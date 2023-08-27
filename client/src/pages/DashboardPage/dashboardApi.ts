@@ -8,7 +8,7 @@ export const updateVersion = async () => {
   try {
     const { data } = await axios.put(`/api/versions/increment`);
     Covy().showSnackbar({
-      message: `Version updated to ${data.version}`,
+      message: `Version updated to ${data}`,
       severity: "success",
     });
     return data;

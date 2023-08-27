@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Link } from "react-router-dom";
 import config from "../../../config";
@@ -9,7 +9,9 @@ const EmailComplete = () => {
       <h2 className="ta-c">Thank You for Contacting Glow LEDs!</h2>
       <p className="ta-c max-w-800px lh-30px m-auto">We'll answer your questions or requests as soon as possible.</p>
       <div className="max-w-800px w-100per m-auto column g-20px">
-        <p className="ta-c max-w-800px lh-30px m-auto">In the meantime, check out these pages for answers to frequently asked questions.</p>
+        <p className="ta-c max-w-800px lh-30px m-auto">
+          In the meantime, check out these pages for answers to frequently asked questions.
+        </p>
         <Link to="/pages/faq#glowskinz">
           <GLButton variant="primary" className="w-100per">
             Glowskinz FAQ
@@ -43,13 +45,17 @@ const EmailComplete = () => {
       </div>
 
       <div className="jc-c">
-        <img src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="heart_caps" className="br-20px w-100per max-w-800px m-10px" />
+        <img
+          src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
+          alt="heart_caps"
+          className="br-20px w-100per max-w-800px m-10px"
+        />
       </div>
       <div className="jc-c">
         <p className="max-w-800px mv-2rem lh-30px ta-c">
           {" "}
-          If you have not recieved a confirmation email make sure to check your spam folder for the confirmation email. Please reach out
-          with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
+          If you have not recieved a confirmation email make sure to check your spam folder for the confirmation email.
+          Please reach out with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
         </p>
       </div>
       <div className="jc-c ai-c m-auto wrap">

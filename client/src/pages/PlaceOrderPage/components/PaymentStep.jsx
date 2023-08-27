@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
@@ -41,7 +41,7 @@ const PaymentStep = ({
   create_order_without_paying,
   create_no_payment_order,
   create_order_without_user,
-  totalPrice
+  totalPrice,
 }) => {
   const { width } = useWindowDimensions();
   return (
@@ -59,7 +59,13 @@ const PaymentStep = ({
           <div>
             <div className="w-100per ">
               <div htmlFor="order_note">Add a note</div>
-              <input type="text" name="order_note" id="order_note" className="w-100per" onChange={e => set_order_note(e.target.value)} />
+              <input
+                type="text"
+                name="order_note"
+                id="order_note"
+                className="w-100per"
+                onChange={e => set_order_note(e.target.value)}
+              />
             </div>
             {current_user?.isAdmin && (
               <div className="w-100per mt-10px">
@@ -85,7 +91,7 @@ const PaymentStep = ({
                         id="promo_code"
                         className="w-100per"
                         style={{
-                          textTransform: "uppercase"
+                          textTransform: "uppercase",
                         }}
                         onChange={e => {
                           set_promo_code(e.target.value.toUpperCase());
@@ -95,7 +101,7 @@ const PaymentStep = ({
                         type="submit"
                         variant="primary"
                         style={{
-                          curser: "pointer"
+                          curser: "pointer",
                         }}
                       >
                         Apply
@@ -106,7 +112,7 @@ const PaymentStep = ({
                 <label
                   className="validation_text"
                   style={{
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   {promo_code_validations}
@@ -147,7 +153,7 @@ const PaymentStep = ({
                     name="create_account"
                     defaultChecked={create_account}
                     style={{
-                      transform: "scale(1.5)"
+                      transform: "scale(1.5)",
                     }}
                     className="mr-1rem"
                     id="create_account"
@@ -173,7 +179,11 @@ const PaymentStep = ({
             )}
             <li>
               {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? (
-                <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} set_loading_payment={set_loading_payment} />
+                <Stripe
+                  pay_order={placeOrderHandler}
+                  loading_payment={loading_payment}
+                  set_loading_payment={set_loading_payment}
+                />
               ) : (
                 <div></div>
               )}
@@ -205,7 +215,7 @@ const PaymentStep = ({
                           name="paid"
                           id="paid"
                           style={{
-                            transform: "scale(1.5)"
+                            transform: "scale(1.5)",
                           }}
                           className="mr-1rem"
                           onChange={e => {
@@ -218,7 +228,10 @@ const PaymentStep = ({
                     {paid && (
                       <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
                         <div className="custom-select w-100per">
-                          <select className="qty_select_dropdown w-100per" onChange={e => set_paymentMethod(e.target.value)}>
+                          <select
+                            className="qty_select_dropdown w-100per"
+                            onChange={e => set_paymentMethod(e.target.value)}
+                          >
                             <option key={1} defaultValue="">
                               Payment Method
                             </option>
@@ -233,7 +246,7 @@ const PaymentStep = ({
                               "promo",
                               "sponsor",
                               "replacement",
-                              "no payment"
+                              "no payment",
                             ].map((method, index) => (
                               <option key={index} value={method}>
                                 {method}

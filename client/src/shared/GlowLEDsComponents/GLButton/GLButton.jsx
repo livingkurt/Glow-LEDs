@@ -1,7 +1,18 @@
-import React from "react";
+import * as React from "react";
 import ReactTooltip from "react-tooltip";
 
-const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, tooltip, ...otherProps }) => {
+const GLButton = ({
+  children,
+  icon,
+  onClick,
+  onKeyUp,
+  className,
+  disabled,
+  variant,
+  fullWidth,
+  tooltip,
+  ...otherProps
+}) => {
   return (
     <>
       <button

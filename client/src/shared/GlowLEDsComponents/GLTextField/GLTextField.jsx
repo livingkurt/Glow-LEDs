@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
-import React from "react";
+import * as React from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -13,25 +13,25 @@ import { makeStyles, styled } from "@mui/styles";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "white"
+    color: "white",
   },
   "& .MuiInput-underline:after": {
-    borderBottomColor: "white"
+    borderBottomColor: "white",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "white"
+      borderColor: "white",
     },
     "&:hover fieldset": {
-      borderColor: "white"
+      borderColor: "white",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "white"
-    }
+      borderColor: "white",
+    },
   },
   "& input": {
-    boxShadow: "0 0 0 0.2rem rgba(0,0,0,0.01)"
-  }
+    boxShadow: "0 0 0 0.2rem rgba(0,0,0,0.01)",
+  },
 });
 
 const useStyles = makeStyles(() => ({
@@ -39,47 +39,59 @@ const useStyles = makeStyles(() => ({
     marginTop: 15,
     marginBottom: 15,
     "& label.Mui-focused": {
-      color: "green"
+      color: "green",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "green"
+      borderBottomColor: "green",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "red"
+        borderColor: "red",
       },
       "&:hover fieldset": {
-        borderColor: "yellow"
+        borderColor: "yellow",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
+        borderColor: "green",
+      },
+    },
   },
   skeleton: {
     marginTop: -10,
-    marginBottom: -10
+    marginBottom: -10,
   },
   inputRoot: {
-    color: "white !important"
+    color: "white !important",
   },
   inputBase: {
     color: "white !important",
     "&.MuiInputLabel-root": {
-      color: "white"
+      color: "white",
     },
     " & label.Mui-focused": {
-      color: "white"
+      color: "white",
     },
     "& .,MuiOutlinedInput-root": {
       "&.Mui-focused fieldset": {
-        borderColor: "white"
-      }
-    }
-  }
+        borderColor: "white",
+      },
+    },
+  },
 }));
 
-const GLTextField = ({ loading, size, value, type, margin, name, label, variant, onChange, fullWidth, ...otherProps }) => {
+const GLTextField = ({
+  loading,
+  size,
+  value,
+  type,
+  margin,
+  name,
+  label,
+  variant,
+  onChange,
+  fullWidth,
+  ...otherProps
+}) => {
   const classes = useStyles();
   return (
     <div>
@@ -90,7 +102,7 @@ const GLTextField = ({ loading, size, value, type, margin, name, label, variant,
           inputProps={{ className: classes.inputRoot }}
           InputProps={{ className: classes.inputBase }}
           InputLabelProps={{
-            style: { color: "#fff" }
+            style: { color: "#fff" },
           }}
           classes={classes.textField}
           size={size}
@@ -119,7 +131,7 @@ PropTypes.GLTextField = {
   label: PropTypes.string,
   variant: PropTypes.string,
   onChange: PropTypes.func,
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
 };
 GLTextField.defaultProps = {
   size: "medium",
@@ -131,7 +143,7 @@ GLTextField.defaultProps = {
   variant: "outlined",
   onChange: () => {},
   fullWidth: true,
-  loading: true
+  loading: true,
 };
 
 export default GLTextField;

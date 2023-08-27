@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
@@ -32,7 +32,9 @@ const ProfileAffiliateMetrics = () => {
           </div>
           <div className="mb-20px">
             <h3>Projected Private Code Discount</h3>
-            <label>{!loading_month_earnings && determine_code_tier(user.affiliate, month_earnings.number_of_uses)}% Off</label>
+            <label>
+              {!loading_month_earnings && determine_code_tier(user.affiliate, month_earnings.number_of_uses)}% Off
+            </label>
           </div>
           {user.affiliate.sponsor && (
             <>
@@ -55,11 +57,18 @@ const ProfileAffiliateMetrics = () => {
               variant="contained"
               color="primary"
               fullWidth
-              onClick={() => copyToClipboard(`https://www.glow-leds.com?code=${user.affiliate.public_code.promo_code.toUpperCase()}`)}
+              onClick={() =>
+                copyToClipboard(`https://www.glow-leds.com?code=${user.affiliate.public_code.promo_code.toUpperCase()}`)
+              }
             >
               Copy Link to Clipboard
             </Button>
-            <a href={determine_terms_link(user.affiliate)} target="_blank" rel="noopener noreferrer" className="mr-10px">
+            <a
+              href={determine_terms_link(user.affiliate)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mr-10px"
+            >
               <Button variant="contained" color="secondary" fullWidth>
                 Affiliate Terms
               </Button>

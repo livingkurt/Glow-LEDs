@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { GLButton } from "../GlowLEDsComponents";
 
 const Arrows = props => {
@@ -22,20 +22,10 @@ const Arrows = props => {
   };
   return (
     <div className="row">
-      <GLButton
-        onClick={() => decrement()}
-        variant="primary"
-        className="w-4rem"
-        aria-label="Previous"
-      >
+      <GLButton onClick={() => decrement()} variant="primary" className="w-4rem" aria-label="Previous">
         <i className="fas fa-arrow-left f-s-12" />
       </GLButton>
-      <GLButton
-        onClick={() => increment()}
-        variant="primary"
-        className="w-4rem m-l-s"
-        aria-label="Next"
-      >
+      <GLButton onClick={() => increment()} variant="primary" className="w-4rem m-l-s" aria-label="Next">
         <i className="fas fa-arrow-right f-s-12" />
       </GLButton>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { LazyImage } from "../../../SharedComponents";
 import { humanize } from "../../../../utils/helper_functions";
@@ -26,7 +26,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
                           size={{
                             height: `auto`,
                             width: `100%`,
-                            objectFit: "cover"
+                            objectFit: "cover",
                           }}
                           effect="blur"
                           src={item.image}

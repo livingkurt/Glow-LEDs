@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Grow, Paper } from "@mui/material";
@@ -8,7 +8,7 @@ import { Popper as MuiPopper } from "@mui/material";
 export const useStyles = makeStyles(theme => ({
   paper: {
     overflow: "auto",
-    fontSize: "16px"
+    fontSize: "16px",
   },
   arrow: {},
   popper: {
@@ -22,8 +22,8 @@ export const useStyles = makeStyles(theme => ({
       height: "1em",
       "&::before": {
         borderWidth: "0 1em 1em 1em",
-        borderColor: `transparent transparent ${theme.palette.background.paper} transparent`
-      }
+        borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
+      },
     },
     '&[x-placement*="top"] $arrow': {
       bottom: 0,
@@ -33,8 +33,8 @@ export const useStyles = makeStyles(theme => ({
       height: "1em",
       "&::before": {
         borderWidth: "1em 1em 0 1em",
-        borderColor: `${theme.palette.background.paper} transparent transparent transparent`
-      }
+        borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
+      },
     },
     '&[x-placement*="right"] $arrow': {
       left: 0,
@@ -43,8 +43,8 @@ export const useStyles = makeStyles(theme => ({
       width: "1em",
       "&::before": {
         borderWidth: "1em 1em 1em 0",
-        borderColor: `transparent ${theme.palette.background.paper} transparent transparent`
-      }
+        borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
+      },
     },
     '&[x-placement*="left"] $arrow': {
       right: 0,
@@ -53,13 +53,23 @@ export const useStyles = makeStyles(theme => ({
       width: "1em",
       "&::before": {
         borderWidth: "1em 0 1em 1em",
-        borderColor: `transparent transparent transparent ${theme.palette.background.paper}`
-      }
-    }
-  }
+        borderColor: `transparent transparent transparent ${theme.palette.background.paper}`,
+      },
+    },
+  },
 }));
 
-const GLPopper = ({ open, anchorEl, placement, popperClasses, paperClasses, children, boundariesElement, flip, transition }) => {
+const GLPopper = ({
+  open,
+  anchorEl,
+  placement,
+  popperClasses,
+  paperClasses,
+  children,
+  boundariesElement,
+  flip,
+  transition,
+}) => {
   const classes = useStyles();
   return (
     <div>
@@ -72,12 +82,12 @@ const GLPopper = ({ open, anchorEl, placement, popperClasses, paperClasses, chil
         transition={transition}
         modifiers={{
           flip: {
-            enabled: flip
+            enabled: flip,
           },
           preventOverflow: {
             enabled: true,
-            boundariesElement
-          }
+            boundariesElement,
+          },
         }}
       >
         {({ TransitionProps }) => (
@@ -98,7 +108,7 @@ GLPopper.defaultProps = {
   paperClasses: "",
   boundariesElement: "viewport",
   flip: true,
-  transition: true
+  transition: true,
 };
 
 GLPopper.propTypes = {
@@ -109,7 +119,7 @@ GLPopper.propTypes = {
   paperClasses: PropTypes.string,
   boundariesElement: PropTypes.string,
   flip: PropTypes.bool,
-  transition: PropTypes.bool
+  transition: PropTypes.bool,
 };
 
 export default GLPopper;

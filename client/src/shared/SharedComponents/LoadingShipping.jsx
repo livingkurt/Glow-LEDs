@@ -1,10 +1,8 @@
 // React
-import React from "react";
+import * as React from "react";
 import { GLButton } from "../GlowLEDsComponents";
 import { useSelector } from "react-redux";
 import config from "../../config";
-require("dotenv").config();
-// Components
 
 const LoadingShipment = ({
   loading,
@@ -14,7 +12,7 @@ const LoadingShipment = ({
   set_loading_payment,
   get_shipping_rates,
   set_verify_shipping,
-  set_loading_shipping
+  set_loading_shipping,
 }) => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
@@ -53,8 +51,18 @@ const LoadingShipment = ({
     <div>
       {loading ? (
         <div className="jc-c column">
-          <img src={config.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
-          <img src={config.PUBLIC_URL + "/loading_overlay.png"} className="loading_png" alt="Loading Overlay" title="Loading Overlay" />
+          <img
+            src={config.PUBLIC_URL + "/loading.gif"}
+            className="loading_gif"
+            alt="Loading Circle"
+            title="Loading Circle"
+          />
+          <img
+            src={config.PUBLIC_URL + "/loading_overlay.png"}
+            className="loading_png"
+            alt="Loading Overlay"
+            title="Loading Overlay"
+          />
           <div className="payment_message">
             <h2 className="ta-c">Wait a moment while we process your Payment</h2>
             <p className="ta-c">Please Do not Refresh Page</p>

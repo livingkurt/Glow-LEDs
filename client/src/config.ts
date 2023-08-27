@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
 // Glow LEDs Backend Environment Variables
 const config = {
   // Public URL
@@ -62,7 +58,7 @@ const config = {
   REACT_APP_GOOGLE_PLACES_KEY: process.env.REACT_APP_GOOGLE_PLACES_KEY,
 
   // Airtable
-  REACT_APP_AIRTABLE_ACCESS_TOKEN: process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN
+  REACT_APP_AIRTABLE_ACCESS_TOKEN: process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN,
 };
 
 export default config;

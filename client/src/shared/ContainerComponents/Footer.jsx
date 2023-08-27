@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import useWindowDimensions from "../Hooks/windowDimensions";
 
@@ -10,7 +10,12 @@ const Footer = () => {
       <div className="footer-image">
         <Link to="/" aria-label="Home Page">
           <div className="">
-            <img className="" src="/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs Logo" title="Big Logo" />
+            <img
+              className=""
+              src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+              alt="Glow LEDs Logo"
+              title="Big Logo"
+            />
           </div>
         </Link>
         <div className="mt-2rem wrap jc-c ">
@@ -26,12 +31,22 @@ const Footer = () => {
               </a>
             </div>
             <div className="ml-10px fs-40px">
-              <a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a
+                href="https://www.instagram.com/glow_leds/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <i className="fab fa-instagram zoom" />
               </a>
             </div>
             <div className="ml-10px fs-40px">
-              <a href="https://www.tiktok.com/@glow_leds?lang=en" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+              <a
+                href="https://www.tiktok.com/@glow_leds?lang=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+              >
                 <i className="fab fa-tiktok zoom" />
               </a>
             </div>
@@ -56,7 +71,12 @@ const Footer = () => {
             )}
             {width > 500 && (
               <div className="mr-10px fs-40px">
-                <a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer" aria-label="Soundcloud">
+                <a
+                  href="https://soundcloud.com/ntre/tracks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Soundcloud"
+                >
                   <i className="fab fa-soundcloud" />
                 </a>
               </div>

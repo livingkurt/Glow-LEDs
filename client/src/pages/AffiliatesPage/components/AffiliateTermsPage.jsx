@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Helmet } from "react-helmet";
 
 const AffiliateTermsPage = () => {
@@ -10,9 +10,18 @@ const AffiliateTermsPage = () => {
         <meta name="twitter:title" content="Terms and Conditions" />
         <link rel="canonical" href="https://www.glow-leds.com/account/terms" />
         <meta property="og:url" content="https://www.glow-leds.com/account/terms" />
-        <meta name="description" content="Glow LEDs wants everyone to use our platform for what it was meant to be used for." />
-        <meta property="og:description" content="Glow LEDs wants everyone to use our platform for what it was meant to be used for." />
-        <meta name="twitter:description" content="Glow LEDs wants everyone to use our platform for what it was meant to be used for." />
+        <meta
+          name="description"
+          content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
+        />
+        <meta
+          property="og:description"
+          content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
+        />
+        <meta
+          name="twitter:description"
+          content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
+        />
       </Helmet>
 
       <h1 className="ta-c">Affiliate Terms & Conditions</h1>
@@ -144,7 +153,9 @@ const AffiliateTermsPage = () => {
           {/* <li>
 						Post a Lightshow with a Glow LEDs product, Glow LEDs Logo and promo code at least twice a month
 					</li> */}
-          <li>Each member sends Glow LEDs a lightshow with a Glow LEDs product to be featured, at least once a month</li>
+          <li>
+            Each member sends Glow LEDs a lightshow with a Glow LEDs product to be featured, at least once a month
+          </li>
           <li>Host X Number of Gloving Competition a year</li>
           <li>With choice of product requires you to make a lightshow/product review video with them</li>
         </ul>

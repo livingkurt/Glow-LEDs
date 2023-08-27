@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import csvDownload from "json-to-csv-export";
 import { GLButton } from "../GlowLEDsComponents";
 

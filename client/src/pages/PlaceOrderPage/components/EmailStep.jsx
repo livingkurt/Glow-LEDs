@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
@@ -18,7 +18,7 @@ const EmailStep = ({
   setPasswordValidations,
   set_is_guest,
   password,
-  set_password
+  set_password,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -90,12 +90,18 @@ const EmailStep = ({
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
                 <label htmlFor="email">Email</label>
-                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value.toLowerCase())} />
+                <input
+                  type="text"
+                  value={email}
+                  name="email"
+                  id="email"
+                  onChange={e => set_email(e.target.value.toLowerCase())}
+                />
               </li>
               <label
                 className="validation_text"
                 style={{
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 {email_validations}
@@ -120,11 +126,23 @@ const EmailStep = ({
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
                 <label htmlFor="email">Email</label>
-                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value.toLowerCase())} />
+                <input
+                  type="text"
+                  value={email}
+                  name="email"
+                  id="email"
+                  onChange={e => set_email(e.target.value.toLowerCase())}
+                />
               </li>
               <li>
                 <label htmlFor="password">Password</label>
-                <input type="password" value={password} name="password" id="password" onChange={e => set_password(e.target.value)} />
+                <input
+                  type="password"
+                  value={password}
+                  name="password"
+                  id="password"
+                  onChange={e => set_password(e.target.value)}
+                />
               </li>
               <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
                 Don't have an account?{" "}

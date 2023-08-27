@@ -1,4 +1,4 @@
-// import React from 'react';
+// import * as React from 'react';
 // import { Carousel } from 'react-responsive-carousel';
 // import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -42,7 +42,7 @@
 
 // export default ProductSlideshow;
 
-import React from "react";
+import * as React from "react";
 // import { Carousel } from 'react-responsive-carousel';
 
 // import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -58,24 +58,24 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 1
+      items: 1,
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 1
+      items: 1,
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 1
+      items: 1,
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 1
+      items: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
 
   return (
@@ -105,7 +105,14 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
       >
         {images.map((image, index) => (
           <div className={className}>
-            <img draggable={false} key={index} src={image} alt="carousel" title="carousel item" className="carousel-item br-40px mb-10px" />
+            <img
+              draggable={false}
+              key={index}
+              src={image}
+              alt="carousel"
+              title="carousel item"
+              className="carousel-item br-40px mb-10px"
+            />
           </div>
         ))}
       </Carousel>

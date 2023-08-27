@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import styles from "./GLInput.module.scss";
 import "./GLInput.scss";
 
@@ -27,7 +27,7 @@ const GLInput = ({
   restrictCharacters,
   inputClasses,
   inputProps,
-  containerProps
+  containerProps,
 }) => {
   return (
     <>
@@ -35,7 +35,9 @@ const GLInput = ({
         <input
           onChange={onChange}
           value={value}
-          className={`zoom_f gl_input ${value ? "filled" : ""} place_input ${error ? "validation" : ""}  ${inputClasses}`}
+          className={`zoom_f gl_input ${value ? "filled" : ""} place_input ${
+            error ? "validation" : ""
+          }  ${inputClasses}`}
           type={type}
           name={name}
           style={{ ...style }}

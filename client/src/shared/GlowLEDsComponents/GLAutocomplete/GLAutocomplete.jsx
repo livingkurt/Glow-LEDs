@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
-import React from "react";
+import * as React from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -98,11 +98,19 @@ const GLAutocomplete = ({
           renderOption={(props, option, { selected }) => {
             return showCheckbox ? (
               <li {...props}>
-                <Checkbox icon={icon} size="large" checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                <Checkbox
+                  icon={icon}
+                  size="large"
+                  checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
                 {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
               </li>
             ) : (
-              <li {...props}>{typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}</li>
+              <li {...props}>
+                {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
+              </li>
             );
           }}
           onChange={onChange}
@@ -145,7 +153,7 @@ GLAutocomplete.defaultProps = {
   chipColor: () => "primary",
   inputType: "text",
   limitTags: 5,
-  inputPropsTextField: {}
+  inputPropsTextField: {},
 };
 
 GLAutocomplete.propTypes = {
@@ -178,7 +186,7 @@ GLAutocomplete.propTypes = {
   chipColor: PropTypes.func,
   inputType: PropTypes.string,
   limitTags: PropTypes.number,
-  inputPropsTextField: PropTypes.object
+  inputPropsTextField: PropTypes.object,
 };
 
 export default GLAutocomplete;

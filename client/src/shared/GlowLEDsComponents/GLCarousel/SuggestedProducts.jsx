@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../SharedComponents";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
@@ -16,7 +16,7 @@ const SuggestedProducts = props => {
         style={{
           textAlign: "center",
           width: "100%",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         Suggested Products
@@ -30,7 +30,12 @@ const SuggestedProducts = props => {
               .map(
                 (item, index) =>
                   !item.hidden && (
-                    <ProductItemD key={index} size="175px" product={item} style={{ marginRight: 20, listStyleType: "none" }} />
+                    <ProductItemD
+                      key={index}
+                      size="175px"
+                      product={item}
+                      style={{ marginRight: 20, listStyleType: "none" }}
+                    />
                   )
               )}
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,17 +6,33 @@ import Divider from "@mui/material/Divider";
 import clsx from "clsx";
 import glTable from "../glTable.module.scss";
 
-const GLTableToolbar = ({ numSelected, hiddenSelected, tableName, rowCount, enableRowSelect, children, titleActions, hasFilters }) => (
+const GLTableToolbar = ({
+  numSelected,
+  hiddenSelected,
+  tableName,
+  rowCount,
+  enableRowSelect,
+  children,
+  titleActions,
+  hasFilters,
+}) => (
   <div>
     {tableName && (hasFilters || titleActions) && (
-      <Toolbar className={clsx(glTable.titleContainer, enableRowSelect && numSelected > 0 && glTable.rowSelectedTitleContainer)}>
+      <Toolbar
+        className={clsx(
+          glTable.titleContainer,
+          enableRowSelect && numSelected > 0 && glTable.rowSelectedTitleContainer
+        )}
+      >
         <div>
           {enableRowSelect && numSelected > 0 ? (
             <div data-test="tableToolbarTitle">
               <Typography variant="h6" color="textPrimary" component="div">
                 {tableName} ({numSelected} selected)
               </Typography>
-              {hiddenSelected > 0 && <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>}
+              {hiddenSelected > 0 && (
+                <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>
+              )}
             </div>
           ) : (
             <Typography variant="h6" data-test="tableToolbarTitle" id="tableTitle" component="div">
@@ -40,7 +56,7 @@ GLTableToolbar.defaultProps = {
   children: <div />,
   enableRowSelect: true,
   titleActions: null,
-  hasFilters: false
+  hasFilters: false,
 };
 
 GLTableToolbar.propTypes = {
@@ -51,7 +67,7 @@ GLTableToolbar.propTypes = {
   children: PropTypes.object,
   enableRowSelect: PropTypes.bool,
   titleActions: PropTypes.object,
-  hasFilters: PropTypes.bool
+  hasFilters: PropTypes.bool,
 };
 
 export default GLTableToolbar;

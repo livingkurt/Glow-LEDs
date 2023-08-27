@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 import { Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
@@ -20,15 +20,17 @@ const CurrentStock = ({ currentStock }) => {
         }}
         rows={
           !currentStock.isLoading &&
-          currentStock.data?.filter(row => (row.subcategory === "gloves" || row.category === "gloves") && row.name.includes("V2"))
+          currentStock.data?.filter(
+            row => (row.subcategory === "gloves" || row.category === "gloves") && row.name.includes("V2")
+          )
         }
         columnDefs={[
           { title: "Name", display: "name" },
           {
             title: "Count in Stock",
             display: row => row?.count_in_stock,
-            attribute: "count_in_stock"
-          }
+            attribute: "count_in_stock",
+          },
         ]}
       />
       <GLDisplayTable
@@ -40,11 +42,13 @@ const CurrentStock = ({ currentStock }) => {
         }}
         rows={
           !currentStock.isLoading &&
-          currentStock.data?.filter(row => (row.subcategory === "gloves" || row.category === "gloves") && !row.name.includes("V2"))
+          currentStock.data?.filter(
+            row => (row.subcategory === "gloves" || row.category === "gloves") && !row.name.includes("V2")
+          )
         }
         columnDefs={[
           { title: "Name", display: "name" },
-          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock" }
+          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock" },
         ]}
       />
 
@@ -56,7 +60,9 @@ const CurrentStock = ({ currentStock }) => {
           dispatch(API.saveProduct(value));
           if (value.option_products.length > 0) {
             // Fetch option products first
-            const optionProductsActions = await Promise.all(value.option_products.map(id => dispatch(API.detailsProduct(id))));
+            const optionProductsActions = await Promise.all(
+              value.option_products.map(id => dispatch(API.detailsProduct(id)))
+            );
 
             // Extract payload from each action
             const optionProducts = optionProductsActions.map(action => action.payload);
@@ -74,7 +80,7 @@ const CurrentStock = ({ currentStock }) => {
         }}
         columnDefs={[
           { title: "Name", display: "name" },
-          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock" }
+          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock" },
         ]}
       />
     </div>

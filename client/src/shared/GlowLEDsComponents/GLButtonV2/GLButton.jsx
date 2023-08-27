@@ -1,8 +1,19 @@
 import { Button, styled, Tooltip } from "@mui/material";
-import React from "react";
+import * as React from "react";
 import ReactTooltip from "react-tooltip";
 
-const GLButtonV2 = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, tooltip, ...otherProps }) => {
+const GLButtonV2 = ({
+  children,
+  icon,
+  onClick,
+  onKeyUp,
+  className,
+  disabled,
+  variant,
+  fullWidth,
+  tooltip,
+  ...otherProps
+}) => {
   return (
     <Tooltip title={tooltip}>
       <Button

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import classnames from "classnames";
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
@@ -11,7 +11,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
     totalCount,
     siblingCount,
     pageSize,
-    width
+    width,
   });
 
   if (currentPage === 0 || paginationRange.length < 2) {
@@ -32,7 +32,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
     <ul className={classnames("pagination-container", { [className]: className })}>
       <li
         className={classnames("pagination-item", {
-          disabled: currentPage === 1
+          disabled: currentPage === 1,
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
@@ -54,18 +54,20 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
           return (
             <li
               className={classnames("pagination-item", {
-                page: pageNumber === currentPage
+                page: pageNumber === currentPage,
               })}
               key={pageNumber}
               onClick={e => onPageChange(e, pageNumber)}
             >
-              <div className={`btn ${pageNumber === parseInt(currentPage) ? "off ft-primary" : "on ft-white"} w-40px`}>{pageNumber}</div>
+              <div className={`btn ${pageNumber === parseInt(currentPage) ? "off ft-primary" : "on ft-white"} w-40px`}>
+                {pageNumber}
+              </div>
             </li>
           );
         })}
       <li
         className={classnames("pagination-item", {
-          disabled: currentPage === lastPage
+          disabled: currentPage === lastPage,
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -47,7 +47,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
                 height: "56px",
                 // backgroundColor: "#333333",
                 minWidth: column.minwidth,
-                width: column.width
+                width: column.width,
               }}
               padding={column.disablePadding ? "none" : "normal"}
             >
@@ -63,7 +63,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
                 height: "56px",
                 // backgroundColor: "#333333",
                 minWidth: column.minwidth,
-                width: column.width
+                width: column.width,
               }}
               padding={column.disablePadding ? "none" : "normal"}
               sortDirection={orderBy === idx ? order : false}
@@ -92,7 +92,7 @@ GLTableHeader.propTypes = {
   enableRowSelect: PropTypes.bool.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.number.isRequired,
-  rowCount: PropTypes.number.isRequired
+  rowCount: PropTypes.number.isRequired,
 };
 
 export default GLTableHeader;

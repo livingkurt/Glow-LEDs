@@ -7,22 +7,26 @@ const UpdateNotifier = () => {
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
 
   useEffect(() => {
-    // Get the current version when the page loads
-    axios.get("/api/versions").then(response => {
-      setVersion(response.data.version);
-    });
-
-    // Check for updates every 5 minutes
-    const interval = setInterval(() => {
+    try {
+      // Get the current version when the page loads
       axios.get("/api/versions").then(response => {
-        if (response.data.version > version) {
-          setShowUpdatePopup(true);
-        }
+        setVersion(response.data.version);
       });
-    }, 30000); // 300000 ms = 5 minutes
 
-    // Clean up the interval on unmount
-    return () => clearInterval(interval);
+      // Check for updates every 5 minutes
+      const interval = setInterval(() => {
+        axios.get("/api/versions").then(response => {
+          if (response.data.version > version) {
+            setShowUpdatePopup(true);
+          }
+        });
+      }, 30000); // 300000 ms = 5 minutes
+
+      // Clean up the interval on unmount
+      return () => clearInterval(interval);
+    } catch (error) {
+      console.log({ error });
+    }
   }, [version]);
 
   const handleUpdate = () => {

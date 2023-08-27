@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
@@ -157,7 +157,9 @@ const SitemapPage = () => {
                     <Link to="/collections/all/products/diffuser_adapters_no_caps">Diffuser Adapters (No Caps)</Link>
                   </li>
                   <li>
-                    <Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">Diffuser Caps + Adapters Starter Kit</Link>
+                    <Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">
+                      Diffuser Caps + Adapters Starter Kit
+                    </Link>
                   </li>
                 </ul>
               </ul>
@@ -185,7 +187,9 @@ const SitemapPage = () => {
                     <Link to="/collections/all/products/peace_diffuser_caps">Peace Diffuser Caps</Link>
                   </li>
                   <li>
-                    <Link to="/collections/all/products/dodecahedron_point_diffuser_caps">Dodecahedron Point Diffuser Caps</Link>
+                    <Link to="/collections/all/products/dodecahedron_point_diffuser_caps">
+                      Dodecahedron Point Diffuser Caps
+                    </Link>
                   </li>
                   {/* <li>
 							<Link to="/collections/all/products/owsla_diffuser_caps">
@@ -234,10 +238,14 @@ const SitemapPage = () => {
                     <Link to="/collections/all/products/flower_diffuser_caps">Flower Diffuser Caps</Link>
                   </li>
                   <li>
-                    <Link to="/collections/all/products/dodecahedron_face_diffuser_caps">Dodecahedron Face Diffuser Caps</Link>
+                    <Link to="/collections/all/products/dodecahedron_face_diffuser_caps">
+                      Dodecahedron Face Diffuser Caps
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/collections/all/products/dizzy_face_emoji_diffuser_caps">Dizzy Face Emoji Diffuser Caps</Link>
+                    <Link to="/collections/all/products/dizzy_face_emoji_diffuser_caps">
+                      Dizzy Face Emoji Diffuser Caps
+                    </Link>
                   </li>
                   <li>
                     <Link to="/collections/all/products/gyro_sphere_diffuser_caps">Gyro Sphere Diffuser Caps</Link>

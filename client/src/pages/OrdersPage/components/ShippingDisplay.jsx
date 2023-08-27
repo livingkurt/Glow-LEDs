@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Typography, Box, Divider } from "@mui/material";
 import { sendEmail } from "../ordersPageHelpers";
 import { GLButton } from "../../../shared/GlowLEDsComponents";

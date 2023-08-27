@@ -1,5 +1,15 @@
-import React from "react";
-import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import * as React from "react";
+import {
+  Divider,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { isLoading, timeLabel } from "../dashboardHelpers";
 
 const TotalsTable = ({ range_revenue, tips_range_revenue, range_payouts, range_expenses, month, year }) => {
@@ -23,15 +33,21 @@ const TotalsTable = ({ range_revenue, tips_range_revenue, range_payouts, range_e
           <TableBody>
             <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell>${isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}</TableCell>
-              <TableCell>${isLoading(range_expenses) ? range_expenses.data[0]?.totalAmount?.toFixed(2) : "0.00"}</TableCell>
+              <TableCell>
+                ${isLoading(range_expenses) ? range_expenses.data[0]?.totalAmount?.toFixed(2) : "0.00"}
+              </TableCell>
               <TableCell>
                 $
                 {isLoading(range_expenses) && isLoading(range_revenue)
                   ? (range_revenue.data[0]?.totalPrice - range_expenses.data[0]?.totalAmount).toFixed(2)
                   : "0.00"}
               </TableCell>
-              <TableCell>${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}</TableCell>
-              <TableCell>${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}</TableCell>
+              <TableCell>
+                ${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
+              </TableCell>
+              <TableCell>
+                ${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

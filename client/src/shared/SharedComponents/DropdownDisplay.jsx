@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { snake_case } from "../../utils/helper_functions";
@@ -81,7 +81,9 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
                             <i className="fas fa-times mr-5px" />
                           </GLButton>
                           <Link to={`/secure/glow/editproduct/${item.pathname}/false`}>
-                            {display_key === "first_name" ? `${item[display_key]} ${item.last_name}` : item[display_key]}
+                            {display_key === "first_name"
+                              ? `${item[display_key]} ${item.last_name}`
+                              : item[display_key]}
                           </Link>
                         </div>
                         <div className="row">
@@ -112,7 +114,9 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
                             to={`/secure/glow/editproduct/${item.pathname}/true`}
                           > */}
                           <Link
-                            to={`/secure/glow/editproduct/${item.pathname}/true/${snake_case(list_name.slice(0, -1))}/${item_group_id}`}
+                            to={`/secure/glow/editproduct/${item.pathname}/true/${snake_case(
+                              list_name.slice(0, -1)
+                            )}/${item_group_id}`}
                           >
                             <GLButton variant="secondary" className="ml-1rem">
                               Use as Template

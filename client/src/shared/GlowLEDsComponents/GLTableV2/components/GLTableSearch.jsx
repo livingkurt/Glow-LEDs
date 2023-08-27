@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { applySearch } from "../actions/actions";
@@ -34,7 +34,7 @@ GLTableSearch.defaultProps = {
   autoFocus: true,
   search: null,
   restrictSearchChars: x => x,
-  namespace: ""
+  namespace: "",
 };
 
 GLTableSearch.propTypes = {
@@ -43,7 +43,7 @@ GLTableSearch.propTypes = {
   autoFocus: PropTypes.bool,
   restrictSearchChars: PropTypes.func,
   search: PropTypes.string,
-  namespace: PropTypes.string
+  namespace: PropTypes.string,
 };
 
 export default React.memo(GLTableSearch);

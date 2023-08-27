@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -31,7 +31,7 @@ const HomeSlideshow = ({ slideshow }) => {
       Object.defineProperty({}, "passive", {
         get: function () {
           supportsPassive = true;
-        }
+        },
       })
     );
   } catch (e) {}
@@ -59,24 +59,24 @@ const HomeSlideshow = ({ slideshow }) => {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 1
+      items: 1,
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 1
+      items: 1,
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 1
+      items: 1,
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 1
+      items: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
   return (
     <Carousel

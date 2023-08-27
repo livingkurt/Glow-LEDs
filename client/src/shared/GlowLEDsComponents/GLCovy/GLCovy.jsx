@@ -1,6 +1,6 @@
 /* eslint-disable react/no-render-return-value */
 /* eslint-disable no-console */
-import React from "react";
+import * as React from "react";
 import { render } from "react-dom";
 import ShowSnackbar from "./components/ShowSnackbar";
 import SnackBarReqLoadBar from "./components/SnackBarReqLoadBar";
@@ -47,7 +47,7 @@ const Covy = () => ({
         open
       />,
       containerNode
-    )
+    ),
 });
 
 window.Covy = Covy();

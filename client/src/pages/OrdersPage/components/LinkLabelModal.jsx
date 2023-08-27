@@ -8,7 +8,7 @@ import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
 import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../../utils/helper_functions";
 import { fullName } from "../../UsersPage/usersHelpers";
-import { applySearch } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
+import { applySearch, clearTable, selectAllRows } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
 
 const LinkLabelModal = () => {
   const dispatch = useDispatch();
@@ -76,6 +76,7 @@ const LinkLabelModal = () => {
         }}
         onCancel={() => {
           dispatch(closeLinkLabelModal());
+          dispatch(clearTable("shippingTable"));
         }}
         confirmDisabled={selectedRows.length > 1 || selectedRows.length === 0}
         title={"Link Label to Order"}

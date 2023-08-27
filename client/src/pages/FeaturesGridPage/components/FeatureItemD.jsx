@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { humanize } from "../../../utils/helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";

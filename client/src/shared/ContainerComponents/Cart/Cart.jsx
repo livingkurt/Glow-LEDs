@@ -53,7 +53,10 @@ const Cart = props => {
     [dispatch, props, cartItems, current_user]
   );
 
-  const wholesaleProceed = useCallback(() => determine_wholesale_proceed(current_user, cartItems), [current_user, cartItems]);
+  const wholesaleProceed = useCallback(
+    () => determine_wholesale_proceed(current_user, cartItems),
+    [current_user, cartItems]
+  );
 
   return (
     <aside
@@ -63,7 +66,7 @@ const Cart = props => {
         top: "-10px",
         zIndex: 4,
         borderRadius: "0px 0px 20px 20px",
-        height: mobile_check() ? "100%" : cartItems.length === 0 ? "1000px" : "unset"
+        height: mobile_check() ? "100%" : cartItems.length === 0 ? "1000px" : "unset",
       }}
     >
       <ul
@@ -111,10 +114,10 @@ const Cart = props => {
             <div
               className={`${mobile_check() ? `h-90vh` : `h-unset`} mb-175px`}
               style={{
-                overflowY: "scroll"
+                overflowY: "scroll",
               }}
             >
-              <Loading loading={loading} />
+              {/* <Loading loading={loading} /> */}
               {cartItems &&
                 cartItems.map((item, index) => (
                   <CartItem key={index} item={item} index={index} dispatch={dispatch} current_user={current_user} />
@@ -125,7 +128,10 @@ const Cart = props => {
         </div>
       </ul>
 
-      <div className="column w-100per pos-fix add_to_cart ph-1rem br-20px" style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}>
+      <div
+        className="column w-100per pos-fix add_to_cart ph-1rem br-20px"
+        style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}
+      >
         <label className="fs-17px title_font mv-1rem">
           Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
           {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
@@ -136,7 +142,10 @@ const Cart = props => {
           </GLButton>
         </Link>
         {current_user?.isWholesaler ? (
-          <GLTooltip tooltip={!wholesaleProceed() && "You must meet your minimum order requirment to continue"} className="w-100per">
+          <GLTooltip
+            tooltip={!wholesaleProceed() && "You must meet your minimum order requirment to continue"}
+            className="w-100per"
+          >
             <GLButton
               onClick={handleCheckout}
               variant={!wholesaleProceed() ? "disabled" : "primary"}

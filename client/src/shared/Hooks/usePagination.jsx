@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useMemo } from "react";
 import { userWindowDimensions } from ".";
 
@@ -53,7 +53,7 @@ export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentP
     const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount);
 
     /*
-      We do not want to show dots if there is only one position left 
+      We do not want to show dots if there is only one position left
       after/before the left/right page count as that would lead to a change if our Pagination
       component size which we do not want
     */

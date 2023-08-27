@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-disabled-tests */
-import React from "react";
+import * as React from "react";
 import userEvent from "@testing-library/user-event";
 import { tagKeyMatchFull } from "covalent/MaterialUI/TagInput/tagRegex";
 import { debug } from "jest-preview";
@@ -13,7 +13,7 @@ const initialState = props;
 
 const renderGLTable = state => {
   const reducers = {
-    glTable: glTableReducer("glTable")
+    glTable: glTableReducer("glTable"),
   };
   const { glTable } = state;
 
@@ -43,7 +43,7 @@ describe("<GLTable/>, basic table functionality", () => {
   test("it shows that filter menus can open", () => {
     const newProps = {
       ...initialState,
-      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" }
+      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" },
     };
     renderGLTable(newProps);
     expect(screen.queryByTestId(/matrix-sub-menu-input/i)).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe("<GLTable/>, basic table functionality", () => {
   test("it shows that filtering works", () => {
     const newProps = {
       ...initialState,
-      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" }
+      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" },
     };
     renderGLTable(newProps);
 
@@ -62,11 +62,14 @@ describe("<GLTable/>, basic table functionality", () => {
   test("it shows that filtering search works", () => {
     const newProps = {
       ...initialState,
-      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" }
+      glTable: { ...initialState.glTable, menuOpen: true, menuSelection: "locations" },
     };
     renderGLTable(newProps);
 
-    userEvent.type(within(screen.queryByTestId("covalent-table-sub-menu-search-input")).queryByTestId("mui-text-field-container"), "Rome");
+    userEvent.type(
+      within(screen.queryByTestId("covalent-table-sub-menu-search-input")).queryByTestId("mui-text-field-container"),
+      "Rome"
+    );
 
     expect(within(screen.queryByTestId("matrix-sub-menu")).queryAllByTestId("menu-item").length).toEqual(1);
   });
@@ -89,8 +92,8 @@ describe("<GLTable/>, basic table functionality", () => {
             return false;
           }
           return e;
-        }
-      }
+        },
+      },
     };
     renderGLTable(newProps);
     const inputEl = screen.queryByPlaceholderText("Search by Tag Name");

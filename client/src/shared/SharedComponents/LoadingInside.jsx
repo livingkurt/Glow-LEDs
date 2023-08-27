@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import config from "../../config";
 
 const LoadingInside = props => {
@@ -12,7 +12,15 @@ const LoadingInside = props => {
   return (
     <div>
       {props.loading ? (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", position: "relative" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            position: "relative",
+          }}
+        >
           <div className="loading_images_container">
             <img
               src={config.PUBLIC_URL + "/loading.gif"}

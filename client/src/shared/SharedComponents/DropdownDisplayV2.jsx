@@ -23,7 +23,7 @@ const DropdownDisplayV2 = ({
   labelProp,
   onChange,
   showItems,
-  onEdit
+  onEdit,
 }) => {
   const handleDragEnd = result => {
     if (!result.destination) return;
@@ -47,7 +47,9 @@ const DropdownDisplayV2 = ({
                 getOptionSelected={getOptionSelected}
                 onChange={(e, value) => onChange(value)}
                 name={fieldName}
-                renderInput={params => <TextField {...params} fullWidth variant="outlined" label={label} margin="normal" />}
+                renderInput={params => (
+                  <TextField {...params} fullWidth variant="outlined" label={label} margin="normal" />
+                )}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
                     <Chip
@@ -63,8 +65,8 @@ const DropdownDisplayV2 = ({
                         backgroundColor: "primary.main",
                         color: "white",
                         "&:hover": {
-                          backgroundColor: "primary.dark"
-                        }
+                          backgroundColor: "primary.dark",
+                        },
                       }}
                       deleteIcon={<Icon style={{ color: "white" }}>clear</Icon>}
                       {...getTagProps({ index })}
@@ -86,10 +88,10 @@ const DropdownDisplayV2 = ({
                             backgroundColor: snapshot.isDragging ? "secondary.main" : "primary.main",
                             color: "white",
                             "&:hover": {
-                              backgroundColor: "primary.dark"
+                              backgroundColor: "primary.dark",
                             },
                             borderRadius: 5,
-                            my: 1
+                            my: 1,
                           }}
                         >
                           <ListItemText primary={item[labelProp]} />
@@ -99,7 +101,10 @@ const DropdownDisplayV2 = ({
                                 <EditIcon sx={{ color: "white" }} />
                               </IconButton>
                             )}
-                            <IconButton edge="end" onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}>
+                            <IconButton
+                              edge="end"
+                              onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}
+                            >
                               <DeleteIcon sx={{ color: "white" }} />
                             </IconButton>
                           </ListItemSecondaryAction>

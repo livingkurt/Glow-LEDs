@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +38,7 @@ const OrderStatusButtons = ({ order }) => {
             isCrafted: !order.isCrafted,
             craftedAt: new Date(),
             isPackaged: !order.isPackaged,
-            packagedAt: new Date()
+            packagedAt: new Date(),
           })
         );
         break;

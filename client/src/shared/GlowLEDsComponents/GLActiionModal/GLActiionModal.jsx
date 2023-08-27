@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 
 // import { themeColorShape, buttonVariantShape } from "../Utils/shapes";

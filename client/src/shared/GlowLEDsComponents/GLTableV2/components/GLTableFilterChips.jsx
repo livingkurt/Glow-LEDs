@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import pickBy from "lodash/pickBy";
 import Chip from "@mui/material/Chip";
@@ -10,7 +10,7 @@ import { humanize } from "../../../../utils/helper_functions";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    display: "flex"
+    display: "flex",
   },
   root: {
     display: "flex",
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap",
     listStyle: "none",
     padding: theme.spacing(0.5),
-    margin: 0
+    margin: 0,
   },
 
   chip: {
@@ -28,16 +28,16 @@ const useStyles = makeStyles(theme => ({
     deleteIcon: {
       height: 40,
       width: 40,
-      fontSize: 40
+      fontSize: 40,
     },
-    deleteIconColorPrimary: "red"
-  }
+    deleteIconColorPrimary: "red",
+  },
 }));
 
 const customStyles = {
   container: {
-    lineHeight: 3
-  }
+    lineHeight: 3,
+  },
 };
 
 const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFunction, disabled, booleanFilters }) => {
@@ -48,18 +48,20 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
   // return early if not
   if (!showChips) return null;
 
-  const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(([filterCategory, filterArray]) => {
-    if (Object.keys(booleanFilters).includes(filterCategory)) {
-      return { key: filterCategory, name: booleanFilters[filterCategory].label || filterCategory };
-    } else if (filterArray.length > 1) {
-      return {
-        key: filterCategory,
-        name: `${filterArray[0]} & ${filterArray.length - 1} more`
-      };
-    } else {
-      return { key: filterCategory, name: filterArray[0] };
+  const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(
+    ([filterCategory, filterArray]) => {
+      if (Object.keys(booleanFilters).includes(filterCategory)) {
+        return { key: filterCategory, name: booleanFilters[filterCategory].label || filterCategory };
+      } else if (filterArray.length > 1) {
+        return {
+          key: filterCategory,
+          name: `${filterArray[0]} & ${filterArray.length - 1} more`,
+        };
+      } else {
+        return { key: filterCategory, name: filterArray[0] };
+      }
     }
-  });
+  );
 
   const handleClick = chip => {
     dispatch(updateFilterDisplay(namespace, { menuOpen: !menuOpen }));
@@ -75,7 +77,7 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
               <Chip
                 // color="primary"
                 sx={{
-                  fontSize: "12px"
+                  fontSize: "12px",
                   // "&:hover": {
                   //   backgroundColor: "#4c6ebf",
                   //   color: "white"
@@ -95,7 +97,13 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
         })}
       </ul>
       {chips.length > maxChips && (
-        <Button color="secondary" variant="outlined" size="small" onClick={() => handleClick(chips[maxChips])} customStyles={customStyles}>
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          onClick={() => handleClick(chips[maxChips])}
+          customStyles={customStyles}
+        >
           + {chips.length - maxChips}
         </Button>
       )}
@@ -109,7 +117,7 @@ GLTableFilterChips.defaultProps = {
   namespace: "",
   onChangeFunction: x => x,
   disabled: false,
-  booleanFilters: {}
+  booleanFilters: {},
 };
 
 GLTableFilterChips.propTypes = {
@@ -119,7 +127,7 @@ GLTableFilterChips.propTypes = {
   namespace: PropTypes.string,
   onChangeFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  booleanFilters: PropTypes.object
+  booleanFilters: PropTypes.object,
 };
 
 export default GLTableFilterChips;

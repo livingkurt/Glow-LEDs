@@ -50,7 +50,7 @@ const ImageDisplay = ({ images, onChange }) => {
                           backgroundColor: "primary.main",
                           width: "100%",
                           borderRadius: "15px",
-                          marginBottom: "1rem"
+                          marginBottom: "1rem",
                         }}
                       >
                         <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -61,7 +61,7 @@ const ImageDisplay = ({ images, onChange }) => {
                               package_height: "auto",
                               maxWidth: "100px",
                               maxHeight: "100px",
-                              borderRadius: "15px"
+                              borderRadius: "15px",
                             }}
                             className="mv-10px ml-10px"
                             src={picture.link}

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
@@ -30,7 +30,9 @@ const ManualPage = props => {
             <a
               href={
                 manuals[
-                  pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
+                  pathname === "glow_strings_v2_manual" ||
+                  pathname === "glowstringz_v2" ||
+                  pathname === "glow_strings_v2"
                     ? "glowstringz"
                     : pathname
                 ].manual
@@ -57,7 +59,7 @@ const ManualPage = props => {
         style={{
           textAlign: "center",
           width: "100%",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         {
@@ -69,7 +71,9 @@ const ManualPage = props => {
         }
       </h2>
       {manuals[
-        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2" ? "glowstringz" : pathname
+        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
+          ? "glowstringz"
+          : pathname
       ].manual && (
         <img
           src={
@@ -84,13 +88,15 @@ const ManualPage = props => {
         />
       )}
       {manuals[
-        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2" ? "glowstringz" : pathname
+        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
+          ? "glowstringz"
+          : pathname
       ].manual && (
         <h2
           style={{
             textAlign: "center",
             width: "100%",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           Watch the Videos below to Learn More
@@ -107,7 +113,7 @@ const ManualPage = props => {
               style={{
                 textAlign: "center",
                 width: "100%",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               {video.title}

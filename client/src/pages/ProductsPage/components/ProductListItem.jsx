@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LazyImage } from "../../../shared/SharedComponents";
@@ -40,7 +40,7 @@ const ProductListItem = props => {
     escape: 27,
     arrowDown: 40,
     arrowUp: 38,
-    tab: 9
+    tab: 9,
   };
   const getBackgroundColor = ({ isSelected, isDragging }) => {
     if (isDragging) {
@@ -160,7 +160,7 @@ const ProductListItem = props => {
     dispatch(
       API.saveProduct({
         ...product,
-        hidden: product.hidden ? false : true
+        hidden: product.hidden ? false : true,
       })
     );
     dispatch(API.listProducts({ option: false }));
@@ -181,16 +181,22 @@ const ProductListItem = props => {
           className="w-500px"
           to={{
             pathname: "/collections/all/products/" + product.pathname,
-            previous_path: history.location.pathname
+            previous_path: history.location.pathname,
           }}
         >
-          <label style={{ fontSize: "1.6rem" }}>{snapshot.isDragging ? props.product.name + " - Moving" : props.product.name}</label>
+          <label style={{ fontSize: "1.6rem" }}>
+            {snapshot.isDragging ? props.product.name + " - Moving" : props.product.name}
+          </label>
           {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
         </Link>
         {/* <label className="w-100px">
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
 				</label> */}
-        <GLButton variant="icon" onClick={() => show_hide_product(product)} aria-label={product.hidden ? "hide" : "show"}>
+        <GLButton
+          variant="icon"
+          onClick={() => show_hide_product(product)}
+          aria-label={product.hidden ? "hide" : "show"}
+        >
           {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
         </GLButton>
         <label className="w-200px">{product.category}</label>
@@ -198,7 +204,7 @@ const ProductListItem = props => {
         <label className="product-price w-500px">
           {sale_price_switch({
             product,
-            isWholesaler: current_user?.isWholesaler
+            isWholesaler: current_user?.isWholesaler,
           })}
           }
         </label>
@@ -268,13 +274,15 @@ const ProductListItem = props => {
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname
+                    previous_path: history.location.pathname,
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
+                <label className="w-100px">
+                  {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+                </label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
@@ -317,13 +325,15 @@ const ProductListItem = props => {
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname
+                    previous_path: history.location.pathname,
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
+                <label className="w-100px">
+                  {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+                </label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
@@ -366,13 +376,15 @@ const ProductListItem = props => {
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname
+                    previous_path: history.location.pathname,
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
+                <label className="w-100px">
+                  {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+                </label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
@@ -415,13 +427,15 @@ const ProductListItem = props => {
                   className=""
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname
+                    previous_path: history.location.pathname,
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
+                <label className="">
+                  {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+                </label>
                 <label className="">{product.category}</label>
                 {/* <label className="">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>

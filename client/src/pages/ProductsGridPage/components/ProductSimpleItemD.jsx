@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
@@ -18,7 +18,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname
+                previous_path: history.location.pathname,
               }}
               className="m-auto"
             >
@@ -43,7 +43,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname
+                previous_path: history.location.pathname,
               }}
             >
               <label className="mt-10px" style={{ fontSize: "1.6rem" }}>
@@ -53,7 +53,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
             <label className="product-price">
               {sale_price_switch({
                 product: product,
-                isWholesaler: current_user?.isWholesaler
+                isWholesaler: current_user?.isWholesaler,
               })}
             </label>
 

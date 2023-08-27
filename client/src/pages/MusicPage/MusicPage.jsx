@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Helmet } from "react-helmet";
 
 const MusicPage = props => {
@@ -28,8 +28,8 @@ const MusicPage = props => {
       </div>
 
       <p className="p_descriptions" style={{ textAlign: "center" }}>
-        Here at Glow LEDs we produce all of the videos, music, and pictures in house here is all of the music that we produced which you'll
-        hear in some of the promo videos!
+        Here at Glow LEDs we produce all of the videos, music, and pictures in house here is all of the music that we
+        produced which you'll hear in some of the promo videos!
       </p>
 
       <iframe
@@ -51,7 +51,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -93,7 +93,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -135,7 +135,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -177,7 +177,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -219,7 +219,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -261,7 +261,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -304,7 +304,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a
@@ -346,7 +346,7 @@ const MusicPage = props => {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           fontFamily: "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: "100"
+          fontWeight: "100",
         }}
       >
         <a

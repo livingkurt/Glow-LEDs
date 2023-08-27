@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Loading } from "../../../shared/SharedComponents";
@@ -38,7 +38,7 @@ const ProfileAffiliateEarnings = () => {
                 <tbody>
                   <tr
                     style={{
-                      backgroundColor: "#656a87"
+                      backgroundColor: "#656a87",
                     }}
                   >
                     <th>Current Month</th>
@@ -46,13 +46,15 @@ const ProfileAffiliateEarnings = () => {
                     <th>
                       $
                       {!loading_month_earnings &&
-                        parseFloat(user?.affiliate?.promoter ? 0.1 * month_earnings?.revenue : 0.15 * month_earnings?.revenue).toFixed(2)}
+                        parseFloat(
+                          user?.affiliate?.promoter ? 0.1 * month_earnings?.revenue : 0.15 * month_earnings?.revenue
+                        ).toFixed(2)}
                     </th>
                     <th>{!loading_month_earnings && month_earnings?.number_of_uses}</th>
                   </tr>
                   <tr
                     style={{
-                      backgroundColor: "#656a87"
+                      backgroundColor: "#656a87",
                     }}
                   >
                     <th>Current Year</th>
@@ -60,7 +62,9 @@ const ProfileAffiliateEarnings = () => {
                     <th>
                       $
                       {!loading_year_earnings &&
-                        parseFloat(user?.affiliate?.promoter ? 0.1 * year_earnings?.revenue : 0.15 * year_earnings?.revenue).toFixed(2)}
+                        parseFloat(
+                          user?.affiliate?.promoter ? 0.1 * year_earnings?.revenue : 0.15 * year_earnings?.revenue
+                        ).toFixed(2)}
                     </th>
                     <th>{!loading_year_earnings && year_earnings?.number_of_uses}</th>
                   </tr>

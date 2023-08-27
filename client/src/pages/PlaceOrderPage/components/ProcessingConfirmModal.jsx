@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
@@ -33,10 +33,11 @@ const ProcessingConfirmModal = ({ open, setOpen, choose_shipping_rate, service, 
       <Typography>
         <Info color="error" /> The items in your order require at least{" "}
         <GLBold color="black">
-          {cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]))} BUSINESS DAYS
+          {cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]))}{" "}
+          BUSINESS DAYS
         </GLBold>{" "}
-        for processing, which does not include shipping time. Larger orders may need more time. Remember, faster shipping doesn't speed up
-        processing time. Please adjust your expectations accordingly.
+        for processing, which does not include shipping time. Larger orders may need more time. Remember, faster
+        shipping doesn't speed up processing time. Please adjust your expectations accordingly.
       </Typography>
     </GLActiionModal>
   );

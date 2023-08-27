@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import "react-tabs/style/react-tabs.css";
 import { product_page_sale_price_switch } from "../../../utils/react_helper_functions";
 import { ProductFacts } from ".";

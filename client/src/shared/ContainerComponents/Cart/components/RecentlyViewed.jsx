@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 
 const RecentlyViewed = ({ closeMenu }) => {
@@ -19,7 +19,13 @@ const RecentlyViewed = ({ closeMenu }) => {
                 <Link to={`/collections/all/products/${item.pathname}`} className="w-100per mb-1rem" key={index}>
                   <li className="ph-1rem w-100per">
                     <div className=" br-5px ai-c">
-                      <img src={item.images && item.images[0]} height="50px" width="50px" alt={item.name} title="Product Image" />
+                      <img
+                        src={item.images && item.images[0]}
+                        height="50px"
+                        width="50px"
+                        alt={item.name}
+                        title="Product Image"
+                      />
                     </div>
                     <div className=" ta-l w-100per">
                       <div className="mb-10px">{item.name}</div>

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import CartItem from "../../../shared/SharedComponents/CartItem";
 const OrderSummaryStep = ({
   show_message,
@@ -11,7 +11,7 @@ const OrderSummaryStep = ({
   itemsPrice,
   items_price,
   taxPrice,
-  totalPrice
+  totalPrice,
 }) => {
   return (
     <div className="placeorder-action">
@@ -19,7 +19,7 @@ const OrderSummaryStep = ({
         <li>
           <h2
             style={{
-              marginTop: "0px"
+              marginTop: "0px",
             }}
           >
             Order Summary
@@ -31,7 +31,7 @@ const OrderSummaryStep = ({
               <div className="">
                 <label
                   style={{
-                    textAlign: "right"
+                    textAlign: "right",
                   }}
                 >
                   Price
@@ -57,12 +57,12 @@ const OrderSummaryStep = ({
           <li>
             <del
               style={{
-                color: "red"
+                color: "red",
               }}
             >
               <div
                 style={{
-                  color: "white"
+                  color: "white",
                 }}
               >
                 Subtotal
@@ -71,12 +71,12 @@ const OrderSummaryStep = ({
             <div>
               <del
                 style={{
-                  color: "red"
+                  color: "red",
                 }}
               >
                 <label
                   style={{
-                    color: "white"
+                    color: "white",
                   }}
                 >
                   ${items_price.toFixed(2)}
@@ -100,7 +100,13 @@ const OrderSummaryStep = ({
 
         <li>
           <div>Tax</div>
-          <div>{!loading ? (shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------") : "------"}</div>
+          <div>
+            {!loading
+              ? shipping && shipping.hasOwnProperty("first_name")
+                ? `$${taxPrice.toFixed(2)}`
+                : "------"
+              : "------"}
+          </div>
         </li>
         <li className="pos-rel">
           <div>Shipping</div>
@@ -118,7 +124,13 @@ const OrderSummaryStep = ({
         )}
         <li>
           <div>Order Total</div>
-          <div>{!loading ? (shipping && shipping.hasOwnProperty("first_name") ? "$" + totalPrice.toFixed(2) : "------") : "------"}</div>
+          <div>
+            {!loading
+              ? shipping && shipping.hasOwnProperty("first_name")
+                ? "$" + totalPrice.toFixed(2)
+                : "------"
+              : "------"}
+          </div>
         </li>
       </ul>
     </div>

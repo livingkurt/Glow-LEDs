@@ -1,6 +1,5 @@
-import React from "react";
+import * as React from "react";
 import config from "../../config";
-require("dotenv").config();
 
 const Error = props => {
   const loading_message = () => {
@@ -13,8 +12,18 @@ const Error = props => {
     <div>
       {props.loading ? (
         <div className="column jc-c">
-          <img src={config.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
-          <img src={config.PUBLIC_URL + "/loading_overlay.png"} className="loading_png" alt="Loading Overlay" title="Loading Overlay" />
+          <img
+            src={config.PUBLIC_URL + "/loading.gif"}
+            className="loading_gif"
+            alt="Loading Circle"
+            title="Loading Circle"
+          />
+          <img
+            src={config.PUBLIC_URL + "/loading_overlay.png"}
+            className="loading_png"
+            alt="Loading Overlay"
+            title="Loading Overlay"
+          />
           {loading_message()}
         </div>
       ) : props.error ? (

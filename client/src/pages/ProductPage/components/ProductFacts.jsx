@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import {
@@ -7,7 +7,7 @@ import {
   determine_alt_skin_pathname,
   determine_sampler,
   determine_sampler_pack_name,
-  determine_sampler_pack_pathname
+  determine_sampler_pack_pathname,
 } from "../productHelpers";
 
 const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
@@ -39,7 +39,10 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
           )}
         {category === "gloves" &&
           determine_sampler(name) &&
-          !(name.includes("Supreme Gloves V1 Sizing Sampler Pack") || name.includes("Supreme Gloves V2 Sizing Sampler Pack")) && (
+          !(
+            name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
+            name.includes("Supreme Gloves V2 Sizing Sampler Pack")
+          ) && (
             <div className="w-100per">
               <h3>Know your size before you buy with our:</h3>
               <Link to={`/collections/all/products/${determine_sampler_pack_pathname(name)}`}>

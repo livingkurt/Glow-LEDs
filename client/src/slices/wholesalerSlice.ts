@@ -1,43 +1,45 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api/wholesalerApi";
 
+const wholesaler = {
+  user: {
+    first_name: "",
+    last_name: "",
+    email: "",
+    is_affiliated: false,
+    is_employee: false,
+    affiliate: {},
+    isVerified: false,
+    isAdmin: false,
+    shipping: {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      international: false,
+      country: "",
+    },
+    email_subscription: false,
+    stripe_connect_id: "",
+    weekly_wage: 0,
+    isWholesaler: false,
+    guest: false,
+    international: false,
+  },
+  company: "",
+  minimum_order_amount: "",
+  active: false,
+};
+
 const wholesalerPage = createSlice({
   name: "wholesalerPage",
   initialState: {
     loading: false,
     wholesalers: [],
-    wholesaler: {
-      user: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        is_affiliated: false,
-        is_employee: false,
-        affiliate: {},
-        isVerified: false,
-        isAdmin: false,
-        shipping: {
-          first_name: "",
-          last_name: "",
-          address_1: "",
-          address_2: "",
-          city: "",
-          state: "",
-          postalCode: "",
-          international: false,
-          country: "",
-        },
-        email_subscription: false,
-        stripe_connect_id: "",
-        weekly_wage: 0,
-        isWholesaler: false,
-        guest: false,
-        international: false,
-      },
-      company: "",
-      minimum_order_amount: "",
-      active: false,
-    },
+    wholesaler: wholesaler,
     remoteVersionRequirement: 0,
     edit_wholesaler_modal: false,
     wholesaler_modal: false,
@@ -64,12 +66,7 @@ const wholesalerPage = createSlice({
     },
     open_create_wholesaler_modal: (state, { payload }) => {
       state.edit_wholesaler_modal = true;
-      state.wholesaler = {
-        user: "",
-        company: "",
-        minimum_order_amount: "",
-        active: false,
-      };
+      state.wholesaler = wholesaler;
     },
     open_edit_wholesaler_modal: (state, { payload }) => {
       state.edit_wholesaler_modal = true;
@@ -77,12 +74,7 @@ const wholesalerPage = createSlice({
     },
     close_wholesaler_modal: (state, { payload }) => {
       state.wholesaler_modal = false;
-      state.wholesaler = {
-        user: "",
-        company: "",
-        minimum_order_amount: "",
-        active: false,
-      };
+      state.wholesaler = wholesaler;
     },
     open_wholesaler_modal: (state, { payload }) => {
       state.wholesaler_modal = true;
