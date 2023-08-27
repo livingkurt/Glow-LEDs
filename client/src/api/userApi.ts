@@ -23,13 +23,13 @@ export const getUsers = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/users`, {
+    return await axios.get(`/api/users`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

@@ -17,7 +17,7 @@ const email_routes = {
       subject,
       email,
       status,
-      message_to_user
+      message_to_user,
     });
   },
   send_affiliate_email: (affiliate: object, subject: string, email: string) => {
@@ -38,7 +38,7 @@ const email_routes = {
   send_contact_confirmation: (email: string, promo_code: string) => {
     return axios.post("/api/emails/contact_confirmation", {
       email,
-      promo_code
+      promo_code,
     });
   },
   send_password_reset: (email: string, promo_code: string) => {
@@ -55,7 +55,7 @@ const email_routes = {
       template,
       subject,
       test,
-      time
+      time,
     });
   },
   view_announcement_email: (template: any) => {
@@ -69,8 +69,8 @@ const email_routes = {
     email = { ...email, html: template };
     return axios.put("/api/emails/" + email._id, email, {
       headers: {
-        Authorization: "Bearer " + access_token
-      }
+        Authorization: "Bearer " + access_token,
+      },
     });
   },
   // not_verified_email: (current_user: any) => {
@@ -89,7 +89,7 @@ const email_routes = {
   },
   get_content: (content_id: string) => {
     return axios.get("/api/contents/" + content_id);
-  }
+  },
 };
 
 export default email_routes;

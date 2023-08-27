@@ -49,7 +49,7 @@ const order_routes = {
   mark_as_shipped: () => {
     //
     return axios.put("/api/orders/mark_as_shipped");
-  }
+  },
 };
 
 export default order_routes;

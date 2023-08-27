@@ -20,13 +20,13 @@ export const getPaychecks = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/paychecks`, {
+    return await axios.get(`/api/paychecks`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

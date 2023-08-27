@@ -5,30 +5,22 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 
-export const getProducts = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search: string;
-  sorting: any;
-  filters: any;
-  page: number;
-  pageSize: number;
-}) => {
+export const getProducts = async ({ search, sorting, filters, page, pageSize }: any) => {
+  console.log("getProducts called"); // Debugging line
   try {
-    return axios.get(`/api/products`, {
+    const response = await axios.get(`/api/products`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
+    console.log("Axios call succeeded", response); // Debugging line
+    return response;
   } catch (error) {
+    console.log("Axios call failed", error); // Debugging line
     Covy().showSnackbar({
       message: errorMessage(error),
       severity: "error",

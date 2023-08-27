@@ -140,6 +140,7 @@ export const normalizeProductFilters = (input: any) => {
   if (input.options.includes("only_options")) {
     output.option = true;
   }
+  console.log({ output });
   return output;
 };
 
@@ -148,8 +149,8 @@ export const normalizeProductSearch = (query: any) => {
     ? {
         name: {
           $regex: query.search.toLowerCase(),
-          $options: "i"
-        }
+          $options: "i",
+        },
       }
     : {};
 

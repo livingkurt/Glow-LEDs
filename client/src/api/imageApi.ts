@@ -20,13 +20,13 @@ export const getImages = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/images`, {
+    return await axios.get(`/api/images`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

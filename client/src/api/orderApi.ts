@@ -21,13 +21,13 @@ export const getOrders = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/orders`, {
+    return await axios.get(`/api/orders`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters: filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

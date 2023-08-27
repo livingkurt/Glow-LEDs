@@ -20,13 +20,13 @@ export const getExpenses = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/expenses`, {
+    return await axios.get(`/api/expenses`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

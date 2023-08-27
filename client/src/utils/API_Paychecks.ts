@@ -6,7 +6,7 @@ const paycheck_routes = {
   },
   delete_multiple_paychecks: (ids: string[]) => {
     return axios.post(`/api/paychecks/delete_multiple`, { ids });
-  }
+  },
 };
 
 export default paycheck_routes;

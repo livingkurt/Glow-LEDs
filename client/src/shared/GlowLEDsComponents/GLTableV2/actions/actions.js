@@ -22,7 +22,7 @@ import {
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
   REORDER_ROWS_SUCCESS,
-  UPDATE_QUERY
+  UPDATE_QUERY,
 } from "./actionTypes";
 
 // ----------- Remote Fetch -----------
@@ -33,13 +33,16 @@ export const fetchTablePage =
     const id = uniqueId();
     dispatch({
       type: `${namespace}/${FETCH_TABLE_PAGE}`,
-      payload: { id }
+      payload: { id },
     });
     return remoteApi({ search, filters, sorting, page, pageSize }).then(response => {
-      dispatch({
-        type: `${namespace}/${FETCH_TABLE_PAGE_SUCCESS}`,
-        payload: { response, id }
-      });
+      console.log({ response });
+      if (response?.data) {
+        dispatch({
+          type: `${namespace}/${FETCH_TABLE_PAGE_SUCCESS}`,
+          payload: { response, id },
+        });
+      }
     });
   };
 
@@ -47,12 +50,13 @@ export const fetchTableFilters =
   (namespace, { remoteFiltersApi, defaultFilters }) =>
   dispatch => {
     dispatch({
-      type: `${namespace}/${FETCH_TABLE_FILTERS}`
+      type: `${namespace}/${FETCH_TABLE_FILTERS}`,
     });
     return remoteFiltersApi().then(({ availableFilters, booleanFilters }) => {
+      console.log({ availableFilters, booleanFilters });
       dispatch({
         type: `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`,
-        payload: { availableFilters, booleanFilters, defaultFilters }
+        payload: { availableFilters, booleanFilters, defaultFilters },
       });
     });
   };
@@ -63,7 +67,7 @@ export const addRows =
   dispatch => {
     dispatch({
       type: `${namespace}/${ADD_ROWS}`,
-      payload: { rows, searchBy, columnDefs, nonTagFilters, filters, availableFilters, isRemote }
+      payload: { rows, searchBy, columnDefs, nonTagFilters, filters, availableFilters, isRemote },
     });
   };
 
@@ -77,7 +81,7 @@ export const reorderRows =
     });
     dispatch({
       type: `${namespace}/${REORDER_ROWS_SUCCESS}`,
-      payload: { items }
+      payload: { items },
     });
 
     return remoteReorderApi({ reorderedItems: items, remoteVersionRequirementType }).then(response => {
@@ -93,7 +97,7 @@ export const updateQuery =
   dispatch => {
     dispatch({
       type: `${namespace}/${UPDATE_QUERY}`,
-      payload: { filters, sorting, page, pageSize, search }
+      payload: { filters, sorting, page, pageSize, search },
     });
   };
 
@@ -101,7 +105,7 @@ export const updateQuery =
 export const clearTable = namespace => dispatch => {
   dispatch({
     type: `${namespace}/${CLEAR_TABLE}`,
-    payload: {}
+    payload: {},
   });
 };
 
@@ -109,7 +113,7 @@ export const clearTable = namespace => dispatch => {
 export const applySearch = (namespace, search) => dispatch => {
   dispatch({
     type: `${namespace}/${APPLY_SEARCH}`,
-    payload: { search }
+    payload: { search },
   });
 };
 
@@ -117,7 +121,7 @@ export const applySearch = (namespace, search) => dispatch => {
 export const toggleSort = (namespace, columnIndex, orderDirection) => dispatch => {
   dispatch({
     type: `${namespace}/${TOGGLE_SORT}`,
-    payload: { columnIndex, orderDirection }
+    payload: { columnIndex, orderDirection },
   });
 };
 
@@ -125,41 +129,41 @@ export const toggleSort = (namespace, columnIndex, orderDirection) => dispatch =
 export const onExpandRow = (namespace, rowName) => dispatch => {
   dispatch({
     type: `${namespace}/${ON_EXPAND_ROW}`,
-    payload: { rowName }
+    payload: { rowName },
   });
 };
 // ----------- Pagination -----------
 export const updatePage = (namespace, page) => dispatch => {
   dispatch({
     type: `${namespace}/${UPDATE_PAGE}`,
-    page
+    page,
   });
 };
 
 export const updatePageSize = (namespace, pageSize) => dispatch => {
   dispatch({
     type: `${namespace}/${UPDATE_PAGE_SIZE}`,
-    pageSize
+    pageSize,
   });
 };
 
 // ----------- Row Selection -----------
 export const selectAllRows = namespace => dispatch => {
   dispatch({
-    type: `${namespace}/${SELECT_ALL_ROWS}`
+    type: `${namespace}/${SELECT_ALL_ROWS}`,
   });
 };
 
 export const selectRow = (namespace, rowId) => dispatch => {
   dispatch({
     type: `${namespace}/${SELECT_ROW}`,
-    payload: { rowId }
+    payload: { rowId },
   });
 };
 
 export const deselectRows = namespace => dispatch => {
   dispatch({
-    type: `${namespace}/${DESELECT_ROWS}`
+    type: `${namespace}/${DESELECT_ROWS}`,
   });
 };
 
@@ -174,10 +178,10 @@ export const toggleFilter = (namespace, filter) => dispatch => {
   pipe(
     dispatch({
       type: `${namespace}/${TOGGLE_FILTER}`,
-      payload: filter
+      payload: filter,
     }),
     dispatch({
-      type: `${namespace}/${APPLY_FILTER}`
+      type: `${namespace}/${APPLY_FILTER}`,
     })
   );
 };
@@ -185,19 +189,19 @@ export const toggleFilter = (namespace, filter) => dispatch => {
 export const removeFilter = (namespace, filter) => dispatch => {
   dispatch({
     type: `${namespace}/${REMOVE_FILTER}`,
-    payload: filter
+    payload: filter,
   });
 };
 
 export const removeAllFilters = namespace => dispatch => {
   dispatch({
-    type: `${namespace}/${REMOVE_ALL_FILTERS}`
+    type: `${namespace}/${REMOVE_ALL_FILTERS}`,
   });
 };
 
 export const applyFilterSearch = (namespace, filterSearch) => dispatch => {
   dispatch({
     type: `${namespace}/${APPLY_FILTER_SEARCH}`,
-    payload: { filterSearch }
+    payload: { filterSearch },
   });
 };

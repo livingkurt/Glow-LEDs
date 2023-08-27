@@ -19,13 +19,13 @@ export const getTutorials = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/tutorials`, {
+    return await axios.get(`/api/tutorials`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters: filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

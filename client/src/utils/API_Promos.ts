@@ -18,7 +18,7 @@ const promo_routes = {
   },
   promo_code_used: (promo_code: any) => {
     return axios.put("/api/promos/code/" + promo_code);
-  }
+  },
 };
 
 export default promo_routes;

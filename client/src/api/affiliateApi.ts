@@ -22,7 +22,7 @@ export const getAffiliates = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/affiliates`, {
+    return await axios.get(`/api/affiliates`, {
       params: {
         limit: pageSize,
         page: page,

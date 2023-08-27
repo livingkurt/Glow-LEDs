@@ -19,13 +19,13 @@ export const getWholesalers = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/wholesalers`, {
+    return await axios.get(`/api/wholesalers`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

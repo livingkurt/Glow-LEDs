@@ -6,7 +6,7 @@ const affiliate_routes = {
   },
   findByPathname_affiliates_a: (affiliate_id: string) => {
     return axios.get("/api/affiliates/" + affiliate_id);
-  }
+  },
 };
 
 export default affiliate_routes;

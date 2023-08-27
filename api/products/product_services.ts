@@ -4,7 +4,7 @@ import {
   dimminish_refresh_stock,
   dimminish_supremes_stock,
   normalizeProductFilters,
-  normalizeProductSearch
+  normalizeProductSearch,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../util";
 import { getFilteredData } from "../api_helpers";
@@ -20,15 +20,21 @@ export default {
         sort_options,
         search_name: "name",
         normalizeFilters: normalizeProductFilters,
-        normalizeSearch: normalizeProductSearch
+        normalizeSearch: normalizeProductSearch,
       });
+      console.log({ filter, sort, limit, page });
 
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
+      console.log({
+        data: products,
+        total_count: count,
+        currentPage: parseInt(page),
+      });
       return {
         data: products,
         total_count: count,
-        currentPage: parseInt(page)
+        currentPage: parseInt(page),
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -39,7 +45,16 @@ export default {
   create_filters_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const availableFilters = {
-        category: ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"],
+        category: [
+          "gloves",
+          "batteries",
+          "decals",
+          "diffuser_caps",
+          "diffusers",
+          "exo_diffusers",
+          "glowstringz",
+          "glowskinz",
+        ],
         subcategory: [
           "singles",
           "refresh",
@@ -77,18 +92,18 @@ export default {
           "custom",
           "colors",
           "sizes",
-          "secondary_colors"
+          "secondary_colors",
         ],
         hidden: ["only_hidden"],
-        options: ["only_options"]
+        options: ["only_options"],
       };
       const booleanFilters = {
         hidden: {
-          label: "Show Hidden"
+          label: "Show Hidden",
         },
         options: {
-          label: "Show Options"
-        }
+          label: "Show Options",
+        },
       };
       return { availableFilters, booleanFilters };
     } catch (error) {
@@ -108,8 +123,8 @@ export default {
           ? {
               category: {
                 $regex: snake_case(query.search),
-                $options: "i"
-              }
+                $options: "i",
+              },
             }
           : {};
       } else if (subcategories.includes(snake_case(query.search))) {
@@ -117,8 +132,8 @@ export default {
           ? {
               subcategory: {
                 $regex: snake_case(query.search),
-                $options: "i"
-              }
+                $options: "i",
+              },
             }
           : {};
       } else {
@@ -126,8 +141,8 @@ export default {
           ? {
               name: {
                 $regex: query.search.toLowerCase(),
-                $options: "i"
-              }
+                $options: "i",
+              },
             }
           : {};
       }
@@ -152,7 +167,7 @@ export default {
       return {
         products,
         totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -267,7 +282,7 @@ export default {
         "Alt Novaskinz w Nano Sleds",
         "Batman Decals",
         "X Decals",
-        "CLOZD Omniskinz"
+        "CLOZD Omniskinz",
       ];
 
       const sort = { _id: -1 };
@@ -324,7 +339,7 @@ export default {
         products.forEach(async (item: any, index: any) => {
           return await product_db.update_products_db(item._id, {
             ...item,
-            order: index + 1
+            order: index + 1,
           });
         });
       });
@@ -365,7 +380,7 @@ export default {
       if (product && option._id && item_group.price) {
         return await product_db.update_products_db(option._id, {
           ...body,
-          price: item_group.price
+          price: item_group.price,
         });
       } else {
         throw new Error("Error in Updating Product.");
@@ -389,12 +404,13 @@ export default {
             first_name: user.first_name,
             last_name: user.last_name,
             rating: Number(body.review.rating),
-            comment: body.review.comment
-          }
+            comment: body.review.comment,
+          },
         ];
 
         product.numReviews = product.reviews.length;
-        product.rating = product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+        product.rating =
+          product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
 
         const updatedProduct = await product.save();
         if (updatedProduct) {
@@ -477,5 +493,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

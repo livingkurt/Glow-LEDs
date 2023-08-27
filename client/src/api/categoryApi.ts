@@ -19,13 +19,13 @@ export const getCategorys = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/categorys`, {
+    return await axios.get(`/api/categorys`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters: filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

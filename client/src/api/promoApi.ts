@@ -20,13 +20,13 @@ export const getPromos = async ({
   pageSize: number;
 }) => {
   try {
-    return axios.get(`/api/promos/table`, {
+    return await axios.get(`/api/promos/table`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
-        filters,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

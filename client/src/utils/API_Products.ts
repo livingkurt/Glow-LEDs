@@ -13,7 +13,7 @@ const product_routes = {
   },
   image_upload_products_a: (formData: any) => {
     return axios.post("/api/image_upload", formData, {
-      headers: { "Content-Type": "multipart/form-data" }
+      headers: { "Content-Type": "multipart/form-data" },
     });
   },
   findByPathname_products_a: (pathname: any) => {
@@ -46,7 +46,7 @@ const product_routes = {
   save_item_group_id: (option: any, item_group: any) => {
     return axios.put("/api/products/save_item_group_id", {
       option,
-      item_group
+      item_group,
     });
   },
   get_our_picks: () => {
@@ -59,7 +59,7 @@ const product_routes = {
     return axios.put("/api/all/product_sale_price", {
       discount_percentage,
       sale_start_date,
-      sale_end_date
+      sale_end_date,
     });
   },
   clear_sale: (sale_start_date: any, sale_end_date: any) => {
@@ -84,15 +84,15 @@ const product_routes = {
         search_parameter,
         action,
         property,
-        value
+        value,
       },
       {
         headers: {
-          Authorization: "Bearer " + user.access_token
-        }
+          Authorization: "Bearer " + user.access_token,
+        },
       }
     );
-  }
+  },
 };
 
 export default product_routes;

@@ -5,6 +5,7 @@ export default {
     const { query } = req;
     try {
       const products = await product_services.findAll_products_s(query);
+      console.log({ products });
       if (products) {
         return res.status(200).send(products);
       }
@@ -240,5 +241,5 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Finding Product Attributes" });
     }
-  }
+  },
 };
