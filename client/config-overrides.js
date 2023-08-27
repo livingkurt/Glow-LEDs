@@ -1,5 +1,3 @@
-const webpack = require("webpack");
-
 module.exports = function override(config, env) {
   // Add polyfills
   config.resolve.fallback = {
@@ -19,10 +17,5 @@ module.exports = function override(config, env) {
     "react/jsx-runtime": require.resolve("react/jsx-runtime.js"),
   };
 
-  config.plugins.push(
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-    })
-  );
   return config;
 };
