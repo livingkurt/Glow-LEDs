@@ -554,8 +554,6 @@ const GLTableV2 = ({
                       determine_color={determine_color}
                       dropdownAction={dropdownAction}
                       singleSelect={singleSelect}
-                      isRowSelected={isRowSelected}
-                      setIsRowSelected={setIsRowSelected}
                     >
                       {enableDropdownRow && expandRow === row[rowName] && (
                         <>
