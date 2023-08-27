@@ -490,6 +490,7 @@ const GLTableV2 = ({
                                 namespace={namespace}
                                 rowName={rowName}
                                 singleSelect={singleSelect}
+                                selectedRows={selectedRows}
                                 enableRowClick={enableRowClick}
                                 onRowClick={onRowClick}
                                 handleRowSelection={handleRowSelection}
@@ -554,6 +555,7 @@ const GLTableV2 = ({
                       determine_color={determine_color}
                       dropdownAction={dropdownAction}
                       singleSelect={singleSelect}
+                      selectedRows={selectedRows}
                     >
                       {enableDropdownRow && expandRow === row[rowName] && (
                         <>

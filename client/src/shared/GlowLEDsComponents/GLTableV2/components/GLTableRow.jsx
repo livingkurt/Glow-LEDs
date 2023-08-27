@@ -4,7 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
-import { determineHover, rowCheckboxClicked, tableColors } from "../glTableHelpers";
+import { determineHover, determineRowStyles, rowCheckboxClicked, tableColors } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
 import { darken } from "@mui/material";
 
@@ -27,6 +27,8 @@ const GLTableRow = ({
   provided,
   innerRef,
   dropdownAction,
+  singleSelect,
+  selectedRows,
 }) => {
   const dispatch = useDispatch();
 
@@ -53,7 +55,11 @@ const GLTableRow = ({
     }
   };
 
+  const isCheckboxDisabled = singleSelect && selectedRows.length > 0 && !selectedRows.includes(row._id || row.id);
+
   const name = row[rowName] || row._id || row.id;
+
+  const styles = determineRowStyles(row, isCheckboxDisabled, determine_color);
 
   return (
     <>
@@ -69,11 +75,12 @@ const GLTableRow = ({
         aria-checked={enableRowSelect && isItemSelected}
         tabIndex={-1}
         sx={{
-          backgroundColor: determine_color ? determine_color(row) : tableColors.active, // Set background color based on attribute value
+          backgroundColor: styles.backgroundColor,
+          color: styles.color,
           "&:hover": {
-            backgroundColor: `${
-              determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)
-            } !important`,
+            backgroundColor: isCheckboxDisabled
+              ? `${styles.backgroundColor} !important`
+              : `${styles.hoverBackgroundColor} !important`,
           },
           "&.Mui-selected": {
             backgroundColor: `${
@@ -100,9 +107,10 @@ const GLTableRow = ({
           <TableCell padding="checkbox" key={row._id || row.id}>
             <Checkbox
               size="large"
+              disabled={isCheckboxDisabled}
               color="primary"
               sx={{
-                color: determine_color ? "white" : "",
+                color: styles.checkboxColor,
                 "& .MuiSvgIcon-root": {
                   color: "white",
                 },
@@ -111,7 +119,9 @@ const GLTableRow = ({
                   backgroundColor: determine_color ? determine_color(row) : "#",
                 },
                 "&:hover": {
-                  backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`,
+                  backgroundColor: isCheckboxDisabled
+                    ? `${styles.backgroundColor} !important`
+                    : `${styles.hoverBackgroundColor} !important`,
                 },
               }}
               checked={enableRowSelect && isItemSelected}
@@ -133,9 +143,9 @@ const GLTableRow = ({
               align={column.align}
               colSpan={column.colSpan || 1}
               data-test={`${namespace}-cell`}
-              onClick={column.nonSelectable ? () => {} : onCellClick}
+              onClick={column.nonSelectable || isCheckboxDisabled ? () => {} : onCellClick}
               sx={{
-                color: "white",
+                color: styles.color,
               }}
             >
               {value}

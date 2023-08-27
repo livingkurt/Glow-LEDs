@@ -1,3 +1,4 @@
+import { darken } from "@mui/material";
 import isEmpty from "lodash/isEmpty";
 
 const applyFilters = (currentRows, filters, nonTagFilters) => {
@@ -278,3 +279,24 @@ export const getDisplayedRowsInfo = (count, page, rowsPerPage) => {
 };
 
 export const selectedPage = newValue => (newValue === null ? "1" : newValue.toString());
+
+export const determineRowStyles = (row, isCheckboxDisabled, determine_color) => {
+  if (isCheckboxDisabled) {
+    return {
+      backgroundColor: "#808080", // gray in hexadecimal
+      color: "#D3D3D3", // light gray in hexadecimal
+      hoverBackgroundColor: darken("#808080", 0.3),
+      checkboxColor: "#D3D3D3",
+    };
+  }
+
+  const activeColor = determine_color ? determine_color(row) : tableColors.active;
+  const darkActiveColor = darken(activeColor, 0.3);
+
+  return {
+    backgroundColor: activeColor,
+    color: "white",
+    hoverBackgroundColor: darkActiveColor,
+    checkboxColor: "white",
+  };
+};
