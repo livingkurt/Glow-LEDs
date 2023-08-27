@@ -1584,7 +1584,7 @@ router.route("/delete_old_carts").put(async (req: any, res: any) => {
     });
 
     console.log(`Deleted ${result.deletedCount} extra carts.`);
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
   }
 });
@@ -1598,7 +1598,7 @@ router.route("/make_expenses_positive").put(async (req: any, res: any) => {
       }
     });
     res.send(updated_expenses);
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
   }
 });
@@ -1625,7 +1625,7 @@ router.route("/card_migration").put(async (req: any, res: any) => {
       }
     });
     res.send(updated_expenses);
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
   }
 });
@@ -1648,7 +1648,7 @@ router.route("/airtable_invoice_download").put(async (req: any, res: any) => {
     });
 
     res.json({ message: "Files are being downloaded and saved." });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
   }
 });
@@ -1742,7 +1742,7 @@ router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
     }
 
     res.status(200).send({ message: "Images uploaded and linked to expenses successfully" });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1759,7 +1759,7 @@ router.route("/export_expenses_as_csv").put(async (req: any, res: any) => {
     fs.writeFileSync("./expenses.csv", csvData);
 
     res.status(200).send({ message: "Expenses successfully exported to CSV" });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1769,7 +1769,7 @@ router.route("/delete_all_expenses").put(async (req: any, res: any) => {
     // Delete all expenses
     await Expense.deleteMany({});
     res.status(200).send({ message: "Expenses Deleted" });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1834,7 +1834,7 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 
     console.log("Finished updating statuses.");
     res.status(200).send({ message: "Statuses updated successfully." });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1855,7 +1855,7 @@ router.route("/migrate_orders").put(async (req: any, res: any) => {
     );
 
     res.send({ message: `Successfully migrated ${result.nModified} orders.`, result });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1878,7 +1878,7 @@ router.route("/sample_ids").put(async (req, res) => {
 
     // Send the user ids as the response
     res.send(users.map(user => ({ id: user._id, user: user.first_name + " " + user.last_name })));
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }
@@ -1926,7 +1926,7 @@ router.route("/migrate_payments").put(async (req, res) => {
 
     // Send response
     res.send({ message: "Payment data migrated successfully." });
-  } catch (err) {
+  } catch (err: any) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
   }

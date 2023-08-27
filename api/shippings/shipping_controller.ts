@@ -171,7 +171,7 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(200).send({ message: "Error Updating Shipping" });
-    } catch (error) {
+    } catch (error: any) {
       res.status(200).json({ error, message: error.message });
     }
   },
