@@ -1,15 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
-import { Notification, ScrollToTop } from "./shared/SharedComponents";
+import { ScrollToTop } from "./shared/SharedComponents";
 // import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Helmet } from "react-helmet";
 import useWindowDimensions from "./shared/Hooks/windowDimensions";
-// import Particles from "react-particles-js";
-import particlesjs_config from "./particlesjs_config.json";
-import { daysBetween } from "./utils/helper_functions";
-import { isBrowser, isMobile } from "react-device-detect";
+import { isBrowser } from "react-device-detect";
 import Headroom from "react-headroom";
 
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -49,10 +46,7 @@ import { Four04Page } from "./pages/Four04Page";
 import { TutorialsPage } from "./pages/TutorialsPage";
 import { WholesalersPage } from "./pages/WholesalersPage";
 import { ImagesPage } from "./pages/ImagesPage";
-import config from "./config";
-import jwt_decode from "jwt-decode";
 import { EditOrderPage } from "./pages/EditOrderPage";
-import { set_current_user } from "./slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTokenRefresh } from "./api/axiosInstance";
 import * as API from "./api";
@@ -91,6 +85,7 @@ import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import routes from "./sitemap/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 import { hot } from "react-hot-loader/root";
+import { debounce } from "./helpers/sharedHelpers";
 
 const App = () => {
   const Components = {
@@ -133,32 +128,21 @@ const App = () => {
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const debounce = (func, wait, immediate) => {
-    let timeout;
-    return function () {
-      const context = this,
-        args = arguments;
-      const later = function () {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      const callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
-    };
-  };
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
-  const handleScroll = debounce(() => {
-    const currentScrollPos = window.pageYOffset;
+  const handleScroll = debounce(
+    this,
+    () => {
+      const currentScrollPos = window.pageYOffset;
 
-    setVisible((prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10);
+      setVisible((prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10);
 
-    setPrevScrollPos(currentScrollPos);
-  }, 50);
+      setPrevScrollPos(currentScrollPos);
+    },
+    50
+  );
 
   useEffect(() => {
     handleTokenRefresh();
@@ -170,44 +154,12 @@ const App = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos, visible, handleScroll]);
 
-  window.onclick = function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  };
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      const popup = JSON.parse(localStorage.getItem("popup"));
-      if (!popup) {
-        setTimeout(() => {
-          set_show_modal(true);
-        }, 5000);
-      } else if (daysBetween(popup.date, today) > 2 && !popup.email) {
-        setTimeout(() => {
-          set_show_modal(true);
-        }, 5000);
-      }
-    }
-    return () => (clean = false);
-  }, []);
-
   useEffect(() => {
     if (current_user._id) {
       dispatch(API.getCurrentUserCart(current_user._id));
     }
   }, [dispatch, current_user._id]);
 
-  const theme_colors = {
-    footer: "#333333",
-    header: "#333333",
-    content: "linear-gradient(180deg, #8a8a8a 0%, #272727 100%);",
-    container: "#272727",
-  };
-
-  const out_of_office_date_1 = "2021-11-23";
-  const out_of_office_date_2 = "2021-12-02";
   const { height, width } = useWindowDimensions();
 
   // We listen to the resize event
@@ -216,13 +168,6 @@ const App = () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   });
-
-  var modal = document.getElementById("myModal");
-  const [show_modal, set_show_modal] = useState(false);
-
-  const date = new Date();
-
-  const today = date.toISOString();
 
   const wrapperRef = useRef(null);
   const theme = createTheme(glow_leds_theme);
@@ -276,7 +221,7 @@ const App = () => {
             <meta name="twitter:creator" content="@glow_leds" />
           </Helmet>
 
-          <EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
+          <EmailModal />
           <UpdateNotifier />
           {/* <Particles
           params={particlesjs_config}
@@ -292,13 +237,7 @@ const App = () => {
           )}
           <Sidebar visible={visible} height={height} width={width} wrapperRef={wrapperRef} />
 
-          <Cart
-            visible={visible}
-            height={height}
-            width={width}
-            date_1={out_of_office_date_1}
-            date_2={out_of_office_date_2}
-          />
+          <Cart visible={visible} height={height} width={width} />
 
           <Content>
             {/* {config.NODE_ENV === "production" && (
