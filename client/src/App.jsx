@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
 import { Notification, ScrollToTop } from "./shared/SharedComponents";
-import MessengerCustomerChat from "react-messenger-customer-chat";
+// import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Helmet } from "react-helmet";
 import useWindowDimensions from "./shared/Hooks/windowDimensions";
 // import Particles from "react-particles-js";
@@ -301,7 +301,7 @@ const App = () => {
           />
 
           <Content>
-            {config.NODE_ENV === "production" && (
+            {/* {config.NODE_ENV === "production" && (
               <MessengerCustomerChat
                 pageId="100365571740684"
                 appId="379385106779969"
@@ -310,7 +310,7 @@ const App = () => {
                 loggedInGreeting="Hi! How can we help you?"
                 loggedOutGreeting="Hi! How can we help you?"
               />
-            )}
+            )} */}
             <ScrollToTop>
               <Switch>
                 {/* Private Routes */}

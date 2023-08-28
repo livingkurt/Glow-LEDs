@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
 import { API_Revenue } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import CSVReader from "react-csv-reader";
+// import CSVReader from "react-csv-reader";
 import * as API from "../../api";
 
 const ExpensesPage = props => {
@@ -208,10 +208,10 @@ const ExpensesPage = props => {
             <span className="custom-arrow" />
           </div>
         </div>
-        <label className="btn primary">
+        {/* <label className="btn primary">
           Upload CSV
           <CSVReader onFileLoaded={(data, fileInfo) => determine_card_type(data, fileInfo)} />
-        </label>
+        </label> */}
       </div>
 
       <div className="jc-c">
