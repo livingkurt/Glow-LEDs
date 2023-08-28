@@ -1,36 +1,55 @@
 const rewireReactHotLoader = require("react-app-rewire-hot-loader");
 const { override, addBabelPlugin } = require("customize-cra");
 
-module.exports = override(addBabelPlugin("@babel/plugin-proposal-private-property-in-object"), (config, env) => {
-  // This is your existing logic
-  config.resolve.fallback = {
-    ...config.resolve.fallback,
-    "fs": false,
-    "path": require.resolve("path-browserify"),
-    "https": require.resolve("https-browserify"),
-    "url": require.resolve("url/"),
-    "child_process": false,
-    "os": require.resolve("os-browserify/browser"),
-    "stream": require.resolve("stream-browserify"),
-    "crypto": require.resolve("crypto-browserify"),
-    "http": require.resolve("stream-http"),
-    "net": require.resolve("net-browserify"),
-    "tls": require.resolve("tls-browserify"),
-    "zlib": require.resolve("browserify-zlib"), // Add this line
-    "react/jsx-runtime": require.resolve("react/jsx-runtime.js"),
-  };
+module.exports = override(
+  addBabelPlugin(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]),
+  (config, env) => {
+    // This is your existing logic
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      "fs": false,
+      "async_hooks": false, // Add this line
+      "path": require.resolve("path-browserify"),
+      "https": require.resolve("https-browserify"),
+      "url": require.resolve("url/"),
+      "child_process": false,
+      "os": require.resolve("os-browserify/browser"),
+      "stream": require.resolve("stream-browserify"),
+      "crypto": require.resolve("crypto-browserify"),
+      "http": require.resolve("stream-http"),
+      "net": require.resolve("net-browserify"),
+      "tls": require.resolve("tls-browserify"),
+      "zlib": require.resolve("browserify-zlib"), // Add this line
+      "react/jsx-runtime": require.resolve("react/jsx-runtime.js"),
+    };
 
-  config.devServer = {
-    ...config.devServer,
-    setupMiddlewares: (middlewares, devServer) => {
-      return middlewares;
-    },
-  };
+    // Exclude node_modules from source-map-loader
+    config.module.rules.push({
+      test: /\.js$/,
+      enforce: "pre",
+      use: ["source-map-loader"],
+      exclude: /node_modules/,
+    });
 
-  config = rewireReactHotLoader(config, env);
+    // Existing logic for devServer
+    config.devServer = {
+      ...config.devServer,
+      setupMiddlewares: (middlewares, devServer) => {
+        return middlewares;
+      },
+    };
 
-  return config;
-});
+    // Existing logic for Hot Loader
+    config = rewireReactHotLoader(config, env);
+
+    // Suppress specific warnings
+    config.stats = {
+      warningsFilter: /source-map/,
+    };
+
+    return config;
+  }
+);
 
 // const rewireReactHotLoader = require("react-app-rewire-hot-loader");
 // const { override, addBabelPlugin } = require("customize-cra");
