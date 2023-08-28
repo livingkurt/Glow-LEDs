@@ -15,7 +15,6 @@ const passport = require("passport");
 const compression = require("compression");
 const expressAttack = require("express-attack");
 const requestIp = require("request-ip");
-const bodyParser = require("body-parser");
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
@@ -26,7 +25,7 @@ const BugsnagPluginExpress = require("@bugsnag/plugin-express");
 
 Bugsnag.start({
   apiKey: config.BUGSNAG_KEY,
-  plugins: [BugsnagPluginExpress]
+  plugins: [BugsnagPluginExpress],
 });
 
 // // The "main" function
@@ -43,7 +42,7 @@ mongoose
   .connect(config.MONGODB_URI || "", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
   })
   .catch((error: { reason: any }) => console.log(error));
 
