@@ -7,7 +7,7 @@ import { GLButton } from "../GlowLEDsComponents";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 
-const Sidebar = props => {
+const Sidebar = () => {
   const history = useHistory();
 
   function useOutsideAlerter(ref) {
@@ -16,7 +16,11 @@ const Sidebar = props => {
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
           // alert('You clicked outside of me!');
-          if (document.querySelector(".sidebar") && document.querySelector(".side-btn") && document.querySelector(".head-btn")) {
+          if (
+            document.querySelector(".sidebar") &&
+            document.querySelector(".side-btn") &&
+            document.querySelector(".head-btn")
+          ) {
             document.querySelector(".sidebar").classList.remove("open");
             document.querySelector(".side-btn").classList.remove("active");
             document.querySelector(".side-btn").classList.add("not-active");
@@ -78,7 +82,7 @@ const Sidebar = props => {
       dispatch(API.listChips({}));
     }
     return () => (clean = false);
-  }, []);
+  }, [dispatch]);
 
   // var btn = $('.side-btn');
   // var btn = document.querySelector('.side-btn');
@@ -104,7 +108,7 @@ const Sidebar = props => {
     dispatch(
       API.listProducts({
         chip: chip_selected._id,
-        hidden: false
+        hidden: false,
       })
     );
     set_chip_name({});
@@ -212,7 +216,11 @@ const Sidebar = props => {
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   <Link to="/pages/menu/gloving">Enhancers </Link>
                 </GLButton>
-                <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("gloving_dropdown")} aria-label="Show">
+                <GLButton
+                  className="sidebar-btn-dropdown"
+                  onClick={() => show_hide("gloving_dropdown")}
+                  aria-label="Show"
+                >
                   <i className="fas fa-sort-up" />
                 </GLButton>
               </div>
@@ -241,7 +249,11 @@ const Sidebar = props => {
                     <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/glowskinz">Glowskinz</Link>
                     </GLButton>
-                    <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("glowskinz_dropdown_2")} aria-label="Show">
+                    <GLButton
+                      className="sidebar-btn-dropdown"
+                      onClick={() => show_hide("glowskinz_dropdown_2")}
+                      aria-label="Show"
+                    >
                       <i className="fas fa-sort-up" />
                     </GLButton>
                   </div>
@@ -254,7 +266,11 @@ const Sidebar = props => {
                             CLOZD Glowskinz
                           </GLButton>
                         </Link>
-                        <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("clozd_glowskinz_dropdown")} aria-label="Show">
+                        <GLButton
+                          className="sidebar-btn-dropdown"
+                          onClick={() => show_hide("clozd_glowskinz_dropdown")}
+                          aria-label="Show"
+                        >
                           <i className="fas fa-sort-up" />
                         </GLButton>
                       </div>
@@ -288,7 +304,11 @@ const Sidebar = props => {
                     <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/exo_diffusers">EXO Diffusers</Link>
                     </GLButton>
-                    <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("exo_diffuseres_dropdown")} aria-label="Show">
+                    <GLButton
+                      className="sidebar-btn-dropdown"
+                      onClick={() => show_hide("exo_diffuseres_dropdown")}
+                      aria-label="Show"
+                    >
                       <i className="fas fa-sort-up" />
                     </GLButton>
                   </div>
@@ -301,7 +321,11 @@ const Sidebar = props => {
                             Collections
                           </GLButton>
                         </Link>
-                        <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("exo_collection_dropdown")} aria-label="Show">
+                        <GLButton
+                          className="sidebar-btn-dropdown"
+                          onClick={() => show_hide("exo_collection_dropdown")}
+                          aria-label="Show"
+                        >
                           <i className="fas fa-sort-up" />
                         </GLButton>
                       </div>
@@ -335,7 +359,11 @@ const Sidebar = props => {
                     <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
                     </GLButton>
-                    <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("glowskinz_dropdown_4")} aria-label="Show">
+                    <GLButton
+                      className="sidebar-btn-dropdown"
+                      onClick={() => show_hide("glowskinz_dropdown_4")}
+                      aria-label="Show"
+                    >
                       <i className="fas fa-sort-up" />
                     </GLButton>
                   </div>
@@ -348,7 +376,11 @@ const Sidebar = props => {
                             Collections
                           </GLButton>
                         </Link>
-                        <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("glowskinz_dropdown_5")} aria-label="Show">
+                        <GLButton
+                          className="sidebar-btn-dropdown"
+                          onClick={() => show_hide("glowskinz_dropdown_5")}
+                          aria-label="Show"
+                        >
                           <i className="fas fa-sort-up" />
                         </GLButton>
                       </div>
@@ -413,7 +445,11 @@ const Sidebar = props => {
                     <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/diffusers">Diffusers </Link>
                     </GLButton>
-                    <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("glowskinz_dropdown_3")} aria-label="Show">
+                    <GLButton
+                      className="sidebar-btn-dropdown"
+                      onClick={() => show_hide("glowskinz_dropdown_3")}
+                      aria-label="Show"
+                    >
                       <i className="fas fa-sort-up" />
                     </GLButton>
                   </div>
@@ -461,7 +497,11 @@ const Sidebar = props => {
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 Essentials
               </GLButton>
-              <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("glowskinz_dropdown_6")} aria-label="Show">
+              <GLButton
+                className="sidebar-btn-dropdown"
+                onClick={() => show_hide("glowskinz_dropdown_6")}
+                aria-label="Show"
+              >
                 <i className="fas fa-sort-up" />
               </GLButton>
             </div>
@@ -505,7 +545,13 @@ const Sidebar = props => {
               </GLButton>
             </Link>
             <div style={{ marginLeft: -"5px" }} className="sidebar-btn secondary pl-0px">
-              <Filter title="Shop By Chip" width="100per" state={chip_name} filterHandler={filterHandler} filter_options={chips_list} />
+              <Filter
+                title="Shop By Chip"
+                width="100per"
+                state={chip_name}
+                filterHandler={filterHandler}
+                filter_options={chips_list}
+              />
             </div>
             <Link to="/collections/all/products/category/new_releases">
               <GLButton className="sidebar-btn secondary" style={{ padding: "7px 10px 7px 20px" }} onClick={closeMenu}>
@@ -604,7 +650,11 @@ const Sidebar = props => {
             <GLButton className="sidebar-btn primary" onClick={closeMenu}>
               <Link to="/pages/menu/featured">Community</Link>
             </GLButton>
-            <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("community_dropdown")} aria-label="Show">
+            <GLButton
+              className="sidebar-btn-dropdown"
+              onClick={() => show_hide("community_dropdown")}
+              aria-label="Show"
+            >
               <i className="fas fa-sort-up" />
             </GLButton>
           </div>
@@ -628,7 +678,11 @@ const Sidebar = props => {
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 <Link to="/pages/menu/featured">Featured</Link>
               </GLButton>
-              <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("nested_faq_dropdown")} aria-label="Show">
+              <GLButton
+                className="sidebar-btn-dropdown"
+                onClick={() => show_hide("nested_faq_dropdown")}
+                aria-label="Show"
+              >
                 <i className="fas fa-sort-up" />
               </GLButton>
             </div>
@@ -674,7 +728,11 @@ const Sidebar = props => {
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   <Link to="/pages/faq">FAQ</Link>
                 </GLButton>
-                <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("nested_faq_dropdown")} aria-label="Show">
+                <GLButton
+                  className="sidebar-btn-dropdown"
+                  onClick={() => show_hide("nested_faq_dropdown")}
+                  aria-label="Show"
+                >
                   <i className="fas fa-sort-up" />
                 </GLButton>
               </div>

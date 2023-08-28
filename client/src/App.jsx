@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
@@ -127,6 +127,7 @@ const App = () => {
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     handleTokenRefresh();
@@ -138,11 +139,8 @@ const App = () => {
     }
   }, [dispatch, current_user._id]);
 
-  const [visible, setVisible] = useState(true);
-
   const { height, width } = useWindowDimensions();
 
-  const wrapperRef = useRef(null);
   const theme = createTheme(glow_leds_theme);
 
   return (
@@ -208,7 +206,7 @@ const App = () => {
           ) : (
             <Header visible={visible} />
           )}
-          <Sidebar visible={visible} height={height} width={width} wrapperRef={wrapperRef} />
+          <Sidebar />
 
           <Cart visible={visible} height={height} width={width} />
 
