@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
 
 const GLCheckbox = ({ children, onChecked, value, ...otherProps }) => {
   const [loading, set_loading] = useState(true);
@@ -19,7 +18,7 @@ const GLCheckbox = ({ children, onChecked, value, ...otherProps }) => {
             name="paid"
             id="paid"
             style={{
-              transform: "scale(1.5)"
+              transform: "scale(1.5)",
             }}
             value={value}
             className="mr-1rem"

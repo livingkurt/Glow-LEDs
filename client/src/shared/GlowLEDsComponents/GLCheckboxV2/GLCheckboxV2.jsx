@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
+import React from "react";
 
 const GLCheckboxV2 = ({ children, onChecked, value, label, ...otherProps }) => {
   return (
@@ -13,7 +12,7 @@ const GLCheckboxV2 = ({ children, onChecked, value, label, ...otherProps }) => {
           color="info"
           size="large"
           sx={{
-            color: "white"
+            color: "white",
           }}
           {...otherProps}
           inputProps={{ "aria-label": "controlled" }}

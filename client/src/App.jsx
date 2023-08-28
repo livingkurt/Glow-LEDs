@@ -26,7 +26,6 @@ import { EditSurveyPage, SurveysPage } from "./pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "./pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "./pages/PalettesPage";
 import { EditFilamentPage, FilamentsPage } from "./pages/FilamentsPage";
-import { MonthExpensesPage, MonthlyExpensesPage } from "./pages/DashboardPage/components";
 import { DashboardPage } from "./pages/DashboardPage";
 import { EditExpensePage, ExpensesPage } from "./pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "./pages/FeaturesPage";
@@ -255,16 +254,6 @@ const App = () => {
                 <AdminRoute path="/secure/glow/editpalette/:id?" component={EditPalettePage} />
                 <AdminRoute path="/secure/glow/editfilament/:id?" component={EditFilamentPage} />
                 <AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
-                <AdminRoute
-                  path="/secure/glow/dashboard/monthly_expenes/:year"
-                  exact={true}
-                  component={MonthlyExpensesPage}
-                />
-                <AdminRoute
-                  path="/secure/glow/dashboard/monthly_expenes/:year/:month"
-                  exact={true}
-                  component={MonthExpensesPage}
-                />
                 <AdminRoute path="/secure/glow/dashboard" component={DashboardPage} />
                 <AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
                 <AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />

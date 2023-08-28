@@ -1,15 +1,12 @@
 import * as React from "react";
-import ReactTooltip from "react-tooltip";
+import Tooltip from "@mui/material/Tooltip";
 
-const GLButton = ({ children, tooltip, ...otherProps }) => {
+const GLTooltip = ({ children, tooltip, ...otherProps }) => {
   return (
-    <>
-      <div {...otherProps} data-tip={tooltip}>
-        {children}
-      </div>
-      {tooltip && <ReactTooltip className="br-10px" />}
-    </>
+    <Tooltip title={tooltip} arrow>
+      <span {...otherProps}>{children}</span>
+    </Tooltip>
   );
 };
 
-export default GLButton;
+export default GLTooltip;

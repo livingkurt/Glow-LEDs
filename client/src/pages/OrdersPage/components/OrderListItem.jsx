@@ -3,12 +3,17 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { determine_tracking_link, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
+import {
+  determine_tracking_link,
+  determnine_link,
+  format_date,
+  getUrlParameter,
+  toCapitalize,
+} from "../../../utils/helper_functions";
 import { LazyImage, Loading } from "../../../shared/SharedComponents";
 import { determine_product_name, determine_product_name_string } from "../../../utils/react_helper_functions";
 
 import { API_Emails, API_Orders, API_Shipping } from "../../../utils";
-import ReactTooltip from "react-tooltip";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { OrderStatusButtons } from "../../OrderPage/components";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
@@ -59,7 +64,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
           ...order.shipping,
           shipment_id: null,
           shipping_rate: null,
-          shipping_label: null
+          shipping_label: null,
         },
         itemsPrice: order.itemsPrice,
         shippingPrice: 0,
@@ -67,7 +72,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
         totalPrice: 0,
         user: order.user._id,
         order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
-        production_note: order.production_note
+        production_note: order.production_note,
       })
     );
     dispatch(API.listOrders({}));
@@ -188,14 +193,23 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const send_order_email = async () => {
     set_loading_label(true);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(
+      order,
+      "New Order Created by " + order.shipping.first_name,
+      config.REACT_APP_INFO_EMAIL
+    );
 
     set_loading_label(false);
   };
   const send_refund_email = async () => {
     set_loading_label(true);
     await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL, true);
+    await API_Emails.send_refund_email(
+      order,
+      "New Refunded for " + order.shipping.first_name,
+      config.REACT_APP_INFO_EMAIL,
+      true
+    );
 
     set_loading_label(false);
   };
@@ -204,18 +218,18 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_crafted: order_items[index].is_crafted ? false : true
+      is_crafted: order_items[index].is_crafted ? false : true,
     };
 
     set_order_items(new_order_items);
     set_order_state({
       ...order,
-      orderItems: [...new_order_items]
+      orderItems: [...new_order_items],
     });
     dispatch(
       API.saveOrder({
         ...order,
-        orderItems: [...new_order_items]
+        orderItems: [...new_order_items],
       })
     );
   };
@@ -262,11 +276,10 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
         boxShadow: "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)",
         borderRadius: "2rem",
         padding: "1.5rem",
-        marginBottom: "25px"
+        marginBottom: "25px",
       }}
     >
       <Loading loading={loading_label} />
-      <ReactTooltip className="br-10px" />
       <div style={{ borderBottom: "1px solid white" }}>
         <div className="pb-15px mb-10px jc-b">
           <div className="w-60per jc-b ">
@@ -297,7 +310,9 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
               )}
               {order.isRefunded && (
                 <div>
-                  <div>${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+                  <div>
+                    ${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+                  </div>
                 </div>
               )}
             </div>
@@ -320,8 +335,10 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             ) : (
               order.shipping.shipping_rate && (
                 <p className="title_font ai-c fs-30px">
-                  {!(order.shipping.shipping_rate.service === "First" || order.shipping.shipping_rate.service === "ParcelSelect") &&
-                    order.shipping.shipping_rate.service}{" "}
+                  {!(
+                    order.shipping.shipping_rate.service === "First" ||
+                    order.shipping.shipping_rate.service === "ParcelSelect"
+                  ) && order.shipping.shipping_rate.service}{" "}
                 </p>
               )
             )}
@@ -334,33 +351,37 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                     <h3 className="mr-10px">Order Number: </h3>
                     <div>{order._id}</div>
                   </div>
-                  {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
-                    <div className="row ai-c mb-2rem">
-                      <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
-                      <div className="mt-0px">
-                        {" "}
-                        <a
-                          href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mv-2rem"
-                          style={{
-                            textDecoration: "underline",
-                            color: "white"
-                          }}
-                        >
-                          {order.tracking_number}
-                        </a>
+                  {order.tracking_number &&
+                    order.tracking_number.length > 0 &&
+                    determine_tracking_link(order.tracking_number) && (
+                      <div className="row ai-c mb-2rem">
+                        <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
+                        <div className="mt-0px">
+                          {" "}
+                          <a
+                            href={
+                              order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mv-2rem"
+                            style={{
+                              textDecoration: "underline",
+                              color: "white",
+                            }}
+                          >
+                            {order.tracking_number}
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               )}
               <div className={`fs-16px jc-fe ai-c ${width > 600 && "mt-10px"}`}>
                 <Link
                   to={{
                     pathname: "/secure/account/order/" + order._id,
-                    previous_path: history.location.pathname + history.location.search
+                    previous_path: history.location.pathname + history.location.search,
                   }}
                 >
                   <GLButton variant="primary">Order Details</GLButton>
@@ -393,7 +414,10 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             {order.orderItems.map((item, index) => {
               return (
                 <div className="row mt-15px" key={index}>
-                  <div className="column ai-c pos-rel" data-tip={determine_product_name_string(item, true, order.createdAt)}>
+                  <div
+                    className="column ai-c pos-rel"
+                    data-tip={determine_product_name_string(item, true, order.createdAt)}
+                  >
                     <Link to={determnine_link(item)}>
                       <div className="">
                         {!item.secondary_image && (
@@ -407,13 +431,19 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                           />
                         )}
                         {item.secondary_image && (
-                          <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
+                          <div
+                            className={` double-image-cart${
+                              item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
+                            }`}
+                          >
                             <LazyImage
                               id="expandedImg"
                               alt={item.name}
                               title={item.name}
                               border={item.color_code}
-                              className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
+                              className={`details-image-cart-${
+                                item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
+                              } m-0px`}
                               src={item.display_image}
                             />
                             <LazyImage
@@ -436,7 +466,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                         style={{
                           backgroundColor: "white",
                           color: "black",
-                          border: "1px solid #ccc"
+                          border: "1px solid #ccc",
                         }}
                       >
                         <div className="mt-3px ml-2px">{item.qty}</div>
@@ -594,7 +624,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                   className="mv-2rem ml-1rem"
                   style={{
                     textDecoration: "underline",
-                    color: "white"
+                    color: "white",
                   }}
                 >
                   {order.tracking_number}
@@ -611,7 +641,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                     className="mv-2rem ml-1rem"
                     style={{
                       textDecoration: "underline",
-                      color: "white"
+                      color: "white",
                     }}
                   >
                     {order.return_tracking_number}
@@ -632,7 +662,11 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                   <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
                     Send User a Message
                   </GLButton>
-                  <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_duplicate_order(order._id)}>
+                  <GLButton
+                    variant="secondary"
+                    className="w-100per mv-5px"
+                    onClick={() => create_duplicate_order(order._id)}
+                  >
                     Create Duplicate Order
                   </GLButton>
                   <GLButton variant="secondary" className="w-100per mv-5px">

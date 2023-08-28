@@ -590,8 +590,11 @@ const ShippingStep = ({
                     id="open-modal"
                     className={`${show_shipping_complete && !hide_pay_button ? "bob" : "disabled"} mt-10px w-100per`}
                     onClick={() => {
+                      console.log({ show_shipping_complete, hide_pay_button });
                       // set_show_modal(true);
-                      next_step("payment");
+                      if (show_shipping_complete && !hide_pay_button) {
+                        next_step("payment");
+                      }
                     }}
                   >
                     Continue

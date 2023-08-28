@@ -4,18 +4,17 @@ import { Link } from "react-router-dom";
 import {
   determine_option_product_name,
   determine_secondary_product_name,
-  product_page_sale_price_switch
+  product_page_sale_price_switch,
 } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import {
   determine_sampler,
   determine_sampler_pack_name,
   determine_sampler_pack_pathname,
-  determine_sizing_quick_look
+  determine_sizing_quick_look,
 } from "../productHelpers";
 import { useSelector } from "react-redux";
 
@@ -61,7 +60,7 @@ const ProductOptions = ({
   set_secondary_image,
   has_add_on,
   set_sale_price,
-  wholesale_price
+  wholesale_price,
 }) => {
   const { width } = useWindowDimensions();
 
@@ -114,7 +113,7 @@ const ProductOptions = ({
     "Capez",
     "CLOZD Omniskinz",
     "CLOZD Omniskinz Sleds",
-    "Nova Clip"
+    "Nova Clip",
   ];
   const categories_hide_add_to_cart = ["exo_diffusers"];
 
@@ -208,9 +207,13 @@ const ProductOptions = ({
         {size !== "1 Sled" && product.color_product_group && color_products && color_products.length > 0 && (
           <li>
             <div className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}>
-              <label className="mv-0px mr-10px title_font">{product.color_group_name ? product.color_group_name : "Color"}: </label>
+              <label className="mv-0px mr-10px title_font">
+                {product.color_group_name ? product.color_group_name : "Color"}:{" "}
+              </label>
               <div className="ai-c">
-                {color_code && <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />}
+                {color_code && (
+                  <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />
+                )}
                 <div className="custom-select">
                   <select
                     className="qty_select_dropdown w-100per"
@@ -240,7 +243,7 @@ const ProductOptions = ({
                 name="show_add_on"
                 defaultChecked={show_add_on}
                 style={{
-                  transform: "scale(1.5)"
+                  transform: "scale(1.5)",
                 }}
                 className="mr-1rem"
                 id="show_add_on"
@@ -288,7 +291,10 @@ const ProductOptions = ({
                 </label>
                 <div className="ai-c">
                   {secondary_color_code && (
-                    <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: secondary_color_code }} />
+                    <canvas
+                      className=" mh-1rem w-60px h-20px br-7px"
+                      style={{ backgroundColor: secondary_color_code }}
+                    />
                   )}
 
                   <div className="custom-select">
@@ -364,7 +370,9 @@ const ProductOptions = ({
             </li>
             {determine_sampler(product?.name) && (
               <>
-                <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
+                <li className="jc-c ta-c w-100oer mt-20px lh-30px">
+                  Worried about the fit? We've got your back with our:
+                </li>
                 <li>
                   {product.category === "gloves" &&
                     !(
@@ -461,7 +469,9 @@ const ProductOptions = ({
       {product.secondary_product_group && product.secondary_products && product.secondary_products.length > 0 && (
         <li>
           <div className={`ai-c h-25px mv-20px ${width < 1150 ? "jc-b" : ""}`}>
-            <label className="mv-0px mr-10px title_font">{product.secondary_group_name ? product.secondary_group_name : "Design"}: </label>
+            <label className="mv-0px mr-10px title_font">
+              {product.secondary_group_name ? product.secondary_group_name : "Design"}:{" "}
+            </label>
             <div className="custom-select">
               <select
                 className="qty_select_dropdown w-100per"
@@ -553,7 +563,8 @@ const ProductOptions = ({
             </h4>
           )}
         </div>
-        {product.name !== "Glowstringz V2" && determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object)}
+        {product.name !== "Glowstringz V2" &&
+          determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object)}
       </li>
     </ul>
   );

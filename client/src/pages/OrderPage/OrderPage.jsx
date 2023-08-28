@@ -65,7 +65,9 @@ const OrderPage = props => {
     set_loading_label(true);
     const confirm = window.confirm("Are you sure you want to Refund this Order?");
     if (confirm) {
-      dispatch(API.refundOrder({ order, refundResult: true, refund_amount: parseFloat(amount).toFixed(2), refund_reason }));
+      dispatch(
+        API.refundOrder({ order, refundResult: true, refund_amount: parseFloat(amount).toFixed(2), refund_reason })
+      );
       set_refund_state(true);
     }
 
@@ -187,7 +189,11 @@ const OrderPage = props => {
   const send_paid_email = async () => {
     const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(
+      order,
+      "New Order Created by " + order.shipping.first_name,
+      config.REACT_APP_INFO_EMAIL
+    );
   };
   const update_order_payment_state = (order, state, is_action) => {
     if (state) {
@@ -307,27 +313,6 @@ const OrderPage = props => {
   const [fetching, setFetching] = useState(false);
   const [error_img, set_error_img] = useState(false);
 
-  const download_return_label = (url, name, e) => {
-    e.preventDefault();
-    if (!url) {
-      throw new Error("Resource URL not provided! You need to provide one");
-    }
-    setFetching(true);
-    fetch(url)
-      .then(response => response.blob())
-      .then(blob => {
-        setFetching(false);
-        const blobURL = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = blobURL;
-        a.style = "display: none";
-
-        if (name && name.length) a.download = name;
-        document.body.appendChild(a);
-        a.click();
-      })
-      .catch(() => set_error_img(true));
-  };
   const print_label = content => {
     // const content = document.getElementById(id).innerHTML;
     const frame1 = document.createElement("iframe");
@@ -366,7 +351,7 @@ const OrderPage = props => {
           ...order.shipping,
           shipment_id: null,
           shipping_rate: null,
-          shipping_label: null
+          shipping_label: null,
         },
         itemsPrice: order.itemsPrice,
         shippingPrice: 0,
@@ -374,7 +359,7 @@ const OrderPage = props => {
         totalPrice: 0,
         user: order.user._id,
         order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
-        production_note: order.production_note
+        production_note: order.production_note,
       })
     );
     dispatch(API.listOrders({}));
@@ -411,7 +396,7 @@ const OrderPage = props => {
     const { data } = await API_Shipping.get_different_shipping_rates({
       shipment_id: order.shipping.shipment_id,
       current_user,
-      order
+      order,
     });
 
     set_shipping_rates(data.shipment.rates);
@@ -429,7 +414,7 @@ const OrderPage = props => {
     dispatch(
       API.saveOrder({
         ...order,
-        shipping: { ...order.shipping, shipment_id, shipping_rate }
+        shipping: { ...order.shipping, shipment_id, shipping_rate },
       })
     );
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
@@ -447,7 +432,7 @@ const OrderPage = props => {
     country: config.REACT_APP_PRODUCTION_COUNTRY,
     phone: config.REACT_APP_HEADQUARTERS_PHONE_NUMBER,
     email: config.REACT_APP_INFO_EMAIL,
-    company: "Glow LEDs"
+    company: "Glow LEDs",
   };
 
   const update_parcel = (e, parcel) => {
@@ -458,7 +443,7 @@ const OrderPage = props => {
       ...package_dimensions,
       package_length: parcel.length || 0,
       package_width: parcel.width || 0,
-      package_height: parcel.height || 0
+      package_height: parcel.height || 0,
     });
   };
 
@@ -487,7 +472,11 @@ const OrderPage = props => {
   const send_order_email = async () => {
     set_loading_label(true);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(
+      order,
+      "New Order Created by " + order.shipping.first_name,
+      config.REACT_APP_INFO_EMAIL
+    );
 
     set_loading_label(false);
   };
@@ -495,7 +484,12 @@ const OrderPage = props => {
   const send_refund_email = async () => {
     set_loading_label(true);
     await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL, true);
+    await API_Emails.send_refund_email(
+      order,
+      "New Refunded for " + order.shipping.first_name,
+      config.REACT_APP_INFO_EMAIL,
+      true
+    );
 
     set_loading_label(false);
   };
@@ -504,13 +498,13 @@ const OrderPage = props => {
     let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_crafted: order_items[index].is_crafted ? false : true
+      is_crafted: order_items[index].is_crafted ? false : true,
     };
     set_order_items(new_order_items);
     dispatch(
       API.saveOrder({
         ...order,
-        orderItems: [...new_order_items]
+        orderItems: [...new_order_items],
       })
     );
   };
@@ -538,7 +532,7 @@ const OrderPage = props => {
       promos,
       current_user,
       items_price,
-      cartItems
+      cartItems,
     };
     //
     const request = validate_promo_code(data);
@@ -642,7 +636,10 @@ const OrderPage = props => {
             <meta property="og:title" content="Your Order" />
             <meta name="twitter:title" content="Your Order" />
             <link rel="canonical" href={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id} />
-            <meta property="og:url" content={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id} />
+            <meta
+              property="og:url"
+              content={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id}
+            />
           </Helmet>
           <Loading loading={loading_shipping_rates} />
           {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
@@ -684,21 +681,27 @@ const OrderPage = props => {
                   textAlign: "center",
                   width: "100%",
                   marginRight: "auto",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
                 className="ta-c "
               >
                 <Link
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname
+                    previous_path: history.location.pathname,
                   }}
                 >
                   {loading ? "Product" : product.name}
                 </Link>
               </h2>
               <div className="ai-c">
-                <GLButton style={{ borderRadius: "50%" }} variant="icon" className="h-59px" onClick={e => move_right(e)} aria-label="Next">
+                <GLButton
+                  style={{ borderRadius: "50%" }}
+                  variant="icon"
+                  className="h-59px"
+                  onClick={e => move_right(e)}
+                  aria-label="Next"
+                >
                   <i className="fas fa-arrow-circle-right fs-40px" />
                 </GLButton>
               </div>
@@ -711,7 +714,7 @@ const OrderPage = props => {
             <div className="placeorder-info">
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order)
+                  backgroundColor: width > 407 && determine_color(order),
                 }}
               >
                 <div className="column jc-b h-22rem w-25remm mb-1rem">
@@ -729,7 +732,11 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isCrafting ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isCrafting ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Crafting</div>
 
@@ -739,7 +746,11 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isCrafted ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isCrafted ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Crafted</div>
 
@@ -749,7 +760,11 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isPackaged ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isPackaged ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Packaged</div>
 
@@ -759,7 +774,11 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isShipped ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isShipped ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Shipped</div>
 
@@ -769,7 +788,11 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px row">
-                        {order.isDelivered ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isDelivered ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Delivered</div>
 
@@ -780,27 +803,29 @@ const OrderPage = props => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order)
+                  backgroundColor: width > 407 && determine_color(order),
                 }}
               >
                 <div className="mb-1rem">Order #: {order._id}</div>
-                {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
-                  <div>
-                    Tracking #:{" "}
-                    <a
-                      href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mv-2rem"
-                      style={{
-                        textDecoration: "underline",
-                        color: "white"
-                      }}
-                    >
-                      {order.tracking_number}
-                    </a>
-                  </div>
-                )}
+                {order.tracking_number &&
+                  order.tracking_number.length > 0 &&
+                  determine_tracking_link(order.tracking_number) && (
+                    <div>
+                      Tracking #:{" "}
+                      <a
+                        href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mv-2rem"
+                        style={{
+                          textDecoration: "underline",
+                          color: "white",
+                        }}
+                      >
+                        {order.tracking_number}
+                      </a>
+                    </div>
+                  )}
 
                 {current_user?.isAdmin && order.return_tracking_number && (
                   <div className="w-100per column mt-1rem">
@@ -813,7 +838,7 @@ const OrderPage = props => {
                         className="mv-2rem"
                         style={{
                           textDecoration: "underline",
-                          color: "white"
+                          color: "white",
                         }}
                       >
                         {order.return_tracking_number}
@@ -832,12 +857,13 @@ const OrderPage = props => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order)
+                  backgroundColor: width > 407 && determine_color(order),
                 }}
               >
                 {order.isRefunded && (
                   <h1>
-                    Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on {format_date(order.refundedAt)}
+                    Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{" "}
+                    {format_date(order.refundedAt)}
                   </h1>
                 )}
 
@@ -854,7 +880,8 @@ const OrderPage = props => {
                           {order.shipping.address_1} {order.shipping.address_2}
                         </div>
                         <div>
-                          {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}, {order.shipping.country}
+                          {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode},{" "}
+                          {order.shipping.country}
                         </div>
                         <div>{order.shipping.international && "International"}</div>
                       </div>
@@ -911,12 +938,14 @@ ${order.shipping.email}`)
 
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order)
+                  backgroundColor: width > 407 && determine_color(order),
                 }}
               >
                 <h2>Payment</h2>
                 <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
-                  <p style={{ marginBottom: "0px" }}>{order.isPaid ? "Paid at " + format_date(order.paidAt) : "Not Paid"}</p>
+                  <p style={{ marginBottom: "0px" }}>
+                    {order.isPaid ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
+                  </p>
                 </div>
                 {current_user?.isAdmin && (
                   <div className="">
@@ -934,7 +963,7 @@ ${order.shipping.email}`)
                 </li>
                 <div
                   style={{
-                    backgroundColor: width > 407 && determine_color(order)
+                    backgroundColor: width > 407 && determine_color(order),
                   }}
                 >
                   <ul className="cart-list-container mt-0px">
@@ -945,7 +974,12 @@ ${order.shipping.email}`)
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem check_item_as_crafted={check_item_as_crafted} item={item} index={index} show_qty={false} />
+                        <CartItem
+                          check_item_as_crafted={check_item_as_crafted}
+                          item={item}
+                          index={index}
+                          show_qty={false}
+                        />
                       ))
                     )}
                   </ul>
@@ -974,7 +1008,9 @@ ${order.shipping.email}`)
                 {order.promo_code && (
                   <li>
                     <div>Discount</div>
-                    <div>-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}</div>
+                    <div>
+                      -${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}
+                    </div>
                   </li>
                 )}
                 {order.promo_code && (
@@ -1023,7 +1059,9 @@ ${order.shipping.email}`)
                 {order.isRefunded && (
                   <li>
                     <div>New Order Total</div>
-                    <div>${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+                    <div>
+                      ${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+                    </div>
                   </li>
                 )}
 
@@ -1097,7 +1135,11 @@ ${order.shipping.email}`)
                       <GLButton variant="secondary" className="mv-5px">
                         <Link to={"/secure/glow/editorder/" + order._id}>Edit Order</Link>
                       </GLButton>
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => dispatch(API.deleteOrder(order._id))}>
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
+                        onClick={() => dispatch(API.deleteOrder(order._id))}
+                      >
                         Delete Order
                       </GLButton>
                       {hide_label_button && (
@@ -1191,7 +1233,11 @@ ${order.shipping.email}`)
                           </GLButton>
                         </a>
                       )}
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_duplicate_order(order._id)}>
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
+                        onClick={() => create_duplicate_order(order._id)}
+                      >
                         Create Duplicate Order
                       </GLButton>
 
@@ -1287,10 +1333,18 @@ ${order.shipping.email}`)
                       </div>
                     </div>
                     <div className="">
-                      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => update_refund_state(refund_amount)}>
+                      <GLButton
+                        variant="primary"
+                        className="mv-5px w-100per"
+                        onClick={() => update_refund_state(refund_amount)}
+                      >
                         Refund Partial Amount
                       </GLButton>
-                      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => update_refund_state(order.totalPrice)}>
+                      <GLButton
+                        variant="primary"
+                        className="mv-5px w-100per"
+                        onClick={() => update_refund_state(order.totalPrice)}
+                      >
                         Refund Full Amount
                       </GLButton>
 

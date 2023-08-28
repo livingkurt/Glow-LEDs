@@ -12,7 +12,7 @@ const DomesticShippingSpeed = ({
   choose_shipping_rate,
   modalShown,
   setModalShown,
-  setHideContinue,
+  // setHideContinue,
 }) => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
@@ -43,7 +43,7 @@ const DomesticShippingSpeed = ({
       setOpen(true);
     } else {
       choose_shipping_rate(rate, service, serviceNames[index]);
-      setHideContinue(false);
+      // setHideContinue(false);
     }
   };
 
