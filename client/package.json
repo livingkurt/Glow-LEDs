@@ -75,7 +75,7 @@
     "test": "react-app-rewired test",
     "postbuild": "npm run generate-sitemap",
     "eject": "react-scripts eject",
-    "generate-sitemap": "npx babel-node src/sitemap/sitemap-generator.js"
+    "generate-sitemap": "node src/sitemap/sitemap-generator.js"
   },
   "eslintConfig": {
     "extends": [

@@ -1,72 +1,54 @@
-const React = require("react");
-const { default: axios } = require("axios");
+const fs = require("fs");
 const path = require("path");
+const { default: axios } = require("axios");
+const routes = require("./routes");
 
-const domain = () => {
-  if (process.env.NODE_ENV === "production") {
-    return "https://www.glow-leds.com";
-  } else {
-    return "http://localhost:3000";
-  }
-};
-
-require("babel-register")({
-  presets: ["es2015", "react"],
-});
-
-const router = require("./sitemap-routes").default;
-// const Sitemap = require("react-router-sitemap").default;
-
-console.log({ router: router.props.children[0].props.path });
+function generateUrlXML(url) {
+  return `
+    <url><loc>${url}</loc></url>`;
+}
 
 async function generateSitemap() {
-  // try {
-  //   const domainUrl = domain();
-  //   const fetchPromises = [
-  //     // axios.get(`${domainUrl}/api/products/category/distinct`),
-  //     // axios.get(`${domainUrl}/api/products/subcategory/distinct`),
-  //     // axios.get(`${domainUrl}/api/products/product_collection/distinct`),
-  //     axios.get(`${domainUrl}/api/products/pathname/distinct`),
-  //     // axios.get(`${domainUrl}/api/teams/category/distinct`),
-  //     // axios.get(`${domainUrl}/api/features/category/distinct`),
-  //     // axios.get(`${domainUrl}/api/affiliates/category/distinct`),
-  //     // axios.get(`${domainUrl}/api/affiliates/promo_code/distinct`)
-  //   ];
-  //   const [pathnameRes] = await Promise.all(fetchPromises);
-  //   const pathnames = pathnameRes.data;
-  //   let pathnameMap = pathnames.map(pathname => ({ pathname }));
-  //   const menu_types = [{ pathname: "gloving" }, { pathname: "featured" }, { pathname: "support" }];
-  //   const paramsConfig = {
-  //     "/collections/all/products/:pathname": pathnameMap,
-  //     // "/pages/contact/:reason": contact_reason,
-  //     "/pages/menu/:pathname": menu_types,
-  //   };
-  //   const paths = new Set();
-  //   // Filter out duplicate paths
-  //   const filteredRoutes = router.props.children.filter(route => {
-  //     const path = route.props.path;
-  //     // If the path is the home URL and it's already in the set, return false
-  //     if (path === "/") {
-  //       return false;
-  //     }
-  //     // If the path is already in the set, it's a duplicate
-  //     if (paths.has(path)) {
-  //       return false;
-  //     } else {
-  //       // Otherwise, add it to the set and include it in the routes
-  //       paths.add(path);
-  //       return true;
-  //     }
-  //   });
-  //   // Use the filtered routes to create the sitemap
-  //   const filteredRouter = React.cloneElement(router, { children: filteredRoutes });
-  //   return new Sitemap(filteredRouter)
-  //     .applyParams(paramsConfig)
-  //     .build("https://www.glow-leds.com")
-  //     .save("../sitemap.xml");
-  // } catch (error) {
-  //   console.error("An error occurred while generating the sitemap:", error);
-  // }
+  try {
+    const fetchPromises = [axios.get(`https://www.glow-leds.com/api/products/pathname/distinct`)];
+
+    const [pathnameRes] = await Promise.all(fetchPromises);
+    const pathnames = pathnameRes.data;
+
+    let pathnameMap = pathnames.map(pathname => ({ pathname }));
+    const menu_types = [{ pathname: "gloving" }, { pathname: "featured" }, { pathname: "support" }];
+
+    const paramsConfig = {
+      "/collections/all/products/:pathname": pathnameMap,
+      "/pages/menu/:pathname": menu_types,
+    };
+
+    let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';
+    sitemapXML += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    routes.forEach(route => {
+      let url = route.path;
+
+      // Handle dynamic routes
+      if (url.includes(":")) {
+        const param = url.split(":")[1];
+        const values = paramsConfig[url];
+
+        values?.forEach(value => {
+          const dynamicUrl = url.replace(`:${param}`, value.pathname);
+          sitemapXML += generateUrlXML(`https://www.glow-leds.com/${dynamicUrl}`);
+        });
+      } else {
+        sitemapXML += generateUrlXML(`https://www.glow-leds.com/${url}`);
+      }
+    });
+
+    sitemapXML += "</urlset>";
+
+    fs.writeFileSync(path.join(__dirname, "../sitemap.xml"), sitemapXML);
+  } catch (error) {
+    console.error("An error occurred while generating the sitemap:", error);
+  }
 }
 
 generateSitemap();
