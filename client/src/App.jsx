@@ -85,7 +85,6 @@ import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import routes from "./sitemap/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 import { hot } from "react-hot-loader/root";
-import { debounce } from "./helpers/sharedHelpers";
 
 const App = () => {
   const Components = {
@@ -129,30 +128,9 @@ const App = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  const handleScroll = debounce(
-    this,
-    () => {
-      const currentScrollPos = window.pageYOffset;
-
-      setVisible((prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10);
-
-      setPrevScrollPos(currentScrollPos);
-    },
-    50
-  );
-
   useEffect(() => {
     handleTokenRefresh();
   }, [dispatch]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos, visible, handleScroll]);
 
   useEffect(() => {
     if (current_user._id) {
@@ -160,14 +138,9 @@ const App = () => {
     }
   }, [dispatch, current_user._id]);
 
-  const { height, width } = useWindowDimensions();
+  const [visible, setVisible] = useState(true);
 
-  // We listen to the resize event
-  window.addEventListener("resize", () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  });
+  const { height, width } = useWindowDimensions();
 
   const wrapperRef = useRef(null);
   const theme = createTheme(glow_leds_theme);
@@ -175,7 +148,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Container>
+        <Container setVisible={setVisible} visible={visible}>
           <Helmet>
             <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
             <meta
