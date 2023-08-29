@@ -725,7 +725,6 @@ const ProductPage = () => {
 
   const [out_of_stock, set_out_of_stock] = useState();
   const [show_product_options, set_show_product_options] = useState();
-  console.log({ location });
 
   return (
     !loading &&
