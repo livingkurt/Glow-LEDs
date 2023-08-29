@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Switch, Route } from "react-router";
-import routes from "./routes";
+import { Routes, Route } from "react-router";
 import { navItems } from "../shared/ContainerComponents/Header/headerHelpers";
+import { routes } from "../utils/helpers/routes";
 
 const extractPaths = obj => {
   let paths = [];
@@ -25,9 +25,9 @@ const allRoutes = extractPaths(navItems);
 const uniqueRoutes = [...allRoutes, ...routes];
 
 export default (
-  <Switch>
+  <Routes>
     {uniqueRoutes.map((route, index) => (
       <Route key={index} path={route.path} />
     ))}
-  </Switch>
+  </Routes>
 );

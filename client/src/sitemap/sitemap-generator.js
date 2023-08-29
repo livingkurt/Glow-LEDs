@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { default: axios } = require("axios");
-const routes = require("./routes");
+const { routes } = require("../utils/helpers/routes");
 
 function generateUrlXML(url) {
   return `
