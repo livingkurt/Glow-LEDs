@@ -203,16 +203,17 @@ const cartPage = createSlice({
       state.loading = true;
     },
     [API.deleteCartItem.fulfilled as any]: (state: any, { payload }: any) => {
-      const { data, type } = payload;
       state.loading = false;
-      if (data.message === "Cart Deleted") {
-        state.my_cart = { cartItems: [] };
-        localStorage.removeItem("cartItems");
-      } else if (type === "add_to_cart") {
-        state.my_cart = data;
-        localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
-      } else if (type === "edit_cart") {
-        state.cart = data;
+      if (payload.data) {
+        if (payload.data.message === "Cart Deleted") {
+          state.my_cart = { cartItems: [] };
+          localStorage.removeItem("cartItems");
+        } else if (payload.type === "add_to_cart") {
+          state.my_cart = payload.data;
+          localStorage.setItem("cartItems", JSON.stringify(payload.data.cartItems));
+        } else if (payload.type === "edit_cart") {
+          state.cart = payload.data;
+        }
       }
       state.message = "Cart Deleted";
     },

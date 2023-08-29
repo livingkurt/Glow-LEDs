@@ -9,6 +9,23 @@ export const updateCartItems = (cartItems: any, cart_item: any) => {
   return new_cart_items;
 };
 
+export const loginUpdateCartItems = (userCartItems: any[], anonymousCartItems: any[]) => {
+  const mergedCart = [...userCartItems];
+
+  anonymousCartItems.forEach(anonymousItem => {
+    const existingItem = mergedCart.find(userItem => deepEqual(userItem, anonymousItem));
+
+    if (existingItem) {
+      // Update the existing item if needed
+      // existingItem.qty += anonymousItem.qty;
+    } else {
+      mergedCart.push(anonymousItem);
+    }
+  });
+
+  return mergedCart;
+};
+
 export const deepEqual = (object1: any, object2: any) => {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);

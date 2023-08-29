@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 
 import { create_query } from "../utils/helper_functions";
 import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
-import { updateCartItems } from "../helpers/userHelpers";
+import { loginUpdateCartItems, updateCartItems } from "../helpers/userHelpers";
 
 export const getUsers = async ({
   search,
@@ -143,62 +143,33 @@ export const registerUser = createAsyncThunk("users/registerUser", async (userDa
 export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {
   try {
     const { data } = await axios.post("/api/users/login", userData);
-
-    // Decode access_token and get user info
     const decoded: any = jwt_decode(data.access_token);
     const userId = decoded._id;
 
-    // Fetch user's cart
     const userCartResponse = await axios.get(`/api/carts/${userId}/user`);
     let userCart = userCartResponse.data;
 
     if (!userCart || !userCart.cartItems) {
-      // If there is no cart for the user, create a new one
-      const newCartResponse = await axios.post(`/api/carts`, { userId: userId, cartItems: [] });
+      const newCartResponse = await axios.post(`/api/carts`, { userId, cartItems: [] });
       userCart = newCartResponse.data;
     }
 
-    // Get anonymous cart from localStorage
     const anonymousCartItemsString = localStorage.getItem("cartItems");
     if (anonymousCartItemsString) {
-      const anonymousCartItems = anonymousCartItemsString ? JSON.parse(anonymousCartItemsString) : { cartItems: [] };
+      const anonymousCartItems = JSON.parse(anonymousCartItemsString);
+      userCart.cartItems = loginUpdateCartItems(userCart.cartItems, anonymousCartItems);
 
-      // Merge the carts
-      anonymousCartItems.forEach((anonymousCartItem: any) => {
-        userCart.cartItems = updateCartItems(userCart.cartItems, anonymousCartItem);
-      });
-
-      // Update the user's cart
       await axios.put(`/api/carts/${userId}/user`, { cartItems: userCart.cartItems });
-
-      // Remove the anonymous cart
-      // localStorage.removeItem("cartItems");
+      localStorage.removeItem("cartItems");
     }
-    Covy().showSnackbar({
-      message: `User Logged In`,
-      severity: "success",
-    });
+
+    Covy().showSnackbar({ message: `User Logged In`, severity: "success" });
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    Covy().showSnackbar({ message: errorMessage(error), severity: "error" });
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
-
-// export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {
-//   try {
-//     const { data } = await axios.post("/api/users/login", userData);
-//     return data;
-//   } catch (error) {
-//     Covy().showSnackbar({
-//       message: errorMessage(error),
-//       severity: "error"
-//     });
-//   }
-// });
 
 export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any, thunkApi: any) => {
   const {

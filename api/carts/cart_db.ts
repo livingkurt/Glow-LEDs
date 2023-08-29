@@ -53,7 +53,7 @@ export default {
       if (cart) {
         return await Cart.updateOne({ _id: id }, body);
       }
-      return "No Cart";
+      return cart;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -63,16 +63,21 @@ export default {
   update_user_carts_db: async (id: string, body: any) => {
     try {
       const cart: any = await Cart.findOne({ user: id, active: true });
+      console.log({ cart, body, id });
       if (cart) {
-        return await Cart.updateOne({ user: id }, body);
+        cart.cartItems = body.cartItems;
+        return await cart.save();
+      } else {
+        return await Cart.create({ ...body, user: id });
       }
-      return "No Cart";
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   remove_carts_db: async (id: string) => {
     try {
       const cart: any = await Cart.findOne({ _id: id });

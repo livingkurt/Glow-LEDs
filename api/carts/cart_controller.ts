@@ -65,8 +65,10 @@ export default {
   },
   update_user_carts_c: async (req: any, res: any) => {
     const { params, body } = req;
+    console.log({ params, body });
     try {
       const cart = await cart_services.update_user_carts_s(params, body);
+      console.log({ cart });
       if (cart) {
         return res.status(200).send(cart);
       }
@@ -118,20 +120,14 @@ export default {
       if (cart) {
         return res.status(201).send(cart);
       }
-      return res
-        .status(500)
-        .send({
-          message:
-            "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-        });
+      return res.status(500).send({
+        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+      });
     } catch (error) {
-      res
-        .status(500)
-        .send({
-          error,
-          message:
-            "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-        });
+      res.status(500).send({
+        error,
+        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+      });
     }
   },
   empty_carts_c: async (req: any, res: any) => {
@@ -142,20 +138,14 @@ export default {
       if (cart) {
         return res.status(201).send(cart);
       }
-      return res
-        .status(500)
-        .send({
-          message:
-            "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-        });
+      return res.status(500).send({
+        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+      });
     } catch (error) {
-      res
-        .status(500)
-        .send({
-          error,
-          message:
-            "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-        });
+      res.status(500).send({
+        error,
+        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+      });
     }
   },
 };
