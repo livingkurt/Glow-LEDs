@@ -210,17 +210,34 @@ export const deleteCartItem = createAsyncThunk(
           cartPage: { my_cart },
         },
       } = thunkApi.getState();
-      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
-      Covy().showSnackbar({
-        message: `Cart Item Deleted`,
-        severity: "success",
-      });
-      return { data, type };
+      if (my_cart._id) {
+        const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, {
+          current_user,
+          my_cart,
+        });
+        Covy().showSnackbar({
+          message: `Cart Item Deleted`,
+          severity: "success",
+        });
+        if (data.message) {
+          console.log({ data });
+          return { data, type };
+        } else {
+          Covy().showSnackbar({
+            message:
+              "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+            severity: "error",
+          });
+        }
+      } else {
+        return { type, data: { message: "Cart Deleted" } };
+      }
     } catch (error) {
       Covy().showSnackbar({
         message: errorMessage(error),
         severity: "error",
       });
+      return thunkApi.rejectWithValue(error.response?.data);
     }
   }
 );
