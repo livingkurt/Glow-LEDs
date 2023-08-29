@@ -14,7 +14,7 @@ import { format_date } from "../../utils/helper_functions";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { message, loading, remoteVersionRequirement } = cartPage;
+  const { remoteVersionRequirement } = cartPage;
 
   const dispatch = useDispatch();
 
@@ -81,7 +81,6 @@ const CartsPage = () => {
         namespace="cartTable"
         determine_color={determine_color}
         columnDefs={column_defs}
-        loading={loading}
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_cart_modal())}>
