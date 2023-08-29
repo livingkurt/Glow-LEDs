@@ -214,7 +214,7 @@ const EditOrderPage = () => {
     );
     e.target.reset();
     unset_state();
-    navigate(location.previous_path || "/secure/glow/orders?page=1?limit=10");
+    navigate(location?.state?.prevPath || "/secure/glow/orders?page=1?limit=10");
   };
 
   const add_order_item = e => {

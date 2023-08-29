@@ -1,6 +1,6 @@
 // React
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -22,6 +22,8 @@ import config from "../../../config";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const [loading_label, set_loading_label] = useState(false);
   const [loading_email, set_loading_email] = useState("");
@@ -167,7 +169,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
-    const query = getUrlParameter(navigate.location);
+    const query = getUrlParameter(location);
     dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
@@ -186,7 +188,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
-    const query = getUrlParameter(navigate.location);
+    const query = getUrlParameter(location);
     dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
@@ -379,10 +381,12 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
               )}
               <div className={`fs-16px jc-fe ai-c ${width > 600 && "mt-10px"}`}>
                 <Link
-                  to={{
-                    pathname: "/secure/account/order/" + order._id,
-                    previous_path: navigate.location.pathname + navigate.location.search,
-                  }}
+                  to={"/secure/account/order/" + order._id}
+                  onClick={() =>
+                    navigate("/secure/account/order/" + order._id, {
+                      state: { prevPath: location.pathname + location.search },
+                    })
+                  }
                 >
                   <GLButton variant="primary">Order Details</GLButton>
                 </Link>

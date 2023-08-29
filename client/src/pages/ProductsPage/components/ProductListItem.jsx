@@ -181,7 +181,7 @@
 //           className="w-500px"
 //           to={{
 //             pathname: "/collections/all/products/" + product.pathname,
-//             previous_path: navigate.location.pathname,
+//             state: { prevPath: location?.pathname },
 //           }}
 //         >
 //           <label style={{ fontSize: "1.6rem" }}>
@@ -274,7 +274,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: navigate.location.pathname,
+//                     state: { prevPath: location?.pathname },
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -325,7 +325,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: navigate.location.pathname,
+//                     state: { prevPath: location?.pathname },
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -376,7 +376,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: navigate.location.pathname,
+//                     state: { prevPath: location?.pathname },
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -427,7 +427,7 @@
 //                   className=""
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: navigate.location.pathname,
+//                     state: { prevPath: location?.pathname },
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>

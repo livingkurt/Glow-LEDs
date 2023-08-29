@@ -135,7 +135,7 @@ const CompletePage = () => {
                   Back to Emails
                 </GLButton>
               </Link>
-              <Link to={location.previous_path || "/secure/glow/orders"}>
+              <Link to={location?.state?.prevPath || "/secure/glow/orders"}>
                 <GLButton variant="primary" className="mh-10px">
                   Back to Orders
                 </GLButton>

@@ -725,6 +725,7 @@ const ProductPage = () => {
 
   const [out_of_stock, set_out_of_stock] = useState();
   const [show_product_options, set_show_product_options] = useState();
+  console.log({ location });
 
   return (
     !loading &&
@@ -733,7 +734,7 @@ const ProductPage = () => {
         <div className="p-1rem">
           <div className="jc-b">
             <div className="mb-10px">
-              <Link to={location.previous_path || "/collections/all/products"} className="m-auto">
+              <Link to={location.state?.prevPath || "/collections/all/products"} className="m-auto">
                 <GLButton variant="secondary">Back to Products</GLButton>
               </Link>
             </div>

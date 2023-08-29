@@ -80,7 +80,6 @@ export const adminRoutes = [
   { path: "/secure/glow/editfilament/:id?", element: "EditFilamentPage" },
   { path: "/secure/glow/change_password/:id", element: "AdminChangePasswordPage" },
   { path: "/secure/glow/dashboard", element: "DashboardPage" },
-  { path: "/secure/glow/editexpense/:id?", element: "EditExpensePage" },
   { path: "/secure/glow/editfeature/:pathname?", element: "EditFeaturePage" },
   { path: "/secure/glow/expenses", element: "ExpensesPage" },
   { path: "/secure/glow/features", element: "FeaturesPage" },

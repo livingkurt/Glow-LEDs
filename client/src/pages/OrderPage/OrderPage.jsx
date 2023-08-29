@@ -265,11 +265,6 @@ const OrderPage = () => {
     const request = await API_Shipping.add_(order, data.tracking_code, data);
 
     dispatch(API.detailsOrder(params.id));
-    // navigate('/secure/glow/emails/invoice/' + order._id);
-    // navigate({
-    // 	pathname: '/secure/glow/emails/invoice/' + order._id,
-    // 	previous_path: location.previous_path
-    // });
   };
 
   const get_invoice = async () => {
@@ -645,7 +640,7 @@ const OrderPage = () => {
           <div className="mb-10px ml-20px jc-b">
             <div>
               {current_user?.isAdmin && (
-                <Link to={location.previous_path || "/secure/glow/orders"}>
+                <Link to={location?.state?.prevPath || "/secure/glow/orders"}>
                   <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
               )}
@@ -685,10 +680,12 @@ const OrderPage = () => {
                 className="ta-c "
               >
                 <Link
-                  to={{
-                    pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: navigate.location.pathname,
-                  }}
+                  to={"/collections/all/products/" + product.pathname}
+                  onClick={() =>
+                    navigate("/collections/all/products/" + product?.pathname, {
+                      state: { prevPath: location.pathname },
+                    })
+                  }
                 >
                   {loading ? "Product" : product.name}
                 </Link>

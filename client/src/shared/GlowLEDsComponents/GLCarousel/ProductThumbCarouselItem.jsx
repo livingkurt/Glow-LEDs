@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
@@ -13,7 +13,7 @@ const ProductThumbCarouselItem = ({ product, size, style }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let clean = true;
@@ -28,10 +28,12 @@ const ProductThumbCarouselItem = ({ product, size, style }) => {
       {!loading && (
         <li key={product && product.pathname} style={style}>
           <Link
-            to={{
-              pathname: product && "/collections/all/products/" + product.pathname,
-              previous_path: navigate.location.pathname,
-            }}
+            to={"/collections/all/products/" + product.pathname}
+            onClick={() =>
+              navigate("/collections/all/products/" + product?.pathname, {
+                state: { prevPath: location.pathname },
+              })
+            }
           >
             <div className="product">
               <LazyImage

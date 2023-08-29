@@ -1,21 +1,20 @@
 // React
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Rating from "./Rating";
-import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import * as API from "../../../api";
 
-const CarouselItem = ({ product, size, style, add_to_cart }) => {
-  const [product, set_product] = useState(product);
+const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
+  const location = useLocation();
+  const [product, set_product] = useState(startProduct);
   const [loading, set_loading] = useState(true);
   const [qty, set_qty] = useState(1);
   const [size, set_size] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -187,11 +186,11 @@ const CarouselItem = ({ product, size, style, add_to_cart }) => {
               </li>
             </span>
             <Link
-              to={{
-                pathname: product && "/collections/all/products/" + product.pathname,
-                previous_path: navigate.location.pathname,
+              to={"/collections/all/products/" + product.pathname}
+              onClick={() => {
+                dispatch(API.detailsProduct(product.pathname));
+                navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } });
               }}
-              onClick={() => dispatch(API.detailsProduct(product.pathname))}
             >
               <div className="product">
                 <LazyImage

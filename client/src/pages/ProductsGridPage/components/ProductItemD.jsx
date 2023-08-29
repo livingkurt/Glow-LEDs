@@ -1,6 +1,6 @@
 // React
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { LazyImage } from "../../../shared/SharedComponents";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 // import Resizer from 'react-image-file-resizer';
 
 const ProductItemD = ({ product, style, size, product_occurrences }) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [image_number, set_image_number] = useState(0);
 
@@ -37,24 +38,24 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
     }
   };
   return (
-    <li key={product.pathname} className="product-thumb" style={style}>
+    <li key={product?.pathname} className="product-thumb" style={style}>
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
             <Link
-              to={{
-                pathname: "/collections/all/products/" + product.pathname,
-                previous_path: navigate.location.pathname,
-              }}
-              className="m-auto"
+              to={"/collections/all/products/" + product.pathname}
+              onClick={() =>
+                navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
+              }
+              className="mt-13px"
             >
-              <div className="row mt-15px" data-testid={product.pathname}>
+              <div className="row mt-15px" data-testid={product?.pathname}>
                 <div className="column ai-c pos-rel">
                   {/* <Link to={'/collections/all/products/' + item.pathname}> */}
                   {product?.images_object?.length === 1 && (
                     <LazyImage
                       className="product-image"
-                      alt={product.name}
+                      alt={product?.name}
                       title="Product Image"
                       size={{ height: size, width: size }}
                       effect="blur"
@@ -107,15 +108,15 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
                   {Array.from({ length: 60 }).map((_, index) => {
                     const productOccurrence = product_occurrences[index];
 
-                    if (productOccurrence?.name === product.name) {
+                    if (productOccurrence?.name === product?.name) {
                       return (
                         <div
                           className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px"
-                          key={product._id}
+                          key={product?._id}
                         >
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
-                            alt={product.name}
+                            alt={product?.name}
                             title="Product Image"
                             src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
                           />
@@ -130,13 +131,13 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
             </Link>
 
             {/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
-							{product.brand}
+							{product?.brand}
 						</label> */}
             <Link
-              to={{
-                pathname: "/collections/all/products/" + product.pathname,
-                previous_path: navigate.location.pathname,
-              }}
+              to={"/collections/all/products/" + product.pathname}
+              onClick={() =>
+                navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
+              }
               className="mt-13px"
             >
               <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>
@@ -150,8 +151,8 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
               })}
             </label>
 
-            {product.rating ? (
-              <Rating rating={product.rating} numReviews={product.numReviews} />
+            {product?.rating ? (
+              <Rating rating={product?.rating} numReviews={product?.numReviews} />
             ) : (
               <span className="rating vis-hid ta-c">No Reviews</span>
             )}

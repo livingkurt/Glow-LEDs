@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { API_Products } from "../../../utils";
 import { humanize, prnt, shuffle } from "../../../utils/helper_functions";
@@ -27,9 +27,10 @@ const RelatedProductsSlideshow = ({
   add_to_cart,
   product,
 }) => {
+  const navigate = useNavigate();
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const location = useLocation();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
@@ -336,10 +337,12 @@ const RelatedProductsSlideshow = ({
 
                 <div className="product">
                   <Link
-                    to={{
-                      pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: navigate.location.pathname,
-                    }}
+                    to={"/collections/all/products/" + product.pathname}
+                    onClick={() =>
+                      navigate("/collections/all/products/" + product?.pathname, {
+                        state: { prevPath: location.pathname },
+                      })
+                    }
                     className="m-auto"
                   >
                     <div className="row mt-15px">
@@ -378,10 +381,12 @@ const RelatedProductsSlideshow = ({
                     </div>
                   </Link>
                   <Link
-                    to={{
-                      pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: navigate.location.pathname,
-                    }}
+                    to={"/collections/all/products/" + product.pathname}
+                    onClick={() =>
+                      navigate("/collections/all/products/" + product?.pathname, {
+                        state: { prevPath: location.pathname },
+                      })
+                    }
                     className="mt-13px"
                   >
                     <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>

@@ -355,7 +355,9 @@ const Header = () => {
                         Orders
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/products">
+                    <Link
+                      to={`/secure/glow/products?search=&filters=%7B"hidden"%3A%5B%5D%2C"options"%3A%5B%5D%7D&page=0&pageSize=10&sorting=%5B3%2C"desc"%5D`}
+                    >
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Products
                       </GLButton>

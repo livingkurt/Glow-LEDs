@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams, useLocation } from "react-router-dom";
 import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { accurate_date, snake_case, unformat_date_and_time } from "../../../utils/helper_functions";
@@ -35,6 +35,7 @@ import {
 
 const EditProductPage = () => {
   const params = useParams();
+  const location = useLocation();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [clipboard, copyToClipboard] = useClipboard();
 
@@ -640,10 +641,12 @@ const EditProductPage = () => {
                       className="ta-c "
                     >
                       <Link
-                        to={{
-                          pathname: "/collections/all/products/" + product.pathname,
-                          previous_path: navigate.location.pathname,
-                        }}
+                        to={"/collections/all/products/" + product.pathname}
+                        onClick={() =>
+                          navigate("/collections/all/products/" + product?.pathname, {
+                            state: { prevPath: location.pathname },
+                          })
+                        }
                       >
                         {loading ? "Product" : product.name}
                       </Link>
@@ -1910,10 +1913,11 @@ const EditProductPage = () => {
                   </li>
                   <li>
                     <Link
-                      to={{
-                        pathname: "/collections/all/products/" + product.pathname,
-                        previous_path: navigate.location.pathname,
-                      }}
+                      onClick={() =>
+                        navigate("/collections/all/products/" + product?.pathname, {
+                          state: { prevPath: location.pathname },
+                        })
+                      }
                     >
                       <GLButton variant="secondary" className="w-100per">
                         Go to {loading ? "Product" : product.name}

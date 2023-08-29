@@ -1,22 +1,23 @@
 // React
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
 const ProductSimpleItemM = ({ product, size, style }) => {
+  const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <li key={product.pathname} className=" w-100per" style={style}>
       <Link
-        to={{
-          pathname: "/collections/all/products/" + product.pathname,
-          previous_path: navigate.location.pathname,
-        }}
+        to={"/collections/all/products/" + product.pathname}
+        onClick={() =>
+          navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
+        }
       >
         <div className="small_screen_product row">
           <div className="row">
