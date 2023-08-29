@@ -413,16 +413,6 @@ const ProductPage = props => {
     });
   };
 
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     if (error) {
-  //       props.navigate("/collections/all/products");
-  //     }
-  //   }
-  //   return () => (clean = false);
-  // }, [error]);
-
   useEffect(() => {
     let clean = true;
     if (clean) {

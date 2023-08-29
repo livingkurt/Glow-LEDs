@@ -7,8 +7,10 @@ import { decide_warning, determine_total } from "../../utils/helper_functions";
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = props => {
+  const navigate = useNavigate();
   const cartPage = useSelector(state => state.carts.cartPage);
 
   const { my_cart } = cartPage;
@@ -24,9 +26,9 @@ const CartPage = props => {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
         if (current_user.hasOwnProperty("first_name")) {
-          props.navigate("/secure/checkout/placeorder");
+          navigate("/secure/checkout/placeorder");
         } else {
-          props.navigate("/checkout/placeorder");
+          navigate("/checkout/placeorder");
         }
       }
     }

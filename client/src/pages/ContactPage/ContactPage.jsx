@@ -6,9 +6,11 @@ import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const ContactPage = props => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const emailPage = useSelector(state => state.emails);
@@ -41,11 +43,11 @@ const ContactPage = props => {
     let clean = true;
     if (clean) {
       if (success) {
-        props.navigate("/pages/complete/email");
+        navigate("/pages/complete/email");
       }
     }
     return () => (clean = false);
-  }, [props.navigate, success]);
+  }, [navigate, success]);
 
   let request;
   const sendEmail = e => {

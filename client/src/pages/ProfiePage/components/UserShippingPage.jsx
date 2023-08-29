@@ -6,8 +6,10 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const ShippingPage = props => {
+  const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -98,7 +100,7 @@ const ShippingPage = props => {
       );
       const paymentMethod = "stripe";
       dispatch(save_payment_method({ paymentMethod }));
-      props.navigate("placeorder");
+      navigate("placeorder");
     }
   };
   setTimeout(() => {

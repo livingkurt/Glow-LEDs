@@ -17,7 +17,6 @@ const PasswordResetPublicPage = props => {
     e.preventDefault();
     dispatch(API.resetPassword(email));
     setWords("Check your Email to Change your Password");
-    // props.navigate(redirect);
   };
   return (
     <div className="form">

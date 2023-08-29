@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { validate_login } from "../../utils/validations";
 import { Helmet } from "react-helmet";
@@ -20,16 +20,17 @@ const LoginPage = props => {
   const { loading: user_loading, current_user, error } = userPage;
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (current_user && current_user.hasOwnProperty("first_name")) {
         const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
-        props.navigate(redirect);
+        navigate(redirect);
       }
     }
     return () => (clean = false);
-  }, [current_user, props.navigate]);
+  }, [current_user, navigate]);
 
   setTimeout(() => {
     set_loading(false);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { validate_registration } from "../../utils/validations";
 import { Helmet } from "react-helmet";
@@ -10,6 +10,7 @@ import * as API from "../../api";
 import { set_success } from "../../slices/userSlice";
 
 const RegisterPage = props => {
+  const navigate = useNavigate();
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [email, setEmail] = useState("");
@@ -51,7 +52,7 @@ const RegisterPage = props => {
         })
       );
       // dispatch(registerUser(first_name, last_name, email, password, rePassword));
-      // props.navigate('/account/login');
+      // navigate('/account/login');
     }
   };
 
@@ -59,7 +60,7 @@ const RegisterPage = props => {
     let clean = true;
     if (clean) {
       if (success) {
-        props.navigate("/account/login");
+        navigate("/account/login");
         dispatch(set_success(false));
       }
     }

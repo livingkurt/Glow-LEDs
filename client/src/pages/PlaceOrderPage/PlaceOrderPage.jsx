@@ -22,6 +22,7 @@ import { save_shipping } from "../../slices/cartSlice";
 // import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 
 const PlaceOrderPage = props => {
+  const navigate = useNavigate();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
@@ -122,11 +123,11 @@ const PlaceOrderPage = props => {
 
     if (clean) {
       if (current_user?.isWholesaler && !determine_wholesale_proceed()) {
-        props.navigate("/checkout/cart");
+        navigate("/checkout/cart");
       }
     }
     return () => (clean = false);
-  }, [cartItems, current_user, props.navigate]);
+  }, [cartItems, current_user, navigate]);
 
   useEffect(() => {
     let clean = true;
@@ -366,7 +367,7 @@ const PlaceOrderPage = props => {
     dimminish_stock();
     send_used_code_email();
     promo_code_used();
-    props.navigate("/secure/glow/orders");
+    navigate("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 
@@ -426,7 +427,7 @@ const PlaceOrderPage = props => {
     dispatch(API.emptyCart(my_cart._id));
     dimminish_stock();
     promo_code_used();
-    props.navigate("/secure/glow/orders");
+    navigate("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 
@@ -435,7 +436,7 @@ const PlaceOrderPage = props => {
     if (clean) {
       if (success_no_pay_order && order && totalPrice === 0) {
         setTimeout(() => {
-          props.navigate("/pages/complete/order/" + order._id);
+          navigate("/pages/complete/order/" + order._id);
           set_loading_payment(false);
           dispatch(API.emptyCart(my_cart._id));
           promo_code_used();
@@ -466,7 +467,7 @@ const PlaceOrderPage = props => {
     let clean = true;
     if (clean) {
       if (success && order?.hasOwnProperty("_id")) {
-        props.navigate("/pages/complete/order/" + order._id);
+        navigate("/pages/complete/order/" + order._id);
         set_loading_payment(false);
         dispatch(API.emptyCart(my_cart._id));
         promo_code_used();
@@ -705,7 +706,6 @@ const PlaceOrderPage = props => {
       set_payment_completed(true);
     }
   };
-  const navigate = useNavigate();
 
   useEffect(() => {
     let clean = true;

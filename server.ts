@@ -13,8 +13,6 @@ import config from "./config";
 const cors = require("cors");
 const passport = require("passport");
 const compression = require("compression");
-const expressAttack = require("express-attack");
-const requestIp = require("request-ip");
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
