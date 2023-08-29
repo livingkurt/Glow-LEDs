@@ -231,7 +231,6 @@ const PlaceOrderPage = () => {
   const choose_shipping_rate = (rate, speed, name) => {
     setShippingPrice(parseFloat(rate.retail_rate || rate.rate));
     setPreviousShippingPrice(parseFloat(rate.retail_rate || rate.rate));
-    console.log({ hide_pay_button });
     set_hide_pay_button(false);
     set_shipping_rate(rate);
     set_current_shipping_speed({ rate, speed, name });
@@ -244,7 +243,6 @@ const PlaceOrderPage = () => {
   const re_choose_shipping_rate = () => {
     setShippingPrice(0);
     setPreviousShippingPrice(0);
-    console.log({ hide_pay_button });
     set_hide_pay_button(true);
     set_shipping_rate({});
     set_show_payment(false);

@@ -17,7 +17,6 @@ const ShippingChoice = ({
   useEffect(() => {
     set_hide_pay_button(true);
   }, [rates, set_hide_pay_button]);
-  console.log({ hide_pay_button, shipping, rates });
   const [modalShown, setModalShown] = useState(false);
   return (
     <div className="w-100per">

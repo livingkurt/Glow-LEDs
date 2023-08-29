@@ -36,7 +36,6 @@ export const fetchTablePage =
       payload: { id },
     });
     return remoteApi({ search, filters, sorting, page, pageSize }).then(response => {
-      console.log({ response });
       if (response?.data) {
         dispatch({
           type: `${namespace}/${FETCH_TABLE_PAGE_SUCCESS}`,
@@ -53,7 +52,6 @@ export const fetchTableFilters =
       type: `${namespace}/${FETCH_TABLE_FILTERS}`,
     });
     return remoteFiltersApi().then(({ availableFilters, booleanFilters }) => {
-      console.log({ availableFilters, booleanFilters });
       dispatch({
         type: `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`,
         payload: { availableFilters, booleanFilters, defaultFilters },

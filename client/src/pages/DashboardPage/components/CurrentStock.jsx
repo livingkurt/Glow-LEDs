@@ -69,7 +69,6 @@ const CurrentStock = ({ currentStock }) => {
 
             const updatedProducts = optionProducts.map(product => {
               const batchStock = Number(value.count_in_stock) / Number(product.size);
-              console.log({ batchStock: Math.floor(batchStock) });
               return { ...product, count_in_stock: Math.floor(batchStock) };
             });
 

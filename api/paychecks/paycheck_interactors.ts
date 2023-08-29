@@ -2,7 +2,6 @@ import { affiliate_db } from "../affiliates";
 import { user_db } from "../users";
 
 export const normalizePaycheckFilters = (input: any) => {
-  console.log({ input });
   const output: any = {};
   Object.keys(input).forEach(key => {
     switch (key) {

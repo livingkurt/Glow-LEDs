@@ -18,7 +18,6 @@ export default {
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

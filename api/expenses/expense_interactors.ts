@@ -13,7 +13,6 @@ export const processInvoice = async (doc: any, record: any) => {
 
     // Upload the image to Imgur
     // const imgurLink = await uploadToImgur(sanitizedExpenseName, `${path}.1.png`);
-    // console.log({ imgurLink });
 
     // if (imgurLink) {
     //   // Create a new Ima  ge document with the Imgur URL
@@ -33,56 +32,5 @@ export const processInvoice = async (doc: any, record: any) => {
     //   // Return the new Image's ID
     //   return newImage._id;
     // }
-  } catch (error) {
-    console.log({ processInvoice: error });
-  }
+  } catch (error) {}
 };
-
-// import { Image } from "../images";
-// import { deleteAllTempFiles, deleteTempFile, downloadFile, sanitizeExpenseName, uploadToImgur } from "./expense_helpers";
-
-// // Interactors
-// export const processInvoice = async (doc: any, record: any) => {
-//   try {
-//     const url = doc.url;
-//     const sanitizedExpenseName = sanitizeExpenseName(record.Expense); // function to sanitize expense name
-//     const path = `temp/${sanitizedExpenseName}`;
-
-//     // Download the image and save it to a temporary file
-//     const fileExtension = await downloadFile(url, path, sanitizedExpenseName);
-
-//     let finalPath = path;
-//     if (fileExtension === ".pdf") {
-//       finalPath += ".1.png";
-//     } else if (fileExtension === ".png") {
-//       finalPath += ".png";
-//     }
-
-//     // Upload the image to Imgur
-//     const imgurLink = await uploadToImgur(sanitizedExpenseName, finalPath);
-//     console.log({ imgurLink });
-
-//     if (typeof imgurLink === "string" && imgurLink.length > 0) {
-//       // Create a new Image document with the Imgur URL
-//       const newImage = new Image({
-//         link: imgurLink,
-//         album: sanitizedExpenseName,
-//         deleted: false // set other fields as necessary
-//       });
-
-//       // Save the Image
-//       await newImage.save();
-
-//       deleteAllTempFiles();
-
-//       // Delete the temporary file
-//       // deleteTempFile(finalPath);
-//       // deleteTempFile(`${path}.pdf`);
-
-//       // Return the new Image's ID
-//       return newImage._id;
-//     }
-//   } catch (error) {
-//     console.log({ processInvoice: error });
-//   }
-// };

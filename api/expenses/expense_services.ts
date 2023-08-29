@@ -1,5 +1,11 @@
 import { Expense, expense_db } from "../expenses";
-import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
+import {
+  determine_category,
+  determine_application,
+  determine_filter,
+  determine_place,
+  unformat_date,
+} from "../../util";
 import { getFilteredData } from "../api_helpers";
 import config from "../../config";
 import { normalizeExpenseFilters, normalizeExpenseSearch } from "./expense_helpers";
@@ -15,14 +21,14 @@ export default {
         sort_options,
         search_name: "expense_name",
         normalizeFilters: normalizeExpenseFilters,
-        normalizeSearch: normalizeExpenseSearch
+        normalizeSearch: normalizeExpenseSearch,
       });
       const expenses = await expense_db.findAll_expenses_db(filter, sort, limit, page);
       const count = await expense_db.count_expenses_db(filter);
       return {
         data: expenses,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -35,7 +41,7 @@ export default {
       const availableFilters = {
         place_of_purchase: await Expense.distinct("place_of_purchase"),
         category: await Expense.distinct("category"),
-        card: await Expense.distinct("card")
+        card: await Expense.distinct("card"),
       };
       return { availableFilters };
     } catch (error) {
@@ -51,8 +57,8 @@ export default {
         deleted: false,
         date_of_purchase: {
           $gte: new Date(body.date_1),
-          $lt: new Date(body.date_2)
-        }
+          $lt: new Date(body.date_2),
+        },
       };
       const sort = { date_of_purchase: 1 };
 
@@ -170,7 +176,7 @@ export default {
       { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app0SsFiabhtaLV2f"), name: "2020 Expenses" },
       { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZpYNucg1uWM2tn"), name: "2021 Expenses" },
       { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appdOmbvAUthq73YV"), name: "2022 Expenses" },
-      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s"), name: "2023 Expenses" }
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s"), name: "2023 Expenses" },
     ];
 
     try {
@@ -215,8 +221,6 @@ export default {
                       // }
                     }
                   }
-                  // console.log({ airtable_invoice_links });
-                  console.log({ record });
 
                   //   // Create a new Mongoose airtable_invoice_link
                   const newExpense = new Expense({
@@ -229,7 +233,7 @@ export default {
                     amount: record.Amount,
                     airtable_id: expenseRecord.id,
                     airtable_invoice_links,
-                    deleted: record["Return Issues"] || false
+                    deleted: record["Return Issues"] || false,
                   });
                   // Save the Expense
                   await newExpense.save();
@@ -252,7 +256,6 @@ export default {
       // Wait for all the Promises to complete
       await Promise.all(promises);
     } catch (error) {
-      console.log({ get_airtable_expenses_s: error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -271,7 +274,11 @@ export default {
         expenses.push(object);
       }
 
-      const payment_check = ["AUTOPAY PAYMENT - THANK YOU", "CUSTOMER SERVICE PAYMENT - THANK YOU", "RETURNED AUTOPAY (DEORY)"];
+      const payment_check = [
+        "AUTOPAY PAYMENT - THANK YOU",
+        "CUSTOMER SERVICE PAYMENT - THANK YOU",
+        "RETURNED AUTOPAY (DEORY)",
+      ];
 
       expenses.forEach(async (expense: any) => {
         if (!payment_check.includes(expense.description)) {
@@ -283,7 +290,7 @@ export default {
             url: "",
             application: determine_application(expense.description),
             category: determine_category(expense.description),
-            amount: card === "GL AMEX" ? Math.abs(parseFloat(expense.amount)) * -1 : parseFloat(expense.amount)
+            amount: card === "GL AMEX" ? Math.abs(parseFloat(expense.amount)) * -1 : parseFloat(expense.amount),
           };
           await expense_db.create_expenses_db(row);
         }
@@ -313,5 +320,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

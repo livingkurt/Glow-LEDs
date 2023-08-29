@@ -1,62 +1,19 @@
-// @ts-nocheck
+export const normalizeCustomerInfo = ({ shipping, paymentMethod }: any) => ({
+  name: shipping.first_name + " " + shipping.last_name,
+  email: shipping.email,
+  address: {
+    city: shipping.city,
+    country: shipping.country,
+    line1: shipping.address_1,
+    line2: shipping.address_2,
+    postal_code: shipping.postalCode,
+    state: shipping.state,
+  },
+  payment_method: paymentMethod.id,
+});
 
-import config from "../../config";
-const stripe = require("stripe")(config.STRIPE_KEY);
-
-// Helper functions
-export const createCustomer = async current_userrmation => {
-  return new Promise((resolve, reject) => {
-    stripe.customers.create(current_userrmation, (err, customer) => {
-      if (err) reject(err);
-      else resolve(customer);
-    });
-  });
-};
-
-export const retrieveCustomer = async requestId => {
-  return new Promise((resolve, reject) => {
-    stripe.customers.retrieve(requestId, (err, customer) => {
-      if (err) reject(err);
-      else resolve(customer);
-    });
-  });
-};
-
-export const updateCustomer = async (customerId, current_userrmation) => {
-  return new Promise((resolve, reject) => {
-    stripe.customers.update(customerId, current_userrmation, (err, customer) => {
-      if (err) reject(err);
-      else resolve(customer);
-    });
-  });
-};
-
-export const createPaymentIntent = async (paymentInformation, customerId) => {
-  return new Promise((resolve, reject) => {
-    stripe.paymentIntents.create(
-      {
-        ...paymentInformation,
-        customer: customerId,
-      },
-      (err, result) => {
-        if (err) reject(err);
-        else resolve(result);
-      }
-    );
-  });
-};
-
-export const confirmPaymentIntent = async (paymentIntentId, paymentMethodId) => {
-  return new Promise((resolve, reject) => {
-    stripe.paymentIntents.confirm(
-      paymentIntentId,
-      {
-        payment_method: paymentMethodId,
-      },
-      (err, result) => {
-        if (err) reject(err);
-        else resolve(result);
-      }
-    );
-  });
-};
+export const normalizePaymentInfo = ({ totalPrice }: any) => ({
+  amount: (totalPrice * 100).toFixed(0),
+  currency: "usd",
+  payment_method_types: ["card"],
+});

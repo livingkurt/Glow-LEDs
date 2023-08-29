@@ -23,7 +23,7 @@ export default {
       return {
         data: images,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -57,7 +57,7 @@ export default {
         "https://api.imgur.com/3/album",
         { title: albumName, privacy: "hidden" },
         {
-          headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` }
+          headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
         }
       );
       const album = albumResponse.data.data;
@@ -67,9 +67,9 @@ export default {
         const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
           headers: {
             Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "multipart/form-data",
           },
-          params: { album: album.deletehash }
+          params: { album: album.deletehash },
         });
         uploadedImageLinks.push(imgResponse.data.data.link);
       }
@@ -86,7 +86,6 @@ export default {
 
       return images;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -164,5 +163,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

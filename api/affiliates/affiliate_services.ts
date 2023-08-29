@@ -129,7 +129,6 @@ export default {
         numberOfContent: numberOfContent,
         // add any additional fields here
       };
-      console.log({ checkin });
 
       const affiliate: any = await Affiliate.findOne({ _id: id });
       if (affiliate) {
@@ -153,7 +152,6 @@ export default {
           } else {
             affiliate.sponsorMonthlyCheckins.push(checkin);
           }
-          console.log({ month, prevMonth, year, prevYear });
           // If the check-in is for the previous month and year, generate sponsor codes
           if (month === prevMonth && year === prevYear) {
             console.log("Generating sponsor codes...");
@@ -167,7 +165,6 @@ export default {
         return affiliate;
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

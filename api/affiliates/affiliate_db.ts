@@ -239,7 +239,6 @@ export default {
     }
   },
   remove_affiliates_db: async (id: string) => {
-    console.log({ id });
     try {
       const affiliate: any = await Affiliate.findOne({ _id: id });
       if (affiliate) {

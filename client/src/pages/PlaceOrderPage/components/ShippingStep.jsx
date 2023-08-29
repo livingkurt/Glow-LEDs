@@ -60,7 +60,6 @@ const ShippingStep = ({
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  console.log({ hide_pay_button });
   useEffect(() => {
     set_hide_pay_button(true);
   }, []);
@@ -590,8 +589,6 @@ const ShippingStep = ({
                     id="open-modal"
                     className={`${show_shipping_complete && !hide_pay_button ? "bob" : "disabled"} mt-10px w-100per`}
                     onClick={() => {
-                      console.log({ show_shipping_complete, hide_pay_button });
-                      // set_show_modal(true);
                       if (show_shipping_complete && !hide_pay_button) {
                         next_step("payment");
                       }

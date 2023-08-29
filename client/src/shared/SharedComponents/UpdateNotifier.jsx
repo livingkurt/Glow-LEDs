@@ -24,9 +24,7 @@ const UpdateNotifier = () => {
 
       // Clean up the interval on unmount
       return () => clearInterval(interval);
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
   }, [version]);
 
   const handleUpdate = () => {

@@ -275,7 +275,6 @@ const CreateLabelModal = () => {
 
   useEffect(() => {
     if (label.length > 0) {
-      console.log({ label });
       setTimeout(() => {
         printLabel(label);
       }, 1000);

@@ -64,9 +64,7 @@ export const deactivateOldCodes = async (affiliate: any) => {
         await promo_db.update_promos_db(code.id, { active: false });
       })
     );
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const generateSponsorCodes = async (affiliate: any) => {

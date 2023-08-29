@@ -135,7 +135,6 @@ export default {
   },
   create_pickup_shipping_s: async (body: any) => {
     const { readyTime, latestTimeAvailable } = body;
-    console.log({ readyTime, latestTimeAvailable });
 
     try {
       const formattedReadyTime = new Date(readyTime);
@@ -165,7 +164,6 @@ export default {
         "0",
         "1"
       );
-      console.log({ orders });
       if (orders?.length === 0 || !orders) {
         throw new Error("Orders not found");
       }
@@ -192,7 +190,6 @@ export default {
         return { pickup, orders };
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -242,7 +239,6 @@ export default {
 
   create_custom_label_shipping_s: async (body: any) => {
     const { selectedRateId, shipmentId } = body;
-    console.log({ selectedRateId, shipmentId });
     try {
       return await EasyPost.Shipment.buy(shipmentId, selectedRateId);
     } catch (error) {

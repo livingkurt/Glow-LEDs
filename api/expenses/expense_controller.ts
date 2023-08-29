@@ -109,7 +109,6 @@ export default {
   },
   get_range_expenses_expenses_c: async (req: any, res: any) => {
     const { start_date, end_date } = req.query;
-    console.log({ start_date, end_date });
     try {
       const expense = await expense_db.get_range_expenses_expenses_db(start_date, end_date);
       if (expense) {
@@ -122,7 +121,6 @@ export default {
   },
   get_daily_expenses_expenses_c: async (req: any, res: any) => {
     const { start_date, end_date } = req.query;
-    console.log({ start_date, end_date });
     try {
       const expense = await expense_db.get_daily_expenses_expenses_db(start_date, end_date);
       if (expense) {
@@ -155,5 +153,5 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Finding Expenses" });
     }
-  }
+  },
 };

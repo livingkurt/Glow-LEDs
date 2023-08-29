@@ -66,12 +66,10 @@ export const clearTracking = async ({ order, isReturnTracking = false }: any) =>
 export const createTracker = async ({ order }: any) => {
   try {
     const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
-    console.log({ label });
     const tracker = await EasyPost.Tracker.create({
       tracking_code: order.tracking_number,
       carrier: order.shipping?.shipping_rate?.carrier || label.selected_rate.carrier,
     });
-    console.log({ tracker });
     order.tracking_url = tracker.public_url;
     order.shipping.shipping_label = label;
     order.shipping.shipping_rate = order.shipping?.shipping_rate || label.selected_rate;
@@ -80,7 +78,6 @@ export const createTracker = async ({ order }: any) => {
     await order_db.update_orders_db(order._id, order);
     return tracker;
   } catch (error) {
-    console.log("Error creating tracker:", error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -124,9 +121,7 @@ export const createLabel = async ({ order, shipping_rate }: any) => {
       (rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier
     );
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
-  } catch (error) {
-    console.error("Error create label:", error);
-  }
+  } catch (error) {}
 };
 
 export const createShippingRates = async ({ order, returnLabel }: any) => {
@@ -189,7 +184,6 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
         commercial_invoice_signature: "IMAGE_2",
       },
     });
-    console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
     if (error instanceof Error) {
@@ -237,7 +231,6 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
         commercial_invoice_signature: "IMAGE_2",
       },
     });
-    console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
     if (error instanceof Error) {
