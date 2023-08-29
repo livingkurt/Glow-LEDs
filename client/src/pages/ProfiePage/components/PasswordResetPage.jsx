@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
-const PasswordResetPublicPage = props => {
+const PasswordResetPublicPage = () => {
   const [email, setEmail] = useState("");
   const userPage = useSelector(state => state.users.userPage);
   const { loading, current_user, error } = userPage;

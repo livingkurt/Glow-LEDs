@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Loading, Notification } from "../../../shared/SharedComponents";
 import { humanize } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -12,23 +12,23 @@ import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../../api";
 
-const AllProductsPage = props => {
+const AllProductsPage = ({ set_message }) => {
+  const params = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [product_occurrences, set_product_occurrences] = useState([]);
   const [best_sellers, set_best_sellers] = useState([]);
   const [loading_products, set_loading_products] = useState(false);
   const [products, set_products] = useState([]);
   const [chip, set_chip] = useState("");
-  const [search, set_search] = useState(props.location.search.substring(8) ? props.location.search.substring(8) : "");
+  const [search, set_search] = useState(location.search.substring(8) ? location.search.substring(8) : "");
   const [sort, setSortOrder] = useState("");
-  const [filter, set_filter] = useState(
-    props.location.hasOwnProperty("filter") ? props.location.filter.substring(8) : ""
-  );
+  const [filter, set_filter] = useState(location.hasOwnProperty("filter") ? location.filter.substring(8) : "");
 
-  const category = props.match.params.category ? props.match.params.category : "";
-  const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
-  const collection = props.match.params.collection ? props.match.params.collection : "";
-  const promo_code = props.match.params.promo_code ? props.match.params.promo_code : "";
+  const category = params.category ? params.category : "";
+  const subcategory = params.subcategory ? params.subcategory : "";
+  const collection = params.collection ? params.collection : "";
+  const promo_code = params.promo_code ? params.promo_code : "";
 
   const productPage = useSelector(state => state.products.productPage);
   const { products: main_products, loading, error } = productPage;
@@ -42,7 +42,7 @@ const AllProductsPage = props => {
     if (clean) {
       if (promo_code) {
         sessionStorage.setItem("promo_code", promo_code);
-        props.set_message(`${promo_code} Added to Checkout`);
+        set_message(`${promo_code} Added to Checkout`);
       }
     }
     return () => (clean = false);

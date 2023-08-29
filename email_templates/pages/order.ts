@@ -3,11 +3,10 @@ import {
   email_sale_price_switch,
   determine_product_name,
   determin_card_logo_images_white,
-  order_status_steps
+  order_status_steps,
 } from "../../util";
 
-export default (props: any): string => {
-  const { email, order } = props;
+export default ({ email, order }: any): string => {
   return `<table style="width:100%;border-spacing:0; padding: 10px;">
 	<tr>
 		<td style="font-family:helvetica;border:0">
@@ -188,26 +187,46 @@ export default (props: any): string => {
                                                             : ""
                                                         }'>
 																										<img id="expandedImg" alt=${item.name} title=${
-                                                          item.name
-                                                        } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                                          item.name
-                                                            ? item.name.split("-")[1]
-                                                              ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                              : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                            : ""
-                                                        } ${item.name ? (item.name.split("-")[1] ? "width: 70px;" : "width: 35px;") : ""} ${
-                                                          item.name ? (item.name.split("-")[1] ? "height: 35px;" : "height: 70px;") : ""
-                                                        }' src=${item.display_image} />
+                                                      item.name
+                                                    } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
+                                                      item.name
+                                                        ? item.name.split("-")[1]
+                                                          ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                          : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                        : ""
+                                                    } ${
+                                                      item.name
+                                                        ? item.name.split("-")[1]
+                                                          ? "width: 70px;"
+                                                          : "width: 35px;"
+                                                        : ""
+                                                    } ${
+                                                      item.name
+                                                        ? item.name.split("-")[1]
+                                                          ? "height: 35px;"
+                                                          : "height: 70px;"
+                                                        : ""
+                                                    }' src=${item.display_image} />
 																										<img id="expandedSecondaryImg" alt=${item.name} title=${item.name}
 																											style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                                          item.name
-                                                            ? item.name.split("-")[1]
-                                                              ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                              : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                            : ""
-                                                        } ${item.name ? (item.name.split("-")[1] ? "width: 70px;" : "width: 35px;") : ""} ${
-                                                          item.name ? (item.name.split("-")[1] ? "height: 35px;" : "height: 70px;") : ""
-                                                        }' src=${item.secondary_image} />
+                                                        item.name
+                                                          ? item.name.split("-")[1]
+                                                            ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                            : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                          : ""
+                                                      } ${
+                                                        item.name
+                                                          ? item.name.split("-")[1]
+                                                            ? "width: 70px;"
+                                                            : "width: 35px;"
+                                                          : ""
+                                                      } ${
+                                                        item.name
+                                                          ? item.name.split("-")[1]
+                                                            ? "height: 35px;"
+                                                            : "height: 70px;"
+                                                          : ""
+                                                      }' src=${item.secondary_image} />
 																									</div>`
                                                       : `
 																									<div />`
@@ -259,7 +278,7 @@ export default (props: any): string => {
                                           .map((item: any) => {
                                             return {
                                               price: item.sale_price ? item.sale_price : item.price,
-                                              qty: item.qty
+                                              qty: item.qty,
                                             };
                                           })
                                           .reduce((a: any, c: any) => a + c.price * c.qty, 0)
@@ -282,7 +301,7 @@ export default (props: any): string => {
                                           .map((item: any) => {
                                             return {
                                               price: item.sale_price ? item.sale_price : item.price,
-                                              qty: item.qty
+                                              qty: item.qty,
                                             };
                                           })
                                           .reduce((a: any, c: any) => a + c.price * c.qty, 0)
@@ -300,7 +319,9 @@ export default (props: any): string => {
 																		style="font-size:16px;margin-left:5px"><img
 																			src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
 																			style="height:16px;margin-right:10px" alt="tag_logo" /><span
-																			style="font-size:14px;line-height:1.1;margin-left:-4px">${order && order.promo_code ? order.promo_code?.toUpperCase() : ""}</span></span>
+																			style="font-size:14px;line-height:1.1;margin-left:-4px">${
+                                        order && order.promo_code ? order.promo_code?.toUpperCase() : ""
+                                      }</span></span>
 																</p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
@@ -403,7 +424,9 @@ export default (props: any): string => {
 																		style="font-size:16px">Refund Amount</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
-																	style="font-size:16px;color:white">-$${(order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100)?.toFixed(2)}</strong></td>
+																	style="font-size:16px;color:white">-$${(
+                                    order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                                  )?.toFixed(2)}</strong></td>
 														</tr>
 														<tr>
 															<td style="font-family:helvetica;padding:5px 0;">
@@ -412,7 +435,8 @@ export default (props: any): string => {
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
 																	style="font-size:24px;color:white">$${Math.abs(
-                                    order.totalPrice - order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                                    order.totalPrice -
+                                      order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
                                   )?.toFixed(2)}</strong></td>
 														</tr>
 													</tbody>
@@ -496,16 +520,22 @@ export default (props: any): string => {
 
 										<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
 											${
-                        order.payment && order.payment.payment && order.payment.payment.card && order.payment.payment.card.brand
+                        order.payment &&
+                        order.payment.payment &&
+                        order.payment.payment.card &&
+                        order.payment.payment.card.brand
                           ? `<img src=${determin_card_logo_images_white(order.payment.payment.card.brand)}
 												style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
 												alt="card_logo">`
                           : ""
                       } <span style="font-size:16px">ending with ${
-    order.payment && order.payment.payment && order.payment.payment.card && order.payment.payment.card
-      ? order.payment.payment.card.last4
-      : ""
-  }</span></p>
+                        order.payment &&
+                        order.payment.payment &&
+                        order.payment.payment.card &&
+                        order.payment.payment.card
+                          ? order.payment.payment.card.last4
+                          : ""
+                      }</span></p>
 									</td>
 								</tr>
 							</tbody>

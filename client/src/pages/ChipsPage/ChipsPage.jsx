@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
@@ -8,10 +8,11 @@ import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const ChipsPage = props => {
+const ChipsPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
   const chipPage = useSelector(state => state.chips);
   const { loading, chips, message, error, success } = chipPage;
 

@@ -1,8 +1,6 @@
 import * as React from "react";
 
-const Rating = props => {
-  const { rating, numReviews } = props;
-
+const Rating = ({ rating, numReviews }) => {
   return !rating ? (
     <div />
   ) : (

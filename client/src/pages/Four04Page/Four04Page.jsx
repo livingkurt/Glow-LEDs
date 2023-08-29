@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
 
-const Four04Page = props => {
+const Four04Page = () => {
   return (
     <div className="jc-c column ta-c">
       <Helmet>

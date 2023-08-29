@@ -1749,7 +1749,7 @@ router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
 });
 router.route("/export_expenses_as_csv").put(async (req: any, res: any) => {
   try {
-    const expenses = await Expense.find({});
+    const expenses: any = await Expense.find({});
 
     const jsonExpenses = JSON.parse(JSON.stringify(expenses));
     const csvFields = Object.keys(expenses[0]._doc);
@@ -1806,7 +1806,7 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
       console.log(
         `Finding documents with conditions: status ${status} not true, prevStatus ${prevStatus} true, createdAt before ${cutoffDate}`
       );
-      const docs = await Order.find({
+      const docs: any = await Order.find({
         [status]: { $ne: true }, // status is not true
         [prevStatus]: true, // previous status is true
         createdAt: { $lt: cutoffDate }, // created before the cutoff date
@@ -1849,7 +1849,7 @@ router.route("/migrate_orders").put(async (req: any, res: any) => {
       return res.status(400).send({ message: "Both oldUserId and newUserId are required." });
     }
 
-    const result = await Order.updateMany(
+    const result: any = await Order.updateMany(
       { user: oldUserId }, // find all orders with the oldUserId
       { $set: { user: newUserId } } // update the user field to the newUserId
     );
@@ -1886,7 +1886,7 @@ router.route("/sample_ids").put(async (req, res) => {
 router.route("/migrate_payments").put(async (req, res) => {
   try {
     // Fetch all orders from the database
-    const orders = await Order.find({});
+    const orders: any = await Order.find({});
 
     // Iterate over each order
     for (const order of orders) {
@@ -1959,7 +1959,7 @@ router.route("/import_checkins").put(async (req, res) => {
 
           const checkin = { month, questionsConcerns, year: 2023 };
 
-          const affiliate = await Affiliate.findOne({ artist_name });
+          const affiliate: any = await Affiliate.findOne({ artist_name });
           if (affiliate) {
             // Check if there is already a checkin for the same month and year.
             const existingCheckin = affiliate.sponsorMonthlyCheckins.find(

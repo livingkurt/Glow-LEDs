@@ -10,8 +10,8 @@ export default {
         ? {
             team_name: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -32,11 +32,16 @@ export default {
       }
       const teams = await team_db.findAll_teams_db(filter, sort, limit, page);
       const count = await team_db.count_teams_db(filter);
-      return {
-        teams,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          teams,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        // Handle the case where count is undefined
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -87,5 +92,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

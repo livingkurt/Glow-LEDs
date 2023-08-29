@@ -1,7 +1,7 @@
 import { Paycheck } from "../paychecks";
 
 export default {
-  findAll_paychecks_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_paychecks_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Paycheck.find(filter)
         .sort(sort)
@@ -37,7 +37,10 @@ export default {
   },
   findMy_paychecks_db: async (affiliate_id: string) => {
     try {
-      return await Paycheck.find({ deleted: false, affiliate: affiliate_id }).sort({ _id: -1 }).populate("affiliate").populate("team");
+      return await Paycheck.find({ deleted: false, affiliate: affiliate_id })
+        .sort({ _id: -1 })
+        .populate("affiliate")
+        .populate("team");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -102,15 +105,15 @@ export default {
         {
           $match: {
             deleted: false,
-            paid: true
-          }
+            paid: true,
+          },
         },
         {
           $group: {
             _id: null,
-            totalAmount: { $sum: "$amount" }
-          }
-        }
+            totalAmount: { $sum: "$amount" },
+          },
+        },
       ]).exec();
       return totalAmount;
     } catch (error) {
@@ -128,16 +131,16 @@ export default {
             paid: true,
             paid_at: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
             _id: null,
-            totalAmount: { $sum: "$amount" }
-          }
-        }
+            totalAmount: { $sum: "$amount" },
+          },
+        },
       ]).exec();
       return totalAmount;
     } catch (error) {
@@ -145,5 +148,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

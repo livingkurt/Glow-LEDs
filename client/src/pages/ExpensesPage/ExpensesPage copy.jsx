@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
@@ -12,13 +12,14 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 // import CSVReader from "react-csv-reader";
 import * as API from "../../api";
 
-const ExpensesPage = props => {
+const ExpensesPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [card_type, set_card_type] = useState("GL AMEX");
   const navigate = useNavigate();
 
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;

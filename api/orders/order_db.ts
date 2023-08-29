@@ -3,7 +3,7 @@ import { Order } from "../orders";
 import { Affiliate } from "../affiliates";
 
 export default {
-  table_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  table_orders_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -53,7 +53,7 @@ export default {
     }
   },
 
-  findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_orders_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Order.find(filter)
         .sort(sort)

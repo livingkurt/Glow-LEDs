@@ -10,7 +10,7 @@ import { CartItem, RecentlyViewed, TopCategories } from "./components";
 import { checkoutHandler, determine_wholesale_proceed, useOutsideAlerter } from "./cartHelpers";
 import LoadingInside from "../../SharedComponents/LoadingInside";
 
-const Cart = props => {
+const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [category_items, set_category_items] = useState([]);
@@ -49,8 +49,8 @@ const Cart = props => {
   const { cartItems } = my_cart;
 
   const handleCheckout = useCallback(
-    () => checkoutHandler(dispatch, navigate, props, cartItems, current_user, closeMenu),
-    [dispatch, props, cartItems, current_user]
+    () => checkoutHandler(dispatch, navigate, current_user, closeMenu),
+    [dispatch, current_user]
   );
 
   const wholesaleProceed = useCallback(

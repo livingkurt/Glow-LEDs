@@ -26,7 +26,6 @@ export const normalizePaycheckFilters = (input: any) => {
         break;
     }
   });
-  console.log({ output });
   return output;
 };
 
@@ -35,8 +34,8 @@ export const normalizePaycheckSearch = (query: any) => {
     ? {
         "$affiliate.artist_name": {
           $regex: query.search.toLowerCase(),
-          $options: "i"
-        }
+          $options: "i",
+        },
       }
     : {};
 

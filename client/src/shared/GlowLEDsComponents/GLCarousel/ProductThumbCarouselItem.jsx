@@ -6,8 +6,8 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
 import { useSelector } from "react-redux";
 
-const ProductThumbCarouselItem = props => {
-  const [product, set_product] = useState(props.product);
+const ProductThumbCarouselItem = ({ product, size, style }) => {
+  const [product, set_product] = useState(product);
   const [loading, set_loading] = useState(true);
 
   const userPage = useSelector(state => state.users.userPage);
@@ -21,12 +21,12 @@ const ProductThumbCarouselItem = props => {
       set_loading(false);
     }
     return () => (clean = false);
-  }, [props.product]);
+  }, [product]);
 
   return (
     <div>
       {!loading && (
-        <li key={props.product && product.pathname} style={props.style}>
+        <li key={product && product.pathname} style={style}>
           <Link
             to={{
               pathname: product && "/collections/all/products/" + product.pathname,
@@ -38,7 +38,7 @@ const ProductThumbCarouselItem = props => {
                 className="product-image"
                 alt={product.name}
                 title="Product Image"
-                size={{ height: props.size, width: props.size }}
+                size={{ height: size, width: size }}
                 effect="blur"
                 src={product?.images_object[0].link}
               />
@@ -46,7 +46,7 @@ const ProductThumbCarouselItem = props => {
 								className="product-image"
 								alt={product.name}
 								title="Product Image"
-								style={{ height: props.size, width: props.size }}
+								style={{ height: size, width: size }}
 								effect="blur"
 								src={product?.images_object[0].link}
 							/> */}
@@ -59,8 +59,8 @@ const ProductThumbCarouselItem = props => {
               </label>
               <label className="product-price">
                 {sale_price_switch({
-                  product: props.product,
-                  cartItem: props.product.product_options,
+                  product: product,
+                  cartItem: product.product_options,
                   isWholesaler: current_user?.isWholesaler,
                 })}
               </label>

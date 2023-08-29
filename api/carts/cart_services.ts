@@ -13,7 +13,7 @@ export default {
       return {
         data: carts,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -75,7 +75,7 @@ export default {
     try {
       // Get the user's active cart if the user is logged in
       if (current_user && Object.keys(current_user).length > 0) {
-        let data = await cart_db.findByUser_carts_db(current_user._id);
+        let data: any = await cart_db.findByUser_carts_db(current_user._id);
         if (data) {
           data.cartItems = updateCartItems(data.cartItems, cart_item);
           await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
@@ -210,7 +210,7 @@ export default {
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
-        const data = await cart_db.findById_carts_db(id);
+        const data: any = await cart_db.findById_carts_db(id);
         const cartItems = [...data.cartItems];
         cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
         console.log({ cartItems });
@@ -221,7 +221,7 @@ export default {
         } else {
           console.log("Update Cart");
           await cart_db.update_carts_db(id, {
-            cartItems: cartItems
+            cartItems: cartItems,
           });
           console.log("Send New Cart");
           const new_cart = await cart_db.findById_carts_db(id);
@@ -244,5 +244,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

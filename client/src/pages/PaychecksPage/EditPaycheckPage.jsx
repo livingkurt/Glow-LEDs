@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -10,7 +10,8 @@ import { set_affiliate } from "../../slices/affiliateSlice";
 import { set_team } from "../../slices/teamSlice";
 import { set_paycheck } from "../../slices/paycheckSlice";
 
-const EditPaycheckPage = props => {
+const EditPaycheckPage = () => {
+  const params = useParams();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const navigate = useNavigate();
@@ -31,12 +32,12 @@ const EditPaycheckPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsPaycheck(props.match.params.id));
+      dispatch(API.detailsPaycheck(params.id));
       dispatch(API.listAffiliates({}));
       dispatch(API.listTeams({}));
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -76,7 +77,7 @@ const EditPaycheckPage = props => {
   const today = date.toISOString();
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Paycheck" : "Create Paycheck"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Paycheck" : "Create Paycheck"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

@@ -5,7 +5,7 @@ const stripe = require("stripe")(config.STRIPE_KEY);
 export default {
   secure_pay_payments_c: async (req: any, res: any) => {
     try {
-      const order = await Order.findById(req.params.id).populate("user");
+      const order: any = await Order.findById(req.params.id).populate("user");
       const current_userrmation = {
         name: order.shipping.first_name + " " + order.shipping.last_name,
         email: order.shipping.email,
@@ -188,7 +188,7 @@ export default {
     console.log({ order_id });
     try {
       //
-      const order = await Order.findById(order_id);
+      const order: any = await Order.findById(order_id);
       const refund = await stripe.refunds.create({
         payment_intent: order.payment.charge.id,
         amount: (parseFloat(req.body.refundAmount) * 100).toFixed(0),

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
@@ -8,7 +8,8 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { set_team } from "../../slices/teamSlice";
 
-const EditTeamPage = props => {
+const EditTeamPage = () => {
+  const params = useParams();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
@@ -54,13 +55,13 @@ const EditTeamPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsTeam(props.match.params.pathname));
+      dispatch(API.detailsTeam(params.pathname));
       dispatch(API.listAffiliates({}));
       dispatch(API.listPromos({}));
       dispatch(API.listUsers({}));
     }
     return () => (clean = false);
-  }, [props.match.params.pathname]);
+  }, [params.pathname]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -197,7 +198,7 @@ const EditTeamPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Team" : "Create Team"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Team" : "Create Team"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

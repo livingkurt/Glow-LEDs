@@ -4,7 +4,7 @@ import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Content } from "../../utils";
 import { GLButton } from "../GlowLEDsComponents";
 
-const Banner = props => {
+const Banner = () => {
   const { height, width } = useWindowDimensions();
   const [content, set_content] = useState([]);
 
@@ -50,12 +50,22 @@ const Banner = props => {
               </a>
             </div>
             <div className="ml-10px">
-              <a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a
+                href="https://www.instagram.com/glow_leds/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <i className="fab fa-instagram zoom" />
               </a>
             </div>
             <div className="ml-10px">
-              <a href="https://www.tiktok.com/@glow_leds?lang=en" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+              <a
+                href="https://www.tiktok.com/@glow_leds?lang=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+              >
                 <i className="fab fa-tiktok zoom" />
               </a>
             </div>
@@ -70,7 +80,12 @@ const Banner = props => {
               </a>
             </div>
             <div className="">
-              <a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <a
+                href="https://soundcloud.com/ntre/tracks"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
                 <i className="fab fa-soundcloud" />
               </a>
             </div>

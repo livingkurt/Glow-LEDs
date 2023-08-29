@@ -116,7 +116,7 @@ export const normalizeOrderSearch = (query: any) => {
   const UPS_REGEX = /^1Z[A-Z0-9]{16}$/; // Matches UPS tracking numbers
 
   if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
-    search = query.search ? { _id: mongoose.Types.ObjectId(query.search) } : {};
+    search = query.search ? { _id: new mongoose.Types.ObjectId(query.search) } : {};
   } else if (query.search && isEmail(query.search)) {
     search = query.search
       ? {
@@ -189,7 +189,7 @@ export const getCodeUsage = async (data: any) => {
     const limit = "0";
     const page = "1";
 
-    const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+    const orders: any = await order_db.findAll_orders_db(filter, sort, limit, page);
 
     const number_of_uses = orders
       .filter((order: any) => order.promo_code)

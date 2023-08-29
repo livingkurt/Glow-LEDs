@@ -48,8 +48,8 @@ export const normalizePromoSearch = (query: any) => {
     ? {
         promo_code: {
           $regex: query.search.toLowerCase(),
-          $options: "i"
-        }
+          $options: "i",
+        },
       }
     : {};
 
@@ -58,7 +58,7 @@ export const normalizePromoSearch = (query: any) => {
 
 export const deactivateOldCodes = async (affiliate: any) => {
   try {
-    const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
+    const old_codes: any = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
     await Promise.all(
       old_codes.map(async (code: any) => {
         await promo_db.update_promos_db(code.id, { active: false });
@@ -93,7 +93,7 @@ export const generateSponsorCodes = async (affiliate: any) => {
       time_limit: true,
       start_date: start_date,
       end_date: end_date,
-      active: true
+      active: true,
     };
     const refresh_private_code = {
       affiliate: affiliate._id,
@@ -112,7 +112,7 @@ export const generateSponsorCodes = async (affiliate: any) => {
       time_limit: true,
       start_date: start_date,
       end_date: end_date,
-      active: true
+      active: true,
     };
     const refresh_pack_code: any = await promo_db.create_promos_db(refresh_private_code);
     const allowance_code: any = await promo_db.create_promos_db(private_code);

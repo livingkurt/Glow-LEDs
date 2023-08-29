@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
@@ -9,9 +9,10 @@ import * as API from "../../api";
 import config from "../../config";
 import { domain } from "../../helpers/sharedHelpers";
 
-const ContentsPage = props => {
+const ContentsPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
   const contentPage = useSelector(state => state.contents);
   const { loading, contents, message, error, success } = contentPage;
 

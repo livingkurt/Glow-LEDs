@@ -1,7 +1,7 @@
 import { Cart } from "../carts";
 
 export default {
-  findAll_carts_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_carts_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Cart.find(filter)
         .sort(sort)
@@ -93,5 +93,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

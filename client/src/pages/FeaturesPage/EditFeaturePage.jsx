@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditFeaturePage = props => {
+const EditFeaturePage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [user, set_user] = useState("");
   const [artist_name, set_artist_name] = useState("");
@@ -41,9 +42,9 @@ const EditFeaturePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.pathname) {
-        dispatch(API.detailsFeature(props.match.params.pathname));
-        dispatch(API.detailsFeature(props.match.params.pathname));
+      if (params.pathname) {
+        dispatch(API.detailsFeature(params.pathname));
+        dispatch(API.detailsFeature(params.pathname));
       } else {
         dispatch(API.detailsFeature({}));
       }
@@ -251,7 +252,7 @@ const EditFeaturePage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Feature" : "Create Feature"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.pathname ? "Edit Feature" : "Create Feature"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

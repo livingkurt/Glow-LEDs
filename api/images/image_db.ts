@@ -1,7 +1,7 @@
 import { Image } from "../images";
 
 export default {
-  findAll_images_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_images_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Image.find(filter)
         .sort(sort)
@@ -89,5 +89,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

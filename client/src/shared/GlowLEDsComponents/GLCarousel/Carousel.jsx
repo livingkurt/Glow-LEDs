@@ -10,7 +10,7 @@ import Overflow from "react-overflow-indicator";
 import { GLButton } from "..";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
 
-const Carousel = props => {
+const Carousel = ({ title, category, random, add_to_cart, product_pathname }) => {
   const { height, width } = useWindowDimensions();
 
   const [products, set_products] = useState([]);
@@ -19,22 +19,24 @@ const Carousel = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.category) {
-        get_products(props.category);
+      if (category) {
+        get_products(category);
       } else {
         get_products("all");
       }
     }
     return () => (clean = false);
-  }, [props.category]);
+  }, [category]);
 
   const get_products = async category => {
     set_loading(true);
     const { data } = await API_Products.findAllGrid_products_a({ category });
 
-    set_products(typeof data === "object" && data.products.filter(product => product.pathname !== props.product_pathname));
-    if (props.random) {
-      set_products(typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== props.product_pathname)));
+    set_products(typeof data === "object" && data.products.filter(product => product.pathname !== product_pathname));
+    if (random) {
+      set_products(
+        typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== product_pathname))
+      );
     }
     set_loading(false);
   };
@@ -85,7 +87,7 @@ const Carousel = props => {
     <div className="mh-10px">
       {products.length > 0 && (
         <div>
-          <h2 className="jc-c w-100per ta-c">{props.title}</h2>
+          <h2 className="jc-c w-100per ta-c">{title}</h2>
 
           <Loading loading={loading}>
             {products &&
@@ -108,10 +110,12 @@ const Carousel = props => {
                         <CarouselItem
                           key={product_number + x}
                           size="175px"
-                          add_to_cart={props.add_to_cart}
+                          add_to_cart={add_to_cart}
                           product={
                             products &&
-                            products.filter(product => !product.option).filter(product => product.hidden === false)[product_number + x]
+                            products.filter(product => !product.option).filter(product => product.hidden === false)[
+                              product_number + x
+                            ]
                           }
                           style={{ listStyleType: "none" }}
                         />
@@ -136,7 +140,12 @@ const Carousel = props => {
                     <Overflow.Content>
                       <div className="row p-10px overflow-s">
                         {products.map((item, index) => (
-                          <ProductItemD key={index} size="175px" product={item} style={{ marginRight: 20, listStyleType: "none" }} />
+                          <ProductItemD
+                            key={index}
+                            size="175px"
+                            product={item}
+                            style={{ marginRight: 20, listStyleType: "none" }}
+                          />
                         ))}
                       </div>
                     </Overflow.Content>

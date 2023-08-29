@@ -14,7 +14,7 @@ import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "../../pages/PalettesPage";
 import { EditFilamentPage, FilamentsPage } from "../../pages/FilamentsPage";
 import { DashboardPage } from "../../pages/DashboardPage";
-import { EditExpensePage, ExpensesPage } from "../../pages/ExpensesPage";
+import { ExpensesPage } from "../../pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage, EditContentPage } from "../../pages/ContentsPage";
@@ -125,7 +125,6 @@ export const AdminComponents = {
   EditFilamentPage,
   AdminChangePasswordPage,
   DashboardPage,
-  EditExpensePage,
   EditFeaturePage,
   ExpensesPage,
   FeaturesPage,

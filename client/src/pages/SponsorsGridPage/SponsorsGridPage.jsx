@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { SponsorItemD, SponsorItemM } from "./components";
 import * as API from "../../api";
 
-const AllSponsorsPage = props => {
+const AllSponsorsPage = () => {
+  const params = useParams();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading, error } = affiliatePage;
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const AllSponsorsPage = props => {
                   {affiliates.map(
                     (affiliate, index) =>
                       !affiliate.hidden && (
-                        <SponsorItemD size="300px" key={index} affiliate={affiliate} category={props.match.params.category} />
+                        <SponsorItemD size="300px" key={index} affiliate={affiliate} category={params.category} />
                       )
                   )}
                 </ul>
@@ -68,14 +69,16 @@ const AllSponsorsPage = props => {
                   {affiliates.map(
                     (affiliate, index) =>
                       !affiliate.hidden && (
-                        <SponsorItemM size="300px" key={index} affiliate={affiliate} category={props.match.params.category} />
+                        <SponsorItemM size="300px" key={index} affiliate={affiliate} category={params.category} />
                       )
                   )}
                 </ul>
               )}
             </div>
           </div>
-          {affiliates.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+          {affiliates.length === 0 && (
+            <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+          )}
         </Loading>
       )}
     </div>

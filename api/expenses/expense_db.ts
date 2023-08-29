@@ -1,7 +1,7 @@
 import { Expense } from "../expenses";
 
 export default {
-  findAll_expenses_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_expenses_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Expense.find(filter)
         .sort(sort)
@@ -74,16 +74,16 @@ export default {
             deleted: false,
             date_of_purchase: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
             _id: null,
-            totalAmount: { $sum: "$amount" }
-          }
-        }
+            totalAmount: { $sum: "$amount" },
+          },
+        },
       ]).exec();
       return totalAmount;
     } catch (error) {
@@ -102,42 +102,42 @@ export default {
             date_of_purchase: {
               // Assuming 'date_of_purchase' is the field that holds the date_of_purchase information
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`)
-            }
-          }
+              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
+            },
+          },
         },
         {
           $group: {
             _id: {
               month: { $month: "$date_of_purchase" }, // Apply $month and $dayOfMonth to 'date_of_purchase' field
-              day: { $dayOfMonth: "$date_of_purchase" }
+              day: { $dayOfMonth: "$date_of_purchase" },
             },
             dailyAmount: {
-              $sum: "$amount"
-            }
-          }
+              $sum: "$amount",
+            },
+          },
         },
         {
           $group: {
             _id: {
-              month: "$_id.month"
+              month: "$_id.month",
             },
             amount: {
-              $sum: "$dailyAmount"
+              $sum: "$dailyAmount",
             },
             dailyAverage: {
-              $avg: "$dailyAmount"
-            }
-          }
+              $avg: "$dailyAmount",
+            },
+          },
         },
         {
           $project: {
             _id: 0,
             month: "$_id.month",
             amount: 1,
-            dailyAverage: 1
-          }
-        }
+            dailyAverage: 1,
+          },
+        },
       ]).exec();
 
       return amountByMonth;
@@ -153,41 +153,41 @@ export default {
       const amountByYear = await Expense.aggregate([
         {
           $match: {
-            deleted: false
-          }
+            deleted: false,
+          },
         },
         {
           $group: {
             _id: {
               year: { $year: "$date_of_purchase" },
-              month: { $month: "$date_of_purchase" }
+              month: { $month: "$date_of_purchase" },
             },
             monthlyAmount: {
-              $sum: "$amount"
-            }
-          }
+              $sum: "$amount",
+            },
+          },
         },
         {
           $group: {
             _id: {
-              year: "$_id.year"
+              year: "$_id.year",
             },
             amount: {
-              $sum: "$monthlyAmount"
+              $sum: "$monthlyAmount",
             },
             monthlyAverage: {
-              $avg: "$monthlyAmount"
-            }
-          }
+              $avg: "$monthlyAmount",
+            },
+          },
         },
         {
           $project: {
             _id: 0,
             year: "$_id.year",
             amount: 1,
-            monthlyAverage: 1
-          }
-        }
+            monthlyAverage: 1,
+          },
+        },
       ]).exec();
       return amountByYear;
     } catch (error) {
@@ -204,9 +204,9 @@ export default {
             deleted: false,
             date_of_purchase: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
@@ -214,27 +214,27 @@ export default {
               year: { $year: "$date_of_purchase" },
               month: { $month: "$date_of_purchase" },
               day: { $dayOfMonth: "$date_of_purchase" },
-              hour: { $hour: "$date_of_purchase" }
+              hour: { $hour: "$date_of_purchase" },
             },
             hourlyAmount: {
-              $sum: "$amount"
-            }
-          }
+              $sum: "$amount",
+            },
+          },
         },
         {
           $group: {
             _id: {
               year: "$_id.year",
               month: "$_id.month",
-              day: "$_id.day"
+              day: "$_id.day",
             },
             amount: {
-              $sum: "$hourlyAmount"
+              $sum: "$hourlyAmount",
             },
             hourlyAverage: {
-              $avg: "$hourlyAmount"
-            }
-          }
+              $avg: "$hourlyAmount",
+            },
+          },
         },
         {
           $project: {
@@ -242,19 +242,19 @@ export default {
               $dateFromParts: {
                 year: "$_id.year",
                 month: "$_id.month",
-                day: "$_id.day"
-              }
+                day: "$_id.day",
+              },
             },
             amount: 1,
             hourlyAverage: 1,
-            _id: 0
-          }
+            _id: 0,
+          },
         },
         {
           $sort: {
-            date: 1
-          }
-        }
+            date: 1,
+          },
+        },
       ]).exec();
 
       return amountByDay;
@@ -263,5 +263,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

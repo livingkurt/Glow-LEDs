@@ -1,12 +1,10 @@
 // React
 import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Loading } from "../../SharedComponents";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
 
-const SuggestedProducts = props => {
-  const dispatch = useDispatch();
-
+const SuggestedProducts = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { products, loading, error } = productPage;
 

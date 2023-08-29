@@ -7,7 +7,7 @@ import { API_Content } from "./utils";
 import config from "./config";
 import { domain } from "./helpers/sharedHelpers";
 
-const Links = props => {
+const Links = () => {
   const [multiplier, set_multiplier] = useState(0);
   const [content, set_content] = useState([]);
 
@@ -83,9 +83,9 @@ const Links = props => {
           {/* {width < 600 && ( */}
           <a href="https://www.glow-leds.com">
             <div
-              className={`${width >= 500 ? "h-125px w-125px" : ""} ${width < 500 && width > 400 ? "h-100px w-100px" : ""} ${
-                width <= 400 ? "h-80px w-80px" : ""
-              } `}
+              className={`${width >= 500 ? "h-125px w-125px" : ""} ${
+                width < 500 && width > 400 ? "h-100px w-100px" : ""
+              } ${width <= 400 ? "h-80px w-80px" : ""} `}
             >
               <img
                 className="zoom w-100per h-auto"
@@ -99,7 +99,11 @@ const Links = props => {
           <a href="https://www.glow-leds.com">
             {/* <div className="pos-rel"> */}
             <div className="row pos-rel">
-              <label className={`glow_leds_text_links ${width < 500 && width > 400 ? "fs-50px" : ""} ${width < 500 ? "fs-40px" : ""} `}>
+              <label
+                className={`glow_leds_text_links ${width < 500 && width > 400 ? "fs-50px" : ""} ${
+                  width < 500 ? "fs-40px" : ""
+                } `}
+              >
                 Glow LEDs
               </label>
 
@@ -108,9 +112,9 @@ const Links = props => {
               </label>
               {/* <label className="make_it_glow_text_links fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px"> */}
               <label
-                className={`glow_leds_text_links mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px  ${width > 500 ? "fs-18px" : ""} ${
-                  width < 500 && width > 400 ? "fs-16px" : ""
-                } ${width < 500 ? "fs-14px" : ""} `}
+                className={`glow_leds_text_links mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px  ${
+                  width > 500 ? "fs-18px" : ""
+                } ${width < 500 && width > 400 ? "fs-16px" : ""} ${width < 500 ? "fs-14px" : ""} `}
               >
                 Make it Glow
               </label>
@@ -134,7 +138,7 @@ const Links = props => {
                     borderColor: hslToHex(num, 100, 100),
                     webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
                     mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
-                    boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
+                    boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
                   }}
                   href={`${domain()}${link.link}`}
                 >
@@ -150,7 +154,7 @@ const Links = props => {
                     borderColor: hslToHex(num, 100, 100),
                     webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
                     mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
-                    boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
+                    boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
                   }}
                   href={link.link}
                 >

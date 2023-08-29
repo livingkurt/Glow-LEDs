@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../../utils";
-import { format_date, unformat_date } from "../../../utils/helper_functions";
+import { unformat_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import { set_promo } from "../../../slices/promoSlice";
 
-const EditPromoPage = props => {
+const EditPromoPage = () => {
+  const params = useParams();
   const [categories, set_categories] = useState([]);
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
@@ -58,14 +59,14 @@ const EditPromoPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsPromo(props.match.params.id));
+      dispatch(API.detailsPromo(params.id));
       dispatch(API.listProducts({ option: false, hidden: false }));
       get_categories();
       dispatch(API.listUsers({}));
       dispatch(API.listAffiliates({}));
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   const get_categories = async () => {
     const { data } = await API_Products.findAllGrid_products_a({
@@ -114,7 +115,7 @@ const EditPromoPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Promo" : "Create Promo"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Promo" : "Create Promo"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

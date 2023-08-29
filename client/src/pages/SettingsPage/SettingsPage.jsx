@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -8,12 +8,13 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api";
 
-const SettingsPage = props => {
+const SettingsPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [loading_settings, set_loading_settings] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
 
   const settingPage = useSelector(state => state.settings);
   const { loading, settings, message, error, success } = settingPage;

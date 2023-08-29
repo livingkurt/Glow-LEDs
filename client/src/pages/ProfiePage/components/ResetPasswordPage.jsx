@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const ResetPasswordPage = props => {
+const ResetPasswordPage = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -13,7 +14,7 @@ const ResetPasswordPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.passwordReset({ user_id: props.match.params.id, password, rePassword }));
+    dispatch(API.passwordReset({ user_id: params.id, password, rePassword }));
     navigate("/account/login");
   };
   return (

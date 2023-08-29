@@ -1,4 +1,4 @@
-export default (props: any): string => {
+export default ({ first_name }: any): string => {
   return `
 
 <table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">
@@ -7,7 +7,7 @@ export default (props: any): string => {
       <td>
       <h2
       style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:#333333;font-size:20px;line-height:30px; margin-bottom: 20px;">
-      Hello ${props.first_name},
+      Hello ${first_name},
     </h2>
         <table
             style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; ">

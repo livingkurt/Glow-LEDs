@@ -2,7 +2,7 @@ import { Promo } from "../promos";
 import { Affiliate } from "../affiliates";
 
 export default {
-  findAll_affiliates_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_affiliates_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Affiliate.find(filter)
         .sort(sort)

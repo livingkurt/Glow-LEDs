@@ -1,14 +1,12 @@
 // React
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ProductThumbCarouselItem from "./CarouselItem";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { GLButton } from "../GlowLEDsComponents";
 import { Loading } from "../../SharedComponents";
 
-const ProductThumbCarousel = props => {
-  const dispatch = useDispatch();
-
+const ProductThumbCarousel = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { products, loading, error } = productPage;
   const { height, width } = useWindowDimensions();
@@ -79,14 +77,24 @@ const ProductThumbCarousel = props => {
                   <ProductThumbCarouselItem
                     key={product_number + x}
                     size="175px"
-                    product={products.filter(product => !product.option).filter(product => product.hidden === false)[product_number + x]}
+                    product={
+                      products.filter(product => !product.option).filter(product => product.hidden === false)[
+                        product_number + x
+                      ]
+                    }
                     style={{ listStyleType: "none" }}
                   />
                 </div>
               ))}
               {/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
               <div className="ai-c">
-                <GLButton style={{ borderRadius: "50%" }} variant="icon" className="h-59px" onClick={() => move_right()} aria-label="Next">
+                <GLButton
+                  style={{ borderRadius: "50%" }}
+                  variant="icon"
+                  className="h-59px"
+                  onClick={() => move_right()}
+                  aria-label="Next"
+                >
                   <i className="fas fa-arrow-circle-right fs-40px" />
                 </GLButton>
               </div>

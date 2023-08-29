@@ -1,7 +1,7 @@
 import { Content } from "../contents";
 
 export default {
-  findAll_contents_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_contents_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Content.find(filter)
         .sort(sort)
@@ -64,5 +64,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

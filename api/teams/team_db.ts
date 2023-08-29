@@ -1,7 +1,7 @@
 import { Team } from "../teams";
 
 export default {
-  findAll_teams_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_teams_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Team.find(filter)
         .populate("affiliates")
@@ -20,7 +20,11 @@ export default {
   },
   findByPathname_teams_db: async (pathname: string) => {
     try {
-      return await Team.findOne({ pathname }).populate("affiliates").populate("public_code").populate("private_code").populate("captain");
+      return await Team.findOne({ pathname })
+        .populate("affiliates")
+        .populate("public_code")
+        .populate("private_code")
+        .populate("captain");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -29,7 +33,11 @@ export default {
   },
   findBy_teams_db: async (query: any) => {
     try {
-      return await Team.findOne(query).populate("affiliates").populate("public_code").populate("private_code").populate("captain");
+      return await Team.findOne(query)
+        .populate("affiliates")
+        .populate("public_code")
+        .populate("private_code")
+        .populate("captain");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -90,5 +98,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

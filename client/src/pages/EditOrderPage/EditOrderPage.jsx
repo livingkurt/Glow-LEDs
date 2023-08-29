@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 
@@ -13,7 +13,9 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import { AppBar, Paper, Tab, Tabs } from "@mui/material";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 
-const EditOrderPage = props => {
+const EditOrderPage = () => {
+  const params = useParams();
+  const location = useLocation();
   const [id, set_id] = useState("");
   const [orderItems, set_orderItems] = useState([{}]);
   const [order_items, set_order_items] = useState([{}]);
@@ -150,9 +152,9 @@ const EditOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsOrder(props.match.params.id));
-        dispatch(API.detailsOrder(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsOrder(params.id));
+        dispatch(API.detailsOrder(params.id));
         dispatch(API.listProducts({ limit: 0, option: false }));
         dispatch(API.listUsers({}));
       } else {
@@ -212,7 +214,7 @@ const EditOrderPage = props => {
     );
     e.target.reset();
     unset_state();
-    navigate(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");
+    navigate(location.previous_path || "/secure/glow/orders?page=1?limit=10");
   };
 
   const add_order_item = e => {
@@ -379,7 +381,7 @@ const EditOrderPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Order" : "Create Order"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Order" : "Create Order"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

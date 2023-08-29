@@ -12,7 +12,7 @@ import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import * as API from "../../api";
 import { set_show_search_bar } from "../../slices/settingSlice";
 
-const HomePage = props => {
+const HomePage = () => {
   const navigate = useNavigate();
 
   const [display, setDisplay] = useState(false);
@@ -20,7 +20,6 @@ const HomePage = props => {
   const [options, set_options] = useState([]);
   const [products, set_products] = useState([]);
   const [slideshow, set_slideshow] = useState([]);
-  // const [promo_code, set_promo_code] = useState(props.match.params.promo_code ? props.match.params.promo_code : "");
   const [search, set_search] = useState("");
   const [message, set_message] = useState("");
   const wrapperRef = useRef(null);

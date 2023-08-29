@@ -15,7 +15,7 @@ export default {
         query,
         sort_options,
         normalizeFilters: normalizeUserFilters,
-        normalizeSearch: normalizeUserSearch
+        normalizeSearch: normalizeUserSearch,
       });
 
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
@@ -23,7 +23,7 @@ export default {
       return {
         data: users,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -38,24 +38,24 @@ export default {
         guests: ["only_guest_users"],
         employees: ["only_employees"],
         admins: ["only_admins"],
-        wholesalers: ["only_wholesalers"]
+        wholesalers: ["only_wholesalers"],
       };
       const booleanFilters = {
         affiliates: {
-          label: "Show Affiliates"
+          label: "Show Affiliates",
         },
         guests: {
-          label: "Show Guests"
+          label: "Show Guests",
         },
         employees: {
-          label: "Show Employees"
+          label: "Show Employees",
         },
         admins: {
-          label: "Show Admins"
+          label: "Show Admins",
         },
         wholesalers: {
-          label: "Show Wholesalers"
-        }
+          label: "Show Wholesalers",
+        },
       };
       return { availableFilters, booleanFilters };
     } catch (error) {
@@ -152,9 +152,9 @@ export default {
           is_affiliated: body.is_affiliated,
           email_subscription: body.email_subscription,
           isAdmin: false,
-          isVerified: true
+          isVerified: true,
         },
-        matched: false
+        matched: false,
       };
     }
   },
@@ -182,7 +182,7 @@ export default {
         shipping: user.shipping,
         isWholesaler: user.isWholesaler,
         wholesaler: user.wholesaler,
-        refresh_token: await getRefreshToken(user)
+        refresh_token: await getRefreshToken(user),
       };
     } else {
       throw new Error("Invalid Credentials");
@@ -204,7 +204,7 @@ export default {
       shipping: user.shipping,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
-      refresh_token: await getRefreshToken(user)
+      refresh_token: await getRefreshToken(user),
     };
   },
   refresh_login_users_s: async (email: string) => {
@@ -228,20 +228,20 @@ export default {
       shipping: user.shipping,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
-      refresh_token: existingToken?.token
+      refresh_token: existingToken?.token,
     };
   },
 
   check_password_s: async (params: any, body: any) => {
     try {
-      const user = await user_db.findById_users_db(params.id);
+      const user: any = await user_db.findById_users_db(params.id);
 
       if (!user) {
         throw new Error("User Doesn't Exist");
       }
       const isMatch = await bcrypt.compare(body.current_password, user.password);
 
-      const existingToken = await Token.findOne({ user: user._id });
+      const existingToken: any = await Token.findOne({ user: user._id });
 
       if (isMatch) {
         return {
@@ -256,7 +256,7 @@ export default {
           is_affiliated: user.is_affiliated,
           email_subscription: user.email_subscription,
           shipping: user.shipping,
-          refresh_token: existingToken.token
+          refresh_token: existingToken.token,
         };
       }
     } catch (error) {
@@ -277,7 +277,7 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
   // checkemail_users_s: async (req: any, res: any) => {
   // 	try {
   //

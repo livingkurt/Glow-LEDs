@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
@@ -10,7 +10,8 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api";
 
-const PalettesPage = props => {
+const PalettesPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [last_months_orders, set_last_months_orders] = useState([]);
@@ -18,7 +19,7 @@ const PalettesPage = props => {
   const [loading_palettes, set_loading_palettes] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_palettes, set_create_palettes] = useState(true);
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
   const palettePage = useSelector(state => state.palettes);
   const { loading, palettes, message, error, success } = palettePage;
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
@@ -9,12 +9,13 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 
-const SurveysPage = props => {
+const SurveysPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
 
   const [loading_surveys, set_loading_surveys] = useState(false);
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
   const surveyPage = useSelector(state => state.surveys);
   const { loading, surveys, message, error, success } = surveyPage;
 

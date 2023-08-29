@@ -1,7 +1,7 @@
 import Chip from "./chip";
 
 export default {
-  findAll_chips_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_chips_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Chip.find(filter)
         .sort(sort)
@@ -73,5 +73,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

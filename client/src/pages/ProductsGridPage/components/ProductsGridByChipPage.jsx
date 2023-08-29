@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../../shared/SharedComponents";
 import {
   description_determination,
@@ -21,7 +21,9 @@ import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../../api";
 
-const AllProductsByChipPage = props => {
+const AllProductsByChipPage = () => {
+  const params = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [product_occurrences, set_product_occurrences] = useState([]);
   const [query, set_query] = useState({});
@@ -40,15 +42,15 @@ const AllProductsByChipPage = props => {
   const [message, set_message] = useState("");
   // const [ currentPage, setCurrentPage ] = useState(1);
 
-  // const category = props.match.params.category ? props.match.params.category : '';
-  // const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
-  // const collection = props.match.params.collection ? props.match.params.collection : '';
-  // const promo_code = props.match.params.promo_code ? props.match.params.promo_code : '';
+  // const category = params.category ? params.category : '';
+  // const subcategory = params.subcategory ? params.subcategory : '';
+  // const collection = params.collection ? params.collection : '';
+  // const promo_code = params.promo_code ? params.promo_code : '';
 
-  const [category, set_category] = useState(props.match.params.category ? props.match.params.category : "");
-  const [subcategory, set_subcategory] = useState(props.match.params.subcategory ? props.match.params.subcategory : "");
-  const [collection, set_collection] = useState(props.match.params.collection ? props.match.params.collection : "");
-  const [promo_code, set_promo_code] = useState(props.match.params.promo_code ? props.match.params.promo_code : "");
+  const [category, set_category] = useState(params.category ? params.category : "");
+  const [subcategory, set_subcategory] = useState(params.subcategory ? params.subcategory : "");
+  const [collection, set_collection] = useState(params.collection ? params.collection : "");
+  const [promo_code, set_promo_code] = useState(params.promo_code ? params.promo_code : "");
   const [search, set_search] = useState("");
   const [sort, set_sort] = useState("");
   const [filter, set_filter] = useState("");
@@ -95,16 +97,16 @@ const AllProductsByChipPage = props => {
     if (clean) {
       dispatch(API.listChips({}));
       determine_products();
-      get_occurrences(props.match.params.category);
+      get_occurrences(params.category);
     }
     return () => (clean = false);
-  }, [props.match.params.category, props.match.params.subcategory, getUrlParameter(props.location).search]);
+  }, [params.category, params.subcategory, getUrlParameter(location).search]);
 
   const determine_products = async () => {
-    const query = getUrlParameter(props.location);
-    let category = props.match.params.category ? props.match.params.category : "";
+    const query = getUrlParameter(location);
+    let category = params.category ? params.category : "";
     let sale = "";
-    let subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
+    let subcategory = params.subcategory ? params.subcategory : "";
     if (category === "discounted") {
       category = "";
       // subcategory = 'sale';
@@ -117,7 +119,7 @@ const AllProductsByChipPage = props => {
     let limit = "";
     let page = "";
     let option = false;
-    let collection = props.match.params.collection ? props.match.params.collection : "";
+    let collection = params.collection ? params.collection : "";
     determine_page_name(category, subcategory, collection);
     // prnt({ query });
     if (category !== "our_picks" || category !== "best_sellers" || category !== "new_releases") {

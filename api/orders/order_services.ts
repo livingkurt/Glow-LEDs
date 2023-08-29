@@ -13,7 +13,7 @@ import {
   month_dates,
   removeDuplicates,
   subcategories,
-  toCapitalize
+  toCapitalize,
 } from "../../util";
 import { getFilteredData } from "../api_helpers";
 import { getCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
@@ -31,14 +31,14 @@ export default {
         sort_options,
         search_name: "shipping.first_name",
         normalizeFilters: normalizeOrderFilters,
-        normalizeSearch: normalizeOrderSearch
+        normalizeSearch: normalizeOrderSearch,
       });
       const orders = await order_db.table_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
       return {
         data: orders,
         total_count: count,
-        currentPage: parseInt(page)
+        currentPage: parseInt(page),
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -59,15 +59,15 @@ export default {
           "isOutForDelivery",
           "isDelivered",
           "isPaused",
-          "isRefunded"
+          "isRefunded",
         ],
         shipping: ["international"],
-        isPaid: []
+        isPaid: [],
       };
       const booleanFilters = {
         isPaid: {
-          label: "isPaid"
-        }
+          label: "isPaid",
+        },
       };
       return { availableFilters, booleanFilters };
     } catch (error) {
@@ -90,15 +90,15 @@ export default {
                 $regexMatch: {
                   input: "$shipping.email",
                   regex: query.search,
-                  options: "i"
-                }
-              }
+                  options: "i",
+                },
+              },
             }
           : {};
       } else if (query.search && query.search.substring(0, 1) === "#") {
         search = query.search
           ? {
-              promo_code: query.search.slice(1, query.search.length).toLowerCase()
+              promo_code: query.search.slice(1, query.search.length).toLowerCase(),
             }
           : {};
       } else {
@@ -107,12 +107,12 @@ export default {
               $expr: {
                 $regexMatch: {
                   input: {
-                    $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
+                    $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
                   },
                   regex: query.search,
-                  options: "i"
-                }
-              }
+                  options: "i",
+                },
+              },
             }
           : {};
       }
@@ -133,7 +133,7 @@ export default {
           isCrafted: false,
           isPackaged: false,
           isShipped: false,
-          isDelivered: false
+          isDelivered: false,
         };
       } else if (sort_query === "crafting") {
         filter = {
@@ -143,7 +143,7 @@ export default {
           isCrafted: false,
           isPackaged: false,
           isShipped: false,
-          isDelivered: false
+          isDelivered: false,
         };
       } else if (sort_query === "crafted") {
         filter = {
@@ -153,7 +153,7 @@ export default {
           isCrafted: true,
           isPackaged: false,
           isShipped: false,
-          isDelivered: false
+          isDelivered: false,
         };
       } else if (sort_query === "packaged") {
         filter = {
@@ -163,7 +163,7 @@ export default {
           isCrafted: true,
           isPackaged: true,
           isShipped: false,
-          isDelivered: false
+          isDelivered: false,
         };
       } else if (sort_query === "shipped") {
         filter = {
@@ -173,7 +173,7 @@ export default {
           isCrafted: true,
           isPackaged: true,
           isShipped: true,
-          isDelivered: false
+          isDelivered: false,
         };
       } else if (sort_query === "delivered") {
         filter = {
@@ -183,17 +183,20 @@ export default {
           isCrafted: true,
           isPackaged: true,
           isShipped: true,
-          isDelivered: true
+          isDelivered: true,
         };
       }
       const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, limit, page);
       const count = await order_db.count_orders_db({ ...filter, ...search });
-      // const count = await Product.countDocuments(filter);
-      return {
-        orders,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          orders,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -260,15 +263,20 @@ export default {
   },
   top_customers_orders_s: async (params: any) => {
     try {
-      const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, "0", "1");
+      const users: any = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, "0", "1");
       const orders = await Promise.all(
         users.map(async (user: any) => {
-          const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 }, "0", "1");
+          const orders: any = await order_db.findAll_orders_db(
+            { deleted: false, user: user._id },
+            { _id: -1 },
+            "0",
+            "1"
+          );
           const amount = orders.reduce((total: any, c: any) => parseFloat(total) + parseFloat(c.totalPrice), 0);
           return {
             user: user,
             number_of_orders: orders.length,
-            amount: amount
+            amount: amount,
           };
         })
       );
@@ -277,7 +285,7 @@ export default {
           return {
             user: order.user,
             number_of_orders: order.number_of_orders,
-            amount: order.amount
+            amount: order.amount,
           };
         })
         .sort((a: any, b: any) => (a.amount > b.amount ? -1 : 1))
@@ -295,7 +303,7 @@ export default {
       const filter = { deleted: false, user: params._id };
       const limit = "50";
       const page = "1";
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      const orders: any = await order_db.findAll_orders_db(filter, sort, limit, page);
       const products: any = [];
       const ids: any = [];
       orders.forEach((order: any) => {
@@ -344,15 +352,15 @@ export default {
         isPaid: true,
         createdAt: {
           $gte: start_date,
-          $lte: end_date
+          $lte: end_date,
         },
-        promo_code: new RegExp(promo_code, "i")
+        promo_code: new RegExp(promo_code, "i"),
       };
 
       const limit = "0";
       const page = "1";
 
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      const orders: any = await order_db.findAll_orders_db(filter, sort, limit, page);
 
       const number_of_uses = orders
         .filter((order: any) => order.promo_code)
@@ -401,8 +409,8 @@ export default {
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else if (query.year && query.year.length > 0) {
         const start_date = query.year + "-01-01";
@@ -413,8 +421,8 @@ export default {
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else {
         filter = { deleted: false, promo_code: params.promo_code, isPaid: true };
@@ -423,7 +431,7 @@ export default {
       const limit = "0";
       const page = "1";
 
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      const orders: any = await order_db.findAll_orders_db(filter, sort, limit, page);
 
       const number_of_uses = orders
         .filter((order: any) => order.promo_code)
@@ -481,8 +489,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else if (params.year && params.year.length > 0) {
         const start_date = params.year + "-01-01";
@@ -492,8 +500,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else {
         o_filter = { deleted: false, isPaid: true };
@@ -510,8 +518,8 @@ export default {
       const limit = "0";
       const page = "1";
 
-      const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
+      const orders: any = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+      let affiliates: any = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
       if (!query.position) {
         affiliates = [...affiliates, { public_code: { promo_code: "inkybois" } }];
       }
@@ -526,7 +534,10 @@ export default {
           Revenue: `${
             orders &&
             orders
-              .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+              .filter(
+                (order: any) =>
+                  order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+              )
               .reduce(
                 (a: any, order: any) =>
                   a +
@@ -541,14 +552,18 @@ export default {
             ? orders &&
               orders
                 .filter(
-                  (order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+                  (order: any) =>
+                    order.promo_code &&
+                    order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
                 .reduce(
                   (a: any, order: any) =>
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0)) *
+                      (order.payment.refund
+                        ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                        : 0)) *
                       0.1,
                   0
                 )
@@ -556,14 +571,18 @@ export default {
             : orders &&
               orders
                 .filter(
-                  (order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+                  (order: any) =>
+                    order.promo_code &&
+                    order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
                 .reduce(
                   (a: any, order: any) =>
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0)) *
+                      (order.payment.refund
+                        ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                        : 0)) *
                       0.15,
                   0
                 )
@@ -571,7 +590,7 @@ export default {
           "Percentage Off":
             !affiliate.team && affiliate.promoter
               ? `${determine_promoter_code_tier(code_usage)}%`
-              : `${determine_sponsor_code_tier(code_usage)}%`
+              : `${determine_sponsor_code_tier(code_usage)}%`,
         };
       });
       //
@@ -596,8 +615,14 @@ export default {
       // );
       const affiliate_s: any = removeDuplicates(affiliate_earnings_dups, "Promo Code");
       const uses_s: any = affiliate_s.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
-      const revenue_s: any = affiliate_s.reduce((a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue), 0);
-      const earned_s: any = affiliate_s.reduce((a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned), 0);
+      const revenue_s: any = affiliate_s.reduce(
+        (a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+        0
+      );
+      const earned_s: any = affiliate_s.reduce(
+        (a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+        0
+      );
       // const affiliate_s_uses: any = removeDuplicates(sorted_by_uses, 'Promo Code');
       // const uses_s_uses: any = affiliate_s_uses.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
       // const revenue_s_uses: any = affiliate_s_uses.reduce(
@@ -616,7 +641,7 @@ export default {
         affiliates: affiliate_s,
         uses: uses_s,
         revenue: revenue_s,
-        earned: earned_s
+        earned: earned_s,
       };
       // return 'Success';
     } catch (error) {
@@ -639,8 +664,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else if (params.year && params.year.length > 0) {
         const start_date = params.year + "-01-01";
@@ -650,8 +675,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else {
         o_filter = { deleted: false, isPaid: true };
@@ -661,8 +686,8 @@ export default {
 
       const limit = "0";
       const page = "1";
-      const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const promos = await promo_db.findAll_promos_db(p_filter, {}, "0", "1");
+      const orders: any = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+      const promos: any = await promo_db.findAll_promos_db(p_filter, {}, "0", "1");
       //
       const promos_earnings: any = promos.map((code: any) => {
         return {
@@ -671,23 +696,33 @@ export default {
             return order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase();
           }).length,
           Revenue: orders
-            .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase())
+            .filter(
+              (order: any) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
+            )
             .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
             .toFixed(2),
           Discount: orders
-            .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase())
+            .filter(
+              (order: any) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
+            )
             .reduce((a: any, order: any) => a + ((order.totalPrice - order.taxPrice) * code.percentage_off) / 100, 0)
-            .toFixed(2)
+            .toFixed(2),
         };
       });
       const uses_s: any = promos_earnings.reduce((a: any, promo: any) => a + promo.Uses, 0);
-      const revenue_s: any = promos_earnings.reduce((a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue), 0);
-      const discount_s: any = promos_earnings.reduce((a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount), 0);
+      const revenue_s: any = promos_earnings.reduce(
+        (a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
+        0
+      );
+      const discount_s: any = promos_earnings.reduce(
+        (a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
+        0
+      );
       return {
         promos: promos_earnings,
         uses: uses_s,
         revenue: revenue_s,
-        discount: discount_s
+        discount: discount_s,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -704,8 +739,8 @@ export default {
         deleted: false,
         createdAt: {
           $gt: new Date(<any>new Date(date).setHours(0, 0, 0)),
-          $lt: new Date(<any>new Date(date).setHours(23, 59, 59))
-        }
+          $lt: new Date(<any>new Date(date).setHours(23, 59, 59)),
+        },
       };
       const limit = "50";
       const page = "1";
@@ -728,8 +763,8 @@ export default {
         deleted: false,
         createdAt: {
           $gt: new Date(<any>new Date(start_date).setHours(0, 0, 0) - 30 * 60 * 60 * 24 * 1000),
-          $lt: new Date(<any>new Date(end_date).setHours(23, 59, 59))
-        }
+          $lt: new Date(<any>new Date(end_date).setHours(23, 59, 59)),
+        },
       };
       const limit = "50";
       const page = "1";
@@ -746,8 +781,8 @@ export default {
       const filter = {
         deleted: false,
         createdAt: {
-          $gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000)
-        }
+          $gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000),
+        },
       };
       const limit = "50";
       const page = "1";
@@ -767,7 +802,7 @@ export default {
         isCrafted: true,
         isPackaged: true,
         isShipped: false,
-        isDelivered: false
+        isDelivered: false,
       };
       const limit = "0";
       const page = "1";
@@ -783,7 +818,7 @@ export default {
       const sort = {};
       const filter = {
         deleted: false,
-        ...body
+        ...body,
       };
       const limit = "0";
       const page = "1";
@@ -798,16 +833,16 @@ export default {
     // const { month, year } = params;
     const o_filter: any = {
       deleted: false,
-      isPaid: true
+      isPaid: true,
     };
     const e_filter: any = {
-      deleted: false
+      deleted: false,
     };
 
     if (params.year) {
       const createdAt = {
         $gte: new Date(params.year + "-01-01"),
-        $lte: new Date(params.year + "-12-31")
+        $lte: new Date(params.year + "-12-31"),
       };
       o_filter.createdAt = createdAt;
       e_filter.date_of_purchase = createdAt;
@@ -815,7 +850,7 @@ export default {
     if (params.month) {
       const createdAt = {
         $gte: new Date(month_dates(params.month, params.year).start_date),
-        $lte: new Date(month_dates(params.month, params.year).end_date)
+        $lte: new Date(month_dates(params.month, params.year).end_date),
       };
       o_filter.createdAt = createdAt;
       e_filter.date_of_purchase = createdAt;
@@ -826,7 +861,7 @@ export default {
       const limit = "0";
       const page = "1";
 
-      const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+      const orders_data: any = await order_db.findAll_orders_db(o_filter, sort, limit, page);
 
       const gloves = orders_data
         .map((order: any) => order.orderItems)
@@ -946,7 +981,7 @@ export default {
           total_expenses: -gloves.length * 0.7,
           total_profit: singles_total - gloves.length * 0.7,
           total_qty_sold: gloves.length,
-          total_income: singles_total
+          total_income: singles_total,
         },
         refresh_packs: {
           s_qty_sold: s_refresh.length * 6,
@@ -969,7 +1004,7 @@ export default {
           total_expenses: -(refresh.length * 6) * 0.7,
           total_profit: refresh_total - refresh.length * 6 * 0.7,
           total_qty_sold: refresh.length * 6,
-          total_income: refresh_total
+          total_income: refresh_total,
         },
         total_gloves: {
           singles_qty_sold: gloves.length,
@@ -985,16 +1020,20 @@ export default {
           m_total_expenses: -(m_gloves.length + m_refresh.length * 6) * 0.7,
           l_total_expenses: -(l_gloves.length + l_refresh.length * 6) * 0.7,
           xl_total_expenses: -(xl_gloves.length + xl_refresh.length * 6) * 0.7,
-          s_total_profit: (s_gloves.length + s_refresh.length * 6) * 3.95 - (s_gloves.length + s_refresh.length * 6) * 0.7,
-          m_total_profit: (m_gloves.length + m_refresh.length * 6) * 3.95 - (m_gloves.length + m_refresh.length * 6) * 0.7,
-          l_total_profit: (l_gloves.length + l_refresh.length * 6) * 3.95 - (l_gloves.length + l_refresh.length * 6) * 0.7,
-          xl_total_profit: (xl_gloves.length + xl_refresh.length * 6) * 3.95 - (xl_gloves.length + xl_refresh.length * 6) * 0.7,
+          s_total_profit:
+            (s_gloves.length + s_refresh.length * 6) * 3.95 - (s_gloves.length + s_refresh.length * 6) * 0.7,
+          m_total_profit:
+            (m_gloves.length + m_refresh.length * 6) * 3.95 - (m_gloves.length + m_refresh.length * 6) * 0.7,
+          l_total_profit:
+            (l_gloves.length + l_refresh.length * 6) * 3.95 - (l_gloves.length + l_refresh.length * 6) * 0.7,
+          xl_total_profit:
+            (xl_gloves.length + xl_refresh.length * 6) * 3.95 - (xl_gloves.length + xl_refresh.length * 6) * 0.7,
           refresh_qty_sold: refresh.length,
           total_expenses: -(gloves.length + refresh.length * 6) * 0.7,
           total_profit: gloves_total - (gloves.length + refresh.length * 6) * 0.7,
           total_qty_sold: gloves.length + refresh.length * 6,
-          total_income: gloves_total
-        }
+          total_income: gloves_total,
+        },
       };
 
       return breakdown;
@@ -1386,7 +1425,10 @@ export default {
       }
     }
   },
-  get_product_range_revenue_orders_s: async (params: { id: string }, query: { start_date: string; end_date: string }) => {
+  get_product_range_revenue_orders_s: async (
+    params: { id: string },
+    query: { start_date: string; end_date: string }
+  ) => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
@@ -1519,7 +1561,7 @@ export default {
 
     // Retrieve affiliates
     const a_filter: any = { deleted: false, active: true };
-    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
+    const affiliates: any = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
 
     const filtered_affiliates = affiliates.filter((affiliate: any) => {
       return affiliate.sponsor === true || affiliate.promoter === true;
@@ -1533,7 +1575,7 @@ export default {
           promo_code,
           start_date,
           end_date,
-          sponsor
+          sponsor,
         });
 
         return { number_of_uses, revenue, earnings, artist_name: affiliate.artist_name };
@@ -1590,7 +1632,7 @@ export default {
       "63c0a57b8fab120004b8d2cd", // Cristina Moskewicz S
       "60243f3afe97542f0f15d665", // Dustin Chau M
       "5fc91b9d231358002a003b21", // Gian Weiss S
-      "61e3bb71b1b687002bab24ac" // Mathew Howk XXL
+      "61e3bb71b1b687002bab24ac", // Mathew Howk XXL
     ];
     try {
       for (const userId of users) {
@@ -1610,7 +1652,7 @@ export default {
           taxPrice: 0,
           shippingPrice: 0,
           isPaid: true,
-          paidAt: Date.now()
+          paidAt: Date.now(),
           // Add other necessary fields here
         });
 
@@ -1623,5 +1665,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

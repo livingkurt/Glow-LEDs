@@ -12,8 +12,8 @@ export default {
         ? {
             p: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -21,11 +21,15 @@ export default {
 
       const contents = await content_db.findAll_contents_db(filter, sort, limit, page);
       const count = await content_db.count_contents_db(filter);
-      return {
-        contents,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          contents,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -53,7 +57,9 @@ export default {
       const titles_html = root.querySelectorAll(".wideeventTitle");
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map((node: any) => node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText));
+      const titles = titles_html.map((node: any) =>
+        node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText)
+      );
       //
       const links = titles_html.map((node: any) => node.childNodes.map((node: any) => node.rawAttrs.split("'")[1]));
       //
@@ -73,8 +79,8 @@ export default {
             city: cities[index],
             state: states[index],
             age: ages[index],
-            link: links[index]
-          }
+            link: links[index],
+          },
         ];
       });
       return events;
@@ -92,7 +98,9 @@ export default {
       const titles_html = root.querySelectorAll(".wideeventTitle");
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map((node: any) => node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText));
+      const titles = titles_html.map((node: any) =>
+        node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText)
+      );
       //
       const links = titles_html.map((node: any) => node.childNodes.map((node: any) => node.rawAttrs.split("'")[1]));
       //
@@ -112,8 +120,8 @@ export default {
             city: cities[index],
             state: states[index],
             age: ages[index],
-            link: links[index]
-          }
+            link: links[index],
+          },
         ];
       });
       return events;
@@ -158,5 +166,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

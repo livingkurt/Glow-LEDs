@@ -22,15 +22,9 @@ export default {
         normalizeFilters: normalizeProductFilters,
         normalizeSearch: normalizeProductSearch,
       });
-      console.log({ filter, sort, limit, page });
 
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
-      console.log({
-        data: products,
-        total_count: count,
-        currentPage: parseInt(page),
-      });
       return {
         data: products,
         total_count: count,

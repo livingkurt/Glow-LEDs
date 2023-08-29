@@ -257,10 +257,10 @@ export default {
   invoice_orders_c: async (req: any, res: any) => {
     const { params } = req;
     try {
-      const order = await order_services.invoice_orders_s(params.id);
+      const order: any = await order_services.invoice_orders_s(params.id);
 
       if (order.user && order.user.affiliate) {
-        const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate });
+        const affiliate: any = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate });
         return res.status(200).send(invoice({ order, isSponsor: affiliate.sponsor }));
       } else {
         return res.status(200).send(invoice({ order, isSponsor: false }));
@@ -514,5 +514,5 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
-  }
+  },
 };

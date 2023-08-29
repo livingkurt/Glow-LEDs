@@ -131,7 +131,7 @@ export const createLabel = async ({ order, shipping_rate }: any) => {
 
 export const createShippingRates = async ({ order, returnLabel }: any) => {
   try {
-    const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
+    const parcels: any = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
     const parcel = determine_parcel(order.orderItems, parcels);
 
     const customerAddress = {

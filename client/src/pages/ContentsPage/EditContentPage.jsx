@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditContentPage = props => {
+const EditContentPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [home_page, set_home_page] = useState({});
   const [links, set_links] = useState([{}]);
@@ -66,9 +67,9 @@ const EditContentPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsContent(props.match.params.id));
-        dispatch(API.detailsContent(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsContent(params.id));
+        dispatch(API.detailsContent(params.id));
       } else {
         dispatch(API.detailsContent(""));
       }
@@ -232,7 +233,7 @@ const EditContentPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Content" : "Create Content"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Content" : "Create Content"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

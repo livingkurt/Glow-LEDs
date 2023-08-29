@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditFilamentPage = props => {
+const EditFilamentPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [type, set_type] = useState("");
   const [color, set_color] = useState();
@@ -40,16 +41,16 @@ const EditFilamentPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsFilament(props.match.params.id));
-        dispatch(API.detailsFilament(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsFilament(params.id));
+        dispatch(API.detailsFilament(params.id));
       } else {
         dispatch(API.listChips({}));
       }
       set_state();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     let clean = true;
@@ -86,7 +87,7 @@ const EditFilamentPage = props => {
   return (
     <div className="main_container p-20px">
       <ul>
-        <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Filament" : "Create Filament"}</h1>
+        <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Filament" : "Create Filament"}</h1>
 
         <div className="form">
           <form onSubmit={submitHandler} style={{ chip: "100%" }}>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../shared/SharedComponents";
+import { Link, useParams } from "react-router-dom";
+import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api";
 
-const ParcelsPage = props => {
+const ParcelsPage = () => {
+  const params = useParams();
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [loading_parcels, set_loading_parcels] = useState(false);
-  const category = props.match.params.category ? props.match.params.category : "";
+  const category = params.category ? params.category : "";
   const parcelPage = useSelector(state => state.parcels);
   const { loading, parcels, message, error, success } = parcelPage;
 

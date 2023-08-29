@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-const ColorPalettePage = props => {
+const ColorPalettePage = () => {
   return (
     <div className="column jc-c">
       <Helmet>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { humanize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -8,12 +8,14 @@ import { FeatureItemD, FeatureItemM } from "./components";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import * as API from "../../api";
 
-const FeaturesGridPage = props => {
+const FeaturesGridPage = () => {
+  const params = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [search, set_search] = useState(props.location.search.substring(8) ? props.location.search.substring(8) : "");
+  const [search, set_search] = useState(location.search.substring(8) ? location.search.substring(8) : "");
   const [sort, setSortOrder] = useState("");
-  const category = props.match.params.category ? props.match.params.category : "";
-  const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
+  const category = params.category ? params.category : "";
+  const subcategory = params.subcategory ? params.subcategory : "";
 
   const featurePage = useSelector(state => state.features);
   const { features, loading, error } = featurePage;
@@ -91,12 +93,7 @@ const FeaturesGridPage = props => {
                   .map(
                     (feature, index) =>
                       !feature.hidden && (
-                        <FeatureItemD
-                          size="300px"
-                          key={index}
-                          feature={feature}
-                          category={props.match.params.category}
-                        />
+                        <FeatureItemD size="300px" key={index} feature={feature} category={params.category} />
                       )
                   )}
               </ul>
@@ -111,12 +108,7 @@ const FeaturesGridPage = props => {
                   .map(
                     (feature, index) =>
                       !feature.hidden && (
-                        <FeatureItemM
-                          size="300px"
-                          key={index}
-                          feature={feature}
-                          category={props.match.params.category}
-                        />
+                        <FeatureItemM size="300px" key={index} feature={feature} category={params.category} />
                       )
                   )}
               </ul>

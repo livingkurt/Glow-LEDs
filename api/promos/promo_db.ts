@@ -1,7 +1,7 @@
 import { Promo } from "../promos";
 
 export default {
-  findAll_promos_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_promos_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Promo.find(filter)
         .sort(sort)
@@ -27,7 +27,7 @@ export default {
         affiliate: affiliateId,
         active: true,
         start_date: { $lte: currentDate },
-        end_date: { $gte: currentDate }
+        end_date: { $gte: currentDate },
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -130,5 +130,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

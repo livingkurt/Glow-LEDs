@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
-const ManualPage = props => {
-  const pathname = props.match.params.pathname;
+const ManualPage = () => {
+  const params = useParams();
+  const pathname = params.pathname;
 
   return (
     <div className="main_container">

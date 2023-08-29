@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { accurate_date, snake_case, unformat_date_and_time } from "../../../utils/helper_functions";
@@ -33,7 +33,8 @@ import {
   set_secondary_color_modifier,
 } from "../../../slices/productSlice";
 
-const EditProductPage = props => {
+const EditProductPage = () => {
+  const params = useParams();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [clipboard, copyToClipboard] = useClipboard();
 
@@ -175,12 +176,12 @@ const EditProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsProduct(props.match.params.pathname));
+      dispatch(API.detailsProduct(params.pathname));
       get_all_options();
       findAllGrid_products_a();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.pathname]);
+  }, [dispatch, params.pathname]);
 
   useEffect(() => {
     let clean = true;
@@ -268,7 +269,7 @@ const EditProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.pathname && props.match.params.template === "true") {
+      if (params.pathname && params.template === "true") {
         dispatch(set_product({ pathname: "" }));
       }
     }
@@ -284,8 +285,8 @@ const EditProductPage = props => {
     const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
     dispatch(
       API.saveProduct({
-        _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
-        // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
+        _id: params.pathname && params.template === "false" ? product._id : null,
+        // _id: params.pathname && !params.template === 'true' ? id : null,
         name,
         price,
         wholesale_product,
@@ -358,25 +359,25 @@ const EditProductPage = props => {
         option,
         macro_product,
         extra_cost,
-        item_group_id: props.match.params.item_group_id || item_group_id,
+        item_group_id: params.item_group_id || item_group_id,
         previous_price,
         has_add_on,
         filament: filament ? filament._id : null,
       })
     );
-    // if (props.match.params.product_option && props.match.params.item_group_id) {
+    // if (params.product_option && params.item_group_id) {
     //   const {
     //     data: option_product,
     //   } = await API_Products.findByPathname_products_a(
     //     pathname ? pathname : snake_case(name)
     //   );
     //   const { data: macro_product } = await API_Products.findById_products_a(
-    //     props.match.params.item_group_id
+    //     params.item_group_id
     //   );
     //   let saved_data = {
     //     _id: macro_product.item_group_id,
     //   };
-    //   switch (props.match.params.product_option) {
+    //   switch (params.product_option) {
     //     case "color_product":
     //       saved_data = {
     //         ...saved_data,
@@ -439,13 +440,13 @@ const EditProductPage = props => {
   let num = 0;
 
   const save_second_product = async () => {
-    if (props.match.params.product_option && props.match.params.item_group_id) {
+    if (params.product_option && params.item_group_id) {
       const { data: option_product } = await API_Products.findByPathname_products_a(pathname);
-      const { data: macro_product } = await API_Products.findById_products_a(props.match.params.item_group_id);
+      const { data: macro_product } = await API_Products.findById_products_a(params.item_group_id);
       let saved_data = {
         _id: macro_product.item_group_id,
       };
-      switch (props.match.params.product_option) {
+      switch (params.product_option) {
         case "color_product":
           saved_data = {
             ...macro_product,
@@ -585,7 +586,7 @@ const EditProductPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Product" : "Create Product"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.pathname ? "Edit Product" : "Create Product"}</h1>
       <Loading loading={loading_options} />
 
       <div className="form">
@@ -1545,7 +1546,7 @@ const EditProductPage = props => {
                                   </GLButton>
                                 </div>
                                 <Link
-                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/color_product/${product._id}`}
+                                  to={`/secure/glow/editproduct/${params.pathname}/true/color_product/${product._id}`}
                                 >
                                   <GLButton variant="primary">Create Color Product</GLButton>
                                 </Link>
@@ -1620,7 +1621,7 @@ const EditProductPage = props => {
                                   </GLButton>
                                 </div>
                                 <Link
-                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_color_product/${product._id}`}
+                                  to={`/secure/glow/editproduct/${params.pathname}/true/secondary_color_product/${product._id}`}
                                 >
                                   <GLButton variant="primary">Create Secondary Color Product</GLButton>
                                 </Link>
@@ -1719,7 +1720,7 @@ const EditProductPage = props => {
                                   </GLButton>
                                 </div>
                                 <Link
-                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/option_product/${product._id}`}
+                                  to={`/secure/glow/editproduct/${params.pathname}/true/option_product/${product._id}`}
                                 >
                                   <GLButton variant="primary">Create Option Product</GLButton>
                                 </Link>
@@ -1790,7 +1791,7 @@ const EditProductPage = props => {
                                   </GLButton>
                                 </div>
                                 <Link
-                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_product/${product._id}`}
+                                  to={`/secure/glow/editproduct/${params.pathname}/true/secondary_product/${product._id}`}
                                 >
                                   <GLButton variant="primary">Create Secondary Product</GLButton>
                                 </Link>

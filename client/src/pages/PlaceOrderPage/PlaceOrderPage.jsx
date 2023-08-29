@@ -21,7 +21,7 @@ import * as API from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
 // import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 
-const PlaceOrderPage = props => {
+const PlaceOrderPage = () => {
   const navigate = useNavigate();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
@@ -861,7 +861,7 @@ const PlaceOrderPage = props => {
         />
       </div>
       {/* <Carousel
-        product_pathname={props.match.params.pathname}
+        product_pathname={params.pathname}
         category={"batteries"}
         title="Accessories You May Need"
         add_to_cart={true}

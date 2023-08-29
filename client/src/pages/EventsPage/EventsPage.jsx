@@ -6,7 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { daysBetween, format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
-const EventsPage = props => {
+const EventsPage = () => {
   const [events, set_events] = useState([]);
   const [loading, set_loading] = useState(false);
   const [going, set_going] = useState(false);
@@ -43,7 +43,7 @@ const EventsPage = props => {
     { name: "> 28", color: "#6d3e3e" },
     { name: "7 Days", color: "#323232" },
     { name: "14 Days", color: "#5f75a9" },
-    { name: "28 Days", color: "#6aa59e" }
+    { name: "28 Days", color: "#6aa59e" },
   ];
 
   const festivals_going = "Festival: ILLfest Music Arts Festival Austin, Tex.";
@@ -123,7 +123,7 @@ const EventsPage = props => {
                       backgroundColor: color.color,
                       height: "20px",
                       width: "60px",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
                     }}
                   />
                 </div>
@@ -147,7 +147,7 @@ const EventsPage = props => {
                   ? determine_color(event)
                   : festivals_going.includes(event.title)
                   ? "#4d5061"
-                  : "#6a6c80"
+                  : "#6a6c80",
               }}
             >
               <div className="jc-b">
@@ -204,7 +204,7 @@ const EventsPage = props => {
               <li
                 className={`container`}
                 style={{
-                  backgroundColor: festivals_going.includes(event.title) ? "#4d5061" : "#6a6c80"
+                  backgroundColor: festivals_going.includes(event.title) ? "#4d5061" : "#6a6c80",
                 }}
               >
                 <a href={event.link} target="_blank" rel="noopener noreferrer" aria-label="Event Title">

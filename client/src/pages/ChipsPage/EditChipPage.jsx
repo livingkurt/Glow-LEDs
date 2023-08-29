@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditChipPage = props => {
+const EditChipPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [name, set_name] = useState("");
   const [company, set_company] = useState("");
@@ -63,16 +64,16 @@ const EditChipPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsChip(props.match.params.id));
-        dispatch(API.detailsChip(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsChip(params.id));
+        dispatch(API.detailsChip(params.id));
       } else {
         dispatch(API.detailsChip(""));
       }
       set_state();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -170,7 +171,7 @@ const EditChipPage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Chip" : "Create Chip"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Chip" : "Create Chip"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

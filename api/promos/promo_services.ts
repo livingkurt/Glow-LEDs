@@ -1,10 +1,21 @@
-import { determine_filter, determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code, month_dates } from "../../util";
+import {
+  determine_filter,
+  determine_promoter_code_tier,
+  determine_sponsor_code_tier,
+  make_private_code,
+  month_dates,
+} from "../../util";
 import { affiliate_db } from "../affiliates";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { promo_db } from "../promos";
 import { extractCodes } from "./promo_helpers";
-import { deactivateOldCodes, generateSponsorCodes, normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
+import {
+  deactivateOldCodes,
+  generateSponsorCodes,
+  normalizePromoFilters,
+  normalizePromoSearch,
+} from "./promo_interactors";
 
 export default {
   findAll_promos_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -15,8 +26,8 @@ export default {
         ? {
             facebook_name: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -34,11 +45,15 @@ export default {
       }
       const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
       const count = await promo_db.count_promos_db(filter);
-      return {
-        promos,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          promos,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -47,19 +62,27 @@ export default {
   },
   findAllTable_promos_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const sort_options = ["createdAt", "active", "promo_code", "percentage_off", "amount_off", "minimum_total", "free_shipping"];
+      const sort_options = [
+        "createdAt",
+        "active",
+        "promo_code",
+        "percentage_off",
+        "amount_off",
+        "minimum_total",
+        "free_shipping",
+      ];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
         normalizeFilters: normalizePromoFilters,
-        normalizeSearch: normalizePromoSearch
+        normalizeSearch: normalizePromoSearch,
       });
       const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
       const count = await promo_db.count_promos_db(filter);
       return {
         data: promos,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -75,27 +98,27 @@ export default {
         single_use: [],
         used: [],
         admin_only: [],
-        active: []
+        active: [],
       };
       const booleanFilters = {
         affiliate_only: {
-          label: "Affiliate Only"
+          label: "Affiliate Only",
         },
         sponsor_only: {
-          label: "Sponsor Only"
+          label: "Sponsor Only",
         },
         single_use: {
-          label: "Single Use"
+          label: "Single Use",
         },
         used: {
-          label: "Used"
+          label: "Used",
         },
         admin_only: {
-          label: "Admin Only"
+          label: "Admin Only",
         },
         active: {
-          label: "Active"
-        }
+          label: "Active",
+        },
       };
       return { availableFilters, booleanFilters };
     } catch (error) {
@@ -156,7 +179,7 @@ export default {
       time_limit: false,
       start_date: "2021-01-01",
       end_date: "2021-01-01",
-      active: true
+      active: true,
     };
 
     try {
@@ -168,7 +191,12 @@ export default {
     }
   },
   refresh_sponsor_codes_promos_s: async () => {
-    const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true, sponsor: true }, {}, "0", "1");
+    const affiliates: any = await affiliate_db.findAll_affiliates_db(
+      { deleted: false, active: true, sponsor: true },
+      {},
+      "0",
+      "1"
+    );
     const currentMonth = new Date().toLocaleString("default", { month: "long" });
     const currentYear = new Date().getFullYear();
 
@@ -216,8 +244,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else if (params.year && params.year.length > 0) {
         const start_date = params.year + "-01-01";
@@ -227,8 +255,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else {
         o_filter = { deleted: false, isPaid: true };
@@ -242,8 +270,8 @@ export default {
 
       const limit = "0";
       const page = "1";
-      const orders = await order_db.findAll_orders_db(o_filter, {}, limit, page);
-      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
+      const orders: any = await order_db.findAll_orders_db(o_filter, {}, limit, page);
+      const affiliates: any = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
 
       affiliates
         .filter((affiliate: any) => !affiliate.deleted)
@@ -257,7 +285,9 @@ export default {
               affiliate.public_code.promo_code.toLowerCase()
           ).length;
           const percentage_off =
-            !affiliate.team && affiliate.promoter ? determine_promoter_code_tier(code_usage) : determine_sponsor_code_tier(code_usage);
+            !affiliate.team && affiliate.promoter
+              ? determine_promoter_code_tier(code_usage)
+              : determine_sponsor_code_tier(code_usage);
 
           await promo_db.update_promos_db(affiliate.private_code._id, { percentage_off });
         });
@@ -314,5 +344,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

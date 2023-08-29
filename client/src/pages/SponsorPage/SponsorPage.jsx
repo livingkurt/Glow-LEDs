@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
@@ -9,7 +9,8 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import { ProductSimpleItemD, ProductSimpleItemM } from "../ProductsGridPage/components";
 import * as API from "../../api";
 
-const SponsorPage = props => {
+const SponsorPage = () => {
+  const params = useParams();
   const [teams, set_teams] = useState([]);
   const navigate = useNavigate();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
@@ -22,7 +23,7 @@ const SponsorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsAffiliate({ pathname: props.match.params.promo_code }));
+      dispatch(API.detailsAffiliate({ pathname: params.promo_code }));
     }
     return () => (clean = false);
   }, []);
@@ -70,7 +71,7 @@ const SponsorPage = props => {
               Back
             </GLButton>
             {/* {current_user?.isAdmin && (
-              <Link to={"/secure/glow/editaffiliate/" + props.match.params.pathname}>
+              <Link to={"/secure/glow/editaffiliate/" + params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Affiliate
                 </GLButton>

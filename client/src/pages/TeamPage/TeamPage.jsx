@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const TeamPage = props => {
+const TeamPage = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const teamPage = useSelector(state => state.teams);
   const { team } = teamPage;
@@ -19,7 +20,7 @@ const TeamPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsTeam(props.match.params.pathname));
+      dispatch(API.detailsTeam(params.pathname));
     }
     return () => (clean = false);
   }, []);
@@ -56,7 +57,7 @@ const TeamPage = props => {
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
             {current_user?.isAdmin && (
-              <Link to={"/secure/glow/editteam/" + props.match.params.pathname}>
+              <Link to={"/secure/glow/editteam/" + params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Team
                 </GLButton>

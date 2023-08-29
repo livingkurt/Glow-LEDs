@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditCategoryPage = props => {
+const EditCategoryPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [name, set_name] = useState("");
   const [pathname, set_pathname] = useState("");
@@ -35,9 +36,9 @@ const EditCategoryPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsCategory(props.match.params.id));
-        dispatch(API.detailsCategory(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsCategory(params.id));
+        dispatch(API.detailsCategory(params.id));
       } else {
         dispatch(API.detailsCategory(""));
       }
@@ -150,7 +151,7 @@ const EditCategoryPage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Category" : "Create Category"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Category" : "Create Category"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

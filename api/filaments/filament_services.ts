@@ -10,8 +10,8 @@ export default {
         ? {
             facebook_name: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -20,11 +20,15 @@ export default {
 
       const filaments = await filament_db.findAll_filaments_db(filter, sort, limit, page);
       const count = await filament_db.count_filaments_db(filter);
-      return {
-        filaments,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          filaments,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -75,5 +79,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -1,10 +1,10 @@
 // React
 import * as React from "react";
 
-const Content = props => {
+const Content = ({ style, children }) => {
   return (
-    <main style={props.style} className="content">
-      {props.children}
+    <main style={style} className="content">
+      {children}
     </main>
   );
 };

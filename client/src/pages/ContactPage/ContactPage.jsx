@@ -6,9 +6,10 @@ import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const ContactPage = props => {
+const ContactPage = () => {
+  const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
@@ -20,9 +21,7 @@ const ContactPage = props => {
   const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
   const [email, set_email] = useState(current_user ? current_user.email : "");
   const [order_number, set_order_number] = useState("Test");
-  const [reason_for_contact, set_reason_for_contact] = useState(
-    props.match.params.reason ? props.match.params.reason : ""
-  );
+  const [reason_for_contact, set_reason_for_contact] = useState(params.reason ? params.reason : "");
   const [message, set_message] = useState("Test");
 
   const [first_name_validations, set_first_name_Validations] = useState("");
@@ -34,10 +33,10 @@ const ContactPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      set_reason_for_contact(props.match.params.reason);
+      set_reason_for_contact(params.reason);
     }
     return () => (clean = false);
-  }, [props.match.params.reason]);
+  }, [params.reason]);
 
   useEffect(() => {
     let clean = true;

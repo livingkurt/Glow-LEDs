@@ -7,7 +7,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
 import * as API from "../../../api";
 
-const Survey = props => {
+const Survey = ({ pathname }) => {
   const [question_1, set_question_1] = useState("");
   const [question_2, set_question_2] = useState("");
   const [question_3, set_question_3] = useState("");
@@ -57,7 +57,7 @@ const Survey = props => {
         } else {
           unset_state();
         }
-        // dispatch(API.detailsOrder(props.order_id));
+        // dispatch(API.detailsOrder(order_id));
       }
     }
     return () => (clean = false);
@@ -181,9 +181,7 @@ const Survey = props => {
 
   return (
     <div className="main_container p-20px">
-      {surveys[0] && !finished && (
-        <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>
-      )}
+      {surveys[0] && !finished && <h1 style={{ textAlign: "center" }}>{pathname ? "Edit Survey" : "Submit Survey"}</h1>}
 
       <div className="form">
         <form style={{ width: "100%" }}>

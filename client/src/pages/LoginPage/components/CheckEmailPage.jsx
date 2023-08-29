@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 
-const CheckEmailPage = props => {
+const CheckEmailPage = () => {
   return (
     <div className="column jc-c">
       <Helmet>

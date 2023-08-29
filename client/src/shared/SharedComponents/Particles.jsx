@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 
-const Particles = props => {
+const Particles = () => {
   return <div className="particles-js" />;
 };
 

@@ -1,7 +1,7 @@
 // React
 import * as React from "react";
 
-const FilterByChip = props => {
+const FilterByChip = () => {
   const chips = [
     "spectra EVOs",
     "chroma EVOs",

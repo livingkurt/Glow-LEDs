@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const EditParcelPage = props => {
+const EditParcelPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [type, set_type] = useState("");
   const [length, set_length] = useState();
@@ -47,16 +48,16 @@ const EditParcelPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsParcel(props.match.params.id));
-        dispatch(API.detailsParcel(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsParcel(params.id));
+        dispatch(API.detailsParcel(params.id));
       } else {
         dispatch(API.detailsParcel(""));
       }
       set_state();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     let clean = true;
@@ -93,7 +94,7 @@ const EditParcelPage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Parcel" : "Create Parcel"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Parcel" : "Create Parcel"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

@@ -12,8 +12,8 @@ export default {
         ? {
             email_type: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -27,11 +27,15 @@ export default {
 
       const emails = await email_db.findAll_emails_db(filter, sort, limit, page);
       const count = await email_db.count_emails_db(filter);
-      return {
-        emails,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          emails,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -81,13 +85,13 @@ export default {
       to: email,
       from: config.DISPLAY_INFO_EMAIL,
       subject: body.subject,
-      html: body.template
+      html: body.template,
     };
     return mailOptions;
   },
   send_all_emails_s: async (body: any) => {
     // const users = await User.find({ deleted: false, email_subscription: true });
-    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
+    const users: any = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const all_emails = users
       .filter((user: any) => user.deleted === false)
       .filter((user: any) => user.email_subscription === true)
@@ -99,7 +103,7 @@ export default {
       "livingkurt222@gmail.com",
       "destanyesalinas@gmail.com",
       "zestanye@gmail.com",
-      "codychau122@gmail.com"
+      "codychau122@gmail.com",
     ];
     const emails: any = body.test ? test : all_emails;
 
@@ -108,8 +112,8 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template,
-      bcc: emails
+      bcc: emails,
     };
     return mailOptions;
-  }
+  },
 };

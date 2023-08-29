@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 
-const VerifiedPage = props => {
+const VerifiedPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { loading, current_user, error } = userPage;
 

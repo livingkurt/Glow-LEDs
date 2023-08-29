@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
-const ChangePasswordPage = props => {
+const ChangePasswordPage = () => {
   const navigate = useNavigate();
   const [current_password, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");

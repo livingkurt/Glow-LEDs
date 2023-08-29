@@ -4,7 +4,7 @@ import { prnt } from "../../util";
 require("dotenv");
 
 export default {
-  findAll_users_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_users_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await User.find(filter)
         .sort(sort)
@@ -17,13 +17,16 @@ export default {
             {
               path: "private_code",
             },
+            {
+              path: "products",
+            },
           ],
         })
         .populate("wholesaler")
-        .populate("products")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit));
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -41,10 +44,12 @@ export default {
             {
               path: "private_code",
             },
+            {
+              path: "products",
+            },
           ],
         })
-        .populate("wholesaler")
-        .populate("products");
+        .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -63,10 +68,12 @@ export default {
             {
               path: "private_code",
             },
+            {
+              path: "products",
+            },
           ],
         })
-        .populate("wholesaler")
-        .populate("products");
+        .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -85,10 +92,12 @@ export default {
             {
               path: "private_code",
             },
+            {
+              path: "products",
+            },
           ],
         })
-        .populate("wholesaler")
-        .populate("products");
+        .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

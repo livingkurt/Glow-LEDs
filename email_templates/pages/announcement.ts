@@ -1,5 +1,15 @@
-export default (props: any): string => {
-  const { h1, h2, images, p, button, link, module_color, button_color, text_color, title_color } = props;
+export default ({
+  h1,
+  h2,
+  images,
+  p,
+  button,
+  link,
+  module_color,
+  button_color,
+  text_color,
+  title_color,
+}: any): string => {
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">

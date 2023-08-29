@@ -1,7 +1,7 @@
 import { Survey } from "../surveys";
 
 export default {
-  findAll_surveys_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_surveys_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Survey.find(filter)
         .sort(sort)
@@ -66,5 +66,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

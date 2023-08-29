@@ -29,7 +29,7 @@ export default {
   different_shipping_rates_shipping_s: async (params: any) => {
     const { shipment_id, order_id } = params;
 
-    const order = await order_db.findById_orders_db(order_id);
+    const order: any = await order_db.findById_orders_db(order_id);
     try {
       if (shipment_id && !order.shipping.shipping_label) {
         const shipment = await EasyPost.Shipment.retrieve(shipment_id);
@@ -44,7 +44,7 @@ export default {
 
   buy_label_shipping_s: async (params: any) => {
     try {
-      const order = await order_db.findById_orders_db(params.order_id);
+      const order: any = await order_db.findById_orders_db(params.order_id);
       const { shipping_rate, shipment_id } = order.shipping;
       const label: any = await buyLabel({ shipment_id, shipping_rate });
       await addTracking({ order, label, shipping_rate });
@@ -57,7 +57,7 @@ export default {
   },
   create_label_shipping_s: async (params: any) => {
     try {
-      const order = await order_db.findById_orders_db(params.order_id);
+      const order: any = await order_db.findById_orders_db(params.order_id);
       const { shipping_rate } = order.shipping;
       const label: any = await createLabel({ order, shipping_rate });
       await addTracking({ order, label, shipping_rate: label.selected_rate });
@@ -123,7 +123,7 @@ export default {
   generate_csv_label_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      const shipment = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
+      const shipment = await EasyPost.Shipment.retrieve(order?.shipping?.shipment_id);
       const csvData = parseOrderData(shipment, order);
 
       return csvData;
@@ -166,7 +166,7 @@ export default {
         "1"
       );
       console.log({ orders });
-      if (orders.length === 0 || !orders) {
+      if (orders?.length === 0 || !orders) {
         throw new Error("Orders not found");
       }
 

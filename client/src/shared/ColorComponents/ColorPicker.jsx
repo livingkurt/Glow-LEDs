@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // import ColorBox from './ColorBox';
 
-const ColorPicker = (props) => {
-	return (
-		<div>
-			<input type="color" />
-			<div className="flex row">
-				{/* <ColorBox color="#FF0000" />
+const ColorPicker = () => {
+  return (
+    <div>
+      <input type="color" />
+      <div className="flex row">
+        {/* <ColorBox color="#FF0000" />
 				<ColorBox color="#FF8000" />
 				<ColorBox color="#FFFF00" />
 				<ColorBox color="#00ff00" />
@@ -18,9 +18,9 @@ const ColorPicker = (props) => {
 				<ColorBox color="#FF00FF" />
 				<ColorBox color="#FF0080" />
 				<ColorBox color="white" /> */}
-			</div>
-		</div>
-	);
+      </div>
+    </div>
+  );
 };
 
 export default ColorPicker;

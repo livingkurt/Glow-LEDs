@@ -22,20 +22,15 @@ export const useOutsideAlerter = (ref, dispatch) => {
   }, [ref]);
 };
 
-export const checkoutHandler = (dispatch, navigate, props, cartItems, current_user, closeMenu) => {
+export const checkoutHandler = (dispatch, navigate, current_user, closeMenu) => {
   dispatch(clear_order_state());
-  if (decide_warning(props.date_1, props.date_2)) {
-    if (cartItems.length === 0) {
-      // set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
-    } else {
-      if (current_user.hasOwnProperty("first_name")) {
-        navigate("/secure/checkout/placeorder");
-      } else {
-        navigate("/checkout/placeorder");
-      }
-    }
-    closeMenu();
+
+  if (current_user.hasOwnProperty("first_name")) {
+    navigate("/secure/checkout/placeorder");
+  } else {
+    navigate("/checkout/placeorder");
   }
+  closeMenu();
 };
 
 export const determine_wholesale_proceed = (current_user, cartItems) => {

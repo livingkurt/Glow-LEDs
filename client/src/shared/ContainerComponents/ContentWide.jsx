@@ -1,10 +1,10 @@
 // React
 import * as React from "react";
 
-const ContentWide = props => {
+const ContentWide = ({ style, children }) => {
   return (
-    <main style={props.style} className="content_wide">
-      {props.children}
+    <main style={style} className="content_wide">
+      {children}
     </main>
   );
 };

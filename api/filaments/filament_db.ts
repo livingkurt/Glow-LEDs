@@ -1,7 +1,7 @@
 import { Filament } from "../filaments";
 
 export default {
-  findAll_filaments_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_filaments_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Filament.find(filter)
         .sort(sort)
@@ -26,7 +26,7 @@ export default {
   findMy_filaments_db: async (user_id: string) => {
     try {
       return await Filament.find({ deleted: false, user: user_id }).sort({
-        _id: -1
+        _id: -1,
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -75,5 +75,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

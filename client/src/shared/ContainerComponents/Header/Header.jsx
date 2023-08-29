@@ -2,28 +2,23 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../Banner";
-import { HashLink } from "react-router-hash-link";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { API_Products } from "../../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../../utils/helper_functions";
 import { GLButton } from "../../GlowLEDsComponents";
-import Filter from "../../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../../api";
-import { clear_email_success } from "../../../slices/emailSlice";
 import { clear_order_state } from "../../../slices/orderSlice";
 import NavColumn from "./components/NavColumn";
 import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
 
-const Header = props => {
+const Header = () => {
   const navigate = useNavigate();
   const [first_name, set_first_name] = useState("");
   const [loading, set_loading] = useState("");
   const [display, setDisplay] = useState(false);
   const [options, set_options] = useState([]);
-  const [products, set_products] = useState([]);
-  const [slideshow, set_slideshow] = useState([]);
   const [pathname, set_pathname] = useState("");
   const [search, set_search] = useState("");
   const wrapperRef = useRef(null);

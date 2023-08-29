@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
@@ -16,7 +16,9 @@ import { open_edit_product_modal } from "../../slices/productSlice";
 import { EditProductModal } from "../ProductsPage/components";
 import config from "../../config";
 
-const ProductPage = props => {
+const ProductPage = () => {
+  const params = useParams();
+  const location = useLocation();
   const userPage = useSelector(state => state.users.userPage);
   let { current_user } = userPage;
 
@@ -98,11 +100,11 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsProduct(props.match.params.pathname));
+      dispatch(API.detailsProduct(params.pathname));
       const video = document.getElementsByClassName("product_video");
       video.muted = true;
       video.autoplay = true;
-      const query = getUrlParameter(props.location);
+      const query = getUrlParameter(location);
     }
     return () => (clean = false);
   }, []);
@@ -110,10 +112,10 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsProduct(props.match.params.pathname));
+      dispatch(API.detailsProduct(params.pathname));
     }
     return () => (clean = false);
-  }, [props.match.params.pathname]);
+  }, [params.pathname]);
 
   const update_universal_state = item => {
     set_previous_price(0);
@@ -178,8 +180,8 @@ const ProductPage = props => {
 
   const determine_options = product => {
     update_universal_state(product);
-    const query = getUrlParameter(props.location);
-    if (props.location.search.length === 0) {
+    const query = getUrlParameter(location);
+    if (location.search.length === 0) {
       if (product.color_products) {
         set_color_products(product.color_products);
 
@@ -218,7 +220,7 @@ const ProductPage = props => {
       if (product.secondary_products && product.secondary_products.length > 0) {
         // update_secondary_product_state(product.secondary_products[0]);
       }
-    } else if (props.location.search.length > 0) {
+    } else if (location.search.length > 0) {
       //
       if (product.color_products) {
         const color = product.color_products.find(color => color.color === query.color);
@@ -478,7 +480,7 @@ const ProductPage = props => {
       package_height: dimensions.package_height,
       package_volume: dimensions.package_volume,
       processing_time: product.processing_time,
-      pathname: props.match.params.pathname,
+      pathname: params.pathname,
       category: product.category,
       subcategory: product.subcategory,
       qty: parseInt(qty),
@@ -731,7 +733,7 @@ const ProductPage = props => {
         <div className="p-1rem">
           <div className="jc-b">
             <div className="mb-10px">
-              <Link to={props.location.previous_path || "/collections/all/products"} className="m-auto">
+              <Link to={location.previous_path || "/collections/all/products"} className="m-auto">
                 <GLButton variant="secondary">Back to Products</GLButton>
               </Link>
             </div>
@@ -751,7 +753,7 @@ const ProductPage = props => {
                   <div className="pos-abs bg-secondary br-10px">
                     <div className="column bg-secondary br-10px">
                       <Link
-                        to={"/secure/glow/editproduct/" + props.match.params.pathname + "/false"}
+                        to={"/secure/glow/editproduct/" + params.pathname + "/false"}
                         className="btn nav p-10px w-100per  br-10px"
                       >
                         Edit Macro
@@ -1020,7 +1022,7 @@ const ProductPage = props => {
                 manuals={manuals}
                 description={description}
                 included_items={included_items}
-                pathname={props.match.params.pathname}
+                pathname={params.pathname}
               />
             </div>
           )}
@@ -1032,7 +1034,7 @@ const ProductPage = props => {
               product={product}
               random={false}
               className=""
-              product_pathname={props.match.params.pathname}
+              product_pathname={params.pathname}
               title="Fits the Same Microlight"
               category="chips"
             />
@@ -1044,7 +1046,7 @@ const ProductPage = props => {
               product_category={product.category}
               random={false}
               className=""
-              product_pathname={props.match.params.pathname}
+              product_pathname={params.pathname}
               title="Related Products"
               category="related"
             />
@@ -1059,7 +1061,7 @@ const ProductPage = props => {
                 product_category={product.category}
                 random={false}
                 className=""
-                product_pathname={props.match.params.pathname}
+                product_pathname={params.pathname}
                 title="Accessories You May Need"
                 category="batteries"
               />
@@ -1072,7 +1074,7 @@ const ProductPage = props => {
               product_category={product.category}
               random={true}
               className=""
-              product_pathname={props.match.params.pathname}
+              product_pathname={params.pathname}
               title="Suggested Products"
               category="all"
             />

@@ -1,15 +1,15 @@
 import * as React from "react";
 
-const ToggleSwitch = props => {
+const ToggleSwitch = ({ setting, update_function }) => {
   return (
     <div className="mv-10px ai-c">
-      <label className="w-14rem">{props.setting.label}</label>
+      <label className="w-14rem">{setting.label}</label>
       <label className="switch">
         <input
           type="checkbox"
-          name={props.setting.name}
-          defaultChecked={props.setting.value === 1 ? true : false}
-          onChange={e => props.update_function(e.target.name, e.target.checked === true ? 1 : 0)}
+          name={setting.name}
+          defaultChecked={setting.value === 1 ? true : false}
+          onChange={e => update_function(e.target.name, e.target.checked === true ? 1 : 0)}
         />
         <span className="slider round" />
       </label>

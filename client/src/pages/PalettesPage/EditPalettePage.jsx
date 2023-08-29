@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SketchPicker } from "react-color";
 import * as API from "../../api";
 
-const EditPalettePage = props => {
+const EditPalettePage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [type, set_type] = useState("");
   const [name, set_name] = useState();
@@ -49,16 +50,16 @@ const EditPalettePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsPalette(props.match.params.id));
-        dispatch(API.detailsPalette(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsPalette(params.id));
+        dispatch(API.detailsPalette(params.id));
       } else {
         dispatch(API.listChips({}));
       }
       set_state();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     let clean = true;
@@ -114,7 +115,7 @@ const EditPalettePage = props => {
   return (
     <div className="main_container p-20px">
       <ul>
-        <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Palette" : "Create Palette"}</h1>
+        <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Palette" : "Create Palette"}</h1>
         {/* <Circle color={color} onChangeComplete={handleChangeComplete} /> */}
         {/* <AlphaPicker color={color} onChangeComplete={handleChangeComplete} /> */}
         {/* <BlockPicker color={color} onChangeComplete={handleChangeComplete} /> */}

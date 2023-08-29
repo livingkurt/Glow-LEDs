@@ -15,7 +15,7 @@ import {
   announcement,
   custom_contact,
   code_used,
-  shipping_status
+  shipping_status,
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
@@ -98,16 +98,16 @@ export default {
     const body = {
       email: {
         h1: "Thank you for your Order!",
-        h2: "We are starting production on your order! We will notify your as your order progresses."
+        h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
       title: "Thank you for your purchase!",
-      order: req.body.order
+      order: req.body.order,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: order(body), unsubscribe: false })
+      html: App({ body: order(body), unsubscribe: false }),
     };
     sendEmail(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
   },
@@ -115,16 +115,16 @@ export default {
     const body = {
       email: {
         h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
-        h2: "We are starting production on your order! We will notify your as your order progresses."
+        h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
       title: "Thank you for your purchase!",
-      order: req.body.order
+      order: req.body.order,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: order(body), unsubscribe: false })
+      html: App({ body: order(body), unsubscribe: false }),
     };
     sendEmail(mailOptions, res, "info", "Order Email Sent to " + req.body.email);
   },
@@ -134,21 +134,23 @@ export default {
     const body = {
       email: {
         h1: `${
-          order_data.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 < order_data.itemsPrice ? "Partial" : "Full"
+          order_data.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 < order_data.itemsPrice
+            ? "Partial"
+            : "Full"
         } Refund Successful`,
         h2: `Your Order has been refunded for ${" "}
           ${order_data.payment.refund_reason[order_data.payment.refund_reason.length - 1]} on ${format_date(
-          order_data.refundedAt
-        )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`
+            order_data.refundedAt
+          )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`,
       },
       title: "Thank you for your purchase!",
-      order: order_data
+      order: order_data,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Your Glow LEDs Refund",
-      html: App({ body: order(body), unsubscribe: false })
+      html: App({ body: order(body), unsubscribe: false }),
     };
     sendEmail(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
   },
@@ -156,12 +158,12 @@ export default {
     const body = {
       email: {
         h1: "Thank you for your Order!",
-        h2: "We are starting production on your order! We will notify your as your order progresses."
+        h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
       title: "Your Order has been " + toCapitalize(req.body.status),
       order: req.body.order,
       status: req.body.status,
-      message_to_user: req.body.message_to_user
+      message_to_user: req.body.message_to_user,
     };
 
     const mailOptions = {
@@ -170,8 +172,8 @@ export default {
       subject: req.body.status === "reassured" ? "Thank you for your patience" : req.body.subject,
       html: App({
         body: order_status(body),
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
@@ -184,8 +186,8 @@ export default {
       to: config.INFO_EMAIL,
       subject: "Glow LEDs Current Stock",
       html: App({
-        body: order_status(data)
-      })
+        body: order_status(data),
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
@@ -193,13 +195,13 @@ export default {
   send_affiliate_emails_c: async (req: any, res: any) => {
     const body = {
       affiliate: req.body.affiliate,
-      title: "Thank you for signing up!"
+      title: "Thank you for signing up!",
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: affiliate(body), unsubscribe: false })
+      html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
     sendEmail(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
@@ -207,7 +209,7 @@ export default {
   send_feature_emails_c: async (req: any, res: any) => {
     const body = {
       feature: req.body.feature,
-      title: "Thank you for sending us your art!"
+      title: "Thank you for sending us your art!",
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
@@ -215,8 +217,8 @@ export default {
       subject: req.body.subject,
       html: App({
         body: feature(body),
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
@@ -226,7 +228,7 @@ export default {
       to: config.LOGIN_EMAIL,
       from: req.body.email,
       subject: `${req.body.subject} - ${req.body.name}`,
-      html: req.body.message
+      html: req.body.message,
     };
     sendEmail(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
   },
@@ -236,7 +238,7 @@ export default {
       to: config.DISPLAY_CONTACT_EMAIL,
       from: email,
       subject: `New message from ${first_name} - ${reason_for_contact}`,
-      html: contact(req.body)
+      html: contact(req.body),
     };
     sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
   },
@@ -247,7 +249,7 @@ export default {
       from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
       subject: `Thank you for Contacting Glow LEDs Support`,
-      html: contact_confirmation(req.body)
+      html: contact_confirmation(req.body),
     };
     sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
   },
@@ -257,7 +259,7 @@ export default {
       from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
-      html: custom_contact({ order })
+      html: custom_contact({ order }),
     };
     sendEmail(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
   },
@@ -277,25 +279,28 @@ export default {
         if (team) {
           const users: any = await Promise.all(
             team.affiliates.map(async (affiliate_id: any) => {
-              const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
+              const affiliate: any = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
               return await user_db.findByAffiliateId_users_db(affiliate._id);
             })
           );
           mailRecipients = users.map((user: any) => user.email);
           mailSubject = `Your team's code was just used!`;
-          const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
+          const stats: any = await order_services.code_usage_orders_s(
+            { promo_code },
+            { start_date: first_of_month, end_date: today }
+          );
           mailBodyData = {
             name: team.team_name,
             promo_code: promo_code,
             percentage_off: null,
             number_of_uses: stats.number_of_uses,
-            earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+            earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
           };
         }
       } else {
-        const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+        const affiliate: any = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
         if (affiliate) {
-          const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+          const user: any = await user_db.findByAffiliateId_users_db(affiliate._id);
           mailRecipients = [user.email];
           mailSubject = `Your code was just used!`;
           const stats: any = await order_services.code_usage_orders_s(
@@ -307,7 +312,7 @@ export default {
             promo_code: promo_code,
             percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
             number_of_uses: stats.number_of_uses,
-            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
           };
         }
       }
@@ -320,8 +325,8 @@ export default {
           bcc: config.INFO_EMAIL,
           html: App({
             body: code_used(mailBodyData),
-            unsubscribe: false
-          })
+            unsubscribe: false,
+          }),
         };
         sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
@@ -336,10 +341,10 @@ export default {
       html: App({
         body: password_reset({
           ...req.body,
-          title: "Glow LEDs Password Reset"
+          title: "Glow LEDs Password Reset",
         }),
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
     sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
   },
@@ -353,12 +358,12 @@ export default {
       html: App({
         body: review({
           ...req.body,
-          categories: contents && contents[0].home_page.slideshow,
-          title: "Enjoy 10% off your next purchase!"
+          categories: contents && contents[0].home_page?.slideshow,
+          title: "Enjoy 10% off your next purchase!",
         }),
 
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
@@ -366,7 +371,12 @@ export default {
 
   send_announcement_emails_c: async (req: any, res: any) => {
     const { template, subject, test, time } = req.body;
-    const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
+    const subscribed_users: any = await user_db.findAll_users_db(
+      { deleted: false, email_subscription: true },
+      {},
+      "0",
+      "1"
+    );
     const email = await email_db.findById_emails_db(template._id);
     // const all_emails = subscribed_users.map((user: any) => user.email);
 
@@ -405,7 +415,7 @@ export default {
         App({
           body: announcement(template),
           unsubscribe: true,
-          background_color: template.background_color
+          background_color: template.background_color,
         })
       );
     }
@@ -420,11 +430,11 @@ export default {
       html: App({
         body: email_subscription({
           ...req.body,
-          categories: contents && contents[0].home_page.slideshow,
-          title: "Enjoy 10% off your next purchase!"
+          categories: contents && contents[0].home_page?.slideshow,
+          title: "Enjoy 10% off your next purchase!",
         }),
-        unsubscribe: true
-      })
+        unsubscribe: true,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
@@ -437,10 +447,10 @@ export default {
       html: App({
         body: reset_password({
           ...req.body,
-          title: "Glow LEDs Reset Password"
+          title: "Glow LEDs Reset Password",
         }),
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
@@ -455,12 +465,12 @@ export default {
       html: App({
         body: account_created({
           user: req.body,
-          categories: contents && contents[0].home_page.slideshow,
-          title: "Glow LEDs Account Created"
+          categories: contents && contents[0].home_page?.slideshow,
+          title: "Glow LEDs Account Created",
         }),
 
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
@@ -473,11 +483,11 @@ export default {
       html: App({
         body: account_created({
           ...req.body,
-          title: "Glow LEDs Account Created"
+          title: "Glow LEDs Account Created",
         }),
 
-        unsubscribe: false
-      })
+        unsubscribe: false,
+      }),
     };
 
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
@@ -487,7 +497,7 @@ export default {
       const event = req.body;
       if (event["object"] === "Event" && event["description"] === "tracker.updated") {
         const tracker = event.result;
-        const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
+        const order: any = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
 
         const updateOrder = (isStatus: any, statusAt: any) => {
           order[isStatus] = true;
@@ -500,7 +510,7 @@ export default {
           title: determine_status(tracker.status),
           order: order,
           status: tracker.status,
-          tracker: tracker
+          tracker: tracker,
           // tracking_details: tracker.tracking_details.reverse()[0]
         };
         const mailOptions = {
@@ -509,8 +519,8 @@ export default {
           subject: determine_status(tracker.status),
           html: App({
             body: shipping_status(body),
-            unsubscribe: false
-          })
+            unsubscribe: false,
+          }),
         };
         if (
           tracker.status === "delivered" ||
@@ -536,5 +546,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

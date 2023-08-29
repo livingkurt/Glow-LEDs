@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import * as API from "../../api";
+import { useParams } from "react-router-dom";
 
-const AnnouncementsPage = props => {
+const AnnouncementsPage = () => {
   const emailPage = useSelector(state => state.emails);
   const { emails } = emailPage;
 
@@ -65,7 +66,7 @@ const AnnouncementsPage = props => {
                     margin: "0 auto",
                     lineHeight: "50px",
                     color: "white",
-                    fontSize: "2em"
+                    fontSize: "2em",
                   }}
                 >
                   {email.h1}
@@ -84,7 +85,7 @@ const AnnouncementsPage = props => {
                             style={{
                               textAlign: "center",
                               width: "100%",
-                              borderRadius: "20px"
+                              borderRadius: "20px",
                             }}
                           />
                         </td>
@@ -99,7 +100,7 @@ const AnnouncementsPage = props => {
                     color: "white",
                     fontSize: "1.5em",
                     marginTop: "20px",
-                    marginBottom: "0"
+                    marginBottom: "0",
                   }}
                 >
                   {email.h2}
@@ -119,7 +120,7 @@ const AnnouncementsPage = props => {
                     margin: "20px auto",
                     color: "white",
                     fontSize: "16px",
-                    lineHeight: "30px"
+                    lineHeight: "30px",
                   }}
                 >
                   {email.p}
@@ -127,7 +128,7 @@ const AnnouncementsPage = props => {
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <a
@@ -137,7 +138,7 @@ const AnnouncementsPage = props => {
                       color: "white",
                       borderRadius: "10px",
                       border: 0,
-                      padding: "15px"
+                      padding: "15px",
                     }}
                   >
                     <h4
@@ -145,7 +146,7 @@ const AnnouncementsPage = props => {
                         fontFamily: "helvetica",
                         margin: 0,
                         fontSize: "1.2em",
-                        textAlign: "center"
+                        textAlign: "center",
                       }}
                     >
                       {email.button}

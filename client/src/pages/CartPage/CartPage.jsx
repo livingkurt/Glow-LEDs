@@ -7,10 +7,11 @@ import { decide_warning, determine_total } from "../../utils/helper_functions";
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CartPage = props => {
+const CartPage = () => {
   const navigate = useNavigate();
+  const params = useParams();
   const cartPage = useSelector(state => state.carts.cartPage);
 
   const { my_cart } = cartPage;
@@ -21,15 +22,13 @@ const CartPage = props => {
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {
-    if (decide_warning(props.date_1, props.date_2)) {
-      if (cartItems.length === 0) {
-        set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
+    if (cartItems.length === 0) {
+      set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
+    } else {
+      if (current_user.hasOwnProperty("first_name")) {
+        navigate("/secure/checkout/placeorder");
       } else {
-        if (current_user.hasOwnProperty("first_name")) {
-          navigate("/secure/checkout/placeorder");
-        } else {
-          navigate("/checkout/placeorder");
-        }
+        navigate("/checkout/placeorder");
       }
     }
   };
@@ -112,7 +111,7 @@ const CartPage = props => {
 
       <RelatedProductsSlideshow
         className=""
-        product_pathname={props.match.params.pathname}
+        product_pathname={params.pathname}
         title="Accessories You May Need"
         category="batteries"
         add_to_cart={true}
@@ -120,7 +119,7 @@ const CartPage = props => {
       <RelatedProductsSlideshow
         random={true}
         className=""
-        product_pathname={props.match.params.pathname}
+        product_pathname={params.pathname}
         title="Suggested Products"
         category="all"
         add_to_cart={true}

@@ -5,7 +5,7 @@ const CurrentProducts = base("Current Products");
 import mongoose from "mongoose";
 
 export default {
-  findAll_products_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_products_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Product.find(filter)
         .sort(sort)
@@ -18,12 +18,13 @@ export default {
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findAllGrid_products_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAllGrid_products_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Product.find(filter)
         .sort(sort)
@@ -38,106 +39,106 @@ export default {
           path: "color_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate({
           path: "secondary_color_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate({
           path: "option_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate("filament")
         .populate({
           path: "secondary_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
+              path: "collections",
             },
             {
               path: "color_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "option_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
               populate: {
-                path: "filament"
-              }
-            }
-          ]
+                path: "filament",
+              },
+            },
+          ],
         })
         .populate("categorys")
         .populate("subcategorys")
@@ -156,7 +157,7 @@ export default {
     try {
       const response = await Product.aggregate([
         {
-          $match: { deleted: false, hidden: false }
+          $match: { deleted: false, hidden: false },
         },
         // Perform a $lookup (join) here
         {
@@ -164,32 +165,32 @@ export default {
             from: "images", // replace with your collection name where Image data is stored
             localField: "images_object", // this is your field in the product collection which corresponds to _id in Image collection
             foreignField: "_id", // this is usually _id in the related collection
-            as: "images_object" // output alias
-          }
+            as: "images_object", // output alias
+          },
         },
         {
           $group: {
             _id: "$category",
             data: {
-              $push: "$$ROOT"
-            }
-          }
+              $push: "$$ROOT",
+            },
+          },
         },
         {
           $project: {
             data: {
-              $slice: ["$data", -4]
-            }
-          }
+              $slice: ["$data", -4],
+            },
+          },
         },
         {
-          $unwind: "$data"
+          $unwind: "$data",
         },
         {
           $replaceRoot: {
-            newRoot: "$data"
-          }
-        }
+            newRoot: "$data",
+          },
+        },
       ]).sort({ _id: 1 });
       return response;
     } catch (error) {
@@ -220,106 +221,106 @@ export default {
           path: "color_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate({
           path: "secondary_color_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate({
           path: "option_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
-            }
-          ]
+              path: "collections",
+            },
+          ],
         })
         .populate("filament")
         .populate({
           path: "secondary_products",
           populate: [
             {
-              path: "filament"
+              path: "filament",
             },
             {
-              path: "images_object"
+              path: "images_object",
             },
             {
-              path: "categorys"
+              path: "categorys",
             },
             {
-              path: "subcategorys"
+              path: "subcategorys",
             },
             {
-              path: "collections"
+              path: "collections",
             },
             {
               path: "color_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "option_products",
               populate: {
-                path: "filament"
-              }
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
               populate: {
-                path: "filament"
-              }
-            }
-          ]
+                path: "filament",
+              },
+            },
+          ],
         })
         .populate("categorys")
         .populate("subcategorys")
@@ -511,7 +512,7 @@ export default {
       const currentStock = await Product.find(
         {
           finite_stock: true,
-          deleted: false
+          deleted: false,
         },
         "name count_in_stock category subcategory product_collection option_products"
       ).exec();
@@ -535,5 +536,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -12,7 +12,7 @@ import {
 } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
-const DatabaseMigrationPage = props => {
+const DatabaseMigrationPage = () => {
   const date = new Date();
 
   function addDays(date, days) {

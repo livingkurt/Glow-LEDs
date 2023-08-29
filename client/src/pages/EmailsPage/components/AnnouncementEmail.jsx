@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { API_Emails } from "../../../utils";
@@ -10,7 +10,8 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 const HtmlToReactParser = require("html-to-react").Parser;
 
-const AnnouncementEmail = props => {
+const AnnouncementEmail = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [test, set_test] = useState(true);
@@ -35,7 +36,7 @@ const AnnouncementEmail = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsEmail(props.match.params.id));
+      dispatch(API.detailsEmail(params.id));
     }
     return () => (clean = false);
   }, []);

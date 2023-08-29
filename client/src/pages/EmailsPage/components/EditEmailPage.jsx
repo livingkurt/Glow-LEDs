@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails } from "../../../utils";
@@ -12,7 +12,8 @@ import * as API from "../../../api";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
-const EditEmailPage = props => {
+const EditEmailPage = () => {
+  const params = useParams();
   const [id, set_id] = useState("");
   const [email_type, set_email_type] = useState("");
   const [email_h1, set_email_h1] = useState("");
@@ -52,7 +53,7 @@ const EditEmailPage = props => {
   const dispatch = useDispatch();
 
   const set_content_state = content => {
-    props.match.params.id && set_id(email._id);
+    params.id && set_id(email._id);
     set_email_type(content.email_type);
     set_email_h1(content.h1);
     set_email_image(content.image);
@@ -65,7 +66,7 @@ const EditEmailPage = props => {
     set_email_active(content.active);
   };
   const set_email_state = () => {
-    props.match.params.id && set_id(email._id);
+    params.id && set_id(email._id);
     set_email_type(email.email_type);
     set_email_h1(email.h1);
     set_email_image(email.image);
@@ -121,9 +122,9 @@ const EditEmailPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsEmail(props.match.params.id));
-        dispatch(API.detailsEmail(props.match.params.id));
+      if (params.id) {
+        dispatch(API.detailsEmail(params.id));
+        dispatch(API.detailsEmail(params.id));
       } else {
         dispatch(API.detailsEmail(""));
       }
@@ -133,7 +134,7 @@ const EditEmailPage = props => {
       set_email_state();
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   const use_template = e => {
     dispatch(API.detailsEmail(e.target.value));
@@ -271,7 +272,7 @@ const EditEmailPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Email" : "Create Email"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Email" : "Create Email"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

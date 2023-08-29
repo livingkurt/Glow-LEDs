@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { determine_total, determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
@@ -17,7 +17,9 @@ import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
 import config from "../../config";
 
-const OrderPage = props => {
+const OrderPage = () => {
+  const params = useParams();
+  const location = useLocation();
   const { height, width } = useWindowDimensions();
 
   const dispatch = useDispatch();
@@ -79,7 +81,7 @@ const OrderPage = props => {
     if (clean) {
       if (refund) {
         set_refund_state(refund.isRefunded);
-        dispatch(API.detailsOrder(props.match.params.id));
+        dispatch(API.detailsOrder(params.id));
       }
     }
     return () => (clean = false);
@@ -88,11 +90,11 @@ const OrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsOrder(props.match.params.id));
+      dispatch(API.detailsOrder(params.id));
       dispatch(API.listPromos({}));
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     let clean = true;
@@ -130,7 +132,7 @@ const OrderPage = props => {
   //     if (successPay && order) {
   //       // navigate('/secure/checkout/paymentcomplete/' + order._id);
   //       navigate("/secure/checkout/order/receipt/" + order._id + "/order/true");
-  //       dispatch(API.detailsOrder(props.match.params.id));
+  //       dispatch(API.detailsOrder(params.id));
   //       set_payment_loading(false);
   //       dispatch(API.emptyCart(my_cart._id));
   //     } else if (errorPay) {
@@ -164,7 +166,7 @@ const OrderPage = props => {
       send_email(action_at.slice(0, -2));
     }
     setTimeout(() => {
-      dispatch(API.detailsOrder(props.match.params.id));
+      dispatch(API.detailsOrder(params.id));
     }, 200);
     set_loading_email(false);
   };
@@ -187,7 +189,7 @@ const OrderPage = props => {
   };
 
   const send_paid_email = async () => {
-    const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
+    const { data: order } = await API_Orders.findById_orders_a(params.id);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
     await API_Emails.send_order_email(
       order,
@@ -205,7 +207,7 @@ const OrderPage = props => {
       send_paid_email();
     }
     setTimeout(() => {
-      dispatch(API.detailsOrder(props.match.params.id));
+      dispatch(API.detailsOrder(params.id));
     }, 200);
   };
 
@@ -226,7 +228,7 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 
-    dispatch(API.detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(params.id));
   };
 
   const create_return_label = async () => {
@@ -240,7 +242,7 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 
-    dispatch(API.detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(params.id));
   };
 
   const buy_label = async () => {
@@ -262,11 +264,11 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_(order, data.tracking_code, data);
 
-    dispatch(API.detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(params.id));
     // navigate('/secure/glow/emails/invoice/' + order._id);
     // navigate({
     // 	pathname: '/secure/glow/emails/invoice/' + order._id,
-    // 	previous_path: props.location.previous_path
+    // 	previous_path: location.previous_path
     // });
   };
 
@@ -418,7 +420,7 @@ const OrderPage = props => {
       })
     );
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-    dispatch(API.detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(params.id));
     navigate("/secure/glow/emails/invoice/" + order._id);
   };
 
@@ -635,18 +637,15 @@ const OrderPage = props => {
             <title>Your Order | Glow LEDs</title>
             <meta property="og:title" content="Your Order" />
             <meta name="twitter:title" content="Your Order" />
-            <link rel="canonical" href={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id} />
-            <meta
-              property="og:url"
-              content={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id}
-            />
+            <link rel="canonical" href={"https://www.glow-leds.com/secure/account/order/" + params.id} />
+            <meta property="og:url" content={"https://www.glow-leds.com/secure/account/order/" + params.id} />
           </Helmet>
           <Loading loading={loading_shipping_rates} />
           {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
           <div className="mb-10px ml-20px jc-b">
             <div>
               {current_user?.isAdmin && (
-                <Link to={props.location.previous_path || "/secure/glow/orders"}>
+                <Link to={location.previous_path || "/secure/glow/orders"}>
                   <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
               )}

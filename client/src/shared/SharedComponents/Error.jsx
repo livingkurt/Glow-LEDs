@@ -1,7 +1,7 @@
 import * as React from "react";
 import config from "../../config";
 
-const Error = props => {
+const Error = (loading, error, children) => {
   const loading_message = () => {
     setTimeout(() => {
       return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
@@ -10,7 +10,7 @@ const Error = props => {
 
   return (
     <div>
-      {props.loading ? (
+      {loading ? (
         <div className="column jc-c">
           <img
             src={config.PUBLIC_URL + "/loading.gif"}
@@ -26,13 +26,13 @@ const Error = props => {
           />
           {loading_message()}
         </div>
-      ) : props.error ? (
+      ) : error ? (
         <div className="row jc-c">
           <h3 style={{ textAlign: "center" }}>Page Error</h3>
-          <h3 style={{ textAlign: "center" }}>{props.error} </h3>
+          <h3 style={{ textAlign: "center" }}>{error} </h3>
         </div>
       ) : (
-        props.children
+        children
       )}
     </div>
   );

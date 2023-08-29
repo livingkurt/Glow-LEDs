@@ -1,14 +1,12 @@
-// React
 import * as React from "react";
-// Styles
 import "./checkbox.css";
 
-const Checkbox = props => {
+const Checkbox = ({ checkboxState, onCheck }) => {
   return (
     <div>
       <label className="checkbox_label">
-        <input id="checkbox_input" type="checkbox" checked={props.checkboxState} />
-        <span className="checkbox_span" onClick={() => props.onCheck()} />
+        <input id="checkbox_input" type="checkbox" checked={checkboxState} />
+        <span className="checkbox_span" onClick={() => onCheck()} />
       </label>
     </div>
   );

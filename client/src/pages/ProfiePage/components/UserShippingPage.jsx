@@ -8,7 +8,7 @@ import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 
-const ShippingPage = props => {
+const ShippingPage = () => {
   const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;

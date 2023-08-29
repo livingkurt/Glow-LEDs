@@ -2,7 +2,7 @@
 import * as React from "react";
 import config from "../../config";
 
-const LoadingInside = props => {
+const LoadingInside = ({ loading, error, children }) => {
   const loading_message = () => {
     setTimeout(() => {
       return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
@@ -11,7 +11,7 @@ const LoadingInside = props => {
 
   return (
     <div>
-      {props.loading ? (
+      {loading ? (
         <div
           style={{
             display: "flex",
@@ -37,12 +37,12 @@ const LoadingInside = props => {
           </div>
           {loading_message()}
         </div>
-      ) : props.error ? (
+      ) : error ? (
         <div className="error_message jc-c column">
-          <p className="ta-c  fs-14px">Error: {props.error}</p>
+          <p className="ta-c  fs-14px">Error: {error}</p>
         </div>
       ) : (
-        props.children
+        children
       )}
     </div>
   );

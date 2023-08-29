@@ -32,7 +32,7 @@ export default {
     }
   },
   create_filters_paychecks_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
-    const affiliates = await affiliate_db.findAll_affiliates_db({ active: true }, {}, "0", "1");
+    const affiliates: any = await affiliate_db.findAll_affiliates_db({ active: true }, {}, "0", "1");
     const users = await user_db.findAll_users_db({ is_employee: true }, {}, "0", "1");
     try {
       const availableFilters = {
@@ -121,14 +121,14 @@ export default {
       } else {
         o_filter = { deleted: false, isPaid: true };
       }
-      let affiliates = [];
-      let teams = [];
+      let affiliates: any = [];
+      let teams: any = [];
       if (params.position !== "team") {
         affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
       } else {
         teams = await team_db.findAll_teams_db(t_filter, {}, "0", "1");
       }
-      const orders = await order_db.findAll_orders_db(o_filter, {}, "0", "1");
+      const orders: any = await order_db.findAll_orders_db(o_filter, {}, "0", "1");
 
       let paychecks = [];
       if (params.position !== "team") {

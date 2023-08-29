@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { validate_registration } from "../../utils/validations";
 import { Helmet } from "react-helmet";
@@ -9,7 +9,8 @@ import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
 import * as API from "../../api";
 import { set_success } from "../../slices/userSlice";
 
-const RegisterPage = props => {
+const RegisterPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -28,7 +29,7 @@ const RegisterPage = props => {
 
   const dispatch = useDispatch();
 
-  const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const submitHandler = e => {
     e.preventDefault();

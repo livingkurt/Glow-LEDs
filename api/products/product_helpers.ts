@@ -140,7 +140,6 @@ export const normalizeProductFilters = (input: any) => {
   if (input.options.includes("only_options")) {
     output.option = true;
   }
-  console.log({ output });
   return output;
 };
 

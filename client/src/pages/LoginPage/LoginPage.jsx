@@ -8,7 +8,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
 import * as API from "../../api";
 
-const LoginPage = props => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

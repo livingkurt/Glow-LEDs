@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { set_survey } from "../../slices/surveySlice";
 
-const EditSurveyPage = props => {
+const EditSurveyPage = () => {
+  const params = useParams();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const navigate = useNavigate();
@@ -39,12 +40,12 @@ const EditSurveyPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsSurvey(props.match.params.id));
+      dispatch(API.detailsSurvey(params.id));
       dispatch(API.listUsers({}));
       dispatch(API.listOrders({}));
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
+  }, [dispatch, params.id]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -78,7 +79,7 @@ const EditSurveyPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Survey" : "Create Survey"}</h1>
+      <h1 style={{ textAlign: "center" }}>{params.id ? "Edit Survey" : "Create Survey"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>

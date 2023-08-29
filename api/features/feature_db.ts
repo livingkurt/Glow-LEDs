@@ -1,7 +1,7 @@
 import { Feature } from "../features";
 
 export default {
-  findAll_features_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_features_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Feature.find(filter)
         .sort(sort)
@@ -66,5 +66,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

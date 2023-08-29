@@ -36,13 +36,7 @@ Bugsnag.start({
 //     key: ""
 //   });
 
-mongoose
-  .connect(config.MONGODB_URI || "", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .catch((error: { reason: any }) => console.log(error));
+mongoose.connect(config.MONGODB_URI || "", {}).catch((error: { reason: any }) => console.log(error));
 
 // Initialize your express application
 const app = express();

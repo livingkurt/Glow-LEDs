@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
-const AdminChangePasswordPage = props => {
+const AdminChangePasswordPage = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -20,8 +21,8 @@ const AdminChangePasswordPage = props => {
 
   const submitHandler = async e => {
     e.preventDefault();
-    dispatch(API.passwordReset({ userId: props.match.params.id, password, rePassword }));
-    navigate("/secure/glow/userprofile/" + props.match.params.id);
+    dispatch(API.passwordReset({ userId: params.id, password, rePassword }));
+    navigate("/secure/glow/userprofile/" + params.id);
   };
 
   useEffect(() => {

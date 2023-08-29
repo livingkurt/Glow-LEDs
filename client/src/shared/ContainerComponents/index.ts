@@ -1,5 +1,4 @@
 export { default as Container } from "./Container";
-export { default as FlexContainer } from "./FlexContainer";
 export { default as Header } from "./Header/Header";
 export { default as Content } from "./Content";
 export { default as ContentWide } from "./ContentWide";

@@ -10,8 +10,8 @@ export default {
         ? {
             facebook_name: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -26,11 +26,16 @@ export default {
       }
       const surveys = await survey_db.findAll_surveys_db(filter, sort, limit, page);
       const count = await survey_db.count_surveys_db(filter);
-      return {
-        surveys,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
-      };
+      if (count !== undefined) {
+        return {
+          surveys,
+          totalPages: Math.ceil(count / parseInt(limit)),
+          currentPage: page,
+        };
+      } else {
+        // Handle the case where count is undefined
+        throw new Error("Count is undefined");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -72,5 +77,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

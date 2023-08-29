@@ -1,4 +1,3 @@
-// React
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,10 +9,8 @@ import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
 import { set_success } from "../../../slices/productSlice";
-// Components
 
-const Review = props => {
-  //
+const Review = ({ product, pathname }) => {
   const dispatch = useDispatch();
 
   const userPage = useSelector(state => state.users.userPage);
@@ -37,13 +34,13 @@ const Review = props => {
     e.preventDefault();
     dispatch(
       API.saveProductReview({
-        product_pathname: props.pathname,
+        product_pathname: pathname,
         review: {
           first_name: current_user.first_name,
           last_name: current_user.last_name,
           rating: rating,
-          comment: comment
-        }
+          comment: comment,
+        },
       })
     );
 
@@ -52,21 +49,21 @@ const Review = props => {
   };
 
   const remove_review = review_id => {
-    dispatch(API.deleteProductReview(props.pathname, review_id));
+    dispatch(API.deleteProductReview(pathname, review_id));
   };
 
   useEffect(() => {
     if (success) {
-      dispatch(API.detailsProduct(props.pathname));
+      dispatch(API.detailsProduct(pathname));
       setReviewModal("none");
       dispatch(set_success(false));
     }
-  }, [dispatch, props.pathname, success]);
+  }, [dispatch, pathname, success]);
 
   return (
     <div className="review" id="reviews">
       <Loading loading={loading}></Loading>
-      {props.product.reviews.map((review, index) => (
+      {product.reviews.map((review, index) => (
         <li
           key={index}
           style={{
@@ -74,7 +71,7 @@ const Review = props => {
             background: "#616161",
             padding: "5px",
             borderRadius: "15px",
-            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
           }}
         >
           <div className="jc-b">
@@ -107,7 +104,7 @@ const Review = props => {
           style={{
             textAlign: "center",
             width: "100%",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           Write a Review
@@ -121,7 +118,7 @@ const Review = props => {
                     textAlign: "center",
                     width: "100%",
                     justifyContent: "center",
-                    marginTop: "-35px"
+                    marginTop: "-35px",
                   }}
                 >
                   {success ? "Review Saved Successfully" : ""}
@@ -148,7 +145,12 @@ const Review = props => {
               </li>
               <li>
                 <label htmlFor="comment" id="comment" />
-                <textarea htmlFor="comment" className="rating_textarea" value={comment} onChange={e => setComment(e.target.value)} />
+                <textarea
+                  htmlFor="comment"
+                  className="rating_textarea"
+                  value={comment}
+                  onChange={e => setComment(e.target.value)}
+                />
               </li>
               <li>
                 <GLButton style={{ marginBottom: "10px" }} onClick={submitHandler} variant="primary">
@@ -164,7 +166,7 @@ const Review = props => {
         ) : (
           <div>
             Please{" "}
-            <Link to={`/account/login?redirect=/collections/all/products/${props.pathname}`}>
+            <Link to={`/account/login?redirect=/collections/all/products/${pathname}`}>
               <GLButton variant="primary">Login</GLButton>
             </Link>{" "}
             to Write a Review

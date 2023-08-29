@@ -1,16 +1,15 @@
 import { Parcel } from "../parcels";
 
 export default {
-  findAll_parcels_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_parcels_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Parcel.find(filter)
         .sort(sort)
-        .populate("user")
-        .populate("affiliate")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -66,5 +65,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

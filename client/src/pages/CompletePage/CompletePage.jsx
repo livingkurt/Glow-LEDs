@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { API_Affiliates, API_Emails, API_Features } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -10,7 +10,9 @@ import EmailComplete from "./components/EmailComplete";
 import AffiliateComplete from "./components/AffiliateComplete";
 import config from "../../config";
 
-const CompletePage = props => {
+const CompletePage = () => {
+  const params = useParams();
+  const location = useLocation();
   const [data, set_data] = useState();
 
   const userPage = useSelector(state => state.users.userPage);
@@ -31,10 +33,10 @@ const CompletePage = props => {
   }, []);
 
   const update_data = () => {
-    if (props.match.params.type === "order") {
+    if (params.type === "order") {
       set_data({
         title: "Order Complete",
-        id: "Order ID: " + props.match.params.id,
+        id: "Order ID: " + params.id,
         h1: "Thank you for your order!",
         h2: "What to expect",
         p: `You will be receiving a confirmation email with your order details shortly.\n
@@ -47,9 +49,9 @@ const CompletePage = props => {
         `,
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/order"
+        link: "https://www.glow-leds.com/pages/complete/order",
       });
-    } else if (props.match.params.type === "affiliate") {
+    } else if (params.type === "affiliate") {
       set_data({
         title: "Affiliate Sign Up Complete",
         h1: "Thank you for Applying!",
@@ -57,9 +59,9 @@ const CompletePage = props => {
         p: "You will be recieving a conformation email with your affiliate details",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/affiliate"
+        link: "https://www.glow-leds.com/pages/complete/affiliate",
       });
-    } else if (props.match.params.type === "email") {
+    } else if (params.type === "email") {
       set_data({
         title: "Email Sent Successfully!",
         h1: "Thank You for Contacting Glow LEDs",
@@ -67,9 +69,9 @@ const CompletePage = props => {
         p: "We'll answer your questions or requests as soon as possible.",
         button_label: "",
         button_link: "",
-        link: "/pages/faq"
+        link: "/pages/faq",
       });
-    } else if (props.match.params.type === "feature") {
+    } else if (params.type === "feature") {
       set_data({
         title: "Feature Sign Up Complete",
         h1: "Thank you for sending us your art!",
@@ -77,27 +79,39 @@ const CompletePage = props => {
         p: "You will be recieving a conformation email with your affiliate details",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/affiliate"
+        link: "https://www.glow-leds.com/pages/complete/affiliate",
       });
     }
   };
 
   const send_email = async () => {
-    if (props.match.params.type === "order") {
+    if (params.type === "order") {
       await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-      await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
+      await API_Emails.send_order_email(
+        order,
+        "New Order Created by " + order.shipping.first_name,
+        config.REACT_APP_INFO_EMAIL
+      );
 
       if (order.orderItems.some(item => item.category === "custom")) {
         await API_Emails.send_custom_contact_email(order, order.shipping.email);
       }
-    } else if (props.match.params.type === "affiliate") {
-      const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(props.match.params.id);
+    } else if (params.type === "affiliate") {
+      const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(params.id);
       await API_Emails.send_affiliate_email(affiliate, "Welcome to the Team!", affiliate.user.email);
-      await API_Emails.send_affiliate_email(affiliate, "New Affiliate Created by " + affiliate.artist_name, config.REACT_APP_INFO_EMAIL);
-    } else if (props.match.params.type === "feature") {
-      const { data: feature } = await API_Features.findById_features_a(props.match.params.id);
+      await API_Emails.send_affiliate_email(
+        affiliate,
+        "New Affiliate Created by " + affiliate.artist_name,
+        config.REACT_APP_INFO_EMAIL
+      );
+    } else if (params.type === "feature") {
+      const { data: feature } = await API_Features.findById_features_a(params.id);
       await API_Emails.send_feature_email(feature, "Your Glow LEDs Feature", feature.user.email);
-      await API_Emails.send_feature_email(feature, "New Feature Created by " + feature.artist_name, config.REACT_APP_INFO_EMAIL);
+      await API_Emails.send_feature_email(
+        feature,
+        "New Feature Created by " + feature.artist_name,
+        config.REACT_APP_INFO_EMAIL
+      );
     }
   };
 
@@ -121,7 +135,7 @@ const CompletePage = props => {
                   Back to Emails
                 </GLButton>
               </Link>
-              <Link to={props.location.previous_path || "/secure/glow/orders"}>
+              <Link to={location.previous_path || "/secure/glow/orders"}>
                 <GLButton variant="primary" className="mh-10px">
                   Back to Orders
                 </GLButton>
@@ -133,10 +147,10 @@ const CompletePage = props => {
             </div>
           )}
 
-          {props.match.params.type === "order" && <OrderComplete current_user={current_user} order_id={props.match.params.id} />}
-          {props.match.params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}
-          {props.match.params.type === "email" && <EmailComplete current_user={current_user} />}
-          {props.match.params.type === "feature" && <FeatureComplete current_user={current_user} />}
+          {params.type === "order" && <OrderComplete current_user={current_user} order_id={params.id} />}
+          {params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}
+          {params.type === "email" && <EmailComplete current_user={current_user} />}
+          {params.type === "feature" && <FeatureComplete current_user={current_user} />}
         </div>
       )}
     </div>

@@ -18,7 +18,7 @@ import {
   order_status,
   custom_contact,
   code_used,
-  shipping_status
+  shipping_status,
 } from "./pages";
 import express from "express";
 import invoice from "./pages/invoice";
@@ -41,16 +41,16 @@ router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0:
   const body = {
     email: config.CONTACT_EMAIL,
     promo_code: "xoteag",
-    categories: contents && contents[0].home_page.slideshow
+    categories: contents && contents[0].home_page?.slideshow,
   };
 
   res.send(
     App({
       body: email_subscription({
         ...body,
-        title: "Enjoy 10% off your next purchase!"
+        title: "Enjoy 10% off your next purchase!",
       }),
-      unsubscribe: true
+      unsubscribe: true,
     })
   );
 });
@@ -73,11 +73,11 @@ router.get("/refund", async (req: { body: any }, res: { send: (arg0: string) => 
       createdAt: "2020-11-19T16:24:12.273Z",
       updatedAt: "2021-07-06T18:52:09.037Z",
       images: [],
-      p: ""
+      p: "",
     },
 
     title: "Thank you for your purchase!",
-    order: data
+    order: data,
   };
   res.send(App({ body: order(body), unsubscribe: false }));
 });
@@ -91,12 +91,12 @@ router.get("/code_used", async (req: { body: any }, res: { send: (arg0: string) 
   const monthNumber = date.getMonth();
   const year = date.getFullYear();
   const promo = await promo_db.findBy_promos_db({ promo_code });
-  const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+  const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo?._id });
   const stats: any = await order_services.affiliate_code_usage_orders_s(
     { promo_code },
     {
       month: months[monthNumber].toLowerCase(),
-      year: year
+      year: year,
     }
   );
 
@@ -105,9 +105,9 @@ router.get("/code_used", async (req: { body: any }, res: { send: (arg0: string) 
       body: code_used({
         affiliate,
         number_of_uses: stats.number_of_uses,
-        earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+        earnings: affiliate?.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
       }),
-      title: "Welcome to the Team!"
+      title: "Welcome to the Team!",
     })
   );
 });
@@ -125,11 +125,11 @@ router.get("/order", async (req: { body: any }, res: { send: (arg0: string) => v
       createdAt: "2020-11-19T16:24:12.273Z",
       updatedAt: "2021-07-06T18:52:09.037Z",
       images: [],
-      p: ""
+      p: "",
     },
 
     title: "Thank you for your purchase!",
-    order: orderDocument
+    order: orderDocument,
   };
   res.send(App({ body: order(body), unsubscribe: false }));
 });
@@ -147,7 +147,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
       createdAt: "2020-11-19T16:24:12.273Z",
       updatedAt: "2021-07-06T18:52:09.037Z",
       images: [],
-      p: ""
+      p: "",
     },
     order: {
       _id: "61ef74b018e233b38fb278b6",
@@ -185,11 +185,11 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                     line1: null,
                     line2: null,
                     postal_code: null,
-                    state: null
+                    state: null,
                   },
                   email: null,
                   name: null,
-                  phone: null
+                  phone: null,
                 },
                 calculated_statement_descriptor: "GLOW-LEDS",
                 captured: true,
@@ -214,7 +214,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                   risk_level: "normal",
                   risk_score: 63,
                   seller_message: "Payment complete.",
-                  type: "authorized"
+                  type: "authorized",
                 },
                 paid: true,
                 payment_intent: "pi_3KLg7yHHW1jy2HDN1kauYrrA",
@@ -225,7 +225,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                     checks: {
                       address_line1_check: null,
                       address_postal_code_check: null,
-                      cvc_check: null
+                      cvc_check: null,
                     },
                     country: "US",
                     exp_month: 1,
@@ -236,9 +236,9 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                     last4: "4242",
                     network: "visa",
                     three_d_secure: null,
-                    wallet: null
+                    wallet: null,
                   },
-                  type: "card"
+                  type: "card",
                 },
                 receipt_email: null,
                 receipt_number: null,
@@ -250,7 +250,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                   data: [],
                   has_more: false,
                   total_count: 0,
-                  url: "/v1/charges/ch_3KLg7yHHW1jy2HDN1zrYGbj8/refunds"
+                  url: "/v1/charges/ch_3KLg7yHHW1jy2HDN1zrYGbj8/refunds",
                 },
                 review: null,
                 shipping: null,
@@ -260,12 +260,12 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
                 statement_descriptor_suffix: null,
                 status: "succeeded",
                 transfer_data: null,
-                transfer_group: null
-              }
+                transfer_group: null,
+              },
             ],
             has_more: false,
             total_count: 1,
-            url: "/v1/charges?payment_intent=pi_3KLg7yHHW1jy2HDN1kauYrrA"
+            url: "/v1/charges?payment_intent=pi_3KLg7yHHW1jy2HDN1kauYrrA",
           },
           client_secret: "pi_3KLg7yHHW1jy2HDN1kauYrrA_secret_OFKo8Ra1jw9SjQHzPVfkBRcTN",
           confirmation_method: "automatic",
@@ -284,8 +284,8 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
             card: {
               installments: null,
               network: null,
-              request_three_d_secure: "automatic"
-            }
+              request_three_d_secure: "automatic",
+            },
           },
           payment_method_types: ["card"],
           processing: null,
@@ -298,7 +298,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           statement_descriptor_suffix: null,
           status: "succeeded",
           transfer_data: null,
-          transfer_group: null
+          transfer_group: null,
         },
         payment: {
           id: "pm_1KLg7vHHW1jy2HDNVmQtkRUq",
@@ -310,18 +310,18 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
               line1: null,
               line2: null,
               postal_code: "42424",
-              state: null
+              state: null,
             },
             email: null,
             name: null,
-            phone: null
+            phone: null,
           },
           card: {
             brand: "visa",
             checks: {
               address_line1_check: null,
               address_postal_code_check: null,
-              cvc_check: null
+              cvc_check: null,
             },
             country: "US",
             exp_month: 4,
@@ -331,18 +331,18 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
             last4: "4242",
             networks: {
               available: ["visa"],
-              preferred: null
+              preferred: null,
             },
             three_d_secure_usage: {
-              supported: true
+              supported: true,
             },
-            wallet: null
+            wallet: null,
           },
           created: 1643082928,
           customer: null,
           livemode: false,
-          type: "card"
-        }
+          type: "card",
+        },
       },
       guest: false,
       isPaid: true,
@@ -387,7 +387,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "glow_stringz",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -423,7 +423,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "gloves",
           qty: 3,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -459,7 +459,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "gloves",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -496,7 +496,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "glowskinz",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -532,7 +532,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "glowskinz",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -566,7 +566,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "accessories",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
+          updatedAt: "2022-01-25T03:55:28.733Z",
         },
         {
           reviewed: false,
@@ -604,8 +604,8 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           category: "exo_diffusers",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
-          updatedAt: "2022-01-25T03:55:28.733Z"
-        }
+          updatedAt: "2022-01-25T03:55:28.733Z",
+        },
       ],
       shipping: {
         first_name: "Mckinnley",
@@ -637,8 +637,8 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           delivery_date_guaranteed: false,
           est_delivery_days: 2,
           shipment_id: "shp_538f06e1d0ac4759a0731533f277741c",
-          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c"
-        }
+          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c",
+        },
       },
       itemsPrice: 111.5625,
       shippingPrice: 9.9,
@@ -654,8 +654,8 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
       createdAt: "2022-01-25T03:55:28.733Z",
       updatedAt: "2022-01-25T03:55:32.342Z",
       __v: 0,
-      paidAt: "2022-01-25T03:55:32.337Z"
-    }
+      paidAt: "2022-01-25T03:55:32.337Z",
+    },
   };
   res.send(invoice(body));
 });
@@ -672,7 +672,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
       createdAt: "2020-11-19T16:24:12.273Z",
       updatedAt: "2021-07-06T18:52:09.037Z",
       images: [],
-      p: ""
+      p: "",
     },
     status: "crafted",
     message_to_user: "",
@@ -712,11 +712,11 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                     line1: null,
                     line2: null,
                     postal_code: "94002",
-                    state: null
+                    state: null,
                   },
                   email: null,
                   name: null,
-                  phone: null
+                  phone: null,
                 },
                 calculated_statement_descriptor: "GLOW-LEDS",
                 captured: true,
@@ -738,7 +738,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                   reason: null,
                   risk_level: "normal",
                   seller_message: "Payment complete.",
-                  type: "authorized"
+                  type: "authorized",
                 },
                 paid: true,
                 payment_intent: "pi_3K51dBHHW1jy2HDN0NIxElzd",
@@ -749,7 +749,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                     checks: {
                       address_line1_check: null,
                       address_postal_code_check: "pass",
-                      cvc_check: "pass"
+                      cvc_check: "pass",
                     },
                     country: "US",
                     exp_month: 1,
@@ -760,9 +760,9 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                     last4: "7823",
                     network: "visa",
                     three_d_secure: null,
-                    wallet: null
+                    wallet: null,
                   },
-                  type: "card"
+                  type: "card",
                 },
                 receipt_email: null,
                 receipt_number: null,
@@ -774,7 +774,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                   data: [],
                   has_more: false,
                   total_count: 0,
-                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds"
+                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds",
                 },
                 review: null,
                 shipping: null,
@@ -784,12 +784,12 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
                 statement_descriptor_suffix: null,
                 status: "succeeded",
                 transfer_data: null,
-                transfer_group: null
-              }
+                transfer_group: null,
+              },
             ],
             has_more: false,
             total_count: 1,
-            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd"
+            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd",
           },
           client_secret: "pi_3K51dBHHW1jy2HDN0NIxElzd_secret_5pObVIZ80Sk2JeLYbM67P1rsj",
           confirmation_method: "automatic",
@@ -807,8 +807,8 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
             card: {
               installments: null,
               network: null,
-              request_three_d_secure: "automatic"
-            }
+              request_three_d_secure: "automatic",
+            },
           },
           payment_method_types: ["card"],
           receipt_email: null,
@@ -820,7 +820,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           statement_descriptor_suffix: null,
           status: "succeeded",
           transfer_data: null,
-          transfer_group: null
+          transfer_group: null,
         },
         refund: [
           {
@@ -836,10 +836,10 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
             receipt_number: null,
             source_transfer_reversal: null,
             status: "succeeded",
-            transfer_reversal: null
-          }
+            transfer_reversal: null,
+          },
         ],
-        refund_reason: ["Duplicate Order"]
+        refund_reason: ["Duplicate Order"],
       },
       guest: false,
       isPaid: true,
@@ -889,7 +889,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           category: "glowskinz",
           qty: 2,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -925,7 +925,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -961,7 +961,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -995,8 +995,8 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           category: "accessories",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
-        }
+          updatedAt: "2021-12-10T18:10:35.464Z",
+        },
       ],
       user: "61b043ba7abb88002bde770e",
       shipping: {
@@ -1030,8 +1030,8 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           delivery_date_guaranteed: false,
           est_delivery_days: 3,
           shipment_id: "shp_4f7dd086cfe248b284e0cdca115a4297",
-          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c"
-        }
+          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c",
+        },
       },
       itemsPrice: 39.483,
       taxPrice: 2.8625175,
@@ -1046,8 +1046,8 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
       createdAt: "2021-12-10T05:26:52.608Z",
       updatedAt: "2021-12-10T18:11:04.643Z",
       __v: 0,
-      refundedAt: "2021-12-10T18:10:35.453Z"
-    }
+      refundedAt: "2021-12-10T18:10:35.453Z",
+    },
   };
   res.send(App({ body: order_status(body), unsubscribe: false }));
 });
@@ -1092,11 +1092,11 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                     line1: null,
                     line2: null,
                     postal_code: "94002",
-                    state: null
+                    state: null,
                   },
                   email: null,
                   name: null,
-                  phone: null
+                  phone: null,
                 },
                 calculated_statement_descriptor: "GLOW-LEDS",
                 captured: true,
@@ -1118,7 +1118,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                   reason: null,
                   risk_level: "normal",
                   seller_message: "Payment complete.",
-                  type: "authorized"
+                  type: "authorized",
                 },
                 paid: true,
                 payment_intent: "pi_3K51dBHHW1jy2HDN0NIxElzd",
@@ -1129,7 +1129,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                     checks: {
                       address_line1_check: null,
                       address_postal_code_check: "pass",
-                      cvc_check: "pass"
+                      cvc_check: "pass",
                     },
                     country: "US",
                     exp_month: 1,
@@ -1140,9 +1140,9 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                     last4: "7823",
                     network: "visa",
                     three_d_secure: null,
-                    wallet: null
+                    wallet: null,
                   },
-                  type: "card"
+                  type: "card",
                 },
                 receipt_email: null,
                 receipt_number: null,
@@ -1154,7 +1154,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                   data: [],
                   has_more: false,
                   total_count: 0,
-                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds"
+                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds",
                 },
                 review: null,
                 shipping: null,
@@ -1164,12 +1164,12 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
                 statement_descriptor_suffix: null,
                 status: "succeeded",
                 transfer_data: null,
-                transfer_group: null
-              }
+                transfer_group: null,
+              },
             ],
             has_more: false,
             total_count: 1,
-            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd"
+            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd",
           },
           client_secret: "pi_3K51dBHHW1jy2HDN0NIxElzd_secret_5pObVIZ80Sk2JeLYbM67P1rsj",
           confirmation_method: "automatic",
@@ -1187,8 +1187,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             card: {
               installments: null,
               network: null,
-              request_three_d_secure: "automatic"
-            }
+              request_three_d_secure: "automatic",
+            },
           },
           payment_method_types: ["card"],
           receipt_email: null,
@@ -1200,8 +1200,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           statement_descriptor_suffix: null,
           status: "succeeded",
           transfer_data: null,
-          transfer_group: null
-        }
+          transfer_group: null,
+        },
       },
       guest: false,
       isPaid: true,
@@ -1251,7 +1251,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           category: "glowskinz",
           qty: 2,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -1287,7 +1287,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -1323,7 +1323,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -1357,8 +1357,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           category: "accessories",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
-        }
+          updatedAt: "2021-12-10T18:10:35.464Z",
+        },
       ],
       user: "61b043ba7abb88002bde770e",
       shipping: {
@@ -1392,8 +1392,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           delivery_date_guaranteed: false,
           est_delivery_days: 3,
           shipment_id: "shp_4f7dd086cfe248b284e0cdca115a4297",
-          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c"
-        }
+          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c",
+        },
       },
       itemsPrice: 39.483,
       taxPrice: 2.8625175,
@@ -1408,7 +1408,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
       createdAt: "2021-12-10T05:26:52.608Z",
       updatedAt: "2021-12-10T18:11:04.643Z",
       __v: 0,
-      refundedAt: "2021-12-10T18:10:35.453Z"
+      refundedAt: "2021-12-10T18:10:35.453Z",
     },
     tracker: {
       id: "trk_2c0254b7684747f2a5c6affc3a2a4b5e",
@@ -1439,8 +1439,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: null,
             state: null,
             country: null,
-            zip: null
-          }
+            zip: null,
+          },
         },
         {
           object: "TrackingDetail",
@@ -1456,8 +1456,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "HOUSTON",
             state: "TX",
             country: null,
-            zip: "77063"
-          }
+            zip: "77063",
+          },
         },
         {
           object: "TrackingDetail",
@@ -1473,8 +1473,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "NORTH HOUSTON",
             state: "TX",
             country: null,
-            zip: "77315"
-          }
+            zip: "77315",
+          },
         },
         {
           object: "TrackingDetail",
@@ -1490,8 +1490,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "COLUMBIA",
             state: "SC",
             country: null,
-            zip: "29201"
-          }
+            zip: "29201",
+          },
         },
         {
           object: "TrackingDetail",
@@ -1507,8 +1507,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "CHARLESTON",
             state: "SC",
             country: null,
-            zip: "29407"
-          }
+            zip: "29407",
+          },
         },
         {
           object: "TrackingDetail",
@@ -1524,8 +1524,8 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "CHARLESTON",
             state: "SC",
             country: null,
-            zip: "29407"
-          }
+            zip: "29407",
+          },
         },
         {
           object: "TrackingDetail",
@@ -1541,11 +1541,11 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
             city: "CHARLESTON",
             state: "SC",
             country: null,
-            zip: "29407"
-          }
-        }
-      ]
-    }
+            zip: "29407",
+          },
+        },
+      ],
+    },
   };
   res.send(App({ body: shipping_status(body), unsubscribe: false }));
 });
@@ -1554,7 +1554,7 @@ router.get("/review", async (req: { body: any }, res: { send: (arg0: string) => 
   const body = {
     email: config.CONTACT_EMAIL,
     promo_code: "xoteag",
-    categories: contents && contents[0].home_page.slideshow
+    categories: contents && contents[0].home_page?.slideshow,
   };
 
   res.send(App({ body: review(body), title: "Enjoy 10% off your next purchase!" }));
@@ -1591,7 +1591,7 @@ router.get("/affiliate", async (req: { body: any }, res: { send: (arg0: string) 
         "605008e3d2946c002a82c293",
         "5ff882654cb3b7002a667747",
         "5f90e202454528002af7df30",
-        "600722965510ff002aceaeb0"
+        "600722965510ff002aceaeb0",
       ],
       chips: [],
       pathname: "cosmo",
@@ -1612,7 +1612,7 @@ router.get("/affiliate", async (req: { body: any }, res: { send: (arg0: string) 
         admin_only: false,
         affiliate_only: true,
         used_once: false,
-        free_shipping: true
+        free_shipping: true,
       },
       public_code: {
         _id: "5f6a57ebf04766002a52230f",
@@ -1634,10 +1634,10 @@ router.get("/affiliate", async (req: { body: any }, res: { send: (arg0: string) 
         start_date: "2021-01-01T00:00:00.000Z",
         included_categories: [],
         included_products: [],
-        sponsor_only: false
+        sponsor_only: false,
       },
-      venmo: "@joseph-conner-12"
-    }
+      venmo: "@joseph-conner-12",
+    },
   };
 
   res.send(App({ body: affiliate(body), title: "Welcome to the Team!" }));
@@ -1665,19 +1665,19 @@ router.get("/feature", async (req: { body: any }, res: { send: (arg0: string) =>
       createdAt: "2021-05-03T15:15:00.977Z",
       updatedAt: "2021-05-13T02:36:44.136Z",
       __v: 0,
-      release_date: "2021-05-12T00:00:00.000Z"
-    }
+      release_date: "2021-05-12T00:00:00.000Z",
+    },
   };
   res.send(App({ body: feature(body), title: "Thank you for sending us your art!" }));
 });
 router.get("/announcement", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-  const email = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, "1", "1");
+  const email: any = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, "1", "1");
 
   res.send(
     App({
       body: announcement(email[0]),
       header_footer_color: email[0].header_footer_color,
-      background_color: email[0].background_color
+      background_color: email[0].background_color,
     })
   );
 });
@@ -1747,11 +1747,11 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                     line1: null,
                     line2: null,
                     postal_code: "94002",
-                    state: null
+                    state: null,
                   },
                   email: null,
                   name: null,
-                  phone: null
+                  phone: null,
                 },
                 calculated_statement_descriptor: "GLOW-LEDS",
                 captured: true,
@@ -1773,7 +1773,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                   reason: null,
                   risk_level: "normal",
                   seller_message: "Payment complete.",
-                  type: "authorized"
+                  type: "authorized",
                 },
                 paid: true,
                 payment_intent: "pi_3K51dBHHW1jy2HDN0NIxElzd",
@@ -1784,7 +1784,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                     checks: {
                       address_line1_check: null,
                       address_postal_code_check: "pass",
-                      cvc_check: "pass"
+                      cvc_check: "pass",
                     },
                     country: "US",
                     exp_month: 1,
@@ -1795,9 +1795,9 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                     last4: "7823",
                     network: "visa",
                     three_d_secure: null,
-                    wallet: null
+                    wallet: null,
                   },
-                  type: "card"
+                  type: "card",
                 },
                 receipt_email: null,
                 receipt_number: null,
@@ -1809,7 +1809,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                   data: [],
                   has_more: false,
                   total_count: 0,
-                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds"
+                  url: "/v1/charges/ch_3K51dBHHW1jy2HDN0zGwM35V/refunds",
                 },
                 review: null,
                 shipping: null,
@@ -1819,12 +1819,12 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
                 statement_descriptor_suffix: null,
                 status: "succeeded",
                 transfer_data: null,
-                transfer_group: null
-              }
+                transfer_group: null,
+              },
             ],
             has_more: false,
             total_count: 1,
-            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd"
+            url: "/v1/charges?payment_intent=pi_3K51dBHHW1jy2HDN0NIxElzd",
           },
           client_secret: "pi_3K51dBHHW1jy2HDN0NIxElzd_secret_5pObVIZ80Sk2JeLYbM67P1rsj",
           confirmation_method: "automatic",
@@ -1842,8 +1842,8 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
             card: {
               installments: null,
               network: null,
-              request_three_d_secure: "automatic"
-            }
+              request_three_d_secure: "automatic",
+            },
           },
           payment_method_types: ["card"],
           receipt_email: null,
@@ -1855,7 +1855,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           statement_descriptor_suffix: null,
           status: "succeeded",
           transfer_data: null,
-          transfer_group: null
+          transfer_group: null,
         },
         refund: [
           {
@@ -1871,10 +1871,10 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
             receipt_number: null,
             source_transfer_reversal: null,
             status: "succeeded",
-            transfer_reversal: null
-          }
+            transfer_reversal: null,
+          },
         ],
-        refund_reason: ["Duplicate Order"]
+        refund_reason: ["Duplicate Order"],
       },
       guest: false,
       isPaid: true,
@@ -1924,7 +1924,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           category: "glowskinz",
           qty: 2,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -1960,7 +1960,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -1996,7 +1996,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
+          updatedAt: "2021-12-10T18:10:35.464Z",
         },
         {
           reviewed: false,
@@ -2030,8 +2030,8 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           category: "accessories",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
-          updatedAt: "2021-12-10T18:10:35.464Z"
-        }
+          updatedAt: "2021-12-10T18:10:35.464Z",
+        },
       ],
       user: "61b043ba7abb88002bde770e",
       shipping: {
@@ -2065,8 +2065,8 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           delivery_date_guaranteed: false,
           est_delivery_days: 3,
           shipment_id: "shp_4f7dd086cfe248b284e0cdca115a4297",
-          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c"
-        }
+          carrier_account_id: "ca_945306ac434f4c5baa70e5d9eb9db72c",
+        },
       },
       itemsPrice: 39.483,
       taxPrice: 2.8625175,
@@ -2081,8 +2081,8 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
       createdAt: "2021-12-10T05:26:52.608Z",
       updatedAt: "2021-12-10T18:11:04.643Z",
       __v: 0,
-      refundedAt: "2021-12-10T18:10:35.453Z"
-    }
+      refundedAt: "2021-12-10T18:10:35.453Z",
+    },
   };
   res.send(custom_contact(data));
 });
@@ -2142,7 +2142,7 @@ router.get("/account_created", async (req: { body: any }, res: { send: (arg0: st
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     user,
-    categories: contents && contents[0].home_page.slideshow
+    categories: contents && contents[0].home_page?.slideshow,
   };
 
   res.send(App({ body: account_created(body), title: "Glow LEDs Account Created" }));

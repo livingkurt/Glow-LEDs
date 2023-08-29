@@ -9,8 +9,8 @@ import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import * as API from "../../../api";
 
-const CarouselItem = props => {
-  const [product, set_product] = useState(props.product);
+const CarouselItem = ({ product, size, style, add_to_cart }) => {
+  const [product, set_product] = useState(product);
   const [loading, set_loading] = useState(true);
   const [qty, set_qty] = useState(1);
   const [size, set_size] = useState(null);
@@ -28,7 +28,7 @@ const CarouselItem = props => {
       set_loading(false);
     }
     return () => (clean = false);
-  }, [props.product]);
+  }, [product]);
 
   const add_item_to_cart = cart_item => {
     dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
@@ -105,11 +105,11 @@ const CarouselItem = props => {
   return (
     <div>
       {product && !loading && (
-        <li key={props.product && product.pathname} style={props.style}>
+        <li key={product && product.pathname} style={style}>
           <div className="tooltip">
             <span className="tooltiptext">
               <li>
-                {product.quantity > 0 && props.add_to_cart ? (
+                {product.quantity > 0 && add_to_cart ? (
                   <div>
                     {product.subcategory !== "coin" ? (
                       <GLButton variant="primary" onClick={handleAddToCart}>
@@ -198,7 +198,7 @@ const CarouselItem = props => {
                   className="product-image"
                   alt={product.name}
                   title="Product Image"
-                  size={{ height: props.size, width: props.size }}
+                  size={{ height: size, width: size }}
                   effect="blur"
                   src={product?.images_object[0].link}
                 />
@@ -206,7 +206,7 @@ const CarouselItem = props => {
 								className="product-image"
 								alt={product.name}
 								title="Product Image"
-								style={{ height: props.size, width: props.size }}
+								style={{ height: size, width: size }}
 								effect="blur"
 								src={product?.images_object[0].link}
 							/> */}

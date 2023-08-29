@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { useNavigate } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
-const FeaturedPage = props => {
+const FeaturedPage = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const featurePage = useSelector(state => state.features);
   const { feature } = featurePage;
@@ -19,7 +20,7 @@ const FeaturedPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsFeature(props.match.params.pathname));
+      dispatch(API.detailsFeature(params.pathname));
     }
     return () => (clean = false);
   }, []);
@@ -56,7 +57,7 @@ const FeaturedPage = props => {
               Back to Features
             </GLButton>
             {current_user?.isAdmin && (
-              <Link to={"/secure/glow/editfeature/" + props.match.params.pathname}>
+              <Link to={"/secure/glow/editfeature/" + params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Feature
                 </GLButton>

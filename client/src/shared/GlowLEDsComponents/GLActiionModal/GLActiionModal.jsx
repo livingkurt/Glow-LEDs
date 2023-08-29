@@ -1,45 +1,41 @@
 /* eslint-disable max-lines-per-function */
 import * as React from "react";
 import PropTypes from "prop-types";
-
-// import { themeColorShape, buttonVariantShape } from "../Utils/shapes";
 import styles from "./GLActiionModal.module.scss";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const GLActiionModal = props => {
-  const {
-    id,
-    isOpen,
-    title,
-    onAction,
-    onConfirm,
-    onCancel,
-    onEnter,
-    actionLabel,
-    confirmLabel,
-    confirmDisabled,
-    confirmLoading,
-    cancelLabel,
-    dividers,
-    actionVariant,
-    cancelVariant,
-    actionColor,
-    cancelColor,
-    confirmColor,
-    confirmVariant,
-    children,
-    maxWidth,
-    fullWidth,
-    dataTest,
-    dialogClasses,
-    titleClasses,
-    contentClasses,
-    actionClasses,
-    cancelDisabled,
-    actionDisabled,
-    disableEscapeKeyDown,
-  } = props;
-
+const GLActiionModal = ({
+  id,
+  isOpen,
+  title,
+  onAction,
+  onConfirm,
+  onCancel,
+  onEnter,
+  actionLabel,
+  confirmLabel,
+  confirmDisabled,
+  confirmLoading,
+  cancelLabel,
+  dividers,
+  actionVariant,
+  cancelVariant,
+  actionColor,
+  cancelColor,
+  confirmColor,
+  confirmVariant,
+  children,
+  maxWidth,
+  fullWidth,
+  dataTest,
+  dialogClasses,
+  titleClasses,
+  contentClasses,
+  actionClasses,
+  cancelDisabled,
+  actionDisabled,
+  disableEscapeKeyDown,
+}) => {
   return (
     <div data-test={dataTest}>
       <Dialog

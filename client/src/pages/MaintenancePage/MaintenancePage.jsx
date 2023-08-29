@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
 
-const MaintenancePage = props => {
+const MaintenancePage = () => {
   const header_styles = {
     gridArea: "header",
     backgroundColor: "#333333",

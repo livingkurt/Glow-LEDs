@@ -1,7 +1,7 @@
 import { Palette } from "../palettes";
 
 export default {
-  findAll_palettes_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  findAll_palettes_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Palette.find(filter)
         .sort(sort)
@@ -74,5 +74,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

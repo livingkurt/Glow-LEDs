@@ -5,9 +5,11 @@ import { useDispatch } from "react-redux";
 import { API_Content, API_Features } from "../../utils";
 import { Loading } from "../../shared/SharedComponents";
 import { MenuItemD, MenuItemM } from "./components";
+import { useParams } from "react-router-dom";
 
-const MenuPage = props => {
-  const pathname = props.match.params.pathname;
+const MenuPage = () => {
+  const params = useParams();
+  const pathname = params.pathname;
 
   const [items, set_items] = useState([]);
   const [loading_pictures, set_loading_pictures] = useState(false);
@@ -20,7 +22,12 @@ const MenuPage = props => {
       if (pathname === "featured") {
         get_features();
       }
-      if (pathname === "gloving" || pathname === "manuals" || pathname === "support" || pathname === "sponsored_artists") {
+      if (
+        pathname === "gloving" ||
+        pathname === "manuals" ||
+        pathname === "support" ||
+        pathname === "sponsored_artists"
+      ) {
         get_display_content();
       }
     }
@@ -65,7 +72,7 @@ const MenuPage = props => {
         {
           label: "Artists",
           image: artists[0] && artists[0].logo,
-          link: "/collections/all/features/category/artists"
+          link: "/collections/all/features/category/artists",
         },
         {
           label: "Glovers",
@@ -73,19 +80,19 @@ const MenuPage = props => {
             glovers.filter(glover => glover.release_date <= today && glover.category === "glovers") &&
             glovers.filter(glover => glover.release_date <= today && glover.category === "glovers")[0].video
           }/hqdefault.jpg`,
-          link: "/collections/all/features/category/glovers"
+          link: "/collections/all/features/category/glovers",
         },
 
         {
           label: "Producers",
           image: producers[0] && producers[0].logo,
-          link: "/collections/all/features/category/producers"
+          link: "/collections/all/features/category/producers",
         },
         {
           label: "VFX",
           image: (vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx && vfx.video}/hqdefault.jpg`,
-          link: "/collections/all/features/category/vfx"
-        }
+          link: "/collections/all/features/category/vfx",
+        },
       ];
     }
   };
@@ -100,7 +107,9 @@ const MenuPage = props => {
         content &&
         content.home_page &&
         content.home_page.slideshow
-          .filter(item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz")
+          .filter(
+            item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz"
+          )
           .map(item => {
             return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
           })
@@ -110,92 +119,92 @@ const MenuPage = props => {
         {
           label: "Track Your Order",
           link: "/pages/track_your_order",
-          image: "https://images2.imgbox.com/6d/ca/gy6td2iV_o.png"
+          image: "https://images2.imgbox.com/6d/ca/gy6td2iV_o.png",
         },
         {
           label: "About",
           link: "/pages/about",
-          image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
+          image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg",
         },
         {
           label: "FAQ",
           link: "/pages/faq",
-          image: "https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png"
+          image: "https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png",
         },
         {
           label: "Manuals",
           link: "/pages/manuals",
-          image: "https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png"
+          image: "https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png",
         },
         {
           label: "Announcements",
           link: "/pages/announcements",
-          image: "https://images2.imgbox.com/8b/52/SfnnCLNz_o.png"
+          image: "https://images2.imgbox.com/8b/52/SfnnCLNz_o.png",
         },
         {
           label: "Contact",
           link: "/pages/contact",
-          image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png"
+          image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png",
         },
         {
           label: "Terms",
           link: "/pages/terms",
-          image: "https://images2.imgbox.com/0b/55/LAI7uhOb_o.png"
-        }
+          image: "https://images2.imgbox.com/0b/55/LAI7uhOb_o.png",
+        },
       ];
     } else if (pathname === "sponsored_artists") {
       return [
         {
           label: "Sponsors",
           image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
-          link: "/collections/all/sponsors"
+          link: "/collections/all/sponsors",
         },
         {
           label: "Teams",
           image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams"
-        }
+          link: "/collections/all/teams",
+        },
       ];
     } else if (pathname === "learn") {
       return [
         {
           label: "Beginner",
           image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
-          link: "/collections/all/tutorials?level=beginner"
+          link: "/collections/all/tutorials?level=beginner",
         },
         {
           label: "Intermediate",
           image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams?level=intermediate"
+          link: "/collections/all/teams?level=intermediate",
         },
         {
           label: "Advanced",
           image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams?level=advanced"
-        }
+          link: "/collections/all/teams?level=advanced",
+        },
       ];
     } else if (pathname === "collections") {
       return [
         {
           label: "Texture",
           link: "/collections/all/products/category/diffuser_caps/collection/texture",
-          image: "https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg"
+          image: "https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg",
         },
         {
           label: "Space Cadet",
           link: "/collections/all/products/category/diffuser_caps/collection/space_cadet",
-          image: "https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg"
+          image: "https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg",
         },
         {
           label: "Festie Bestie",
           link: "/collections/all/products/category/diffuser_caps/collection/festie_bestie",
-          image: "https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg"
+          image: "https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg",
         },
         {
           label: "Platonic Solids",
           link: "/collections/all/products/category/diffuser_caps/collection/platonic_solids",
-          image: "https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg"
-        }
+          image: "https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg",
+        },
       ];
     }
   };

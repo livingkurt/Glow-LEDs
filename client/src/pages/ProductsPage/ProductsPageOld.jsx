@@ -33,8 +33,8 @@
 //   const [page, set_page] = useState(1);
 //   const [limit, set_limit] = useState(30);
 
-//   const category = props.match.params.category ? props.match.params.category : "";
-//   const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
+//   const category = params.category ? params.category : "";
+//   const subcategory = params.subcategory ? params.subcategory : "";
 
 //   const dispatch = useDispatch();
 //   const [products_list, updateProducts] = useState([]);
@@ -52,12 +52,12 @@
 
 //   const determine_products = () => {
 //     const query = getUrlParameter(props.location);
-//     let category = props.match.params.category ? props.match.params.category : "";
-//     let subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
+//     let category = params.category ? params.category : "";
+//     let subcategory = params.subcategory ? params.subcategory : "";
 //     let search = "";
 //     let sort = "";
 //     let filter = "";
-//     let collection = props.match.params.collection ? props.match.params.collection : "";
+//     let collection = params.collection ? params.collection : "";
 //     let limit = 30;
 //     let page = "";
 //     let hidden = "";
@@ -298,12 +298,12 @@
 //     updateProducts(items);
 //   };
 //   const update_page = (e, new_page) => {
-//     let category = props.match.params.category ? props.match.params.category : "";
-//     let subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
+//     let category = params.category ? params.category : "";
+//     let subcategory = params.subcategory ? params.subcategory : "";
 //     let search = "";
 //     let sort = "";
 //     let filter = "";
-//     let collection = props.match.params.collection ? props.match.params.collection : "";
+//     let collection = params.collection ? params.collection : "";
 
 //     let hidden = "";
 //     let limit = 30;

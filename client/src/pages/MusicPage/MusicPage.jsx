@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
 
-const MusicPage = props => {
+const MusicPage = () => {
   return (
     <div className="main_container p-20px">
       <Helmet>
