@@ -197,6 +197,7 @@ export default {
   },
   remove_carts_s: async (params: any) => {
     try {
+      console.log({ params });
       return await cart_db.remove_carts_db(params.id);
     } catch (error) {
       if (error instanceof Error) {

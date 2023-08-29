@@ -225,6 +225,12 @@ const cartPage = createSlice({
       state.cart = {};
     },
     [API.emptyCart.fulfilled as any]: (state: any, { payload }: any) => {
+      console.log("Empty Cart");
+      localStorage.removeItem("cartItems");
+      state.my_cart = { cartItems: [] };
+    },
+    [API.emptyCart.rejected as any]: (state: any, { payload }: any) => {
+      console.log("Empty Cart");
       localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
     },

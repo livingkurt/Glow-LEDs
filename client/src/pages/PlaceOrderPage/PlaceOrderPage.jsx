@@ -434,13 +434,13 @@ const PlaceOrderPage = () => {
     if (clean) {
       if (success_no_pay_order && order && totalPrice === 0) {
         setTimeout(() => {
-          navigate("/pages/complete/order/" + order._id);
           set_loading_payment(false);
           dispatch(API.emptyCart(my_cart._id));
           promo_code_used();
           dimminish_stock();
           send_used_code_email();
           sessionStorage.removeItem("shippingAddress");
+          navigate("/pages/complete/order/" + order._id);
           // dispatch(removeOrderState());
         }, 2000);
       } else if (error_order) {
@@ -465,13 +465,13 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (success && order?.hasOwnProperty("_id")) {
-        navigate("/pages/complete/order/" + order._id);
         set_loading_payment(false);
         dispatch(API.emptyCart(my_cart._id));
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
         send_used_code_email();
+        navigate("/pages/complete/order/" + order._id);
       }
     }
     return () => (clean = false);

@@ -9,7 +9,6 @@ import reactCSS from "reactcss";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const EditEmailPage = () => {

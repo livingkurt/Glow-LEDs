@@ -166,8 +166,12 @@ export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", a
 
 export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, thunkApi: any) => {
   try {
-    const { data } = await axios.post(`/api/carts/${id}/empty_cart`);
-    return data;
+    if (id) {
+      const { data } = await axios.post(`/api/carts/${id}/empty_cart`);
+      return data;
+    } else {
+      return "Success";
+    }
   } catch (error) {
     Covy().showSnackbar({
       message: errorMessage(error),
