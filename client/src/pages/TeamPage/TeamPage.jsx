@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
 const TeamPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const teamPage = useSelector(state => state.teams);
   const { team } = teamPage;
   const userPage = useSelector(state => state.users.userPage);
@@ -49,7 +49,7 @@ const TeamPage = props => {
       {team && (
         <div className="">
           <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => history.goBack()}>
+            <GLButton variant="secondary" onClick={() => navigate.goBack()}>
               Back
             </GLButton>
             {/* <Link to="/collections/all/teams">
@@ -76,7 +76,7 @@ const TeamPage = props => {
                 width: "100%",
                 display: "none",
                 maxWidth: "unset",
-                maxHeight: "unset"
+                maxHeight: "unset",
               }}
               effect="blur"
               src={team.picture}
@@ -179,7 +179,7 @@ const TeamPage = props => {
                           style={{
                             top: "40%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)"
+                            transform: "translate(-50%, -50%)",
                           }}
                         >
                           {affiliate.artist_name}
@@ -189,7 +189,7 @@ const TeamPage = props => {
                           style={{
                             top: "70%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)"
+                            transform: "translate(-50%, -50%)",
                           }}
                         >
                           Sponsored
@@ -219,7 +219,7 @@ const TeamPage = props => {
                           style={{
                             top: "40%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)"
+                            transform: "translate(-50%, -50%)",
                           }}
                         >
                           {affiliate.artist_name}

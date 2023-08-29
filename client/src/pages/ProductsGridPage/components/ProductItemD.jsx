@@ -1,6 +1,6 @@
 // React
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { LazyImage } from "../../../shared/SharedComponents";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 // import Resizer from 'react-image-file-resizer';
 
 const ProductItemD = ({ product, style, size, product_occurrences }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [image_number, set_image_number] = useState(0);
 
   const userPage = useSelector(state => state.users.userPage);
@@ -44,7 +44,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname
+                previous_path: navigate.location.pathname,
               }}
               className="m-auto"
             >
@@ -109,7 +109,10 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
 
                     if (productOccurrence?.name === product.name) {
                       return (
-                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={product._id}>
+                        <div
+                          className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px"
+                          key={product._id}
+                        >
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
                             alt={product.name}
@@ -132,7 +135,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname
+                previous_path: navigate.location.pathname,
               }}
               className="mt-13px"
             >
@@ -143,7 +146,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
               {sale_price_switch({
                 product: product,
                 cartItem: false,
-                isWholesaler: current_user?.isWholesaler
+                isWholesaler: current_user?.isWholesaler,
               })}
             </label>
 

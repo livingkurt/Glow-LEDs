@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -28,7 +28,7 @@ const EditFeaturePage = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { users } = userPage;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const featurePage = useSelector(state => state.features);
   const { feature, loading, error } = featurePage;
@@ -123,12 +123,12 @@ const EditFeaturePage = props => {
         description,
         pathname,
         category,
-        release_date: unformat_date(release_date)
+        release_date: unformat_date(release_date),
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/features");
+    navigate("/secure/glow/features");
   };
 
   const add_image = e => {
@@ -205,7 +205,7 @@ const EditFeaturePage = props => {
                         package_height: "auto",
                         maxWidth: "100px",
                         maxHeight: "100px",
-                        borderRadius: "15px"
+                        borderRadius: "15px",
                       }}
                       className="mv-10px ml-10px"
                       src={picture}
@@ -271,7 +271,11 @@ const EditFeaturePage = props => {
                         </label>
                         <div className="ai-c h-25px mb-15px">
                           <div className="custom-select">
-                            <select defaultValue={users} className="qty_select_dropdown" onChange={e => set_user(e.target.value)}>
+                            <select
+                              defaultValue={users}
+                              className="qty_select_dropdown"
+                              onChange={e => set_user(e.target.value)}
+                            >
                               <option key={1} defaultValue="">
                                 ---Choose User---
                               </option>
@@ -288,7 +292,13 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="user">User</label>
-                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
+                        <input
+                          type="text"
+                          name="user"
+                          value={user}
+                          id="user"
+                          onChange={e => set_user(e.target.value)}
+                        />
                       </li>
 
                       <li>
@@ -323,11 +333,23 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="category">Category</label>
-                        <input type="text" name="category" value={category} id="category" onChange={e => set_category(e.target.value)} />
+                        <input
+                          type="text"
+                          name="category"
+                          value={category}
+                          id="category"
+                          onChange={e => set_category(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="pathname">Pathname</label>
-                        <input type="text" name="pathname" value={pathname} id="pathname" onChange={e => set_pathname(e.target.value)} />
+                        <input
+                          type="text"
+                          name="pathname"
+                          value={pathname}
+                          id="pathname"
+                          onChange={e => set_pathname(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="description">Description</label>
@@ -348,7 +370,11 @@ const EditFeaturePage = props => {
                         </label>
                         <div className="ai-c h-25px mb-15px">
                           <div className="custom-select">
-                            <select defaultValue={product} className="qty_select_dropdown" onChange={e => set_product(e.target.value)}>
+                            <select
+                              defaultValue={product}
+                              className="qty_select_dropdown"
+                              onChange={e => set_product(e.target.value)}
+                            >
                               <option key={1} defaultValue="">
                                 ---Choose Product---
                               </option>
@@ -367,24 +393,54 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="product">Product</label>
-                        <input type="text" name="product" value={product} id="product" onChange={e => set_product(e.target.value)} />
+                        <input
+                          type="text"
+                          name="product"
+                          value={product}
+                          id="product"
+                          onChange={e => set_product(e.target.value)}
+                        />
                       </li>
 
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
+                        <input
+                          type="text"
+                          name="video"
+                          value={video}
+                          id="video"
+                          onChange={e => set_video(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="link">Link</label>
-                        <input type="text" name="link" value={link} id="link" onChange={e => set_link(e.target.value)} />
+                        <input
+                          type="text"
+                          name="link"
+                          value={link}
+                          id="link"
+                          onChange={e => set_link(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="logo">Logo</label>
-                        <input type="text" name="logo" value={logo} id="logo" onChange={e => set_logo(e.target.value)} />
+                        <input
+                          type="text"
+                          name="logo"
+                          value={logo}
+                          id="logo"
+                          onChange={e => set_logo(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="song_id">Song ID</label>
-                        <input type="text" name="song_id" value={song_id} id="song_id" onChange={e => set_song_id(e.target.value)} />
+                        <input
+                          type="text"
+                          name="song_id"
+                          value={song_id}
+                          id="song_id"
+                          onChange={e => set_song_id(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="release_date">Release Date</label>
@@ -398,7 +454,13 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="image">Image</label>
-                        <input type="text" name="image" value={image} id="image" onChange={e => set_image(e.target.value)} />
+                        <input
+                          type="text"
+                          name="image"
+                          value={image}
+                          id="image"
+                          onChange={e => set_image(e.target.value)}
+                        />
                         <GLButton variant="primary" onClick={e => add_image(e)}>
                           Add Image
                         </GLButton>
@@ -413,7 +475,7 @@ const EditFeaturePage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Features
                     </GLButton>
                   </li>

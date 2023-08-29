@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -15,7 +15,7 @@ const EditFilamentPage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const filamentPage = useSelector(state => state.filaments);
   const { filament, loading, error } = filamentPage;
@@ -75,12 +75,12 @@ const EditFilamentPage = props => {
         type,
         color,
         color_code,
-        active
+        active,
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/filaments");
+    navigate("/secure/glow/filaments");
   };
 
   return (
@@ -103,7 +103,11 @@ const EditFilamentPage = props => {
                         <div className="h-25px mv-10px mb-30px column">
                           <label>Filament Type</label>
                           <div className="custom-select w-100per">
-                            <select className="qty_select_dropdown w-100per" onChange={e => set_type(e.target.value)} value={type}>
+                            <select
+                              className="qty_select_dropdown w-100per"
+                              onChange={e => set_type(e.target.value)}
+                              value={type}
+                            >
                               <option key={1} defaultValue="">
                                 ---Choose Filament Type---
                               </option>
@@ -119,7 +123,13 @@ const EditFilamentPage = props => {
                       </li>
                       <li>
                         <label htmlFor="color">Color</label>
-                        <input type="text" name="color" defaultValue={color} id="color" onChange={e => set_color(e.target.value)} />
+                        <input
+                          type="text"
+                          name="color"
+                          defaultValue={color}
+                          id="color"
+                          onChange={e => set_color(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="color_code">Color Code</label>

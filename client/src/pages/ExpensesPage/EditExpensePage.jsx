@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -18,7 +18,7 @@ const EditExpensePage = props => {
   const [card, set_card] = useState("");
   const [amount, set_amount] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const expensePage = useSelector(state => state.expenses);
   const { expense, loading, error } = expensePage;
@@ -87,12 +87,12 @@ const EditExpensePage = props => {
         date_of_purchase: unformat_date(date_of_purchase),
         category,
         card,
-        amount
+        amount,
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/expenses");
+    navigate("/secure/glow/expenses");
   };
 
   return (
@@ -140,7 +140,13 @@ const EditExpensePage = props => {
                       </li>
                       <li>
                         <label htmlFor="category">Category</label>
-                        <input type="text" name="category" value={category} id="category" onChange={e => set_category(e.target.value)} />
+                        <input
+                          type="text"
+                          name="category"
+                          value={category}
+                          id="category"
+                          onChange={e => set_category(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="place_of_purchase">Place of Purchase</label>
@@ -165,11 +171,23 @@ const EditExpensePage = props => {
 
                       <li>
                         <label htmlFor="card">Card</label>
-                        <input type="text" name="card" value={card} id="card" onChange={e => set_card(e.target.value)} />
+                        <input
+                          type="text"
+                          name="card"
+                          value={card}
+                          id="card"
+                          onChange={e => set_card(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="amount">Amount</label>
-                        <input type="text" name="amount" value={amount} id="amount" onChange={e => set_amount(e.target.value)} />
+                        <input
+                          type="text"
+                          name="amount"
+                          value={amount}
+                          id="amount"
+                          onChange={e => set_amount(e.target.value)}
+                        />
                       </li>
                     </div>
                   </div>
@@ -179,7 +197,7 @@ const EditExpensePage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Expenses
                     </GLButton>
                   </li>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import {
   description_determination,
@@ -21,7 +21,7 @@ import { ProductItemD, ProductItemM } from "./components";
 import * as API from "../../api";
 
 const AllProductsPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [product_occurrences, set_product_occurrences] = useState([]);
   const [query, set_query] = useState({});
   const [best_sellers, set_best_sellers] = useState([]);
@@ -211,7 +211,7 @@ const AllProductsPage = props => {
 
   const sortHandler = e => {
     set_sort(e.target.value);
-    update_products_url(history, search, e.target.value, filter, limit);
+    update_products_url(navigate, search, e.target.value, filter, limit);
     dispatch(
       API.listProducts({
         category,
@@ -236,7 +236,7 @@ const AllProductsPage = props => {
     set_search("");
     set_filter(chip_selected._id);
     //
-    update_products_url(history, "", sort, chip_selected.name, limit);
+    update_products_url(navigate, "", sort, chip_selected.name, limit);
     dispatch(
       API.listProducts({
         category,
@@ -268,14 +268,14 @@ const AllProductsPage = props => {
         option,
       })
     );
-    history.push("/collections/all/products");
+    navigate("/collections/all/products");
   };
 
   const update_page = (e, new_page) => {
     //
     e.preventDefault();
     const page = parseInt(new_page);
-    update_products_url(history, search, sort, filter, page, limit);
+    update_products_url(navigate, search, sort, filter, page, limit);
 
     //
     dispatch(

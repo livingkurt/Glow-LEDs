@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -13,7 +13,7 @@ const EditSettingPage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const settingPage = useSelector(state => state.settings);
   const { settings: settings_list, setting, loading, error } = settingPage;
@@ -70,12 +70,12 @@ const EditSettingPage = props => {
       API.saveSetting({
         _id: id,
         settings,
-        active
+        active,
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/settings");
+    navigate("/secure/glow/settings");
   };
 
   // const update_fields = (e) => {
@@ -96,7 +96,7 @@ const EditSettingPage = props => {
     // set_settings((options) => { ...options });
     set_settings(prevState => ({
       ...prevState,
-      setting: ""
+      setting: "",
     }));
   };
 
@@ -135,7 +135,7 @@ const EditSettingPage = props => {
                               onChange={e =>
                                 set_settings(prevState => ({
                                   ...prevState,
-                                  [setting.key]: setting.value
+                                  [setting.key]: setting.value,
                                 }))
                               }
                             />

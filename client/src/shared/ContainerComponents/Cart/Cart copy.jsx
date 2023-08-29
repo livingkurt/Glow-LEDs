@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sale_price_switch, determine_product_name } from "../../utils/react_helper_functions";
 import { mobile_check } from "../../utils/react_helper_functions";
@@ -12,7 +12,7 @@ import { clear_order_state } from "../../slices/orderSlice";
 import { set_success } from "../../slices/cartSlice";
 
 const Cart = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading_products, set_loading_products] = useState(false);
   const [loading_pictures, set_loading_pictures] = useState(false);
@@ -79,9 +79,9 @@ const Cart = props => {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
         if (current_user.hasOwnProperty("first_name")) {
-          history.push("/secure/checkout/placeorder");
+          navigate("/secure/checkout/placeorder");
         } else {
-          history.push("/checkout/placeorder");
+          navigate("/checkout/placeorder");
         }
       }
       closeMenu();
@@ -90,7 +90,8 @@ const Cart = props => {
 
   const determine_wholesale_proceed = () => {
     return (
-      current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+      current_user?.isWholesaler &&
+      determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
     );
   };
 
@@ -117,7 +118,7 @@ const Cart = props => {
                             size={{
                               height: `auto`,
                               width: `100%`,
-                              objectFit: "cover"
+                              objectFit: "cover",
                             }}
                             effect="blur"
                             src={item.image}
@@ -152,7 +153,13 @@ const Cart = props => {
                   <Link to={`/collections/all/products/${item.pathname}`} className="w-100per mb-1rem" key={index}>
                     <li className="ph-1rem w-100per">
                       <div className=" br-5px ai-c">
-                        <img src={item.images && item.images[0]} height="50px" width="50px" alt={item.name} title="Product Image" />
+                        <img
+                          src={item.images && item.images[0]}
+                          height="50px"
+                          width="50px"
+                          alt={item.name}
+                          title="Product Image"
+                        />
                       </div>
                       <div className=" ta-l w-100per">
                         <div className="mb-10px">{item.name}</div>
@@ -176,7 +183,7 @@ const Cart = props => {
         top: "-10px",
         zIndex: 4,
         borderRadius: "0px 0px 20px 20px",
-        height: mobile_check() ? "100%" : cartItems.length === 0 ? "1000px" : "unset"
+        height: mobile_check() ? "100%" : cartItems.length === 0 ? "1000px" : "unset",
       }}
     >
       <Loading loading={loading_products} />
@@ -229,7 +236,7 @@ const Cart = props => {
             <div
               className={`${mobile_check() ? `h-90vh` : `h-unset`} mb-175px`}
               style={{
-                overflowY: "scroll"
+                overflowY: "scroll",
               }}
             >
               {/* <div className={mobile_check() ? 'h-40vh max-h-65vh' : ''} > */}
@@ -241,24 +248,35 @@ const Cart = props => {
                       <Link to={"/collections/all/products/" + item.pathname}>
                         <div className="mb-10px">
                           {!item.secondary_image && (
-                            <LazyImage src={item.display_image} alt={item.name} className="br-10px w-70px h-70px" title="Product Image" />
+                            <LazyImage
+                              src={item.display_image}
+                              alt={item.name}
+                              className="br-10px w-70px h-70px"
+                              title="Product Image"
+                            />
                           )}
                           {item.secondary_image && (
                             <div
-                              className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}
+                              className={` double-image-cart${
+                                item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
+                              }`}
                             >
                               <LazyImage
                                 id="expandedImg"
                                 alt={item.name}
                                 title={item.name}
-                                className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
+                                className={`details-image-cart-${
+                                  item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
+                                } m-0px`}
                                 src={item.display_image}
                               />
                               <LazyImage
                                 id="expandedSecondaryImg"
                                 alt={item.name}
                                 title={item.name}
-                                className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"} `}
+                                className={`details-image-cart-${
+                                  item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
+                                } `}
                                 src={item.secondary_image}
                               />
                             </div>
@@ -269,7 +287,9 @@ const Cart = props => {
                     <div className="w-100per">
                       <div className="cart_sidebar-name jc-b ai-c">
                         <div className="mb-10px w-100per">
-                          <Link to={`/collections/all/products/${item.pathname}`}>{determine_product_name(item, true)}</Link>
+                          <Link to={`/collections/all/products/${item.pathname}`}>
+                            {determine_product_name(item, true)}
+                          </Link>
                         </div>
                         <div className="mb-10px">
                           <GLButton
@@ -315,7 +335,7 @@ const Cart = props => {
                             product: item,
                             cartItem: true,
                             background: "light",
-                            isWholesaler: current_user?.isWholesaler
+                            isWholesaler: current_user?.isWholesaler,
                           })}
                         </div>
                       </div>
@@ -332,7 +352,10 @@ const Cart = props => {
         </div>
       </ul>
 
-      <div className="column w-100per pos-fix add_to_cart ph-1rem br-20px" style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}>
+      <div
+        className="column w-100per pos-fix add_to_cart ph-1rem br-20px"
+        style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}
+      >
         <label className="fs-17px title_font mv-1rem">
           Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
           {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}

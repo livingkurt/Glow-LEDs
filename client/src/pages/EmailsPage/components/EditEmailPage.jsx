@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails } from "../../../utils";
@@ -41,7 +41,7 @@ const EditEmailPage = props => {
   const [time, set_time] = useState();
   const [subject, set_subject] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const emailPage = useSelector(state => state.emails);
   const { emails, message, email, loading, error } = emailPage;
@@ -233,7 +233,7 @@ const EditEmailPage = props => {
     );
     e.target.reset();
     // unset_state();
-    // history.push('/secure/glow/emails');
+    // navigate('/secure/glow/emails');
   };
 
   const [title_color_picker, set_title_color_picker] = useState(false);

@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
@@ -13,7 +13,7 @@ const ProductThumbCarouselItem = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let clean = true;
@@ -30,7 +30,7 @@ const ProductThumbCarouselItem = props => {
           <Link
             to={{
               pathname: product && "/collections/all/products/" + product.pathname,
-              previous_path: history.location.pathname
+              previous_path: navigate.location.pathname,
             }}
           >
             <div className="product">
@@ -61,7 +61,7 @@ const ProductThumbCarouselItem = props => {
                 {sale_price_switch({
                   product: props.product,
                   cartItem: props.product.product_options,
-                  isWholesaler: current_user?.isWholesaler
+                  isWholesaler: current_user?.isWholesaler,
                 })}
               </label>
 

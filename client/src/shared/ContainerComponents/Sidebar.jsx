@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HashLink } from "react-router-hash-link";
 import { update_products_url } from "../../utils/helper_functions";
@@ -8,7 +8,7 @@ import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 
 const Sidebar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -53,7 +53,7 @@ const Sidebar = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
     closeMenu();
-    history.push("/account/login");
+    navigate("/account/login");
   };
 
   const [first_name, set_first_name] = useState("");
@@ -104,7 +104,7 @@ const Sidebar = () => {
 
   const filterHandler = e => {
     const chip_selected = JSON.parse(e.target.value);
-    update_products_url(history, "", "", chip_selected.name, "", "0", "/collections/all/products");
+    update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
     dispatch(
       API.listProducts({
         chip: chip_selected._id,

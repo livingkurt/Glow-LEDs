@@ -236,7 +236,7 @@ export const updateTableStateFromUrl = ({ location, search, filters, page, pageS
   };
 };
 
-export const updateUrlWithTableState = ({ location, history, search, filters, page, pageSize, sorting }) => {
+export const updateUrlWithTableState = ({ location, navigate, search, filters, page, pageSize, sorting }) => {
   const queryParams = new URLSearchParams({
     search,
     filters: JSON.stringify(filters),
@@ -245,7 +245,7 @@ export const updateUrlWithTableState = ({ location, history, search, filters, pa
     sorting: JSON.stringify(sorting),
   });
 
-  history.push({
+  navigate({
     pathname: location.pathname,
     search: `?${queryParams.toString()}`,
   });

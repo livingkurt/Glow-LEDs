@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { createElement, useEffect, useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
 import { ScrollToTop } from "./shared/SharedComponents";
@@ -221,70 +221,423 @@ const App = () => {
               />
             )} */}
             <ScrollToTop>
-              <Switch>
+              <Routes>
                 {/* Private Routes */}
-                <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
-                <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
-                <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
+                <Route
+                  path="/secure/account/profile"
+                  element={
+                    <PrivateRoute>
+                      <ProfilePage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/secure/account/order/:id"
+                  element={
+                    <PrivateRoute>
+                      <OrderPage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/secure/checkout/placeorder"
+                  element={
+                    <PrivateRoute>
+                      <PlaceOrderPage />
+                    </PrivateRoute>
+                  }
+                />
 
                 {/* Admin Routes */}
-                <AdminRoute
+                <Route
                   path="/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?"
-                  component={EditProductPage}
+                  element={
+                    <AdminRoute>
+                      <EditProductPage />
+                    </AdminRoute>
+                  }
                 />
-                <AdminRoute path="/secure/glow/gcode_continous" component={GcodeContinousPage} />
-                <AdminRoute path="/secure/glow/edit_all_data" component={DatabaseMigrationPage} />
-                <AdminRoute path="/secure/glow/products" component={ProductsPage} />
-                <AdminRoute path="/secure/glow/edit_order/:id" component={EditOrderPage} />
-                <AdminRoute path="/secure/glow/orders" component={OrdersPage} />
-                <AdminRoute path="/secure/glow/users" component={UsersPage} />
-                <AdminRoute path="/secure/glow/paychecks" component={PaychecksPage} />
-                <AdminRoute path="/secure/glow/settings" component={SettingsPage} />
-                <AdminRoute path="/secure/glow/categorys" component={CategorysPage} />
-                <AdminRoute path="/secure/glow/surveys" component={SurveysPage} />
-                <AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
-                <AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
-                <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
-                <AdminRoute path="/secure/glow/userprofile/:id" component={ProfilePage} />
-                <AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
-                <AdminRoute path="/secure/glow/editsetting/:id?" component={EditSettingPage} />
-                <AdminRoute path="/secure/glow/editcategory/:id?" component={EditCategoryPage} />
-                <AdminRoute path="/secure/glow/editsurvey/:id?" component={EditSurveyPage} />
-                <AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
-                <AdminRoute path="/secure/glow/editpalette/:id?" component={EditPalettePage} />
-                <AdminRoute path="/secure/glow/editfilament/:id?" component={EditFilamentPage} />
-                <AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
-                <AdminRoute path="/secure/glow/dashboard" component={DashboardPage} />
-                <AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
-                <AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />
-                <AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
-                <AdminRoute path="/secure/glow/features" component={FeaturesPage} />
-                <AdminRoute path="/secure/glow/carts" component={CartsPage} />
-                <AdminRoute path="/secure/glow/contents" component={ContentsPage} />
-                <AdminRoute path="/secure/glow/display_products" component={ProductsDisplayPage} />
-                <AdminRoute path="/secure/glow/emails/announcement/:id" exact={true} component={AnnouncementEmail} />
-                <AdminRoute path="/secure/glow/emails" component={EmailsPage} />
-                <AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-                <AdminRoute path="/secure/glow/editteam/:pathname?" component={EditTeamPage} />
-                <AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
-                <AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
-                <AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
-                <AdminRoute path="/secure/glow/promos" component={PromosPage} />
-                <AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
-                <AdminRoute path="/secure/glow/teams" component={TeamsPage} />
-                <AdminRoute path="/secure/glow/teams/category/:category" component={TeamsPage} />
-                <AdminRoute path="/secure/glow/chips" component={ChipsPage} />
-                <AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
-                <AdminRoute path="/secure/glow/tutorials" component={TutorialsPage} />
-                <AdminRoute path="/secure/glow/images" component={ImagesPage} />
-                <AdminRoute path="/secure/glow/wholesalers" component={WholesalersPage} />
+                <Route
+                  path="/secure/glow/gcode_continous"
+                  element={
+                    <AdminRoute>
+                      <GcodeContinousPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/edit_all_data"
+                  element={
+                    <AdminRoute>
+                      <DatabaseMigrationPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/products"
+                  element={
+                    <AdminRoute>
+                      <ProductsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/edit_order/:id"
+                  element={
+                    <AdminRoute>
+                      <EditOrderPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/orders"
+                  element={
+                    <AdminRoute>
+                      <OrdersPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/users"
+                  element={
+                    <AdminRoute>
+                      <UsersPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/paychecks"
+                  element={
+                    <AdminRoute>
+                      <PaychecksPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/settings"
+                  element={
+                    <AdminRoute>
+                      <SettingsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/categorys"
+                  element={
+                    <AdminRoute>
+                      <CategorysPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/surveys"
+                  element={
+                    <AdminRoute>
+                      <SurveysPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/parcels"
+                  element={
+                    <AdminRoute>
+                      <ParcelsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/palettes"
+                  element={
+                    <AdminRoute>
+                      <PalettesPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/filaments"
+                  element={
+                    <AdminRoute>
+                      <FilamentsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/userprofile/:id"
+                  element={
+                    <AdminRoute>
+                      <ProfilePage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editpaycheck/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditPaycheckPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editsetting/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditSettingPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editcategory/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditCategoryPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editsurvey/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditSurveyPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editparcel/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditParcelPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editpalette/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditPalettePage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editfilament/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditFilamentPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/change_password/:id"
+                  element={
+                    <AdminRoute>
+                      <AdminChangePasswordPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/dashboard"
+                  element={
+                    <AdminRoute>
+                      <DashboardPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editexpense/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditExpensePage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editfeature/:pathname?"
+                  element={
+                    <AdminRoute>
+                      <EditFeaturePage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/expenses"
+                  element={
+                    <AdminRoute>
+                      <ExpensesPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/features"
+                  element={
+                    <AdminRoute>
+                      <FeaturesPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/carts"
+                  element={
+                    <AdminRoute>
+                      <CartsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/contents"
+                  element={
+                    <AdminRoute>
+                      <ContentsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/display_products"
+                  element={
+                    <AdminRoute>
+                      <ProductsDisplayPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/emails/announcement/:id"
+                  exact={true}
+                  element={
+                    <AdminRoute>
+                      <AnnouncementEmail />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/emails"
+                  element={
+                    <AdminRoute>
+                      <EmailsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editpromo/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditPromoPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editteam/:pathname?"
+                  element={
+                    <AdminRoute>
+                      <EditTeamPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editchip/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditChipPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editcontent/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditContentPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/editemail/:id?"
+                  element={
+                    <AdminRoute>
+                      <EditEmailPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/promos"
+                  element={
+                    <AdminRoute>
+                      <PromosPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/affiliates"
+                  element={
+                    <AdminRoute>
+                      <AffiliatesPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/teams"
+                  element={
+                    <AdminRoute>
+                      <TeamsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/teams/category/:category"
+                  element={
+                    <AdminRoute>
+                      <TeamsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/chips"
+                  element={
+                    <AdminRoute>
+                      <ChipsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/product_display"
+                  element={
+                    <AdminRoute>
+                      <ProductsDisplayPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/tutorials"
+                  element={
+                    <AdminRoute>
+                      <TutorialsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/images"
+                  element={
+                    <AdminRoute>
+                      <ImagesPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/secure/glow/wholesalers"
+                  element={
+                    <AdminRoute>
+                      <WholesalersPage />
+                    </AdminRoute>
+                  }
+                />
 
-                <Route path={"/"} exact={true} component={HomePage} />
+                <Route path={"/"} exact={true} element={<HomePage />} />
                 {routes.map((route, index) => (
-                  <Route key={index} path={route.path} exact={route.exact} component={Components[route.component]} />
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    element={createElement(Components[route.element])}
+                  />
                 ))}
-                <Route component={Four04Page} />
-              </Switch>
+                <Route element={<Four04Page />} />
+              </Routes>
             </ScrollToTop>
           </Content>
           <Footer />

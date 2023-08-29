@@ -148,7 +148,7 @@ export default PaychecksPage;
 
 // import React, { useEffect, useState } from "react";
 // import { useSelector, useDispatch } from "react-redux";
-// import { Link, useHistory } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 // import { Loading, Notification } from "../../shared/SharedComponents";
 // import { Helmet } from "react-helmet";
 // import * as API from "../../api";
@@ -166,7 +166,7 @@ export default PaychecksPage;
 // import axios from "axios";
 
 // const PaychecksPage = props => {
-//   const history = useHistory();
+//   const navigate = useNavigate();
 //   const [search, set_search] = useState("");
 //   const [sort, set_sort] = useState("");
 //   const [message_note, set_message_note] = useState([]);
@@ -315,7 +315,7 @@ export default PaychecksPage;
 //     e.preventDefault();
 //     const page = parseInt(new_page);
 //     set_page(page);
-//     update_products_url(history, search, "", "", page, limit);
+//     update_products_url(navigate, search, "", "", page, limit);
 
 //     dispatch(API.listPaychecks({ limit, page }));
 //   };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../../utils";
@@ -13,7 +13,7 @@ const EditPromoPage = props => {
   const [categories, set_categories] = useState([]);
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promo, loading, error } = promoPage;
@@ -41,7 +41,7 @@ const EditPromoPage = props => {
     time_limit,
     active,
     start_date,
-    end_date
+    end_date,
   } = promo;
 
   const userPage = useSelector(state => state.users.userPage);
@@ -70,7 +70,7 @@ const EditPromoPage = props => {
   const get_categories = async () => {
     const { data } = await API_Products.findAllGrid_products_a({
       limit: 0,
-      page: 1
+      page: 1,
     });
 
     set_categories(data);
@@ -106,10 +106,10 @@ const EditPromoPage = props => {
         time_limit,
         start_date: unformat_date(start_date),
         end_date: unformat_date(end_date),
-        active
+        active,
       })
     );
-    history.push("/secure/glow/promos");
+    navigate("/secure/glow/promos");
   };
 
   return (
@@ -339,7 +339,7 @@ const EditPromoPage = props => {
                               categories &&
                               categories.length > 0 &&
                               categories?.map(category => ({
-                                name: category
+                                name: category,
                               }))
                             }
                             list_items={excluded_categories}
@@ -382,7 +382,7 @@ const EditPromoPage = props => {
                               categories &&
                               categories.length > 0 &&
                               categories.map(category => ({
-                                name: category
+                                name: category,
                               }))
                             }
                             list_items={included_categories}
@@ -469,7 +469,7 @@ const EditPromoPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Promos
                     </GLButton>
                   </li>

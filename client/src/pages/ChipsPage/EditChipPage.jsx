@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
@@ -24,7 +24,7 @@ const EditChipPage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const chipPage = useSelector(state => state.chips);
   const { chip, message, loading, error } = chipPage;
@@ -109,7 +109,7 @@ const EditChipPage = props => {
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/chips");
+    navigate("/secure/glow/chips");
   };
 
   // const remove_color = (color_index, e) => {

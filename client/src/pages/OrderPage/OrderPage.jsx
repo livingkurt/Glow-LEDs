@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { determine_total, determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
@@ -128,8 +128,8 @@ const OrderPage = props => {
   //   let clean = true;
   //   if (clean) {
   //     if (successPay && order) {
-  //       // history.push('/secure/checkout/paymentcomplete/' + order._id);
-  //       history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
+  //       // navigate('/secure/checkout/paymentcomplete/' + order._id);
+  //       navigate("/secure/checkout/order/receipt/" + order._id + "/order/true");
   //       dispatch(API.detailsOrder(props.match.params.id));
   //       set_payment_loading(false);
   //       dispatch(API.emptyCart(my_cart._id));
@@ -149,7 +149,7 @@ const OrderPage = props => {
     return () => (clean = false);
   }, [errorPay]);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [show_color, set_show_color] = useState(false);
 
@@ -263,8 +263,8 @@ const OrderPage = props => {
     const request = await API_Shipping.add_(order, data.tracking_code, data);
 
     dispatch(API.detailsOrder(props.match.params.id));
-    // history.push('/secure/glow/emails/invoice/' + order._id);
-    // history.push({
+    // navigate('/secure/glow/emails/invoice/' + order._id);
+    // navigate({
     // 	pathname: '/secure/glow/emails/invoice/' + order._id,
     // 	previous_path: props.location.previous_path
     // });
@@ -374,7 +374,7 @@ const OrderPage = props => {
       if (left_order_index >= all_orders.length) {
         left_order_index = 0;
       }
-      history.push("/secure/account/order/" + all_orders[left_order_index]._id);
+      navigate("/secure/account/order/" + all_orders[left_order_index]._id);
     }
   };
   const move_right = e => {
@@ -385,7 +385,7 @@ const OrderPage = props => {
       if (right_order_index === -1) {
         right_order_index = all_orders.length - 1;
       }
-      history.push("/secure/account/order/" + all_orders[right_order_index]._id);
+      navigate("/secure/account/order/" + all_orders[right_order_index]._id);
     }
   };
 
@@ -419,7 +419,7 @@ const OrderPage = props => {
     );
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     dispatch(API.detailsOrder(props.match.params.id));
-    history.push("/secure/glow/emails/invoice/" + order._id);
+    navigate("/secure/glow/emails/invoice/" + order._id);
   };
 
   const address = {
@@ -688,7 +688,7 @@ const OrderPage = props => {
                 <Link
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: navigate.location.pathname,
                   }}
                 >
                   {loading ? "Product" : product.name}

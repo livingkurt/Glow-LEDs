@@ -1,7 +1,6 @@
 import * as React from "react";
 
 const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, ...otherProps }) => {
-  console.log({ variant });
   return (
     <button
       type="button"

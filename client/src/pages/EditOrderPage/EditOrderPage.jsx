@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 
@@ -56,7 +56,7 @@ const EditOrderPage = props => {
     setTabIndex(newValue);
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading, order, error } = orderPage;
@@ -212,7 +212,7 @@ const EditOrderPage = props => {
     );
     e.target.reset();
     unset_state();
-    history.push(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");
+    navigate(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");
   };
 
   const add_order_item = e => {
@@ -1487,7 +1487,7 @@ const EditOrderPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Orders
                     </GLButton>
                   </li>

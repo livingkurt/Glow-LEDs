@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 
-const AdminRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ element: Component, children }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
   const [isLoading, setIsLoading] = useState(true);
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (current_user) {
@@ -24,8 +27,8 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     })();
   }, []);
 
-  const determinePathname = props => {
-    let pathname = props.location.pathname;
+  const determinePathname = () => {
+    let pathname = location.pathname;
 
     if (pathname.includes("glow")) {
       return "/";
@@ -34,23 +37,18 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     }
   };
 
-  return (
-    <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        // <Loading loading={isLoading} />
-        isTokenRefreshed && (
-          <Route
-            {...rest}
-            render={props =>
-              current_user.isAdmin ? <Component {...props} /> : <Redirect to={"/account/login?redirect=" + determinePathname(props)} />
-            }
-          />
-        )
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isTokenRefreshed) {
+    if (current_user && current_user.isAdmin) {
+      return children;
+    } else {
+      navigate(`/account/login?redirect=${determinePathname()}`, { replace: true });
+      return null;
+    }
+  }
+  return null;
 };
 
 export default AdminRoute;

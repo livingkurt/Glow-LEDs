@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
@@ -81,7 +81,7 @@ const ProductPage = props => {
 
   const { width, height } = useWindowDimensions();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -158,7 +158,7 @@ const ProductPage = props => {
         package_length: item.package_length,
         package_width: item.package_width,
         package_height: item.package_height,
-        package_volume: item.package_volume
+        package_volume: item.package_volume,
       });
       set_size(item.size);
     }
@@ -191,7 +191,9 @@ const ProductPage = props => {
       if (product.secondary_color_products) {
         set_secondary_color_products(product.secondary_color_products);
 
-        const secondary_color = product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+        const secondary_color = product.secondary_color_products.find(
+          secondary_color => secondary_color.default_option === true
+        );
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
           if (product.has_add_on) {
@@ -227,7 +229,9 @@ const ProductPage = props => {
       }
       if (product.secondary_color_products) {
         set_secondary_products(product.secondary_products);
-        const secondary_color = product.secondary_color_products.find(secondary_color => secondary_color.color === query.secondary_color);
+        const secondary_color = product.secondary_color_products.find(
+          secondary_color => secondary_color.color === query.secondary_color
+        );
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
         }
@@ -250,7 +254,8 @@ const ProductPage = props => {
           query_secondary = query.secondary.split("%20").join(" ");
         }
         const secondary =
-          query.secondary && product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
+          query.secondary &&
+          product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
         if (secondary) {
           update_secondary_product_state(secondary);
         }
@@ -333,7 +338,7 @@ const ProductPage = props => {
       package_length: option.package_length,
       package_width: option.package_width,
       package_height: option.package_height,
-      package_volume: option.package_volume
+      package_volume: option.package_volume,
     });
     set_option_product(option._id);
     set_option_product_name(option.name);
@@ -401,10 +406,10 @@ const ProductPage = props => {
   };
 
   const update_url = (color = "", secondary_color = "", option = "", secondary_product = "") => {
-    history.push({
-      search: `${color ? "?color=" + color : ""}${show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""}${
-        option ? "?option=" + option : ""
-      }${secondary_product ? "?secondary=" + secondary_product : ""}`
+    navigate({
+      search: `${color ? "?color=" + color : ""}${
+        show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""
+      }${option ? "?option=" + option : ""}${secondary_product ? "?secondary=" + secondary_product : ""}`,
     });
   };
 
@@ -412,7 +417,7 @@ const ProductPage = props => {
   //   let clean = true;
   //   if (clean) {
   //     if (error) {
-  //       props.history.push("/collections/all/products");
+  //       props.navigate("/collections/all/products");
   //     }
   //   }
   //   return () => (clean = false);
@@ -493,7 +498,7 @@ const ProductPage = props => {
       show_add_on,
       has_add_on: product.has_add_on,
       wholesale_product: product.wholesale_product,
-      wholesale_price: wholesale_price
+      wholesale_price: wholesale_price,
     };
     if (preorder) {
       const confirm = window.confirm(
@@ -670,7 +675,7 @@ const ProductPage = props => {
       package_length: option.package_length,
       package_width: option.package_width,
       package_height: option.package_height,
-      package_volume: option.package_volume
+      package_volume: option.package_volume,
     });
     set_option_product_object(option);
     set_option_product(option._id);
@@ -742,7 +747,11 @@ const ProductPage = props => {
             </div>
             {current_user?.isAdmin && (
               <div className="br-10px">
-                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal(product))}>
+                <GLButton
+                  variant="secondary"
+                  className=" w-300px"
+                  onClick={e => dispatch(open_edit_product_modal(product))}
+                >
                   Edit Product
                 </GLButton>
                 {/* <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
@@ -780,12 +789,18 @@ const ProductPage = props => {
                 <meta property="og:title" content={product.meta_title} />
                 <meta name="twitter:title" content={product.meta_title} />
                 <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
-                <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
+                <meta
+                  property="og:url"
+                  content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
+                />
                 {product.images_object && (
                   <div>
                     <meta property="og:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
 
-                    <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
+                    <meta
+                      property="og:image:secure_url"
+                      content={"https://www.glow-leds.com/" + product.images_object[0].link}
+                    />
                     <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
                   </div>
                 )}
@@ -871,7 +886,9 @@ const ProductPage = props => {
 
                 {width < 500 &&
                   product &&
-                  (product.category === "diffusers" || product.category === "diffuser_caps" || product.category === "exo_diffusers") && (
+                  (product.category === "diffusers" ||
+                    product.category === "diffuser_caps" ||
+                    product.category === "exo_diffusers") && (
                     <div className=" w-100per m-auto">
                       <RelatedProductsSlideshow
                         product_category={"glowskinz"}
@@ -896,7 +913,10 @@ const ProductPage = props => {
                     wholesale_price={wholesale_price}
                   />
                 </div>
-                <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
+                <div
+                  className="details-action desktop_product_view"
+                  style={{ display: width > 819 ? "block" : "none" }}
+                >
                   <ProductOptions
                     product={product}
                     price={price}
@@ -943,7 +963,10 @@ const ProductPage = props => {
                 </div>
 
                 <div className="w-100per">
-                  <div className="details-action mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
+                  <div
+                    className="details-action mobile_product_view"
+                    style={{ display: width <= 819 ? "block" : "none" }}
+                  >
                     <ProductOptions
                       product={product}
                       width={width}
@@ -987,7 +1010,10 @@ const ProductPage = props => {
                       wholesale_price={wholesale_price}
                     />
                   </div>
-                  <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
+                  <div
+                    className="details-info mobile_product_view"
+                    style={{ display: width <= 819 ? "block" : "none" }}
+                  >
                     <ProductFacts
                       facts={facts}
                       category={product.category}
@@ -1034,18 +1060,21 @@ const ProductPage = props => {
             />
           </div>
         )}
-        {product && product.category !== "batteries" && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              random={false}
-              className=""
-              product_pathname={props.match.params.pathname}
-              title="Accessories You May Need"
-              category="batteries"
-            />
-          </div>
-        )}
+        {product &&
+          product.category !== "batteries" &&
+          product.name !== "Glowstringz V2" &&
+          product.name !== "Nova Clip" && (
+            <div className=" w-100per m-auto">
+              <RelatedProductsSlideshow
+                product_category={product.category}
+                random={false}
+                className=""
+                product_pathname={props.match.params.pathname}
+                title="Accessories You May Need"
+                category="batteries"
+              />
+            </div>
+          )}
 
         {product && (
           <div className=" w-100per m-auto">

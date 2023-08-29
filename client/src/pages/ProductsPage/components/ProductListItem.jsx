@@ -1,6 +1,6 @@
 // // React
 // import * as React from "react";
-// import { Link, useHistory } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { LazyImage } from "../../../shared/SharedComponents";
 // import { sale_price_switch } from "../../../utils/react_helper_functions";
@@ -34,7 +34,7 @@
 // const ProductListItem = props => {
 //   const userPage = useSelector(state => state.users.userPage);
 //   const { current_user } = userPage;
-//   const history = useHistory();
+//   const navigate = useNavigate();
 //   const keyCodes = {
 //     enter: 13,
 //     escape: 27,
@@ -181,7 +181,7 @@
 //           className="w-500px"
 //           to={{
 //             pathname: "/collections/all/products/" + product.pathname,
-//             previous_path: history.location.pathname,
+//             previous_path: navigate.location.pathname,
 //           }}
 //         >
 //           <label style={{ fontSize: "1.6rem" }}>
@@ -274,7 +274,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: history.location.pathname,
+//                     previous_path: navigate.location.pathname,
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -325,7 +325,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: history.location.pathname,
+//                     previous_path: navigate.location.pathname,
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -376,7 +376,7 @@
 //                   className="w-500px"
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: history.location.pathname,
+//                     previous_path: navigate.location.pathname,
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
@@ -427,7 +427,7 @@
 //                   className=""
 //                   to={{
 //                     pathname: "/collections/all/products/" + product.pathname,
-//                     previous_path: history.location.pathname,
+//                     previous_path: navigate.location.pathname,
 //                   }}
 //                 >
 //                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>

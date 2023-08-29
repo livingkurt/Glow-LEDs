@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_Emails } from "../../../utils";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -11,7 +11,7 @@ import * as API from "../../../api";
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [test, set_test] = useState(true);
   const [subject, set_subject] = useState("");
@@ -89,7 +89,7 @@ const AnnouncementEmail = props => {
         <title>View Email | Glow LEDs</title>
       </Helmet>
       <div className="jc-b mb-1rem ai-c">
-        <GLButton variant="primary" onClick={() => history.goBack()}>
+        <GLButton variant="primary" onClick={() => navigate.goBack()}>
           Back to Emails
         </GLButton>
         {email && (

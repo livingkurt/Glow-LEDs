@@ -2,7 +2,7 @@
 // import { useSelector, useDispatch } from "react-redux";
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 // import { API_Products } from "../../utils";
-// import { Link, useHistory } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 // import { Loading, Notification } from "../../shared/SharedComponents";
 // import { Helmet } from "react-helmet";
 // import {
@@ -25,7 +25,7 @@
 // import { listProducts } from "../../api";
 
 // function ProductPage(props) {
-//   const history = useHistory();
+//   const navigate = useNavigate();
 //   const [search, set_search] = useState("");
 //   const [sort, setSortOrder] = useState("");
 //   const [loading_upload, set_loading_upload] = useState(false);
@@ -312,7 +312,7 @@
 //     e.preventDefault();
 //     const page = parseInt(new_page);
 //     set_page(page);
-//     update_products_url(history, search, "", "", page, limit);
+//     update_products_url(navigate, search, "", "", page, limit);
 
 //     dispatch(
 //       listProducts({

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { accurate_date, snake_case, unformat_date_and_time } from "../../../utils/helper_functions";
@@ -37,7 +37,7 @@ const EditProductPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [clipboard, copyToClipboard] = useClipboard();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const productPage = useSelector(state => state.products.productPage);
   const {
@@ -421,7 +421,7 @@ const EditProductPage = props => {
     //   // if (success){
 
     //   // }
-    //   // history.push(
+    //   // navigate(
     //   //   `/secure/glow/editproduct/${macro_product.pathname}/false`
     //   // );
     // }
@@ -482,7 +482,7 @@ const EditProductPage = props => {
     save_product();
     // e.target.reset();
     // unset_state();
-    // history.push('/secure/glow/products');
+    // navigate('/secure/glow/products');
   };
 
   const move_left = e => {
@@ -501,7 +501,7 @@ const EditProductPage = props => {
     if (save) {
       save_product();
     } else {
-      history.push("/secure/glow/editproduct/" + filtered_products[left_product_index].pathname);
+      navigate("/secure/glow/editproduct/" + filtered_products[left_product_index].pathname);
     }
   };
   const move_right = e => {
@@ -519,7 +519,7 @@ const EditProductPage = props => {
     if (save) {
       save_product();
     } else {
-      history.push("/secure/glow/editproduct/" + filtered_products[right_product_index].pathname);
+      navigate("/secure/glow/editproduct/" + filtered_products[right_product_index].pathname);
     }
   };
 
@@ -641,7 +641,7 @@ const EditProductPage = props => {
                       <Link
                         to={{
                           pathname: "/collections/all/products/" + product.pathname,
-                          previous_path: history.location.pathname,
+                          previous_path: navigate.location.pathname,
                         }}
                       >
                         {loading ? "Product" : product.name}
@@ -1911,7 +1911,7 @@ const EditProductPage = props => {
                     <Link
                       to={{
                         pathname: "/collections/all/products/" + product.pathname,
-                        previous_path: history.location.pathname,
+                        previous_path: navigate.location.pathname,
                       }}
                     >
                       <GLButton variant="secondary" className="w-100per">
@@ -1920,7 +1920,7 @@ const EditProductPage = props => {
                     </Link>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Products
                     </GLButton>
                   </li>

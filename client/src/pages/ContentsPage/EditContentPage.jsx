@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails } from "../../utils";
@@ -23,7 +23,7 @@ const EditContentPage = props => {
   const [using_template, set_using_template] = useState(false);
   const [email, set_email] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const contentPage = useSelector(state => state.contents);
   const { contents, content, loading, error } = contentPage;
@@ -124,7 +124,7 @@ const EditContentPage = props => {
         home_page: { ...home_page, images, slideshow },
         banner,
         links,
-        active
+        active,
       })
     );
     if (create_email && (using_template || id)) {
@@ -138,13 +138,13 @@ const EditContentPage = props => {
           p: home_page.p,
           button: home_page.button,
           link: `https://www.glow-leds.com${home_page.link}`,
-          active: home_page.active
+          active: home_page.active,
         })
       );
     }
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/contents");
+    navigate("/secure/glow/contents");
   };
 
   const update_link_item_property = (e, field_name, index) => {
@@ -152,7 +152,7 @@ const EditContentPage = props => {
     let new_link_items = [...links];
     new_link_items[index] = {
       ...new_link_items[index],
-      [field_name]: e.target.value
+      [field_name]: e.target.value,
     };
     set_links(new_link_items);
   };
@@ -189,7 +189,7 @@ const EditContentPage = props => {
     let new_slideshow_items = [...slideshow];
     new_slideshow_items[index] = {
       ...new_slideshow_items[index],
-      [field_name]: e.target.value
+      [field_name]: e.target.value,
     };
     set_slideshow(new_slideshow_items);
   };
@@ -312,7 +312,7 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              video: e.target.value
+                              video: e.target.value,
                             })
                           }
                         />
@@ -330,7 +330,7 @@ const EditContentPage = props => {
                             onChange={e => {
                               set_home_page({
                                 ...home_page,
-                                show_video: e.target.checked
+                                show_video: e.target.checked,
                               });
                             }}
                           />
@@ -367,7 +367,7 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              button: e.target.value
+                              button: e.target.value,
                             })
                           }
                         />
@@ -383,7 +383,7 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              link: e.target.value
+                              link: e.target.value,
                             })
                           }
                         />
@@ -401,7 +401,7 @@ const EditContentPage = props => {
                             onChange={e => {
                               set_home_page({
                                 ...home_page,
-                                show_image: e.target.checked
+                                show_image: e.target.checked,
                               });
                             }}
                           />
@@ -417,12 +417,18 @@ const EditContentPage = props => {
                           onChange={e => {
                             set_home_page({
                               ...home_page,
-                              banner_image: e.target.value
+                              banner_image: e.target.value,
                             });
                           }}
                         />
                       </li>
-                      <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} name={"Images"} />
+                      <ImageDisplay
+                        images={images}
+                        set_images={set_images}
+                        image={image}
+                        set_image={set_image}
+                        name={"Images"}
+                      />
                       {/* <div className="w-228px m-10px"> */}
                       <h2>Images</h2>
                       <div className="scroll-y h-100per max-h-900px ">
@@ -461,7 +467,7 @@ const EditContentPage = props => {
                                   >
                                     <i
                                       style={{
-                                        WebkitTransform: "rotate(-180deg)"
+                                        WebkitTransform: "rotate(-180deg)",
                                       }}
                                       className=" fas fa-sort-up"
                                     />
@@ -612,7 +618,7 @@ const EditContentPage = props => {
                                   >
                                     <i
                                       style={{
-                                        WebkitTransform: "rotate(-180deg)"
+                                        WebkitTransform: "rotate(-180deg)",
                                       }}
                                       className=" fas fa-sort-up"
                                     />
@@ -694,7 +700,7 @@ const EditContentPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Contents
                     </GLButton>
                   </li>

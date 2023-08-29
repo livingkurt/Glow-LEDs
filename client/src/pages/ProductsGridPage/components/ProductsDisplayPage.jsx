@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading, Notification } from "../../../shared/SharedComponents";
 import { humanize } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -13,7 +13,7 @@ import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../../api";
 
 const AllProductsPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [product_occurrences, set_product_occurrences] = useState([]);
   const [best_sellers, set_best_sellers] = useState([]);
   const [loading_products, set_loading_products] = useState(false);
@@ -21,7 +21,9 @@ const AllProductsPage = props => {
   const [chip, set_chip] = useState("");
   const [search, set_search] = useState(props.location.search.substring(8) ? props.location.search.substring(8) : "");
   const [sort, setSortOrder] = useState("");
-  const [filter, set_filter] = useState(props.location.hasOwnProperty("filter") ? props.location.filter.substring(8) : "");
+  const [filter, set_filter] = useState(
+    props.location.hasOwnProperty("filter") ? props.location.filter.substring(8) : ""
+  );
 
   const category = props.match.params.category ? props.match.params.category : "";
   const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
@@ -70,8 +72,8 @@ const AllProductsPage = props => {
     if (clean) {
       get_occurrences();
       if (search) {
-        history.push({
-          search: "?search=" + search
+        navigate({
+          search: "?search=" + search,
         });
         dispatch(API.listProducts({ search, collection, option: false }));
         dispatch(API.listChips({}));
@@ -131,10 +133,10 @@ const AllProductsPage = props => {
 
   const handleListItems = e => {
     e.preventDefault();
-    history.push({
-      search: "?search=" + search
+    navigate({
+      search: "?search=" + search,
     });
-    // history.push({
+    // navigate({
     // 	search: '?search=' + search + chip && '?filter=' + chip
     // });
     dispatch(API.listProducts({ search, sort, collection, option: false }));
@@ -149,10 +151,12 @@ const AllProductsPage = props => {
     set_chip(chip_selected._id);
     set_filter(chip_selected._id);
     //
-    history.push({
-      search: "?search=" + search + "?filter=" + chip_selected.name
+    navigate({
+      search: "?search=" + search + "?filter=" + chip_selected.name,
     });
-    dispatch(API.listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection, option: false }));
+    dispatch(
+      API.listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection, option: false })
+    );
   };
 
   const descriptions = {
@@ -167,7 +171,7 @@ const AllProductsPage = props => {
     glowstringz:
       "Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.",
     glowskinz:
-      "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop."
+      "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
   };
 
   const description_determination = () => {
@@ -208,9 +212,9 @@ const AllProductsPage = props => {
       <div className="jc-c">
         <div className="row">
           <h1>
-            {`${humanize(category) === "Exo Diffusers" ? "EXO Diffusers" : humanize(category)} ${subcategory && humanize(subcategory)} ${
-              collection && humanize(collection)
-            }` || "Products"}
+            {`${humanize(category) === "Exo Diffusers" ? "EXO Diffusers" : humanize(category)} ${
+              subcategory && humanize(subcategory)
+            } ${collection && humanize(collection)}` || "Products"}
           </h1>
           <label style={{ color: "#d2cfcf", marginTop: "10px" }}>
             {category === "diffuser_caps" ||
@@ -240,7 +244,12 @@ const AllProductsPage = props => {
                   {products
                     .filter(product => !product.option)
                     .map((product, index) => (
-                      <ProductItemD size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                      <ProductItemD
+                        size="300px"
+                        key={index}
+                        product={product}
+                        product_occurrences={product_occurrences}
+                      />
                     ))}
                 </ul>
               )}
@@ -252,14 +261,21 @@ const AllProductsPage = props => {
                   {products
                     .filter(product => !product.option)
                     .map((product, index) => (
-                      <ProductItemM size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                      <ProductItemM
+                        size="300px"
+                        key={index}
+                        product={product}
+                        product_occurrences={product_occurrences}
+                      />
                     ))}
                 </ul>
               )}
             </div>
           </div>
         )}
-        {products.length === 0 && !best_sellers && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+        {products.length === 0 && !best_sellers && (
+          <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+        )}
       </Loading>
     </div>
   );

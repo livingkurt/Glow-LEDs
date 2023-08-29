@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
@@ -14,7 +14,7 @@ const EditTeamPage = props => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates: affiliates_list } = affiliatePage;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const teamPage = useSelector(state => state.teams);
   const { team, loading, error } = teamPage;
@@ -40,7 +40,7 @@ const EditTeamPage = props => {
     video,
     public_code,
     private_code,
-    venmo
+    venmo,
   } = team;
 
   const userPage = useSelector(state => state.users.userPage);
@@ -90,10 +90,10 @@ const EditTeamPage = props => {
         public_code: public_code && public_code._id,
         private_code: private_code && private_code._id,
         pathname: pathname ? pathname : snake_case(team_name),
-        affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
+        affiliates: affiliates && affiliates.map(affiliate => affiliate._id),
       })
     );
-    history.push("/secure/glow/teams");
+    navigate("/secure/glow/teams");
   };
 
   const add_affiliate = e => {
@@ -119,7 +119,7 @@ const EditTeamPage = props => {
       set_team({
         affiliates: affiliates.filter((affiliate, index) => {
           return affiliate_index !== index;
-        })
+        }),
       })
     );
   };
@@ -500,7 +500,7 @@ const EditTeamPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="econdary" onClick={() => history.goBack()}>
+                    <GLButton variant="econdary" onClick={() => navigate.goBack()}>
                       Back to Teams
                     </GLButton>
                   </li>

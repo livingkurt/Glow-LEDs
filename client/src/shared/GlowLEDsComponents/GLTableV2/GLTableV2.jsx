@@ -46,7 +46,7 @@ import {
   selectRow,
 } from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
 import GLTablePagination from "./components/GLTablePagination";
 
@@ -159,7 +159,7 @@ const GLTableV2 = ({
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const tableState = useSelector(state => {
     if (namespaceScope) {
@@ -218,7 +218,7 @@ const GLTableV2 = ({
           );
           if (!noURLParams) {
             // Call updateUrlWithTableState after the dispatch here
-            updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+            updateUrlWithTableState({ location, navigate, search, filters, page, pageSize, sorting });
           }
         }, 1000);
 
@@ -273,7 +273,7 @@ const GLTableV2 = ({
         })
       );
       if (!noURLParams) {
-        updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+        updateUrlWithTableState({ location, navigate, search, filters, page, pageSize, sorting });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

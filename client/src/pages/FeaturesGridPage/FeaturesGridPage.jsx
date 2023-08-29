@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { humanize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -9,7 +9,7 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import * as API from "../../api";
 
 const FeaturesGridPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [search, set_search] = useState(props.location.search.substring(8) ? props.location.search.substring(8) : "");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
@@ -31,8 +31,8 @@ const FeaturesGridPage = props => {
     let clean = true;
     if (clean) {
       if (search) {
-        history.push({
-          search: "?search=" + search
+        navigate({
+          search: "?search=" + search,
         });
       }
 
@@ -50,11 +50,11 @@ const FeaturesGridPage = props => {
 
   const handleListItems = e => {
     e.preventDefault();
-    // history.push(
+    // navigate(
     // 	'/collections/all/features/category' + category + '/' + subcategory + '?search=' + search
     // );
-    history.push({
-      search: "?search=" + search
+    navigate({
+      search: "?search=" + search,
     });
     dispatch(API.listFeatures({ category, subcategory, search, sort }));
   };
@@ -90,7 +90,14 @@ const FeaturesGridPage = props => {
                   .filter(feature => feature.release_date <= today && feature.category === category)
                   .map(
                     (feature, index) =>
-                      !feature.hidden && <FeatureItemD size="300px" key={index} feature={feature} category={props.match.params.category} />
+                      !feature.hidden && (
+                        <FeatureItemD
+                          size="300px"
+                          key={index}
+                          feature={feature}
+                          category={props.match.params.category}
+                        />
+                      )
                   )}
               </ul>
             )}
@@ -103,7 +110,14 @@ const FeaturesGridPage = props => {
                   .filter(feature => feature.release_date <= today && feature.category === category)
                   .map(
                     (feature, index) =>
-                      !feature.hidden && <FeatureItemM size="300px" key={index} feature={feature} category={props.match.params.category} />
+                      !feature.hidden && (
+                        <FeatureItemM
+                          size="300px"
+                          key={index}
+                          feature={feature}
+                          category={props.match.params.category}
+                        />
+                      )
                   )}
               </ul>
             )}

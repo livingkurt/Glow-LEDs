@@ -24,9 +24,9 @@ const CartPage = props => {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
         if (current_user.hasOwnProperty("first_name")) {
-          props.history.push("/secure/checkout/placeorder");
+          props.navigate("/secure/checkout/placeorder");
         } else {
-          props.history.push("/checkout/placeorder");
+          props.navigate("/checkout/placeorder");
         }
       }
     }
@@ -38,7 +38,8 @@ const CartPage = props => {
 
   const determine_wholesale_proceed = () => {
     return (
-      current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+      current_user?.isWholesaler &&
+      determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
     );
   };
 

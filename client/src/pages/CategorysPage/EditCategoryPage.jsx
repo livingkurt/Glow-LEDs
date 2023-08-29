@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -21,7 +21,7 @@ const EditCategoryPage = props => {
   const [masthead, set_masthead] = useState("");
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const categoryPage = useSelector(state => state.categorys.categoryPage);
   const { categorys: subcategorys_list, category, loading, error } = categoryPage;
@@ -99,12 +99,12 @@ const EditCategoryPage = props => {
         meta_description,
         meta_keywords,
         masthead,
-        subcategorys: subcategorys && subcategorys.map(category => category._id)
+        subcategorys: subcategorys && subcategorys.map(category => category._id),
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/categorys");
+    navigate("/secure/glow/categorys");
   };
   const remove_subcategory = (subcategory_index, e) => {
     e.preventDefault();
@@ -169,7 +169,13 @@ const EditCategoryPage = props => {
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="name">Name</label>
-                        <input type="text" name="name" value={name} id="name" onChange={e => set_name(e.target.value)} />
+                        <input
+                          type="text"
+                          name="name"
+                          value={name}
+                          id="name"
+                          onChange={e => set_name(e.target.value)}
+                        />
                       </li>
                       <DropdownDisplay
                         display_key={"name"}
@@ -180,7 +186,13 @@ const EditCategoryPage = props => {
                       />
                       <li>
                         <label htmlFor="pathname">Pathname</label>
-                        <input type="text" name="pathname" value={pathname} id="pathname" onChange={e => set_pathname(e.target.value)} />
+                        <input
+                          type="text"
+                          name="pathname"
+                          value={pathname}
+                          id="pathname"
+                          onChange={e => set_pathname(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="nest_level">Nest Level</label>
@@ -273,7 +285,7 @@ const EditCategoryPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                       Back to Categorys
                     </GLButton>
                   </li>

@@ -11,7 +11,7 @@ const VerifiedPage = props => {
   //   dispatch(verify(props.match.params.id));
   //   if (!loading) {
   //     setTimeout(function () {
-  //       props.history.push("/account/login");
+  //       props.navigate("/account/login");
   //     }, 3000);
   //   }
 

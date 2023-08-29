@@ -1,6 +1,6 @@
 // React
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -21,7 +21,7 @@ import * as API from "../../../api";
 import config from "../../../config";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading_label, set_loading_label] = useState(false);
   const [loading_email, set_loading_email] = useState("");
@@ -167,7 +167,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
-    const query = getUrlParameter(history.location);
+    const query = getUrlParameter(navigate.location);
     dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
@@ -186,7 +186,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
-    const query = getUrlParameter(history.location);
+    const query = getUrlParameter(navigate.location);
     dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
@@ -381,7 +381,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 <Link
                   to={{
                     pathname: "/secure/account/order/" + order._id,
-                    previous_path: history.location.pathname + history.location.search,
+                    previous_path: navigate.location.pathname + navigate.location.search,
                   }}
                 >
                   <GLButton variant="primary">Order Details</GLButton>

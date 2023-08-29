@@ -20,7 +20,6 @@ module.exports = override(
       "net": require.resolve("net-browserify"),
       "tls": require.resolve("tls-browserify"),
       "zlib": require.resolve("browserify-zlib"), // Add this line
-      "react/jsx-runtime": require.resolve("react/jsx-runtime.js"),
     };
 
     // Exclude node_modules from source-map-loader

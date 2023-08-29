@@ -12,7 +12,7 @@ const ResetPasswordPage = props => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(API.passwordReset({ user_id: props.match.params.id, password, rePassword }));
-    props.history.push("/account/login");
+    props.navigate("/account/login");
   };
   return (
     <div className="form">

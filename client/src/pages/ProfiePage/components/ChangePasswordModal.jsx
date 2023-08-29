@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-// import { Link, useHistory } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { validate_password_change } from "../../../utils/validations";
 // import { Helmet } from "react-helmet";
@@ -8,7 +8,7 @@
 // import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 
 // const ChangePasswordModal = props => {
-//   const history = useHistory();
+//   const navigate = useNavigate();
 //   const [current_password, setCurrentPassword] = useState("");
 //   const [password, setPassword] = useState("");
 //   const [rePassword, setRePassword] = useState("");
@@ -38,7 +38,7 @@
 
 //     if (request.isValid) {
 //       dispatch(API.passwordReset({ user_id: current_user._id, password, rePassword }));
-//       history.push(`/secure/account/profile`);
+//       navigate(`/secure/account/profile`);
 //     }
 //   };
 

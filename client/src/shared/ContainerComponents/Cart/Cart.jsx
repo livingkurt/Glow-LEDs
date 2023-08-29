@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { mobile_check } from "../../../utils/react_helper_functions";
 import { API_Content } from "../../../utils";
@@ -11,7 +11,7 @@ import { checkoutHandler, determine_wholesale_proceed, useOutsideAlerter } from 
 import LoadingInside from "../../SharedComponents/LoadingInside";
 
 const Cart = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [category_items, set_category_items] = useState([]);
 
@@ -49,7 +49,7 @@ const Cart = props => {
   const { cartItems } = my_cart;
 
   const handleCheckout = useCallback(
-    () => checkoutHandler(dispatch, history, props, cartItems, current_user, closeMenu),
+    () => checkoutHandler(dispatch, navigate, props, cartItems, current_user, closeMenu),
     [dispatch, props, cartItems, current_user]
   );
 

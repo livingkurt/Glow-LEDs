@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SketchPicker } from "react-color";
 import * as API from "../../api";
 
@@ -22,7 +22,7 @@ const EditPalettePage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const palettePage = useSelector(state => state.palettes);
   const { palette, loading, error } = palettePage;
@@ -100,12 +100,12 @@ const EditPalettePage = props => {
         chip,
         colors_per_mode,
         colors: name * chip * colors_per_mode,
-        quantity_state
+        quantity_state,
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/palettes");
+    navigate("/secure/glow/palettes");
   };
 
   const handleChangeComplete = color => {

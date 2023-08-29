@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
@@ -34,7 +34,7 @@ const Survey = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, current_user } = userPage;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
@@ -137,20 +137,20 @@ const Survey = props => {
         survey: survey_questions,
         is_survey: false,
         active,
-        rating
+        rating,
       })
     );
     // e.target.reset();
     unset_state();
     set_loading_submit(false);
-    // history.push('/collections/surveys/category/' + category.toLowerCase());
+    // navigate('/collections/surveys/category/' + category.toLowerCase());
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (success) {
-        // history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
+        // navigate('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
         set_finished(true);
       }
     }
@@ -181,7 +181,9 @@ const Survey = props => {
 
   return (
     <div className="main_container p-20px">
-      {surveys[0] && !finished && <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>}
+      {surveys[0] && !finished && (
+        <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>
+      )}
 
       <div className="form">
         <form style={{ width: "100%" }}>
@@ -224,19 +226,37 @@ const Survey = props => {
                     {question_3 && (
                       <li>
                         <label htmlFor="where">{question_3}</label>
-                        <input type="text" name="where" value={answer_3} id="where" onChange={e => set_answer_3(e.target.value)} />
+                        <input
+                          type="text"
+                          name="where"
+                          value={answer_3}
+                          id="where"
+                          onChange={e => set_answer_3(e.target.value)}
+                        />
                       </li>
                     )}
                     {question_4 && (
                       <li>
                         <label htmlFor="where">{question_4}</label>
-                        <input type="text" name="where" value={answer_4} id="where" onChange={e => set_answer_4(e.target.value)} />
+                        <input
+                          type="text"
+                          name="where"
+                          value={answer_4}
+                          id="where"
+                          onChange={e => set_answer_4(e.target.value)}
+                        />
                       </li>
                     )}
                     {question_5 && (
                       <li>
                         <label htmlFor="where">{question_5}</label>
-                        <input type="text" name="where" value={answer_5} id="where" onChange={e => set_answer_5(e.target.value)} />
+                        <input
+                          type="text"
+                          name="where"
+                          value={answer_5}
+                          id="where"
+                          onChange={e => set_answer_5(e.target.value)}
+                        />
                       </li>
                     )}
                   </div>
@@ -257,7 +277,7 @@ const Survey = props => {
                   style={{
                     textAlign: "center",
                     width: "100%",
-                    borderRadius: "20px"
+                    borderRadius: "20px",
                   }}
                 />
                 <div
@@ -266,7 +286,8 @@ const Survey = props => {
                 >
                   {finished && (
                     <div>
-                      <div>Thank you for Taking the Time to Give us Feedback!</div> <div>We Greatly Appreciate it! 💙</div>
+                      <div>Thank you for Taking the Time to Give us Feedback!</div>{" "}
+                      <div>We Greatly Appreciate it! 💙</div>
                       <br />
                       <div>Follow us on Social Media</div>
                       <div className="mt-2rem wrap jc-c ">
@@ -282,7 +303,12 @@ const Survey = props => {
                             </a>
                           </div>
                           <div className="ml-10px fs-40px">
-                            <a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <a
+                              href="https://www.instagram.com/glow_leds/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label="Instagram"
+                            >
                               <i className="fab fa-instagram zoom" />
                             </a>
                           </div>
@@ -307,7 +333,12 @@ const Survey = props => {
                             </a>
                           </div>
                           <div className="mr-10px fs-40px">
-                            <a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer" aria-label="Soundcloud">
+                            <a
+                              href="https://soundcloud.com/ntre/tracks"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label="Soundcloud"
+                            >
                               <i className="fab fa-soundcloud" />
                             </a>
                           </div>

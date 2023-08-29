@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -13,7 +13,7 @@ import { set_paycheck } from "../../slices/paycheckSlice";
 const EditPaycheckPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
   const { paycheck, loading, error } = paycheckPage;
@@ -54,11 +54,11 @@ const EditPaycheckPage = props => {
         venmo,
         paid,
         reciept,
-        paid_at: paid_at ? paid_at : paid && format_date(today)
+        paid_at: paid_at ? paid_at : paid && format_date(today),
       })
     );
     e.target.reset();
-    history.push("/secure/glow/paychecks");
+    navigate("/secure/glow/paychecks");
   };
 
   const update_affiliate = e => {

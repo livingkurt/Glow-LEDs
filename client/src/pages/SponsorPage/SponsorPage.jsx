@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { API_Users } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -11,7 +11,7 @@ import * as API from "../../api";
 
 const SponsorPage = props => {
   const [teams, set_teams] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliate } = affiliatePage;
   const userPage = useSelector(state => state.users.userPage);
@@ -53,7 +53,10 @@ const SponsorPage = props => {
           <meta property="og:title" content={affiliate.artist_name + " | Glow LEDs"} />
           <meta name="twitter:title" content={affiliate.artist_name + " | Glow LEDs"} />
           <link rel="canonical" href={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
-          <meta property="og:url" content={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
+          <meta
+            property="og:url"
+            content={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname}
+          />
           <meta name="description" content={affiliate.bio} />
           <meta property="og:description" content={affiliate.bio} />
           <meta name="twitter:description" content={affiliate.bio} />
@@ -63,7 +66,7 @@ const SponsorPage = props => {
       {affiliate && (
         <div className="">
           <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => history.goBack()}>
+            <GLButton variant="secondary" onClick={() => navigate.goBack()}>
               Back
             </GLButton>
             {/* {current_user?.isAdmin && (
@@ -88,7 +91,7 @@ const SponsorPage = props => {
                 width: "100%",
                 display: "none",
                 maxWidth: "unset",
-                maxHeight: "unset"
+                maxHeight: "unset",
               }}
               effect="blur"
               src={affiliate.picture}
@@ -166,7 +169,7 @@ const SponsorPage = props => {
                         style={{
                           top: "-119px",
                           left: "50%",
-                          transform: "translate(-50%, -50%)"
+                          transform: "translate(-50%, -50%)",
                         }}
                       >
                         {team.team_name}
@@ -181,7 +184,12 @@ const SponsorPage = props => {
                   <div className="fs-25px jc-fs w-100per max-w-500px ai-c">
                     <div className="fs-40px">
                       {affiliate.facebook_name && (
-                        <a href={affiliate.facebook_name} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <a
+                          href={affiliate.facebook_name}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Facebook"
+                        >
                           <i className="fab fa-facebook zoom" />
                         </a>
                       )}

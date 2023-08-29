@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../Banner";
 import { HashLink } from "react-router-hash-link";
@@ -17,7 +17,7 @@ import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
 
 const Header = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [first_name, set_first_name] = useState("");
   const [loading, set_loading] = useState("");
   const [display, setDisplay] = useState(false);
@@ -88,7 +88,7 @@ const Header = props => {
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
-    history.push("/account/login");
+    navigate("/account/login");
   };
   const [last_id, set_last_id] = useState("");
   const [current_id, set_current_id] = useState("");
@@ -142,13 +142,13 @@ const Header = props => {
   const update_list = product => {
     set_search(product);
     setDisplay(false);
-    history.push("/collections/all/products?search=" + product);
+    navigate("/collections/all/products?search=" + product);
   };
 
   const submitHandler = e => {
     e.preventDefault();
 
-    history.push("/collections/all/products?search=" + search);
+    navigate("/collections/all/products?search=" + search);
   };
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const Header = props => {
       ...subcategories.map(category => {
         return { name: humanize(category) };
       }),
-      ...data.products.filter(product => !product.option).filter(product => !product.hidden)
+      ...data.products.filter(product => !product.option).filter(product => !product.hidden),
     ]);
     set_loading(false);
   };
@@ -191,11 +191,11 @@ const Header = props => {
 
   const filterHandler = e => {
     const chip_selected = JSON.parse(e.target.value);
-    update_products_url(history, "", "", chip_selected.name, "", "0", "/collections/all/products");
+    update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
     dispatch(
       API.listProducts({
         chip: chip_selected._id,
-        hidden: false
+        hidden: false,
       })
     );
     set_chip_name({});
@@ -260,7 +260,9 @@ const Header = props => {
                     <label className="tm" style={{ color: "#9a9898" }}>
                       ™
                     </label>
-                    <label className="make_it_glow_text fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px">Make it Glow</label>
+                    <label className="make_it_glow_text fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px">
+                      Make it Glow
+                    </label>
                   </div>
                 </Link>
               </div>

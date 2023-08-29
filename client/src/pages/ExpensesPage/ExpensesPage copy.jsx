@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
@@ -16,7 +16,7 @@ const ExpensesPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [card_type, set_card_type] = useState("GL AMEX");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const category = props.match.params.category ? props.match.params.category : "";
 

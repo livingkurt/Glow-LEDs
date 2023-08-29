@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
@@ -18,7 +18,7 @@ const EditParcelPage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const parcelPage = useSelector(state => state.parcels);
   const { parcel, loading, error } = parcelPage;
@@ -84,12 +84,12 @@ const EditParcelPage = props => {
         width,
         height,
         volume: length * width * height,
-        quantity_state
+        quantity_state,
       })
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/parcels");
+    navigate("/secure/glow/parcels");
   };
   return (
     <div className="main_container p-20px">
@@ -135,19 +135,43 @@ const EditParcelPage = props => {
 
                     <li>
                       <label htmlFor="type">Type</label>
-                      <input type="text" name="type" defaultValue={type} id="type" onChange={e => set_type(e.target.value)} />
+                      <input
+                        type="text"
+                        name="type"
+                        defaultValue={type}
+                        id="type"
+                        onChange={e => set_type(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="length">Length</label>
-                      <input type="text" name="length" defaultValue={length} id="length" onChange={e => set_length(e.target.value)} />
+                      <input
+                        type="text"
+                        name="length"
+                        defaultValue={length}
+                        id="length"
+                        onChange={e => set_length(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="width">Width</label>
-                      <input type="text" name="width" defaultValue={width} id="width" onChange={e => set_width(e.target.value)} />
+                      <input
+                        type="text"
+                        name="width"
+                        defaultValue={width}
+                        id="width"
+                        onChange={e => set_width(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="height">Height</label>
-                      <input type="text" name="height" defaultValue={height} id="height" onChange={e => set_height(e.target.value)} />
+                      <input
+                        type="text"
+                        name="height"
+                        defaultValue={height}
+                        id="height"
+                        onChange={e => set_height(e.target.value)}
+                      />
                     </li>
 
                     <li>

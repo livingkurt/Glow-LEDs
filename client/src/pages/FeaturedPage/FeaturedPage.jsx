@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 
 const FeaturedPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const featurePage = useSelector(state => state.features);
   const { feature } = featurePage;
   const userPage = useSelector(state => state.users.userPage);
@@ -52,7 +52,7 @@ const FeaturedPage = props => {
       {feature && (
         <div className="">
           <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => history.goBack()}>
+            <GLButton variant="secondary" onClick={() => navigate.goBack()}>
               Back to Features
             </GLButton>
             {current_user?.isAdmin && (

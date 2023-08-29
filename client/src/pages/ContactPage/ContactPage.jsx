@@ -18,7 +18,9 @@ const ContactPage = props => {
   const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
   const [email, set_email] = useState(current_user ? current_user.email : "");
   const [order_number, set_order_number] = useState("Test");
-  const [reason_for_contact, set_reason_for_contact] = useState(props.match.params.reason ? props.match.params.reason : "");
+  const [reason_for_contact, set_reason_for_contact] = useState(
+    props.match.params.reason ? props.match.params.reason : ""
+  );
   const [message, set_message] = useState("Test");
 
   const [first_name_validations, set_first_name_Validations] = useState("");
@@ -39,11 +41,11 @@ const ContactPage = props => {
     let clean = true;
     if (clean) {
       if (success) {
-        props.history.push("/pages/complete/email");
+        props.navigate("/pages/complete/email");
       }
     }
     return () => (clean = false);
-  }, [props.history, success]);
+  }, [props.navigate, success]);
 
   let request;
   const sendEmail = e => {
@@ -57,7 +59,7 @@ const ContactPage = props => {
       last_name,
       email,
       reason_for_contact,
-      message
+      message,
     };
     request = validate_contact(data);
 
@@ -76,7 +78,7 @@ const ContactPage = props => {
           email,
           order_number,
           reason_for_contact: reason,
-          message
+          message,
         })
       );
     }
@@ -89,9 +91,18 @@ const ContactPage = props => {
         <meta name="twitter:title" content="Contact" />
         <link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
         <meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
-        <meta name="description" content="If you have any questions, do not hesitate to use our contact page for support." />
-        <meta property="og:description" content="If you have any questions, do not hesitate to use our contact page for support." />
-        <meta name="twitter:description" content="If you have any questions, do not hesitate to use our contact page for support." />
+        <meta
+          name="description"
+          content="If you have any questions, do not hesitate to use our contact page for support."
+        />
+        <meta
+          property="og:description"
+          content="If you have any questions, do not hesitate to use our contact page for support."
+        />
+        <meta
+          name="twitter:description"
+          content="If you have any questions, do not hesitate to use our contact page for support."
+        />
       </Helmet>
       <div className="jc-c">
         <h1>Contact</h1>

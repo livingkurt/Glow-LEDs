@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
@@ -8,7 +8,7 @@ import { resetDateRange, set_end_date, set_month, set_start_date, set_year } fro
 
 const DatePicker = ({ year, month, start_date, end_date }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // useEffect(() => {
@@ -72,7 +72,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
   //   if (end_date) {
   //     searchParams.set("end_date", end_date);
   //   }
-  //   history.push({ search: searchParams.toString() });
+  //   navigate({ search: searchParams.toString() });
   // };
 
   return (
@@ -141,7 +141,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
         <Button
           onClick={() => {
             dispatch(resetDateRange());
-            history.push({ search: "" });
+            navigate({ search: "" });
           }}
           variant="contained"
           className="mt-10px"
@@ -151,7 +151,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
         <Button
           onClick={() => {
             dispatch(set_month(""));
-            history.push({ search: "" });
+            navigate({ search: "" });
           }}
           variant="contained"
           className="mt-10px"

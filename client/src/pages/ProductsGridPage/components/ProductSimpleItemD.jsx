@@ -1,6 +1,6 @@
 // React
 import * as React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const ProductSimpleItemD = ({ product, size, style }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <li key={product.pathname} style={style}>
       <div className="tooltip">
@@ -18,7 +18,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: navigate.location.pathname,
               }}
               className="m-auto"
             >
@@ -43,7 +43,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: navigate.location.pathname,
               }}
             >
               <label className="mt-10px" style={{ fontSize: "1.6rem" }}>

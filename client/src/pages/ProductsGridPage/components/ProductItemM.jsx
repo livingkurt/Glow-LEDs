@@ -1,6 +1,6 @@
 // React
 import * as React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
@@ -9,14 +9,14 @@ import { useSelector } from "react-redux";
 const ProductItemM = ({ product, style, size, product_occurrences }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <li key={product.pathname} className=" w-100per" style={style}>
       {product_occurrences && (
         <Link
           to={{
             pathname: "/collections/all/products/" + product.pathname,
-            state: { prevPath: history.location.pathname },
+            state: { prevPath: navigate.location.pathname },
           }}
         >
           <div className="small_screen_product row">

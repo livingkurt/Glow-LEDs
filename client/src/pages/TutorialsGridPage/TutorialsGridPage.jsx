@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./TutorialsGridPage.scss";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,7 +11,7 @@ import { Loading } from "../../shared/SharedComponents";
 
 const TutorialsGridPage = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
   const { tutorials, loading, tutorial_modal, tutorial } = tutorialPage;
@@ -42,13 +42,13 @@ const TutorialsGridPage = () => {
   const handleOpen = tutorial => {
     dispatch(open_tutorial_modal(tutorial));
     const newPath = `/collections/all/tutorials?tutorial=${tutorial.pathname}`;
-    history.push(newPath);
+    navigate(newPath);
   };
 
   const handleClose = () => {
     dispatch(close_tutorial_modal(tutorial));
     const newPath = "/collections/all/tutorials";
-    history.push(newPath);
+    navigate(newPath);
   };
 
   return (
@@ -56,9 +56,10 @@ const TutorialsGridPage = () => {
       <h1 className="ta-c">Learn Gloving</h1>
       <h2 className="ta-c">Your Journey Starts Here</h2>
       <p>
-        Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics to melting serious
-        face. Our talented glovers will guide you step by step, providing tips and tricks to help you improve your skills and create your
-        own unique light shows. Get ready to leave your audiance speechless with your mesmorizing moves!
+        Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
+        to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help you
+        improve your skills and create your own unique light shows. Get ready to leave your audiance speechless with
+        your mesmorizing moves!
       </p>
       <h2 className="ta-c">Beginner</h2>
       <Loading loading={loading}>
@@ -82,7 +83,9 @@ const TutorialsGridPage = () => {
         </Grid>
       </Loading>
       <h2 className="ta-c">More to Come!</h2>
-      <p className="ta-c">We will release videos on a regular basis, so be sure to check back often for new tutorials!</p>
+      <p className="ta-c">
+        We will release videos on a regular basis, so be sure to check back often for new tutorials!
+      </p>
       <TutorialModal selectedTutorial={tutorial} handleClose={handleClose} open={tutorial_modal} />
     </div>
   );

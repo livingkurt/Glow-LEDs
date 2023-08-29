@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
@@ -21,7 +21,7 @@ const EmailStep = ({
   set_password,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
@@ -41,7 +41,7 @@ const EmailStep = ({
     e.preventDefault();
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
-    history.push("/checkout/placeorder");
+    navigate("/checkout/placeorder");
   };
 
   const { width } = useWindowDimensions();

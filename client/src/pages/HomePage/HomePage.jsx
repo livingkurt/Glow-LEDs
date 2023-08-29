@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import { API_Content, API_Products } from "../../utils";
@@ -13,7 +13,7 @@ import * as API from "../../api";
 import { set_show_search_bar } from "../../slices/settingSlice";
 
 const HomePage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [display, setDisplay] = useState(false);
   const [loading, set_loading] = useState(false);
@@ -61,13 +61,13 @@ const HomePage = props => {
   const update_list = product => {
     set_search(product);
     setDisplay(false);
-    history.push("/collections/all/products?search=" + product);
+    navigate("/collections/all/products?search=" + product);
   };
 
   const submitHandler = e => {
     e.preventDefault();
 
-    history.push("/collections/all/products?search=" + search);
+    navigate("/collections/all/products?search=" + search);
   };
 
   const contentPage = useSelector(state => state.contents);

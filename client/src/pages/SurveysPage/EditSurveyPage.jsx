@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -10,7 +10,7 @@ import { set_survey } from "../../slices/surveySlice";
 const EditSurveyPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const surveyPage = useSelector(state => state.surveys);
   const { survey, loading, error } = surveyPage;
@@ -31,7 +31,7 @@ const EditSurveyPage = props => {
     order,
     is_survey,
     active,
-    rating
+    rating,
   } = survey;
 
   const dispatch = useDispatch();
@@ -69,11 +69,11 @@ const EditSurveyPage = props => {
         order,
         rating,
         is_survey,
-        active
+        active,
       })
     );
     e.target.reset();
-    history.push("/secure/glow/surveys");
+    navigate("/secure/glow/surveys");
   };
 
   return (

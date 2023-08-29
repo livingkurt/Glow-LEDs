@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ element: Component, children }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
   const [isLoading, setIsLoading] = useState(true);
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (current_user) {
@@ -24,27 +27,18 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     })();
   }, []);
 
-  return (
-    <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        isTokenRefreshed && (
-          // <Loading loading={isLoading} />
-          <Route
-            {...rest}
-            render={props =>
-              current_user && current_user.hasOwnProperty("first_name") ? (
-                <Component {...props} />
-              ) : (
-                <Redirect to={"/account/login?redirect=" + props.location.pathname} />
-              )
-            }
-          />
-        )
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isTokenRefreshed) {
+    if (current_user && current_user.hasOwnProperty("first_name")) {
+      return children;
+    } else {
+      navigate(`/account/login?redirect=${location.pathname}`, { replace: true });
+      return null;
+    }
+  }
+  return null;
 };
 
 export default PrivateRoute;

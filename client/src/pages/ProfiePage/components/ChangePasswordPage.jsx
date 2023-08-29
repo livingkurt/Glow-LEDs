@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_password_change } from "../../../utils/validations";
 import { Helmet } from "react-helmet";
@@ -7,7 +7,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
 const ChangePasswordPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [current_password, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -27,7 +27,7 @@ const ChangePasswordPage = props => {
       id: current_user._id,
       current_password,
       password,
-      rePassword
+      rePassword,
     };
     const request = await validate_password_change(validation_data);
 
@@ -37,7 +37,7 @@ const ChangePasswordPage = props => {
 
     if (request.isValid) {
       dispatch(API.passwordReset({ userId: current_user._id, password, rePassword }));
-      history.push(`/secure/account/profile`);
+      navigate(`/secure/account/profile`);
     }
   };
 
@@ -62,7 +62,7 @@ const ChangePasswordPage = props => {
         <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
       </Helmet>
       <div className="mb-10px">
-        <GLButton variant="secondary" onClick={() => history.goBack()}>
+        <GLButton variant="secondary" onClick={() => navigate.goBack()}>
           Back to Profile
         </GLButton>
       </div>
@@ -94,7 +94,13 @@ const ChangePasswordPage = props => {
               </label>
               <li>
                 <label htmlFor="password">Password</label>
-                <input className="form_input" type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
+                <input
+                  className="form_input"
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={e => setPassword(e.target.value)}
+                />
               </li>
               <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {password_validations}

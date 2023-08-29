@@ -68,7 +68,7 @@ const ShippingPage = props => {
       state,
       postalCode,
       country,
-      international
+      international,
     };
     const request = validate_shipping(data);
     set_email_validations(request.errors.email);
@@ -93,12 +93,12 @@ const ShippingPage = props => {
           state,
           postalCode,
           country: international ? country : "United States",
-          international
+          international,
         })
       );
       const paymentMethod = "stripe";
       dispatch(save_payment_method({ paymentMethod }));
-      props.history.push("placeorder");
+      props.navigate("placeorder");
     }
   };
   setTimeout(() => {
@@ -129,28 +129,52 @@ const ShippingPage = props => {
             {email_validations}
             <li>
               <label htmlFor="first_name">First Name</label>
-              <input type="text" value={first_name} name="first_name" id="first_name" onChange={e => set_first_name(e.target.value)} />
+              <input
+                type="text"
+                value={first_name}
+                name="first_name"
+                id="first_name"
+                onChange={e => set_first_name(e.target.value)}
+              />
             </li>
             <label className="validation_text" style={{ justifyContent: "center" }}>
               {first_name_validations}
             </label>
             <li>
               <label htmlFor="last_name">Last Name</label>
-              <input type="text" value={last_name} name="last_name" id="last_name" onChange={e => set_last_name(e.target.value)} />
+              <input
+                type="text"
+                value={last_name}
+                name="last_name"
+                id="last_name"
+                onChange={e => set_last_name(e.target.value)}
+              />
             </li>
             <label className="validation_text" style={{ justifyContent: "center" }}>
               {last_name_validations}
             </label>
             <li>
               <label htmlFor="address_1">Address</label>
-              <input type="text" value={address_1} name="address_1" id="address_1" onChange={e => set_address_1(e.target.value)} />
+              <input
+                type="text"
+                value={address_1}
+                name="address_1"
+                id="address_1"
+                onChange={e => set_address_1(e.target.value)}
+              />
             </li>
             <label className="validation_text" style={{ justifyContent: "center" }}>
               {address_validations}
             </label>
             <li>
               <label htmlFor="address_2">Apt/Suite</label>
-              <input type="text" value={address_2} name="address_2" id="address_2" onChange={e => set_address_2(e.target.value)} />
+              <input
+                type="text"
+                value={address_2}
+                name="address_2"
+                id="address_2"
+                onChange={e => set_address_2(e.target.value)}
+              />
             </li>
             <li>
               <label htmlFor="city">City</label>
@@ -168,7 +192,13 @@ const ShippingPage = props => {
             </label>
             <li>
               <label htmlFor="postalCode">Postal Code</label>
-              <input type="text" value={postalCode} name="postalCode" id="postalCode" onChange={e => setPostalCode(e.target.value)} />
+              <input
+                type="text"
+                value={postalCode}
+                name="postalCode"
+                id="postalCode"
+                onChange={e => setPostalCode(e.target.value)}
+              />
             </li>
             <label className="validation_text" style={{ justifyContent: "center" }}>
               {postal_code_validations}
@@ -195,7 +225,13 @@ const ShippingPage = props => {
                 {international && (
                   <li>
                     <label htmlFor="country">Country</label>
-                    <input type="text" value={country} name="country" id="country" onChange={e => setCountry(e.target.value)} />
+                    <input
+                      type="text"
+                      value={country}
+                      name="country"
+                      id="country"
+                      onChange={e => setCountry(e.target.value)}
+                    />
                   </li>
                 )}
               </div>

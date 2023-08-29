@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
 const AdminChangePasswordPage = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
@@ -21,7 +21,7 @@ const AdminChangePasswordPage = props => {
   const submitHandler = async e => {
     e.preventDefault();
     dispatch(API.passwordReset({ userId: props.match.params.id, password, rePassword }));
-    history.push("/secure/glow/userprofile/" + props.match.params.id);
+    navigate("/secure/glow/userprofile/" + props.match.params.id);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const AdminChangePasswordPage = props => {
         <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
       </Helmet>
       <div className="mb-10px">
-        <GLButton variant="secondary" onClick={() => history.goBack()}>
+        <GLButton variant="secondary" onClick={() => navigate.goBack()}>
           Back to Profile
         </GLButton>
       </div>
@@ -58,7 +58,13 @@ const AdminChangePasswordPage = props => {
               </li>
               <li>
                 <label htmlFor="password">Password</label>
-                <input className="form_input" type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
+                <input
+                  className="form_input"
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={e => setPassword(e.target.value)}
+                />
               </li>
               <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {password_validations}

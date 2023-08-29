@@ -25,11 +25,11 @@ const LoginPage = props => {
     if (clean) {
       if (current_user && current_user.hasOwnProperty("first_name")) {
         const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
-        props.history.push(redirect);
+        props.navigate(redirect);
       }
     }
     return () => (clean = false);
-  }, [current_user, props.history]);
+  }, [current_user, props.navigate]);
 
   setTimeout(() => {
     set_loading(false);

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
@@ -27,7 +27,7 @@ import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal"
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user, message } = userPage;
@@ -185,7 +185,7 @@ const ProfilePage = () => {
       </Helmet>
       <EditUserModal />
       {current_user?.isAdmin && (
-        <GLButton variant="icon" onClick={() => history.goBack()}>
+        <GLButton variant="icon" onClick={() => navigate.goBack()}>
           <i class="fas fa-chevron-left"></i>
         </GLButton>
       )}

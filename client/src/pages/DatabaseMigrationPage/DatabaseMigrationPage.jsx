@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../utils";
-import { accurate_date, format_date, format_time, unformat_date, unformat_date_and_time } from "../../utils/helper_functions";
+import {
+  accurate_date,
+  format_date,
+  format_time,
+  unformat_date,
+  unformat_date_and_time,
+} from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const DatabaseMigrationPage = props => {
@@ -39,7 +45,7 @@ const DatabaseMigrationPage = props => {
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const batch_request = async e => {
     e.preventDefault();
@@ -92,7 +98,7 @@ const DatabaseMigrationPage = props => {
     "carts",
     "affiliates",
     "teams",
-    "paychecks"
+    "paychecks",
   ];
   const methods = ["get", "updateMany"];
 
@@ -211,7 +217,13 @@ const DatabaseMigrationPage = props => {
                 <div className="w-228px m-10px">
                   <li>
                     <label htmlFor="method">Method</label>
-                    <input type="text" name="method" value={method} id="method" onChange={e => set_method(e.target.value)} />
+                    <input
+                      type="text"
+                      name="method"
+                      value={method}
+                      id="method"
+                      onChange={e => set_method(e.target.value)}
+                    />
                   </li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
@@ -256,7 +268,13 @@ const DatabaseMigrationPage = props => {
 
                   <li>
                     <label htmlFor="action">Action</label>
-                    <input type="text" name="action" value={action} id="action" onChange={e => set_action(e.target.value)} />
+                    <input
+                      type="text"
+                      name="action"
+                      value={action}
+                      id="action"
+                      onChange={e => set_action(e.target.value)}
+                    />
                   </li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
@@ -296,7 +314,13 @@ const DatabaseMigrationPage = props => {
                   </li>
                   <li>
                     <label htmlFor="property">Property</label>
-                    <input type="text" name="property" value={property} id="property" onChange={e => set_property(e.target.value)} />
+                    <input
+                      type="text"
+                      name="property"
+                      value={property}
+                      id="property"
+                      onChange={e => set_property(e.target.value)}
+                    />
                   </li>
                   <li>
                     <label htmlFor="value">Value</label>
@@ -319,7 +343,7 @@ const DatabaseMigrationPage = props => {
                 </GLButton>
               </li>
               <li>
-                <GLButton variant="secondary" onClick={() => history.goBack()}>
+                <GLButton variant="secondary" onClick={() => navigate.goBack()}>
                   Back
                 </GLButton>
               </li>
@@ -338,7 +362,13 @@ const DatabaseMigrationPage = props => {
       </div>
       <div>
         <label htmlFor="request">Results</label>
-        <textarea type="text" className="w-100per h-99rem" name="request" value={JSON.stringify(request.data, undefined, 4)} id="request" />
+        <textarea
+          type="text"
+          className="w-100per h-99rem"
+          name="request"
+          value={JSON.stringify(request.data, undefined, 4)}
+          id="request"
+        />
       </div>
     </div>
   );

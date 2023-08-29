@@ -61,7 +61,7 @@ export const shuffle = (array: any) => {
 const getSizeObject = (width: number, size: string, hand_length: string, hand_width: string) => ({
   size: width > 500 ? size : size === "X-Large" ? "XL" : size === "XX-Large" ? "XXL" : size[0],
   hand_length,
-  hand_width
+  hand_width,
 });
 
 export const sizes = (width: number, product_name: string) => {
@@ -70,13 +70,13 @@ export const sizes = (width: number, product_name: string) => {
     getSizeObject(width, "Medium", "6.3", "3.2"),
     getSizeObject(width, "Large", "7", "3.5"),
     getSizeObject(width, "X-Large", "7.5", "4"),
-    getSizeObject(width, "XX-Large", "9", "4.8")
+    getSizeObject(width, "XX-Large", "9", "4.8"),
   ];
   const supremes_v2 = [
     getSizeObject(width, "Small", "6.5", "3.2"),
     getSizeObject(width, "Medium", "7", "3.5"),
     getSizeObject(width, "Large", "7.5", "4"),
-    getSizeObject(width, "X-Large", "8", "4.5")
+    getSizeObject(width, "X-Large", "8", "4.5"),
   ];
   if (product_name?.includes("V1")) {
     return supremes_v1;
@@ -91,13 +91,13 @@ export const sizes_short = (width: number, product_name: string) => {
     M: getSizeObject(width, "Medium", "6.3", "3.2"),
     L: getSizeObject(width, "Large", "7", "3.5"),
     XL: getSizeObject(width, "X-Large", "7.5", "4"),
-    XXL: getSizeObject(width, "XX-Large", "9", "4.8")
+    XXL: getSizeObject(width, "XX-Large", "9", "4.8"),
   };
   const supremes_v2 = {
     S: getSizeObject(width, "Small", "6.5", "3.2"),
     M: getSizeObject(width, "Medium", "7", "3.5"),
     L: getSizeObject(width, "Large", "7.5", "4"),
-    XL: getSizeObject(width, "X-Large", "8", "4.5")
+    XL: getSizeObject(width, "X-Large", "8", "4.5"),
   };
   if (product_name?.includes("V1")) {
     return supremes_v1;
@@ -140,7 +140,9 @@ export const determnine_link = (item: any) => {
   const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
     item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
   }${item.option_product ? "?option=" + item.size : ""}${
-    item.secondary_product_name ? "?secondary=" + determine_secondary_product_name(item.secondary_product_name, item) : ""
+    item.secondary_product_name
+      ? "?secondary=" + determine_secondary_product_name(item.secondary_product_name, item)
+      : ""
   }`;
   //
   return link;
@@ -378,7 +380,11 @@ export const determine_total = (cartItems: any, isWholesaler: boolean) => {
     cartItems.forEach((item: any) => {
       if (isWholesaler) {
         total = total + (item.wholesale_price || item.price) * item.qty;
-      } else if (today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0) {
+      } else if (
+        today >= new Date(item.sale_start_date) &&
+        today <= new Date(item.sale_end_date) &&
+        item.sale_price !== 0
+      ) {
         total = total + item.sale_price * item.qty;
       } else {
         total = total + item.price * item.qty;
@@ -395,7 +401,7 @@ const colors = [
   { color: "Green", price: 15.99 },
   { color: "Blue", price: 15.99 },
   { color: "Violet", price: 15.99 },
-  { color: "Purple", price: 15.99 }
+  { color: "Purple", price: 15.99 },
 ];
 const diffuser_colors = [
   { color: "Translucent White", price: 11.99 },
@@ -403,7 +409,7 @@ const diffuser_colors = [
   { color: "Green", price: 11.99 },
   { color: "Blue", price: 11.99 },
   { color: "Violet", price: 11.99 },
-  { color: "Purple", price: 11.99 }
+  { color: "Purple", price: 11.99 },
 ];
 
 export const determine_price = (color: any, diffuser_cap: any) => {
@@ -492,17 +498,23 @@ export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
       Revenue: ` $${orders
-        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .filter(
+          (order: any) =>
+            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+        )
         .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
-        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .filter(
+          (order: any) =>
+            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+        )
         .reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
         .toFixed(2)}`,
       "Percentage Off":
         !affiliate.team && affiliate.promoter
           ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`
+          : `${determine_sponsor_code_tier(code_usage)}%`,
     };
   });
 };
@@ -516,17 +528,23 @@ export const calculate_sponsor_usage = (affiliates: any, orders: any) => {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
       Revenue: ` $${orders
-        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .filter(
+          (order: any) =>
+            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+        )
         .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
-        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .filter(
+          (order: any) =>
+            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+        )
         .reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
         .toFixed(2)}`,
       "Percentage Off":
         !affiliate.team && affiliate.promoter
           ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`
+          : `${determine_sponsor_code_tier(code_usage)}%`,
     };
   });
 };
@@ -657,10 +675,19 @@ export const state_names = [
   { long_name: "Washington", short_name: "WA" },
   { long_name: "West Virginia", short_name: "WV" },
   { long_name: "Wisconsin", short_name: "WI" },
-  { long_name: "Wyoming", short_name: "WY" }
+  { long_name: "Wyoming", short_name: "WY" },
 ];
 
-export const categories = ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
+export const categories = [
+  "gloves",
+  "batteries",
+  "decals",
+  "diffuser_caps",
+  "diffusers",
+  "exo_diffusers",
+  "glowstringz",
+  "glowskinz",
+];
 export const subcategories = [
   "singles",
   "refresh",
@@ -698,7 +725,7 @@ export const subcategories = [
   "custom",
   "colors",
   "sizes",
-  "secondary_colors"
+  "secondary_colors",
 ];
 
 export const homepage_videos = [
@@ -708,7 +735,7 @@ export const homepage_videos = [
     video: "hPxFDj7R5Lg",
     color: "#8e4a4a",
     description:
-      "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! "
+      "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! ",
   },
   // {
   //   name: "Glowstringz V2",
@@ -725,7 +752,7 @@ export const homepage_videos = [
     video: "_aJDfd6vlYU",
     color: "#b1a72f",
     description:
-      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from gloves."
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from gloves.",
   },
   {
     name: "CLOZD Glowskinz",
@@ -734,7 +761,7 @@ export const homepage_videos = [
     video: "3Yk0QOMBlAo",
     color: "#427942",
     description:
-      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from gloves."
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from gloves.",
   },
 
   {
@@ -743,7 +770,7 @@ export const homepage_videos = [
     video: "0b1cn_3EczE",
     color: "#416d63",
     description:
-      "Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we"
+      "Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we",
   },
   {
     name: "Diffusers",
@@ -751,8 +778,8 @@ export const homepage_videos = [
     video: "uY2xjrGrZd0",
     color: "#6d416d",
     description:
-      "Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point."
-  }
+      "Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.",
+  },
 ];
 
 export const manuals = {
@@ -762,21 +789,21 @@ export const manuals = {
     videos: [
       {
         title: "One Button Functionality",
-        video: "oHNFMaUepLs"
+        video: "oHNFMaUepLs",
       },
       {
         title: "Everyday Modes",
-        video: "dCjgyMdiKhY"
+        video: "dCjgyMdiKhY",
       },
       {
         title: "Festival Modes",
-        video: "LxtZ1noaxlk"
+        video: "LxtZ1noaxlk",
       },
       {
         title: "Color Modes",
-        video: "6RCxB4waLAI"
-      }
-    ]
+        video: "6RCxB4waLAI",
+      },
+    ],
   },
   diffuser_caps: {
     name: "Diffuser Caps Manual",
@@ -784,13 +811,13 @@ export const manuals = {
     videos: [
       {
         title: "Diffuser Caps 101",
-        video: "FJbKd0ClkFM"
+        video: "FJbKd0ClkFM",
       },
       {
         title: "Orienting Diffuser Caps 101",
-        video: "vG4qgtrotkw"
-      }
-    ]
+        video: "vG4qgtrotkw",
+      },
+    ],
   },
   glowskinz: {
     name: "Glowskinz Manual",
@@ -798,10 +825,10 @@ export const manuals = {
     videos: [
       {
         title: "Glowskinz 101",
-        video: "s49fiZPC5G0"
-      }
-    ]
-  }
+        video: "s49fiZPC5G0",
+      },
+    ],
+  },
   // diffusers: {
   // 	name: 'Diffuser Caps Manual',
   // 	manual: '/Diffuser_Caps_Manual.png',
@@ -860,7 +887,7 @@ export const descriptions = {
   glowstringz:
     "Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.",
   glowskinz:
-    "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop."
+    "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
 };
 
 export const description_determination = (category: any) => {
@@ -883,19 +910,27 @@ export const description_determination = (category: any) => {
   }
 };
 
-export const update_products_url = (history: any, search = "", sort = "", filter = "", page = 1, limit = 0, pathname = "") => {
+export const update_products_url = (
+  navigate: any,
+  search = "",
+  sort = "",
+  filter = "",
+  page = 1,
+  limit = 0,
+  pathname = ""
+) => {
   if (pathname) {
-    history.push({
+    navigate({
       pathname: pathname,
       search: `${search ? "?search=" + search : ""}${sort ? "?sort=" + sort : ""}${filter ? "?filter=" + filter : ""}${
         page ? "?page=" + page : ""
-      }${limit ? "?limit=" + limit : ""}`
+      }${limit ? "?limit=" + limit : ""}`,
     });
   } else {
-    history.push({
+    navigate({
       search: `${search ? "?search=" + search : ""}${sort ? "?sort=" + sort : ""}${filter ? "?filter=" + filter : ""}${
         page ? "?page=" + page : ""
-      }${limit ? "?limit=" + limit : ""}`
+      }${limit ? "?limit=" + limit : ""}`,
     });
   }
 };
@@ -941,13 +976,13 @@ const reorderSingleDrag = ({ entities, selectedProductIds, source, destination }
       ...entities,
       columns: {
         ...entities.columns,
-        [column.id]: withNewProductIds(column, reordered)
-      }
+        [column.id]: withNewProductIds(column, reordered),
+      },
     };
 
     return {
       entities: updated,
-      selectedProductIds
+      selectedProductIds,
     };
   }
 
@@ -971,13 +1006,13 @@ const reorderSingleDrag = ({ entities, selectedProductIds, source, destination }
     columns: {
       ...entities.columns,
       [home.id]: withNewProductIds(home, newHomeProductIds),
-      [foreign.id]: withNewProductIds(foreign, newForeignProductIds)
-    }
+      [foreign.id]: withNewProductIds(foreign, newForeignProductIds),
+    },
   };
 
   return {
     entities: updated,
-    selectedProductIds
+    selectedProductIds,
   };
 };
 
@@ -1067,24 +1102,24 @@ const reorderMultiDrag = ({ entities, selectedProductIds, source, destination }:
   // insert all selected products into final column
   const withAddedProducts = {
     ...withRemovedProducts,
-    [final.id]: withNewProductIds(final, withInserted)
+    [final.id]: withNewProductIds(final, withInserted),
   };
 
   const updated = {
     ...entities,
-    columns: withAddedProducts
+    columns: withAddedProducts,
   };
 
   return {
     entities: updated,
-    selectedProductIds: orderedSelectedProductIds
+    selectedProductIds: orderedSelectedProductIds,
   };
 };
 
 const withNewProductIds = (column: any, product_ids: any) => ({
   id: column.id,
   title: column.title,
-  product_ids
+  product_ids,
 });
 
 export const getHomeColumn = (entities: any, productId: any) => {
@@ -1164,74 +1199,74 @@ export const dates_in_year = (year: number) => {
       month: "january",
       number_of_days: 31,
       start_date: year + "-01-01",
-      end_date: year + "-01-31"
+      end_date: year + "-01-31",
     },
     {
       month: "february",
       number_of_days: 28,
       start_date: year + "-02-01",
-      end_date: year + "-02-28"
+      end_date: year + "-02-28",
     },
     {
       month: "march",
       number_of_days: 31,
       start_date: year + "-03-01",
-      end_date: year + "-03-31"
+      end_date: year + "-03-31",
     },
     {
       month: "april",
       number_of_days: 30,
       start_date: year + "-04-01",
-      end_date: year + "-04-30"
+      end_date: year + "-04-30",
     },
     {
       month: "may",
       number_of_days: 31,
       start_date: year + "-05-01",
-      end_date: year + "-05-31"
+      end_date: year + "-05-31",
     },
     {
       month: "june",
       number_of_days: 30,
       start_date: year + "-06-01",
-      end_date: year + "-06-30"
+      end_date: year + "-06-30",
     },
     {
       month: "july",
       number_of_days: 31,
       start_date: year + "-07-01",
-      end_date: year + "-07-31"
+      end_date: year + "-07-31",
     },
     {
       month: "august",
       number_of_days: 31,
       start_date: year + "-08-01",
-      end_date: year + "-08-31"
+      end_date: year + "-08-31",
     },
     {
       month: "september",
       number_of_days: 30,
       start_date: year + "-09-01",
-      end_date: year + "-09-30"
+      end_date: year + "-09-30",
     },
     {
       month: "october",
       number_of_days: 31,
       start_date: year + "-10-01",
-      end_date: year + "-10-31"
+      end_date: year + "-10-31",
     },
     {
       month: "november",
       number_of_days: 30,
       start_date: year + "-11-01",
-      end_date: year + "-11-30"
+      end_date: year + "-11-30",
     },
     {
       month: "december",
       number_of_days: 31,
       start_date: year + "-12-01",
-      end_date: year + "-12-31"
-    }
+      end_date: year + "-12-31",
+    },
   ];
 };
 
@@ -1247,5 +1282,5 @@ export const months = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];

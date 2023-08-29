@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { API_Products } from "../../../utils";
 import { humanize, prnt, shuffle } from "../../../utils/helper_functions";
@@ -9,7 +9,7 @@ import {
   determine_option_product_name,
   determine_product_name_display,
   mobile_check,
-  sale_price_switch
+  sale_price_switch,
 } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { LazyImage } from "../../SharedComponents";
@@ -25,11 +25,11 @@ const RelatedProductsSlideshow = ({
   title,
   product_pathname,
   add_to_cart,
-  product
+  product,
 }) => {
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
@@ -62,13 +62,13 @@ const RelatedProductsSlideshow = ({
       query = {
         category: product_category,
         hidden: false,
-        option: false
+        option: false,
       };
     } else if (category === "opyn") {
       query = {
         subcategory: product_subcategory,
         hidden: false,
-        option: false
+        option: false,
       };
     }
 
@@ -76,7 +76,9 @@ const RelatedProductsSlideshow = ({
 
     set_products(typeof data === "object" && data.products.filter(product => product.pathname !== product_pathname));
     if (random) {
-      set_products(typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== product_pathname)));
+      set_products(
+        typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== product_pathname))
+      );
     }
     set_loading(false);
   };
@@ -86,24 +88,24 @@ const RelatedProductsSlideshow = ({
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 5
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 4
+      items: 4,
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 3
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 2
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
 
   // const update_option = (e) => {
@@ -130,7 +132,8 @@ const RelatedProductsSlideshow = ({
 
     const color = product.color_products && product.color_products.find(color => color.default_option === true);
     const secondary_color =
-      product.secondary_color_products && product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+      product.secondary_color_products &&
+      product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
     const option = product.option_products && product.option_products.find(option => option.default_option === true);
     const cart_item = {
       product: product._id,
@@ -166,7 +169,7 @@ const RelatedProductsSlideshow = ({
       category: product.category,
       subcategory: product.subcategory,
       qty,
-      finite_stock: product.category
+      finite_stock: product.category,
       // // determine_default_color(color),
       // diffuser_cap: diffuser_cap,
     };
@@ -270,7 +273,7 @@ const RelatedProductsSlideshow = ({
                                 className="w-250px br-20px m-auto br-20px p-10px"
                                 style={{
                                   backgroundColor: "#27272780",
-                                  color: "white"
+                                  color: "white",
                                 }}
                               >
                                 <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
@@ -313,7 +316,11 @@ const RelatedProductsSlideshow = ({
                                     <span className="custom-arrow" />
                                   </div>
                                 </div>
-                                <GLButton onClick={e => handleAddToCart(e, product)} variant="primary" className="w-100per">
+                                <GLButton
+                                  onClick={e => handleAddToCart(e, product)}
+                                  variant="primary"
+                                  className="w-100per"
+                                >
                                   Add to Cart
                                 </GLButton>
                               </div>
@@ -331,7 +338,7 @@ const RelatedProductsSlideshow = ({
                   <Link
                     to={{
                       pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: history.location.pathname
+                      previous_path: navigate.location.pathname,
                     }}
                     className="m-auto"
                   >
@@ -373,7 +380,7 @@ const RelatedProductsSlideshow = ({
                   <Link
                     to={{
                       pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: history.location.pathname
+                      previous_path: navigate.location.pathname,
                     }}
                     className="mt-13px"
                   >

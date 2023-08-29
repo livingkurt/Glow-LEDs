@@ -47,11 +47,11 @@ const RegisterPage = props => {
           last_name,
           email: email.toLowerCase(),
           password,
-          rePassword
+          rePassword,
         })
       );
       // dispatch(registerUser(first_name, last_name, email, password, rePassword));
-      // props.history.push('/account/login');
+      // props.navigate('/account/login');
     }
   };
 
@@ -59,7 +59,7 @@ const RegisterPage = props => {
     let clean = true;
     if (clean) {
       if (success) {
-        props.history.push("/account/login");
+        props.navigate("/account/login");
         dispatch(set_success(false));
       }
     }

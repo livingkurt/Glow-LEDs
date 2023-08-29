@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
@@ -15,7 +15,7 @@ const CarouselItem = props => {
   const [qty, set_qty] = useState(1);
   const [size, set_size] = useState(null);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -38,7 +38,8 @@ const CarouselItem = props => {
     e.preventDefault();
     const color = product.color_products && product.color_products.find(color => color.default_option === true);
     const secondary_color =
-      product.secondary_color_products && product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+      product.secondary_color_products &&
+      product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
     const option = product.option_products && product.option_products.find(option => option.default_option === true);
 
     const cart_item = {
@@ -75,7 +76,7 @@ const CarouselItem = props => {
       category: product.category,
       subcategory: product.subcategory,
       qty,
-      finite_stock: product.category
+      finite_stock: product.category,
       // // determine_default_color(color),
       // diffuser_cap: diffuser_cap,
     };
@@ -126,7 +127,7 @@ const CarouselItem = props => {
                             className="w-250px br-20px m-auto br-20px p-10px"
                             style={{
                               backgroundColor: "#27272780",
-                              color: "white"
+                              color: "white",
                             }}
                           >
                             <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
@@ -188,7 +189,7 @@ const CarouselItem = props => {
             <Link
               to={{
                 pathname: product && "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname
+                previous_path: navigate.location.pathname,
               }}
               onClick={() => dispatch(API.detailsProduct(product.pathname))}
             >
@@ -219,7 +220,7 @@ const CarouselItem = props => {
                 <label className="product-price">
                   {sale_price_switch({
                     product,
-                    isWholesaler: current_user?.isWholesaler
+                    isWholesaler: current_user?.isWholesaler,
                   })}
                 </label>
 
