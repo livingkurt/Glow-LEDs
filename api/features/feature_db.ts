@@ -6,7 +6,6 @@ export default {
       return await Feature.find(filter)
         .sort(sort)
         .populate("user")
-        .populate("affiliate")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
@@ -18,7 +17,7 @@ export default {
   },
   findByPathname_features_db: async (pathname: string) => {
     try {
-      return await Feature.findOne({ pathname: pathname }).populate("user").populate("affiliate");
+      return await Feature.findOne({ pathname: pathname }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

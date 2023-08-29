@@ -6,7 +6,6 @@ export default {
       return await Survey.find(filter)
         .sort(sort)
         .populate("user")
-        .populate("affiliate")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
@@ -18,7 +17,7 @@ export default {
   },
   findById_surveys_db: async (id: string) => {
     try {
-      return await Survey.findOne({ _id: id }).populate("user").populate("affiliate");
+      return await Survey.findOne({ _id: id }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
