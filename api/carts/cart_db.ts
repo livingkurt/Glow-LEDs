@@ -49,6 +49,7 @@ export default {
   },
   update_carts_db: async (id: string, body: any) => {
     try {
+      console.log({ id, body });
       const cart: any = await Cart.findOne({ _id: id, active: true });
       if (cart) {
         return await Cart.updateOne({ _id: id }, body);

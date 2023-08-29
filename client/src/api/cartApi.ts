@@ -122,9 +122,17 @@ export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (ca
       users: {
         userPage: { current_user },
       },
+      carts: {
+        cartPage: { my_cart },
+      },
     } = thunkApi.getState();
-    const { data } = await axios.put(`/api/carts/${cart._id}`, cart);
-    return { data: cart, current_user };
+    console.log({ my_cart });
+    if (my_cart._id) {
+      await axios.put(`/api/carts/${cart._id}`, cart);
+      return { data: cart, current_user };
+    } else {
+      return { data: cart, current_user };
+    }
   } catch (error) {
     Covy().showSnackbar({
       message: errorMessage(error),
@@ -210,34 +218,18 @@ export const deleteCartItem = createAsyncThunk(
           cartPage: { my_cart },
         },
       } = thunkApi.getState();
-      if (my_cart._id) {
-        const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, {
-          current_user,
-          my_cart,
-        });
-        Covy().showSnackbar({
-          message: `Cart Item Deleted`,
-          severity: "success",
-        });
-        if (data.message) {
-          console.log({ data });
-          return { data, type };
-        } else {
-          Covy().showSnackbar({
-            message:
-              "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-            severity: "error",
-          });
-        }
-      } else {
-        return { type, data: { message: "Cart Deleted" } };
-      }
+      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
+      console.log({ data });
+      Covy().showSnackbar({
+        message: `Cart Item Deleted`,
+        severity: "success",
+      });
+      return { data, type };
     } catch (error) {
       Covy().showSnackbar({
         message: errorMessage(error),
         severity: "error",
       });
-      return thunkApi.rejectWithValue(error.response?.data);
     }
   }
 );
