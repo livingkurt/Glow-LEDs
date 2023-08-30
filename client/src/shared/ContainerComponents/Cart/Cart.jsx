@@ -70,10 +70,7 @@ const Cart = () => {
       transitionDuration={{ enter: 700, exit: 700 }}
     >
       <div style={{ backgroundColor: "#333333", height: "100%", color: "white" }}>
-        <div
-          className={`cart_sidebar-list-container w-100per column jc-b ${mobile_check() ? `h-100per` : `h-unset`}`}
-          style={{ minHeight: "100vh" }}
-        >
+        <div className={`cart_sidebar-list-container w-100per column jc-b `} style={{ minHeight: "100vh" }}>
           <div>
             <li className="w-100per pb-5px">
               <div className="p-1rem w-100per">
@@ -113,7 +110,6 @@ const Cart = () => {
               </div>
             ) : (
               <div
-                className={`${mobile_check() ? `h-90vh` : `h-unset`} mb-175px`}
                 style={{
                   overflowY: "scroll",
                 }}

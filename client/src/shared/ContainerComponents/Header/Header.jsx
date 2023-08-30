@@ -12,7 +12,7 @@ import NavColumn from "./components/NavColumn";
 import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
-import { setCartDrawer } from "../../../slices/cartSlice";
+import { setCartDrawer, setSideNavDrawer } from "../../../slices/cartSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -54,21 +54,7 @@ const Header = () => {
   const { cartItems } = my_cart;
 
   const open_sidebar = () => {
-    const sidebar = document.querySelector(".sidebar");
-
-    if (sidebar.classList.value === "sidebar open") {
-      document.querySelector(".sidebar").classList.remove("open");
-      document.querySelector(".side-btn").classList.remove("active");
-      document.querySelector(".side-btn").classList.add("not-active");
-      document.querySelector(".head-btn").classList.remove("active");
-      document.querySelector(".head-btn").classList.add("not-active");
-    } else if (sidebar.classList.value === "sidebar") {
-      document.querySelector(".sidebar").classList.add("open");
-      document.querySelector(".side-btn").classList.remove("not-active");
-      document.querySelector(".side-btn").classList.add("active");
-      document.querySelector(".head-btn").classList.remove("not-active");
-      document.querySelector(".head-btn").classList.add("active");
-    }
+    dispatch(setSideNavDrawer(true));
   };
   const open_cart = () => {
     dispatch(setCartDrawer(true));
