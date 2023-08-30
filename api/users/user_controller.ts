@@ -159,7 +159,7 @@ export default {
           success: true,
           access_token: access_token,
           // Include the refresh_token in the response
-          refresh_token: user.refresh_token
+          refresh_token: user.refresh_token,
         });
       }
       return res.status(404).send({ message: "User Not Found" });
@@ -180,7 +180,7 @@ export default {
           success: true,
           access_token: access_token,
           // Include the refresh_token in the response
-          refresh_token: user.refresh_token
+          refresh_token: user.refresh_token,
         });
       }
       return res.status(404).send({ message: "User Not Found" });
@@ -195,13 +195,13 @@ export default {
 
       // send error if no refresh_token is sent
       if (!refresh_token) {
-        return res.status(403).send({ error: "Access denied, token missing!" });
+        return res.status(403).send({ message: "Access denied, token missing!" });
       } else {
         // query for the token to check if it is valid:
         const tokenDoc = await Token.findOne({ token: refresh_token });
         // send error if no token found:
         if (!tokenDoc) {
-          return res.status(401).json({ error: "Token expired!" });
+          return res.status(401).json({ message: "Token expired!" });
         } else {
           // await Token.findOneAndDelete({ token: refresh_token });
           // extract payload from refresh token and generate a new access token and send it
@@ -212,12 +212,12 @@ export default {
           const access_token = getAccessToken(user);
           return res.status(200).send({
             success: true,
-            access_token: access_token
+            access_token: access_token,
           });
         }
       }
     } catch (error) {
-      return res.status(500).send({ error: "Internal Server Error" });
+      return res.status(500).send({ error, message: "Internal Server Error" });
     }
   },
 
@@ -230,7 +230,7 @@ export default {
       return res.status(200).json({ success: "User logged out!" });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: "Internal Server Error!" });
+      return res.status(500).json({ error, message: "Internal Server Error!" });
     }
   },
   password_reset_users_c: async (req: any, res: any) => {
@@ -303,7 +303,7 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Finding User" });
     }
-  }
+  },
   // checkemail_users_c: async (req: any, res: any) => {
   // 	const { params } = req;
   // 	try {

@@ -8,7 +8,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
-import { set_success } from "../../../slices/productSlice";
+import { set_success } from "../../ProductsPage/productsPageSlice";
 
 const Review = ({ product, pathname }) => {
   const dispatch = useDispatch();
@@ -16,8 +16,8 @@ const Review = ({ product, pathname }) => {
   const userPage = useSelector(state => state.users.userPage);
 
   let { current_user } = userPage;
-  const productPage = useSelector(state => state.products.productPage);
-  const { success, loading } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { success, loading } = productsPage;
 
   const [review_modal, setReviewModal] = useState("none");
   const [rating, setRating] = useState(5);

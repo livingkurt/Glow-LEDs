@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_product_modal, open_edit_product_modal } from "../../slices/productSlice";
+import { open_create_product_modal, open_edit_product_modal } from "./productsPageSlice";
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
@@ -12,8 +12,8 @@ import { Button } from "@mui/material";
 import { determine_color, productColors } from "./productsPageHelpers";
 
 const ProductsPage = () => {
-  const productPage = useSelector(state => state.products.productPage);
-  const { message, loading, remoteVersionRequirement, product } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { message, loading, remoteVersionRequirement, product } = productsPage;
 
   const productTable = useSelector(state => state.products.productTable);
   const { selectedRows } = productTable;

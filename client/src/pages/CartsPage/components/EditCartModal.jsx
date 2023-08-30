@@ -19,8 +19,8 @@ const EditCartModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products, loading: loading_products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading: loading_products } = productsPage;
 
   useEffect(() => {
     let clean = true;
@@ -36,7 +36,7 @@ const EditCartModal = () => {
 
   const formFields = cartFormFields({
     users,
-    products
+    products,
   });
 
   return (

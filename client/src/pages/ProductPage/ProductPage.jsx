@@ -1,91 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
-import { Helmet } from "react-helmet";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
-import { getUrlParameter, manuals } from "../../utils/helper_functions";
+import { getUrlParameter } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
+
+import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
-import { open_edit_product_modal } from "../../slices/productSlice";
-import { EditProductModal } from "../ProductsPage/components";
 import config from "../../config";
+import {
+  set_name,
+  set_description,
+  set_facts,
+  set_included_items,
+  setQty,
+  set_images,
+  set_price,
+  set_wholesale_price,
+  set_previous_price,
+  set_sale_price,
+  set_size,
+  set_quantity,
+  set_count_in_stock,
+  set_image,
+  set_secondary_image,
+  set_secondary_images,
+  set_dimensions,
+  set_color,
+  set_secondary_color,
+  set_color_code,
+  set_secondary_color_code,
+  set_color_product,
+  set_color_products,
+  set_secondary_color_product,
+  set_secondary_color_products,
+  set_option_product,
+  set_option_products,
+  set_secondary_product,
+  set_secondary_products,
+  set_preorder,
+  set_secondary_product_name,
+  set_option_product_name,
+  set_color_product_object,
+  set_secondary_color_product_object,
+  set_option_product_object,
+  set_secondary_product_object,
+  set_show_add_on,
+  set_add_on_price,
+  set_has_add_on,
+} from "./productPageSlice";
+import ProductPageHead from "./components/ProductPageHead";
 
 const ProductPage = () => {
   const params = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const productPage = useSelector(state => state.products.productPage);
+  const { name, images, image, secondary_image, secondary_images } = productPage;
   const userPage = useSelector(state => state.users.userPage);
-  let { current_user } = userPage;
+  const { current_user } = userPage;
 
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart, success } = cartPage;
-  const { cartItems } = my_cart;
+  const { success } = cartPage;
 
-  const [name, set_name] = useState("");
-  const [description, set_description] = useState("");
-  const [facts, set_facts] = useState("");
-  const [included_items, set_included_items] = useState("");
-  const [qty, setQty] = useState(1);
-  const [images, set_images] = useState([]);
-  const [price, set_price] = useState();
-  const [wholesale_price, set_wholesale_price] = useState();
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product, loading, error } = productsPage;
 
-  const [previous_price, set_previous_price] = useState(0);
-  const [sale_price, set_sale_price] = useState(0);
-  const [size, set_size] = useState();
-  const [quantity, set_quantity] = useState();
-  const [count_in_stock, set_count_in_stock] = useState();
-  const [image, set_image] = useState("");
-  const [secondary_image, set_secondary_image] = useState("");
-  const [secondary_images, set_secondary_images] = useState([]);
-
-  const [dimensions, set_dimensions] = useState({});
-
-  const [color, set_color] = useState("");
-  const [secondary_color, set_secondary_color] = useState("");
-
-  const [color_code, set_color_code] = useState("");
-  const [secondary_color_code, set_secondary_color_code] = useState("");
-
-  const [color_product, set_color_product] = useState(null);
-  const [color_products, set_color_products] = useState([]);
-  const [secondary_color_product, set_secondary_color_product] = useState(null);
-  const [secondary_color_products, set_secondary_color_products] = useState([]);
-  const [option_product, set_option_product] = useState(null);
-  const [option_products, set_option_products] = useState([]);
-  const [secondary_product, set_secondary_product] = useState(null);
-  const [secondary_products, set_secondary_products] = useState([]);
-  const [preorder, set_preorder] = useState(false);
-
-  const [secondary_product_name, set_secondary_product_name] = useState("");
-  const [option_product_name, set_option_product_name] = useState("");
-
-  const [color_product_object, set_color_product_object] = useState({});
-  const [secondary_color_product_object, set_secondary_color_product_object] = useState({});
-  const [option_product_object, set_option_product_object] = useState({});
-  const [secondary_product_object, set_secondary_product_object] = useState({});
-
-  const [show_add_on, set_show_add_on] = useState(false);
-  const [add_on_price, set_add_on_price] = useState(0);
-  const [has_add_on, set_has_add_on] = useState(false);
-  // const [ color_group_name, set_color_group_name ] = useState('');
-  // const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
-  // const [ option_group_name, set_option_group_name ] = useState('');
-  // const [ secondary_group_name, set_secondary_group_name ] = useState('');
-
-  const productPage = useSelector(state => state.products.productPage);
-  const { product, loading, error } = productPage;
-
-  const { width, height } = useWindowDimensions();
-
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
 
   const open_cart = () => {
     const cart = document.querySelector(".cart_sidebar");
@@ -118,51 +105,53 @@ const ProductPage = () => {
   }, [params.pathname]);
 
   const update_universal_state = item => {
-    set_previous_price(0);
+    dispatch(set_previous_price(0));
     if (item) {
-      set_image(item.images_object && item.images_object[0].link);
-      set_images(item.images_object);
+      dispatch(set_image(item.images_object && item.images_object[0].link));
+      dispatch(set_images(item.images_object));
 
       if (item.price > 0) {
         if (current_user?.isWholesaler) {
-          set_wholesale_price(item.wholesale_price);
+          dispatch(set_wholesale_price(item.wholesale_price));
         }
-        set_price(item.price);
+        dispatch(set_price(item.price));
       }
       if (item.hasOwnProperty("previous_price") && item.previous_price > 0) {
-        set_previous_price(item.previous_price);
+        dispatch(set_previous_price(item.previous_price));
       }
       if (item.sale_price > 0) {
-        set_sale_price(item.sale_price);
+        dispatch(set_sale_price(item.sale_price));
       }
-      set_quantity(item.quantity);
-      set_count_in_stock(item.count_in_stock);
+      dispatch(set_quantity(item.quantity));
+      dispatch(set_count_in_stock(item.count_in_stock));
       if (item.count_in_stock === 0) {
-        set_preorder(true);
+        dispatch(set_preorder(true));
       } else {
-        set_preorder(false);
+        dispatch(set_preorder(false));
       }
-      set_name(item.name);
-      set_description(item.description);
-      set_facts(item.facts);
-      set_color(item.color);
-      set_secondary_color(item.secondary_color);
-      set_color_products(item.color_products);
-      set_secondary_color_products(item.secondary_color_products);
-      set_option_products(item.option_products);
+      dispatch(set_name(item.name));
+      dispatch(set_description(item.description));
+      dispatch(set_facts(item.facts));
+      dispatch(set_color(item.color));
+      dispatch(set_secondary_color(item.secondary_color));
+      dispatch(set_color_products(item.color_products));
+      dispatch(set_secondary_color_products(item.secondary_color_products));
+      dispatch(set_option_products(item.option_products));
 
-      set_secondary_products(item.secondary_products);
-      set_included_items(item.included_items);
-      set_has_add_on(item.has_add_on);
-      set_dimensions({
-        weight_pounds: item.weight_pounds,
-        weight_ounces: item.weight_ounces,
-        package_length: item.package_length,
-        package_width: item.package_width,
-        package_height: item.package_height,
-        package_volume: item.package_volume,
-      });
-      set_size(item.size);
+      dispatch(set_secondary_products(item.secondary_products));
+      dispatch(set_included_items(item.included_items));
+      dispatch(set_has_add_on(item.has_add_on));
+      dispatch(
+        set_dimensions({
+          weight_pounds: item.weight_pounds,
+          weight_ounces: item.weight_ounces,
+          package_length: item.package_length,
+          package_width: item.package_width,
+          package_height: item.package_height,
+          package_volume: item.package_volume,
+        })
+      );
+      dispatch(set_size(item.size));
     }
   };
 
@@ -183,7 +172,7 @@ const ProductPage = () => {
     const query = getUrlParameter(location);
     if (location.search.length === 0) {
       if (product.color_products) {
-        set_color_products(product.color_products);
+        dispatch(set_color_products(product.color_products));
 
         const color = product.color_products.find(color => color.default_option === true);
         if (color) {
@@ -191,7 +180,7 @@ const ProductPage = () => {
         }
       }
       if (product.secondary_color_products) {
-        set_secondary_color_products(product.secondary_color_products);
+        dispatch(set_secondary_color_products(product.secondary_color_products));
 
         const secondary_color = product.secondary_color_products.find(
           secondary_color => secondary_color.default_option === true
@@ -199,18 +188,18 @@ const ProductPage = () => {
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
           if (product.has_add_on) {
-            set_show_add_on(false);
+            dispatch(set_show_add_on(false));
           }
           if (product.name !== "CLOZD Omniskinz Sleds") {
-            set_add_on_price(secondary_color.price);
-            set_price(secondary_color.price + product.price);
+            dispatch(set_add_on_price(secondary_color.price));
+            dispatch(set_price(secondary_color.price + product.price));
           }
         } else {
-          set_show_add_on(true);
+          dispatch(set_show_add_on(true));
         }
       }
       if (product.option_products) {
-        set_option_products(product.option_products);
+        dispatch(set_option_products(product.option_products));
 
         const option = product.option_products.find(option => option.default_option === true);
         if (option) {
@@ -230,7 +219,7 @@ const ProductPage = () => {
         }
       }
       if (product.secondary_color_products) {
-        set_secondary_products(product.secondary_products);
+        dispatch(set_secondary_products(product.secondary_products));
         const secondary_color = product.secondary_color_products.find(
           secondary_color => secondary_color.color === query.secondary_color
         );
@@ -250,7 +239,7 @@ const ProductPage = () => {
         }
       }
       if (product.secondary_products && product.secondary_products.length > 0) {
-        set_secondary_products(product.secondary_products);
+        dispatch(set_secondary_products(product.secondary_products));
         let query_secondary = query.secondary;
         if (query.secondary && query.secondary.indexOf("%20") > -1) {
           query_secondary = query.secondary.split("%20").join(" ");
@@ -267,152 +256,146 @@ const ProductPage = () => {
 
   const update_color_product_state = color => {
     //
-    set_color_product(color._id);
-    set_color(color.color);
-    set_color_code(color.color_code);
-    set_color_product_object(color);
+    dispatch(set_color_product(color._id));
+    dispatch(set_color(color.color));
+    dispatch(set_color_code(color.color_code));
+    dispatch(set_color_product_object(color));
     // if (color.quantity) {
-    // 	set_quantity(color.quantity);
+    // 	dispatch(set_quantity(color.quantity));
     // }
     // if (color.count_in_stock) {
-    // 	set_count_in_stock(color.count_in_stock);
+    // 	dispatch(set_count_in_stock(color.count_in_stock));
     // }
     // update_url(color.color);
   };
 
   const update_secondary_color_product_state = secondary_color => {
     // if (product.name === "CLOZD Omniskinz Sleds") {
-    //   set_color_product(secondary_color._id);
-    //   set_color(secondary_color.color);
-    //   set_color_code(secondary_color.color_code);
-    //   set_color_product_object(secondary_color);
+    //   dispatch(set_color_product(secondary_color._id));
+    //   dispatch(set_color(secondary_color.color));
+    //   dispatch(set_color_code(secondary_color.color_code));
+    //   dispatch(set_color_product_object(secondary_color));
     // } else {
-    set_secondary_color_product(secondary_color._id);
-    set_secondary_color(secondary_color.color);
-    set_secondary_color_code(secondary_color.color_code);
-    set_secondary_color_product_object(secondary_color);
+    dispatch(set_secondary_color_product(secondary_color._id));
+    dispatch(set_secondary_color(secondary_color.color));
+    dispatch(set_secondary_color_code(secondary_color.color_code));
+    dispatch(set_secondary_color_product_object(secondary_color));
     // }
 
     // if (secondary_color.quantity) {
-    // 	set_quantity(secondary_color.quantity);
+    // 	dispatch(set_quantity(secondary_color.quantity));
     // }
     // if (secondary_color.count_in_stock) {
-    // 	set_count_in_stock(secondary_color.count_in_stock);
+    // 	dispatch(set_count_in_stock(secondary_color.count_in_stock));
     // }
     // update_url(color, secondary_color.color);
   };
 
   const update_option_product_state = option => {
     if (option.size) {
-      set_size(option.size);
+      dispatch(set_size(option.size));
     }
     // else {
-    // 	set_size(option.name);
+    // 	dispatch(set_size(option.name));
     // }
 
     if (option.secondary_color) {
-      set_secondary_color(option.secondary_color);
+      dispatch(set_secondary_color(option.secondary_color));
     }
     if (option.price > 0) {
       if (current_user?.isWholesaler) {
-        set_wholesale_price(option.wholesale_price);
+        dispatch(set_wholesale_price(option.wholesale_price));
       }
-      set_price(option.price);
+      dispatch(set_price(option.price));
     }
     if (option.sale_price > 0) {
-      set_sale_price(option.sale_price);
+      dispatch(set_sale_price(option.sale_price));
     }
     if (option.count_in_stock === 0) {
-      set_preorder(true);
+      dispatch(set_preorder(true));
     } else {
-      set_preorder(false);
+      dispatch(set_preorder(false));
     }
     if (option.quantity) {
-      set_quantity(option.quantity);
+      dispatch(set_quantity(option.quantity));
     }
     if (option.count_in_stock) {
-      set_count_in_stock(option.count_in_stock);
+      dispatch(set_count_in_stock(option.count_in_stock));
     }
 
-    set_dimensions({
-      weight_pounds: option.weight_pounds,
-      weight_ounces: option.weight_ounces,
-      package_length: option.package_length,
-      package_width: option.package_width,
-      package_height: option.package_height,
-      package_volume: option.package_volume,
-    });
-    set_option_product(option._id);
-    set_option_product_name(option.name);
-    set_option_product_object(option);
+    dispatch(
+      set_dimensions({
+        weight_pounds: option.weight_pounds,
+        weight_ounces: option.weight_ounces,
+        package_length: option.package_length,
+        package_width: option.package_width,
+        package_height: option.package_height,
+        package_volume: option.package_volume,
+      })
+    );
+    dispatch(set_option_product(option._id));
+    dispatch(set_option_product_name(option.name));
+    dispatch(set_option_product_object(option));
   };
 
   const update_secondary_product_state = secondary => {
     //
-    set_secondary_product(secondary._id);
-    set_secondary_product_name(secondary.name);
-    set_secondary_product_object(secondary);
+    dispatch(set_secondary_product(secondary._id));
+    dispatch(set_secondary_product_name(secondary.name));
+    dispatch(set_secondary_product_object(secondary));
     if (secondary.quantity) {
-      set_quantity(secondary.quantity);
+      dispatch(set_quantity(secondary.quantity));
     }
     if (secondary.count_in_stock) {
-      set_count_in_stock(secondary.count_in_stock);
+      dispatch(set_count_in_stock(secondary.count_in_stock));
     }
     if (secondary.subcategory !== "batteries") {
       if (secondary.images_object.length > 0) {
-        set_images(secondary.images_object);
-        set_image(secondary.images_object && secondary.images_object[0]?.link);
+        dispatch(set_images(secondary.images_object));
+        dispatch(set_image(secondary.images_object && secondary.images_object[0]?.link));
       }
     }
   };
 
   const unset_state = () => {
-    set_name("");
-    set_description("");
-    set_facts("");
-    set_included_items("");
-    setQty(1);
-    set_images([]);
-    set_price();
-    set_previous_price(0);
-    set_sale_price(0);
-    set_size();
-    set_quantity();
-    set_count_in_stock();
-    set_image("");
-    set_secondary_image("");
-    set_secondary_images([]);
-    set_dimensions({});
-    set_color("");
-    set_secondary_color("");
-    set_color_code("");
-    set_secondary_color_code("");
-    set_color_product(null);
-    set_color_products([]);
-    set_secondary_color_product(null);
-    set_secondary_color_products([]);
-    set_option_product(null);
-    set_option_products([]);
-    set_secondary_product(null);
-    set_secondary_products([]);
-    set_preorder(false);
-    set_secondary_product_name("");
-    set_option_product_name("");
-    set_color_product_object({});
-    set_secondary_color_product_object({});
-    set_option_product_object({});
-    set_secondary_product_object({});
-    set_show_add_on(true);
-    set_add_on_price(0);
-    set_has_add_on(false);
-  };
-
-  const update_url = (color = "", secondary_color = "", option = "", secondary_product = "") => {
-    navigate({
-      search: `${color ? "?color=" + color : ""}${
-        show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""
-      }${option ? "?option=" + option : ""}${secondary_product ? "?secondary=" + secondary_product : ""}`,
-    });
+    dispatch(set_name(""));
+    dispatch(set_description(""));
+    dispatch(set_facts(""));
+    dispatch(set_included_items(""));
+    dispatch(setQty(1));
+    dispatch(set_images([]));
+    dispatch(set_price());
+    dispatch(set_previous_price(0));
+    dispatch(set_sale_price(0));
+    dispatch(set_size());
+    dispatch(set_quantity());
+    dispatch(set_count_in_stock());
+    dispatch(set_image(""));
+    dispatch(set_secondary_image(""));
+    dispatch(set_secondary_images([]));
+    dispatch(set_dimensions({}));
+    dispatch(set_color(""));
+    dispatch(set_secondary_color(""));
+    dispatch(set_color_code(""));
+    dispatch(set_secondary_color_code(""));
+    dispatch(set_color_product(null));
+    dispatch(set_color_products([]));
+    dispatch(set_secondary_color_product(null));
+    dispatch(set_secondary_color_products([]));
+    dispatch(set_option_product(null));
+    dispatch(set_option_products([]));
+    dispatch(set_secondary_product(null));
+    dispatch(set_secondary_products([]));
+    dispatch(set_preorder(false));
+    dispatch(set_secondary_product_name(""));
+    dispatch(set_option_product_name(""));
+    dispatch(set_color_product_object({}));
+    dispatch(set_secondary_color_product_object({}));
+    dispatch(set_option_product_object({}));
+    dispatch(set_secondary_product_object({}));
+    dispatch(set_show_add_on(true));
+    dispatch(set_add_on_price(0));
+    dispatch(set_has_add_on(false));
   };
 
   useEffect(() => {
@@ -421,7 +404,6 @@ const ProductPage = () => {
       if (config.NODE_ENV === "production") {
         const recently_viewed = sessionStorage.getItem("recently_viewed");
         const products = JSON.parse(recently_viewed);
-        //
         if (recently_viewed) {
           if (product && product.hasOwnProperty("name")) {
             sessionStorage.setItem("recently_viewed", JSON.stringify([product, ...products]));
@@ -436,298 +418,13 @@ const ProductPage = () => {
     return () => (clean = false);
   }, []);
 
-  const determine_addon_color = () => {
-    if (has_add_on && show_add_on && secondary_color) {
-      return true;
-    } else if (!has_add_on && secondary_color) {
-      return true;
-    }
-    return false;
-  };
-
-  const handleAddToCart = () => {
-    const cart_item = {
-      product: product._id,
-      color_product,
-      color_code,
-      secondary_color_code: determine_addon_color() ? secondary_color_code : null,
-      secondary_color_product: determine_addon_color() ? secondary_color_product : null,
-      secondary_color_group_name: determine_addon_color() ? product.secondary_color_group_name : null,
-      secondary_color: determine_addon_color() ? secondary_color : null,
-      secondary_color_product_name: determine_addon_color() ? product.secondary_color_product_name : null,
-      color_group_name: product.color_group_name,
-      option_group_name: product.option_group_name,
-      secondary_group_name: product.secondary_group_name,
-      option_product,
-      option_product_name,
-      secondary_product,
-      secondary_product_name,
-      name,
-      size,
-      color: size !== "1 Skin" && color,
-      display_image: image ? image : images[0]?.link,
-      secondary_image: secondary_image ? secondary_image : "",
-      price,
-      preorder,
-      sale_price,
-      sale_start_date: product.sale_start_date,
-      sale_end_date: product.sale_end_date,
-      quantity,
-      weight_pounds: dimensions.weight_pounds,
-      weight_ounces: dimensions.weight_ounces,
-      package_length: dimensions.package_length,
-      package_width: dimensions.package_width,
-      package_height: dimensions.package_height,
-      package_volume: dimensions.package_volume,
-      processing_time: product.processing_time,
-      pathname: params.pathname,
-      category: product.category,
-      subcategory: product.subcategory,
-      qty: parseInt(qty),
-      finite_stock: product.finite_stock,
-      count_in_stock: product.count_in_stock,
-      add_on_price,
-      show_add_on,
-      has_add_on: product.has_add_on,
-      wholesale_product: product.wholesale_product,
-      wholesale_price: wholesale_price,
-    };
-    if (preorder) {
-      const confirm = window.confirm(
-        `${name} are out of stock in your selected size.\n\nBy clicking OK you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} separately from any in-stock items so we can ship you your in-stock products without needing to wait for your out-of-stock products.\n\nThank you for your support!\n\nYou will be notified when ${name} are restocked. We anticipate they will be restocked by the end of January.`
-      );
-      if (confirm) {
-        dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
-      }
-    } else {
-      dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
-    }
-    // if (current_user) {
-    // 	dispatch(addToCart(cart_item));
-    // }
-    // open_cart();
-  };
-
   useChangedEffect(() => {
     if (success) {
       open_cart();
     }
   }, [success]);
 
-  // export const decide_warning = (preorder) => {
-  // 	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
-  // 		const confirm = window.confirm(
-  // 			`Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
-  // 				date_2
-  // 			)}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
-  // 				date_2
-  // 			)} \n\nThank you so much for your support! 💙`
-  // 		);
-  //
-  // 		return confirm;
-  // 	} else {
-  // 		return true;
-  // 	}
-  // };
-
-  const update_color = e => {
-    const option = JSON.parse(e.target.value);
-    //
-    // if (
-    //   option.price !== 0 ||
-    //   option.price === null ||
-    //   option.price === undefined
-    // ) {
-    //   set_price(option.price);
-    // }
-    // if (
-    //   option.sale_price !== 0 ||
-    //   option.sale_price === null ||
-    //   option.sale_price === undefined
-    // ) {
-    //   set_sale_price(option.sale_price);
-    // }
-    set_color(option.color);
-    set_color_code(option.color_code);
-    if (option.images_object && option.images_object[0]) {
-      set_images(option.images_object);
-      set_image(option.images_object[0].link);
-    }
-    set_color_product(option._id);
-    set_color_product_object(option);
-    if (option.quantity) {
-      set_quantity(option.quantity);
-    }
-    if (option.count_in_stock) {
-      set_count_in_stock(option.count_in_stock);
-    }
-    update_url(option.color, secondary_color, option_product_name, secondary_product_name);
-  };
-
-  const update_secondary_color = e => {
-    const option = JSON.parse(e.target.value);
-    //
-
-    // if (
-    //   option.price !== 0 ||
-    //   option.price === null ||
-    //   option.price === undefined
-    // ) {
-    //   if (product.name === "Capez") {
-    //     set_price(option.price);
-    //   }
-    // }
-    // if (
-    //   option.sale_price !== 0 ||
-    //   option.sale_price === null ||
-    //   option.sale_price === undefined
-    // ) {
-    //   set_sale_price(option.sale_price);
-    // }
-    set_secondary_color(option.color);
-    set_secondary_color_code(option.color_code);
-    if (option.images_object && option.images_object[0]) {
-      if (product.name === "CLOZD Omniskinz Sleds") {
-        set_image(option.images_object[0].link);
-        set_images(option.images_object);
-      } else {
-        set_secondary_image(option.images_object[0].link);
-        set_secondary_images(option.images_object);
-      }
-    }
-    set_secondary_color_product(option._id);
-    set_secondary_color_product_object(option);
-    if (option.quantity) {
-      set_quantity(option.quantity);
-    }
-    if (option.count_in_stock) {
-      set_count_in_stock(option.count_in_stock);
-    }
-    if (has_add_on && show_add_on) {
-      if (product.name === "Capez") {
-        set_add_on_price(option.price);
-        set_price(option.price + product.price);
-        set_sale_price(option.sale_price + product.price);
-      }
-    }
-    update_url(color, option.color, option_product_name, secondary_product_name);
-  };
-
-  const update_option = e => {
-    const option = JSON.parse(e.target.value);
-    if (option.size) {
-      set_size(option.size);
-    }
-    if (option.count_in_stock === 0) {
-      set_preorder(true);
-    } else {
-      set_preorder(false);
-    }
-    if (option.price > 0) {
-      if (has_add_on && show_add_on) {
-        if (current_user?.isWholesaler) {
-          set_wholesale_price(option.wholesale_price);
-        }
-        set_price(option.price + add_on_price);
-        set_sale_price(option.sale_price + add_on_price);
-      } else {
-        if (current_user?.isWholesaler) {
-          set_wholesale_price(option.wholesale_price);
-        }
-        set_price(option.price);
-        set_sale_price(option.sale_price);
-      }
-    }
-
-    if (option.quantity) {
-      set_quantity(option.quantity);
-    }
-    if (option.count_in_stock) {
-      set_count_in_stock(option.count_in_stock);
-    }
-
-    if (option.subcategory !== "gloves") {
-      if (option.images_object && option.images_object[0]) {
-        set_images(option.images_object);
-        set_image(option.images_object[0].link);
-      }
-      if (option.description) {
-        set_description(option.description);
-      }
-      if (option.facts) {
-        set_facts(option.facts);
-      }
-      if (option.included_items) {
-        set_included_items(option.included_items);
-      }
-    }
-    set_dimensions({
-      weight_pounds: option.weight_pounds,
-      weight_ounces: option.weight_ounces,
-      package_length: option.package_length,
-      package_width: option.package_width,
-      package_height: option.package_height,
-      package_volume: option.package_volume,
-    });
-    set_option_product_object(option);
-    set_option_product(option._id);
-    set_option_product_name(option.name);
-    update_url(color, secondary_color, option.size);
-  };
-
-  const update_secondary = e => {
-    const secondary = JSON.parse(e.target.value);
-    if (secondary.subcategory !== "coin") {
-      if (secondary.images_object && secondary.images_object[0]) {
-        set_images(secondary.images_object);
-        set_image(secondary.images_object[0].link);
-      }
-      if (product.name !== "Diffuser Caps + Adapters Starter Kit V4" && product.name !== "CLOZD Omniskinz Sleds") {
-        set_option_products(secondary.option_products);
-      }
-    }
-    if (secondary.quantity) {
-      set_quantity(secondary.quantity);
-    }
-    if (secondary.count_in_stock) {
-      set_count_in_stock(secondary.count_in_stock);
-    }
-
-    if (
-      product.name === "CLOZD Nanoskinz V2" ||
-      product.name === "OPYN Nanoskinz V2" ||
-      product.name === "Capez" ||
-      product.name === "CLOZD Omniskinz" ||
-      product.name === "CLOZD Omniskinz Sleds"
-    ) {
-      if (product.name !== "CLOZD Omniskinz Sleds") {
-        set_color_products(secondary.color_products);
-      }
-      set_secondary_color_products(secondary.secondary_color_products);
-      // set_secondary_color_code(
-      //   secondary.secondary_color_products[0].color_code
-      // );
-    }
-
-    // set_secondary_products(secondary.secondary_products);
-    if (product.category === "glowstringz") {
-      if (current_user?.isWholesaler) {
-        set_wholesale_price(secondary.wholesale_price);
-      }
-      set_price(secondary.price);
-      set_sale_price(secondary.sale_price);
-    }
-    set_secondary_product(secondary._id);
-    set_secondary_product_name(secondary.name);
-    set_secondary_product_object(secondary);
-    update_url(color, secondary_color, option_product_name, secondary.name);
-  };
-
-  const [out_of_stock, set_out_of_stock] = useState();
-  const [show_product_options, set_show_product_options] = useState();
-
   return (
-    !loading &&
     product?.hasOwnProperty("name") && (
       <div className="">
         <div className="p-1rem">
@@ -746,28 +443,6 @@ const ProductPage = () => {
                 >
                   Edit Product
                 </GLButton>
-                {/* <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
-                  Edit Product
-                </GLButton>
-                {show_product_options && (
-                  <div className="pos-abs bg-secondary br-10px">
-                    <div className="column bg-secondary br-10px">
-                      <Link
-                        to={"/secure/glow/editproduct/" + params.pathname + "/false"}
-                        className="btn nav p-10px w-100per  br-10px"
-                      >
-                        Edit Macro
-                      </Link>
-
-                      {product &&
-                        product.option_products.map(option => (
-                          <Link to={"/secure/glow/editproduct/" + option.pathname + "/false"} className="btn nav p-10px w-100per  br-10px">
-                            Edit {option.name}
-                          </Link>
-                        ))}
-                    </div>
-                  </div>
-                )} */}
               </div>
             )}
           </div>
@@ -776,53 +451,7 @@ const ProductPage = () => {
         <Loading loading={loading} error={error}>
           {product && (
             <div className="">
-              <Helmet>
-                <title>{product.meta_title + " | Glow LEDs"}</title>
-                <meta property="og:title" content={product.meta_title} />
-                <meta name="twitter:title" content={product.meta_title} />
-                <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
-                <meta
-                  property="og:url"
-                  content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
-                />
-                {product.images_object && (
-                  <div>
-                    <meta property="og:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
-
-                    <meta
-                      property="og:image:secure_url"
-                      content={"https://www.glow-leds.com/" + product.images_object[0].link}
-                    />
-                    <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
-                  </div>
-                )}
-                <meta
-                  name="description"
-                  content={
-                    product.meta_description
-                      ? product.meta_description
-                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  }
-                />
-
-                <meta
-                  property="og:description"
-                  content={
-                    product.meta_description
-                      ? product.meta_description
-                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  }
-                />
-
-                <meta
-                  name="twitter:description"
-                  content={
-                    product.meta_description
-                      ? product.meta_description
-                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  }
-                />
-              </Helmet>
+              <ProductPageHead />
               {!secondary_image && width <= 819 && (
                 <div>
                   <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
@@ -838,16 +467,9 @@ const ProductPage = () => {
                         transitionTime={200}
                       />
                     )}
-                    {/* {images.length > 4 &&
-									width < 1000 && (
-										<div className="tab_indicator pos-abs bottom-21px bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
-											{'>'}
-										</div>
-									)} */}
                   </div>
                 </div>
               )}
-              {/* <EditProductModal /> */}
               <div className="details">
                 <div className="">
                   {(secondary_image || width > 819) && (
@@ -895,63 +517,13 @@ const ProductPage = () => {
                     </div>
                   )}
                 <div className="details-info desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
-                  <ProductSelection
-                    product={product}
-                    name={name}
-                    price={price}
-                    sale_price={sale_price}
-                    previous_price={previous_price}
-                    facts={facts}
-                    wholesale_price={wholesale_price}
-                  />
+                  <ProductSelection />
                 </div>
                 <div
                   className="details-action desktop_product_view"
                   style={{ display: width > 819 ? "block" : "none" }}
                 >
-                  <ProductOptions
-                    product={product}
-                    price={price}
-                    sale_price={sale_price}
-                    previous_price={previous_price}
-                    update_secondary={update_secondary}
-                    secondary_product_object={secondary_product_object}
-                    size={size}
-                    color_products={color_products}
-                    color_code={color_code}
-                    update_color={update_color}
-                    color_product_object={color_product_object}
-                    secondary_color_products={secondary_color_products}
-                    secondary_color_code={secondary_color_code}
-                    update_secondary_color={update_secondary_color}
-                    secondary_color_product_object={secondary_color_product_object}
-                    option_products={option_products}
-                    update_option={update_option}
-                    option_product_object={option_product_object}
-                    qty={qty}
-                    setQty={setQty}
-                    quantity={quantity}
-                    secondary_product={secondary_product}
-                    count_in_stock={count_in_stock}
-                    handleAddToCart={handleAddToCart}
-                    out_of_stock={out_of_stock}
-                    set_out_of_stock={set_out_of_stock}
-                    preorder={preorder}
-                    set_preorder={set_preorder}
-                    show_add_on={show_add_on}
-                    set_show_add_on={set_show_add_on}
-                    set_price={set_price}
-                    set_add_on_price={set_add_on_price}
-                    set_secondary_color_product_object={set_secondary_color_product_object}
-                    set_secondary_color_product={set_secondary_color_product}
-                    set_secondary_color_products={set_secondary_color_products}
-                    set_secondary_color={set_secondary_color}
-                    set_secondary_color_code={set_secondary_color_code}
-                    set_secondary_image={set_secondary_image}
-                    has_add_on={has_add_on}
-                    set_sale_price={set_sale_price}
-                    wholesale_price={wholesale_price}
-                  />
+                  <ProductOptions />
                 </div>
 
                 <div className="w-100per">
@@ -959,71 +531,18 @@ const ProductPage = () => {
                     className="details-action mobile_product_view"
                     style={{ display: width <= 819 ? "block" : "none" }}
                   >
-                    <ProductOptions
-                      product={product}
-                      width={width}
-                      price={price}
-                      sale_price={sale_price}
-                      previous_price={previous_price}
-                      update_secondary={update_secondary}
-                      secondary_product_object={secondary_product_object}
-                      size={size}
-                      color_products={color_products}
-                      color_code={color_code}
-                      update_color={update_color}
-                      color_product_object={color_product_object}
-                      secondary_color_products={secondary_color_products}
-                      secondary_color_code={secondary_color_code}
-                      update_secondary_color={update_secondary_color}
-                      secondary_color_product_object={secondary_color_product_object}
-                      option_products={option_products}
-                      update_option={update_option}
-                      option_product_object={option_product_object}
-                      qty={qty}
-                      setQty={setQty}
-                      quantity={quantity}
-                      secondary_product={secondary_product}
-                      count_in_stock={count_in_stock}
-                      handleAddToCart={handleAddToCart}
-                      out_of_stock={out_of_stock}
-                      set_out_of_stock={set_out_of_stock}
-                      show_add_on={show_add_on}
-                      set_show_add_on={set_show_add_on}
-                      set_price={set_price}
-                      set_add_on_price={set_add_on_price}
-                      set_secondary_color_product_object={set_secondary_color_product_object}
-                      set_secondary_color_product={set_secondary_color_product}
-                      set_secondary_color_products={set_secondary_color_products}
-                      set_secondary_color={set_secondary_color}
-                      set_secondary_color_code={set_secondary_color_code}
-                      set_secondary_image={set_secondary_image}
-                      has_add_on={has_add_on}
-                      set_sale_price={set_sale_price}
-                      wholesale_price={wholesale_price}
-                    />
+                    <ProductOptions />
                   </div>
                   <div
                     className="details-info mobile_product_view"
                     style={{ display: width <= 819 ? "block" : "none" }}
                   >
-                    <ProductFacts
-                      facts={facts}
-                      category={product.category}
-                      subcategory={product.subcategory}
-                      pathname={product.pathname}
-                      name={product.name}
-                    />
+                    <ProductFacts />
                   </div>
                 </div>
               </div>
 
-              <ProductDetails
-                product={product}
-                manuals={manuals}
-                description={description}
-                included_items={included_items}
-                pathname={params.pathname}
-              />
+              <ProductDetails />
             </div>
           )}
         </Loading>

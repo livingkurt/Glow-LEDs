@@ -5,8 +5,8 @@ import { Loading } from "../../SharedComponents";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
 
 const SuggestedProducts = () => {
-  const productPage = useSelector(state => state.products.productPage);
-  const { products, loading, error } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading, error } = productsPage;
 
   return (
     <div className="mh-10px">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
-import { open_edit_product_modal, set_edit_product_modal, set_product } from "../../../slices/productSlice";
+import { open_edit_product_modal, set_edit_product_modal, set_product } from "../productsPageSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { AppBar, Tab, Tabs, Typography } from "@mui/material";
@@ -13,8 +13,8 @@ const EditProductModal = () => {
   const dispatch = useDispatch();
 
   const [tabIndex, setTabIndex] = useState(0);
-  const productPage = useSelector(state => state.products.productPage);
-  const { edit_product_modal, product, loading, products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { edit_product_modal, product, loading, products } = productsPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
   // const imagePage = useSelector(state => state.images.imagePage);

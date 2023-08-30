@@ -1,8 +1,8 @@
 /* eslint-disable max-lines-per-function */
 
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api";
-import { accurate_date, format_date, format_time } from "../utils/helper_functions";
+import * as API from "../../api";
+import { accurate_date, format_date, format_time } from "../../utils/helper_functions";
 
 const product = {
   name: "",
@@ -94,8 +94,8 @@ const product = {
   extra_cost: 0,
 };
 
-const productPage = createSlice({
-  name: "productPage",
+const productsPage = createSlice({
+  name: "productsPage",
   initialState: {
     loading: false,
     products: [],
@@ -322,5 +322,5 @@ export const {
   close_edit_product_modal,
   open_edit_product_modal,
   setRemoteVersionRequirement,
-} = productPage.actions;
-export default productPage.reducer;
+} = productsPage.actions;
+export default productsPage.reducer;

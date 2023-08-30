@@ -12,7 +12,7 @@ import {
   paletteSlice,
   parcelSlice,
   paycheckSlice,
-  productSlice,
+  productsPageSlice,
   promoSlice,
   settingSlice,
   surveySlice,
@@ -30,6 +30,7 @@ import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTab
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
+import productPageSlice from "./pages/ProductPage/productPageSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -107,7 +108,8 @@ const reducers = {
     }),
   }),
   products: combineReducers({
-    productPage: productSlice,
+    productsPage: productsPageSlice,
+    productPage: productPageSlice,
     productTable: glTableReducer("productTable", {
       sorting: [3, "desc"],
       nonTagFilters: ["category", "subcategory", "collection"],

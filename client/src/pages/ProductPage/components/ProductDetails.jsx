@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { humanize, sizes, toCapitalize } from "../../../utils/helper_functions";
+import { humanize, manuals, sizes, toCapitalize } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReadMore from "../../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { Reviews } from ".";
 import { Tabs, Tab, Paper, AppBar } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
+import { useSelector } from "react-redux";
+import { setTabIndex } from "../productPageSlice";
+import { useDispatch } from "react-redux";
 
-const ProductDetails = ({ product, manuals, description, included_items, pathname }) => {
-  const [tabIndex, setTabIndex] = useState(0);
+const ProductDetails = () => {
+  const dispatch = useDispatch();
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product } = productsPage;
+
+  const productPage = useSelector(state => state.products.productPage);
+  const { description, included_items, pathname, tabIndex } = productPage;
   const { width } = useWindowDimensions();
-
-  const handleChange = (event, newValue) => {
-    setTabIndex(newValue);
-  };
 
   return (
     <div>
@@ -22,7 +26,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
         <AppBar position="sticky" color="transparent">
           <Tabs
             value={tabIndex}
-            onChange={handleChange}
+            onChange={(e, newValue) => dispatch(setTabIndex(newValue))}
             variant="scrollable"
             style={{ color: "lightgray" }} // Default color
             TabIndicatorProps={{ style: { backgroundColor: "white" } }} // Indicator color

@@ -31,7 +31,7 @@ import {
   set_option_products_list,
   set_product,
   set_secondary_color_modifier,
-} from "../../../slices/productSlice";
+} from "../productsPageSlice";
 
 const EditProductPage = () => {
   const params = useParams();
@@ -41,7 +41,7 @@ const EditProductPage = () => {
 
   const navigate = useNavigate();
 
-  const productPage = useSelector(state => state.products.productPage);
+  const productsPage = useSelector(state => state.products.productsPage);
   const {
     product,
     loading,
@@ -70,7 +70,7 @@ const EditProductPage = () => {
     secondary_image,
     sale_start_date,
     sale_end_date,
-  } = productPage;
+  } = productsPage;
 
   const {
     _id: id,

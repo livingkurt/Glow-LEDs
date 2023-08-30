@@ -39,8 +39,8 @@
 //   const dispatch = useDispatch();
 //   const [products_list, updateProducts] = useState([]);
 
-//   const productPage = useSelector(state => state.products.productPage);
-//   const { loading, products: items, totalPages, message, currentPage, error } = productPage;
+//   const productsPage = useSelector(state => state.products.productsPage);
+//   const { loading, products: items, totalPages, message, currentPage, error } = productsPage;
 
 //   useEffect(() => {
 //     let clean = true;

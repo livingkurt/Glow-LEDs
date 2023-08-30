@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
-import { set_product } from "../../../slices/productSlice";
+import { set_product } from "../../ProductsPage/productsPageSlice";
 import { months } from "../dashboardHelpers";
 import { Divider, Paper, Typography } from "@mui/material";
 
-const YearlyMonthlyProductRevenue = ({ month, year, yearly_product_revenue, monthly_product_revenue, all_product_revenue }) => {
+const YearlyMonthlyProductRevenue = ({
+  month,
+  year,
+  yearly_product_revenue,
+  monthly_product_revenue,
+  all_product_revenue,
+}) => {
   const dispatch = useDispatch();
-  const productPage = useSelector(state => state.products.productPage);
-  const { product } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product } = productsPage;
   return (
     <>
       <Paper className="mt-10px p-10px">
@@ -57,7 +63,7 @@ const YearlyMonthlyProductRevenue = ({ month, year, yearly_product_revenue, mont
                 { title: "Year", display: "year" },
                 { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` },
                 { title: "Quantity", display: row => row.totalQuantity },
-                { title: "Monthly Average", display: row => `$${row.monthlyAverage?.toFixed(2)}` }
+                { title: "Monthly Average", display: row => `$${row.monthlyAverage?.toFixed(2)}` },
               ]}
             />
           )}
@@ -74,7 +80,7 @@ const YearlyMonthlyProductRevenue = ({ month, year, yearly_product_revenue, mont
                 { title: "Month", display: row => months[row.month - 1] },
                 { title: "Revenue", display: row => `$${row.totalPrice?.toFixed(2)}` },
                 { title: "Quantity", display: row => row.totalQuantity },
-                { title: "Daily Average", display: row => `$${row.dailyAverage?.toFixed(2)}` }
+                { title: "Daily Average", display: row => `$${row.dailyAverage?.toFixed(2)}` },
               ]}
             />
           )}

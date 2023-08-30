@@ -9,8 +9,15 @@ import {
   determine_sampler_pack_name,
   determine_sampler_pack_pathname,
 } from "../productHelpers";
+import { useSelector } from "react-redux";
 
-const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
+const ProductFacts = () => {
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product } = productsPage;
+  const { category, subcategory, pathname, name } = product;
+
+  const productPage = useSelector(state => state.products.productPage);
+  const { facts } = productPage;
   return (
     <div className="mt-1rem">
       <div className="h-100per paragraph_font">

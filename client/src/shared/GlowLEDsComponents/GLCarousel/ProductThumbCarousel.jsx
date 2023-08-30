@@ -7,8 +7,8 @@ import { GLButton } from "../GlowLEDsComponents";
 import { Loading } from "../../SharedComponents";
 
 const ProductThumbCarousel = () => {
-  const productPage = useSelector(state => state.products.productPage);
-  const { products, loading, error } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading, error } = productsPage;
   const { height, width } = useWindowDimensions();
 
   const [product_number, set_product_number] = useState(0);

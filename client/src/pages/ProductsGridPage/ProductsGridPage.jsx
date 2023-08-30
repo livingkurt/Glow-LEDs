@@ -54,8 +54,8 @@ const AllProductsPage = () => {
   const [sort, set_sort] = useState("");
   const [filter, set_filter] = useState("");
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products: main_products, totalPages, currentPage, loading, error } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products: main_products, totalPages, currentPage, loading, error } = productsPage;
 
   const chipPage = useSelector(state => state.chips);
   const { chips: chips_list } = chipPage;

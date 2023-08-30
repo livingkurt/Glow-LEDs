@@ -17,8 +17,8 @@ const EditOrderModal = () => {
   const { edit_order_modal, order, loading } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
-  const productPage = useSelector(state => state.products.productPage);
-  const { products, loading: loading_products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading: loading_products } = productsPage;
 
   useEffect(() => {
     let clean = true;
@@ -37,7 +37,7 @@ const EditOrderModal = () => {
     products,
     setState: (value, key) => dispatch(set_order({ [key]: [...order[key], ...value] })),
     onEdit: order => dispatch(open_edit_order_modal(order)),
-    order
+    order,
   });
   // function extractFormFields(schema) {
   //   const formFields = {};
@@ -84,7 +84,7 @@ const EditOrderModal = () => {
           color_group_name: value.color_group_name,
           secondary_color_group_name: value.secondary_color_group_name,
           option_group_name: value.option_group_name,
-          secondary_group_name: value.secondary_group_name
+          secondary_group_name: value.secondary_group_name,
         };
       } else {
         return item;
@@ -110,7 +110,12 @@ const EditOrderModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={order} onChange={value => dispatch(set_order(value))} loading={loading && loading_users} />
+        <GLForm
+          formData={formFields}
+          state={order}
+          onChange={value => dispatch(set_order(value))}
+          loading={loading && loading_users}
+        />
         <Typography component="h4" variant="h4" sx={{ mb: 2 }}>
           {formFields.shipping.title}
         </Typography>

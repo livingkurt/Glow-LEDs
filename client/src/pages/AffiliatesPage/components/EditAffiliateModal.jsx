@@ -19,8 +19,8 @@ const EditAffiliateModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users, current_user } = userPage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products, loading: loading_products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading: loading_products } = productsPage;
 
   const chipPage = useSelector(state => state.chips);
   const { chips, loading: loading_chips } = chipPage;

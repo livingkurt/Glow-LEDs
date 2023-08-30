@@ -51,8 +51,8 @@ const EditPromoPage = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates } = affiliatePage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products } = productsPage;
 
   const dispatch = useDispatch();
 

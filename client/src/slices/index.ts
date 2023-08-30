@@ -11,7 +11,7 @@ export { default as orderSlice } from "./orderSlice";
 export { default as paletteSlice } from "./paletteSlice";
 export { default as parcelSlice } from "./parcelSlice";
 export { default as paycheckSlice } from "./paycheckSlice";
-export { default as productSlice } from "./productSlice";
+export { default as productsPageSlice } from "../pages/ProductsPage/productsPageSlice";
 export { default as promoSlice } from "./promoSlice";
 export { default as settingSlice } from "./settingSlice";
 export { default as shippingSlice } from "./shippingSlice";

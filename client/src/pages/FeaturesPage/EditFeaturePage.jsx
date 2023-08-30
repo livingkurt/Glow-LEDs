@@ -34,8 +34,8 @@ const EditFeaturePage = () => {
   const featurePage = useSelector(state => state.features);
   const { feature, loading, error } = featurePage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products } = productsPage;
 
   const dispatch = useDispatch();
 

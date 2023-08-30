@@ -65,8 +65,8 @@ const EditOrderPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, users } = userPage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { products } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products } = productsPage;
 
   const dispatch = useDispatch();
 

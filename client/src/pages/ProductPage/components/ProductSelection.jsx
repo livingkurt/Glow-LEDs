@@ -5,7 +5,13 @@ import { ProductFacts } from ".";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
-const ProductSelection = ({ product, name, price, sale_price, previous_price, facts, wholesale_price }) => {
+const ProductSelection = () => {
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product } = productsPage;
+
+  const productPage = useSelector(state => state.products.productPage);
+  const { price, wholesale_price, previous_price, sale_price, name, facts } = productPage;
+
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   return (

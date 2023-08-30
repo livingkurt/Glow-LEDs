@@ -24,8 +24,8 @@ const DashboardPage = () => {
 
   const { year, month, start_date, end_date, start_end_date, loading, tabIndex } = dashboardPage;
 
-  const productPage = useSelector(state => state.products.productPage);
-  const { product } = productPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { product } = productsPage;
 
   const range_revenue = API.useGetRangeRevenueOrdersQuery({ start_date, end_date });
   const category_range_revenue = API.useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
