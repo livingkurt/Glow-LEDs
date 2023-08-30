@@ -93,7 +93,7 @@
     "start:dev": "concurrently \"npm:server-dev\" \"npm:client\" \"npm:watch\"",
     "server-dev": "nodemon --ignore 'client/*' --max_old_space_size=2560",
     "client": "cd client && npm start",
-    "install": "cd client && npm install",
+    "install": "cd client && npm install --legacy-peer-deps",
     "build": "npm run tsc && npm run build:client",
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
