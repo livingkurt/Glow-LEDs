@@ -1,4 +1,4 @@
-export const routes = [
+const routes = [
   { path: "/account/login", element: "LoginPage" },
   { path: "/account/verified/:id", element: "VerifiedPage" },
   { path: "/account/checkemail", element: "CheckEmailPage" },
@@ -52,7 +52,7 @@ export const routes = [
   { path: "/pages/track_your_order", element: "TrackOrderPage", exact: true },
   { path: "/pages/complete/:type/:id?", element: "CompletePage", exact: true },
 ];
-export const adminRoutes = [
+const adminRoutes = [
   {
     path: "/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?",
     element: "EditProductPage",
@@ -103,8 +103,10 @@ export const adminRoutes = [
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
 ];
-export const privateRoutes = [
+const privateRoutes = [
   { path: "/secure/account/profile", element: "ProfilePage" },
   { path: "/secure/account/order/:id", element: "OrderPage" },
   { path: "/secure/checkout/placeorder", element: "PlaceOrderPage" },
 ];
+
+module.exports = { routes, adminRoutes, privateRoutes };
