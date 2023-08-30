@@ -14,23 +14,10 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
 import config from "../../config";
-import {
-  set_image,
-  set_color_products,
-  set_secondary_color_products,
-  set_option_products,
-  set_secondary_products,
-  update_color_product_state,
-  update_secondary_color_product_state,
-  update_option_product_state,
-  update_secondary_product_state,
-  unset_state,
-  update_universal_state,
-  set_show_add_on,
-  set_add_on_price,
-  set_price,
-} from "./productPageSlice";
+import { set_image, unset_state } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
+import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
+import { setCartDrawer } from "../../slices/cartSlice";
 
 const ProductPage = () => {
   const params = useParams();
@@ -50,13 +37,7 @@ const ProductPage = () => {
   const { width } = useWindowDimensions();
 
   const open_cart = () => {
-    const cart = document.querySelector(".cart_sidebar");
-
-    if (cart.classList.value === "cart_sidebar open") {
-      document.querySelector(".cart_sidebar").classList.remove("open");
-    } else if (cart.classList.value === "cart_sidebar") {
-      document.querySelector(".cart_sidebar").classList.add("open");
-    }
+    dispatch(setCartDrawer(true));
   };
 
   useEffect(() => {
@@ -66,15 +47,6 @@ const ProductPage = () => {
       const video = document.getElementsByClassName("product_video");
       video.muted = true;
       video.autoplay = true;
-      const query = getUrlParameter(location);
-    }
-    return () => (clean = false);
-  }, []);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.detailsProduct(params.pathname));
     }
     return () => (clean = false);
   }, []);
@@ -83,231 +55,19 @@ const ProductPage = () => {
     let clean = true;
     if (clean) {
       if (product) {
-        determine_options(product);
-      } else {
-        dispatch(unset_state());
+        normalizeProductPage({ product, dispatch, location, current_user });
       }
     }
-    return () => (clean = false);
-  }, [product]);
-
-  const handleDefaultOptions = product => {
-    // Logic for color_products
-    if (product.color_products) {
-      dispatch(set_color_products(product.color_products));
-      const color = product.color_products.find(color => color.default_option === true);
-      if (color) {
-        dispatch(update_color_product_state({ color }));
-      }
-    }
-
-    // Logic for secondary_color_products
-    if (product.secondary_color_products) {
-      dispatch(set_secondary_color_products(product.secondary_color_products));
-      const secondary_color = product.secondary_color_products.find(
-        secondary_color => secondary_color.default_option === true
-      );
-      if (secondary_color) {
-        dispatch(update_secondary_color_product_state({ secondary_color }));
-        if (product.has_add_on) {
-          dispatch(set_show_add_on(false));
-        }
-        if (product.name !== "CLOZD Omniskinz Sleds") {
-          dispatch(set_add_on_price(secondary_color.price));
-          dispatch(set_price(secondary_color.price + product.price));
-        }
-      } else {
-        dispatch(set_show_add_on(true));
-      }
-    }
-
-    // Logic for option_products
-    if (product.option_products) {
-      dispatch(set_option_products(product.option_products));
-      const option = product.option_products.find(option => option.default_option === true);
-      if (option) {
-        dispatch(update_option_product_state({ option, current_user }));
-      }
-    }
-  };
-
-  const handleColorProducts = (product, query) => {
-    if (product.color_products) {
-      const color = product.color_products.find(color => color.color === query.color);
-      if (color) {
-        dispatch(update_color_product_state({ color }));
-      }
-    }
-  };
-
-  const handleSecondaryColorProducts = product => {
-    if (product.secondary_color_products) {
-      dispatch(set_secondary_color_products(product.secondary_color_products));
-      const secondary_color = product.secondary_color_products.find(
-        secondary_color => secondary_color.default_option === true
-      );
-      if (secondary_color) {
-        dispatch(update_secondary_color_product_state({ secondary_color }));
-        if (product.has_add_on) {
-          dispatch(set_show_add_on(false));
-        }
-        if (product.name !== "CLOZD Omniskinz Sleds") {
-          dispatch(set_add_on_price(secondary_color.price));
-          dispatch(set_price(secondary_color.price + product.price));
-        }
-      } else {
-        dispatch(set_show_add_on(true));
-      }
-    }
-  };
-
-  const handleOptionProducts = (product, query, current_user) => {
-    if (product.option_products) {
-      dispatch(set_option_products(product.option_products));
-
-      const option = product.option_products.find(option => option.default_option === true);
-      if (option) {
-        dispatch(update_option_product_state({ option, current_user }));
-      }
-    }
-  };
-
-  const handleSecondaryProducts = (product, query) => {
-    if (product.secondary_products && product.secondary_products.length > 0) {
-      dispatch(set_secondary_products(product.secondary_products));
-      let query_secondary = query.secondary;
-      if (query.secondary && query.secondary.indexOf("%20") > -1) {
-        query_secondary = query.secondary.split("%20").join(" ");
-      }
-      const secondary =
-        query.secondary &&
-        product.secondary_products.find(secondary => secondary.name === query_secondary?.split("%20").join(" "));
-      if (secondary) {
-        dispatch(update_secondary_product_state({ secondary }));
-      }
-    }
-  };
-
-  const determine_options = product => {
-    dispatch(update_universal_state({ item: product, current_user }));
-    const query = getUrlParameter(location);
-
-    if (location.search.length === 0) {
-      handleDefaultOptions(product);
-      handleColorProducts(product);
-      handleSecondaryColorProducts(product);
-      handleOptionProducts(product, null, current_user);
-    } else if (location.search.length > 0) {
-      handleColorProducts(product);
-      handleSecondaryColorProducts(product);
-      handleOptionProducts(product, null, current_user);
-      handleSecondaryProducts(product, query);
-    }
-  };
-
-  // const determine_options = product => {
-  //   dispatch(update_universal_state({ item: product, current_user }));
-  //   const query = getUrlParameter(location);
-  //   if (location.search.length === 0) {
-  //     if (product.color_products) {
-  //       dispatch(set_color_products(product.color_products));
-
-  //       const color = product.color_products.find(color => color.default_option === true);
-  //       if (color) {
-  //         dispatch(update_color_product_state({ color }));
-  //       }
-  //     }
-  //     if (product.secondary_color_products) {
-  //       dispatch(set_secondary_color_products(product.secondary_color_products));
-
-  //       const secondary_color = product.secondary_color_products.find(
-  //         secondary_color => secondary_color.default_option === true
-  //       );
-  //       if (secondary_color) {
-  //         dispatch(update_secondary_color_product_state({ secondary_color }));
-  //         if (product.has_add_on) {
-  //           dispatch(set_show_add_on(false));
-  //         }
-  //         if (product.name !== "CLOZD Omniskinz Sleds") {
-  //           dispatch(set_add_on_price(secondary_color.price));
-  //           dispatch(set_price(secondary_color.price + product.price));
-  //         }
-  //       } else {
-  //         dispatch(set_show_add_on(true));
-  //       }
-  //     }
-  // if (product.option_products) {
-  //   dispatch(set_option_products(product.option_products));
-
-  //   const option = product.option_products.find(option => option.default_option === true);
-  //   if (option) {
-  //     dispatch(update_option_product_state({ option, current_user }));
-  //   }
-  // }
-  //     if (product.secondary_products && product.secondary_products.length > 0) {
-  //       // update_secondary_product_state(product.secondary_products[0]);
-  //     }
-  //   } else if (location.search.length > 0) {
-  //     //
-  //     if (product.color_products) {
-  //       const color = product.color_products.find(color => color.color === query.color);
-  //       //
-  //       if (color) {
-  //         dispatch(update_color_product_state({ color }));
-  //       }
-  //     }
-  //     if (product.secondary_color_products) {
-  //       dispatch(set_secondary_products(product.secondary_products));
-  //       const secondary_color = product.secondary_color_products.find(
-  //         secondary_color => secondary_color.color === query.secondary_color
-  //       );
-  //       if (secondary_color) {
-  //         dispatch(update_secondary_color_product_state({ secondary_color }));
-  //       }
-  //     }
-  //     if (product.option_products) {
-  //       let query_option = query.option;
-  //       if (query.option && query.option.indexOf("%20") > -1) {
-  //         query_option = query.option.split("%20").join(" ");
-  //       }
-
-  //       const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
-  //       if (option) {
-  //         dispatch(update_option_product_state({ option, current_user }));
-  //       }
-  //     }
-  //     if (product.secondary_products && product.secondary_products.length > 0) {
-  //       dispatch(set_secondary_products(product.secondary_products));
-  //       let query_secondary = query.secondary;
-  //       if (query.secondary && query.secondary.indexOf("%20") > -1) {
-  //         query_secondary = query.secondary.split("%20").join(" ");
-  //       }
-  //       const secondary =
-  //         query.secondary &&
-  //         product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
-  //       if (secondary) {
-  //         dispatch(update_secondary_product_state({ secondary }));
-  //       }
-  //     }
-  //   }
-  // };
+    return () => {
+      clean = false;
+      dispatch(unset_state());
+    };
+  }, [current_user, dispatch, product]);
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (config.NODE_ENV === "production") {
-        const recently_viewed = sessionStorage.getItem("recently_viewed");
-        const products = JSON.parse(recently_viewed);
-        if (recently_viewed) {
-          if (product && product.hasOwnProperty("name")) {
-            sessionStorage.setItem("recently_viewed", JSON.stringify([product, ...products]));
-          }
-        } else {
-          if (product && product.hasOwnProperty("name")) {
-            sessionStorage.setItem("recently_viewed", JSON.stringify([product]));
-          }
-        }
-      }
+      updateRecentlyViewed(product);
     }
     return () => (clean = false);
   }, [product]);

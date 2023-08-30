@@ -11,70 +11,70 @@ const typography = {
     fontWeight: 300,
     fontSize: "96px",
     lineHeight: 1,
-    letterSpacing: "-0.66px"
+    letterSpacing: "-0.66px",
   },
   h2: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 300,
     fontSize: "60px",
     lineHeight: 1,
-    letterSpacing: "-0.5px"
+    letterSpacing: "-0.5px",
   },
   h3: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "48px",
     lineHeight: 1.02,
-    letterSpacing: "0px"
+    letterSpacing: "0px",
   },
   h4: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "34px",
     lineHeight: 1.15,
-    letterSpacing: "0.07px"
+    letterSpacing: "0.07px",
   },
   h5: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "24px",
     lineHeight: 1.33,
-    letterSpacing: "0px"
+    letterSpacing: "0px",
   },
   h6: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "20px",
     lineHeight: 1.6,
-    letterSpacing: "0.07px"
+    letterSpacing: "0.07px",
   },
   subtitle1: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
     lineHeight: 1.75,
-    letterSpacing: "0.09px"
+    letterSpacing: "0.09px",
   },
   subtitle2: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: 1.57,
-    letterSpacing: "0.07px"
+    letterSpacing: "0.07px",
   },
   body1: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
     lineHeight: 1.5,
-    letterSpacing: "0.09px"
+    letterSpacing: "0.09px",
   },
   body2: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "14px",
     lineHeight: 1.43,
-    letterSpacing: "0.1px"
+    letterSpacing: "0.1px",
   },
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -82,14 +82,14 @@ const typography = {
     fontSize: "13px",
     lineHeight: 1.69,
     letterSpacing: "0.3px",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   caption: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "12px",
     lineHeight: 1.58,
-    letterSpacing: "0.3px"
+    letterSpacing: "0.3px",
   },
   overline: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -97,8 +97,8 @@ const typography = {
     fontSize: "12px",
     lineHeight: 2.58,
     letterSpacing: "0.83px",
-    textTransform: "uppercase"
-  }
+    textTransform: "uppercase",
+  },
 };
 
 const palette = {
@@ -108,43 +108,43 @@ const palette = {
     light: "#4c6ebf",
     main: "#4d5061",
     dark: "#363947",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   secondary: {
     light: "#63a4ff",
     main: "#6a6c80",
     dark: "#464754",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   error: {
     light: "#BF334C",
     main: "#b00020",
     dark: "#7B0016",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   warning: {
     light: "#ffc947",
     main: "#ff9800",
     dark: "#c66900",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   info: {
     light: "#63a4ff",
     main: "#FFFFFF",
     dark: "#004ba0",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   success: {
     light: "#5fab5e",
     main: "#2e7b32",
     dark: "#004e06",
-    contrastText: "#fff"
+    contrastText: "#fff",
   },
   disabled: {
     light: "#bdbdbd",
     main: "#bdbdbd",
     dark: "#212121",
-    contrastText: "#303030"
+    contrastText: "#303030",
   },
   grey: {
     50: "#fafafa",
@@ -160,7 +160,7 @@ const palette = {
     A100: "#d5d5d5",
     A200: "#aaaaaa",
     A400: "#303030",
-    A700: "#616161"
+    A700: "#616161",
   },
   contrastThreshold: 3,
   tonalOffset: 0.2,
@@ -169,14 +169,14 @@ const palette = {
     primary: "#212121",
     secondary: "#757575",
     disabled: "rgba(0, 0, 0, 0.38)",
-    hint: "rgba(0, 0, 0, 0.38)"
+    hint: "rgba(0, 0, 0, 0.38)",
   },
   divider: "rgba(0, 0, 0, 0.12)",
   background: {
     paper: "#fff",
     default: "#fff",
     level2: "#f5f5f5",
-    level1: "#eeeeee"
+    level1: "#eeeeee",
   },
   action: {
     active: "rgba(0, 0, 0, 0.54)",
@@ -189,8 +189,8 @@ const palette = {
     disabledOpacity: 0.38,
     focus: "rgba(0, 0, 0, 0.12)",
     focusOpacity: 0.12,
-    activatedOpacity: 0.12
-  }
+    activatedOpacity: 0.12,
+  },
 };
 
 const shadows = [
@@ -218,7 +218,7 @@ const shadows = [
   "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
   "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
   "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
-  "0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2)"
+  "0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2)",
 ];
 
 // const table = {
@@ -288,7 +288,7 @@ const shadows = [
 const theme = {
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
-    values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 }
+    values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 },
   },
   direction: "ltr",
   mixins: {},
@@ -296,33 +296,43 @@ const theme = {
     MuiCssBaseline: {
       "@global": {
         html: {
-          WebkitFontSmoothing: "auto"
-        }
-      }
+          WebkitFontSmoothing: "auto",
+        },
+      },
     },
     MuiTextField: {
       root: {
         "& MuiOutlinedInput": {
           color: "white",
-          border: "1px solid white"
-        }
-      }
+          border: "1px solid white",
+        },
+      },
     },
     MuiButton: {
       label: {
-        fontFamily: '"Comic Sans", sans-serif'
+        fontFamily: '"Comic Sans", sans-serif',
       },
       borderRadius: "20px",
       "&:hover": {
-        borderRadius: "30px"
+        borderRadius: "30px",
       },
       "&:active": {
-        borderRadius: "30px"
-      }
-    }
+        borderRadius: "30px",
+      },
+    },
   },
   palette,
   props: {},
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          transitionDuration: "3s",
+          transitionTimingFunction: "ease-in-out", // Add your easing function here
+        },
+      },
+    },
+  },
   shadows,
   typography,
   // ...table,
@@ -333,7 +343,7 @@ const theme = {
       easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
       easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
       easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-      sharp: "cubic-bezier(0.4, 0, 0.6, 1)"
+      sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
     },
     duration: {
       shortest: 150,
@@ -342,8 +352,8 @@ const theme = {
       standard: 300,
       complex: 375,
       enteringScreen: 225,
-      leavingScreen: 195
-    }
+      leavingScreen: 195,
+    },
   },
   zIndex: {
     mobileStepper: 1000,
@@ -352,10 +362,10 @@ const theme = {
     drawer: 1200,
     modal: 1300,
     snackbar: 1400,
-    tooltip: 1500
+    tooltip: 1500,
   },
   nprogress: { color: "#000" },
-  themeName: "Glow LEDs"
+  themeName: "Glow LEDs",
 };
 
 export default theme;

@@ -1,3 +1,20 @@
+import config from "../../config";
+import { getUrlParameter } from "../../utils/helper_functions";
+import {
+  set_add_on_price,
+  set_color_products,
+  set_option_products,
+  set_price,
+  set_secondary_color_products,
+  set_secondary_products,
+  set_show_add_on,
+  update_color_product_state,
+  update_option_product_state,
+  update_secondary_color_product_state,
+  update_secondary_product_state,
+  update_universal_state,
+} from "./productPageSlice";
+
 export const determine_alt_skin_pathname = (subcategory, pathname) => {
   if (subcategory === "clozd") {
     const empty_pathname = pathname.substring(5);
@@ -169,4 +186,126 @@ export const update_url = ({
       show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""
     }${option ? "?option=" + option : ""}${secondary_product ? "?secondary=" + secondary_product : ""}`,
   });
+};
+
+export const setColorDefaultOption = ({ product, query, dispatch }) => {
+  if (product.color_products) {
+    dispatch(set_color_products(product.color_products));
+
+    const color = product.color_products.find(color => color.default_option === true);
+    if (color) {
+      dispatch(update_color_product_state({ color }));
+    }
+  }
+};
+export const setSecondaryColorDefaultOption = ({ product, query, dispatch }) => {
+  if (product.secondary_color_products) {
+    dispatch(set_secondary_color_products(product.secondary_color_products));
+
+    const secondary_color = product.secondary_color_products.find(
+      secondary_color => secondary_color.default_option === true
+    );
+    if (secondary_color) {
+      dispatch(update_secondary_color_product_state({ secondary_color }));
+      if (product.has_add_on) {
+        dispatch(set_show_add_on(false));
+      }
+      if (product.name !== "CLOZD Omniskinz Sleds") {
+        dispatch(set_add_on_price(secondary_color.price));
+        dispatch(set_price(secondary_color.price + product.price));
+      }
+    } else {
+      dispatch(set_show_add_on(true));
+    }
+  }
+};
+export const setOptionDefaultOption = ({ product, query, dispatch, current_user }) => {
+  if (product.option_products) {
+    dispatch(set_option_products(product.option_products));
+
+    const option = product.option_products.find(option => option.default_option === true);
+    if (option) {
+      dispatch(update_option_product_state({ option, current_user }));
+    }
+  }
+};
+
+export const setColorUrlOption = ({ product, query, dispatch }) => {
+  if (product.color_products) {
+    const color = product.color_products.find(color => color.color === query.color);
+    if (color) {
+      dispatch(update_color_product_state({ color }));
+    }
+  }
+};
+export const setSecondaryColorUrlOption = ({ product, query, dispatch }) => {
+  if (product.secondary_color_products) {
+    dispatch(set_secondary_products(product.secondary_products));
+    const secondary_color = product.secondary_color_products.find(
+      secondary_color => secondary_color.color === query.secondary_color
+    );
+    if (secondary_color) {
+      dispatch(update_secondary_color_product_state({ secondary_color }));
+    }
+  }
+};
+export const setOptionUrlOption = ({ product, query, dispatch, current_user }) => {
+  if (product.option_products) {
+    let query_option = query.option;
+    if (query.option && query.option.indexOf("%20") > -1) {
+      query_option = query.option.split("%20").join(" ");
+    }
+
+    const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
+    if (option) {
+      dispatch(update_option_product_state({ option, current_user }));
+    }
+  }
+};
+export const setSecondaryProductUrlOption = ({ product, query, dispatch }) => {
+  if (product.secondary_products && product.secondary_products.length > 0) {
+    dispatch(set_secondary_products(product.secondary_products));
+    let query_secondary = query.secondary;
+    if (query.secondary && query.secondary.indexOf("%20") > -1) {
+      query_secondary = query.secondary.split("%20").join(" ");
+    }
+    const secondary =
+      query.secondary &&
+      product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
+    if (secondary) {
+      dispatch(update_secondary_product_state({ secondary }));
+    }
+  }
+};
+
+export const normalizeProductPage = ({ product, dispatch, location, current_user }) => {
+  dispatch(update_universal_state({ item: product, current_user }));
+  const query = getUrlParameter(location);
+  const urlParamsLength = location.search.length;
+  if (urlParamsLength === 0) {
+    setColorDefaultOption({ product, query, dispatch });
+    setSecondaryColorDefaultOption({ product, query, dispatch });
+    setOptionDefaultOption({ product, query, dispatch });
+  } else if (urlParamsLength > 0) {
+    setColorUrlOption({ product, query, dispatch });
+    setSecondaryColorUrlOption({ product, query, dispatch });
+    setOptionUrlOption({ product, query, dispatch, current_user });
+    setSecondaryProductUrlOption({ product, query, dispatch });
+  }
+};
+
+export const updateRecentlyViewed = product => {
+  if (config.NODE_ENV === "production") {
+    const recently_viewed = sessionStorage.getItem("recently_viewed");
+    const products = JSON.parse(recently_viewed);
+    if (recently_viewed) {
+      if (product && product.hasOwnProperty("name")) {
+        sessionStorage.setItem("recently_viewed", JSON.stringify([product, ...products]));
+      }
+    } else {
+      if (product && product.hasOwnProperty("name")) {
+        sessionStorage.setItem("recently_viewed", JSON.stringify([product]));
+      }
+    }
+  }
 };

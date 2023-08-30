@@ -12,6 +12,7 @@ import NavColumn from "./components/NavColumn";
 import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
+import { setCartDrawer } from "../../../slices/cartSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -70,13 +71,7 @@ const Header = () => {
     }
   };
   const open_cart = () => {
-    const cart = document.querySelector(".cart_sidebar");
-
-    if (cart.classList.value === "cart_sidebar open") {
-      document.querySelector(".cart_sidebar").classList.remove("open");
-    } else if (cart.classList.value === "cart_sidebar") {
-      document.querySelector(".cart_sidebar").classList.add("open");
-    }
+    dispatch(setCartDrawer(true));
   };
   const dispatch = useDispatch();
 

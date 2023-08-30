@@ -49,6 +49,7 @@ const cartPage = createSlice({
     edit_cart_modal: false,
     cart_modal: false,
     paymentMethod: "stripe",
+    cartDrawer: false,
   },
   reducers: {
     set_cart: (state, { payload }) => {
@@ -95,6 +96,9 @@ const cartPage = createSlice({
     open_cart_modal: (state, { payload }) => {
       state.cart_modal = true;
       state.cart = payload;
+    },
+    setCartDrawer: (state, { payload }) => {
+      state.cartDrawer = payload;
     },
   },
   extraReducers: {
@@ -267,5 +271,6 @@ export const {
   open_cart_modal,
   close_cart_modal,
   open_edit_cart_modal,
+  setCartDrawer,
 } = cartPage.actions;
 export default cartPage.reducer;

@@ -1,4 +1,4 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 /* Cart */
 
@@ -34,7 +34,7 @@
     justify-content: space-between;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: .1rem #c0c0c0 solid;
+    border-bottom: 0.1rem #c0c0c0 solid;
     img {
       max-width: 10rem;
       max-height: 10rem;
@@ -68,7 +68,7 @@
 
 .cart_sidebar {
   position: fixed;
-  transition: right .5s;
+  transition: right 0.5s;
   transform: translateX(40rem);
   width: 40rem;
   height: 100%;
@@ -81,7 +81,7 @@
   // padding: 10px;
   z-index: 99;
   // transition: top 0.2s;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .cart_sidebar.open {
@@ -170,7 +170,7 @@
     // justify-content: space-between;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: .1rem #c0c0c0 solid;
+    border-bottom: 0.1rem #c0c0c0 solid;
     img {
       max-width: 10rem;
       max-height: 10rem;
