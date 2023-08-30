@@ -281,6 +281,147 @@ const productPage = createSlice({
         state.sale_price = secondary.sale_price;
       }
     },
+    update_color_product_state: (state, { payload }) => {
+      const { color } = payload;
+      state.color_product = color._id;
+      state.color = color.color;
+      state.color_code = color.color_code;
+      state.color_product_object = color;
+    },
+    update_secondary_color_product_state: (state, { payload }) => {
+      const { secondary_color } = payload;
+      state.secondary_color_product = secondary_color._id;
+      state.secondary_color = secondary_color.color;
+      state.secondary_color_code = secondary_color.color_code;
+      state.secondary_color_product_object = secondary_color;
+    },
+    update_option_product_state: (state, { payload }) => {
+      const { option, current_user } = payload;
+      state.size = option.size || state.size;
+      state.secondary_color = option.secondary_color || state.secondary_color;
+      state.preorder = option.count_in_stock === 0;
+      state.quantity = option.quantity || state.quantity;
+      state.count_in_stock = option.count_in_stock || state.count_in_stock;
+      state.dimensions = {
+        weight_pounds: option.weight_pounds,
+        weight_ounces: option.weight_ounces,
+        package_length: option.package_length,
+        package_width: option.package_width,
+        package_height: option.package_height,
+        package_volume: option.package_volume,
+      };
+      state.option_product = option._id;
+      state.option_product_name = option.name;
+      state.option_product_object = option;
+
+      if (option.price > 0) {
+        if (current_user?.isWholesaler) {
+          state.wholesale_price = option.wholesale_price;
+        }
+        state.price = option.price;
+      }
+
+      if (option.sale_price > 0) {
+        state.sale_price = option.sale_price;
+      }
+    },
+    update_secondary_product_state: (state, { payload }) => {
+      const { secondary } = payload;
+      state.secondary_product = secondary._id;
+      state.secondary_product_name = secondary.name;
+      state.secondary_product_object = secondary;
+      state.quantity = secondary.quantity || state.quantity;
+      state.count_in_stock = secondary.count_in_stock || state.count_in_stock;
+
+      if (secondary.subcategory !== "batteries") {
+        state.images = secondary.images_object || [];
+        state.image = secondary.images_object?.[0]?.link || "";
+      }
+    },
+    unset_state: state => {
+      state.name = "";
+      state.description = "";
+      state.facts = "";
+      state.included_items = "";
+      state.qty = 1;
+      state.images = [];
+      state.price = 0;
+      state.previous_price = 0;
+      state.sale_price = 0;
+      state.size = "";
+      state.quantity = 1;
+      state.count_in_stock = 0;
+      state.image = "";
+      state.secondary_image = "";
+      state.secondary_images = [];
+      state.dimensions = {};
+      state.color = "";
+      state.secondary_color = "";
+      state.color_code = "";
+      state.secondary_color_code = "";
+      state.color_product = null;
+      state.color_products = [];
+      state.secondary_color_product = null;
+      state.secondary_color_products = [];
+      state.option_product = null;
+      state.option_products = [];
+      state.secondary_product = null;
+      state.secondary_products = [];
+      state.preorder = false;
+      state.secondary_product_name = "";
+      state.option_product_name = "";
+      state.color_product_object = {};
+      state.secondary_color_product_object = {};
+      state.option_product_object = {};
+      state.secondary_product_object = {};
+      state.show_add_on = true;
+      state.add_on_price = 0;
+      state.has_add_on = false;
+    },
+    update_universal_state: (state, { payload }) => {
+      const { item, current_user } = payload;
+      state.previous_price = 0;
+      state.image = item?.images_object?.[0]?.link || "";
+      state.images = item?.images_object || [];
+      state.quantity = item?.quantity || state.quantity;
+      state.count_in_stock = item?.count_in_stock || state.count_in_stock;
+      state.preorder = item?.count_in_stock === 0;
+      state.name = item?.name || "";
+      state.description = item?.description || "";
+      state.facts = item?.facts || "";
+      state.color = item?.color || "";
+      state.secondary_color = item?.secondary_color || "";
+      state.color_products = item?.color_products || [];
+      state.secondary_color_products = item?.secondary_color_products || [];
+      state.option_products = item?.option_products || [];
+      state.secondary_products = item?.secondary_products || [];
+      state.included_items = item?.included_items || "";
+      state.has_add_on = item?.has_add_on || false;
+      state.dimensions = {
+        weight_pounds: item?.weight_pounds || 0,
+        weight_ounces: item?.weight_ounces || 0,
+        package_length: item?.package_length || 0,
+        package_width: item?.package_width || 0,
+        package_height: item?.package_height || 0,
+        package_volume: item?.package_volume || 0,
+      };
+      state.size = item?.size || "";
+
+      if (item?.price > 0) {
+        if (current_user?.isWholesaler) {
+          state.wholesale_price = item.wholesale_price;
+        }
+        state.price = item.price;
+      }
+
+      if (item?.sale_price > 0) {
+        state.sale_price = item.sale_price;
+      }
+
+      if (item?.hasOwnProperty("previous_price") && item.previous_price > 0) {
+        state.previous_price = item.previous_price;
+      }
+    },
   },
   extraReducers: {},
 });
@@ -333,5 +474,11 @@ export const {
   update_secondary_color,
   update_option,
   update_secondary,
+  update_color_product_state,
+  update_secondary_color_product_state,
+  update_option_product_state,
+  update_secondary_product_state,
+  unset_state,
+  update_universal_state,
 } = productPage.actions;
 export default productPage.reducer;

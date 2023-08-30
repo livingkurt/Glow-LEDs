@@ -15,45 +15,20 @@ import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
 import config from "../../config";
 import {
-  set_name,
-  set_description,
-  set_facts,
-  set_included_items,
-  setQty,
-  set_images,
   set_price,
-  set_wholesale_price,
-  set_previous_price,
-  set_sale_price,
-  set_size,
-  set_quantity,
-  set_count_in_stock,
   set_image,
-  set_secondary_image,
-  set_secondary_images,
-  set_dimensions,
-  set_color,
-  set_secondary_color,
-  set_color_code,
-  set_secondary_color_code,
-  set_color_product,
   set_color_products,
-  set_secondary_color_product,
   set_secondary_color_products,
-  set_option_product,
   set_option_products,
-  set_secondary_product,
   set_secondary_products,
-  set_preorder,
-  set_secondary_product_name,
-  set_option_product_name,
-  set_color_product_object,
-  set_secondary_color_product_object,
-  set_option_product_object,
-  set_secondary_product_object,
   set_show_add_on,
   set_add_on_price,
-  set_has_add_on,
+  update_color_product_state,
+  update_secondary_color_product_state,
+  update_option_product_state,
+  update_secondary_product_state,
+  unset_state,
+  update_universal_state,
 } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
 
@@ -102,58 +77,7 @@ const ProductPage = () => {
       dispatch(API.detailsProduct(params.pathname));
     }
     return () => (clean = false);
-  }, [params.pathname]);
-
-  const update_universal_state = item => {
-    dispatch(set_previous_price(0));
-    if (item) {
-      dispatch(set_image(item.images_object && item.images_object[0].link));
-      dispatch(set_images(item.images_object));
-
-      if (item.price > 0) {
-        if (current_user?.isWholesaler) {
-          dispatch(set_wholesale_price(item.wholesale_price));
-        }
-        dispatch(set_price(item.price));
-      }
-      if (item.hasOwnProperty("previous_price") && item.previous_price > 0) {
-        dispatch(set_previous_price(item.previous_price));
-      }
-      if (item.sale_price > 0) {
-        dispatch(set_sale_price(item.sale_price));
-      }
-      dispatch(set_quantity(item.quantity));
-      dispatch(set_count_in_stock(item.count_in_stock));
-      if (item.count_in_stock === 0) {
-        dispatch(set_preorder(true));
-      } else {
-        dispatch(set_preorder(false));
-      }
-      dispatch(set_name(item.name));
-      dispatch(set_description(item.description));
-      dispatch(set_facts(item.facts));
-      dispatch(set_color(item.color));
-      dispatch(set_secondary_color(item.secondary_color));
-      dispatch(set_color_products(item.color_products));
-      dispatch(set_secondary_color_products(item.secondary_color_products));
-      dispatch(set_option_products(item.option_products));
-
-      dispatch(set_secondary_products(item.secondary_products));
-      dispatch(set_included_items(item.included_items));
-      dispatch(set_has_add_on(item.has_add_on));
-      dispatch(
-        set_dimensions({
-          weight_pounds: item.weight_pounds,
-          weight_ounces: item.weight_ounces,
-          package_length: item.package_length,
-          package_width: item.package_width,
-          package_height: item.package_height,
-          package_volume: item.package_volume,
-        })
-      );
-      dispatch(set_size(item.size));
-    }
-  };
+  }, []);
 
   useEffect(() => {
     let clean = true;
@@ -161,242 +85,176 @@ const ProductPage = () => {
       if (product) {
         determine_options(product);
       } else {
-        unset_state();
+        dispatch(unset_state());
       }
     }
     return () => (clean = false);
   }, [product]);
 
+  const handleDefaultOptions = product => {
+    if (product.color_products) {
+      dispatch(set_color_products(product.color_products));
+      const color = product.color_products.find(color => color.default_option === true);
+      if (color) {
+        dispatch(update_color_product_state({ color }));
+      }
+    }
+  };
+
+  const handleColorProducts = (product, query) => {
+    if (product.color_products) {
+      const color = product.color_products.find(color => color.color === query.color);
+      if (color) {
+        dispatch(update_color_product_state({ color }));
+      }
+    }
+  };
+
+  const handleSecondaryColorProducts = (product, query) => {
+    if (product.secondary_color_products) {
+      dispatch(set_secondary_color_products(product.secondary_color_products));
+      const secondary_color = product.secondary_color_products.find(
+        secondary_color => secondary_color.color === query.secondary_color
+      );
+      if (secondary_color) {
+        dispatch(update_secondary_color_product_state({ secondary_color }));
+      }
+    }
+  };
+
+  const handleOptionProducts = (product, query, current_user) => {
+    if (product.option_products) {
+      dispatch(set_option_products(product.option_products));
+      let query_option = query.option;
+      if (query.option && query.option.indexOf("%20") > -1) {
+        query_option = query.option.split("%20").join(" ");
+      }
+      const option = product.option_products.find(option => option.size === query_option?.split("%20").join(" "));
+      if (option) {
+        dispatch(update_option_product_state({ option, current_user }));
+      }
+    }
+  };
+
+  const handleSecondaryProducts = (product, query) => {
+    if (product.secondary_products && product.secondary_products.length > 0) {
+      dispatch(set_secondary_products(product.secondary_products));
+      let query_secondary = query.secondary;
+      if (query.secondary && query.secondary.indexOf("%20") > -1) {
+        query_secondary = query.secondary.split("%20").join(" ");
+      }
+      const secondary =
+        query.secondary &&
+        product.secondary_products.find(secondary => secondary.name === query_secondary?.split("%20").join(" "));
+      if (secondary) {
+        dispatch(update_secondary_product_state({ secondary }));
+      }
+    }
+  };
+
   const determine_options = product => {
-    update_universal_state(product);
+    dispatch(update_universal_state({ item: product, current_user }));
     const query = getUrlParameter(location);
+
     if (location.search.length === 0) {
-      if (product.color_products) {
-        dispatch(set_color_products(product.color_products));
-
-        const color = product.color_products.find(color => color.default_option === true);
-        if (color) {
-          update_color_product_state(color);
-        }
-      }
-      if (product.secondary_color_products) {
-        dispatch(set_secondary_color_products(product.secondary_color_products));
-
-        const secondary_color = product.secondary_color_products.find(
-          secondary_color => secondary_color.default_option === true
-        );
-        if (secondary_color) {
-          update_secondary_color_product_state(secondary_color);
-          if (product.has_add_on) {
-            dispatch(set_show_add_on(false));
-          }
-          if (product.name !== "CLOZD Omniskinz Sleds") {
-            dispatch(set_add_on_price(secondary_color.price));
-            dispatch(set_price(secondary_color.price + product.price));
-          }
-        } else {
-          dispatch(set_show_add_on(true));
-        }
-      }
-      if (product.option_products) {
-        dispatch(set_option_products(product.option_products));
-
-        const option = product.option_products.find(option => option.default_option === true);
-        if (option) {
-          update_option_product_state(option);
-        }
-      }
-      if (product.secondary_products && product.secondary_products.length > 0) {
-        // update_secondary_product_state(product.secondary_products[0]);
-      }
+      handleDefaultOptions(product);
+      handleColorProducts(product);
+      handleSecondaryColorProducts(product);
+      handleOptionProducts(product, current_user);
     } else if (location.search.length > 0) {
-      //
-      if (product.color_products) {
-        const color = product.color_products.find(color => color.color === query.color);
-        //
-        if (color) {
-          update_color_product_state(color);
-        }
-      }
-      if (product.secondary_color_products) {
-        dispatch(set_secondary_products(product.secondary_products));
-        const secondary_color = product.secondary_color_products.find(
-          secondary_color => secondary_color.color === query.secondary_color
-        );
-        if (secondary_color) {
-          update_secondary_color_product_state(secondary_color);
-        }
-      }
-      if (product.option_products) {
-        let query_option = query.option;
-        if (query.option && query.option.indexOf("%20") > -1) {
-          query_option = query.option.split("%20").join(" ");
-        }
-
-        const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
-        if (option) {
-          update_option_product_state(option);
-        }
-      }
-      if (product.secondary_products && product.secondary_products.length > 0) {
-        dispatch(set_secondary_products(product.secondary_products));
-        let query_secondary = query.secondary;
-        if (query.secondary && query.secondary.indexOf("%20") > -1) {
-          query_secondary = query.secondary.split("%20").join(" ");
-        }
-        const secondary =
-          query.secondary &&
-          product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
-        if (secondary) {
-          update_secondary_product_state(secondary);
-        }
-      }
+      handleColorProducts(product);
+      handleSecondaryColorProducts(product);
+      handleOptionProducts(product, current_user);
+      handleSecondaryProducts(product, query);
     }
   };
 
-  const update_color_product_state = color => {
-    //
-    dispatch(set_color_product(color._id));
-    dispatch(set_color(color.color));
-    dispatch(set_color_code(color.color_code));
-    dispatch(set_color_product_object(color));
-    // if (color.quantity) {
-    // 	dispatch(set_quantity(color.quantity));
-    // }
-    // if (color.count_in_stock) {
-    // 	dispatch(set_count_in_stock(color.count_in_stock));
-    // }
-    // update_url(color.color);
-  };
+  // const determine_options = product => {
+  //   dispatch(update_universal_state({ item: product, current_user }));
+  //   const query = getUrlParameter(location);
+  //   if (location.search.length === 0) {
+  //     if (product.color_products) {
+  //       dispatch(set_color_products(product.color_products));
 
-  const update_secondary_color_product_state = secondary_color => {
-    // if (product.name === "CLOZD Omniskinz Sleds") {
-    //   dispatch(set_color_product(secondary_color._id));
-    //   dispatch(set_color(secondary_color.color));
-    //   dispatch(set_color_code(secondary_color.color_code));
-    //   dispatch(set_color_product_object(secondary_color));
-    // } else {
-    dispatch(set_secondary_color_product(secondary_color._id));
-    dispatch(set_secondary_color(secondary_color.color));
-    dispatch(set_secondary_color_code(secondary_color.color_code));
-    dispatch(set_secondary_color_product_object(secondary_color));
-    // }
+  //       const color = product.color_products.find(color => color.default_option === true);
+  //       if (color) {
+  //         dispatch(update_color_product_state({ color }));
+  //       }
+  //     }
+  //     if (product.secondary_color_products) {
+  //       dispatch(set_secondary_color_products(product.secondary_color_products));
 
-    // if (secondary_color.quantity) {
-    // 	dispatch(set_quantity(secondary_color.quantity));
-    // }
-    // if (secondary_color.count_in_stock) {
-    // 	dispatch(set_count_in_stock(secondary_color.count_in_stock));
-    // }
-    // update_url(color, secondary_color.color);
-  };
+  //       const secondary_color = product.secondary_color_products.find(
+  //         secondary_color => secondary_color.default_option === true
+  //       );
+  //       if (secondary_color) {
+  //         dispatch(update_secondary_color_product_state({ secondary_color }));
+  //         if (product.has_add_on) {
+  //           dispatch(set_show_add_on(false));
+  //         }
+  //         if (product.name !== "CLOZD Omniskinz Sleds") {
+  //           dispatch(set_add_on_price(secondary_color.price));
+  //           dispatch(set_price(secondary_color.price + product.price));
+  //         }
+  //       } else {
+  //         dispatch(set_show_add_on(true));
+  //       }
+  //     }
+  //     if (product.option_products) {
+  //       dispatch(set_option_products(product.option_products));
 
-  const update_option_product_state = option => {
-    if (option.size) {
-      dispatch(set_size(option.size));
-    }
-    // else {
-    // 	dispatch(set_size(option.name));
-    // }
+  //       const option = product.option_products.find(option => option.default_option === true);
+  //       if (option) {
+  //         dispatch(update_option_product_state({ option, current_user }));
+  //       }
+  //     }
+  //     if (product.secondary_products && product.secondary_products.length > 0) {
+  //       // update_secondary_product_state(product.secondary_products[0]);
+  //     }
+  //   } else if (location.search.length > 0) {
+  //     //
+  //     if (product.color_products) {
+  //       const color = product.color_products.find(color => color.color === query.color);
+  //       //
+  //       if (color) {
+  //         dispatch(update_color_product_state({ color }));
+  //       }
+  //     }
+  //     if (product.secondary_color_products) {
+  //       dispatch(set_secondary_products(product.secondary_products));
+  //       const secondary_color = product.secondary_color_products.find(
+  //         secondary_color => secondary_color.color === query.secondary_color
+  //       );
+  //       if (secondary_color) {
+  //         dispatch(update_secondary_color_product_state({ secondary_color }));
+  //       }
+  //     }
+  //     if (product.option_products) {
+  //       let query_option = query.option;
+  //       if (query.option && query.option.indexOf("%20") > -1) {
+  //         query_option = query.option.split("%20").join(" ");
+  //       }
 
-    if (option.secondary_color) {
-      dispatch(set_secondary_color(option.secondary_color));
-    }
-    if (option.price > 0) {
-      if (current_user?.isWholesaler) {
-        dispatch(set_wholesale_price(option.wholesale_price));
-      }
-      dispatch(set_price(option.price));
-    }
-    if (option.sale_price > 0) {
-      dispatch(set_sale_price(option.sale_price));
-    }
-    if (option.count_in_stock === 0) {
-      dispatch(set_preorder(true));
-    } else {
-      dispatch(set_preorder(false));
-    }
-    if (option.quantity) {
-      dispatch(set_quantity(option.quantity));
-    }
-    if (option.count_in_stock) {
-      dispatch(set_count_in_stock(option.count_in_stock));
-    }
-
-    dispatch(
-      set_dimensions({
-        weight_pounds: option.weight_pounds,
-        weight_ounces: option.weight_ounces,
-        package_length: option.package_length,
-        package_width: option.package_width,
-        package_height: option.package_height,
-        package_volume: option.package_volume,
-      })
-    );
-    dispatch(set_option_product(option._id));
-    dispatch(set_option_product_name(option.name));
-    dispatch(set_option_product_object(option));
-  };
-
-  const update_secondary_product_state = secondary => {
-    //
-    dispatch(set_secondary_product(secondary._id));
-    dispatch(set_secondary_product_name(secondary.name));
-    dispatch(set_secondary_product_object(secondary));
-    if (secondary.quantity) {
-      dispatch(set_quantity(secondary.quantity));
-    }
-    if (secondary.count_in_stock) {
-      dispatch(set_count_in_stock(secondary.count_in_stock));
-    }
-    if (secondary.subcategory !== "batteries") {
-      if (secondary.images_object.length > 0) {
-        dispatch(set_images(secondary.images_object));
-        dispatch(set_image(secondary.images_object && secondary.images_object[0]?.link));
-      }
-    }
-  };
-
-  const unset_state = () => {
-    dispatch(set_name(""));
-    dispatch(set_description(""));
-    dispatch(set_facts(""));
-    dispatch(set_included_items(""));
-    dispatch(setQty(1));
-    dispatch(set_images([]));
-    dispatch(set_price());
-    dispatch(set_previous_price(0));
-    dispatch(set_sale_price(0));
-    dispatch(set_size());
-    dispatch(set_quantity());
-    dispatch(set_count_in_stock());
-    dispatch(set_image(""));
-    dispatch(set_secondary_image(""));
-    dispatch(set_secondary_images([]));
-    dispatch(set_dimensions({}));
-    dispatch(set_color(""));
-    dispatch(set_secondary_color(""));
-    dispatch(set_color_code(""));
-    dispatch(set_secondary_color_code(""));
-    dispatch(set_color_product(null));
-    dispatch(set_color_products([]));
-    dispatch(set_secondary_color_product(null));
-    dispatch(set_secondary_color_products([]));
-    dispatch(set_option_product(null));
-    dispatch(set_option_products([]));
-    dispatch(set_secondary_product(null));
-    dispatch(set_secondary_products([]));
-    dispatch(set_preorder(false));
-    dispatch(set_secondary_product_name(""));
-    dispatch(set_option_product_name(""));
-    dispatch(set_color_product_object({}));
-    dispatch(set_secondary_color_product_object({}));
-    dispatch(set_option_product_object({}));
-    dispatch(set_secondary_product_object({}));
-    dispatch(set_show_add_on(true));
-    dispatch(set_add_on_price(0));
-    dispatch(set_has_add_on(false));
-  };
+  //       const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
+  //       if (option) {
+  //         dispatch(update_option_product_state({ option, current_user }));
+  //       }
+  //     }
+  //     if (product.secondary_products && product.secondary_products.length > 0) {
+  //       dispatch(set_secondary_products(product.secondary_products));
+  //       let query_secondary = query.secondary;
+  //       if (query.secondary && query.secondary.indexOf("%20") > -1) {
+  //         query_secondary = query.secondary.split("%20").join(" ");
+  //       }
+  //       const secondary =
+  //         query.secondary &&
+  //         product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
+  //       if (secondary) {
+  //         dispatch(update_secondary_product_state({ secondary }));
+  //       }
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     let clean = true;
@@ -416,7 +274,7 @@ const ProductPage = () => {
       }
     }
     return () => (clean = false);
-  }, []);
+  }, [product]);
 
   useChangedEffect(() => {
     if (success) {

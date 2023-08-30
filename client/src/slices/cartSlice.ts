@@ -6,8 +6,9 @@ import * as API from "../api";
 let my_cart: any;
 const cart_string: any = localStorage.getItem("cartItems");
 
-if (cart_string) {
-  my_cart = { cartItems: JSON.parse(cart_string) };
+console.log({ cart_string });
+if (cart_string && cart_string !== "undefined" && cart_string !== null) {
+  my_cart = { cartItems: cart_string && JSON.parse(cart_string) };
 } else {
   my_cart = { cartItems: [] };
 }
@@ -204,8 +205,12 @@ const cartPage = createSlice({
     },
     [API.deleteCartItem.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type } = payload;
+      console.log({ data });
       state.loading = false;
       if (data.message === "Cart Deleted") {
+        state.my_cart = { cartItems: [] };
+        localStorage.removeItem("cartItems");
+      } else if (data.message === "Cart is now empty") {
         state.my_cart = { cartItems: [] };
         localStorage.removeItem("cartItems");
       } else if (type === "add_to_cart") {
