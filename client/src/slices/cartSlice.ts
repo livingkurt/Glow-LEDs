@@ -6,7 +6,6 @@ import * as API from "../api";
 let my_cart: any;
 const cart_string: any = localStorage.getItem("cartItems");
 
-console.log({ cart_string });
 if (cart_string && cart_string !== "undefined" && cart_string !== null) {
   my_cart = { cartItems: cart_string && JSON.parse(cart_string) };
 } else {
