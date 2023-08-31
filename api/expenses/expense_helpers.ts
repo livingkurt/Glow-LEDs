@@ -137,7 +137,11 @@ export const uploadToImgur = async (albumName: any, filePath: any) => {
     });
 
     return imgResponse.data.data.link;
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const deleteTempFile = (path: any) => {
@@ -145,5 +149,9 @@ export const deleteTempFile = (path: any) => {
     fs.unlink(path, err => {
       if (err) throw err;
     });
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

@@ -32,5 +32,9 @@ export const processInvoice = async (doc: any, record: any) => {
     //   // Return the new Image's ID
     //   return newImage._id;
     // }
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

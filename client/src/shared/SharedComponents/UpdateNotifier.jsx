@@ -24,7 +24,12 @@ const UpdateNotifier = () => {
 
       // Clean up the interval on unmount
       return () => clearInterval(interval);
-    } catch (error) {}
+    } catch (error) {
+      // Covy().showSnackbar({
+      //   message: errorMessage(error),
+      //   severity: "error",
+      // });
+    }
   }, [version]);
 
   const handleUpdate = () => {

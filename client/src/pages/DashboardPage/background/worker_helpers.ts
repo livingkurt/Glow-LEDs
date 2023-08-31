@@ -110,5 +110,9 @@ export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
 //         }
 //       }
 //     );
-//    } catch (error) {}
+//    } catch (error) {
+//   if (error instanceof Error) {
+//     throw new Error(error.message);
+//   }
+// }
 // };

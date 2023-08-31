@@ -121,7 +121,11 @@ export const createLabel = async ({ order, shipping_rate }: any) => {
       (rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier
     );
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const createShippingRates = async ({ order, returnLabel }: any) => {
