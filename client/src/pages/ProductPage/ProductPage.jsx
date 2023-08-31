@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
-import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -15,7 +14,6 @@ import * as API from "../../api";
 import { set_image, unset_state } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
 import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
-import { setCartDrawer } from "../../slices/cartSlice";
 
 const ProductPage = () => {
   const params = useParams();
