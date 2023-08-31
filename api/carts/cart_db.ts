@@ -49,7 +49,6 @@ export default {
   },
   update_carts_db: async (id: string, body: any) => {
     try {
-      console.log({ id, body });
       const cart: any = await Cart.findOne({ _id: id, active: true });
       if (cart) {
         return await Cart.updateOne({ _id: id }, body);
@@ -64,7 +63,6 @@ export default {
   update_user_carts_db: async (id: string, body: any) => {
     try {
       const cart: any = await Cart.findOne({ user: id, active: true });
-      console.log({ cart, body, id });
       if (cart) {
         cart.cartItems = body.cartItems;
         return await cart.save();
@@ -72,7 +70,6 @@ export default {
         return await Cart.create({ ...body, user: id });
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -112,7 +112,6 @@ export default {
   },
   remove_carts_s: async (params: any) => {
     try {
-      console.log({ params });
       return await cart_db.remove_carts_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
@@ -127,8 +126,6 @@ export default {
     // Convert id and item_index to their proper types
     const actualId = id === "undefined" ? undefined : id;
     const actualItemIndex = parseInt(item_index, 10);
-
-    console.log({ actualId, actualItemIndex, current_user, my_cart });
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
@@ -160,7 +157,6 @@ export default {
         }
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
