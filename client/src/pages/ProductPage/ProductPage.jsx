@@ -77,6 +77,7 @@ const ProductPage = () => {
       open_cart();
     }
   }, [success]);
+  console.log({ location });
 
   return (
     product?.hasOwnProperty("name") && (
@@ -199,60 +200,60 @@ const ProductPage = () => {
               <ProductDetails />
             </div>
           )}
-        </Loading>
-        {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              product={product}
-              random={false}
-              className=""
-              product_pathname={params.pathname}
-              title="Fits the Same Microlight"
-              category="chips"
-            />
-          </div>
-        )}
-        {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              random={false}
-              className=""
-              product_pathname={params.pathname}
-              title="Related Products"
-              category="related"
-            />
-          </div>
-        )}
-        {product &&
-          product.category !== "batteries" &&
-          product.name !== "Glowstringz V2" &&
-          product.name !== "Nova Clip" && (
+          {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+            <div className=" w-100per m-auto">
+              <RelatedProductsSlideshow
+                product_category={product.category}
+                product={product}
+                random={false}
+                className=""
+                product_pathname={params.pathname}
+                title="Fits the Same Microlight"
+                category="chips"
+              />
+            </div>
+          )}
+          {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
             <div className=" w-100per m-auto">
               <RelatedProductsSlideshow
                 product_category={product.category}
                 random={false}
                 className=""
                 product_pathname={params.pathname}
-                title="Accessories You May Need"
-                category="batteries"
+                title="Related Products"
+                category="related"
               />
             </div>
           )}
+          {product &&
+            product.category !== "batteries" &&
+            product.name !== "Glowstringz V2" &&
+            product.name !== "Nova Clip" && (
+              <div className=" w-100per m-auto">
+                <RelatedProductsSlideshow
+                  product_category={product.category}
+                  random={false}
+                  className=""
+                  product_pathname={params.pathname}
+                  title="Accessories You May Need"
+                  category="batteries"
+                />
+              </div>
+            )}
 
-        {product && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              random={true}
-              className=""
-              product_pathname={params.pathname}
-              title="Suggested Products"
-              category="all"
-            />
-          </div>
-        )}
+          {product && (
+            <div className=" w-100per m-auto">
+              <RelatedProductsSlideshow
+                product_category={product.category}
+                random={true}
+                className=""
+                product_pathname={params.pathname}
+                title="Suggested Products"
+                category="all"
+              />
+            </div>
+          )}
+        </Loading>
       </div>
     )
   );

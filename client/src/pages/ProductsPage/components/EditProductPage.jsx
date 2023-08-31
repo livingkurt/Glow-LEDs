@@ -640,8 +640,7 @@ const EditProductPage = () => {
                       }}
                       className="ta-c "
                     >
-                      <Link
-                        to={"/collections/all/products/" + product.pathname}
+                      <div
                         onClick={() =>
                           navigate("/collections/all/products/" + product?.pathname, {
                             state: { prevPath: location.pathname },
@@ -649,7 +648,7 @@ const EditProductPage = () => {
                         }
                       >
                         {loading ? "Product" : product.name}
-                      </Link>
+                      </div>
                     </h2>
 
                     <div className="ai-c">
@@ -1912,7 +1911,7 @@ const EditProductPage = () => {
                     </GLButton>
                   </li>
                   <li>
-                    <Link
+                    <div
                       onClick={() =>
                         navigate("/collections/all/products/" + product?.pathname, {
                           state: { prevPath: location.pathname },
@@ -1922,7 +1921,7 @@ const EditProductPage = () => {
                       <GLButton variant="secondary" className="w-100per">
                         Go to {loading ? "Product" : product.name}
                       </GLButton>
-                    </Link>
+                    </div>
                   </li>
                   <li>
                     <GLButton variant="secondary" onClick={() => navigate.goBack()}>

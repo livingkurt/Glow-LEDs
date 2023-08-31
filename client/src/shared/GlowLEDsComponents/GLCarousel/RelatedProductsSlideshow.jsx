@@ -336,8 +336,7 @@ const RelatedProductsSlideshow = ({
                 </span>
 
                 <div className="product">
-                  <Link
-                    to={"/collections/all/products/" + product.pathname}
+                  <div
                     onClick={() =>
                       navigate("/collections/all/products/" + product?.pathname, {
                         state: { prevPath: location.pathname },
@@ -379,9 +378,8 @@ const RelatedProductsSlideshow = ({
                         )}
                       </div>
                     </div>
-                  </Link>
-                  <Link
-                    to={"/collections/all/products/" + product.pathname}
+                  </div>
+                  <div
                     onClick={() =>
                       navigate("/collections/all/products/" + product?.pathname, {
                         state: { prevPath: location.pathname },
@@ -390,7 +388,7 @@ const RelatedProductsSlideshow = ({
                     className="mt-13px"
                   >
                     <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>
-                  </Link>
+                  </div>
 
                   <label className="product-price mv-3px">
                     {sale_price_switch({ product, cartItem: false, isWholesaler: current_user?.isWholesaler })}

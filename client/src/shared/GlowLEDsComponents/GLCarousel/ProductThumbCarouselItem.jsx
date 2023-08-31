@@ -27,8 +27,7 @@ const ProductThumbCarouselItem = ({ product, size, style }) => {
     <div>
       {!loading && (
         <li key={product && product.pathname} style={style}>
-          <Link
-            to={"/collections/all/products/" + product.pathname}
+          <div
             onClick={() =>
               navigate("/collections/all/products/" + product?.pathname, {
                 state: { prevPath: location.pathname },
@@ -73,7 +72,7 @@ const ProductThumbCarouselItem = ({ product, size, style }) => {
                 <span className="rating vis-hid ta-c">No Reviews</span>
               )}
             </div>
-          </Link>
+          </div>
         </li>
       )}
     </div>

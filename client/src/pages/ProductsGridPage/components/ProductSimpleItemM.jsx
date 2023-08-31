@@ -13,8 +13,7 @@ const ProductSimpleItemM = ({ product, size, style }) => {
   const location = useLocation();
   return (
     <li key={product.pathname} className=" w-100per" style={style}>
-      <Link
-        to={"/collections/all/products/" + product.pathname}
+      <div
         onClick={() =>
           navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
         }
@@ -51,7 +50,7 @@ const ProductSimpleItemM = ({ product, size, style }) => {
             )}
           </div>
         </div>
-      </Link>
+      </div>
     </li>
   );
 };

@@ -14,8 +14,7 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
   return (
     <li key={product.pathname} className=" w-100per" style={style}>
       {product_occurrences && (
-        <Link
-          to={"/collections/all/products/" + product.pathname}
+        <div
           onClick={() =>
             navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
           }
@@ -71,7 +70,7 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
               )}
             </div>
           </div>
-        </Link>
+        </div>
       )}
     </li>
   );

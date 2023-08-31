@@ -679,8 +679,7 @@ const OrderPage = () => {
                 }}
                 className="ta-c "
               >
-                <Link
-                  to={"/collections/all/products/" + product.pathname}
+                <div
                   onClick={() =>
                     navigate("/collections/all/products/" + product?.pathname, {
                       state: { prevPath: location.pathname },
@@ -688,7 +687,7 @@ const OrderPage = () => {
                   }
                 >
                   {loading ? "Product" : product.name}
-                </Link>
+                </div>
               </h2>
               <div className="ai-c">
                 <GLButton

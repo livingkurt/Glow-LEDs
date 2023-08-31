@@ -380,8 +380,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 </div>
               )}
               <div className={`fs-16px jc-fe ai-c ${width > 600 && "mt-10px"}`}>
-                <Link
-                  to={"/secure/account/order/" + order._id}
+                <div
                   onClick={() =>
                     navigate("/secure/account/order/" + order._id, {
                       state: { prevPath: location.pathname + location.search },
@@ -389,7 +388,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                   }
                 >
                   <GLButton variant="primary">Order Details</GLButton>
-                </Link>
+                </div>
               </div>
             </div>
           </div>

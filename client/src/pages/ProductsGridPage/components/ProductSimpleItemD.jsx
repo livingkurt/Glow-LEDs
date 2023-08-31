@@ -16,8 +16,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
-            <Link
-              to={"/collections/all/products/" + product.pathname}
+            <div
               onClick={() =>
                 navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
               }
@@ -36,13 +35,12 @@ const ProductSimpleItemD = ({ product, size, style }) => {
                   />
                 </div>
               </div>
-            </Link>
+            </div>
 
             {/* <label style={{ fontSize: '1.3rem' }} className="title_font">
 							{product.brand}
 						</label> */}
-            <Link
-              to={"/collections/all/products/" + product.pathname}
+            <div
               onClick={() =>
                 navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } })
               }
@@ -50,7 +48,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
               <label className="mt-10px" style={{ fontSize: "1.6rem" }}>
                 {determine_product_name_display(product, false)}
               </label>
-            </Link>
+            </div>
             <label className="product-price">
               {sale_price_switch({
                 product: product,

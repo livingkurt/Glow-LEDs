@@ -270,13 +270,10 @@ const Header = () => {
                 ))}
               </nav>
             </div>
-            {/* <Link to="/checkout/cart"> */}
             <GLButton variant="mobile nav" className="cart_icon none" onClick={open_cart}>
               <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
             </GLButton>
-            {/* </Link> */}
             <div className="nav_bar w-233px jc-fe ai-c">
-              {/* <Link to="/checkout/cart"> */}
               <GLButton
                 variant="nav"
                 className={`cart_text w-110px title_font ai-c ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
@@ -285,8 +282,6 @@ const Header = () => {
                 Cart <i className="fas fa-shopping-cart ml-5px mb-5px" />
                 <div className="ml-5px">{cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
               </GLButton>
-              {/* </Link> */}
-              {/* <Link to="/checkout/cart"> */}
               <GLButton
                 variant="mobile nav"
                 className={`cart_icon title_font none ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
@@ -294,7 +289,6 @@ const Header = () => {
               >
                 <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
               </GLButton>
-              {/* </Link> */}
               {current_user && current_user.hasOwnProperty("first_name") ? (
                 <div className="dropdown">
                   <GLButton variant="nav" className="title_font">
