@@ -8,7 +8,6 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
-
 import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
 import { set_image, unset_state } from "./productPageSlice";
@@ -33,18 +32,15 @@ const ProductPage = () => {
     let clean = true;
     if (clean) {
       dispatch(API.detailsProduct(params.pathname));
-      const video = document.getElementsByClassName("product_video");
-      video.muted = true;
-      video.autoplay = true;
     }
     return () => (clean = false);
-  }, []);
+  }, [dispatch, params.pathname]);
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (product) {
-        normalizeProductPage({ product, dispatch, location, current_user });
+        normalizeProductPage({ product, dispatch, current_user });
       }
     }
     return () => {

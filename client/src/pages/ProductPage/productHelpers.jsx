@@ -279,18 +279,18 @@ export const setSecondaryProductUrlOption = ({ product, query, dispatch }) => {
 
 export const normalizeProductPage = ({ product, dispatch, location, current_user }) => {
   dispatch(update_universal_state({ item: product, current_user }));
-  const query = getUrlParameter(location);
-  const urlParamsLength = location.search.length;
-  if (urlParamsLength === 0) {
-    setColorDefaultOption({ product, query, dispatch });
-    setSecondaryColorDefaultOption({ product, query, dispatch });
-    setOptionDefaultOption({ product, query, dispatch });
-  } else if (urlParamsLength > 0) {
-    setColorUrlOption({ product, query, dispatch });
-    setSecondaryColorUrlOption({ product, query, dispatch });
-    setOptionUrlOption({ product, query, dispatch, current_user });
-    setSecondaryProductUrlOption({ product, query, dispatch });
-  }
+  // const query = getUrlParameter(location);
+  // const urlParamsLength = location.search.length;
+  // if (urlParamsLength === 0) {
+  setColorDefaultOption({ product, dispatch });
+  setSecondaryColorDefaultOption({ product, dispatch });
+  setOptionDefaultOption({ product, dispatch });
+  // } else if (urlParamsLength > 0) {
+  //   setColorUrlOption({ product, query, dispatch });
+  //   setSecondaryColorUrlOption({ product, query, dispatch });
+  //   setOptionUrlOption({ product, query, dispatch, current_user });
+  //   setSecondaryProductUrlOption({ product, query, dispatch });
+  // }
 };
 
 export const updateRecentlyViewed = product => {
