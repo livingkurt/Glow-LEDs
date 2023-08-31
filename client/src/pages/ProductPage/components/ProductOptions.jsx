@@ -2,7 +2,6 @@ import React from "react";
 import { sizes_conversion, sizes_short } from "../../../utils/helper_functions";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  determine_option_product_name,
   determine_secondary_product_name,
   product_page_sale_price_switch,
 } from "../../../utils/react_helper_functions";
@@ -14,7 +13,6 @@ import {
   categories_hide_add_to_cart,
   determine_add_to_cart,
   determine_addon_color,
-  determine_option_styles,
   determine_preorder,
   determine_sampler,
   determine_sampler_pack_name,
@@ -33,37 +31,9 @@ import {
   set_secondary_color_code,
   set_show_add_on,
   set_add_on_price,
-  set_description,
-  set_facts,
-  set_included_items,
-  set_images,
-  set_wholesale_price,
-  set_size,
-  set_quantity,
-  set_count_in_stock,
-  set_image,
-  set_secondary_images,
-  set_dimensions,
-  set_color,
-  set_color_code,
-  set_color_product,
-  set_color_products,
-  set_secondary_color_product,
-  set_secondary_color_products,
-  set_option_product,
-  set_option_products,
-  set_secondary_product,
-  set_preorder,
-  set_secondary_product_name,
-  set_option_product_name,
-  set_color_product_object,
-  set_secondary_color_product_object,
-  set_option_product_object,
-  set_secondary_product_object,
-  update_color,
-  update_option,
-  update_secondary_color,
   update_secondary,
+  update_color,
+  update_secondary_color,
 } from "../productPageSlice";
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
@@ -179,10 +149,6 @@ const ProductOptions = () => {
     } else {
       dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
     }
-    // if (current_user) {
-    // 	dispatch(addToCart(cart_item));
-    // }
-    // open_cart();
   };
 
   const { text, variant } = determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object);

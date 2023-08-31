@@ -53,26 +53,17 @@ const productPage = createSlice({
     set_name: (state, { payload }) => {
       state.name = payload;
     },
-    set_description: (state, { payload }) => {
-      state.description = payload;
-    },
-    set_facts: (state, { payload }) => {
-      state.facts = payload;
-    },
-    set_included_items: (state, { payload }) => {
-      state.included_items = payload;
-    },
+
     setQty: (state, { payload }) => {
       state.qty = payload;
     },
-    set_images: (state, { payload }) => {
-      state.images = payload;
-    },
+
     set_price: (state, { payload }) => {
       state.price = payload;
     },
-    set_wholesale_price: (state, { payload }) => {
-      state.wholesale_price = payload;
+
+    set_image: (state, { payload }) => {
+      state.image = payload;
     },
     set_previous_price: (state, { payload }) => {
       state.previous_price = payload;
@@ -80,84 +71,33 @@ const productPage = createSlice({
     set_sale_price: (state, { payload }) => {
       state.sale_price = payload;
     },
-    set_size: (state, { payload }) => {
-      state.size = payload;
-    },
-    set_quantity: (state, { payload }) => {
-      state.quantity = payload;
-    },
-    set_count_in_stock: (state, { payload }) => {
-      state.count_in_stock = payload;
-    },
-    set_image: (state, { payload }) => {
-      state.image = payload;
-    },
-    set_secondary_image: (state, { payload }) => {
-      state.secondary_image = payload;
-    },
-    set_secondary_images: (state, { payload }) => {
-      state.secondary_images = payload;
-    },
-    set_dimensions: (state, { payload }) => {
-      state.dimensions = payload;
-    },
-    set_color: (state, { payload }) => {
-      state.color = payload;
-    },
-    set_secondary_color: (state, { payload }) => {
-      state.secondary_color = payload;
-    },
-    set_color_code: (state, { payload }) => {
-      state.color_code = payload;
-    },
-    set_secondary_color_code: (state, { payload }) => {
-      state.secondary_color_code = payload;
-    },
-    set_color_product: (state, { payload }) => {
-      state.color_product = payload;
-    },
+
     set_color_products: (state, { payload }) => {
       state.color_products = payload;
     },
-    set_secondary_color_product: (state, { payload }) => {
-      state.secondary_color_product = payload;
+
+    set_secondary_image: (state, { payload }) => {
+      state.secondary_image = payload;
     },
     set_secondary_color_products: (state, { payload }) => {
       state.secondary_color_products = payload;
     },
-    set_option_product: (state, { payload }) => {
-      state.option_product = payload;
-    },
     set_option_products: (state, { payload }) => {
       state.option_products = payload;
     },
-    set_secondary_product: (state, { payload }) => {
-      state.secondary_product = payload;
+
+    set_secondary_color: (state, { payload }) => {
+      state.secondary_color = payload;
     },
+
+    set_secondary_color_code: (state, { payload }) => {
+      state.secondary_color_code = payload;
+    },
+
     set_secondary_products: (state, { payload }) => {
       state.secondary_products = payload;
     },
-    set_preorder: (state, { payload }) => {
-      state.preorder = payload;
-    },
-    set_secondary_product_name: (state, { payload }) => {
-      state.secondary_product_name = payload;
-    },
-    set_option_product_name: (state, { payload }) => {
-      state.option_product_name = payload;
-    },
-    set_color_product_object: (state, { payload }) => {
-      state.color_product_object = payload;
-    },
-    set_secondary_color_product_object: (state, { payload }) => {
-      state.secondary_color_product_object = payload;
-    },
-    set_option_product_object: (state, { payload }) => {
-      state.option_product_object = payload;
-    },
-    set_secondary_product_object: (state, { payload }) => {
-      state.secondary_product_object = payload;
-    },
+
     set_show_add_on: (state, { payload }) => {
       state.show_add_on = payload;
     },
@@ -428,41 +368,23 @@ const productPage = createSlice({
 
 export const {
   set_name,
-  set_description,
-  set_facts,
-  set_included_items,
+
   setQty,
-  set_images,
+
   set_price,
-  set_wholesale_price,
+  set_image,
   set_previous_price,
   set_sale_price,
-  set_size,
-  set_quantity,
-  set_count_in_stock,
-  set_image,
+
   set_secondary_image,
-  set_secondary_images,
-  set_dimensions,
-  set_color,
-  set_secondary_color,
-  set_color_code,
-  set_secondary_color_code,
-  set_color_product,
   set_color_products,
-  set_secondary_color_product,
+  set_secondary_color,
   set_secondary_color_products,
-  set_option_product,
   set_option_products,
-  set_secondary_product,
+  set_secondary_color_code,
+
   set_secondary_products,
-  set_preorder,
-  set_secondary_product_name,
-  set_option_product_name,
-  set_color_product_object,
-  set_secondary_color_product_object,
-  set_option_product_object,
-  set_secondary_product_object,
+
   set_show_add_on,
   set_add_on_price,
   set_has_add_on,

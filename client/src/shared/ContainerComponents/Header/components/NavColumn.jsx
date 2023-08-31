@@ -7,8 +7,8 @@ import Filter from "../../../GlowLEDsComponents/GLTable/Filter";
 const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list }) => {
   return (
     <>
-      {columns?.map((column, index) => (
-        <div key={column.name} className="nav-column">
+      {columns?.map(column => (
+        <div key={column._id} className="nav-column">
           <Link to={column.path}>
             <GLButton variant={column.variant} className={column.className}>
               {column.name}
@@ -16,7 +16,13 @@ const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list })
           </Link>
           <hr className="w-95per m-0px" />
           {chips_list && column.name === "Featured" && (
-            <Filter title="Shop By Chip" width="100per" state={chip_name} filterHandler={filterHandler} filter_options={chips_list} />
+            <Filter
+              title="Shop By Chip"
+              width="100per"
+              state={chip_name}
+              filterHandler={filterHandler}
+              filter_options={chips_list}
+            />
           )}
           {column.rows.map(row => (
             <DropdownButton {...row} show_hide={show_hide} />

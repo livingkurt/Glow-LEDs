@@ -44,7 +44,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Container setVisible={setVisible} visible={visible}>
-          <Head />
+          {/* <Head /> */}
           {isBrowser && width > 1158 && height > 900 ? (
             <Headroom>
               <Header visible={visible} />

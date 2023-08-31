@@ -1,7 +1,5 @@
-/* eslint-disable react/no-render-return-value */
-/* eslint-disable no-console */
 import * as React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom";
 import ShowSnackbar from "./components/ShowSnackbar";
 import SnackBarReqLoadBar from "./components/SnackBarReqLoadBar";
 import ShowAutosave from "./components/ShowAutosave";
@@ -9,10 +7,13 @@ import ShowAutosave from "./components/ShowAutosave";
 const containerNode = document.getElementById("covy-container");
 const loaderContainerNode = document.getElementById("covy-loader-container");
 
+const containerRoot = createRoot(containerNode);
+const loaderContainerRoot = createRoot(loaderContainerNode);
+
 const Covy = () => ({
   says: msg => console.log(msg),
   showSnackbar: ({ message, severity, horizontal = "center", vertical = "top", duration = 4000 }) =>
-    render(
+    containerRoot.render(
       <ShowSnackbar
         anchorOrigin={{ horizontal, vertical }}
         containerNode={containerNode}
@@ -20,11 +21,10 @@ const Covy = () => ({
         message={message}
         severity={severity}
         open
-      />,
-      containerNode
+      />
     ),
   showSnackBarReqLoadBar: ({ formData, loadMessage, successMessage, failMessage, path, updateState }) =>
-    render(
+    loaderContainerRoot.render(
       <SnackBarReqLoadBar
         containerNode={loaderContainerNode}
         path={path}
@@ -33,11 +33,10 @@ const Covy = () => ({
         successMessage={successMessage}
         failMessage={failMessage}
         updateState={updateState}
-      />,
-      loaderContainerNode
+      />
     ),
   showAutosave: ({ message, severity, horizontal, vertical, duration }) =>
-    render(
+    containerRoot.render(
       <ShowAutosave
         anchorOrigin={{ horizontal, vertical }}
         containerNode={containerNode}
@@ -45,8 +44,7 @@ const Covy = () => ({
         message={message}
         severity={severity}
         open
-      />,
-      containerNode
+      />
     ),
 });
 
