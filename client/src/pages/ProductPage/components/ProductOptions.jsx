@@ -34,6 +34,7 @@ import {
   update_secondary,
   update_color,
   update_secondary_color,
+  toggle_show_add_on,
 } from "../productPageSlice";
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
@@ -342,23 +343,13 @@ const ProductOptions = () => {
                   className="mr-1rem"
                   id="show_add_on"
                   onChange={e => {
-                    if (show_add_on) {
-                      dispatch(set_secondary_color(""));
-                      dispatch(set_secondary_color_code(""));
-                      dispatch(set_secondary_image(""));
-                      dispatch(set_price(product.price));
-                      dispatch(set_sale_price(product.sale_price));
-                    } else {
-                      dispatch(set_price(secondary_color_product_object.price + product.price));
-                      dispatch(set_sale_price(secondary_color_product_object.sale_price + product.sale_price));
-                      if (secondary_color_product_object.sale_price > 0) {
-                        dispatch(set_add_on_price(secondary_color_product_object.sale_price));
-                      } else {
-                        dispatch(set_add_on_price(secondary_color_product_object.price));
-                      }
-                    }
-
-                    dispatch(set_show_add_on(show_add_on ? false : true));
+                    dispatch(
+                      toggle_show_add_on({
+                        show_add_on,
+                        product,
+                        secondary_color_product_object,
+                      })
+                    );
                   }}
                 />
                 <label htmlFor="show_add_on mb-20px">

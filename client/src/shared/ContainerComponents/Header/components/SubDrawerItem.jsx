@@ -6,9 +6,9 @@ import DropdownButton from "./DropdownButton";
 const SubDrawerItem = ({ columns, show_hide_nested }) => (
   <>
     {columns.map(column => (
-      <div key={column._id}>
+      <>
         {column.rows.map(row => (
-          <div key={row._id}>
+          <>
             {row.sideDrawer && (
               <>
                 {row.sideDrawer.drawerItems.map((drawerItem, index) => (
@@ -38,9 +38,9 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => (
                 ))}
               </>
             )}
-          </div>
+          </>
         ))}
-      </div>
+      </>
     ))}
   </>
 );

@@ -7,7 +7,7 @@ import Filter from "../../../GlowLEDsComponents/GLTable/Filter";
 const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list }) => {
   return (
     <>
-      {columns?.map(column => (
+      {columns?.map((column, index) => (
         <div key={column._id} className="nav-column">
           <Link to={column.path}>
             <GLButton variant={column.variant} className={column.className}>

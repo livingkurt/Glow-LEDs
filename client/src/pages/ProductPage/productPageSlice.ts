@@ -362,6 +362,25 @@ const productPage = createSlice({
         state.previous_price = item.previous_price;
       }
     },
+    toggle_show_add_on: (state, { payload }) => {
+      const { show_add_on, product, secondary_color_product_object } = payload;
+      if (show_add_on) {
+        state.secondary_color = "";
+        state.secondary_color_code = "";
+        state.secondary_image = "";
+        state.price = product.price;
+        state.sale_price = product.sale_price;
+      } else {
+        state.price = secondary_color_product_object.price + product.price;
+        state.sale_price = secondary_color_product_object.sale_price + product.sale_price;
+        if (secondary_color_product_object.sale_price > 0) {
+          state.add_on_price = secondary_color_product_object.sale_price;
+        } else {
+          state.add_on_price = secondary_color_product_object.price;
+        }
+      }
+      state.show_add_on = !show_add_on;
+    },
   },
   extraReducers: {},
 });
@@ -370,7 +389,7 @@ export const {
   set_name,
 
   setQty,
-
+  toggle_show_add_on,
   set_price,
   set_image,
   set_previous_price,
