@@ -170,6 +170,7 @@ const cartPage = createSlice({
         state.cart = data;
       }
       state.success = true;
+      state.cartDrawer = true;
       state.message = "Cart Created";
       state.edit_cart_modal = false;
       state.loading = false;

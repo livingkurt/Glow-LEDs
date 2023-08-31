@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
-import { getUrlParameter } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
@@ -13,7 +12,6 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 
 import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
-import config from "../../config";
 import { set_image, unset_state } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
 import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
@@ -28,17 +26,10 @@ const ProductPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { success } = cartPage;
-
   const productsPage = useSelector(state => state.products.productsPage);
   const { product, loading, error } = productsPage;
 
   const { width } = useWindowDimensions();
-
-  const open_cart = () => {
-    dispatch(setCartDrawer(true));
-  };
 
   useEffect(() => {
     let clean = true;
@@ -71,13 +62,6 @@ const ProductPage = () => {
     }
     return () => (clean = false);
   }, [product]);
-
-  useChangedEffect(() => {
-    if (success) {
-      open_cart();
-    }
-  }, [success]);
-  console.log({ location });
 
   return (
     product?.hasOwnProperty("name") && (
