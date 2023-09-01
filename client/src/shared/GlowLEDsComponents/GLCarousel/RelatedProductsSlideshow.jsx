@@ -252,10 +252,10 @@ const RelatedProductsSlideshow = ({
       >
         {products &&
           products.map((product, index) => (
-            <li key={product.pathname} className="product-thumb pv-2rem">
+            <div key={product.pathname} className="product-thumb pv-2rem">
               <div className="tooltip">
                 <span className="tooltiptext">
-                  <li className="">
+                  <div className="">
                     {product.quantity > 0 && add_to_cart ? (
                       <div>
                         {product.subcategory !== "batteries" ? (
@@ -263,7 +263,7 @@ const RelatedProductsSlideshow = ({
                             Quick Add to Cart
                           </GLButton>
                         ) : (
-                          <li>
+                          <div>
                             {!show_options && (
                               <GLButton onClick={() => set_show_options(true)} variant="primary">
                                 Quick Add to Cart
@@ -326,13 +326,13 @@ const RelatedProductsSlideshow = ({
                                 </GLButton>
                               </div>
                             )}
-                          </li>
+                          </div>
                         )}
                       </div>
                     ) : (
                       <GLButton variant="inactive">Out of Stock</GLButton>
                     )}
-                  </li>
+                  </div>
                 </span>
 
                 <div className="product">
@@ -401,7 +401,7 @@ const RelatedProductsSlideshow = ({
                   )}
                 </div>
               </div>
-            </li>
+            </div>
           ))}
       </Carousel>
     </div>

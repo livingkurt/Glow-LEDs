@@ -104,10 +104,10 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
   return (
     <div>
       {product && !loading && (
-        <li key={product && product.pathname} style={style}>
+        <div key={product && product.pathname} style={style}>
           <div className="tooltip">
             <span className="tooltiptext">
-              <li>
+              <div>
                 {product.quantity > 0 && add_to_cart ? (
                   <div>
                     {product.subcategory !== "coin" ? (
@@ -115,7 +115,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
                         Quick Add to Cart
                       </GLButton>
                     ) : (
-                      <li>
+                      <div>
                         {!show_options && (
                           <GLButton variant="primary" onClick={() => set_show_options(true)}>
                             Quick Add to Cart
@@ -177,13 +177,13 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
                             </GLButton>
                           </div>
                         )}
-                      </li>
+                      </div>
                     )}
                   </div>
                 ) : (
                   <GLButton variant="inactive">Out of Stock</GLButton>
                 )}
-              </li>
+              </div>
             </span>
             <div
               onClick={() => {
@@ -230,7 +230,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
               </div>
             </div>
           </div>
-        </li>
+        </div>
       )}
     </div>
   );
