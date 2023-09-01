@@ -15,6 +15,10 @@ const SnackBarReqLoadBar = ({
   const [progress, setProgress] = useState(0);
   const [successStat, setSuccessStat] = useState(false);
   const [failStat, setFailStat] = useState(false);
+  const [open, setOpen] = useState(true);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const sendRequest = () => {
     const xhr = new XMLHttpRequest();
@@ -36,13 +40,13 @@ const SnackBarReqLoadBar = ({
         setSuccessStat(true);
         if (progress < 100) {
           setTimeout(() => {
-            containerRoot.unmount();
+            handleClose();
           }, 3000);
         }
       } else {
         setFailStat(true);
         setTimeout(() => {
-          containerRoot.unmount();
+          handleClose();
         }, 3000);
       }
     };

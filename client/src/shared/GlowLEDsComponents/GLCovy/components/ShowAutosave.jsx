@@ -30,7 +30,7 @@ const ShowSnackbar = ({ containerRoot, message, open, severity, duration, horizo
       message={message}
       open={open}
       autoHideDuration={duration}
-      onClose={() => handleClose()}
+      // onClose={() => handleClose()}
     >
       <Alert
         elevation={10}

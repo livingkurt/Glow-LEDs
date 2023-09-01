@@ -20,3 +20,4 @@ export { default as teamSlice } from "./teamSlice";
 export { default as userSlice } from "./userSlice";
 export { default as wholesalerSlice } from "./wholesalerSlice";
 export { default as tutorialSlice } from "./tutorialSlice";
+export { default as snackbarSlice } from "./snackbarSlice";

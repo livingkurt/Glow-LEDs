@@ -21,6 +21,7 @@ import {
   wholesalerSlice,
   tutorialSlice,
   shippingSlice,
+  snackbarSlice,
 } from "./slices";
 
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
@@ -155,6 +156,7 @@ const reducers = {
   [allRecordsApi.reducerPath]: allRecordsApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
+  snackbar: snackbarSlice,
   dashboards: dashboardSlice,
   wholesalers: combineReducers({
     wholesalerPage: wholesalerSlice,

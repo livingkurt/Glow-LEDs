@@ -1,20 +1,17 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError } from "../slices/snackbarSlice";
 
 export const listContents = createAsyncThunk("contents/listContents", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/contents?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -29,10 +26,7 @@ export const saveContent = createAsyncThunk("contents/saveContent", async (conte
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -42,10 +36,7 @@ export const detailsContent = createAsyncThunk("contents/detailsContent", async 
     const { data } = await axios.get(`/api/contents/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -55,10 +46,7 @@ export const deleteContent = createAsyncThunk("contents/deleteContent", async (p
     const { data } = await axios.delete("/api/contents/" + pathname);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

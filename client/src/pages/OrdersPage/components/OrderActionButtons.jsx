@@ -11,6 +11,7 @@ import { openShippingModal, set_loading_label, set_order } from "../../../slices
 import GenerateCSVLabel from "./GenerateCSVLabel";
 import { Link } from "react-router-dom";
 import Covy from "../../../shared/GlowLEDsComponents/GLCovy/GLCovy";
+import { showSuccess } from "../../../slices/snackbarSlice";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -122,10 +123,7 @@ const OrderActionButtons = ({ order }) => {
                 },
               })
             );
-            Covy().showSnackbar({
-              message: `Label and Tracking Cleared for Order`,
-              severity: "success",
-            });
+            dispatch(showSuccess({ message: `Label and Tracking Cleared for Order` }));
           }
         }}
       >

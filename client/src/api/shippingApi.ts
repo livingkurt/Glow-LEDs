@@ -4,20 +4,15 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { errorMessage } from "../helpers/sharedHelpers";
+import { showError, showSuccess } from "../slices/snackbarSlice";
 
 export const buyLabel = createAsyncThunk("shipping/buyLabel", async ({ orderId }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/buy_label`, {});
-    Covy().showSnackbar({
-      message: `Label Purchased`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Label Purchased` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -25,16 +20,10 @@ export const buyLabel = createAsyncThunk("shipping/buyLabel", async ({ orderId }
 export const createLabel = createAsyncThunk("shipping/createLabel", async ({ orderId, speed }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_label/${speed}`, {});
-    Covy().showSnackbar({
-      message: `Label Purchased`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Label Purchased` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -44,16 +33,10 @@ export const createCustomLabel = createAsyncThunk(
   async ({ selectedRateId, shipmentId }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/create_custom_label`, { selectedRateId, shipmentId });
-      Covy().showSnackbar({
-        message: `Label Purchased`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Label Purchased` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -62,32 +45,20 @@ export const createCustomLabel = createAsyncThunk(
 export const getShipments = createAsyncThunk("shipping/getShipments", async (_params, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/shipping/shipments`);
-    Covy().showSnackbar({
-      message: `Shipments Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Shipments Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 export const createTracker = createAsyncThunk("shipping/createTracker", async ({ orderId }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_tracker`, {});
-    Covy().showSnackbar({
-      message: `Order Linked to Tracker`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Order Linked to Tracker` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -96,16 +67,10 @@ export const createReturnLabel = createAsyncThunk(
   async ({ orderId }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/${orderId}/create_return_label`, {});
-      Covy().showSnackbar({
-        message: `Return Label Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Return Label Created` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -118,10 +83,7 @@ export const shippingRates = createAsyncThunk(
       const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -131,16 +93,10 @@ export const customShippingRates = createAsyncThunk(
   async ({ toShipping, fromShipping, parcel }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/custom_shipping_rates`, { toShipping, fromShipping, parcel });
-      Covy().showSnackbar({
-        message: `Custom Shipping Rates Found`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Custom Shipping Rates Found` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -151,16 +107,10 @@ export const refundLabel = createAsyncThunk(
   async ({ orderId, isReturnTracking }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/${orderId}/refund_label/${isReturnTracking}`);
-      Covy().showSnackbar({
-        message: `Return Label Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Return Label Created` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -173,10 +123,7 @@ export const generateCSVLabel = createAsyncThunk(
       const { data } = await axios.put(`/api/shipping/${orderId}/generate_csv_label`);
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -187,16 +134,10 @@ export const createPickup = createAsyncThunk(
   async ({ readyTime, latestTimeAvailable }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/create_pickup`, { readyTime, latestTimeAvailable });
-      Covy().showSnackbar({
-        message: `Pickup Rates Found`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Pickup Rates Found` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -206,17 +147,11 @@ export const confirmPickup = createAsyncThunk(
   async ({ pickupId, rateId, orders }: any, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/shipping/confirm_pickup`, { pickupId, rateId, orders });
-      Covy().showSnackbar({
-        message: `Pickup Confirmed`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Pickup Confirmed` }));
 
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -230,20 +165,18 @@ export const differentShippingRates = createAsyncThunk(
         const { data } = await axios.get(
           `/api/shipping/${order._id}/different_shipping_rates/${order.shipping.shipment_id}`
         );
-        Covy().showSnackbar({
-          message: `New Shipping Rates Found`,
-          severity: "success",
-        });
+        thunkApi.dispatch(
+          showSuccess({
+            message: `New Shipping Rates Found`,
+          })
+        );
         return data;
       } else {
         const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
         return data;
       }
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -260,7 +193,7 @@ export const differentShippingRates = createAsyncThunk(
 //     );
 //     return data;
 //     } catch (error) {
-//   Covy().showSnackbar({
+//   thunkApi.dispatch(showSuccess({
 //     message: errorMessage(error),
 //     severity: "error"
 //   });
@@ -273,7 +206,7 @@ export const differentShippingRates = createAsyncThunk(
 //     });
 //     return response_data;
 //     } catch (error) {
-//   Covy().showSnackbar({
+//   thunkApi.dispatch(showSuccess({
 //     message: errorMessage(error),
 //     severity: "error"
 //   });
@@ -293,7 +226,7 @@ export const differentShippingRates = createAsyncThunk(
 //       );
 //       return data;
 //       } catch (error) {
-//   Covy().showSnackbar({
+//   thunkApi.dispatch(showSuccess({
 //     message: errorMessage(error),
 //     severity: "error"
 //   });
@@ -314,7 +247,7 @@ export const differentShippingRates = createAsyncThunk(
 //       );
 //       return data;
 //       } catch (error) {
-//   Covy().showSnackbar({
+//   thunkApi.dispatch(showSuccess({
 //     message: errorMessage(error),
 //     severity: "error"
 //   });
@@ -334,7 +267,7 @@ export const differentShippingRates = createAsyncThunk(
 //     );
 //     return data;
 //     } catch (error) {
-//   Covy().showSnackbar({
+//   thunkApi.dispatch(showSuccess({
 //     message: errorMessage(error),
 //     severity: "error"
 //   });

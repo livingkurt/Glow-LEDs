@@ -5,16 +5,15 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const listFeatures = createAsyncThunk("features/listFeatures", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/features?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -29,10 +28,7 @@ export const saveFeature = createAsyncThunk("features/saveFeature", async (featu
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -42,10 +38,7 @@ export const detailsFeature = createAsyncThunk("features/detailsFeature", async 
     const { data } = await axios.get(`/api/features/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -55,10 +48,7 @@ export const deleteFeature = createAsyncThunk("features/deleteFeature", async (p
     const { data } = await axios.delete("/api/features/" + pathname);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

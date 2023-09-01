@@ -5,16 +5,15 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const listFilaments = createAsyncThunk("filaments/listFilaments", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/filaments?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -29,10 +28,7 @@ export const saveFilament = createAsyncThunk("filaments/saveFilament", async (fi
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -42,10 +38,7 @@ export const detailsFilament = createAsyncThunk("filaments/detailsFilament", asy
     const { data } = await axios.get(`/api/filaments/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -55,10 +48,7 @@ export const deleteFilament = createAsyncThunk("filaments/deleteFilament", async
     const { data } = await axios.delete("/api/filaments/" + pathname);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

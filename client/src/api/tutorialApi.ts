@@ -4,6 +4,8 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getTutorials = async ({
   search,
@@ -29,20 +31,14 @@ export const getTutorials = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any }) => {
   try {
     return axios.put(`/api/tutorials/reorder`, { reorderedItems });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -52,10 +48,7 @@ export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (
 
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -64,24 +57,15 @@ export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tu
   try {
     if (!tutorial._id) {
       const { data } = await axios.post("/api/tutorials", tutorial);
-      Covy().showSnackbar({
-        message: `Tutorial Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Tutorial Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/tutorials/${tutorial._id}`, tutorial);
-      Covy().showSnackbar({
-        message: `Tutorials Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Tutorials Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -96,16 +80,10 @@ export const detailsTutorial = createAsyncThunk(
       } else if (pathname) {
         response = await axios.get(`/api/tutorials/${pathname}/pathname`);
       }
-      Covy().showSnackbar({
-        message: `Tutorial Found`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Tutorial Found` }));
       return response.data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -113,16 +91,10 @@ export const detailsTutorial = createAsyncThunk(
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/tutorials/${id}`);
-    Covy().showSnackbar({
-      message: `Tutorial Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Tutorial Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

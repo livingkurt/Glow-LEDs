@@ -5,7 +5,7 @@ const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, varia
     <button
       type="button"
       className={`${variant ? "btn" : ""} ${variant} ${className} ${fullWidth ? "w-100per" : ""}`}
-      onClick={variant !== "disabled" && onClick}
+      onClick={variant !== "disabled" ? onClick : x => x}
       onKeyUp={onKeyUp}
       {...otherProps}
     >

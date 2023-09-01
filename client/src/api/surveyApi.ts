@@ -5,20 +5,16 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/surveys?${create_query(query)}`);
-    Covy().showSnackbar({
-      message: `Surveys Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Surveys Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -27,24 +23,15 @@ export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: 
   try {
     if (!survey._id) {
       const { data } = await axios.post("/api/surveys", survey);
-      Covy().showSnackbar({
-        message: `Survey Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Survey Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/surveys/${survey._id}`, survey);
-      Covy().showSnackbar({
-        message: `Survey Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Survey Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -52,16 +39,10 @@ export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: 
 export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/surveys/${id}`);
-    Covy().showSnackbar({
-      message: `Survey Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Survey Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -69,16 +50,10 @@ export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id
 export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/surveys/" + pathname);
-    Covy().showSnackbar({
-      message: `Survey Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Survey Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

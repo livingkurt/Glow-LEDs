@@ -5,16 +5,15 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const listEmails = createAsyncThunk("emails/listEmails", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/emails?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -29,10 +28,7 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -42,10 +38,7 @@ export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: s
     const { data } = await axios.get(`/api/emails/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -55,10 +48,7 @@ export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathnam
     const { data } = await axios.delete("/api/emails/" + pathname);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -87,10 +77,7 @@ export const sendContactEmail = createAsyncThunk(
       axios.post("/api/emails/contact_confirmation", contact_info);
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );

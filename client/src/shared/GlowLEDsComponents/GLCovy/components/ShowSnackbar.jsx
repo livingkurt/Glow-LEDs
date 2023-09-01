@@ -1,11 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { unmountComponentAtNode } from "react-dom";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 
-const ShowSnackbar = ({ containerRoot, message, open, severity, duration, horizontal, vertical }) => {
+const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizontal, vertical }) => {
   const handleClose = () => {
-    containerRoot.unmount();
+    unmountComponentAtNode(containerNode);
   };
 
   // eslint-disable-next-line consistent-return

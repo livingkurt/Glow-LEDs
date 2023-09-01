@@ -4,6 +4,8 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getWholesalers = async ({
   search,
@@ -29,10 +31,7 @@ export const getWholesalers = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -42,10 +41,7 @@ export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", a
 
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -54,24 +50,15 @@ export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", asy
   try {
     if (!wholesaler._id) {
       const { data } = await axios.post("/api/wholesalers", wholesaler);
-      Covy().showSnackbar({
-        message: `Wholesaler Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Wholesaler Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/wholesalers/${wholesaler._id}`, wholesaler);
-      Covy().showSnackbar({
-        message: `Wholesaler Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Wholesaler Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -81,16 +68,10 @@ export const detailsWholesaler = createAsyncThunk(
   async ({ id }: any, thunkApi: any) => {
     try {
       const { data } = await axios.get(`/api/wholesalers/${id}`);
-      Covy().showSnackbar({
-        message: `Wholesaler Found`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Wholesaler Found` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -98,16 +79,10 @@ export const detailsWholesaler = createAsyncThunk(
 export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler", async (id, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/wholesalers/${id}`);
-    Covy().showSnackbar({
-      message: `Wholesaler Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Wholesaler Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

@@ -25,7 +25,7 @@ const UpdateNotifier = () => {
       // Clean up the interval on unmount
       return () => clearInterval(interval);
     } catch (error) {
-      // Covy().showSnackbar({
+      // thunkApi.dispatch(showSuccess({
       //   message: errorMessage(error),
       //   severity: "error",
       // });

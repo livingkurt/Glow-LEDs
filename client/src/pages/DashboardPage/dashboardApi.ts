@@ -1,22 +1,21 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import Covy from "../../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import { errorMessage } from "../../helpers/sharedHelpers";
+import store from "../../store";
+import { showError, showSuccess } from "../../slices/snackbarSlice";
 
 export const updateVersion = async () => {
   try {
     const { data } = await axios.put(`/api/versions/increment`);
-    Covy().showSnackbar({
-      message: `Version updated to ${data.version}`,
-      severity: "success",
-    });
+    store.dispatch(
+      showSuccess({
+        message: `Version updated to ${data.version}`,
+      })
+    );
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 

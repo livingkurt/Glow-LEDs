@@ -5,6 +5,8 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getExpenses = async ({
   search,
@@ -30,10 +32,7 @@ export const getExpenses = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -47,10 +46,7 @@ export const listExpenses = createAsyncThunk("expenses/listExpenses", async (que
     const { data } = await axios.get(`/api/expenses?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -59,24 +55,15 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
   try {
     if (!expense._id) {
       const { data } = await axios.post("/api/expenses", expense);
-      Covy().showSnackbar({
-        message: `Expense Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Expense Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/expenses/${expense._id}`, expense);
-      Covy().showSnackbar({
-        message: `Expense Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Expense Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -84,16 +71,10 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
 export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/expenses/${id}`);
-    Covy().showSnackbar({
-      message: `Expense Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Expense Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -103,10 +84,7 @@ export const getExpensesByLink = createAsyncThunk("expenses/getExpensesByLink", 
     const { data } = await axios.put(`/api/expenses/link`, { link });
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -114,16 +92,10 @@ export const getExpensesByLink = createAsyncThunk("expenses/getExpensesByLink", 
 export const deleteExpense = createAsyncThunk("expenses/deleteExpense", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/expenses/" + pathname);
-    Covy().showSnackbar({
-      message: `Expense Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Expense Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

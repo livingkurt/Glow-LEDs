@@ -5,6 +5,8 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getPaychecks = async ({
   search,
@@ -30,10 +32,7 @@ export const getPaychecks = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -48,10 +47,7 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
 
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -60,24 +56,15 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
   try {
     if (!paycheck._id) {
       const { data } = await axios.post("/api/paychecks", paycheck);
-      Covy().showSnackbar({
-        message: `Paycheck Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Paycheck Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/paychecks/${paycheck._id}`, paycheck);
-      Covy().showSnackbar({
-        message: `Paycheck Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Paycheck Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -85,16 +72,10 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
 export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/paychecks/${id}`);
-    Covy().showSnackbar({
-      message: `Paycheck Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Paycheck Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -102,16 +83,10 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
 export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/paychecks/" + pathname);
-    Covy().showSnackbar({
-      message: `Paycheck Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Paycheck Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -121,16 +96,10 @@ export const deleteMultiplePaychecks = createAsyncThunk(
   async (ids: string, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
-      Covy().showSnackbar({
-        message: `Paychecks Deleted`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );

@@ -19,6 +19,7 @@ import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 import { hot } from "react-hot-loader/root";
 import { AdminComponents, Components, PrivateComponents } from "./shared/RouteComponents/pages";
 import Head from "./shared/RouteComponents/Head";
+import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Container setVisible={setVisible} visible={visible}>
-          {/* <Head /> */}
+          <GLSnackbar />
+          <Head />
           {isBrowser && width > 1158 && height > 900 ? (
             <Headroom>
               <Header visible={visible} />

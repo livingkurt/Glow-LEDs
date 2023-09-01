@@ -215,66 +215,6 @@ const ProductOptions = () => {
           </div>
         </li>
       )}
-      {/* {product.name === "CLOZD Omniskinz" && (
-        <li>
-          <div className={`ai-c h-25px mv-20px ${width < 1150 ? "jc-b" : ""}`}>
-            <label className="mv-0px mr-10px title_font">
-              {product.secondary_group_name ? (
-                product.secondary_group_name
-              ) : (
-                "Design"
-              )}: {" "}
-            </label>
-            <div className="custom-select">
-              <select
-                className="qty_select_dropdown w-100per"
-                onChange={e => update_secondary(e)}
-                value={JSON.stringify(secondary_product_object)}
-                defaultValue={JSON.stringify(secondary_product_object)}
-              >
-                <option key={1} defaultValue="">
-                  Choose{" "}
-                  {product.secondary_group_name && product.secondary_group_name}
-                </option>
-                {product.secondary_products.map((secondary, index) => (
-                  <option key={index} value={JSON.stringify(secondary)}>
-                    {determine_secondary_product_name(secondary.name, product)}
-                  </option>
-                ))}
-              </select>
-              <span className="custom-arrow" />
-            </div>
-          </div>
-          <div className="mv-2rem">
-            <input
-              type="checkbox"
-              name="show_add_on"
-              defaultChecked={show_add_on}
-              style={{
-                transform: "scale(1.5)",
-              }}
-              className="mr-1rem"
-              id="show_add_on"
-              onChange={e => {
-                dispatch(set_show_add_on(show => ){
-
-                    secondary_color_product_object:
-                      secondary_color_product_object.price,
-                  });
-                  !show
-                    ? dispatch(set_price)(
-                        secondary_color_product_object.price + product.price
-                      )
-                    : dispatch(set_price(product.price));
-
-                  return show ? false : true;
-                });
-              }}
-            />
-            <label htmlFor="show_add_on mb-20px">Add more sleds</label>
-          </div>
-        </li>
-      )} */}
       {(names_hide_add_to_cart.includes(product.name) && !secondary_product) ||
       (categories_hide_add_to_cart.includes(product.category) && !secondary_product) ? (
         <div></div>
@@ -528,4 +468,3 @@ const ProductOptions = () => {
 };
 
 export default ProductOptions;
-// 1762 smoke tree st. Hesperia ca, 92345

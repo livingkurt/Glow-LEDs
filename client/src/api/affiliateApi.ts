@@ -3,6 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 import * as API from "../api";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
@@ -32,10 +34,7 @@ export const getAffiliates = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -44,10 +43,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
     const { data } = await axios.get(`/api/affiliates?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -75,10 +71,7 @@ export const saveAffiliate = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -95,10 +88,7 @@ export const detailsAffiliate = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -108,10 +98,7 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
     const { data } = await axios.delete(`/api/affiliates/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -119,16 +106,11 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
 export const generateSponsorCodes = createAsyncThunk("affiliates/generateSponsorCodes", async (id, thunkApi: any) => {
   try {
     const { data } = await axios.post(`/api/affiliates/${id}/generate_sponsor_codes`);
-    Covy().showSnackbar({
-      message: `Codes Generated`,
-      severity: "success",
-    });
+
+    thunkApi.dispatch(showSuccess({ message: `Codes Generated` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -140,10 +122,7 @@ export const create_rave_mob_affiliates = createAsyncThunk(
       const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv });
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -171,10 +150,7 @@ export const affiliateEarnings = createAsyncThunk(
       );
       return { data, type };
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -192,10 +168,7 @@ export const monthlyCheckin = createAsyncThunk(
       await handleTokenRefresh(true);
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );

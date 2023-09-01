@@ -5,6 +5,8 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getPromos = async ({
   search,
@@ -30,10 +32,7 @@ export const getPromos = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -48,10 +47,7 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
 
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -61,16 +57,10 @@ export const listSponsorCodes = createAsyncThunk(
   async (affiliateId: string, thunkApi: any) => {
     try {
       const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
-      Covy().showSnackbar({
-        message: `Sponsor Promos Found`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -79,24 +69,15 @@ export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any,
   try {
     if (!promo._id) {
       const { data } = await axios.post("/api/promos", promo);
-      Covy().showSnackbar({
-        message: `Promo Created`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Promo Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/promos/${promo._id}`, promo);
-      Covy().showSnackbar({
-        message: `Promo Updated`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Promo Updated` }));
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -104,16 +85,10 @@ export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any,
 export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/promos/${id}`);
-    Covy().showSnackbar({
-      message: `Promo Found`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Promo Found` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -121,16 +96,10 @@ export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id: s
 export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/promos/" + pathname);
-    Covy().showSnackbar({
-      message: `Promo Deleted`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Promo Deleted` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -140,16 +109,10 @@ export const deleteMultiplePromos = createAsyncThunk(
   async (ids: string, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
-      Covy().showSnackbar({
-        message: `Promos Deleted`,
-        severity: "success",
-      });
+      thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
       return data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -157,16 +120,10 @@ export const deleteMultiplePromos = createAsyncThunk(
 export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes", async (_data, thunkApi: any) => {
   try {
     const { data } = await axios.post(`/api/promos/refresh_sponsor_codes`, {});
-    Covy().showSnackbar({
-      message: `Sponsor Codes Refreshed`,
-      severity: "success",
-    });
+    thunkApi.dispatch(showSuccess({ message: `Sponsor Codes Refreshed` }));
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

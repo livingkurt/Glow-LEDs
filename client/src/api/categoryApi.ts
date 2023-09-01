@@ -4,6 +4,8 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
 export const getCategorys = async ({
   search,
@@ -29,20 +31,14 @@ export const getCategorys = async ({
       },
     });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 export const reorderCategorys = async ({ reorderedItems }: { reorderedItems: any }) => {
   try {
     return axios.put(`/api/categorys/reorder`, { reorderedItems });
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 
@@ -51,10 +47,7 @@ export const listCategorys = createAsyncThunk("categorys/listCategorys", async (
     const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -69,10 +62,7 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
       return data;
     }
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
@@ -89,10 +79,7 @@ export const detailsCategory = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
-      Covy().showSnackbar({
-        message: errorMessage(error),
-        severity: "error",
-      });
+      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
     }
   }
 );
@@ -102,10 +89,7 @@ export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async
     const { data } = await axios.delete(`/api/categorys/${id}`);
     return data;
   } catch (error) {
-    Covy().showSnackbar({
-      message: errorMessage(error),
-      severity: "error",
-    });
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

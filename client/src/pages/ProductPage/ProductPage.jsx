@@ -42,11 +42,12 @@ const ProductPage = () => {
       if (product) {
         console.log({ product });
         normalizeProductPage({ product, dispatch, current_user });
+      } else {
+        dispatch(unset_state());
       }
     }
     return () => {
       clean = false;
-      dispatch(unset_state());
     };
   }, [dispatch, product]);
 
