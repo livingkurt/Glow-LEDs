@@ -14,14 +14,14 @@ const ProductPageHead = () => {
       <meta name="twitter:title" content={meta_title} />
       <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
       <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
-      {images_object && (
-        <div>
-          <meta property="og:image" content={"https://www.glow-leds.com/" + images_object[0].link} />
 
-          <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + images_object[0].link} />
-          <meta name="twitter:image" content={"https://www.glow-leds.com/" + images_object[0].link} />
-        </div>
+      {images_object && <meta property="og:image" content={"https://www.glow-leds.com/" + images_object[0].link} />}
+
+      {images_object && (
+        <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + images_object[0].link} />
       )}
+      {images_object && <meta name="twitter:image" content={"https://www.glow-leds.com/" + images_object[0].link} />}
+
       <meta
         name="description"
         content={

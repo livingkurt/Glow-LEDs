@@ -142,3 +142,4 @@ client/src/scss/OLDSCSS.scss
 .aider.tags.cache.v1/
 .aider.ident.cache.v1/
 .aider.chat.history.md
+.aider.chat.history
