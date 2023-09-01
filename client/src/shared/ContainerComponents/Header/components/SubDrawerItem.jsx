@@ -5,18 +5,18 @@ import DropdownButton from "./DropdownButton";
 
 const SubDrawerItem = ({ columns, show_hide_nested }) => (
   <>
-    {columns.map((column, columnIndex) => (
-      <React.Fragment key={`column-${columnIndex}`}>
-        {column.rows.map((row, rowIndex) => (
-          <React.Fragment key={`row-${rowIndex}`}>
+    {columns.map(column => (
+      <>
+        {column.rows.map(row => (
+          <>
             {row.sideDrawer && (
-              <React.Fragment key={`sideDrawer-${rowIndex}`}>
-                {row.sideDrawer.drawerItems.map((drawerItem, drawerItemIndex) => (
-                  <React.Fragment key={`drawerItem-${drawerItemIndex}`}>
+              <>
+                {row.sideDrawer.drawerItems.map((drawerItem, index) => (
+                  <>
                     {drawerItem.subSideDrawer && (
                       <div
                         className="nav-dropdown-subcategory-content hover_fade_in"
-                        key={`${drawerItem._id}-drawerItem-${drawerItemIndex}`}
+                        key={`${drawerItem._id}-drawerItem-${index}`}
                         id={drawerItem.id}
                       >
                         <Link to={drawerItem.path}>
@@ -33,13 +33,13 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => (
                         ))}
                       </div>
                     )}
-                  </React.Fragment>
+                  </>
                 ))}
-              </React.Fragment>
+              </>
             )}
-          </React.Fragment>
+          </>
         ))}
-      </React.Fragment>
+      </>
     ))}
   </>
 );
