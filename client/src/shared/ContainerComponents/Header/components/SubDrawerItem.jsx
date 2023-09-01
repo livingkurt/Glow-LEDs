@@ -33,15 +33,14 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => (
                         ))}
                       </div>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
-              </>
+              </React.Fragment>
             )}
-          </>
+          </React.Fragment>
         ))}
-      </>
+      </React.Fragment>
     ))}
-  </>
 );
 
 export default SubDrawerItem;
