@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
-import { unmountComponentAtNode } from "react-dom";
 import { Alert } from "@mui/material";
 
-const SnackBarReqLoadBar = ({ formData, loadMessage, successMessage, failMessage, containerNode, path, updateState }) => {
+const SnackBarReqLoadBar = ({
+  formData,
+  loadMessage,
+  successMessage,
+  failMessage,
+  containerRoot,
+  path,
+  updateState,
+}) => {
   const [progress, setProgress] = useState(0);
   const [successStat, setSuccessStat] = useState(false);
   const [failStat, setFailStat] = useState(false);
@@ -29,13 +36,13 @@ const SnackBarReqLoadBar = ({ formData, loadMessage, successMessage, failMessage
         setSuccessStat(true);
         if (progress < 100) {
           setTimeout(() => {
-            unmountComponentAtNode(containerNode);
+            containerRoot.unmount();
           }, 3000);
         }
       } else {
         setFailStat(true);
         setTimeout(() => {
-          unmountComponentAtNode(containerNode);
+          containerRoot.unmount();
         }, 3000);
       }
     };
@@ -112,7 +119,7 @@ SnackBarReqLoadBar.propTypes = {
   successMessage: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   failMessage: PropTypes.string.isRequired,
-  updateState: PropTypes.func.isRequired
+  updateState: PropTypes.func.isRequired,
 };
 
 export default SnackBarReqLoadBar;

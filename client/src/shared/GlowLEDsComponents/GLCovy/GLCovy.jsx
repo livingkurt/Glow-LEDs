@@ -17,6 +17,7 @@ const Covy = () => ({
       <ShowSnackbar
         anchorOrigin={{ horizontal, vertical }}
         containerNode={containerNode}
+        containerRoot={containerRoot}
         duration={duration}
         message={message}
         severity={severity}
@@ -26,7 +27,7 @@ const Covy = () => ({
   showSnackBarReqLoadBar: ({ formData, loadMessage, successMessage, failMessage, path, updateState }) =>
     loaderContainerRoot.render(
       <SnackBarReqLoadBar
-        containerNode={loaderContainerNode}
+        containerRoot={loaderContainerRoot}
         path={path}
         formData={formData}
         loadMessage={loadMessage}
@@ -40,6 +41,7 @@ const Covy = () => ({
       <ShowAutosave
         anchorOrigin={{ horizontal, vertical }}
         containerNode={containerNode}
+        containerRoot={containerRoot}
         duration={duration}
         message={message}
         severity={severity}
