@@ -47,7 +47,7 @@ const ProductPage = () => {
       clean = false;
       dispatch(unset_state());
     };
-  }, [current_user, dispatch, product]);
+  }, [dispatch, product]);
 
   useEffect(() => {
     let clean = true;

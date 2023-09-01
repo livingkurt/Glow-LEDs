@@ -113,6 +113,7 @@ export default {
             {
               path: "collections",
             },
+
             {
               path: "color_products",
               populate: {
@@ -295,29 +296,50 @@ export default {
             {
               path: "collections",
             },
+
             {
               path: "color_products",
-              populate: {
-                path: "filament",
-              },
+              populate: [
+                {
+                  path: "filament",
+                },
+                {
+                  path: "images_object",
+                },
+              ],
             },
             {
               path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
+              populate: [
+                {
+                  path: "filament",
+                },
+                {
+                  path: "images_object",
+                },
+              ],
             },
             {
               path: "option_products",
-              populate: {
-                path: "filament",
-              },
+              populate: [
+                {
+                  path: "filament",
+                },
+                {
+                  path: "images_object",
+                },
+              ],
             },
             {
               path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
+              populate: [
+                {
+                  path: "filament",
+                },
+                {
+                  path: "images_object",
+                },
+              ],
             },
           ],
         })

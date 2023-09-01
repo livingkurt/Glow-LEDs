@@ -121,6 +121,7 @@ const productPage = createSlice({
     },
     update_color: (state, { payload }) => {
       const { color, color_code, images_object, _id, quantity, count_in_stock } = payload;
+      console.log({ payload });
       state.color = color;
       state.color_code = color_code;
       state.images = images_object || [];

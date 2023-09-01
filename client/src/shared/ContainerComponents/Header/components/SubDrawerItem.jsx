@@ -19,7 +19,6 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => (
                         key={`${drawerItem._id}-drawerItem-${index}`}
                         id={drawerItem.id}
                       >
-                        {console.log({ _id: drawerItem._id })}
                         <Link to={drawerItem.path}>
                           <GLButton
                             variant={drawerItem.subSideDrawer.variant}

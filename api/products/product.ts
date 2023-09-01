@@ -9,10 +9,10 @@ const reviewSchema = new mongoose.Schema(
     last_name: { type: String },
     rating: { type: Number, default: 0 },
     comment: { type: String, required: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
@@ -51,8 +51,8 @@ const productSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        default: "5f2d7c0e9005a57059801ce8"
-      }
+        default: "5f2d7c0e9005a57059801ce8",
+      },
     ],
     description: { type: String },
     rating: { type: Number, default: 0 },
@@ -115,10 +115,10 @@ const productSchema = new mongoose.Schema(
     default_option: { type: Boolean, default: false },
     option: { type: Boolean, default: false },
     macro_product: { type: Boolean, default: false },
-    extra_cost: { type: Number }
+    extra_cost: { type: Number },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
