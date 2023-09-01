@@ -5,18 +5,18 @@ import DropdownButton from "./DropdownButton";
 
 const SubDrawerItem = ({ columns, show_hide_nested }) => (
   <>
-    {columns.map(column => (
-      <>
-        {column.rows.map(row => (
-          <>
+    {columns.map((column, columnIndex) => (
+      <React.Fragment key={`column-${columnIndex}`}>
+        {column.rows.map((row, rowIndex) => (
+          <React.Fragment key={`row-${rowIndex}`}>
             {row.sideDrawer && (
-              <>
-                {row.sideDrawer.drawerItems.map((drawerItem, index) => (
-                  <>
+              <React.Fragment key={`sideDrawer-${rowIndex}`}>
+                {row.sideDrawer.drawerItems.map((drawerItem, drawerItemIndex) => (
+                  <React.Fragment key={`drawerItem-${drawerItemIndex}`}>
                     {drawerItem.subSideDrawer && (
                       <div
                         className="nav-dropdown-subcategory-content hover_fade_in"
-                        key={`${drawerItem._id}-drawerItem-${index}`}
+                        key={`${drawerItem._id}-drawerItem-${drawerItemIndex}`}
                         id={drawerItem.id}
                       >
                         <Link to={drawerItem.path}>
