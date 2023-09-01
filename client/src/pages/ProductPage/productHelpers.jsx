@@ -308,3 +308,21 @@ export const updateRecentlyViewed = product => {
     }
   }
 };
+
+export const determine_secondary_product_name = (name, item) => {
+  console.log({ name, item });
+  const { category, subcategory } = item;
+  if (category === "diffuser_caps") {
+    return name.split(" ")[0];
+  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 4] === "Outline") {
+    return name.replace(" Outline + Batman Decals", "");
+  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 2] === "Batman") {
+    return name.replace(" Batman Decals", "");
+  } else if (subcategory === "refresh" && name.includes("Bulk")) {
+    return name.split(" ")[1].trim();
+  } else if (name.includes("Capez")) {
+    return name.replace(" Capez", "");
+  } else {
+    return name.includes("-") ? name.split("-")[1].trim() : name;
+  }
+};

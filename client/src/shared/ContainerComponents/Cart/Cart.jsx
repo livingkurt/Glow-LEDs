@@ -103,7 +103,7 @@ const Cart = () => {
               </div>
             </li>
             {cartItems && cartItems.length === 0 ? (
-              <div className="p-1rem ta-c w-100per">
+              <div className="p-1rem ta-c w-100per max-w-500px">
                 <div className="ta-c w-100per">Cart is Empty</div>
                 <RecentlyViewed closeMenu={closeMenu} />
                 <TopCategories category_items={category_items} closeMenu={closeMenu} />

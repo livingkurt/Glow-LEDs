@@ -179,11 +179,11 @@ export const deleteCartItem = createAsyncThunk(
         },
       } = thunkApi.getState();
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
-      console.log({ data });
       thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
       return { data, type };
     } catch (error) {
       thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      return thunkApi.rejectWithValue(error.response?.data);
     }
   }
 );
