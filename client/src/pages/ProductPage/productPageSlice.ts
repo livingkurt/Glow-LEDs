@@ -196,8 +196,10 @@ const productPage = createSlice({
       state.secondary_product_object = secondary;
 
       if (secondary.subcategory !== "coin") {
-        state.images = secondary.images_object || [];
-        state.image = secondary.images_object?.[0]?.link || "";
+        if (secondary.images_object?.length > 0) {
+          state.images = secondary.images_object || [];
+          state.image = secondary.images_object?.[0]?.link || "";
+        }
         if (product.name !== "Diffuser Caps + Adapters Starter Kit V4" && product.name !== "CLOZD Omniskinz Sleds") {
           state.option_products = secondary.option_products || [];
         }
