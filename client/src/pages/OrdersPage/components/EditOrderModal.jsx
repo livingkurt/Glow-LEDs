@@ -4,7 +4,18 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { open_edit_order_modal, set_edit_order_modal, set_order } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { AppBar, Box, Button, Grid, IconButton, Tab, Tabs, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
@@ -16,6 +27,8 @@ const EditOrderModal = () => {
   const dispatch = useDispatch();
 
   const [tabIndex, setTabIndex] = useState(0);
+  const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
+
   const orderPage = useSelector(state => state.orders.orderPage);
   const { edit_order_modal, order, loading } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
@@ -51,12 +64,16 @@ const EditOrderModal = () => {
     };
 
     const updatedOrderItems = [...order.orderItems, emptyOrderItem];
-    const updatedPrices = updateOrderPrices({
-      orderItems: updatedOrderItems,
-      shippingPrice: order.shippingPrice,
-      taxPrice: order.taxPrice,
-      tip: order.tip,
-    });
+    let updatedPrices = {};
+
+    if (isUpdatePricesActive) {
+      updatedPrices = updateOrderPrices({
+        orderItems: updatedOrderItems,
+        shippingPrice: order.shippingPrice,
+        taxPrice: order.taxPrice,
+        tip: order.tip,
+      });
+    }
 
     const updatedOrder = {
       ...order,
@@ -74,13 +91,16 @@ const EditOrderModal = () => {
   const handleDeleteItem = index => {
     const updatedOrderItems = [...order.orderItems];
     updatedOrderItems.splice(index, 1);
+    let updatedPrices = {};
 
-    const updatedPrices = updateOrderPrices({
-      orderItems: updatedOrderItems,
-      shippingPrice: order.shippingPrice,
-      taxPrice: order.taxPrice,
-      tip: order.tip,
-    });
+    if (isUpdatePricesActive) {
+      updatedPrices = updateOrderPrices({
+        orderItems: updatedOrderItems,
+        shippingPrice: order.shippingPrice,
+        taxPrice: order.taxPrice,
+        tip: order.tip,
+      });
+    }
 
     const updatedOrder = {
       ...order,
@@ -93,10 +113,9 @@ const EditOrderModal = () => {
     // Move to the closest active tab
     setTabIndex(prevIndex => {
       if (prevIndex === updatedOrderItems.length) {
-        // If it was the last tab
-        return updatedOrderItems.length - 1; // Move to the new last tab
+        return updatedOrderItems.length - 1;
       }
-      return prevIndex > index ? prevIndex - 1 : prevIndex; // Otherwise, move to the closest tab
+      return prevIndex > index ? prevIndex - 1 : prevIndex;
     });
   };
 
@@ -135,7 +154,18 @@ const EditOrderModal = () => {
         <Typography component="h4" variant="h4" sx={{ mb: 2 }}>
           {formFields.orderItems.title}
         </Typography>
-
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isUpdatePricesActive}
+              size="large"
+              onChange={() => setIsUpdatePricesActive(!isUpdatePricesActive)}
+              name="updatePrices"
+              color="primary"
+            />
+          }
+          label="Update Prices"
+        />
         <AppBar position="sticky" color="transparent">
           <Tabs
             value={tabIndex}
@@ -176,9 +206,16 @@ const EditOrderModal = () => {
                     onChange={(e, value) => {
                       // Update the individual order item
                       const updatedOrder = updateOrderItem(index, value, order);
+                      let updatedPrices = {};
 
-                      // Update the prices using the helper function
-                      const updatedPrices = updateOrderPrices(updatedOrder.orderItems);
+                      if (isUpdatePricesActive) {
+                        updatedPrices = updateOrderPrices({
+                          orderItems: updatedOrder.orderItems,
+                          shippingPrice: order.shippingPrice,
+                          taxPrice: order.taxPrice,
+                          tip: order.tip,
+                        });
+                      }
 
                       // Merge the updated prices into the updatedOrder object
                       const finalUpdatedOrder = {
@@ -203,7 +240,7 @@ const EditOrderModal = () => {
                       });
 
                       // Update the prices if qty changes
-                      if (value.hasOwnProperty("qty")) {
+                      if (isUpdatePricesActive && value.hasOwnProperty("qty")) {
                         const updatedPrices = updateOrderPrices({
                           orderItems: updatedOrderItems,
                           shippingPrice: order.shippingPrice,
