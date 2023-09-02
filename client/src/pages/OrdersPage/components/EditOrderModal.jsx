@@ -4,7 +4,7 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { open_edit_order_modal, set_edit_order_modal, set_order } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { AppBar, Button, Grid, IconButton, Tab, Tabs, Typography } from "@mui/material";
+import { AppBar, Box, Button, Grid, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
@@ -149,6 +149,7 @@ const EditOrderModal = () => {
             })}
           </Tabs>
         </AppBar>
+        <Box sx={{ m: 3 }} />
         {order?.orderItems?.map((item, index) => {
           return (
             <GLTabPanel value={tabIndex} index={index}>
@@ -193,14 +194,26 @@ const EditOrderModal = () => {
                     formData={formFields.orderItems.fields}
                     state={item}
                     onChange={value => {
-                      const orderItems = order.orderItems.map((item, i) => {
+                      let updatedOrderItems = order.orderItems.map((item, i) => {
                         if (i === index) {
                           return { ...item, ...value };
                         } else {
                           return item;
                         }
                       });
-                      dispatch(set_order({ orderItems }));
+
+                      // Update the prices if qty changes
+                      if (value.hasOwnProperty("qty")) {
+                        const updatedPrices = updateOrderPrices({
+                          orderItems: updatedOrderItems,
+                          shippingPrice: order.shippingPrice,
+                          taxPrice: order.taxPrice,
+                          tip: order.tip,
+                        });
+                        dispatch(set_order({ orderItems: updatedOrderItems, ...updatedPrices }));
+                      } else {
+                        dispatch(set_order({ orderItems: updatedOrderItems }));
+                      }
                     }}
                     loading={loading && loading_products}
                   />

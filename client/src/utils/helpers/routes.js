@@ -60,7 +60,6 @@ const adminRoutes = [
   { path: "/secure/glow/gcode_continous", element: "GcodeContinousPage" },
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
   { path: "/secure/glow/products", element: "ProductsPage" },
-  { path: "/secure/glow/edit_order/:id", element: "EditOrderPage" },
   { path: "/secure/glow/orders", element: "OrdersPage" },
   { path: "/secure/glow/users", element: "UsersPage" },
   { path: "/secure/glow/paychecks", element: "PaychecksPage" },

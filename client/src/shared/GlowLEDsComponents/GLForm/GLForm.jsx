@@ -78,7 +78,9 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   getOptionSelected={(option, value) => option._id === value._id}
                   name={fieldName}
                   label={fieldData.label}
-                  onChange={(event, value) => handleInputChange(fieldName, value)}
+                  onChange={(event, value) => {
+                    handleInputChange(fieldName, value);
+                  }}
                 />
               );
             case "image_upload":

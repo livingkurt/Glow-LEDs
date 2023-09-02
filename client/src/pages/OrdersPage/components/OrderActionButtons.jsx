@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
@@ -8,7 +7,6 @@ import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import GenerateCSVLabel from "./GenerateCSVLabel";
-import { Link } from "react-router-dom";
 import { showSuccess } from "../../../slices/snackbarSlice";
 
 const OrderActionButtons = ({ order }) => {
@@ -168,11 +166,6 @@ const OrderActionButtons = ({ order }) => {
         </a>
       )}
       <GenerateCSVLabel order={order} />
-      <Link to={`/secure/glow/edit_order/${order._id}`} className="w-100per">
-        <GLButton variant={"secondary"} className="w-100per mv-5px">
-          Edit Order
-        </GLButton>
-      </Link>
     </div>
   );
 };

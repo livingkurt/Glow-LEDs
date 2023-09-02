@@ -30,7 +30,6 @@ import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
 import { ImagesPage } from "../../pages/ImagesPage";
-import { EditOrderPage } from "../../pages/EditOrderPage";
 import { LoginPage } from "../../pages/LoginPage";
 import VerifiedPage from "../../pages/LoginPage/components/VerifiedPage";
 import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfiePage/components";
@@ -105,7 +104,6 @@ export const AdminComponents = {
   GcodeContinousPage,
   DatabaseMigrationPage,
   ProductsPage,
-  EditOrderPage,
   OrdersPage,
   UsersPage,
   PaychecksPage,
