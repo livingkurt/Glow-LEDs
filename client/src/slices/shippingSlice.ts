@@ -2,6 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+import { printInvoice, printLabel } from "../pages/OrdersPage/ordersPageHelpers";
 
 const shippingSlice = createSlice({
   name: "shippingPage",
@@ -177,6 +178,8 @@ const shippingSlice = createSlice({
       state.loading_label = false;
       state.invoice = invoice;
       state.label = label;
+      printInvoice(invoice);
+      printLabel(label);
       state.message = "Label Bought";
     },
     [API.buyLabel.rejected as any]: (state: any, { payload, error }: any) => {
@@ -194,6 +197,8 @@ const shippingSlice = createSlice({
       state.loading_label = false;
       state.invoice = invoice;
       state.label = label;
+      printInvoice(invoice);
+      printLabel(label);
       state.message = "Label Bought";
     },
     [API.createLabel.rejected as any]: (state: any, { payload, error }: any) => {
@@ -300,6 +305,7 @@ const shippingSlice = createSlice({
     [API.createCustomLabel.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.label = payload.postage_label.label_url;
+      printLabel(payload.postage_label.label_url);
       state.message = "Label Bought";
     },
     [API.createCustomLabel.rejected as any]: (state: any, { payload, error }: any) => {

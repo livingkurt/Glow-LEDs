@@ -252,20 +252,3 @@ export const printInvoice = async (invoice: string) => {
 `,
   ]);
 };
-
-// export const printLabel = async (label: string) => {
-//   const html = `<div style="width: 100%;
-//   display: flex;
-//   height: auto;
-//   padding: 40px;
-//   align-items: center;">
-//       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
-//   </div>`;
-//   await waitForImagesToLoad(html);
-//   printHtml(html);
-// };
-
-// export const printInvoice = async (invoice: string) => {
-//   await waitForImagesToLoad(invoice);
-//   printHtml(invoice);
-// };

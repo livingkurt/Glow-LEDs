@@ -1,39 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
-import { API_Emails, API_Orders } from "../../../utils";
+import { API_Orders } from "../../../utils";
 import { Loading } from "../../../shared/SharedComponents";
-import { printInvoice, printLabel, sendEmail } from "../ordersPageHelpers";
-import { clearPrints, openLinkLabelModal } from "../../../slices/shippingSlice";
-import { toCapitalize } from "../../../utils/helper_functions";
-import { openShippingModal, set_loading_label, set_order } from "../../../slices/orderSlice";
+import { printInvoice, printLabel } from "../ordersPageHelpers";
+import { openLinkLabelModal } from "../../../slices/shippingSlice";
+import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import GenerateCSVLabel from "./GenerateCSVLabel";
 import { Link } from "react-router-dom";
-import Covy from "../../../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import { showSuccess } from "../../../slices/snackbarSlice";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
 
-  const orderPage = useSelector(state => state.orders.orderPage);
-  const { hide_label_button } = orderPage;
-
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
-  const { invoice, label, loading_label } = shippingSlice;
-
-  useEffect(() => {
-    if (invoice.length > 0 && label.length > 0) {
-      printInvoice(invoice);
-      setTimeout(() => {
-        printLabel(label);
-      }, 1000);
-      dispatch(clearPrints());
-    } else if (label.length > 0) {
-      printLabel(label);
-      dispatch(clearPrints());
-    }
-  }, [invoice, label]);
+  const { loading_label } = shippingSlice;
 
   return (
     <div className="">

@@ -273,16 +273,6 @@ const CreateLabelModal = () => {
     },
   };
 
-  useEffect(() => {
-    if (label.length > 0) {
-      setTimeout(() => {
-        printLabel(label);
-      }, 1000);
-      // dispatch(clearPrints());
-      // dispatch(closeCreateLabelModal());
-    }
-  }, [dispatch, label]);
-
   return (
     <GLActiionModal
       isOpen={createLabelModal}
