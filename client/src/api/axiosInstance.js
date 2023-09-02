@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import store from "../store";
 import { set_current_user } from "../slices/userSlice";
 import * as API from "../api";
+import { showError, startLoading, stopLoading } from "../slices/snackbarSlice";
 
 export async function getFreshAccessToken(refresh_token) {
   try {
@@ -116,5 +117,40 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// axios.interceptors.request.use(
+//   async config => {
+//     // store.dispatch(startLoading());
+
+//     const accessToken = localStorage.getItem("accessToken");
+
+//     if (accessToken) {
+//       const isRefreshRequest = config.url.includes("/api/users/refresh_login");
+
+//       if (!isRefreshRequest) {
+//         const refreshedAccessToken = await handleTokenRefresh();
+//         config.headers["Authorization"] = `Bearer ${refreshedAccessToken}`;
+//       }
+//     }
+
+//     return config;
+//   },
+//   error => {
+//     // store.dispatch(stopLoading()); // Clear loading on error
+//     return Promise.reject(error);
+//   }
+// );
+
+// axios.interceptors.response.use(
+//   response => {
+//     store.dispatch(stopLoading()); // Clear loading on successful response
+//     return response;
+//   },
+//   error => {
+//     store.dispatch(stopLoading()); // Clear loading on successful response
+//     // store.dispatch(showError({ error: errorMessage(error) })); // Set error message
+//     return Promise.reject(error);
+//   }
+// );
 
 export default axios;

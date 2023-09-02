@@ -9,30 +9,35 @@ const snackbarPage = createSlice({
     horizontal: "center",
     vertical: "top",
     duration: 4000,
+    loading: false,
+    error: "",
   },
   reducers: {
     showSuccess: (state, { payload }) => {
       state.open = true;
       state.message = payload.message;
+      state.loading = false;
       state.severity = "success";
     },
     showError: (state, { payload }) => {
       state.open = true;
       state.message = payload.message;
+      state.loading = false;
       state.severity = "error";
-    },
-    showSnackbar: (state, { payload }) => {
-      state.open = true;
-      state.message = payload.message;
-      state.severity = payload.severity;
     },
     hideSnackbar: state => {
       state.open = false;
       state.message = "";
       state.severity = "";
     },
+    startLoading: state => {
+      state.loading = true;
+    },
+    stopLoading: state => {
+      state.loading = false;
+    },
   },
 });
 
-export const { showSnackbar, hideSnackbar, showSuccess, showError } = snackbarPage.actions;
+export const { hideSnackbar, showSuccess, showError, startLoading, stopLoading } = snackbarPage.actions;
 export default snackbarPage.reducer;

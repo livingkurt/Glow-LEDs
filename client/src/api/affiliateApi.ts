@@ -7,7 +7,7 @@ import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
 import * as API from "../api";
-import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
+
 import { handleTokenRefresh } from "./axiosInstance";
 
 export const getAffiliates = async ({

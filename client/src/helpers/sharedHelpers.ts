@@ -8,8 +8,7 @@ export const domain = (): string => {
   }
 };
 
-export const errorMessage = (error: any) => {
-  console.log({ error });
+export const errorMessage = (error: any): string => {
   return `Error: ${error.response ? error.response.data.message : "An unexpected error occurred"}`;
 };
 

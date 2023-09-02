@@ -20,6 +20,7 @@ import { hot } from "react-hot-loader/root";
 import { AdminComponents, Components, PrivateComponents } from "./shared/RouteComponents/pages";
 import Head from "./shared/RouteComponents/Head";
 import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
+import GLLoading from "./shared/GlowLEDsComponents/GLLoading/GLLoading";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const App = () => {
       <Router>
         <Container setVisible={setVisible} visible={visible}>
           <GLSnackbar />
+          <GLLoading />
           <Head />
           {isBrowser && width > 1158 && height > 900 ? (
             <Headroom>

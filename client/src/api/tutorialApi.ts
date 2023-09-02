@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
+
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
