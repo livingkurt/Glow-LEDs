@@ -4,7 +4,6 @@ import jwt_decode from "jwt-decode";
 import store from "../store";
 import { set_current_user } from "../slices/userSlice";
 import * as API from "../api";
-import { showError, startLoading, stopLoading } from "../slices/snackbarSlice";
 
 export async function getFreshAccessToken(refresh_token) {
   try {
