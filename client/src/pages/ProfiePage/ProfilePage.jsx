@@ -186,7 +186,7 @@ const ProfilePage = () => {
       <EditUserModal />
       {current_user?.isAdmin && (
         <GLButton variant="icon" onClick={() => navigate.goBack()}>
-          <i class="fas fa-chevron-left"></i>
+          <i className="fas fa-chevron-left"></i>
         </GLButton>
       )}
 

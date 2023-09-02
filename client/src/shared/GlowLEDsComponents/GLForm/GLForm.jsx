@@ -1,6 +1,7 @@
 import { Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
@@ -39,10 +40,19 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
+        console.log({ fieldData });
 
         if (loading) {
           if (fieldData.type === "checkbox") {
-            return <Skeleton key={fieldName} variant="circle" width={200} height={20} style={{ marginTop: 25, marginRight: 16 }} />;
+            return (
+              <Skeleton
+                key={fieldName}
+                variant="circle"
+                width={200}
+                height={20}
+                style={{ marginTop: 25, marginRight: 16 }}
+              />
+            );
           } else {
             return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
           }
@@ -56,9 +66,15 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   value={fieldState || ""}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
-                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                    option
+                      ? fieldData.getOptionLabel
+                        ? fieldData.getOptionLabel(option)
+                        : option[fieldData.labelProp]
+                      : ""
                   }
-                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  optionDisplay={option =>
+                    fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
+                  }
                   getOptionSelected={(option, value) => option._id === value._id}
                   name={fieldName}
                   label={fieldData.label}
@@ -68,7 +84,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "image_upload":
               return (
                 <>
-                  <ImageWizard fieldData={fieldData} fieldState={fieldState} fieldName={fieldName} onChange={onChange} />
+                  <ImageWizard
+                    fieldData={fieldData}
+                    fieldState={fieldState}
+                    fieldName={fieldName}
+                    onChange={onChange}
+                  />
                 </>
               );
             case "autocomplete_multiple":
@@ -79,9 +100,15 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   value={fieldState || ""}
                   options={fieldData.options || []}
                   getOptionLabel={option =>
-                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                    option
+                      ? fieldData.getOptionLabel
+                        ? fieldData.getOptionLabel(option)
+                        : option[fieldData.labelProp]
+                      : ""
                   }
-                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  optionDisplay={option =>
+                    fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
+                  }
                   getOptionSelected={(option, value) => option._id === value._id}
                   fieldName={fieldName}
                   labelProp={fieldData.labelProp}
@@ -119,7 +146,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                   value={fieldState || ""}
                   options={{
-                    types: ["address"]
+                    types: ["address"],
                   }}
                   onPlaceSelected={place => {
                     fieldData.setGeneratedAddress(place);
@@ -196,6 +223,29 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
       })}
     </>
   );
+};
+
+GLForm.propTypes = {
+  formData: PropTypes.objectOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      options: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+      label: PropTypes.string,
+      labelProp: PropTypes.string,
+      getOptionLabel: PropTypes.func,
+      onEdit: PropTypes.func,
+      setGeneratedAddress: PropTypes.func,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  nesting: PropTypes.any, // Define the shape if possible
+  index: PropTypes.any, // Define the shape if possible
+};
+
+GLForm.defaultProps = {
+  // Define any default props here if needed
 };
 
 export default GLForm;

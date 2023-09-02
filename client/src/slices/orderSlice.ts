@@ -2,72 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
-
-const order = {
-  user: {},
-  orderItems: [],
-  messages: [],
-  shipping: {
-    shipment_id: "",
-    shipping_rate: {},
-    shipping_label: {},
-    shipment_tracker: {},
-    return_shipment_id: "",
-    return_shipping_rate: {},
-    return_shipping_label: {},
-    return_shipment_tracker: {},
-    first_name: "",
-    last_name: "",
-    email: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    international: "",
-    country: "",
-  },
-  payments: [{ paymentMethod: "stripe", payment: {}, charge: {}, refund: [], refund_reason: "" }],
-  itemsPrice: 0,
-  taxPrice: 0,
-  shippingPrice: 0,
-  totalPrice: 0,
-  refundTotal: 0,
-  guest: false,
-  isPaid: false,
-  paidAt: "",
-  isReassured: false,
-  reassuredAt: "",
-  isCrafting: false,
-  craftingAt: "",
-  isCrafted: false,
-  craftedAt: "",
-  isPackaged: false,
-  packagedAt: "",
-  isShipped: false,
-  shippedAt: "",
-  isInTransit: false,
-  inTransitAt: "",
-  isOutForDelivery: false,
-  outForDeliveryAt: "",
-  isDelivered: false,
-  deliveredAt: "",
-  isRefunded: false,
-  isPaused: false,
-  pausedAt: "",
-  parcel: {},
-  refundedAt: "",
-  order_note: "",
-  production_note: "",
-  tip: 0,
-  promo_code: "",
-  tracking_number: "",
-  tracking_url: "",
-  return_tracking_number: "",
-  is_error: false,
-  error_at: "",
-  error: false,
-};
+import { emptyOrder } from "../emptyState/order";
 
 const orderPage = createSlice({
   name: "orderPage",
@@ -76,7 +11,7 @@ const orderPage = createSlice({
     loading_order: false,
     loading_payment: false,
     orders: [],
-    order: order,
+    order: emptyOrder,
     message: "",
     success: false,
     success_order: false,
@@ -109,14 +44,14 @@ const orderPage = createSlice({
       state.success = payload;
     },
     clear_order_state: (state, { payload }) => {
-      state.order = order;
+      state.order = emptyOrder;
     },
     set_edit_order_modal: (state, { payload }) => {
       state.edit_order_modal = payload;
     },
     open_create_order_modal: (state, { payload }) => {
       state.edit_order_modal = true;
-      state.order = order;
+      state.order = emptyOrder;
     },
 
     open_edit_order_modal: (state, { payload }) => {
@@ -145,7 +80,7 @@ const orderPage = createSlice({
     },
     closeRefundModal: (state, { payload }) => {
       state.refundModal = false;
-      state.order = order;
+      state.order = emptyOrder;
     },
     setRefundAmount: (state, { payload }) => {
       state.refundAmount = payload;

@@ -101,7 +101,7 @@ export default ({ feature }: any): string => {
             <ol width="100%" style="color:white;max-width:800px;margin:auto">
             <li>
               <div>
-                <div class="">
+                <div >
                   <div>Click the WeTransfer button to begin</div>
                   <div style="display:flex;justify-content:center"><a href="https://wetransfer.com/"
                       style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;margin:20px;text-decoration:none">

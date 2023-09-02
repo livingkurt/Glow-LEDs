@@ -151,7 +151,7 @@ const OrdersPage = () => {
               }}
               aria-label="Refund"
             >
-              <i class="fas fa-hand-holding-usd"></i>
+              <i className="fas fa-hand-holding-usd"></i>
             </GLButton>
             <GLButton
               variant="icon"

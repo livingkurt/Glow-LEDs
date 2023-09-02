@@ -4,10 +4,13 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { open_edit_order_modal, set_edit_order_modal, set_order } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { AppBar, Tab, Tabs, Typography } from "@mui/material";
+import { AppBar, Button, Grid, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
+import CloseIcon from "@mui/icons-material/Close";
+import { updateOrderItem, updateOrderPrices } from "../ordersPageHelpers";
+import { emptyOrder } from "../../../emptyState/order";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
@@ -39,58 +42,62 @@ const EditOrderModal = () => {
     onEdit: order => dispatch(open_edit_order_modal(order)),
     order,
   });
-  // function extractFormFields(schema) {
-  //   const formFields = {};
 
-  //   for (const key in schema) {
-  //     const field = schema[key];
-  //     const type = field.type.name;
+  // When adding a new item
+  const handleAddNewItem = () => {
+    const emptyOrderItem = {
+      ...emptyOrder.orderItems[0],
+      name: "New Item",
+    };
 
-  //     formFields[key] = {
-  //       type: type.toLowerCase(),
-  //       label: key.charAt(0).toUpperCase() + key.slice(1),
-  //       required: field.required || false
-  //     };
-  //   }
-
-  //   return formFields;
-  // }
-
-  const updateOrderItem = (index, value, order) => {
-    const orderItems = order.orderItems.map((item, i) => {
-      if (i === index) {
-        return {
-          ...item,
-          ...value,
-          name: value.name,
-          qty: item.qty || 1,
-          display_image: value?.images[0],
-          price: value.price,
-          category: value.category,
-          pathname: value.pathname,
-          package_volume: value.package_volume,
-          weight_pounds: value.weight_pounds,
-          weight_ounces: value.weight_ounces,
-          package_length: value.package_length,
-          package_width: value.package_width,
-          package_height: value.package_height,
-          product_option: value?.product_options?.find(option => option.default === true),
-          reviewed: value.reviewed,
-          product: { _id: value._id },
-          color_products: value.color_products,
-          secondary_color_products: value.secondary_color_products,
-          option_products: value.option_products,
-          secondary_products: value.secondary_products,
-          color_group_name: value.color_group_name,
-          secondary_color_group_name: value.secondary_color_group_name,
-          option_group_name: value.option_group_name,
-          secondary_group_name: value.secondary_group_name,
-        };
-      } else {
-        return item;
-      }
+    const updatedOrderItems = [...order.orderItems, emptyOrderItem];
+    const updatedPrices = updateOrderPrices({
+      orderItems: updatedOrderItems,
+      shippingPrice: order.shippingPrice,
+      taxPrice: order.taxPrice,
+      tip: order.tip,
     });
-    return { orderItems };
+
+    const updatedOrder = {
+      ...order,
+      orderItems: updatedOrderItems,
+      ...updatedPrices,
+    };
+
+    dispatch(set_order(updatedOrder));
+
+    // Move to the new tab
+    setTabIndex(updatedOrderItems.length - 1);
+  };
+
+  // When deleting an item
+  const handleDeleteItem = index => {
+    const updatedOrderItems = [...order.orderItems];
+    updatedOrderItems.splice(index, 1);
+
+    const updatedPrices = updateOrderPrices({
+      orderItems: updatedOrderItems,
+      shippingPrice: order.shippingPrice,
+      taxPrice: order.taxPrice,
+      tip: order.tip,
+    });
+
+    const updatedOrder = {
+      ...order,
+      orderItems: updatedOrderItems,
+      ...updatedPrices,
+    };
+
+    dispatch(set_order(updatedOrder));
+
+    // Move to the closest active tab
+    setTabIndex(prevIndex => {
+      if (prevIndex === updatedOrderItems.length) {
+        // If it was the last tab
+        return updatedOrderItems.length - 1; // Move to the new last tab
+      }
+      return prevIndex > index ? prevIndex - 1 : prevIndex; // Otherwise, move to the closest tab
+    });
   };
 
   return (
@@ -134,7 +141,7 @@ const EditOrderModal = () => {
             value={tabIndex}
             className="jc-b"
             onChange={(e, newValue) => {
-              dispatch(setTabIndex(newValue));
+              setTabIndex(newValue);
             }}
           >
             {order.orderItems.map((item, index) => {
@@ -142,40 +149,63 @@ const EditOrderModal = () => {
             })}
           </Tabs>
         </AppBar>
-
         {order?.orderItems?.map((item, index) => {
           return (
             <GLTabPanel value={tabIndex} index={index}>
-              <GLAutocomplete
-                loading={!loading_products}
-                margin="normal"
-                value={item}
-                options={products}
-                optionDisplay={option => (option.name ? option.name : "")}
-                getOptionLabel={option => (option.name ? option.name : "")}
-                getOptionSelected={(option, value) => option._id === value.product}
-                name="product"
-                label="Choose Product"
-                onChange={(e, value) => {
-                  const updatedOrder = updateOrderItem(index, value, order);
-                  dispatch(set_order(updatedOrder));
-                }}
-              />
-              <GLForm
-                formData={formFields.orderItems.fields}
-                state={item}
-                onChange={value => {
-                  const orderItems = order.orderItems.map((item, i) => {
-                    if (i === index) {
-                      return { ...item, ...value };
-                    } else {
-                      return item;
-                    }
-                  });
-                  dispatch(set_order({ orderItems }));
-                }}
-                loading={loading && loading_products}
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <IconButton variant="primary" onClick={() => handleDeleteItem(index)} aria-label="Delete">
+                    <CloseIcon style={{ fontSize: "25px" }} />
+                  </IconButton>
+                  <Button variant="contained" color="primary" onClick={handleAddNewItem}>
+                    Add New Item
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                  <GLAutocomplete
+                    loading={!loading_products}
+                    margin="normal"
+                    value={item}
+                    options={products}
+                    optionDisplay={option => (option.name ? option.name : "")}
+                    getOptionLabel={option => (option.name ? option.name : "")}
+                    getOptionSelected={(option, value) => option._id === value.product}
+                    name="product"
+                    label="Choose Product"
+                    onChange={(e, value) => {
+                      // Update the individual order item
+                      const updatedOrder = updateOrderItem(index, value, order);
+
+                      // Update the prices using the helper function
+                      const updatedPrices = updateOrderPrices(updatedOrder.orderItems);
+
+                      // Merge the updated prices into the updatedOrder object
+                      const finalUpdatedOrder = {
+                        ...updatedOrder,
+                        ...updatedPrices,
+                      };
+
+                      // Dispatch the updated order
+                      dispatch(set_order(finalUpdatedOrder));
+                    }}
+                  />
+                  <GLForm
+                    formData={formFields.orderItems.fields}
+                    state={item}
+                    onChange={value => {
+                      const orderItems = order.orderItems.map((item, i) => {
+                        if (i === index) {
+                          return { ...item, ...value };
+                        } else {
+                          return item;
+                        }
+                      });
+                      dispatch(set_order({ orderItems }));
+                    }}
+                    loading={loading && loading_products}
+                  />
+                </Grid>
+              </Grid>
             </GLTabPanel>
           );
         })}
@@ -185,3 +215,20 @@ const EditOrderModal = () => {
 };
 
 export default EditOrderModal;
+
+// function extractFormFields(schema) {
+//   const formFields = {};
+
+//   for (const key in schema) {
+//     const field = schema[key];
+//     const type = field.type.name;
+
+//     formFields[key] = {
+//       type: type.toLowerCase(),
+//       label: key.charAt(0).toUpperCase() + key.slice(1),
+//       required: field.required || false
+//     };
+//   }
+
+//   return formFields;
+// }

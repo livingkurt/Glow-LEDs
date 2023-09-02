@@ -252,3 +252,69 @@ export const printInvoice = async (invoice: string) => {
 `,
   ]);
 };
+
+export const updateOrderPrices = ({
+  orderItems,
+  shippingPrice,
+  taxPrice,
+  tip,
+}: {
+  orderItems: any;
+  shippingPrice: number;
+  taxPrice: number;
+  tip: number;
+}) => {
+  let updatedItemsPrice = 0;
+  // let updatedTaxPrice = 0;
+
+  orderItems.forEach((item: any) => {
+    updatedItemsPrice += item.price * item.qty;
+  });
+
+  // Assuming a tax rate of 10% (customize as needed)
+  // updatedTaxPrice = updatedItemsPrice * 0.1;
+
+  const updatedTotalPrice = updatedItemsPrice + taxPrice + shippingPrice + tip;
+
+  return {
+    itemsPrice: updatedItemsPrice,
+    totalPrice: updatedTotalPrice,
+  };
+};
+
+export const updateOrderItem = (index: number, value: any, order: any) => {
+  const orderItems = order.orderItems.map((item: any, i: number) => {
+    if (i === index) {
+      return {
+        ...item,
+        ...value,
+        name: value.name,
+        qty: item.qty || 1,
+        display_image: value?.images[0],
+        price: value.price,
+        category: value.category,
+        pathname: value.pathname,
+        package_volume: value.package_volume,
+        weight_pounds: value.weight_pounds,
+        weight_ounces: value.weight_ounces,
+        package_length: value.package_length,
+        package_width: value.package_width,
+        package_height: value.package_height,
+        product_option: value?.product_options?.find((option: any) => option.default === true),
+        reviewed: value.reviewed,
+        product: { _id: value._id },
+        color_products: value.color_products,
+        secondary_color_products: value.secondary_color_products,
+        option_products: value.option_products,
+        secondary_products: value.secondary_products,
+        color_group_name: value.color_group_name,
+        secondary_color_group_name: value.secondary_color_group_name,
+        option_group_name: value.option_group_name,
+        secondary_group_name: value.secondary_group_name,
+      };
+    } else {
+      return item;
+    }
+  });
+  return { orderItems };
+};
