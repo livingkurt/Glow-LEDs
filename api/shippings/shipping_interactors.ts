@@ -16,9 +16,27 @@ export const buyLabel = async ({ shipment_id, shipping_rate }: any) => {
     }
   }
 };
+
+const maxRetries = 3;
+let retries = 0;
+
+async function fetchTracker(label: any) {
+  while (retries < maxRetries) {
+    try {
+      const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
+      return tracker;
+    } catch (error: any) {
+      retries++;
+      console.log(`Retry ${retries}: ${error.message}`);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // wait for 2 seconds
+    }
+  }
+  throw new Error("Max retries reached. Tracker could not be found.");
+}
+
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
   try {
-    const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
+    const tracker = await fetchTracker(label);
 
     if (isReturnTracking) {
       order.shipping.return_shipment_tracker = label.tracker.id;
@@ -41,6 +59,7 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
     }
   }
 };
+
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
   try {
     if (isReturnTracking) {
