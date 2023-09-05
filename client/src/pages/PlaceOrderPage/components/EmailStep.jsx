@@ -5,23 +5,21 @@ import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-const EmailStep = ({
-  email_completed,
-  show_email,
-  show_hide_steps,
-  next_step,
-  is_guest,
-  email,
-  set_email,
-  email_validations,
+import {
   setEmailValidations,
   setPasswordValidations,
-  set_is_guest,
-  password,
+  set_email,
   set_password,
-}) => {
+  set_is_guest,
+  showHideSteps,
+} from "../placeOrderSlice";
+
+const EmailStep = ({ next_step }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const placeOrder = useSelector(state => state.placeOrder);
+  const { show_email, is_guest, email_completed, password, email_validations, email } = placeOrder;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
@@ -31,8 +29,8 @@ const EmailStep = ({
     const data = { email, password };
     const request = validate_login(data);
 
-    setEmailValidations(request.errors.email);
-    setPasswordValidations(request.errors.password);
+    dispatch(setEmailValidations(request.errors.email));
+    dispatch(setPasswordValidations(request.errors.password));
     if (request.isValid) {
       dispatch(API.loginUser({ email: email.toLowerCase(), password }));
     }
@@ -48,10 +46,10 @@ const EmailStep = ({
 
   const validate_email = e => {
     const request = validate_login({ email });
-    setEmailValidations(request.errors.email);
+    dispatch(setEmailValidations(request.errors.email));
     if (!request.errors.email) {
       next_step("shipping");
-      setEmailValidations("");
+      dispatch(setEmailValidations(""));
     }
   };
 
@@ -60,7 +58,7 @@ const EmailStep = ({
       <div className="jc-b">
         <h2>1. Email</h2>
         {email_completed && !show_email && (
-          <GLButton variant="secondary" className="mv-10px" onClick={() => show_hide_steps("email")}>
+          <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("email"))}>
             Edit
           </GLButton>
         )}
@@ -95,7 +93,7 @@ const EmailStep = ({
                   value={email}
                   name="email"
                   id="email"
-                  onChange={e => set_email(e.target.value.toLowerCase())}
+                  onChange={e => dispatch(set_email(e.target.value.toLowerCase()))}
                 />
               </li>
               <label
@@ -112,7 +110,7 @@ const EmailStep = ({
                 <GLButton
                   variant="primary"
                   className="title_font m-10px"
-                  onClick={() => set_is_guest(is_guest => (is_guest ? false : true))}
+                  onClick={() => dispatch(set_is_guest(is_guest => (is_guest ? false : true)))}
                 >
                   Login
                 </GLButton>
@@ -131,7 +129,7 @@ const EmailStep = ({
                   value={email}
                   name="email"
                   id="email"
-                  onChange={e => set_email(e.target.value.toLowerCase())}
+                  onChange={e => dispatch(set_email(e.target.value.toLowerCase()))}
                 />
               </li>
               <li>
@@ -141,7 +139,7 @@ const EmailStep = ({
                   value={password}
                   name="password"
                   id="password"
-                  onChange={e => set_password(e.target.value)}
+                  onChange={e => dispatch(set_password(e.target.value))}
                 />
               </li>
               <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
@@ -149,7 +147,7 @@ const EmailStep = ({
                 <GLButton
                   variant="primary"
                   className="title_font m-10px"
-                  onClick={() => set_is_guest(is_guest => (is_guest ? false : true))}
+                  onClick={() => dispatch(set_is_guest(is_guest => (is_guest ? false : true)))}
                 >
                   Continue as Guest
                 </GLButton>

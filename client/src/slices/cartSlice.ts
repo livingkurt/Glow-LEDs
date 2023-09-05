@@ -51,6 +51,7 @@ const cartPage = createSlice({
     paymentMethod: "stripe",
     cartDrawer: false,
     sideNavDrawer: false,
+    verify_shipping: true,
   },
   reducers: {
     set_cart: (state, { payload }) => {
@@ -103,6 +104,45 @@ const cartPage = createSlice({
     },
     setSideNavDrawer: (state, { payload }) => {
       state.sideNavDrawer = payload;
+    },
+    set_verify_shipping: (state, { payload }) => {
+      state.verify_shipping = payload;
+    },
+    updateGoogleShipping: (state, { payload }) => {
+      const { shipping, street_num } = payload;
+
+      if (!shipping || !shipping.address_components) {
+        console.error("Invalid shipping data:", shipping);
+        return;
+      }
+
+      const street_number = shipping.address_components.find((comp: any) => comp.types.includes("street_number")) || {};
+      if (!street_number.long_name) {
+        state.verify_shipping = false;
+      }
+
+      const address = shipping.address_components.find((comp: any) => comp.types.includes("route"));
+      const city = shipping.address_components.find((comp: any) => comp.types.includes("locality"));
+      const stateObj = shipping.address_components.find((comp: any) =>
+        comp.types.includes("administrative_area_level_1")
+      );
+      const country = shipping.address_components.find((comp: any) => comp.types.includes("country"));
+      const postal_code = shipping.address_components.find((comp: any) => comp.types.includes("postal_code"));
+
+      state.shipping.address_1 = `${(street_number && street_number.long_name) || street_num.split(" ")[0]} ${
+        address.short_name
+      }`;
+      state.shipping.city = city.long_name || city.short_name;
+      state.shipping.state = stateObj.short_name;
+      state.shipping.postalCode = postal_code.long_name;
+      state.shipping.country = country.short_name;
+
+      if (country.short_name !== "US") {
+        state.shipping.international = true;
+        state.shipping.verify_shipping = false;
+        state.shipping.state = stateObj.short_name;
+        state.shipping.country = country.long_name;
+      }
     },
   },
   extraReducers: {
@@ -278,5 +318,7 @@ export const {
   open_edit_cart_modal,
   setCartDrawer,
   setSideNavDrawer,
+  updateGoogleShipping,
+  set_verify_shipping,
 } = cartPage.actions;
 export default cartPage.reducer;

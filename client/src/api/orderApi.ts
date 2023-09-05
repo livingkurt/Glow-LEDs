@@ -144,7 +144,8 @@ export const createPayOrder = createAsyncThunk(
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {
-      throw error;
+      thunkApi.dispatch(showError({ message: errorMessage(error), duration: 10000 }));
+      return thunkApi.rejectWithValue(error.response?.data);
     }
   }
 );
@@ -189,7 +190,7 @@ export const deleteMultipleOrders = createAsyncThunk(
       const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -205,7 +206,7 @@ export const refundOrder = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Order Refunded` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -217,7 +218,7 @@ export const payOrder = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -229,7 +230,7 @@ export const payOrderGuest = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -242,7 +243,7 @@ export const transferOrders = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Orders Transfered` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -255,7 +256,7 @@ export const invoiceOrder = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Invoice Recieved` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

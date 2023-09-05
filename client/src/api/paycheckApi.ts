@@ -99,7 +99,7 @@ export const deleteMultiplePaychecks = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

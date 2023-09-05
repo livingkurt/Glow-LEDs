@@ -36,7 +36,7 @@ export const createCustomLabel = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Label Purchased` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -70,7 +70,7 @@ export const createReturnLabel = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Return Label Created` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -83,7 +83,8 @@ export const shippingRates = createAsyncThunk(
       const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      return thunkApi.rejectWithValue(error.response?.data);
     }
   }
 );
@@ -96,7 +97,7 @@ export const customShippingRates = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Custom Shipping Rates Found` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -110,7 +111,7 @@ export const refundLabel = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Return Label Created` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -123,7 +124,7 @@ export const generateCSVLabel = createAsyncThunk(
       const { data } = await axios.put(`/api/shipping/${orderId}/generate_csv_label`);
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -137,7 +138,7 @@ export const createPickup = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Pickup Rates Found` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -151,7 +152,7 @@ export const confirmPickup = createAsyncThunk(
 
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }
@@ -176,7 +177,7 @@ export const differentShippingRates = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }

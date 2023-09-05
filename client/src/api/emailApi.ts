@@ -77,7 +77,7 @@ export const sendContactEmail = createAsyncThunk(
       axios.post("/api/emails/contact_confirmation", contact_info);
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

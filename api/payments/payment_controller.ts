@@ -27,10 +27,11 @@ export default {
       } else {
         res.status(500).send({ message: "Error Saving Payment" });
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log({ error });
       res.status(500).send({
         error,
-        message: "Error Paying for Order",
+        message: error.message,
         solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
       });
     }

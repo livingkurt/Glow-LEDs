@@ -18,7 +18,7 @@ const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: elements.getElement(CardElement),
     });
 
     if (error) {
@@ -47,13 +47,13 @@ const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
               fontSize: "1.2rem",
               fontSmoothing: "antialiased",
               ":-webkit-autofill": { color: "white" },
-              "::placeholder": { color: "white" }
+              "::placeholder": { color: "white" },
             },
             invalid: {
               iconColor: "#ffc7ee",
-              color: "#ffc7ee"
-            }
-          }
+              color: "#ffc7ee",
+            },
+          },
         }}
       />
       {payment_validations && (

@@ -9,6 +9,18 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
+import { makeStyles } from "@mui/styles";
+
+// Define your styles
+const useStyles = makeStyles(theme => ({
+  input: {
+    backgroundColor: "white",
+    color: "black", // Optional, if you want to change text color
+  },
+  label: {
+    // color: "white", // Optional, if you want to change label color
+  },
+}));
 
 const GLAutocomplete = ({
   loading,
@@ -45,6 +57,7 @@ const GLAutocomplete = ({
   customClasses,
   ...otherProps
 }) => {
+  const defaultClasses = useStyles();
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
   const checkedIcon = <CheckBoxIcon fontSize="medium" />;
   return (
@@ -69,6 +82,12 @@ const GLAutocomplete = ({
             <TextField
               {...params}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
+              InputProps={{
+                className: defaultClasses.input,
+              }}
+              InputLabelProps={{
+                className: defaultClasses.label,
+              }}
               name={name}
               margin={margin}
               data-test={textFieldDataTest}

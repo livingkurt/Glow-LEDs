@@ -3,54 +3,71 @@ import * as React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { Stripe } from "../../../shared/SharedComponents/Stripe";
-
-const PaymentStep = ({
-  payment_completed,
-  show_payment,
-  show_hide_steps,
+import {
   set_order_note,
   set_production_note,
-  show_promo_code,
-  show_promo_code_input_box,
-  check_code,
   set_promo_code,
-  promo_code_validations,
-  show_message,
-  remove_promo,
-  tip,
   set_tip,
-  parseFloat,
-  loading_checkboxes,
-  create_account,
   set_create_account,
-  current_user,
   set_new_password,
-  password_validations,
-  loading,
-  hide_pay_button,
-  placeOrderHandler,
-  loading_payment,
-  users,
-  set_paid,
-  paid,
-  set_paymentMethod,
-  set_user,
   set_loading_payment,
-  user,
-  cartItems,
+  set_paid,
+  set_paymentMethod,
+  showHideSteps,
+  removePromo,
+} from "../placeOrderSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Checkbox, FormControlLabel } from "@mui/material";
+import StripeCheckout from "./StripeCheckout/StripeCheckout";
+
+const PaymentStep = ({
+  check_code,
+  placeOrderHandler,
   create_order_without_paying,
   create_no_payment_order,
   create_order_without_user,
-  totalPrice,
 }) => {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, shipping } = cartPage;
+  const { cartItems } = my_cart;
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user, users } = userPage;
+
+  const placeOrder = useSelector(state => state.placeOrder);
+  const {
+    payment_completed,
+    show_payment,
+    show_promo_code,
+    show_promo_code_input_box,
+    promo_code_validations,
+    show_message,
+    tip,
+    parseFloat,
+    create_account,
+    password_validations,
+    loading,
+    hide_pay_button,
+    loading_payment,
+    paid,
+    set_user,
+    totalPrice,
+    items_price,
+    tax_rate,
+    shippingPrice,
+    previousShippingPrice,
+  } = placeOrder;
   return (
     <div>
       <ul className="mv-0px">
         <div className="jc-b">
           <h2>3. Payment & Review</h2>
           {payment_completed && !show_payment && (
-            <GLButton variant="secondary" className="mv-10px" onClick={() => show_hide_steps("payment")}>
+            <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("payment"))}>
               Edit
             </GLButton>
           )}
@@ -64,7 +81,7 @@ const PaymentStep = ({
                 name="order_note"
                 id="order_note"
                 className="w-100per"
-                onChange={e => set_order_note(e.target.value)}
+                onChange={e => dispatch(set_order_note(e.target.value))}
               />
             </div>
             {current_user?.isAdmin && (
@@ -75,7 +92,7 @@ const PaymentStep = ({
                   name="production_note"
                   id="production_note"
                   className="w-100per"
-                  onChange={e => set_production_note(e.target.value)}
+                  onChange={e => dispatch(set_production_note(e.target.value))}
                 />
               </div>
             )}
@@ -94,7 +111,7 @@ const PaymentStep = ({
                           textTransform: "uppercase",
                         }}
                         onChange={e => {
-                          set_promo_code(e.target.value.toUpperCase());
+                          dispatch(set_promo_code(e.target.value.toUpperCase()));
                         }}
                       />
                       <GLButton
@@ -119,7 +136,15 @@ const PaymentStep = ({
                 </label>
                 {show_message && (
                   <div className="promo_code mv-1rem">
-                    <GLButton variant="icon" onClick={() => remove_promo()} aria-label="Detete">
+                    <GLButton
+                      variant="icon"
+                      onClick={() =>
+                        dispatch(
+                          removePromo({ items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping })
+                        )
+                      }
+                      aria-label="Detete"
+                    >
                       <i className="fas fa-times mr-5px" />
                     </GLButton>
                     {show_message}
@@ -141,7 +166,7 @@ const PaymentStep = ({
                   placeholder="$0.00"
                   defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
                   className="w-100per"
-                  onChange={e => set_tip(parseFloat(e.target.value))}
+                  onChange={e => dispatch(set_tip(parseFloat(e.target.value)))}
                 />
               </div>
             </li>
@@ -158,7 +183,7 @@ const PaymentStep = ({
                     className="mr-1rem"
                     id="create_account"
                     onChange={e => {
-                      set_create_account(e.target.checked);
+                      dispatch(set_create_account(e.target.checked));
                     }}
                   />
                   <label htmlFor="create_account mb-20px">Create an account for faster checkout</label>
@@ -172,19 +197,20 @@ const PaymentStep = ({
                   type="password"
                   id="password"
                   name="password"
-                  onChange={e => set_new_password(e.target.value)}
+                  onChange={e => dispatch(set_new_password(e.target.value))}
                 />
                 <label className="validation_text fs-16px jc-c ">{password_validations}</label>
               </li>
             )}
             <li>
               {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? (
-                <Stripe
-                  pay_order={placeOrderHandler}
-                  loading_payment={loading_payment}
-                  set_loading_payment={set_loading_payment}
-                />
+                <StripeCheckout />
               ) : (
+                // <Stripe
+                //   pay_order={placeOrderHandler}
+                //   loading_payment={loading_payment}
+                //   set_loading_payment={set_loading_payment}
+                // />
                 <div></div>
               )}
               {(!totalPrice || totalPrice === 0) && (
@@ -202,35 +228,31 @@ const PaymentStep = ({
                 </>
               )}
             </li>
-            {current_user?.isAdmin && (
+            {current_user.isAdmin && (
               <div className="mt-2rem">
-                {current_user?.isAdmin && users && (
+                {current_user.isAdmin && users && (
                   <div>
-                    {loading_checkboxes ? (
-                      <div>Loading...</div>
-                    ) : (
-                      <li>
-                        <input
-                          type="checkbox"
-                          name="paid"
-                          id="paid"
-                          style={{
-                            transform: "scale(1.5)",
-                          }}
-                          className="mr-1rem"
-                          onChange={e => {
-                            set_paid(e.target.checked);
-                          }}
-                        />
-                        <label htmlFor="paid mb-20px ">Already Paid?</label>
-                      </li>
-                    )}
+                    <li>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            size="large"
+                            name="paid"
+                            id="paid"
+                            onChange={e => {
+                              dispatch(set_paid(e.target.checked));
+                            }}
+                          />
+                        }
+                        label="Already Paid?"
+                      />
+                    </li>
                     {paid && (
                       <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
                         <div className="custom-select w-100per">
                           <select
                             className="qty_select_dropdown w-100per"
-                            onChange={e => set_paymentMethod(e.target.value)}
+                            onChange={e => dispatch(set_paymentMethod(e.target.value))}
                           >
                             <option key={1} defaultValue="">
                               Payment Method
@@ -262,7 +284,7 @@ const PaymentStep = ({
                         <select
                           className="qty_select_dropdown w-100per"
                           defaultValue={current_user.first_name}
-                          onChange={e => set_user(JSON.parse(e.target.value))}
+                          onChange={e => dispatch(set_user(JSON.parse(e.target.value)))}
                         >
                           <option key={1} defaultValue="">
                             ---Choose User for Order---
@@ -281,7 +303,7 @@ const PaymentStep = ({
                     </GLButton>
                   </div>
                 )}
-                {current_user?.isAdmin && users && (
+                {current_user.isAdmin && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>

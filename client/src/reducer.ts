@@ -32,6 +32,7 @@ import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
 import productPageSlice from "./pages/ProductPage/productPageSlice";
+import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -120,6 +121,7 @@ const reducers = {
       },
     }),
   }),
+  placeOrder: placeOrderSlice,
   promos: combineReducers({
     promoPage: promoSlice,
     promoTable: glTableReducer("promoTable", {

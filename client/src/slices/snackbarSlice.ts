@@ -16,12 +16,14 @@ const snackbarPage = createSlice({
     showSuccess: (state, { payload }) => {
       state.open = true;
       state.message = payload.message;
+      state.duration = payload.duration;
       state.loading = false;
       state.severity = "success";
     },
     showError: (state, { payload }) => {
       state.open = true;
       state.message = payload.message;
+      state.duration = payload.duration;
       state.loading = false;
       state.severity = "error";
     },

@@ -71,7 +71,7 @@ export const saveAffiliate = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -88,7 +88,7 @@ export const detailsAffiliate = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -122,7 +122,7 @@ export const create_rave_mob_affiliates = createAsyncThunk(
       const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv });
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -150,7 +150,7 @@ export const affiliateEarnings = createAsyncThunk(
       );
       return { data, type };
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -168,7 +168,7 @@ export const monthlyCheckin = createAsyncThunk(
       await handleTokenRefresh(true);
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

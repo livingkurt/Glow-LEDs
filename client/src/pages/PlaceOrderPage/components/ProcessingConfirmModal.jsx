@@ -4,19 +4,24 @@ import { Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import GLBold from "../../../shared/GlowLEDsComponents/GLBold/GLBold";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setOpen } from "../placeOrderSlice";
 
-const ProcessingConfirmModal = ({ open, setOpen, choose_shipping_rate, service, rate, serviceName }) => {
+const ProcessingConfirmModal = ({ choose_shipping_rate, serviceName, rate }) => {
+  const dispatch = useDispatch();
+  const placeOrder = useSelector(state => state.placeOrder);
+  const { open } = placeOrder;
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(setOpen(false));
   };
 
   const handleConfirm = rate => {
-    choose_shipping_rate(rate, service, serviceName);
-    setOpen(false);
+    choose_shipping_rate(rate, rate.service, serviceName);
+    dispatch(setOpen(false));
   };
   return (
     <GLActiionModal

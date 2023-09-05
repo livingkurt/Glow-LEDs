@@ -79,7 +79,7 @@ export const detailsCategory = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

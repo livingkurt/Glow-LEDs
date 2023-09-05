@@ -1,11 +1,18 @@
 // React
-import React, { useState } from "react";
+import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
+import { setModalShown, setOpen } from "../placeOrderSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate, modalShown, setModalShown }) => {
-  const sortedRates = rates
+const InternationalShippingSpeed = ({ choose_shipping_rate }) => {
+  const dispatch = useDispatch();
+  const placeOrder = useSelector(state => state.placeOrder);
+  const { modalShown, shipping_rates } = placeOrder;
+
+  const sortedRates = shipping_rates.rates
     .sort((a, b) => {
       if (a.retail_rate && b.retail_rate) {
         return parseFloat(a.retail_rate) - parseFloat(b.retail_rate);
@@ -19,15 +26,13 @@ const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate, moda
     })
     .filter(rate => rate.carrier === "UPSDAP");
 
-  const [open, setOpen] = useState(false);
-
   const handleOpen = rate => {
     if (modalShown) {
-      choose_shipping_rate(rate, service, toTitleCaseSnakeCase(rate.service));
+      choose_shipping_rate(rate, rate.service, toTitleCaseSnakeCase(rate.service));
       return;
     }
-    setOpen(true);
-    setModalShown(true);
+    dispatch(setOpen(true));
+    dispatch(setModalShown(true));
   };
 
   return sortedRates.map((rate, index) => {
@@ -44,10 +49,8 @@ const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate, moda
           Select
         </GLButton>
         <ProcessingConfirmModal
-          open={open}
           serviceName={toTitleCaseSnakeCase(rate.service)}
           choose_shipping_rate={choose_shipping_rate}
-          setOpen={setOpen}
           rate={rate}
         />
       </div>

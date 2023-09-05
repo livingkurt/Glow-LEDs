@@ -196,7 +196,7 @@ export const passwordReset = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Password Reset` }));
       return { current_user, data };
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

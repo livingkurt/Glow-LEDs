@@ -10,8 +10,21 @@ import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleA
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
+import { makeStyles } from "@mui/styles";
+
+// Define your styles
+const useStyles = makeStyles(theme => ({
+  input: {
+    backgroundColor: "white",
+    color: "black", // Optional, if you want to change text color
+  },
+  label: {
+    // color: "white", // Optional, if you want to change label color
+  },
+}));
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
+  const classes = useStyles();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -159,6 +172,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "text":
               return (
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
                   key={fieldName}
                   name={fieldName}
                   margin="normal"
@@ -174,6 +193,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "number":
               return (
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
                   key={fieldName}
                   name={fieldName}
                   margin="normal"
@@ -190,6 +215,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
               const formattedDate = formatDate(fieldState);
               return (
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
                   key={fieldName}
                   name={fieldName}
                   margin="normal"
@@ -205,6 +236,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "text_multiline":
               return (
                 <TextField
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
                   key={fieldName}
                   name={fieldName}
                   margin="normal"

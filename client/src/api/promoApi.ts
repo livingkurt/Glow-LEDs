@@ -60,7 +60,7 @@ export const listSponsorCodes = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -112,7 +112,7 @@ export const deleteMultiplePromos = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

@@ -75,7 +75,7 @@ export const addToCart = createAsyncThunk(
       // Add current_user to the returned payload
       return { data: data.data, type, current_user };
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -182,7 +182,7 @@ export const deleteCartItem = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
       return { data, type };
     } catch (error) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
   }

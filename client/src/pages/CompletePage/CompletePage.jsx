@@ -85,6 +85,7 @@ const CompletePage = () => {
   };
 
   const send_email = async () => {
+    if (config.NODE_ENV === "development") return;
     if (params.type === "order") {
       await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
       await API_Emails.send_order_email(

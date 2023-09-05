@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { state_names } from "../../../utils/helper_functions";
+import React, { useEffect } from "react";
+import { state_names, toCapitalize } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,49 +11,64 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
-import { save_shipping } from "../../../slices/cartSlice";
+import { save_shipping, set_verify_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import config from "../../../config";
-
-const ShippingStep = ({
-  shipping_completed,
-  set_shipping_completed,
-  show_shipping,
-  set_show_shipping,
-  show_hide_steps,
-  loading,
-  set_loading,
-  shipping,
-  email,
-  set_email,
-  loading_shipping,
-  choose_shipping_rate,
-  hide_pay_button,
+import {
   set_hide_pay_button,
-  current_shipping_speed,
-  re_choose_shipping_rate,
-  show_shipping_complete,
-  next_step,
-  shipping_rates,
-  cartItems,
-  set_verify_shipping,
-  verify_shipping,
-  error_happened,
-  show_payment,
-}) => {
+  set_email,
+  set_show_shipping,
+  set_shipping_completed,
+  set_loading,
+  set_save_user_shipping,
+  showHideSteps,
+  setShippingValidation,
+  set_loading_shipping,
+  setFreeShipping,
+  setTaxPrice,
+} from "../placeOrderSlice";
+import { Checkbox, FormControlLabel } from "@mui/material";
+import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
+
+const ShippingStep = ({ choose_shipping_rate, next_step }) => {
+  const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
-  const [first_name, set_first_name] = useState("");
-  const [last_name, set_last_name] = useState("");
-  const [address_1, set_address_1] = useState("");
-  const [address_2, set_address_2] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("United States");
-  const [international, setInternational] = useState(false);
-  const [save_user_shipping, set_save_user_shipping] = useState(false);
-  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
-  const [show_modal, set_show_modal] = useState(false);
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, shipping, payment, verify_shipping } = cartPage;
+  const { cartItems } = my_cart;
+
+  const placeOrder = useSelector(state => state.placeOrder);
+  const {
+    shipping_rates,
+    hide_pay_button,
+    show_shipping,
+    show_payment,
+    shipping_completed,
+    itemsPrice,
+    loading_shipping,
+    show_shipping_complete,
+    save_user_shipping,
+    email,
+    promo_code,
+    shippingPrice,
+    show_message,
+    taxPrice,
+    totalPrice,
+    tip,
+    order_note,
+    production_note,
+    shippingValidations,
+  } = placeOrder;
+
+  const {
+    first_name: first_name_validations,
+    last_name: last_name_validations,
+    address_1: address_validations,
+    city: city_validations,
+    state: state_validations,
+    postal_code: postal_code_validations,
+    country: country_validations,
+  } = shippingValidations;
 
   const dispatch = useDispatch();
 
@@ -61,192 +76,169 @@ const ShippingStep = ({
   const { current_user } = userPage;
 
   useEffect(() => {
-    set_hide_pay_button(true);
+    dispatch(set_hide_pay_button(true));
   }, []);
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (shipping && shipping.first_name && shipping.first_name.length > 1) {
-        set_email(shipping.email);
-        set_first_name(shipping.first_name);
-        set_last_name(shipping.last_name);
-        set_address_1(shipping.address_1);
-        set_address_2(shipping.address_2);
-        setCity(shipping.city);
-        setState(shipping.state);
-        setPostalCode(shipping.postalCode);
-        setCountry(shipping.country);
-        setInternational(shipping.international);
+        dispatch(save_shipping(shipping));
         if (shipping.international) {
-          set_verify_shipping(false);
+          dispatch(set_verify_shipping(false));
         }
       }
     }
     return () => (clean = false);
   }, [set_email, shipping]);
 
-  setTimeout(() => {
-    set_loading_checkboxes(false);
-  }, 500);
-
-  // const [ email_validations, set_email_validations ] = useState('');
-  const [first_name_validations, set_first_name_validations] = useState("");
-  const [last_name_validations, set_last_name_validations] = useState("");
-  const [address_validations, set_address_validations] = useState("");
-  const [city_validations, set_city_validations] = useState("");
-  const [state_validations, set_state_validations] = useState("");
-  const [postal_code_validations, set_postal_code_validations] = useState("");
-  const [country_validations, set_country_validations] = useState("");
-  const [international_validations, set_international_validations] = useState("");
-  const [agree, set_agree] = useState(false);
-  // const dispatch = useDispatch();
-
   const submitHandler = e => {
     e.preventDefault();
+
     const data = {
+      ...shipping,
       email: email ? email : current_user.email,
-      first_name,
-      last_name,
-      address_1,
-      address_2,
-      city,
-      state,
-      postalCode,
-      country,
-      international,
     };
 
     const request = validate_shipping(data);
-    // set_email_validations(request.errors.email);
-    set_first_name_validations(request.errors.first_name);
-    set_last_name_validations(request.errors.last_name);
-    set_address_validations(request.errors.address_1);
-    set_city_validations(request.errors.city);
-    set_state_validations(request.errors.state);
-    set_postal_code_validations(request.errors.postalCode);
-    set_country_validations(request.errors.country);
-    set_international_validations(request.errors.international);
+    console.log({ request });
+    if (Object.keys(request?.errors).length > 0) {
+      dispatch(setShippingValidation({ errors: request.errors }));
+      return;
+    }
 
     if (request.isValid) {
-      dispatch(
-        save_shipping({
-          first_name,
-          last_name,
-          email: email ? email : current_user.email,
-          address_1,
-          address_2,
-          city,
-          state,
-          postalCode,
-          country: international ? country : "US",
-          international,
-        })
-      );
-      save_user_shipping_to_user();
-      set_show_shipping(false);
-      set_shipping_completed(true);
+      if (shipping && Object.keys(shipping).length > 0) {
+        dispatch(set_loading_shipping(true));
+        const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
+
+        if (!package_volume) {
+          dispatch(setFreeShipping());
+        } else {
+          if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
+            get_shipping_rates(verify_shipping);
+          }
+        }
+        if (shipping.international) {
+          dispatch(setTaxPrice(0));
+        } else {
+          dispatch(API.getTaxRates({ shipping, itemsPrice }));
+        }
+      }
+      if (save_user_shipping) {
+        dispatch(
+          API.saveUser({
+            user: {
+              ...current_user,
+              shipping: {
+                ...shipping,
+                email: current_user.email,
+                country: shipping.international ? shipping.country : "US",
+              },
+            },
+            profile: false,
+          })
+        );
+      }
+      dispatch(set_show_shipping(false));
+      dispatch(set_shipping_completed(true));
       isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
     }
   };
   setTimeout(() => {
-    set_loading(false);
+    dispatch(set_loading(false));
   }, 500);
 
-  const save_user_shipping_to_user = () => {
-    if (save_user_shipping) {
-      dispatch(
-        API.saveUser({
-          user: {
-            ...current_user,
-            shipping: {
-              first_name,
-              last_name,
-              email: current_user.email,
-              address_1,
-              address_2,
-              city,
-              state,
-              postalCode,
-              country: international ? country : "US",
-              international,
-            },
-          },
-          profile: false,
-        })
-      );
-    }
+  const get_shipping_rates = async verify_ship => {
+    const verify = shipping.international ? false : verify_ship;
+    const order = {
+      orderItems: cartItems,
+      shipping,
+      payment,
+      itemsPrice,
+      shippingPrice,
+      taxPrice,
+      totalPrice,
+      current_user,
+      tip,
+      order_note,
+      production_note,
+      promo_code: show_message && promo_code,
+    };
+
+    dispatch(API.shippingRates({ order, verify_shipping: verify }));
   };
 
-  const update_shipping = shipping => {
-    shipping = JSON.parse(shipping);
-    set_email(shipping.email);
-    set_first_name(shipping.first_name);
-    set_last_name(shipping.last_name);
-    set_address_1(shipping.address_1);
-    set_address_2(shipping.address_2);
-    setCity(shipping.city);
-    setState(shipping.state);
-    setPostalCode(shipping.postalCode);
-    setCountry(shipping.country);
-    setInternational(shipping.international);
-  };
+  // const setGeneratedAddress = place => {
+  //   let autocompleteElement = document.querySelector("#autocomplete");
+  //   const street_num = autocompleteElement ? autocompleteElement.value : "";
 
-  const use_saved_shipping = (e, shipping, user) => {
-    e.preventDefault();
-    set_email(user.email);
-    set_first_name(shipping.first_name);
-    set_last_name(shipping.last_name);
-    set_address_1(shipping.address_1);
-    set_address_2(shipping.address_2);
-    setCity(shipping.city);
-    setState(shipping.state);
-    setPostalCode(shipping.postalCode);
-    setCountry(shipping.country);
-    setInternational(shipping.international);
-  };
+  //   const payload = {
+  //     shipping: place,
+  //     street_num,
+  //   };
 
-  const update_google_shipping = shipping => {
-    if (!shipping || !shipping.address_components) {
-      console.error("Invalid shipping data:", shipping);
-      return;
-    }
-    let autocompleteElement = document.querySelector("#autocomplete");
-    const street_num = autocompleteElement ? autocompleteElement.value : "";
+  //   dispatch(updateGoogleShipping(payload));
+  // };
 
-    const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0] || {};
-    if (!street_number.long_name) {
-      set_verify_shipping(false);
-    }
-
-    const address = shipping.address_components.filter(comp => comp.types.includes("route"))[0];
-    const street_1 = `${(street_number && street_number.long_name) || street_num.split(" ")[0]} ${address.short_name}`;
-    const city = shipping.address_components.filter(comp => comp.types.includes("locality"))[0];
-    const state = shipping.address_components.filter(comp => comp.types.includes("administrative_area_level_1"))[0];
-    const country = shipping.address_components.filter(comp => comp.types.includes("country"))[0];
-    const postal_code = shipping.address_components.filter(comp => comp.types.includes("postal_code"))[0];
-    set_address_1(street_1);
-    setCity(city.long_name || city.short_name);
-    setState(state.short_name);
-    setPostalCode(postal_code.long_name);
-
-    setCountry(country.short_name);
-    if (country.short_name !== "US") {
-      setInternational(true);
-      set_verify_shipping(false);
-      setState(state.short_name);
-      setCountry(country.long_name);
-    }
-  };
-
-  const { width } = useWindowDimensions();
+  // const shippingFormFields = {
+  //   toShipping: {
+  //     type: "object",
+  //     title: "To Shipping Address",
+  //     fields: {
+  //       first_name: {
+  //         type: "text",
+  //         label: "First Name",
+  //       },
+  //       last_name: {
+  //         type: "text",
+  //         label: "Last Name",
+  //       },
+  //       address_1: {
+  //         type: "autocomplete_address",
+  //         label: "Address Line 1",
+  //         setGeneratedAddress: place => setGeneratedAddress(place, "to"),
+  //       },
+  //       address_2: {
+  //         type: "text",
+  //         label: "Address Line 2",
+  //       },
+  //       city: {
+  //         type: "text",
+  //         label: "City",
+  //       },
+  //       state: {
+  //         type: "autocomplete_single",
+  //         label: "State",
+  //         getOptionLabel: option => {
+  //           if (typeof option === "string") {
+  //             return toCapitalize(option);
+  //           }
+  //         },
+  //         options: state_names,
+  //       },
+  //       postalCode: {
+  //         type: "text",
+  //         label: "Postal Code",
+  //       },
+  //       country: {
+  //         type: "text",
+  //         label: "Country",
+  //       },
+  //       international: {
+  //         type: "checkbox",
+  //         label: "International",
+  //       },
+  //     },
+  //   },
+  // };
 
   return (
     <div>
       <div className="jc-b">
         <h2>2. Shipping</h2>
         {shipping_completed && !show_shipping && (
-          <GLButton variant="secondary" className="mv-10px" onClick={() => show_hide_steps("shipping")}>
+          <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("shipping"))}>
             Edit
           </GLButton>
         )}
@@ -254,14 +246,11 @@ const ShippingStep = ({
       {shipping_completed && (
         <div>
           {show_shipping ? (
-            <form>
+            <>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
                 {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
-                    <GLButton
-                      onClick={e => use_saved_shipping(e, current_user.shipping, current_user)}
-                      variant="primary"
-                    >
+                    <GLButton onClick={e => dispatch(save_shipping({ ...current_user.shipping }))} variant="primary">
                       Use Saved Shipping
                     </GLButton>
                   </li>
@@ -275,7 +264,10 @@ const ShippingStep = ({
                           style={{
                             width: "100%",
                           }}
-                          onChange={e => update_shipping(e.target.value)}
+                          onChange={e => {
+                            const newShipping = JSON.parse(e.target.value);
+                            dispatch(save_shipping(newShipping));
+                          }}
                         >
                           <option key={1} defaultValue="">
                             ---Choose Shipping for Order---
@@ -292,32 +284,26 @@ const ShippingStep = ({
                     </div>
                   </li>
                 )}
-                {current_user?.isAdmin &&
-                  (loading_checkboxes ? (
-                    <div>Loading...</div>
-                  ) : (
-                    <div>
-                      <li>
-                        <div>
-                          <input
-                            type="checkbox"
-                            name="verify_shipping"
-                            defaultValue={verify_shipping}
-                            defaultChecked={verify_shipping}
-                            id="verify_shipping"
-                            style={{
-                              transform: "scale(1.5)",
-                            }}
-                            className="mr-1rem"
-                            onChange={e => {
-                              set_verify_shipping(e.target.checked);
-                            }}
-                          />
-                          <label htmlFor="international">Verify Shipping</label>
-                        </div>
-                      </li>
-                    </div>
-                  ))}
+                {current_user?.isAdmin && (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        size="large"
+                        name="verify_shipping"
+                        defaultChecked={verify_shipping}
+                        onChange={e => {
+                          dispatch(set_verify_shipping(e.target.checked));
+                        }}
+                      />
+                    }
+                    label="Verify Shipping"
+                  />
+                )}
+                {/* <GLForm
+                  formData={shippingFormFields.toShipping.fields}
+                  state={shipping}
+                  onChange={value => dispatch(save_shipping(value))}
+                /> */}
                 <li>
                   <div className="jc-b">
                     <div className="mr-5px w-50per">
@@ -325,10 +311,10 @@ const ShippingStep = ({
                       <input
                         type="text"
                         className="w-100per"
-                        value={first_name}
+                        value={shipping.first_name}
                         name="first_name"
                         id="first_name"
-                        onChange={e => set_first_name(e.target.value)}
+                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                       />
 
                       <label
@@ -345,10 +331,10 @@ const ShippingStep = ({
                       <input
                         type="text"
                         className="w-100per"
-                        value={last_name}
+                        value={shipping.last_name}
                         name="last_name"
                         id="last_name"
-                        onChange={e => set_last_name(e.target.value)}
+                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                       />
                       <label
                         className="validation_text"
@@ -361,20 +347,28 @@ const ShippingStep = ({
                     </div>
                   </div>
                 </li>
-
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
                   <Autocomplete
                     apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                     className="fs-16px"
-                    value={address_1}
+                    name="address_1"
+                    value={shipping.address_1}
                     options={{
                       types: ["address"],
                     }}
                     onPlaceSelected={place => {
-                      update_google_shipping(place);
+                      let autocompleteElement = document.querySelector("#autocomplete");
+                      const street_num = autocompleteElement ? autocompleteElement.value : "";
+
+                      const payload = {
+                        shipping: place,
+                        street_num,
+                      };
+
+                      dispatch(updateGoogleShipping(payload));
                     }}
-                    onChange={e => set_address_1(e.target.value)}
+                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
                 <label
@@ -389,15 +383,21 @@ const ShippingStep = ({
                   <label htmlFor="address_2">Apt/Suite</label>
                   <input
                     type="text"
-                    value={address_2}
+                    value={shipping.address_2}
                     name="address_2"
                     id="address_2"
-                    onChange={e => set_address_2(e.target.value)}
+                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
                 <li>
                   <label htmlFor="city">City</label>
-                  <input type="text" value={city} name="city" id="city" onChange={e => setCity(e.target.value)} />
+                  <input
+                    type="text"
+                    value={shipping.city}
+                    name="city"
+                    id="city"
+                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                  />
                 </li>
                 <label
                   className="validation_text"
@@ -407,7 +407,7 @@ const ShippingStep = ({
                 >
                   {city_validations}
                 </label>
-                {!international && (
+                {!shipping.international && (
                   <li>
                     <label className="mb-1rem" htmlFor="state">
                       State
@@ -416,8 +416,8 @@ const ShippingStep = ({
                       <div className="custom-select w-100per">
                         <select
                           className="qty_select_dropdown w-100per"
-                          onChange={e => setState(e.target.value)}
-                          value={state && state}
+                          onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                          value={shipping.state && shipping.state}
                         >
                           {state_names.map((state, index) => (
                             <option key={index} value={state.short_name}>
@@ -430,10 +430,16 @@ const ShippingStep = ({
                     </div>
                   </li>
                 )}
-                {international && (
+                {shipping.international && (
                   <li>
                     <label htmlFor="state">State</label>
-                    <input type="text" value={state} name="state" id="state" onChange={e => setState(e.target.value)} />
+                    <input
+                      type="text"
+                      value={shipping.state}
+                      name="state"
+                      id="state"
+                      onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                    />
                   </li>
                 )}
                 <label
@@ -448,10 +454,10 @@ const ShippingStep = ({
                   <label htmlFor="postalCode">Postal Code</label>
                   <input
                     type="text"
-                    value={postalCode}
+                    value={shipping.postalCode}
                     name="postalCode"
                     id="postalCode"
-                    onChange={e => setPostalCode(e.target.value)}
+                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
                 <label
@@ -462,44 +468,31 @@ const ShippingStep = ({
                 >
                   {postal_code_validations}
                 </label>
-                {loading_checkboxes ? (
-                  <div>Loading...</div>
-                ) : (
-                  <div>
+                <div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        size="large"
+                        name="international"
+                        defaultChecked={shipping.international}
+                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.checked }))}
+                      />
+                    }
+                    label="International"
+                  />
+                  {shipping.international && (
                     <li>
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="international"
-                          defaultValue={international}
-                          defaultChecked={international}
-                          value={international}
-                          id="international"
-                          style={{
-                            transform: "scale(1.5)",
-                          }}
-                          className="mr-1rem"
-                          onChange={e => {
-                            setInternational(e.target.checked);
-                          }}
-                        />
-                        <label htmlFor="international">International</label>
-                      </div>
+                      <label htmlFor="country">Country</label>
+                      <input
+                        type="text"
+                        value={shipping.country}
+                        name="country"
+                        id="country"
+                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                      />
                     </li>
-                    {international && (
-                      <li>
-                        <label htmlFor="country">Country</label>
-                        <input
-                          type="text"
-                          value={country}
-                          name="country"
-                          id="country"
-                          onChange={e => setCountry(e.target.value)}
-                        />
-                      </li>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
                 <label
                   className="validation_text"
                   style={{
@@ -513,33 +506,25 @@ const ShippingStep = ({
                     Continue
                   </GLButton>
                 </li>
-
                 {current_user && current_user.first_name && (
-                  <div>
-                    {loading_checkboxes ? (
-                      <div>Loading...</div>
-                    ) : (
-                      <div className="mv-2rem">
-                        <input
-                          type="checkbox"
+                  <div className="mv-2rem">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          size="large"
                           name="save_user_shipping"
                           defaultChecked={save_user_shipping}
-                          style={{
-                            transform: "scale(1.5)",
-                          }}
-                          className="mr-1rem"
-                          id="save_user_shipping"
                           onChange={e => {
-                            set_save_user_shipping(e.target.checked);
+                            dispatch(set_save_user_shipping(e.target.checked));
                           }}
                         />
-                        <label htmlFor="save_user_shipping mb-20px">Save Shipping</label>
-                      </div>
-                    )}
+                      }
+                      label="Save Shipping"
+                    />
                   </div>
                 )}
               </ul>
-            </form>
+            </>
           ) : (
             <div className="wrap jc-b w-100per pos-rel">
               {shipping && shipping.hasOwnProperty("first_name") && (
@@ -561,15 +546,7 @@ const ShippingStep = ({
               <Loading loading={loading_shipping} />
               {/* </div> */}
 
-              <ShippingChoice
-                rates={shipping_rates.rates}
-                choose_shipping_rate={choose_shipping_rate}
-                hide_pay_button={hide_pay_button}
-                set_hide_pay_button={set_hide_pay_button}
-                shipping={shipping}
-                current_shipping_speed={current_shipping_speed}
-                re_choose_shipping_rate={re_choose_shipping_rate}
-              />
+              <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
               {cartItems.some(item => item.processing_time) && (
                 <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
                   Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}

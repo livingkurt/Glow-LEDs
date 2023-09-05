@@ -4,42 +4,32 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import DomesticShippingSpeed from "./DomesticShippingSpeed";
 import InternationalShippingSpeed from "./InternationalShippingSpeed";
 import { determine_service } from "../placeOrderHelpers";
+import { re_choose_shipping_rate, set_hide_pay_button } from "../placeOrderSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-const ShippingChoice = ({
-  rates,
-  hide_pay_button,
-  shipping,
-  current_shipping_speed,
-  choose_shipping_rate,
-  re_choose_shipping_rate,
-  set_hide_pay_button,
-}) => {
+const ShippingChoice = ({ choose_shipping_rate }) => {
+  const dispatch = useDispatch();
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { shipping } = cartPage;
+  const placeOrder = useSelector(state => state.placeOrder);
+  const { shipping_rates, current_shipping_speed, hide_pay_button } = placeOrder;
   useEffect(() => {
-    set_hide_pay_button(true);
-  }, [rates, set_hide_pay_button]);
-  const [modalShown, setModalShown] = useState(false);
+    dispatch(set_hide_pay_button(true));
+  }, [shipping_rates.rates, set_hide_pay_button]);
+
   return (
     <div className="w-100per">
-      {hide_pay_button && rates && (
+      {hide_pay_button && shipping_rates.rates && (
         <div className="w-100per">
           {shipping && shipping.international && (
             <div>
-              <InternationalShippingSpeed
-                rates={rates}
-                choose_shipping_rate={choose_shipping_rate}
-                modalShown={modalShown}
-                setModalShown={setModalShown}
-              />
+              <InternationalShippingSpeed choose_shipping_rate={choose_shipping_rate} />
             </div>
           )}
           {shipping && !shipping.international && (
             <div>
-              <DomesticShippingSpeed
-                rates={rates}
-                choose_shipping_rate={choose_shipping_rate}
-                modalShown={modalShown}
-                setModalShown={setModalShown}
-              />
+              <DomesticShippingSpeed choose_shipping_rate={choose_shipping_rate} />
             </div>
           )}
         </div>
@@ -57,7 +47,7 @@ const ShippingChoice = ({
               </div>
             </div>
           </div>
-          <GLButton className="rates w-10rem" onClick={() => re_choose_shipping_rate()}>
+          <GLButton className="rates w-10rem" onClick={() => dispatch(re_choose_shipping_rate())}>
             Change
           </GLButton>
         </div>

@@ -22,6 +22,7 @@ const orderPage = createSlice({
     hide_label_button: true,
     refundAmount: 0,
     refundReason: "",
+    error: "",
     shippingModal: false,
     createLabelModal: false,
     loading_label: false,
@@ -125,6 +126,7 @@ const orderPage = createSlice({
     },
     [API.createPayOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading_payment = true;
+      state.hideCheckoutButton = true;
     },
     [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading_payment = false;
@@ -133,6 +135,7 @@ const orderPage = createSlice({
       state.message = "Order Created and Paid";
     },
     [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
+      console.log({ payload });
       state.loading_payment = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -1,18 +1,22 @@
 import * as React from "react";
 import CartItem from "../../../shared/SharedComponents/CartItem";
-const OrderSummaryStep = ({
-  show_message,
-  loading,
-  shipping,
-  shippingPrice,
-  free_shipping_message,
-  tip,
-  cartItems,
-  itemsPrice,
-  items_price,
-  taxPrice,
-  totalPrice,
-}) => {
+import { useSelector } from "react-redux";
+const OrderSummaryStep = () => {
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, shipping } = cartPage;
+  const { cartItems } = my_cart;
+  const placeOrder = useSelector(state => state.placeOrder);
+  const {
+    show_message,
+    loading,
+    shippingPrice,
+    free_shipping_message,
+    tip,
+    itemsPrice,
+    items_price,
+    taxPrice,
+    totalPrice,
+  } = placeOrder;
   return (
     <div className="placeorder-action">
       <ul>
