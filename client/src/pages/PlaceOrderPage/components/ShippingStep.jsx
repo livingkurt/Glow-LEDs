@@ -31,6 +31,7 @@ import { Checkbox, FormControlLabel, Paper } from "@mui/material";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { isRequired, validateSection } from "../placeOrderHelpers";
 import { makeStyles } from "@mui/styles";
+import { fullName } from "../../UsersPage/usersHelpers";
 
 const useStyles = makeStyles(theme => ({
   // input: {
@@ -136,19 +137,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
   const submitHandler = e => {
     e.preventDefault();
 
-    // const data = {
-    //   ...shipping,
-    //   email: email ? email : current_user.email,
-    // };
     const result = validateForm();
-    console.log({ result });
-    // const request = validate_shipping(data);
-    // console.log({ request });
-    // if (Object.keys(request?.errors).length > 0) {
-    //   dispatch(setShippingValidation({ errors: request.errors }));
-
-    //   return;
-    // }
 
     if (result.isValid) {
       if (shipping && Object.keys(shipping).length > 0) {
@@ -188,9 +177,6 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
     }
   };
-  setTimeout(() => {
-    dispatch(set_loading(false));
-  }, 500);
 
   const get_shipping_rates = async verify_ship => {
     const verify = shipping.international ? false : verify_ship;
@@ -281,6 +267,28 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       },
     },
   };
+  console.log({ all_shipping });
+
+  const allShippingFormFields = {
+    type: "object",
+    title: "To Shipping Address",
+    fields: {
+      shippingChoice: {
+        type: "autocomplete_single",
+        label: "Choose Shipping",
+        options: all_shipping.data,
+        labelProp: "shipping",
+        getOptionValue: option => option,
+        getOptionLabel: shipping => {
+          if (!shipping) {
+            return "";
+          }
+
+          return fullName(shipping);
+        },
+      },
+    },
+  };
 
   const validateForm = () => {
     const validationResult = { isValid: true, errorMessages: {} };
@@ -314,33 +322,43 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                   </li>
                 )}
                 {current_user?.isAdmin && (
-                  <li className="w-100per">
-                    <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
-                      <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          style={{
-                            width: "100%",
-                          }}
-                          onChange={e => {
-                            const newShipping = JSON.parse(e.target.value);
-                            dispatch(save_shipping(newShipping));
-                          }}
-                        >
-                          <option key={1} defaultValue="">
-                            ---Choose Shipping for Order---
-                          </option>
-                          {!all_shipping.isLoading &&
-                            all_shipping.data.map((shipping, index) => (
-                              <option key={index} value={JSON.stringify(shipping)}>
-                                {shipping.first_name} {shipping.last_name}
-                              </option>
-                            ))}
-                        </select>
-                        <span className="custom-arrow" />
-                      </div>
-                    </div>
-                  </li>
+                  <GLForm
+                    formData={allShippingFormFields.fields}
+                    state={shipping}
+                    onChange={value =>
+                      dispatch(save_shipping({ ...value.shippingChoice, shippingChoice: value.shippingChoice }))
+                    }
+                    formErrors={formErrors} // Pass the errors here
+                    setFormErrors={setFormErrors}
+                    classes={classes}
+                  />
+                  // <li className="w-100per">
+                  //   <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
+                  //     <div className="custom-select w-100per">
+                  //       <select
+                  //         className="qty_select_dropdown w-100per"
+                  //         style={{
+                  //           width: "100%",
+                  //         }}
+                  //         onChange={e => {
+                  //           const newShipping = JSON.parse(e.target.value);
+                  //           dispatch(save_shipping(newShipping));
+                  //         }}
+                  //       >
+                  //         <option key={1} defaultValue="">
+                  //           ---Choose Shipping for Order---
+                  //         </option>
+                  //         {!all_shipping.isLoading &&
+                  //           all_shipping.data.map((shipping, index) => (
+                  //             <option key={index} value={JSON.stringify(shipping)}>
+                  //               {shipping.first_name} {shipping.last_name}
+                  //             </option>
+                  //           ))}
+                  //       </select>
+                  //       <span className="custom-arrow" />
+                  //     </div>
+                  //   </div>
+                  // </li>
                 )}
                 {current_user?.isAdmin && (
                   <FormControlLabel

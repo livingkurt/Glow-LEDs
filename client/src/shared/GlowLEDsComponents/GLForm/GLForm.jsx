@@ -63,8 +63,9 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
         } else if (determine_shown_fields(fieldData, current_user)) {
           switch (fieldData.type) {
             case "autocomplete_single":
-              const selectedOption =
-                fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState) || fieldState;
+              const selectedOption = fieldData.valueAttribute
+                ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
+                : fieldState;
               return (
                 <GLAutocomplete
                   key={fieldName}
@@ -76,7 +77,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
                   // isOptionEqualToValue={(option, value) => option.short_name === value.short_name}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
-                  value={selectedOption === "" ? null : selectedOption}
+                  value={selectedOption || ""}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
                     option
@@ -323,11 +324,13 @@ GLForm.propTypes = {
   index: PropTypes.any,
   setFormErrors: PropTypes.func,
   formErrors: PropTypes.object,
+  classes: PropTypes.object,
 };
 
 GLForm.defaultProps = {
   setFormErrors: () => {},
   formErrors: {},
+  classes: {},
 };
 
 export default GLForm;

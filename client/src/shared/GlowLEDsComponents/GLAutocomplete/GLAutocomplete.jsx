@@ -68,7 +68,7 @@ const GLAutocomplete = ({
           renderInput={params => (
             <TextField
               {...params}
-              className={customClasses.outlinedInput}
+              className={customClasses?.outlinedInput}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
               InputProps={{
                 ...params.InputProps, // Spread existing props
