@@ -203,16 +203,7 @@ const PaymentStep = ({
               </li>
             )}
             <li>
-              {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? (
-                <StripeCheckout />
-              ) : (
-                // <Stripe
-                //   pay_order={placeOrderHandler}
-                //   loading_payment={loading_payment}
-                //   set_loading_payment={set_loading_payment}
-                // />
-                <div></div>
-              )}
+              {cartItems.length > 0 && totalPrice && <StripeCheckout />}
               {(!totalPrice || totalPrice === 0) && (
                 <>
                   <p htmlFor="password">Payment is not necessary at this time</p>

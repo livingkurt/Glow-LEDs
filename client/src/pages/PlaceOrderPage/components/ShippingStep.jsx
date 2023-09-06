@@ -11,16 +11,13 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
-import { save_shipping, set_verify_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
+import { save_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import config from "../../../config";
 import {
   set_hide_pay_button,
-  set_email,
   set_show_shipping,
   set_shipping_completed,
-  set_loading,
-  set_save_user_shipping,
   showHideSteps,
   setShippingValidation,
   set_loading_shipping,
@@ -32,7 +29,6 @@ import {
   setShippingSaved,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { Info } from "@mui/icons-material";
 
@@ -40,7 +36,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
   const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart, shipping, payment, verify_shipping } = cartPage;
+  const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
 
   const placeOrder = useSelector(state => state.placeOrder);
@@ -133,29 +129,6 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     return JSON.stringify(address).toLowerCase().replace(/\s/g, "");
   };
 
-  // const validateShipping = e => {
-  //   e.preventDefault();
-
-  //   const result = validateForm();
-
-  //   if (result.isValid) {
-  //     const normalizedCurrentUserShipping = normalizeAddress(current_user?.shipping || {});
-  //     const normalizedNewShipping = normalizeAddress(shipping || {});
-
-  //     if (current_user.shipping && normalizedCurrentUserShipping !== normalizedNewShipping && !shippingSaved) {
-  //       if (current_user?.shipping) {
-  //         dispatch(setModalText("Your address is different from your saved one. Would you like to update it?"));
-  //       } else {
-  //         dispatch(setModalText("Would you like to save your address for future use?"));
-  //       }
-  //       dispatch(openSaveShippingModal(true)); // Open the modal
-  //       return;
-  //     } else {
-  //       submitShipping();
-  //     }
-  //   }
-  // };
-
   const submitShipping = () => {
     if (shipping && Object.keys(shipping).length > 0) {
       dispatch(set_loading_shipping(true));
@@ -199,70 +172,6 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
 
     dispatch(API.shippingRates({ order, verify_shipping: verify }));
   };
-
-  // const setGeneratedAddress = place => {
-  //   let autocompleteElement = document.querySelector("#autocomplete");
-  //   const street_num = autocompleteElement ? autocompleteElement.value : "";
-
-  //   const payload = {
-  //     shipping: place,
-  //     street_num,
-  //   };
-
-  //   dispatch(updateGoogleShipping(payload));
-  // };
-
-  // const shippingFormFields = {
-  //   toShipping: {
-  //     type: "object",
-  //     title: "To Shipping Address",
-  //     fields: {
-  //       first_name: {
-  //         type: "text",
-  //         label: "First Name",
-  //       },
-  //       last_name: {
-  //         type: "text",
-  //         label: "Last Name",
-  //       },
-  //       address_1: {
-  //         type: "autocomplete_address",
-  //         label: "Address Line 1",
-  //         setGeneratedAddress: place => setGeneratedAddress(place, "to"),
-  //       },
-  //       address_2: {
-  //         type: "text",
-  //         label: "Address Line 2",
-  //       },
-  //       city: {
-  //         type: "text",
-  //         label: "City",
-  //       },
-  //       state: {
-  //         type: "autocomplete_single",
-  //         label: "State",
-  //         getOptionLabel: option => {
-  //           if (typeof option === "string") {
-  //             return toCapitalize(option);
-  //           }
-  //         },
-  //         options: state_names,
-  //       },
-  //       postalCode: {
-  //         type: "text",
-  //         label: "Postal Code",
-  //       },
-  //       country: {
-  //         type: "text",
-  //         label: "Country",
-  //       },
-  //       international: {
-  //         type: "checkbox",
-  //         label: "International",
-  //       },
-  //     },
-  //   },
-  // };
 
   return (
     <div>
@@ -537,9 +446,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                 </div>
               )}
 
-              {/* <div className="pos-abs "> */}
               <Loading loading={loading_shipping} />
-              {/* </div> */}
 
               <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
               {cartItems.some(item => item.processing_time) && (
