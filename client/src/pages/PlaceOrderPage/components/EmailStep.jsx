@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
@@ -13,6 +13,8 @@ import {
   set_is_guest,
   showHideSteps,
 } from "../placeOrderSlice";
+import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
+import { Paper } from "@mui/material";
 
 const EmailStep = ({ next_step }) => {
   const dispatch = useDispatch();
@@ -38,8 +40,8 @@ const EmailStep = ({ next_step }) => {
   const submit_logout = e => {
     e.preventDefault();
     const refreshToken = localStorage.getItem("refreshToken");
-    dispatch(API.logoutUser(refreshToken));
     navigate("/checkout/placeorder");
+    dispatch(API.logoutUser(refreshToken));
   };
 
   const { width } = useWindowDimensions();
@@ -53,6 +55,35 @@ const EmailStep = ({ next_step }) => {
     }
   };
 
+  const isRequired = (value, fieldName) => (value === "" ? `${fieldName} is Required` : null);
+
+  const isValidEmail = value =>
+    !value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) ? "Invalid email format" : null;
+
+  // Composite Validation Function
+  const validateEmail = value => {
+    const required = isRequired(value, "Email");
+    if (required) return required;
+
+    const valid = isValidEmail(value);
+    if (valid) return valid;
+
+    return null;
+  };
+
+  const emailFormFields = {
+    type: "object",
+    title: "Email",
+    fields: {
+      email: {
+        type: "text",
+        label: "Email",
+        validate: value => validateEmail(value),
+      },
+    },
+  };
+
+  const [formErrors, setFormErrors] = useState({});
   return (
     <div>
       <div className="jc-b">
@@ -104,6 +135,16 @@ const EmailStep = ({ next_step }) => {
               >
                 {email_validations}
               </label>
+              {/* <Paper style={{ padding: "8px 20px", borderRadius: "10px" }}>
+                <GLForm
+                  formData={emailFormFields.fields}
+                  state={{ email }}
+                  onChange={value => dispatch(set_email(value.email..toLowerCase()))}
+                  formErrors={formErrors} // Pass the errors here
+                  setFormErrors={setFormErrors}
+                  // classes={classes}
+                />
+              </Paper> */}
               <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
                 You'll recieve receipts and notifications at this email address.{"\n"}
                 {"\n"}Already have an account?

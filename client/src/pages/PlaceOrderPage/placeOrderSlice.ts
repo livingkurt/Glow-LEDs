@@ -74,6 +74,7 @@ const initialState = {
   paymentValidations: "",
   showSaveShippingModal: false,
   shippingSaved: false,
+  modalText: false,
   shippingValidations: {
     first_name: "",
     last_name: "",
@@ -198,6 +199,9 @@ const placeOrder = createSlice({
     },
     setShippingSaved: (state, { payload }) => {
       state.shippingSaved = false;
+    },
+    setModalText: (state, { payload }) => {
+      state.modalText = payload;
     },
 
     nextStep: (state, { payload }) => {
@@ -456,6 +460,7 @@ export const {
   setPaymentValidations,
   clearValidations,
   setShippingSaved,
+  setModalText,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

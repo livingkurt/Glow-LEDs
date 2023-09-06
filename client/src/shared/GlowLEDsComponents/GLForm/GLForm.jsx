@@ -167,11 +167,12 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
                   variant="outlined"
                   className={classes.outlinedInput}
                   fullWidth
+                  // autoComplete="new-password"
                   InputProps={{
-                    autocomplete: "new-password",
-                    form: {
-                      autocomplete: "off",
-                    },
+                    // autocomplete: "new-password",
+                    // form: {
+                    //   autocomplete: "off",
+                    // },
                     className: classes.input,
                   }}
                   InputLabelProps={{
@@ -195,8 +196,8 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
-                  autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
+                  autoComplete="new-password"
                   className={classes.outlinedInput}
                   InputProps={{
                     autocomplete: "new-password",
