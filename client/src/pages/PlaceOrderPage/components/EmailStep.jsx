@@ -110,7 +110,7 @@ const EmailStep = ({ next_step }) => {
                 <GLButton
                   variant="primary"
                   className="title_font m-10px"
-                  onClick={() => dispatch(set_is_guest(is_guest => (is_guest ? false : true)))}
+                  onClick={() => dispatch(set_is_guest(is_guest ? false : true))}
                 >
                   Login
                 </GLButton>

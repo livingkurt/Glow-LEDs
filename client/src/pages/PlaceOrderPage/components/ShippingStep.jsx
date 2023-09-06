@@ -11,7 +11,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
-import { save_shipping, set_verify_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
+import { save_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import config from "../../../config";
 import {
@@ -26,12 +26,16 @@ import {
   set_loading_shipping,
   setFreeShipping,
   setTaxPrice,
+  openSaveShippingModal,
+  closeSaveShippingModal,
+  setShippingSaved,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel, Paper } from "@mui/material";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { isRequired, validateSection } from "../placeOrderHelpers";
 import { makeStyles } from "@mui/styles";
 import { fullName } from "../../UsersPage/usersHelpers";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 
 const useStyles = makeStyles(theme => ({
   // input: {
@@ -76,7 +80,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
   const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart, shipping, payment, verify_shipping } = cartPage;
+  const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
 
   const placeOrder = useSelector(state => state.placeOrder);
@@ -90,7 +94,6 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     loading_shipping,
     show_shipping_complete,
     save_user_shipping,
-    email,
     promo_code,
     shippingPrice,
     show_message,
@@ -99,18 +102,9 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     tip,
     order_note,
     production_note,
-    shippingValidations,
+    showSaveShippingModal,
+    shippingSaved,
   } = placeOrder;
-
-  // const {
-  //   first_name: first_name_validations,
-  //   last_name: last_name_validations,
-  //   address_1: address_validations,
-  //   city: city_validations,
-  //   state: state_validations,
-  //   postal_code: postal_code_validations,
-  //   country: country_validations,
-  // } = shippingValidations;
 
   const dispatch = useDispatch();
 
@@ -126,60 +120,56 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     if (clean) {
       if (shipping && shipping.first_name && shipping.first_name.length > 1) {
         dispatch(save_shipping(shipping));
-        if (shipping.international) {
-          dispatch(set_verify_shipping(false));
-        }
       }
     }
     return () => (clean = false);
   }, []);
 
-  const submitHandler = e => {
+  const normalizeAddress = address => {
+    return JSON.stringify(address).toLowerCase().replace(/\s/g, "");
+  };
+
+  const validateShipping = e => {
     e.preventDefault();
 
     const result = validateForm();
 
     if (result.isValid) {
-      if (shipping && Object.keys(shipping).length > 0) {
-        dispatch(set_loading_shipping(true));
-        const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
+      const normalizedCurrentUserShipping = normalizeAddress(current_user?.shipping || {});
+      const normalizedNewShipping = normalizeAddress(shipping || {});
 
-        if (!package_volume) {
-          dispatch(setFreeShipping());
-        } else {
-          if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
-            get_shipping_rates(verify_shipping);
-          }
-        }
-        if (shipping.international) {
-          dispatch(setTaxPrice(0));
-        } else {
-          dispatch(API.getTaxRates({ shipping, itemsPrice }));
-        }
+      if (normalizedCurrentUserShipping !== normalizedNewShipping && !shippingSaved) {
+        dispatch(openSaveShippingModal(true)); // Open the modal
+        return;
       }
-      if (save_user_shipping) {
-        dispatch(
-          API.saveUser({
-            user: {
-              ...current_user,
-              shipping: {
-                ...shipping,
-                email: current_user.email,
-                country: shipping.international ? shipping.country : "US",
-              },
-            },
-            profile: false,
-          })
-        );
-      }
-      dispatch(set_show_shipping(false));
-      dispatch(set_shipping_completed(true));
-      isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
     }
   };
 
-  const get_shipping_rates = async verify_ship => {
-    const verify = shipping.international ? false : verify_ship;
+  const submitShipping = () => {
+    if (shipping && Object.keys(shipping).length > 0) {
+      dispatch(set_loading_shipping(true));
+      const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
+
+      if (!package_volume) {
+        dispatch(setFreeShipping());
+      } else {
+        if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
+          get_shipping_rates();
+        }
+      }
+      if (shipping.international) {
+        dispatch(setTaxPrice(0));
+      } else {
+        dispatch(API.getTaxRates({ shipping, itemsPrice }));
+      }
+    }
+    dispatch(set_show_shipping(false));
+    dispatch(set_shipping_completed(true));
+    isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
+    dispatch(setShippingSaved(false));
+  };
+
+  const get_shipping_rates = async () => {
     const order = {
       orderItems: cartItems,
       shipping,
@@ -195,7 +185,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       promo_code: show_message && promo_code,
     };
 
-    dispatch(API.shippingRates({ order, verify_shipping: verify }));
+    dispatch(API.shippingRates({ order }));
   };
 
   const setGeneratedAddress = place => {
@@ -228,13 +218,13 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       },
       address_1: {
         type: "autocomplete_address",
-        label: "Address Line 1",
+        label: "Address",
         validate: value => isRequired(value, "Address"),
         setGeneratedAddress: place => setGeneratedAddress(place, "to"),
       },
       address_2: {
         type: "text",
-        label: "Address Line 2",
+        label: "Apt/Suite #",
       },
       city: {
         type: "text",
@@ -246,8 +236,8 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         label: "State",
         validate: value => isRequired(value, "State"),
         getOptionLabel: option => option.long_name,
-        getOptionSelected: (option, value) => option.short_name === value,
-        getOptionValue: option => option.short_name,
+        getOptionSelected: (option, value) => option?.short_name === value,
+        getOptionValue: option => option?.short_name,
         valueAttribute: "short_name",
         options: state_names,
       },
@@ -263,11 +253,9 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       country: {
         type: shipping.international ? "text" : "",
         label: "Country",
-        validate: value => isRequired(value, "Country"),
       },
     },
   };
-  console.log({ all_shipping });
 
   const allShippingFormFields = {
     type: "object",
@@ -286,6 +274,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
 
           return fullName(shipping);
         },
+        permissions: ["admin"],
       },
     },
   };
@@ -332,50 +321,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                     setFormErrors={setFormErrors}
                     classes={classes}
                   />
-                  // <li className="w-100per">
-                  //   <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
-                  //     <div className="custom-select w-100per">
-                  //       <select
-                  //         className="qty_select_dropdown w-100per"
-                  //         style={{
-                  //           width: "100%",
-                  //         }}
-                  //         onChange={e => {
-                  //           const newShipping = JSON.parse(e.target.value);
-                  //           dispatch(save_shipping(newShipping));
-                  //         }}
-                  //       >
-                  //         <option key={1} defaultValue="">
-                  //           ---Choose Shipping for Order---
-                  //         </option>
-                  //         {!all_shipping.isLoading &&
-                  //           all_shipping.data.map((shipping, index) => (
-                  //             <option key={index} value={JSON.stringify(shipping)}>
-                  //               {shipping.first_name} {shipping.last_name}
-                  //             </option>
-                  //           ))}
-                  //       </select>
-                  //       <span className="custom-arrow" />
-                  //     </div>
-                  //   </div>
-                  // </li>
                 )}
-                {current_user?.isAdmin && (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        size="large"
-                        name="verify_shipping"
-                        defaultChecked={verify_shipping}
-                        onChange={e => {
-                          dispatch(set_verify_shipping(e.target.checked));
-                        }}
-                      />
-                    }
-                    label="Verify Shipping"
-                  />
-                )}
-                {/* <Paper className="p-10px"> */}
                 <GLForm
                   formData={shippingFormFields.fields}
                   state={shipping}
@@ -386,11 +332,11 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                 />
 
                 <li>
-                  <GLButton onClick={submitHandler} variant="primary" className="bob">
+                  <GLButton onClick={validateShipping} variant="primary" className="bob">
                     Continue
                   </GLButton>
                 </li>
-                {current_user && current_user.first_name && (
+                {/* {current_user && current_user.first_name && (
                   <div className="mv-2rem">
                     <FormControlLabel
                       control={
@@ -406,7 +352,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                       label="Save Shipping"
                     />
                   </div>
-                )}
+                )} */}
               </div>
             </>
           ) : (
@@ -464,6 +410,40 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         </div>
       )}
       {width < 400 && <hr />}
+      <GLActiionModal
+        isOpen={showSaveShippingModal}
+        onConfirm={() => {
+          dispatch(
+            API.saveUser({
+              user: {
+                ...current_user,
+                shipping: {
+                  ...shipping,
+                  email: current_user.email,
+                  country: shipping.international ? shipping.country : "US",
+                },
+              },
+              profile: true,
+            })
+          );
+          dispatch(closeSaveShippingModal(false));
+          submitShipping();
+        }}
+        onCancel={() => {
+          dispatch(closeSaveShippingModal(false));
+        }}
+        title={"Save Shipping Address"}
+        confirmLabel={"Save"}
+        confirmColor="primary"
+        cancelLabel={"Cancel"}
+        cancelColor="secondary"
+        disableEscapeKeyDown
+      >
+        <p>Do you want to save the updated shipping address?</p>
+        <p>
+          <strong>Note</strong>: You can change your saved address later from your profile page
+        </p>
+      </GLActiionModal>
     </div>
   );
 };

@@ -51,7 +51,6 @@ const cartPage = createSlice({
     paymentMethod: "stripe",
     cartDrawer: false,
     sideNavDrawer: false,
-    verify_shipping: true,
   },
   reducers: {
     set_cart: (state, { payload }) => {
@@ -106,9 +105,6 @@ const cartPage = createSlice({
     setSideNavDrawer: (state, { payload }) => {
       state.sideNavDrawer = payload;
     },
-    set_verify_shipping: (state, { payload }) => {
-      state.verify_shipping = payload;
-    },
     updateGoogleShipping: (state, { payload }) => {
       const { shipping, street_num } = payload;
 
@@ -118,9 +114,6 @@ const cartPage = createSlice({
       }
 
       const street_number = shipping.address_components.find((comp: any) => comp.types.includes("street_number")) || {};
-      if (!street_number.long_name) {
-        state.verify_shipping = false;
-      }
 
       const address = shipping.address_components.find((comp: any) => comp.types.includes("route"));
       const city = shipping.address_components.find((comp: any) => comp.types.includes("locality"));
@@ -140,7 +133,6 @@ const cartPage = createSlice({
 
       if (country.short_name !== "US") {
         state.shipping.international = true;
-        state.shipping.verify_shipping = false;
         state.shipping.state = stateObj.short_name;
         state.shipping.country = country.long_name;
       }
@@ -320,6 +312,5 @@ export const {
   setCartDrawer,
   setSideNavDrawer,
   updateGoogleShipping,
-  set_verify_shipping,
 } = cartPage.actions;
 export default cartPage.reducer;

@@ -76,18 +76,15 @@ export const createReturnLabel = createAsyncThunk(
   }
 );
 
-export const shippingRates = createAsyncThunk(
-  "shipping/shippingRates",
-  async ({ order, verify_shipping }: any, thunkApi: any) => {
-    try {
-      const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
-    }
+export const shippingRates = createAsyncThunk("shipping/shippingRates", async ({ order }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    return thunkApi.rejectWithValue(error.response?.data);
   }
-);
+});
 
 export const customShippingRates = createAsyncThunk(
   "shipping/customShippingRates",

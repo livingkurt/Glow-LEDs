@@ -72,6 +72,8 @@ const initialState = {
   show_modal: false,
   hideCheckoutButton: false,
   paymentValidations: "",
+  showSaveShippingModal: false,
+  shippingSaved: false,
   shippingValidations: {
     first_name: "",
     last_name: "",
@@ -87,51 +89,29 @@ const placeOrder = createSlice({
   name: "placeOrder",
   initialState,
   reducers: {
-    set_shipping_rates: (state, { payload }) => {
-      state.shipping_rates = payload;
-    },
-    set_current_shipping_speed: (state, { payload }) => {
-      state.current_shipping_speed = payload;
-    },
-    set_shipment_id: (state, { payload }) => {
-      state.shipment_id = payload;
-    },
-    set_shipping_rate: (state, { payload }) => {
-      state.shipping_rate = payload;
-    },
     set_hide_pay_button: (state, { payload }) => {
       state.hide_pay_button = payload;
     },
-    set_parcel: (state, { payload }) => {
-      state.parcel = payload;
-    },
+
     set_paymentMethod: (state, { payload }) => {
       state.paymentMethod = payload;
     },
     set_create_account: (state, { payload }) => {
       state.create_account = payload;
     },
-    set_show_email: (state, { payload }) => {
-      state.show_email = payload;
-    },
+
     set_show_shipping: (state, { payload }) => {
       state.show_shipping = payload;
     },
-    set_show_payment: (state, { payload }) => {
-      state.show_payment = payload;
-    },
+
     set_is_guest: (state, { payload }) => {
       state.is_guest = payload;
     },
-    set_email_completed: (state, { payload }) => {
-      state.email_completed = payload;
-    },
+
     set_shipping_completed: (state, { payload }) => {
       state.shipping_completed = payload;
     },
-    set_payment_completed: (state, { payload }) => {
-      state.payment_completed = payload;
-    },
+
     set_password: (state, { payload }) => {
       state.password = payload;
     },
@@ -144,12 +124,7 @@ const placeOrder = createSlice({
     setPasswordValidations: (state, { payload }) => {
       state.password_validations = payload;
     },
-    setShippingPrice: (state, { payload }) => {
-      state.shippingPrice = payload;
-    },
-    setPreviousShippingPrice: (state, { payload }) => {
-      state.previousShippingPrice = payload;
-    },
+
     set_promo_code: (state, { payload }) => {
       state.promo_code = payload;
     },
@@ -159,52 +134,35 @@ const placeOrder = createSlice({
     setItemsPrice: (state, { payload }) => {
       state.itemsPrice = payload;
     },
-    set_tax_rate: (state, { payload }) => {
-      state.tax_rate = payload;
-    },
+
     setTaxPrice: (state, { payload }) => {
       state.taxPrice = payload;
     },
     setTotalPrice: (state, { payload }) => {
       state.totalPrice = payload;
     },
-    set_show_message: (state, { payload }) => {
-      state.show_message = payload;
-    },
+
     set_user: (state, { payload }) => {
       state.user = payload;
     },
-    set_free_shipping_message: (state, { payload }) => {
-      state.free_shipping_message = payload;
-    },
+
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_show_promo_code: (state, { payload }) => {
-      state.show_promo_code = payload;
-    },
-    set_show_promo_code_input_box: (state, { payload }) => {
-      state.show_promo_code_input_box = payload;
-    },
+
     set_tip: (state, { payload }) => {
       state.tip = payload;
     },
-    set_error_happened: (state, { payload }) => {
-      state.error_happened = payload;
-    },
+
     set_error: (state, { payload }) => {
       state.error = payload;
       state.loading_payment = false;
     },
-    set_error_shipping: (state, { payload }) => {
-      state.error_shipping = payload;
-    },
+
     set_paid: (state, { payload }) => {
       state.paid = payload;
     },
-    set_loading_checkboxes: (state, { payload }) => {
-      state.loading_checkboxes = payload;
-    },
+
     set_order_note: (state, { payload }) => {
       state.order_note = payload;
     },
@@ -214,9 +172,7 @@ const placeOrder = createSlice({
     set_loading_shipping: (state, { payload }) => {
       state.loading_shipping = payload;
     },
-    set_show_shipping_complete: (state, { payload }) => {
-      state.show_shipping_complete = payload;
-    },
+
     set_promo_code_validations: (state, { payload }) => {
       state.promo_code_validations = payload;
     },
@@ -232,66 +188,18 @@ const placeOrder = createSlice({
     setModalShown: (state, { payload }) => {
       state.modalShown = payload;
     },
-    set_first_name: (state, { payload }) => {
-      state.first_name = payload;
+
+    openSaveShippingModal: (state, { payload }) => {
+      state.showSaveShippingModal = true;
     },
-    set_last_name: (state, { payload }) => {
-      state.last_name = payload;
+    closeSaveShippingModal: (state, { payload }) => {
+      state.showSaveShippingModal = false;
+      state.shippingSaved = true;
     },
-    set_address_1: (state, { payload }) => {
-      state.address_1 = payload;
+    setShippingSaved: (state, { payload }) => {
+      state.shippingSaved = false;
     },
-    set_address_2: (state, { payload }) => {
-      state.address_2 = payload;
-    },
-    setCity: (state, { payload }) => {
-      state.city = payload;
-    },
-    setState: (state, { payload }) => {
-      state.state = payload;
-    },
-    setPostalCode: (state, { payload }) => {
-      state.postalCode = payload;
-    },
-    setCountry: (state, { payload }) => {
-      state.country = payload;
-    },
-    setInternational: (state, { payload }) => {
-      state.international = payload;
-    },
-    set_save_user_shipping: (state, { payload }) => {
-      state.save_user_shipping = payload;
-    },
-    set_show_modal: (state, { payload }) => {
-      state.show_modal = payload;
-    },
-    set_first_name_validations: (state, { payload }) => {
-      state.first_name_validations = payload;
-    },
-    set_last_name_validations: (state, { payload }) => {
-      state.last_name_validations = payload;
-    },
-    set_address_validations: (state, { payload }) => {
-      state.address_validations = payload;
-    },
-    set_city_validations: (state, { payload }) => {
-      state.city_validations = payload;
-    },
-    set_state_validations: (state, { payload }) => {
-      state.state_validations = payload;
-    },
-    set_postal_code_validations: (state, { payload }) => {
-      state.postal_code_validations = payload;
-    },
-    set_country_validations: (state, { payload }) => {
-      state.country_validations = payload;
-    },
-    set_international_validations: (state, { payload }) => {
-      state.international_validations = payload;
-    },
-    set_agree: (state, { payload }) => {
-      state.agree = payload;
-    },
+
     nextStep: (state, { payload }) => {
       if (payload === "email") {
         state.show_email = true;
@@ -404,25 +312,7 @@ const placeOrder = createSlice({
         }
       }
     },
-    choose_shipping_rate: (state, { payload }) => {
-      const { rate, speed, name, promo_code_storage } = payload;
 
-      state.shippingPrice = parseFloat(rate.retail_rate || rate.rate);
-      state.previousShippingPrice = parseFloat(rate.retail_rate || rate.rate);
-      state.hide_pay_button = false;
-      state.shipping_rate = rate;
-      state.current_shipping_speed = { rate, speed, name };
-      state.show_promo_code = true;
-      state.show_shipping_complete = true;
-
-      if (promo_code_storage && promo_code_storage.length > 0) {
-        state.promo_code = promo_code_storage.toLowerCase();
-        state.show_promo_code = true;
-        state.show_message = promo_code_storage;
-        state.show_promo_code_input_box = false;
-        // Call activatePromo logic here if needed
-      }
-    },
     re_choose_shipping_rate: state => {
       state.shippingPrice = 0;
       state.previousShippingPrice = 0;
@@ -430,22 +320,6 @@ const placeOrder = createSlice({
       state.shipping_rate = {};
       state.show_payment = false;
     },
-    // initializeShippingDetails: (state, { payload }) => {
-    //   const { email, first_name, last_name, address_1, address_2, city, state, postalCode, country, international } = payload;
-    //   state.email = email;
-    //   state.first_name = first_name;
-    //   state.last_name = last_name;
-    //   state.address_1 = address_1;
-    //   state.address_2 = address_2;
-    //   state.city = city;
-    //   state.state = state;
-    //   state.postalCode = postalCode;
-    //   state.country = country;
-    //   state.international = international;
-    //   if (international) {
-    //     state.verify_shipping = false;
-    //   }
-    // },
     setShippingValidation: (state, { payload }) => {
       const { errors } = payload;
       state.shippingValidations = errors;
@@ -538,79 +412,40 @@ const placeOrder = createSlice({
 });
 
 export const {
-  set_shipping_rates,
-  set_current_shipping_speed,
-  set_shipment_id,
-  set_shipping_rate,
   set_hide_pay_button,
-  set_parcel,
   set_paymentMethod,
   set_create_account,
-  set_show_email,
   set_show_shipping,
-  set_show_payment,
   set_is_guest,
-  set_email_completed,
   set_shipping_completed,
-  set_payment_completed,
   set_password,
   set_new_password,
   setEmailValidations,
   setPasswordValidations,
-  setShippingPrice,
-  setPreviousShippingPrice,
   set_promo_code,
   set_loading_payment,
   setItemsPrice,
-  set_tax_rate,
   setTaxPrice,
   setTotalPrice,
-  set_show_message,
   set_user,
-  set_free_shipping_message,
   set_loading,
-  set_show_promo_code,
-  set_show_promo_code_input_box,
   set_tip,
-  set_error_happened,
   set_error,
-  set_error_shipping,
   set_paid,
-  set_loading_checkboxes,
   set_order_note,
   set_production_note,
   set_loading_shipping,
-  set_show_shipping_complete,
   set_promo_code_validations,
   set_email,
   setValue,
   setOpen,
   setModalShown,
-  set_first_name,
-  set_last_name,
-  set_address_1,
-  set_address_2,
-  setCity,
-  setState,
-  setPostalCode,
-  setCountry,
-  setInternational,
-  set_save_user_shipping,
-  set_show_modal,
-  set_first_name_validations,
-  set_last_name_validations,
-  set_address_validations,
-  set_city_validations,
-  set_state_validations,
-  set_postal_code_validations,
-  set_country_validations,
-  set_international_validations,
-  set_agree,
+  openSaveShippingModal,
+  closeSaveShippingModal,
   nextStep,
   showHideSteps,
   removePromo,
   activatePromo,
-  choose_shipping_rate,
   re_choose_shipping_rate,
   setShippingValidation,
   setFreeShipping,
@@ -620,6 +455,7 @@ export const {
   hiddenCheckoutButton,
   setPaymentValidations,
   clearValidations,
+  setShippingSaved,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

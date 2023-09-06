@@ -7,42 +7,14 @@ import { useDispatch } from "react-redux";
 import { set_error } from "../placeOrderSlice";
 
 const LoadingShipment = ({ children }) => {
-  const dispatch = useDispatch();
-
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart } = cartPage;
-  const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
-  const { loading_shipping, error } = placeOrder;
+  const { loading_shipping } = placeOrder;
 
   const loading_message = () => {
     setTimeout(() => {
       return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
     }, 3000);
   };
-
-  const close_error = () => {
-    dispatch(set_error());
-  };
-
-  // const run_address_without_verification = () => {
-  //   // set_loading_payment(false);
-  //   dispatch(set_loading_shipping(true));
-  //   dispatch(set_verify_shipping(false));
-  //   get_shipping_rates(false);
-  //   dispatch(set_error());
-  // };
-
-  // function calculateTotalPounds(cartItems) {
-  //   let totalOunces = 0;
-  //   for (let i = 0; i < cartItems.length; i++) {
-  //     const item = cartItems[i];
-  //     const weightInOunces = (item?.weight_pounds * 16 || 0) + (item?.weight_ounces || 0);
-  //     totalOunces += weightInOunces * item.qty;
-  //   }
-  //   const totalPounds = totalOunces / 16;
-  //   return totalPounds;
-  // }
 
   return (
     <div>

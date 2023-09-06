@@ -69,6 +69,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <GLAutocomplete
                   key={fieldName}
+                  autoComplete="new-password"
                   customClasses={classes}
                   isOptionEqualToValue={(option, value) => {
                     return option.short_name === value.short_name;
@@ -160,13 +161,17 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
                   name={fieldName}
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
-                  label={"Enter a Location"}
+                  label={fieldData.label}
                   margin="normal"
                   size="small"
                   variant="outlined"
                   className={classes.outlinedInput}
                   fullWidth
                   InputProps={{
+                    autocomplete: "new-password",
+                    form: {
+                      autocomplete: "off",
+                    },
                     className: classes.input,
                   }}
                   InputLabelProps={{
@@ -190,9 +195,14 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
+                  autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
+                    autocomplete: "new-password",
+                    form: {
+                      autocomplete: "off",
+                    },
                     className: classes.input,
                   }}
                   InputLabelProps={{
@@ -217,9 +227,14 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
+                  autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
+                    autocomplete: "new-password",
+                    form: {
+                      autocomplete: "off",
+                    },
                     className: classes.input,
                   }}
                   InputLabelProps={{
@@ -245,9 +260,14 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
+                  autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
+                    autocomplete: "new-password",
+                    form: {
+                      autocomplete: "off",
+                    },
                     className: classes.input,
                   }}
                   InputLabelProps={{
@@ -272,9 +292,14 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
+                  autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
+                    autocomplete: "new-password",
+                    form: {
+                      autocomplete: "off",
+                    },
                     className: classes.input,
                   }}
                   InputLabelProps={{
