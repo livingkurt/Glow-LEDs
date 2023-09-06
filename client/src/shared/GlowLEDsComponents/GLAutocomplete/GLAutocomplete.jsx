@@ -9,18 +9,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
-import { makeStyles } from "@mui/styles";
-
-// Define your styles
-const useStyles = makeStyles(theme => ({
-  input: {
-    backgroundColor: "white",
-    color: "black", // Optional, if you want to change text color
-  },
-  label: {
-    // color: "white", // Optional, if you want to change label color
-  },
-}));
 
 const GLAutocomplete = ({
   loading,
@@ -57,7 +45,6 @@ const GLAutocomplete = ({
   customClasses,
   ...otherProps
 }) => {
-  const defaultClasses = useStyles();
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
   const checkedIcon = <CheckBoxIcon fontSize="medium" />;
   return (
@@ -81,12 +68,18 @@ const GLAutocomplete = ({
           renderInput={params => (
             <TextField
               {...params}
+              className={customClasses.outlinedInput}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
               InputProps={{
-                className: defaultClasses.input,
+                ...params.InputProps, // Spread existing props
+                className: customClasses.input, // Your custom props here
               }}
               InputLabelProps={{
-                className: defaultClasses.label,
+                ...params.InputLabelProps, // Spread existing props
+                className: customClasses.label, // Your custom props here
+              }}
+              FormHelperTextProps={{
+                className: error ? customClasses.errorHelperText : customClasses.helperText,
               }}
               name={name}
               margin={margin}

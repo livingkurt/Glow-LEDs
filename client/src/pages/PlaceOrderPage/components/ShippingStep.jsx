@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { state_names, toCapitalize } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
@@ -27,10 +27,51 @@ import {
   setFreeShipping,
   setTaxPrice,
 } from "../placeOrderSlice";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Paper } from "@mui/material";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
+import { isRequired, validateSection } from "../placeOrderHelpers";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles(theme => ({
+  // input: {
+  //   backgroundColor: "white",
+  //   color: "black",
+  // },
+  // label: {},
+  input: {
+    backgroundColor: "transparent",
+    color: "white",
+  },
+
+  helperText: {
+    color: "white",
+  },
+  errorHelperText: {
+    color: "red", // or any color you prefer for error state
+  },
+  outlinedInput: {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+      },
+    },
+  },
+  label: {
+    color: "white",
+    "&.Mui-focused": {
+      color: "white",
+    },
+  },
+}));
 
 const ShippingStep = ({ choose_shipping_rate, next_step }) => {
+  const classes = useStyles();
   const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -60,15 +101,15 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     shippingValidations,
   } = placeOrder;
 
-  const {
-    first_name: first_name_validations,
-    last_name: last_name_validations,
-    address_1: address_validations,
-    city: city_validations,
-    state: state_validations,
-    postal_code: postal_code_validations,
-    country: country_validations,
-  } = shippingValidations;
+  // const {
+  //   first_name: first_name_validations,
+  //   last_name: last_name_validations,
+  //   address_1: address_validations,
+  //   city: city_validations,
+  //   state: state_validations,
+  //   postal_code: postal_code_validations,
+  //   country: country_validations,
+  // } = shippingValidations;
 
   const dispatch = useDispatch();
 
@@ -90,24 +131,26 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       }
     }
     return () => (clean = false);
-  }, [set_email, shipping]);
+  }, []);
 
   const submitHandler = e => {
     e.preventDefault();
 
-    const data = {
-      ...shipping,
-      email: email ? email : current_user.email,
-    };
+    // const data = {
+    //   ...shipping,
+    //   email: email ? email : current_user.email,
+    // };
+    const result = validateForm();
+    console.log({ result });
+    // const request = validate_shipping(data);
+    // console.log({ request });
+    // if (Object.keys(request?.errors).length > 0) {
+    //   dispatch(setShippingValidation({ errors: request.errors }));
 
-    const request = validate_shipping(data);
-    console.log({ request });
-    if (Object.keys(request?.errors).length > 0) {
-      dispatch(setShippingValidation({ errors: request.errors }));
-      return;
-    }
+    //   return;
+    // }
 
-    if (request.isValid) {
+    if (result.isValid) {
       if (shipping && Object.keys(shipping).length > 0) {
         dispatch(set_loading_shipping(true));
         const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
@@ -169,69 +212,84 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     dispatch(API.shippingRates({ order, verify_shipping: verify }));
   };
 
-  // const setGeneratedAddress = place => {
-  //   let autocompleteElement = document.querySelector("#autocomplete");
-  //   const street_num = autocompleteElement ? autocompleteElement.value : "";
+  const setGeneratedAddress = place => {
+    let autocompleteElement = document.querySelector("#autocomplete");
+    const street_num = autocompleteElement ? autocompleteElement.value : "";
 
-  //   const payload = {
-  //     shipping: place,
-  //     street_num,
-  //   };
+    const payload = {
+      shipping: place,
+      street_num,
+    };
 
-  //   dispatch(updateGoogleShipping(payload));
-  // };
+    dispatch(updateGoogleShipping(payload));
+  };
 
-  // const shippingFormFields = {
-  //   toShipping: {
-  //     type: "object",
-  //     title: "To Shipping Address",
-  //     fields: {
-  //       first_name: {
-  //         type: "text",
-  //         label: "First Name",
-  //       },
-  //       last_name: {
-  //         type: "text",
-  //         label: "Last Name",
-  //       },
-  //       address_1: {
-  //         type: "autocomplete_address",
-  //         label: "Address Line 1",
-  //         setGeneratedAddress: place => setGeneratedAddress(place, "to"),
-  //       },
-  //       address_2: {
-  //         type: "text",
-  //         label: "Address Line 2",
-  //       },
-  //       city: {
-  //         type: "text",
-  //         label: "City",
-  //       },
-  //       state: {
-  //         type: "autocomplete_single",
-  //         label: "State",
-  //         getOptionLabel: option => {
-  //           if (typeof option === "string") {
-  //             return toCapitalize(option);
-  //           }
-  //         },
-  //         options: state_names,
-  //       },
-  //       postalCode: {
-  //         type: "text",
-  //         label: "Postal Code",
-  //       },
-  //       country: {
-  //         type: "text",
-  //         label: "Country",
-  //       },
-  //       international: {
-  //         type: "checkbox",
-  //         label: "International",
-  //       },
-  //     },
-  //   },
-  // };
+  const [formErrors, setFormErrors] = useState({});
+
+  const shippingFormFields = {
+    type: "object",
+    title: "To Shipping Address",
+    fields: {
+      first_name: {
+        type: "text",
+        label: "First Name",
+        validate: value => isRequired(value, "First Name"),
+      },
+      last_name: {
+        type: "text",
+        label: "Last Name",
+        validate: value => isRequired(value, "Last Name"),
+      },
+      address_1: {
+        type: "autocomplete_address",
+        label: "Address Line 1",
+        validate: value => isRequired(value, "Address"),
+        setGeneratedAddress: place => setGeneratedAddress(place, "to"),
+      },
+      address_2: {
+        type: "text",
+        label: "Address Line 2",
+      },
+      city: {
+        type: "text",
+        label: "City",
+        validate: value => isRequired(value, "City"),
+      },
+      state: {
+        type: shipping.international ? "text" : "autocomplete_single",
+        label: "State",
+        validate: value => isRequired(value, "State"),
+        getOptionLabel: option => option.long_name,
+        getOptionSelected: (option, value) => option.short_name === value,
+        getOptionValue: option => option.short_name,
+        valueAttribute: "short_name",
+        options: state_names,
+      },
+      postalCode: {
+        type: "text",
+        label: "Postal Code",
+        validate: value => isRequired(value, "Postal Code"),
+      },
+      international: {
+        type: "checkbox",
+        label: "International",
+      },
+      country: {
+        type: shipping.international ? "text" : "",
+        label: "Country",
+        validate: value => isRequired(value, "Country"),
+      },
+    },
+  };
+
+  const validateForm = () => {
+    const validationResult = { isValid: true, errorMessages: {} };
+
+    validateSection(shippingFormFields.fields, shipping, validationResult);
+
+    setFormErrors(validationResult.errorMessages);
+    return validationResult;
+  };
 
   return (
     <div>
@@ -247,7 +305,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         <div>
           {show_shipping ? (
             <>
-              <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
+              <div className={`shipping-container mv-0px pv-0px ${width > 400 ? "" : "p-0px"}`}>
                 {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
                     <GLButton onClick={e => dispatch(save_shipping({ ...current_user.shipping }))} variant="primary">
@@ -299,208 +357,16 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                     label="Verify Shipping"
                   />
                 )}
-                {/* <GLForm
-                  formData={shippingFormFields.toShipping.fields}
+                {/* <Paper className="p-10px"> */}
+                <GLForm
+                  formData={shippingFormFields.fields}
                   state={shipping}
                   onChange={value => dispatch(save_shipping(value))}
-                /> */}
-                <li>
-                  <div className="jc-b">
-                    <div className="mr-5px w-50per">
-                      <label htmlFor="first_name">First Name</label>
-                      <input
-                        type="text"
-                        className="w-100per"
-                        value={shipping.first_name}
-                        name="first_name"
-                        id="first_name"
-                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                      />
+                  formErrors={formErrors} // Pass the errors here
+                  setFormErrors={setFormErrors}
+                  classes={classes}
+                />
 
-                      <label
-                        className="validation_text"
-                        style={{
-                          justifyContent: "center",
-                        }}
-                      >
-                        {first_name_validations}
-                      </label>
-                    </div>
-                    <div className="ml-5px w-50per">
-                      <label htmlFor="last_name">Last Name</label>
-                      <input
-                        type="text"
-                        className="w-100per"
-                        value={shipping.last_name}
-                        name="last_name"
-                        id="last_name"
-                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                      />
-                      <label
-                        className="validation_text"
-                        style={{
-                          justifyContent: "center",
-                        }}
-                      >
-                        {last_name_validations}
-                      </label>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <label htmlFor="address_autocomplete">Address</label>
-                  <Autocomplete
-                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
-                    className="fs-16px"
-                    name="address_1"
-                    value={shipping.address_1}
-                    options={{
-                      types: ["address"],
-                    }}
-                    onPlaceSelected={place => {
-                      let autocompleteElement = document.querySelector("#autocomplete");
-                      const street_num = autocompleteElement ? autocompleteElement.value : "";
-
-                      const payload = {
-                        shipping: place,
-                        street_num,
-                      };
-
-                      dispatch(updateGoogleShipping(payload));
-                    }}
-                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                  />
-                </li>
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {address_validations}
-                </label>
-                <li>
-                  <label htmlFor="address_2">Apt/Suite</label>
-                  <input
-                    type="text"
-                    value={shipping.address_2}
-                    name="address_2"
-                    id="address_2"
-                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                  />
-                </li>
-                <li>
-                  <label htmlFor="city">City</label>
-                  <input
-                    type="text"
-                    value={shipping.city}
-                    name="city"
-                    id="city"
-                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                  />
-                </li>
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {city_validations}
-                </label>
-                {!shipping.international && (
-                  <li>
-                    <label className="mb-1rem" htmlFor="state">
-                      State
-                    </label>
-                    <div className="ai-c h-25px mb-15px jc-c">
-                      <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                          value={shipping.state && shipping.state}
-                        >
-                          {state_names.map((state, index) => (
-                            <option key={index} value={state.short_name}>
-                              {state.long_name}
-                            </option>
-                          ))}
-                        </select>
-                        <span className="custom-arrow" />
-                      </div>
-                    </div>
-                  </li>
-                )}
-                {shipping.international && (
-                  <li>
-                    <label htmlFor="state">State</label>
-                    <input
-                      type="text"
-                      value={shipping.state}
-                      name="state"
-                      id="state"
-                      onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                    />
-                  </li>
-                )}
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {state_validations}
-                </label>
-                <li>
-                  <label htmlFor="postalCode">Postal Code</label>
-                  <input
-                    type="text"
-                    value={shipping.postalCode}
-                    name="postalCode"
-                    id="postalCode"
-                    onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                  />
-                </li>
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {postal_code_validations}
-                </label>
-                <div>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        size="large"
-                        name="international"
-                        defaultChecked={shipping.international}
-                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.checked }))}
-                      />
-                    }
-                    label="International"
-                  />
-                  {shipping.international && (
-                    <li>
-                      <label htmlFor="country">Country</label>
-                      <input
-                        type="text"
-                        value={shipping.country}
-                        name="country"
-                        id="country"
-                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                      />
-                    </li>
-                  )}
-                </div>
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {country_validations}
-                </label>
                 <li>
                   <GLButton onClick={submitHandler} variant="primary" className="bob">
                     Continue
@@ -523,7 +389,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                     />
                   </div>
                 )}
-              </ul>
+              </div>
             </>
           ) : (
             <div className="wrap jc-b w-100per pos-rel">

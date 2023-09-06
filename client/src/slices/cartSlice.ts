@@ -68,10 +68,11 @@ const cartPage = createSlice({
       state.paymentMethod = payload;
     },
     save_shipping: (state, { payload }) => {
-      state.shipping = payload;
-    },
-    remove_from_cart: (state, { payload }) => {
-      state.shipping = payload;
+      const updated_shipping = payload;
+      return {
+        ...state,
+        shipping: { ...state.shipping, ...updated_shipping },
+      };
     },
     set_success: (state, { payload }) => {
       state.success = payload;

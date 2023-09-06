@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   resetRates,
   setFromShipping,
@@ -12,7 +12,7 @@ import * as API from "../../../api";
 import { closeCreateLabelModal } from "../../../slices/shippingSlice";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, Typography } from "@mui/material";
-import { humanize } from "../../../utils/helper_functions";
+import { humanize, state_names, toCapitalize } from "../../../utils/helper_functions";
 import config from "../../../config";
 import { Loading } from "../../../shared/SharedComponents";
 import { printLabel } from "../ordersPageHelpers";
@@ -32,6 +32,7 @@ const CreateLabelModal = () => {
     label,
   } = shipping;
 
+  const [formErrors, setFormErrors] = useState({});
   const parcelPage = useSelector(state => state.parcels);
   const { parcels } = parcelPage;
 
@@ -111,6 +112,21 @@ const CreateLabelModal = () => {
     company: "",
   };
 
+  const isRequired = (value, fieldName) => (value === "" ? `${fieldName} is Required` : null);
+  const isValidEmail = value =>
+    !value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) ? "Invalid email format" : null;
+
+  // Composite Validation Function
+  const validateEmail = value => {
+    const required = isRequired(value, "Email");
+    if (required) return required;
+
+    const valid = isValidEmail(value);
+    if (valid) return valid;
+
+    return null;
+  };
+
   const shippingFormFields = {
     toShipping: {
       type: "object",
@@ -119,14 +135,17 @@ const CreateLabelModal = () => {
         first_name: {
           type: "text",
           label: "First Name",
+          validate: value => isRequired(value, "First Name"),
         },
         last_name: {
           type: "text",
           label: "Last Name",
+          validate: value => isRequired(value, "Last Name"),
         },
         address_1: {
           type: "autocomplete_address",
           label: "Address Line 1",
+          validate: value => isRequired(value, "Address"),
           setGeneratedAddress: place => setGeneratedAddress(place, "to"),
         },
         address_2: {
@@ -136,18 +155,24 @@ const CreateLabelModal = () => {
         city: {
           type: "text",
           label: "City",
+          validate: value => isRequired(value, "City"),
         },
         state: {
-          type: "text",
+          type: "autocomplete_single",
           label: "State",
+          validate: value => isRequired(value, "State"),
+          getOptionLabel: option => option.long_name,
+          options: state_names,
         },
         postalCode: {
           type: "text",
           label: "Postal Code",
+          validate: value => isRequired(value, "Postal Code"),
         },
         country: {
           type: "text",
           label: "Country",
+          validate: value => isRequired(value, "Country"),
         },
         international: {
           type: "checkbox",
@@ -160,6 +185,7 @@ const CreateLabelModal = () => {
         email: {
           type: "text",
           label: "Email",
+          validate: value => validateEmail(value),
         },
         company: {
           type: "text",
@@ -174,14 +200,17 @@ const CreateLabelModal = () => {
         first_name: {
           type: "text",
           label: "First Name",
+          validate: value => isRequired(value, "First Name"),
         },
         last_name: {
           type: "text",
           label: "Last Name",
+          validate: value => isRequired(value, "Last Name"),
         },
         address_1: {
           type: "autocomplete_address",
           label: "Address Line 1",
+          validate: value => isRequired(value, "Address"),
           setGeneratedAddress: place => setGeneratedAddress(place, "from"),
         },
         address_2: {
@@ -191,18 +220,25 @@ const CreateLabelModal = () => {
         city: {
           type: "text",
           label: "City",
+          validate: value => isRequired(value, "City"),
         },
         state: {
-          type: "text",
+          type: "autocomplete_single",
           label: "State",
+          labelProps: "state",
+          validate: value => isRequired(value, "State"),
+          getOptionLabel: option => option.long_name,
+          options: state_names,
         },
         postalCode: {
           type: "text",
           label: "Postal Code",
+          validate: value => isRequired(value, "Postal Code"),
         },
         country: {
           type: "text",
           label: "Country",
+          validate: value => isRequired(value, "Country"),
         },
         international: {
           type: "checkbox",
@@ -215,6 +251,7 @@ const CreateLabelModal = () => {
         email: {
           type: "text",
           label: "Email",
+          validate: value => validateEmail(value),
         },
         company: {
           type: "text",
@@ -252,25 +289,57 @@ const CreateLabelModal = () => {
         length: {
           type: "text",
           label: "Package Length",
+          validate: value => (value === "" ? "Package Length is Required" : null),
         },
         width: {
           type: "text",
           label: "Package Width",
+          validate: value => (value === "" ? "Package Width is Required" : null),
         },
         height: {
           type: "text",
           label: "Package Height",
+          validate: value => (value === "" ? "Package Height is Required" : null),
         },
         weight_pounds: {
           type: "text",
           label: "Package lbs",
+          validate: value => (value === "" ? "Package lbs is Required" : null),
         },
         weight_ounces: {
           type: "text",
           label: "Package oz",
+          validate: value => (value === "" ? "Package oz is Required" : null),
         },
       },
     },
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    let errorMessages = {};
+
+    const validateSection = (sectionFields, sectionState) => {
+      Object.keys(sectionFields).forEach(fieldName => {
+        const field = sectionFields[fieldName];
+        if (field.validate) {
+          const value = sectionState[fieldName];
+          const errorMessage = field.validate(value);
+          if (errorMessage) {
+            isValid = false;
+            errorMessages[fieldName] = errorMessage;
+          }
+        }
+      });
+    };
+
+    validateSection(shippingFormFields.toShipping.fields, toShipping);
+    validateSection(shippingFormFields.fromShipping.fields, fromShipping);
+    validateSection(shippingFormFields.parcel.fields, parcel);
+
+    setFormErrors(errorMessages);
+    // You can set errorMessages to state if you want to display them
+    return isValid;
   };
 
   return (
@@ -332,6 +401,8 @@ const CreateLabelModal = () => {
             formData={shippingFormFields.toShipping.fields}
             state={toShipping}
             onChange={value => dispatch(setToShipping(value))}
+            formErrors={formErrors} // Pass the errors here
+            setFormErrors={setFormErrors}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -374,6 +445,8 @@ const CreateLabelModal = () => {
             formData={shippingFormFields.fromShipping.fields}
             state={fromShipping}
             onChange={value => dispatch(setFromShipping(value))}
+            formErrors={formErrors} // Pass the errors here
+            setFormErrors={setFormErrors}
           />
         </Grid>
       </Grid>
@@ -384,13 +457,20 @@ const CreateLabelModal = () => {
         formData={shippingFormFields.parcel.fields}
         state={parcel}
         onChange={value => dispatch(setParcel(value))}
+        formErrors={formErrors} // Pass the errors here
+        setFormErrors={setFormErrors}
       />
       {!label && shippingRates.length === 0 && (
         <Button
           variant="contained"
           color="secondary"
           fullWidth
-          onClick={() => dispatch(API.customShippingRates({ toShipping, fromShipping, parcel }))}
+          onClick={() => {
+            const isValid = validateForm();
+            if (isValid) {
+              dispatch(API.customShippingRates({ toShipping, fromShipping, parcel }));
+            }
+          }}
         >
           Generate Rates
         </Button>

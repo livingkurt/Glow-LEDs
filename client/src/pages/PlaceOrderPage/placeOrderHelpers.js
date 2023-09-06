@@ -24,3 +24,19 @@ export const toTitleCaseSnakeCase = str => {
     })
     .join(" ");
 };
+
+export const isRequired = (value, fieldName) => (value === "" ? `${fieldName} is Required` : null);
+
+export const validateSection = (sectionFields, sectionState, validationResult) => {
+  Object.keys(sectionFields).forEach(fieldName => {
+    const field = sectionFields[fieldName];
+    if (field.validate) {
+      const value = sectionState[fieldName];
+      const errorMessage = field.validate(value);
+      if (errorMessage) {
+        validationResult.isValid = false;
+        validationResult.errorMessages[fieldName] = errorMessage;
+      }
+    }
+  });
+};

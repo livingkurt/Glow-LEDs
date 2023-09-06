@@ -10,25 +10,17 @@ import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleA
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import { makeStyles } from "@mui/styles";
 
-// Define your styles
-const useStyles = makeStyles(theme => ({
-  input: {
-    backgroundColor: "white",
-    color: "black", // Optional, if you want to change text color
-  },
-  label: {
-    // color: "white", // Optional, if you want to change label color
-  },
-}));
-
-const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
-  const classes = useStyles();
+const GLForm = ({ formData, onChange, state, loading, nesting, index, formErrors, setFormErrors, classes }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
+  useEffect(() => {
+    setFormErrors({ ...formErrors });
+  }, []);
+
   const [localState, setLocalState] = useState({});
+
   useEffect(() => {
     setLocalState(state);
   }, [state]);
@@ -53,7 +45,6 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
-        console.log({ fieldData });
 
         if (loading) {
           if (fieldData.type === "checkbox") {
@@ -72,11 +63,20 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
         } else if (determine_shown_fields(fieldData, current_user)) {
           switch (fieldData.type) {
             case "autocomplete_single":
+              const selectedOption =
+                fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState) || fieldState;
               return (
                 <GLAutocomplete
                   key={fieldName}
+                  customClasses={classes}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.short_name === value.short_name;
+                  }}
+                  helperText={formErrors && formErrors[fieldName]}
+                  // isOptionEqualToValue={(option, value) => option.short_name === value.short_name}
+                  error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
-                  value={fieldState || ""}
+                  value={selectedOption === "" ? null : selectedOption}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
                     option
@@ -88,11 +88,14 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   optionDisplay={option =>
                     fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
                   }
-                  getOptionSelected={(option, value) => option._id === value._id}
+                  getOptionSelected={(option, value) =>
+                    fieldData.getOptionSelected ? fieldData.getOptionLabel(option) : option._id === value._id
+                  }
                   name={fieldName}
                   label={fieldData.label}
                   onChange={(event, value) => {
-                    handleInputChange(fieldName, value);
+                    const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
+                    handleInputChange(fieldName, savedValue);
                   }}
                 />
               );
@@ -143,6 +146,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                       size="large"
                       onChange={e => handleInputChange(fieldName, e.target.checked)}
                       checked={!!fieldState}
+                      error={formErrors && !!formErrors[fieldName]}
                     />
                   }
                   label={fieldData.label}
@@ -153,11 +157,23 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                 <GoogleAutocomplete
                   key={fieldName}
                   name={fieldName}
-                  placeholder={"Enter a Location"}
+                  helperText={formErrors && formErrors[fieldName]}
+                  error={formErrors && !!formErrors[fieldName]}
+                  label={"Enter a Location"}
                   margin="normal"
                   size="small"
                   variant="outlined"
+                  className={classes.outlinedInput}
                   fullWidth
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                  }}
                   apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                   value={fieldState || ""}
                   options={{
@@ -172,11 +188,17 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "text":
               return (
                 <TextField
+                  helperText={formErrors && formErrors[fieldName]}
+                  error={formErrors && !!formErrors[fieldName]}
+                  className={classes.outlinedInput}
                   InputProps={{
                     className: classes.input,
                   }}
                   InputLabelProps={{
                     className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
                   key={fieldName}
                   name={fieldName}
@@ -193,11 +215,17 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "number":
               return (
                 <TextField
+                  helperText={formErrors && formErrors[fieldName]}
+                  error={formErrors && !!formErrors[fieldName]}
+                  className={classes.outlinedInput}
                   InputProps={{
                     className: classes.input,
                   }}
                   InputLabelProps={{
                     className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
                   key={fieldName}
                   name={fieldName}
@@ -215,11 +243,17 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
               const formattedDate = formatDate(fieldState);
               return (
                 <TextField
+                  helperText={formErrors && formErrors[fieldName]}
+                  error={formErrors && !!formErrors[fieldName]}
+                  className={classes.outlinedInput}
                   InputProps={{
                     className: classes.input,
                   }}
                   InputLabelProps={{
                     className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
                   key={fieldName}
                   name={fieldName}
@@ -236,11 +270,17 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "text_multiline":
               return (
                 <TextField
+                  helperText={formErrors && formErrors[fieldName]}
+                  error={formErrors && !!formErrors[fieldName]}
+                  className={classes.outlinedInput}
                   InputProps={{
                     className: classes.input,
                   }}
                   InputLabelProps={{
                     className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
                   key={fieldName}
                   name={fieldName}
@@ -279,12 +319,15 @@ GLForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   state: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  nesting: PropTypes.any, // Define the shape if possible
-  index: PropTypes.any, // Define the shape if possible
+  nesting: PropTypes.any,
+  index: PropTypes.any,
+  setFormErrors: PropTypes.func,
+  formErrors: PropTypes.object,
 };
 
 GLForm.defaultProps = {
-  // Define any default props here if needed
+  setFormErrors: () => {},
+  formErrors: {},
 };
 
 export default GLForm;
