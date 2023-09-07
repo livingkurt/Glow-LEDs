@@ -105,12 +105,6 @@ const PlaceOrderPage = () => {
     return () => (clean = false);
   }, [success_no_pay_order]);
 
-  // const empty_cart = () => {
-  //   for (let item of cartItems) {
-  //     dispatch(removeFromCart(item));
-  //   }
-  // };
-
   useEffect(() => {
     let clean = true;
     if (clean) {

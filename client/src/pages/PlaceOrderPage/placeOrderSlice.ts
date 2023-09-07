@@ -44,6 +44,7 @@ const initialState = {
   order_note: "",
   production_note: "",
   loading_shipping: false,
+  loading_tax_rates: false,
   show_shipping_complete: false,
   promo_code_validations: "",
   email: "",
@@ -390,11 +391,11 @@ const placeOrder = createSlice({
       state.error_happened = true;
     },
     [API.getTaxRates.pending as any]: state => {
-      state.loading = true;
+      state.loading_tax_rates = true;
       state.taxPrice = 0;
     },
     [API.getTaxRates.fulfilled as any]: (state, { payload }) => {
-      state.loading = false;
+      state.loading_tax_rates = false;
       const { tax_rate, shipping, itemsPrice } = payload;
       state.tax_rate = tax_rate;
       if (!isNaN(tax_rate)) {
@@ -406,7 +407,7 @@ const placeOrder = createSlice({
       }
     },
     [API.getTaxRates.rejected as any]: (state, { payload, error }) => {
-      state.loading = false;
+      state.loading_tax_rates = false;
       state.error = payload ? payload.error : error.message;
     },
 

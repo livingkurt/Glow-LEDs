@@ -25,6 +25,7 @@ import { determine_total } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { validate_promo_code } from "../../../utils/validations";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../../../shared/SharedComponents";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ const PaymentStep = () => {
     user,
     tip,
     paid,
+    loading_tax_rates,
     order_note,
     tax_rate,
     show_message,
@@ -212,7 +214,8 @@ const PaymentStep = () => {
             </GLButton>
           )}
         </div>
-        {show_payment && (
+        <Loading loading={loading_tax_rates} />
+        {show_payment && !loading_tax_rates && (
           <div>
             <div className="w-100per ">
               <div htmlFor="order_note">Add a note</div>

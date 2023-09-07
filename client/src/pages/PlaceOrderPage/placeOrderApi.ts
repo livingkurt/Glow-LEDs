@@ -22,7 +22,6 @@ export const getTaxRates = createAsyncThunk(
   async ({ shipping, itemsPrice }: any, thunkApi: any) => {
     try {
       const { data } = await axios.get("/api/orders/tax_rates");
-      console.log({ data });
       const result = state_names.find(obj => {
         return obj?.short_name === shipping.state || obj?.long_name === shipping.state;
       });
