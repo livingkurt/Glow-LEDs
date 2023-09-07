@@ -199,7 +199,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                 {current_user?.isAdmin && (
                   <GLAutocomplete
                     margin="normal"
-                    value={""}
+                    value={shipping}
                     variant={"filled"}
                     loading={!all_shipping.isLoading}
                     options={all_shipping.isLoading ? [] : all_shipping.data}
@@ -209,7 +209,18 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                     name={"product"}
                     label={"Choose Shipping"}
                     onChange={(event, newValue) => {
-                      dispatch(save_shipping(newValue));
+                      if (newValue) {
+                        const stateShortName = state_names.find(
+                          state => state.long_name === newValue.state || state.short_name === newValue.state
+                        )?.short_name;
+
+                        dispatch(
+                          save_shipping({
+                            ...newValue,
+                            state: stateShortName,
+                          })
+                        );
+                      }
                     }}
                   />
                 )}
@@ -329,9 +340,9 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                           onChange={e => dispatch(save_shipping({ ...shipping, state: e.target.value }))}
                           value={shipping.state}
                         >
-                          <option key={1} defaultValue="">
+                          {/* <option key={1} defaultValue="">
                             Choose State
-                          </option>
+                          </option> */}
                           {state_names.map((state, index) => (
                             <option key={index} value={state.short_name}>
                               {state.long_name}
