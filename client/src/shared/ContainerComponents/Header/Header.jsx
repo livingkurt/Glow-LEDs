@@ -13,6 +13,7 @@ import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
 import { setCartDrawer, setSideNavDrawer } from "../../../slices/cartSlice";
+import { Search, ShoppingCart } from "@mui/icons-material";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -203,7 +204,6 @@ const Header = () => {
                   aria-label="Sidebar"
                   style={{ fontSize: "30px !important" }}
                 >
-                  {/* <i className="fas fa-bars" /> */}
                   <div className="box">
                     <div className="head-btn not-active">
                       <span className="span" />
@@ -271,7 +271,7 @@ const Header = () => {
               </nav>
             </div>
             <GLButton variant="mobile nav" className="cart_icon none" onClick={open_cart}>
-              <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+              <ShoppingCart /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
             </GLButton>
             <div className="nav_bar w-233px jc-fe ai-c">
               <GLButton
@@ -279,7 +279,7 @@ const Header = () => {
                 className={`cart_text w-110px title_font ai-c ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
                 onClick={open_cart}
               >
-                Cart <i className="fas fa-shopping-cart ml-5px mb-5px" />
+                Cart <ShoppingCart className="ml-5px mb-5px" />
                 <div className="ml-5px">{cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
               </GLButton>
               <GLButton
@@ -287,7 +287,7 @@ const Header = () => {
                 className={`cart_icon title_font none ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
                 onClick={open_cart}
               >
-                <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+                <ShoppingCart /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
               </GLButton>
               {current_user && current_user.hasOwnProperty("first_name") ? (
                 <div className="dropdown">
@@ -502,8 +502,8 @@ const Header = () => {
                   )}
                 </div>
 
-                <GLButton type="submit" variant="primary" className="w-50px fs-16px mb-0px">
-                  <i className="fas fa-search" />
+                <GLButton type="submit" variant="primary" className="w-50px mb-0px">
+                  <Search />
                 </GLButton>
               </div>
             </form>

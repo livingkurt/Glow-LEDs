@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { GLButton } from "../../../GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, permissions, extraContent }) => {
   const users = useSelector(state => state.users.userPage);
@@ -26,7 +27,7 @@ const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, per
       )}
       {id && (
         <GLButton className="nav-btn-dropdown" onClick={() => show_hide(id)} aria-label="Show">
-          <i className="fas fa-sort-up" />
+          <PlayArrowIcon />
         </GLButton>
       )}
     </div>

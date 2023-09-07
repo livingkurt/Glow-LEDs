@@ -8,6 +8,10 @@ import { browser_check, mobile_check } from "../../../utils/react_helper_functio
 import Overflow from "react-overflow-indicator";
 import { GLButton } from "..";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
+import { IconButton } from "@mui/material";
+import ArrowBackCircleIcon from "@mui/icons-material/ArrowBackCircle";
+import ArrowForwardCircleIcon from "@mui/icons-material/ArrowForwardCircle";
+import { ArrowForward } from "@mui/icons-material";
 
 const Carousel = ({ title, category, random, add_to_cart, product_pathname }) => {
   const { height, width } = useWindowDimensions();
@@ -94,15 +98,14 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
                 <div className="row p-10px" style={{ overflowX: "scroll" }}>
                   <div className="row jc-b w-100per">
                     <div className="ai-c">
-                      <GLButton
+                      <IconButton
                         style={{ borderRadius: "50%" }}
-                        variant="icon"
                         className="h-59px"
                         onClick={() => move_left()}
                         aria-label="Previous"
                       >
-                        <i className="fas fa-arrow-circle-left fs-40px" />
-                      </GLButton>
+                        <ArrowBackCircleIcon fontSize="large" />
+                      </IconButton>
                     </div>
                     {[...Array(number_of_items).keys()].map(x => (
                       <div className="w-259px" key={product_number + x}>
@@ -121,15 +124,14 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
                       </div>
                     ))}
                     <div className="ai-c">
-                      <GLButton
+                      <IconButton
                         style={{ borderRadius: "50%" }}
-                        variant="icon"
                         className="h-59px"
                         onClick={() => move_right()}
                         aria-label="Next"
                       >
-                        <i className="fas fa-arrow-circle-right fs-40px" />
-                      </GLButton>
+                        <ArrowForwardCircleIcon fontSize="large" />
+                      </IconButton>
                     </div>
                   </div>
                 </div>
@@ -151,7 +153,7 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
                   </Overflow>
                   {canScroll && (
                     <div className="pos-abs right-0px top-80px bob br-5px ta-c ai-c bg-primary h-25per w-23px box-s-d b-1px">
-                      <i className="fas fa-sort-up fs-20px" style={{ WebkitTransform: "rotate(90deg)" }} />
+                      <ArrowForward fontSize="large" />
                     </div>
                   )}
                 </div>

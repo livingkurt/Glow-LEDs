@@ -8,6 +8,7 @@ import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { Drawer } from "@mui/material";
 import { setSideNavDrawer } from "../../slices/cartSlice";
+import { ExpandM, ExpandMore, ExpandMoreore } from "@mui/icons-material";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ const Sidebar = () => {
               <div className="sidebar-btn-container">
                 <GLButton className="sidebar-btn primary">{first_name}</GLButton>
                 <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("user_dropdown")} aria-label="Show">
-                  <i className="fas fa-sort-up" />
+                  <ExpandMore className="fs-25px" />
                 </GLButton>
               </div>
               <ul className="sidebar_dropdown_container" id="user_dropdown">
@@ -179,7 +180,7 @@ const Sidebar = () => {
                 onClick={() => show_hide("products_dropdown")}
                 aria-label="Show"
               >
-                <i className="fas fa-sort-up" />
+                <ExpandMore className="fs-25px" />
               </GLButton>
             </div>
 
@@ -194,7 +195,7 @@ const Sidebar = () => {
                     onClick={() => show_hide("gloving_dropdown")}
                     aria-label="Show"
                   >
-                    <i className="fas fa-sort-up" />
+                    <ExpandMore className="fs-25px" />
                   </GLButton>
                 </div>
                 <ul className="sidebar_dropdown_secondary_container" id="gloving_dropdown">
@@ -227,7 +228,7 @@ const Sidebar = () => {
                         onClick={() => show_hide("glowskinz_dropdown_2")}
                         aria-label="Show"
                       >
-                        <i className="fas fa-sort-up" />
+                        <ExpandMore className="fs-25px" />
                       </GLButton>
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="glowskinz_dropdown_2">
@@ -247,7 +248,7 @@ const Sidebar = () => {
                             onClick={() => show_hide("clozd_glowskinz_dropdown")}
                             aria-label="Show"
                           >
-                            <i className="fas fa-sort-up" />
+                            <ExpandMore className="fs-25px" />
                           </GLButton>
                         </div>
                         <ul className="sidebar_dropdown_nested_2_container" id="clozd_glowskinz_dropdown">
@@ -285,7 +286,7 @@ const Sidebar = () => {
                         onClick={() => show_hide("exo_diffuseres_dropdown")}
                         aria-label="Show"
                       >
-                        <i className="fas fa-sort-up" />
+                        <ExpandMore className="fs-25px" />
                       </GLButton>
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="exo_diffuseres_dropdown">
@@ -302,7 +303,7 @@ const Sidebar = () => {
                             onClick={() => show_hide("exo_collection_dropdown")}
                             aria-label="Show"
                           >
-                            <i className="fas fa-sort-up" />
+                            <ExpandMore className="fs-25px" />
                           </GLButton>
                         </div>
                         <ul className="sidebar_dropdown_nested_2_container" id="exo_collection_dropdown">
@@ -340,7 +341,7 @@ const Sidebar = () => {
                         onClick={() => show_hide("glowskinz_dropdown_4")}
                         aria-label="Show"
                       >
-                        <i className="fas fa-sort-up" />
+                        <ExpandMore className="fs-25px" />
                       </GLButton>
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="glowskinz_dropdown_4">
@@ -357,7 +358,7 @@ const Sidebar = () => {
                             onClick={() => show_hide("glowskinz_dropdown_5")}
                             aria-label="Show"
                           >
-                            <i className="fas fa-sort-up" />
+                            <ExpandMore className="fs-25px" />
                           </GLButton>
                         </div>
                         <ul className="sidebar_dropdown_nested_2_container" id="glowskinz_dropdown_5">
@@ -426,7 +427,7 @@ const Sidebar = () => {
                         onClick={() => show_hide("glowskinz_dropdown_3")}
                         aria-label="Show"
                       >
-                        <i className="fas fa-sort-up" />
+                        <ExpandMore className="fs-25px" />
                       </GLButton>
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="glowskinz_dropdown_3">
@@ -478,7 +479,7 @@ const Sidebar = () => {
                   onClick={() => show_hide("glowskinz_dropdown_6")}
                   aria-label="Show"
                 >
-                  <i className="fas fa-sort-up" />
+                  <ExpandMore className="fs-25px" />
                 </GLButton>
               </div>
               <ul className="sidebar_dropdown_secondary_container" id="glowskinz_dropdown_6">
@@ -596,7 +597,7 @@ const Sidebar = () => {
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('products_dropdown')}
 					>
-						<i className="fas fa-sort-up" />
+						<ExpandMore  className="fs256px"/>
 					</GLButton> */}
           </div>
           <Link to="/collections/all/tutorials">
@@ -610,7 +611,7 @@ const Sidebar = () => {
               <Link to="/collections/all/sponsors">Our Team</Link>
             </GLButton>
             <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("our_team_dropdown")} aria-label="Show">
-              <i className="fas fa-sort-up" />
+              <ExpandMore  className="fs256px"/>
             </GLButton>
           </div>
           <ul className="sidebar_dropdown_container" id="our_team_dropdown">
@@ -642,7 +643,7 @@ const Sidebar = () => {
                 onClick={() => show_hide("community_dropdown")}
                 aria-label="Show"
               >
-                <i className="fas fa-sort-up" />
+                <ExpandMore className="fs-25px" />
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_container" id="community_dropdown">
@@ -670,7 +671,7 @@ const Sidebar = () => {
                   onClick={() => show_hide("nested_faq_dropdown")}
                   aria-label="Show"
                 >
-                  <i className="fas fa-sort-up" />
+                  <ExpandMore className="fs-25px" />
                 </GLButton>
               </div>
               <ul className="sidebar_dropdown_secondary_container" id="nested_faq_dropdown">
@@ -710,7 +711,7 @@ const Sidebar = () => {
                 onClick={() => show_hide("support_dropdown")}
                 aria-label="Show"
               >
-                <i className="fas fa-sort-up" />
+                <ExpandMore className="fs-25px" />
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_container" id="support_dropdown">
@@ -724,7 +725,7 @@ const Sidebar = () => {
                     onClick={() => show_hide("nested_faq_dropdown")}
                     aria-label="Show"
                   >
-                    <i className="fas fa-sort-up" />
+                    <ExpandMore className="fs-25px" />
                   </GLButton>
                 </div>
                 <ul className="sidebar_dropdown_secondary_container" id="nested_faq_dropdown">
@@ -797,7 +798,7 @@ const Sidebar = () => {
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('support_dropdown')}
 					>
-						<i className="fas fa-sort-up" />
+						<ExpandMore  className="fs256px"/>
 					</GLButton> */}
           </div>
           {current_user?.isAdmin && (
@@ -812,7 +813,7 @@ const Sidebar = () => {
                   onClick={() => show_hide("admin_dropdown")}
                   aria-label="Show"
                 >
-                  <i className="fas fa-sort-up" />
+                  <ExpandMore className="fs-25px" />
                 </GLButton>
               </div>
               <ul className="sidebar_dropdown_container" id="admin_dropdown">

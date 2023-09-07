@@ -7,7 +7,9 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_category_modal, open_edit_category_modal } from "../../slices/categorySlice";
 import { EditCategoryModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CategorysPage = () => {
   const categoryPage = useSelector(state => state.categorys.categoryPage);
@@ -22,22 +24,21 @@ const CategorysPage = () => {
         title: "Actions",
         display: category => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
+            <IconButton
+              variant="contained"
               aria-label="Edit"
-              onClick={() => {
-                dispatch(open_edit_category_modal(category));
-              }}
+              onClick={() => dispatch(open_edit_category_modal(category))}
             >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <EditIcon />
+            </IconButton>
+
+            <IconButton
+              variant="contained"
               onClick={() => dispatch(API.deleteCategory(category.pathname))}
               aria-label="Delete"
             >
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <DeleteIcon />
+            </IconButton>
           </div>
         ),
       },

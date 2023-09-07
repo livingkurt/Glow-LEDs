@@ -332,6 +332,23 @@ const theme = {
         },
       },
     },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          fontSize: "20px", // Set the default icon size here
+          color: "#ffffff",
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "#393e55", // Lighter background color on hover
+          },
+        },
+      },
+    },
   },
   shadows,
   typography,

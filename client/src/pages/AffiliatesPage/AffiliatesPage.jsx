@@ -14,6 +14,11 @@ import { determine_color } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
 
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 const AffiliatesPage = () => {
   const location = useLocation();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
@@ -26,8 +31,8 @@ const AffiliatesPage = () => {
       {
         title: "Active",
         display: affiliate => (
-          <GLButton
-            variant="icon"
+          <IconButton
+            color="white"
             onClick={() => {
               dispatch(
                 API.saveAffiliate({
@@ -41,8 +46,8 @@ const AffiliatesPage = () => {
             }}
             aria-label={affiliate.active ? "deactivate" : "activate"}
           >
-            {affiliate.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-          </GLButton>
+            {affiliate.active ? <CheckCircleIcon /> : <CancelIcon />}
+          </IconButton>
         ),
       },
       { title: "Artist Name", display: "artist_name" },
@@ -58,25 +63,17 @@ const AffiliatesPage = () => {
         title: "Actions",
         display: affiliate => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
-              aria-label="Edit"
-              onClick={() => {
-                dispatch(open_edit_affiliate_modal(affiliate));
-              }}
-            >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
-              aria-label="Edit"
-              onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}
-            >
-              <PolylineIcon style={{ color: "white" }} />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
+              <EditIcon />
+            </IconButton>
+
+            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}>
+              <PolylineIcon />
+            </IconButton>
+
+            <IconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
           </div>
         ),
       },

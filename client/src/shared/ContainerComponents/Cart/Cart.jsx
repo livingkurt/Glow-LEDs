@@ -9,8 +9,9 @@ import { GLButton, GLTooltip } from "../../GlowLEDsComponents";
 import { CartItem, RecentlyViewed, TopCategories } from "./components";
 import { checkoutHandler, determine_wholesale_proceed, useOutsideAlerter } from "./cartHelpers";
 import LoadingInside from "../../SharedComponents/LoadingInside";
-import { Drawer } from "@mui/material";
+import { Divider, Drawer, IconButton } from "@mui/material";
 import { setCartDrawer } from "../../../slices/cartSlice";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -74,9 +75,6 @@ const Cart = () => {
           <div>
             <li className="w-100per pb-5px">
               <div className="p-1rem w-100per">
-                <GLButton className="cart_sidebar_close_button" aria-label="Close" onClick={closeMenu}>
-                  <i className="fas fa-times" />
-                </GLButton>
                 <div className="jc-b">
                   <div className="logo_text ai-c">
                     <Link to="/" aria-label="Home Page">
@@ -96,8 +94,10 @@ const Cart = () => {
                     </Link>
                   </div>
 
-                  <div className="column jc-fe">
-                    <div className="ta-r ">Price</div>
+                  <div>
+                    <IconButton aria-label="Close" onClick={closeMenu}>
+                      <CloseIcon />
+                    </IconButton>
                   </div>
                 </div>
               </div>

@@ -7,10 +7,14 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { getCarts } from "../../api";
 import { determine_color } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -23,8 +27,8 @@ const CartsPage = () => {
       {
         title: "Active",
         display: cart => (
-          <GLButton
-            variant="icon"
+          <IconButton
+            variant="contained"
             onClick={() => {
               dispatch(
                 API.saveCart({
@@ -35,8 +39,8 @@ const CartsPage = () => {
             }}
             aria-label={cart.active ? "deactivate" : "activate"}
           >
-            {cart.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-          </GLButton>
+            {cart.active ? <CheckCircleIcon /> : <CancelIcon />}
+          </IconButton>
         ),
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
@@ -46,18 +50,13 @@ const CartsPage = () => {
         title: "Actions",
         display: cart => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
-              aria-label="Edit"
-              onClick={() => {
-                dispatch(open_edit_cart_modal(cart));
-              }}
-            >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+            <IconButton variant="contained" aria-label="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
+              <EditIcon />
+            </IconButton>
+
+            <IconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
           </div>
         ),
       },

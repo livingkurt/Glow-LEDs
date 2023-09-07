@@ -4,6 +4,8 @@ import { GLButton } from "../../../GlowLEDsComponents";
 import * as API from "../../../../api";
 import { determine_product_name, sale_price_switch } from "../../../../utils/react_helper_functions";
 import { useSelector } from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton } from "@mui/material";
 
 const CartItem = ({ item, index, dispatch, current_user }) => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -15,22 +17,35 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
         <Link to={"/collections/all/products/" + item.pathname}>
           <div className="mb-10px">
             {!item.secondary_image && (
-              <LazyImage src={item.display_image} alt={item.name} className="br-10px w-70px h-70px" title="Product Image" />
+              <LazyImage
+                src={item.display_image}
+                alt={item.name}
+                className="br-10px w-70px h-70px"
+                title="Product Image"
+              />
             )}
             {item.secondary_image && (
-              <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
+              <div
+                className={` double-image-cart${
+                  item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
+                }`}
+              >
                 <LazyImage
                   id="expandedImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
+                  className={`details-image-cart-${
+                    item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
+                  } m-0px`}
                   src={item.display_image}
                 />
                 <LazyImage
                   id="expandedSecondaryImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"} `}
+                  className={`details-image-cart-${
+                    item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
+                  } `}
                   src={item.secondary_image}
                 />
               </div>
@@ -44,13 +59,13 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
             <Link to={`/collections/all/products/${item.pathname}`}>{determine_product_name(item, true)}</Link>
           </div>
           <div className="mb-10px">
-            <GLButton
-              variant="icon"
+            <IconButton
+              variant="contained"
               onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
               aria-label="Delete"
             >
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <DeleteIcon />
+            </IconButton>
           </div>
         </div>
 
@@ -71,7 +86,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
                 // Update the quantity of the item
                 updatedCartItems[itemIndex] = {
                   ...updatedCartItems[itemIndex],
-                  qty: parseInt(e.target.value)
+                  qty: parseInt(e.target.value),
                 };
 
                 // Save the updated cart
@@ -95,7 +110,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
               product: item,
               cartItem: true,
               background: "light",
-              isWholesaler: current_user?.isWholesaler
+              isWholesaler: current_user?.isWholesaler,
             })}
           </div>
         </div>

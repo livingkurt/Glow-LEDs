@@ -13,6 +13,9 @@ import { open_create_expense_modal, open_edit_expense_modal } from "../../slices
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors } from "./expensesPageHelpers";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -81,12 +84,13 @@ const ExpensesPage = () => {
         title: "Actions",
         display: expense => (
           <div className="jc-b">
-            <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
+              <EditIcon />
+            </IconButton>
+
+            <IconButton onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
           </div>
         ),
       },
