@@ -13,8 +13,6 @@ import {
   set_is_guest,
   showHideSteps,
 } from "../placeOrderSlice";
-import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { Paper } from "@mui/material";
 
 const EmailStep = ({ next_step }) => {
   const dispatch = useDispatch();
@@ -71,19 +69,19 @@ const EmailStep = ({ next_step }) => {
     return null;
   };
 
-  const emailFormFields = {
-    type: "object",
-    title: "Email",
-    fields: {
-      email: {
-        type: "text",
-        label: "Email",
-        validate: value => validateEmail(value),
-      },
-    },
-  };
+  // const emailFormFields = {
+  //   type: "object",
+  //   title: "Email",
+  //   fields: {
+  //     email: {
+  //       type: "text",
+  //       label: "Email",
+  //       validate: value => validateEmail(value),
+  //     },
+  //   },
+  // };
 
-  const [formErrors, setFormErrors] = useState({});
+  // const [formErrors, setFormErrors] = useState({});
   return (
     <div>
       <div className="jc-b">

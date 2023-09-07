@@ -1,4 +1,3 @@
-// React
 import * as React from "react";
 import config from "../../config";
 

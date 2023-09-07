@@ -15,15 +15,12 @@ import {
   setEmailValidations,
   set_promo_code,
   setItemsPrice,
-  setTaxPrice,
   setTotalPrice,
   set_error,
-  set_loading_shipping,
   set_promo_code_validations,
   set_email,
   nextStep,
   activatePromo,
-  setFreeShipping,
   chooseShippingRateBasic,
   chooseShippingRateWithPromo,
   finalizeShippingRate,
@@ -41,10 +38,10 @@ const PlaceOrderPage = () => {
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { order, error: error_order, success_order, success_no_pay_order, success, error_pay } = orderPage;
+  const { order, error: error_order, success_no_pay_order, success, error_pay } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { users, current_user, loading: user_loading, success: user_success } = userPage;
+  const { current_user, loading: user_loading, success: user_success } = userPage;
 
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
@@ -54,16 +51,13 @@ const PlaceOrderPage = () => {
     shipment_id,
     shipping_rate,
     parcel,
-    create_account,
     show_payment,
     shipping_completed,
-    new_password,
     shippingPrice,
     promo_code,
     itemsPrice,
     taxPrice,
     totalPrice,
-    show_message,
     user,
     tip,
     paid,

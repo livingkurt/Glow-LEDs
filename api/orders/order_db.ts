@@ -1,6 +1,7 @@
 import { Product } from "../products";
 import { Order } from "../orders";
 import { Affiliate } from "../affiliates";
+import { dedupeAddresses } from "./order_helpers";
 
 export default {
   table_orders_db: async (filter: any, sort: any, limit: string, page: string) => {
@@ -198,7 +199,7 @@ export default {
   },
   get_all_shipping_orders_db: async () => {
     try {
-      const dedupedShippingAddresses = await Order.aggregate([
+      const addresses = await Order.aggregate([
         {
           $group: {
             _id: {
@@ -233,8 +234,9 @@ export default {
           },
         },
       ]);
-      return dedupedShippingAddresses;
+      return dedupeAddresses(addresses);
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

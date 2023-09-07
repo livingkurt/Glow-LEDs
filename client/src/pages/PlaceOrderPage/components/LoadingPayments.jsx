@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 const LoadingPayment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);
   const { loading_payment } = placeOrder;
-  const orderPage = useSelector(state => state.orders.orderPage);
-  const { error } = orderPage;
 
   return (
     <div>

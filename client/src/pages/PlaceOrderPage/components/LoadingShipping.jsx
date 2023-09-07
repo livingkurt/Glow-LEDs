@@ -1,10 +1,6 @@
-// React
 import * as React from "react";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useSelector } from "react-redux";
 import config from "../../../config";
-import { useDispatch } from "react-redux";
-import { set_error } from "../placeOrderSlice";
 
 const LoadingShipment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);

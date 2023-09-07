@@ -1,5 +1,4 @@
-// React
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import DomesticShippingSpeed from "./DomesticShippingSpeed";
 import InternationalShippingSpeed from "./InternationalShippingSpeed";

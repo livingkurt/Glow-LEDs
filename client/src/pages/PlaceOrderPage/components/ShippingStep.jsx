@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { state_names, toCapitalize } from "../../../utils/helper_functions";
+import { state_names } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_shipping } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
-import Autocomplete from "./AddressAutocomplete";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import ReactGoogleAutocomplete from "./ReactGoogleAutocomplete";
+import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
@@ -29,6 +29,7 @@ import {
   setShippingSaved,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
+
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { Info } from "@mui/icons-material";
 
@@ -196,33 +197,21 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                   </li>
                 )}
                 {current_user?.isAdmin && (
-                  <li className="w-100per">
-                    <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
-                      <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          style={{
-                            width: "100%",
-                          }}
-                          onChange={e => {
-                            const newShipping = JSON.parse(e.target.value);
-                            dispatch(save_shipping(newShipping));
-                          }}
-                        >
-                          <option key={1} defaultValue="">
-                            ---Choose Shipping for Order---
-                          </option>
-                          {!all_shipping.isLoading &&
-                            all_shipping.data.map((shipping, index) => (
-                              <option key={index} value={JSON.stringify(shipping)}>
-                                {shipping.first_name} {shipping.last_name}
-                              </option>
-                            ))}
-                        </select>
-                        <span className="custom-arrow" />
-                      </div>
-                    </div>
-                  </li>
+                  <GLAutocomplete
+                    margin="normal"
+                    value={""}
+                    variant={"filled"}
+                    loading={!all_shipping.isLoading}
+                    options={all_shipping.isLoading ? [] : all_shipping.data}
+                    getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                    optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                    getOptionSelected={(option, value) => option.uniqueKey === value.uniqueKey}
+                    name={"product"}
+                    label={"Choose Shipping"}
+                    onChange={(event, newValue) => {
+                      dispatch(save_shipping(newValue));
+                    }}
+                  />
                 )}
 
                 <li>
@@ -270,7 +259,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                 </li>
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
-                  <Autocomplete
+                  <ReactGoogleAutocomplete
                     apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     name="address_1"
@@ -340,6 +329,9 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                           onChange={e => dispatch(save_shipping({ ...shipping, state: e.target.value }))}
                           value={shipping.state}
                         >
+                          <option key={1} defaultValue="">
+                            Choose State
+                          </option>
                           {state_names.map((state, index) => (
                             <option key={index} value={state.short_name}>
                               {state.long_name}

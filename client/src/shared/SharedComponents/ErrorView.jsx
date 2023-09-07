@@ -1,7 +1,4 @@
-// React
 import * as React from "react";
-
-// Components
 
 const ErrorView = ({ error }) => {
   return (

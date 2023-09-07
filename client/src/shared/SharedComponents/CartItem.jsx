@@ -1,4 +1,3 @@
-// React
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +33,7 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
                   name="is_crafted"
                   defaultChecked={item.is_crafted}
                   style={{
-                    transform: "scale(1.5)"
+                    transform: "scale(1.5)",
                   }}
                   className=""
                   id="is_crafted"
@@ -58,19 +57,27 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
               />
             )}
             {item.secondary_image && (
-              <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
+              <div
+                className={` double-image-cart${
+                  item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
+                }`}
+              >
                 <LazyImage
                   id="expandedImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-page-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
+                  className={`details-image-cart-page-${
+                    item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
+                  } m-0px`}
                   src={item.display_image}
                 />
                 <LazyImage
                   id="expandedSecondaryImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-page-${item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"} `}
+                  className={`details-image-cart-page-${
+                    item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
+                  } `}
                   src={item.secondary_image}
                 />
               </div>
@@ -129,7 +136,9 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
 					) : (
 						<label>{item.qty}</label>
 					)} */}
-          <div className="cart-price fs-16px">{sale_price_switch({ product: item, isWholesaler: current_user?.isWholesaler })}</div>
+          <div className="cart-price fs-16px">
+            {sale_price_switch({ product: item, isWholesaler: current_user?.isWholesaler })}
+          </div>
         </div>
       </div>
     </li>

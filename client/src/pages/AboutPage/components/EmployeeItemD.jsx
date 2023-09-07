@@ -1,4 +1,3 @@
-// React
 import * as React from "react";
 
 const EmployeeItemD = ({ user, style, size }) => {

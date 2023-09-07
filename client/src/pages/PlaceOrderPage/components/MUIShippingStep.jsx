@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validate_shipping } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
-import Autocomplete from "./AddressAutocomplete";
+import Autocomplete from "./ReactGoogleAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 

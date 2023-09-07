@@ -1,8 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { forwardRef } from "react";
-
 import { usePlacesWidget } from "react-google-autocomplete";
-import { makeStyles } from "@mui/styles";
 
 const ReactGoogleAutocomplete = ({
   onPlaceSelected,

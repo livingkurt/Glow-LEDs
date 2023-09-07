@@ -1,4 +1,3 @@
-// React
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";

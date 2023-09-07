@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 
 const ChooseShipping = ({ shippingRates, onChange, carrier }) => {
   const [value, setValue] = React.useState("");

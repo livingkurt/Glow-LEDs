@@ -1,4 +1,3 @@
-// React
 import React, { useEffect, useState } from "react";
 import CarouselItem from "./CarouselItem";
 import { Loading } from "../../SharedComponents";

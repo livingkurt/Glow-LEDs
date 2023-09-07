@@ -1,4 +1,3 @@
-// React
 import React, { useEffect, useState } from "react";
 
 const StyledDropdown = ({ onChange, items, label }) => {

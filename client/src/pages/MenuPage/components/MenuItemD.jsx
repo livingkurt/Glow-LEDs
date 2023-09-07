@@ -1,4 +1,3 @@
-// React
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { humanize } from "../../../utils/helper_functions";

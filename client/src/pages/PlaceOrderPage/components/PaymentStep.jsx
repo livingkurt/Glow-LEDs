@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
-import { Stripe } from "../../../shared/SharedComponents/Stripe";
 import {
   set_order_note,
   set_production_note,
@@ -10,7 +9,6 @@ import {
   set_tip,
   set_create_account,
   set_new_password,
-  set_loading_payment,
   set_paid,
   set_paymentMethod,
   showHideSteps,

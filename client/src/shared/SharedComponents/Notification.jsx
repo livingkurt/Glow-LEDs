@@ -1,7 +1,4 @@
-// React
 import * as React from "react";
-
-// Components
 
 const Notification = ({ message, ...others }) => {
   return (

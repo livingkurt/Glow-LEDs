@@ -1,4 +1,3 @@
-// React
 import * as React from "react";
 import { product_page_sale_price_switch } from "../../../utils/react_helper_functions";
 import { ProductFacts } from ".";

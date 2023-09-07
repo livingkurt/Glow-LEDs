@@ -70,6 +70,12 @@ const GLAutocomplete = ({
               {...params}
               className={customClasses?.outlinedInput}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
+              sx={{
+                backgroundColor: "white", // This changes the background color
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "white", // This also ensures the filled variant has a white background
+                },
+              }}
               InputProps={{
                 ...params.InputProps, // Spread existing props
                 className: customClasses.input, // Your custom props here
@@ -166,6 +172,7 @@ GLAutocomplete.defaultProps = {
   inputType: "text",
   limitTags: 5,
   inputPropsTextField: {},
+  customClasses: {},
 };
 
 GLAutocomplete.propTypes = {
@@ -199,6 +206,7 @@ GLAutocomplete.propTypes = {
   inputType: PropTypes.string,
   limitTags: PropTypes.number,
   inputPropsTextField: PropTypes.object,
+  customClasses: PropTypes.object,
 };
 
 export default GLAutocomplete;

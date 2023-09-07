@@ -1,4 +1,3 @@
-// React
 import React, { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeForm from "./StripeForm";

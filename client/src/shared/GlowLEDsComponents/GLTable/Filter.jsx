@@ -1,4 +1,3 @@
-// React
 import * as React from "react";
 
 const Filter = ({ filterHandler, filter_options, state, title, width }) => {
