@@ -278,7 +278,10 @@ const placeOrder = createSlice({
       state.show_promo_code_input_box = true;
     },
     activatePromo: (state, { payload }) => {
-      const { items_price, tax_rate, promo_excluded, code, promos, show_message } = payload;
+      const { items_price, tax_rate, code, promos, show_message } = payload;
+      let promo_excluded = 0;
+
+      // let promo_included = 0;
       const promo = promos.find((promo: any) => promo.promo_code === code.toLowerCase());
 
       if (promo) {
@@ -314,6 +317,8 @@ const placeOrder = createSlice({
 
           state.show_promo_code_input_box = false;
         }
+      } else {
+        state.promo_code_validations = "Promo Code Not Found";
       }
     },
 

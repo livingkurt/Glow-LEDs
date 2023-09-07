@@ -62,6 +62,8 @@ const PlaceOrderPage = () => {
     tip,
     paid,
     order_note,
+    tax_rate,
+    show_message,
     production_note,
     email,
   } = placeOrder;
@@ -321,10 +323,11 @@ const PlaceOrderPage = () => {
       cartItems,
     };
     const request = validate_promo_code(data);
+    console.log({ request });
     dispatch(set_promo_code_validations(request.errors.promo_code));
 
     if (request.isValid) {
-      dispatch(activatePromo(promo_code.toLowerCase()));
+      dispatch(activatePromo({ items_price, tax_rate, show_message, code: promo_code.toLowerCase(), promos }));
     } else {
       dispatch(set_promo_code(""));
     }

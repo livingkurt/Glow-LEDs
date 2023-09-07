@@ -1,22 +1,16 @@
 import * as React from "react";
 import CartItem from "../../../shared/SharedComponents/CartItem";
 import { useSelector } from "react-redux";
+import { determine_total } from "../../../utils/helper_functions";
 const OrderSummaryStep = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
   const { cartItems } = my_cart;
+
+  const items_price = determine_total(cartItems);
   const placeOrder = useSelector(state => state.placeOrder);
-  const {
-    show_message,
-    loading,
-    shippingPrice,
-    free_shipping_message,
-    tip,
-    itemsPrice,
-    items_price,
-    taxPrice,
-    totalPrice,
-  } = placeOrder;
+  const { show_message, loading, shippingPrice, free_shipping_message, tip, itemsPrice, taxPrice, totalPrice } =
+    placeOrder;
   return (
     <div className="placeorder-action">
       <ul>
@@ -56,6 +50,7 @@ const OrderSummaryStep = () => {
             <div>${itemsPrice.toFixed(2)}</div>
           </li>
         )}
+        {console.log({ items_price, itemsPrice })}
 
         {show_message && (
           <li>

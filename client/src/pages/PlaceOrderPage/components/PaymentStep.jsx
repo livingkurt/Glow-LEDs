@@ -18,10 +18,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
+import { determine_total } from "../../../utils/helper_functions";
 
 const PaymentStep = ({
   check_code,
-  placeOrderHandler,
   create_order_without_paying,
   create_no_payment_order,
   create_order_without_user,
@@ -36,6 +36,8 @@ const PaymentStep = ({
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, users } = userPage;
 
+  const items_price = determine_total(cartItems);
+
   const placeOrder = useSelector(state => state.placeOrder);
   const {
     payment_completed,
@@ -48,13 +50,9 @@ const PaymentStep = ({
     parseFloat,
     create_account,
     password_validations,
-    loading,
-    hide_pay_button,
-    loading_payment,
     paid,
     set_user,
     totalPrice,
-    items_price,
     tax_rate,
     shippingPrice,
     previousShippingPrice,
