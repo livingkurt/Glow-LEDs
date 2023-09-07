@@ -3,6 +3,8 @@ import classnames from "classnames";
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
 import { GLButton } from "..";
+import { IconButton } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
   const { width, height } = userWindowDimensions();
 
@@ -36,9 +38,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
-        <GLButton variant="primary" className="w-40px">
-          <i className="fas fa-arrow-left" />
-        </GLButton>
+        <IconButton variant="contained" className="w-40px">
+          <ArrowBack />
+        </IconButton>
       </li>
       {width > 430 &&
         paginationRange.map(pageNumber => {
@@ -71,9 +73,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >
-        <GLButton variant="primary" className="w-40px">
-          <i className="fas fa-arrow-right" />
-        </GLButton>
+        <IconButton variant="contained" className="w-40px">
+          <ArrowForward />
+        </IconButton>
       </li>
     </ul>
   );

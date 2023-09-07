@@ -4,6 +4,8 @@ import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
 import { logout_user, set_current_user } from "../slices/userSlice";
+import { IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 export const mobile_check = () => {
   let check = false;
@@ -463,9 +465,9 @@ export const list_display = (list_items, set_items) => {
               return (
                 <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
                   <div>
-                    <GLButton variant="icon" onClick={e => remove_list_item(index, e, set_items)} aria-label="Delete">
-                      <i className="fas fa-times mr-5px" />
-                    </GLButton>
+                    <IconButton onClick={e => remove_list_item(index, e)} aria-label="Delete">
+                      <Close />
+                    </IconButton>
                     {item.name}
                   </div>
                 </div>

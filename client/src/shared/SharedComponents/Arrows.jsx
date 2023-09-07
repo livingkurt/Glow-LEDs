@@ -1,5 +1,7 @@
 import * as React from "react";
 import { GLButton } from "../GlowLEDsComponents";
+import { IconButton } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 const Arrows = ({ direction, set_value, update_function, name, value }) => {
   const increment = () => {
@@ -22,12 +24,13 @@ const Arrows = ({ direction, set_value, update_function, name, value }) => {
   };
   return (
     <div className="row">
-      <GLButton onClick={() => decrement()} variant="primary" className="w-4rem" aria-label="Previous">
-        <i className="fas fa-arrow-left f-s-12" />
-      </GLButton>
-      <GLButton onClick={() => increment()} variant="primary" className="w-4rem m-l-s" aria-label="Next">
-        <i className="fas fa-arrow-right f-s-12" />
-      </GLButton>
+      <IconButton onClick={() => decrement()} variant="contained" className="w-4rem" aria-label="Previous">
+        <ArrowBack fontSize="small" />
+      </IconButton>
+
+      <IconButton onClick={() => increment()} variant="contained" className="w-4rem m-l-s" aria-label="Next">
+        <ArrowForward fontSize="small" />
+      </IconButton>
     </div>
   );
 };

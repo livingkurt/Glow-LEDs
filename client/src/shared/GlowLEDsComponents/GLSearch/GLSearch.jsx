@@ -1,5 +1,7 @@
 import * as React from "react";
 import GLButton from "../GLButton/GLButton";
+import { IconButton } from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 const GLSearch = ({ set_search, search, submitHandler, className }) => {
   return (
@@ -13,9 +15,9 @@ const GLSearch = ({ set_search, search, submitHandler, className }) => {
           onChange={set_search}
           className="form_input search mv-0px"
         />
-        <GLButton type="submit" variant="primary" className="w-50px mb-0px" aria-label="Search">
-          <i className="fas fa-search" />
-        </GLButton>
+        <IconButton type="submit" variant="contained" className="w-50px mb-0px" aria-label="Search">
+          <Search />
+        </IconButton>
       </div>
     </form>
   );

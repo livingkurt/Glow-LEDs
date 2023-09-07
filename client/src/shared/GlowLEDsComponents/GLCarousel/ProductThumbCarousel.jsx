@@ -4,6 +4,9 @@ import ProductThumbCarouselItem from "./CarouselItem";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { GLButton } from "../GlowLEDsComponents";
 import { Loading } from "../../SharedComponents";
+import { IconButton } from "@mui/material";
+import ArrowBackCircleIcon from "@mui/icons-material/ArrowBackCircle";
+import ArrowForwardCircleIcon from "@mui/icons-material/ArrowForwardCircle";
 
 const ProductThumbCarousel = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -60,15 +63,14 @@ const ProductThumbCarousel = () => {
             <div className="row jc-b w-100per">
               {/* {product_number != 0 && ( */}
               <div className="ai-c">
-                <GLButton
+                <IconButton
                   style={{ borderRadius: "50%" }}
-                  variant="icon"
                   className="h-59px"
                   onClick={() => move_left()}
                   aria-label="Previous"
                 >
-                  <i className="fas fa-arrow-circle-left fs-40px" />
-                </GLButton>
+                  <ArrowBackCircleIcon fontSize="large" />
+                </IconButton>
               </div>
               {/* )} */}
               {[...Array(1).keys()].map(x => (
@@ -87,15 +89,14 @@ const ProductThumbCarousel = () => {
               ))}
               {/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
               <div className="ai-c">
-                <GLButton
+                <IconButton
                   style={{ borderRadius: "50%" }}
-                  variant="icon"
                   className="h-59px"
                   onClick={() => move_right()}
                   aria-label="Next"
                 >
-                  <i className="fas fa-arrow-circle-right fs-40px" />
-                </GLButton>
+                  <ArrowForwardCircleIcon fontSize="large" />
+                </IconButton>
               </div>
               {/* )} */}
             </div>

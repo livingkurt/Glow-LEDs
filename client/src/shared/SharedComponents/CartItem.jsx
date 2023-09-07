@@ -7,6 +7,8 @@ import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 import { deleteCartItem } from "../../api";
+import { Delete } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 const CartItem = ({ index, item, check_item_as_crafted }) => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
@@ -92,13 +94,12 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
           </Link>
           {current_user?.isAdmin && (
             <div className="ai-c">
-              <GLButton
-                variant="icon"
+              <IconButton
                 onClick={() => dispatch(deleteCartItem({ item_index: index, type: "add_to_cart" }))}
                 aria-label="Delete"
               >
-                <i className="fas fa-trash-alt" />
-              </GLButton>
+                <Delete />
+              </IconButton>
             </div>
           )}
         </div>
