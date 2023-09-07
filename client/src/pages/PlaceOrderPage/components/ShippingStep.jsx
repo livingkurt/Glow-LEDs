@@ -101,7 +101,7 @@ const ShippingStep = () => {
 
     const data = {
       ...shipping,
-      email: email ? email : current_user.email,
+      email: shipping.email ? shipping.email : current_user.email,
     };
 
     const request = validate_shipping(data);
@@ -179,7 +179,7 @@ const ShippingStep = () => {
   const next_step = step => {
     dispatch(nextStep(step));
 
-    if (step === "shipping" && email.length === 0) {
+    if (step === "shipping" && shipping.email.length === 0) {
       dispatch(setEmailValidations("Email Field Empty"));
     }
 

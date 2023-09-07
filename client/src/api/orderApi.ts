@@ -144,6 +144,7 @@ export const createPayOrder = createAsyncThunk(
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {
+      console.log({ error });
       thunkApi.dispatch(showError({ message: errorMessage(error), duration: 10000 }));
       return thunkApi.rejectWithValue(error.response?.data);
     }

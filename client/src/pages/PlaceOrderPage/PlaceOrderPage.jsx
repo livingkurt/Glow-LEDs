@@ -9,7 +9,7 @@ import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedCo
 import { determine_total } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
-import { setItemsPrice, setTotalPrice, set_error, set_email } from "./placeOrderSlice";
+import { setItemsPrice, setTotalPrice, set_error } from "./placeOrderSlice";
 
 import * as API from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
@@ -152,7 +152,7 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (current_user && current_user?.hasOwnProperty("first_name")) {
-        dispatch(set_email(current_user.email));
+        dispatch(save_shipping({ email: current_user.email }));
       }
     }
     return () => (clean = false);

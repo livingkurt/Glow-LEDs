@@ -121,11 +121,12 @@ const productPage = createSlice({
     },
     update_color: (state, { payload }) => {
       const { color, color_code, images_object, _id, quantity, count_in_stock } = payload;
-      console.log({ payload });
       state.color = color;
       state.color_code = color_code;
-      state.images = images_object || [];
-      state.image = images_object?.[0]?.link || "";
+      if (images_object?.length > 0) {
+        state.images = images_object || [];
+        state.image = images_object?.[0]?.link || "";
+      }
       state.color_product = _id;
       state.color_product_object = payload;
       state.quantity = quantity || state.quantity;
@@ -143,8 +144,10 @@ const productPage = createSlice({
       state.count_in_stock = option.count_in_stock || state.count_in_stock;
 
       if (product.name === "CLOZD Omniskinz Sleds") {
-        state.image = option.images_object?.[0]?.link || "";
-        state.images = option.images_object || [];
+        if (option.images_object?.length > 0) {
+          state.image = option.images_object?.[0]?.link || "";
+          state.images = option.images_object || [];
+        }
       }
 
       if (has_add_on && show_add_on && product.name === "Capez") {
@@ -172,8 +175,10 @@ const productPage = createSlice({
       state.option_product_name = option.name;
 
       if (option.subcategory !== "gloves") {
-        state.images = option.images_object || [];
-        state.image = option.images_object?.[0]?.link || "";
+        if (option.images_object?.length > 0) {
+          state.images = option.images_object || [];
+          state.image = option.images_object?.[0]?.link || "";
+        }
         state.description = option.description || state.description;
         state.facts = option.facts || state.facts;
         state.included_items = option.included_items || state.included_items;

@@ -50,8 +50,6 @@ const PaymentStep = () => {
     show_promo_code,
     show_promo_code_input_box,
     promo_code_validations,
-
-    parseFloat,
     create_account,
     password_validations,
 
@@ -309,7 +307,9 @@ const PaymentStep = () => {
                   placeholder="$0.00"
                   defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
                   className="w-100per"
-                  onChange={e => dispatch(set_tip(parseFloat(e.target.value)))}
+                  onChange={e => {
+                    dispatch(set_tip(parseFloat(e.target.value)));
+                  }}
                 />
               </div>
             </li>

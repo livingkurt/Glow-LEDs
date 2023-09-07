@@ -15,10 +15,14 @@ import {
   nextStep,
 } from "../placeOrderSlice";
 import { isMobile } from "react-device-detect";
+import { save_shipping } from "../../../slices/cartSlice";
 
 const EmailStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { shipping } = cartPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
   const { show_email, is_guest, email_completed, password, email_validations, email } = placeOrder;
@@ -59,7 +63,7 @@ const EmailStep = () => {
     }
   };
   const validate_email = e => {
-    const request = validate_login({ email });
+    const request = validate_login({ email: shipping.email });
     dispatch(setEmailValidations(request.errors.email));
     if (!request.errors.email) {
       next_step("shipping");
@@ -104,10 +108,10 @@ const EmailStep = () => {
                 <label htmlFor="email">Email</label>
                 <input
                   type="text"
-                  value={email}
+                  value={shipping.email}
                   name="email"
                   id="email"
-                  onChange={e => dispatch(set_email(e.target.value.toLowerCase()))}
+                  onChange={e => dispatch(save_shipping({ email: e.target.value.toLowerCase() }))}
                 />
               </li>
               <label
@@ -118,16 +122,6 @@ const EmailStep = () => {
               >
                 {email_validations}
               </label>
-              {/* <Paper style={{ padding: "8px 20px", borderRadius: "10px" }}>
-                <GLForm
-                  formData={emailFormFields.fields}
-                  state={{ email }}
-                  onChange={value => dispatch(set_email(value.email..toLowerCase()))}
-                  formErrors={formErrors} // Pass the errors here
-                  setFormErrors={setFormErrors}
-                  // classes={classes}
-                />
-              </Paper> */}
               <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
                 You'll recieve receipts and notifications at this email address.{"\n"}
                 {"\n"}Already have an account?
@@ -187,7 +181,7 @@ const EmailStep = () => {
       ) : (
         <div className="wrap jc-b w-100per">
           <div className="paragraph_font lh-25px">
-            <div>{email.toLowerCase()}</div>
+            <div>{shipping.email.toLowerCase()}</div>
           </div>
         </div>
       )}
