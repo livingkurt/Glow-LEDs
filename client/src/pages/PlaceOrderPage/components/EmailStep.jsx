@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
@@ -12,9 +12,11 @@ import {
   set_password,
   set_is_guest,
   showHideSteps,
+  nextStep,
 } from "../placeOrderSlice";
+import { isMobile } from "react-device-detect";
 
-const EmailStep = ({ next_step }) => {
+const EmailStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,6 +46,18 @@ const EmailStep = ({ next_step }) => {
 
   const { width } = useWindowDimensions();
 
+  const next_step = step => {
+    dispatch(nextStep(step));
+
+    if (step === "shipping" && email.length === 0) {
+      dispatch(setEmailValidations("Email Field Empty"));
+    }
+
+    if (isMobile) {
+      const scrollTo = step === "shipping" ? 340 : 560;
+      window.scrollTo({ top: scrollTo, behavior: "smooth" });
+    }
+  };
   const validate_email = e => {
     const request = validate_login({ email });
     dispatch(setEmailValidations(request.errors.email));
@@ -53,35 +67,6 @@ const EmailStep = ({ next_step }) => {
     }
   };
 
-  const isRequired = (value, fieldName) => (value === "" ? `${fieldName} is Required` : null);
-
-  const isValidEmail = value =>
-    !value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) ? "Invalid email format" : null;
-
-  // Composite Validation Function
-  const validateEmail = value => {
-    const required = isRequired(value, "Email");
-    if (required) return required;
-
-    const valid = isValidEmail(value);
-    if (valid) return valid;
-
-    return null;
-  };
-
-  // const emailFormFields = {
-  //   type: "object",
-  //   title: "Email",
-  //   fields: {
-  //     email: {
-  //       type: "text",
-  //       label: "Email",
-  //       validate: value => validateEmail(value),
-  //     },
-  //   },
-  // };
-
-  // const [formErrors, setFormErrors] = useState({});
   return (
     <div>
       <div className="jc-b">

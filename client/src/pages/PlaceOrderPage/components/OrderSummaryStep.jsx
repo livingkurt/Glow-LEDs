@@ -50,7 +50,6 @@ const OrderSummaryStep = () => {
             <div>${itemsPrice.toFixed(2)}</div>
           </li>
         )}
-        {console.log({ items_price, itemsPrice })}
 
         {show_message && (
           <li>

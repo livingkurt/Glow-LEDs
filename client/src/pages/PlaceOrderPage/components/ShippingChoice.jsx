@@ -7,7 +7,7 @@ import { re_choose_shipping_rate, set_hide_pay_button } from "../placeOrderSlice
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const ShippingChoice = ({ choose_shipping_rate }) => {
+const ShippingChoice = () => {
   const dispatch = useDispatch();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { shipping } = cartPage;
@@ -23,12 +23,12 @@ const ShippingChoice = ({ choose_shipping_rate }) => {
         <div className="w-100per">
           {shipping && shipping.international && (
             <div>
-              <InternationalShippingSpeed choose_shipping_rate={choose_shipping_rate} />
+              <InternationalShippingSpeed />
             </div>
           )}
           {shipping && !shipping.international && (
             <div>
-              <DomesticShippingSpeed choose_shipping_rate={choose_shipping_rate} />
+              <DomesticShippingSpeed />
             </div>
           )}
         </div>

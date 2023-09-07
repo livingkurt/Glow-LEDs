@@ -2,14 +2,29 @@ import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
-import { setModalShown, setOpen } from "../placeOrderSlice";
+import {
+  activatePromo,
+  chooseShippingRateBasic,
+  chooseShippingRateWithPromo,
+  finalizeShippingRate,
+  setModalShown,
+  setOpen,
+} from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { determine_total } from "../../../utils/helper_functions";
 
-const InternationalShippingSpeed = ({ choose_shipping_rate }) => {
+const InternationalShippingSpeed = () => {
   const dispatch = useDispatch();
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
+  const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
-  const { modalShown, shipping_rates } = placeOrder;
+  const { modalShown, shipping_rates, tax_rate, show_message } = placeOrder;
+  const promoPage = useSelector(state => state.promos.promoPage);
+  const { promos } = promoPage;
+
+  const items_price = determine_total(cartItems);
 
   const sortedRates = shipping_rates.rates
     .sort((a, b) => {
@@ -24,6 +39,20 @@ const InternationalShippingSpeed = ({ choose_shipping_rate }) => {
       }
     })
     .filter(rate => rate.carrier === "UPSDAP");
+
+  const choose_shipping_rate = (rate, speed, name) => {
+    const basicPayload = { rate, speed, name };
+    dispatch(chooseShippingRateBasic(basicPayload));
+
+    const promo_code_storage = sessionStorage.getItem("promo_code");
+    if (promo_code_storage && promo_code_storage.length > 0) {
+      const promoPayload = { promo_code_storage };
+      dispatch(chooseShippingRateWithPromo(promoPayload));
+      dispatch(activatePromo({ items_price, tax_rate, show_message, code: promo_code_storage, promos }));
+    }
+
+    dispatch(finalizeShippingRate());
+  };
 
   const handleOpen = rate => {
     if (modalShown) {

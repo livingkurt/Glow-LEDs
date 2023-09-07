@@ -27,13 +27,15 @@ import {
   openSaveShippingModal,
   closeSaveShippingModal,
   setShippingSaved,
+  nextStep,
+  setEmailValidations,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { Info } from "@mui/icons-material";
 
-const ShippingStep = ({ choose_shipping_rate, next_step }) => {
+const ShippingStep = () => {
   const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -172,6 +174,19 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     };
 
     dispatch(API.shippingRates({ order, verify_shipping: verify }));
+  };
+
+  const next_step = step => {
+    dispatch(nextStep(step));
+
+    if (step === "shipping" && email.length === 0) {
+      dispatch(setEmailValidations("Email Field Empty"));
+    }
+
+    if (isMobile) {
+      const scrollTo = step === "shipping" ? 340 : 560;
+      window.scrollTo({ top: scrollTo, behavior: "smooth" });
+    }
   };
 
   return (
@@ -451,7 +466,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
 
               <Loading loading={loading_shipping} />
 
-              <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
+              <ShippingChoice />
               {cartItems.some(item => item.processing_time) && (
                 <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
                   Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
