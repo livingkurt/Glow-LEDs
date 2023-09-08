@@ -1,12 +1,26 @@
-export const contentFormFields = () => {
+export const contentFormFields = ({ content }: any) => {
   return {
     home_page: {
       type: "object",
       title: "Home Page",
       fields: {
         h1: { type: "text", label: "H1" },
-        image: { type: "text", label: "Image" },
-        images: { type: "array", label: "Images" },
+        // image_object: {
+        //   type: "image_upload",
+        //   label: "Image",
+        //   // options: images,
+        //   labelProp: "link",
+        //   album: `${content?.home_page?.h1} Images`,
+        //   getOptionLabel: (option: any) => option.link,
+        // },
+        images_object: {
+          type: "image_upload",
+          label: "Images",
+          // options: images,
+          labelProp: "link",
+          album: `${content?.home_page?.h1} Images`,
+          getOptionLabel: (option: any) => option.link,
+        },
         slideshow: {
           type: "array",
           label: "Slideshow",
@@ -14,13 +28,27 @@ export const contentFormFields = () => {
             type: "object",
             fields: {
               label: { type: "text", label: "Label" },
-              image: { type: "text", label: "Image" },
+              image_object: {
+                type: "image_upload",
+                label: "Image",
+                // options: images,
+                labelProp: "link",
+                album: `${content?.home_page?.h1} Images`,
+                getOptionLabel: (option: any) => option.link,
+              },
               link: { type: "text", label: "Link" },
             },
           },
         },
         video: { type: "text", label: "Video" },
-        banner_image: { type: "text", label: "Banner Image" },
+        banner_image: {
+          type: "image_upload",
+          label: "Rectangle Image",
+          // options: images,
+          labelProp: "link",
+          album: `${content?.home_page?.h1} Images`,
+          getOptionLabel: (option: any) => option.link,
+        },
         show_image: { type: "checkbox", label: "Show Image", default: true },
         show_video: { type: "checkbox", label: "Show Video", default: false },
         h2: { type: "text", label: "H2" },
@@ -51,7 +79,6 @@ export const contentFormFields = () => {
       },
     },
     active: { type: "checkbox", label: "Active", default: true },
-    deleted: { type: "checkbox", label: "Deleted", default: false },
   };
 };
 

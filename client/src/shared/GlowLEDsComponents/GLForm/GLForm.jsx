@@ -1,4 +1,17 @@
-import { Button, Checkbox, FormControlLabel, Skeleton, TextField, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  Paper,
+  Skeleton,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -11,6 +24,8 @@ import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import GLNestedForm from "./GLNestedForm";
+import { ArrowBack, ArrowForward, Close } from "@mui/icons-material";
+import GLTabPanel from "../GLTabPanel/GLTabPanel";
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -52,6 +67,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
     });
     return emptyObject;
   };
+
+  const [tabIndex, setTabIndex] = useState(0);
 
   return (
     <>
@@ -121,7 +138,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     fieldData={fieldData}
                     fieldState={fieldState}
                     fieldName={fieldName}
-                    onChange={onChange}
+                    onChange={(value, key) => onChange({ [key]: [...fieldState[key], ...value] })}
                   />
                 </>
               );
@@ -337,7 +354,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "object":
               return (
-                <>
+                <Paper className="p-10px mv-10px">
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
@@ -351,39 +368,101 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     }}
                     loading={loading}
                   />
-                </>
+                </Paper>
               );
             case "array":
               return (
-                <>
+                <Paper className="p-10px mv-10px">
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
                   {console.log({ fieldState, fieldName: formData[fieldName] })}
+                  <AppBar position="sticky" color="transparent">
+                    <Tabs
+                      variant="scrollable"
+                      value={tabIndex}
+                      onChange={(event, newValue) => {
+                        setTabIndex(newValue);
+                      }}
+                    >
+                      {fieldState.length > 0 && fieldState.map((item, index) => <Tab label={item.label} />)}
+                    </Tabs>
+                  </AppBar>
+                  <Box sx={{ m: 3 }} />
                   {fieldState.length > 0 &&
-                    fieldState?.map((item, index) => (
-                      <GLNestedForm
-                        key={index}
-                        formData={fieldData.itemSchema.fields}
-                        state={item}
-                        onChange={newItem => {
-                          const newArray = [...fieldState];
-                          newArray[index] = newItem;
-                          onChange(newArray);
-                        }}
-                        loading={loading}
-                      />
+                    fieldState.map((item, index) => (
+                      <GLTabPanel value={tabIndex} index={index}>
+                        <IconButton
+                          color="secondary"
+                          onClick={() => {
+                            const newArray = [...fieldState];
+                            newArray.splice(index, 1);
+                            onChange({ [fieldName]: newArray });
+                            setTabIndex(prevIndex => {
+                              if (prevIndex === newArray.length) {
+                                return newArray.length - 1;
+                              }
+                              return prevIndex > index ? prevIndex - 1 : prevIndex;
+                            });
+                          }}
+                        >
+                          <Close />
+                        </IconButton>
+                        {/* Move Up Button */}
+                        <IconButton
+                          color="primary"
+                          onClick={() => {
+                            if (index > 0) {
+                              const newArray = [...fieldState];
+                              [newArray[index - 1], newArray[index]] = [newArray[index], newArray[index - 1]];
+                              onChange({ [fieldName]: newArray });
+                              setTabIndex(index - 1);
+                            }
+                          }}
+                        >
+                          <ArrowBack />
+                        </IconButton>
+
+                        {/* Move Down Button */}
+                        <IconButton
+                          color="primary"
+                          onClick={() => {
+                            if (index < fieldState.length - 1) {
+                              const newArray = [...fieldState];
+                              [newArray[index + 1], newArray[index]] = [newArray[index], newArray[index + 1]];
+                              onChange({ [fieldName]: newArray });
+                              setTabIndex(index + 1);
+                            }
+                          }}
+                        >
+                          <ArrowForward />
+                        </IconButton>
+                        <GLNestedForm
+                          formData={fieldData.itemSchema.fields}
+                          state={item}
+                          onChange={newItem => {
+                            const newArray = [...fieldState];
+                            newArray[index] = newItem;
+                            onChange({ [fieldName]: newArray });
+                          }}
+                          loading={loading}
+                        />
+                      </GLTabPanel>
                     ))}
+
                   <Button
                     variant="contained"
+                    fullWidth
                     onClick={() => {
                       const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
+                      const newArray = [...fieldState, { ...emptyItem }];
                       onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
+                      setTabIndex(newArray.length - 1);
                     }}
                   >
                     Add Item
                   </Button>
-                </>
+                </Paper>
               );
 
             default:

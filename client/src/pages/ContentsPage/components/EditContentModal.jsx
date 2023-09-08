@@ -12,7 +12,6 @@ const EditContentModal = () => {
 
   const formFields = contentFormFields({
     content,
-    dispatch,
   });
 
   return (
