@@ -112,9 +112,10 @@ const ShippingStep = () => {
     }
 
     if (request.isValid) {
-      const normalizedCurrentUserShipping = normalizeAddress(current_user?.shipping || {});
+      const normalizedCurrentUserShipping = normalizeAddress(
+        { ...current_user?.shipping, email: current_user?.email } || {}
+      );
       const normalizedNewShipping = normalizeAddress(shipping || {});
-
       if (current_user?.shipping && normalizedCurrentUserShipping !== normalizedNewShipping && !shippingSaved) {
         if (current_user?.shipping) {
           dispatch(setModalText("Your address is different from your saved one. Would you like to update it?"));

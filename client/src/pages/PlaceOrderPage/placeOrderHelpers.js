@@ -66,3 +66,5 @@ export const mapCarrierName = carrier => {
   };
   return carrierMap[carrier] || carrier;
 };
+
+export const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];

@@ -3,7 +3,7 @@ import * as API from "../../api";
 
 const initialState = {
   shipping_rates: {},
-  current_shipping_speed: { rate: { retail_rate: "", rate: "", speed: "" }, speed: "", name: "" },
+  current_shipping_speed: { rate: { retail_rate: "", rate: "", speed: "" }, speed: "", name: "", freeShipping: false },
   shipment_id: "",
   shipping_rate: {},
   hide_pay_button: true,
@@ -343,12 +343,22 @@ const placeOrder = createSlice({
       state.show_shipping_complete = true;
     },
     chooseShippingRateBasic: (state, { payload }) => {
-      const { rate, speed, name } = payload;
-      state.shippingPrice = parseFloat(rate.retail_rate || rate.rate);
-      state.previousShippingPrice = parseFloat(rate.retail_rate || rate.rate);
+      const { rate, speed, name, freeShipping } = payload;
+
+      if (freeShipping) {
+        state.loading = false;
+        state.hide_pay_button = false;
+        state.shippingPrice = 0;
+        state.free_shipping_message = "Free";
+        state.loading_shipping = false;
+        state.show_shipping_complete = true;
+      } else {
+        state.shippingPrice = parseFloat(rate.retail_rate || rate.rate);
+        state.previousShippingPrice = parseFloat(rate.retail_rate || rate.rate);
+      }
       state.hide_pay_button = false;
       state.shipping_rate = rate;
-      state.current_shipping_speed = { rate, speed, name };
+      state.current_shipping_speed = { rate, speed, name, freeShipping };
     },
     chooseShippingRateWithPromo: (state, { payload }) => {
       const { promo_code_storage } = payload;

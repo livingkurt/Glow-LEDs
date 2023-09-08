@@ -1,5 +1,5 @@
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";
+import { determine_service, serviceNames, toTitleCaseSnakeCase } from "../placeOrderHelpers";
 import { useSelector } from "react-redux";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 import {
@@ -7,6 +7,7 @@ import {
   chooseShippingRateBasic,
   chooseShippingRateWithPromo,
   finalizeShippingRate,
+  setFreeShipping,
   setModalShown,
   setOpen,
 } from "../placeOrderSlice";
@@ -34,12 +35,12 @@ const DomesticShippingSpeed = () => {
   const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
 
   // Define custom service names for selected rates
-  const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];
 
   const choose_shipping_rate = (rate, speed, name) => {
-    const basicPayload = { rate, speed, name };
-    dispatch(chooseShippingRateBasic(basicPayload));
+    const freeShipping = items_price > 50 && name === "USPS: Standard" ? true : false;
 
+    const basicPayload = { rate, speed, name, freeShipping };
+    dispatch(chooseShippingRateBasic(basicPayload));
     const promo_code_storage = sessionStorage.getItem("promo_code");
     if (promo_code_storage && promo_code_storage.length > 0) {
       const promoPayload = { promo_code_storage };
@@ -67,13 +68,16 @@ const DomesticShippingSpeed = () => {
   };
 
   return selectedRates.map((rate, index) => {
+    let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
+    let displayRate = isFreeShipping ? "Free" : `$${parseFloat(rate.retail_rate || rate.rate).toFixed(2)}`;
+
     return (
       <div className="mv-1rem jc-b ai-c" key={index}>
         <div className="shipping_rates jc-b w-100per wrap">
           <label className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</label>
           <div className="jc-b max-w-150px w-100per">
             <label>{determine_service(rate)}</label>
-            <label>${parseFloat(rate.retail_rate || rate.rate).toFixed(2)}</label>
+            <label>{displayRate}</label>
           </div>
         </div>
         <GLButton variant="rates" onClick={() => handleOpen(rate, index)}>

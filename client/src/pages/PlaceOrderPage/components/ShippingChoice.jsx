@@ -6,16 +6,23 @@ import { determine_service } from "../placeOrderHelpers";
 import { re_choose_shipping_rate, set_hide_pay_button } from "../placeOrderSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { determine_total } from "../../../utils/helper_functions";
 
 const ShippingChoice = () => {
   const dispatch = useDispatch();
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { shipping } = cartPage;
+  const { shipping, my_cart } = cartPage;
+  const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
   const { shipping_rates, current_shipping_speed, hide_pay_button } = placeOrder;
+
   useEffect(() => {
     dispatch(set_hide_pay_button(true));
   }, [shipping_rates.rates, set_hide_pay_button]);
+
+  let displayRate = current_shipping_speed.freeShipping
+    ? "Free"
+    : `$${parseFloat(current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate).toFixed(2)}`;
 
   return (
     <div className="w-100per">
@@ -40,9 +47,7 @@ const ShippingChoice = () => {
               <div>{current_shipping_speed.name}</div>
               <div className="jc-b max-w-150px w-100per">
                 <div>{determine_service(current_shipping_speed.rate)}</div>
-                <div>
-                  ${parseFloat(current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate).toFixed(2)}
-                </div>
+                <div>{displayRate}</div>
               </div>
             </div>
           </div>
