@@ -524,15 +524,13 @@ const ShippingStep = () => {
           submitShipping();
         }}
         title={"Save Shipping Address"}
-        confirmLabel={"Save"}
+        confirmLabel={"Save Shipping"}
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel={"Continue without Saving Shipping"}
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <p>
-          <Info color="primary" /> {modalText}
-        </p>
+        <p>{modalText}</p>
         <p>
           <strong>Note</strong>: You can change your saved address later from your profile page
         </p>

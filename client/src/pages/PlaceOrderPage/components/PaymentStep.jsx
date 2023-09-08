@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import {
   set_order_note,
@@ -16,6 +16,7 @@ import {
   set_promo_code_validations,
   activatePromo,
   set_loading_payment,
+  set_user,
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -53,7 +54,6 @@ const PaymentStep = () => {
     create_account,
     password_validations,
 
-    set_user,
     previousShippingPrice,
     shipment_id,
     shipping_rate,
@@ -413,7 +413,21 @@ const PaymentStep = () => {
                         </div>
                       </div>
                     )}
-                    <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
+                    <GLAutocomplete
+                      margin="normal"
+                      value={user || ""}
+                      variant={"filled"}
+                      options={users.filter(user => !user.deleted).filter(user => user.first_name)}
+                      getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                      optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                      getOptionSelected={(option, value) => option._id === value._id}
+                      name={"users"}
+                      label={"Choose User"}
+                      onChange={(event, newValue) => {
+                        dispatch(set_user(newValue));
+                      }}
+                    />
+                    {/* <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
                       <div className="custom-select w-100per">
                         <select
                           className="qty_select_dropdown w-100per"
@@ -431,7 +445,7 @@ const PaymentStep = () => {
                         </select>
                         <span className="custom-arrow" />
                       </div>
-                    </div>
+                    </div> */}
                     <GLButton onClick={create_order_without_paying} variant="secondary" className="w-100per mb-12px">
                       Create Order For User
                     </GLButton>

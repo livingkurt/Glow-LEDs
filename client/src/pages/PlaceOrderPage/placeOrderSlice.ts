@@ -416,6 +416,7 @@ const placeOrder = createSlice({
     },
     [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
+      state.loading_payment = false;
       state.paymentValidations = payload.message;
     },
   },

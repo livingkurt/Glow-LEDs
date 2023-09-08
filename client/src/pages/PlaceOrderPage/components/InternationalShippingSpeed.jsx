@@ -1,6 +1,6 @@
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";
+import { determine_service, mapCarrierName, mapServiceName, toTitleCaseSnakeCase } from "../placeOrderHelpers";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 import {
   activatePromo,
@@ -26,19 +26,31 @@ const InternationalShippingSpeed = () => {
 
   const items_price = determine_total(cartItems);
 
-  const sortedRates = shipping_rates.rates
-    .sort((a, b) => {
-      if (a.retail_rate && b.retail_rate) {
-        return parseFloat(a.retail_rate) - parseFloat(b.retail_rate);
-      } else if (a.retail_rate) {
-        return -1;
-      } else if (b.retail_rate) {
-        return 1;
-      } else {
-        return parseFloat(a.rate) - parseFloat(b.rate);
-      }
-    })
-    .filter(rate => rate.carrier === "UPSDAP");
+  console.log({ rates: shipping_rates.rates });
+
+  const sortedRates = [...shipping_rates.rates].sort((a, b) => {
+    if (a.rate && b.rate) {
+      return parseFloat(a.rate) - parseFloat(b.rate);
+    } else if (a.rate) {
+      return -1;
+    } else if (b.rate) {
+      return 1;
+    } else {
+      return parseFloat(a.rate) - parseFloat(b.rate);
+    }
+  });
+  // const sortedRates = [...shipping_rates.rates].sort((a, b) => {
+  //   if (a.retail_rate && b.retail_rate) {
+  //     return parseFloat(a.retail_rate) - parseFloat(b.retail_rate);
+  //   } else if (a.retail_rate) {
+  //     return -1;
+  //   } else if (b.retail_rate) {
+  //     return 1;
+  //   } else {
+  //     return parseFloat(a.rate) - parseFloat(b.rate);
+  //   }
+  // });
+  // .filter(rate => rate.carrier === "UPSDAP");
 
   const choose_shipping_rate = (rate, speed, name) => {
     const basicPayload = { rate, speed, name };
@@ -64,13 +76,17 @@ const InternationalShippingSpeed = () => {
   };
 
   return sortedRates.map((rate, index) => {
+    const friendlyCarrier = mapCarrierName(rate.carrier);
+    const friendlyService = mapServiceName(rate.service);
     return (
       <div className=" mv-1rem jc-b  ai-c" key={index}>
         <div className="shipping_rates jc-b w-100per wrap ">
-          <label className="service">{toTitleCaseSnakeCase(rate.service)}</label>
+          <label className="service">
+            {friendlyCarrier}: {friendlyService}
+          </label>
           <div className="jc-b max-w-150px w-100per">
             <label className="">{determine_service(rate)}</label>
-            <label> ${parseFloat(rate.retail_rate || rate.rate).toFixed(2)} </label>
+            <label> ${parseFloat(rate.rate || rate.rate).toFixed(2)} </label>
           </div>
         </div>
         <GLButton variant="rates" onClick={() => handleOpen(rate, index)}>

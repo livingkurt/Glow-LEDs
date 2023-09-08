@@ -3,6 +3,8 @@ export const determine_service = rate => {
     return `Est: ${rate.est_delivery_days} ${rate.est_delivery_days === 1 ? "Day" : "Days"}`;
   } else if (rate.service === "INTERNATIONAL_ECONOMY") {
     return "Est: 2-5 Days";
+  } else if (rate.service === "FirstClassPackageInternationalService") {
+    return "Est: 4+ Weeks";
   } else if (rate.service === "FEDEX_INTERNATIONAL_PRIORITY") {
     return "Est: 1-3 Days";
   } else if (rate.service === "FEDEX_EXPRESS_SAVER") {
@@ -13,6 +15,8 @@ export const determine_service = rate => {
     return "Est: 6-10 Days";
   } else if (rate.service === "ExpressMailInternational") {
     return "Est: 3-5 Days";
+  } else if (rate.service === "Express") {
+    return "Est: 3 Days";
   }
 };
 
@@ -39,4 +43,26 @@ export const validateSection = (sectionFields, sectionState, validationResult) =
       }
     }
   });
+};
+
+export const mapServiceName = service => {
+  const serviceMap = {
+    "PriorityMailInternational": "Priority",
+    "ExpressMailInternational": "Express",
+    "FirstClassPackageInternationalService": "First Class (Not Recommended)",
+    "Express": "Express",
+    "Expedited": "Expedited",
+    "UPSSaver": "UPS Saver",
+    "FEDEX_INTERNATIONAL_PRIORITY": "Priority",
+    "INTERNATIONAL_ECONOMY": "Economy",
+  };
+  return serviceMap[service] || service;
+};
+export const mapCarrierName = carrier => {
+  const carrierMap = {
+    "UPSDAP": "UPS",
+    "USPS": "USPS",
+    "FedEx": "FedEx",
+  };
+  return carrierMap[carrier] || carrier;
 };
