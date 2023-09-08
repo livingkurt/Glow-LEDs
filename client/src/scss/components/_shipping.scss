@@ -25,7 +25,10 @@
   right: 0;
   display: block;
   background: $theme_color_primary;
-  height: 100%;
+  box-shadow:
+    4px 4px 8px 0 rgba(0, 0, 0, 0.2),
+    4px 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 42px;
   width: 8rem;
   color: $theme_color_phrase_font;
   font-family: "phrase_font";
