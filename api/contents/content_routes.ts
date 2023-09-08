@@ -3,7 +3,11 @@ import { content_controller } from "../contents";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
-router.route("/").get(content_controller.findAll_contents_c).post(isAuth, isAdmin, content_controller.create_contents_c);
+router
+  .route("/")
+  .get(content_controller.findAll_contents_c)
+  .post(isAuth, isAdmin, content_controller.create_contents_c);
+router.route("/table").get(content_controller.get_table_contents_c);
 
 router.route("/events").get(content_controller.findAllEvents_contents_c);
 router.route("/youtube").get(content_controller.findAllYoutube_contents_c);

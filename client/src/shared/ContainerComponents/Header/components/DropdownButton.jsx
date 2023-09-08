@@ -27,7 +27,7 @@ const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, per
       )}
       {id && (
         <GLButton className="nav-btn-dropdown" onClick={() => show_hide(id)} aria-label="Show">
-          <PlayArrowIcon />
+          <PlayArrowIcon color="white" />
         </GLButton>
       )}
     </div>

@@ -2,8 +2,32 @@ import { content_db } from "../contents";
 const axios = require("axios");
 import { parse } from "node-html-parser";
 import { determine_filter } from "../../util";
+import { normalizeContentFilters, normalizeContentSearch } from "./content_helpers";
+import { getFilteredData } from "../api_helpers";
 
 export default {
+  get_table_contents_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
+    try {
+      const sort_options = ["createdAt", "active", "home_page", "banner"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeFilters: normalizeContentFilters,
+        normalizeSearch: normalizeContentSearch,
+      });
+      const contents = await content_db.findAll_contents_db(filter, sort, limit, page);
+      const count = await content_db.count_contents_db(filter);
+      return {
+        data: contents,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
       const page: string = query.page ? query.page : "1";

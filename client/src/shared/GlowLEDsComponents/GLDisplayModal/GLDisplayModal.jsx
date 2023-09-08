@@ -20,7 +20,7 @@ const GLDisplayModal = ({ children, onClose, open, title }) => {
           boxShadow: 24,
           p: 4,
           borderRadius: "10px",
-          color: "#333333"
+          color: "#333333",
         }}
       >
         <IconButton
@@ -30,10 +30,10 @@ const GLDisplayModal = ({ children, onClose, open, title }) => {
             position: "absolute",
             top: "10px",
             right: "10px",
-            color: "text.primary"
+            color: "text.primary",
           }}
         >
-          <CloseIcon />
+          <CloseIcon color="white" />
         </IconButton>
         <Typography variant="h4" component="h2" align="center" mb={2} color="inherit">
           {title}

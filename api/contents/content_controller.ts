@@ -1,6 +1,18 @@
 import content_services from "./content_services";
 
 export default {
+  get_table_contents_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const contents = await content_services.get_table_contents_s(query);
+      if (contents) {
+        return res.status(200).send(contents);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Contents" });
+    }
+  },
   findAll_contents_c: async (req: any, res: any) => {
     const { query } = req;
     try {
@@ -96,5 +108,5 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Content" });
     }
-  }
+  },
 };

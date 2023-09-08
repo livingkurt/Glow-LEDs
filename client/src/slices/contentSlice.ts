@@ -3,18 +3,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const content = {
+  id: "",
+  content_name: "",
+  application: "",
+  url: "",
+  place_of_purchase: "",
+  date_of_purchase: "",
+  category: "",
+  card: "",
+  amount: 0,
+  documents: [],
+};
+
 const contentPage = createSlice({
   name: "contentPage",
   initialState: {
     loading: false,
     contents: [],
-    content: {},
+    content: content,
+    remoteVersionRequirement: 0,
+    edit_content_modal: false,
+    upload_content_modal: false,
+    content_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_content: (state, { payload }) => {
@@ -27,17 +40,30 @@ const contentPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_content_modal: (state, { payload }) => {
+      state.edit_content_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_content_modal: (state, { payload }) => {
+      state.edit_content_modal = true;
+      state.content = content;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_content_modal: (state, { payload }) => {
+      state.edit_content_modal = true;
+      state.content = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_content_modal: (state, { payload }) => {
+      state.edit_content_modal = false;
+      state.upload_content_modal = false;
+      state.content_modal = false;
+      state.content = content;
+    },
+    open_content_modal: (state, { payload }) => {
+      state.content_modal = true;
+      state.content = payload;
+    },
+    content_uploaded: (state, { payload }) => {
+      state.upload_content_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -47,8 +73,8 @@ const contentPage = createSlice({
     },
     [API.listContents.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.contents = payload.contents;
-      state.totalPages = payload.totalPages;
+      state.contents = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Contents Found";
     },
@@ -63,6 +89,8 @@ const contentPage = createSlice({
     [API.saveContent.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Content Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_content_modal = false;
     },
     [API.saveContent.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -87,8 +115,9 @@ const contentPage = createSlice({
     },
     [API.deleteContent.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.content = payload.content;
+      state.content = content;
       state.message = "Content Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteContent.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -98,5 +127,14 @@ const contentPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_content } = contentPage.actions;
+export const {
+  set_loading,
+  set_content,
+  set_edit_content_modal,
+  open_create_content_modal,
+  open_content_modal,
+  close_content_modal,
+  open_edit_content_modal,
+  content_uploaded,
+} = contentPage.actions;
 export default contentPage.reducer;

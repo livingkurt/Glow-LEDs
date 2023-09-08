@@ -46,7 +46,7 @@ const AffiliatesPage = () => {
             }}
             aria-label={affiliate.active ? "deactivate" : "activate"}
           >
-            {affiliate.active ? <CheckCircleIcon /> : <CancelIcon />}
+            {affiliate.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
           </IconButton>
         ),
       },
@@ -64,15 +64,15 @@ const AffiliatesPage = () => {
         display: affiliate => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
-              <EditIcon />
+              <EditIcon color="white" />
             </IconButton>
 
             <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}>
-              <PolylineIcon />
+              <PolylineIcon color="white" />
             </IconButton>
 
             <IconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
-              <DeleteIcon />
+              <DeleteIcon color="white" />
             </IconButton>
           </div>
         ),

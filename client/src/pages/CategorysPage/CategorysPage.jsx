@@ -29,7 +29,7 @@ const CategorysPage = () => {
               aria-label="Edit"
               onClick={() => dispatch(open_edit_category_modal(category))}
             >
-              <EditIcon />
+              <EditIcon color="white" />
             </IconButton>
 
             <IconButton
@@ -37,7 +37,7 @@ const CategorysPage = () => {
               onClick={() => dispatch(API.deleteCategory(category.pathname))}
               aria-label="Delete"
             >
-              <DeleteIcon />
+              <DeleteIcon color="white" />
             </IconButton>
           </div>
         ),

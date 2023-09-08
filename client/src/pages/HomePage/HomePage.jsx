@@ -69,7 +69,7 @@ const HomePage = () => {
     navigate("/collections/all/products?search=" + search);
   };
 
-  const contentPage = useSelector(state => state.contents);
+  const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
 
   const featurePage = useSelector(state => state.features);

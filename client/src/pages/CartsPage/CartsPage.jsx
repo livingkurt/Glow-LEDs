@@ -39,7 +39,7 @@ const CartsPage = () => {
             }}
             aria-label={cart.active ? "deactivate" : "activate"}
           >
-            {cart.active ? <CheckCircleIcon /> : <CancelIcon />}
+            {cart.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
           </IconButton>
         ),
       },
@@ -51,11 +51,11 @@ const CartsPage = () => {
         display: cart => (
           <div className="jc-b">
             <IconButton variant="contained" aria-label="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
-              <EditIcon />
+              <EditIcon color="white" />
             </IconButton>
 
             <IconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
-              <DeleteIcon />
+              <DeleteIcon color="white" />
             </IconButton>
           </div>
         ),

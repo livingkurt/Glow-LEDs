@@ -85,11 +85,11 @@ const ExpensesPage = () => {
         display: expense => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
-              <EditIcon />
+              <EditIcon color="white" />
             </IconButton>
 
             <IconButton onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
-              <DeleteIcon />
+              <DeleteIcon color="white" />
             </IconButton>
           </div>
         ),

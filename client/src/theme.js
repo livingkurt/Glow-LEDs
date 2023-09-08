@@ -146,6 +146,9 @@ const palette = {
     dark: "#212121",
     contrastText: "#303030",
   },
+  custom: {
+    white: "#ffffff",
+  },
   grey: {
     50: "#fafafa",
     100: "#f5f5f5",
@@ -336,7 +339,10 @@ const theme = {
       styleOverrides: {
         root: {
           fontSize: "20px", // Set the default icon size here
-          color: "#ffffff",
+          // color: "#ffffff",
+          "&.MuiSvgIcon-colorWhite": {
+            color: palette.custom.white,
+          },
         },
       },
     },

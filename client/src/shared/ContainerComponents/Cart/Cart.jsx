@@ -96,7 +96,7 @@ const Cart = () => {
 
                   <div>
                     <IconButton aria-label="Close" onClick={closeMenu}>
-                      <CloseIcon />
+                      <CloseIcon color="white" />
                     </IconButton>
                   </div>
                 </div>

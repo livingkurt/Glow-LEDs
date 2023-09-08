@@ -64,7 +64,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
               onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
               aria-label="Delete"
             >
-              <DeleteIcon />
+              <DeleteIcon color="white" />
             </IconButton>
           </div>
         </div>

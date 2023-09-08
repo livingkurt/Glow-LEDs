@@ -17,7 +17,7 @@ import { DashboardPage } from "../../pages/DashboardPage";
 import { ExpensesPage } from "../../pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
-import { ContentsPage, EditContentPage } from "../../pages/ContentsPage";
+import { ContentsPage } from "../../pages/ContentsPage";
 import { ProductsDisplayPage } from "../../pages/ProductsGridPage/components";
 import { AnnouncementEmail, EditEmailPage } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
@@ -133,7 +133,6 @@ export const AdminComponents = {
   EditPromoPage,
   EditTeamPage,
   EditChipPage,
-  EditContentPage,
   EditEmailPage,
   PromosPage,
   AffiliatesPage,

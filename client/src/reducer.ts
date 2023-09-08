@@ -65,7 +65,15 @@ const reducers = {
     }),
   }),
   chips: chipSlice,
-  contents: contentSlice,
+  contents: combineReducers({
+    contentPage: contentSlice,
+    contentTable: glTableReducer("contentTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.content_name;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      },
+    }),
+  }),
   emails: emailSlice,
   expenses: combineReducers({
     expensePage: expenseSlice,

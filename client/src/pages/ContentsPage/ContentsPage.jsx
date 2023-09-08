@@ -1,49 +1,78 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { Loading, Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
-import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import { EditContentModal } from "./components";
 import * as API from "../../api";
-import config from "../../config";
-import { domain } from "../../helpers/sharedHelpers";
+import { Button } from "@mui/material";
+import { format_date } from "../../utils/helper_functions";
+import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
+import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
+import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
+import { determineContentColors } from "./contentsPageHelpers";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ContentsPage = () => {
-  const params = useParams();
-  const [search, set_search] = useState("");
-  const category = params.category ? params.category : "";
-  const contentPage = useSelector(state => state.contents);
-  const { loading, contents, message, error, success } = contentPage;
-
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { message, loading, remoteVersionRequirement } = contentPage;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listContents({}));
-    }
-    return () => (clean = false);
-  }, [success, dispatch]);
-  const handleListItems = e => {
-    e.preventDefault();
-    dispatch(API.listContents({ category, search }));
-  };
+  const column_defs = useMemo(
+    () => [
+      { title: "createdAt", display: content => content.createdAt && format_date(content.createdAt) },
+      {
+        title: "Active",
+        display: content => (
+          <IconButton
+            onClick={() => {
+              dispatch(
+                API.saveContent({
+                  ...content,
+                  active: content.active ? false : true,
+                })
+              );
+            }}
+            aria-label={content.active ? "deactivate" : "activate"}
+          >
+            {content.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+          </IconButton>
+        ),
+      },
+      {
+        title: "Home Page",
+        display: content => content?.home_page?.h1,
+      },
+      {
+        title: "Banner",
+        display: content => content.banner.label,
+      },
 
-  const deleteHandler = content => {
-    dispatch(API.deleteContent(content._id));
-  };
+      {
+        title: "Actions",
+        display: content => (
+          <div className="jc-b">
+            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
+              <EditIcon color="white" />
+            </IconButton>
 
-  const change_content_status = content => {
-    dispatch(
-      API.saveContent({
-        ...content,
-        active: content.active ? false : true,
-      })
-    );
-    dispatch(API.listContents({}));
-    dispatch(API.listContents({}));
-  };
+            <IconButton onClick={() => dispatch(API.deleteContent(content._id))} aria-label="Delete">
+              <DeleteIcon color="white" />
+            </IconButton>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
+
+  const remoteApi = useCallback(options => API.getContents(options), []);
+  // const remoteFiltersApi = useCallback(() => API.getContentFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -51,81 +80,24 @@ const ContentsPage = () => {
         <title>Admin Contents | Glow LEDs</title>
       </Helmet>
 
-      <div className="wrap jc-b">
-        <a href={`${domain()}/links`}>
-          <GLButton variant="primary" style={{ width: "160px" }}>
-            Visit Links Page
-          </GLButton>
-        </a>
-        <Link to="/secure/glow/editcontent">
-          <GLButton variant="primary" style={{ width: "160px" }}>
+      <GLTableV2
+        remoteApi={remoteApi}
+        // remoteFiltersApi={remoteFiltersApi}
+        remoteVersionRequirement={remoteVersionRequirement}
+        determine_color={determineContentColors}
+        tableName={"Contents"}
+        namespaceScope="contents"
+        namespace="contentTable"
+        columnDefs={column_defs}
+        loading={loading}
+        enableRowSelect={true}
+        titleActions={
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_content_modal())}>
             Create Content
-          </GLButton>
-        </Link>
-      </div>
-
-      <div className="jc-c">
-        <h1 style={{ textAlign: "center" }}>Contents</h1>
-      </div>
-      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
-      </div>
-      <Loading loading={loading} error={error}>
-        {contents && (
-          <div className="content-list responsive_table">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Active</th>
-                  <th>Home Page</th>
-                  <th>Banner</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contents.map((content, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      backgroundColor: "#3e4c6d",
-                      fontSize: "16px",
-                    }}
-                  >
-                    <td className="p-10px">
-                      <GLButton
-                        variant="icon"
-                        onClick={() => change_content_status(content)}
-                        aria-label={content.active ? "deactive" : "activate"}
-                      >
-                        {content.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                      </GLButton>
-                    </td>
-                    <td className="p-10px paragraph_font" style={{ minWidth: "5rem" }}>
-                      {content.home_page && content.home_page.h1}
-                    </td>
-                    <td className="p-10px paragraph_font" style={{ minWidth: "15rem" }}>
-                      {content.banner && content.banner.label}
-                    </td>
-                    {/* <td className="p-10px paragraph_font" style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
-                    <td className="p-10px paragraph_font">
-                      <div className="jc-c">
-                        <Link to={"/secure/glow/editcontent/" + content._id}>
-                          <GLButton variant="icon" aria-label="Edit">
-                            <i className="fas fa-edit" />
-                          </GLButton>
-                        </Link>
-                        <GLButton variant="icon" onClick={() => deleteHandler(content)} aria-label="Delete">
-                          <i className="fas fa-trash-alt" />
-                        </GLButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Loading>
+          </Button>
+        }
+      />
+      {/* <EditContentModal /> */}
     </div>
   );
 };

@@ -46,7 +46,7 @@ const EditEmailPage = () => {
   const emailPage = useSelector(state => state.emails);
   const { emails, message, email, loading, error } = emailPage;
 
-  const contentPage = useSelector(state => state.contents);
+  const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
 
   const dispatch = useDispatch();
