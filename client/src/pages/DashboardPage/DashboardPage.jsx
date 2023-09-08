@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 
-import * as API from "./dashboardApi";
+import * as API from "../../api";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
@@ -66,9 +66,6 @@ const DashboardPage = () => {
           Run Monthly Workers
         </GLButton>
       </div>
-      <GLButton variant="primary" onClick={() => API.updateVersion()}>
-        Update Version
-      </GLButton>
       <Loading
         loading={
           daily_revenue.isLoading &&

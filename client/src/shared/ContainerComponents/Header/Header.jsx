@@ -457,6 +457,9 @@ const Header = () => {
                         Compressor
                       </GLButton>
                     </Link>
+                    <GLButton variant="nav" fullWidth className="ta-l" onClick={() => API.updateVersion()}>
+                      Update Version
+                    </GLButton>
                   </ul>
                 </div>
               )}

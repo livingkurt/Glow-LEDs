@@ -72,7 +72,7 @@ const DomesticShippingSpeed = () => {
     let displayRate = isFreeShipping ? "Free" : `$${parseFloat(rate.retail_rate || rate.rate).toFixed(2)}`;
 
     return (
-      <div className="mv-1rem jc-b ai-c" key={index}>
+      <div className="rate-container mv-1rem jc-b ai-c" key={index}>
         <div className="shipping_rates jc-b w-100per wrap">
           <label className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</label>
           <div className="jc-b max-w-150px w-100per">

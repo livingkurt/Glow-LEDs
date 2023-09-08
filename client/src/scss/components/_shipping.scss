@@ -1,6 +1,11 @@
 @use "../abstracts" as *;
 // Shipping Rates
 
+.rate-container {
+  display: flex; /* Create a flex container */
+  align-items: stretch;
+}
+
 .shipping_rates {
   box-shadow: $bs_deep;
   font-size: 1.5rem;
@@ -13,6 +18,7 @@
   transition: all 0.5s ease;
   font-family: "phrase_font";
   border-radius: 10px 0 0 10px;
+  flex-grow: 1;
 }
 
 .select-label {
@@ -36,6 +42,7 @@
   padding: 1rem;
   border-radius: 0 10px 10px 0;
   border: 0;
+  flex-shrink: 0;
 }
 .rates:hover {
   background-color: $theme_color_primary_hover;

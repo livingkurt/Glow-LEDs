@@ -22,3 +22,4 @@ export * from "./tutorialApi";
 export * from "./wholesalerApi";
 export * from "./imageApi";
 export * from "../pages/PlaceOrderPage/placeOrderApi";
+export * from "../pages/DashboardPage/dashboardApi";
