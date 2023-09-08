@@ -1,142 +1,80 @@
-import { set_content } from "../../../slices/contentSlice";
-import { toCapitalize } from "../../../utils/helper_functions";
-
-export const contentFormFields = ({ content, dispatch }: { content: any; dispatch: any }) => {
+export const contentFormFields = () => {
   return {
-    content_name: {
-      type: "text",
-      label: "Expense",
-    },
-    date_of_purchase: {
-      type: "date",
-      label: "Date of Purchase",
-    },
-    amount: {
-      type: "number",
-      label: "Amount",
-    },
-    application: {
-      type: "text",
-      label: "Application",
-    },
-    url: {
-      type: "text",
-      label: "URL",
-    },
-    documents: {
-      type: "image_upload",
-      label: "Documents",
-      labelProp: "link",
-      album: `${content.content_name} Documents`,
-      getOptionLabel: (option: any) => option.link,
-      onUpload: (value: any, key: any) => dispatch(set_content({ documents: [...content.documents, ...value] })),
-    },
-    place_of_purchase: {
-      type: "autocomplete_single",
-      label: "Place of Purchase",
-      getOptionLabel: (option: any) => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
+    home_page: {
+      type: "object",
+      title: "Home Page",
+      fields: {
+        h1: { type: "text", label: "H1" },
+        image: { type: "text", label: "Image" },
+        images: { type: "array", label: "Images" },
+        slideshow: {
+          type: "array",
+          label: "Slideshow",
+          itemSchema: {
+            type: "object",
+            fields: {
+              label: { type: "text", label: "Label" },
+              image: { type: "text", label: "Image" },
+              link: { type: "text", label: "Link" },
+            },
+          },
+        },
+        video: { type: "text", label: "Video" },
+        banner_image: { type: "text", label: "Banner Image" },
+        show_image: { type: "checkbox", label: "Show Image", default: true },
+        show_video: { type: "checkbox", label: "Show Video", default: false },
+        h2: { type: "text", label: "H2" },
+        p: { type: "text", label: "P" },
+        button: { type: "text", label: "Button" },
+        link: { type: "text", label: "Link" },
       },
-      options: [
-        "EasyPost",
-        "FedEx",
-        "Heroku",
-        "Venmo",
-        "Alibaba",
-        "Amazon",
-        "Backblaze",
-        "Beaky's Chicken",
-        "Bill Hulsey",
-        "Bocanegras",
-        "Canva",
-        "EasyPost",
-        "Fiverr",
-        "Fuel Wise",
-        "Google",
-        "Paypal",
-        "Pirateship",
-        "Prinful",
-        "Rice Bowl of India",
-        "SocialChamp",
-        "Stripe",
-        "The Home Depot",
-        "TopTea",
-        "Venmo",
-        "Vinyl Disorder",
-      ],
     },
-    card: {
-      type: "autocomplete_single",
-      label: "Card",
-      getOptionLabel: (option: any) => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
+    banner: {
+      type: "object",
+      title: "Banner",
+      fields: {
+        label: { type: "text", label: "Label" },
+        button: { type: "text", label: "Button" },
+        link: { type: "text", label: "Link" },
       },
-      options: [
-        "Amazon Business 1004",
-        "Charles Schwab 2628",
-        "Charles Schwab 9432",
-        "Venmo balance",
-        "Amazon 4654",
-        "Amazon 9204",
-        "Amazon Business 0584",
-        "Amazon Business 1004",
-        "Amazon Business 1005",
-        "Charles Schwab 2628",
-        "Charles Schwab 7633",
-        "Charles Schwab 9432",
-        "Chase 2365",
-        "Covantage 0933",
-        "Covantage 7060",
-        "Destanye 1991",
-        "Fidelity 7484",
-        "Joint Amex 1006",
-        "Joint Amex 1014",
-        "Joint Amex 2004",
-        "Joint Amex 2012",
-        "Mastercard 2713",
-        "Mastercard 7404",
-        "Stripe",
-        "Venmo Balance",
-      ],
     },
-    category: {
-      type: "autocomplete_single",
-      label: "Category",
-      getOptionLabel: (option: any) => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
+    links: {
+      type: "array",
+      title: "Links",
+      itemSchema: {
+        type: "object",
+        fields: {
+          label: { type: "text", label: "Label" },
+          link: { type: "text", label: "Link" },
+          icon: { type: "text", label: "Icon" },
+        },
       },
-      options: [
-        "3D Printer Accessories",
-        "3D Printing Supplies",
-        "Affiliate Earnings",
-        "Cutter Accessories",
-        "Cutter Supplies",
-        "Electronic Accessories",
-        "Electronic Supplies",
-        "Electronics Supplies",
-        "Employee Paycheck",
-        "Filament",
-        "Food",
-        "Legal",
-        "Marketing",
-        "Merch",
-        "Outsourcing",
-        "Product",
-        "Rave Mob",
-        "Restaurants",
-        "Shipping",
-        "Shipping, Filament",
-        "Shipping, Tools",
-        "Supplies",
-        "Tools",
-        "Website",
-      ],
     },
+    active: { type: "checkbox", label: "Active", default: true },
+    deleted: { type: "checkbox", label: "Deleted", default: false },
   };
 };
+
+// const formFields = {
+//   email_type: { type: 'text', label: 'Email Type' },
+//   header_footer_color: { type: 'text', label: 'Header Footer Color' },
+//   background_color: { type: 'text', label: 'Background Color' },
+//   module_color: { type: 'text', label: 'Module Color' },
+//   button_color: { type: 'text', label: 'Button Color' },
+//   text_color: { type: 'text', label: 'Text Color' },
+//   title_color: { type: 'text', label: 'Title Color' },
+//   subject: { type: 'text', label: 'Subject' },
+//   h1: { type: 'text', label: 'H1' },
+//   image: { type: 'text', label: 'Image' },
+//   images: { type: 'array', title: 'Images', itemSchema: { type: 'text' } },
+//   show_image: { type: 'checkbox', label: 'Show Image', default: true },
+//   h2: { type: 'text', label: 'H2' },
+//   p: { type: 'text', label: 'P' },
+//   button: { type: 'text', label: 'Button' },
+//   link: { type: 'text', label: 'Link' },
+//   html: { type: 'text', label: 'HTML' },
+//   scheduled_at: { type: 'text', label: 'Scheduled At' },  // Consider using a date picker
+//   status: { type: 'text', label: 'Status', default: 'draft' },
+//   active: { type: 'checkbox', label: 'Active', default: true },
+//   deleted: { type: 'checkbox', label: 'Deleted', default: false }
+// };

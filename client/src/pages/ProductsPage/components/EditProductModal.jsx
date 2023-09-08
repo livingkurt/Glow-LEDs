@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { open_edit_product_modal, set_edit_product_modal, set_product } from "../productsPageSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -49,7 +49,7 @@ const EditProductModal = () => {
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_product_modal}
         onConfirm={() => {
           dispatch(API.saveProduct({ ...product }));
@@ -108,7 +108,7 @@ const EditProductModal = () => {
             </GLTabPanel>
           );
         })}
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

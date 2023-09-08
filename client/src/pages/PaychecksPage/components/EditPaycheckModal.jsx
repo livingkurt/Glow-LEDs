@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_paycheck_modal, set_paycheck } from "../../../slices/paycheckSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -41,71 +41,79 @@ const EditPaycheckModal = () => {
       type: "autocomplete_single",
       label: "Affiliate",
       options: affiliates,
-      labelProp: "artist_name"
+      labelProp: "artist_name",
     },
     user: {
       type: "autocomplete_single",
       label: "Users",
       options: users,
       labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
     team: {
       type: "autocomplete_single",
       label: "User",
       options: teams,
-      labelProp: "artist_name"
+      labelProp: "artist_name",
     },
     promo_code: {
       type: "autocomplete_single",
       label: "User",
       options: promos,
-      labelProp: "artist_name"
+      labelProp: "artist_name",
     },
     amount: {
       type: "number",
-      label: "Amount"
+      label: "Amount",
     },
     revenue: {
       type: "number",
-      label: "Revenue"
+      label: "Revenue",
     },
     earned: {
       type: "number",
-      label: "Earned"
+      label: "Earned",
     },
     uses: {
       type: "number",
-      label: "Uses"
+      label: "Uses",
     },
     venmo: {
       type: "number",
-      label: "Venmo"
+      label: "Venmo",
     },
     stripe_connect_id: {
       type: "number",
-      label: "Stripe Connect ID"
+      label: "Stripe Connect ID",
     },
     paid: {
       type: "number",
-      label: "Paid"
+      label: "Paid",
     },
     paid_at: {
       type: "number",
-      label: "Paid At"
+      label: "Paid At",
     },
     reciept: {
       type: "number",
-      label: "Reciept"
-    }
+      label: "Reciept",
+    },
   };
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_paycheck_modal}
         onConfirm={() => {
-          dispatch(API.savePaycheck({ ...paycheck, affiliate: affiliate._id, user: user._id, team: team._id, promo_code: promo_code._id }));
+          dispatch(
+            API.savePaycheck({
+              ...paycheck,
+              affiliate: affiliate._id,
+              user: user._id,
+              team: team._id,
+              promo_code: promo_code._id,
+            })
+          );
           dispatch(API.listAffiliates({ active: true }));
         }}
         onCancel={() => {
@@ -124,7 +132,7 @@ const EditPaycheckModal = () => {
           onChange={value => dispatch(set_paycheck(value))}
           loading={loading && loading_affiliates}
         />
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

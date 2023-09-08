@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import * as API from "../../../api";
 import { closeLinkLabelModal } from "../../../slices/shippingSlice";
 import { Grid, Typography, List, ListItem, ListItemText, Collapse } from "@mui/material";
@@ -52,7 +52,7 @@ const LinkLabelModal = () => {
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={linkLabelModal}
         onConfirm={() => {
           const selectedShipment = shipments.find(shipment => shipment.id === selectedRows[0]);
@@ -152,7 +152,7 @@ const LinkLabelModal = () => {
             </>
           )}
         </Grid>
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

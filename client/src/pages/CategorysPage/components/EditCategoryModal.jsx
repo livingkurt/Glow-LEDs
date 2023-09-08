@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_category_modal, set_category } from "../../../slices/categorySlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -25,7 +25,7 @@ const EditCategoryModal = () => {
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_category_modal}
         onConfirm={() => {
           dispatch(API.saveCategory({ ...category }));
@@ -40,8 +40,13 @@ const EditCategoryModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={category} onChange={value => dispatch(set_category(value))} loading={loading} />
-      </GLModal>
+        <GLForm
+          formData={formFields}
+          state={category}
+          onChange={value => dispatch(set_category(value))}
+          loading={loading}
+        />
+      </GLActiionModal>
     </div>
   );
 };

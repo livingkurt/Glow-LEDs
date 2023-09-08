@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 export {};
 
 const expenseSchema = new mongoose.Schema(
@@ -14,10 +14,10 @@ const expenseSchema = new mongoose.Schema(
     documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     airtable_id: { type: String },
     airtable_invoice_links: { type: Array },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

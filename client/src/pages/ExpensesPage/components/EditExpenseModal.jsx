@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_expense_modal, set_expense } from "../../../slices/expenseSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -12,12 +12,12 @@ const EditExpenseModal = () => {
 
   const formFields = expenseFormFields({
     expense,
-    dispatch
+    dispatch,
   });
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_expense_modal}
         onConfirm={() => {
           dispatch(API.saveExpense(expense));
@@ -32,8 +32,13 @@ const EditExpenseModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={expense} onChange={value => dispatch(set_expense(value))} loading={loading} />
-      </GLModal>
+        <GLForm
+          formData={formFields}
+          state={expense}
+          onChange={value => dispatch(set_expense(value))}
+          loading={loading}
+        />
+      </GLActiionModal>
     </div>
   );
 };

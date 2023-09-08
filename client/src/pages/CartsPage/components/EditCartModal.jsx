@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -41,7 +41,7 @@ const EditCartModal = () => {
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_cart_modal}
         onConfirm={() => {
           dispatch(API.saveCart({ ...cart, user: user?._id ? user?._id : null }));
@@ -100,7 +100,7 @@ const EditCartModal = () => {
             </GLTabPanel>
           );
         })}
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

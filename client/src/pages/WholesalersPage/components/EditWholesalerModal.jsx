@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_wholesaler_modal, set_wholesaler } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -33,30 +33,32 @@ const EditWholesalerModal = () => {
       options: users.filter(user => fullName(user)),
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-      permissions: ["admin"]
+      permissions: ["admin"],
     },
     company: {
       type: "text",
-      label: "Company"
+      label: "Company",
     },
     minimum_order_amount: {
       type: "number",
       label: "Minimum Order Amount",
-      permissions: ["admin"]
+      permissions: ["admin"],
     },
     active: {
       type: "checkbox",
       label: "Active",
-      permissions: ["admin"]
-    }
+      permissions: ["admin"],
+    },
   };
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_wholesaler_modal}
         onConfirm={() => {
-          dispatch(API.saveWholesaler({ ...wholesaler, user: user?._id || wholesaler?.user?._id || current_user?._id }));
+          dispatch(
+            API.saveWholesaler({ ...wholesaler, user: user?._id || wholesaler?.user?._id || current_user?._id })
+          );
           if (current_user?.isAdmin) {
             dispatch(API.listUsers());
           }
@@ -77,7 +79,7 @@ const EditWholesalerModal = () => {
           onChange={value => dispatch(set_wholesaler(value))}
           loading={loading && loading_users}
         />
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

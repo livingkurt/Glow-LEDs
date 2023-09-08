@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Skeleton, TextField, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -10,9 +10,8 @@ import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleA
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import GLNestedForm from "./GLNestedForm";
 
-const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
+const GLNestedForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -37,20 +36,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
 
   const handleInputChange = (fieldName, value) => {
+    console.log({ fieldName, value });
     setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
     debouncedOnChange({ [fieldName]: value });
-  };
-
-  const getEmptyObjectFromSchema = schema => {
-    const emptyObject = {};
-    Object.keys(schema).forEach(key => {
-      const field = schema[key];
-      if (field.type === "text") {
-        emptyObject[key] = "";
-      }
-      // Add more conditions for other field types if needed
-    });
-    return emptyObject;
   };
 
   return (
@@ -335,57 +323,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
-            case "object":
-              return (
-                <>
-                  <Typography component="h6" variant="h6" className="ta-c">
-                    {fieldData.title}
-                  </Typography>
-                  <GLNestedForm
-                    formData={fieldData.fields}
-                    state={fieldState}
-                    onChange={newObjectState => {
-                      onChange({
-                        [fieldName]: { ...fieldState, ...newObjectState },
-                      });
-                    }}
-                    loading={loading}
-                  />
-                </>
-              );
-            case "array":
-              return (
-                <>
-                  <Typography component="h6" variant="h6" className="ta-c">
-                    {fieldData.title}
-                  </Typography>
-                  {console.log({ fieldState, fieldName: formData[fieldName] })}
-                  {fieldState.length > 0 &&
-                    fieldState?.map((item, index) => (
-                      <GLNestedForm
-                        key={index}
-                        formData={fieldData.itemSchema.fields}
-                        state={item}
-                        onChange={newItem => {
-                          const newArray = [...fieldState];
-                          newArray[index] = newItem;
-                          onChange(newArray);
-                        }}
-                        loading={loading}
-                      />
-                    ))}
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
-                      onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
-                    }}
-                  >
-                    Add Item
-                  </Button>
-                </>
-              );
-
             default:
               return <div></div>;
           }
@@ -395,32 +332,10 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   );
 };
 
-GLForm.propTypes = {
-  formData: PropTypes.objectOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      options: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-      label: PropTypes.string,
-      labelProp: PropTypes.string,
-      getOptionLabel: PropTypes.func,
-      onEdit: PropTypes.func,
-      setGeneratedAddress: PropTypes.func,
-    })
-  ).isRequired,
-  onChange: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-  nesting: PropTypes.any,
-  index: PropTypes.any,
-  setFormErrors: PropTypes.func,
-  formErrors: PropTypes.object,
-  classes: PropTypes.object,
-};
-
-GLForm.defaultProps = {
+GLNestedForm.defaultProps = {
   setFormErrors: () => {},
   formErrors: {},
   classes: {},
 };
 
-export default GLForm;
+export default GLNestedForm;

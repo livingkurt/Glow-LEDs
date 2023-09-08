@@ -339,7 +339,6 @@ const theme = {
       styleOverrides: {
         root: {
           fontSize: "20px", // Set the default icon size here
-          // color: "#ffffff",
           "&.MuiSvgIcon-colorWhite": {
             color: palette.custom.white,
           },

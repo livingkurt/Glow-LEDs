@@ -97,7 +97,7 @@ const ContentsPage = () => {
           </Button>
         }
       />
-      {/* <EditContentModal /> */}
+      <EditContentModal />
     </div>
   );
 };

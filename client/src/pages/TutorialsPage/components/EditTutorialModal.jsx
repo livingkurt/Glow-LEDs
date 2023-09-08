@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -34,19 +34,19 @@ const EditTutorialModal = () => {
       type: "autocomplete_single",
       label: "Affiliate",
       options: affiliates,
-      labelProp: "artist_name"
+      labelProp: "artist_name",
     },
     title: {
       type: "text",
-      label: "Title"
+      label: "Title",
     },
     video: {
       type: "text",
-      label: "Video"
+      label: "Video",
     },
     description: {
       type: "text_multiline",
-      label: "Description"
+      label: "Description",
     },
     level: {
       type: "autocomplete_single",
@@ -56,21 +56,21 @@ const EditTutorialModal = () => {
           return toCapitalize(option);
         }
       },
-      options: ["beginner", "intermediate", "advanced"]
+      options: ["beginner", "intermediate", "advanced"],
     },
     order: {
       type: "text",
-      label: "Order"
+      label: "Order",
     },
     active: {
       type: "checkbox",
-      label: "Active"
-    }
+      label: "Active",
+    },
   };
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_tutorial_modal}
         onConfirm={() => {
           dispatch(API.saveTutorial({ ...tutorial, affiliate: affiliate._id, pathname: generate_pathname() }));
@@ -92,7 +92,7 @@ const EditTutorialModal = () => {
           onChange={value => dispatch(set_tutorial(value))}
           loading={loading && loading_affiliates}
         />
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };

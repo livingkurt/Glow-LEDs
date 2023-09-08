@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_affiliate_modal, set_affiliate } from "../../../slices/affiliateSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -49,7 +49,7 @@ const EditAffiliateModal = () => {
 
   return (
     <div>
-      <GLModal
+      <GLActiionModal
         isOpen={edit_affiliate_modal}
         onConfirm={() => {
           dispatch(
@@ -210,7 +210,7 @@ const EditAffiliateModal = () => {
             })}
           </Grid>
         </Grid>
-      </GLModal>
+      </GLActiionModal>
     </div>
   );
 };
