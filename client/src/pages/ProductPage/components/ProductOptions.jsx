@@ -425,7 +425,7 @@ const ProductOptions = () => {
                   defaultValue={qty}
                   className="qty_select_dropdown w-100per"
                   onChange={e => {
-                    setQty(e.target.value);
+                    dispatch(setQty(e.target.value));
                   }}
                 >
                   {[...Array(quantity).keys()].map((x, index) => (
