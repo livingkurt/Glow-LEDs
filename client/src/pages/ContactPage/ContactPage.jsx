@@ -14,7 +14,7 @@ const ContactPage = () => {
   const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const emailPage = useSelector(state => state.emails);
+  const emailPage = useSelector(state => state.emails.emailPage);
   const { loading, success, message: completed_message, error } = emailPage;
 
   const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");

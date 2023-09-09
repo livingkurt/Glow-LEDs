@@ -5,7 +5,7 @@ import * as API from "../../api";
 import { useParams } from "react-router-dom";
 
 const AnnouncementsPage = () => {
-  const emailPage = useSelector(state => state.emails);
+  const emailPage = useSelector(state => state.emails.emailPage);
   const { emails } = emailPage;
 
   const dispatch = useDispatch();

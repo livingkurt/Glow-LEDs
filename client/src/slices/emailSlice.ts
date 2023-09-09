@@ -3,19 +3,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const email = {
+  id: "",
+  email_name: "",
+  application: "",
+  url: "",
+  place_of_purchase: "",
+  date_of_purchase: "",
+  category: "",
+  card: "",
+  amount: 0,
+  documents: [],
+};
+
 const emailPage = createSlice({
   name: "emailPage",
   initialState: {
     loading: false,
     emails: [],
-    email: {},
+    email: email,
+    remoteVersionRequirement: 0,
+    edit_email_modal: false,
+    upload_email_modal: false,
+    email_modal: false,
     message: "",
-    success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_email: (state, { payload }) => {
@@ -28,20 +40,30 @@ const emailPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_email_modal: (state, { payload }) => {
+      state.edit_email_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_email_modal: (state, { payload }) => {
+      state.edit_email_modal = true;
+      state.email = email;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_email_modal: (state, { payload }) => {
+      state.edit_email_modal = true;
+      state.email = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_email_modal: (state, { payload }) => {
+      state.edit_email_modal = false;
+      state.upload_email_modal = false;
+      state.email_modal = false;
+      state.email = email;
     },
-    clear_email_success: (state, { payload }) => {
-      state.success = false;
+    open_email_modal: (state, { payload }) => {
+      state.email_modal = true;
+      state.email = payload;
+    },
+    email_uploaded: (state, { payload }) => {
+      state.upload_email_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -51,8 +73,8 @@ const emailPage = createSlice({
     },
     [API.listEmails.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.emails = payload.emails;
-      state.totalPages = payload.totalPages;
+      state.emails = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Emails Found";
     },
@@ -66,8 +88,9 @@ const emailPage = createSlice({
     },
     [API.saveEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.success = true;
       state.message = "Email Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_email_modal = false;
     },
     [API.saveEmail.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -92,24 +115,11 @@ const emailPage = createSlice({
     },
     [API.deleteEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.email = payload.email;
+      state.email = email;
       state.message = "Email Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteEmail.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.sendContactEmail.pending as any]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.sendContactEmail.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.email = payload.email;
-      state.success = true;
-      state.message = "Contact Email Sent";
-    },
-    [API.sendContactEmail.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
@@ -117,6 +127,14 @@ const emailPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_email, clear_email_success } =
-  emailPage.actions;
+export const {
+  set_loading,
+  set_email,
+  set_edit_email_modal,
+  open_create_email_modal,
+  open_email_modal,
+  close_email_modal,
+  open_edit_email_modal,
+  email_uploaded,
+} = emailPage.actions;
 export default emailPage.reducer;

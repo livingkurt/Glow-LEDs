@@ -74,7 +74,16 @@ const reducers = {
       },
     }),
   }),
-  emails: emailSlice,
+  emails: combineReducers({
+    emailPage: emailSlice,
+    emailTable: glTableReducer("emailTable", {
+      sorting: [0, "asc"],
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.email_name;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      },
+    }),
+  }),
   expenses: combineReducers({
     expensePage: expenseSlice,
     expenseTable: glTableReducer("expenseTable", {

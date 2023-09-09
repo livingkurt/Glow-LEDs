@@ -3,7 +3,7 @@ export {};
 
 const emailSchema = new mongoose.Schema(
   {
-    email_type: { type: String },
+    email_type: { type: String, default: "Announcments" },
     header_footer_color: { type: String },
     background_color: { type: String },
     module_color: { type: String },

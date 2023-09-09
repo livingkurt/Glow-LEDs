@@ -25,7 +25,7 @@ const AnnouncementEmail = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const emailPage = useSelector(state => state.emails);
+  const emailPage = useSelector(state => state.emails.emailPage);
   const { email } = emailPage;
 
   const [date, set_date] = useState(format_date(accurate_date(today)));

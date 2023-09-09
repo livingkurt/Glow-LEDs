@@ -1,8 +1,3 @@
-import axios from "axios";
-import fs from "fs";
-import config from "../../config";
-import path from "path";
-
 export const normalizeContentFilters = (input: any) => {
   const output: any = {};
   Object.keys(input).forEach(key => {

@@ -2,8 +2,32 @@ import { determine_filter } from "../../util";
 import { user_db } from "../users";
 import { email_db } from "../emails";
 import config from "../../config";
+import { getFilteredData } from "../api_helpers";
+import { normalizeEmailFilters, normalizeEmailSearch } from "./email_helpers";
 
 export default {
+  get_table_emails_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
+    try {
+      const sort_options = ["createdAt", "active", "h1", "h2"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeFilters: normalizeEmailFilters,
+        normalizeSearch: normalizeEmailSearch,
+      });
+      const emails = await email_db.findAll_emails_db(filter, sort, limit, page);
+      const count = await email_db.count_emails_db(filter);
+      return {
+        data: emails,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_emails_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
       const page: string = query.page ? query.page : "1";

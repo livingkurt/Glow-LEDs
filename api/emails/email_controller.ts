@@ -25,13 +25,25 @@ import { promo_db } from "../promos";
 import { user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../util";
-import { sendEmail, send_multiple_emails } from "./email_helper";
+import { sendEmail, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { team_db } from "../teams";
 import config from "../../config";
 
 export default {
+  get_table_emails_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const emails = await email_services.get_table_emails_s(query);
+      if (emails) {
+        return res.status(200).send(emails);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Contents" });
+    }
+  },
   findAll_emails_c: async (req: any, res: any) => {
     const { query } = req;
     try {

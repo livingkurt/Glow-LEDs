@@ -2,15 +2,12 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditContentModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
-import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
-import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
 import { determineContentColors } from "./contentsPageHelpers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -21,7 +18,7 @@ import { ContentCopy } from "@mui/icons-material";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
-  const { message, loading, remoteVersionRequirement } = contentPage;
+  const { loading, remoteVersionRequirement } = contentPage;
   const dispatch = useDispatch();
 
   const column_defs = useMemo(
@@ -89,7 +86,6 @@ const ContentsPage = () => {
   );
 
   const remoteApi = useCallback(options => API.getContents(options), []);
-  // const remoteFiltersApi = useCallback(() => API.getContentFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -99,7 +95,6 @@ const ContentsPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
-        // remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determineContentColors}
         tableName={"Contents"}

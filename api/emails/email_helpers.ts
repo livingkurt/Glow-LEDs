@@ -6,7 +6,14 @@ const cron = require("node-cron");
 const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
 
-export const send_multiple_emails = async (emailAddresses: any, time: any, email: any, template: any, subject: string, res: any) => {
+export const send_multiple_emails = async (
+  emailAddresses: any,
+  time: any,
+  email: any,
+  template: any,
+  subject: string,
+  res: any
+) => {
   try {
     const mailOptions = {
       to: config.INFO_EMAIL,
@@ -15,9 +22,9 @@ export const send_multiple_emails = async (emailAddresses: any, time: any, email
       html: App({
         body: announcement(template),
         unsubscribe: true,
-        header_footer_color: template.header_footer_color
+        header_footer_color: template.header_footer_color,
       }),
-      bcc: emailAddresses
+      bcc: emailAddresses,
     };
 
     const date = new Date(time);
@@ -35,7 +42,7 @@ export const send_multiple_emails = async (emailAddresses: any, time: any, email
         },
         {
           scheduled: true,
-          timezone: "America/Rainy_River"
+          timezone: "America/Rainy_River",
         }
       );
     } else {
@@ -55,20 +62,24 @@ const createTransporter = async (type: string) => {
         user: config.CONTACT_EMAIL,
         client_id: config.GOOGLE_CONTACT_OAUTH_ID,
         client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
-        refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN
+        refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN,
       };
     } else {
       credentials = {
         user: config.INFO_EMAIL,
         client_id: config.GOOGLE_INFO_OAUTH_ID,
         client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
-        refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN
+        refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
       };
     }
 
-    const oauth2Client = new OAuth2(credentials.client_id, credentials.client_secret, "https://developers.google.com/oauthplayground");
+    const oauth2Client = new OAuth2(
+      credentials.client_id,
+      credentials.client_secret,
+      "https://developers.google.com/oauthplayground"
+    );
     oauth2Client.setCredentials({
-      refresh_token: credentials.refresh_token
+      refresh_token: credentials.refresh_token,
     });
 
     const accessToken = await new Promise((resolve, reject) => {
@@ -89,8 +100,8 @@ const createTransporter = async (type: string) => {
         accessToken,
         clientId: credentials.client_id,
         clientSecret: credentials.client_secret,
-        refreshToken: credentials.refresh_token
-      }
+        refreshToken: credentials.refresh_token,
+      },
     });
 
     return transporter;
@@ -116,4 +127,44 @@ export const sendEmail = async (emailOptions: any, res: any, type: string, name:
   } catch (error) {
     console.log({ sendEmail: error });
   }
+};
+
+export const normalizeEmailFilters = (input: any) => {
+  const output: any = {};
+  Object.keys(input).forEach(key => {
+    switch (key) {
+      case "category":
+        for (const category of input.category) {
+          output["category"] = category;
+        }
+        break;
+      case "card":
+        for (const card of input.card) {
+          output["card"] = card;
+        }
+        break;
+      case "place_of_purchase":
+        for (const place_of_purchase of input.place_of_purchase) {
+          output["place_of_purchase"] = place_of_purchase;
+        }
+        break;
+
+      default:
+        break;
+    }
+  });
+  return output;
+};
+
+export const normalizeEmailSearch = (query: any) => {
+  const search = query.search
+    ? {
+        email_name: {
+          $regex: query.search.toLowerCase(),
+          $options: "i",
+        },
+      }
+    : {};
+
+  return search;
 };

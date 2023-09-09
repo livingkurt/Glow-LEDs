@@ -8,6 +8,39 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
+export const getEmails = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize,
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return await axios.get(`/api/emails/table`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
+export const getEmailFilters = async () => {
+  const { data } = await axios.get(`/api/emails/filters`);
+  return data;
+};
+
 export const listEmails = createAsyncThunk("emails/listEmails", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/emails?${create_query(query)}`);
@@ -22,9 +55,11 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
   try {
     if (!email._id) {
       const { data } = await axios.post("/api/emails", email);
+      thunkApi.dispatch(showSuccess({ message: `Email Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/emails/${email._id}`, email);
+      thunkApi.dispatch(showSuccess({ message: `Email Updated` }));
       return data;
     }
   } catch (error) {
@@ -36,6 +71,7 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
 export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/emails/${id}`);
+    thunkApi.dispatch(showSuccess({ message: `Email Found` }));
     return data;
   } catch (error) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
@@ -46,6 +82,7 @@ export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: s
 export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/emails/" + pathname);
+    thunkApi.dispatch(showSuccess({ message: `Email Deleted` }));
     return data;
   } catch (error) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
