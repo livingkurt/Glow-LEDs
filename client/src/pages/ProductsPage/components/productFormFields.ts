@@ -6,7 +6,7 @@ export const productFormFields = ({
   setState,
   product,
   onEdit,
-  chips
+  chips,
 }: {
   products: any;
   users: any;
@@ -21,56 +21,56 @@ export const productFormFields = ({
     name: {
       type: "text",
       label: "Name",
-      required: true
+      required: true,
     },
     price: {
       type: "number",
-      label: "Price"
+      label: "Price",
     },
     description: {
       type: "text_multiline",
-      label: "Description"
+      label: "Description",
     },
     facts: {
       type: "text_multiline",
-      label: "Facts"
+      label: "Facts",
     },
     included_items: {
       type: "text_multiline",
-      label: "Included Items"
+      label: "Included Items",
     },
     brand: {
       type: "text",
       label: "Brand",
-      required: true
+      required: true,
     },
     category: {
       type: "text",
       label: "Category",
-      required: true
+      required: true,
     },
     subcategory: {
       type: "text",
-      label: "Subcategory"
+      label: "Subcategory",
     },
     product_collection: {
       type: "text",
-      label: "Product Collection"
+      label: "Product Collection",
     },
     previous_price: {
       type: "number",
-      label: "Previous Price"
+      label: "Previous Price",
     },
     count_in_stock: {
       type: "number",
       label: "Count in Stock",
       default: 30,
-      required: true
+      required: true,
     },
     finite_stock: {
       type: "checkbox",
       label: "Finite Stock",
-      default: false
+      default: false,
     },
     images_object: {
       type: "image_upload",
@@ -79,171 +79,170 @@ export const productFormFields = ({
       labelProp: "link",
       album: `${product.name} Images`,
       getOptionLabel: (option: any) => option.link,
-      onUpload: (images: any) => setState(images, "images_object")
     },
 
     video: {
       type: "text",
-      label: "Video"
+      label: "Video",
     },
 
     wholesale_price: {
       type: "number",
-      label: "Wholesale Price"
+      label: "Wholesale Price",
     },
     wholesale_product: {
       type: "checkbox",
-      label: "Wholesale Product"
+      label: "Wholesale Product",
     },
     categorys: {
       type: "autocomplete_multiple",
       label: "Categorys",
       options: categorys,
-      labelProp: "name"
+      labelProp: "name",
     },
     subcategorys: {
       type: "autocomplete_multiple",
       label: "Subcategorys",
       options: categorys,
-      labelProp: "name"
+      labelProp: "name",
     },
     collections: {
       type: "autocomplete_multiple",
       label: "Collections",
       options: categorys,
-      labelProp: "name"
+      labelProp: "name",
     },
 
     contributers: {
       type: "array",
       label: "Contributers",
-      default: "5f2d7c0e9005a57059801ce8"
+      default: "5f2d7c0e9005a57059801ce8",
     },
 
     rating: {
       type: "number",
       label: "Rating",
-      default: 0
+      default: 0,
     },
     numReviews: {
       type: "number",
       label: "Number of Reviews",
-      default: 0
+      default: 0,
     },
 
     hidden: {
       type: "checkbox",
       label: "Hidden",
       labelProp: "hidden",
-      defaultValue: false
+      defaultValue: false,
     },
     sale_price: {
       type: "number",
       label: "Sale Price",
       labelProp: "sale_price",
-      defaultValue: 0
+      defaultValue: 0,
     },
     sale_start_date: {
       type: "date",
       label: "Sale Start Date",
-      labelProp: "sale_start_date"
+      labelProp: "sale_start_date",
     },
     sale_end_date: {
       type: "date",
       label: "Sale End Date",
-      labelProp: "sale_end_date"
+      labelProp: "sale_end_date",
     },
     preorder: {
       type: "checkbox",
       label: "Preorder",
       labelProp: "preorder",
-      defaultValue: false
+      defaultValue: false,
     },
     pathname: {
       type: "text",
       label: "Pathname",
-      labelProp: "pathname"
+      labelProp: "pathname",
     },
     meta_title: {
       type: "text",
       label: "Meta Title",
-      labelProp: "meta_title"
+      labelProp: "meta_title",
     },
     meta_description: {
       type: "text_multiline",
       label: "Meta Description",
-      labelProp: "meta_description"
+      labelProp: "meta_description",
     },
     meta_keywords: {
       type: "text_multiline",
       label: "Meta Keywords",
-      labelProp: "meta_keywords"
+      labelProp: "meta_keywords",
     },
     length: {
       type: "number",
       label: "Length",
-      labelProp: "length"
+      labelProp: "length",
     },
     width: {
       type: "number",
       label: "Width",
-      labelProp: "width"
+      labelProp: "width",
     },
     height: {
       type: "number",
       label: "Height",
-      labelProp: "height"
+      labelProp: "height",
     },
     package_length: {
       type: "number",
       label: "Package Length",
-      labelProp: "package_length"
+      labelProp: "package_length",
     },
     package_width: {
       type: "number",
       label: "Package Width",
-      labelProp: "package_width"
+      labelProp: "package_width",
     },
     package_height: {
       type: "number",
       label: "Package Height",
-      labelProp: "package_height"
+      labelProp: "package_height",
     },
     package_volume: {
       type: "number",
       label: "Package Volume",
-      labelProp: "package_volume"
+      labelProp: "package_volume",
     },
     weight_pounds: {
       type: "number",
       label: "Weight (lbs)",
-      labelProp: "weight_pounds"
+      labelProp: "weight_pounds",
     },
     weight_ounces: {
       type: "number",
       label: "Weight (oz)",
-      labelProp: "weight_ounces"
+      labelProp: "weight_ounces",
     },
     processing_time: {
       type: "multi-select",
       label: "Processing Time",
       labelProp: "processing_time",
-      options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"]
+      options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"],
     },
     quantity: {
       type: "number",
       label: "Quantity",
-      labelProp: "quantity"
+      labelProp: "quantity",
     },
     add_on_price: {
       type: "number",
       label: "Add-On Price",
-      labelProp: "add_on_price"
+      labelProp: "add_on_price",
     },
     show_add_on: {
       type: "checkbox",
       label: "Show Add-On",
-      labelProp: "show_add_on"
+      labelProp: "show_add_on",
     },
 
     color_products: {
@@ -251,12 +250,12 @@ export const productFormFields = ({
       label: "Color Product",
       options: products,
       labelProp: "name",
-      onEdit: (product: any) => onEdit(product)
+      onEdit: (product: any) => onEdit(product),
     },
     color_product_name: {
       type: "text",
       label: "Color Product Name",
-      labelProp: "color_product_name"
+      labelProp: "color_product_name",
     },
     color_images_object: {
       type: "image_upload",
@@ -264,19 +263,18 @@ export const productFormFields = ({
       // options: images,
       labelProp: "link",
       album: `${product.name} Color Images`,
-      onUpload: (images: any) => setState(images, "color_images_object")
     },
     secondary_color_products: {
       type: "autocomplete_multiple",
       label: "Secondary Color Product",
       options: products,
       labelProp: "name",
-      onEdit: (product: any) => onEdit(product)
+      onEdit: (product: any) => onEdit(product),
     },
     secondary_color_product_name: {
       type: "text",
       label: "Secondary Color Product Name",
-      labelProp: "secondary_color_product_name"
+      labelProp: "secondary_color_product_name",
     },
     secondary_color_images_object: {
       type: "image_upload",
@@ -284,19 +282,18 @@ export const productFormFields = ({
       // options: images,
       labelProp: "link",
       album: `${product.name} Secondary Color Images`,
-      onUpload: (images: any) => setState(images, "secondary_color_images_object")
     },
     option_product_name: {
       type: "text",
       label: "Option Product Name",
-      labelProp: "option_product_name"
+      labelProp: "option_product_name",
     },
     option_products: {
       type: "autocomplete_multiple",
       label: "Option Product",
       options: products,
       labelProp: "name",
-      onEdit: (product: any) => onEdit(product)
+      onEdit: (product: any) => onEdit(product),
     },
     option_images_object: {
       type: "image_upload",
@@ -304,19 +301,18 @@ export const productFormFields = ({
       // options: images,
       labelProp: "link",
       album: `${product.name} Option Images`,
-      onUpload: (images: any) => setState(images, "option_images_object")
     },
     secondary_product_name: {
       type: "text",
       label: "Secondary Product Name",
-      labelProp: "secondary_product_name"
+      labelProp: "secondary_product_name",
     },
     secondary_products: {
       type: "autocomplete_multiple",
       label: "Secondary Product",
       options: products,
       labelProp: "name",
-      onEdit: (product: any) => onEdit(product)
+      onEdit: (product: any) => onEdit(product),
     },
     secondary_images_object: {
       type: "image_upload",
@@ -324,49 +320,51 @@ export const productFormFields = ({
       // options: images,
       labelProp: "link",
       album: `${product.name} Secondary Images`,
-      onUpload: (images: any) => setState(images, "secondary_images_object")
     },
     chips: {
       type: "autocomplete_multiple",
       label: "Chips",
       options: chips,
       labelProp: "name",
-      onEdit: (chip: any) => onEdit(chip)
+      onEdit: (chip: any) => onEdit(chip),
     },
     reviews: {
-      type: "array_of_objects",
+      type: "array",
       title: "Reviews",
-      fields: {
-        user: {
-          type: "autocomplete_single",
-          label: "Users",
-          options: users,
-          labelProp: "user",
-          getOptionLabel: (option: any) => (option ? `${option.first_name} ${option.last_name}` : "")
+      itemSchema: {
+        type: "object",
+        fields: {
+          user: {
+            type: "autocomplete_single",
+            label: "Users",
+            options: users,
+            labelProp: "user",
+            getOptionLabel: (option: any) => (option ? `${option.first_name} ${option.last_name}` : ""),
+          },
+          first_name: {
+            type: "text",
+            label: "First Name",
+            labelProp: "first_name",
+          },
+          last_name: {
+            type: "text",
+            label: "Last Name",
+            labelProp: "last_name",
+          },
+          rating: {
+            type: "number",
+            label: "Rating",
+            labelProp: "rating",
+            required: true,
+          },
+          comment: {
+            type: "text",
+            label: "Comment",
+            labelProp: "comment",
+            required: true,
+          },
         },
-        first_name: {
-          type: "text",
-          label: "First Name",
-          labelProp: "first_name"
-        },
-        last_name: {
-          type: "text",
-          label: "Last Name",
-          labelProp: "last_name"
-        },
-        rating: {
-          type: "number",
-          label: "Rating",
-          labelProp: "rating",
-          required: true
-        },
-        comment: {
-          type: "text",
-          label: "Comment",
-          labelProp: "comment",
-          required: true
-        }
-      }
-    }
+      },
+    },
   };
 };

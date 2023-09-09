@@ -70,44 +70,6 @@ const EditProductModal = () => {
           onChange={value => dispatch(set_product(value))}
           loading={loading && loading_users && loading_categorys}
         />
-        <Typography component="h4" variant="h4" sx={{ mb: 2 }}>
-          {formFields.reviews.title}
-        </Typography>
-
-        <AppBar position="sticky" color="transparent">
-          <Tabs
-            value={tabIndex}
-            className="jc-b"
-            onChange={(e, newValue) => {
-              dispatch(setTabIndex(newValue));
-            }}
-          >
-            {product.reviews.map((item, index) => {
-              return <Tab label={fullName(item)} value={index} />;
-            })}
-          </Tabs>
-        </AppBar>
-        {product?.reviews?.map((item, index) => {
-          return (
-            <GLTabPanel value={tabIndex} index={index}>
-              <GLForm
-                formData={formFields.reviews.fields}
-                state={item}
-                onChange={value => {
-                  const reviews = product.reviews.map((item, i) => {
-                    if (i === index) {
-                      return { ...item, ...value };
-                    } else {
-                      return item;
-                    }
-                  });
-                  dispatch(set_product({ reviews }));
-                }}
-                loading={loading && loading_users}
-              />
-            </GLTabPanel>
-          );
-        })}
       </GLActiionModal>
     </div>
   );

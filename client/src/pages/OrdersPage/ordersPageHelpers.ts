@@ -2,6 +2,7 @@ import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHe
 import { daysBetween } from "../../utils/helper_functions";
 import { setTimeout } from "timers";
 import { Printd } from "printd";
+import { set_order } from "../../slices/orderSlice";
 // const { printHtml } = require("print-html-element");
 
 export const orderColors = [
@@ -282,7 +283,25 @@ export const updateOrderPrices = ({
   };
 };
 
+export const updatePricesAndDispatch = (updatedOrderItems: any, dispatch: any, order: any) => {
+  const updatedPrices = updateOrderPrices({
+    orderItems: updatedOrderItems,
+    shippingPrice: order.shippingPrice,
+    taxPrice: order.taxPrice,
+    tip: order.tip,
+  });
+
+  const finalUpdatedOrder = {
+    ...order,
+    orderItems: updatedOrderItems,
+    ...updatedPrices,
+  };
+
+  dispatch(set_order(finalUpdatedOrder));
+};
+
 export const updateOrderItem = (index: number, value: any, order: any) => {
+  console.log({ index, value, order });
   const orderItems = order.orderItems.map((item: any, i: number) => {
     if (i === index) {
       return {
@@ -290,7 +309,7 @@ export const updateOrderItem = (index: number, value: any, order: any) => {
         ...value,
         name: value.name,
         qty: item.qty || 1,
-        display_image: value?.images[0],
+        display_image: value?.images && value?.images[0],
         price: value.price,
         category: value.category,
         pathname: value.pathname,
@@ -302,7 +321,7 @@ export const updateOrderItem = (index: number, value: any, order: any) => {
         package_height: value.package_height,
         product_option: value?.product_options?.find((option: any) => option.default === true),
         reviewed: value.reviewed,
-        product: { _id: value._id },
+        product: value,
         color_products: value.color_products,
         secondary_color_products: value.secondary_color_products,
         option_products: value.option_products,

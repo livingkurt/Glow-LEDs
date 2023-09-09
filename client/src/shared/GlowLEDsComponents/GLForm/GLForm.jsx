@@ -23,7 +23,7 @@ import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleA
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import { ArrowBack, ArrowForward, Close } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, Close, FileCopy } from "@mui/icons-material";
 import GLTabPanel from "../GLTabPanel/GLTabPanel";
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
@@ -52,7 +52,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
 
   const handleInputChange = (fieldName, value) => {
     setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
-    debouncedOnChange({ [fieldName]: value });
+    debouncedOnChange({ [fieldName]: value }, fieldName);
   };
 
   const getEmptyObjectFromSchema = schema => {
@@ -61,6 +61,39 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       const field = schema[key];
       if (field.type === "text") {
         emptyObject[key] = "";
+      }
+      if (field.type === "autocomplete_single") {
+        emptyObject[key] = {};
+      }
+      if (field.type === "image_upload") {
+        emptyObject[key] = "";
+      }
+      if (field.type === "autocomplete_multiple") {
+        emptyObject[key] = [];
+      }
+      if (field.type === "checkbox") {
+        emptyObject[key] = false;
+      }
+      if (field.type === "autocomplete_address") {
+        emptyObject[key] = {};
+      }
+      if (field.type === "text") {
+        emptyObject[key] = "";
+      }
+      if (field.type === "number") {
+        emptyObject[key] = 0;
+      }
+      if (field.type === "date") {
+        emptyObject[key] = "";
+      }
+      if (field.type === "text_multiline") {
+        emptyObject[key] = "";
+      }
+      if (field.type === "object") {
+        emptyObject[key] = {};
+      }
+      if (field.type === "array") {
+        emptyObject[key] = [];
       }
       // Add more conditions for other field types if needed
     });
@@ -71,13 +104,10 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
 
   return (
     <>
+      <div></div>
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
-        // if (fieldData.type === "image_upload") {
-        //   console.log({ state, fieldState, fieldName });
-        // }
-
         if (loading) {
           if (fieldData.type === "checkbox") {
             return (
@@ -378,17 +408,41 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <Typography component="h6" variant="h6" className="ta-c mb-15px">
                     {fieldData.title}
                   </Typography>
-                  <AppBar position="sticky" color="transparent">
-                    <Tabs
-                      variant="scrollable"
-                      value={tabIndex}
-                      onChange={(event, newValue) => {
-                        setTabIndex(newValue);
-                      }}
-                    >
-                      {fieldState.length > 0 && fieldState.map((item, index) => <Tab label={item.label} />)}
-                    </Tabs>
-                  </AppBar>
+                  <Paper style={{ backgroundColor: "#4e5061" }}>
+                    <AppBar position="sticky" color="transparent">
+                      <Tabs
+                        variant="scrollable"
+                        value={tabIndex}
+                        style={{ color: "lightgray" }}
+                        TabIndicatorProps={{ style: { backgroundColor: "white" } }}
+                        onChange={(event, newValue) => {
+                          setTabIndex(newValue);
+                        }}
+                      >
+                        {fieldState.length > 0 &&
+                          fieldState.map((item, index) => (
+                            <Tab
+                              value={index}
+                              label={item[fieldData.label]}
+                              style={{ color: tabIndex === index ? "white" : "lightgray" }}
+                            />
+                          ))}
+                      </Tabs>
+                    </AppBar>
+                  </Paper>
+                  <Box sx={{ m: 3 }} />
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() => {
+                      const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
+                      const newArray = [...fieldState, { ...emptyItem }];
+                      onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
+                      setTabIndex(newArray.length - 1);
+                    }}
+                  >
+                    Add Item
+                  </Button>
                   <Box sx={{ m: 3 }} />
                   {fieldState.length > 0 &&
                     fieldState.map((item, index) => (
@@ -398,7 +452,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                           onClick={() => {
                             const newArray = [...fieldState];
                             newArray.splice(index, 1);
-                            onChange({ [fieldName]: newArray });
+                            onChange({ [fieldName]: newArray }, "delete", index);
                             setTabIndex(prevIndex => {
                               if (prevIndex === newArray.length) {
                                 return newArray.length - 1;
@@ -409,7 +463,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         >
                           <Close />
                         </IconButton>
-                        {/* Move Up Button */}
                         <IconButton
                           color="primary"
                           onClick={() => {
@@ -423,8 +476,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         >
                           <ArrowBack />
                         </IconButton>
-
-                        {/* Move Down Button */}
                         <IconButton
                           color="primary"
                           onClick={() => {
@@ -438,34 +489,46 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         >
                           <ArrowForward />
                         </IconButton>
+                        <IconButton
+                          color="primary"
+                          onClick={() => {
+                            const newArray = [...fieldState];
+                            // Clone the item you want to duplicate
+                            const clone = { ...newArray[index] };
+
+                            // Modify the name by appending 'Copy' at the end
+                            clone[fieldData.label] = `${clone[fieldData.label]} Copy`;
+
+                            // Insert the clone back into the array
+                            newArray.splice(index + 1, 0, clone);
+
+                            onChange({ [fieldName]: newArray }, "duplicate", index);
+                            setTabIndex(index + 1); // Optional: Move the tab index to the new copy
+                          }}
+                        >
+                          <FileCopy /> {/* Assuming you import FileCopy from Material-UI */}
+                        </IconButton>
                         <GLForm
                           formData={fieldData.itemSchema.fields}
                           state={item}
                           onChange={newItem => {
                             const newArray = [...fieldState];
-                            newArray[index] = newItem;
-                            onChange({ [fieldName]: newArray });
+                            newArray[index] = {
+                              ...newArray[index],
+                              ...newItem,
+                            };
+
+                            Object.keys(newItem).forEach(nestedFieldName => {
+                              const fullFieldName = `${fieldName}.${nestedFieldName}.${index}`;
+                              onChange({ [fieldName]: newArray }, fullFieldName, index);
+                            });
                           }}
                           loading={loading}
                         />
                       </GLTabPanel>
                     ))}
-
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={() => {
-                      const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
-                      const newArray = [...fieldState, { ...emptyItem }];
-                      onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
-                      setTabIndex(newArray.length - 1);
-                    }}
-                  >
-                    Add Item
-                  </Button>
                 </Paper>
               );
-
             default:
               return <div></div>;
           }
