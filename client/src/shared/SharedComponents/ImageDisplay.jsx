@@ -5,7 +5,6 @@ import { FileCopy } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const ImageDisplay = ({ images, onChange, fieldName }) => {
-  console.log({ images, fieldName });
   const remove_image = image_index => {
     onChange(
       images.filter((image, index) => {
@@ -54,7 +53,6 @@ const ImageDisplay = ({ images, onChange, fieldName }) => {
                           marginBottom: "1rem",
                         }}
                       >
-                        {console.log({ picture })}
                         <Stack direction="row" alignItems="center" justifyContent="space-between">
                           <img
                             alt="product"

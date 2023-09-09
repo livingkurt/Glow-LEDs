@@ -75,6 +75,13 @@ const imagePage = createSlice({
       state.upload_image_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
+    clear_image: (state, { payload }) => {
+      state.image = {
+        id: "",
+        link: "",
+        album: "",
+      };
+    },
   },
   extraReducers: {
     [API.listImages.pending as any]: (state: any, { payload }: any) => {
@@ -160,5 +167,6 @@ export const {
   image_uploaded,
   open_image_display_modal,
   close_image_display_modal,
+  clear_image,
 } = imagePage.actions;
 export default imagePage.reducer;

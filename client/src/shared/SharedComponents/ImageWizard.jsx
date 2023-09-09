@@ -15,19 +15,39 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
     dispatch(API.getImagesByLink(text));
   };
 
+  // useEffect(() => {
+  //   if (image && text) {
+  //     onChange({ [fieldName]: [...fieldState, image] });
+  //     setText("");
+  //   }
+  // }, [image]);
+
   useEffect(() => {
     if (image && text) {
-      onChange({ [fieldName]: [...fieldState, image] });
+      // Check if 'fieldState' is an array
+      if (Array.isArray(fieldState)) {
+        onChange({ [fieldName]: [...fieldState, image] });
+      }
+      // Check if 'fieldState' is an object
+      else if (typeof fieldState === "object") {
+        onChange({ [fieldName]: { ...fieldState, ...image } });
+      }
+      // Default case
+      else {
+        onChange({ [fieldName]: image });
+      }
       setText("");
     }
   }, [image]);
 
   const images = [fieldState].flat();
 
+  console.log({ images });
+
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-      <ImageUploader onUpload={onChange} album={fieldData.album} type="image" />
+      <ImageUploader onChange={onChange} album={fieldData.album} fieldName={fieldName} type="image" />
       <div className="ai-c g-10px">
         <TextField
           label="Enter an Image ID"

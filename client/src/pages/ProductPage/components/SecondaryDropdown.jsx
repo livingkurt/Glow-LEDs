@@ -6,7 +6,6 @@ import InputLabel from "@mui/material/InputLabel";
 import { determine_secondary_product_name } from "../productHelpers";
 
 const SecondaryDropdown = ({ label, color_code, onChange, value, options, defaultValue, product }) => {
-  console.log({ label, color_code, onChange, value, options, defaultValue, product });
   return (
     <div className="ai-c h-25px mb-25px">
       <InputLabel className="mv-0px mr-10px title_font">{label}</InputLabel>

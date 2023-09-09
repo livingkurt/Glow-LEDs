@@ -37,7 +37,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const [localState, setLocalState] = useState({});
 
   useEffect(() => {
-    // console.log({ state });
     setLocalState(state);
   }, [state]);
 
@@ -75,9 +74,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
-        if (fieldData.type === "image_upload") {
-          console.log({ state, fieldState, fieldName });
-        }
+        // if (fieldData.type === "image_upload") {
+        //   console.log({ state, fieldState, fieldName });
+        // }
 
         if (loading) {
           if (fieldData.type === "checkbox") {

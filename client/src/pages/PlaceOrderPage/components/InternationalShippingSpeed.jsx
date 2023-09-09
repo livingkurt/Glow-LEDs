@@ -26,8 +26,6 @@ const InternationalShippingSpeed = () => {
 
   const items_price = determine_total(cartItems);
 
-  console.log({ rates: shipping_rates.rates });
-
   const sortedRates = [...shipping_rates.rates].sort((a, b) => {
     if (a.rate && b.rate) {
       return parseFloat(a.rate) - parseFloat(b.rate);

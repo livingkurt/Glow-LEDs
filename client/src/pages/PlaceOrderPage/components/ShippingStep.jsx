@@ -105,7 +105,6 @@ const ShippingStep = () => {
     };
 
     const request = validate_shipping(data);
-    console.log({ request });
     if (Object.keys(request?.errors).length > 0) {
       dispatch(setShippingValidation({ errors: request.errors }));
       return;

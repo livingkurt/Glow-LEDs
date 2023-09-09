@@ -135,7 +135,6 @@ const orderPage = createSlice({
       state.message = "Order Created and Paid";
     },
     [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
-      console.log({ payload });
       state.loading_payment = false;
       // state.error = payload ? payload.error : error.message;
       // state.message = payload ? payload.message : "An error occurred";

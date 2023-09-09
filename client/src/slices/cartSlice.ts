@@ -246,7 +246,6 @@ const cartPage = createSlice({
     },
     [API.deleteCartItem.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type } = payload;
-      console.log({ data });
       state.loading = false;
       if (data.message === "Cart Deleted") {
         state.my_cart = { cartItems: [] };
@@ -271,12 +270,10 @@ const cartPage = createSlice({
       state.cart = {};
     },
     [API.emptyCart.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log("Empty Cart");
       localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
     },
     [API.emptyCart.rejected as any]: (state: any, { payload }: any) => {
-      console.log("Empty Cart");
       localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
     },

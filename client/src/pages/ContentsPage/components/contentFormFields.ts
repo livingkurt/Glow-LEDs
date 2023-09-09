@@ -22,7 +22,7 @@ export const contentFormFields = ({ content }: any) => {
         },
         slideshow: {
           type: "array",
-          label: "Slideshow",
+          title: "Slideshow",
           itemSchema: {
             type: "object",
             fields: {

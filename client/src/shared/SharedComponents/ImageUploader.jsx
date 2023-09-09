@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { clear_image } from "../../slices/imageSlice";
+import { useDispatch } from "react-redux";
 
-const ImageUploader = ({ onUpload, album, type }) => {
+const ImageUploader = ({ onChange, album, type, fieldName }) => {
+  const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [albumName, setAlbumName] = useState(album);
+
+  console.log({ fieldName, previewUrls });
 
   const handleFileChange = event => {
     const selectedFiles = event.target.files;
@@ -42,7 +47,8 @@ const ImageUploader = ({ onUpload, album, type }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      onUpload(response.data);
+      onChange(response.data);
+      dispatch(clear_image({}));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -67,8 +73,8 @@ const ImageUploader = ({ onUpload, album, type }) => {
           </Grid>
           <Grid item xs={12} sm={3} container justifyContent="space-around">
             <div>
-              <input type="file" hidden onChange={handleFileChange} id="upload-input" multiple />
-              <label htmlFor="upload-input">
+              <input type="file" hidden onChange={handleFileChange} id={`${fieldName}-upload-input`} multiple />
+              <label htmlFor={`${fieldName}-upload-input`}>
                 <Button variant="contained" component="span">
                   Select
                 </Button>
