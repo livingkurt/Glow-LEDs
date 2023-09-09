@@ -119,6 +119,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 style={{ marginTop: 25, marginRight: 16 }}
               />
             );
+          } else if (fieldData.type === "array" || fieldData.type === "object") {
+            return <Skeleton key={fieldName} variant="rectangular" height={500} style={{ marginTop: 22 }} />;
           } else {
             return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
           }
