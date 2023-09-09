@@ -212,15 +212,6 @@ const EditUserModal = () => {
           onChange={value => dispatch(set_user(value))}
           loading={loading && loading_affiliates}
         />
-        <Typography component="h5" variant="h5" sx={{ mb: 2 }} className="ta-c">
-          {formFields.shipping.title}
-        </Typography>
-        <GLForm
-          formData={formFields.shipping.fields}
-          state={user.shipping}
-          onChange={value => dispatch(set_user({ shipping: { ...user.shipping, ...value } }))}
-          loading={loading && loading_affiliates}
-        />
       </GLActiionModal>
     </div>
   );
