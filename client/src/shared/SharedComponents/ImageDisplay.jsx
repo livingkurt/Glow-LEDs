@@ -5,6 +5,7 @@ import { FileCopy } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const ImageDisplay = ({ images, onChange }) => {
+  console.log({ images });
   const remove_image = image_index => {
     onChange(
       images.filter((image, index) => {

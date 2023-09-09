@@ -4,6 +4,10 @@ export default {
   findAll_contents_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Content.find(filter)
+        .populate("home_page.image_object")
+        .populate("home_page.images_object")
+        .populate("home_page.banner_image_object")
+        .populate("home_page.slideshow.image_object")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -16,7 +20,11 @@ export default {
   },
   findById_contents_db: async (id: string) => {
     try {
-      return await Content.findOne({ _id: id });
+      return await Content.findOne({ _id: id })
+        .populate("home_page.image_object")
+        .populate("home_page.images_object")
+        .populate("home_page.banner_image_object")
+        .populate("home_page.slideshow.image_object");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

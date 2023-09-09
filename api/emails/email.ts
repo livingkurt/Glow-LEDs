@@ -14,6 +14,8 @@ const emailSchema = new mongoose.Schema(
     h1: { type: String },
     image: { type: String },
     images: { type: Array },
+    image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     show_image: { type: Boolean, default: true },
     h2: { type: String },
     p: { type: String },
@@ -23,10 +25,10 @@ const emailSchema = new mongoose.Schema(
     scheduled_at: { type: Date },
     status: { type: String, default: "draft" },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

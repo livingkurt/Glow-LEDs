@@ -38,6 +38,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const [localState, setLocalState] = useState({});
 
   useEffect(() => {
+    console.log({ state });
     setLocalState(state);
   }, [state]);
 
@@ -132,6 +133,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 />
               );
             case "image_upload":
+              console.log({ fieldState });
               return (
                 <>
                   <ImageWizard
@@ -358,7 +360,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
-                  <GLNestedForm
+                  <GLForm
                     formData={fieldData.fields}
                     state={fieldState}
                     onChange={newObjectState => {
@@ -373,10 +375,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "array":
               return (
                 <Paper className="p-10px mv-10px">
-                  <Typography component="h6" variant="h6" className="ta-c">
+                  <Typography component="h6" variant="h6" className="ta-c mb-15px">
                     {fieldData.title}
                   </Typography>
-                  {console.log({ fieldState, fieldName: formData[fieldName] })}
                   <AppBar position="sticky" color="transparent">
                     <Tabs
                       variant="scrollable"
@@ -437,7 +438,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         >
                           <ArrowForward />
                         </IconButton>
-                        <GLNestedForm
+                        <GLForm
                           formData={fieldData.itemSchema.fields}
                           state={item}
                           onChange={newItem => {

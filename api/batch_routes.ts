@@ -1529,6 +1529,177 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
   await Promise.all(products.map(processProduct));
   res.send(products);
 });
+router.route("/create_content_image_records_and_reference_them").put(async (req: any, res: any) => {
+  const contents = await Content.find({ deleted: false });
+
+  const imageCache: any = {};
+
+  const processContent = async (content: any) => {
+    const { _id, home_page } = content;
+    const albumName = home_page.h1;
+
+    const imagesToUpdate = [
+      { field: "home_page.image", objectField: "home_page.image_object" },
+      { field: "home_page.images", objectField: "home_page.images_object", arrayProp: "image" },
+      { field: "home_page.banner_image", objectField: "home_page.banner_image_object" },
+      { field: "home_page.slideshow", objectField: "image_object", arrayProp: "image" },
+    ];
+
+    for (const { field, objectField, arrayProp } of imagesToUpdate) {
+      let obj = content;
+      const keys = field.split(".");
+      for (const key of keys) {
+        if (obj) {
+          obj = obj[key];
+        }
+      }
+
+      const processImage = async (imageUrl: string) => {
+        if (imageCache[imageUrl]) {
+          return imageCache[imageUrl];
+        }
+
+        const existingImage = await Image.findOne({ link: imageUrl });
+        if (existingImage) {
+          imageCache[imageUrl] = existingImage._id;
+          return existingImage._id;
+        }
+
+        const response: any = await Image.create({ link: imageUrl, album: albumName });
+        imageCache[imageUrl] = response._id;
+        return response._id;
+      };
+
+      if (Array.isArray(obj)) {
+        const newImageIds = await Promise.all(
+          obj.map(async (item: any) => {
+            const imageUrl = arrayProp ? item[arrayProp] : item;
+            if (imageUrl) {
+              return await processImage(imageUrl);
+            }
+          })
+        ).then(ids => ids.filter(id => id));
+
+        if (newImageIds.length > 0) {
+          const updateFields = { [objectField]: newImageIds };
+          await Content.updateOne({ _id }, { $set: updateFields });
+        }
+      } else if (obj) {
+        const imageId = await processImage(obj);
+        const updateFields = { [objectField]: imageId };
+        await Content.updateOne({ _id }, { $set: updateFields });
+      }
+    }
+  };
+
+  await Promise.all(contents.map(processContent));
+  res.send(contents);
+});
+
+router.route("/migrate_slideshow_images").put(async (req: any, res: any) => {
+  const contents = await Content.find({ deleted: false });
+  const imageCache: any = {};
+
+  const processContent = async (content: any) => {
+    const { _id, home_page } = content;
+    const albumName = home_page.h1;
+    console.log({ albumName });
+    const slideshowImages = home_page.slideshow;
+
+    for (let i = 0; i < slideshowImages.length; i++) {
+      const imageUrl = slideshowImages[i].image;
+
+      if (imageUrl) {
+        let imageId;
+        if (imageCache[imageUrl]) {
+          imageId = imageCache[imageUrl];
+        } else {
+          const existingImage = await Image.findOne({ link: imageUrl });
+
+          if (existingImage) {
+            imageId = existingImage._id;
+          } else {
+            const response: any = await Image.create({ link: imageUrl, album: albumName });
+            imageId = response._id;
+          }
+          imageCache[imageUrl] = imageId;
+        }
+
+        await Content.updateOne(
+          { _id, "home_page.slideshow.image": imageUrl },
+          { $set: { "home_page.slideshow.$.image_object": new mongoose.Types.ObjectId(imageId) } }
+        );
+      }
+    }
+  };
+
+  await Promise.all(contents.map(processContent));
+  res.send(contents);
+});
+
+router.route("/migrate_email_images").put(async (req: any, res: any) => {
+  const emails = await Email.find({ deleted: false });
+  const imageCache: any = {};
+
+  const processEmail = async (email: any) => {
+    const { _id, h1 } = email;
+    const albumName = h1;
+
+    // Single image
+    if (email.image) {
+      let imageId;
+      const imageUrl = email.image;
+
+      if (imageCache[imageUrl]) {
+        imageId = imageCache[imageUrl];
+      } else {
+        const existingImage = await Image.findOne({ link: imageUrl });
+
+        if (existingImage) {
+          imageId = existingImage._id;
+        } else {
+          const response: any = await Image.create({ link: imageUrl, album: albumName });
+          imageId = response._id;
+        }
+        imageCache[imageUrl] = imageId;
+      }
+
+      await Email.updateOne({ _id }, { $set: { "image_object": new mongoose.Types.ObjectId(imageId) } });
+    }
+
+    // Multiple images
+    if (email.images && Array.isArray(email.images)) {
+      const newImageIds = await Promise.all(
+        email.images.map(async (imageUrl: string) => {
+          if (imageCache[imageUrl]) {
+            return imageCache[imageUrl];
+          }
+
+          const existingImage = await Image.findOne({ link: imageUrl });
+          if (existingImage) {
+            imageCache[imageUrl] = existingImage._id;
+            return existingImage._id;
+          }
+
+          const response: any = await Image.create({ link: imageUrl, album: albumName });
+          imageCache[imageUrl] = response._id;
+          return response._id;
+        })
+      ).then(ids => ids.filter(id => id));
+
+      if (newImageIds.length > 0) {
+        await Email.updateOne(
+          { _id },
+          { $set: { "images_object": newImageIds.map(id => new mongoose.Types.ObjectId(id)) } }
+        );
+      }
+    }
+  };
+
+  await Promise.all(emails.map(processEmail));
+  res.send(emails);
+});
+
 router.route("/create_category_records_and_reference_them_in_product").put(async (req: any, res: any) => {
   const findOrCreateCategory = async (name: any) => {
     let category = await Category.findOne({ name });

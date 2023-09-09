@@ -17,6 +17,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ContentCopy } from "@mui/icons-material";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
@@ -59,6 +60,22 @@ const ContentsPage = () => {
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
               <EditIcon color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Edit"
+              onClick={() =>
+                dispatch(
+                  API.saveContent({
+                    ...content,
+                    _id: null,
+                    home_page: { ...content.home_page, h1: `${content.home_page.h1} Copy` },
+                    createdAt: null,
+                    updatedAt: null,
+                  })
+                )
+              }
+            >
+              <ContentCopy color="white" />
             </IconButton>
 
             <IconButton onClick={() => dispatch(API.deleteContent(content._id))} aria-label="Delete">

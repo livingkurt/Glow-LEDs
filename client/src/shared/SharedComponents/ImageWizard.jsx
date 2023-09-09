@@ -6,6 +6,7 @@ import * as API from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
+  console.log({ fieldData, fieldState, onChange, fieldName });
   const dispatch = useDispatch();
   const imagePage = useSelector(state => state.images.imagePage);
   const { image } = imagePage;
@@ -27,7 +28,13 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
       <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} type="image" />
       <div className="ai-c g-10px">
-        <TextField label="Enter an Image ID" fullWidth margin="normal" size="small" onChange={e => setText(e.target.value)} />
+        <TextField
+          label="Enter an Image ID"
+          fullWidth
+          margin="normal"
+          size="small"
+          onChange={e => setText(e.target.value)}
+        />
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>
           Save
         </Button>
