@@ -8,8 +8,9 @@ import * as API from "../../api";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { format_date, humanize } from "../../utils/helper_functions";
 import { open_create_email_modal, open_edit_email_modal } from "../../slices/emailSlice";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import SendIcon from "@mui/icons-material/Send";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,22 +26,15 @@ const EmailsPage = () => {
     () => [
       { title: "createdAt", display: email => email.createdAt && format_date(email.createdAt) },
       {
-        title: "Active",
-        display: email => (
-          <IconButton
-            onClick={() => {
-              dispatch(
-                API.saveEmail({
-                  ...email,
-                  active: email.active ? false : true,
-                })
-              );
-            }}
-            aria-label={email.active ? "deactivate" : "activate"}
-          >
-            {email.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
-        ),
+        title: "Status",
+        display: email =>
+          email.status === "draft" ? (
+            <DescriptionIcon color="white" />
+          ) : email.status === "scheduled" ? (
+            <AccessTimeIcon color="white" />
+          ) : (
+            <SendIcon color="white" />
+          ),
       },
       {
         title: "Title",
