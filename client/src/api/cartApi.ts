@@ -107,7 +107,6 @@ export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (ca
         cartPage: { my_cart },
       },
     } = thunkApi.getState();
-    console.log({ my_cart });
     if (my_cart._id) {
       await axios.put(`/api/carts/${cart._id}`, cart);
       return { data: cart, current_user };

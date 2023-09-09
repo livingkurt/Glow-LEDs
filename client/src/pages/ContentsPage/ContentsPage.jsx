@@ -15,11 +15,14 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
+import EmailIcon from "@mui/icons-material/Email";
+import { useNavigate } from "react-router-dom";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { loading, remoteVersionRequirement } = contentPage;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const column_defs = useMemo(
     () => [
@@ -73,6 +76,24 @@ const ContentsPage = () => {
               }
             >
               <ContentCopy color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Edit"
+              onClick={() => {
+                dispatch(
+                  API.saveEmail({
+                    h1: content.home_page.h1,
+                    images: content.home_page.images,
+                    h2: content.home_page.h2,
+                    p: content.home_page.p,
+                    button: content.home_page.button,
+                    link: content.home_page.link,
+                  })
+                );
+                navigate("/secure/glow/emails");
+              }}
+            >
+              <EmailIcon color="white" />
             </IconButton>
 
             <IconButton onClick={() => dispatch(API.deleteContent(content._id))} aria-label="Delete">

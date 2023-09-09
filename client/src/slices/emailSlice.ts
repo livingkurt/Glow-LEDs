@@ -2,6 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+const HtmlToReactParser = require("html-to-react").Parser;
 
 const email = {
   id: "",
@@ -120,6 +121,23 @@ const emailPage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.deleteEmail.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.viewAnnouncement.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.viewAnnouncement.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+
+      const htmlToReactParser = new HtmlToReactParser();
+      const reactElement = htmlToReactParser.parse(payload);
+      console.log({ reactElement });
+      state.template = reactElement;
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.viewAnnouncement.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

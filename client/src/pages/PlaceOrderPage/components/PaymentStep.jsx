@@ -85,7 +85,6 @@ const PaymentStep = () => {
       cartItems,
     };
     const request = validate_promo_code(data);
-    console.log({ request });
     dispatch(set_promo_code_validations(request.errors.promo_code));
 
     if (request.isValid) {

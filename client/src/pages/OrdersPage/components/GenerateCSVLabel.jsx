@@ -25,9 +25,7 @@ const GenerateCSVLabel = ({ order }) => {
       const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
 
       saveAs(csvBlob, `${order.shipping.first_name}_${order.shipping.last_name}_Label.csv`); // Download the CSV using file-saver
-    } catch (error) {
-      console.error("Error generating CSV:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

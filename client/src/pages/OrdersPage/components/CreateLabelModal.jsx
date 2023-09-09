@@ -46,7 +46,6 @@ const CreateLabelModal = () => {
 
   const setGeneratedAddress = (shipping, type) => {
     if (!shipping || !shipping.address_components) {
-      console.error("Invalid shipping data:", shipping);
       return;
     }
     let autocompleteElement = document.querySelector("#autocomplete");

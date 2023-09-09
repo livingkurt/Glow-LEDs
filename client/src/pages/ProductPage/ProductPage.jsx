@@ -40,7 +40,6 @@ const ProductPage = () => {
     let clean = true;
     if (clean) {
       if (product) {
-        console.log({ product });
         normalizeProductPage({ product, dispatch, current_user });
       } else {
         dispatch(unset_state());

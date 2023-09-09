@@ -109,7 +109,6 @@ const cartPage = createSlice({
       const { shipping, street_num } = payload;
 
       if (!shipping || !shipping.address_components) {
-        console.error("Invalid shipping data:", shipping);
         return;
       }
 

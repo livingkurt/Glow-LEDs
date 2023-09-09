@@ -1,14 +1,8 @@
 export const emailFormFields = ({ email }: any) => {
   return {
-    email_type: { type: "text", label: "Email Type" },
-    header_footer_color: { type: "text", label: "Header Footer Color" },
-    background_color: { type: "text", label: "Background Color" },
-    module_color: { type: "text", label: "Module Color" },
-    button_color: { type: "text", label: "Button Color" },
-    text_color: { type: "text", label: "Text Color" },
-    title_color: { type: "text", label: "Title Color" },
     subject: { type: "text", label: "Subject" },
-    h1: { type: "text", label: "H1" },
+    h1: { type: "text", label: "Heading" },
+    h2: { type: "text_multiline", label: "Summary" },
     images_objects: {
       type: "image_upload",
       label: "Images",
@@ -16,12 +10,9 @@ export const emailFormFields = ({ email }: any) => {
       album: `${email?.h1} Images`,
     },
     show_image: { type: "checkbox", label: "Show Image", default: true },
-    h2: { type: "text", label: "H2" },
-    p: { type: "text", label: "P" },
-    button: { type: "text", label: "Button" },
-    link: { type: "text", label: "Link" },
-    html: { type: "text", label: "HTML" },
-    scheduled_at: { type: "text", label: "Scheduled At" },
+    p: { type: "text_multiline", label: "Body" },
+    button: { type: "text", label: "Button Text" },
+    link: { type: "text", label: "Button Link" },
     status: {
       type: "autocomplete_single",
       label: "Status",
@@ -32,6 +23,14 @@ export const emailFormFields = ({ email }: any) => {
       },
       options: ["Draft", "Scheduled", "Sent"],
     },
+    scheduled_at: { type: "text", label: "Scheduled At" },
+    background_color: { type: "color_picker", label: "Background Color" },
+    title_color: { type: "color_picker", label: "Title Color" },
+    text_color: { type: "color_picker", label: "Text Color" },
+    module_color: { type: "color_picker", label: "Module Color" },
+    header_footer_color: { type: "color_picker", label: "Header Footer Color" },
+    button_color: { type: "color_picker", label: "Button Color" },
+
     active: { type: "checkbox", label: "Active", default: true },
   };
 };

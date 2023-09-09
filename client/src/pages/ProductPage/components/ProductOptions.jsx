@@ -231,13 +231,11 @@ const ProductOptions = () => {
                   {color_code && (
                     <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />
                   )}
-                  {console.log({ color_products })}
                   <div className="custom-select">
                     <select
                       className="qty_select_dropdown w-100per"
                       onChange={e => {
                         const option = JSON.parse(e.target.value);
-                        console.log({ option });
                         dispatch(update_color(option));
                         update_url({
                           color: option.color,
@@ -316,7 +314,6 @@ const ProductOptions = () => {
                         className="qty_select_dropdown w-100per"
                         onChange={e => {
                           const option = JSON.parse(e.target.value);
-                          console.log({ option });
                           dispatch(update_secondary_color({ option, product, has_add_on, show_add_on }));
                           update_url({
                             color: color,
@@ -731,7 +728,6 @@ export default ProductOptions;
 //                   color_code={color_code}
 //                   onChange={e => {
 //                     const option = e.target.value;
-//                     console.log({ option });
 //                     dispatch(update_color(option));
 //                     update_url({
 //                       color: option.color,
@@ -753,13 +749,11 @@ export default ProductOptions;
 //                   {color_code && (
 //                     <canvas className="mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />
 //                   )}
-//                   {console.log({ color_products })}
 //                   <FormControl className="custom-select">
 //                     <Select
 //                       className="qty_select_dropdown w-100per"
 //                       onChange={e => {
 //                         const option = JSON.parse(e.target.value);
-//                         console.log({ option });
 //                         dispatch(update_color(option));
 //                         update_url({
 //                           color: option.color,
@@ -825,7 +819,6 @@ export default ProductOptions;
 //                     color_code={secondary_color_code}
 //                     onChange={e => {
 //                       const option = e.target.value;
-//                       console.log({ option });
 //                       dispatch(update_secondary_color({ option, product, has_add_on, show_add_on }));
 //                       update_url({
 //                         color: color,
@@ -856,7 +849,6 @@ export default ProductOptions;
 //                         className="qty_select_dropdown w-100per"
 //                         onChange={e => {
 //                           const option = JSON.parse(e.target.value);
-//                           console.log({ option });
 //                           dispatch(update_secondary_color({ option, product, has_add_on, show_add_on }));
 //                           update_url({
 //                             color: color,

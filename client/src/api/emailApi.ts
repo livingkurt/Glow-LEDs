@@ -7,6 +7,7 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
 export const getEmails = async ({
   search,
@@ -112,9 +113,34 @@ export const sendContactEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/contact", contact_info);
       axios.post("/api/emails/contact_confirmation", contact_info);
+      thunkApi.dispatch(showSuccess({ message: `Contact Email Sent` }));
       return data;
     } catch (error) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
+export const viewAnnouncement = createAsyncThunk(
+  "emails/viewAnnouncement",
+  async ({ template }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.post("/api/emails/view_announcement", { template });
+      thunkApi.dispatch(showSuccess({ message: `Preview Updated` }));
+      return data;
+    } catch (error) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    }
+  }
+);
+
+// export const emailApi = createApi({
+//   reducerPath: "emailApi",
+//   baseQuery: fetchBaseQuery({ baseUrl: "/api/emails" }),
+//   endpoints: builder => ({
+//     viewAnnouncement: builder.query({
+//       query: () => "/view_announcement",
+//     }),
+//   }),
+// });
+
+// export const { useViewAnnouncementQuery } = emailApi;

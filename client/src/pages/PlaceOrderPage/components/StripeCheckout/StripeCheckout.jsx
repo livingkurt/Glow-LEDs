@@ -48,9 +48,6 @@ const StripeCheckout = () => {
       });
 
       const { paymentMethod, error } = stripePayment;
-      console.log({ stripePayment });
-
-      console.log({ error });
       if (error) {
         dispatch(setPaymentValidations(error.message));
         dispatch(showError({ message: error.message }));
@@ -86,7 +83,6 @@ const StripeCheckout = () => {
         );
       }
     } catch (error) {
-      console.log({ error });
       dispatch(setPaymentValidations(error.message));
       dispatch(showError({ message: errorMessage(error) }));
     }

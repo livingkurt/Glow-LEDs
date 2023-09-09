@@ -11,8 +11,6 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const [previewUrls, setPreviewUrls] = useState([]);
   const [albumName, setAlbumName] = useState(album);
 
-  console.log({ fieldName, previewUrls });
-
   const handleFileChange = event => {
     const selectedFiles = event.target.files;
     const selectedPreviewUrls = [];

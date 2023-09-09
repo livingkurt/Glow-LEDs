@@ -40,3 +40,48 @@ export const getValueByStringPath = (obj: any, path: string) => {
   }
   return result;
 };
+
+export const getEmptyObjectFromSchema = (schema: any) => {
+  const emptyObject: any = {};
+  Object.keys(schema).forEach(key => {
+    const field = schema[key];
+    if (field.type === "text") {
+      emptyObject[key] = "";
+    }
+    if (field.type === "autocomplete_single") {
+      emptyObject[key] = {};
+    }
+    if (field.type === "image_upload") {
+      emptyObject[key] = "";
+    }
+    if (field.type === "autocomplete_multiple") {
+      emptyObject[key] = [];
+    }
+    if (field.type === "checkbox") {
+      emptyObject[key] = false;
+    }
+    if (field.type === "autocomplete_address") {
+      emptyObject[key] = {};
+    }
+    if (field.type === "text") {
+      emptyObject[key] = "";
+    }
+    if (field.type === "number") {
+      emptyObject[key] = 0;
+    }
+    if (field.type === "date") {
+      emptyObject[key] = "";
+    }
+    if (field.type === "text_multiline") {
+      emptyObject[key] = "";
+    }
+    if (field.type === "object") {
+      emptyObject[key] = {};
+    }
+    if (field.type === "array") {
+      emptyObject[key] = [];
+    }
+    // Add more conditions for other field types if needed
+  });
+  return emptyObject;
+};

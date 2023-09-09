@@ -301,7 +301,6 @@ export const updatePricesAndDispatch = (updatedOrderItems: any, dispatch: any, o
 };
 
 export const updateOrderItem = (index: number, value: any, order: any) => {
-  console.log({ index, value, order });
   const orderItems = order.orderItems.map((item: any, i: number) => {
     if (i === index) {
       return {

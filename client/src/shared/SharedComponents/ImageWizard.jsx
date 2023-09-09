@@ -15,13 +15,6 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
     dispatch(API.getImagesByLink(text));
   };
 
-  // useEffect(() => {
-  //   if (image && text) {
-  //     onChange({ [fieldName]: [...fieldState, image] });
-  //     setText("");
-  //   }
-  // }, [image]);
-
   useEffect(() => {
     if (image && text) {
       // Check if 'fieldState' is an array
@@ -41,8 +34,6 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   }, [image]);
 
   const images = [fieldState].flat();
-
-  console.log({ images });
 
   return (
     <div>

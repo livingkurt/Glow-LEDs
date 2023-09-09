@@ -310,7 +310,6 @@ export const updateRecentlyViewed = product => {
 };
 
 export const determine_secondary_product_name = (name, item) => {
-  console.log({ name, item });
   const { category, subcategory } = item;
   if (category === "diffuser_caps") {
     return name.split(" ")[0];

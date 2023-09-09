@@ -3,7 +3,9 @@ import {
   Box,
   Button,
   Checkbox,
+  ClickAwayListener,
   FormControlLabel,
+  Grid,
   IconButton,
   Paper,
   Skeleton,
@@ -18,9 +20,10 @@ import PropTypes from "prop-types";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
-import { determine_shown_fields, formatDate, getValueByStringPath } from "./glFormHelpers";
+import { determine_shown_fields, formatDate, getEmptyObjectFromSchema, getValueByStringPath } from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
+import { SketchPicker } from "react-color";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import { ArrowBack, ArrowForward, Close, FileCopy } from "@mui/icons-material";
@@ -53,51 +56,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const handleInputChange = (fieldName, value) => {
     setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
     debouncedOnChange({ [fieldName]: value }, fieldName);
-  };
-
-  const getEmptyObjectFromSchema = schema => {
-    const emptyObject = {};
-    Object.keys(schema).forEach(key => {
-      const field = schema[key];
-      if (field.type === "text") {
-        emptyObject[key] = "";
-      }
-      if (field.type === "autocomplete_single") {
-        emptyObject[key] = {};
-      }
-      if (field.type === "image_upload") {
-        emptyObject[key] = "";
-      }
-      if (field.type === "autocomplete_multiple") {
-        emptyObject[key] = [];
-      }
-      if (field.type === "checkbox") {
-        emptyObject[key] = false;
-      }
-      if (field.type === "autocomplete_address") {
-        emptyObject[key] = {};
-      }
-      if (field.type === "text") {
-        emptyObject[key] = "";
-      }
-      if (field.type === "number") {
-        emptyObject[key] = 0;
-      }
-      if (field.type === "date") {
-        emptyObject[key] = "";
-      }
-      if (field.type === "text_multiline") {
-        emptyObject[key] = "";
-      }
-      if (field.type === "object") {
-        emptyObject[key] = {};
-      }
-      if (field.type === "array") {
-        emptyObject[key] = [];
-      }
-      // Add more conditions for other field types if needed
-    });
-    return emptyObject;
   };
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -531,6 +489,62 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       </GLTabPanel>
                     ))}
                 </Paper>
+              );
+            case "color_picker":
+              const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
+              return (
+                <Grid container key={fieldName} alignItems="center" spacing={2}>
+                  <Grid item>
+                    <Box
+                      sx={{
+                        padding: "5px",
+                        background: "#fff",
+                        borderRadius: "4px",
+                        boxShadow: 1,
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        setLocalState({ ...localState, [fieldName + "_picker"]: !localState[fieldName + "_picker"] })
+                      }
+                    >
+                      <Box
+                        sx={{
+                          width: "36px",
+                          height: "14px",
+                          borderRadius: "4px",
+                          bgcolor: fieldState || "#ffffff",
+                        }}
+                      />
+                    </Box>
+                    {localState[fieldName + "_picker"] && (
+                      <ClickAwayListener
+                        onClickAway={() => setLocalState({ ...localState, [fieldName + "_picker"]: false })}
+                      >
+                        <Box sx={{ position: "absolute", zIndex: "2" }}>
+                          <SketchPicker
+                            color={fieldState || "#ffffff"}
+                            presetColors={preset_colors}
+                            onChangeComplete={color => handleInputChange(fieldName, color.hex)}
+                          />
+                        </Box>
+                      </ClickAwayListener>
+                    )}
+                  </Grid>
+                  <Grid item xs>
+                    <TextField
+                      variant="outlined"
+                      type="text"
+                      size="small"
+                      margin="normal"
+                      fullWidth
+                      label={fieldData.label || "Background"}
+                      name={fieldName}
+                      id={fieldName}
+                      value={fieldState || ""}
+                      onChange={e => handleInputChange(fieldName, e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
               );
             default:
               return <div></div>;
