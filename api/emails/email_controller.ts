@@ -402,7 +402,7 @@ export default {
     const waitTime = 10000;
     if (test) {
       // // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
-      const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com"];
+      const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
       send_multiple_emails(test_emails, time, email, template, subject, res);
     } else {
       for (let i = 0; i < iterations; i++) {

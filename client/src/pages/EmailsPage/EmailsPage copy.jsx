@@ -15,7 +15,7 @@ const EmailsPage = () => {
   const [sort, setSortOrder] = useState("");
 
   const category = params.category ? params.category : "";
-  const emailPage = useSelector(state => state.emails.emailPage);
+  const emailPage = useSelector(state => state.emails);
   const { loading, emails, message, error, success } = emailPage;
 
   const dispatch = useDispatch();

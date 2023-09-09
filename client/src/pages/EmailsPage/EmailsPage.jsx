@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditEmailModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
-import { format_date } from "../../utils/helper_functions";
+import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import { format_date, humanize } from "../../utils/helper_functions";
 import { open_create_email_modal, open_edit_email_modal } from "../../slices/emailSlice";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
-import { determineEmailColors } from "./emailsPageHelpers";
+import { determineEmailColors, templates } from "./emailsPageHelpers";
 
 const EmailsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -104,9 +104,33 @@ const EmailsPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_email_modal())}>
-            Create Email
-          </Button>
+          <Box display="flex" alignItems={"center"} gap={2}>
+            <Autocomplete
+              options={templates}
+              getOptionLabel={option => humanize(option)}
+              onChange={(event, newValue) => {
+                // set_link(newValue);
+                if (newValue) {
+                  window.open("/api/templates/" + newValue, "_blank");
+                }
+              }}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label="Choose Email Template"
+                  fullWidth
+                  style={{ width: 300 }}
+                  size="small"
+                  ariant="outlined"
+                />
+              )}
+            />
+            <div>
+              <Button color="primary" variant="contained" onClick={() => dispatch(open_create_email_modal())}>
+                Create Email
+              </Button>
+            </div>
+          </Box>
         }
       />
       <EditEmailModal />

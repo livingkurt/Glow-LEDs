@@ -29,6 +29,7 @@ const emailPage = createSlice({
     email_modal: false,
     message: "",
     error: {},
+    testEmail: true,
   },
   reducers: {
     set_email: (state, { payload }) => {
@@ -65,6 +66,9 @@ const emailPage = createSlice({
     email_uploaded: (state, { payload }) => {
       state.upload_email_modal = false;
       state.remoteVersionRequirement = Date.now();
+    },
+    setTestEmail: (state, { payload }) => {
+      state.testEmail = payload;
     },
   },
   extraReducers: {
@@ -133,7 +137,6 @@ const emailPage = createSlice({
 
       const htmlToReactParser = new HtmlToReactParser();
       const reactElement = htmlToReactParser.parse(payload);
-      console.log({ reactElement });
       state.template = reactElement;
       state.remoteVersionRequirement = Date.now();
     },
@@ -154,5 +157,6 @@ export const {
   close_email_modal,
   open_edit_email_modal,
   email_uploaded,
+  setTestEmail,
 } = emailPage.actions;
 export default emailPage.reducer;

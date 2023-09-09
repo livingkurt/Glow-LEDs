@@ -132,15 +132,20 @@ export const viewAnnouncement = createAsyncThunk(
     }
   }
 );
-
-// export const emailApi = createApi({
-//   reducerPath: "emailApi",
-//   baseQuery: fetchBaseQuery({ baseUrl: "/api/emails" }),
-//   endpoints: builder => ({
-//     viewAnnouncement: builder.query({
-//       query: () => "/view_announcement",
-//     }),
-//   }),
-// });
-
-// export const { useViewAnnouncementQuery } = emailApi;
+export const sendAnnouncement = createAsyncThunk(
+  "emails/sendAnnouncement",
+  async ({ template, subject, test, time }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.post("/api/emails/announcement", {
+        template,
+        subject,
+        test,
+        time,
+      });
+      thunkApi.dispatch(showSuccess({ message: `${test && "Test "}Emails Sent` }));
+      return data;
+    } catch (error) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    }
+  }
+);
