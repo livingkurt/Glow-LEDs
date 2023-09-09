@@ -114,11 +114,11 @@ export const affiliateFormFields = ({
       label: "Pathname",
       permissions: ["admin"],
     },
-    answers: {
-      type: "array",
-      label: "Answers",
-      permissions: ["admin"],
-    },
+    // answers: {
+    //   type: "array",
+    //   label: "Answers",
+    //   permissions: ["admin"],
+    // },
     promoter: {
       type: "checkbox",
       label: "Promoter",
@@ -146,35 +146,39 @@ export const affiliateFormFields = ({
     },
     sponsorMonthlyCheckins: {
       title: "Sponsor Monthly Checkins",
-      type: "array_of_objects",
       labelProp: "sponsorMonthlyCheckins",
-      fields: {
-        month: {
-          type: "autocomplete_single",
-          label: "Month",
-          getOptionLabel: (option: any) => {
-            if (typeof option === "string") {
-              return option;
-            }
+      label: (item: any) => `${item.year} ${item.month}`,
+      type: "array",
+      itemSchema: {
+        type: "object",
+        fields: {
+          month: {
+            type: "autocomplete_single",
+            label: "Month",
+            getOptionLabel: (option: any) => {
+              if (typeof option === "string") {
+                return option;
+              }
+            },
+            options: months,
           },
-          options: months,
-        },
-        year: {
-          type: "number",
-          label: "Year",
-          labelProp: "year",
-          required: true,
-        },
-        questionsConcerns: {
-          type: "text",
-          label: "Questions or Concerns",
-          labelProp: "questionsConcerns",
-          required: true,
-        },
-        numberOfContent: {
-          type: "text",
-          label: "Number of Content",
-          labelProp: "numberOfContent",
+          year: {
+            type: "number",
+            label: "Year",
+            labelProp: "year",
+            required: true,
+          },
+          questionsConcerns: {
+            type: "text",
+            label: "Questions or Concerns",
+            labelProp: "questionsConcerns",
+            required: true,
+          },
+          numberOfContent: {
+            type: "text",
+            label: "Number of Content",
+            labelProp: "numberOfContent",
+          },
         },
       },
     },

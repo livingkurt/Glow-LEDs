@@ -104,7 +104,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
 
   return (
     <>
-      <div></div>
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
@@ -425,7 +424,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                           fieldState.map((item, index) => (
                             <Tab
                               value={index}
-                              label={item[fieldData.label]}
+                              label={
+                                typeof fieldData.label === "function" ? fieldData.label(item) : item[fieldData.label]
+                              }
                               style={{ color: tabIndex === index ? "white" : "lightgray" }}
                             />
                           ))}
