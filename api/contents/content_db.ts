@@ -6,6 +6,7 @@ export default {
       return await Content.find(filter)
         .populate("home_page.image_object")
         .populate("home_page.images_object")
+        .populate("home_page.images_objects")
         .populate("home_page.banner_image_object")
         .populate("home_page.slideshow.image_object")
         .sort(sort)
@@ -23,6 +24,7 @@ export default {
       return await Content.findOne({ _id: id })
         .populate("home_page.image_object")
         .populate("home_page.images_object")
+        .populate("home_page.images_objects")
         .populate("home_page.banner_image_object")
         .populate("home_page.slideshow.image_object");
     } catch (error) {

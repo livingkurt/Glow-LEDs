@@ -23,7 +23,6 @@ import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleA
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import GLNestedForm from "./GLNestedForm";
 import { ArrowBack, ArrowForward, Close } from "@mui/icons-material";
 import GLTabPanel from "../GLTabPanel/GLTabPanel";
 
@@ -38,7 +37,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const [localState, setLocalState] = useState({});
 
   useEffect(() => {
-    console.log({ state });
+    // console.log({ state });
     setLocalState(state);
   }, [state]);
 
@@ -76,6 +75,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
         let fieldState = localState[fieldName] ?? {};
+        if (fieldData.type === "image_upload") {
+          console.log({ state, fieldState, fieldName });
+        }
 
         if (loading) {
           if (fieldData.type === "checkbox") {
@@ -133,14 +135,13 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 />
               );
             case "image_upload":
-              console.log({ fieldState });
               return (
                 <>
                   <ImageWizard
                     fieldData={fieldData}
                     fieldState={fieldState}
                     fieldName={fieldName}
-                    onChange={(value, key) => onChange({ [key]: [...fieldState[key], ...value] })}
+                    onChange={value => handleInputChange(fieldName, value)}
                   />
                 </>
               );

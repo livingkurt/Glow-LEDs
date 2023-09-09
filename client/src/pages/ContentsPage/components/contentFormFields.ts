@@ -13,13 +13,12 @@ export const contentFormFields = ({ content }: any) => {
         //   album: `${content?.home_page?.h1} Images`,
         //   getOptionLabel: (option: any) => option.link,
         // },
-        images_object: {
+        images_objects: {
           type: "image_upload",
           label: "Images",
           // options: images,
-          labelProp: "images_object",
+          labelProp: "images_objects",
           album: `${content?.home_page?.h1} Images`,
-          getOptionLabel: (option: any) => option.link,
         },
         slideshow: {
           type: "array",
@@ -34,20 +33,18 @@ export const contentFormFields = ({ content }: any) => {
                 // options: images,
                 labelProp: "image_object",
                 album: `${content?.home_page?.h1} Images`,
-                getOptionLabel: (option: any) => option.link,
               },
               link: { type: "text", label: "Link" },
             },
           },
         },
         video: { type: "text", label: "Video" },
-        banner_image: {
+        banner_image_object: {
           type: "image_upload",
           label: "Rectangle Image",
           // options: images,
-          labelProp: "banner_image",
+          labelProp: "banner_image_object",
           album: `${content?.home_page?.h1} Images`,
-          getOptionLabel: (option: any) => option.link,
         },
         show_image: { type: "checkbox", label: "Show Image", default: true },
         show_video: { type: "checkbox", label: "Show Video", default: false },

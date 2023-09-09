@@ -6,7 +6,6 @@ import * as API from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
-  console.log({ fieldData, fieldState, onChange, fieldName });
   const dispatch = useDispatch();
   const imagePage = useSelector(state => state.images.imagePage);
   const { image } = imagePage;
@@ -23,10 +22,12 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
     }
   }, [image]);
 
+  const images = [fieldState].flat();
+
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-      <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} type="image" />
+      <ImageUploader onUpload={onChange} album={fieldData.album} type="image" />
       <div className="ai-c g-10px">
         <TextField
           label="Enter an Image ID"
@@ -39,7 +40,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
           Save
         </Button>
       </div>
-      <ImageDisplay images={fieldState} onChange={value => onChange({ [fieldName]: value })} />
+      <ImageDisplay images={images} fieldName={fieldName} onChange={value => onChange({ [fieldName]: value })} />
     </div>
   );
 };
