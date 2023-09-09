@@ -10,7 +10,7 @@ const shippingSchema = {
   state: { type: String, default: "" },
   postalCode: { type: String, default: "" },
   international: { type: Boolean, default: false },
-  country: { type: String, default: "" }
+  country: { type: String, default: "" },
 };
 
 const userSchema = new mongoose.Schema(
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     last_name: { type: String },
     email: {
       type: String,
-      required: true
+      required: true,
     },
     shipping: shippingSchema,
     password: { type: String },
@@ -35,12 +35,12 @@ const userSchema = new mongoose.Schema(
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
     wholesaler: { type: mongoose.Schema.Types.ObjectId, ref: "Wholesaler" },
-    isWholesaler: { type: Boolean },
+    isWholesaler: { type: Boolean, default: false },
     minimum_order_amount: { type: Number },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
