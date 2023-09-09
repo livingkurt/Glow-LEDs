@@ -19,7 +19,7 @@ import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
 import { ProductsDisplayPage } from "../../pages/ProductsGridPage/components";
-import { AnnouncementEmail, EditEmailPage } from "../../pages/EmailsPage/components";
+import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { EditPromoPage, PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
@@ -133,7 +133,6 @@ export const AdminComponents = {
   EditPromoPage,
   EditTeamPage,
   EditChipPage,
-  EditEmailPage,
   PromosPage,
   AffiliatesPage,
   TeamsPage,

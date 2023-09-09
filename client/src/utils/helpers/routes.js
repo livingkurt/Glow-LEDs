@@ -91,7 +91,6 @@ const adminRoutes = [
   { path: "/secure/glow/editteam/:pathname?", element: "EditTeamPage" },
   { path: "/secure/glow/editchip/:id?", element: "EditChipPage" },
   { path: "/secure/glow/editcontent/:id?", element: "EditContentPage" },
-  { path: "/secure/glow/editemail/:id?", element: "EditEmailPage" },
   { path: "/secure/glow/promos", element: "PromosPage" },
   { path: "/secure/glow/affiliates", element: "AffiliatesPage" },
   { path: "/secure/glow/teams", element: "TeamsPage" },
