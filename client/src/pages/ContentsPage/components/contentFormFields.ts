@@ -23,6 +23,7 @@ export const contentFormFields = ({ content }: any) => {
         slideshow: {
           type: "array",
           title: "Slideshow",
+          label: (item: any) => item.label,
           itemSchema: {
             type: "object",
             fields: {
@@ -66,6 +67,7 @@ export const contentFormFields = ({ content }: any) => {
     links: {
       type: "array",
       title: "Links",
+      label: (item: any) => item.label,
       itemSchema: {
         type: "object",
         fields: {
