@@ -131,6 +131,7 @@ const Header = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
+      dispatch(API.listContents({ limit: 3 }));
       findAllGrid_products_a();
       dispatch(API.listChips({}));
     }

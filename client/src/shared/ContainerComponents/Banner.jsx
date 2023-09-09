@@ -1,42 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import useWindowDimensions from "../Hooks/windowDimensions";
-import { API_Content } from "../../utils";
 import { GLButton } from "../GlowLEDsComponents";
+import { useSelector } from "react-redux";
 
 const Banner = () => {
-  const { height, width } = useWindowDimensions();
-  const [content, set_content] = useState([]);
+  const { width } = useWindowDimensions();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      get_display_content();
-    }
-    return () => (clean = false);
-  }, []);
-
-  const get_display_content = async () => {
-    const { data } = await API_Content.get_display_content();
-
-    if (data) {
-      set_content(data[0]);
-    }
-  };
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { contents } = contentPage;
 
   return (
     <div className="banner">
       <div className="max-w-1500px m-auto jc-b">
-        {content && content.banner && (
+        {contents.length > 0 && contents[0] && contents[0].banner && (
           <div className={`row ${width < 600 ? "m-auto" : "ml-10px"}`}>
-            {content.banner.button && content.banner.link && (
-              <Link to={content.banner.link && content.banner.link}>
-                <GLButton className="banner-button">{content.banner.label}</GLButton>
+            {contents[0].banner.button && contents[0].banner.link && (
+              <Link to={contents[0].banner.link && contents[0].banner.link}>
+                <GLButton className="banner-button">{contents[0].banner.label}</GLButton>
               </Link>
             )}
           </div>
         )}
-        {/* </div> */}
         {width > 600 && (
           <div className="row mt-3px social_media_banner">
             <div className="ml-10px">

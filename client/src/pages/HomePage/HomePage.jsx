@@ -18,14 +18,17 @@ const HomePage = () => {
   const [display, setDisplay] = useState(false);
   const [loading, set_loading] = useState(false);
   const [options, set_options] = useState([]);
-  const [products, set_products] = useState([]);
-  const [slideshow, set_slideshow] = useState([]);
   const [search, set_search] = useState("");
   const [message, set_message] = useState("");
   const wrapperRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
   const [promoCode, setPromoCode] = useState("");
+
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { contents } = contentPage;
+
+  console.log({ contents });
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -69,9 +72,6 @@ const HomePage = () => {
     navigate("/collections/all/products?search=" + search);
   };
 
-  const contentPage = useSelector(state => state.contents.contentPage);
-  const { contents } = contentPage;
-
   const featurePage = useSelector(state => state.features);
   const { features } = featurePage;
 
@@ -80,21 +80,20 @@ const HomePage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listContents({ limit: 3 }));
       dispatch(API.listFeatures({}));
       findAllGrid_products_a();
-      get_display_content();
+      // get_display_content();
     }
     return () => (clean = false);
   }, []);
 
-  const get_display_content = async () => {
-    const { data } = await API_Content.get_display_content();
+  // const get_display_content = async () => {
+  //   const { data } = await API_Content.get_display_content();
 
-    if (data) {
-      set_slideshow(data[0].home_page.slideshow);
-    }
-  };
+  //   if (data) {
+  //     set_slideshow(data[0].home_page.slideshow);
+  //   }
+  // };
   const findAllGrid_products_a = async () => {
     set_loading(true);
     const { data } = await API_Products.findAllGrid_products_a();
@@ -169,7 +168,7 @@ const HomePage = () => {
         />
       </Helmet>
 
-      <Loading loading={slideshow.length === 0} />
+      <Loading loading={contents.length > 0 && contents[0]?.home_page?.slideshow?.length === 0} />
       {contents &&
       contents.filter(content => content.active === true)[0] &&
       contents.filter(content => content.active === true)[0]?.home_page?.banner_image ? (
@@ -187,10 +186,9 @@ const HomePage = () => {
       <div>
         {width > 1019 && (
           <div>
-            {slideshow.length > 0 ? (
+            {contents.length > 0 && contents[0]?.home_page?.slideshow?.length > 0 ? (
               <div className="carousel-wrapper pos-rel">
-                {<HomeSlideshow slideshow={slideshow} />}
-                {/* {start !== 0 && <HomeSlideshow products={products} start={start} />} */}
+                {<HomeSlideshow slideshow={contents[0]?.home_page?.slideshow} />}
 
                 <div
                   className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
@@ -326,7 +324,7 @@ const HomePage = () => {
         )}
         {width < 1019 && (
           <div>
-            {slideshow.length > 0 ? (
+            {contents[0]?.home_page?.slideshow.length > 0 ? (
               <div className="carousel-wrapper ">
                 <div
                   className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
@@ -389,8 +387,7 @@ const HomePage = () => {
                     </form>
                   </div>
                 </div>
-                {/* {start > 0 && <HomeSlideshow products={products} start={start} />} */}
-                {<HomeSlideshow slideshow={slideshow} />}
+                {<HomeSlideshow slideshow={contents[0]?.home_page?.slideshow} />}
               </div>
             ) : (
               <div
@@ -459,7 +456,7 @@ const HomePage = () => {
         )}
       </div>
 
-      <div style={{ marginTop: slideshow.length === 0 ? 0 : "-25%" }} className="pv-2rem">
+      <div style={{ marginTop: contents[0]?.home_page?.slideshow.length === 0 ? 0 : "-25%" }} className="pv-2rem">
         <div className="jc-c">
           <div>
             <p

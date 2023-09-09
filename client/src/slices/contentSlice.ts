@@ -4,16 +4,44 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const content = {
-  id: "",
-  content_name: "",
-  application: "",
-  url: "",
-  place_of_purchase: "",
-  date_of_purchase: "",
-  category: "",
-  card: "",
-  amount: 0,
-  documents: [],
+  "home_page": {
+    "h1": "",
+    "image": "",
+    "images": [],
+    "image_object": null,
+    "images_object": [],
+    "images_objects": [],
+    "slideshow": [
+      {
+        "label": "",
+        "image": "",
+        "image_object": null,
+        "link": "",
+      },
+    ],
+    "video": "",
+    "banner_image": "",
+    "banner_image_object": null,
+    "show_image": true,
+    "show_video": false,
+    "h2": "",
+    "p": "",
+    "button": "",
+    "link": "",
+  },
+  "banner": {
+    "label": "",
+    "button": "",
+    "link": "",
+  },
+  "links": [
+    {
+      "label": "",
+      "link": "",
+      "icon": "",
+    },
+  ],
+  "active": true,
 };
 
 const contentPage = createSlice({
@@ -73,7 +101,7 @@ const contentPage = createSlice({
     },
     [API.listContents.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.contents = payload.data;
+      state.contents = payload.contents;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Contents Found";
