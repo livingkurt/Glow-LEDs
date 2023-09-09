@@ -337,3 +337,61 @@ export const updateOrderItem = (index: number, value: any, order: any) => {
   });
   return { orderItems };
 };
+
+// orderLogic.js
+
+export const handleDelete = (value: any, dispatch: any, order: any, isUpdatePricesActive: any) => {
+  const updatedOrderItems = [...value.orderItems];
+  if (isUpdatePricesActive) {
+    updatePricesAndDispatch(updatedOrderItems, dispatch, order);
+  }
+};
+
+export const handleDuplicate = (value: any, dispatch: any, order: any, isUpdatePricesActive: any) => {
+  const updatedOrderItems = [...value.orderItems];
+  if (isUpdatePricesActive) {
+    updatePricesAndDispatch(updatedOrderItems, dispatch, order);
+  }
+};
+
+export const handleProductChange = (index: any, value: any, dispatch: any, order: any, isUpdatePricesActive: any) => {
+  const updatedOrderItems = updateOrderItem(index, value.orderItems[index].product, order);
+  let updatedPrices = {};
+
+  if (isUpdatePricesActive) {
+    updatedPrices = updateOrderPrices({
+      orderItems: updatedOrderItems.orderItems,
+      shippingPrice: order.shippingPrice,
+      taxPrice: order.taxPrice,
+      tip: order.tip,
+    });
+  }
+
+  const finalUpdatedOrder = {
+    ...order,
+    orderItems: updatedOrderItems.orderItems,
+    ...updatedPrices,
+  };
+
+  dispatch(set_order(finalUpdatedOrder));
+};
+
+export const handleQtyChange = (value: any, dispatch: any, order: any, isUpdatePricesActive: any) => {
+  let updatedPrices = {};
+
+  if (isUpdatePricesActive) {
+    updatedPrices = updateOrderPrices({
+      orderItems: value.orderItems,
+      shippingPrice: order.shippingPrice,
+      taxPrice: order.taxPrice,
+      tip: order.tip,
+    });
+  }
+
+  const finalUpdatedOrder = {
+    ...order,
+    ...updatedPrices,
+  };
+
+  dispatch(set_order(finalUpdatedOrder));
+};

@@ -4,29 +4,12 @@ import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GL
 import { open_edit_order_modal, set_edit_order_modal, set_order } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import {
-  AppBar,
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
-import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
-import CloseIcon from "@mui/icons-material/Close";
-import { updateOrderItem, updateOrderPrices, updatePricesAndDispatch } from "../ordersPageHelpers";
-import { emptyOrder } from "../../../emptyState/order";
+import { handleDelete, handleDuplicate, handleProductChange, handleQtyChange } from "../ordersPageHelpers";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
-
-  const [tabIndex, setTabIndex] = useState(0);
   const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
 
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -56,69 +39,6 @@ const EditOrderModal = () => {
     order,
   });
 
-  // When adding a new item
-  const handleAddNewItem = () => {
-    const emptyOrderItem = {
-      ...emptyOrder.orderItems[0],
-      name: "New Item",
-    };
-
-    const updatedOrderItems = [...order.orderItems, emptyOrderItem];
-    let updatedPrices = {};
-
-    if (isUpdatePricesActive) {
-      updatedPrices = updateOrderPrices({
-        orderItems: updatedOrderItems,
-        shippingPrice: order.shippingPrice,
-        taxPrice: order.taxPrice,
-        tip: order.tip,
-      });
-    }
-
-    const updatedOrder = {
-      ...order,
-      orderItems: updatedOrderItems,
-      ...updatedPrices,
-    };
-
-    dispatch(set_order(updatedOrder));
-
-    // Move to the new tab
-    setTabIndex(updatedOrderItems.length - 1);
-  };
-
-  // When deleting an item
-  const handleDeleteItem = index => {
-    const updatedOrderItems = [...order.orderItems];
-    updatedOrderItems.splice(index, 1);
-    let updatedPrices = {};
-
-    if (isUpdatePricesActive) {
-      updatedPrices = updateOrderPrices({
-        orderItems: updatedOrderItems,
-        shippingPrice: order.shippingPrice,
-        taxPrice: order.taxPrice,
-        tip: order.tip,
-      });
-    }
-
-    const updatedOrder = {
-      ...order,
-      orderItems: updatedOrderItems,
-      ...updatedPrices,
-    };
-
-    dispatch(set_order(updatedOrder));
-
-    // Move to the closest active tab
-    setTabIndex(prevIndex => {
-      if (prevIndex === updatedOrderItems.length) {
-        return updatedOrderItems.length - 1;
-      }
-      return prevIndex > index ? prevIndex - 1 : prevIndex;
-    });
-  };
-
   return (
     <div>
       <GLActiionModal
@@ -136,155 +56,40 @@ const EditOrderModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
+        <FormControlLabel
+          control={
+            <Checkbox
+              name={"is_updated"}
+              size="large"
+              onChange={e => setIsUpdatePricesActive(e.target.checked)}
+              checked={isUpdatePricesActive}
+            />
+          }
+          label={"Update Prices"}
+        />
         <GLForm
           formData={formFields}
           state={order}
           onChange={(value, fieldName, index) => {
             console.log({ value, fieldName });
-            if (fieldName === "delete") {
-              const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got changed
-              updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-            } else if (fieldName === "duplicate") {
-              const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got duplicated
-              updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-            } else if (fieldName !== undefined) {
-              // Extract the actual field name
-              const actualFieldName = fieldName.split(".")[1] || fieldName;
 
-              // Dispatch the main state update first
+            if (fieldName === "delete") {
+              handleDelete(value, dispatch, order, isUpdatePricesActive);
+            } else if (fieldName === "duplicate") {
+              handleDuplicate(value, dispatch, order, isUpdatePricesActive);
+            } else if (fieldName !== undefined) {
+              const actualFieldName = fieldName.split(".")[1] || fieldName;
               dispatch(set_order(value));
 
-              // If either the 'product' or 'qty' field was changed, do additional updates
               if (actualFieldName === "product") {
-                // const updatedOrderItems = [...order.orderItems];
-                const updatedOrderItems = updateOrderItem(index, value.orderItems[index].product, order);
-                // updatedOrderItems[index] = { ...updatedOrderItems[index], ...value.orderItems[index] };
-
-                let updatedPrices = {};
-
-                if (isUpdatePricesActive) {
-                  updatedPrices = updateOrderPrices({
-                    orderItems: updatedOrderItems.orderItems,
-                    shippingPrice: order.shippingPrice,
-                    taxPrice: order.taxPrice,
-                    tip: order.tip,
-                  });
-                }
-
-                const finalUpdatedOrder = {
-                  ...order,
-                  orderItems: updatedOrderItems.orderItems,
-                  ...updatedPrices,
-                };
-
-                // Dispatch the updated order
-                dispatch(set_order(finalUpdatedOrder));
+                handleProductChange(index, value, dispatch, order, isUpdatePricesActive);
               } else if (actualFieldName === "qty") {
-                let updatedPrices = {};
-
-                if (isUpdatePricesActive) {
-                  updatedPrices = updateOrderPrices({
-                    orderItems: value.orderItems,
-                    shippingPrice: order.shippingPrice,
-                    taxPrice: order.taxPrice,
-                    tip: order.tip,
-                  });
-                }
-
-                const finalUpdatedOrder = {
-                  ...order,
-                  ...updatedPrices,
-                };
-
-                // Dispatch the updated order
-                dispatch(set_order(finalUpdatedOrder));
+                handleQtyChange(value, dispatch, order, isUpdatePricesActive);
               }
             } else {
               dispatch(set_order(value));
             }
           }}
-          // onChange={(value, fieldName, index) => {
-          //   console.log({ value, fieldName });
-          //   if (fieldName === "delete") {
-          //     const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got changed
-          //     updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-          //   } else if (fieldName === "duplicate") {
-          //     const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got duplicated
-          //     updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-          //   } else if (fieldName !== undefined) {
-          //     // Extract the actual field name
-          //     const actualFieldName = fieldName.split(".")[1] || fieldName;
-
-          //     // Dispatch the main state update first
-          //     dispatch(set_order(value));
-
-          //     // If either the 'product' or 'qty' field was changed, do additional updates
-          //     if (actualFieldName === "product" || actualFieldName === "qty") {
-          //       const updatedOrderItems = [...order.orderItems];
-          //       updatedOrderItems[index] = { ...updatedOrderItems[index], ...value.orderItems[index] };
-
-          //       let updatedPrices = {};
-
-          //       if (isUpdatePricesActive) {
-          //         updatedPrices = updateOrderPrices({
-          //           orderItems: updatedOrderItems,
-          //           shippingPrice: order.shippingPrice,
-          //           taxPrice: order.taxPrice,
-          //           tip: order.tip,
-          //         });
-          //       }
-
-          //       const finalUpdatedOrder = {
-          //         ...order,
-          //         orderItems: updatedOrderItems,
-          //         ...updatedPrices,
-          //       };
-
-          //       // Dispatch the updated order
-          //       dispatch(set_order(finalUpdatedOrder));
-          //     }
-          //   } else {
-          //     dispatch(set_order(value));
-          //   }
-          // }}
-          // onChange={(value, action, index) => {
-          // if (action === "delete") {
-          //   const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got changed
-          //   updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-          // } else if (action === "duplicate") {
-          //   const updatedOrderItems = [...value.orderItems]; // Assuming that 'orderItems' is the field that got duplicated
-          //   updatePricesAndDispatch(updatedOrderItems, dispatch, order);
-          //   } else if (action !== undefined) {
-          //     const actualFieldName = action.split(".")[1] || action; // Assuming action can be fieldName for other updates
-
-          //     if (actualFieldName === "product" || actualFieldName === "qty") {
-          //       const updatedOrderItems = [...order.orderItems];
-          //       updatedOrderItems[index] = { ...updatedOrderItems[index], ...value.orderItems[index] };
-
-          //       let updatedPrices = {};
-
-          //       if (isUpdatePricesActive) {
-          //         updatedPrices = updateOrderPrices({
-          //           orderItems: updatedOrderItems,
-          //           shippingPrice: order.shippingPrice,
-          //           taxPrice: order.taxPrice,
-          //           tip: order.tip,
-          //         });
-          //       }
-
-          //       const finalUpdatedOrder = {
-          //         ...order,
-          //         orderItems: updatedOrderItems,
-          //         ...updatedPrices,
-          //       };
-
-          //       // Dispatch the updated order
-          //       dispatch(set_order(finalUpdatedOrder));
-          //     }
-          //   } else {
-          //     dispatch(set_order(value));
-          //   }
-          // }}
           loading={loading && loading_users}
         />
       </GLActiionModal>
