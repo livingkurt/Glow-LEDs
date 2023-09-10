@@ -16,7 +16,6 @@ const emailSchema = new mongoose.Schema(
     images: { type: Array },
     image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    images_objects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     show_image: { type: Boolean, default: true },
     h2: { type: String },
     p: { type: String },

@@ -13,11 +13,11 @@ export const contentFormFields = ({ content }: any) => {
         //   album: `${content?.home_page?.h1} Images`,
         //   getOptionLabel: (option: any) => option.link,
         // },
-        images_objects: {
+        images_object: {
           type: "image_upload",
           label: "Images",
           // options: images,
-          labelProp: "images_objects",
+          labelProp: "images_object",
           album: `${content?.home_page?.h1} Images`,
         },
         slideshow: {

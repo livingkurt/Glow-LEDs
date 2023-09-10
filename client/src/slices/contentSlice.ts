@@ -10,7 +10,6 @@ const content = {
     "images": [],
     "image_object": null,
     "images_object": [],
-    "images_objects": [],
     "slideshow": [
       {
         "label": "",

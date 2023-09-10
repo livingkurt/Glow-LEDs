@@ -14,7 +14,6 @@ const home_page_schema = {
   images: { type: Array },
   image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-  images_objects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
   slideshow: [slideshow_schema],
   video: { type: String },
   banner_image: { type: String },

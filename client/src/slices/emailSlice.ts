@@ -18,7 +18,6 @@ const email = {
   "images": [],
   "image_object": null,
   "images_object": [],
-  "images_objects": [],
   "show_image": true,
   "h2": "",
   "p": "",

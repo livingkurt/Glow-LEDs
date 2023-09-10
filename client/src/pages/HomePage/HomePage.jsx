@@ -171,10 +171,10 @@ const HomePage = () => {
       <Loading loading={contents.length > 0 && contents[0]?.home_page?.slideshow?.length === 0} />
       {contents &&
       contents.filter(content => content.active === true)[0] &&
-      contents.filter(content => content.active === true)[0]?.home_page?.banner_image ? (
+      contents.filter(content => content.active === true)[0]?.home_page?.banner_image_object.link ? (
         <img
           style={{ borderRadius: "20px", width: "100%" }}
-          src={contents.filter(content => content.active === true)[0]?.home_page?.banner_image}
+          src={contents.filter(content => content.active === true)[0]?.home_page?.banner_image_object.link}
           className="jc-c mb-20px"
           alt="Promo"
           title="Promo Image"
@@ -523,12 +523,12 @@ const HomePage = () => {
                 >
                   <div>
                     <h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">{home_page.h1}</h4>
-                    {home_page.show_image && home_page.images && (
+                    {home_page.show_image && home_page.images_object && (
                       <div className="m-auto jc-c max-w-300px">
                         <Link to={home_page.link}>
                           <img
                             style={{ borderRadius: "20px", width: "100%" }}
-                            src={home_page.images[0]}
+                            src={home_page?.images_object[0]?.link}
                             className="max-w-300px jc-c m-auto"
                             alt="Promo"
                             title="Promo Image"
@@ -538,12 +538,12 @@ const HomePage = () => {
                     )}
 
                     <div className="m-auto jc-c max-w-300px">
-                      {!home_page.show_image && home_page.images && (
+                      {!home_page.show_image && home_page.images_object && (
                         <Link to={home_page.link} className="home_page_pictures">
-                          {home_page.images.map((image, index) => (
+                          {home_page?.images_object.map((image, index) => (
                             <img
                               key={index}
-                              src={image}
+                              src={image.link}
                               className={"w-100per br-20px m-auto image_" + (index + 1)}
                               alt="Promo"
                               title="Promo Image"

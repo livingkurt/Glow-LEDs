@@ -57,11 +57,11 @@ export default ({
                     <tbody>
                       <tr>
                         ${
-                          images[0]
+                          images[0]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[0]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[0]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -70,11 +70,11 @@ export default ({
                             : ""
                         }
                         ${
-                          images[1]
+                          images[1]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[1]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[1]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -89,11 +89,11 @@ export default ({
                     <tbody>
                       <tr>
                         ${
-                          images[2]
+                          images[2]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[2]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[2]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -102,11 +102,11 @@ export default ({
                             : ""
                         }
                         ${
-                          images[3]
+                          images[3]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[3]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[3]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -121,11 +121,11 @@ export default ({
                       <tbody>
                         <tr>
                           ${
-                            images[4]
+                            images[4]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[4]} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[4]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -134,11 +134,11 @@ export default ({
                               : ""
                           }
                           ${
-                            images[5]
+                            images[5]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[5]} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[5]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -154,11 +154,11 @@ export default ({
                       <tbody>
                         <tr>
                           ${
-                            images[6]
+                            images[6]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[6]} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[6]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -167,11 +167,11 @@ export default ({
                               : ""
                           }
                           ${
-                            images[7]
+                            images[7]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[7]} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[7]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
