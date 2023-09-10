@@ -42,10 +42,10 @@ const ContactPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      // if (successContactSend) {
-      //   navigate("/pages/complete/email");
-      //   dispatch(setSuccessContactSend(false));
-      // }
+      if (successContactSend) {
+        navigate("/pages/complete/email");
+        dispatch(setSuccessContactSend(false));
+      }
     }
     return () => (clean = false);
   }, [navigate, successContactSend]);
