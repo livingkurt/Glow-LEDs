@@ -13,12 +13,13 @@ const TopCategories = ({ category_items, closeMenu }) => {
         <div className="wrapper">
           {category_items &&
             category_items.slice(0, 4).map((item, index) => {
+              console.log({ item });
               return (
                 <div className={`product jc-c m-auto`} style={{ height: "unset" }} key={index}>
                   {item.label && (
                     <Link to={item.link} onClick={closeMenu} className="column jc-c ta-c">
                       <label className="mt-0px fs-14px title_font mb-10px"> {humanize(item.label)}</label>
-                      {item && item.image && (
+                      {item && item.image_object && (
                         <LazyImage
                           className="br-20px"
                           alt={item.label}
@@ -29,7 +30,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
                             objectFit: "cover",
                           }}
                           effect="blur"
-                          src={item.image}
+                          src={item.image_object.link}
                         />
                       )}
                     </Link>

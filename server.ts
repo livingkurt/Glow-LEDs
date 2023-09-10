@@ -13,6 +13,7 @@ import config from "./config";
 const cors = require("cors");
 const passport = require("passport");
 const compression = require("compression");
+const dns = require("dns");
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
@@ -113,6 +114,11 @@ app.post("/api/gcode", async (req: any, res: any) => {
 app.get("/api/bugsnag-test", function (req, res) {
   Bugsnag.notify(new Error("Test error"));
   res.send("Test error sent to Bugsnag");
+});
+
+dns.resolve("sessions.bugsnag.com", function (err: any, addresses: any) {
+  if (err) console.log(err);
+  console.log("addresses:", addresses);
 });
 
 //   // Start express

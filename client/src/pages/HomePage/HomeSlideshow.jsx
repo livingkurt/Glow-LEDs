@@ -107,7 +107,7 @@ const HomeSlideshow = ({ slideshow }) => {
               {slide.label}
             </GLButton>
           </Link>
-          <img key={index} src={slide.image} draggable={false} alt="carousel" title="carousel item" />
+          <img key={index} src={slide.image_object.link} draggable={false} alt="carousel" title="carousel item" />
         </div>
       ))}
     </Carousel>

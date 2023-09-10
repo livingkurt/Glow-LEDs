@@ -1,15 +1,11 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { mobile_check } from "../../../utils/react_helper_functions";
-import { API_Content } from "../../../utils";
-import { Loading } from "../../SharedComponents";
-import { determine_total, shuffle } from "../../../utils/helper_functions";
+import { determine_total } from "../../../utils/helper_functions";
 import { GLButton, GLTooltip } from "../../GlowLEDsComponents";
 import { CartItem, RecentlyViewed, TopCategories } from "./components";
-import { checkoutHandler, determine_wholesale_proceed, useOutsideAlerter } from "./cartHelpers";
-import LoadingInside from "../../SharedComponents/LoadingInside";
-import { Divider, Drawer, IconButton } from "@mui/material";
+import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
+import { Drawer, IconButton } from "@mui/material";
 import { setCartDrawer } from "../../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -24,28 +20,11 @@ const Cart = () => {
   const { my_cart, cartDrawer } = cartPage;
   const { cartItems } = my_cart;
 
-  const [category_items, set_category_items] = useState([]);
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { contents } = contentPage;
 
   const closeMenu = () => {
     dispatch(setCartDrawer(false));
-  };
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      get_display_content();
-    }
-    return () => (clean = false);
-  }, []);
-
-  const get_display_content = async () => {
-    const { data } = await API_Content.get_display_content();
-
-    if (data && data[0]) {
-      if (data[0].home_page && data[0].home_page.slideshow) {
-        set_category_items(shuffle(data[0].home_page.slideshow));
-      }
-    }
   };
 
   const handleCheckout = useCallback(
@@ -106,7 +85,10 @@ const Cart = () => {
               <div className="p-1rem ta-c w-100per max-w-500px">
                 <div className="ta-c w-100per">Cart is Empty</div>
                 <RecentlyViewed closeMenu={closeMenu} />
-                <TopCategories category_items={category_items} closeMenu={closeMenu} />
+                <TopCategories
+                  category_items={contents.length > 0 && contents[0].home_page?.slideshow}
+                  closeMenu={closeMenu}
+                />
               </div>
             ) : (
               <div
