@@ -1,4 +1,3 @@
-export { default as ShippingSpeed } from "./InternationalShippingSpeed";
 export { default as ShippingChoice } from "./ShippingChoice";
 export { default as AddressAutocomplete } from "./GoogleAutocomplete";
 export { default as EmailStep } from "./EmailStep";

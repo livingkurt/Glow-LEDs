@@ -271,7 +271,7 @@ const placeOrder = createSlice({
         tip === 0 || tip === "" || isNaN(tip)
           ? items_price + shippingPrice + state.taxPrice
           : items_price + shippingPrice + state.taxPrice + parseInt(tip);
-      state.free_shipping_message = "";
+      state.free_shipping_message = "------";
       state.show_message = "";
       if (shipping) {
         state.shippingPrice = previousShippingPrice;
@@ -327,6 +327,7 @@ const placeOrder = createSlice({
       state.shippingPrice = 0;
       state.previousShippingPrice = 0;
       state.hide_pay_button = true;
+      state.free_shipping_message = "------";
       state.shipping_rate = {};
       state.show_payment = false;
     },

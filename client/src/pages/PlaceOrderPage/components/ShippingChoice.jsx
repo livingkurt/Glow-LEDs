@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import InternationalShippingSpeed from "./InternationalShippingSpeed";
 import { useSelector, useDispatch } from "react-redux";
 import {
   determine_service,
@@ -69,9 +68,9 @@ const ShippingChoice = () => {
       ).toFixed(2)}`;
 
   const choose_shipping_rate = rate => {
-    console.log({ rate });
+    const sortedRates = normalizeDomesticRates(shipping_rates.rates);
     const freeShipping =
-      !shipping.international && items_price > 50 && mapServiceName(rate.service) === "Standard" ? true : false;
+      !shipping.international && items_price > 50 && rate.rate === sortedRates[0].rate ? true : false;
     dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping }));
     const promo_code_storage = sessionStorage.getItem("promo_code");
     if (promo_code_storage && promo_code_storage.length > 0) {
