@@ -132,7 +132,7 @@ export const normalizeOrderSearch = (query: any) => {
   } else if (query.search && query.search.substring(0, 1) === "#") {
     search = query.search
       ? {
-          promo_code: query.search.slice(1, query.search.length).toLowerCase(),
+          promo_code: query.search.slice(1, query.search.length),
         }
       : {};
   } else if (query.search && query.search.match(USPS_REGEX)) {

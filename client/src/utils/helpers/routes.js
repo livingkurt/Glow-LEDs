@@ -1,9 +1,7 @@
 const routes = [
-  { path: "/account/login", element: "LoginPage" },
   { path: "/account/verified/:id", element: "VerifiedPage" },
   { path: "/account/checkemail", element: "CheckEmailPage" },
   { path: "/account/changepassword", element: "ChangePasswordPage" },
-  { path: "/account/register", element: "RegisterPage" },
   { path: "/account/passwordreset", element: "PasswordResetPage" },
   { path: "/account/resetpassword/:id", element: "ResetPasswordPage" },
 

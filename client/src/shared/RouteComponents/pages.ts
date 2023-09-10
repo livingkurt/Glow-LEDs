@@ -30,10 +30,7 @@ import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
 import { ImagesPage } from "../../pages/ImagesPage";
-import { LoginPage } from "../../pages/LoginPage";
-import VerifiedPage from "../../pages/LoginPage/components/VerifiedPage";
 import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfiePage/components";
-import { RegisterPage } from "../../pages/RegisterPage";
 import ShippingPage from "../../pages/ProfiePage/components/UserShippingPage";
 import { CartPage } from "../../pages/CartPage";
 import { ProductsGridPage } from "../../pages/ProductsGridPage";
@@ -57,20 +54,16 @@ import { FAQPage } from "../../pages/FAQPage";
 import { SitemapPage } from "../../pages/SitemapPage";
 import { MusicPage } from "../../pages/MusicPage";
 import { CompletePage } from "../../pages/CompletePage";
-import { CheckEmailPage } from "../../pages/LoginPage/components";
 import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
 import TrackOrderPage from "../../pages/TrackOrderPage/TrackOrderPage";
 
 export const Components = {
-  LoginPage,
   PlaceOrderPage,
   OrderPage,
-  VerifiedPage,
   ChangePasswordPage,
   PasswordResetPage,
   ResetPasswordPage,
-  RegisterPage,
   ShippingPage,
   CartPage,
   ProductsGridPage,
@@ -94,7 +87,6 @@ export const Components = {
   SitemapPage,
   MusicPage,
   CompletePage,
-  CheckEmailPage,
   AffiliateTermsPage,
   TutorialsGridPage,
   TrackOrderPage,
