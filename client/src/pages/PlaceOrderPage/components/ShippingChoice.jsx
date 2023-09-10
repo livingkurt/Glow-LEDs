@@ -3,8 +3,15 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useSelector, useDispatch } from "react-redux";
 import {
   determine_service,
+  displayRate,
+  getShippingInfo,
+  isFasterShipping,
+  isFreeShipping,
   mapCarrierName,
   mapServiceName,
+  normalizeDomesticRates,
+  normalizeInternationalRates,
+  processingTime,
   serviceNames,
   toTitleCaseSnakeCase,
 } from "../placeOrderHelpers";
@@ -13,6 +20,7 @@ import {
   chooseShippingRateBasic,
   chooseShippingRateWithPromo,
   finalizeShippingRate,
+  openProcessingTimeModal,
   re_choose_shipping_rate,
   setModalShown,
   setOpen,
@@ -48,34 +56,13 @@ const ShippingChoice = () => {
     dispatch(set_hide_pay_button(true));
   }, [shipping_rates.rates, dispatch]);
 
-  const normalizeDomesticRates = rates => {
-    const USPSRates = rates.filter(rate => rate.carrier === "USPS");
-    const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
-    const sortedUSPSRates = USPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-    const sortedUPSRates = UPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-    const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
-    return selectedRates;
-  };
-
-  const normalizeInternationalRates = rates => {
-    return [...rates].sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-  };
-
-  const displayRate = current_shipping_speed.freeShipping
-    ? "Free"
-    : `$${parseFloat(
-        shipping.international ? current_shipping_speed.rate.rate : current_shipping_speed.rate.retail_rate
-      ).toFixed(2)}`;
-
   const choose_shipping_rate = rate => {
     const sortedRates = normalizeDomesticRates(shipping_rates.rates);
-    const freeShipping =
-      !shipping.international && items_price > 50 && rate.rate === sortedRates[0].rate ? true : false;
+    const freeShipping = isFreeShipping({ shipping, items_price, rate, sortedRates });
     dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping }));
     const promo_code_storage = sessionStorage.getItem("promo_code");
     if (promo_code_storage && promo_code_storage.length > 0) {
-      const promoPayload = { promo_code_storage };
-      dispatch(chooseShippingRateWithPromo(promoPayload));
+      dispatch(chooseShippingRateWithPromo({ promo_code_storage }));
       dispatch(activatePromo({ items_price, tax_rate, show_message, code: promo_code_storage, promos }));
     }
 
@@ -87,17 +74,11 @@ const ShippingChoice = () => {
       choose_shipping_rate(rate);
       return;
     }
-    const processingTime =
-      cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]));
-    if (
-      ((!shipping.international && serviceNames[index] !== "USPS: Standard") ||
-        (shipping.international && mapServiceName(rate.service) !== "First Class")) &&
-      processingTime
-    ) {
-      console.log({ rate });
-      dispatch(setTempShippingRate(rate));
-      dispatch(setModalShown(true));
-      dispatch(setOpen(true));
+    const hasProcessingTime = processingTime({ cartItems });
+    const chooseFasterShipping = isFasterShipping({ shipping, rate, index });
+
+    if (chooseFasterShipping && hasProcessingTime) {
+      dispatch(openProcessingTimeModal({ rate }));
     } else {
       choose_shipping_rate(rate);
     }
@@ -170,24 +151,19 @@ const ShippingChoice = () => {
           <div className="shipping_rates jc-b w-100per ">
             <div className="jc-b w-100per">
               <div>
-                {shipping &&
-                  shipping.international &&
-                  `${mapCarrierName(current_shipping_speed.rate.carrier)}: ${mapServiceName(
-                    current_shipping_speed.rate.service
-                  )}`}
-                {shipping &&
-                  !shipping.international &&
-                  `${
-                    serviceNames[
-                      normalizeDomesticRates(shipping_rates.rates).findIndex(
-                        rate => rate.carrier === current_shipping_speed.rate.carrier
-                      )
-                    ]
-                  }`}
+                {getShippingInfo(
+                  shipping,
+                  current_shipping_speed,
+                  shipping_rates,
+                  serviceNames,
+                  mapCarrierName,
+                  mapServiceName,
+                  normalizeDomesticRates
+                )}
               </div>
               <div className="jc-b max-w-150px w-100per">
                 <div>{determine_service(current_shipping_speed.rate)}</div>
-                <div>{displayRate}</div>
+                <div>{displayRate({ current_shipping_speed, shipping })}</div>
               </div>
             </div>
           </div>

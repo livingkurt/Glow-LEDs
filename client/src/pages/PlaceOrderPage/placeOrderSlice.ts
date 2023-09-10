@@ -204,6 +204,11 @@ const placeOrder = createSlice({
     setModalText: (state, { payload }) => {
       state.modalText = payload;
     },
+    openProcessingTimeModal: (state, { payload }) => {
+      state.shipping_rate = payload.rate;
+      state.modalShown = true;
+      state.open = true;
+    },
 
     nextStep: (state, { payload }) => {
       if (payload === "email") {
@@ -484,6 +489,7 @@ export const {
   setShippingSaved,
   setModalText,
   setTempShippingRate,
+  openProcessingTimeModal,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

@@ -68,3 +68,58 @@ export const mapCarrierName = carrier => {
 };
 
 export const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];
+
+export const isFreeShipping = ({ shipping, items_price, rate, sortedRates }) => {
+  return !shipping.international && items_price > 50 && rate.rate === sortedRates[0].rate ? true : false;
+};
+
+export const displayRate = ({ current_shipping_speed, shipping }) =>
+  current_shipping_speed.freeShipping
+    ? "Free"
+    : `$${parseFloat(
+        shipping.international ? current_shipping_speed.rate.rate : current_shipping_speed.rate.retail_rate
+      ).toFixed(2)}`;
+
+export const normalizeDomesticRates = rates => {
+  const USPSRates = rates.filter(rate => rate.carrier === "USPS");
+  const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
+  const sortedUSPSRates = USPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+  const sortedUPSRates = UPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+  const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
+  return selectedRates;
+};
+
+export const normalizeInternationalRates = rates => {
+  return [...rates].sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+};
+
+export const getShippingInfo = (
+  shipping,
+  current_shipping_speed,
+  shipping_rates,
+  serviceNames,
+  mapCarrierName,
+  mapServiceName,
+  normalizeDomesticRates
+) => {
+  if (shipping) {
+    if (shipping.international) {
+      return `${mapCarrierName(current_shipping_speed.rate.carrier)}: ${mapServiceName(
+        current_shipping_speed.rate.service
+      )}`;
+    } else {
+      const index = normalizeDomesticRates(shipping_rates.rates).findIndex(
+        rate => rate.carrier === current_shipping_speed.rate.carrier
+      );
+      return serviceNames[index];
+    }
+  }
+  return "";
+};
+
+export const processingTime = ({ cartItems }) =>
+  cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]));
+
+export const isFasterShipping = ({ shipping, rate, index }) =>
+  (!shipping.international && serviceNames[index] !== "USPS: Standard") ||
+  (shipping.international && mapServiceName(rate.service) !== "First Class");
