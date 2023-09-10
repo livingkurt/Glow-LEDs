@@ -370,15 +370,14 @@ const theme = {
         },
       },
     },
-    // MuiInputLabel: {
-    //   styleOverrides: {
-    //     root: {
-    //       "&.Mui-focused": {
-    //         color: "white",
-    //       },
-    //     },
-    //   },
-    // },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: "1.2rem", // Set the font size you desire here
+          lineHeight: "1.5",
+        },
+      },
+    },
   },
   shadows,
   typography,

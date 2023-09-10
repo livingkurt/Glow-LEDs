@@ -33,7 +33,6 @@ import {
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
-import { Info } from "@mui/icons-material";
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
@@ -44,7 +43,6 @@ const ShippingStep = () => {
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {
-    shipping_rates,
     hide_pay_button,
     show_shipping,
     show_payment,
@@ -64,7 +62,6 @@ const ShippingStep = () => {
     shippingSaved,
     shippingValidations,
     modalText,
-    email,
   } = placeOrder;
 
   const {

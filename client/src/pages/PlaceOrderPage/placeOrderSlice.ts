@@ -3,7 +3,7 @@ import * as API from "../../api";
 
 const initialState = {
   shipping_rates: {},
-  current_shipping_speed: { rate: { retail_rate: "", rate: "", speed: "" }, speed: "", name: "", freeShipping: false },
+  current_shipping_speed: { rate: { retail_rate: "", rate: "", speed: "" }, freeShipping: false },
   shipment_id: "",
   shipping_rate: {},
   hide_pay_button: true,
@@ -334,6 +334,9 @@ const placeOrder = createSlice({
       const { errors } = payload;
       state.shippingValidations = errors;
     },
+    setTempShippingRate: (state, { payload }) => {
+      state.shipping_rate = payload;
+    },
     setFreeShipping: (state, { payload }) => {
       state.loading = false;
       state.hide_pay_button = false;
@@ -343,7 +346,8 @@ const placeOrder = createSlice({
       state.show_shipping_complete = true;
     },
     chooseShippingRateBasic: (state, { payload }) => {
-      const { rate, speed, name, freeShipping } = payload;
+      const { rate, freeShipping, shipping } = payload;
+      console.log({ rate, freeShipping, shipping });
 
       if (freeShipping) {
         state.loading = false;
@@ -353,12 +357,12 @@ const placeOrder = createSlice({
         state.loading_shipping = false;
         state.show_shipping_complete = true;
       } else {
-        state.shippingPrice = parseFloat(rate.retail_rate || rate.rate);
-        state.previousShippingPrice = parseFloat(rate.retail_rate || rate.rate);
+        state.shippingPrice = parseFloat(shipping.international ? rate.rate : rate.retail_rate);
+        state.previousShippingPrice = parseFloat(shipping.international ? rate.rate : rate.retail_rate);
       }
       state.hide_pay_button = false;
       state.shipping_rate = rate;
-      state.current_shipping_speed = { rate, speed, name, freeShipping };
+      state.current_shipping_speed = { rate, freeShipping };
     },
     chooseShippingRateWithPromo: (state, { payload }) => {
       const { promo_code_storage } = payload;
@@ -478,6 +482,7 @@ export const {
   clearValidations,
   setShippingSaved,
   setModalText,
+  setTempShippingRate,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

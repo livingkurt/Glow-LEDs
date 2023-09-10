@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setOpen } from "../placeOrderSlice";
 
-const ProcessingConfirmModal = ({ choose_shipping_rate, serviceName, rate }) => {
+const ProcessingConfirmModal = ({ choose_shipping_rate, rate }) => {
   const dispatch = useDispatch();
   const placeOrder = useSelector(state => state.placeOrder);
   const { open } = placeOrder;
@@ -20,7 +20,7 @@ const ProcessingConfirmModal = ({ choose_shipping_rate, serviceName, rate }) => 
   };
 
   const handleConfirm = rate => {
-    choose_shipping_rate(rate, rate.service, serviceName);
+    choose_shipping_rate(rate);
     dispatch(setOpen(false));
   };
   return (

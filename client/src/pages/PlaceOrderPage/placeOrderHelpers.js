@@ -49,7 +49,7 @@ export const mapServiceName = service => {
   const serviceMap = {
     "PriorityMailInternational": "Priority",
     "ExpressMailInternational": "Express",
-    "FirstClassPackageInternationalService": "First Class (Not Recommended)",
+    "FirstClassPackageInternationalService": "First Class",
     "Express": "Express",
     "Expedited": "Expedited",
     "UPSSaver": "UPS Saver",

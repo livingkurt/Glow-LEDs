@@ -477,31 +477,7 @@ const AllProductsPage = () => {
               </>
             ))}
       </Grid>
-      {/* <div>
-        <ul className="products" style={{ marginTop: 0 }}>
-          {!loading &&
-            products &&
-            products
-              .filter(product => !product.option)
-              .map(product =>
-                width >= 704 ? (
-                  <ProductItemD
-                    size="300px"
-                    key={product.name}
-                    product={product}
-                    product_occurrences={product_occurrences}
-                  />
-                ) : (
-                  <ProductItemM
-                    size="300px"
-                    key={product.name}
-                    product={product}
-                    product_occurrences={product_occurrences}
-                  />
-                )
-              )}
-        </ul>
-      </div> */}
+
       <div className="jc-c">
         {totalPages && (
           <Pagination
