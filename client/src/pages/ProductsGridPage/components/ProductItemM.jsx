@@ -11,7 +11,7 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
   const { current_user } = userPage;
   const location = useLocation();
   return (
-    <li key={product.pathname} className=" w-100per" style={style}>
+    <div key={product.pathname} className=" w-100per" style={style}>
       {product_occurrences && (
         <div
           onClick={() =>
@@ -71,7 +71,7 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
           </div>
         </div>
       )}
-    </li>
+    </div>
   );
 };
 

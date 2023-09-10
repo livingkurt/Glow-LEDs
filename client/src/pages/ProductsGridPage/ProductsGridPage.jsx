@@ -19,6 +19,7 @@ import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
 import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { ProductItemD, ProductItemM } from "./components";
 import * as API from "../../api";
+import { Grid, Skeleton } from "@mui/material";
 
 const AllProductsPage = () => {
   const params = useParams();
@@ -360,46 +361,161 @@ const AllProductsPage = () => {
           />
         )}
       </div>
-      <Loading loading={loading} error={error}>
-        <div>
-          <ul className="products" style={{ marginTop: 0 }}>
-            {products &&
-              products
-                .filter(product => !product.option)
-                .map(product =>
-                  width >= 704 ? (
+      <Loading loading={loading} error={error} />
+      {loading && (
+        <Grid container spacing={5}>
+          {[...Array(30).keys()].map(item => (
+            <>
+              {width >= 704 ? (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  key={item}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+                >
+                  {/* Square Skeleton for Picture */}
+                  <Skeleton
+                    className="br-20px"
+                    variant="rectangular"
+                    sx={{ bgcolor: "#4e5061" }}
+                    animation="wave"
+                    height={300}
+                    width={300}
+                  />
+                  {/* Rectangle Skeleton for Name */}
+                  <Skeleton
+                    className="br-20px"
+                    variant="text"
+                    width={300}
+                    sx={{ width: "100%", maxWidth: "400px", height: "30px", bgcolor: "#4e5061" }}
+                    animation="wave"
+                  />
+                  {/* Rectangle Skeleton for Price */}
+                  <Skeleton
+                    className="br-20px"
+                    variant="text"
+                    sx={{ width: "50px", height: "30px", bgcolor: "#4e5061" }}
+                    animation="wave"
+                  />
+                </Grid>
+              ) : (
+                <Grid item xs={12} key={item} style={{ display: "flex" }}>
+                  {/* Square Skeleton for Picture */}
+                  <Skeleton
+                    className="br-20px"
+                    variant="rectangular"
+                    sx={{ bgcolor: "#4e5061" }}
+                    animation="wave"
+                    height={200}
+                    width={200}
+                  />
+                  <div style={{ marginLeft: "16px" }}>
+                    {/* Rectangle Skeleton for Name */}
+                    <Skeleton
+                      className="br-20px"
+                      variant="text"
+                      width={200}
+                      sx={{ width: "100%", maxWidth: "400px", height: "30px", bgcolor: "#4e5061" }}
+                      animation="wave"
+                    />
+                    {/* Rectangle Skeleton for Price */}
+                    <Skeleton
+                      className="br-20px"
+                      variant="text"
+                      sx={{ width: "50px", height: "30px", bgcolor: "#4e5061" }}
+                      animation="wave"
+                    />
+                  </div>
+                </Grid>
+              )}
+            </>
+          ))}
+        </Grid>
+      )}
+      <Grid container spacing={5}>
+        {!loading &&
+          products &&
+          products
+            .filter(product => !product.option)
+            .map(product => (
+              <>
+                {width >= 704 ? (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    key={product}
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+                  >
                     <ProductItemD
                       size="300px"
                       key={product.name}
                       product={product}
                       product_occurrences={product_occurrences}
                     />
-                  ) : (
+                  </Grid>
+                ) : (
+                  <Grid
+                    item
+                    xs={12}
+                    key={product}
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}
+                  >
                     <ProductItemM
                       size="300px"
                       key={product.name}
                       product={product}
                       product_occurrences={product_occurrences}
                     />
-                  )
+                  </Grid>
                 )}
-          </ul>
-        </div>
-        <div className="jc-c">
-          {totalPages && (
-            <Pagination
-              className="pagination-bar"
-              currentPage={page}
-              totalCount={totalPages}
-              pageSize={limit}
-              onPageChange={(e, page) => update_page(e, page)}
-            />
-          )}
-        </div>
-        {products.length === 0 && !best_sellers && (
-          <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+              </>
+            ))}
+      </Grid>
+      {/* <div>
+        <ul className="products" style={{ marginTop: 0 }}>
+          {!loading &&
+            products &&
+            products
+              .filter(product => !product.option)
+              .map(product =>
+                width >= 704 ? (
+                  <ProductItemD
+                    size="300px"
+                    key={product.name}
+                    product={product}
+                    product_occurrences={product_occurrences}
+                  />
+                ) : (
+                  <ProductItemM
+                    size="300px"
+                    key={product.name}
+                    product={product}
+                    product_occurrences={product_occurrences}
+                  />
+                )
+              )}
+        </ul>
+      </div> */}
+      <div className="jc-c">
+        {totalPages && (
+          <Pagination
+            className="pagination-bar"
+            currentPage={page}
+            totalCount={totalPages}
+            pageSize={limit}
+            onPageChange={(e, page) => update_page(e, page)}
+          />
         )}
-      </Loading>
+      </div>
+      {products.length === 0 && !best_sellers && (
+        <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+      )}
     </div>
   );
 };

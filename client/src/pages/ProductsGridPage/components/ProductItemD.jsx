@@ -37,7 +37,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
     }
   };
   return (
-    <li key={product?.pathname} className="product-thumb" style={style}>
+    <div key={product?.pathname} className="product-thumb" style={style}>
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
@@ -156,7 +156,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
           </div>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 
