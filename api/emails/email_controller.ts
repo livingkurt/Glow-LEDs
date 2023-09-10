@@ -252,6 +252,7 @@ export default {
     const mailOptions = {
       to: config.DISPLAY_CONTACT_EMAIL,
       from: email,
+      replyTo: email,
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: contact(req.body),
     };
@@ -259,10 +260,12 @@ export default {
   },
   send_admin_contact_emails_c: async (req: any, res: any) => {
     const { email, first_name } = req.body;
+    console.log({ email });
 
     const mailOptions = {
       from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
+      replyTo: email,
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
     };

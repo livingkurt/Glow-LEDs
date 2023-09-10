@@ -7,6 +7,7 @@ import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
+import { setSuccessContactSend } from "../../slices/emailSlice";
 
 const ContactPage = () => {
   const params = useParams();
@@ -15,14 +16,14 @@ const ContactPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { loading, success, message: completed_message, error } = emailPage;
+  const { loadingContactSend, successContactSend, message: completed_message, error } = emailPage;
 
   const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");
   const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
   const [email, set_email] = useState(current_user ? current_user.email : "");
-  const [order_number, set_order_number] = useState("Test");
+  const [order_number, set_order_number] = useState("");
   const [reason_for_contact, set_reason_for_contact] = useState(params.reason ? params.reason : "");
-  const [message, set_message] = useState("Test");
+  const [message, set_message] = useState("");
 
   const [first_name_validations, set_first_name_Validations] = useState("");
   const [last_name_validations, set_last_name_Validations] = useState("");
@@ -41,12 +42,13 @@ const ContactPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success) {
-        navigate("/pages/complete/email");
-      }
+      // if (successContactSend) {
+      //   navigate("/pages/complete/email");
+      //   dispatch(setSuccessContactSend(false));
+      // }
     }
     return () => (clean = false);
-  }, [navigate, success]);
+  }, [navigate, successContactSend]);
 
   let request;
   const sendEmail = e => {
@@ -108,7 +110,6 @@ const ContactPage = () => {
       <div className="jc-c">
         <h1>Contact</h1>
       </div>
-      <Notification message={completed_message} />
       <div className="column jc-c">
         {/* <div className="ta-c">
           We are avaiable from 11 AM to 7 PM on Weekdays
@@ -120,13 +121,16 @@ const ContactPage = () => {
         </div> */}
       </div>
       <div className="jc-c">
-        <Loading loading={loading} error={error}>
-          {/* {completed && (
-						<h3 style={{ textAlign: 'center' }}>
-							{completed ? completed : request.isValid ? 'Error Sending Email' : ''}
-						</h3>
-					)} */}
-        </Loading>
+        <Loading
+          loading={loadingContactSend}
+          error={error}
+          message={
+            <div className="payment_message">
+              <h2 className="ta-c">Sending Message</h2>
+              <p className="ta-c">Please do not refresh page</p>
+            </div>
+          }
+        />
       </div>
       <form style={{ display: "flex", flexDirection: "column" }} className="contact-form">
         <label>First Name</label>

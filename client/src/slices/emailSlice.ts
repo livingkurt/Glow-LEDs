@@ -43,6 +43,8 @@ const emailPage = createSlice({
     message: "",
     error: {},
     testEmail: true,
+    loadingContactSend: false,
+    successContactSend: false,
   },
   reducers: {
     set_email: (state, { payload }) => {
@@ -82,6 +84,9 @@ const emailPage = createSlice({
     },
     setTestEmail: (state, { payload }) => {
       state.testEmail = payload;
+    },
+    setSuccessContactSend: (state, { payload }) => {
+      state.successContactSend = payload;
     },
   },
   extraReducers: {
@@ -142,6 +147,19 @@ const emailPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.sendContactEmail.pending as any]: (state: any, { payload }: any) => {
+      state.loadingContactSend = true;
+      state.successContactSend = false;
+    },
+    [API.sendContactEmail.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingContactSend = false;
+      state.successContactSend = true;
+    },
+    [API.sendContactEmail.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingContactSend = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
 
     [API.viewAnnouncement.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -172,5 +190,6 @@ export const {
   open_edit_email_modal,
   email_uploaded,
   setTestEmail,
+  setSuccessContactSend,
 } = emailPage.actions;
 export default emailPage.reducer;
