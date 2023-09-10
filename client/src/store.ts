@@ -11,7 +11,7 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }).concat(apiMiddleware),
   devTools: {
-    maxAge: 10, // maximum allowed actions to be stored in the history tree
+    // maxAge: 10, // maximum allowed actions to be stored in the history tree
   },
 });
 
