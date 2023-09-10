@@ -21,6 +21,7 @@ import { AdminComponents, Components, PrivateComponents } from "./shared/RouteCo
 import Head from "./shared/RouteComponents/Head";
 import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
 import GLLoading from "./shared/GlowLEDsComponents/GLLoading/GLLoading";
+import GLLoginModal from "./shared/GlowLEDsComponents/GLLoginModal/GLLoginModal";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const App = () => {
         <Container setVisible={setVisible} visible={visible}>
           <GLSnackbar />
           <GLLoading />
+          <GLLoginModal />
           <Head />
           {isBrowser && width > 1158 && height > 900 ? (
             <Headroom>

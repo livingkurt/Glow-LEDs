@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 
@@ -11,11 +11,16 @@ const PrivateRoute = ({ element: Component, children }) => {
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (current_user) {
       setIsLoading(false);
+    }
+  }, [current_user]);
+
+  useEffect(() => {
+    if (!current_user) {
+      navigate("/", { replace: true });
     }
   }, [current_user]);
 
@@ -34,7 +39,7 @@ const PrivateRoute = ({ element: Component, children }) => {
     if (current_user && current_user.hasOwnProperty("first_name")) {
       return children;
     } else {
-      navigate(`/account/login?redirect=${location.pathname}`, { replace: true });
+      navigate("/", { replace: true });
       return null;
     }
   }

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import { useNavigate, useParams } from "react-router-dom";
+import { openLoginModal } from "../../../slices/userSlice";
 
 const ResetPasswordPage = () => {
   const params = useParams();
@@ -15,7 +16,8 @@ const ResetPasswordPage = () => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(API.passwordReset({ user_id: params.id, password, rePassword }));
-    navigate("/account/login");
+    // navigate("/account/login");
+    dispatch(openLoginModal());
   };
   return (
     <div className="form">

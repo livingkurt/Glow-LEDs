@@ -50,6 +50,11 @@ const userPage = createSlice({
     error: {},
     user1: {},
     user2: {},
+    loginModal: false,
+    email: "",
+    password: "",
+    email_validations: "",
+    password_validations: "",
   },
   reducers: {
     set_user: (state, { payload }) => {
@@ -88,6 +93,28 @@ const userPage = createSlice({
     close_modals: (state, { payload }) => {
       state.combine_user_modal = false;
       state.edit_user_modal = false;
+    },
+    openLoginModal: (state, { payload }) => {
+      state.loginModal = true;
+    },
+    closeLoginModal: (state, { payload }) => {
+      state.loginModal = false;
+    },
+    setEmail: (state, { payload }) => {
+      state.email = payload;
+    },
+    setPassword: (state, { payload }) => {
+      state.password = payload;
+    },
+    setEmailValidations: (state, { payload }) => {
+      state.email_validations = payload;
+    },
+    setPasswordValidations: (state, { payload }) => {
+      state.password_validations = payload;
+    },
+    setLoginValidations: (state, { payload }) => {
+      state.email_validations = payload.email;
+      state.password_validations = payload.password;
     },
   },
   extraReducers: {
@@ -242,6 +269,7 @@ const userPage = createSlice({
       setAuthToken(false);
       localStorage.setItem("cartItems", JSON.stringify(my_cart.cartItems));
       state.current_user = {};
+      state.loading = false;
     },
     [API.logoutUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -261,5 +289,12 @@ export const {
   open_combine_users_modal,
   close_modals,
   open_edit_user_modal,
+  openLoginModal,
+  closeLoginModal,
+  setEmail,
+  setPassword,
+  setEmailValidations,
+  setPasswordValidations,
+  setLoginValidations,
 } = userPage.actions;
 export default userPage.reducer;

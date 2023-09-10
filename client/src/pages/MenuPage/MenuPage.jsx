@@ -6,6 +6,7 @@ import { API_Content, API_Features } from "../../utils";
 import { Loading } from "../../shared/SharedComponents";
 import { MenuItemD, MenuItemM } from "./components";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MenuPage = () => {
   const params = useParams();
@@ -14,7 +15,8 @@ const MenuPage = () => {
   const [items, set_items] = useState([]);
   const [loading_pictures, set_loading_pictures] = useState(false);
 
-  const dispatch = useDispatch();
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { contents } = contentPage;
 
   useEffect(() => {
     let clean = true;
@@ -28,34 +30,17 @@ const MenuPage = () => {
         pathname === "support" ||
         pathname === "sponsored_artists"
       ) {
-        get_display_content();
+        set_items(contents[0]?.home_page?.slideshow);
       }
     }
     return () => (clean = false);
   }, [pathname]);
-
-  const get_display_content = async () => {
-    set_loading_pictures(true);
-    const { data } = await API_Content.get_display_content();
-
-    if (data) {
-      const menu_items = determine_menu_items(data[0]);
-      set_items(menu_items);
-
-      set_loading_pictures(false);
-    }
-    set_loading_pictures(false);
-  };
 
   const get_features = async () => {
     const { data: glovers } = await API_Features.get_features_by_category("glovers");
     const { data: artists } = await API_Features.get_features_by_category("artists");
     const { data: producers } = await API_Features.get_features_by_category("producers");
     const { data: vfx } = await API_Features.get_features_by_category("vfx");
-    //
-    //
-    //
-    //
     if (glovers && artists && producers && vfx) {
       const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
       set_items(menu_items);

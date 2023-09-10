@@ -14,6 +14,7 @@ import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
 import { setCartDrawer, setSideNavDrawer } from "../../../slices/cartSlice";
 import { Search, ShoppingCart } from "@mui/icons-material";
+import { openLoginModal } from "../../../slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -65,7 +66,8 @@ const Header = () => {
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
-    navigate("/account/login");
+    navigate("/");
+    // navigate("/account/login");
   };
   const [last_id, set_last_id] = useState("");
   const [current_id, set_current_id] = useState("");
@@ -308,11 +310,11 @@ const Header = () => {
                 </div>
               ) : (
                 <div>
-                  <Link to="/account/login">
-                    <GLButton variant="nav" className="title_font">
-                      Login
-                    </GLButton>
-                  </Link>
+                  {/* <Link to="/account/login"> */}
+                  <GLButton variant="nav" className="title_font" onClick={() => dispatch(openLoginModal())}>
+                    Login
+                  </GLButton>
+                  {/* </Link> */}
                 </div>
               )}
               {current_user?.isAdmin && (

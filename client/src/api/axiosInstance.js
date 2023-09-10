@@ -15,9 +15,13 @@ export async function getFreshAccessToken(refresh_token) {
 }
 
 export function isTokenExpired(token) {
-  const decoded = jwt_decode(token);
-  const currentTime = Date.now() / 1000;
-  return decoded.exp < currentTime;
+  try {
+    const decoded = jwt_decode(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp < currentTime;
+  } catch (e) {
+    return true;
+  }
 }
 
 export const setAuthToken = accessToken => {
@@ -44,45 +48,22 @@ export const refreshAccessToken = async refreshTokenValue => {
   }
 };
 
-// export function setCurrentUser(accessToken) {
-//   setAuthToken(accessToken);
-//   const decoded_access_token = jwt_decode(accessToken);
-//   store.dispatch(set_current_user(decoded_access_token));
-//   return decoded_access_token;
-// }
-
-// export async function handleTokenRefresh(forceRefresh = false) {
-//   const accessToken = localStorage.getItem("accessToken");
-//   if (!accessToken) return;
-
-//   const refreshTokenValue = localStorage.getItem("refreshToken"); // Get the refresh token from localStorage
-//   if (!refreshTokenValue) return;
-
-//   if (isTokenExpired(accessToken) || forceRefresh) {
-//     const newAccessToken = await refreshAccessToken(refreshTokenValue);
-//     return newAccessToken || accessToken;
-//   } else {
-//     const user = setCurrentUser(accessToken); // store the user object
-
-//     // After the access token has been set and the user object has been dispatched, fetch the user's cart
-//     if (user) {
-//       store.dispatch(API.getCurrentUserCart(user._id)); // replace `user._id` with appropriate user ID reference
-//     }
-//   }
-
-//   return accessToken;
-// }
-
 export function setCurrentUser(accessToken) {
-  setAuthToken(accessToken);
-  const decoded_access_token = jwt_decode(accessToken);
-  store.dispatch(set_current_user(decoded_access_token));
-  return decoded_access_token;
+  try {
+    setAuthToken(accessToken);
+    const decoded_access_token = jwt_decode(accessToken);
+    store.dispatch(set_current_user(decoded_access_token));
+    return decoded_access_token;
+  } catch (e) {
+    return null;
+  }
 }
 
 export async function handleTokenRefresh(forceRefresh = false) {
   const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) return;
+  if (!accessToken) {
+    return null; // <-- Redirect will occur in your route components
+  }
 
   const refreshTokenValue = localStorage.getItem("refreshToken"); // Get the refresh token from localStorage
   if (!refreshTokenValue) return;
@@ -100,7 +81,6 @@ export async function handleTokenRefresh(forceRefresh = false) {
 axios.interceptors.request.use(
   async config => {
     const accessToken = localStorage.getItem("accessToken");
-
     if (accessToken) {
       const isRefreshRequest = config.url.includes("/api/users/refresh_login"); // Check if the request is for token refresh
 
@@ -116,40 +96,5 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// axios.interceptors.request.use(
-//   async config => {
-//     // store.dispatch(startLoading());
-
-//     const accessToken = localStorage.getItem("accessToken");
-
-//     if (accessToken) {
-//       const isRefreshRequest = config.url.includes("/api/users/refresh_login");
-
-//       if (!isRefreshRequest) {
-//         const refreshedAccessToken = await handleTokenRefresh();
-//         config.headers["Authorization"] = `Bearer ${refreshedAccessToken}`;
-//       }
-//     }
-
-//     return config;
-//   },
-//   error => {
-//     // store.dispatch(stopLoading()); // Clear loading on error
-//     return Promise.reject(error);
-//   }
-// );
-
-// axios.interceptors.response.use(
-//   response => {
-//     store.dispatch(stopLoading()); // Clear loading on successful response
-//     return response;
-//   },
-//   error => {
-//     store.dispatch(stopLoading()); // Clear loading on successful response
-//     // store.dispatch(showError({ error: errorMessage(error) })); // Set error message
-//     return Promise.reject(error);
-//   }
-// );
 
 export default axios;

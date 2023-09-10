@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 
@@ -11,11 +11,16 @@ const AdminRoute = ({ element: Component, children }) => {
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (current_user) {
       setIsLoading(false);
+    }
+  }, [current_user]);
+
+  useEffect(() => {
+    if (!current_user || !current_user.isAdmin) {
+      navigate("/", { replace: true });
     }
   }, [current_user]);
 
@@ -27,16 +32,6 @@ const AdminRoute = ({ element: Component, children }) => {
     })();
   }, []);
 
-  const determinePathname = () => {
-    let pathname = location.pathname;
-
-    if (pathname.includes("glow")) {
-      return "/";
-    } else {
-      return pathname;
-    }
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -44,7 +39,7 @@ const AdminRoute = ({ element: Component, children }) => {
     if (current_user && current_user.isAdmin) {
       return children;
     } else {
-      navigate(`/account/login?redirect=${determinePathname()}`, { replace: true });
+      navigate("/", { replace: true });
       return null;
     }
   }

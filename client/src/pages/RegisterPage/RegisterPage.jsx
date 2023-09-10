@@ -7,7 +7,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
 import * as API from "../../api";
-import { set_success } from "../../slices/userSlice";
+import { openLoginModal, set_success } from "../../slices/userSlice";
 
 const RegisterPage = () => {
   const location = useLocation();
@@ -61,7 +61,8 @@ const RegisterPage = () => {
     let clean = true;
     if (clean) {
       if (success) {
-        navigate("/account/login");
+        // navigate("/account/login");
+        dispatch(openLoginModal());
         dispatch(set_success(false));
       }
     }

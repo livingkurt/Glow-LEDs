@@ -22,7 +22,8 @@ const Sidebar = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
     closeMenu();
-    navigate("/account/login");
+    navigate("/");
+    // navigate("/account/login");
   };
 
   const [first_name, set_first_name] = useState("");
