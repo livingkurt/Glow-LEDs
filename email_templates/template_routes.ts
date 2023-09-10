@@ -34,6 +34,8 @@ import current_stock from "./pages/current_stock";
 import { product_db } from "../api/products";
 import config from "../config";
 import mongoose from "mongoose";
+import verify from "./pages/verify";
+import { domain } from "./email_template_helpers";
 const router = express.Router();
 
 router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
@@ -51,6 +53,21 @@ router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0:
         title: "Enjoy 10% off your next purchase!",
       }),
       unsubscribe: true,
+    })
+  );
+});
+router.get("/verify", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+  const user = await user_db.findById_users_db("6379a4497212b9524b2a49b2");
+
+  res.send(
+    App({
+      body: verify({
+        title: "Verify your Email",
+        url: `${domain()}/verify/123456`,
+        user: user,
+      }),
+
+      unsubscribe: false,
     })
   );
 });

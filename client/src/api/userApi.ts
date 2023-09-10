@@ -100,12 +100,23 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string
 export const registerUser = createAsyncThunk("users/registerUser", async (userData: any, thunkApi: any) => {
   try {
     const { data } = await axios.post("/api/users/register", userData);
-    axios.post("/api/emails/account_created", data);
+    // axios.post("/api/emails/account_created", data);
+    // axios.post("/api/emails/verify", data);
     thunkApi.dispatch(showSuccess({ message: `User Registered` }));
     return data;
   } catch (error) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
+  }
+});
+
+export const verifyUser = createAsyncThunk("emails/verifyUser", async ({ token }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.post(`/api/users/verify/${token}`);
+    thunkApi.dispatch(showSuccess({ message: `User Account Verified` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
 });
 
@@ -135,7 +146,7 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
     thunkApi.dispatch(showSuccess({ message: `User Logged In` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+    // thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });

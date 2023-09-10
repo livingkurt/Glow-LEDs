@@ -166,6 +166,10 @@ export default {
       throw new Error("Invalid Credentials");
     }
 
+    if (!user.isVerified) {
+      throw new Error("Account not verified");
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {

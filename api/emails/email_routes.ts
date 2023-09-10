@@ -27,7 +27,7 @@ router.route("/account_created").post(email_controller.send_account_created_emai
 router.route("/send_shipping_status").post(email_controller.send_shipping_status_emails_c);
 router.route("/current_stock").post(email_controller.send_current_stock_emails_c);
 
-// router.route('/verified').post(email_controller.send_verified_emails_c);
+router.route("/verify").post(email_controller.send_verified_emails_c);
 
 router.route("/table").get(email_controller.get_table_emails_c);
 router.route("/").get(email_controller.findAll_emails_c).post(isAuth, isAdmin, email_controller.create_emails_c);

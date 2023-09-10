@@ -103,7 +103,6 @@ const EmailsPage = () => {
               options={templates}
               getOptionLabel={option => humanize(option)}
               onChange={(event, newValue) => {
-                // set_link(newValue);
                 if (newValue) {
                   window.open("/api/templates/" + newValue, "_blank");
                 }

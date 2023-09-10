@@ -142,6 +142,7 @@ const emailPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+
     [API.viewAnnouncement.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },

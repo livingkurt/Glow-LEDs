@@ -1,7 +1,13 @@
-import { user_db, user_services } from "../users";
+import { User, user_db, user_services } from "../users";
 import Token from "../tokens/token";
 import { getAccessToken, getRefreshToken } from "./userInteractors";
 import config from "../../config";
+import App from "../../email_templates/App";
+import verify from "../../email_templates/pages/verify";
+import { sendEmail } from "../emails/email_helpers";
+import { domain } from "../../email_templates/email_template_helpers";
+import { content_db } from "../contents";
+import { account_created } from "../../email_templates/pages";
 // import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -122,7 +128,6 @@ export default {
     const { body } = req;
     try {
       const { user, matched } = await user_services.register_users_s(body);
-      //
       bcrypt.genSalt(10, (err: any, salt: any) => {
         bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
           if (err) throw err;
@@ -135,7 +140,25 @@ export default {
             user.password = hash;
           }
           try {
-            const new_user = await user_db.create_users_db(user);
+            const new_user: any = await user_db.create_users_db(user);
+            const token = jwt.sign({ userId: new_user._id }, "secret", { expiresIn: "1h" });
+
+            const mailOptions = {
+              from: config.DISPLAY_INFO_EMAIL,
+              to: req.body.email,
+              subject: "Verify your Email",
+              html: App({
+                body: verify({
+                  title: "Verify your Email",
+                  url: `${domain()}/pages/complete/account_created/${token}`,
+                  user: new_user,
+                }),
+
+                unsubscribe: false,
+              }),
+            };
+
+            sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
 
             return res.status(200).send(new_user);
           } catch (error) {
@@ -145,6 +168,36 @@ export default {
       });
     } catch (error) {
       res.status(500).send({ error, message: "Error Registering User" });
+    }
+  },
+  verify_users_c: async (req: any, res: any) => {
+    try {
+      const { token } = req.params;
+      const { userId } = jwt.verify(token, "secret");
+
+      await User.updateOne({ _id: userId }, { isVerified: true });
+      const user: any = await User.findById(userId);
+      const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+
+      const mailOptions = {
+        from: config.DISPLAY_INFO_EMAIL,
+        to: user.email,
+        subject: "Glow LEDs Account Created",
+        html: App({
+          body: account_created({
+            user: user,
+            categories: contents && contents[0].home_page?.slideshow,
+            title: "Glow LEDs Account Created",
+          }),
+
+          unsubscribe: false,
+        }),
+      };
+
+      sendEmail(mailOptions, res, "info", "Registration Email Sent to " + user.first_name);
+      res.status(200).json({ message: "Email verified successfully" });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
     }
   },
   login_users_c: async (req: any, res: any) => {
@@ -162,9 +215,8 @@ export default {
           refresh_token: user.refresh_token,
         });
       }
-      return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "User Not Found" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 

@@ -22,14 +22,17 @@ import { order_db, order_services } from "../orders";
 import { content_db } from "../contents";
 import { affiliate_db } from "../affiliates";
 import { promo_db } from "../promos";
-import { user_db } from "../users";
+import { User, user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../util";
 import { sendEmail, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { team_db } from "../teams";
+const jwt = require("jsonwebtoken");
 import config from "../../config";
+import verify from "../../email_templates/pages/verify";
+import { domain } from "../../email_templates/email_template_helpers";
 
 export default {
   get_table_emails_c: async (req: any, res: any) => {
@@ -488,21 +491,27 @@ export default {
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
   },
   send_verified_emails_c: async (req: any, res: any) => {
+    const { email } = req.body;
+    const user: any = await user_db.findByEmail_users_db(email);
+    const token = jwt.sign({ userId: user._id }, "secret", { expiresIn: "1h" });
+
+    console.log({ user, token });
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
-      subject: "Glow LEDs Account Created",
+      subject: "Verify your Email",
       html: App({
-        body: account_created({
-          ...req.body,
-          title: "Glow LEDs Account Created",
+        body: verify({
+          title: "Verify your Email",
+          url: `${domain()}/pages/complete/account_created/${token}`,
+          user: user,
         }),
 
         unsubscribe: false,
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
+    sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
   },
   send_shipping_status_emails_c: async (req: any, res: any) => {
     try {

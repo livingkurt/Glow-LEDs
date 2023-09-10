@@ -55,6 +55,21 @@ const userPage = createSlice({
     password: "",
     email_validations: "",
     password_validations: "",
+    showRegister: "",
+    first_name: "",
+    last_name: "",
+    rePassword: "",
+    re_password_validations: "",
+    first_name_validations: "",
+    last_name_validations: "",
+    checkEmail: false,
+    registerationSuccess: false,
+    verificationSuccess: false,
+    verificationLoading: false,
+    loginSuccess: false,
+    errorMessage: "",
+    resendVerificationSucess: false,
+    loadingVerification: false,
   },
   reducers: {
     set_user: (state, { payload }) => {
@@ -106,15 +121,39 @@ const userPage = createSlice({
     setPassword: (state, { payload }) => {
       state.password = payload;
     },
-    setEmailValidations: (state, { payload }) => {
-      state.email_validations = payload;
-    },
-    setPasswordValidations: (state, { payload }) => {
-      state.password_validations = payload;
-    },
     setLoginValidations: (state, { payload }) => {
       state.email_validations = payload.email;
       state.password_validations = payload.password;
+    },
+    setRegisterValidations: (state, { payload }) => {
+      state.email_validations = payload.email;
+      state.password_validations = payload.password;
+      state.re_password_validations = payload.repassword;
+      state.first_name_validations = payload.first_name;
+      state.last_name_validations = payload.last_name;
+    },
+    setShowRegister: (state, { payload }) => {
+      state.showRegister = payload;
+    },
+    set_first_name: (state, { payload }) => {
+      state.first_name = payload;
+    },
+    set_last_name: (state, { payload }) => {
+      state.last_name = payload;
+    },
+    setRePassword: (state, { payload }) => {
+      state.rePassword = payload;
+    },
+    setCheckEmail: (state, { payload }) => {
+      state.checkEmail = payload;
+    },
+    setLoginSuccess: (state, { payload }) => {
+      state.loginSuccess = payload;
+    },
+    setResendVerificationSucess: (state, { payload }) => {
+      state.resendVerificationSucess = payload;
+      state.email_validations = "";
+      state.password_validations = "";
     },
   },
   extraReducers: {
@@ -208,14 +247,42 @@ const userPage = createSlice({
     },
     [API.registerUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
+      state.registerationSuccess = false;
     },
     [API.registerUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "User Registered";
-      state.success = true;
+      state.registerationSuccess = true;
+      state.loginModal = false;
     },
     [API.registerUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.verifyUser.pending as any]: (state: any, { payload }: any) => {
+      state.verificationLoading = true;
+      state.registerationSuccess = false;
+    },
+    [API.verifyUser.fulfilled as any]: (state: any, { payload }: any) => {
+      state.verificationLoading = false;
+      state.message = "User Registered";
+      state.verificationSuccess = true;
+    },
+    [API.verifyUser.rejected as any]: (state: any, { payload, error }: any) => {
+      state.verificationLoading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.resendVerification.pending as any]: (state: any, { payload }: any) => {
+      state.loadingVerification = true;
+    },
+    [API.resendVerification.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingVerification = false;
+      state.resendVerificationSucess = true;
+    },
+    [API.resendVerification.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingVerification = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
@@ -231,12 +298,15 @@ const userPage = createSlice({
       state.loading = false;
       state.current_user = decoded;
       state.message = "User Login Success";
-      state.success = true;
+      state.loginModal = false;
+      state.loginSuccess = true;
     },
 
     [API.loginUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
+      state.email_validations = payload.message;
+      state.password_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.loginAsUser.pending as any]: (state: any, { payload }: any) => {
@@ -293,8 +363,14 @@ export const {
   closeLoginModal,
   setEmail,
   setPassword,
-  setEmailValidations,
-  setPasswordValidations,
   setLoginValidations,
+  setShowRegister,
+  set_first_name,
+  set_last_name,
+  setRePassword,
+  setRegisterValidations,
+  setCheckEmail,
+  setLoginSuccess,
+  setResendVerificationSucess,
 } = userPage.actions;
 export default userPage.reducer;

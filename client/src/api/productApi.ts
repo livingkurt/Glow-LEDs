@@ -93,7 +93,7 @@ export const deleteMultipleProducts = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Products Deleted` }));
       return data;
     } catch (error: any) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -117,7 +117,7 @@ export const saveProductReview = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Product Review Saved` }));
       return data;
     } catch (error: any) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );
@@ -130,7 +130,7 @@ export const deleteProductReview = createAsyncThunk(
       thunkApi.dispatch(showSuccess({ message: `Product Review Deleted` }));
       return data;
     } catch (error: any) {
-      thunkApi.dispatch(showSuccess({ message: errorMessage(error) }));
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
 );

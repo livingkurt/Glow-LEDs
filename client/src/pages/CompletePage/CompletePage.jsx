@@ -9,14 +9,19 @@ import FeatureComplete from "./components/FeatureComplete";
 import EmailComplete from "./components/EmailComplete";
 import AffiliateComplete from "./components/AffiliateComplete";
 import config from "../../config";
+import RegisterComplete from "./components/RegisterComplete";
+import * as API from "../../api";
+import { useDispatch } from "react-redux";
+import AccountCreatedComplete from "./components/AccountCreatedComplete";
 
 const CompletePage = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const location = useLocation();
   const [data, set_data] = useState();
 
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
+  const { current_user, email, password } = userPage;
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
@@ -81,37 +86,90 @@ const CompletePage = () => {
         button_link: "",
         link: "https://www.glow-leds.com/pages/complete/affiliate",
       });
+    } else if (params.type === "registered") {
+      // 2. Add new condition
+      set_data({
+        title: "You're almost there!",
+        h1: "Please check your email for verification link",
+        h2: "",
+        p: "",
+        button_label: "",
+        button_link: "",
+        link: "https://www.glow-leds.com/pages/complete/register",
+      });
+    } else if (params.type === "account_created") {
+      // 2. Add new condition
+      set_data({
+        title: "You're almost there!",
+        h1: "Please check your email for verification link",
+        h2: "",
+        p: "",
+        button_label: "",
+        button_link: "",
+        link: "https://www.glow-leds.com/pages/complete/register",
+      });
     }
   };
 
   const send_email = async () => {
     if (config.NODE_ENV === "development") return;
+
     if (params.type === "order") {
-      await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-      await API_Emails.send_order_email(
-        order,
-        "New Order Created by " + order.shipping.first_name,
-        config.REACT_APP_INFO_EMAIL
+      dispatch(
+        API.sendOrderEmail({
+          order,
+          subject: "Thank you for your Glow LEDs Order",
+          email: order.shipping.email,
+        })
+      );
+      dispatch(
+        API.sendOrderEmail({
+          order,
+          subject: "New Order Created by " + order.shipping.first_name,
+          email: config.REACT_APP_INFO_EMAIL,
+        })
       );
 
       if (order.orderItems.some(item => item.category === "custom")) {
-        await API_Emails.send_custom_contact_email(order, order.shipping.email);
+        // Use your custom thunk for sending custom contact emails
       }
     } else if (params.type === "affiliate") {
       const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(params.id);
-      await API_Emails.send_affiliate_email(affiliate, "Welcome to the Team!", affiliate.user.email);
-      await API_Emails.send_affiliate_email(
-        affiliate,
-        "New Affiliate Created by " + affiliate.artist_name,
-        config.REACT_APP_INFO_EMAIL
+      dispatch(
+        API.sendAffiliateEmail({
+          affiliate,
+          subject: "Welcome to the Team!",
+          email: affiliate.user.email,
+        })
+      );
+      dispatch(
+        API.sendAffiliateEmail({
+          affiliate,
+          subject: "New Affiliate Created by " + affiliate.artist_name,
+          email: config.REACT_APP_INFO_EMAIL,
+        })
       );
     } else if (params.type === "feature") {
       const { data: feature } = await API_Features.findById_features_a(params.id);
-      await API_Emails.send_feature_email(feature, "Your Glow LEDs Feature", feature.user.email);
-      await API_Emails.send_feature_email(
-        feature,
-        "New Feature Created by " + feature.artist_name,
-        config.REACT_APP_INFO_EMAIL
+      dispatch(
+        API.sendFeatureEmail({
+          feature,
+          subject: "Your Glow LEDs Feature",
+          email: feature.user.email,
+        })
+      );
+      dispatch(
+        API.sendFeatureEmail({
+          feature,
+          subject: "New Feature Created by " + feature.artist_name,
+          email: config.REACT_APP_INFO_EMAIL,
+        })
+      );
+    } else if (params.type === "account_created") {
+      dispatch(
+        API.verifyUser({
+          token: params.id,
+        })
       );
     }
   };
@@ -147,11 +205,12 @@ const CompletePage = () => {
               </GLButton>
             </div>
           )}
-
           {params.type === "order" && <OrderComplete current_user={current_user} order_id={params.id} />}
           {params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}
           {params.type === "email" && <EmailComplete current_user={current_user} />}
           {params.type === "feature" && <FeatureComplete current_user={current_user} />}
+          {params.type === "registered" && <RegisterComplete current_user={current_user} />}
+          {params.type === "account_created" && <AccountCreatedComplete current_user={current_user} />}
         </div>
       )}
     </div>
