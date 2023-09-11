@@ -4,18 +4,16 @@ import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 import { Loading } from "../SharedComponents";
 
-const PrivateRoute = ({ element: Component, children }) => {
+const ProtectedRoute = ({ element: Component, children, isAdminRoute = false }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
-  const navigate = useNavigate();
-
   const getRedirectPath = () => {
-    console.log({ location });
     if (location.pathname === "/secure/checkout/placeorder") {
       return "/checkout/placeorder";
     }
@@ -30,7 +28,7 @@ const PrivateRoute = ({ element: Component, children }) => {
 
   useEffect(() => {
     if (isTokenRefreshed) {
-      if (!current_user) {
+      if (!current_user || (isAdminRoute && !current_user.isAdmin)) {
         navigate(getRedirectPath(), { replace: true });
       }
     }
@@ -57,15 +55,17 @@ const PrivateRoute = ({ element: Component, children }) => {
       />
     );
   }
+
   if (isTokenRefreshed) {
-    if (current_user && current_user.hasOwnProperty("first_name")) {
+    if (current_user && (!isAdminRoute || current_user.isAdmin)) {
       return children;
     } else {
       navigate(getRedirectPath(), { replace: true });
       return null;
     }
   }
+
   return null;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;

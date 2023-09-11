@@ -1,7 +1,6 @@
 import { createElement, useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
-import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
 import { ScrollToTop } from "./shared/SharedComponents";
 import useWindowDimensions from "./shared/Hooks/windowDimensions";
 import { isBrowser } from "react-device-detect";
@@ -22,6 +21,7 @@ import Head from "./shared/RouteComponents/Head";
 import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
 import GLLoading from "./shared/GlowLEDsComponents/GLLoading/GLLoading";
 import GLLoginModal from "./shared/GlowLEDsComponents/GLLoginModal/GLLoginModal";
+import ProtectedRoute from "./shared/RouteComponents/ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const App = () => {
                       key={index}
                       path={route.path}
                       exact={route.exact}
-                      element={<PrivateRoute>{createElement(PrivateComponents[route.element])}</PrivateRoute>}
+                      element={<ProtectedRoute>{createElement(PrivateComponents[route.element])}</ProtectedRoute>}
                     />
                   );
                 })}
@@ -83,7 +83,11 @@ const App = () => {
                       key={index}
                       path={route.path}
                       exact={route.exact}
-                      element={<AdminRoute>{createElement(AdminComponents[route.element])}</AdminRoute>}
+                      element={
+                        <ProtectedRoute isAdminRoute={true}>
+                          {createElement(AdminComponents[route.element])}
+                        </ProtectedRoute>
+                      }
                     />
                   );
                 })}
