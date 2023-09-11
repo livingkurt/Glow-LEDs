@@ -23,12 +23,9 @@ const HomePage = () => {
   const wrapperRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
-  const [promoCode, setPromoCode] = useState("");
 
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
-
-  console.log({ contents });
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);

@@ -50,7 +50,7 @@ const PrivateRoute = ({ element: Component, children }) => {
     if (current_user && current_user.hasOwnProperty("first_name")) {
       return children;
     } else {
-      navigate("/", { replace: true });
+      navigate(getRedirectPath(), { replace: true });
       return null;
     }
   }

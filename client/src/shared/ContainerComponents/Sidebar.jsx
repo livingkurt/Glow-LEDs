@@ -9,6 +9,7 @@ import * as API from "../../api";
 import { Drawer } from "@mui/material";
 import { setSideNavDrawer } from "../../slices/cartSlice";
 import { ExpandM, ExpandMore, ExpandMoreore } from "@mui/icons-material";
+import { openLoginModal } from "../../slices/userSlice";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -163,11 +164,15 @@ const Sidebar = () => {
               </ul>
             </div>
           ) : (
-            <Link to="/account/login">
-              <GLButton className="sidebar-btn primary" onClick={closeMenu}>
-                Login
-              </GLButton>
-            </Link>
+            <GLButton
+              className="sidebar-btn primary"
+              onClick={() => {
+                dispatch(openLoginModal());
+                closeMenu();
+              }}
+            >
+              Login
+            </GLButton>
           )}
           <div className="sidebar_dropdown">
             <div className="sidebar-btn-container">

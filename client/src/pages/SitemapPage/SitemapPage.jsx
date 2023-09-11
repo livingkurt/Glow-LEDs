@@ -38,18 +38,6 @@ const SitemapPage = () => {
             <h2 style={{ textAlign: "left" }}>Account</h2>
             <ul>
               <li>
-                <Link to="/account/login ">Login</Link>
-              </li>
-              <li>
-                <Link to="/account/verified ">Verified</Link>
-              </li>
-              <li>
-                <Link to="/account/checkemail ">Check Email</Link>
-              </li>
-              <li>
-                <Link to="/account/register ">Register</Link>
-              </li>
-              <li>
                 <Link to="/account/passwordreset ">Password Reset</Link>
               </li>
               <li>

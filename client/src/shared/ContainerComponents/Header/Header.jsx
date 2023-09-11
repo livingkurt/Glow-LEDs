@@ -67,7 +67,6 @@ const Header = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
     navigate("/");
-    // navigate("/account/login");
   };
   const [last_id, set_last_id] = useState("");
   const [current_id, set_current_id] = useState("");

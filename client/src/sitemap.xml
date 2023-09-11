@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url><loc>https://www.glow-leds.com//account/login</loc></url>
-    <url><loc>https://www.glow-leds.com//account/checkemail</loc></url>
+
     <url><loc>https://www.glow-leds.com//account/changepassword</loc></url>
-    <url><loc>https://www.glow-leds.com//account/register</loc></url>
     <url><loc>https://www.glow-leds.com//account/passwordreset</loc></url>
     <url><loc>https://www.glow-leds.com//checkout/placeorder</loc></url>
     <url><loc>https://www.glow-leds.com//checkout/shipping</loc></url>

@@ -8,7 +8,6 @@ import { openLoginModal } from "../../../slices/userSlice";
 
 const ResetPasswordPage = () => {
   const params = useParams();
-  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const dispatch = useDispatch();
@@ -16,7 +15,6 @@ const ResetPasswordPage = () => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(API.passwordReset({ user_id: params.id, password, rePassword }));
-    // navigate("/account/login");
     dispatch(openLoginModal());
   };
   return (

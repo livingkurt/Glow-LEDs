@@ -189,10 +189,6 @@
 <!-- Account -->
 
 <url>
-  <loc>https://www.glow-leds.com/account/login </loc>
-  <lastmod>2020-08-16</lastmod>
-</url>
-<url>
   <loc>https://www.glow-leds.com/account/verified </loc>
   <lastmod>2020-08-16</lastmod>
 </url>

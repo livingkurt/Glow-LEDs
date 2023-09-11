@@ -9,6 +9,7 @@ import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
 import { set_success } from "../../ProductsPage/productsPageSlice";
+import { openLoginModal } from "../../../slices/userSlice";
 
 const Review = ({ product, pathname }) => {
   const dispatch = useDispatch();
@@ -165,11 +166,11 @@ const Review = ({ product, pathname }) => {
           </form>
         ) : (
           <div>
-            Please{" "}
-            <Link to={`/account/login?redirect=/collections/all/products/${pathname}`}>
-              <GLButton variant="primary">Login</GLButton>
-            </Link>{" "}
-            to Write a Review
+            Please {/* <Link to={`/account/login?redirect=/collections/all/products/${pathname}`}> */}
+            <GLButton variant="primary" onClick={() => dispatch(openLoginModal())}>
+              Login
+            </GLButton>
+            {/* </Link> */} to Write a Review
           </div>
         )}
       </li>
