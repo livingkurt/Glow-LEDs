@@ -19,8 +19,10 @@ const PrivateRoute = ({ element: Component, children }) => {
   }, [current_user]);
 
   useEffect(() => {
-    if (!current_user) {
-      navigate("/", { replace: true });
+    if (isTokenRefreshed) {
+      if (!current_user) {
+        navigate("/", { replace: true });
+      }
     }
   }, [current_user]);
 

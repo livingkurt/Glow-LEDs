@@ -19,8 +19,10 @@ const AdminRoute = ({ element: Component, children }) => {
   }, [current_user]);
 
   useEffect(() => {
-    if (!current_user || !current_user.isAdmin) {
-      navigate("/", { replace: true });
+    if (isTokenRefreshed) {
+      if (!current_user || !current_user.isAdmin) {
+        navigate("/", { replace: true });
+      }
     }
   }, [current_user]);
 

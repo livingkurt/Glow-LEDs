@@ -16,6 +16,7 @@ import {
 } from "../placeOrderSlice";
 import { isMobile } from "react-device-detect";
 import { save_shipping } from "../../../slices/cartSlice";
+import { openLoginModal } from "../../../slices/userSlice";
 
 const EmailStep = () => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const EmailStep = () => {
                 </li>
               </ul>
             </div>
-          ) : is_guest ? (
+          ) : (
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
                 <label htmlFor="email">Email</label>
@@ -128,7 +129,10 @@ const EmailStep = () => {
                 <GLButton
                   variant="primary"
                   className="title_font m-10px"
-                  onClick={() => dispatch(set_is_guest(is_guest ? false : true))}
+                  onClick={() => {
+                    dispatch(openLoginModal());
+                    dispatch(set_is_guest(is_guest ? false : true));
+                  }}
                 >
                   Login
                 </GLButton>
@@ -137,44 +141,6 @@ const EmailStep = () => {
               <GLButton variant="primary" className="bob" onClick={e => validate_email(e)}>
                 Continue
               </GLButton>
-            </ul>
-          ) : (
-            <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
-              <li>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
-                  value={email}
-                  name="email"
-                  id="email"
-                  onChange={e => dispatch(set_email(e.target.value.toLowerCase()))}
-                />
-              </li>
-              <li>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  name="password"
-                  id="password"
-                  onChange={e => dispatch(set_password(e.target.value))}
-                />
-              </li>
-              <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
-                Don't have an account?{" "}
-                <GLButton
-                  variant="primary"
-                  className="title_font m-10px"
-                  onClick={() => dispatch(set_is_guest(is_guest => (is_guest ? false : true)))}
-                >
-                  Continue as Guest
-                </GLButton>
-              </pre>
-              <li>
-                <GLButton variant="primary" className="bob m-10px" onClick={e => submit_login(e)}>
-                  Login
-                </GLButton>
-              </li>
             </ul>
           )}
         </div>
