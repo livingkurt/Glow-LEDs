@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
+import { Loading } from "../SharedComponents";
 
 const AdminRoute = ({ element: Component, children }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -44,7 +45,17 @@ const AdminRoute = ({ element: Component, children }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Loading
+        loading={isLoading}
+        message={
+          <div className="payment_message">
+            <h2 className="ta-c">Refreshing Login</h2>
+            <p className="ta-c">Please wait</p>
+          </div>
+        }
+      />
+    );
   }
   if (isTokenRefreshed) {
     if (current_user && current_user.isAdmin) {
