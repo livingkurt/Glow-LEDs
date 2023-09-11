@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 import { Loading } from "../SharedComponents";
 
-const ProtectedRoute = ({ element: Component, children, isAdminRoute = false }) => {
+const ProtectedRoute = ({ element: Component, children, isAdminRoute = false, onLogout }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const location = useLocation();
@@ -19,16 +19,19 @@ const ProtectedRoute = ({ element: Component, children, isAdminRoute = false }) 
     }
     return "/";
   };
-
   useEffect(() => {
     if (current_user) {
       setIsLoading(false);
+    } else {
+      onLogout(location.pathname);
     }
   }, [current_user]);
 
   useEffect(() => {
     if (isTokenRefreshed) {
-      if (!current_user || (isAdminRoute && !current_user.isAdmin)) {
+      if (Object.keys(current_user).length === 0) {
+        navigate(getRedirectPath(), { replace: true });
+      } else if (isAdminRoute && current_user && !current_user.isAdmin) {
         navigate(getRedirectPath(), { replace: true });
       }
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../Banner";
 import useWindowDimensions from "../../Hooks/windowDimensions";
@@ -18,6 +18,7 @@ import { openLoginModal } from "../../../slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [first_name, set_first_name] = useState("");
   const [loading, set_loading] = useState("");
   const [display, setDisplay] = useState(false);
@@ -66,7 +67,9 @@ const Header = () => {
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(API.logoutUser(refreshToken));
-    navigate("/");
+    if (location.pathname.includes("secure")) {
+      navigate("/");
+    }
   };
   const [last_id, set_last_id] = useState("");
   const [current_id, set_current_id] = useState("");
