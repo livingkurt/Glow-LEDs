@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 
@@ -7,10 +7,19 @@ const AdminRoute = ({ element: Component, children }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
   const navigate = useNavigate();
+
+  const getRedirectPath = () => {
+    console.log({ location });
+    if (location.pathname === "/secure/checkout/placeorder") {
+      return "/checkout/placeorder";
+    }
+    return "/";
+  };
 
   useEffect(() => {
     if (current_user) {
@@ -21,7 +30,7 @@ const AdminRoute = ({ element: Component, children }) => {
   useEffect(() => {
     if (isTokenRefreshed) {
       if (!current_user || !current_user.isAdmin) {
-        navigate("/", { replace: true });
+        navigate(getRedirectPath(), { replace: true });
       }
     }
   }, [current_user]);

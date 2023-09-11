@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
@@ -31,17 +31,12 @@ const EmailStep = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const submit_login = e => {
-    e.preventDefault();
-    const data = { email, password };
-    const request = validate_login(data);
-
-    dispatch(setEmailValidations(request.errors.email));
-    dispatch(setPasswordValidations(request.errors.password));
-    if (request.isValid) {
-      dispatch(API.loginUser({ email: email.toLowerCase(), password }));
+  useEffect(() => {
+    if (current_user && current_user.hasOwnProperty("first_name")) {
+      navigate("/secure/checkout/placeorder");
     }
-  };
+  }, [current_user]);
+
   const submit_logout = e => {
     e.preventDefault();
     const refreshToken = localStorage.getItem("refreshToken");

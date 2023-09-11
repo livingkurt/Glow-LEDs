@@ -1,6 +1,4 @@
 const routes = [
-  { path: "/account/verified/:id", element: "VerifiedPage" },
-  { path: "/account/checkemail", element: "CheckEmailPage" },
   { path: "/account/changepassword", element: "ChangePasswordPage" },
   { path: "/account/passwordreset", element: "PasswordResetPage" },
   { path: "/account/resetpassword/:id", element: "ResetPasswordPage" },
@@ -88,7 +86,6 @@ const adminRoutes = [
   { path: "/secure/glow/editpromo/:id?", element: "EditPromoPage" },
   { path: "/secure/glow/editteam/:pathname?", element: "EditTeamPage" },
   { path: "/secure/glow/editchip/:id?", element: "EditChipPage" },
-  { path: "/secure/glow/editcontent/:id?", element: "EditContentPage" },
   { path: "/secure/glow/promos", element: "PromosPage" },
   { path: "/secure/glow/affiliates", element: "AffiliatesPage" },
   { path: "/secure/glow/teams", element: "TeamsPage" },

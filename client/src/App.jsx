@@ -63,32 +63,44 @@ const App = () => {
           <Content>
             <ScrollToTop>
               <Routes>
-                {privateRoutes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    element={<PrivateRoute>{createElement(PrivateComponents[route.element])}</PrivateRoute>}
-                  />
-                ))}
-                {adminRoutes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    element={<AdminRoute>{createElement(AdminComponents[route.element])}</AdminRoute>}
-                  />
-                ))}
+                {privateRoutes.map((route, index) => {
+                  // console.log({ [route.element]: PrivateComponents[route.element] });
+
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      element={<PrivateRoute>{createElement(PrivateComponents[route.element])}</PrivateRoute>}
+                    />
+                  );
+                })}
+                {adminRoutes.map((route, index) => {
+                  // console.log({ [route.element]: AdminComponents[route.element] });
+
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      element={<AdminRoute>{createElement(AdminComponents[route.element])}</AdminRoute>}
+                    />
+                  );
+                })}
 
                 <Route path={"/"} exact={true} element={<HomePage />} />
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    element={createElement(Components[route.element])}
-                  />
-                ))}
+                {routes.map((route, index) => {
+                  // console.log({ [route.element]: Components[route.element] });
+
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      element={createElement(Components[route.element])}
+                    />
+                  );
+                })}
                 <Route element={<Four04Page />} />
               </Routes>
             </ScrollToTop>
