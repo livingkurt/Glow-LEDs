@@ -1946,6 +1946,7 @@ router.route("/delete_all_expenses").put(async (req: any, res: any) => {
   }
 });
 import { Request, Response, Router } from "express";
+import { Promo } from "./promos";
 
 router.route("/update_status").put(async (req: Request, res: Response) => {
   try {
@@ -2162,6 +2163,26 @@ router.route("/import_checkins").put(async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Server Error");
+  }
+});
+
+router.route("/remove_free_shipping").put(async (req, res) => {
+  try {
+    await Promo.updateMany(
+      {
+        single_use: true,
+        affiliate: { $exists: false },
+        user: { $exists: false },
+      },
+      {
+        $set: { free_shipping: false },
+      }
+    );
+
+    res.status(200).json({ message: "Free shipping removed from single-use codes." });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

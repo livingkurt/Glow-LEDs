@@ -127,3 +127,18 @@ export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes",
     return thunkApi.rejectWithValue(error.response?.data);
   }
 });
+
+export const validatePromoCode = createAsyncThunk(
+  "promo/validatePromoCode",
+  async ({ promo_code, current_user, cartItems }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/promos/validate/${promo_code}`, { cartItems, current_user });
+      console.log({ data });
+      thunkApi.dispatch(showSuccess({ message: `Promo Code Validated` }));
+      return data;
+    } catch (error) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      return thunkApi.rejectWithValue(error.response?.data);
+    }
+  }
+);

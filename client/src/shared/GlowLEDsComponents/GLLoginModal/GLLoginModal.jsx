@@ -49,8 +49,8 @@ const GLLoginModal = () => {
 
   useEffect(() => {
     if (loginSuccess) {
-      const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
-      navigate(redirect);
+      // const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
+      // navigate(redirect);
       dispatch(setLoginSuccess(false));
     }
   }, [current_user.isAdmin, dispatch, loginSuccess, navigate]);

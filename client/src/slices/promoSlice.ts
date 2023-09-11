@@ -40,6 +40,7 @@ const promoPage = createSlice({
     promo_modal: false,
     message: "",
     error: {},
+    loadingValidatePromoCode: false,
   },
   reducers: {
     set_promo: (state, { payload }) => {
@@ -169,6 +170,17 @@ const promoPage = createSlice({
     },
     [API.refreshSponsorCodes.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.validatePromoCode.pending as any]: (state: any, { payload }: any) => {
+      state.loadingValidatePromoCode = true;
+    },
+    [API.validatePromoCode.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingValidatePromoCode = false;
+    },
+    [API.validatePromoCode.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingValidatePromoCode = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

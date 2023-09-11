@@ -14,7 +14,7 @@ const promoSchema = new mongoose.Schema(
     included_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     excluded_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     percentage_off: { type: Number },
-    free_shipping: { type: Boolean },
+    free_shipping: { type: Boolean, default: false },
     exclude: { type: Boolean },
     include: { type: Boolean },
     amount_off: { type: Number },
@@ -25,10 +25,10 @@ const promoSchema = new mongoose.Schema(
     used_once: { type: Boolean, default: false },
     minimum_total: { type: Number, default: 0 },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

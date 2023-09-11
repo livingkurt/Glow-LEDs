@@ -5,11 +5,11 @@ import {
   make_private_code,
   month_dates,
 } from "../../util";
-import { affiliate_db } from "../affiliates";
+import { Affiliate, affiliate_db } from "../affiliates";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
-import { promo_db } from "../promos";
-import { extractCodes } from "./promo_helpers";
+import { Promo, promo_db } from "../promos";
+import { determineCartTotal, extractCodes } from "./promo_helpers";
 import {
   deactivateOldCodes,
   generateSponsorCodes,
@@ -175,7 +175,7 @@ export default {
       excluded_categories: [],
       excluded_products: [],
       percentage_off: 10,
-      free_shipping: true,
+      free_shipping: false,
       time_limit: false,
       start_date: "2021-01-01",
       end_date: "2021-01-01",
@@ -344,5 +344,85 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  validate_promo_code_promos_s: async (params: any, body: any) => {
+    const { promo_code } = params;
+    const { current_user, cartItems } = body;
+    const errors: any = { promo_code: [] };
+    const isValid = true;
+    try {
+      const itemsPrice: any = determineCartTotal(cartItems, current_user.isWholesaler);
+
+      // Check if promo_code exists in the database
+      const promo = await Promo.findOne({ promo_code: promo_code.toLowerCase() });
+      if (!promo) {
+        return { isValid: false, errors: { promo_code: "Invalid promo code." } };
+      }
+
+      // Check if promo is active
+      if (!promo.active) {
+        return { isValid: false, errors: { promo_code: "This promo code is not active." } };
+      }
+      if (promo.time_limit) {
+        // Check if promo has expired
+        const now = new Date();
+        if (promo.end_date && now > new Date(promo.end_date)) {
+          return { isValid: false, errors: { promo_code: "This promo code has expired." } };
+        }
+
+        // Check if promo is yet to start
+        if (promo.start_date && now < new Date(promo.start_date)) {
+          return { isValid: false, errors: { promo_code: "This promo code is not yet active." } };
+        }
+      }
+
+      // Check if promo is admin_only and current_user is not admin
+      if (promo.admin_only && !current_user.isAdmin) {
+        return { isValid: false, errors: { promo_code: "This promo code is restricted to admins." } };
+      }
+
+      // Check if promo is sponsor_only
+      if (promo.sponsor_only) {
+        const affiliate = await Affiliate.findOne({ user: current_user._id }).exec();
+        if (!affiliate || !affiliate.sponsor) {
+          return { isValid: false, errors: { promo_code: "This promo code is restricted to sponsors." } };
+        }
+      }
+
+      // Check if promo is affiliate_only and current_user is not an affiliate
+      if (promo.affiliate_only && !current_user.is_affiliated) {
+        return { isValid: false, errors: { promo_code: "This promo code is restricted to affiliates." } };
+      }
+
+      // Check if the promo is single_use and has been used
+      if (promo.single_use && promo.used_once) {
+        return { isValid: false, errors: { promo_code: "This promo code has already been used." } };
+      }
+
+      // Check if minimum_total is met
+      if (promo.minimum_total > itemsPrice) {
+        return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
+      }
+
+      // // Check if promo is associated with an affiliate and validate
+      // if (promo.affiliate) {
+      //   const affiliate = await Affiliate.findOne({ user: current_user._id }).exec();
+      //   if (!affiliate || affiliate._id.toString() !== promo.affiliate.toString()) {
+      //     return { isValid: false, errors: { promo_code: "This promo code does not match your affiliate." } };
+      //   }
+      // }
+
+      // // Validate the user
+      // if (promo.user && promo.user.toString() !== current_user._id.toString()) {
+      //   return { isValid: false, errors: { promo_code: "This promo code is not associated with your account." } };
+      // }
+      console.log({ isValid, errors, promo });
+      return { isValid, errors, promo };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+    return { isValid, errors };
   },
 };

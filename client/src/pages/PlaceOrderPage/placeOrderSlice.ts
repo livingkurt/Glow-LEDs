@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../../api";
+import { applyAmountOff, applyFreeShipping, applyPercentageOff, calculateNewItemsPrice } from "./placeOrderHelpers";
 
 const initialState = {
   shipping_rates: {},
@@ -284,41 +285,27 @@ const placeOrder = createSlice({
       state.show_promo_code_input_box = true;
     },
     activatePromo: (state, { payload }) => {
-      const { items_price, tax_rate, code, promos, show_message } = payload;
+      const { tax_rate, show_message, validPromo, cartItems, current_user } = payload;
       let promo_excluded = 0;
 
-      // let promo_included = 0;
-      const promo = promos.find((promo: any) => promo.promo_code === code.toLowerCase());
+      const items_price = calculateNewItemsPrice({ cartItems, validPromo, isWholesaler: current_user?.isWholesaler });
 
-      if (promo) {
+      if (validPromo) {
         if (show_message) {
           state.promo_code_validations = "Can only use one promo code at a time";
         } else {
-          if (promo.percentage_off) {
+          if (validPromo.percentage_off) {
             if (items_price === promo_excluded) {
               state.promo_code_validations = "All Items Excluded from Promo";
               return;
             }
-            const newItemsPrice = items_price - (items_price - promo_excluded) * (promo.percentage_off / 100);
-            state.itemsPrice = newItemsPrice;
-            state.taxPrice = tax_rate * newItemsPrice;
-            state.show_message = `${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`;
-          } else if (promo.amount_off) {
-            if (promo.amount_off > items_price) {
-              state.itemsPrice = 0;
-              state.taxPrice = 0;
-            } else {
-              const newItemsPrice = items_price - promo.amount_off;
-              state.itemsPrice = newItemsPrice;
-              state.taxPrice = tax_rate * newItemsPrice;
-            }
-            state.show_message = `${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`;
+            applyPercentageOff(state, items_price, promo_excluded, validPromo, tax_rate);
+          } else if (validPromo.amount_off) {
+            applyAmountOff(state, items_price, validPromo, tax_rate);
           }
 
-          if (promo.free_shipping) {
-            state.shippingPrice = 0;
-            state.free_shipping_message = "Free";
-            state.show_message = `${promo.promo_code.toUpperCase()} Free Shipping`;
+          if (validPromo.free_shipping) {
+            applyFreeShipping(state, validPromo);
           }
 
           state.show_promo_code_input_box = false;
@@ -353,7 +340,6 @@ const placeOrder = createSlice({
     },
     chooseShippingRateBasic: (state, { payload }) => {
       const { rate, freeShipping, shipping } = payload;
-      console.log({ rate, freeShipping, shipping });
 
       if (freeShipping) {
         state.loading = false;
@@ -438,6 +424,9 @@ const placeOrder = createSlice({
       state.loading = false;
       state.loading_payment = false;
       state.paymentValidations = payload.message;
+    },
+    [API.validatePromoCode.fulfilled as any]: (state: any, { payload }: any) => {
+      state.promo_code_validations = payload.errors.promo_code;
     },
   },
 });

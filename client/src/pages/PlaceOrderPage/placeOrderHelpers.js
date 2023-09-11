@@ -1,3 +1,5 @@
+import { determine_total } from "../../utils/helper_functions";
+
 export const determine_service = rate => {
   if (rate.est_delivery_days) {
     return `Est: ${rate.est_delivery_days} ${rate.est_delivery_days === 1 ? "Day" : "Days"}`;
@@ -123,3 +125,70 @@ export const processingTime = ({ cartItems }) =>
 export const isFasterShipping = ({ shipping, rate, index }) =>
   (!shipping.international && serviceNames[index] !== "USPS: Standard") ||
   (shipping.international && mapServiceName(rate.service) !== "First Class");
+
+export const applyPercentageOff = (state, items_price, promo_excluded, validPromo, tax_rate) => {
+  const newItemsPrice = items_price - (items_price - promo_excluded) * (validPromo.percentage_off / 100);
+  state.itemsPrice = newItemsPrice;
+  state.taxPrice = tax_rate * newItemsPrice;
+  state.show_message = `${validPromo.promo_code.toUpperCase()} ${validPromo.percentage_off}% Off`;
+};
+
+export const applyAmountOff = (state, items_price, validPromo, tax_rate) => {
+  const newItemsPrice = validPromo.amount_off > items_price ? 0 : items_price - validPromo.amount_off;
+  state.itemsPrice = newItemsPrice;
+  state.taxPrice = tax_rate * newItemsPrice;
+  state.show_message = `${validPromo.promo_code.toUpperCase()} $${validPromo.amount_off} Off`;
+};
+
+export const applyFreeShipping = (state, validPromo) => {
+  state.shippingPrice = 0;
+  state.free_shipping_message = "Free";
+  state.show_message = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
+};
+
+// Check if a product is included or excluded
+export const isProductValidForPromo = (productId, validPromo) => {
+  if (validPromo.include) {
+    return validPromo.included_products.includes(productId);
+  }
+  if (validPromo.exclude) {
+    return !validPromo.excluded_products.includes(productId);
+  }
+  return true;
+};
+
+// Check if a category is included or excluded
+export const isCategoryValidForPromo = (categoryId, validPromo) => {
+  if (validPromo.include) {
+    return validPromo.included_categories.includes(categoryId);
+  }
+  if (validPromo.exclude) {
+    return !validPromo.excluded_categories.includes(categoryId);
+  }
+  return true;
+};
+
+// Calculate the new total price based on included or excluded products and categories
+export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
+  const today = new Date();
+  let total = 0;
+  cartItems.forEach(item => {
+    if (
+      isProductValidForPromo(item.product, validPromo) &&
+      isCategoryValidForPromo(item.product.category, validPromo)
+    ) {
+      if (isWholesaler) {
+        total += (item.wholesale_price || item.price) * item.qty;
+      } else if (
+        today >= new Date(item.sale_start_date) &&
+        today <= new Date(item.sale_end_date) &&
+        item.sale_price !== 0
+      ) {
+        total += item.sale_price * item.qty;
+      } else {
+        total += item.price * item.qty;
+      }
+    }
+  });
+  return total;
+};

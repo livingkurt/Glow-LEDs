@@ -6,111 +6,177 @@ interface errors {
   email: string;
   password: string;
 }
+
 export const validate_promo_code = (data: any) => {
-  let errors: any = {};
-  interface errors {
-    promo_code: string;
-  }
-  const promo_codes = data.promos.map((promo: any) => promo.promo_code.toLowerCase());
-  //
-  const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
+  let errors: any;
+  let isValid = true;
 
-  // Convert empty fields to an empty string so we can use validator functions
-  data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : "";
-  // Email checks
-  if (isEmpty2(data.promo_code)) {
-    errors.promo_code = "Promo Code Field Empty";
-  }
-  if (data.current_user) {
-    if (promo && promo.admin_only && data.current_user?.isAdmin === false) {
-      errors.promo_code = "Promo Code Not Active";
-    } else if (promo && promo.affiliate_only && data.current_user.is_affiliated === false) {
-      errors.promo_code = "Promo Code Not Active";
-    }
-    // else if (promo && promo.sponsor_only && data.current_user.affiliate.sponsor === false) {
-    //   errors.promo_code = "Promo Code Not Active";
-    // }
-  }
-  if (!data.current_user.hasOwnProperty("first_name")) {
-    if (promo && promo.admin_only) {
-      errors.promo_code = "Promo Code Not Active";
-    } else if (promo && promo.affiliate_only) {
-      errors.promo_code = "Promo Code Not Active";
-    }
-  }
-  let included_deductions = 0;
-  if (promo && promo.minimum_total) {
-    if (promo.include) {
-      included_deductions = promo.included_products.reduce((a: any, item: any) => a + item.price, 0);
-      if (promo.minimum_total > data.items_price - included_deductions) {
-        errors.promo_code = "Minimum Order Total Not Met";
-      }
-    } else {
-      if (promo.minimum_total > data.items_price) {
-        errors.promo_code = "Minimum Order Total Not Met";
-      }
-    }
-  }
-  // if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
-  // 	errors.promo_code = 'Minimum Order Total Not Met';
-  // }
-  // errors.promo_code = 'Promo Code Not Active Start';
-  if (promo && !promo.active) {
-    errors.promo_code = "Promo Code Not Active";
-  }
-  // if (promo && promo.include) {
-  //
-  // 	//
-  // 	//
-  // 	// const category_cart_items = data.cartItems.filter((item: any) =>
-  // 	// 	promo.included_categories.include(item.category)
-  // 	// );
-  // 	//
-  // 	let included_item_exists = false;
-  // 	data.cartItems.forEach((item: any) => {
-  //
-  // 		return promo.included_products.forEach((included_product: any) => {
-  //
-  // 			if (included_product.pathname === item.pathname) {
-  // 				included_item_exists = true;
-  // 			}
-  // 		});
-  // 	});
-  // 	//
-  //
-  // 	if (!included_item_exists) {
-  // 		errors.promo_code = 'Promo Code Not Active Not Included';
-  // 	}
-  // }
+  // Destructure data
+  const { promo_code, promos, current_user, items_price, cartItems, dispatch } = data;
 
-  if (promo && promo.single_use && promo.used_once) {
-    //
-    errors.promo_code = "Promo Code Not Active";
-  }
-  // if (!promo_codes.includes(data.promo_code.toLowerCase())) {
-  //   errors.promo_code = "Promo Code Not Valid";
-  // }
-  const today = new Date();
-
-  if (promo && promo.time_limit) {
-    if (today >= new Date(promo.end_date) || today <= new Date(promo.start_date)) {
-      //
-      errors.promo_code = "Promo Code Not Active 7";
-    }
-    // else {
-    // }
-    // if (today < new Date(promo.start_date) && today > new Date(promo.end_date)) {
-    //
-    // }
-    //
-    // errors.promo_code = 'Promo Code Not Active';
+  // Check if promo_code exists in the database
+  const promo = promos.find((p: any) => p.promo_code.toLowerCase() === promo_code.toLowerCase());
+  if (!promo) {
+    errors.promo_code.push("Invalid promo code.");
+    isValid = false;
+    return { isValid, errors };
   }
 
-  return {
-    errors,
-    isValid: isEmpty(errors)
-  };
+  // Check if promo is active
+  if (!promo.active) {
+    errors.promo_code.push("This promo code is not active.");
+    isValid = false;
+  }
+
+  // Check if promo has expired
+  const now = new Date();
+  if (promo.end_date && now > new Date(promo.end_date)) {
+    errors.promo_code.push("This promo code has expired.");
+    isValid = false;
+  }
+
+  // Check if promo is yet to start
+  if (promo.start_date && now < new Date(promo.start_date)) {
+    errors.promo_code.push("This promo code is not yet active.");
+    isValid = false;
+  }
+
+  // Check if promo is admin_only and current_user is not admin
+  if (promo.admin_only && !current_user.isAdmin) {
+    errors.promo_code.push("This promo code is restricted to admins.");
+    isValid = false;
+  }
+  // Check if promo is admin_only and current_user is not admin
+  if (promo.sponsor_only && !current_user.isAdmin) {
+    errors.promo_code.push("This promo code is restricted to admins.");
+    isValid = false;
+  }
+
+  // Check if promo is affiliate_only and current_user is not an affiliate
+  if (promo.affiliate_only && !current_user.is_affiliated) {
+    errors.promo_code.push("This promo code is restricted to affiliates.");
+    isValid = false;
+  }
+
+  // Check if the promo is single_use and has been used
+  if (promo.single_use && promo.used_once) {
+    errors.promo_code.push("This promo code has already been used.");
+    isValid = false;
+  }
+
+  // Check if minimum_total is met
+  if (promo.minimum_total > items_price) {
+    errors.promo_code.push(`Minimum total of ${promo.minimum_total} is required.`);
+    isValid = false;
+  }
+
+  return { isValid, errors };
 };
+// export const validate_promo_code = (data: any) => {
+//   let errors: any = {};
+//   interface errors {
+//     promo_code: string;
+//   }
+//   const promo_codes = data.promos.map((promo: any) => promo.promo_code.toLowerCase());
+//   //
+//   const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
+
+//   // Convert empty fields to an empty string so we can use validator functions
+//   data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : "";
+//   // Email checks
+//   if (isEmpty2(data.promo_code)) {
+//     errors.promo_code = "Promo Code Field Empty";
+//   }
+//   if (data.current_user) {
+//     if (promo && promo.admin_only && data.current_user?.isAdmin === false) {
+//       errors.promo_code = "Promo Code Not Active";
+//     } else if (promo && promo.affiliate_only && data.current_user.is_affiliated === false) {
+//       errors.promo_code = "Promo Code Not Active";
+//     }
+//     // else if (promo && promo.sponsor_only && data.current_user.affiliate.sponsor === false) {
+//     //   errors.promo_code = "Promo Code Not Active";
+//     // }
+//   }
+//   if (!data.current_user.hasOwnProperty("first_name")) {
+//     if (promo && promo.admin_only) {
+//       errors.promo_code = "Promo Code Not Active";
+//     } else if (promo && promo.affiliate_only) {
+//       errors.promo_code = "Promo Code Not Active";
+//     }
+//   }
+//   let included_deductions = 0;
+//   if (promo && promo.minimum_total) {
+//     if (promo.include) {
+//       included_deductions = promo.included_products.reduce((a: any, item: any) => a + item.price, 0);
+//       if (promo.minimum_total > data.items_price - included_deductions) {
+//         errors.promo_code = "Minimum Order Total Not Met";
+//       }
+//     } else {
+//       if (promo.minimum_total > data.items_price) {
+//         errors.promo_code = "Minimum Order Total Not Met";
+//       }
+//     }
+//   }
+//   // if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
+//   // 	errors.promo_code = 'Minimum Order Total Not Met';
+//   // }
+//   // errors.promo_code = 'Promo Code Not Active Start';
+//   if (promo && !promo.active) {
+//     errors.promo_code = "Promo Code Not Active";
+//   }
+//   // if (promo && promo.include) {
+//   //
+//   // 	//
+//   // 	//
+//   // 	// const category_cart_items = data.cartItems.filter((item: any) =>
+//   // 	// 	promo.included_categories.include(item.category)
+//   // 	// );
+//   // 	//
+//   // 	let included_item_exists = false;
+//   // 	data.cartItems.forEach((item: any) => {
+//   //
+//   // 		return promo.included_products.forEach((included_product: any) => {
+//   //
+//   // 			if (included_product.pathname === item.pathname) {
+//   // 				included_item_exists = true;
+//   // 			}
+//   // 		});
+//   // 	});
+//   // 	//
+//   //
+//   // 	if (!included_item_exists) {
+//   // 		errors.promo_code = 'Promo Code Not Active Not Included';
+//   // 	}
+//   // }
+
+//   if (promo && promo.single_use && promo.used_once) {
+//     //
+//     errors.promo_code = "Promo Code Not Active";
+//   }
+//   // if (!promo_codes.includes(data.promo_code.toLowerCase())) {
+//   //   errors.promo_code = "Promo Code Not Valid";
+//   // }
+//   const today = new Date();
+
+//   if (promo && promo.time_limit) {
+//     if (today >= new Date(promo.end_date) || today <= new Date(promo.start_date)) {
+//       //
+//       errors.promo_code = "Promo Code Not Active 7";
+//     }
+//     // else {
+//     // }
+//     // if (today < new Date(promo.start_date) && today > new Date(promo.end_date)) {
+//     //
+//     // }
+//     //
+//     // errors.promo_code = 'Promo Code Not Active';
+//   }
+
+//   return {
+//     errors,
+//     isValid: isEmpty(errors)
+//   };
+// };
 
 export const validate_email = async (data: { email: any; password: any }) => {
   let errors: any = {};
@@ -131,7 +197,7 @@ export const validate_email = async (data: { email: any; password: any }) => {
   }
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 export const validate_login = (data: { email: any; password: any }) => {
@@ -155,11 +221,17 @@ export const validate_login = (data: { email: any; password: any }) => {
   }
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
-export const validate_registration = (data: { first_name: any; last_name: any; email: any; password: any; rePassword: any }) => {
+export const validate_registration = (data: {
+  first_name: any;
+  last_name: any;
+  email: any;
+  password: any;
+  rePassword: any;
+}) => {
   let errors: any = {};
 
   // Convert empty fields to an empty string so we can use validator functions
@@ -200,7 +272,7 @@ export const validate_registration = (data: { first_name: any; last_name: any; e
   }
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -279,7 +351,7 @@ export const validate_shipping = (data: {
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -315,7 +387,7 @@ export const validate_payment = (data: { paymentMethod: any }) => {
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -362,7 +434,7 @@ export const validate_contact = (data: {
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -389,11 +461,16 @@ export const validate_profile = (data: { first_name: any; last_name: any; email:
 
   return {
     errors,
-    isValid: !isEmpty2(errors)
+    isValid: !isEmpty2(errors),
   };
 };
 
-export const validate_password_change = async (data: { id: any; current_password: any; password: any; rePassword: any }) => {
+export const validate_password_change = async (data: {
+  id: any;
+  current_password: any;
+  password: any;
+  rePassword: any;
+}) => {
   //
   //
   let errors: any = {};
@@ -401,7 +478,7 @@ export const validate_password_change = async (data: { id: any; current_password
   if (data.current_password) {
     try {
       request = await axios.post("/api/users/check_password/" + data.id, {
-        current_password: data.current_password
+        current_password: data.current_password,
       });
 
       // Password checks
@@ -439,7 +516,7 @@ export const validate_password_change = async (data: { id: any; current_password
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -471,7 +548,7 @@ export const validate_passwords = async (data: { id: any; password: any; rePassw
   }
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
 
@@ -497,6 +574,6 @@ export const validate_affiliate = (data: { artist_name: any; years: any }) => {
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };

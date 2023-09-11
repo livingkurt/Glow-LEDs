@@ -13,7 +13,6 @@ import {
   set_paymentMethod,
   showHideSteps,
   removePromo,
-  set_promo_code_validations,
   activatePromo,
   set_loading_payment,
   set_user,
@@ -24,7 +23,6 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determine_total } from "../../../utils/helper_functions";
 import * as API from "../../../api";
-import { validate_promo_code } from "../../../utils/validations";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 
@@ -41,9 +39,6 @@ const PaymentStep = () => {
   const { current_user, users } = userPage;
 
   const items_price = determine_total(cartItems);
-
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {
@@ -74,21 +69,22 @@ const PaymentStep = () => {
     production_note,
   } = placeOrder;
 
-  const check_code = e => {
+  const check_code = async e => {
     e.preventDefault();
 
-    const data = {
-      promo_code: promo_code,
-      promos,
-      current_user,
-      items_price,
-      cartItems,
-    };
-    const request = validate_promo_code(data);
-    dispatch(set_promo_code_validations(request.errors.promo_code));
+    const request = await dispatch(API.validatePromoCode({ promo_code, current_user, cartItems }));
+    console.log({ request });
 
-    if (request.isValid) {
-      dispatch(activatePromo({ items_price, tax_rate, show_message, code: promo_code.toLowerCase(), promos }));
+    if (request.payload.isValid) {
+      dispatch(
+        activatePromo({
+          cartItems,
+          tax_rate,
+          show_message,
+          current_user,
+          validPromo: request.payload.promo,
+        })
+      );
     } else {
       dispatch(set_promo_code(""));
     }
