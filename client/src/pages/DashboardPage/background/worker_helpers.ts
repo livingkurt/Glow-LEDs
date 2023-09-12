@@ -86,7 +86,7 @@ export const get_todays_date = (): string => {
 export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
   try {
     await axios.post(`/api/expenses`, data);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -110,7 +110,7 @@ export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
 //         }
 //       }
 //     );
-//    } catch (error) {
+//    } catch (error: any) {
 //   if (error instanceof Error) {
 //     throw new Error(error.message);
 //   }

@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(affiliates);
       }
       return res.status(404).send({ message: "Affiliates Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Affiliates" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByPathname_affiliates_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(affiliate);
       }
       return res.status(404).send({ message: "Affiliate Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_affiliates_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(affiliate);
       }
       return res.status(404).send({ message: "Affiliate Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_affiliates_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(201).send(affiliate);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   monthly_checkin_affiliates_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(201).send(affiliate);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   checkin_status_affiliates_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(201).send(affiliate);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   question_concerns_affiliates_c: async (req: any, res: any) => {
@@ -81,8 +81,8 @@ export default {
         return res.status(201).send(affiliate);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_affiliates_c: async (req: any, res: any) => {
@@ -93,8 +93,8 @@ export default {
         return res.status(200).send(affiliate);
       }
       return res.status(500).send({ message: "Error Updating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_rave_mob_affiliates_affiliates_c: async (req: any, res: any) => {
@@ -106,8 +106,8 @@ export default {
         return res.status(200).send(affiliate);
       }
       return res.status(500).send({ message: "Error Updating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_affiliates_c: async (req: any, res: any) => {
@@ -118,8 +118,8 @@ export default {
         return res.status(204).send({ message: "Affiliate Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   generate_sponsor_codes_affiliates_c: async (req: any, res: any) => {
@@ -130,8 +130,8 @@ export default {
         return res.status(201).send(affiliate);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

@@ -15,7 +15,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -24,7 +24,7 @@ export default {
   findById_carts_s: async (params: any) => {
     try {
       return await cart_db.findById_carts_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -34,7 +34,7 @@ export default {
     try {
       const { id } = params;
       return await cart_db.findByUser_carts_db(id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -43,7 +43,7 @@ export default {
   create_carts_s: async (body: any) => {
     try {
       return await cart_db.create_carts_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -53,7 +53,7 @@ export default {
     const { id } = params;
     try {
       return await cart_db.update_carts_db(id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -63,7 +63,7 @@ export default {
     const { id } = params;
     try {
       return await cart_db.update_user_carts_db(id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -94,7 +94,7 @@ export default {
           return { cartItems: [cart_item] };
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -104,7 +104,7 @@ export default {
   empty_carts_s: async (params: any) => {
     try {
       return await cart_db.update_carts_db(params.id, { active: false });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -113,7 +113,7 @@ export default {
   remove_carts_s: async (params: any) => {
     try {
       return await cart_db.remove_carts_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -156,7 +156,7 @@ export default {
           throw new Error("There is no cart to modify");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

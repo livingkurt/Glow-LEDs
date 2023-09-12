@@ -83,7 +83,7 @@ export const top_code_usage_upload = async (year: number, month: string) => {
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -159,7 +159,7 @@ export const top_earner_upload = async (year: number, month: string) => {
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -234,7 +234,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     await newSheet.saveUpdatedCells();
 
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -351,7 +351,7 @@ export const facebook_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -470,7 +470,7 @@ export const current_products_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -559,7 +559,7 @@ export const google_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -666,7 +666,7 @@ export const orders_upload = async (orders: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

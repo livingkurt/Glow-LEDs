@@ -46,7 +46,7 @@ export const createPaymentIntent = async (customer: any, paymentInformation: any
       customer: customer.id,
     });
     return result;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -60,7 +60,7 @@ export const confirmPaymentIntent = async (result: any, paymentMethodId: string)
       payment_method: paymentMethodId,
     });
     return confirmedResult;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -79,7 +79,7 @@ export const updateOrder = async (order: any, confirmedPayment: any, paymentMeth
     };
 
     return await order.save();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

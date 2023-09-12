@@ -209,7 +209,7 @@ export const getCodeUsage = async (data: any) => {
 
     return { number_of_uses, revenue, earnings };
     // return "Success";
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(tutorials);
       }
       return res.status(404).send({ message: "Tutorials Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Tutorials" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_tutorials_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(tutorial);
       }
       return res.status(404).send({ message: "Tutorial Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_tutorials_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(201).send(tutorial);
       }
       return res.status(500).send({ message: "Error Creating Tutorial" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_tutorials_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(tutorial);
       }
       return res.status(500).send({ message: "Error Updating Tutorial" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   reorder_tutorials_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(200).send(tutorial);
       }
       return res.status(500).send({ message: "Error Reordering Tutorial" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Reordering Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_tutorials_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(204).send({ message: "Tutorial Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Tutorial" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

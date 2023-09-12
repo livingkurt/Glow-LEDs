@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(chips);
       }
       return res.status(404).send({ message: "Chips Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Chips" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_chips_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(chip);
       }
       return res.status(404).send({ message: "Chip Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Chip" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByName_chips_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(chip);
       }
       return res.status(404).send({ message: "Chip Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Chip" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_chips_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(201).send(chip);
       }
       return res.status(500).send({ message: "Error Creating Chip" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Chip" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_chips_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(200).send(chip);
       }
       return res.status(500).send({ message: "Error Updating Chip" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Chip" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_chips_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(204).send({ message: "Chip Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Chip" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Chip" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

@@ -12,7 +12,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -25,7 +25,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -38,7 +38,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -51,7 +51,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -60,7 +60,7 @@ export default {
   create_teams_db: async (body: any) => {
     try {
       return await Team.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -72,7 +72,7 @@ export default {
       if (team) {
         return await Team.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -84,7 +84,7 @@ export default {
       if (team) {
         return await Team.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -93,7 +93,7 @@ export default {
   count_teams_db: async (filter: any) => {
     try {
       return await Team.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

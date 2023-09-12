@@ -20,7 +20,7 @@ export default {
   shipping_rates_shipping_s: async (body: any) => {
     try {
       return await createShippingRates({ order: body.order, returnLabel: false });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -37,7 +37,7 @@ export default {
       } else {
         return await createShippingRates({ order, returnLabel: false });
       }
-    } catch (error) {
+    } catch (error: any) {
       return await createShippingRates({ order, returnLabel: false });
     }
   },
@@ -52,7 +52,7 @@ export default {
       console.log({ label });
       await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -65,7 +65,7 @@ export default {
       const label: any = await createLabel({ order, shipping_rate });
       await addTracking({ order, label, shipping_rate: label.selected_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -78,7 +78,7 @@ export default {
       const refund: any = await refundLabel({ order, is_return_tracking });
       await clearTracking({ order, isReturnTracking: is_return_tracking });
       return refund;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -90,7 +90,7 @@ export default {
         page_size: 50,
       });
       return shipments;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -101,7 +101,7 @@ export default {
       const order = await order_db.findById_orders_db(params.order_id);
       const tracker: any = await createTracker({ order });
       return tracker;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -117,7 +117,7 @@ export default {
       await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
 
       return { label: label.postage_label.label_url };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -130,7 +130,7 @@ export default {
       const csvData = parseOrderData(shipment, order);
 
       return csvData;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -192,7 +192,7 @@ export default {
         });
         return { pickup, orders };
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -222,7 +222,7 @@ export default {
 
       // Return the bought pickup
       return boughtPickup;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -233,7 +233,7 @@ export default {
     const { toShipping, fromShipping, parcel } = body;
     try {
       return await createCustomShippingRates({ toShipping, fromShipping, parcel });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -244,7 +244,7 @@ export default {
     const { selectedRateId, shipmentId } = body;
     try {
       return await EasyPost.Shipment.buy(shipmentId, selectedRateId);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

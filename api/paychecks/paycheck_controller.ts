@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(paychecks);
       }
       return res.status(404).send({ message: "Paychecks Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paychecks" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_paychecks_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(paycheck_filters);
       }
       return res.status(404).send({ message: "Paychecks Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paychecks" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_paychecks_c: async (req: any, res: any) => {
@@ -34,8 +34,8 @@ export default {
         return res.status(200).send(paycheck);
       }
       return res.status(404).send({ message: "Paycheck Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findMy_paychecks: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(200).send(paycheck);
       }
       return res.status(404).send({ message: "Paycheck Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_paychecks_c: async (req: any, res: any) => {
@@ -59,8 +59,8 @@ export default {
         return res.status(201).send(paycheck);
       }
       return res.status(500).send({ message: "Error Creating Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_affiliate_paychecks_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(201).send(paycheck);
       }
       return res.status(500).send({ message: "Error Creating Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_paychecks_c: async (req: any, res: any) => {
@@ -83,8 +83,8 @@ export default {
         return res.status(200).send(paycheck);
       }
       return res.status(500).send({ message: "Error Updating Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_paychecks_c: async (req: any, res: any) => {
@@ -95,8 +95,8 @@ export default {
         return res.status(204).send({ message: "Paycheck Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_multiple_paychecks_c: async (req: any, res: any) => {
@@ -107,8 +107,8 @@ export default {
         return res.status(204).send({ message: "Paycheck Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_payouts_paychecks_c: async (req: any, res: any) => {
@@ -119,8 +119,8 @@ export default {
         return res.status(200).send(paycheck);
       }
       return res.status(500).send({ message: "Error Deleting Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_time_payouts_paychecks_c: async (req: any, res: any) => {
@@ -130,8 +130,8 @@ export default {
         return res.status(200).send(paycheck);
       }
       return res.status(500).send({ message: "Error Deleting Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

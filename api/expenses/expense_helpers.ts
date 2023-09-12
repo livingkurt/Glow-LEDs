@@ -99,7 +99,7 @@ export const downloadFile = async (url: any, filePath: any, expenseName: string)
       //       try {
       //         await storeAsImage.bulk(-1);
       //         resolve();
-      //       } catch (error) {
+      //       } catch (error: any) {
       //         console.error(`Failed to convert pdf to png: ${error}`);
       //         reject(error);
       //       }
@@ -112,7 +112,7 @@ export const downloadFile = async (url: any, filePath: any, expenseName: string)
     } else {
       throw new Error(`Failed to download file with status code: ${response.status}`);
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Failed to download file from url: ${url} with error: ${error}`);
     throw error;
   }
@@ -137,7 +137,7 @@ export const uploadToImgur = async (albumName: any, filePath: any) => {
     });
 
     return imgResponse.data.data.link;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -149,7 +149,7 @@ export const deleteTempFile = (path: any) => {
     fs.unlink(path, err => {
       if (err) throw err;
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

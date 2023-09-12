@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(palettes);
       }
       return res.status(404).send({ message: "Palettes Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Palettes" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_palettes_c: async (req: any, res: any) => {
@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(palette);
       }
       return res.status(404).send({ message: "Palette Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Palette" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findMy_palettes: async (req: any, res: any) => {
@@ -35,8 +35,8 @@ export default {
         return res.status(200).send(palette);
       }
       return res.status(404).send({ message: "Paycheck Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_palettes_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(201).send(palette);
       }
       return res.status(500).send({ message: "Error Creating Palette" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Palette" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_palettes_c: async (req: any, res: any) => {
@@ -59,8 +59,8 @@ export default {
         return res.status(200).send(palette);
       }
       return res.status(500).send({ message: "Error Updating Palette" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Palette" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_palettes_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(204).send({ message: "Palette Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Palette" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Palette" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

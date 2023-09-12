@@ -12,7 +12,7 @@ export const listFeatures = createAsyncThunk("features/listFeatures", async (que
   try {
     const { data } = await axios.get(`/api/features?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -27,7 +27,7 @@ export const saveFeature = createAsyncThunk("features/saveFeature", async (featu
       const { data } = await axios.put(`/api/features/${feature._id}`, feature);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -37,7 +37,7 @@ export const detailsFeature = createAsyncThunk("features/detailsFeature", async 
   try {
     const { data } = await axios.get(`/api/features/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -47,7 +47,7 @@ export const deleteFeature = createAsyncThunk("features/deleteFeature", async (p
   try {
     const { data } = await axios.delete("/api/features/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

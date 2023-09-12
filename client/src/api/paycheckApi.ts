@@ -31,7 +31,7 @@ export const getPaychecks = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -46,7 +46,7 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
     const { data } = await axios.get(`/api/paychecks?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -63,7 +63,7 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
       thunkApi.dispatch(showSuccess({ message: `Paycheck Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -74,7 +74,7 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
     const { data } = await axios.get(`/api/paychecks/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Paycheck Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -85,7 +85,7 @@ export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async
     const { data } = await axios.delete("/api/paychecks/" + pathname);
     thunkApi.dispatch(showSuccess({ message: `Paycheck Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -98,7 +98,7 @@ export const deleteMultiplePaychecks = createAsyncThunk(
       const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
       thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }

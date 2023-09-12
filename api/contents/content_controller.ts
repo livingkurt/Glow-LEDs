@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(contents);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAll_contents_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(contents);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findDisplay_contents_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(contents);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllEvents_contents_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(contents);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllYoutube_contents_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(200).send(contents);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_contents_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(200).send(content);
       }
       return res.status(404).send({ message: "Content Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Content" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_contents_c: async (req: any, res: any) => {
@@ -81,8 +81,8 @@ export default {
         return res.status(201).send(content);
       }
       return res.status(500).send({ message: "Error Creating Content" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Content" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_contents_c: async (req: any, res: any) => {
@@ -93,8 +93,8 @@ export default {
         return res.status(200).send(content);
       }
       return res.status(500).send({ message: "Error Updating Content" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Content" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_contents_c: async (req: any, res: any) => {
@@ -105,8 +105,8 @@ export default {
         return res.status(204).send({ message: "Content Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Content" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Content" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

@@ -27,7 +27,7 @@ export const getTaxRates = createAsyncThunk(
       });
       const tax_rate = parseFloat(data[result?.long_name || shipping.state]) / 100;
       return { tax_rate, shipping, itemsPrice };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       thunkApi.rejectWithValue(error.message);
     }
@@ -36,7 +36,7 @@ export const getTaxRates = createAsyncThunk(
 export const updateStock = createAsyncThunk("placeOrderPage/updateStock", async ({ cartItems }: any, thunkApi: any) => {
   try {
     axios.put("/api/products/update_stock", { cartItems });
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     thunkApi.rejectWithValue(error.message);
   }
@@ -46,7 +46,7 @@ export const promoCodeUsed = createAsyncThunk(
   async ({ promo_code }: any, thunkApi: any) => {
     try {
       return axios.put("/api/promos/code/" + promo_code);
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       thunkApi.rejectWithValue(error.message);
     }
@@ -57,7 +57,7 @@ export const sendCodeUsedEmail = createAsyncThunk(
   async ({ promo_code }: any, thunkApi: any) => {
     try {
       return axios.post("/api/emails/code_used/" + promo_code);
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       thunkApi.rejectWithValue(error.message);
     }

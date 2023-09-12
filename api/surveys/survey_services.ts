@@ -36,7 +36,7 @@ export default {
         // Handle the case where count is undefined
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -45,7 +45,7 @@ export default {
   findById_surveys_s: async (params: any) => {
     try {
       return await survey_db.findById_surveys_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -54,7 +54,7 @@ export default {
   create_surveys_s: async (body: any) => {
     try {
       return await survey_db.create_surveys_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -63,7 +63,7 @@ export default {
   update_surveys_s: async (params: any, body: any) => {
     try {
       return await survey_db.update_surveys_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -72,7 +72,7 @@ export default {
   remove_surveys_s: async (params: any) => {
     try {
       return await survey_db.remove_surveys_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

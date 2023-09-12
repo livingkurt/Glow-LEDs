@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(categorys);
       }
       return res.status(404).send({ message: "Categorys Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Categorys" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_categorys_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(category);
       }
       return res.status(404).send({ message: "Category Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Category" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_categorys_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(201).send(category);
       }
       return res.status(500).send({ message: "Error Creating Category" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Category" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_categorys_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(category);
       }
       return res.status(500).send({ message: "Error Updating Category" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Category" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_categorys_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(204).send({ message: "Category Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Category" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Category" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

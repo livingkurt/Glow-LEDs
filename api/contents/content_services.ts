@@ -22,7 +22,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -54,7 +54,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -67,7 +67,7 @@ export default {
       const sort = { _id: -1 };
       const filter = { deleted: false, active: true };
       return await content_db.findAll_contents_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -108,7 +108,7 @@ export default {
         ];
       });
       return events;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -149,7 +149,7 @@ export default {
         ];
       });
       return events;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -158,7 +158,7 @@ export default {
   findById_contents_s: async (params: any) => {
     try {
       return await content_db.findById_contents_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -167,7 +167,7 @@ export default {
   create_contents_s: async (body: any) => {
     try {
       return await content_db.create_contents_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -176,7 +176,7 @@ export default {
   update_contents_s: async (params: any, body: any) => {
     try {
       return await content_db.update_contents_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -185,7 +185,7 @@ export default {
   remove_contents_s: async (params: any) => {
     try {
       return await content_db.remove_contents_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -32,7 +32,7 @@ export const getEmails = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -46,7 +46,7 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query: an
   try {
     const { data } = await axios.get(`/api/emails?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -63,7 +63,7 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
       thunkApi.dispatch(showSuccess({ message: `Email Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -74,7 +74,7 @@ export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: s
     const { data } = await axios.get(`/api/emails/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Email Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -85,7 +85,7 @@ export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathnam
     const { data } = await axios.delete("/api/emails/" + pathname);
     thunkApi.dispatch(showSuccess({ message: `Email Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -115,7 +115,7 @@ export const sendContactEmail = createAsyncThunk(
       axios.post("/api/emails/contact_confirmation", contact_info);
       thunkApi.dispatch(showSuccess({ message: `Contact Email Sent` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -128,7 +128,7 @@ export const viewAnnouncement = createAsyncThunk(
       const { data } = await axios.post("/api/emails/view_announcement", { template });
       thunkApi.dispatch(showSuccess({ message: `Preview Updated` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -145,7 +145,7 @@ export const sendAnnouncement = createAsyncThunk(
       });
       thunkApi.dispatch(showSuccess({ message: `${test && "Test "}Emails Sent` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -157,7 +157,7 @@ export const sendEmailSubscription = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/email_subscription", { email, promo_code });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -171,7 +171,7 @@ export const sendOrderEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/order", { order, subject, email });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -184,7 +184,7 @@ export const sendRefundEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/refund", { order, subject, email });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -204,7 +204,7 @@ export const sendOrderStatusEmail = createAsyncThunk(
         message_to_user,
       });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -217,7 +217,7 @@ export const sendAffiliateEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/affiliate", { affiliate, subject, email });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -229,7 +229,7 @@ export const sendCodeUsedEmailsA = createAsyncThunk("emails/sendCodeUsedEmailsA"
   try {
     const { data } = await axios.post("/api/emails/code_used/" + promo_code);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -242,7 +242,7 @@ export const sendFeatureEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/feature", { feature, subject, email });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -254,7 +254,7 @@ export const sendContact = createAsyncThunk("emails/sendContact", async ({ email
   try {
     const { data } = await axios.post("/api/emails/contact", { email, promo_code });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -267,7 +267,7 @@ export const sendCustomContactEmail = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/custom_contact", { order, email });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -281,7 +281,7 @@ export const sendContactConfirmation = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/contact_confirmation", { email, promo_code });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -295,7 +295,7 @@ export const sendPasswordReset = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/password_reset", { email, promo_code });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -309,7 +309,7 @@ export const sendResetPassword = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/emails/reset_password", { email, promo_code });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -321,7 +321,7 @@ export const resendVerification = createAsyncThunk("emails/resendVerification", 
   try {
     const { data } = await axios.post("/api/emails/verify", { email });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -339,7 +339,7 @@ export const sendAnnouncementEmail = createAsyncThunk(
         time,
       });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -350,7 +350,7 @@ export const sendEmail = createAsyncThunk("emails/sendEmail", async ({ template,
   try {
     const { data } = await axios.post("/api/emails/send_email", { template, subject, email });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -368,7 +368,7 @@ export const saveHtml = createAsyncThunk(
         },
       });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -380,7 +380,7 @@ export const printInvoice = createAsyncThunk("emails/printInvoice", async (order
   try {
     const { data } = await axios.post("/api/emails/invoice", order);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -391,7 +391,7 @@ export const getEmail = createAsyncThunk("emails/getEmail", async (email_id, thu
   try {
     const { data } = await axios.get(`/api/emails/${email_id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -403,7 +403,7 @@ export const getLastActiveEmail = createAsyncThunk("emails/getLastActiveEmail", 
     const query = create_query({ active: true, sort: "newest", limit: 1 });
     const { data } = await axios.get(`/api/emails/?${query}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -414,7 +414,7 @@ export const getContent = createAsyncThunk("emails/getContent", async (content_i
   try {
     const { data } = await axios.get(`/api/contents/${content_id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

@@ -30,7 +30,7 @@ export const getWholesalers = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -40,7 +40,7 @@ export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", a
     const { data } = await axios.get(`/api/wholesalers?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -57,7 +57,7 @@ export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", asy
       thunkApi.dispatch(showSuccess({ message: `Wholesaler Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -70,7 +70,7 @@ export const detailsWholesaler = createAsyncThunk(
       const { data } = await axios.get(`/api/wholesalers/${id}`);
       thunkApi.dispatch(showSuccess({ message: `Wholesaler Found` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -81,7 +81,7 @@ export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler",
     const { data } = await axios.delete(`/api/wholesalers/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Wholesaler Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

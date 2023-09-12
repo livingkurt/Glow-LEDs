@@ -33,7 +33,7 @@ export const getAffiliates = async ({
         // filters: pickBy(filters, (val: any) => val.length > 0)
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -42,7 +42,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   try {
     const { data } = await axios.get(`/api/affiliates?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -70,7 +70,7 @@ export const saveAffiliate = createAsyncThunk(
         const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate);
         return data;
       }
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -87,7 +87,7 @@ export const detailsAffiliate = createAsyncThunk(
         const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
         return data;
       }
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -97,7 +97,7 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
   try {
     const { data } = await axios.delete(`/api/affiliates/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -109,7 +109,7 @@ export const generateSponsorCodes = createAsyncThunk("affiliates/generateSponsor
 
     thunkApi.dispatch(showSuccess({ message: `Codes Generated` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -121,7 +121,7 @@ export const create_rave_mob_affiliates = createAsyncThunk(
     try {
       const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -149,7 +149,7 @@ export const affiliateEarnings = createAsyncThunk(
         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`
       );
       return { data, type };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -167,7 +167,7 @@ export const monthlyCheckin = createAsyncThunk(
       });
       await handleTokenRefresh(true);
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }

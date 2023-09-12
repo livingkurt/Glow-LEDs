@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(filaments);
       }
       return res.status(404).send({ message: "Filaments Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Filaments" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_filaments_c: async (req: any, res: any) => {
@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(filament);
       }
       return res.status(404).send({ message: "Filament Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Filament" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findMy_filaments: async (req: any, res: any) => {
@@ -35,8 +35,8 @@ export default {
         return res.status(200).send(filament);
       }
       return res.status(404).send({ message: "Paycheck Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paycheck" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filaments_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(201).send(filament);
       }
       return res.status(500).send({ message: "Error Creating Filament" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Filament" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_filaments_c: async (req: any, res: any) => {
@@ -59,8 +59,8 @@ export default {
         return res.status(200).send(filament);
       }
       return res.status(500).send({ message: "Error Updating Filament" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Filament" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_filaments_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(204).send({ message: "Filament Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Filament" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Filament" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

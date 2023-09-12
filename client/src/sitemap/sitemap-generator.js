@@ -46,7 +46,7 @@ async function generateSitemap() {
     sitemapXML += "</urlset>";
 
     fs.writeFileSync(path.join(__dirname, "../sitemap.xml"), sitemapXML);
-  } catch (error) {
+  } catch (error: any) {
     console.error("An error occurred while generating the sitemap:", error);
   }
 }

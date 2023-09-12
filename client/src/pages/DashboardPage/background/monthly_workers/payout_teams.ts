@@ -22,12 +22,12 @@ export const payout_teams = async (): Promise<void> => {
           console.log({
             amount: promo_code_usage.earnings,
             stripe_connect_id: team.captain.stripe_connect_id,
-            description: `Monthly Payout for ${team.team_name}`
+            description: `Monthly Payout for ${team.team_name}`,
           });
           await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
             amount: promo_code_usage.earnings,
             stripe_connect_id: team.captain.stripe_connect_id,
-            description: `Monthly Payout for ${team.team_name}`
+            description: `Monthly Payout for ${team.team_name}`,
           });
           const data = {
             Expense: `${team.team_name} Affiliate Earnings`,
@@ -35,7 +35,7 @@ export const payout_teams = async (): Promise<void> => {
             Amount: promo_code_usage.earnings || 0, // ensure that Amount is a number and not undefined
             "Place of Purchase": "Stripe",
             Card: "Stripe",
-            Category: ["Employee Paycheck"]
+            Category: ["Employee Paycheck"],
           };
           save_paycheck_to_expenses(data);
         }
@@ -48,7 +48,7 @@ export const payout_teams = async (): Promise<void> => {
           uses: promo_code_usage.number_of_uses,
           stripe_connect_id: team?.captain?.stripe_connect_id || null,
           paid: team?.captain?.stripe_connect_id ? true : false,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
         await axios.post(`${domainUrl}/api/paychecks`, {
           team: team?._id,
@@ -59,11 +59,11 @@ export const payout_teams = async (): Promise<void> => {
           uses: promo_code_usage.number_of_uses,
           stripe_connect_id: team?.captain?.stripe_connect_id || null,
           paid: team?.captain?.stripe_connect_id ? true : false,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
       })
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("error", error);
   }
 };

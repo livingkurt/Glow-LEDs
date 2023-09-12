@@ -12,7 +12,7 @@ export const listSettings = createAsyncThunk("settings/listSettings", async (que
   try {
     const { data } = await axios.get(`/api/settings?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -27,7 +27,7 @@ export const saveSetting = createAsyncThunk("settings/saveSetting", async (setti
       const { data } = await axios.put(`/api/settings/${setting._id}`, setting);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -37,7 +37,7 @@ export const detailsSetting = createAsyncThunk("settings/detailsSetting", async 
   try {
     const { data } = await axios.get(`/api/settings/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -47,7 +47,7 @@ export const deleteSetting = createAsyncThunk("settings/deleteSetting", async (p
   try {
     const { data } = await axios.delete("/api/settings/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

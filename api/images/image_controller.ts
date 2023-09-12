@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(images);
       }
       return res.status(404).send({ message: "Images Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Images" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_images_c: async (req: any, res: any) => {
@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(image);
       }
       return res.status(404).send({ message: "Image Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByLink_images_c: async (req: any, res: any) => {
@@ -35,8 +35,8 @@ export default {
         return res.status(200).send(image);
       }
       return res.status(404).send({ message: "Image Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   upload_images_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(201).send(image);
       }
       return res.status(500).send({ message: "Error Creating Image" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_images_c: async (req: any, res: any) => {
@@ -59,8 +59,8 @@ export default {
         return res.status(201).send(image);
       }
       return res.status(500).send({ message: "Error Creating Image" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_images_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(200).send(image);
       }
       return res.status(500).send({ message: "Error Updating Image" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_images_c: async (req: any, res: any) => {
@@ -83,8 +83,8 @@ export default {
         return res.status(204).send({ message: "Image Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Image" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_multiple_images_c: async (req: any, res: any) => {
@@ -95,8 +95,8 @@ export default {
         return res.status(204).send({ message: "Image Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Image" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Image" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

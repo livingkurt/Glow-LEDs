@@ -11,7 +11,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -20,7 +20,7 @@ export default {
   findById_settings_db: async (id: string) => {
     try {
       return await Setting.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -29,7 +29,7 @@ export default {
   create_settings_db: async (body: any) => {
     try {
       return await Setting.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -41,7 +41,7 @@ export default {
       if (setting) {
         return await Setting.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -53,7 +53,7 @@ export default {
       if (setting) {
         return await Setting.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -62,7 +62,7 @@ export default {
   count_settings_db: async (filter: any) => {
     try {
       return await Setting.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

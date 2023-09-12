@@ -13,7 +13,7 @@ export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query:
     const { data } = await axios.get(`/api/surveys?${create_query(query)}`);
     thunkApi.dispatch(showSuccess({ message: `Surveys Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -30,7 +30,7 @@ export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: 
       thunkApi.dispatch(showSuccess({ message: `Survey Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -41,7 +41,7 @@ export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id
     const { data } = await axios.get(`/api/surveys/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Survey Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -52,7 +52,7 @@ export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (path
     const { data } = await axios.delete("/api/surveys/" + pathname);
     thunkApi.dispatch(showSuccess({ message: `Survey Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

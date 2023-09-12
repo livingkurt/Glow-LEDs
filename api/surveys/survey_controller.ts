@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(surveys);
       }
       return res.status(404).send({ message: "Surveys Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Surveys" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_surveys_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(survey);
       }
       return res.status(404).send({ message: "Survey Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Survey" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_surveys_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(201).send(survey);
       }
       return res.status(500).send({ message: "Error Creating Survey" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Survey" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_surveys_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(survey);
       }
       return res.status(500).send({ message: "Error Updating Survey" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Survey" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_surveys_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(204).send({ message: "Survey Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Survey" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Survey" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

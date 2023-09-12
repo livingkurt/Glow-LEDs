@@ -8,7 +8,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -17,7 +17,7 @@ export default {
   findById_chips_db: async (id: string) => {
     try {
       return await Chip.findOne({ _id: id });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -26,7 +26,7 @@ export default {
   findByName_chips_db: async (name: string) => {
     try {
       return await Chip.findOne({ name: name });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -35,7 +35,7 @@ export default {
   create_chips_db: async (body: any) => {
     try {
       return await Chip.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -47,7 +47,7 @@ export default {
       if (chip) {
         return await Chip.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -59,7 +59,7 @@ export default {
       if (chip) {
         return await Chip.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -68,7 +68,7 @@ export default {
   count_chips_db: async (filter: any) => {
     try {
       return await Chip.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

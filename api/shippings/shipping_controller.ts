@@ -10,7 +10,7 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
-    } catch (error) {
+    } catch (error: any) {
       const errorMessage = error instanceof Error ? error.message : "Error Finding Shipping";
       res.status(500).send({ error, message: errorMessage });
     }
@@ -23,8 +23,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   refund_label_shipping_c: async (req: any, res: any) => {
@@ -35,8 +35,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_tracker_shipping_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 
@@ -60,8 +60,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   generate_csv_label_shipping_c: async (req: any, res: any) => {
@@ -72,8 +72,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   shipments_shipping_c: async (req: any, res: any) => {
@@ -83,8 +83,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_pickup_shipping_c: async (req: any, res: any) => {
@@ -95,8 +95,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   confirm_pickup_shipping_c: async (req: any, res: any) => {
@@ -107,8 +107,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   verify_address_shipping_c: async (req: any, res: any) => {
@@ -120,8 +120,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   different_shipping_rates_shipping_c: async (req: any, res: any) => {
@@ -133,8 +133,8 @@ export default {
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   custom_shipping_rates_shipping_c: async (req: any, res: any) => {
@@ -145,8 +145,8 @@ export default {
         return res.status(201).send(shipping);
       }
       return res.status(500).send({ message: "Error Creating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_custom_label_shipping_c: async (req: any, res: any) => {
@@ -157,8 +157,8 @@ export default {
         return res.status(201).send(shipping);
       }
       return res.status(500).send({ message: "Error Creating Shipping" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Shipping" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 

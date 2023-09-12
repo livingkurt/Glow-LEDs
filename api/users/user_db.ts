@@ -25,7 +25,7 @@ export default {
         .populate("wholesaler")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit));
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -49,7 +49,7 @@ export default {
           ],
         })
         .populate("wholesaler");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -73,7 +73,7 @@ export default {
           ],
         })
         .populate("wholesaler");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -97,7 +97,7 @@ export default {
           ],
         })
         .populate("wholesaler");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -106,7 +106,7 @@ export default {
   findByEmail_users_db: async (email: string) => {
     try {
       return await User.findOne({ email }).populate("wholesaler");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -115,7 +115,7 @@ export default {
   create_users_db: async (user: any) => {
     try {
       return await User.create(user);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -125,7 +125,7 @@ export default {
     try {
       // return await Token.create(token);
       return "";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -138,7 +138,7 @@ export default {
       if (user) {
         return await User.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -150,7 +150,7 @@ export default {
       if (user) {
         return await User.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -159,7 +159,7 @@ export default {
   count_users_db: async (filter: any) => {
     try {
       return await User.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -34,7 +34,7 @@ export const getUsers = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -49,7 +49,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
     const { data } = await axios.get(`/api/users?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -69,7 +69,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
       }
       return { data, profile };
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -80,7 +80,7 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
     const { data } = await axios.get(`/api/users/${id}`);
     thunkApi.dispatch(showSuccess({ message: `User Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -91,7 +91,7 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string
     const { data } = await axios.delete(`/api/users/${id}`);
     thunkApi.dispatch(showSuccess({ message: `User Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -104,7 +104,7 @@ export const registerUser = createAsyncThunk("users/registerUser", async (userDa
     // axios.post("/api/emails/verify", data);
     thunkApi.dispatch(showSuccess({ message: `User Registered` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -115,7 +115,7 @@ export const verifyUser = createAsyncThunk("emails/verifyUser", async ({ token }
     const { data } = await axios.post(`/api/users/verify/${token}`);
     thunkApi.dispatch(showSuccess({ message: `User Account Verified` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
 });
@@ -145,7 +145,7 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
 
     thunkApi.dispatch(showSuccess({ message: `User Logged In` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     // thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -161,7 +161,7 @@ export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_to
     await axios.put("/api/users/logout", { refresh_token });
     thunkApi.dispatch(showSuccess({ message: `User Logged Out` }));
     return { my_cart };
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -169,7 +169,7 @@ export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_to
 export const refreshLogin = async (refresh_token: any, thunkApi: any) => {
   try {
     return await axios.put("/api/users/refresh_login", { refresh_token });
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -179,7 +179,7 @@ export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData
     const { data } = await axios.post("/api/users/login_as_user", userData);
     thunkApi.dispatch(showSuccess({ message: `Logged in as User` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -206,7 +206,7 @@ export const passwordReset = createAsyncThunk(
       // }
       thunkApi.dispatch(showSuccess({ message: `Password Reset` }));
       return { current_user, data };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -219,7 +219,7 @@ export const resetPassword = createAsyncThunk("users/resetPassword", async (emai
     axios.post("/api/emails/reset_password", data);
     thunkApi.dispatch(showSuccess({ message: `Reset Password` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

@@ -12,9 +12,9 @@ export default {
       return {
         data: tutorials,
         total_count: count,
-        currentPage: parseInt(page)
+        currentPage: parseInt(page),
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -23,7 +23,7 @@ export default {
   findById_tutorials_s: async (params: { id: string }) => {
     try {
       return await tutorial_db.findById_tutorials_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -32,7 +32,7 @@ export default {
   create_tutorials_s: async (body: any) => {
     try {
       return await tutorial_db.create_tutorials_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -41,7 +41,7 @@ export default {
   update_tutorials_s: async (params: any, body: any) => {
     try {
       return await tutorial_db.update_tutorials_db(params, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -61,7 +61,7 @@ export default {
 
       // Send success response
       return "Tutorials reordered successfully.";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -70,10 +70,10 @@ export default {
   remove_tutorials_s: async (params: any) => {
     try {
       return await tutorial_db.remove_tutorials_db(params);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

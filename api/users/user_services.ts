@@ -25,7 +25,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -58,7 +58,7 @@ export default {
         },
       };
       return { availableFilters, booleanFilters };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -67,7 +67,7 @@ export default {
   findById_users_s: async (params: any) => {
     try {
       return await user_db.findById_users_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -76,7 +76,7 @@ export default {
   findByAffiliateId_users_s: async (params: any) => {
     try {
       return await user_db.findByAffiliateId_users_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -85,7 +85,7 @@ export default {
   findByEmail_users_s: async (params: any) => {
     try {
       return await user_db.findByEmail_users_db(params.email);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -106,7 +106,7 @@ export default {
         });
       });
       return response;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -115,7 +115,7 @@ export default {
   update_users_s: async (params: any, body: any) => {
     try {
       return await user_db.update_users_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -124,7 +124,7 @@ export default {
   remove_users_s: async (params: any) => {
     try {
       return await user_db.remove_users_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -263,7 +263,7 @@ export default {
           refresh_token: existingToken.token,
         };
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -276,7 +276,7 @@ export default {
         return true;
       }
       return false;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -292,7 +292,7 @@ export default {
   // 		}
   // 		// res.json({ message: "User Already Exists" })
   // 		res.status(200).send({ message: 'No User Found' });
-  // 	} catch (error) {
+  // 	} catch (error: any) {
   //
   // 		res.send(error);
   // 	}
@@ -333,7 +333,7 @@ export default {
   // 				});
   // 			});
   // 		}
-  // 	} catch (error) {
+  // 	} catch (error: any) {
   //
   // 		res.send(error);
   // 	}

@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(parcels);
       }
       return res.status(404).send({ message: "Parcels Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Parcels" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_parcels_c: async (req: any, res: any) => {
@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(parcel);
       }
       return res.status(404).send({ message: "Parcel Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Parcel" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_parcels_c: async (req: any, res: any) => {
@@ -34,8 +34,8 @@ export default {
         return res.status(201).send(parcel);
       }
       return res.status(500).send({ message: "Error Creating Parcel" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Parcel" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_parcels_c: async (req: any, res: any) => {
@@ -46,8 +46,8 @@ export default {
         return res.status(200).send(parcel);
       }
       return res.status(500).send({ message: "Error Updating Parcel" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Parcel" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_parcels_c: async (req: any, res: any) => {
@@ -58,8 +58,8 @@ export default {
         return res.status(204).send({ message: "Parcel Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Parcel" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Parcel" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

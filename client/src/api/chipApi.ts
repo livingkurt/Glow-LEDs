@@ -10,7 +10,7 @@ export const listChips = createAsyncThunk("chips/listChips", async (query: any, 
   try {
     const { data } = await axios.get(`/api/chips?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -25,7 +25,7 @@ export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thu
       const { data } = await axios.put(`/api/chips/${chip._id}`, chip);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -35,7 +35,7 @@ export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: stri
   try {
     const { data } = await axios.get(`/api/chips/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -45,7 +45,7 @@ export const deleteChip = createAsyncThunk("chips/deleteChip", async (pathname, 
   try {
     const { data } = await axios.delete("/api/chips/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

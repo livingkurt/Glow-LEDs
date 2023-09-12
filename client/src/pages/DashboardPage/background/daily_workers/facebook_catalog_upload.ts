@@ -96,7 +96,7 @@ export const facebook_catalog_upload = async () => {
 
     await sheet.addRows(new_rows);
     await sheet.saveUpdatedCells();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

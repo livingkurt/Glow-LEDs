@@ -14,7 +14,7 @@ export const updateVersion = async () => {
       })
     );
     return data;
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -202,6 +202,6 @@ export const {
 //     });
 //     const records = response.data.records;
 //     return records;
-//   } catch (error) {
+//   } catch (error: any) {
 //   }
 // };

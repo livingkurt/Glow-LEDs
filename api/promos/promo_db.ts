@@ -14,7 +14,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -29,7 +29,7 @@ export default {
         start_date: { $lte: currentDate },
         end_date: { $gte: currentDate },
       });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -44,7 +44,7 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -59,7 +59,7 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -74,7 +74,7 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -83,7 +83,7 @@ export default {
   create_promos_db: async (body: any) => {
     try {
       return await Promo.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -95,7 +95,7 @@ export default {
       if (promo) {
         return await Promo.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -107,7 +107,7 @@ export default {
       if (promo) {
         return await Promo.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -116,7 +116,7 @@ export default {
   remove_multiple_promos_db: async (ids: string[]) => {
     try {
       return await Promo.updateMany({ _id: { $in: ids } }, { deleted: true });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -125,7 +125,7 @@ export default {
   count_promos_db: async (filter: any) => {
     try {
       return await Promo.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

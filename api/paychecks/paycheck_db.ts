@@ -11,7 +11,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -20,7 +20,7 @@ export default {
   findById_paychecks_db: async (id: string) => {
     try {
       return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -29,7 +29,7 @@ export default {
   findBy_paychecks_db: async (filter: any) => {
     try {
       return await Paycheck.findOne(filter).populate("user").populate("affiliate").populate("team");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -41,7 +41,7 @@ export default {
         .sort({ _id: -1 })
         .populate("affiliate")
         .populate("team");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -50,7 +50,7 @@ export default {
   create_paychecks_db: async (body: any) => {
     try {
       return await Paycheck.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -62,7 +62,7 @@ export default {
       if (paycheck) {
         return await Paycheck.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -74,7 +74,7 @@ export default {
       if (paycheck) {
         return await Paycheck.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -83,7 +83,7 @@ export default {
   remove_multiple_paychecks_db: async (ids: string[]) => {
     try {
       return await Paycheck.updateMany({ _id: { $in: ids } }, { deleted: true });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -92,7 +92,7 @@ export default {
   count_paychecks_db: async (filter: any) => {
     try {
       return await Paycheck.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -115,7 +115,7 @@ export default {
         },
       ]).exec();
       return totalAmount;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -142,7 +142,7 @@ export default {
         },
       ]).exec();
       return totalAmount;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

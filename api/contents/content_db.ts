@@ -13,7 +13,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -27,7 +27,7 @@ export default {
         .populate("home_page.images_object")
         .populate("home_page.banner_image_object")
         .populate("home_page.slideshow.image_object");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -36,7 +36,7 @@ export default {
   create_contents_db: async (body: any) => {
     try {
       return await Content.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -48,7 +48,7 @@ export default {
       if (content) {
         return await Content.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -60,7 +60,7 @@ export default {
       if (content) {
         return await Content.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -69,7 +69,7 @@ export default {
   count_contents_db: async (filter: any) => {
     try {
       return await Content.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

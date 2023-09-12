@@ -31,7 +31,7 @@ export const getPromos = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -46,7 +46,7 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
     const { data } = await axios.get(`/api/promos?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -59,7 +59,7 @@ export const listSponsorCodes = createAsyncThunk(
       const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
       thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -76,7 +76,7 @@ export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any,
       thunkApi.dispatch(showSuccess({ message: `Promo Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -87,7 +87,7 @@ export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id: s
     const { data } = await axios.get(`/api/promos/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Promo Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -98,7 +98,7 @@ export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathnam
     const { data } = await axios.delete("/api/promos/" + pathname);
     thunkApi.dispatch(showSuccess({ message: `Promo Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -111,7 +111,7 @@ export const deleteMultiplePromos = createAsyncThunk(
       const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
       thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -122,7 +122,7 @@ export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes",
     const { data } = await axios.post(`/api/promos/refresh_sponsor_codes`, {});
     thunkApi.dispatch(showSuccess({ message: `Sponsor Codes Refreshed` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -136,7 +136,7 @@ export const validatePromoCode = createAsyncThunk(
       console.log({ data });
       thunkApi.dispatch(showSuccess({ message: `Promo Code Validated` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }

@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(expenses);
       }
       return res.status(404).send({ message: "Expenses Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_expenses_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(expense_filters);
       }
       return res.status(404).send({ message: "Expenses Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllByDate_expenses_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(expenses);
       }
       return res.status(404).send({ message: "Expenses Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_expenses_c: async (req: any, res: any) => {
@@ -46,8 +46,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(404).send({ message: "Expense Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_expenses_c: async (req: any, res: any) => {
@@ -58,8 +58,8 @@ export default {
         return res.status(201).send(expense);
       }
       return res.status(500).send({ message: "Error Creating Expense" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_airtable_expenses_c: async (req: any, res: any) => {
@@ -67,8 +67,8 @@ export default {
       const expense = await expense_services.get_airtable_expenses_s();
       // if (expense) {
       return res.status(201).send(expense);
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_all_expenses_c: async (req: any, res: any) => {
@@ -79,8 +79,8 @@ export default {
         return res.status(201).send(expense);
       }
       return res.status(500).send({ message: "Error Creating Expense" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_expenses_c: async (req: any, res: any) => {
@@ -91,8 +91,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(500).send({ message: "Error Updating Expense" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_expenses_c: async (req: any, res: any) => {
@@ -103,8 +103,8 @@ export default {
         return res.status(204).send({ message: "Expense Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Expense" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Expense" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_expenses_expenses_c: async (req: any, res: any) => {
@@ -115,8 +115,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(500).send({ message: "Error Finding Expenses" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_daily_expenses_expenses_c: async (req: any, res: any) => {
@@ -127,8 +127,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(500).send({ message: "Error Finding Expenses" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_monthly_expenses_expenses_c: async (req: any, res: any) => {
@@ -139,8 +139,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(500).send({ message: "Error Finding Expenses" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_yearly_expenses_expenses_c: async (req: any, res: any) => {
@@ -150,8 +150,8 @@ export default {
         return res.status(200).send(expense);
       }
       return res.status(500).send({ message: "Error Finding Expenses" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Expenses" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

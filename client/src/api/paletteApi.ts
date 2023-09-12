@@ -12,7 +12,7 @@ export const listPalettes = createAsyncThunk("palettes/listPalettes", async (que
   try {
     const { data } = await axios.get(`/api/palettes?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -27,7 +27,7 @@ export const savePalette = createAsyncThunk("palettes/savePalette", async (palet
       const { data } = await axios.put(`/api/palettes/${palette._id}`, palette);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -37,7 +37,7 @@ export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async 
   try {
     const { data } = await axios.get(`/api/palettes/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -47,7 +47,7 @@ export const deletePalette = createAsyncThunk("palettes/deletePalette", async (p
   try {
     const { data } = await axios.delete("/api/palettes/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

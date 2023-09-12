@@ -36,7 +36,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -45,7 +45,7 @@ export default {
   findByPathname_features_s: async (params: any) => {
     try {
       return await feature_db.findByPathname_features_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -55,7 +55,7 @@ export default {
   create_features_s: async (body: any) => {
     try {
       return await feature_db.create_features_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -64,7 +64,7 @@ export default {
   update_features_s: async (params: any, body: any) => {
     try {
       return await feature_db.update_features_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -73,7 +73,7 @@ export default {
   remove_features_s: async (params: any) => {
     try {
       return await feature_db.remove_features_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

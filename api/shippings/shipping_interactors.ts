@@ -10,7 +10,7 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 export const buyLabel = async ({ shipment_id, shipping_rate }: any) => {
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -53,7 +53,7 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
     }
 
     await order_db.update_orders_db(order._id, order);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -75,7 +75,7 @@ export const clearTracking = async ({ order, isReturnTracking = false }: any) =>
     }
 
     await order_db.update_orders_db(order._id, order);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -96,7 +96,7 @@ export const createTracker = async ({ order }: any) => {
     order.tracking_url = tracker.public_url;
     await order_db.update_orders_db(order._id, order);
     return tracker;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -126,7 +126,7 @@ export const refundLabel = async ({ order, is_return_tracking }: any) => {
     }
 
     return await order_db.update_orders_db(order._id, order);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -140,7 +140,7 @@ export const createLabel = async ({ order, shipping_rate }: any) => {
       (rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier
     );
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -208,7 +208,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
       },
     });
     return { shipment, parcel };
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -255,7 +255,7 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
       },
     });
     return { shipment, parcel };
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

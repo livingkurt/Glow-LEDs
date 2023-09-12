@@ -9,7 +9,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -18,7 +18,7 @@ export default {
   findById_expenses_db: async (id: string) => {
     try {
       return await Expense.findOne({ _id: id }).populate("documents");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -27,7 +27,7 @@ export default {
   create_expenses_db: async (body: any) => {
     try {
       return await Expense.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -39,7 +39,7 @@ export default {
       if (expense) {
         return await Expense.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -51,7 +51,7 @@ export default {
       if (expense) {
         return await Expense.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -60,7 +60,7 @@ export default {
   count_expenses_db: async (filter: any) => {
     try {
       return await Expense.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -86,7 +86,7 @@ export default {
         },
       ]).exec();
       return totalAmount;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -140,7 +140,7 @@ export default {
       ]).exec();
 
       return amountByMonth;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -189,7 +189,7 @@ export default {
         },
       ]).exec();
       return amountByYear;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -257,7 +257,7 @@ export default {
       ]).exec();
 
       return amountByDay;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

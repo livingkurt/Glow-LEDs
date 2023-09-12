@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(products);
       }
       return res.status(404).send({ message: "Products Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Products" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_products_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(product_filters);
       }
       return res.status(404).send({ message: "Orders Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Orders" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllGrid_products_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(products);
       }
       return res.status(404).send({ message: "Products Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Products" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_products_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(200).send(product);
       }
       return res.status(404).send({ message: "Product Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_products_c: async (req: any, res: any) => {
@@ -59,8 +59,8 @@ export default {
         return res.status(201).send(product);
       }
       return res.status(500).send({ message: "Error Creating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_products_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(200).send(product);
       }
       return res.status(500).send({ message: "Error Updating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   reorder_products_c: async (req: any, res: any) => {
@@ -83,8 +83,8 @@ export default {
         return res.status(200).send(product);
       }
       return res.status(500).send({ message: "Error Reordering Tutorial" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Reordering Tutorial" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_products_c: async (req: any, res: any) => {
@@ -95,8 +95,8 @@ export default {
         return res.status(204).send({ message: "Product Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_best_sellers_products_c: async (req: any, res: any) => {
@@ -107,8 +107,8 @@ export default {
         return res.status(201).send(product);
       }
       return res.status(500).send({ message: "Error Creating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_our_picks_products_c: async (req: any, res: any) => {
@@ -119,8 +119,8 @@ export default {
         return res.status(200).send(product);
       }
       return res.status(500).send({ message: "Error Updating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_new_releases_products_c: async (req: any, res: any) => {
@@ -131,8 +131,8 @@ export default {
         return res.status(200).send(product);
       }
       return res.status(500).send({ message: "Error Updating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_stock_products_c: async (req: any, res: any) => {
@@ -143,8 +143,8 @@ export default {
         return res.status(204).send({ message: "Product Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_product_order_products_c: async (req: any, res: any) => {
@@ -155,8 +155,8 @@ export default {
         return res.status(200).send(products);
       }
       return res.status(404).send({ message: "Products Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Products" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   add_product_options_products_c: async (req: any, res: any) => {
@@ -167,8 +167,8 @@ export default {
         return res.status(200).send(products);
       }
       return res.status(404).send({ message: "Products Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Products" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   save_item_group_id_products_c: async (req: any, res: any) => {
@@ -179,8 +179,8 @@ export default {
         return res.status(201).send(product);
       }
       return res.status(500).send({ message: "Error Creating Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   reviews_products_c: async (req: any, res: any) => {
@@ -191,8 +191,8 @@ export default {
         return res.status(204).send({ message: "Product Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   image_upload_products_c: async (req: any, res: any) => {
@@ -202,8 +202,8 @@ export default {
         return res.status(204).send({ message: "Product Deleted" });
       }
       return res.status(500).send({ message: "Error Uploading Images" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Uploading Images" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_multiple_products_c: async (req: any, res: any) => {
@@ -214,8 +214,8 @@ export default {
         return res.status(204).send({ message: "Product Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   current_stock_products_c: async (req: any, res: any) => {
@@ -225,8 +225,8 @@ export default {
         return res.status(201).send(product);
       }
       return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Product" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   distinct_products_c: async (req: any, res: any) => {
@@ -237,8 +237,8 @@ export default {
         return res.status(201).send(product);
       }
       return res.status(500).send({ message: "Error Finding Product Attributes" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Product Attributes" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

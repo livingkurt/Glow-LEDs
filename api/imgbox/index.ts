@@ -24,7 +24,7 @@
 //     try {
 //       const filename = response.headers["content-disposition"].split('filename="')[1].split('"')[0];
 //       result.push({ buffer, filename });
-//     } catch (error) {
+//     } catch (error: any) {
 //       const filename = crypto.randomUUID() + ".jpg";
 //       result.push({ buffer, filename });
 //     }

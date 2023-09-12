@@ -104,7 +104,7 @@ app.post("/api/gcode", async (req: any, res: any) => {
 
       res.send("Gcode Continous File Created");
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

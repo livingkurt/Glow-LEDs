@@ -25,7 +25,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -34,7 +34,7 @@ export default {
   findById_images_s: async (params: any) => {
     try {
       return await image_db.findById_images_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -43,7 +43,7 @@ export default {
   findByLink_images_s: async (body: any) => {
     try {
       return await image_db.findByLink_images_db(body.link);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -85,7 +85,7 @@ export default {
       await Promise.all(uploadedFiles.map((file: string) => deleteFile(path.join(uploadsDir, file))));
 
       return images;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -105,7 +105,7 @@ export default {
   //           album: album.deletehash // optional
   //         });
   //         uploadedImageLinks.push(upload.data.link);
-  //       } catch (error) {
+  //       } catch (error: any) {
   //         if (error instanceof Error) {
   //           throw new Error(error.message);
   //         }
@@ -122,7 +122,7 @@ export default {
   //     const uploadedFiles = await promisify(fs.readdir)(uploadsDir);
   //     await Promise.all(uploadedFiles.map((file: string) => deleteFile(path.join(uploadsDir, file))));
   //     return images;
-  //   } catch (error) {
+  //   } catch (error: any) {
   //     if (error instanceof Error) {
   //       throw new Error(error.message);
   //     }
@@ -131,7 +131,7 @@ export default {
   create_images_s: async (body: any) => {
     try {
       return await image_db.create_images_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -140,7 +140,7 @@ export default {
   update_images_s: async (params: any, body: any) => {
     try {
       return await image_db.update_images_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -149,7 +149,7 @@ export default {
   remove_images_s: async (params: any) => {
     try {
       return await image_db.remove_images_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -158,7 +158,7 @@ export default {
   remove_multiple_images_s: async (body: any) => {
     try {
       return await image_db.remove_multiple_images_db(body.ids);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

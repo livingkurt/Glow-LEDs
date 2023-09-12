@@ -17,7 +17,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -147,7 +147,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -193,7 +193,7 @@ export default {
         },
       ]).sort({ _id: 1 });
       return response;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -347,7 +347,7 @@ export default {
         .populate("subcategorys")
         .populate("collections")
         .populate("contributers");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -390,7 +390,7 @@ export default {
       //   });
       // });
       return await Product.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -464,7 +464,7 @@ export default {
       //
       //       });
       //     });
-      //   } catch (error) {
+      //   } catch (error: any) {
       //
       //   }
       // });
@@ -472,7 +472,7 @@ export default {
         const updated = await Product.updateOne(query, body);
         return updated;
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -496,7 +496,7 @@ export default {
         //           return;
         //         }
         //       });
-        //     } catch (error) {
+        //     } catch (error: any) {
         //
         //     }
         //   }
@@ -504,7 +504,7 @@ export default {
         return await Product.updateOne({ _id: id }, { deleted: true });
         // return await Product.deleteOne({ _id: id });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -513,7 +513,7 @@ export default {
   remove_multiple_products_db: async (ids: string[]) => {
     try {
       return await Product.updateMany({ _id: { $in: ids } }, { deleted: true });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -522,7 +522,7 @@ export default {
   count_products_db: async (filter: any) => {
     try {
       return await Product.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -539,7 +539,7 @@ export default {
       ).exec();
 
       return currentStock;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -552,7 +552,7 @@ export default {
       } else {
         return await Product.distinct(attribute);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

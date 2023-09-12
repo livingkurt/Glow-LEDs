@@ -35,7 +35,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -44,7 +44,7 @@ export default {
   findById_chips_s: async (params: any) => {
     try {
       return await chip_db.findById_chips_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -53,7 +53,7 @@ export default {
   findByName_chips_s: async (params: any) => {
     try {
       return await chip_db.findByName_chips_db(params.name);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -62,7 +62,7 @@ export default {
   create_chips_s: async (body: any) => {
     try {
       return await chip_db.create_chips_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -71,7 +71,7 @@ export default {
   update_chips_s: async (params: any, body: any) => {
     try {
       return await chip_db.update_chips_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -80,7 +80,7 @@ export default {
   remove_chips_s: async (params: any) => {
     try {
       return await chip_db.remove_chips_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

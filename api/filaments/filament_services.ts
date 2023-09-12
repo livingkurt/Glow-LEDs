@@ -29,7 +29,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -38,7 +38,7 @@ export default {
   findById_filaments_s: async (params: any) => {
     try {
       return await filament_db.findById_filaments_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -47,7 +47,7 @@ export default {
   findMy_filaments_s: async (params: any) => {
     try {
       return await filament_db.findMy_filaments_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -56,7 +56,7 @@ export default {
   create_filaments_s: async (body: any) => {
     try {
       return await filament_db.create_filaments_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -65,7 +65,7 @@ export default {
   update_filaments_s: async (params: any, body: any) => {
     try {
       return await filament_db.update_filaments_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -74,7 +74,7 @@ export default {
   remove_filaments_s: async (params: any) => {
     try {
       return await filament_db.remove_filaments_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

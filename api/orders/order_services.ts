@@ -40,7 +40,7 @@ export default {
         total_count: count,
         currentPage: parseInt(page),
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -70,7 +70,7 @@ export default {
         },
       };
       return { availableFilters, booleanFilters };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -197,7 +197,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -210,7 +210,7 @@ export default {
       const limit = "0";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -219,7 +219,7 @@ export default {
   findById_orders_s: async (params: any) => {
     try {
       return await order_db.findById_orders_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -228,7 +228,7 @@ export default {
   create_orders_s: async (body: any) => {
     try {
       return await order_db.create_orders_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -237,7 +237,7 @@ export default {
   update_orders_s: async (params: any, body: any) => {
     try {
       return await order_db.update_orders_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -246,7 +246,7 @@ export default {
   remove_orders_s: async (params: any) => {
     try {
       return await order_db.remove_orders_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -255,7 +255,7 @@ export default {
   occurrences_orders_s: async () => {
     try {
       return await order_db.get_occurances_products_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -291,7 +291,7 @@ export default {
         .sort((a: any, b: any) => (a.amount > b.amount ? -1 : 1))
         .slice(0, 20);
       return sorted_orders;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -335,7 +335,7 @@ export default {
       }
       final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
       return final_result;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -380,7 +380,7 @@ export default {
 
       return { number_of_uses, revenue, earnings };
       // return "Success";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -450,7 +450,7 @@ export default {
         .toFixed(2);
 
       return { number_of_uses, revenue };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -469,7 +469,7 @@ export default {
         result[state["State"]] = percentage.slice(0, percentage.indexOf("%") + 1);
       });
       return result;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -644,7 +644,7 @@ export default {
         earned: earned_s,
       };
       // return 'Success';
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -724,7 +724,7 @@ export default {
         revenue: revenue_s,
         discount: discount_s,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -745,7 +745,7 @@ export default {
       const limit = "50";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -769,7 +769,7 @@ export default {
       const limit = "50";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -787,7 +787,7 @@ export default {
       const limit = "50";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -807,7 +807,7 @@ export default {
       const limit = "0";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -823,7 +823,7 @@ export default {
       const limit = "0";
       const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1037,7 +1037,7 @@ export default {
       };
 
       return breakdown;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1383,7 +1383,7 @@ export default {
   //     };
 
   //     return breakdown;
-  //   } catch (error) {
+  //   } catch (error: any) {
   //     if (error instanceof Error) {
   //       throw new Error(error.message);
   //     }
@@ -1392,7 +1392,7 @@ export default {
   invoice_orders_s: async (id: string) => {
     try {
       return await order_db.findById_orders_db(id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1401,7 +1401,7 @@ export default {
   get_product_quantities_orders_s: async () => {
     try {
       return await order_db.get_product_quantities_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1410,7 +1410,7 @@ export default {
   get_all_shipping_orders_s: async () => {
     try {
       return await order_db.get_all_shipping_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1419,7 +1419,7 @@ export default {
   get_all_time_revenue_orders_s: async () => {
     try {
       return await order_db.get_all_time_revenue_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1432,7 +1432,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1442,7 +1442,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_all_product_range_revenue_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1452,7 +1452,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_revenue_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1462,7 +1462,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_daily_revenue_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1473,7 +1473,7 @@ export default {
     const { product_id } = params;
     try {
       return await order_db.get_monthly_revenue_product_orders_db(year, product_id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1483,7 +1483,7 @@ export default {
     const { product_id } = params;
     try {
       return await order_db.get_yearly_revenue_product_orders_db(product_id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1493,7 +1493,7 @@ export default {
     const { year } = query;
     try {
       return await order_db.get_monthly_revenue_orders_db(year);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1502,7 +1502,7 @@ export default {
   get_yearly_revenue_orders_s: async () => {
     try {
       return await order_db.get_yearly_revenue_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1512,7 +1512,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_category_revenue_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1521,7 +1521,7 @@ export default {
   get_all_time_category_revenue_orders_s: async () => {
     try {
       return await order_db.get_all_time_category_revenue_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1530,7 +1530,7 @@ export default {
   get_all_time_tips_revenue_orders_s: async () => {
     try {
       return await order_db.get_all_time_tips_revenue_orders_db();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1540,7 +1540,7 @@ export default {
     const { start_date, end_date } = query;
     try {
       return await order_db.get_range_gloves_data_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1550,7 +1550,7 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_tips_revenue_orders_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1587,7 +1587,7 @@ export default {
   remove_multiple_orders_s: async (body: any) => {
     try {
       return await order_db.remove_multiple_orders_db(body.ids);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1611,7 +1611,7 @@ export default {
       );
 
       return updatedOrders;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1660,7 +1660,7 @@ export default {
         await order.save();
       }
       return "Success";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

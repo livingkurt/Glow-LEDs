@@ -10,7 +10,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -19,7 +19,7 @@ export default {
   findById_emails_db: async (id: string) => {
     try {
       return await Email.findOne({ _id: id }).populate("image_object").populate("images_object");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -28,7 +28,7 @@ export default {
   create_emails_db: async (body: any) => {
     try {
       return await Email.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -40,7 +40,7 @@ export default {
       if (email) {
         return await Email.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -52,7 +52,7 @@ export default {
       if (email) {
         return await Email.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -61,7 +61,7 @@ export default {
   count_emails_db: async (filter: any) => {
     try {
       return await Email.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

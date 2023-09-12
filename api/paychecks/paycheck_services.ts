@@ -25,7 +25,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -46,7 +46,7 @@ export default {
         },
       };
       return { availableFilters, booleanFilters };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -55,7 +55,7 @@ export default {
   findById_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.findById_paychecks_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -64,7 +64,7 @@ export default {
   findMy_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.findMy_paychecks_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -73,7 +73,7 @@ export default {
   create_paychecks_s: async (body: any) => {
     try {
       return await paycheck_db.create_paychecks_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -221,7 +221,7 @@ export default {
       }
 
       return paychecks;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -230,7 +230,7 @@ export default {
   update_paychecks_s: async (params: any, body: any) => {
     try {
       return await paycheck_db.update_paychecks_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -239,7 +239,7 @@ export default {
   remove_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.remove_paychecks_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -248,7 +248,7 @@ export default {
   remove_multiple_paychecks_s: async (body: any) => {
     try {
       return await paycheck_db.remove_multiple_paychecks_db(body.ids);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -105,7 +105,7 @@ const createTransporter = async (type: string) => {
     });
 
     return transporter;
-  } catch (error) {
+  } catch (error: any) {
     return "Error Creating Transporter";
   }
 };
@@ -124,7 +124,7 @@ export const sendEmail = async (emailOptions: any, res: any, type: string, name:
     } else {
       res.status(500).send({ message: "Error Sending Email" });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log({ sendEmail: error });
   }
 };

@@ -12,7 +12,7 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, 
   try {
     const { data } = await axios.get(`/api/teams?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -27,7 +27,7 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thu
       const { data } = await axios.put(`/api/teams/${team._id}`, team);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -37,7 +37,7 @@ export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname
   try {
     const { data } = await axios.get(`/api/teams/${pathname}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -47,7 +47,7 @@ export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, 
   try {
     const { data } = await axios.delete("/api/teams/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

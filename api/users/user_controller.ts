@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_users_c: async (req: any, res: any) => {
@@ -34,8 +34,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_users_c: async (req: any, res: any) => {
@@ -46,8 +46,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByAffiliateId_users_c: async (req: any, res: any) => {
@@ -58,8 +58,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByEmail_users_c: async (req: any, res: any) => {
@@ -71,8 +71,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(200).send({});
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_users_c: async (req: any, res: any) => {
@@ -90,13 +90,13 @@ export default {
             const new_user = await user_db.create_users_db(user);
 
             return res.status(200).send(new_user);
-          } catch (error) {
+          } catch (error: any) {
             res.status(500).json({ message: "Error Creating User", error });
           }
         });
       });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_users_c: async (req: any, res: any) => {
@@ -107,8 +107,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_users_c: async (req: any, res: any) => {
@@ -119,8 +119,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 
@@ -161,13 +161,13 @@ export default {
             sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
 
             return res.status(200).send(new_user);
-          } catch (error) {
-            res.status(500).json({ message: "Error Registering User", error });
+          } catch (error: any) {
+            res.status(500).json({ message: error.message, error });
           }
         });
       });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Registering User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   verify_users_c: async (req: any, res: any) => {
@@ -236,8 +236,8 @@ export default {
         });
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "User Not Found" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   refresh_login_users_c: async (req: any, res: any) => {
@@ -268,8 +268,8 @@ export default {
           });
         }
       }
-    } catch (error) {
-      return res.status(500).send({ error, message: "Internal Server Error" });
+    } catch (error: any) {
+      return res.status(500).send({ error, message: error.message });
     }
   },
 
@@ -280,7 +280,7 @@ export default {
       //
       await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       return res.status(500).json({ error, message: "Internal Server Error!" });
     }
@@ -296,13 +296,13 @@ export default {
             user.password = hash;
             const new_user = await user_db.update_users_db(user._id, user);
             return res.status(200).send(new_user);
-          } catch (error) {
-            res.status(500).json({ message: "Error Registering User", error });
+          } catch (error: any) {
+            res.status(500).json({ message: error.message, error });
           }
         });
       });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Registering User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   reset_password_users_c: async (req: any, res: any) => {
@@ -315,8 +315,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   // verify_users_c: async (req: any, res: any) => {
@@ -327,7 +327,7 @@ export default {
   // 			return res.status(200).send(user );
   // 		}
   // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
+  // 	} catch (error: any) {
   //
   // 		res.status(500).send({ error, message: 'Error Finding User' });
   // 	}
@@ -340,8 +340,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   validate_email_c: async (req: any, res: any) => {
@@ -352,8 +352,8 @@ export default {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding User" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   // checkemail_users_c: async (req: any, res: any) => {
@@ -364,7 +364,7 @@ export default {
   // 			return res.status(200).send(user );
   // 		}
   // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
+  // 	} catch (error: any) {
   //
   // 		res.status(500).send({ error, message: 'Error Finding User' });
   // 	}
@@ -377,7 +377,7 @@ export default {
   // 			return res.status(200).send(user );
   // 		}
   // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
+  // 	} catch (error: any) {
   //
   // 		res.status(500).send({ error, message: 'Error Finding User' });
   // 	}

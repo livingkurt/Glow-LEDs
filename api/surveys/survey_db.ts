@@ -9,7 +9,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -18,7 +18,7 @@ export default {
   findById_surveys_db: async (id: string) => {
     try {
       return await Survey.findOne({ _id: id }).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -27,7 +27,7 @@ export default {
   create_surveys_db: async (body: any) => {
     try {
       return await Survey.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -39,7 +39,7 @@ export default {
       if (survey) {
         return await Survey.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -51,7 +51,7 @@ export default {
       if (survey) {
         return await Survey.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -60,7 +60,7 @@ export default {
   count_surveys_db: async (filter: any) => {
     try {
       return await Survey.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -72,8 +72,8 @@ export default {
       } else {
         res.status(500).send({ message: "Refund not Created" });
       }
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Refunding Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   secure_payout_payments_c: async (req: any, res: any) => {
@@ -94,52 +94,8 @@ export default {
       });
 
       res.status(200).send({ message: `Transfer to Connected Account Success: ${transfer.id}` });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Transferring Funds" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };
-
-// import { payment_services } from '../services';
-
-// export default {
-// 	secure_pay_payments_c: async (req: any, res: any) => {
-// 		const { params, body } = req;
-// 		try {
-// 			const payment = await payment_services.secure_pay_payments_s(params, body);
-// 			if (payment) {
-// 				return res.status(200).send(payment);
-// 			}
-// 			return res.status(500).send({ message: 'Error Updating Chip' });
-// 		} catch (error) {
-//
-// 			res.status(500).send({ error, message: 'Error Updating Chip' });
-// 		}
-// 	},
-// 	guest_pay_payments_c: async (req: any, res: any) => {
-// 		const { params, body } = req;
-// 		try {
-// 			const payment = await payment_services.guest_pay_payments_s(params, body);
-// 			if (payment) {
-// 				return res.status(200).send(payment);
-// 			}
-// 			return res.status(500).send({ message: 'Error Updating Chip' });
-// 		} catch (error) {
-//
-// 			res.status(500).send({ error, message: 'Error Updating Chip' });
-// 		}
-// 	},
-// 	secure_refund_payments_c: async (req: any, res: any) => {
-// 		const { params, body } = req;
-// 		try {
-// 			const payment = await payment_services.secure_refund_payments_s(params, body);
-// 			if (payment) {
-// 				return res.status(200).send(payment);
-// 			}
-// 			return res.status(500).send({ message: 'Error Updating Chip' });
-// 		} catch (error) {
-//
-// 			res.status(500).send({ error, message: 'Error Updating Chip' });
-// 		}
-// 	}
-// };

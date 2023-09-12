@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(promos);
       }
       return res.status(404).send({ message: "Promos Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Promos" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllTable_promos_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(promos);
       }
       return res.status(404).send({ message: "Promos Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Promos" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_promos_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(promo_filters);
       }
       return res.status(404).send({ message: "Paychecks Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Paychecks" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_promos_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(404).send({ message: "Promo Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByAffiliateId_promos_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(404).send({ message: "Promo Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByCode_promos_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(404).send({ message: "Promo Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_promos_c: async (req: any, res: any) => {
@@ -81,8 +81,8 @@ export default {
         return res.status(201).send(promo);
       }
       return res.status(500).send({ message: "Error Creating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_one_time_use_code_promos_c: async (req: any, res: any) => {
@@ -93,8 +93,8 @@ export default {
         return res.status(201).send(promo);
       }
       return res.status(500).send({ message: "Error Creating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   refresh_sponsor_codes_promos_c: async (req: any, res: any) => {
@@ -104,8 +104,8 @@ export default {
         return res.status(201).send(promo);
       }
       return res.status(500).send({ message: "Error Creating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_promos_c: async (req: any, res: any) => {
@@ -116,8 +116,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(500).send({ message: "Error Updating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_code_used_promos_c: async (req: any, res: any) => {
@@ -128,8 +128,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(500).send({ message: "Error Updating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_affiliate_codes_promos_c: async (req: any, res: any) => {
@@ -140,8 +140,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(500).send({ message: "Error Updating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 
@@ -153,8 +153,8 @@ export default {
         return res.status(204).send({ message: "Promo Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_multiple_promos_c: async (req: any, res: any) => {
@@ -165,8 +165,8 @@ export default {
         return res.status(204).send({ message: "Promo Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   validate_promo_code_promos_c: async (req: any, res: any) => {
@@ -178,8 +178,8 @@ export default {
         return res.status(200).send(promo);
       }
       return res.status(500).send({ message: "Error Deleting Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Promo" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

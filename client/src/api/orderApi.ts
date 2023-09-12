@@ -32,7 +32,7 @@ export const getOrders = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -46,7 +46,7 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
     const { data } = await axios.get(`/api/orders/old?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -56,7 +56,7 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
   try {
     const { data } = await axios.get(`/api/orders/${user_id}/user`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -67,7 +67,7 @@ export const createNoPayOrder = createAsyncThunk("orders/createNoPayOrder", asyn
     const { data } = await axios.post("/api/orders", order);
     sessionStorage.removeItem("shippingAddress");
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -84,7 +84,7 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
       thunkApi.dispatch(showSuccess({ message: `Order Saved` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -143,7 +143,7 @@ export const createPayOrder = createAsyncThunk(
       const { data: payment_created } = await axios.put(`/api/payments/${order_created._id}/pay`, { paymentMethod });
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error), duration: 10000 }));
       return thunkApi.rejectWithValue(error.response?.data);
     }
@@ -166,7 +166,7 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
       thunkApi.dispatch(showSuccess({ message: `Order Found` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -177,7 +177,7 @@ export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id: str
     const { data } = await axios.delete(`/api/orders/glow/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Order Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -189,7 +189,7 @@ export const deleteMultipleOrders = createAsyncThunk(
     try {
       const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -205,7 +205,7 @@ export const refundOrder = createAsyncThunk(
       });
       thunkApi.dispatch(showSuccess({ message: `Order Refunded` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -217,7 +217,7 @@ export const payOrder = createAsyncThunk(
       const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
       thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -229,7 +229,7 @@ export const payOrderGuest = createAsyncThunk(
       const { data } = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
       thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -242,7 +242,7 @@ export const transferOrders = createAsyncThunk(
       const { data } = await axios.put(`/api/orders/${oldUserId}transfer/${newUserId}`);
       thunkApi.dispatch(showSuccess({ message: `Orders Transfered` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -255,7 +255,7 @@ export const invoiceOrder = createAsyncThunk(
       const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
       thunkApi.dispatch(showSuccess({ message: `Invoice Recieved` }));
       return data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }

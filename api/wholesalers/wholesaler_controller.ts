@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(wholesalers);
       }
       return res.status(404).send({ message: "Affiliates Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Affiliates" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_wholesalers_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(wholesaler);
       }
       return res.status(404).send({ message: "Affiliate Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_wholesalers_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(201).send(wholesaler);
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_wholesalers_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(200).send(wholesaler);
       }
       return res.status(500).send({ message: "Error Updating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_wholesalers_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(204).send({ message: "Affiliate Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Affiliate" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

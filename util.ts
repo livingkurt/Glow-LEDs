@@ -40,7 +40,7 @@ export const make_private_code = (length: any) => {
 // 	try {
 // 		const data = await Promise;
 // 		return [ data, null ];
-// 	} catch (error) {
+// 	} catch (error: any) {
 //
 // 		console.error(error);
 // 		return [ null, error ];
@@ -55,7 +55,7 @@ const storage = multer.diskStorage({
     const fileExtension = path.extname(file.originalname);
     const fileName = uuidv4() + fileExtension;
     cb(null, fileName);
-  }
+  },
 });
 
 // Set up multer middleware for handling file uploads
@@ -72,7 +72,7 @@ export const upload = multer({
     //  else {
     //   cb("Error: Images only!");
     // }
-  }
+  },
 });
 
 export const deepEqual = (object1: any, object2: any) => {
@@ -143,7 +143,16 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
   }
 };
 
-export const categories = ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
+export const categories = [
+  "gloves",
+  "batteries",
+  "decals",
+  "diffuser_caps",
+  "diffusers",
+  "exo_diffusers",
+  "glowstringz",
+  "glowskinz",
+];
 export const subcategories = [
   "singles",
   "refresh",
@@ -182,7 +191,7 @@ export const subcategories = [
   "custom",
   "colors",
   "sizes",
-  "secondary_colors"
+  "secondary_colors",
 ];
 
 export const dates_in_year = [
@@ -197,7 +206,7 @@ export const dates_in_year = [
   { month: 9, number_of_days: 30 },
   { month: 10, number_of_days: 31 },
   { month: 11, number_of_days: 30 },
-  { month: 12, number_of_days: 31 }
+  { month: 12, number_of_days: 31 },
 ];
 
 export const determine_filter = (query: any, search: any) => {
@@ -211,14 +220,14 @@ export const determine_filter = (query: any, search: any) => {
         filter.$or = [
           {
             sale_price: {
-              $gt: 0
-            }
+              $gt: 0,
+            },
           },
           {
             previous_price: {
-              $gt: 0
-            }
-          }
+              $gt: 0,
+            },
+          },
         ];
       } else if (item[1]) {
         if (item[0] === "chip") {
@@ -283,74 +292,74 @@ export const month_dates = (month: string, year: string) => {
       month: "january",
       number_of_days: 31,
       start_date: year + "-01-01",
-      end_date: year + "-02-01"
+      end_date: year + "-02-01",
     },
     february: {
       month: "february",
       number_of_days: 28,
       start_date: year + "-02-01",
-      end_date: year + "-03-01"
+      end_date: year + "-03-01",
     },
     march: {
       month: "march",
       number_of_days: 31,
       start_date: year + "-03-01",
-      end_date: year + "-04-01"
+      end_date: year + "-04-01",
     },
     april: {
       month: "april",
       number_of_days: 30,
       start_date: year + "-04-01",
-      end_date: year + "-05-01"
+      end_date: year + "-05-01",
     },
     may: {
       month: "may",
       number_of_days: 31,
       start_date: year + "-05-01",
-      end_date: year + "-06-01"
+      end_date: year + "-06-01",
     },
     june: {
       month: "june",
       number_of_days: 30,
       start_date: year + "-06-01",
-      end_date: year + "-07-01"
+      end_date: year + "-07-01",
     },
     july: {
       month: "july",
       number_of_days: 31,
       start_date: year + "-07-01",
-      end_date: year + "-08-01"
+      end_date: year + "-08-01",
     },
     august: {
       month: "august",
       number_of_days: 31,
       start_date: year + "-08-01",
-      end_date: year + "-09-01"
+      end_date: year + "-09-01",
     },
     september: {
       month: "september",
       number_of_days: 30,
       start_date: year + "-09-01",
-      end_date: year + "-10-01"
+      end_date: year + "-10-01",
     },
     october: {
       month: "october",
       number_of_days: 31,
       start_date: year + "-10-01",
-      end_date: year + "-11-01"
+      end_date: year + "-11-01",
     },
     november: {
       month: "november",
       number_of_days: 30,
       start_date: year + "-11-01",
-      end_date: year + "-12-01"
+      end_date: year + "-12-01",
     },
     december: {
       month: "december",
       number_of_days: 31,
       start_date: year + "-12-01",
-      end_date: parseInt(year) + 1 + "-01-01"
-    }
+      end_date: parseInt(year) + 1 + "-01-01",
+    },
   };
   return month_date[month];
 };
@@ -493,10 +502,14 @@ const size = (item: any) => {
 };
 
 const secondary_color = (item: any) => {
-  return `${item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""}`;
+  return `${
+    item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""
+  }`;
 };
 const secondary_color_name = (item: any) => {
-  const secondary_color_name = item.secondary_color_group_name ? item.secondary_color_group_name.split(" ")[0] + "s" : "";
+  const secondary_color_name = item.secondary_color_group_name
+    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    : "";
   if (item.category === "gloves") {
     return secondary_color_name;
   }
@@ -601,10 +614,14 @@ const third_dash = (item: any) => {
 
 export const determine_product_name = (item: any, show_qty: any) => {
   return `<div>
-      ${qty(item, show_qty) ? qty(item, show_qty) : ""} ${color(item) ? color(item) : ""} ${item.name} ${size(item) ? size(item) : ""}
-      ${secondary_color(item) ? secondary_color(item) : ""} ${secondary_color_name(item) ? secondary_color_name(item) : ""}${
-    secondary_product(item) ? secondary_product(item) : ""
-  } ${secondary_product_name(item) ? secondary_product_name(item) : ""}
+      ${qty(item, show_qty) ? qty(item, show_qty) : ""} ${color(item) ? color(item) : ""} ${item.name} ${
+        size(item) ? size(item) : ""
+      }
+      ${secondary_color(item) ? secondary_color(item) : ""} ${
+        secondary_color_name(item) ? secondary_color_name(item) : ""
+      }${secondary_product(item) ? secondary_product(item) : ""} ${
+        secondary_product_name(item) ? secondary_product_name(item) : ""
+      }
     </div>`;
 };
 
@@ -632,38 +649,38 @@ export const order_status_steps = (order: any, status: string) => {
 		>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    order
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          order
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Placed</div>
 			</div>
 
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "crafting" || status === "crafted" || status === "packaged" || status === "shipped"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "crafting" || status === "crafted" || status === "packaged" || status === "shipped"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Crafted</div>
 			</div>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "packaged" || status === "shipped"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "packaged" || status === "shipped"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Packaged</div>
 			</div>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "shipped"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "shipped"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Shipped</div>
 			</div>
@@ -677,38 +694,38 @@ export const shipping_status_steps = (order: any, status: string) => {
 		>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "pre_transit" || status === "in_transit" || status === "out_for_delivery" || status === "delivered"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "pre_transit" || status === "in_transit" || status === "out_for_delivery" || status === "delivered"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Label Created</div>
 			</div>
 
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "in_transit" || status === "out_for_delivery" || status === "delivered"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "in_transit" || status === "out_for_delivery" || status === "delivered"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Shipped</div>
 			</div>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "out_for_delivery" || status === "delivered"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "out_for_delivery" || status === "delivered"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Out For Delivery</div>
 			</div>
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "delivered"
-      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
-      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
-  }'
+          status === "delivered"
+            ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+            : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+        }'
 			>
 				<div style='font-size: 16px;'>Delivered</div>
 			</div>
@@ -760,7 +777,11 @@ export const determine_tracking_link = (tracking_number: string) => {
 };
 
 export const determine_category = (place_of_purchase: string) => {
-  if (place_of_purchase.includes("AMAZON") || place_of_purchase.includes("Amazon") || place_of_purchase.includes("AMZN")) {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
     return "Supplies";
   } else if (place_of_purchase.includes("PIRATE SHIP")) {
     return "Shipping";
@@ -807,7 +828,11 @@ export const determine_category = (place_of_purchase: string) => {
   }
 };
 export const determine_place = (place_of_purchase: string) => {
-  if (place_of_purchase.includes("AMAZON") || place_of_purchase.includes("Amazon") || place_of_purchase.includes("AMZN")) {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
     return "Amazon";
   } else if (place_of_purchase.includes("PIRATE SHIP")) {
     return "Pirate Ship";
@@ -856,7 +881,11 @@ export const determine_place = (place_of_purchase: string) => {
 export const determine_application = (place_of_purchase: string) => {
   if (place_of_purchase.includes("PIRATE SHIP")) {
     return "Shipping";
-  } else if (place_of_purchase.includes("AMAZON") || place_of_purchase.includes("Amazon") || place_of_purchase.includes("AMZN")) {
+  } else if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
     return "Products";
   } else if (place_of_purchase.includes("THE HOME DEPOT")) {
     return "Tools";
@@ -913,7 +942,7 @@ export const months = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];
 
 export const determine_code_tier = (affiliate: IAffiliate, code_usage: number) => {

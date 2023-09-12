@@ -8,7 +8,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -24,7 +24,7 @@ export default {
         query = { link: id };
       }
       return await Image.findOne(query);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -33,7 +33,7 @@ export default {
   findByLink_images_db: async (link: string) => {
     try {
       return await Image.findOne({ link: link });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -42,7 +42,7 @@ export default {
   create_images_db: async (body: any) => {
     try {
       return await Image.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -54,7 +54,7 @@ export default {
       if (image) {
         return await Image.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -66,7 +66,7 @@ export default {
       if (image) {
         return await Image.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -75,7 +75,7 @@ export default {
   remove_multiple_images_db: async (ids: string[]) => {
     try {
       return await Image.deleteMany({ _id: { $in: ids } });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -84,7 +84,7 @@ export default {
   count_images_db: async (filter: any) => {
     try {
       return await Image.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

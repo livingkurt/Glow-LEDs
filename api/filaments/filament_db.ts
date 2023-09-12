@@ -8,7 +8,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -17,7 +17,7 @@ export default {
   findById_filaments_db: async (id: string) => {
     try {
       return await Filament.findOne({ _id: id });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -28,7 +28,7 @@ export default {
       return await Filament.find({ deleted: false, user: user_id }).sort({
         _id: -1,
       });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -37,7 +37,7 @@ export default {
   create_filaments_db: async (body: any) => {
     try {
       return await Filament.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -49,7 +49,7 @@ export default {
       if (filament) {
         return await Filament.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -61,7 +61,7 @@ export default {
       if (filament) {
         return await Filament.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -70,7 +70,7 @@ export default {
   count_filaments_db: async (filter: any) => {
     try {
       return await Filament.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

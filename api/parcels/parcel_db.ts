@@ -8,7 +8,7 @@ export default {
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -17,7 +17,7 @@ export default {
   findById_parcels_db: async (id: string) => {
     try {
       return await Parcel.findOne({ _id: id }).populate("user").populate("affiliate");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -26,7 +26,7 @@ export default {
   create_parcels_db: async (body: any) => {
     try {
       return await Parcel.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -38,7 +38,7 @@ export default {
       if (parcel) {
         return await Parcel.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -50,7 +50,7 @@ export default {
       if (parcel) {
         return await Parcel.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -59,7 +59,7 @@ export default {
   count_parcels_db: async (filter: any) => {
     try {
       return await Parcel.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -16,11 +16,11 @@ export const getAccessToken = (user: any) => {
       shipping: user.shipping,
       is_affiliated: user.is_affiliated,
       isWholesaler: user.isWholesaler,
-      wholesaler: user.wholesaler
+      wholesaler: user.wholesaler,
     },
     config.ACCESS_TOKEN_SECRET || "",
     {
-      expiresIn: "1hr"
+      expiresIn: "1hr",
     }
   );
 };
@@ -39,17 +39,17 @@ export const getRefreshToken = async (user: any) => {
         shipping: user.shipping,
         is_affiliated: user.is_affiliated,
         wholesaler: user.wholesaler,
-        isWholesaler: user.isWholesaler
+        isWholesaler: user.isWholesaler,
       },
       config.REFRESH_TOKEN_SECRET || "",
       {
-        expiresIn: "30d"
+        expiresIn: "30d",
       }
     );
     await Token.create({ user: user._id, token: refreshToken });
 
     return refreshToken;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     return;
   }

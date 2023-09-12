@@ -42,7 +42,7 @@ export default {
         // Handle the case where count is undefined
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -51,7 +51,7 @@ export default {
   findByPathname_teams_s: async (params: any) => {
     try {
       return await team_db.findByPathname_teams_db(params.pathname);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -60,7 +60,7 @@ export default {
   findByAffiliate_teams_s: async (params: any) => {
     try {
       return await team_db.findByAffiliate_teams_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -69,7 +69,7 @@ export default {
   create_teams_s: async (body: any) => {
     try {
       return await team_db.create_teams_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -78,7 +78,7 @@ export default {
   update_teams_s: async (params: any, body: any) => {
     try {
       return await team_db.update_teams_db(params.pathname, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -87,7 +87,7 @@ export default {
   remove_teams_s: async (params: any) => {
     try {
       return await team_db.remove_teams_db(params.pathname);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

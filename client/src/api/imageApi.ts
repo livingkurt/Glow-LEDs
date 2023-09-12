@@ -31,7 +31,7 @@ export const getImages = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -40,7 +40,7 @@ export const listImages = createAsyncThunk("images/listImages", async (query: an
   try {
     const { data } = await axios.get(`/api/images?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -57,7 +57,7 @@ export const saveImage = createAsyncThunk("images/saveImage", async (image: any,
       thunkApi.dispatch(showSuccess({ message: `Image Saved` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -67,7 +67,7 @@ export const detailsImage = createAsyncThunk("images/detailsImage", async (id: s
   try {
     const { data } = await axios.get(`/api/images/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -78,7 +78,7 @@ export const getImagesByLink = createAsyncThunk("images/getImagesByLink", async 
     const { data } = await axios.put(`/api/images/link`, { link });
     thunkApi.dispatch(showSuccess({ message: `Image Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -89,7 +89,7 @@ export const deleteImage = createAsyncThunk("images/deleteImage", async (pathnam
     const { data } = await axios.delete("/api/images/" + pathname);
     thunkApi.dispatch(showSuccess({ message: `Image Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

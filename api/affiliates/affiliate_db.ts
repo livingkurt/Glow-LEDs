@@ -14,7 +14,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -28,7 +28,7 @@ export default {
         .populate("products")
         .populate("public_code")
         .populate("private_code");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -42,7 +42,7 @@ export default {
         .populate("products")
         .populate("public_code")
         .populate("private_code");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -56,7 +56,7 @@ export default {
         .populate("products")
         .populate("public_code")
         .populate("private_code");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -73,7 +73,7 @@ export default {
           private_code: priv_code._id,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -178,7 +178,7 @@ export default {
         },
       ]);
       return sponsorCheckins;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -232,7 +232,7 @@ export default {
       if (affiliate) {
         return await Affiliate.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -244,7 +244,7 @@ export default {
       if (affiliate) {
         return await Affiliate.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -253,7 +253,7 @@ export default {
   count_affiliates_db: async (filter: any) => {
     try {
       return await Affiliate.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

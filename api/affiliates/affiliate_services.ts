@@ -46,7 +46,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -55,7 +55,7 @@ export default {
   findByPathname_affiliates_s: async (params: { pathname: string }) => {
     try {
       return await affiliate_db.findByPathname_affiliates_db(params.pathname);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -64,7 +64,7 @@ export default {
   findById_affiliates_s: async (params: { id: string }) => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -104,7 +104,7 @@ export default {
     };
     try {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -164,7 +164,7 @@ export default {
 
         return affiliate;
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -175,7 +175,7 @@ export default {
     const { start_date, end_date } = query;
     try {
       return await affiliate_db.checkin_status_affiliates_db(start_date, end_date);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -184,7 +184,7 @@ export default {
   update_affiliates_s: async (params: any, body: IAffiliate) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -293,14 +293,14 @@ export default {
                     public_code,
                     private_code
                   );
-                } catch (error) {
+                } catch (error: any) {
                   if (error instanceof Error) {
                     throw new Error(error.message);
                   }
                 }
               });
             });
-          } catch (error) {
+          } catch (error: any) {
             if (error instanceof Error) {
               throw new Error(error.message);
             }
@@ -309,7 +309,7 @@ export default {
       });
 
       return "Succes";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -319,7 +319,7 @@ export default {
     const { id } = params;
     try {
       return await affiliate_db.remove_affiliates_db(id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -331,7 +331,7 @@ export default {
       const affiliate: any = await Affiliate.findOne({ _id: id });
       await generateSponsorCodes(affiliate);
       return affiliate;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -54,7 +54,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -84,7 +84,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -121,7 +121,7 @@ export default {
         },
       };
       return { availableFilters, booleanFilters };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -130,7 +130,7 @@ export default {
   findById_promos_s: async (params: any) => {
     try {
       return await promo_db.findById_promos_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -141,7 +141,7 @@ export default {
       const promos = await promo_db.findByAffiliateId_promos_db(params.affiliate_id);
       const { twentyFiveOffCode, refreshCode }: any = extractCodes(promos);
       return { twentyFiveOffCode, refreshCode };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -150,7 +150,7 @@ export default {
   findByCode_promos_s: async (params: any) => {
     try {
       return await promo_db.findByCode_promos_db(params.promo_code);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -159,7 +159,7 @@ export default {
   create_promos_s: async (body: any) => {
     try {
       return await promo_db.create_promos_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -184,7 +184,7 @@ export default {
 
     try {
       return await promo_db.create_promos_db(private_code);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -218,7 +218,7 @@ export default {
         })
       );
       return sponsor_codes;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -227,7 +227,7 @@ export default {
   update_promos_s: async (params: any, body: any) => {
     try {
       return await promo_db.update_promos_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -293,7 +293,7 @@ export default {
         });
 
       return "Success";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -311,7 +311,7 @@ export default {
             if (updatedPromo) {
               return updatedPromo;
             }
-          } catch (error) {
+          } catch (error: any) {
             if (error instanceof Error) {
               throw new Error(error.message);
             }
@@ -321,7 +321,7 @@ export default {
         }
       }
       return promo;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -330,7 +330,7 @@ export default {
   remove_promos_s: async (params: any) => {
     try {
       return await promo_db.remove_promos_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -339,7 +339,7 @@ export default {
   remove_multiple_promos_s: async (body: any) => {
     try {
       return await promo_db.remove_multiple_promos_db(body.ids);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -418,7 +418,7 @@ export default {
       // }
       console.log({ isValid, errors, promo });
       return { isValid, errors, promo };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

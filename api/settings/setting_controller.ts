@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(settings);
       }
       return res.status(404).send({ message: "Settings Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Settings" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_settings_c: async (req: any, res: any) => {
@@ -22,8 +22,8 @@ export default {
         return res.status(200).send(setting);
       }
       return res.status(404).send({ message: "Setting Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Setting" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_settings_c: async (req: any, res: any) => {
@@ -34,8 +34,8 @@ export default {
         return res.status(201).send(setting);
       }
       return res.status(500).send({ message: "Error Creating Setting" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Setting" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_settings_c: async (req: any, res: any) => {
@@ -46,8 +46,8 @@ export default {
         return res.status(200).send(setting);
       }
       return res.status(500).send({ message: "Error Updating Setting" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Setting" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_settings_c: async (req: any, res: any) => {
@@ -58,8 +58,8 @@ export default {
         return res.status(204).send({ message: "Setting Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Setting" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Setting" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };

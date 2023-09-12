@@ -5,7 +5,7 @@ export const refresh_sponsor_codes = async (): Promise<void> => {
   try {
     const domainUrl = domain();
     await axios.post(`${domainUrl}/api/promos/refresh_sponsor_codes`);
-  } catch (error) {
+  } catch (error: any) {
     console.log("error", error);
   }
 };

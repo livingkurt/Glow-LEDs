@@ -482,7 +482,7 @@ export const validate_password_change = async (data: {
       });
 
       // Password checks
-    } catch (error) {
+    } catch (error: any) {
       errors.current_password = "Current Password is Incorrect";
     }
   }

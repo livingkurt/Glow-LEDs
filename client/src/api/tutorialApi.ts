@@ -30,14 +30,14 @@ export const getTutorials = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any }) => {
   try {
     return axios.put(`/api/tutorials/reorder`, { reorderedItems });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -47,7 +47,7 @@ export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (
     const { data } = await axios.get(`/api/tutorials?${create_query(query)}`);
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -64,7 +64,7 @@ export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tu
       thunkApi.dispatch(showSuccess({ message: `Tutorials Updated` }));
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -82,7 +82,7 @@ export const detailsTutorial = createAsyncThunk(
       }
       thunkApi.dispatch(showSuccess({ message: `Tutorial Found` }));
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -93,7 +93,7 @@ export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async
     const { data } = await axios.delete(`/api/tutorials/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Tutorial Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

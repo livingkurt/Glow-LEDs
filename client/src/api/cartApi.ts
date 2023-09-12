@@ -31,7 +31,7 @@ export const getCarts = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -40,7 +40,7 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, 
   try {
     const { data } = await axios.get(`/api/carts?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -74,7 +74,7 @@ export const addToCart = createAsyncThunk(
 
       // Add current_user to the returned payload
       return { data: data.data, type, current_user };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -91,7 +91,7 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
       thunkApi.dispatch(showSuccess({ message: `Cart Saved` }));
       return { data };
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -113,7 +113,7 @@ export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (ca
     } else {
       return { data: cart, current_user };
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -124,7 +124,7 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
     const { data } = await axios.get(`/api/carts/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Cart Found` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -134,7 +134,7 @@ export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", a
   try {
     const { data } = await axios.get(`/api/carts/${id}/user`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -148,7 +148,7 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
     } else {
       return "Success";
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -159,7 +159,7 @@ export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string
     const { data } = await axios.delete(`/api/carts/${id}`);
     thunkApi.dispatch(showSuccess({ message: `Cart Deleted` }));
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -180,7 +180,7 @@ export const deleteCartItem = createAsyncThunk(
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
       thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
       return { data, type };
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
       return thunkApi.rejectWithValue(error.response?.data);
     }

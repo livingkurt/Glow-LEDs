@@ -12,7 +12,7 @@ export const listFilaments = createAsyncThunk("filaments/listFilaments", async (
   try {
     const { data } = await axios.get(`/api/filaments?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -27,7 +27,7 @@ export const saveFilament = createAsyncThunk("filaments/saveFilament", async (fi
       const { data } = await axios.put(`/api/filaments/${filament._id}`, filament);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -37,7 +37,7 @@ export const detailsFilament = createAsyncThunk("filaments/detailsFilament", asy
   try {
     const { data } = await axios.get(`/api/filaments/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -47,7 +47,7 @@ export const deleteFilament = createAsyncThunk("filaments/deleteFilament", async
   try {
     const { data } = await axios.delete("/api/filaments/" + pathname);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

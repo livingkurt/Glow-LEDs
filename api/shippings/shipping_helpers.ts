@@ -137,7 +137,7 @@ export const parseOrderData = (shipment: any, order: any) => {
       "customs_item.origin_country": shipment.customs_info.customs_items[0].origin_country,
     };
     return data;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

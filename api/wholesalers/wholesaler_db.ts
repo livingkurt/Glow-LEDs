@@ -10,7 +10,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -19,7 +19,7 @@ export default {
   findBy_wholesalers_db: async (params: any) => {
     try {
       return await Wholesaler.findOne(params).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -28,7 +28,7 @@ export default {
   findByPathname_wholesalers_db: async (pathname: string) => {
     try {
       return await Wholesaler.findOne({ pathname: pathname }).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -37,7 +37,7 @@ export default {
   findById_wholesalers_db: async (id: string) => {
     try {
       return await Wholesaler.findOne({ _id: id }).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -46,7 +46,7 @@ export default {
   create_wholesalers_db: async (body: any) => {
     try {
       return await Wholesaler.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -58,7 +58,7 @@ export default {
       if (wholesaler) {
         return await Wholesaler.updateOne({ _id: params.id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -70,7 +70,7 @@ export default {
       if (wholesaler) {
         return await Wholesaler.updateOne({ pathname: params.pathname }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -79,10 +79,10 @@ export default {
   count_wholesalers_db: async (filter: any) => {
     try {
       return await Wholesaler.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

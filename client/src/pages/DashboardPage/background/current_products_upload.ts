@@ -69,7 +69,7 @@ const current_products_upload = async () => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }

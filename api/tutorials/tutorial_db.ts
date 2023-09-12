@@ -9,7 +9,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -18,7 +18,7 @@ export default {
   findBy_tutorials_db: async (params: any) => {
     try {
       return await Tutorial.findOne(params).populate("affiliate");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -27,7 +27,7 @@ export default {
   findByPathname_tutorials_db: async (pathname: string) => {
     try {
       return await Tutorial.findOne({ pathname: pathname }).populate("affiliate");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -36,7 +36,7 @@ export default {
   findById_tutorials_db: async (id: string) => {
     try {
       return await Tutorial.findOne({ _id: id }).populate("affiliate");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -45,7 +45,7 @@ export default {
   create_tutorials_db: async (body: any) => {
     try {
       return await Tutorial.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -58,7 +58,7 @@ export default {
       if (tutorial) {
         return await Tutorial.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -70,7 +70,7 @@ export default {
       if (tutorial) {
         return await Tutorial.updateOne({ pathname: params.pathname }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -79,10 +79,10 @@ export default {
   count_tutorials_db: async (filter: any) => {
     try {
       return await Tutorial.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -271,7 +271,7 @@
 // //         ...data
 // //       };
 // //       return result;
-// //     } catch (error) {
+// //     } catch (error: any) {
 // //       console.error(error);
 // //       return {
 // //         ok: false,

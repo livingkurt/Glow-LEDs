@@ -36,7 +36,7 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -45,7 +45,7 @@ export default {
   findById_parcels_s: async (params: any) => {
     try {
       return await parcel_db.findById_parcels_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -54,7 +54,7 @@ export default {
   create_parcels_s: async (body: any) => {
     try {
       return await parcel_db.create_parcels_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -63,7 +63,7 @@ export default {
   update_parcels_s: async (params: any, body: any) => {
     try {
       return await parcel_db.update_parcels_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -72,7 +72,7 @@ export default {
   remove_parcels_s: async (params: any) => {
     try {
       return await parcel_db.remove_parcels_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

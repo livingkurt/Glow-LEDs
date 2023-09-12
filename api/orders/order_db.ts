@@ -47,7 +47,7 @@ export default {
       //   { $limit: parseInt(limit) }
       // ]);
       // return orders;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -66,7 +66,7 @@ export default {
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
 
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -98,7 +98,7 @@ export default {
             },
           ],
         });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -111,7 +111,7 @@ export default {
         .populate("user")
         .populate("orderItems.product")
         .populate("orderItems.secondary_product");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -120,7 +120,7 @@ export default {
   create_orders_db: async (body: any) => {
     try {
       return await Order.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -132,7 +132,7 @@ export default {
       if (order) {
         return await Order.updateOne({ _id: id }, body);
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -144,7 +144,7 @@ export default {
       if (order) {
         return await Order.updateOne({ _id: id }, { deleted: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -153,7 +153,7 @@ export default {
   count_orders_db: async (filter: any) => {
     try {
       return await Order.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -191,7 +191,7 @@ export default {
       );
 
       return products_with_names;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -235,7 +235,7 @@ export default {
         },
       ]);
       return dedupeAddresses(addresses);
-    } catch (error) {
+    } catch (error: any) {
       console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -280,7 +280,7 @@ export default {
         },
       ]).exec();
       return totalPrice;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -328,7 +328,7 @@ export default {
         },
       ]).exec();
       return totalPrice;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -375,7 +375,7 @@ export default {
   //     ]);
 
   //     return totalPriceByDay;
-  //   } catch (error) {
+  //   } catch (error: any) {
   //     if (error instanceof Error) {
   //       throw new Error(error.message);
   //     }
@@ -442,7 +442,7 @@ export default {
       ]).exec();
 
       return totalPriceByMonth;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -508,7 +508,7 @@ export default {
         },
       ]).exec();
       return totalPriceByYear;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -563,7 +563,7 @@ export default {
       ]).exec();
 
       return totalPriceByMonth;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -612,7 +612,7 @@ export default {
         },
       ]).exec();
       return totalPriceByYear;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -681,7 +681,7 @@ export default {
       ]).exec();
 
       return totalPriceByDay;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -723,7 +723,7 @@ export default {
         },
       ]).exec();
       return result;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -763,7 +763,7 @@ export default {
         },
       ]).exec();
       return result;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -789,7 +789,7 @@ export default {
         },
       ]).exec();
       return total_tips;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -818,7 +818,7 @@ export default {
         },
       ]).exec();
       return total_tips;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -861,7 +861,7 @@ export default {
         },
       ]);
       return category_totals;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -899,7 +899,7 @@ export default {
         },
       ]);
       return category_totals;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1007,7 +1007,7 @@ export default {
       ]);
 
       return affiliatesEarnings;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1046,7 +1046,7 @@ export default {
       // };
 
       return orders_data;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -1055,7 +1055,7 @@ export default {
   remove_multiple_orders_db: async (ids: string[]) => {
     try {
       return await Order.updateMany({ _id: { $in: ids } }, { deleted: true });
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

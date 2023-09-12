@@ -1,7 +1,12 @@
 import axios from "axios";
 import { IAffiliate } from "../../../../types/affiliateTypes";
 
-import { last_month_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import {
+  last_month_date_range,
+  determine_code_tier,
+  get_todays_date,
+  save_paycheck_to_expenses,
+} from "../worker_helpers";
 import { domain } from "../../../../helpers/sharedHelpers";
 
 export const payout_affiliates = async (): Promise<void> => {
@@ -15,21 +20,20 @@ export const payout_affiliates = async (): Promise<void> => {
     await Promise.all(
       affiliates.map(async (affiliate: IAffiliate) => {
         const { data: promo_code_usage } = await axios.get(
-          `${domain()}/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${
-            affiliate.sponsor
-          }`
+          `${domain()}/api/orders/code_usage/${affiliate?.public_code
+            ?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
         );
 
         if (affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1) {
           console.log({
             amount: promo_code_usage.earnings,
             stripe_connect_id: affiliate.user.stripe_connect_id,
-            description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
+            description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
           });
           await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
             amount: promo_code_usage.earnings,
             stripe_connect_id: affiliate.user.stripe_connect_id,
-            description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
+            description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
           });
           const data = {
             Expense: `${affiliate.artist_name} Affiliate Earnings`,
@@ -37,7 +41,7 @@ export const payout_affiliates = async (): Promise<void> => {
             Amount: promo_code_usage.earnings,
             "Place of Purchase": "Stripe",
             Card: "Stripe",
-            Category: ["Employee Paycheck"]
+            Category: ["Employee Paycheck"],
           };
           save_paycheck_to_expenses(data);
         }
@@ -50,7 +54,7 @@ export const payout_affiliates = async (): Promise<void> => {
           uses: promo_code_usage.number_of_uses,
           stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
           paid: affiliate?.user?.stripe_connect_id ? true : false,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
         await axios.post(`${domainUrl}/api/paychecks`, {
           affiliate: affiliate?._id,
@@ -61,16 +65,16 @@ export const payout_affiliates = async (): Promise<void> => {
           uses: promo_code_usage.number_of_uses,
           stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
           paid: affiliate?.user?.stripe_connect_id ? true : false,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
         const percentage_off = determine_code_tier(affiliate, promo_code_usage.number_of_uses);
         await axios.put(`${domainUrl}/api/promos/${affiliate?.private_code?._id}`, {
           ...affiliate.private_code,
-          percentage_off
+          percentage_off,
         });
       })
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("error", error);
   }
 };

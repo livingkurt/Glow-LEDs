@@ -14,7 +14,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -23,7 +23,7 @@ export default {
   findById_carts_db: async (id: string) => {
     try {
       return await Cart.findOne({ _id: id, active: true, deleted: false }).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -32,7 +32,7 @@ export default {
   findByUser_carts_db: async (user_id: string) => {
     try {
       return await Cart.findOne({ user: user_id, active: true, deleted: false }).populate("user");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -41,7 +41,7 @@ export default {
   create_carts_db: async (body: any) => {
     try {
       return await Cart.create(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -54,7 +54,7 @@ export default {
         return await Cart.updateOne({ _id: id }, body);
       }
       return cart;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -69,7 +69,7 @@ export default {
       } else {
         return await Cart.create({ ...body, user: id });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -82,7 +82,7 @@ export default {
       if (cart) {
         return await Cart.deleteOne({ _id: id });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -91,7 +91,7 @@ export default {
   count_carts_db: async (filter: any) => {
     try {
       return await Cart.countDocuments(filter);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

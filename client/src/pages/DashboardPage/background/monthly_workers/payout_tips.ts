@@ -15,13 +15,13 @@ export const payout_tips = async (): Promise<void> => {
     console.log({
       amount: tips[0].total_tips,
       stripe_connect_id: user.stripe_connect_id,
-      description: `Tips Payout ${user.first_name} ${user.last_name}`
+      description: `Tips Payout ${user.first_name} ${user.last_name}`,
     });
 
     await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
       amount: tips[0].total_tips,
       stripe_connect_id: user.stripe_connect_id,
-      description: `Tips Payout ${user.first_name} ${user.last_name}`
+      description: `Tips Payout ${user.first_name} ${user.last_name}`,
     });
 
     console.log({
@@ -29,7 +29,7 @@ export const payout_tips = async (): Promise<void> => {
       amount: tips[0].total_tips,
       stripe_connect_id: user?.stripe_connect_id ?? null,
       paid: true,
-      paid_at: new Date()
+      paid_at: new Date(),
     });
 
     await axios.post(`${domainUrl}/api/paychecks`, {
@@ -37,7 +37,7 @@ export const payout_tips = async (): Promise<void> => {
       amount: tips[0].total_tips,
       stripe_connect_id: user?.stripe_connect_id ?? null,
       paid: true,
-      paid_at: new Date()
+      paid_at: new Date(),
     });
     const data = {
       Expense: `${user.first_name} ${user.last_name} Paycheck`,
@@ -45,10 +45,10 @@ export const payout_tips = async (): Promise<void> => {
       Amount: tips[0].total_tips || 0, // ensure that Amount is a number and not undefined
       "Place of Purchase": "Stripe",
       Card: "Stripe",
-      Category: ["Employee Paycheck"]
+      Category: ["Employee Paycheck"],
     };
     save_paycheck_to_expenses(data);
-  } catch (error) {
+  } catch (error: any) {
     console.log("error", error);
   }
 };

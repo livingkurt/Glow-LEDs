@@ -46,7 +46,7 @@ router.route("/users").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(users);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -70,7 +70,7 @@ router.route("/expenses").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(expenses);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -94,7 +94,7 @@ router.route("/products").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(products);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -118,7 +118,7 @@ router.route("/features").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(features);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -142,7 +142,7 @@ router.route("/orders").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(orders);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -166,7 +166,7 @@ router.route("/emails").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(emails);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -190,7 +190,7 @@ router.route("/affiliates").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(affiliates);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -214,7 +214,7 @@ router.route("/paychecks").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(paychecks);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -238,7 +238,7 @@ router.route("/parcels").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(parcels);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -262,7 +262,7 @@ router.route("/chips").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(chips);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -286,7 +286,7 @@ router.route("/filaments").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(filaments);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -310,7 +310,7 @@ router.route("/contents").put(isAuth, isAdmin, async (req: any, res: any) => {
 
       res.send(contents);
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -1467,7 +1467,7 @@ router.route("/update_refund_price").put(async (req: any, res: any) => {
       order.save();
     });
     res.send(refunds.flat(2));
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
   }
 });
@@ -2107,7 +2107,7 @@ router.route("/unset_payments").put(async (req, res) => {
   try {
     console.log("Transactions removed from all orders.");
     return await Order.updateMany({}, { $unset: { payments: 1 } });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error:", error);
   }
 });
@@ -2160,7 +2160,7 @@ router.route("/import_checkins").put(async (req, res) => {
 
         res.status(200).send("Import completed successfully");
       });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error:", error);
     res.status(500).send("Server Error");
   }
@@ -2180,7 +2180,7 @@ router.route("/remove_free_shipping").put(async (req, res) => {
     );
 
     res.status(200).json({ message: "Free shipping removed from single-use codes." });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }

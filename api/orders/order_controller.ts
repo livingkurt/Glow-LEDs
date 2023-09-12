@@ -11,8 +11,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(404).send({ message: "Orders Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Orders" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_filters_orders_c: async (req: any, res: any) => {
@@ -23,8 +23,8 @@ export default {
         return res.status(200).send(order_filters);
       }
       return res.status(404).send({ message: "Orders Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Orders" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAllOld_orders_c: async (req: any, res: any) => {
@@ -35,8 +35,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(404).send({ message: "Orders Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Orders" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findMy_orders_c: async (req: any, res: any) => {
@@ -47,8 +47,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_orders_c: async (req: any, res: any) => {
@@ -60,8 +60,8 @@ export default {
         return res.status(200).send(order);
       }
       return res.status(404).send({ message: "Order Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_orders_c: async (req: any, res: any) => {
@@ -72,8 +72,8 @@ export default {
         return res.status(201).send(order);
       }
       return res.status(500).send(order);
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_orders_c: async (req: any, res: any) => {
@@ -84,8 +84,8 @@ export default {
         return res.status(200).send(order);
       }
       return res.status(500).send({ message: "Error Updating Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_orders_c: async (req: any, res: any) => {
@@ -96,8 +96,8 @@ export default {
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   occurrences_orders_c: async (req: any, res: any) => {
@@ -107,8 +107,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   top_customers_orders_c: async (req: any, res: any) => {
@@ -119,8 +119,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   category_occurrences_orders_c: async (req: any, res: any) => {
@@ -131,8 +131,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   code_usage_orders_c: async (req: any, res: any) => {
@@ -143,8 +143,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   affiliate_code_usage_orders_c: async (req: any, res: any) => {
@@ -155,8 +155,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   tax_rates_orders_c: async (req: any, res: any) => {
@@ -166,8 +166,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   all_affiliate_code_usage_orders_c: async (req: any, res: any) => {
@@ -178,8 +178,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   promo_code_usage_orders_c: async (req: any, res: any) => {
@@ -190,8 +190,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   each_day_income_orders_c: async (req: any, res: any) => {
@@ -202,8 +202,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   each_month_income_orders_c: async (req: any, res: any) => {
@@ -214,8 +214,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   previous_income_orders_c: async (req: any, res: any) => {
@@ -226,8 +226,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   mark_as_shipped_orders_c: async (req: any, res: any) => {
@@ -238,8 +238,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   income_orders_c: async (req: any, res: any) => {
@@ -250,8 +250,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   invoice_orders_c: async (req: any, res: any) => {
@@ -265,8 +265,8 @@ export default {
       } else {
         return res.status(200).send(invoice({ order, isSponsor: false }));
       }
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   eligible_for_review_orders_c: async (req: any, res: any) => {
@@ -277,8 +277,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_product_quantities_orders_c: async (req: any, res: any) => {
@@ -288,8 +288,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_product_quantities_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_product_quantities_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_shipping_orders_c: async (req: any, res: any) => {
@@ -299,8 +299,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_all_shipping_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_all_shipping_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_time_revenue_orders_c: async (req: any, res: any) => {
@@ -310,8 +310,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_all_time_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_all_time_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_product_range_revenue_orders_c: async (req: any, res: any) => {
@@ -322,8 +322,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_product_range_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_product_range_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_product_range_revenue_orders_c: async (req: any, res: any) => {
@@ -334,8 +334,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_range_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_revenue_orders_c: async (req: any, res: any) => {
@@ -346,8 +346,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_range_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_daily_revenue_orders_c: async (req: any, res: any) => {
@@ -358,8 +358,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_daily_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_daily_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_monthly_revenue_orders_c: async (req: any, res: any) => {
@@ -370,8 +370,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_monthly_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_monthly_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_yearly_revenue_orders_c: async (req: any, res: any) => {
@@ -381,8 +381,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_yearly_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_yearly_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_monthly_revenue_product_orders_c: async (req: any, res: any) => {
@@ -393,8 +393,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_monthly_revenue_product_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_monthly_revenue_product_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_yearly_revenue_product_orders_c: async (req: any, res: any) => {
@@ -405,8 +405,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_yearly_revenue_product_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_yearly_revenue_product_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_category_revenue_orders_c: async (req: any, res: any) => {
@@ -417,8 +417,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_range_category_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_category_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_time_category_revenue_orders_c: async (req: any, res: any) => {
@@ -428,8 +428,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_all_time_category_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_all_time_category_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_tips_revenue_orders_c: async (req: any, res: any) => {
@@ -440,8 +440,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_range_tips_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_tips_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_all_time_tips_revenue_orders_c: async (req: any, res: any) => {
@@ -451,8 +451,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_all_time_tips_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   get_range_gloves_data_orders_c: async (req: any, res: any) => {
@@ -463,8 +463,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_all_time_tips_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   affiliate_earnings_c: async (req: any, res: any) => {
@@ -475,8 +475,8 @@ export default {
         return res.status(200).send(orders);
       }
       return res.status(500).send({ message: "Error get_range_affiliate_earnings_code_usage_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_affiliate_earnings_code_usage_orders_c" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_multiple_orders_c: async (req: any, res: any) => {
@@ -487,8 +487,8 @@ export default {
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   transfer_orders_c: async (req: any, res: any) => {
@@ -499,8 +499,8 @@ export default {
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   sample_testing_orders_c: async (req: any, res: any) => {
@@ -511,8 +511,8 @@ export default {
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Order" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

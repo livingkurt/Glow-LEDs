@@ -43,8 +43,8 @@ export default {
         return res.status(200).send(emails);
       }
       return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Contents" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findAll_emails_c: async (req: any, res: any) => {
@@ -55,8 +55,8 @@ export default {
         return res.status(200).send(emails);
       }
       return res.status(404).send({ message: "Emails Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Emails" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findById_emails_c: async (req: any, res: any) => {
@@ -68,8 +68,8 @@ export default {
         return res.status(200).send(email);
       }
       return res.status(404).send({ message: "Email Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Email" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_emails_c: async (req: any, res: any) => {
@@ -80,8 +80,8 @@ export default {
         return res.status(201).send(email);
       }
       return res.status(500).send({ message: "Error Creating Email" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Email" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_emails_c: async (req: any, res: any) => {
@@ -92,8 +92,8 @@ export default {
         return res.status(200).send(email);
       }
       return res.status(500).send({ message: "Error Updating Email" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Email" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_emails_c: async (req: any, res: any) => {
@@ -104,8 +104,8 @@ export default {
         return res.status(204).send({ message: "Email Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Email" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Email" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 
@@ -565,7 +565,7 @@ export default {
       } else {
         res.status(200).send("Not a Tracker event, so nothing to do here for now...");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

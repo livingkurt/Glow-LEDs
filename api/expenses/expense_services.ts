@@ -30,7 +30,7 @@ export default {
         total_count: count,
         currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -44,7 +44,7 @@ export default {
         card: await Expense.distinct("card"),
       };
       return { availableFilters };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -63,7 +63,7 @@ export default {
       const sort = { date_of_purchase: 1 };
 
       return await expense_db.findAll_expenses_db(filter, sort, "0", "1");
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -72,7 +72,7 @@ export default {
   findById_expenses_s: async (params: any) => {
     try {
       return await expense_db.findById_expenses_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -81,7 +81,7 @@ export default {
   create_expenses_s: async (body: any) => {
     try {
       return await expense_db.create_expenses_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -163,7 +163,7 @@ export default {
 
   //     // Wait for all the Promises to complete
   //     await Promise.all(promises);
-  //   } catch (error) {
+  //   } catch (error: any) {
   //     if (error instanceof Error) {
   //       throw new Error(error.message);
   //     }
@@ -255,7 +255,7 @@ export default {
 
       // Wait for all the Promises to complete
       await Promise.all(promises);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -297,7 +297,7 @@ export default {
       });
 
       return "Success";
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -306,7 +306,7 @@ export default {
   update_expenses_s: async (params: any, body: any) => {
     try {
       return await expense_db.update_expenses_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -315,7 +315,7 @@ export default {
   remove_expenses_s: async (params: any) => {
     try {
       return await expense_db.remove_expenses_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

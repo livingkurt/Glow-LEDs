@@ -11,9 +11,9 @@ export default {
       return {
         data: categorys,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -22,7 +22,7 @@ export default {
   findById_categorys_s: async (params: any) => {
     try {
       return await category_db.findById_categorys_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -31,7 +31,7 @@ export default {
   create_categorys_s: async (body: any) => {
     try {
       return await category_db.create_categorys_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -40,7 +40,7 @@ export default {
   update_categorys_s: async (params: any, body: any) => {
     try {
       return await category_db.update_categorys_db(params.id, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -49,10 +49,10 @@ export default {
   remove_categorys_s: async (params: any) => {
     try {
       return await category_db.remove_categorys_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

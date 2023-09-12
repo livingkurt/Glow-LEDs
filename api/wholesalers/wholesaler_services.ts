@@ -11,9 +11,9 @@ export default {
       return {
         data: wholesalers,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -22,7 +22,7 @@ export default {
   findById_wholesalers_s: async (params: { id: string }) => {
     try {
       return await wholesaler_db.findById_wholesalers_db(params.id);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -31,7 +31,7 @@ export default {
   create_wholesalers_s: async (body: any) => {
     try {
       return await wholesaler_db.create_wholesalers_db(body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -40,7 +40,7 @@ export default {
   update_wholesalers_s: async (params: any, body: any) => {
     try {
       return await wholesaler_db.update_wholesalers_db(params, body);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -49,10 +49,10 @@ export default {
   remove_wholesalers_s: async (params: any) => {
     try {
       return await wholesaler_db.remove_wholesalers_db(params);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -30,14 +30,14 @@ export const getCategorys = async ({
         filters: JSON.stringify(filters),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
 export const reorderCategorys = async ({ reorderedItems }: { reorderedItems: any }) => {
   try {
     return axios.put(`/api/categorys/reorder`, { reorderedItems });
-  } catch (error) {
+  } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -46,7 +46,7 @@ export const listCategorys = createAsyncThunk("categorys/listCategorys", async (
   try {
     const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -61,7 +61,7 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
       const { data } = await axios.put(`/api/categorys/${category._id}`, category);
       return data;
     }
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }
@@ -78,7 +78,7 @@ export const detailsCategory = createAsyncThunk(
         response = await axios.get(`/api/categorys/${pathname}/pathname`);
       }
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
     }
   }
@@ -88,7 +88,7 @@ export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async
   try {
     const { data } = await axios.delete(`/api/categorys/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     thunkApi.dispatch(showError({ message: errorMessage(error) }));
     return thunkApi.rejectWithValue(error.response?.data);
   }

@@ -9,8 +9,8 @@ export default {
         return res.status(200).send(teams);
       }
       return res.status(404).send({ message: "Teams Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Teams" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByPathname_teams_c: async (req: any, res: any) => {
@@ -21,8 +21,8 @@ export default {
         return res.status(200).send(team);
       }
       return res.status(404).send({ message: "Team Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Team" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   findByAffiliate_teams_c: async (req: any, res: any) => {
@@ -33,8 +33,8 @@ export default {
         return res.status(200).send(team);
       }
       return res.status(404).send({ message: "Team Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Team" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   create_teams_c: async (req: any, res: any) => {
@@ -45,8 +45,8 @@ export default {
         return res.status(201).send(team);
       }
       return res.status(500).send({ message: "Error Creating Team" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Team" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   update_teams_c: async (req: any, res: any) => {
@@ -57,8 +57,8 @@ export default {
         return res.status(200).send(team);
       }
       return res.status(500).send({ message: "Error Updating Team" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Updating Team" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   remove_teams_c: async (req: any, res: any) => {
@@ -69,8 +69,8 @@ export default {
         return res.status(204).send({ message: "Team Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Team" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Deleting Team" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
     }
-  }
+  },
 };
