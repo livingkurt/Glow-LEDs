@@ -47,7 +47,7 @@ const ShippingChoice = () => {
     hide_pay_button,
     open,
     tax_rate,
-    show_message,
+    activePromoCodeIndicator,
     shipping_rate,
     modalShown,
   } = placeOrder;
@@ -63,7 +63,7 @@ const ShippingChoice = () => {
     const promo_code_storage = sessionStorage.getItem("promo_code");
     if (promo_code_storage && promo_code_storage.length > 0) {
       dispatch(chooseShippingRateWithPromo({ promo_code_storage }));
-      dispatch(activatePromo({ items_price, tax_rate, show_message, code: promo_code_storage, promos }));
+      dispatch(activatePromo({ items_price, tax_rate, activePromoCodeIndicator, code: promo_code_storage, promos }));
     }
 
     dispatch(finalizeShippingRate());

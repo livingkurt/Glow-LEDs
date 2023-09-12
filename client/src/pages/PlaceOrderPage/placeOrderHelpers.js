@@ -126,24 +126,24 @@ export const isFasterShipping = ({ shipping, rate, index }) =>
   (!shipping.international && serviceNames[index] !== "USPS: Standard") ||
   (shipping.international && mapServiceName(rate.service) !== "First Class");
 
-export const applyPercentageOff = (state, items_price, promo_excluded, validPromo, tax_rate) => {
-  const newItemsPrice = items_price - (items_price - promo_excluded) * (validPromo.percentage_off / 100);
+export const applyPercentageOff = (state, items_price, validPromo, tax_rate) => {
+  const newItemsPrice = items_price * (validPromo.percentage_off / 100);
   state.itemsPrice = newItemsPrice;
   state.taxPrice = tax_rate * newItemsPrice;
-  state.show_message = `${validPromo.promo_code.toUpperCase()} ${validPromo.percentage_off}% Off`;
+  state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} ${validPromo.percentage_off}% Off`;
 };
 
 export const applyAmountOff = (state, items_price, validPromo, tax_rate) => {
   const newItemsPrice = validPromo.amount_off > items_price ? 0 : items_price - validPromo.amount_off;
   state.itemsPrice = newItemsPrice;
   state.taxPrice = tax_rate * newItemsPrice;
-  state.show_message = `${validPromo.promo_code.toUpperCase()} $${validPromo.amount_off} Off`;
+  state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} $${validPromo.amount_off} Off`;
 };
 
 export const applyFreeShipping = (state, validPromo) => {
   state.shippingPrice = 0;
   state.free_shipping_message = "Free";
-  state.show_message = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
+  state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
 
 // Check if a product is included or excluded

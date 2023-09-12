@@ -9,8 +9,16 @@ const OrderSummaryStep = () => {
 
   const items_price = determine_total(cartItems);
   const placeOrder = useSelector(state => state.placeOrder);
-  const { show_message, loading, shippingPrice, free_shipping_message, tip, itemsPrice, taxPrice, totalPrice } =
-    placeOrder;
+  const {
+    activePromoCodeIndicator,
+    loading,
+    shippingPrice,
+    free_shipping_message,
+    tip,
+    itemsPrice,
+    taxPrice,
+    totalPrice,
+  } = placeOrder;
   return (
     <div className="placeorder-action">
       <ul>
@@ -44,14 +52,14 @@ const OrderSummaryStep = () => {
           </ul>
         </li>
 
-        {!show_message && (
+        {!activePromoCodeIndicator && (
           <li>
             <div>Subtotal</div>
             <div>${itemsPrice.toFixed(2)}</div>
           </li>
         )}
 
-        {show_message && (
+        {activePromoCodeIndicator && (
           <li>
             <del
               style={{
@@ -83,13 +91,13 @@ const OrderSummaryStep = () => {
             </div>
           </li>
         )}
-        {show_message && (
+        {activePromoCodeIndicator && (
           <li>
             <div>Discount</div>
             <div>-${(items_price - itemsPrice).toFixed(2)}</div>
           </li>
         )}
-        {show_message && (
+        {activePromoCodeIndicator && (
           <li>
             <div>New Subtotal</div>
             <div>${itemsPrice.toFixed(2)}</div>

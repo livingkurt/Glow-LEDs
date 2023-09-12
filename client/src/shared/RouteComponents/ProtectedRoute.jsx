@@ -3,12 +3,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { handleTokenRefresh, setCurrentUser } from "../../api/axiosInstance";
 import { Loading } from "../SharedComponents";
+import { useDispatch } from "react-redux";
+import { closeLoginModal, openLoginModal } from "../../slices/userSlice";
 
 const ProtectedRoute = ({ children, isAdminRoute = false }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
@@ -17,10 +20,12 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
     if (location.pathname === "/secure/checkout/placeorder") {
       return "/checkout/placeorder";
     }
+    console.log({ location });
+
     return "/";
   };
   useEffect(() => {
-    if (current_user) {
+    if (Object.keys(current_user).length > 0) {
       setIsLoading(false);
     }
   }, [current_user]);
@@ -28,9 +33,15 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
   useEffect(() => {
     if (isTokenRefreshed) {
       if (Object.keys(current_user).length === 0) {
+        if (isAdminRoute) {
+          navigate(getRedirectPath(), { replace: true });
+        } else {
+          dispatch(openLoginModal());
+        }
+      } else if (isAdminRoute && !current_user.isAdmin) {
         navigate(getRedirectPath(), { replace: true });
-      } else if (isAdminRoute && current_user && !current_user.isAdmin) {
-        navigate(getRedirectPath(), { replace: true });
+      } else {
+        setIsLoading(false);
       }
     }
   }, [current_user, isTokenRefreshed]);
@@ -58,7 +69,9 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
   }
 
   if (isTokenRefreshed) {
-    if (current_user && (!isAdminRoute || current_user.isAdmin)) {
+    if (Object.keys(current_user).length > 0 && !isAdminRoute) {
+      return children;
+    } else if (isAdminRoute && current_user.isAdmin) {
       return children;
     } else {
       navigate(getRedirectPath(), { replace: true });

@@ -65,7 +65,7 @@ const PaymentStep = () => {
     loading_tax_rates,
     order_note,
     tax_rate,
-    show_message,
+    activePromoCodeIndicator,
     production_note,
   } = placeOrder;
 
@@ -80,7 +80,7 @@ const PaymentStep = () => {
         activatePromo({
           cartItems,
           tax_rate,
-          show_message,
+          activePromoCodeIndicator,
           current_user,
           validPromo: request.payload.promo,
         })
@@ -270,7 +270,7 @@ const PaymentStep = () => {
                 >
                   {promo_code_validations}
                 </label>
-                {show_message && (
+                {activePromoCodeIndicator && (
                   <div className="promo_code mv-1rem">
                     <GLButton
                       variant="icon"
@@ -283,7 +283,7 @@ const PaymentStep = () => {
                     >
                       <i className="fas fa-times mr-5px" />
                     </GLButton>
-                    {show_message}
+                    {activePromoCodeIndicator}
                   </div>
                 )}
               </div>

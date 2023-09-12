@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as API from "../../../api";
@@ -49,8 +49,6 @@ const GLLoginModal = () => {
 
   useEffect(() => {
     if (loginSuccess) {
-      // const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
-      // navigate(redirect);
       dispatch(setLoginSuccess(false));
     }
   }, [current_user.isAdmin, dispatch, loginSuccess, navigate]);
@@ -107,8 +105,18 @@ const GLLoginModal = () => {
     dispatch(setShowRegister(!showRegister));
   };
 
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const onClose = () => {
+    setFadeOut(true);
+    setTimeout(() => {
+      dispatch(closeLoginModal());
+      setFadeOut(false); // reset for the next time modal opens
+    }, 500); // match the duration of your fade-out animation
+  };
+
   return (
-    <Modal onClose={() => dispatch(closeLoginModal())} open={loginModal}>
+    <Modal onClose={onClose} open={loginModal} className={fadeOut ? "fade-out-login-modal" : "fade-in-login-modal"}>
       <div
         style={{
           display: "flex",
@@ -120,7 +128,7 @@ const GLLoginModal = () => {
         }}
         onClick={e => {
           if (e.target === e.currentTarget) {
-            dispatch(closeLoginModal());
+            onClose();
           }
         }}
       >

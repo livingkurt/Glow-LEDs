@@ -30,7 +30,7 @@ const initialState = {
   tax_rate: 0,
   taxPrice: 0,
   totalPrice: 0,
-  show_message: "",
+  activePromoCodeIndicator: "",
   user: {},
   free_shipping_message: "------",
   loading: false,
@@ -278,28 +278,23 @@ const placeOrder = createSlice({
           ? items_price + shippingPrice + state.taxPrice
           : items_price + shippingPrice + state.taxPrice + parseInt(tip);
       state.free_shipping_message = "------";
-      state.show_message = "";
+      state.activePromoCodeIndicator = "";
       if (shipping) {
         state.shippingPrice = previousShippingPrice;
       }
       state.show_promo_code_input_box = true;
     },
     activatePromo: (state, { payload }) => {
-      const { tax_rate, show_message, validPromo, cartItems, current_user } = payload;
-      let promo_excluded = 0;
+      const { tax_rate, activePromoCodeIndicator, validPromo, cartItems, current_user } = payload;
 
       const items_price = calculateNewItemsPrice({ cartItems, validPromo, isWholesaler: current_user?.isWholesaler });
 
       if (validPromo) {
-        if (show_message) {
+        if (activePromoCodeIndicator) {
           state.promo_code_validations = "Can only use one promo code at a time";
         } else {
           if (validPromo.percentage_off) {
-            if (items_price === promo_excluded) {
-              state.promo_code_validations = "All Items Excluded from Promo";
-              return;
-            }
-            applyPercentageOff(state, items_price, promo_excluded, validPromo, tax_rate);
+            applyPercentageOff(state, items_price, validPromo, tax_rate);
           } else if (validPromo.amount_off) {
             applyAmountOff(state, items_price, validPromo, tax_rate);
           }
@@ -360,7 +355,7 @@ const placeOrder = createSlice({
       const { promo_code_storage } = payload;
       state.promo_code = promo_code_storage.toLowerCase();
       state.show_promo_code = true;
-      state.show_message = promo_code_storage;
+      state.activePromoCodeIndicator = promo_code_storage;
       state.show_promo_code_input_box = false;
     },
     finalizeShippingRate: state => {

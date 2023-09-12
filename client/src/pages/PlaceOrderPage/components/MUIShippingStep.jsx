@@ -97,7 +97,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     show_shipping_complete,
     promo_code,
     shippingPrice,
-    show_message,
+    activePromoCodeIndicator,
     taxPrice,
     totalPrice,
     tip,
@@ -191,7 +191,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
       tip,
       order_note,
       production_note,
-      promo_code: show_message && promo_code,
+      promo_code: activePromoCodeIndicator && promo_code,
     };
 
     dispatch(API.shippingRates({ order }));
