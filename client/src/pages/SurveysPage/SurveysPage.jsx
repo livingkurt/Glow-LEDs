@@ -1,95 +1,114 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { Loading, Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
-import { format_date } from "../../utils/helper_functions";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import { EditSurveyModal } from "./components";
 import * as API from "../../api";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { Button, Rating } from "@mui/material";
+import { format_date } from "../../utils/helper_functions";
+import { open_create_survey_modal, open_edit_survey_modal } from "../../slices/surveySlice";
+import { determineSurveyColors } from "./surveysPageHelpers";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { ContentCopy } from "@mui/icons-material";
+import EmailIcon from "@mui/icons-material/Email";
+import { useNavigate } from "react-router-dom";
 
 const SurveysPage = () => {
-  const params = useParams();
-  const [search, set_search] = useState("");
-  const [sort, setSortOrder] = useState("");
-
-  const [loading_surveys, set_loading_surveys] = useState(false);
-  const category = params.category ? params.category : "";
-  const surveyPage = useSelector(state => state.surveys);
-  const { loading, surveys, message, error, success } = surveyPage;
-
+  const surveyPage = useSelector(state => state.surveys.surveyPage);
+  const { loading, remoteVersionRequirement } = surveyPage;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listSurveys({}));
-      dispatch(API.listAffiliates({ active: true }));
-      dispatch(API.listTeams({}));
-      dispatch(API.listOrders({}));
-    }
-    return () => (clean = false);
-  }, [success, dispatch]);
-  const handleListItems = e => {
-    e.preventDefault();
-    dispatch(API.listSurveys({ category, search, sort }));
-  };
+  const column_defs = useMemo(
+    () => [
+      { title: "createdAt", display: survey => survey.createdAt && format_date(survey.createdAt) },
+      {
+        title: "Rating",
+        display: survey => <Rating name="read-only" value={survey.rating} readOnly />,
+      },
+      {
+        title: "Is Survey?",
+        display: survey => (survey.is_survey ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+      },
+      {
+        title: "Answer 1",
+        display: survey => (survey.is_survey ? survey.question_1 : survey.answer_1),
+      },
+      {
+        title: "Answer 2",
+        display: survey => (survey.is_survey ? survey.question_2 : survey.answer_2),
+      },
+      {
+        title: "Answer 3",
+        display: survey => (survey.is_survey ? survey.question_3 : survey.answer_3),
+      },
+      {
+        title: "Answer 4",
+        display: survey => (survey.is_survey ? survey.question_4 : survey.answer_4),
+      },
+      {
+        title: "Answer 5",
+        display: survey => (survey.is_survey ? survey.question_5 : survey.answer_5),
+      },
 
-  const sortHandler = e => {
-    setSortOrder(e.target.value);
-    dispatch(API.listSurveys({ category, search, sort: e.target.value }));
-  };
+      {
+        title: "Actions",
+        display: survey => (
+          <div className="jc-b">
+            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
+              <EditIcon color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Edit"
+              onClick={() =>
+                dispatch(
+                  API.saveSurvey({
+                    ...survey,
+                    _id: null,
+                    home_page: { ...survey.home_page, h1: `${survey.home_page.h1} Copy` },
+                    createdAt: null,
+                    updatedAt: null,
+                  })
+                )
+              }
+            >
+              <ContentCopy color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Edit"
+              onClick={() => {
+                dispatch(
+                  API.saveEmail({
+                    h1: survey.home_page.h1,
+                    images: survey.home_page.images,
+                    h2: survey.home_page.h2,
+                    p: survey.home_page.p,
+                    button: survey.home_page.button,
+                    link: survey.home_page.link,
+                  })
+                );
+                navigate("/secure/glow/emails");
+              }}
+            >
+              <EmailIcon color="white" />
+            </IconButton>
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listSurveys({ category, search, sort }));
-    }
-    return () => (clean = false);
-  }, [dispatch, category, search, sort]);
-  const deleteHandler = survey => {
-    dispatch(API.deleteSurvey(survey._id));
-  };
+            <IconButton onClick={() => dispatch(API.deleteSurvey(survey._id))} aria-label="Delete">
+              <DeleteIcon color="white" />
+            </IconButton>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
 
-  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
-
-  const colors = [
-    { name: "Survey", color: "#3e4c6d" },
-    { name: "Answers", color: "#6f3c3c" },
-    { name: "1 Rating", color: "#8a2e2e" },
-    { name: "2 Rating", color: "#8a502e" },
-    { name: "3 Rating", color: "#898a2e" },
-    { name: "4 Rating", color: "#2e8a42" },
-    { name: "5 Rating", color: "#2e578a" },
-  ];
-
-  const determine_color = survey => {
-    let result = "";
-    if (survey.is_survey) {
-      result = colors[0].color;
-    }
-    if (!survey.is_survey) {
-      result = colors[1].color;
-    }
-    if (survey.rating === 1) {
-      result = colors[2].color;
-    }
-    if (survey.rating === 2) {
-      result = colors[3].color;
-    }
-    if (survey.rating === 3) {
-      result = colors[4].color;
-    }
-    if (survey.rating === 4) {
-      result = colors[5].color;
-    }
-    if (survey.rating === 5) {
-      result = colors[6].color;
-    }
-
-    return result;
-  };
+  const remoteApi = useCallback(options => API.getSurveys(options), []);
 
   return (
     <div className="main_container p-20px">
@@ -97,97 +116,23 @@ const SurveysPage = () => {
         <title>Admin Surveys | Glow LEDs</title>
       </Helmet>
 
-      <Loading loading={loading_surveys} error={error} />
-      <div className="wrap jc-b">
-        <div className="wrap jc-b">
-          {colors.map((color, index) => {
-            return (
-              <div className="wrap jc-b  m-1rem" key={index}>
-                <label style={{ marginRight: "1rem" }}>{color.name}</label>
-                <div
-                  style={{
-                    backgroundColor: color.color,
-                    height: "20px",
-                    width: "60px",
-                    borderRadius: "5px",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <Link to="/secure/glow/editsurvey">
-          <GLButton variant="primary">Create Survey</GLButton>
-        </Link>
-      </div>
-      <div className="jc-c">
-        <h1 style={{ textAlign: "center" }}>Surveys</h1>
-      </div>
-      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
-      </div>
-      <Loading loading={loading} error={error}>
-        {surveys && (
-          <div className="survey-list responsive_table">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Date Paid</th>
-                  <th>Is Survey</th>
-                  <th>Rating</th>
-                  <th>Q/A 1</th>
-                  <th>Q/A 2</th>
-                  <th>Q/A 3</th>
-                  <th>Q/A 4</th>
-                  <th>Q/A 5</th>
-                  <th>Active</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {surveys.map((survey, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      backgroundColor: determine_color(survey),
-                      fontSize: "16px",
-                    }}
-                  >
-                    <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {survey.createdAt && format_date(survey.createdAt)}
-                    </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
-                    <td className="p-10px">{survey.rating}</td>
-                    <td className="p-10px">{survey.is_survey ? survey.question_1 : survey.answer_1}</td>
-                    <td className="p-10px">{survey.is_survey ? survey.question_2 : survey.answer_2}</td>
-                    <td className="p-10px">{survey.is_survey ? survey.question_3 : survey.answer_3}</td>
-                    <td className="p-10px">{survey.is_survey ? survey.question_4 : survey.answer_4}</td>
-                    <td className="p-10px">{survey.is_survey ? survey.question_5 : survey.answer_5}</td>
-                    <td className="p-10px">
-                      {survey.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
-                    <td className="p-10px">
-                      <div className="jc-b">
-                        <Link to={"/secure/glow/editsurvey/" + survey._id}>
-                          <GLButton variant="icon" aria-label="Edit">
-                            <i className="fas fa-edit" />
-                          </GLButton>
-                        </Link>
-                        <GLButton variant="icon" onClick={() => deleteHandler(survey)} aria-label="Delete">
-                          <i className="fas fa-trash-alt" />
-                        </GLButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Loading>
+      <GLTableV2
+        remoteApi={remoteApi}
+        remoteVersionRequirement={remoteVersionRequirement}
+        determine_color={determineSurveyColors}
+        tableName={"Surveys"}
+        namespaceScope="surveys"
+        namespace="surveyTable"
+        columnDefs={column_defs}
+        loading={loading}
+        enableRowSelect={true}
+        titleActions={
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_survey_modal())}>
+            Create Survey
+          </Button>
+        }
+      />
+      <EditSurveyModal />
     </div>
   );
 };

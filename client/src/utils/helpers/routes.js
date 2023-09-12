@@ -69,7 +69,6 @@ const adminRoutes = [
   { path: "/secure/glow/editpaycheck/:id?", element: "EditPaycheckPage" },
   { path: "/secure/glow/editsetting/:id?", element: "EditSettingPage" },
   { path: "/secure/glow/editcategory/:id?", element: "EditCategoryPage" },
-  { path: "/secure/glow/editsurvey/:id?", element: "EditSurveyPage" },
   { path: "/secure/glow/editparcel/:id?", element: "EditParcelPage" },
   { path: "/secure/glow/editpalette/:id?", element: "EditPalettePage" },
   { path: "/secure/glow/editfilament/:id?", element: "EditFilamentPage" },

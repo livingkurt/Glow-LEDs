@@ -1,7 +1,31 @@
 import { determine_filter } from "../../util";
+import { getFilteredData } from "../api_helpers";
 import { survey_db } from "../surveys";
+import { normalizeSurveyFilters, normalizeSurveySearch } from "./survey_helpers";
 
 export default {
+  get_table_surveys_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
+    try {
+      const sort_options = ["createdAt", "active", "home_page", "banner"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeFilters: normalizeSurveyFilters,
+        normalizeSearch: normalizeSurveySearch,
+      });
+      const surveys = await survey_db.findAll_surveys_db(filter, sort, limit, page);
+      const count = await survey_db.count_surveys_db(filter);
+      return {
+        data: surveys,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error: any) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_surveys_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
       const page: string = query.page ? query.page : "1";

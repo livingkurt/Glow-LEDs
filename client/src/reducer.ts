@@ -159,7 +159,15 @@ const reducers = {
       },
     }),
   }),
-  surveys: surveySlice,
+  surveys: combineReducers({
+    surveyPage: surveySlice,
+    surveyTable: glTableReducer("surveyTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.survey_name;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      },
+    }),
+  }),
   teams: teamSlice,
   users: combineReducers({
     userPage: userSlice,

@@ -4,10 +4,12 @@ export default {
   findAll_surveys_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Survey.find(filter)
-        .sort(sort)
         .populate("user")
+        .populate("order")
+        .populate("survey")
+        .sort(sort)
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error: any) {
       if (error instanceof Error) {
@@ -17,7 +19,7 @@ export default {
   },
   findById_surveys_db: async (id: string) => {
     try {
-      return await Survey.findOne({ _id: id }).populate("user");
+      return await Survey.findOne({ _id: id }).populate("user").populate("order").populate("survey");
     } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);

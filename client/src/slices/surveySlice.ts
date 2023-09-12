@@ -3,36 +3,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const survey = {
+  id: "",
+  question_1: "",
+  question_2: "",
+  question_3: "",
+  question_4: "",
+  question_5: "",
+  answer_1: "",
+  answer_2: "",
+  answer_3: "",
+  answer_4: "",
+  answer_5: "",
+  question_answer: [{ question: "", answer: "" }],
+  user: "",
+  survey_questions: "",
+  order: "",
+  is_survey: "",
+  active: "",
+  rating: null,
+};
+
 const surveyPage = createSlice({
   name: "surveyPage",
   initialState: {
     loading: false,
     surveys: [],
-    survey: {
-      id: "",
-      question_1: "",
-      question_2: "",
-      question_3: "",
-      question_4: "",
-      question_5: "",
-      answer_1: "",
-      answer_2: "",
-      answer_3: "",
-      answer_4: "",
-      answer_5: "",
-      user: "",
-      survey_questions: "",
-      order: "",
-      is_survey: "",
-      active: "",
-      rating: null,
-    },
+    survey: survey,
+    remoteVersionRequirement: 0,
+    edit_survey_modal: false,
+    upload_survey_modal: false,
+    survey_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_survey: (state, { payload }) => {
@@ -45,17 +48,30 @@ const surveyPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_survey_modal: (state, { payload }) => {
+      state.edit_survey_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_survey_modal: (state, { payload }) => {
+      state.edit_survey_modal = true;
+      state.survey = survey;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_survey_modal: (state, { payload }) => {
+      state.edit_survey_modal = true;
+      state.survey = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_survey_modal: (state, { payload }) => {
+      state.edit_survey_modal = false;
+      state.upload_survey_modal = false;
+      state.survey_modal = false;
+      state.survey = survey;
+    },
+    open_survey_modal: (state, { payload }) => {
+      state.survey_modal = true;
+      state.survey = payload;
+    },
+    survey_uploaded: (state, { payload }) => {
+      state.upload_survey_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -66,7 +82,7 @@ const surveyPage = createSlice({
     [API.listSurveys.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.surveys = payload.surveys;
-      state.totalPages = payload.totalPages;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Surveys Found";
     },
@@ -81,6 +97,8 @@ const surveyPage = createSlice({
     [API.saveSurvey.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Survey Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_survey_modal = false;
     },
     [API.saveSurvey.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -105,8 +123,9 @@ const surveyPage = createSlice({
     },
     [API.deleteSurvey.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.survey = payload.survey;
+      state.survey = survey;
       state.message = "Survey Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteSurvey.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
@@ -116,5 +135,14 @@ const surveyPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_survey } = surveyPage.actions;
+export const {
+  set_loading,
+  set_survey,
+  set_edit_survey_modal,
+  open_create_survey_modal,
+  open_survey_modal,
+  close_survey_modal,
+  open_edit_survey_modal,
+  survey_uploaded,
+} = surveyPage.actions;
 export default surveyPage.reducer;

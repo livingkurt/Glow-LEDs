@@ -1,6 +1,18 @@
 import { survey_services } from "../surveys";
 
 export default {
+  get_table_surveys_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const surveys = await survey_services.get_table_surveys_s(query);
+      if (surveys) {
+        return res.status(200).send(surveys);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error: any) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_surveys_c: async (req: any, res: any) => {
     const { query } = req;
     try {

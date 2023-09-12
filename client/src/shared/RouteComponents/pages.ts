@@ -9,7 +9,7 @@ import { OrdersPage } from "../../pages/OrdersPage";
 import { EditPaycheckPage, PaychecksPage } from "../../pages/PaychecksPage";
 import { EditSettingPage, SettingsPage } from "../../pages/SettingsPage";
 import { CategorysPage, EditCategoryPage } from "../../pages/CategorysPage";
-import { EditSurveyPage, SurveysPage } from "../../pages/SurveysPage";
+import { SurveysPage } from "../../pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "../../pages/PalettesPage";
 import { EditFilamentPage, FilamentsPage } from "../../pages/FilamentsPage";
@@ -109,7 +109,6 @@ export const AdminComponents = {
   EditPaycheckPage,
   EditSettingPage,
   EditCategoryPage,
-  EditSurveyPage,
   EditParcelPage,
   EditPalettePage,
   EditFilamentPage,
