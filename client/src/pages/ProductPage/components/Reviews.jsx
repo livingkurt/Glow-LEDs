@@ -166,11 +166,11 @@ const Review = ({ product, pathname }) => {
           </form>
         ) : (
           <div>
-            Please {/* <Link to={`/account/login?redirect=/collections/all/products/${pathname}`}> */}
+            Please
             <GLButton variant="primary" onClick={() => dispatch(openLoginModal())}>
               Login
             </GLButton>
-            {/* </Link> */} to Write a Review
+            to Write a Review
           </div>
         )}
       </li>

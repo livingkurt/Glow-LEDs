@@ -42,10 +42,7 @@ export const refreshAccessToken = async refreshTokenValue => {
     const decoded = jwt_decode(newAccessToken);
     store.dispatch(set_current_user(decoded));
     return newAccessToken;
-  } catch (error) {
-    // store.dispatch(API.logoutUser(refreshTokenValue));
-    // window.location.href = "/account/login?redirect=" + window.location.pathname;
-  }
+  } catch (error) {}
 };
 
 export function setCurrentUser(accessToken) {

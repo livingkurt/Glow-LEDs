@@ -109,7 +109,7 @@ export default ({ email, order }: any): string => {
 											margin-left:10px; border-spacing: 2px;><a
 												style="font-size:16px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-weight: 800;"
 												target="_blank"
-												href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW
+												href="https://www.glow-leds.com/secure/account/order/${order._id}">VIEW
 												ORDER</a></td>
 
 										<td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>

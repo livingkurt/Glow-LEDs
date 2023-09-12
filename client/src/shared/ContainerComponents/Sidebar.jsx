@@ -24,7 +24,6 @@ const Sidebar = () => {
     dispatch(API.logoutUser(refreshToken));
     closeMenu();
     navigate("/");
-    // navigate("/account/login");
   };
 
   const [first_name, set_first_name] = useState("");

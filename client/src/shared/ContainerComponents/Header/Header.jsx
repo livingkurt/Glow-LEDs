@@ -312,11 +312,9 @@ const Header = () => {
                 </div>
               ) : (
                 <div>
-                  {/* <Link to="/account/login"> */}
                   <GLButton variant="nav" className="title_font" onClick={() => dispatch(openLoginModal())}>
                     Login
                   </GLButton>
-                  {/* </Link> */}
                 </div>
               )}
               {current_user?.isAdmin && (

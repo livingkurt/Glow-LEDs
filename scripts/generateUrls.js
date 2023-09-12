@@ -1,9 +1,5 @@
 const routes = [
   { path: "/", component: "HomePage", exact: true },
-
-  { path: "/account/login", component: "LoginPage" },
-  { path: "/account/verified/:id", component: "VerifiedPage" },
-  { path: "/account/checkemail", component: "CheckEmailPage" },
   { path: "/account/changepassword", component: "ChangePasswordPage" },
   { path: "/account/register", component: "RegisterPage" },
   { path: "/account/passwordreset", component: "PasswordResetPage" },
@@ -16,7 +12,10 @@ const routes = [
 
   { path: "/collections/all/products", component: "ProductsGridPage", exact: true },
   { path: "/collections/all/products/shop_by_chip", component: "ProductsGridByChipPage" },
-  { path: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?", component: "ProductsGridPage" },
+  {
+    path: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?",
+    component: "ProductsGridPage",
+  },
   { path: "/collections/all/products/category/:category/subcategory/:subcategory?", component: "ProductsGridPage" },
   { path: "/collections/all/products/category/:category", component: "ProductsGridPage" },
   { path: "/collections/all/products/:pathname", component: "ProductPage" },
@@ -49,7 +48,7 @@ const routes = [
   { path: "/pages/sitemap", component: "SitemapPage", exact: true },
   { path: "/pages/music", component: "MusicPage", exact: true },
   { path: "/pages/track_your_order", component: "TrackOrderPage", exact: true },
-  { path: "/pages/complete/:type/:id?", component: "CompletePage", exact: true }
+  { path: "/pages/complete/:type/:id?", component: "CompletePage", exact: true },
 ];
 
 const categories = [
@@ -73,7 +72,7 @@ const categories = [
   "mega_diffuser_caps",
   "merch",
   "options",
-  "shipping"
+  "shipping",
 ];
 const subcategories = [
   "",
@@ -121,7 +120,7 @@ const subcategories = [
   "storage",
   "symbol",
   "symbols",
-  "universal"
+  "universal",
 ];
 const collections = [
   "",
@@ -142,7 +141,7 @@ const collections = [
   "space_cadet",
   "spheroid",
   "texture",
-  "wholesale"
+  "wholesale",
 ];
 const pathnames = [
   "1225_batteries",
@@ -244,7 +243,7 @@ const pathnames = [
   "platonic_solids_diffuser_caps",
   "platonic_solids_exo_diffusers",
   "popcorn_diffusers",
-  "popcorn_pyramids_diffusers"
+  "popcorn_pyramids_diffusers",
 ];
 
 let generatedUrls = [];

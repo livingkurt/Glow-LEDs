@@ -57,7 +57,17 @@ const determine_message = (status: string): string | undefined => {
   }
 };
 
-export default ({ order, status, title, tracker }: { order: any; status: string; title: string; tracker: any }): string => {
+export default ({
+  order,
+  status,
+  title,
+  tracker,
+}: {
+  order: any;
+  status: string;
+  title: string;
+  tracker: any;
+}): string => {
   return `<table style="width:100%;border-spacing:0;padding:10px">
   <tr>
     <td style="font-family:helvetica;border:0">
@@ -90,9 +100,9 @@ export default ({ order, status, title, tracker }: { order: any; status: string;
                         <strong>${tracker.carrier} Tracking #:</strong>
                         <a
                       style="color:#333333; padding: 15px 0px;border:none; font-family:helvetica;"
-                      href="${order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}" target="_blank">${
-    order.tracking_number
-  }</a><br />
+                      href="${
+                        order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)
+                      }" target="_blank">${order.tracking_number}</a><br />
                       </td>
                     </tr>
                   </tbody>
@@ -150,7 +160,7 @@ export default ({ order, status, title, tracker }: { order: any; status: string;
                         status === " shipped" ? "#4c4f60" : "#6a6c80"
                       }"; margin-left:10px; border-spacing: 2px;><a
                           style="font-size:16px;text-decoration:none;display:block;color:white;border:none;    padding: 15px 0px;  font-weight: 800;"
-                          href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW
+                          href="https://www.glow-leds.com/secure/account/order/${order._id}">VIEW
                           ORDER</a></td>
 
                       ${
@@ -245,27 +255,47 @@ export default ({ order, status, title, tracker }: { order: any; status: string;
                                                     : ""
                                                 }'>
                                             <img id="expandedImg" alt=${item.name} title=${
-                                                  item.name
-                                                } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                                  item.name
-                                                    ? item.name.split("-")[1]
-                                                      ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                      : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                    : ""
-                                                } ${item.name ? (item.name.split("-")[1] ? "width: 70px;" : "width: 35px;") : ""} ${
-                                                  item.name ? (item.name.split("-")[1] ? "height: 35px;" : "height: 70px;") : ""
-                                                }' src=${item.display_image} />
+                                              item.name
+                                            } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                : ""
+                                            } ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "width: 70px;"
+                                                  : "width: 35px;"
+                                                : ""
+                                            } ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "height: 35px;"
+                                                  : "height: 70px;"
+                                                : ""
+                                            }' src=${item.display_image} />
                                             <img id="expandedSecondaryImg" alt=${item.name} title=${
-                                                  item.name
-                                                } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                                  item.name
-                                                    ? item.name.split("-")[1]
-                                                      ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                      : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                    : ""
-                                                } ${item.name ? (item.name.split("-")[1] ? "width: 70px;" : "width: 35px;") : ""} ${
-                                                  item.name ? (item.name.split("-")[1] ? "height: 35px;" : "height: 70px;") : ""
-                                                }' src=${item.secondary_image} />
+                                              item.name
+                                            } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                : ""
+                                            } ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "width: 70px;"
+                                                  : "width: 35px;"
+                                                : ""
+                                            } ${
+                                              item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "height: 35px;"
+                                                  : "height: 70px;"
+                                                : ""
+                                            }' src=${item.secondary_image} />
                                           </div>`
                                               : `
                                           <div />`
@@ -314,7 +344,9 @@ export default ({ order, status, title, tracker }: { order: any; status: string;
 
                         <td style="font-family:helvetica;width:50%;">
                           <p style="">
-                          <p style="color:white;line-height:150%;font-size:16px;margin:0;">${order.shipping.first_name}${" "}
+                          <p style="color:white;line-height:150%;font-size:16px;margin:0;">${
+                            order.shipping.first_name
+                          }${" "}
                             ${order.shipping.last_name}
                             <br>
                             ${order.shipping.address_1}${" "}

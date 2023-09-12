@@ -1,7 +1,9 @@
 import config from "../../config";
 
 export default (header_footer_color: string): string => {
-  return `<table style="width:100%;border-spacing:0;background-color:${header_footer_color ? header_footer_color : `#333333`}">
+  return `<table style="width:100%;border-spacing:0;background-color:${
+    header_footer_color ? header_footer_color : `#333333`
+  }">
   <tbody>
     <tr>
       <td style="font-family:helvetica;padding-bottom:35px 0">
@@ -42,9 +44,9 @@ export default (header_footer_color: string): string => {
               <td style="font-family:helvetica;color:white">
                 <p style="text-align:center;font-size:14px;color:white">Want to change how you receive these
                   emails? <br /> You can <a
-                    href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile" target="_blank"
+                    href="https://www.glow-leds.com/secure/account/editprofile" target="_blank"
                     rel="noopener noreferrer" style="text-decoration:underline;color:white">update your preferences</a>
-                  or <a href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
+                  or <a href="https://www.glow-leds.com/secure/account/editprofile"
                     target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:white">unsubscribe
                   </a>from this list.</p>
               </td>
