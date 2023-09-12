@@ -13,6 +13,10 @@ export const contentFormFields = ({ content }: any) => {
         //   album: `${content?.home_page?.h1} Images`,
         //   getOptionLabel: (option: any) => option.link,
         // },
+
+        h2: { type: "text", label: "H2" },
+        p: { type: "text_multiline", label: "P" },
+
         images_object: {
           type: "image_upload",
           label: "Images",
@@ -20,6 +24,18 @@ export const contentFormFields = ({ content }: any) => {
           labelProp: "images_object",
           album: `${content?.home_page?.h1} Images`,
         },
+        banner_image_object: {
+          type: "image_upload",
+          label: "Rectangle Image",
+          // options: images,
+          labelProp: "banner_image_object",
+          album: `${content?.home_page?.h1} Images`,
+        },
+        video: { type: "text", label: "Video" },
+        show_image: { type: "checkbox", label: "Show Image", default: true },
+        show_video: { type: "checkbox", label: "Show Video", default: false },
+        button: { type: "text", label: "Button" },
+        link: { type: "text", label: "Link" },
         slideshow: {
           type: "array",
           title: "Slideshow",
@@ -39,20 +55,6 @@ export const contentFormFields = ({ content }: any) => {
             },
           },
         },
-        video: { type: "text", label: "Video" },
-        banner_image_object: {
-          type: "image_upload",
-          label: "Rectangle Image",
-          // options: images,
-          labelProp: "banner_image_object",
-          album: `${content?.home_page?.h1} Images`,
-        },
-        show_image: { type: "checkbox", label: "Show Image", default: true },
-        show_video: { type: "checkbox", label: "Show Video", default: false },
-        h2: { type: "text", label: "H2" },
-        p: { type: "text", label: "P" },
-        button: { type: "text", label: "Button" },
-        link: { type: "text", label: "Link" },
       },
     },
     banner: {
