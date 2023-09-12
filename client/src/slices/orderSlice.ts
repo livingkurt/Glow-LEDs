@@ -9,7 +9,7 @@ const orderPage = createSlice({
   initialState: {
     loading: false,
     loading_order: false,
-    loading_payment: false,
+    loadingPayment: false,
     orders: [],
     order: emptyOrder,
     message: "",
@@ -38,8 +38,8 @@ const orderPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_loading_payment: (state, { payload }) => {
-      state.loading_payment = payload;
+    setLoadingPayment: (state, { payload }) => {
+      state.loadingPayment = payload;
     },
     set_success: (state, { payload }) => {
       state.success = payload;
@@ -125,17 +125,17 @@ const orderPage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.createPayOrder.pending as any]: (state: any, { payload }: any) => {
-      state.loading_payment = true;
+      state.loadingPayment = true;
       state.hideCheckoutButton = true;
     },
     [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading_payment = false;
+      state.loadingPayment = false;
       state.success = true;
       state.order = payload.order;
       state.message = "Order Created and Paid";
     },
     [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading_payment = false;
+      state.loadingPayment = false;
       // state.error = payload ? payload.error : error.message;
       // state.message = payload ? payload.message : "An error occurred";
     },
@@ -285,7 +285,7 @@ const orderPage = createSlice({
 
 export const {
   set_loading,
-  set_loading_payment,
+  setLoadingPayment,
   set_order,
   clear_order_state,
   set_edit_order_modal,

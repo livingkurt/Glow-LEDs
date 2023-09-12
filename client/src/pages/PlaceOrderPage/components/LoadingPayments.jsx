@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 const LoadingPayment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);
-  const { loading_payment } = placeOrder;
+  const { loadingPayment } = placeOrder;
 
   return (
     <div>
-      {loading_payment ? (
+      {loadingPayment ? (
         <div className="jc-c column">
           <img
             src={config.PUBLIC_URL + "/loading.gif"}

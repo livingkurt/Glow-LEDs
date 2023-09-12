@@ -4,7 +4,7 @@ import { isMobile } from "react-device-detect";
 import { GLButton } from "../../GlowLEDsComponents";
 import { useDispatch } from "react-redux";
 
-const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
+const StripeForm = ({ pay_order, date_1, date_2, setLoadingPayment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [remove_button, set_remove_button] = useState(false);
@@ -13,7 +13,7 @@ const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
   const handleSubmit = async event => {
     event.preventDefault();
     isMobile && window.scrollTo({ top: 0, behavior: "smooth" });
-    set_loading_payment(true);
+    setLoadingPayment(true);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -21,7 +21,7 @@ const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
     });
 
     if (error) {
-      set_loading_payment(false);
+      setLoadingPayment(false);
       set_payment_validations(error.message);
 
       return;

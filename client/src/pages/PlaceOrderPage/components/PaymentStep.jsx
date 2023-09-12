@@ -14,7 +14,7 @@ import {
   showHideSteps,
   removePromo,
   activatePromo,
-  set_loading_payment,
+  setLoadingPayment,
   set_user,
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
@@ -123,7 +123,7 @@ const PaymentStep = () => {
       })
     );
 
-    dispatch(set_loading_payment(false));
+    dispatch(setLoadingPayment(false));
     dispatch(API.emptyCart(my_cart._id));
     dispatch(API.updateStock({ cartItems }));
     if (promo_code) {
@@ -135,7 +135,7 @@ const PaymentStep = () => {
   };
 
   const create_no_payment_order = async ({ isPaid }) => {
-    dispatch(set_loading_payment(true));
+    dispatch(setLoadingPayment(true));
     dispatch(
       API.createNoPayOrder({
         orderItems: cartItems,
@@ -186,7 +186,7 @@ const PaymentStep = () => {
       })
     );
 
-    dispatch(set_loading_payment(false));
+    dispatch(setLoadingPayment(false));
     dispatch(API.emptyCart(my_cart._id));
     dispatch(API.updateStock({ cartItems }));
     if (promo_code) {

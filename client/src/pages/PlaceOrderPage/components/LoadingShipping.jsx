@@ -4,7 +4,7 @@ import config from "../../../config";
 
 const LoadingShipment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);
-  const { loading_shipping } = placeOrder;
+  const { loadingShipping } = placeOrder;
 
   const loading_message = () => {
     setTimeout(() => {
@@ -14,7 +14,7 @@ const LoadingShipment = ({ children }) => {
 
   return (
     <div>
-      {loading_shipping ? (
+      {loadingShipping ? (
         <div className="jc-c column">
           <img
             src={config.PUBLIC_URL + "/loading.gif"}

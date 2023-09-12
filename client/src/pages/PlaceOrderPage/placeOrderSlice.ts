@@ -25,7 +25,7 @@ const initialState = {
   shippingPrice: 0,
   previousShippingPrice: 0,
   promo_code: "",
-  loading_payment: false,
+  loadingPayment: false,
   itemsPrice: 0,
   tax_rate: 0,
   taxPrice: 0,
@@ -44,7 +44,7 @@ const initialState = {
   loading_checkboxes: true,
   order_note: "",
   production_note: "",
-  loading_shipping: false,
+  loadingShipping: false,
   loading_tax_rates: false,
   show_shipping_complete: false,
   promo_code_validations: "",
@@ -131,8 +131,8 @@ const placeOrder = createSlice({
     set_promo_code: (state, { payload }) => {
       state.promo_code = payload;
     },
-    set_loading_payment: (state, { payload }) => {
-      state.loading_payment = payload;
+    setLoadingPayment: (state, { payload }) => {
+      state.loadingPayment = payload;
     },
     setItemsPrice: (state, { payload }) => {
       state.itemsPrice = payload;
@@ -149,17 +149,13 @@ const placeOrder = createSlice({
       state.user = payload;
     },
 
-    set_loading: (state, { payload }) => {
-      state.loading = payload;
-    },
-
     set_tip: (state, { payload }) => {
       state.tip = payload;
     },
 
     set_error: (state, { payload }) => {
       state.error = payload;
-      state.loading_payment = false;
+      state.loadingPayment = false;
     },
 
     set_paid: (state, { payload }) => {
@@ -172,8 +168,8 @@ const placeOrder = createSlice({
     set_production_note: (state, { payload }) => {
       state.production_note = payload;
     },
-    set_loading_shipping: (state, { payload }) => {
-      state.loading_shipping = payload;
+    setLoadingShipping: (state, { payload }) => {
+      state.loadingShipping = payload;
     },
 
     set_promo_code_validations: (state, { payload }) => {
@@ -326,22 +322,20 @@ const placeOrder = createSlice({
       state.shipping_rate = payload;
     },
     setFreeShipping: (state, { payload }) => {
-      state.loading = false;
       state.hide_pay_button = false;
       state.shippingPrice = 0;
       state.free_shipping_message = "Free";
-      state.loading_shipping = false;
+      state.loadingShipping = false;
       state.show_shipping_complete = true;
     },
     chooseShippingRateBasic: (state, { payload }) => {
       const { rate, freeShipping, shipping } = payload;
 
       if (freeShipping) {
-        state.loading = false;
         state.hide_pay_button = false;
         state.shippingPrice = 0;
         state.free_shipping_message = "Free";
-        state.loading_shipping = false;
+        state.loadingShipping = false;
         state.show_shipping_complete = true;
       } else {
         state.shippingPrice = parseFloat(shipping.international ? rate.rate : rate.retail_rate);
@@ -367,27 +361,27 @@ const placeOrder = createSlice({
     },
     setPaymentValidations: (state, { payload }) => {
       state.paymentValidations = payload;
-      state.loading_payment = false;
+      state.loadingPayment = false;
     },
     clearValidations: (state, { payload }) => {
       state.paymentValidations = "";
-      state.loading_payment = false;
+      state.loadingPayment = false;
       state.error = null;
       state.hideCheckoutButton = false;
     },
   },
   extraReducers: {
     [API.shippingRates.pending as any]: (state: any, { payload }: any) => {
-      state.loading_shipping = true;
+      state.loadingShipping = true;
     },
     [API.shippingRates.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading_shipping = false;
+      state.loadingShipping = false;
       state.shipping_rates = payload.shipment;
       state.shipment_id = payload.shipment.id;
       state.parcel = payload.parcel._id;
     },
     [API.shippingRates.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading_shipping = false;
+      state.loadingShipping = false;
       state.error_shipping = payload ? payload.error : error.message;
       state.error_happened = true;
     },
@@ -416,8 +410,7 @@ const placeOrder = createSlice({
       return initialState;
     },
     [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading = false;
-      state.loading_payment = false;
+      state.loadingPayment = false;
       state.paymentValidations = payload.message;
     },
     [API.validatePromoCode.fulfilled as any]: (state: any, { payload }: any) => {
@@ -438,18 +431,17 @@ export const {
   setEmailValidations,
   setPasswordValidations,
   set_promo_code,
-  set_loading_payment,
+  setLoadingPayment,
   setItemsPrice,
   setTaxPrice,
   setTotalPrice,
   set_user,
-  set_loading,
   set_tip,
   set_error,
   set_paid,
   set_order_note,
   set_production_note,
-  set_loading_shipping,
+  setLoadingShipping,
   set_promo_code_validations,
   set_email,
   setValue,

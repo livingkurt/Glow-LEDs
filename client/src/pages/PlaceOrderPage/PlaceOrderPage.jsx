@@ -13,7 +13,7 @@ import { setItemsPrice, setTotalPrice, set_error } from "./placeOrderSlice";
 
 import * as API from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
-import { set_loading_payment } from "../../slices/orderSlice";
+import { setLoadingPayment } from "../../slices/orderSlice";
 
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -26,7 +26,7 @@ const PlaceOrderPage = () => {
   const { order, error: error_order, success_no_pay_order, success, error_pay } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user, loading: user_loading, success: user_success } = userPage;
+  const { current_user, success: user_success } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
   const { show_payment, shipping_completed, shippingPrice, promo_code, itemsPrice, taxPrice, totalPrice, tip } =
@@ -76,7 +76,7 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (error_order) {
-        dispatch(set_loading_payment(false));
+        dispatch(setLoadingPayment(false));
         dispatch(set_error(error_order));
       }
     }
@@ -88,7 +88,7 @@ const PlaceOrderPage = () => {
     if (clean) {
       if (success_no_pay_order && order && totalPrice === 0) {
         setTimeout(() => {
-          dispatch(set_loading_payment(false));
+          dispatch(setLoadingPayment(false));
           dispatch(API.emptyCart(my_cart._id));
           if (promo_code) {
             dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
@@ -109,7 +109,7 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (success && order?.hasOwnProperty("_id")) {
-        dispatch(set_loading_payment(false));
+        dispatch(setLoadingPayment(false));
         dispatch(API.emptyCart(my_cart._id));
         if (promo_code) {
           dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
@@ -127,7 +127,7 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (error_pay) {
-        dispatch(set_loading_payment(false));
+        dispatch(setLoadingPayment(false));
         dispatch(set_error(error_pay));
       }
     }
@@ -180,7 +180,6 @@ const PlaceOrderPage = () => {
       <CheckoutSteps success={success} show_payment={show_payment} shipping_completed={shipping_completed} />
       <LoadingPayments />
       <LoadingShipping />
-      <Loading loading={user_loading} />
       <div className="placeorder">
         <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
           <div className="placeorder-info">

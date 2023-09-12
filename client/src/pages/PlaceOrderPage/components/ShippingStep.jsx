@@ -20,7 +20,7 @@ import {
   set_shipping_completed,
   showHideSteps,
   setShippingValidation,
-  set_loading_shipping,
+  setLoadingShipping,
   setFreeShipping,
   setTaxPrice,
   setModalText,
@@ -48,7 +48,7 @@ const ShippingStep = () => {
     show_payment,
     shipping_completed,
     itemsPrice,
-    loading_shipping,
+    loadingShipping,
     show_shipping_complete,
     promo_code,
     shippingPrice,
@@ -131,7 +131,7 @@ const ShippingStep = () => {
 
   const submitShipping = () => {
     if (shipping && Object.keys(shipping).length > 0) {
-      dispatch(set_loading_shipping(true));
+      dispatch(setLoadingShipping(true));
       const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
 
       if (!package_volume) {
@@ -461,7 +461,7 @@ const ShippingStep = () => {
                 </div>
               )}
 
-              <Loading loading={loading_shipping} />
+              <Loading loading={loadingShipping} />
 
               <ShippingChoice />
               {cartItems.some(item => item.processing_time) && (

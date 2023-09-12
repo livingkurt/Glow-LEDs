@@ -6,7 +6,7 @@ import StripeForm from "./StripeForm";
 import { isMobile } from "react-device-detect";
 import * as API from "../../../../api";
 import config from "../../../../config";
-import { setPaymentValidations, set_loading_payment } from "../../placeOrderSlice";
+import { setPaymentValidations, setLoadingPayment } from "../../placeOrderSlice";
 import { showError } from "../../../../slices/snackbarSlice";
 import { errorMessage } from "../../../../helpers/sharedHelpers";
 
@@ -40,7 +40,7 @@ const StripeCheckout = () => {
     event.preventDefault();
     dispatch(setPaymentValidations());
     isMobile && window.scrollTo({ top: 0, behavior: "smooth" });
-    dispatch(set_loading_payment(true));
+    dispatch(setLoadingPayment(true));
     try {
       const stripePayment = await stripe.createPaymentMethod({
         type: "card",

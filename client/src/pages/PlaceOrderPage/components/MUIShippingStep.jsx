@@ -16,14 +16,10 @@ import * as API from "../../../api";
 import config from "../../../config";
 import {
   set_hide_pay_button,
-  set_email,
   set_show_shipping,
   set_shipping_completed,
-  set_loading,
-  set_save_user_shipping,
   showHideSteps,
-  setShippingValidation,
-  set_loading_shipping,
+  setLoadingShipping,
   setFreeShipping,
   setTaxPrice,
   openSaveShippingModal,
@@ -93,7 +89,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
     show_payment,
     shipping_completed,
     itemsPrice,
-    loading_shipping,
+    loadingShipping,
     show_shipping_complete,
     promo_code,
     shippingPrice,
@@ -156,7 +152,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
 
   const submitShipping = () => {
     if (shipping && Object.keys(shipping).length > 0) {
-      dispatch(set_loading_shipping(true));
+      dispatch(setLoadingShipping(true));
       const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
 
       if (!package_volume) {
@@ -364,7 +360,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
               )}
 
               {/* <div className="pos-abs "> */}
-              <Loading loading={loading_shipping} />
+              <Loading loading={loadingShipping} />
               {/* </div> */}
 
               <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
