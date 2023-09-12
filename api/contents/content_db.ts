@@ -1,7 +1,9 @@
+import { consoleLogFn } from "@scout_apm/scout-apm/dist/lib/types";
 import { Content } from "../contents";
 
 export default {
   findAll_contents_db: async (filter: any, sort: any, limit: string, page: string) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Content.find(filter)
         .populate("home_page.image_object")

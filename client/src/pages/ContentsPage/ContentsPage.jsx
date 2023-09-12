@@ -51,7 +51,7 @@ const ContentsPage = () => {
       },
       {
         title: "Banner",
-        display: content => content.banner.label,
+        display: content => content?.banner?.label,
       },
 
       {

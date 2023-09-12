@@ -116,10 +116,10 @@ app.get("/api/bugsnag-test", function (req, res) {
   res.send("Test error sent to Bugsnag");
 });
 
-dns.resolve("sessions.bugsnag.com", function (err: any, addresses: any) {
-  if (err) console.log(err);
-  console.log("addresses:", addresses);
-});
+// dns.resolve("sessions.bugsnag.com", function (err: any, addresses: any) {
+//   if (err) console.log(err);
+//   console.log("addresses:", addresses);
+// });
 
 //   // Start express
 //   app.start();

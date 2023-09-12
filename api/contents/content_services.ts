@@ -1,4 +1,4 @@
-import { content_db } from "../contents";
+import { Content, content_db } from "../contents";
 const axios = require("axios");
 import { parse } from "node-html-parser";
 import { determine_filter } from "../../util";
@@ -28,22 +28,32 @@ export default {
       }
     }
   },
-  findAll_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  findAll_contents_s: async (query: any) => {
+    console.log({ query });
     try {
       const page: string = query.page ? query.page : "1";
       const limit: string = query.limit ? query.limit : "0";
-      const search = query.search
-        ? {
-            p: {
-              $regex: query.search,
-              $options: "i",
-            },
-          }
-        : {};
-      const filter = determine_filter(query, search);
-      const sort = { _id: -1 };
+      // Initialize an empty filter object
+      const filter: any = {};
 
-      const contents = await content_db.findAll_contents_db(filter, sort, limit, page);
+      // Apply the active status if it exists
+      if (query.active !== undefined) {
+        filter.active = query.active === "true" ? true : false;
+      }
+
+      // Add deleted flag as false
+      filter.deleted = false;
+      // let filter = query
+      // filter.
+
+      const contents = await Content.find(filter)
+        .populate("home_page.image_object")
+        .populate("home_page.images_object")
+        .populate("home_page.images_object")
+        .populate("home_page.banner_image_object")
+        .populate("home_page.slideshow.image_object")
+        .sort({ _id: -1 })
+        .limit(3);
       const count = await content_db.count_contents_db(filter);
       if (count !== undefined) {
         return {
