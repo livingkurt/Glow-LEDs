@@ -1595,6 +1595,44 @@ router.route("/create_content_image_records_and_reference_them").put(async (req:
   await Promise.all(contents.map(processContent));
   res.send(contents);
 });
+router.route("/migrate_images_to_images_objects").put(async (req, res) => {
+  try {
+    // Fetch all the content records
+    const allContent: any = await Content.find({ deleted: false });
+
+    for (const content of allContent) {
+      const imagesArray = content.home_page.images || [];
+      const imageObjectsArray = content.home_page.images_object || [];
+
+      for (const imageLink of imagesArray) {
+        // Check if image record already exists
+        let existingImage = await Image.findOne({ link: imageLink });
+
+        // If image record doesn't exist, create a new one
+        if (!existingImage) {
+          existingImage = new Image({ link: imageLink });
+          await existingImage.save();
+        }
+
+        // Add the ObjectId of the image to the images_object array
+        imageObjectsArray.push(existingImage._id);
+      }
+
+      // Update the images_object field in the content record
+      content.home_page.images_object = imageObjectsArray;
+
+      // Optionally, clear the images array if you no longer need it
+      content.home_page.images = [];
+
+      await content.save();
+    }
+
+    res.status(200).json({ message: "Migration successful!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred during migration." });
+  }
+});
 
 router.route("/migrate_slideshow_images").put(async (req: any, res: any) => {
   const contents = await Content.find({ deleted: false });
