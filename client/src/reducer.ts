@@ -37,61 +37,34 @@ import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 const reducers = {
   affiliates: combineReducers({
     affiliatePage: affiliateSlice,
-    affiliateTable: glTableReducer("affiliateTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = `${row.first_name} ${row.last_name}}`;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    affiliateTable: glTableReducer("affiliateTable", {}),
   }),
   carts: combineReducers({
     cartPage: cartSlice,
     cartTable: glTableReducer("cartTable", {
       sorting: [1, "asc"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = `${row.first_name} ${row.last_name}}`;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   categorys: combineReducers({
     categoryPage: categorySlice,
     categoryTable: glTableReducer("categoryTable", {
       sorting: [0, "desc"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   chips: chipSlice,
   contents: combineReducers({
     contentPage: contentSlice,
-    contentTable: glTableReducer("contentTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.content_name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    contentTable: glTableReducer("contentTable", {}),
   }),
   emails: combineReducers({
     emailPage: emailSlice,
     emailTable: glTableReducer("emailTable", {
       sorting: [0, "asc"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.email_name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   expenses: combineReducers({
     expensePage: expenseSlice,
-    expenseTable: glTableReducer("expenseTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.expense_name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    expenseTable: glTableReducer("expenseTable", {}),
   }),
   features: featureSlice,
   filaments: filamentSlice,
@@ -100,31 +73,17 @@ const reducers = {
     orderTable: glTableReducer("orderTable", {
       sorting: [0, "asc"],
       nonTagFilters: ["order_status", "shipping"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = `${row.shipping.first_name} ${row.shipping.last_name} ${row._id}`;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   palettes: paletteSlice,
   parcels: parcelSlice,
   paychecks: combineReducers({
     paycheckPage: paycheckSlice,
-    paycheckTable: glTableReducer("paycheckTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.affiliate;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    paycheckTable: glTableReducer("paycheckTable", {}),
   }),
   images: combineReducers({
     imagePage: imageSlice,
-    imageTable: glTableReducer("imageTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.album;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    imageTable: glTableReducer("imageTable", {}),
   }),
   products: combineReducers({
     productsPage: productsPageSlice,
@@ -132,21 +91,12 @@ const reducers = {
     productTable: glTableReducer("productTable", {
       sorting: [3, "desc"],
       nonTagFilters: ["category", "subcategory", "collection"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   placeOrder: placeOrderSlice,
   promos: combineReducers({
     promoPage: promoSlice,
-    promoTable: glTableReducer("promoTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.promo_code;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    promoTable: glTableReducer("promoTable", {}),
   }),
   settings: settingSlice,
   shipping: combineReducers({
@@ -161,12 +111,7 @@ const reducers = {
   }),
   surveys: combineReducers({
     surveyPage: surveySlice,
-    surveyTable: glTableReducer("surveyTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.survey_name;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    surveyTable: glTableReducer("surveyTable", {}),
   }),
   teams: teamSlice,
   users: combineReducers({
@@ -174,10 +119,6 @@ const reducers = {
     userTable: glTableReducer("userTable", {
       sorting: [0, "asc"],
       nonTagFilters: ["affiliates", "guests", "employees", "admins", "wholesalers"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = `${row.first_name} ${row.last_name}}`;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
   [allRecordsApi.reducerPath]: allRecordsApi.reducer,
@@ -187,21 +128,12 @@ const reducers = {
   dashboards: dashboardSlice,
   wholesalers: combineReducers({
     wholesalerPage: wholesalerSlice,
-    wholesalerTable: glTableReducer("wholesalerTable", {
-      searchBy: (row: any, search: string) => {
-        const searchableText = `${row?.user?.first_name} ${row?.user?.last_name}}`;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
-    }),
+    wholesalerTable: glTableReducer("wholesalerTable", {}),
   }),
   tutorials: combineReducers({
     tutorialPage: tutorialSlice,
     tutorialTable: glTableReducer("tutorialTable", {
       sorting: [3, "desc"],
-      searchBy: (row: any, search: string) => {
-        const searchableText = row.title;
-        return searchableText.toLowerCase().includes(search.toLowerCase());
-      },
     }),
   }),
 };

@@ -108,6 +108,7 @@ export const dimminish_batteries_stock = async (product: any, item: any) => {
 export const normalizeProductFilters = (input: any) => {
   const output: any = {};
   Object.keys(input).forEach(key => {
+    console.log({ input });
     switch (key) {
       case "category":
         for (const category of input.category) {
@@ -120,24 +121,24 @@ export const normalizeProductFilters = (input: any) => {
         }
         break;
       case "hidden":
-        if (!input.hidden.includes(1)) {
+        if (input.hidden && !input.hidden.includes(1)) {
           output["hidden"] = false;
         }
         break;
       case "options":
-        if (!input.options.includes(1)) {
+        if (input.options && !input.options.includes(1)) {
           output["option"] = false;
         }
-        break;
 
+        break;
       default:
         break;
     }
   });
-  if (input.hidden.includes("only_hidden")) {
+  if (input.hidden && input.hidden.includes("only_hidden")) {
     output.hidden = true;
   }
-  if (input.options.includes("only_options")) {
+  if (input.options && input.options.includes("only_options")) {
     output.option = true;
   }
   return output;

@@ -61,11 +61,11 @@ export const fetchTableFilters =
 
 // ----------- Rows -----------
 export const addRows =
-  (namespace, { rows, searchBy, columnDefs, nonTagFilters, filters, availableFilters, isRemote }) =>
+  (namespace, { rows, columnDefs, nonTagFilters, filters, availableFilters, isRemote }) =>
   dispatch => {
     dispatch({
       type: `${namespace}/${ADD_ROWS}`,
-      payload: { rows, searchBy, columnDefs, nonTagFilters, filters, availableFilters, isRemote },
+      payload: { rows, columnDefs, nonTagFilters, filters, availableFilters, isRemote },
     });
   };
 
