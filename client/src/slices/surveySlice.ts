@@ -80,6 +80,7 @@ const surveyPage = createSlice({
       state.surveys = [];
     },
     [API.listSurveys.fulfilled as any]: (state: any, { payload }: any) => {
+      console.log({ payload });
       state.loading = false;
       state.surveys = payload.surveys;
       state.totalPages = payload.total_count;

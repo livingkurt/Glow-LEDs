@@ -1985,6 +1985,7 @@ router.route("/delete_all_expenses").put(async (req: any, res: any) => {
 });
 import { Request, Response, Router } from "express";
 import { Promo } from "./promos";
+import { Survey } from "./surveys";
 
 router.route("/update_status").put(async (req: Request, res: Response) => {
   try {
@@ -2221,6 +2222,48 @@ router.route("/remove_free_shipping").put(async (req, res) => {
   } catch (error: any) {
     console.error("Error:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+router.route("/migrate_surveys").put(async (req, res) => {
+  try {
+    // First find the survey that has is_survey set to true
+    const surveyTemplate: any = await Survey.findOne({ is_survey: true });
+    if (!surveyTemplate) {
+      return res.status(400).json({ success: false, message: "No survey template found" });
+    }
+
+    const surveys: any = await Survey.find({ is_survey: { $ne: true } });
+
+    const bulkOps = surveys.map((survey: any) => {
+      const questionAnswerArray = [];
+
+      for (const qa of surveyTemplate.question_answer) {
+        const correspondingAnswer = survey[`answer_${qa._id}`] || "";
+        questionAnswerArray.push({
+          question: qa.question,
+          answer: correspondingAnswer,
+        });
+      }
+
+      return {
+        updateOne: {
+          filter: { _id: survey._id },
+          update: {
+            $set: { question_answer: questionAnswerArray },
+          },
+        },
+      };
+    });
+
+    Survey.bulkWrite(bulkOps)
+      .then(result => {
+        res.status(200).json({ success: true, message: "Migration successful", result });
+      })
+      .catch(err => {
+        res.status(500).json({ success: false, message: "Migration failed", err });
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong", error });
   }
 });
 

@@ -41,15 +41,26 @@ export const getSurveyFilters = async () => {
   return data;
 };
 
-export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query: any, thunkApi: any) => {
-  try {
-    const { data } = await axios.get(`/api/surveys?${create_query(query)}`);
-    return data;
-  } catch (error: any) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const listSurveys = createAsyncThunk(
+  "surveys/listSurveys",
+  async ({ search, sorting, filters, page, pageSize }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.get(`/api/surveys`, {
+        params: {
+          limit: pageSize,
+          page: page,
+          search: search,
+          sort: sorting,
+          filters: JSON.stringify(filters),
+        },
+      });
+      return data;
+    } catch (error: any) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      return thunkApi.rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: any, thunkApi: any) => {
   try {

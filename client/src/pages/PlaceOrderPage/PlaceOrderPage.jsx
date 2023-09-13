@@ -9,7 +9,7 @@ import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedCo
 import { determine_total } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
-import { setItemsPrice, setTotalPrice, set_error } from "./placeOrderSlice";
+import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
 
 import * as API from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
@@ -23,7 +23,7 @@ const PlaceOrderPage = () => {
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { order, error: error_order, success_no_pay_order, success, error_pay } = orderPage;
+  const { order, success_no_pay_order, success } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, success: user_success } = userPage;
@@ -54,9 +54,12 @@ const PlaceOrderPage = () => {
       if (current_user?.isWholesaler && !determine_wholesale_proceed()) {
         navigate("/checkout/cart");
       }
+      if (current_user && current_user?.hasOwnProperty("first_name")) {
+        dispatch(save_shipping({ email: current_user.email }));
+      }
     }
     return () => (clean = false);
-  }, [cartItems, current_user, navigate]);
+  }, [cartItems, current_user, dispatch, navigate]);
 
   useEffect(() => {
     let clean = true;
@@ -70,36 +73,27 @@ const PlaceOrderPage = () => {
       dispatch(setItemsPrice(determine_total(cartItems, current_user?.isWholesaler)));
     }
     return () => (clean = false);
-  }, [cartItems, dispatch]);
+  }, [cartItems, current_user?.isWholesaler, dispatch]);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (error_order) {
-        dispatch(setLoadingPayment(false));
-        dispatch(set_error(error_order));
-      }
+  const finishOrder = () => {
+    dispatch(setLoadingPayment(false));
+    dispatch(API.emptyCart(my_cart._id));
+    if (promo_code) {
+      dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
+      dispatch(API.sendCodeUsedEmail(promo_code.toLowerCase()));
     }
-    return () => (clean = false);
-  }, [error_order]);
+    dispatch(API.updateStock({ cartItems }));
+    sessionStorage.removeItem("shippingAddress");
+    navigate("/pages/complete/order/" + order._id);
+  };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (success_no_pay_order && order && totalPrice === 0) {
         setTimeout(() => {
-          dispatch(setLoadingPayment(false));
-          dispatch(API.emptyCart(my_cart._id));
-          if (promo_code) {
-            dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
-            dispatch(API.sendCodeUsedEmail(promo_code.toLowerCase()));
-          }
-          dispatch(API.updateStock({ cartItems }));
-          sessionStorage.removeItem("shippingAddress");
-          navigate("/pages/complete/order/" + order._id);
-          // dispatch(removeOrderState());
+          finishOrder();
         }, 2000);
-      } else if (error_order) {
       }
     }
     return () => (clean = false);
@@ -109,30 +103,11 @@ const PlaceOrderPage = () => {
     let clean = true;
     if (clean) {
       if (success && order?.hasOwnProperty("_id")) {
-        dispatch(setLoadingPayment(false));
-        dispatch(API.emptyCart(my_cart._id));
-        if (promo_code) {
-          dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
-          dispatch(API.sendCodeUsedEmail(promo_code.toLowerCase()));
-        }
-        dispatch(API.updateStock({ cartItems }));
-        sessionStorage.removeItem("shippingAddress");
-        navigate("/pages/complete/order/" + order._id);
+        finishOrder();
       }
     }
     return () => (clean = false);
   }, [success]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (error_pay) {
-        dispatch(setLoadingPayment(false));
-        dispatch(set_error(error_pay));
-      }
-    }
-    return () => (clean = false);
-  }, [error_pay]);
 
   useEffect(() => {
     let clean = true;
@@ -146,27 +121,7 @@ const PlaceOrderPage = () => {
       );
     }
     return () => (clean = false);
-  }, [itemsPrice, taxPrice, tip, shippingPrice]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (current_user && current_user?.hasOwnProperty("first_name")) {
-        dispatch(save_shipping({ email: current_user.email }));
-      }
-    }
-    return () => (clean = false);
-  }, [current_user]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (current_user && current_user?.hasOwnProperty("first_name") && user_success) {
-        navigate("/secure/checkout/placeorder");
-      }
-    }
-    return () => (clean = false);
-  }, [user_success]);
+  }, [itemsPrice, taxPrice, tip, shippingPrice, dispatch]);
 
   return (
     <div>

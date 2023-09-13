@@ -36,25 +36,47 @@ const SurveysPage = () => {
         display: survey => (survey.is_survey ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
       {
-        title: "Answer 1",
-        display: survey => (survey.is_survey ? survey.question_1 : survey.answer_1),
+        title: "Questions and Answers",
+        display: survey => (
+          <div>
+            {survey.question_answer.map((qa, index) => (
+              <div key={index}>
+                {survey.is_survey ? (
+                  <>
+                    <span>{`Q${index + 1}: ${qa.question}`}</span>
+                    <br />
+                    <span>{`A${index + 1}: ${qa.answer}`}</span>
+                  </>
+                ) : (
+                  <span>
+                    Q{index + 1}. {qa.answer}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        ),
       },
-      {
-        title: "Answer 2",
-        display: survey => (survey.is_survey ? survey.question_2 : survey.answer_2),
-      },
-      {
-        title: "Answer 3",
-        display: survey => (survey.is_survey ? survey.question_3 : survey.answer_3),
-      },
-      {
-        title: "Answer 4",
-        display: survey => (survey.is_survey ? survey.question_4 : survey.answer_4),
-      },
-      {
-        title: "Answer 5",
-        display: survey => (survey.is_survey ? survey.question_5 : survey.answer_5),
-      },
+      // {
+      //   title: "Answer 1",
+      //   display: survey => (survey.is_survey ? survey.question_1 : survey.answer_1),
+      // },
+      // {
+      //   title: "Answer 2",
+      //   display: survey => (survey.is_survey ? survey.question_2 : survey.answer_2),
+      // },
+      // {
+      //   title: "Answer 3",
+      //   display: survey => (survey.is_survey ? survey.question_3 : survey.answer_3),
+      // },
+      // {
+      //   title: "Answer 4",
+      //   display: survey => (survey.is_survey ? survey.question_4 : survey.answer_4),
+      // },
+      // {
+      //   title: "Answer 5",
+      //   display: survey => (survey.is_survey ? survey.question_5 : survey.answer_5),
+      // },
 
       {
         title: "Actions",

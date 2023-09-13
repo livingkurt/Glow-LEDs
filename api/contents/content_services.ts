@@ -29,7 +29,6 @@ export default {
     }
   },
   findAll_contents_s: async (query: any) => {
-    console.log({ query });
     try {
       const page: string = query.page ? query.page : "1";
       const limit: string = query.limit ? query.limit : "0";

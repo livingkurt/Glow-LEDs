@@ -14,7 +14,6 @@ const orderPage = createSlice({
     order: emptyOrder,
     message: "",
     success: false,
-    success_order: false,
     success_no_pay_order: false,
     refundModal: false,
     remoteVersionRequirement: 0,
