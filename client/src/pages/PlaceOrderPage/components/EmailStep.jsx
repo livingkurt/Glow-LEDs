@@ -5,15 +5,7 @@ import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-import {
-  setEmailValidations,
-  setPasswordValidations,
-  set_email,
-  set_password,
-  set_is_guest,
-  showHideSteps,
-  nextStep,
-} from "../placeOrderSlice";
+import { setEmailValidations, set_is_guest, showHideSteps, nextStep } from "../placeOrderSlice";
 import { isMobile } from "react-device-detect";
 import { save_shipping } from "../../../slices/cartSlice";
 import { openLoginModal } from "../../../slices/userSlice";
