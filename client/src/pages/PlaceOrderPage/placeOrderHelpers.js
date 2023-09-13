@@ -127,7 +127,7 @@ export const isFasterShipping = ({ shipping, rate, index }) =>
   (shipping.international && mapServiceName(rate.service) !== "First Class");
 
 export const applyPercentageOff = (state, items_price, validPromo, tax_rate) => {
-  const newItemsPrice = items_price * (validPromo.percentage_off / 100);
+  const newItemsPrice = items_price - items_price * (validPromo.percentage_off / 100);
   state.itemsPrice = newItemsPrice;
   state.taxPrice = tax_rate * newItemsPrice;
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} ${validPromo.percentage_off}% Off`;
