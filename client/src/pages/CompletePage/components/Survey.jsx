@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
 import * as API from "../../../api";
 
-const Survey = ({ pathname }) => {
+const Survey = () => {
   const [questionAnswers, setQuestionAnswers] = useState({});
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [finished, setFinished] = useState(false);
   const [rating, set_rating] = useState(null);
-
-  console.log({ questionAnswers });
 
   const dispatch = useDispatch();
 
@@ -27,12 +24,6 @@ const Survey = ({ pathname }) => {
   useEffect(() => {
     dispatch(API.listSurveys({ filters: { active: true, is_survey: true }, limit: 1 }));
   }, [dispatch]);
-
-  useEffect(() => {
-    if (success) {
-      setFinished(true);
-    }
-  }, [success]);
 
   const submitHandler = e => {
     setLoadingSubmit(true);
