@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
 // import { useSelector, useDispatch } from "react-redux";
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+// import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 // import { API_Products } from "../../utils";
 // import { Link, useNavigate } from "react-router-dom";
 // import { Loading, Notification } from "../../shared/SharedComponents";

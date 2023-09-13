@@ -2,7 +2,7 @@ import { Box, Stack, IconButton, Typography } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { FileCopy } from "@mui/icons-material";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const ImageDisplay = ({ images, onChange, fieldName }) => {
   const remove_image = image_index => {

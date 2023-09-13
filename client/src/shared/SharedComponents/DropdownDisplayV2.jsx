@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";

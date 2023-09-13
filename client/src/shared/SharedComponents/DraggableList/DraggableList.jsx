@@ -1,7 +1,7 @@
 // import * as React from 'react';
 // import PropTypes from 'prop-types';
 // import classNames from 'classnames';
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+// import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 // import DraggableListItem from './components/DraggableListItem';
 
 // const DraggableList = ({ items, onChange, depth, itemMap, boundingRef, itemGenerator, noStyles, customStyles }) => {

@@ -45,7 +45,7 @@ import {
   updateQuery,
   selectRow,
 } from "./actions/actions";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useNavigate, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
 import GLTablePagination from "./components/GLTablePagination";
