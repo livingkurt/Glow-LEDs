@@ -31,17 +31,9 @@ export default {
     console.log({ query });
     try {
       const surveys = await survey_db.findAll_surveys_db(JSON.parse(filters), sort, limit, page);
-      const count = await survey_db.count_surveys_db(filters);
-      if (count !== undefined) {
-        return {
-          surveys,
-          totalPages: Math.ceil(count / parseInt(limit)),
-          currentPage: page,
-        };
-      } else {
-        // Handle the case where count is undefined
-        throw new Error("Count is undefined");
-      }
+      return {
+        surveys,
+      };
     } catch (error: any) {
       if (error instanceof Error) {
         throw new Error(error.message);

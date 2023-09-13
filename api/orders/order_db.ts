@@ -5,6 +5,7 @@ import { dedupeAddresses } from "./order_helpers";
 
 export default {
   table_orders_db: async (filter: any, sort: any, limit: string, page: string) => {
+    console.log({ filter });
     try {
       return await Order.find(filter)
         .sort(sort)

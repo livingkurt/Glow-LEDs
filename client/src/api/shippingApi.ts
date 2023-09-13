@@ -129,9 +129,9 @@ export const generateCSVLabel = createAsyncThunk(
 
 export const createPickup = createAsyncThunk(
   "shipping/createPickup",
-  async ({ readyTime, latestTimeAvailable }: any, thunkApi: any) => {
+  async ({ readyTime, latestTimeAvailable, orderIds }: any, thunkApi: any) => {
     try {
-      const { data } = await axios.put(`/api/shipping/create_pickup`, { readyTime, latestTimeAvailable });
+      const { data } = await axios.put(`/api/shipping/create_pickup`, { readyTime, latestTimeAvailable, orderIds });
       thunkApi.dispatch(showSuccess({ message: `Pickup Rates Found` }));
       return data;
     } catch (error: any) {

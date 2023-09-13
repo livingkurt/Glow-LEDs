@@ -1,6 +1,6 @@
 import config from "../../config";
 import invoice from "../../email_templates/pages/invoice";
-import { order_db } from "../orders";
+import { Order, order_db } from "../orders";
 import { covertToOunces, parseOrderData } from "./shipping_helpers";
 import {
   addTracking,
@@ -137,7 +137,7 @@ export default {
     }
   },
   create_pickup_shipping_s: async (body: any) => {
-    const { readyTime, latestTimeAvailable } = body;
+    const { readyTime, latestTimeAvailable, orderIds } = body;
 
     try {
       const formattedReadyTime = new Date(readyTime);
@@ -152,32 +152,19 @@ export default {
         phone: config.PHONE_NUMBER,
         email: config.INFO_EMAIL,
       });
-
-      const orders = await order_db.findAll_orders_db(
-        {
-          deleted: false,
-          isPaid: true,
-          isPackaged: true,
-          "shipping.shipping_rate.carrier": "UPSDAP",
-          isPickup: false,
-          isShipped: false,
-          isDelivered: false,
-        },
-        {},
-        "0",
-        "1"
-      );
-      if (orders?.length === 0 || !orders) {
-        throw new Error("Orders not found");
-      }
+      console.log({ orderIds });
+      const orders = await Order.find({ _id: { $in: orderIds } });
+      console.log({ orders });
 
       const shipmentIds = orders.map((order: any) => order.shipping.shipment_id);
       const shipments = await Promise.all(shipmentIds.map((id: any) => EasyPost.Shipment.retrieve(id)));
+      console.log({ shipments });
       if (shipments) {
         // Create a batch with the shipments
         const batch = await EasyPost.Batch.create({
           shipments: shipments,
         });
+        console.log({ batch });
 
         const pickup = await EasyPost.Pickup.create({
           address: homeAddress,
@@ -190,6 +177,7 @@ export default {
           instructions: "Pick up on front porch please.",
           batch: batch,
         });
+        console.log({ pickup, orders });
         return { pickup, orders };
       }
     } catch (error: any) {

@@ -11,6 +11,8 @@ const CreatePickupModal = () => {
   const dispatch = useDispatch();
   const shipping = useSelector(state => state.shipping.shippingPage);
   const { create_pickup_modal, pickup, orders, loading_label } = shipping;
+  const orderTable = useSelector(state => state.orders.orderTable);
+  const { selectedRows } = orderTable;
 
   const date = new Date();
   date.setMinutes(date.getMinutes() + 30); // set time 30 minutes into the future
@@ -40,7 +42,7 @@ const CreatePickupModal = () => {
   const [selectedRate, setSelectedRate] = useState("");
 
   const handleCreatePickup = () => {
-    dispatch(API.createPickup({ readyTime, latestTimeAvailable }));
+    dispatch(API.createPickup({ readyTime, latestTimeAvailable, orderIds: selectedRows }));
   };
 
   const handleConfirmPickup = () => {

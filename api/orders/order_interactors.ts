@@ -96,6 +96,17 @@ export const normalizeOrderFilters = (input: any) => {
           output["user"] = user;
         }
         break;
+      case "carrier":
+        for (const carrier of input.carrier) {
+          if (carrier === "ups") {
+            output["shipping.shipping_rate.carrier"] = "UPSDAP";
+          } else if (carrier === "fedex") {
+            output["shipping.shipping_rate.carrier"] = "Fedex";
+          } else if (carrier === "usps") {
+            output["shipping.shipping_rate.carrier"] = "USPS";
+          }
+        }
+        break;
       case "isPaid":
         if (!input.isPaid.includes(1)) {
           output["isPaid"] = false;

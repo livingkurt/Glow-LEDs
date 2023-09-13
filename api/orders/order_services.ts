@@ -23,6 +23,29 @@ const scraper = require("table-scraper");
 const today = new Date();
 
 export default {
+  get_table_orders_s: async (query: { search: string; sort: string; page: string; limit: string; filters: any }) => {
+    try {
+      const sort_options = ["createdAt", "user.first_name", "totalPrice"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "shipping.first_name",
+        normalizeFilters: normalizeOrderFilters,
+        normalizeSearch: normalizeOrderSearch,
+      });
+      const orders = await order_db.table_orders_db(filter, sort, limit, page);
+      const count = await order_db.count_orders_db(filter);
+      return {
+        data: orders,
+        total_count: count,
+        currentPage: parseInt(page),
+      };
+    } catch (error: any) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_orders_s: async (query: { search: string; sort: string; page: string; limit: string; filters: any }) => {
     try {
       const sort_options = ["createdAt", "user.first_name", "totalPrice"];
@@ -46,6 +69,20 @@ export default {
       }
     }
   },
+  // findAll_orders_s: async (query: any) => {
+  //   const { limit, page, search, sort, filters } = query;
+  //   console.log({ query });
+  //   try {
+  //     const orders = await order_db.findAll_orders_db(JSON.parse(filters), sort, limit, page);
+  //     return {
+  //       orders,
+  //     };
+  //   } catch (error: any) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
   create_filters_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const availableFilters = {
@@ -62,6 +99,8 @@ export default {
           "isRefunded",
         ],
         shipping: ["international"],
+        carrier: ["usps", "ups", "fedex"],
+        users: await Order.distinct("user").populate("user"),
         isPaid: [],
       };
       const booleanFilters = {

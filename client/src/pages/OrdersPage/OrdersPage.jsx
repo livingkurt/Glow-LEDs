@@ -216,11 +216,13 @@ const OrdersPage = () => {
                 Delete Orders
               </Button>
             )}
+            {selectedRows.length > 0 && (
+              <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
+                Create UPS Pickup
+              </Button>
+            )}
             <Button color="secondary" variant="contained" onClick={() => dispatch(openCreateLabelModal())}>
               Create Label
-            </Button>
-            <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
-              Create UPS Pickup
             </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
               Create Order
