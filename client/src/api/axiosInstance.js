@@ -84,6 +84,7 @@ axios.interceptors.request.use(
       if (!isRefreshRequest) {
         const refreshedAccessToken = await handleTokenRefresh(); // Get the refreshed access token
         config.headers["Authorization"] = `Bearer ${refreshedAccessToken}`; // Use the refreshed access token
+        axios.defaults.headers.common["Refresh-Token"] = refreshedAccessToken;
       }
     }
 

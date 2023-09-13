@@ -35,8 +35,8 @@ const defaultState = {
     remoteCount: null,
     // time when we last fetched a page from a remote, if a prop
     // is passed requesting a newer version we would need to issue a re-fetch
-    latestRemoteVersionTimestamp: 0
-  }
+    latestRemoteVersionTimestamp: 0,
+  },
 };
 
 export default defaultState;

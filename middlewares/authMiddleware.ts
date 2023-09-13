@@ -31,7 +31,9 @@ export const isAuth = async (req: any, res: any, next: () => void) => {
       if (err) {
         // If the token is expired, try refreshing it
         if (err.name === "TokenExpiredError") {
-          const refresh_token = req.body.refresh_token; // Or from wherever you keep it
+          // const refresh_token = req.body.refresh_token; // Or from wherever you keep it
+          const refresh_token = req.headers["refresh-token"] || req.headers["Refresh-Token"];
+
           if (!refresh_token) {
             return res.status(403).send({ message: "Access denied, refresh token missing!" });
           }
@@ -47,14 +49,14 @@ export const isAuth = async (req: any, res: any, next: () => void) => {
           next();
           return;
         }
-        return res.status(401).send({ msg: "Invalid Token" });
+        return res.status(401).send({ message: "Invalid Token" });
       }
       req.user = decode;
       next();
       return;
     });
   } else {
-    return res.status(401).send({ msg: "Token is not supplied." });
+    return res.status(401).send({ message: "Token is not supplied." });
   }
 };
 
