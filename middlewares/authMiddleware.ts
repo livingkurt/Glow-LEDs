@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config";
+import Token from "../api/tokens/token";
+import { user_services } from "../api/users";
 
 export const setCurrentUser = (req: any, res: any, next: () => void) => {
   const authHeader = req.headers["authorization"];
@@ -20,13 +22,31 @@ export const setCurrentUser = (req: any, res: any, next: () => void) => {
   });
 };
 
-export const isAuth = (req: any, res: any, next: () => void) => {
+export const isAuth = async (req: any, res: any, next: () => void) => {
   const token = req.headers.authorization;
 
   if (token) {
     const onlyToken = token.slice(7, token.length);
-    jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET || "", (err: any, decode: any) => {
+    jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET || "", async (err: any, decode: any) => {
       if (err) {
+        // If the token is expired, try refreshing it
+        if (err.name === "TokenExpiredError") {
+          const refresh_token = req.body.refresh_token; // Or from wherever you keep it
+          if (!refresh_token) {
+            return res.status(403).send({ message: "Access denied, refresh token missing!" });
+          }
+
+          const tokenDoc = await Token.findOne({ token: refresh_token });
+          if (!tokenDoc) {
+            return res.status(401).send({ message: "Token expired!" });
+          }
+
+          const payload: any = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET || "");
+          const user = await user_services.refresh_login_users_s(payload.email);
+          req.user = user;
+          next();
+          return;
+        }
         return res.status(401).send({ msg: "Invalid Token" });
       }
       req.user = decode;
@@ -42,5 +62,5 @@ export const isAdmin = (req: any, res: any, next: () => any) => {
   if (req.user && req.user.isAdmin) {
     return next();
   }
-  return res.status(401).send({ msg: "Admin Token is not valid." });
+  return res.status(401).send({ message: "Admin Token is not valid." });
 };
