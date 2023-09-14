@@ -26,7 +26,6 @@
     "printd": "^1.6.0",
     "react": "^18.2.0",
     "react-app-rewire-hot-loader": "^2.0.1",
-    "react-beautiful-dnd": "^13.1.1",
     "react-color": "^2.19.3",
     "react-csv": "^2.2.2",
     "react-device-detect": "^2.2.2",
