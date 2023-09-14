@@ -24,6 +24,9 @@ const ProductPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { loadingAddToCart } = cartPage;
+
   const productsPage = useSelector(state => state.products.productsPage);
   const { product, loading, error } = productsPage;
 
@@ -84,6 +87,7 @@ const ProductPage = () => {
         </div>
 
         <Loading loading={loading} error={error} />
+        <Loading loading={loadingAddToCart} />
 
         {loading && (
           <Grid container spacing={3}>

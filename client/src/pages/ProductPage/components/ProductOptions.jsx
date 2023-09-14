@@ -32,6 +32,7 @@ import {
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
 import OptionButtons from "./OptionButtons";
+import { Loading } from "../../../shared/SharedComponents";
 
 const ProductOptions = () => {
   const dispatch = useDispatch();

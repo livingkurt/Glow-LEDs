@@ -77,7 +77,9 @@ export default {
       if (current_user && Object.keys(current_user).length > 0) {
         let data: any = await cart_db.findByUser_carts_db(current_user._id);
         if (data) {
+          // console.log("Before update:", data.cartItems, cart_item);
           data.cartItems = updateCartItems(data.cartItems, cart_item);
+          // console.log("After update:", data.cartItems);
           await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
           data = await cart_db.findById_carts_db(data._id);
           return data;

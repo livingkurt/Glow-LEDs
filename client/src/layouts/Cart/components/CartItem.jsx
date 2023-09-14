@@ -93,7 +93,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
                 dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
               }}
             >
-              {[...Array(30).keys()].map((x, index) => (
+              {[...Array(item.quantity).keys()].map((x, index) => (
                 <option key={index} defaultValue={x + 1}>
                   {x + 1}
                 </option>

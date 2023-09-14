@@ -25,6 +25,7 @@ const cartPage = createSlice({
   name: "cartPage",
   initialState: {
     loading: false,
+    loadingAddToCart: false,
     my_cart: { ...my_cart },
     carts: [],
     cart: {
@@ -187,7 +188,7 @@ const cartPage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.addToCart.pending as any]: (state: any, { payload }: any) => {
-      state.loading = true;
+      state.loadingAddToCart = true;
     },
     [API.addToCart.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type, current_user } = payload;
@@ -205,11 +206,11 @@ const cartPage = createSlice({
       state.cartDrawer = true;
       state.message = "Cart Created";
       state.edit_cart_modal = false;
-      state.loading = false;
+      state.loadingAddToCart = false;
     },
 
     [API.addToCart.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading = false;
+      state.loadingAddToCart = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

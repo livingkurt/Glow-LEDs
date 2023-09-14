@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 // const environment = "prod";
 const environment = process.env.ENVIRONMENT;
+const database = process.env.DATABASE;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -13,11 +14,30 @@ const decideEnvironment = (prod: string | undefined, dev: string | undefined): s
     return prod;
   }
 };
+const decideDatabase = (
+  prod: string | undefined,
+  staging: string | undefined,
+  dev: string | undefined
+): string | undefined => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (database === "local") {
+    return dev;
+  } else if (database === "staging") {
+    return staging;
+  } else if (database === "prod") {
+    return prod;
+  }
+};
 
 // Glow LEDs Backend Environment Variables
 const config = {
   // Database
-  MONGODB_URI: decideEnvironment(process.env.MONGODB_URI_PROD, process.env.MONGODB_URI_DEV), // mongodb://localhost/db_name
+  MONGODB_URI: decideDatabase(
+    process.env.MONGODB_URI_PROD,
+    process.env.MONGODB_URI_STAGING,
+    process.env.MONGODB_URI_DEV
+  ), // mongodb://localhost/db_name
 
   // Environment
   NODE_ENV: process.env.NODE_ENV,
