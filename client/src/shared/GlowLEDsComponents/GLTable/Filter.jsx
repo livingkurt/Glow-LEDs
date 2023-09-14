@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 const Filter = ({ filterHandler, filter_options, state, title, width }) => {
   return (

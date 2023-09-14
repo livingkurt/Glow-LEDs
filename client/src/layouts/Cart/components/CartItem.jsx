@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { LazyImage } from "../../../SharedComponents";
-import { GLButton } from "../../../GlowLEDsComponents";
-import * as API from "../../../../api";
-import { determine_product_name, sale_price_switch } from "../../../../utils/react_helper_functions";
+import { LazyImage } from "../../../shared/SharedComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
+import { determine_product_name, sale_price_switch } from "../../../utils/react_helper_functions";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";

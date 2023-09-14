@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import "./checkbox.css";
 
 const Checkbox = ({ checkboxState, onCheck }) => {

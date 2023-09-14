@@ -1,6 +1,6 @@
 import { createElement, useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
+import { Header, Container, Content, Footer, Sidebar, Cart } from "./layouts/index";
 import { ScrollToTop } from "./shared/SharedComponents";
 import useWindowDimensions from "./shared/Hooks/windowDimensions";
 import { isBrowser } from "react-device-detect";

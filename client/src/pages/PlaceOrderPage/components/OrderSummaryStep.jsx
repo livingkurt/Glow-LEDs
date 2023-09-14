@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import CartItem from "../../../shared/SharedComponents/CartItem";
 import { useSelector } from "react-redux";
 import { determine_total } from "../../../utils/helper_functions";

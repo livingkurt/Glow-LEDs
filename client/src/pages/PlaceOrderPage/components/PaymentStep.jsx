@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";

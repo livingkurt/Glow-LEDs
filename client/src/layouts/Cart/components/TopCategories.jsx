@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { LazyImage } from "../../../SharedComponents";
-import { humanize } from "../../../../utils/helper_functions";
+import { LazyImage } from "../../../shared/SharedComponents";
+import { humanize } from "../../../utils/helper_functions";
 
 const TopCategories = ({ category_items, closeMenu }) => {
   return (

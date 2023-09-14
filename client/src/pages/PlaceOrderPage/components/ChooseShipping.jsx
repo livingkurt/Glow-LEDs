@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 
 const ChooseShipping = ({ shippingRates, onChange, carrier }) => {

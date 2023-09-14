@@ -1,5 +1,5 @@
 import { Button, styled, Tooltip } from "@mui/material";
-import * as React from "react";
+import React from "react";
 
 const GLButtonV2 = ({
   children,

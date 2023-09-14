@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { GLButton } from "../../../GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import DropdownButton from "./DropdownButton";
-import Filter from "../../../GlowLEDsComponents/GLTable/Filter";
+import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 
 const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list }) => {
   return (

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 // import './scss/css_reset.scss';

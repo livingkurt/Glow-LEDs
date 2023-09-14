@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, ...otherProps }) => {
   return (

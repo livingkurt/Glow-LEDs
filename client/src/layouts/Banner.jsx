@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useWindowDimensions from "../Hooks/windowDimensions";
-import { GLButton } from "../GlowLEDsComponents";
+import useWindowDimensions from "../shared/Hooks/windowDimensions";
+import { GLButton } from "../shared/GlowLEDsComponents";
 import { useSelector } from "react-redux";
 
 const Banner = () => {

@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "@mui/material";
-import * as React from "react";
+import React from "react";
 
 const GLImageModal = ({ open, onClose, selected_image }) => {
   return (

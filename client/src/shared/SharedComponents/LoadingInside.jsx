@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import config from "../../config";
 
 const LoadingInside = ({ loading, error, children }) => {

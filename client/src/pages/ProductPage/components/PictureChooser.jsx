@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 const PictureChooser = ({ product, className, show_hide }) => {
   const classes = "details-image " + show_hide;

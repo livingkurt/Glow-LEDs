@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 const Particles = () => {
   return <div className="particles-js" />;

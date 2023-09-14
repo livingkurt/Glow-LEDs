@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import jwt_decode from "jwt-decode";
 import { API_Users } from ".";
 import store from "../store";

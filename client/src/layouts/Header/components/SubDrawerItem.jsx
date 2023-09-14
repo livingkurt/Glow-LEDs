@@ -1,6 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import DropdownButton from "./DropdownButton";
 
 const SubDrawerItem = ({ columns, show_hide_nested }) => (

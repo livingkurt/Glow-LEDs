@@ -2,19 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../Banner";
-import useWindowDimensions from "../../Hooks/windowDimensions";
-import { API_Products } from "../../../utils";
-import { categories, humanize, subcategories, update_products_url } from "../../../utils/helper_functions";
-import { GLButton } from "../../GlowLEDsComponents";
-import * as API from "../../../api";
-import { clear_order_state } from "../../../slices/orderSlice";
+import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import { API_Products } from "../../utils";
+import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import * as API from "../../api";
+import { clear_order_state } from "../../slices/orderSlice";
 import NavColumn from "./components/NavColumn";
 import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
 import { navItems } from "./headerHelpers";
-import { setCartDrawer, setSideNavDrawer } from "../../../slices/cartSlice";
+import { setCartDrawer, setSideNavDrawer } from "../../slices/cartSlice";
 import { Search, ShoppingCart } from "@mui/icons-material";
-import { openLoginModal } from "../../../slices/userSlice";
+import { openLoginModal } from "../../slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 
 const SponsorCheckins = ({ month, year, sponsorCheckinStatus, questionConcerns }) => {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { GLButton } from "..";
 import { IconButton } from "@mui/material";
 

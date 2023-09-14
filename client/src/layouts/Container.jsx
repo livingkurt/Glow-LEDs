@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { debounce } from "../../helpers/sharedHelpers";
+import { debounce } from "../helpers/sharedHelpers";
 
 const Container = ({ children, style, setVisible, visible }) => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);

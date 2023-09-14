@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";

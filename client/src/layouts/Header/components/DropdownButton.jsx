@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";

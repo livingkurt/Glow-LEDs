@@ -3,7 +3,9 @@ export {};
 
 const question_answer_schema = {
   question: { type: String },
-  answer: { type: String }
+  answer: { type: String },
+  questionType: { type: String }, // 'text', 'radio', 'dropdown', etc.
+  options: [{ type: String }], //
 };
 
 const survey_schema = new mongoose.Schema(
@@ -25,10 +27,10 @@ const survey_schema = new mongoose.Schema(
     rating: { type: Number },
     is_survey: { type: Boolean },
     active: { type: Boolean },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

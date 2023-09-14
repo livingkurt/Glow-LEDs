@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-disabled-tests */
-import * as React from "react";
+import React from "react";
 import userEvent from "@testing-library/user-event";
 import { tagKeyMatchFull } from "covalent/MaterialUI/TagInput/tagRegex";
 import { debug } from "jest-preview";

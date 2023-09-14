@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";

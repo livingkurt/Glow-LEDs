@@ -2,14 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HashLink } from "react-router-hash-link";
-import { update_products_url } from "../../utils/helper_functions";
-import { GLButton } from "../GlowLEDsComponents";
-import Filter from "../GlowLEDsComponents/GLTable/Filter";
-import * as API from "../../api";
+import { update_products_url } from "../utils/helper_functions";
+import { GLButton } from "../shared/GlowLEDsComponents";
+import Filter from "../shared/GlowLEDsComponents/GLTable/Filter";
+import * as API from "../api";
 import { Drawer } from "@mui/material";
-import { setSideNavDrawer } from "../../slices/cartSlice";
+import { setSideNavDrawer } from "../slices/cartSlice";
 import { ExpandM, ExpandMore, ExpandMoreore } from "@mui/icons-material";
-import { openLoginModal } from "../../slices/userSlice";
+import { openLoginModal } from "../slices/userSlice";
 
 const Sidebar = () => {
   const navigate = useNavigate();

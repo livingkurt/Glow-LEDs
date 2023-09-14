@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { determine_total } from "../../../utils/helper_functions";
-import { GLButton, GLTooltip } from "../../GlowLEDsComponents";
+import { determine_total } from "../../utils/helper_functions";
+import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { CartItem, RecentlyViewed, TopCategories } from "./components";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { Drawer, IconButton } from "@mui/material";
-import { setCartDrawer } from "../../../slices/cartSlice";
+import { setCartDrawer } from "../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Cart = () => {
