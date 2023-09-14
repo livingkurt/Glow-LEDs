@@ -19,6 +19,15 @@ export const updateVersion = async () => {
   }
 };
 
+export const getDatabase = async () => {
+  try {
+    const { data } = await axios.get(`/api/settings/database`);
+    return data;
+  } catch (error: any) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),

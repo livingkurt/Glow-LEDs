@@ -1,3 +1,4 @@
+import config from "../../config";
 import { setting_services } from "../settings";
 
 export default {
@@ -61,5 +62,8 @@ export default {
     } catch (error: any) {
       res.status(500).send({ error, message: error.message });
     }
+  },
+  database_settings_c: async (req: any, res: any) => {
+    return res.status(201).send(config.DATABASE);
   },
 };
