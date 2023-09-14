@@ -31,7 +31,11 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
   }, [current_user]);
 
   useEffect(() => {
-    if (isTokenRefreshed) {
+    // Retrieve the 'manualNavigation' flag from session storage
+    const manualNavigation = sessionStorage.getItem("manualNavigation") === "true";
+
+    // Only proceed with the navigation logic if 'manualNavigation' is false
+    if (isTokenRefreshed && !manualNavigation) {
       if (Object.keys(current_user).length === 0) {
         if (isAdminRoute) {
           navigate(getRedirectPath(), { replace: true });
@@ -44,7 +48,11 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
         setIsLoading(false);
       }
     }
+
+    // Remove the 'manualNavigation' flag from session storage
+    sessionStorage.removeItem("manualNavigation");
   }, [current_user, isTokenRefreshed]);
+
 
   useEffect(() => {
     (async () => {

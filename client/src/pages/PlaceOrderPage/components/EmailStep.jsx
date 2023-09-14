@@ -23,11 +23,11 @@ const EmailStep = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  useEffect(() => {
-    if (current_user && current_user.hasOwnProperty("first_name")) {
-      navigate("/secure/checkout/placeorder");
-    }
-  }, [current_user]);
+  // useEffect(() => {
+  //   if (current_user && current_user.hasOwnProperty("first_name")) {
+  //     navigate("/secure/checkout/placeorder");
+  //   }
+  // }, [current_user]);
 
   const submit_logout = e => {
     e.preventDefault();
