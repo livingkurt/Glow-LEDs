@@ -5,6 +5,8 @@ dotenv.config();
 const environment = process.env.ENVIRONMENT;
 const database = process.env.DATABASE;
 
+console.log({ environment, database });
+
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -38,7 +40,7 @@ const config = {
     process.env.MONGODB_URI_STAGING,
     process.env.MONGODB_URI_DEV
   ), // mongodb://localhost/db_name
-  DATABASE: process.env.DATABASE,
+  DATABASE: database,
 
   // Environment
   NODE_ENV: process.env.NODE_ENV,
