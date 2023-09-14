@@ -422,25 +422,6 @@ const PaymentStep = () => {
                         dispatch(set_user(newValue));
                       }}
                     />
-                    {/* <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
-                      <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          defaultValue={current_user.first_name}
-                          onChange={e => dispatch(set_user(JSON.parse(e.target.value)))}
-                        >
-                          <option key={1} defaultValue="">
-                            ---Choose User for Order---
-                          </option>
-                          {users.map((user, index) => (
-                            <option key={index} value={JSON.stringify(user)}>
-                              {user.first_name} {user.last_name}
-                            </option>
-                          ))}
-                        </select>
-                        <span className="custom-arrow" />
-                      </div>
-                    </div> */}
                     <GLButton onClick={create_order_without_paying} variant="secondary" className="w-100per mb-12px">
                       Create Order For User
                     </GLButton>

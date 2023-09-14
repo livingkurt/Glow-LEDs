@@ -84,7 +84,7 @@ const PlaceOrderPage = () => {
     }
     dispatch(API.updateStock({ cartItems }));
     sessionStorage.removeItem("shippingAddress");
-      sessionStorage.setItem("manualNavigation", "true");
+    sessionStorage.setItem("manualNavigation", "true");
     navigate("/pages/complete/order/" + order._id);
   };
 

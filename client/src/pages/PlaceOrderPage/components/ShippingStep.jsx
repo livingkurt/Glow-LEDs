@@ -10,7 +10,6 @@ import ReactGoogleAutocomplete from "./ReactGoogleAutocomplete";
 import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 
-import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
 import { save_shipping, updateGoogleShipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import config from "../../../config";
@@ -36,7 +35,7 @@ import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GL
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
-  const all_shipping = useGetAllShippingOrdersQuery();
+  const all_shipping = API.useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
@@ -352,9 +351,6 @@ const ShippingStep = () => {
                           onChange={e => dispatch(save_shipping({ ...shipping, state: e.target.value }))}
                           value={shipping.state}
                         >
-                          {/* <option key={1} defaultValue="">
-                            Choose State
-                          </option> */}
                           {state_names.map((state, index) => (
                             <option key={index} value={state.short_name}>
                               {state.long_name}
