@@ -4,7 +4,7 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.route("/database").get(setting_controller.database_settings_c);
+router.route("/env").get(setting_controller.database_settings_c);
 router
   .route("/:id")
   .get(setting_controller.findById_settings_c)

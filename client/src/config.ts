@@ -1,3 +1,15 @@
+const environment = process.env.REACT_APP_ENVIRONMENT;
+
+const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (environment === "dev") {
+    return dev;
+  } else {
+    return prod;
+  }
+};
+
 // Glow LEDs Backend Environment Variables
 const config = {
   // Public URL
@@ -7,7 +19,9 @@ const config = {
   NODE_ENV: process.env.NODE_ENV,
 
   // Stripe
-  REACT_APP_STRIPE_KEY: process.env.REACT_APP_STRIPE_KEY,
+  REACT_APP_STRIPE_KEY: decideEnvironment(process.env.REACT_APP_STRIPE_LIVE_KEY, process.env.REACT_APP_STRIPE_TEST_KEY),
+  // REACT_APP_STRIPE_LIVE_KEY: process.env.REACT_APP_STRIPE_LIVE_KEY,
+  // REACT_APP_STRIPE_TEST_KEY: process.env.REACT_APP_STRIPE_TEST_KEY,
 
   // Company Info
   // No Reply Email

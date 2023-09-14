@@ -34,6 +34,10 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    dispatch(API.getEnvironment());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (current_user._id) {
       dispatch(API.getCurrentUserCart(current_user._id));
     }

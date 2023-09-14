@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useWindowDimensions from "../shared/Hooks/windowDimensions";
 import { GLButton } from "../shared/GlowLEDsComponents";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as API from "../api";
 import { Box } from "@mui/material";
 import { toCapitalize } from "../utils/helper_functions";
@@ -13,23 +13,12 @@ const Banner = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
 
-  const [envBanner, setEnvBanner] = useState("");
-
-  useEffect(() => {
-    (async () => {
-      let clean = true;
-      if (clean) {
-        const response = await API.getDatabase();
-        setEnvBanner(response);
-      }
-
-      return () => (clean = false);
-    })();
-  }, []);
+  const placeOrder = useSelector(state => state.placeOrder);
+  const { environment, database } = placeOrder;
 
   return (
     <div>
-      {(envBanner.database === "local" || envBanner.database === "staging") && (
+      {(database === "local" || database === "staging") && (
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -39,7 +28,7 @@ const Banner = () => {
         >
           <div>
             {`------------------------- `}
-            {toCapitalize(envBanner.environment)} Environment {toCapitalize(envBanner.database)} Database
+            {toCapitalize(environment)} Environment {toCapitalize(database)} Database
             {` -------------------------`}
           </div>
         </Box>

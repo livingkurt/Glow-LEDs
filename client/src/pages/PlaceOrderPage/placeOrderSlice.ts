@@ -75,6 +75,8 @@ const initialState = {
   hideCheckoutButton: false,
   paymentValidations: "",
   showSaveShippingModal: false,
+  environment: "prod",
+  database: "prod",
   shippingSaved: false,
   modalText: false,
   shippingValidations: {
@@ -415,6 +417,11 @@ const placeOrder = createSlice({
     },
     [API.validatePromoCode.fulfilled as any]: (state: any, { payload }: any) => {
       state.promo_code_validations = payload.errors.promo_code;
+    },
+    [API.getEnvironment.fulfilled as any]: (state: any, { payload }: any) => {
+      console.log({ payload });
+      state.environment = payload.environment;
+      state.database = payload.database;
     },
   },
 });

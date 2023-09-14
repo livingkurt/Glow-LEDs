@@ -4,6 +4,7 @@ import Covy from "../../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import { errorMessage } from "../../helpers/sharedHelpers";
 import store from "../../store";
 import { showError, showSuccess } from "../../slices/snackbarSlice";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const updateVersion = async () => {
   try {
@@ -19,14 +20,15 @@ export const updateVersion = async () => {
   }
 };
 
-export const getDatabase = async () => {
+export const getEnvironment = createAsyncThunk("settings/getEnvironment", async () => {
   try {
-    const { data } = await axios.get(`/api/settings/database`);
+    const { data } = await axios.get(`/api/settings/env`);
+    console.log({ data });
     return data;
   } catch (error: any) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
-};
+});
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
