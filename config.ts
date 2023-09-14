@@ -5,8 +5,6 @@ dotenv.config();
 const environment = process.env.ENVIRONMENT;
 const database = process.env.DATABASE;
 
-console.log({ environment, database });
-
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
