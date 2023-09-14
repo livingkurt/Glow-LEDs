@@ -13,14 +13,14 @@ const Banner = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
 
-  const [database, setDatabase] = useState("");
+  const [envBanner, setEnvBanner] = useState("");
 
   useEffect(() => {
     (async () => {
       let clean = true;
       if (clean) {
         const response = await API.getDatabase();
-        setDatabase(response);
+        setEnvBanner(response);
       }
 
       return () => (clean = false);
@@ -29,7 +29,7 @@ const Banner = () => {
 
   return (
     <div>
-      {(database === "local" || database === "staging") && (
+      {(envBanner.database === "local" || envBanner.database === "staging") && (
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -39,7 +39,7 @@ const Banner = () => {
         >
           <div>
             {`------------------------- `}
-            {toCapitalize(database)} Database
+            {toCapitalize(envBanner.environment)} Environment {toCapitalize(envBanner.database)} Database
             {` -------------------------`}
           </div>
         </Box>

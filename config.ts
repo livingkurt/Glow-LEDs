@@ -39,6 +39,7 @@ const config = {
     process.env.MONGODB_URI_DEV
   ), // mongodb://localhost/db_name
   DATABASE: database,
+  ENVIRONMENT: environment,
 
   // Environment
   NODE_ENV: process.env.NODE_ENV,
