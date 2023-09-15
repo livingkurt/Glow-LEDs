@@ -1,5 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
-import { daysBetween } from "../../utils/helper_functions";
+import { daysBetween, determine_total } from "../../utils/helper_functions";
 import { setTimeout } from "timers";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
@@ -393,4 +393,48 @@ export const handleQtyChange = (value: any, dispatch: any, order: any, isUpdateP
   };
 
   dispatch(set_order(finalUpdatedOrder));
+};
+
+export const handlePromoCode = (value: any, order: any, dispatch: any) => {
+  // Get the original itemsPrice from the determine_total function
+  const originalItemsPrice: any = determine_total(order.orderItems, false);
+  const promoCodeData = value.promo_code;
+  let { taxPrice, shippingPrice } = order; // Assuming these are part of your order state
+
+  if (promoCodeData) {
+    let itemsPrice = originalItemsPrice; // Use the original itemsPrice as the base
+
+    if (promoCodeData.percentage_off) {
+      const discount = originalItemsPrice * (promoCodeData.percentage_off / 100);
+      itemsPrice -= discount;
+    } else if (promoCodeData.amount_off) {
+      itemsPrice -= promoCodeData.amount_off;
+    }
+
+    if (promoCodeData.free_shipping) {
+      shippingPrice = 0; // Set shipping price to zero
+    }
+
+    const newTotalPrice = itemsPrice + taxPrice + shippingPrice; // Recalculate total price
+
+    const updatedOrder = {
+      itemsPrice,
+      totalPrice: newTotalPrice,
+      shippingPrice,
+      promo_code: promoCodeData.promo_code,
+    };
+
+    // Dispatch the updated order state
+    dispatch(set_order(updatedOrder));
+  } else {
+    const updatedOrder = {
+      itemsPrice: originalItemsPrice,
+      totalPrice: originalItemsPrice + taxPrice + shippingPrice,
+      shippingPrice,
+      promo_code: "",
+    };
+
+    // Dispatch the updated order state
+    dispatch(set_order(updatedOrder));
+  }
 };

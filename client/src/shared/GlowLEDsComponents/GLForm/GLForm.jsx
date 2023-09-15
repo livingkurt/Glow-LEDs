@@ -97,7 +97,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     return option.short_name === value.short_name;
                   }}
                   helperText={formErrors && formErrors[fieldName]}
-                  // isOptionEqualToValue={(option, value) => option.short_name === value.short_name}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
                   value={selectedOption || ""}
