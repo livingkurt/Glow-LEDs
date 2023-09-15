@@ -7,6 +7,7 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { orderFormFields } from "./orderFormFields";
 import { handleDelete, handleDuplicate, handleProductChange, handleQtyChange } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { determine_total } from "../../../utils/helper_functions";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const EditOrderModal = () => {
   const { users, loading: loading_users } = userPage;
   const productsPage = useSelector(state => state.products.productsPage);
   const { products, loading: loading_products } = productsPage;
+  const promoPage = useSelector(state => state.promos.promoPage);
+  const { promos } = promoPage;
 
   useEffect(() => {
     let clean = true;
@@ -25,6 +28,7 @@ const EditOrderModal = () => {
       dispatch(API.listOrders({ option: true }));
       dispatch(API.listUsers({}));
       dispatch(API.listProducts({}));
+      dispatch(API.listPromos({}));
     }
     return () => {
       clean = false;
@@ -34,10 +38,59 @@ const EditOrderModal = () => {
   const formFields = orderFormFields({
     users,
     products,
-    setState: (value, key) => dispatch(set_order({ [key]: [...order[key], ...value] })),
-    onEdit: order => dispatch(open_edit_order_modal(order)),
-    order,
+    promos,
   });
+
+  const handlePromoCode = (value, order) => {
+    // Get the original itemsPrice from the determine_total function
+    const originalItemsPrice = determine_total(order.orderItems);
+    const promoCodeData = value.promo_code;
+    let { taxPrice, shippingPrice } = order; // Assuming these are part of your order state
+
+    console.log({ originalItemsPrice, promoCodeData });
+    if (promoCodeData) {
+      let itemsPrice = originalItemsPrice; // Use the original itemsPrice as the base
+
+      if (promoCodeData.percentage_off) {
+        const discount = originalItemsPrice * (promoCodeData.percentage_off / 100);
+        itemsPrice -= discount;
+      } else if (promoCodeData.amount_off) {
+        itemsPrice -= promoCodeData.amount_off;
+      }
+
+      if (promoCodeData.free_shipping) {
+        shippingPrice = 0; // Set shipping price to zero
+      }
+
+      const newTotalPrice = itemsPrice + taxPrice + shippingPrice; // Recalculate total price
+
+      console.log({ promo_code: promoCodeData.promo_code });
+
+      const updatedOrder = {
+        // ...order,
+        itemsPrice,
+        totalPrice: newTotalPrice,
+        shippingPrice,
+        promo_code: promoCodeData.promo_code,
+      };
+
+      console.log({ updatedOrder });
+
+      // Dispatch the updated order state
+      dispatch(set_order(updatedOrder));
+    } else {
+      const updatedOrder = {
+        // ...order,
+        itemsPrice: originalItemsPrice,
+        totalPrice: originalItemsPrice + taxPrice + shippingPrice,
+        shippingPrice,
+        promo_code: "",
+      };
+
+      // Dispatch the updated order state
+      dispatch(set_order(updatedOrder));
+    }
+  };
 
   return (
     <div>
@@ -76,6 +129,10 @@ const EditOrderModal = () => {
             } else if (fieldName === "duplicate") {
               handleDuplicate(value, dispatch, order, isUpdatePricesActive);
             } else if (fieldName !== undefined) {
+              if (fieldName === "promo_code") {
+                handlePromoCode(value, order);
+                return;
+              }
               const actualFieldName = fieldName.split(".")[1] || fieldName;
               dispatch(set_order(value));
 

@@ -1,16 +1,4 @@
-export const orderFormFields = ({
-  users,
-  products,
-  setState,
-  order,
-  onEdit,
-}: {
-  users: any;
-  products: any;
-  setState: any;
-  order: any;
-  onEdit: any;
-}) => {
+export const orderFormFields = ({ users, products, promos }: any) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -146,9 +134,18 @@ export const orderFormFields = ({
       type: "number",
       label: "Tip",
     },
+    // promo_code: {
+    //   type: "text",
+    //   label: "Promo Code",
+    // },
     promo_code: {
-      type: "text",
-      label: "Promo Code",
+      type: "autocomplete_single",
+      label: "Promp Code",
+      options: promos,
+      getOptionLabel: (option: any) => option.promo_code,
+      getOptionSelected: (option: any) => option,
+      labelProp: "promo_code",
+      valueAttribute: "promo_code",
     },
     tracking_number: {
       type: "text",
