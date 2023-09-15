@@ -308,11 +308,11 @@ export default {
             const mailOptions = {
               from: config.DISPLAY_INFO_EMAIL,
               to: user.email,
-              subject: "Glow LEDs Reset Password",
+              subject: "Successfully Changed Password",
               html: App({
                 body: successful_password_reset({
                   first_name: user.first_name,
-                  title: "Glow LEDs Reset Password",
+                  title: "Successfully Changed Password",
                 }),
                 unsubscribe: false,
               }),
@@ -331,11 +331,8 @@ export default {
   verify_email_password_reset_users_c: async (req: any, res: any) => {
     try {
       const email = req.body.email;
-      console.log({ email });
 
       const user: any = await user_db.findByEmail_users_db(email);
-
-      console.log({ user });
 
       if (user) {
         // Generate a JWT token for reset password
@@ -365,6 +362,27 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  generate_password_reset_token_users_c: async (req: any, res: any) => {
+    const { email, currentPassword } = req.body;
+
+    console.log({ currentPassword, email });
+    try {
+      const user: any = await user_db.findByEmail_users_db(email);
+
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      console.log({ isMatch, currentPassword, password: user.password });
+
+      if (isMatch) {
+        const token = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+        return res.status(200).send({ token });
+      } else {
+        return res.status(401).send({ message: "Passwords do not match" });
+      }
+    } catch (error: any) {
+      return res.status(500).send({ error, message: error.message });
+    }
+  },
+
   // verify_users_c: async (req: any, res: any) => {
   // 	const { params } = req;
   // 	try {

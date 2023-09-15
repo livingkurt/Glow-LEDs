@@ -15,6 +15,7 @@ router.route("/verify/:token").post(user_controller.verify_users_c);
 router.route("/login_as_user").post(isAuth, isAdmin, user_controller.login_as_user_users_c);
 router.route("/reset_password").put(user_controller.reset_password_users_c);
 router.route("/verify_email_password_reset").post(user_controller.verify_email_password_reset_users_c);
+router.route("/generate_password_reset_token").put(user_controller.generate_password_reset_token_users_c);
 router.route("/refresh_login").put(user_controller.refresh_login_users_c);
 router.route("/logout").put(user_controller.logout_users_c);
 

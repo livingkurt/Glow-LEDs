@@ -55,6 +55,7 @@ const userPage = createSlice({
     password: "",
     email_validations: "",
     password_validations: "",
+    current_password_validations: "",
     showRegister: "",
     first_name: "",
     last_name: "",
@@ -73,6 +74,12 @@ const userPage = createSlice({
     loadingPasswordReset: false,
     showForgotPassword: false,
     loadingResetPassword: false,
+    changePasswordModal: false,
+    changePassword: {
+      currentPassword: "",
+      password: "",
+      rePassword: "",
+    },
   },
   reducers: {
     set_user: (state, { payload }) => {
@@ -160,6 +167,25 @@ const userPage = createSlice({
     },
     setShowForgotPassword: (state, { payload }) => {
       state.showForgotPassword = payload;
+    },
+    setChangePassword: (state, { payload }) => {
+      const passwords = payload;
+      return {
+        ...state,
+        changePassword: { ...state.changePassword, ...passwords },
+      };
+    },
+    openChangePasswordModal: (state, { payload }) => {
+      state.changePasswordModal = true;
+    },
+    closeChangePasswordModal: (state, { payload }) => {
+      state.changePasswordModal = false;
+    },
+    setChangeValidations: (state, { payload }) => {
+      console.log({ payload });
+      state.current_password_validations = payload.currentPassword;
+      state.password_validations = payload.password;
+      state.re_password_validations = payload.rePassword;
     },
   },
   extraReducers: {
@@ -364,6 +390,18 @@ const userPage = createSlice({
       state.email_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.generatePasswordResetToken.pending as any]: (state: any, { payload }: any) => {
+      state.loadingChangePassword = true;
+    },
+    [API.generatePasswordResetToken.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingChangePassword = false;
+      state.email_validations = "";
+    },
+    [API.generatePasswordResetToken.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingChangePassword = false;
+      state.email_validations = payload.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -391,5 +429,9 @@ export const {
   setLoginSuccess,
   setResendVerificationSucess,
   setShowForgotPassword,
+  setChangePassword,
+  openChangePasswordModal,
+  closeChangePasswordModal,
+  setChangeValidations,
 } = userPage.actions;
 export default userPage.reducer;

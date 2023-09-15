@@ -276,6 +276,41 @@ export const validate_registration = (data: {
   };
 };
 
+export const validate_change_password = ({ currentPassword, password, rePassword }: any) => {
+  let errors: any = {};
+
+  // Convert empty fields to an empty string so we can use validator functions
+  currentPassword = !isEmpty2(currentPassword) ? currentPassword : "";
+  password = !isEmpty2(password) ? password : "";
+  rePassword = !isEmpty2(rePassword) ? rePassword : "";
+
+  // Current Password checks
+  if (isEmpty2(currentPassword)) {
+    errors.currentPassword = "Current password field is required";
+  }
+
+  // New Password checks
+  if (isEmpty2(password)) {
+    errors.password = "New password field is required";
+  } else if (!isLength(password, { min: 6, max: 30 })) {
+    errors.password = "New password must be at least 6 characters";
+  } else if (isEquals(password, currentPassword)) {
+    errors.password = "New password cannot be the same as your current password";
+  }
+
+  // Confirm New Password checks
+  if (isEmpty2(rePassword)) {
+    errors.rePassword = "Confirm new password field is required";
+  } else if (!isEquals(password, rePassword)) {
+    errors.rePassword = "New passwords must match";
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};
+
 export const validate_shipping = (data: {
   email: string;
   first_name: string;

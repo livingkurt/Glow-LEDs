@@ -185,6 +185,23 @@ export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData
   }
 });
 
+export const generatePasswordResetToken = createAsyncThunk(
+  "users/generatePasswordResetToken",
+  async ({ email, currentPassword }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.put("/api/users/generate_password_reset_token", {
+        email,
+        currentPassword,
+      });
+
+      thunkApi.dispatch(showSuccess({ message: `Password Successfully Reset` }));
+      return data;
+    } catch (error: any) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    }
+  }
+);
+
 export const resetPassword = createAsyncThunk(
   "users/resetPassword",
   async ({ token, password, rePassword }: { token: string; password: string; rePassword: string }, thunkApi: any) => {

@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { open_edit_user_modal } from "../../../slices/userSlice";
+import { openChangePasswordModal, open_edit_user_modal } from "../../../slices/userSlice";
 import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
-import { setOpenMonthlyCheckinModal } from "../profileSlice";
 import { Box, Button, Typography } from "@mui/material";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
 import SponsorMonthlyCheckinModal from "./SponsorMonthlyCheckinModal";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -44,11 +44,11 @@ export const ProfileActions = () => {
         Edit Profile
       </Button>
 
-      <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/changepassword"} className="w-100per">
-        <Button variant="contained" color="secondary" fullWidth>
-          Change Password
-        </Button>
-      </Link>
+      {/* <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/changepassword"} className="w-100per"> */}
+      <Button variant="contained" color="secondary" fullWidth onClick={() => dispatch(openChangePasswordModal())}>
+        Change Password
+      </Button>
+      {/* </Link> */}
 
       {user.is_affiliated && (
         <Button
@@ -125,6 +125,7 @@ export const ProfileActions = () => {
 
       <EditAffiliateModal />
       <EditWholesalerModal />
+      <ChangePasswordModal />
     </Box>
   );
 };
