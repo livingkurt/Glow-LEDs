@@ -945,7 +945,7 @@ ${order.shipping.email}`)
                 {current_user?.isAdmin && (
                   <div className="">
                     <div className="pt-1rem" htmlFor="payment">
-                      Payment Method: {order.payment.paymentMethod}
+                      Payment Method: {order?.payment?.paymentMethod}
                     </div>
                   </div>
                 )}
