@@ -31,11 +31,9 @@ const config = {
     staging: process.env.MONGODB_URI_STAGING,
     development: process.env.MONGODB_URI_DEV,
   }), // mongodb://localhost/db_name
-  // DATABASE: database,
-  ENVIRONMENT: environment,
-
   // Environment
-  NODE_ENV: environment,
+  ENVIRONMENT: environment,
+  NODE_ENV: process.env.NODE_ENV,
 
   // User Login
   // Local Authorization
