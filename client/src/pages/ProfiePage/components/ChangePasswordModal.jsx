@@ -28,7 +28,7 @@
 //       id: current_user._id,
 //       current_password,
 //       password,
-//       rePassword
+//       rePassword,
 //     };
 //     const request = await validate_password_change(validation_data);
 
@@ -37,7 +37,7 @@
 //     setRePasswordValidations(request.errors.rePassword);
 
 //     if (request.isValid) {
-//       dispatch(API.passwordReset({ user_id: current_user._id, password, rePassword }));
+//       dispatch(API.resetPassword({ user_id: current_user._id, password, rePassword }));
 //       navigate(`/secure/account/profile`);
 //     }
 //   };
@@ -60,22 +60,22 @@
 //       value: current_password,
 //       onChange: value => setCurrentPassword(value),
 //       error: current_password_validations,
-//       permission: [ "user"]
+//       permission: ["user"],
 //     },
 //     password: {
 //       type: "password",
 //       label: "New Password",
 //       value: password,
 //       onChange: value => setPassword(value),
-//       error: password_validations
+//       error: password_validations,
 //     },
 //     rePassword: {
 //       type: "password",
 //       label: "Confirm New Password",
 //       value: rePassword,
 //       onChange: value => setRePassword(value),
-//       error: re_password_validations
-//     }
+//       error: re_password_validations,
+//     },
 //   };
 
 //   return (
@@ -98,7 +98,7 @@
 //         <GLForm
 //           formData={formFields}
 //           state={cart}
-//           onChange={value => dispatch(set_cart(value))}
+//           onChange={value => dispatch(setChangePassword(value))}
 //           loading={loading && loading_users && loading_products}
 //         />
 //       </GLActiionModal>

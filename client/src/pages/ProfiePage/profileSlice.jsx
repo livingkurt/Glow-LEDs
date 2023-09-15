@@ -10,7 +10,12 @@ const profilePage = createSlice({
     start_date: "",
     end_date: "",
     start_end_date: false,
-    loading: false
+    loading: false,
+    changePassword: {
+      currentPassword: "",
+      password: "",
+      rePassword: "",
+    },
   },
   reducers: {
     set_year: (state, { payload }) => {
@@ -30,10 +35,25 @@ const profilePage = createSlice({
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
-    }
-  }
+    },
+    setChangePassword: (state, { payload }) => {
+      const passwords = payload;
+      return {
+        ...state,
+        changePassword: { ...state.changePassword, ...passwords },
+      };
+    },
+  },
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading, setOpenMonthlyCheckinModal } =
-  profilePage.actions;
+export const {
+  set_year,
+  set_month,
+  set_start_date,
+  set_end_date,
+  set_start_end_date,
+  set_loading,
+  setOpenMonthlyCheckinModal,
+  setChangePassword,
+} = profilePage.actions;
 export default profilePage.reducer;

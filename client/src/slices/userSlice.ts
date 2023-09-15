@@ -70,6 +70,9 @@ const userPage = createSlice({
     errorMessage: "",
     resendVerificationSucess: false,
     loadingVerification: false,
+    loadingPasswordReset: false,
+    showForgotPassword: false,
+    loadingResetPassword: false,
   },
   reducers: {
     set_user: (state, { payload }) => {
@@ -155,6 +158,9 @@ const userPage = createSlice({
       state.email_validations = "";
       state.password_validations = "";
     },
+    setShowForgotPassword: (state, { payload }) => {
+      state.showForgotPassword = payload;
+    },
   },
   extraReducers: {
     [API.listUsers.pending as any]: (state: any, { payload }: any) => {
@@ -224,10 +230,10 @@ const userPage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
       state.loading = false;
     },
-    [API.passwordReset.pending as any]: (state: any, { payload }: any) => {
-      state.loading = true;
+    [API.resetPassword.pending as any]: (state: any, { payload }: any) => {
+      state.loadingResetPassword = true;
     },
-    [API.passwordReset.fulfilled as any]: (state: any, { payload }: any) => {
+    [API.resetPassword.fulfilled as any]: (state: any, { payload }: any) => {
       const { current_user, data } = payload;
 
       if (!current_user.isAdmin) {
@@ -236,12 +242,12 @@ const userPage = createSlice({
         setAuthToken(false);
         state.current_user = {};
       }
-      state.loading = false;
+      state.loadingResetPassword = false;
       state.message = "Password Reset";
       state.success = true;
     },
-    [API.passwordReset.rejected as any]: (state: any, { payload, error }: any) => {
-      state.loading = false;
+    [API.resetPassword.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingResetPassword = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
@@ -346,6 +352,18 @@ const userPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.verifyEmailPasswordReset.pending as any]: (state: any, { payload }: any) => {
+      state.loadingPasswordReset = true;
+    },
+    [API.verifyEmailPasswordReset.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingPasswordReset = false;
+      state.email_validations = "";
+    },
+    [API.verifyEmailPasswordReset.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingPasswordReset = false;
+      state.email_validations = payload.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -372,5 +390,6 @@ export const {
   setCheckEmail,
   setLoginSuccess,
   setResendVerificationSucess,
+  setShowForgotPassword,
 } = userPage.actions;
 export default userPage.reducer;

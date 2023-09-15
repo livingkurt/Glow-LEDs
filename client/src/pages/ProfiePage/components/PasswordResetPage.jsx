@@ -15,7 +15,7 @@ const PasswordResetPublicPage = () => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.resetPassword(email));
+    dispatch(API.verifyEmailPasswordReset(email));
     setWords("Check your Email to Change your Password");
   };
   return (

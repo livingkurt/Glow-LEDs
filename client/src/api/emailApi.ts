@@ -288,12 +288,12 @@ export const sendContactConfirmation = createAsyncThunk(
   }
 );
 
-// send_password_reset
+// send_verify_email_password_reset
 export const sendPasswordReset = createAsyncThunk(
   "emails/sendPasswordReset",
   async ({ email, promo_code }: any, thunkApi) => {
     try {
-      const { data } = await axios.post("/api/emails/password_reset", { email, promo_code });
+      const { data } = await axios.post("/api/emails/reset_password", { email, promo_code });
       return data;
     } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
@@ -302,7 +302,7 @@ export const sendPasswordReset = createAsyncThunk(
   }
 );
 
-// send_reset_password
+// send_successful_password_reset
 export const sendResetPassword = createAsyncThunk(
   "emails/sendResetPassword",
   async ({ email, promo_code }: any, thunkApi) => {

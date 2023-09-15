@@ -36,7 +36,7 @@ const ChangePasswordPage = () => {
     setRePasswordValidations(request.errors.rePassword);
 
     if (request.isValid) {
-      dispatch(API.passwordReset({ userId: current_user._id, password, rePassword }));
+      dispatch(API.resetPassword({ userId: current_user._id, password, rePassword }));
       navigate(`/secure/account/profile`);
     }
   };

@@ -1,7 +1,7 @@
 const routes = [
   { path: "/account/changepassword", element: "ChangePasswordPage" },
   { path: "/account/passwordreset", element: "PasswordResetPage" },
-  { path: "/account/resetpassword/:id", element: "ResetPasswordPage" },
+  { path: "/account/reset_password", element: "ResetPasswordPage" },
 
   { path: "/checkout/placeorder", element: "PlaceOrderPage" },
   { path: "/checkout/shipping", element: "ShippingPage" },

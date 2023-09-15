@@ -21,8 +21,8 @@ router.route("/external_contact").post(cors(), email_controller.send_external_co
 router.route("/contact").post(email_controller.send_user_contact_emails_c);
 router.route("/contact_confirmation").post(email_controller.send_admin_contact_emails_c);
 router.route("/custom_contact").post(email_controller.send_custom_contact_emails_c);
-router.route("/password_reset").post(email_controller.send_password_reset_emails_c);
-router.route("/reset_password").post(email_controller.send_reset_password_emails_c);
+router.route("/verify_email_password_reset").post(email_controller.send_verify_email_password_reset_emails_c);
+router.route("/reset_password").post(email_controller.send_successful_password_reset_emails_c);
 router.route("/account_created").post(email_controller.send_account_created_emails_c);
 router.route("/send_shipping_status").post(email_controller.send_shipping_status_emails_c);
 router.route("/current_stock").post(email_controller.send_current_stock_emails_c);

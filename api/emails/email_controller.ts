@@ -3,8 +3,6 @@ import email_services from "./email_services";
 import App from "../../email_templates/App";
 import {
   account_created,
-  password_reset,
-  reset_password,
   contact,
   contact_confirmation,
   order_status,
@@ -16,6 +14,8 @@ import {
   custom_contact,
   code_used,
   shipping_status,
+  verify_email_password_reset,
+  successful_password_reset,
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
@@ -350,21 +350,69 @@ export default {
       }
     }
   },
+  send_verify_email_password_reset_emails_c: async (req: any, res: any) => {
+    const email = req.body.email;
+    console.log({ email });
 
-  send_password_reset_emails_c: async (req: any, res: any) => {
+    const user: any = await user_db.findByEmail_users_db(email);
+
+    console.log({ user });
+
+    if (user) {
+      // Generate a JWT token for reset password
+      const resetToken = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+
+      // Include the token in the reset URL
+      const url = `${domain()}/account/reset_password?token=${resetToken}`;
+
+      const mailOptions = {
+        from: config.DISPLAY_INFO_EMAIL,
+        to: req.body.email,
+        subject: "Glow LEDs Reset Password",
+        html: App({
+          body: verify_email_password_reset({
+            ...req.body,
+            url,
+            title: "Glow LEDs Reset Password",
+          }),
+          unsubscribe: false,
+        }),
+      };
+      sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+    } else {
+      res.status(500).send({ message: "You do not have an account with us" });
+    }
+  },
+  // send_verify_email_password_reset_emails_c: async (req: any, res: any) => {
+  //   console.log({ req_body: req.body });
+  //   const mailOptions = {
+  //     from: config.DISPLAY_INFO_EMAIL,
+  //     to: req.body.data.email,
+  //     subject: "Glow LEDs Password Reset",
+  //     html: App({
+  //       body: reset_password({
+  //         ...req.body,
+  //         title: "Glow LEDs Password Reset",
+  //       }),
+  //       unsubscribe: false,
+  //     }),
+  //   };
+  //   sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
+  // },
+  send_successful_password_reset_emails_c: async (req: any, res: any) => {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.data.email,
-      subject: "Glow LEDs Password Reset",
+      to: req.body.email,
+      subject: "Glow LEDs Reset Password",
       html: App({
-        body: password_reset({
+        body: successful_password_reset({
           ...req.body,
-          title: "Glow LEDs Password Reset",
+          title: "Glow LEDs Reset Password",
         }),
         unsubscribe: false,
       }),
     };
-    sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
+    sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
   },
   send_review_emails_c: async (req: any, res: any) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -457,22 +505,7 @@ export default {
 
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
   },
-  send_reset_password_emails_c: async (req: any, res: any) => {
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Glow LEDs Reset Password",
-      html: App({
-        body: reset_password({
-          ...req.body,
-          title: "Glow LEDs Reset Password",
-        }),
-        unsubscribe: false,
-      }),
-    };
 
-    sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
-  },
   send_account_created_emails_c: async (req: any, res: any) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
 

@@ -11,14 +11,14 @@ import {
   contact_confirmation,
   feature,
   order,
-  password_reset,
-  reset_password,
+  successful_password_reset,
   review,
   email_subscription,
   order_status,
   custom_contact,
   code_used,
   shipping_status,
+  verify_email_password_reset,
 } from "./pages";
 import express from "express";
 import invoice from "./pages/invoice";
@@ -2131,11 +2131,11 @@ router.get(
 
 router.get("/reset_password", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const user = await user_db.findByEmail_users_db("lavacquek@icloud.com");
-  res.send(App({ body: reset_password(user), title: "Password Reset Instructions " }));
+  res.send(App({ body: verify_email_password_reset(user), title: "Password Reset Instructions " }));
 });
-router.get("/password_reset", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+router.get("/reset_password", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
-  res.send(App({ body: password_reset(user), title: "Password Reset Successful" }));
+  res.send(App({ body: successful_password_reset(user), title: "Password Reset Successful" }));
 });
 // router.get(
 //   "/announcement",

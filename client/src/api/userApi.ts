@@ -185,26 +185,22 @@ export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData
   }
 });
 
-export const passwordReset = createAsyncThunk(
-  "users/passwordReset",
-  async ({ userId, password, rePassword }: { userId: string; password: string; rePassword: string }, thunkApi: any) => {
+export const resetPassword = createAsyncThunk(
+  "users/resetPassword",
+  async ({ token, password, rePassword }: { token: string; password: string; rePassword: string }, thunkApi: any) => {
     const {
       users: {
         userPage: { current_user },
       },
     } = thunkApi.getState();
     try {
-      const { data } = await axios.put("/api/users/password_reset", {
-        userId,
+      const { data } = await axios.put("/api/users/reset_password", {
+        token,
         password,
         rePassword,
       });
 
-      // if (data && data.hasOwnProperty("first_name")) {
-      //   axios.post("/api/emails/password_reset", data);
-      //   return data;
-      // }
-      thunkApi.dispatch(showSuccess({ message: `Password Reset` }));
+      thunkApi.dispatch(showSuccess({ message: `Password Successfully Reset` }));
       return { current_user, data };
     } catch (error: any) {
       thunkApi.dispatch(showError({ message: errorMessage(error) }));
@@ -212,15 +208,16 @@ export const passwordReset = createAsyncThunk(
   }
 );
 
-export const resetPassword = createAsyncThunk("users/resetPassword", async (email: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.post("/api/users/reset_password", { email });
-
-    axios.post("/api/emails/reset_password", data);
-    thunkApi.dispatch(showSuccess({ message: `Reset Password` }));
-    return data;
-  } catch (error: any) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const verifyEmailPasswordReset = createAsyncThunk(
+  "users/verifyEmailPasswordReset",
+  async ({ email }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.post("/api/users/verify_email_password_reset", { email });
+      thunkApi.dispatch(showSuccess({ message: `Verify Email Sent` }));
+      return data;
+    } catch (error: any) {
+      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      return thunkApi.rejectWithValue(error.response?.data);
+    }
   }
-});
+);

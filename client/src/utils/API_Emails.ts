@@ -41,10 +41,10 @@ const email_routes = {
       promo_code,
     });
   },
-  send_password_reset: (email: string, promo_code: string) => {
-    return axios.post("/api/emails/password_reset", { email, promo_code });
+  send_verify_email_password_reset: (email: string, promo_code: string) => {
+    return axios.post("/api/emails/reset_password", { email, promo_code });
   },
-  send_reset_password: (email: string, promo_code: string) => {
+  send_successful_password_reset: (email: string, promo_code: string) => {
     return axios.post("/api/emails/reset_password", { email, promo_code });
   },
   send_verified: (email: string, promo_code: string) => {

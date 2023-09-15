@@ -21,7 +21,7 @@ const AdminChangePasswordPage = () => {
 
   const submitHandler = async e => {
     e.preventDefault();
-    dispatch(API.passwordReset({ userId: params.id, password, rePassword }));
+    dispatch(API.resetPassword({ userId: params.id, password, rePassword }));
     navigate("/secure/glow/userprofile/" + params.id);
   };
 

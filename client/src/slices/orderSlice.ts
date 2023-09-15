@@ -28,7 +28,6 @@ const orderPage = createSlice({
   },
   reducers: {
     set_order: (state, { payload }) => {
-      console.log({ payload });
       const updated_order = payload;
       return {
         ...state,

@@ -7,7 +7,7 @@ import verify from "../../email_templates/pages/verify";
 import { sendEmail } from "../emails/email_helpers";
 import { domain } from "../../email_templates/email_template_helpers";
 import { content_db } from "../contents";
-import { account_created } from "../../email_templates/pages";
+import { account_created, successful_password_reset, verify_email_password_reset } from "../../email_templates/pages";
 // import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -285,17 +285,40 @@ export default {
       return res.status(500).json({ error, message: "Internal Server Error!" });
     }
   },
-  password_reset_users_c: async (req: any, res: any) => {
-    const { body } = req;
+
+  reset_password_users_c: async (req: any, res: any) => {
+    const { token, password } = req.body;
+    console.log({ token, password });
     try {
-      const user: any = await user_db.findById_users_db(body.userId);
+      // Decoding token to get email
+      const decoded: any = jwt.verify(token, "yourSecretKey");
+      const user: any = await user_db.findByEmail_users_db(decoded.email);
+      console.log({ user });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
       bcrypt.genSalt(10, (err: any, salt: any) => {
-        bcrypt.hash(body.password, salt, async (err: any, hash: any) => {
+        bcrypt.hash(password, salt, async (err: any, hash: any) => {
           if (err) throw err;
           try {
             user.password = hash;
-            const new_user = await user_db.update_users_db(user._id, user);
-            return res.status(200).send(new_user);
+            await user_db.update_users_db(user._id, user);
+            const mailOptions = {
+              from: config.DISPLAY_INFO_EMAIL,
+              to: user.email,
+              subject: "Glow LEDs Reset Password",
+              html: App({
+                body: successful_password_reset({
+                  first_name: user.first_name,
+                  title: "Glow LEDs Reset Password",
+                }),
+                unsubscribe: false,
+              }),
+            };
+            sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + user.first_name);
+            // return res.status(200).send(new_user);
           } catch (error: any) {
             res.status(500).json({ message: error.message, error });
           }
@@ -305,16 +328,39 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  reset_password_users_c: async (req: any, res: any) => {
-    const { body } = req;
-    //
+  verify_email_password_reset_users_c: async (req: any, res: any) => {
     try {
-      const user = await user_services.findByEmail_users_s(body);
+      const email = req.body.email;
+      console.log({ email });
+
+      const user: any = await user_db.findByEmail_users_db(email);
+
+      console.log({ user });
 
       if (user) {
-        return res.status(200).send(user);
+        // Generate a JWT token for reset password
+        const resetToken = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+
+        // Include the token in the reset URL
+        const url = `${domain()}/account/reset_password?token=${resetToken}`;
+
+        const mailOptions = {
+          from: config.DISPLAY_INFO_EMAIL,
+          to: req.body.email,
+          subject: "Glow LEDs Reset Password",
+          html: App({
+            body: verify_email_password_reset({
+              ...req.body,
+              url,
+              title: "Glow LEDs Reset Password",
+            }),
+            unsubscribe: false,
+          }),
+        };
+        sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+      } else {
+        res.status(500).send({ message: "You do not have an account with us" });
       }
-      return res.status(404).send({ message: "User Not Found" });
     } catch (error: any) {
       res.status(500).send({ error, message: error.message });
     }

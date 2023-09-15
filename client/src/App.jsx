@@ -51,9 +51,9 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Container setVisible={setVisible} visible={visible}>
-          <GLSnackbar />
           <GLLoading />
           <GLLoginModal />
+
           <Head />
           {isBrowser && width > 1158 && height > 900 ? (
             <Headroom>
@@ -113,11 +113,13 @@ const App = () => {
               </Routes>
             </ScrollToTop>
           </Content>
+
           <Footer />
           <EmailModal />
           <UpdateNotifier />
         </Container>
       </Router>
+      <GLSnackbar />
     </ThemeProvider>
   );
 };
