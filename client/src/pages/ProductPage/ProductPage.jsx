@@ -37,7 +37,10 @@ const ProductPage = () => {
     if (clean) {
       dispatch(API.detailsProduct(params.pathname));
     }
-    return () => (clean = false);
+    return () => {
+      dispatch(unset_state());
+      clean = false;
+    };
   }, [dispatch, params.pathname]);
 
   useEffect(() => {
@@ -45,8 +48,6 @@ const ProductPage = () => {
     if (clean) {
       if (product) {
         normalizeProductPage({ product, dispatch, current_user });
-      } else {
-        dispatch(unset_state());
       }
     }
     return () => {
