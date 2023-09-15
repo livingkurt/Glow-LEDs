@@ -14,11 +14,11 @@ const Banner = () => {
   const { contents } = contentPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
-  const { environment, database } = placeOrder;
+  const { environment } = placeOrder;
 
   return (
     <div>
-      {(database === "local" || database === "staging") && (
+      {(environment === "development" || environment === "staging") && (
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -28,7 +28,7 @@ const Banner = () => {
         >
           <div>
             {`------------------------- `}
-            {toCapitalize(environment)} Environment {toCapitalize(database)} Database
+            {toCapitalize(environment)} Environment
             {` -------------------------`}
           </div>
         </Box>

@@ -1,48 +1,41 @@
 import dotenv from "dotenv";
 
 dotenv.config();
-// const environment = "prod";
-const environment = process.env.ENVIRONMENT;
-const database = process.env.DATABASE;
 
-const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  if (environment === "dev") {
-    return dev;
-  } else {
-    return prod;
-  }
-};
-const decideDatabase = (
-  prod: string | undefined,
-  staging: string | undefined,
-  dev: string | undefined
-): string | undefined => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  if (database === "local") {
-    return dev;
-  } else if (database === "staging") {
+const environment = process.env.ENVIRONMENT;
+// const environment = "staging";
+
+const decideEnvironment = ({
+  production,
+  staging,
+  development,
+}: {
+  production: string | undefined;
+  staging: string | undefined;
+  development: string | undefined;
+}): string | undefined => {
+  if (environment === "development") {
+    return development;
+  } else if (environment === "staging") {
     return staging;
-  } else if (database === "prod") {
-    return prod;
+  } else if (environment === "production") {
+    return production;
   }
 };
 
 // Glow LEDs Backend Environment Variables
 const config = {
   // Database
-  MONGODB_URI: decideDatabase(
-    process.env.MONGODB_URI_PROD,
-    process.env.MONGODB_URI_STAGING,
-    process.env.MONGODB_URI_DEV
-  ), // mongodb://localhost/db_name
-  DATABASE: database,
-  ENVIRONMENT: environment,
+  MONGODB_URI: decideEnvironment({
+    production: process.env.MONGODB_URI_PROD,
+    staging: process.env.MONGODB_URI_STAGING,
+    development: process.env.MONGODB_URI_DEV,
+  }), // mongodb://localhost/db_name
+  // DATABASE: database,
+  // ENVIRONMENT: environment,
 
   // Environment
-  NODE_ENV: process.env.NODE_ENV,
+  NODE_ENV: environment,
 
   // User Login
   // Local Authorization
@@ -84,7 +77,11 @@ const config = {
   PRODUCTION_COUNTRY: process.env.PRODUCTION_COUNTRY,
 
   // Easy Post
-  EASY_POST: decideEnvironment(process.env.EASY_POST_LIVE, process.env.EASY_POST_DEV),
+  EASY_POST: decideEnvironment({
+    production: process.env.EASY_POST_LIVE,
+    staging: process.env.EASY_POST_DEV,
+    development: process.env.EASY_POST_DEV,
+  }),
   // EASY_POST_LIVE: process.env.EASY_POST_LIVE,
   // EASY_POST_DEV: process.env.EASY_POST_DEV,
 
@@ -98,7 +95,11 @@ const config = {
   GOOGLE_SHEETS_CLIENT_SECRET: process.env.GOOGLE_SHEETS_CLIENT_SECRET,
 
   // Stripe
-  STRIPE_KEY: decideEnvironment(process.env.STRIPE_LIVE_SECRET_KEY, process.env.STRIPE_TEST_SECRET_KEY),
+  STRIPE_KEY: decideEnvironment({
+    production: process.env.STRIPE_LIVE_SECRET_KEY,
+    staging: process.env.STRIPE_TEST_SECRET_KEY,
+    development: process.env.STRIPE_TEST_SECRET_KEY,
+  }),
   // STRIPE_KEY: process.env.NODE_ENV ? process.env.STRIPE_LIVE_SECRET_KEY : ,
   // STRIPE_TEST_PUBLISHER_KEY: process.env.STRIPE_TEST_PUBLISHER_KEY,
   // STRIPE_TEST_SECRET_KEY: process.env.STRIPE_TEST_SECRET_KEY,

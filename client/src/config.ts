@@ -1,12 +1,22 @@
-const environment = process.env.REACT_APP_ENVIRONMENT;
+// const environment = process.env.REACT_APP_ENVIRONMENT;
 
-const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  if (environment === "dev") {
-    return dev;
-  } else {
-    return prod;
+const environment = process.env.REACT_APP_ENVIRONMENT as string; // could be 'development', 'staging', or 'production'
+
+const decideEnvironment = ({
+  production,
+  staging,
+  development,
+}: {
+  production: string | undefined;
+  staging: string | undefined;
+  development: string | undefined;
+}): string | undefined => {
+  if (environment === "development") {
+    return development;
+  } else if (environment === "staging") {
+    return staging;
+  } else if (environment === "production") {
+    return production;
   }
 };
 
@@ -19,7 +29,11 @@ const config = {
   NODE_ENV: process.env.NODE_ENV,
 
   // Stripe
-  REACT_APP_STRIPE_KEY: decideEnvironment(process.env.REACT_APP_STRIPE_LIVE_KEY, process.env.REACT_APP_STRIPE_TEST_KEY),
+  REACT_APP_STRIPE_KEY: decideEnvironment({
+    production: process.env.REACT_APP_STRIPE_LIVE_KEY,
+    staging: process.env.REACT_APP_STRIPE_TEST_KEY,
+    development: process.env.REACT_APP_STRIPE_TEST_KEY,
+  }),
   // REACT_APP_STRIPE_LIVE_KEY: process.env.REACT_APP_STRIPE_LIVE_KEY,
   // REACT_APP_STRIPE_TEST_KEY: process.env.REACT_APP_STRIPE_TEST_KEY,
 
