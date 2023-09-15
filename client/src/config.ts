@@ -34,6 +34,7 @@ const config = {
     staging: process.env.REACT_APP_STRIPE_TEST_KEY,
     development: process.env.REACT_APP_STRIPE_TEST_KEY,
   }),
+  REACT_APP_ENVIRONMENT: process.env.REACT_APP_ENVIRONMENT,
   // REACT_APP_STRIPE_LIVE_KEY: process.env.REACT_APP_STRIPE_LIVE_KEY,
   // REACT_APP_STRIPE_TEST_KEY: process.env.REACT_APP_STRIPE_TEST_KEY,
 

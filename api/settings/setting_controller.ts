@@ -64,6 +64,6 @@ export default {
     }
   },
   database_settings_c: async (req: any, res: any) => {
-    return res.status(201).send({ environment: config.NODE_ENV });
+    return res.status(201).send({ environment: config.ENVIRONMENT });
   },
 };
