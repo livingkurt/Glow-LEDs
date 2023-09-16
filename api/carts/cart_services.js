@@ -4,7 +4,7 @@ import { getFilteredData } from "../api_helpers";
 import { updateCartItems } from "./cart_helpers";
 
 export default {
-  findAll_carts_s: async (query: { page; search; sort; limit }) => {
+  findAll_carts_s: async query => {
     try {
       const sort_options = ["active", "updatedAt", "user", "cartItems"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
@@ -21,7 +21,7 @@ export default {
       }
     }
   },
-  findById_carts_s: async (params) => {
+  findById_carts_s: async params => {
     try {
       return await cart_db.findById_carts_db(params.id);
     } catch (error) {
@@ -30,7 +30,7 @@ export default {
       }
     }
   },
-  findByUser_carts_s: async (params) => {
+  findByUser_carts_s: async params => {
     try {
       const { id } = params;
       return await cart_db.findByUser_carts_db(id);
@@ -40,7 +40,7 @@ export default {
       }
     }
   },
-  create_carts_s: async (body) => {
+  create_carts_s: async body => {
     try {
       return await cart_db.create_carts_db(body);
     } catch (error) {
@@ -69,7 +69,7 @@ export default {
       }
     }
   },
-  add_to_cart_carts_s: async (body) => {
+  add_to_cart_carts_s: async body => {
     const { cart_item, cartItems, current_user } = body;
 
     try {
@@ -103,7 +103,7 @@ export default {
     }
   },
 
-  empty_carts_s: async (params) => {
+  empty_carts_s: async params => {
     try {
       return await cart_db.update_carts_db(params.id, { active: false });
     } catch (error) {
@@ -112,7 +112,7 @@ export default {
       }
     }
   },
-  remove_carts_s: async (params) => {
+  remove_carts_s: async params => {
     try {
       return await cart_db.remove_carts_db(params.id);
     } catch (error) {

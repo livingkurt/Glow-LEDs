@@ -8,6 +8,8 @@ import { Order } from "./orders";
 import { Email } from "./emails";
 import { Affiliate } from "./affiliates";
 import { Content } from "./contents";
+import { Promo } from "./promos";
+import { Survey } from "./surveys";
 import { Paycheck } from "./paychecks";
 import { Parcel } from "./parcels";
 import Chip from "./chips/chip";
@@ -323,7 +325,7 @@ router.route("/product_sale_price").put(isAuth, isAdmin, async (req, res) => {
   const sale_end_date = req.body.sale_end_date;
   products
     // .filter((product) => !product.hidden)
-    .forEach(async (product) => {
+    .forEach(async product => {
       const main_discount = product.price * req.body.discount_percentage;
       await Product.updateOne(
         { _id: product._id },
@@ -343,14 +345,14 @@ router.route("/clear_sale").put(isAuth, isAdmin, async (req, res) => {
   const sale_end_date = req.body.sale_end_date;
   products
     // .filter((product) => !product.hidden)
-    .forEach(async (product) => {
+    .forEach(async product => {
       await Product.updateOne({ _id: product._id }, { sale_price: cleared_sale_price, sale_start_date, sale_end_date });
     });
   res.send(products);
 });
 router.route("/make_emails_lowercase").put(isAuth, isAdmin, async (req, res) => {
   const users = await User.find({ email: { $exists: true } });
-  users.forEach(async (user) => {
+  users.forEach(async user => {
     const userss = await User.findOne({ _id: user._id });
     const updated_user = new User(userss);
     // Check if user exists
@@ -363,7 +365,7 @@ router.route("/make_emails_lowercase").put(isAuth, isAdmin, async (req, res) => 
         await updated_user.save();
       } else if (same_user) {
         const orders = await Order.find({ user: updated_user._id });
-        orders.forEach(async (order) => {
+        orders.forEach(async order => {
           // const orderss = await Order.findOne({ _id: order._id });
 
           const updated_order = new Order(order);
@@ -384,12 +386,12 @@ router.route("/find_duplicate_emails").put(async (req, res) => {
   const users = await User.find({ email: { $exists: true } });
 
   // // find all emails that are not lowercase
-  const not_lowercase = users.filter((user) => user.email !== user.email.toLowerCase());
+  const not_lowercase = users.filter(user => user.email !== user.email.toLowerCase());
 
   // // find all emails that have duplicates to the lowercase version
-  const duplicates = not_lowercase.filter((user) => {
+  const duplicates = not_lowercase.filter(user => {
     const lowercase = user.email.toLowerCase();
-    const same_email = users.filter((user) => user.email === lowercase);
+    const same_email = users.filter(user => user.email === lowercase);
     return same_email.length > 1;
   });
 
@@ -450,9 +452,9 @@ router.route("/update_diffuser_caps_product_name").put(async (req, res) => {
   // const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
   const products = await Product.find({});
 
-  const diffuser_caps = products.filter((product) => product.category === "diffuser_caps");
+  const diffuser_caps = products.filter(product => product.category === "diffuser_caps");
 
-  diffuser_caps.forEach(async (product) => {
+  diffuser_caps.forEach(async product => {
     product.name = product.name + " V4";
     const result = await product.save();
   });
@@ -489,7 +491,7 @@ router.route("/change_size_to_string").put(async (req, res) => {
   //
   // const diffuser_caps = products.filter((product) => product.category === 'diffuser_caps');
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.sizing = product.size ? `${product.size}` : "";
     const result = await product.save();
   });
@@ -565,7 +567,7 @@ router.route("/clozd_glowframez").put(async (req, res) => {
     subcategory: "nova",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "OPYN " + product.name.replace(" Glow Casings", "framez");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -587,7 +589,7 @@ router.route("/opyn_glowskinz").put(async (req, res) => {
     category: "glow_casings",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "OPYN " + product.name.replace(" Glow Casings", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -610,7 +612,7 @@ router.route("/clozd_novaskinz").put(async (req, res) => {
     subcategory: "novaskins",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "CLOZD " + product.name.replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -633,7 +635,7 @@ router.route("/clozd_alt_novaskinz").put(async (req, res) => {
     subcategory: "alt_novaskins",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "CLOZD " + product.name.replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -660,7 +662,7 @@ router.route("/clozd_skin_color_options").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = product.name
       .replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD")
       .replace("skins", "skinz");
@@ -684,7 +686,7 @@ router.route("/clozd_skin_size_options").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "CLOZD " + product.name.replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -706,7 +708,7 @@ router.route("/clozd_casing_color_options").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = product.name
       .replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD")
       .replace(" Glow Casings", "skinz");
@@ -730,7 +732,7 @@ router.route("/clozd_casing_size_options").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "CLOZD " + product.name.replace(" Glow Casings", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -748,7 +750,7 @@ router.route("/clozd_glowskinz").put(async (req, res) => {
     subcategory: "classics",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const product_name = "CLOZD " + product.name.replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -858,7 +860,7 @@ router.route("/vortex_language").put(async (req, res) => {
     category: "diffusers",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     const facts_array = product.facts.split("\n");
     facts_array.splice(facts_array.length - 2, 2);
     // product.facts = product.facts.split("\n").pop();
@@ -878,7 +880,7 @@ router.route("/processing_time_diffusers").put(async (req, res) => {
     category: "diffusers",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [2, 5];
     const result = await product.save();
   });
@@ -891,7 +893,7 @@ router.route("/processing_time_exo_diffusers").put(async (req, res) => {
     category: "exo_diffusers",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [3, 6];
     const result = await product.save();
   });
@@ -904,7 +906,7 @@ router.route("/processing_time_diffuser_caps").put(async (req, res) => {
     category: "diffuser_caps",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [3, 6];
     const result = await product.save();
   });
@@ -917,7 +919,7 @@ router.route("/processing_time_decals").put(async (req, res) => {
     category: "decals",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [3, 6];
     const result = await product.save();
   });
@@ -930,7 +932,7 @@ router.route("/processing_time_gloves").put(async (req, res) => {
     category: { $in: ["gloves"] },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [1, 3];
     const result = await product.save();
   });
@@ -943,7 +945,7 @@ router.route("/processing_time_glowskinz").put(async (req, res) => {
     category: { $in: ["glowskinz"] },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [3, 7];
     const result = await product.save();
   });
@@ -956,7 +958,7 @@ router.route("/processing_time_glowstringz").put(async (req, res) => {
     category: { $in: ["glowstringz"] },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [6, 10];
     const result = await product.save();
   });
@@ -970,7 +972,7 @@ router.route("/processing_time_battery_coin").put(async (req, res) => {
     subcategory: "coin",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [1, 3];
     const result = await product.save();
   });
@@ -984,7 +986,7 @@ router.route("/processing_time_battery_storage").put(async (req, res) => {
     subcategory: "storage",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.processing_time = [5, 8];
     const result = await product.save();
   });
@@ -1002,7 +1004,7 @@ router.route("/adding_clear_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62b12ad5e9a1c4705bd04412";
     const result = await product.save();
   });
@@ -1020,7 +1022,7 @@ router.route("/adding_clear_petg").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae4e01f26dbb73774e19";
     const result = await product.save();
   });
@@ -1038,7 +1040,7 @@ router.route("/adding_frosted_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afaee901f26dbb73774e3d";
     const result = await product.save();
   });
@@ -1052,7 +1054,7 @@ router.route("/adding_frosted_petg").put(async (req, res) => {
     color_code: "#abaeb5",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae6901f26dbb73774e1f";
     const result = await product.save();
   });
@@ -1071,7 +1073,7 @@ router.route("/adding_red_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afad6101f26dbb73774df0";
     const result = await product.save();
   });
@@ -1086,7 +1088,7 @@ router.route("/adding_red_petg").put(async (req, res) => {
     color_code: "#c11c22",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afad4701f26dbb73774de4";
     const result = await product.save();
   });
@@ -1100,7 +1102,7 @@ router.route("/adding_emerald_tpu").put(async (req, res) => {
     color_code: "#15715a",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afadb301f26dbb73774e01";
     const result = await product.save();
   });
@@ -1114,7 +1116,7 @@ router.route("/adding_green_petg").put(async (req, res) => {
     color_code: "#00c700",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afad7701f26dbb73774df6";
     const result = await product.save();
   });
@@ -1128,7 +1130,7 @@ router.route("/adding_teal_tpu").put(async (req, res) => {
     color_code: "#1da5b3",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afadee01f26dbb73774e07";
     const result = await product.save();
   });
@@ -1147,7 +1149,7 @@ router.route("/adding_blue_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae1901f26dbb73774e0d";
     const result = await product.save();
   });
@@ -1161,7 +1163,7 @@ router.route("/adding_blue_petg").put(async (req, res) => {
     color_code: "#0014ff",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae8301f26dbb73774e25";
     const result = await product.save();
   });
@@ -1180,7 +1182,7 @@ router.route("/adding_violet_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afad1901f26dbb73774ddd";
     const result = await product.save();
   });
@@ -1194,7 +1196,7 @@ router.route("/adding_violet_petg").put(async (req, res) => {
     color_code: "#543abb",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afad0c01f26dbb73774dd7";
     const result = await product.save();
   });
@@ -1213,7 +1215,7 @@ router.route("/adding_purple_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae3001f26dbb73774e13";
     const result = await product.save();
   });
@@ -1228,7 +1230,7 @@ router.route("/adding_purple_petg").put(async (req, res) => {
     // color_code: "purple",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afae9d01f26dbb73774e2b";
     const result = await product.save();
   });
@@ -1247,7 +1249,7 @@ router.route("/adding_black_tpu").put(async (req, res) => {
     },
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afaeb801f26dbb73774e37";
     const result = await product.save();
   });
@@ -1262,7 +1264,7 @@ router.route("/adding_black_petg").put(async (req, res) => {
     // color_code: "purple",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afaeb101f26dbb73774e31";
     const result = await product.save();
   });
@@ -1277,7 +1279,7 @@ router.route("/adding_white_petg").put(async (req, res) => {
     color_code: "white",
   });
 
-  products.forEach(async (product) => {
+  products.forEach(async product => {
     product.filament = "62afaef401f26dbb73774e43";
     const result = await product.save();
   });
@@ -1355,7 +1357,7 @@ router.route("/delete_multiple_products").put(async (req, res) => {
 router.route("/all_options").put(async (req, res) => {
   const products = await Product.find({ deleted: false, option: true });
   //
-  const ids = products.map((product) => {
+  const ids = products.map(product => {
     return {
       id: product._id,
       name: product.name,
@@ -1375,7 +1377,7 @@ router.route("/all_options").put(async (req, res) => {
 router.route("/all_products").put(async (req, res) => {
   const products = await Product.find({ deleted: false });
   //
-  const ids = products.map((product) => {
+  const ids = products.map(product => {
     return {
       id: product._id,
       name: product.name,
@@ -1408,7 +1410,7 @@ router.route("/add_shipping").put(async (req, res) => {
     country: "",
   };
   // Loop through users and add shipping
-  users.forEach(async (user) => {
+  users.forEach(async user => {
     const u = await User.findOne({ _id: user._id });
     const updated_user = new User(u);
     updated_user.shipping = shipping;
@@ -1433,7 +1435,7 @@ router.route("/add_public_url").put(async (req, res) => {
     country: "",
   };
   // Loop through users and add shipping
-  users.forEach(async (user) => {
+  users.forEach(async user => {
     const u = await User.findOne({ _id: user._id });
     const updated_user = new User(u);
     updated_user.shipping = shipping;
@@ -1446,7 +1448,7 @@ router.route("/update_all_orders_easy_post_tracking_url").put(async (req, res) =
   // Get all orders that arent deleted
   const orders = await Order.find({ deleted: false });
   // Loop through orders and update easy_post_tracking_url
-  orders.forEach(async (order) => {
+  orders.forEach(async order => {
     const o = await Order.findOne({ _id: order._id });
     const updated_order = new Order(o);
     updated_order.tracking_url = order.easy_post_tracking_url;
@@ -1458,9 +1460,9 @@ router.route("/update_refund_price").put(async (req, res) => {
     // // find all orders with isRefunded: true
     const orders = await Order.find({ deleted: false, isRefunded: true });
 
-    const refunds = orders.map((order) => {
+    const refunds = orders.map(order => {
       // Update refundPrice with the refund amount
-      const totalRefunds = order.payment?.refund.reduce((acc, curr: { amount }) => {
+      const totalRefunds = order.payment?.refund.reduce((acc, curr) => {
         return acc + curr.amount;
       }, 0);
       order.refundTotal = totalRefunds / 100;
@@ -1499,7 +1501,7 @@ router.route("/update_refund_price").put(async (req, res) => {
 router.route("/create_image_records_and_reference_them_in_product").put(async (req, res) => {
   const products = await Product.find({ deleted: false }).sort({ order: 1 });
 
-  const processProduct = async (product) => {
+  const processProduct = async product => {
     const { _id, name } = product;
     const imagesToUpdate = [
       { array: "images", object: "images_object" },
@@ -1512,7 +1514,7 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
     for (const { array, object } of imagesToUpdate) {
       if (product[array] && product[array].length > 0) {
         const newImageIds = await Promise.all(
-          product[array].map(async (imageUrl) => {
+          product[array].map(async imageUrl => {
             const response = await Image.create({ link: imageUrl, album: name });
             return response._id;
           })
@@ -1534,7 +1536,7 @@ router.route("/create_content_image_records_and_reference_them").put(async (req,
 
   const imageCache = {};
 
-  const processContent = async (content) => {
+  const processContent = async content => {
     const { _id, home_page } = content;
     const albumName = home_page.h1;
 
@@ -1554,7 +1556,7 @@ router.route("/create_content_image_records_and_reference_them").put(async (req,
         }
       }
 
-      const processImage = async (imageUrl) => {
+      const processImage = async imageUrl => {
         if (imageCache[imageUrl]) {
           return imageCache[imageUrl];
         }
@@ -1572,7 +1574,7 @@ router.route("/create_content_image_records_and_reference_them").put(async (req,
 
       if (Array.isArray(obj)) {
         const newImageIds = await Promise.all(
-          obj.map(async (item) => {
+          obj.map(async item => {
             const imageUrl = arrayProp ? item[arrayProp] : item;
             if (imageUrl) {
               return await processImage(imageUrl);
@@ -1638,7 +1640,7 @@ router.route("/migrate_slideshow_images").put(async (req, res) => {
   const contents = await Content.find({ deleted: false });
   const imageCache = {};
 
-  const processContent = async (content) => {
+  const processContent = async content => {
     const { _id, home_page } = content;
     const albumName = home_page.h1;
     console.log({ albumName });
@@ -1679,7 +1681,7 @@ router.route("/migrate_email_images").put(async (req, res) => {
   const emails = await Email.find({ deleted: false });
   const imageCache = {};
 
-  const processEmail = async (email) => {
+  const processEmail = async email => {
     const { _id, h1 } = email;
     const albumName = h1;
 
@@ -1708,7 +1710,7 @@ router.route("/migrate_email_images").put(async (req, res) => {
     // Multiple images
     if (email.images && Array.isArray(email.images)) {
       const newImageIds = await Promise.all(
-        email.images.map(async (imageUrl) => {
+        email.images.map(async imageUrl => {
           if (imageCache[imageUrl]) {
             return imageCache[imageUrl];
           }
@@ -1739,7 +1741,7 @@ router.route("/migrate_email_images").put(async (req, res) => {
 });
 
 router.route("/create_category_records_and_reference_them_in_product").put(async (req, res) => {
-  const findOrCreateCategory = async (name) => {
+  const findOrCreateCategory = async name => {
     let category = await Category.findOne({ name });
     if (!category) {
       category = new Category({ name });
@@ -1800,7 +1802,7 @@ router.route("/delete_old_carts").put(async (req, res) => {
 router.route("/make_expenses_positive").put(async (req, res) => {
   try {
     const expenses = await Expense.find({ deleted: false });
-    const updated_expenses = expenses.map(async (expense) => {
+    const updated_expenses = expenses.map(async expense => {
       if (expense.amount < 0) {
         expense.amount = expense.amount * -1;
         await expense.save();
@@ -1815,7 +1817,7 @@ router.route("/card_migration").put(async (req, res) => {
   try {
     // Replace FID with Fidelity 7484 in expenses
     const expenses = await Expense.find({ deleted: false });
-    const updated_expenses = expenses.map(async (expense) => {
+    const updated_expenses = expenses.map(async expense => {
       if (expense.card === "FID") {
         expense.card = "Fidelity 7484";
         await expense.save();
@@ -1843,7 +1845,7 @@ router.route("/airtable_invoice_download").put(async (req, res) => {
     // Replace FID with Fidelity 7484 in expenses
     const expenses = await Expense.find({ deleted: false });
 
-    expenses.forEach(async (expense) => {
+    expenses.forEach(async expense => {
       if (expense.airtable_invoice_links && expense.airtable_invoice_links.length > 0) {
         expense.airtable_invoice_links.forEach(async (link, index) => {
           const url = link;
@@ -1876,7 +1878,7 @@ router.route("/link_documents_to_expenses").put(async (req, res) => {
       }));
 
     // Group the files by airtable_id
-    const filesByAirtableId: { [key][] } = {};
+    const filesByAirtableId = {};
     for (const file of files) {
       // Split the filename by underscore
       const splitName = file.name.split("_");
@@ -1928,7 +1930,7 @@ router.route("/link_documents_to_expenses").put(async (req, res) => {
         }
 
         const images = await Promise.all(
-          uploadedImageLinks.map(async (link) => {
+          uploadedImageLinks.map(async link => {
             return await image_db.create_images_db({ link, album: expense_name });
           })
         );
@@ -1983,11 +1985,8 @@ router.route("/delete_all_expenses").put(async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
-import { Request, Response, Router } from "express";
-import { Promo } from "./promos";
-import { Survey } from "./surveys";
 
-router.route("/update_status").put(async (req: Request, res: Response) => {
+router.route("/update_status").put(async (req, res) => {
   try {
     console.log("Starting status update...");
 
@@ -2004,7 +2003,7 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
     };
 
     // Define the cutoff date
-    const cutoffDate: Date = new Date("2023-06-26T02:03:50.442Z");
+    const cutoffDate = new Date("2023-06-26T02:03:50.442Z");
 
     console.log("Updating documents...");
     // Update the documents
@@ -2081,7 +2080,7 @@ router.route("/sample_ids").put(async (req, res) => {
 
     // Get the user details of the sponsored affiliates
     const sponsoredAffiliateUsers = await User.find({
-      _id: { $in: sponsoredAffiliates.map((affiliate) => affiliate.user) },
+      _id: { $in: sponsoredAffiliates.map(affiliate => affiliate.user) },
     });
 
     // Combine the employees and sponsored affiliate users
@@ -2158,9 +2157,9 @@ router.route("/import_checkins").put(async (req, res) => {
     const checkinsData = [];
     csv
       .parseStream(checkinsStream, { headers: true })
-      .on("error", (error) => console.error(error))
-      .on("data", (row) => checkinsData.push(row))
-      .on("end", async (rowCount) => {
+      .on("error", error => console.error(error))
+      .on("data", row => checkinsData.push(row))
+      .on("end", async rowCount => {
         for (const data of checkinsData) {
           const {
             "Glover Name": artist_name,
@@ -2174,7 +2173,7 @@ router.route("/import_checkins").put(async (req, res) => {
           if (affiliate) {
             // Check if there is already a checkin for the same month and year.
             const existingCheckin = affiliate.sponsorMonthlyCheckins.find(
-              (ci) => ci.year === checkin.year && ci.month === checkin.month
+              ci => ci.year === checkin.year && ci.month === checkin.month
             );
 
             if (existingCheckin) {
@@ -2234,7 +2233,7 @@ router.route("/migrate_surveys").put(async (req, res) => {
 
     const surveys = await Survey.find({ is_survey: { $ne: true } });
 
-    const bulkOps = surveys.map((survey) => {
+    const bulkOps = surveys.map(survey => {
       const questionAnswerArray = [];
 
       for (const qa of surveyTemplate.question_answer) {

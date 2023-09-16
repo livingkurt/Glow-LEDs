@@ -4,7 +4,7 @@ import { survey_db } from "../surveys";
 import { normalizeSurveyFilters, normalizeSurveySearch } from "./survey_helpers";
 
 export default {
-  get_table_surveys_s: async (query: { page; search; sort; limit; filters }) => {
+  get_table_surveys_s: async query => {
     try {
       const sort_options = ["createdAt", "active", "home_page", "banner"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -26,7 +26,7 @@ export default {
       }
     }
   },
-  findAll_surveys_s: async (query) => {
+  findAll_surveys_s: async query => {
     const { limit, page, search, sort, filters } = query;
     console.log({ query });
     try {
@@ -40,7 +40,7 @@ export default {
       }
     }
   },
-  findById_surveys_s: async (params) => {
+  findById_surveys_s: async params => {
     try {
       return await survey_db.findById_surveys_db(params.id);
     } catch (error) {
@@ -49,7 +49,7 @@ export default {
       }
     }
   },
-  create_surveys_s: async (body) => {
+  create_surveys_s: async body => {
     try {
       return await survey_db.create_surveys_db(body);
     } catch (error) {
@@ -67,7 +67,7 @@ export default {
       }
     }
   },
-  remove_surveys_s: async (params) => {
+  remove_surveys_s: async params => {
     try {
       return await survey_db.remove_surveys_db(params.id);
     } catch (error) {

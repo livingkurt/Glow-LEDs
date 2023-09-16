@@ -2,7 +2,7 @@ import { filament_db } from "../filaments";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_filaments_s: async (query: { page; search; sort; limit }) => {
+  findAll_filaments_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -35,7 +35,7 @@ export default {
       }
     }
   },
-  findById_filaments_s: async (params) => {
+  findById_filaments_s: async params => {
     try {
       return await filament_db.findById_filaments_db(params.id);
     } catch (error) {
@@ -44,7 +44,7 @@ export default {
       }
     }
   },
-  findMy_filaments_s: async (params) => {
+  findMy_filaments_s: async params => {
     try {
       return await filament_db.findMy_filaments_db(params.id);
     } catch (error) {
@@ -53,7 +53,7 @@ export default {
       }
     }
   },
-  create_filaments_s: async (body) => {
+  create_filaments_s: async body => {
     try {
       return await filament_db.create_filaments_db(body);
     } catch (error) {
@@ -71,7 +71,7 @@ export default {
       }
     }
   },
-  remove_filaments_s: async (params) => {
+  remove_filaments_s: async params => {
     try {
       return await filament_db.remove_filaments_db(params.id);
     } catch (error) {

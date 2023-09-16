@@ -12,7 +12,7 @@ import { getFilteredData } from "../api_helpers";
 // const sharp = require("sharp");
 
 export default {
-  findAll_products_s: async (query: { search; sort; page; limit }) => {
+  findAll_products_s: async query => {
     try {
       const sort_options = ["name", "hidden", "category", "order", "price"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -36,7 +36,7 @@ export default {
       }
     }
   },
-  create_filters_products_s: async (query: { search; sort; page; limit }) => {
+  create_filters_products_s: async query => {
     try {
       const availableFilters = {
         category: [
@@ -106,7 +106,7 @@ export default {
       }
     }
   },
-  findAllGrid_products_s: async (query: { page; search; sort; limit }) => {
+  findAllGrid_products_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -169,7 +169,7 @@ export default {
       }
     }
   },
-  findById_products_s: async (params) => {
+  findById_products_s: async params => {
     try {
       return await product_db.findById_products_db(params.id);
     } catch (error) {
@@ -178,7 +178,7 @@ export default {
       }
     }
   },
-  create_products_s: async (body) => {
+  create_products_s: async body => {
     try {
       return await product_db.create_products_db(body);
     } catch (error) {
@@ -197,12 +197,12 @@ export default {
       }
     }
   },
-  reorder_products_s: async (body) => {
+  reorder_products_s: async body => {
     try {
       const { reorderedItems } = body;
 
       // Update each product's order using the reorderedItems array
-      const updatePromises = reorderedItems.map(async (item) => {
+      const updatePromises = reorderedItems.map(async item => {
         await product_db.update_products_db(item._id, { ...item, order: item.order });
       });
 
@@ -217,7 +217,7 @@ export default {
       }
     }
   },
-  remove_products_s: async (params) => {
+  remove_products_s: async params => {
     try {
       return await product_db.remove_products_db(params.id);
     } catch (error) {
@@ -227,11 +227,11 @@ export default {
     }
   },
 
-  get_best_sellers_products_s: async (body) => {
+  get_best_sellers_products_s: async body => {
     try {
       const occurences = body.occurences;
 
-      const names = occurences.map((item) => item.name);
+      const names = occurences.map(item => item.name);
 
       const sort = {};
       const filter = { name: { $in: names }, deleted: false, hidden: false };
@@ -239,8 +239,8 @@ export default {
       const page = "1";
       const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
       const compareFn = (a, b) => {
-        const aIndex = occurences.findIndex((x) => x.name === a.name);
-        const bIndex = occurences.findIndex((x) => x.name === b.name);
+        const aIndex = occurences.findIndex(x => x.name === a.name);
+        const bIndex = occurences.findIndex(x => x.name === b.name);
         return aIndex - bIndex;
       };
       const sortedProducts = products.sort(compareFn);
@@ -302,7 +302,7 @@ export default {
   update_stock_products_s: async (params, body) => {
     const { cartItems } = body;
     try {
-      cartItems.forEach(async (item) => {
+      cartItems.forEach(async item => {
         const product = await product_db.findById_products_db(item.product);
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
@@ -324,7 +324,7 @@ export default {
   update_product_order_products_s: async (params, body) => {
     const { state } = body;
     try {
-      return state.entities.columnOrder.map((columnId) => {
+      return state.entities.columnOrder.map(columnId => {
         const column = state.entities.columns[columnId];
         const products = [];
         state.entities.products.forEach(function (product) {
@@ -403,8 +403,7 @@ export default {
         ];
 
         product.numReviews = product.reviews.length;
-        product.rating =
-          product.reviews.reduce((a, c: { rating }) => c.rating + a, 0) / product.reviews.length;
+        product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
 
         const updatedProduct = await product.save();
         if (updatedProduct) {
@@ -419,7 +418,7 @@ export default {
       }
     }
   },
-  image_upload_products_s: async (req) => {
+  image_upload_products_s: async req => {
     // or you can use
     const formData = new FormData(req);
     // const { images, album_title } = body;
@@ -460,7 +459,7 @@ export default {
   //           }
   //   }
   // },
-  remove_multiple_products_s: async (body) => {
+  remove_multiple_products_s: async body => {
     try {
       return await product_db.remove_multiple_products_db(body.ids);
     } catch (error) {
@@ -478,7 +477,7 @@ export default {
       }
     }
   },
-  distinct_products_s: async (params) => {
+  distinct_products_s: async params => {
     const { attribute } = params;
     try {
       return await product_db.distinct_products_db(attribute);

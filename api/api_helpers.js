@@ -1,4 +1,4 @@
-export const getSort = (sort_options[], querySort[]) => {
+export const getSort = (sort_options, querySort) => {
   const sortIndex = querySort ? parseInt(querySort[0]) : 1;
   const direction = querySort ? (querySort[1] === "asc" ? -1 : 1) : 1;
   const sort = sort_options[sortIndex] ? { [sort_options[sortIndex]]: direction } : { _id: -1 };
@@ -13,8 +13,8 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
       ? {
           [search_name]: {
             $regex: query.search,
-            $options: "i"
-          }
+            $options: "i",
+          },
         }
       : {};
 

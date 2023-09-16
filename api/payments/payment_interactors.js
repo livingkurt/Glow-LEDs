@@ -8,14 +8,8 @@ const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
 });
 // Function to create or update a Stripe customer
-interface CustomerInformation {
-  name;
-  email;
-  address: Stripe.AddressParam;
-  payment_method;
-}
 
-export const createOrUpdateCustomer = async (current_userrmation: CustomerInformation) => {
+export const createOrUpdateCustomer = async current_userrmation => {
   try {
     const customer = await stripe.customers.create({
       name: current_userrmation.name,
@@ -26,7 +20,7 @@ export const createOrUpdateCustomer = async (current_userrmation: CustomerInform
     return customer;
   } catch (error) {
     if (error.code === "resource_already_exists") {
-      const existingCustomer = await stripe.customers.retrieve(error.raw.requestId as string);
+      const existingCustomer = await stripe.customers.retrieve(error.raw.requestId);
       return existingCustomer;
     } else {
       if (error instanceof Error) {

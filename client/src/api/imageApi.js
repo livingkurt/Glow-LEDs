@@ -8,19 +8,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getImages = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getImages = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/images`, {
       params: {

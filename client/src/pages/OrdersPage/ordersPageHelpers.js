@@ -186,7 +186,7 @@ export const sendEmail = (shipping) => {
 };
 
 const waitForImagesToLoad = (htmlString) => {
-  return new Promise<void>(resolve => {
+  return new Promise(resolve => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
     const images = doc.querySelectorAll("img");

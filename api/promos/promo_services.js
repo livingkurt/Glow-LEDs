@@ -18,7 +18,7 @@ import {
 } from "./promo_interactors";
 
 export default {
-  findAll_promos_s: async (query: { page; search; sort; limit }) => {
+  findAll_promos_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -60,7 +60,7 @@ export default {
       }
     }
   },
-  findAllTable_promos_s: async (query: { page; search; sort; limit; filters }) => {
+  findAllTable_promos_s: async query => {
     try {
       const sort_options = [
         "createdAt",
@@ -90,7 +90,7 @@ export default {
       }
     }
   },
-  create_filters_promos_s: async (query: { search; sort; page; limit }) => {
+  create_filters_promos_s: async query => {
     try {
       const availableFilters = {
         affiliate_only: [],
@@ -127,7 +127,7 @@ export default {
       }
     }
   },
-  findById_promos_s: async (params) => {
+  findById_promos_s: async params => {
     try {
       return await promo_db.findById_promos_db(params.id);
     } catch (error) {
@@ -136,7 +136,7 @@ export default {
       }
     }
   },
-  findByAffiliateId_promos_s: async (params) => {
+  findByAffiliateId_promos_s: async params => {
     try {
       const promos = await promo_db.findByAffiliateId_promos_db(params.affiliate_id);
       const { twentyFiveOffCode, refreshCode } = extractCodes(promos);
@@ -147,7 +147,7 @@ export default {
       }
     }
   },
-  findByCode_promos_s: async (params) => {
+  findByCode_promos_s: async params => {
     try {
       return await promo_db.findByCode_promos_db(params.promo_code);
     } catch (error) {
@@ -156,7 +156,7 @@ export default {
       }
     }
   },
-  create_promos_s: async (body) => {
+  create_promos_s: async body => {
     try {
       return await promo_db.create_promos_db(body);
     } catch (error) {
@@ -165,7 +165,7 @@ export default {
       }
     }
   },
-  create_one_time_use_code_promos_s: async (body) => {
+  create_one_time_use_code_promos_s: async body => {
     const private_code = {
       promo_code: make_private_code(6),
       admin_only: false,
@@ -206,11 +206,11 @@ export default {
 
     try {
       const sponsor_codes = await Promise.all(
-        affiliates.map(async (affiliate) => {
+        affiliates.map(async affiliate => {
           deactivateOldCodes(affiliate);
           //const previousMonth = date.toLocaleString("default", { month: "long" });
           const checkinCompleted = affiliate?.sponsorMonthlyCheckins?.find(
-            (checkin) => checkin.month === currentMonth && checkin.year === currentYear
+            checkin => checkin.month === currentMonth && checkin.year === currentYear
           );
           if (checkinCompleted) {
             return generateSponsorCodes(affiliate);
@@ -274,12 +274,12 @@ export default {
       const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
 
       affiliates
-        .filter((affiliate) => !affiliate.deleted)
-        .filter((affiliate) => affiliate.active)
-        .filter((affiliate) => affiliate.private_code)
-        .forEach(async (affiliate) => {
+        .filter(affiliate => !affiliate.deleted)
+        .filter(affiliate => affiliate.active)
+        .filter(affiliate => affiliate.private_code)
+        .forEach(async affiliate => {
           const code_usage = orders.filter(
-            (order) =>
+            order =>
               order.promo_code &&
               order.promo_code.toLowerCase() === affiliate.public_code.promo_code &&
               affiliate.public_code.promo_code.toLowerCase()
@@ -327,7 +327,7 @@ export default {
       }
     }
   },
-  remove_promos_s: async (params) => {
+  remove_promos_s: async params => {
     try {
       return await promo_db.remove_promos_db(params.id);
     } catch (error) {
@@ -336,7 +336,7 @@ export default {
       }
     }
   },
-  remove_multiple_promos_s: async (body) => {
+  remove_multiple_promos_s: async body => {
     try {
       return await promo_db.remove_multiple_promos_db(body.ids);
     } catch (error) {

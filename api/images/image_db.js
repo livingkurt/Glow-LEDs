@@ -14,7 +14,7 @@ export default {
       }
     }
   },
-  findById_images_db: async (id) => {
+  findById_images_db: async id => {
     let query = {};
 
     try {
@@ -30,7 +30,7 @@ export default {
       }
     }
   },
-  findByLink_images_db: async (link) => {
+  findByLink_images_db: async link => {
     try {
       return await Image.findOne({ link: link });
     } catch (error) {
@@ -39,7 +39,7 @@ export default {
       }
     }
   },
-  create_images_db: async (body) => {
+  create_images_db: async body => {
     try {
       return await Image.create(body);
     } catch (error) {
@@ -60,7 +60,7 @@ export default {
       }
     }
   },
-  remove_images_db: async (id) => {
+  remove_images_db: async id => {
     try {
       const image = await Image.findOne({ _id: id });
       if (image) {
@@ -72,7 +72,7 @@ export default {
       }
     }
   },
-  remove_multiple_images_db: async (ids[]) => {
+  remove_multiple_images_db: async ids => {
     try {
       return await Image.deleteMany({ _id: { $in: ids } });
     } catch (error) {
@@ -81,7 +81,7 @@ export default {
       }
     }
   },
-  count_images_db: async (filter) => {
+  count_images_db: async filter => {
     try {
       return await Image.countDocuments(filter);
     } catch (error) {

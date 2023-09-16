@@ -2,7 +2,7 @@ import wholesaler_db from "./wholesaler_db";
 import { getFilteredData } from "../api_helpers";
 
 export default {
-  findAll_wholesalers_s: async (query: { page; search; sort; limit; filters }) => {
+  findAll_wholesalers_s: async query => {
     try {
       const sort_options = ["company", "minimum_order_amount", "active"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "company" });
@@ -19,7 +19,7 @@ export default {
       }
     }
   },
-  findById_wholesalers_s: async (params: { id }) => {
+  findById_wholesalers_s: async params => {
     try {
       return await wholesaler_db.findById_wholesalers_db(params.id);
     } catch (error) {
@@ -28,7 +28,7 @@ export default {
       }
     }
   },
-  create_wholesalers_s: async (body) => {
+  create_wholesalers_s: async body => {
     try {
       return await wholesaler_db.create_wholesalers_db(body);
     } catch (error) {
@@ -46,7 +46,7 @@ export default {
       }
     }
   },
-  remove_wholesalers_s: async (params) => {
+  remove_wholesalers_s: async params => {
     try {
       return await wholesaler_db.remove_wholesalers_db(params);
     } catch (error) {

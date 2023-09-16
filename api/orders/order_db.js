@@ -74,7 +74,7 @@ export default {
     }
   },
 
-  findById_orders_db: async (id) => {
+  findById_orders_db: async id => {
     try {
       return await Order.findOne({ _id: id })
         .populate("user")
@@ -106,7 +106,7 @@ export default {
     }
   },
 
-  findBy_orders_db: async (params) => {
+  findBy_orders_db: async params => {
     try {
       return await Order.findOne(params)
         .populate("user")
@@ -118,7 +118,7 @@ export default {
       }
     }
   },
-  create_orders_db: async (body) => {
+  create_orders_db: async body => {
     try {
       return await Order.create(body);
     } catch (error) {
@@ -139,7 +139,7 @@ export default {
       }
     }
   },
-  remove_orders_db: async (id) => {
+  remove_orders_db: async id => {
     try {
       const order = await Order.findOne({ _id: id });
       if (order) {
@@ -151,7 +151,7 @@ export default {
       }
     }
   },
-  count_orders_db: async (filter) => {
+  count_orders_db: async filter => {
     try {
       return await Order.countDocuments(filter);
     } catch (error) {
@@ -179,7 +179,7 @@ export default {
 
       // Loop through products and get the name
       const products_with_names = await Promise.all(
-        products.map(async (product) => {
+        products.map(async product => {
           // Get the product
           const p = await Product.findOne({ _id: product._id });
           // Return the product with the name
@@ -450,7 +450,7 @@ export default {
     }
   },
 
-  get_yearly_revenue_product_orders_db: async (product_id) => {
+  get_yearly_revenue_product_orders_db: async product_id => {
     try {
       const ObjectId = require("mongoose").Types.ObjectId;
       const totalPriceByYear = await Order.aggregate([
@@ -516,7 +516,7 @@ export default {
     }
   },
 
-  get_monthly_revenue_orders_db: async (year) => {
+  get_monthly_revenue_orders_db: async year => {
     try {
       const totalPriceByMonth = await Order.aggregate([
         {
@@ -1053,7 +1053,7 @@ export default {
       }
     }
   },
-  remove_multiple_orders_db: async (ids[]) => {
+  remove_multiple_orders_db: async ids => {
     try {
       return await Order.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {

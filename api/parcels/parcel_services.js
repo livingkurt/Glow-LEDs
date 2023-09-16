@@ -2,7 +2,7 @@ import { parcel_db } from "../parcels";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_parcels_s: async (query: { page; search; sort; limit }) => {
+  findAll_parcels_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  findById_parcels_s: async (params) => {
+  findById_parcels_s: async params => {
     try {
       return await parcel_db.findById_parcels_db(params.id);
     } catch (error) {
@@ -51,7 +51,7 @@ export default {
       }
     }
   },
-  create_parcels_s: async (body) => {
+  create_parcels_s: async body => {
     try {
       return await parcel_db.create_parcels_db(body);
     } catch (error) {
@@ -69,7 +69,7 @@ export default {
       }
     }
   },
-  remove_parcels_s: async (params) => {
+  remove_parcels_s: async params => {
     try {
       return await parcel_db.remove_parcels_db(params.id);
     } catch (error) {

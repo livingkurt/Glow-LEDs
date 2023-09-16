@@ -8,19 +8,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getPromos = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getPromos = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/promos/table`, {
       params: {
@@ -52,18 +40,15 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query, th
   }
 });
 
-export const listSponsorCodes = createAsyncThunk(
-  "promos/listSponsorCodes",
-  async (affiliateId, thunkApi) => {
-    try {
-      const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
-      thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const listSponsorCodes = createAsyncThunk("promos/listSponsorCodes", async (affiliateId, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
+    thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const savePromo = createAsyncThunk("promos/savePromo", async (promo, thunkApi) => {
   try {
@@ -104,18 +89,15 @@ export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathnam
   }
 });
 
-export const deleteMultiplePromos = createAsyncThunk(
-  "promo/deleteMultiplePromos",
-  async (ids, thunkApi) => {
-    try {
-      const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
-      thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const deleteMultiplePromos = createAsyncThunk("promo/deleteMultiplePromos", async (ids, thunkApi) => {
+  try {
+    const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
+    thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes", async (_data, thunkApi) => {
   try {

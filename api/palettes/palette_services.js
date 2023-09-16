@@ -2,7 +2,7 @@ import { palette_db } from "../palettes";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_palettes_s: async (query: { page; search; sort; limit }) => {
+  findAll_palettes_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  findById_palettes_s: async (params) => {
+  findById_palettes_s: async params => {
     try {
       return await palette_db.findById_palettes_db(params.id);
     } catch (error) {
@@ -51,7 +51,7 @@ export default {
       }
     }
   },
-  findMy_palettes_s: async (params) => {
+  findMy_palettes_s: async params => {
     try {
       return await palette_db.findMy_palettes_db(params.id);
     } catch (error) {
@@ -60,7 +60,7 @@ export default {
       }
     }
   },
-  create_palettes_s: async (body) => {
+  create_palettes_s: async body => {
     try {
       return await palette_db.create_palettes_db(body);
     } catch (error) {
@@ -78,7 +78,7 @@ export default {
       }
     }
   },
-  remove_palettes_s: async (params) => {
+  remove_palettes_s: async params => {
     try {
       return await palette_db.remove_palettes_db(params.id);
     } catch (error) {

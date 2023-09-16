@@ -2,7 +2,7 @@ import tutorial_db from "./tutorial_db";
 import { getFilteredData } from "../api_helpers";
 
 export default {
-  findAll_tutorials_s: async (query: { search; sort; page; limit }) => {
+  findAll_tutorials_s: async query => {
     try {
       const sort_options = ["title", "video", "level", "order"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
@@ -20,7 +20,7 @@ export default {
       }
     }
   },
-  findById_tutorials_s: async (params: { id }) => {
+  findById_tutorials_s: async params => {
     try {
       return await tutorial_db.findById_tutorials_db(params.id);
     } catch (error) {
@@ -29,7 +29,7 @@ export default {
       }
     }
   },
-  create_tutorials_s: async (body) => {
+  create_tutorials_s: async body => {
     try {
       return await tutorial_db.create_tutorials_db(body);
     } catch (error) {
@@ -47,12 +47,12 @@ export default {
       }
     }
   },
-  reorder_tutorials_s: async (body) => {
+  reorder_tutorials_s: async body => {
     try {
       const { reorderedItems } = body;
 
       // Update each tutorial's order using the reorderedItems array
-      const updatePromises = reorderedItems.map(async (item) => {
+      const updatePromises = reorderedItems.map(async item => {
         await tutorial_db.update_tutorials_db({ id: item._id }, { ...item, order: item.order });
       });
 
@@ -67,7 +67,7 @@ export default {
       }
     }
   },
-  remove_tutorials_s: async (params) => {
+  remove_tutorials_s: async params => {
     try {
       return await tutorial_db.remove_tutorials_db(params);
     } catch (error) {

@@ -2,7 +2,7 @@ import { setting_db } from "../settings";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_settings_s: async (query: { page; search; sort; limit }) => {
+  findAll_settings_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  findById_settings_s: async (params) => {
+  findById_settings_s: async params => {
     try {
       return await setting_db.findById_settings_db(params.id);
     } catch (error) {
@@ -51,7 +51,7 @@ export default {
       }
     }
   },
-  create_settings_s: async (body) => {
+  create_settings_s: async body => {
     try {
       return await setting_db.create_settings_db(body);
     } catch (error) {
@@ -69,7 +69,7 @@ export default {
       }
     }
   },
-  remove_settings_s: async (params) => {
+  remove_settings_s: async params => {
     try {
       return await setting_db.remove_settings_db(params.id);
     } catch (error) {

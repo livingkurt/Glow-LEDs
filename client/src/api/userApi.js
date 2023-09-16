@@ -17,12 +17,6 @@ export const getUsers = async ({
   filters,
   page,
   pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
 }) => {
   try {
     return await axios.get(`/api/users`, {

@@ -13,12 +13,6 @@ export const getCategorys = async ({
   filters,
   page,
   pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
 }) => {
   try {
     return await axios.get(`/api/categorys`, {

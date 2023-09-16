@@ -8,7 +8,7 @@ import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_in
 import { user_db } from "../users";
 
 export default {
-  findAll_paychecks_s: async (query: { page; search; sort; limit; filters }) => {
+  findAll_paychecks_s: async query => {
     try {
       const sort_options = ["createdAt", "paid_at", "paid", "amount"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -31,13 +31,13 @@ export default {
       }
     }
   },
-  create_filters_paychecks_s: async (query: { search; sort; page; limit }) => {
+  create_filters_paychecks_s: async query => {
     const affiliates = await affiliate_db.findAll_affiliates_db({ active: true }, {}, "0", "1");
     const users = await user_db.findAll_users_db({ is_employee: true }, {}, "0", "1");
     try {
       const availableFilters = {
         paid: [],
-        affiliates: affiliates.map((affiliate) => ({ display: affiliate.artist_name, value: affiliate._id })),
+        affiliates: affiliates.map(affiliate => ({ display: affiliate.artist_name, value: affiliate._id })),
         // employees: users.map((user) => ({ display: `${user.first_name} ${user.last_name}`, value: user._id }))
       };
       const booleanFilters = {
@@ -52,7 +52,7 @@ export default {
       }
     }
   },
-  findById_paychecks_s: async (params) => {
+  findById_paychecks_s: async params => {
     try {
       return await paycheck_db.findById_paychecks_db(params.id);
     } catch (error) {
@@ -61,7 +61,7 @@ export default {
       }
     }
   },
-  findMy_paychecks_s: async (params) => {
+  findMy_paychecks_s: async params => {
     try {
       return await paycheck_db.findMy_paychecks_db(params.id);
     } catch (error) {
@@ -70,7 +70,7 @@ export default {
       }
     }
   },
-  create_paychecks_s: async (body) => {
+  create_paychecks_s: async body => {
     try {
       return await paycheck_db.create_paychecks_db(body);
     } catch (error) {
@@ -79,7 +79,7 @@ export default {
       }
     }
   },
-  create_affiliate_paychecks_s: async (params) => {
+  create_affiliate_paychecks_s: async params => {
     try {
       let a_filter = {};
       let o_filter = {};
@@ -133,12 +133,12 @@ export default {
       let paychecks = [];
       if (params.position !== "team") {
         paychecks = await Promise.all(
-          affiliates.map(async (affiliate) => {
+          affiliates.map(async affiliate => {
             return await paycheck_db.create_paychecks_db({
               affiliate: affiliate._id,
               amount: orders
                 .filter(
-                  (order) =>
+                  order =>
                     order.promo_code &&
                     order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
@@ -147,9 +147,7 @@ export default {
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund
-                        ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100
-                        : 0)) *
+                      (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0)) *
                       discount,
                   0
                 )
@@ -158,7 +156,7 @@ export default {
               promo_code: affiliate.public_code.promo_code.toLowerCase(),
               revenue: orders
                 .filter(
-                  (order) =>
+                  order =>
                     order.promo_code &&
                     order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
@@ -167,14 +165,12 @@ export default {
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund
-                        ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100
-                        : 0)),
+                      (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0)),
                   0
                 )
                 .toFixed(2),
               uses: orders.filter(
-                (order) =>
+                order =>
                   order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
               ).length,
             });
@@ -182,19 +178,17 @@ export default {
         );
       } else {
         paychecks = await Promise.all(
-          teams.map(async (team) => {
+          teams.map(async team => {
             return await paycheck_db.create_paychecks_db({
               team: team._id,
               amount: orders
-                .filter((order) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code)
+                .filter(order => order.promo_code && order.promo_code.toLowerCase() === team.promo_code)
                 .reduce(
                   (a, order) =>
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund
-                        ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100
-                        : 0)) *
+                      (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0)) *
                       discount,
                   0
                 )
@@ -202,7 +196,7 @@ export default {
               venmo: team.venmo,
               promo_code: team.promo_code,
               revenue: orders
-                .filter((order) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code)
+                .filter(order => order.promo_code && order.promo_code.toLowerCase() === team.promo_code)
                 .reduce(
                   (a, order) =>
                     a +
@@ -212,9 +206,8 @@ export default {
                   0
                 )
                 .toFixed(2),
-              uses: orders.filter(
-                (order) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code
-              ).length,
+              uses: orders.filter(order => order.promo_code && order.promo_code.toLowerCase() === team.promo_code)
+                .length,
             });
           })
         );
@@ -236,7 +229,7 @@ export default {
       }
     }
   },
-  remove_paychecks_s: async (params) => {
+  remove_paychecks_s: async params => {
     try {
       return await paycheck_db.remove_paychecks_db(params.id);
     } catch (error) {
@@ -245,7 +238,7 @@ export default {
       }
     }
   },
-  remove_multiple_paychecks_s: async (body) => {
+  remove_multiple_paychecks_s: async body => {
     try {
       return await paycheck_db.remove_multiple_paychecks_db(body.ids);
     } catch (error) {

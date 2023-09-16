@@ -2,7 +2,7 @@ import { feature_db } from "../features";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_features_s: async (query: { page; search; sort; limit }) => {
+  findAll_features_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  findByPathname_features_s: async (params) => {
+  findByPathname_features_s: async params => {
     try {
       return await feature_db.findByPathname_features_db(params.id);
     } catch (error) {
@@ -52,7 +52,7 @@ export default {
     }
   },
 
-  create_features_s: async (body) => {
+  create_features_s: async body => {
     try {
       return await feature_db.create_features_db(body);
     } catch (error) {
@@ -70,7 +70,7 @@ export default {
       }
     }
   },
-  remove_features_s: async (params) => {
+  remove_features_s: async params => {
     try {
       return await feature_db.remove_features_db(params.id);
     } catch (error) {

@@ -200,7 +200,7 @@ export default {
     }
   },
 
-  findById_products_db: async (id) => {
+  findById_products_db: async id => {
     let query = {};
 
     try {
@@ -354,7 +354,7 @@ export default {
     }
   },
 
-  create_products_db: async (body) => {
+  create_products_db: async body => {
     try {
       // const fields = [
       //   {
@@ -478,7 +478,7 @@ export default {
       }
     }
   },
-  remove_products_db: async (id) => {
+  remove_products_db: async id => {
     try {
       const product = await Product.findOne({ _id: id });
 
@@ -510,7 +510,7 @@ export default {
       }
     }
   },
-  remove_multiple_products_db: async (ids[]) => {
+  remove_multiple_products_db: async ids => {
     try {
       return await Product.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
@@ -519,7 +519,7 @@ export default {
       }
     }
   },
-  count_products_db: async (filter) => {
+  count_products_db: async filter => {
     try {
       return await Product.countDocuments(filter);
     } catch (error) {
@@ -545,7 +545,7 @@ export default {
       }
     }
   },
-  distinct_products_db: async (attribute) => {
+  distinct_products_db: async attribute => {
     try {
       if (attribute === "pathname") {
         return await Product.find({ deleted: false, option: false, hidden: false }).distinct(attribute);

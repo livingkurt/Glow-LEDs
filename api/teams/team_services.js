@@ -2,7 +2,7 @@ import { team_db } from "../teams";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_teams_s: async (query: { page; search; sort; limit }) => {
+  findAll_teams_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -48,7 +48,7 @@ export default {
       }
     }
   },
-  findByPathname_teams_s: async (params) => {
+  findByPathname_teams_s: async params => {
     try {
       return await team_db.findByPathname_teams_db(params.pathname);
     } catch (error) {
@@ -57,7 +57,7 @@ export default {
       }
     }
   },
-  findByAffiliate_teams_s: async (params) => {
+  findByAffiliate_teams_s: async params => {
     try {
       return await team_db.findByAffiliate_teams_db(params.id);
     } catch (error) {
@@ -66,7 +66,7 @@ export default {
       }
     }
   },
-  create_teams_s: async (body) => {
+  create_teams_s: async body => {
     try {
       return await team_db.create_teams_db(body);
     } catch (error) {
@@ -84,7 +84,7 @@ export default {
       }
     }
   },
-  remove_teams_s: async (params) => {
+  remove_teams_s: async params => {
     try {
       return await team_db.remove_teams_db(params.pathname);
     } catch (error) {

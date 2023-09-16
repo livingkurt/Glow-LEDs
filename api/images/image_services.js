@@ -14,7 +14,7 @@ const readdir = util.promisify(fs.readdir);
 // const client = new ImgurClient({ clientId: config.IMGUR_ClIENT_ID });
 
 export default {
-  findAll_images_s: async (query: { page; search; sort; limit; filters }) => {
+  findAll_images_s: async query => {
     try {
       const sort_options = ["createdAt", "album", "image", "link"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "album" });
@@ -31,7 +31,7 @@ export default {
       }
     }
   },
-  findById_images_s: async (params) => {
+  findById_images_s: async params => {
     try {
       return await image_db.findById_images_db(params.id);
     } catch (error) {
@@ -40,7 +40,7 @@ export default {
       }
     }
   },
-  findByLink_images_s: async (body) => {
+  findByLink_images_s: async body => {
     try {
       return await image_db.findByLink_images_db(body.link);
     } catch (error) {
@@ -75,14 +75,14 @@ export default {
       }
 
       const images = await Promise.all(
-        uploadedImageLinks.map(async (link) => {
+        uploadedImageLinks.map(async link => {
           return await image_db.create_images_db({ link, album: albumName });
         })
       );
 
       const uploadsDir = path.join(appRoot.path, "uploads");
       const uploadedFiles = await readdir(uploadsDir);
-      await Promise.all(uploadedFiles.map((file) => deleteFile(path.join(uploadsDir, file))));
+      await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
 
       return images;
     } catch (error) {
@@ -128,7 +128,7 @@ export default {
   //     }
   //   }
   // },
-  create_images_s: async (body) => {
+  create_images_s: async body => {
     try {
       return await image_db.create_images_db(body);
     } catch (error) {
@@ -146,7 +146,7 @@ export default {
       }
     }
   },
-  remove_images_s: async (params) => {
+  remove_images_s: async params => {
     try {
       return await image_db.remove_images_db(params.id);
     } catch (error) {
@@ -155,7 +155,7 @@ export default {
       }
     }
   },
-  remove_multiple_images_s: async (body) => {
+  remove_multiple_images_s: async body => {
     try {
       return await image_db.remove_multiple_images_db(body.ids);
     } catch (error) {

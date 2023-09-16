@@ -20,7 +20,7 @@ export default {
       }
     }
   },
-  findByAffiliateId_promos_db: async (affiliateId) => {
+  findByAffiliateId_promos_db: async affiliateId => {
     const currentDate = new Date();
     try {
       return await Promo.find({
@@ -35,7 +35,7 @@ export default {
       }
     }
   },
-  findById_promos_db: async (id) => {
+  findById_promos_db: async id => {
     try {
       return await Promo.findOne({ _id: id })
         .populate("affiliate")
@@ -50,7 +50,7 @@ export default {
       }
     }
   },
-  findBy_promos_db: async (params) => {
+  findBy_promos_db: async params => {
     try {
       return await Promo.findOne(params)
         .populate("affiliate")
@@ -65,7 +65,7 @@ export default {
       }
     }
   },
-  findByCode_promos_db: async (promo_code) => {
+  findByCode_promos_db: async promo_code => {
     try {
       return await Promo.findOne({ promo_code: promo_code })
         .populate("affiliate")
@@ -80,7 +80,7 @@ export default {
       }
     }
   },
-  create_promos_db: async (body) => {
+  create_promos_db: async body => {
     try {
       return await Promo.create(body);
     } catch (error) {
@@ -101,7 +101,7 @@ export default {
       }
     }
   },
-  remove_promos_db: async (id) => {
+  remove_promos_db: async id => {
     try {
       const promo = await Promo.findOne({ _id: id });
       if (promo) {
@@ -113,7 +113,7 @@ export default {
       }
     }
   },
-  remove_multiple_promos_db: async (ids[]) => {
+  remove_multiple_promos_db: async ids => {
     try {
       return await Promo.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
@@ -122,7 +122,7 @@ export default {
       }
     }
   },
-  count_promos_db: async (filter) => {
+  count_promos_db: async filter => {
     try {
       return await Promo.countDocuments(filter);
     } catch (error) {

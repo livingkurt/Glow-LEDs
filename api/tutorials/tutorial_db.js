@@ -15,7 +15,7 @@ export default {
       }
     }
   },
-  findBy_tutorials_db: async (params) => {
+  findBy_tutorials_db: async params => {
     try {
       return await Tutorial.findOne(params).populate("affiliate");
     } catch (error) {
@@ -24,7 +24,7 @@ export default {
       }
     }
   },
-  findByPathname_tutorials_db: async (pathname) => {
+  findByPathname_tutorials_db: async pathname => {
     try {
       return await Tutorial.findOne({ pathname: pathname }).populate("affiliate");
     } catch (error) {
@@ -33,7 +33,7 @@ export default {
       }
     }
   },
-  findById_tutorials_db: async (id) => {
+  findById_tutorials_db: async id => {
     try {
       return await Tutorial.findOne({ _id: id }).populate("affiliate");
     } catch (error) {
@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  create_tutorials_db: async (body) => {
+  create_tutorials_db: async body => {
     try {
       return await Tutorial.create(body);
     } catch (error) {
@@ -64,7 +64,7 @@ export default {
       }
     }
   },
-  remove_tutorials_db: async (params: { pathname }) => {
+  remove_tutorials_db: async params => {
     try {
       const tutorial = await Tutorial.findOne({ pathname: params.pathname });
       if (tutorial) {
@@ -76,7 +76,7 @@ export default {
       }
     }
   },
-  count_tutorials_db: async (filter) => {
+  count_tutorials_db: async filter => {
     try {
       return await Tutorial.countDocuments(filter);
     } catch (error) {

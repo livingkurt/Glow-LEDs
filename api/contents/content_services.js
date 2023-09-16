@@ -6,7 +6,7 @@ import { normalizeContentFilters, normalizeContentSearch } from "./content_helpe
 import { getFilteredData } from "../api_helpers";
 
 export default {
-  get_table_contents_s: async (query: { page; search; sort; limit; filters }) => {
+  get_table_contents_s: async query => {
     try {
       const sort_options = ["createdAt", "active", "home_page", "banner"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -28,7 +28,7 @@ export default {
       }
     }
   },
-  findAll_contents_s: async (query) => {
+  findAll_contents_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -69,7 +69,7 @@ export default {
       }
     }
   },
-  findDisplay_contents_s: async (query: { page; search; sort; limit }) => {
+  findDisplay_contents_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "1";
@@ -82,7 +82,7 @@ export default {
       }
     }
   },
-  findAllEvents_contents_s: async (query: { page; search; sort; limit }) => {
+  findAllEvents_contents_s: async query => {
     const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
     try {
       const { data } = await axios.get(url);
@@ -90,18 +90,16 @@ export default {
       const titles_html = root.querySelectorAll(".wideeventTitle");
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map((node) =>
-        node.childNodes.map((node) => node.childNodes[0].childNodes[0]._rawText)
-      );
+      const titles = titles_html.map(node => node.childNodes.map(node => node.childNodes[0].childNodes[0]._rawText));
       //
-      const links = titles_html.map((node) => node.childNodes.map((node) => node.rawAttrs.split("'")[1]));
+      const links = titles_html.map(node => node.childNodes.map(node => node.rawAttrs.split("'")[1]));
       //
-      const dates = dates_html.map((node) => node.childNodes[0]._rawText);
-      const cities = venues_html.map((node) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
-      const states = venues_html.map((node) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
-      const venues = venues_html.map((node) => node.childNodes[2].childNodes[0]._rawText);
-      const ages = venues_html.map((node) => node.childNodes[3]._rawText.replace(" &middot; ", ""));
-      let events: Array<any> = [];
+      const dates = dates_html.map(node => node.childNodes[0]._rawText);
+      const cities = venues_html.map(node => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
+      const states = venues_html.map(node => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
+      const venues = venues_html.map(node => node.childNodes[2].childNodes[0]._rawText);
+      const ages = venues_html.map(node => node.childNodes[3]._rawText.replace(" &middot; ", ""));
+      let events = [];
       titles.forEach((event, index) => {
         events = [
           ...events,
@@ -123,7 +121,7 @@ export default {
       }
     }
   },
-  findAllYoutube_contents_s: async (query: { page; search; sort; limit }) => {
+  findAllYoutube_contents_s: async query => {
     const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
     try {
       const { data } = await axios.get(url);
@@ -131,18 +129,16 @@ export default {
       const titles_html = root.querySelectorAll(".wideeventTitle");
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map((node) =>
-        node.childNodes.map((node) => node.childNodes[0].childNodes[0]._rawText)
-      );
+      const titles = titles_html.map(node => node.childNodes.map(node => node.childNodes[0].childNodes[0]._rawText));
       //
-      const links = titles_html.map((node) => node.childNodes.map((node) => node.rawAttrs.split("'")[1]));
+      const links = titles_html.map(node => node.childNodes.map(node => node.rawAttrs.split("'")[1]));
       //
-      const dates = dates_html.map((node) => node.childNodes[0]._rawText);
-      const cities = venues_html.map((node) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
-      const states = venues_html.map((node) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
-      const venues = venues_html.map((node) => node.childNodes[2].childNodes[0]._rawText);
-      const ages = venues_html.map((node) => node.childNodes[3]._rawText.replace(" &middot; ", ""));
-      let events: Array<any> = [];
+      const dates = dates_html.map(node => node.childNodes[0]._rawText);
+      const cities = venues_html.map(node => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
+      const states = venues_html.map(node => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
+      const venues = venues_html.map(node => node.childNodes[2].childNodes[0]._rawText);
+      const ages = venues_html.map(node => node.childNodes[3]._rawText.replace(" &middot; ", ""));
+      let events = [];
       titles.forEach((event, index) => {
         events = [
           ...events,
@@ -164,7 +160,7 @@ export default {
       }
     }
   },
-  findById_contents_s: async (params) => {
+  findById_contents_s: async params => {
     try {
       return await content_db.findById_contents_db(params.id);
     } catch (error) {
@@ -173,7 +169,7 @@ export default {
       }
     }
   },
-  create_contents_s: async (body) => {
+  create_contents_s: async body => {
     try {
       return await content_db.create_contents_db(body);
     } catch (error) {
@@ -191,7 +187,7 @@ export default {
       }
     }
   },
-  remove_contents_s: async (params) => {
+  remove_contents_s: async params => {
     try {
       return await content_db.remove_contents_db(params.id);
     } catch (error) {

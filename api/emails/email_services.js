@@ -6,7 +6,7 @@ import { getFilteredData } from "../api_helpers";
 import { normalizeEmailFilters, normalizeEmailSearch } from "./email_helpers";
 
 export default {
-  get_table_emails_s: async (query: { page; search; sort; limit; filters }) => {
+  get_table_emails_s: async query => {
     try {
       const sort_options = ["createdAt", "active", "h1", "h2"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -28,7 +28,7 @@ export default {
       }
     }
   },
-  findAll_emails_s: async (query: { page; search; sort; limit }) => {
+  findAll_emails_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -66,7 +66,7 @@ export default {
       }
     }
   },
-  findById_emails_s: async (params) => {
+  findById_emails_s: async params => {
     try {
       return await email_db.findById_emails_db(params.id);
     } catch (error) {
@@ -75,7 +75,7 @@ export default {
       }
     }
   },
-  create_emails_s: async (body) => {
+  create_emails_s: async body => {
     try {
       return await email_db.create_emails_db(body);
     } catch (error) {
@@ -93,7 +93,7 @@ export default {
       }
     }
   },
-  remove_emails_s: async (params) => {
+  remove_emails_s: async params => {
     try {
       return await email_db.remove_emails_db(params.id);
     } catch (error) {
@@ -102,7 +102,7 @@ export default {
       }
     }
   },
-  send_emails_s: async (body) => {
+  send_emails_s: async body => {
     const test = ["lavacquek@icloud.com"];
     const email = body.test ? test : body.email ? body.email : config.INFO_EMAIL;
     const mailOptions = {
@@ -113,13 +113,13 @@ export default {
     };
     return mailOptions;
   },
-  send_all_emails_s: async (body) => {
+  send_all_emails_s: async body => {
     // const users = await User.find({ deleted: false, email_subscription: true });
     const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const all_emails = users
-      .filter((user) => user.deleted === false)
-      .filter((user) => user.email_subscription === true)
-      .map((user) => user.email);
+      .filter(user => user.deleted === false)
+      .filter(user => user.email_subscription === true)
+      .map(user => user.email);
 
     const test = [
       "lavacquek@icloud.com",

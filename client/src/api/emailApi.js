@@ -15,12 +15,6 @@ export const getEmails = async ({
   filters,
   page,
   pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
 }) => {
   try {
     return await axios.get(`/api/emails/table`, {

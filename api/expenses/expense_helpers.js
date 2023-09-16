@@ -82,7 +82,7 @@ export const downloadFile = async (url, filePath, expenseName) => {
       const writer = fs.createWriteStream(outputPath);
       response.data.pipe(writer);
 
-      // return new Promise<void>((resolve, reject) => {
+      // return new Promise((resolve, reject) => {
       //   writer.on("finish", async () => {
       //     if (extension === ".pdf") {
       //       const options = {

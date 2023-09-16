@@ -16,7 +16,7 @@ export default {
       }
     }
   },
-  findBy_wholesalers_db: async (params) => {
+  findBy_wholesalers_db: async params => {
     try {
       return await Wholesaler.findOne(params).populate("user");
     } catch (error) {
@@ -25,7 +25,7 @@ export default {
       }
     }
   },
-  findByPathname_wholesalers_db: async (pathname) => {
+  findByPathname_wholesalers_db: async pathname => {
     try {
       return await Wholesaler.findOne({ pathname: pathname }).populate("user");
     } catch (error) {
@@ -34,7 +34,7 @@ export default {
       }
     }
   },
-  findById_wholesalers_db: async (id) => {
+  findById_wholesalers_db: async id => {
     try {
       return await Wholesaler.findOne({ _id: id }).populate("user");
     } catch (error) {
@@ -43,7 +43,7 @@ export default {
       }
     }
   },
-  create_wholesalers_db: async (body) => {
+  create_wholesalers_db: async body => {
     try {
       return await Wholesaler.create(body);
     } catch (error) {
@@ -64,7 +64,7 @@ export default {
       }
     }
   },
-  remove_wholesalers_db: async (params: { pathname }) => {
+  remove_wholesalers_db: async params => {
     try {
       const wholesaler = await Wholesaler.findOne({ pathname: params.pathname });
       if (wholesaler) {
@@ -76,7 +76,7 @@ export default {
       }
     }
   },
-  count_wholesalers_db: async (filter) => {
+  count_wholesalers_db: async filter => {
     try {
       return await Wholesaler.countDocuments(filter);
     } catch (error) {

@@ -17,7 +17,7 @@ export default {
       }
     }
   },
-  findById_paychecks_db: async (id) => {
+  findById_paychecks_db: async id => {
     try {
       return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
     } catch (error) {
@@ -26,7 +26,7 @@ export default {
       }
     }
   },
-  findBy_paychecks_db: async (filter) => {
+  findBy_paychecks_db: async filter => {
     try {
       return await Paycheck.findOne(filter).populate("user").populate("affiliate").populate("team");
     } catch (error) {
@@ -35,7 +35,7 @@ export default {
       }
     }
   },
-  findMy_paychecks_db: async (affiliate_id) => {
+  findMy_paychecks_db: async affiliate_id => {
     try {
       return await Paycheck.find({ deleted: false, affiliate: affiliate_id })
         .sort({ _id: -1 })
@@ -47,7 +47,7 @@ export default {
       }
     }
   },
-  create_paychecks_db: async (body) => {
+  create_paychecks_db: async body => {
     try {
       return await Paycheck.create(body);
     } catch (error) {
@@ -68,7 +68,7 @@ export default {
       }
     }
   },
-  remove_paychecks_db: async (id) => {
+  remove_paychecks_db: async id => {
     try {
       const paycheck = await Paycheck.findOne({ _id: id });
       if (paycheck) {
@@ -80,7 +80,7 @@ export default {
       }
     }
   },
-  remove_multiple_paychecks_db: async (ids[]) => {
+  remove_multiple_paychecks_db: async ids => {
     try {
       return await Paycheck.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
@@ -89,7 +89,7 @@ export default {
       }
     }
   },
-  count_paychecks_db: async (filter) => {
+  count_paychecks_db: async filter => {
     try {
       return await Paycheck.countDocuments(filter);
     } catch (error) {

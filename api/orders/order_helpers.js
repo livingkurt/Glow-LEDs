@@ -1,12 +1,12 @@
-export const mostRecentPayment = (payments) => {
+export const mostRecentPayment = payments => {
   return payments[payments.length - 1];
 };
 
-export const dedupeAddresses = (addresses[]) => {
+export const dedupeAddresses = addresses => {
   const seen = new Set();
   let uniqueKey = 0;
 
-  const uniqueAddresses = addresses.filter((address) => {
+  const uniqueAddresses = addresses.filter(address => {
     const serialized = `${address.first_name} ${address.last_name}`.toLowerCase();
     if (seen.has(serialized)) {
       return false;

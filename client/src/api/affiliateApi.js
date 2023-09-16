@@ -10,19 +10,7 @@ import * as API from "../api";
 
 import { handleTokenRefresh } from "./axiosInstance";
 
-export const getAffiliates = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getAffiliates = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/affiliates`, {
       params: {
@@ -48,50 +36,44 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   }
 });
 
-export const saveAffiliate = createAsyncThunk(
-  "affiliates/saveAffiliate",
-  async ({ affiliate, profile }, thunkApi) => {
-    try {
-      const {
-        users: {
-          userPage: { current_user },
-        },
-      } = thunkApi.getState();
+export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async ({ affiliate, profile }, thunkApi) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user },
+      },
+    } = thunkApi.getState();
 
-      const newAffiliate = !affiliate._id;
+    const newAffiliate = !affiliate._id;
 
-      if (newAffiliate) {
-        const { data } = await axios.post("/api/affiliates", affiliate);
-        if (profile) {
-          await thunkApi.dispatch(API.saveUser({ user: { _id: current_user._id, affiliate: data._id }, profile }));
-        }
-        return data;
-      } else {
-        const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate);
-        return data;
+    if (newAffiliate) {
+      const { data } = await axios.post("/api/affiliates", affiliate);
+      if (profile) {
+        await thunkApi.dispatch(API.saveUser({ user: { _id: current_user._id, affiliate: data._id }, profile }));
       }
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      return data;
+    } else {
+      const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate);
+      return data;
     }
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
-export const detailsAffiliate = createAsyncThunk(
-  "affiliates/detailsAffiliate",
-  async ({ pathname, id }, thunkApi) => {
-    try {
-      if (id) {
-        const { data } = await axios.get(`/api/affiliates/${id}`);
-        return data;
-      } else if (pathname) {
-        const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
-        return data;
-      }
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ pathname, id }, thunkApi) => {
+  try {
+    if (id) {
+      const { data } = await axios.get(`/api/affiliates/${id}`);
+      return data;
+    } else if (pathname) {
+      const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
+      return data;
     }
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (id, thunkApi) => {
   try {
@@ -129,22 +111,8 @@ export const create_rave_mob_affiliates = createAsyncThunk(
 
 export const affiliateEarnings = createAsyncThunk(
   "affiliates/affiliateEarnings",
-  async (
-    {
-      promo_code,
-      start_date,
-      end_date,
-      sponsor,
-      type,
-    }: { promo_code; start_date; end_date; sponsor; type },
-    thunkApi
-  ) => {
+  async ({ promo_code, start_date, end_date, sponsor, type }, thunkApi) => {
     try {
-      const {
-        users: {
-          userPage: { current_user },
-        },
-      } = thunkApi.getState();
       const { data } = await axios.get(
         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`
       );

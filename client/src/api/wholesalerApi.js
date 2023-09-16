@@ -7,19 +7,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getWholesalers = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getWholesalers = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/wholesalers`, {
       params: {
@@ -63,18 +51,15 @@ export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", asy
   }
 });
 
-export const detailsWholesaler = createAsyncThunk(
-  "wholesalers/detailsWholesaler",
-  async ({ id }, thunkApi) => {
-    try {
-      const { data } = await axios.get(`/api/wholesalers/${id}`);
-      thunkApi.dispatch(showSuccess({ message: `Wholesaler Found` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const detailsWholesaler = createAsyncThunk("wholesalers/detailsWholesaler", async ({ id }, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/wholesalers/${id}`);
+    thunkApi.dispatch(showSuccess({ message: `Wholesaler Found` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler", async (id, thunkApi) => {
   try {

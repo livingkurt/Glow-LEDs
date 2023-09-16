@@ -23,7 +23,7 @@ const scraper = require("table-scraper");
 const today = new Date();
 
 export default {
-  get_table_orders_s: async (query: { search; sort; page; limit; filters }) => {
+  get_table_orders_s: async query => {
     try {
       const sort_options = ["createdAt", "user.first_name", "totalPrice"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -46,7 +46,7 @@ export default {
       }
     }
   },
-  findAll_orders_s: async (query: { search; sort; page; limit; filters }) => {
+  findAll_orders_s: async query => {
     try {
       const sort_options = ["createdAt", "user.first_name", "totalPrice"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -83,7 +83,7 @@ export default {
   //     }
   //   }
   // },
-  create_filters_orders_s: async (query: { search; sort; page; limit }) => {
+  create_filters_orders_s: async query => {
     try {
       const availableFilters = {
         order_status: [
@@ -115,7 +115,7 @@ export default {
       }
     }
   },
-  findAllOld_orders_s: async (query: { page; search; sort; limit }) => {
+  findAllOld_orders_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "10";
@@ -242,7 +242,7 @@ export default {
       }
     }
   },
-  findMy_orders_s: async (params) => {
+  findMy_orders_s: async params => {
     try {
       const sort = { _id: -1 };
       const filter = { deleted: false, user: params.id };
@@ -255,7 +255,7 @@ export default {
       }
     }
   },
-  findById_orders_s: async (params) => {
+  findById_orders_s: async params => {
     try {
       return await order_db.findById_orders_db(params.id);
     } catch (error) {
@@ -264,7 +264,7 @@ export default {
       }
     }
   },
-  create_orders_s: async (body) => {
+  create_orders_s: async body => {
     try {
       return await order_db.create_orders_db(body);
     } catch (error) {
@@ -282,7 +282,7 @@ export default {
       }
     }
   },
-  remove_orders_s: async (params) => {
+  remove_orders_s: async params => {
     try {
       return await order_db.remove_orders_db(params.id);
     } catch (error) {
@@ -300,17 +300,12 @@ export default {
       }
     }
   },
-  top_customers_orders_s: async (params) => {
+  top_customers_orders_s: async params => {
     try {
       const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, "0", "1");
       const orders = await Promise.all(
-        users.map(async (user) => {
-          const orders = await order_db.findAll_orders_db(
-            { deleted: false, user: user._id },
-            { _id: -1 },
-            "0",
-            "1"
-          );
+        users.map(async user => {
+          const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 }, "0", "1");
           const amount = orders.reduce((total, c) => parseFloat(total) + parseFloat(c.totalPrice), 0);
           return {
             user: user,
@@ -320,7 +315,7 @@ export default {
         })
       );
       const sorted_orders = orders
-        .map((order) => {
+        .map(order => {
           return {
             user: order.user,
             number_of_orders: order.number_of_orders,
@@ -336,7 +331,7 @@ export default {
       }
     }
   },
-  category_occurrences_orders_s: async (params) => {
+  category_occurrences_orders_s: async params => {
     try {
       const sort = {};
       const filter = { deleted: false, user: params._id };
@@ -345,8 +340,8 @@ export default {
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
       const products = [];
       const ids = [];
-      orders.forEach((order) => {
-        order.orderItems.map((item) => {
+      orders.forEach(order => {
+        order.orderItems.map(item => {
           products.push(item.category);
           ids.push(item._id);
           if (item.secondary_product) {
@@ -402,11 +397,11 @@ export default {
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
       const number_of_uses = orders
-        .filter((order) => order.promo_code)
-        .filter((order) => order.promo_code.toLowerCase() === promo_code.toLowerCase()).length;
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === promo_code.toLowerCase()).length;
       const revenue = orders
-        .filter((order) => order.promo_code)
-        .filter((order) => order.promo_code.toLowerCase() === promo_code.toLowerCase())
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === promo_code.toLowerCase())
         .reduce(
           (a, order) =>
             a +
@@ -473,11 +468,11 @@ export default {
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
       const number_of_uses = orders
-        .filter((order) => order.promo_code)
-        .filter((order) => order.promo_code.toLowerCase() === params.promo_code.toLowerCase()).length;
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase()).length;
       const revenue = orders
-        .filter((order) => order.promo_code)
-        .filter((order) => order.promo_code.toLowerCase() === params.promo_code.toLowerCase())
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase())
         .reduce(
           (a, order) =>
             a +
@@ -503,7 +498,7 @@ export default {
       const tableData = await scraper.get(updatedSalesTaxes);
 
       const tempData = tableData[1];
-      tempData.map((state) => {
+      tempData.map(state => {
         const percentage = state["State Rate"];
         result[state["State"]] = percentage.slice(0, percentage.indexOf("%") + 1);
       });
@@ -563,8 +558,8 @@ export default {
         affiliates = [...affiliates, { public_code: { promo_code: "inkybois" } }];
       }
 
-      const affiliate_earnings_dups = affiliates.map((affiliate) => {
-        const code_usage = orders.filter((order) => {
+      const affiliate_earnings_dups = affiliates.map(affiliate => {
+        const code_usage = orders.filter(order => {
           return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
         }).length;
         return {
@@ -574,7 +569,7 @@ export default {
             orders &&
             orders
               .filter(
-                (order) =>
+                order =>
                   order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
               )
               .reduce(
@@ -591,7 +586,7 @@ export default {
             ? orders &&
               orders
                 .filter(
-                  (order) =>
+                  order =>
                     order.promo_code &&
                     order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
@@ -600,9 +595,7 @@ export default {
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund
-                        ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100
-                        : 0)) *
+                      (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0)) *
                       0.1,
                   0
                 )
@@ -610,7 +603,7 @@ export default {
             : orders &&
               orders
                 .filter(
-                  (order) =>
+                  order =>
                     order.promo_code &&
                     order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
@@ -619,9 +612,7 @@ export default {
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund
-                        ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100
-                        : 0)) *
+                      (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0)) *
                       0.15,
                   0
                 )
@@ -654,14 +645,8 @@ export default {
       // );
       const affiliate_s = removeDuplicates(affiliate_earnings_dups, "Promo Code");
       const uses_s = affiliate_s.reduce((a, affiliate) => a + affiliate.Uses, 0);
-      const revenue_s = affiliate_s.reduce(
-        (a, affiliate) => parseFloat(a) + parseFloat(affiliate.Revenue),
-        0
-      );
-      const earned_s = affiliate_s.reduce(
-        (a, affiliate) => parseFloat(a) + parseFloat(affiliate.Earned),
-        0
-      );
+      const revenue_s = affiliate_s.reduce((a, affiliate) => parseFloat(a) + parseFloat(affiliate.Revenue), 0);
+      const earned_s = affiliate_s.reduce((a, affiliate) => parseFloat(a) + parseFloat(affiliate.Earned), 0);
       // const affiliate_s_uses = removeDuplicates(sorted_by_uses, 'Promo Code');
       // const uses_s_uses = affiliate_s_uses.reduce((a, affiliate) => a + affiliate.Uses, 0);
       // const revenue_s_uses = affiliate_s_uses.reduce(
@@ -728,35 +713,25 @@ export default {
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
       const promos = await promo_db.findAll_promos_db(p_filter, {}, "0", "1");
       //
-      const promos_earnings = promos.map((code) => {
+      const promos_earnings = promos.map(code => {
         return {
           "Promo Code": toCapitalize(code.promo_code),
-          Uses: orders.filter((order) => {
+          Uses: orders.filter(order => {
             return order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase();
           }).length,
           Revenue: orders
-            .filter(
-              (order) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
-            )
+            .filter(order => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase())
             .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
             .toFixed(2),
           Discount: orders
-            .filter(
-              (order) => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
-            )
+            .filter(order => order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase())
             .reduce((a, order) => a + ((order.totalPrice - order.taxPrice) * code.percentage_off) / 100, 0)
             .toFixed(2),
         };
       });
       const uses_s = promos_earnings.reduce((a, promo) => a + promo.Uses, 0);
-      const revenue_s = promos_earnings.reduce(
-        (a, promo) => parseFloat(a) + parseFloat(promo.Revenue),
-        0
-      );
-      const discount_s = promos_earnings.reduce(
-        (a, promo) => parseFloat(a) + parseFloat(promo.Discount),
-        0
-      );
+      const revenue_s = promos_earnings.reduce((a, promo) => parseFloat(a) + parseFloat(promo.Revenue), 0);
+      const discount_s = promos_earnings.reduce((a, promo) => parseFloat(a) + parseFloat(promo.Discount), 0);
       return {
         promos: promos_earnings,
         uses: uses_s,
@@ -769,7 +744,7 @@ export default {
       }
     }
   },
-  each_day_income_orders_s: async (params) => {
+  each_day_income_orders_s: async params => {
     try {
       const date = params.date;
 
@@ -777,8 +752,8 @@ export default {
       const filter = {
         deleted: false,
         createdAt: {
-          $gt: new Date(<any>new Date(date).setHours(0, 0, 0)),
-          $lt: new Date(<any>new Date(date).setHours(23, 59, 59)),
+          $gt: new Date(new Date(date).setHours(0, 0, 0)),
+          $lt: new Date(new Date(date).setHours(23, 59, 59)),
         },
       };
       const limit = "50";
@@ -790,7 +765,7 @@ export default {
       }
     }
   },
-  each_month_income_orders_s: async (params) => {
+  each_month_income_orders_s: async params => {
     try {
       const start_date = params.date;
       const year = start_date.split("-")[0];
@@ -801,8 +776,8 @@ export default {
       const filter = {
         deleted: false,
         createdAt: {
-          $gt: new Date(<any>new Date(start_date).setHours(0, 0, 0) - 30 * 60 * 60 * 24 * 1000),
-          $lt: new Date(<any>new Date(end_date).setHours(23, 59, 59)),
+          $gt: new Date(new Date(start_date).setHours(0, 0, 0) - 30 * 60 * 60 * 24 * 1000),
+          $lt: new Date(new Date(end_date).setHours(23, 59, 59)),
         },
       };
       const limit = "50";
@@ -814,13 +789,13 @@ export default {
       }
     }
   },
-  previous_income_orders_s: async (params) => {
+  previous_income_orders_s: async params => {
     try {
       const sort = {};
       const filter = {
         deleted: false,
         createdAt: {
-          $gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000),
+          $gte: new Date(new Date() - params.days * 60 * 60 * 24 * 1000),
         },
       };
       const limit = "50";
@@ -832,7 +807,7 @@ export default {
       }
     }
   },
-  mark_as_shipped_orders_s: async (body) => {
+  mark_as_shipped_orders_s: async body => {
     try {
       const sort = {};
       const filter = {
@@ -852,7 +827,7 @@ export default {
       }
     }
   },
-  eligible_for_review_orders_s: async (body) => {
+  eligible_for_review_orders_s: async body => {
     try {
       const sort = {};
       const filter = {
@@ -868,7 +843,7 @@ export default {
       }
     }
   },
-  income_orders_s: async (params) => {
+  income_orders_s: async params => {
     // const { month, year } = params;
     const o_filter = {
       deleted: false,
@@ -903,99 +878,99 @@ export default {
       const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
 
       const gloves = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles");
+        .filter(item => item.subcategory === "singles");
       const s_gloves = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S");
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S");
       const m_gloves = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M");
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M");
       const l_gloves = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L");
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L");
       const xl_gloves = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL");
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL");
       const refresh = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh");
+        .filter(item => item.subcategory === "refresh");
       const s_refresh = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S");
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S");
       const m_refresh = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M");
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M");
       const l_refresh = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L");
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L");
       const xl_refresh = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL");
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL");
       const gloves_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.category === "gloves")
+        .filter(item => item.category === "gloves")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const singles_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles")
+        .filter(item => item.subcategory === "singles")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const refresh_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh")
+        .filter(item => item.subcategory === "refresh")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const s_singles_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S")
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const m_singles_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M")
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const l_singles_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L")
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const xl_singles_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL")
+        .filter(item => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const s_refresh_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S")
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const m_refresh_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M")
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const l_refresh_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L")
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const xl_refresh_total = orders_data
-        .map((order) => order.orderItems)
+        .map(order => order.orderItems)
         .flat(1)
-        .filter((item) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL")
+        .filter(item => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL")
         .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
       const breakdown = {
         gloves: {
@@ -1428,7 +1403,7 @@ export default {
   //     }
   //   }
   // },
-  invoice_orders_s: async (id) => {
+  invoice_orders_s: async id => {
     try {
       return await order_db.findById_orders_db(id);
     } catch (error) {
@@ -1464,10 +1439,7 @@ export default {
       }
     }
   },
-  get_product_range_revenue_orders_s: async (
-    params: { id },
-    query: { start_date; end_date }
-  ) => {
+  get_product_range_revenue_orders_s: async (params, query) => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
@@ -1477,7 +1449,7 @@ export default {
       }
     }
   },
-  get_all_product_range_revenue_orders_s: async (query: { start_date; end_date }) => {
+  get_all_product_range_revenue_orders_s: async query => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_all_product_range_revenue_orders_db(start_date, end_date);
@@ -1487,7 +1459,7 @@ export default {
       }
     }
   },
-  get_range_revenue_orders_s: async (query: { start_date; end_date }) => {
+  get_range_revenue_orders_s: async query => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_revenue_orders_db(start_date, end_date);
@@ -1497,7 +1469,7 @@ export default {
       }
     }
   },
-  get_daily_revenue_orders_s: async (query: { start_date; end_date }) => {
+  get_daily_revenue_orders_s: async query => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_daily_revenue_orders_db(start_date, end_date);
@@ -1507,7 +1479,7 @@ export default {
       }
     }
   },
-  get_monthly_revenue_product_orders_s: async (params, query: { year }) => {
+  get_monthly_revenue_product_orders_s: async (params, query) => {
     const { year } = query;
     const { product_id } = params;
     try {
@@ -1518,7 +1490,7 @@ export default {
       }
     }
   },
-  get_yearly_revenue_product_orders_s: async (params) => {
+  get_yearly_revenue_product_orders_s: async params => {
     const { product_id } = params;
     try {
       return await order_db.get_yearly_revenue_product_orders_db(product_id);
@@ -1528,7 +1500,7 @@ export default {
       }
     }
   },
-  get_monthly_revenue_orders_s: async (query: { year }) => {
+  get_monthly_revenue_orders_s: async query => {
     const { year } = query;
     try {
       return await order_db.get_monthly_revenue_orders_db(year);
@@ -1547,7 +1519,7 @@ export default {
       }
     }
   },
-  get_range_category_revenue_orders_s: async (query: { start_date; end_date }) => {
+  get_range_category_revenue_orders_s: async query => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_category_revenue_orders_db(start_date, end_date);
@@ -1575,7 +1547,7 @@ export default {
       }
     }
   },
-  get_range_gloves_data_orders_s: async (query: { start_date; end_date }) => {
+  get_range_gloves_data_orders_s: async query => {
     const { start_date, end_date } = query;
     try {
       return await order_db.get_range_gloves_data_orders_db(start_date, end_date);
@@ -1585,7 +1557,7 @@ export default {
       }
     }
   },
-  get_range_tips_reveune_orders_s: async (query: { start_date; end_date }) => {
+  get_range_tips_reveune_orders_s: async query => {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_range_tips_revenue_orders_db(start_date, end_date);
@@ -1595,19 +1567,19 @@ export default {
       }
     }
   },
-  affiliate_earnings_s: async (query) => {
+  affiliate_earnings_s: async query => {
     const { start_date, end_date } = query;
 
     // Retrieve affiliates
     const a_filter = { deleted: false, active: true };
     const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
 
-    const filtered_affiliates = affiliates.filter((affiliate) => {
+    const filtered_affiliates = affiliates.filter(affiliate => {
       return affiliate.sponsor === true || affiliate.promoter === true;
     });
 
     const earnings = await Promise.all(
-      filtered_affiliates.map(async (affiliate) => {
+      filtered_affiliates.map(async affiliate => {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
         const { number_of_uses, revenue, earnings } = await getCodeUsage({
@@ -1623,7 +1595,7 @@ export default {
 
     return earnings;
   },
-  remove_multiple_orders_s: async (body) => {
+  remove_multiple_orders_s: async body => {
     try {
       return await order_db.remove_multiple_orders_db(body.ids);
     } catch (error) {
@@ -1632,7 +1604,7 @@ export default {
       }
     }
   },
-  transfer_orders_s: async (params) => {
+  transfer_orders_s: async params => {
     const { oldUserId, newUserId } = params;
 
     try {
@@ -1643,7 +1615,7 @@ export default {
       }
 
       const updatedOrders = await Promise.all(
-        orders.map(async (order) => {
+        orders.map(async order => {
           order.user = newUserId;
           return order.save();
         })
@@ -1656,7 +1628,7 @@ export default {
       }
     }
   },
-  sample_testing_orders_s: async (body) => {
+  sample_testing_orders_s: async body => {
     const { cartItems } = body;
     const users = [
       "5f2d7c0e9005a57059801ce8", // Kurt LaVacque S

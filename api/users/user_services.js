@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv");
 
 export default {
-  findAll_users_s: async (query: { page; search; sort; limit }) => {
+  findAll_users_s: async query => {
     try {
       const sort_options = ["createdAt", "first_name", "email", "is_guest", "is_affiliated"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -31,7 +31,7 @@ export default {
       }
     }
   },
-  create_filters_users_s: async (query: { search; sort; page; limit }) => {
+  create_filters_users_s: async query => {
     try {
       const availableFilters = {
         affiliates: ["only_affiliated_users"],
@@ -64,7 +64,7 @@ export default {
       }
     }
   },
-  findById_users_s: async (params) => {
+  findById_users_s: async params => {
     try {
       return await user_db.findById_users_db(params.id);
     } catch (error) {
@@ -73,7 +73,7 @@ export default {
       }
     }
   },
-  findByAffiliateId_users_s: async (params) => {
+  findByAffiliateId_users_s: async params => {
     try {
       return await user_db.findByAffiliateId_users_db(params.id);
     } catch (error) {
@@ -82,7 +82,7 @@ export default {
       }
     }
   },
-  findByEmail_users_s: async (params) => {
+  findByEmail_users_s: async params => {
     try {
       return await user_db.findByEmail_users_db(params.email);
     } catch (error) {
@@ -91,7 +91,7 @@ export default {
       }
     }
   },
-  create_users_s: async (body) => {
+  create_users_s: async body => {
     try {
       let user = {};
       let response = {};
@@ -121,7 +121,7 @@ export default {
       }
     }
   },
-  remove_users_s: async (params) => {
+  remove_users_s: async params => {
     try {
       return await user_db.remove_users_db(params.id);
     } catch (error) {
@@ -131,7 +131,7 @@ export default {
     }
   },
 
-  register_users_s: async (body) => {
+  register_users_s: async body => {
     const user = await user_db.findByEmail_users_db(body.email);
     if (user) {
       const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
@@ -192,7 +192,7 @@ export default {
       throw new Error("Invalid Credentials");
     }
   },
-  login_as_user_users_s: async (email) => {
+  login_as_user_users_s: async email => {
     const user = await user_db.findByEmail_users_db(email);
 
     return {
@@ -211,7 +211,7 @@ export default {
       refresh_token: await getRefreshToken(user),
     };
   },
-  refresh_login_users_s: async (email) => {
+  refresh_login_users_s: async email => {
     const user = await user_db.findByEmail_users_db(email);
 
     if (!user) {

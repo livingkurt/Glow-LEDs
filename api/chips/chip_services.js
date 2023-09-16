@@ -2,7 +2,7 @@ import { determine_filter } from "../../util";
 import { chip_db } from "../chips";
 
 export default {
-  findAll_chips_s: async (query: { page; search; sort; limit }) => {
+  findAll_chips_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -41,7 +41,7 @@ export default {
       }
     }
   },
-  findById_chips_s: async (params) => {
+  findById_chips_s: async params => {
     try {
       return await chip_db.findById_chips_db(params.id);
     } catch (error) {
@@ -50,7 +50,7 @@ export default {
       }
     }
   },
-  findByName_chips_s: async (params) => {
+  findByName_chips_s: async params => {
     try {
       return await chip_db.findByName_chips_db(params.name);
     } catch (error) {
@@ -59,7 +59,7 @@ export default {
       }
     }
   },
-  create_chips_s: async (body) => {
+  create_chips_s: async body => {
     try {
       return await chip_db.create_chips_db(body);
     } catch (error) {
@@ -77,7 +77,7 @@ export default {
       }
     }
   },
-  remove_chips_s: async (params) => {
+  remove_chips_s: async params => {
     try {
       return await chip_db.remove_chips_db(params.id);
     } catch (error) {

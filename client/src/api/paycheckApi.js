@@ -8,19 +8,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getPaychecks = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getPaychecks = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/paychecks`, {
       params: {
@@ -91,15 +79,12 @@ export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async
   }
 });
 
-export const deleteMultiplePaychecks = createAsyncThunk(
-  "paycheck/deleteMultiplePaychecks",
-  async (ids, thunkApi) => {
-    try {
-      const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
-      thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const deleteMultiplePaychecks = createAsyncThunk("paycheck/deleteMultiplePaychecks", async (ids, thunkApi) => {
+  try {
+    const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
+    thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});

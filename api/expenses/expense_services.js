@@ -13,7 +13,7 @@ import { normalizeExpenseFilters, normalizeExpenseSearch } from "./expense_helpe
 const Airtable = require("airtable");
 
 export default {
-  findAll_expenses_s: async (query: { page; search; sort; limit; filters }) => {
+  findAll_expenses_s: async query => {
     try {
       const sort_options = ["date_of_purchase", "expense_name", "place_of_purchase", "card", "category", "amount"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -36,7 +36,7 @@ export default {
       }
     }
   },
-  create_filters_expenses_s: async (query: { search; sort; page; limit }) => {
+  create_filters_expenses_s: async query => {
     try {
       const availableFilters = {
         place_of_purchase: await Expense.distinct("place_of_purchase"),
@@ -51,7 +51,7 @@ export default {
     }
   },
 
-  findAllByDate_expenses_s: async (body) => {
+  findAllByDate_expenses_s: async body => {
     try {
       const filter = {
         deleted: false,
@@ -69,7 +69,7 @@ export default {
       }
     }
   },
-  findById_expenses_s: async (params) => {
+  findById_expenses_s: async params => {
     try {
       return await expense_db.findById_expenses_db(params.id);
     } catch (error) {
@@ -78,7 +78,7 @@ export default {
       }
     }
   },
-  create_expenses_s: async (body) => {
+  create_expenses_s: async body => {
     try {
       return await expense_db.create_expenses_db(body);
     } catch (error) {
@@ -99,7 +99,7 @@ export default {
   //   try {
   //     // Create a Promise for each base
   //     const promises = bases.map(({ base, name }) => {
-  //       return new Promise<void>((resolve, reject) => {
+  //       return new Promise((resolve, reject) => {
   //         base(name)
   //           .select({
   //             // Add any filters or sorting here
@@ -182,7 +182,7 @@ export default {
     try {
       // Create a Promise for each base
       const promises = bases.map(({ base, name }) => {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           base(name)
             .select({
               // maxRecords: 10
@@ -262,7 +262,7 @@ export default {
     }
   },
 
-  create_all_expenses_s: async (body) => {
+  create_all_expenses_s: async body => {
     const { data, card, properties } = body;
     try {
       const expenses = [];
@@ -280,7 +280,7 @@ export default {
         "RETURNED AUTOPAY (DEORY)",
       ];
 
-      expenses.forEach(async (expense) => {
+      expenses.forEach(async expense => {
         if (!payment_check.includes(expense.description)) {
           const row = {
             date_of_purchase: unformat_date(expense.date),
@@ -312,7 +312,7 @@ export default {
       }
     }
   },
-  remove_expenses_s: async (params) => {
+  remove_expenses_s: async params => {
     try {
       return await expense_db.remove_expenses_db(params.id);
     } catch (error) {

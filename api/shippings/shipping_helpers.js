@@ -16,13 +16,11 @@ const fitsInParcel = (itemDimensions, parcel) => {
 };
 
 const filterParcels = (parcels, dimmensions) => {
-  return parcels.filter((parcel) =>
-    dimmensions.every((itemDimensions) => fitsInParcel(itemDimensions, parcel))
-  );
+  return parcels.filter(parcel => dimmensions.every(itemDimensions => fitsInParcel(itemDimensions, parcel)));
 };
 
-const getOrderItemDimensions = (orderItems) =>
-  orderItems.map((item) => ({
+const getOrderItemDimensions = orderItems =>
+  orderItems.map(item => ({
     length: item.package_length,
     width: item.package_width,
     height: item.package_height,
@@ -40,7 +38,7 @@ const selectBestFitParcel = (fit_parcels, all_parcels) => {
 };
 
 // Update the main function
-export const determine_parcel = (orderItems, parcels[]) => {
+export const determine_parcel = (orderItems, parcels) => {
   const dimmensions = getOrderItemDimensions(orderItems);
 
   const fitParcels = filterParcels(parcels, dimmensions);
@@ -54,7 +52,7 @@ export const determine_parcel = (orderItems, parcels[]) => {
   }
 };
 
-export const determine_parcel_weight = (order) => {
+export const determine_parcel_weight = order => {
   let weight = 0;
   order.orderItems.forEach((item, index) => {
     if (item.weight_pounds) {
@@ -67,7 +65,7 @@ export const determine_parcel_weight = (order) => {
   return weight;
 };
 
-export const calculateTotalOunces = (cartItems) => {
+export const calculateTotalOunces = cartItems => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
@@ -77,12 +75,12 @@ export const calculateTotalOunces = (cartItems) => {
   return totalOunces;
 };
 
-export const covertToOunces = (weight) => {
+export const covertToOunces = weight => {
   const weightInOunces = (weight?.weight_pounds * 16 || 0) + (weight?.weight_ounces || 0);
   return weightInOunces;
 };
 
-export const calculateTotalPounds = (cartItems) => {
+export const calculateTotalPounds = cartItems => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];

@@ -8,19 +8,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getCarts = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}: {
-  search;
-  sorting;
-  filters;
-  page;
-  pageSize;
-}) => {
+export const getCarts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/carts`, {
       params: {
@@ -46,39 +34,36 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query, thunk
   }
 });
 
-export const addToCart = createAsyncThunk(
-  "carts/addToCart",
-  async ({ cart, cart_item, type }: { cart; cart_item; type }, thunkApi) => {
-    try {
-      const {
-        users: {
-          userPage: { current_user },
-        },
-        carts: {
-          cartPage: { my_cart },
-        },
-      } = thunkApi.getState();
+export const addToCart = createAsyncThunk("carts/addToCart", async ({ cart, cart_item, type }, thunkApi) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user },
+      },
+      carts: {
+        cartPage: { my_cart },
+      },
+    } = thunkApi.getState();
 
-      // Call handle_cart route whether the cart exists or not
-      let data;
-      if (cart._id) {
-        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
-          cart_item,
-          cartItems: my_cart.cartItems,
-          current_user,
-        });
-      } else {
-        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
-      }
-      thunkApi.dispatch(showSuccess({ message: `Cart Item Added` }));
-
-      // Add current_user to the returned payload
-      return { data: data.data, type, current_user };
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    // Call handle_cart route whether the cart exists or not
+    let data;
+    if (cart._id) {
+      data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
+        cart_item,
+        cartItems: my_cart.cartItems,
+        current_user,
+      });
+    } else {
+      data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
     }
+    thunkApi.dispatch(showSuccess({ message: `Cart Item Added` }));
+
+    // Add current_user to the returned payload
+    return { data: data.data, type, current_user };
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const saveCart = createAsyncThunk("carts/saveCart", async (cart, thunkApi) => {
   try {
@@ -165,24 +150,21 @@ export const deleteCart = createAsyncThunk("carts/deleteCart", async (id, thunkA
   }
 });
 
-export const deleteCartItem = createAsyncThunk(
-  "carts/deleteCartItem",
-  async ({ item_index, type }: { cart; item_index; type }, thunkApi) => {
-    try {
-      const {
-        users: {
-          userPage: { current_user },
-        },
-        carts: {
-          cartPage: { my_cart },
-        },
-      } = thunkApi.getState();
-      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
-      thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
-      return { data, type };
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
-    }
+export const deleteCartItem = createAsyncThunk("carts/deleteCartItem", async ({ item_index, type }, thunkApi) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user },
+      },
+      carts: {
+        cartPage: { my_cart },
+      },
+    } = thunkApi.getState();
+    const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
+    thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
+    return { data, type };
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    return thunkApi.rejectWithValue(error.response?.data);
   }
-);
+});
