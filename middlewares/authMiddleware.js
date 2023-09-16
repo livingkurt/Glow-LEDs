@@ -3,7 +3,7 @@ import config from "../config";
 import Token from "../api/tokens/token";
 import { user_services } from "../api/users";
 
-export const setCurrentUser = (req, res, next: () => void) => {
+export const setCurrentUser = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
@@ -22,7 +22,7 @@ export const setCurrentUser = (req, res, next: () => void) => {
   });
 };
 
-export const isAuth = async (req, res, next: () => void) => {
+export const isAuth = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
@@ -60,7 +60,7 @@ export const isAuth = async (req, res, next: () => void) => {
   }
 };
 
-export const isAdmin = (req, res, next: () => any) => {
+export const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next();
   }

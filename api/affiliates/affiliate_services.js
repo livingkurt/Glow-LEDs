@@ -1,6 +1,4 @@
 import { determine_filter, make_private_code, snake_case } from "../../util";
-import { IAffiliate } from "../../types/affiliateTypes";
-import { IUser } from "../../types/userTypes";
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
@@ -10,7 +8,7 @@ import { monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
 
 export default {
-  findAll_affiliates_s: async (query: { search; sort; page; limit }) => {
+  findAll_affiliates_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -52,7 +50,7 @@ export default {
       }
     }
   },
-  findByPathname_affiliates_s: async (params: { pathname }) => {
+  findByPathname_affiliates_s: async params => {
     try {
       return await affiliate_db.findByPathname_affiliates_db(params.pathname);
     } catch (error) {
@@ -61,7 +59,7 @@ export default {
       }
     }
   },
-  findById_affiliates_s: async (params: { id }) => {
+  findById_affiliates_s: async params => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);
     } catch (error) {
@@ -70,7 +68,7 @@ export default {
       }
     }
   },
-  create_affiliates_s: async (body: { artist_name; email; user: IUser }) => {
+  create_affiliates_s: async body => {
     const public_code = {
       promo_code: body.artist_name.toLowerCase(),
       admin_only: false,
@@ -133,7 +131,7 @@ export default {
       const affiliate = await Affiliate.findOne({ _id: id });
       if (affiliate) {
         const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
-          (checkin) => checkin.month === month && checkin.year === year
+          checkin => checkin.month === month && checkin.year === year
         );
 
         if (existingCheckinIndex > -1) {
@@ -142,7 +140,7 @@ export default {
         } else {
           // Find the correct position for the new checkin based on month and year
           const correctPosition = affiliate.sponsorMonthlyCheckins.findIndex(
-            (checkin) =>
+            checkin =>
               new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
           );
 
@@ -171,7 +169,7 @@ export default {
     }
   },
 
-  checkin_status_affiliates_s: async (query) => {
+  checkin_status_affiliates_s: async query => {
     const { start_date, end_date } = query;
     try {
       return await affiliate_db.checkin_status_affiliates_db(start_date, end_date);
@@ -181,7 +179,7 @@ export default {
       }
     }
   },
-  update_affiliates_s: async (params, body: IAffiliate) => {
+  update_affiliates_s: async (params, body) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);
     } catch (error) {
@@ -315,7 +313,7 @@ export default {
       }
     }
   },
-  remove_affiliates_s: async (params) => {
+  remove_affiliates_s: async params => {
     const { id } = params;
     try {
       return await affiliate_db.remove_affiliates_db(id);
@@ -325,7 +323,7 @@ export default {
       }
     }
   },
-  generate_sponsor_codes_affiliates_s: async (params) => {
+  generate_sponsor_codes_affiliates_s: async params => {
     const { id } = params;
     try {
       const affiliate = await Affiliate.findOne({ _id: id });

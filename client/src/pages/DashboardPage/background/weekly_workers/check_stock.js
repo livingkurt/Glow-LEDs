@@ -1,7 +1,7 @@
 import axios from "axios";
 import { domain } from "../../../../helpers/sharedHelpers";
 
-export const check_stock = async (): Promise<void> => {
+export const check_stock = async () => {
   try {
     const domainUrl = domain();
     await axios.post(`${domainUrl}/api/emails/current_stock`);

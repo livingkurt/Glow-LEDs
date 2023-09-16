@@ -1,5 +1,4 @@
 import axios from "axios";
-import { IAffiliate } from "../../../../types/affiliateTypes";
 
 import {
   last_month_date_range,
@@ -9,7 +8,7 @@ import {
 } from "../worker_helpers";
 import { domain } from "../../../../helpers/sharedHelpers";
 
-export const payout_affiliates = async (): Promise<void> => {
+export const payout_affiliates = async () => {
   try {
     const domainUrl = domain();
 
@@ -18,10 +17,11 @@ export const payout_affiliates = async (): Promise<void> => {
     const { data } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
     const affiliates = data.data;
     await Promise.all(
-      affiliates.map(async (affiliate: IAffiliate) => {
+      affiliates.map(async affiliate => {
         const { data: promo_code_usage } = await axios.get(
-          `${domain()}/api/orders/code_usage/${affiliate?.public_code
-            ?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
+          `${domain()}/api/orders/code_usage/${
+            affiliate?.public_code?.promo_code
+          }?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
         );
 
         if (affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1) {

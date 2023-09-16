@@ -2,7 +2,7 @@ import axios from "axios";
 import { last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 import { domain } from "../../../../helpers/sharedHelpers";
 
-export const payout_tips = async (): Promise<void> => {
+export const payout_tips = async () => {
   try {
     const domainUrl = domain();
 

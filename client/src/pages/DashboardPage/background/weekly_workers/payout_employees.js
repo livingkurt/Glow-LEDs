@@ -1,16 +1,15 @@
 import axios from "axios";
 import { get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import { IUser } from "../../../../types/userTypes";
 import { domain } from "../../../../helpers/sharedHelpers";
 
-export const payout_employees = async (): Promise<void> => {
+export const payout_employees = async () => {
   try {
     const domainUrl = domain();
     const { data } = await axios.get(
       `${domainUrl}/api/users?search=&filters=%7B"employees"%3A%5B"only_employees"%5D%7D&page=0&pageSize=10&sorting=%5B0%2C"asc"%5D`
     );
     const employees = data.data;
-    employees.map(async (employee: IUser) => {
+    employees.map(async employee => {
       if (employee?.weekly_wage && employee.stripe_connect_id) {
         await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
           amount: employee?.weekly_wage,

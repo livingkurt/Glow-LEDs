@@ -1,10 +1,9 @@
 import axios from "axios";
-import { IAffiliate } from "../../../types/affiliateTypes";
 import config from "../../../config";
 const baseId = "app1s1rBexc8nLb9s";
 const tableIdOrName = "tblsCcVphzBosLDmU";
 
-export const last_month_date_range = (): { start_date; end_date } => {
+export const last_month_date_range = () => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
 
@@ -23,7 +22,7 @@ export const last_month_date_range = (): { start_date; end_date } => {
   const end_date = endDate.toISOString().split("T")[0];
   return { start_date, end_date };
 };
-export const this_month_date_range = (): { start_date; end_date } => {
+export const this_month_date_range = () => {
   const today = new Date(); // get current date
   const year = today.getFullYear(); // get current year
   const month = today.getMonth() + 1; // get current month (0-indexed)
@@ -33,7 +32,7 @@ export const this_month_date_range = (): { start_date; end_date } => {
   return { start_date, end_date };
 };
 
-export const this_year_date_range = (): { start_date; end_date } => {
+export const this_year_date_range = () => {
   const today = new Date(); // get current date
   const year = today.getFullYear(); // get current year
   const start_date = `${year}-01-01`;
@@ -41,7 +40,7 @@ export const this_year_date_range = (): { start_date; end_date } => {
   return { start_date, end_date };
 };
 
-export const determine_code_tier = (affiliate: IAffiliate, code_usage) | undefined => {
+export const determine_code_tier = (affiliate, code_usage) | => {
   if (affiliate.promoter) {
     if (code_usage === 0 || code_usage === 1) {
       return 10;
@@ -83,7 +82,7 @@ export const get_todays_date = () => {
   return todaysDate;
 };
 
-export const save_paycheck_to_expenses = async (data): Promise<void> => {
+export const save_paycheck_to_expenses = async (data) => {
   try {
     await axios.post(`/api/expenses`, data);
   } catch (error) {
@@ -92,7 +91,7 @@ export const save_paycheck_to_expenses = async (data): Promise<void> => {
     }
   }
 };
-// export const save_paycheck_to_expenses = async (data): Promise<void> => {
+// export const save_paycheck_to_expenses = async (data) => {
 //   try {
 //     const response = await axios.post(
 //       `https://api.airtable.com/v0/${baseId}/${tableIdOrName}`,

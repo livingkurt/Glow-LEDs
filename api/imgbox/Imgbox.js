@@ -47,8 +47,8 @@
 
 // interface Imgbox {
 //   setConfig(csrf, cookie);
-//   getAuthenticityToken(): Promise<void>;
-//   getToken(): Promise<void>;
+//   getAuthenticityToken();
+//   getToken();
 //   init(): Promise<ImgboxClient>;
 // }
 
@@ -72,14 +72,14 @@
 //     };
 //   };
 
-//   const getAuthenticityToken = async (): Promise<void> => {
+//   const getAuthenticityToken = async () => {
 //     const response = await client.get("/");
 //     csrf = response.data.split('input name="authenticity_token" type="hidden" value="')[1].split('"')[0];
 //     cookie = response.headers["set-cookie"][1].split(";")[0] + "; request_method=POST";
 //     setConfig(csrf, cookie);
 //   };
 
-//   const getToken = async (): Promise<void> => {
+//   const getToken = async () => {
 //     const data = {
 //       gallery: true,
 //       gallery_title: "",
@@ -202,7 +202,7 @@
 // //     this.cookie = cookie;
 // //   };
 
-// //   getToken = async (): Promise<void> => {
+// //   getToken = async () => {
 // //     const data = {
 // //       gallery: true,
 // //       gallery_title: "",
@@ -223,7 +223,7 @@
 // //     this.token = { token_id, token_secret, gallery_id, gallery_secret };
 // //   };
 
-// //   getAuthenticityToken = async (): Promise<void> => {
+// //   getAuthenticityToken = async () => {
 // //     const response = await this.client.get("/");
 // //     const csrf = response.data.split('input name="authenticity_token" type="hidden" value="')[1].split('"')[0];
 // //     const cookie = response.headers["set-cookie"][1].split(";")[0] + "; request_method=POST";

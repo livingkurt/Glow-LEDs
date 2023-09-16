@@ -162,7 +162,7 @@ export const {
   useGetQuestionConcernsQuery,
 } = dashboardApi;
 
-// export const get_airtable_expenses = async (year): Promise<void> => {
+// export const get_airtable_expenses = async (year) => {
 //   const airtable = {
 //     expenses_2023: {
 //       base: "app1s1rBexc8nLb9s",
