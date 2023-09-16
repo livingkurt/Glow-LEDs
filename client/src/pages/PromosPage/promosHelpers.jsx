@@ -7,12 +7,12 @@ const colors = [
   { name: "No Restrictions", color: "#3e4c6d" },
   { name: "Single Use", color: "#5f557d" },
   { name: "Used", color: "#303030" },
-  { name: "Deactivated", color: "#466475" }
+  { name: "Deactivated", color: "#466475" },
   // { name: 'Specific User', color: '#3d7f79' }
   // { name: 'Active', color: '#3f6561' }
 ];
 
-export const determine_color = (promo: any) => {
+export const determine_color = promo => {
   let result = "";
 
   // if (promo.percentage_off > 0) {
