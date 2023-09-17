@@ -65,9 +65,9 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "nodemon": "^3.0.1",
+    "pre-commit": "^1.2.2",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^26.0.0",
@@ -91,21 +91,24 @@
     "lint:js": "eslint 'client/src/**/*.{js,jsx}' --cache",
     "lint:scss": "stylelint 'client/src/**/*.scss' --cache",
     "sitemap": "cd client && npm run generate-sitemap",
-    "lint-staged": "$(npm bin)/lint-staged",
+    "lint-staged": "lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
     "lint:js:fix": "npm run lint:js --fix",
     "lint:scss:fix": "npm run lint:scss --fix",
-    "stylelint-check": "stylelint-config-prettier-check"
+    "stylelint-check": "stylelint-config-prettier-check",
+    "clean-install": "rm -rf node_modules && npm install",
+    "test": "jest",
+    "test:all": "npm --test-all"
   },
+  "pre-commit": [
+    "lint-staged"
+  ],
   "lint-staged": {
     "client/src/**/*.jsx": [
       "eslint --fix --cache"
     ],
-    "client/src/scss/**/*.scss": [
+    "client/src/**/*.scss": [
       "stylelint --fix --cache"
     ]
-  },
-  "simple-git-hooks": {
-    "pre-commit": "./server/scripts/hooks/pre-commit.sh"
   }
 }
