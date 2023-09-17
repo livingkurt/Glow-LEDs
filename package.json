@@ -50,7 +50,6 @@
     "@babel/core": "^7.22.20",
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.22.20",
-    "@playwright/test": "^1.32.3",
     "babel-jest": "^29.7.0",
     "concurrently": "^8.2.1",
     "cross-env": "^7.0.3",
