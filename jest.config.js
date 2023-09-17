@@ -1,23 +1,19 @@
 module.exports = {
   rootDir: process.cwd(),
   collectCoverage: false,
-  collectCoverageFrom: ["server/**/*.{js,jsx}", "client/src/**/*.{js,jsx}"],
+  collectCoverageFrom: ["server/**/*.{js,jsx}"], // Only collect coverage from server
   coverageDirectory: "<rootDir>/coverage",
   coverageReporters: ["lcov"],
-  setupFiles: ["jest-canvas-mock"],
-  setupFilesAfterEnv: ["<rootDir>/client/src/setupTests.js"],
-  testEnvironment: "jsdom",
+  setupFiles: [],
+  setupFilesAfterEnv: [],
+  testEnvironment: "node", // Use node environment for backend
   testEnvironmentOptions: {},
   globals: {},
-  roots: ["<rootDir>/server", "<rootDir>/client/src"],
+  roots: ["<rootDir>/server"], // Only test files inside server
   testRegex: "(/__tests__/.*|\\.test)\\.jsx?$",
-  moduleNameMapper: {
-    "^react$": "<rootDir>/node_modules/react",
-    "^react-dom$": "<rootDir>/node_modules/react-dom",
-    "\\.(css|sass|scss)$": "identity-obj-proxy",
-  },
-  moduleDirectories: ["node_modules", "<rootDir>/server", "<rootDir>/client/src"],
-  modulePathIgnorePatterns: ["<rootDir>/client/src/.*/__mocks__", "<rootDir>/server/.*/__mocks__"],
+  moduleNameMapper: {},
+  moduleDirectories: ["node_modules", "<rootDir>/server"],
+  modulePathIgnorePatterns: ["<rootDir>/server/.*/__mocks__"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },

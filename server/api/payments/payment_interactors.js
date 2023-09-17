@@ -10,6 +10,9 @@ const stripe = new Stripe(config.STRIPE_KEY, {
 // Function to create or update a Stripe customer
 
 export const createOrUpdateCustomer = async current_userrmation => {
+  // In createOrUpdateCustomer
+  console.log("Inside function: ", stripe.customers.create);
+
   try {
     const customer = await stripe.customers.create({
       name: current_userrmation.name,
