@@ -107,7 +107,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "/Users/kurtlavacque/Desktop/Glow-LEDs/server/scripts/hooks/pre-commit.sh"
+      "pre-commit": "echo 'pre-commit hook triggered' && exit 1",
+      "commit-msg": "echo 'commit-msg hook triggered' && exit 1"
     }
   }
 }

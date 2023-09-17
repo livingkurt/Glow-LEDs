@@ -21,7 +21,7 @@ const config = {
     production: process.env.MONGODB_URI_PROD,
     staging: process.env.MONGODB_URI_STAGING,
     development: process.env.MONGODB_URI_DEV,
-  }),
+  }), // mongodb://localhost/db_name
   // Environment
   ENVIRONMENT: environment,
   NODE_ENV: process.env.NODE_ENV,
