@@ -105,10 +105,7 @@
       "stylelint --fix --cache"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo 'pre-commit hook triggered' && exit 1",
-      "commit-msg": "echo 'commit-msg hook triggered' && exit 1"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "./server/scripts/hooks/pre-commit.sh"
   }
 }
