@@ -8,8 +8,6 @@ import mongoose from "mongoose";
 import routes from "./api";
 
 import template_routes from "./email_templates/template_routes";
-import axios from "axios";
-import FormData from "form-data";
 import config from "./config";
 const cors = require("cors");
 const passport = require("passport");
