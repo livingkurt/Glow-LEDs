@@ -1,7 +1,7 @@
-import { payout_employees } from "../client/src/pages/DashboardPage/background/weekly_workers/payout_employees";
-import { check_stock } from "../client/src/pages/DashboardPage/background/weekly_workers/check_stock";
+import { payout_employees } from "../../client/src/pages/DashboardPage/background/weekly_workers/payout_employees";
+import { check_stock } from "../../client/src/pages/DashboardPage/background/weekly_workers/check_stock";
 
-const getWeekNumber = (d: Date) => {
+const getWeekNumber = d => {
   // Copy date so don't modify original
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   // Set to nearest Thursday: current date + 4 - current day number

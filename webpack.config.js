@@ -1,17 +1,23 @@
 const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  entry: "./server.js", // your main server file
+  entry: "./server/server.js",
   target: "node",
+  externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "server.js",
+  },
+  resolve: {
+    extensions: [".js", ".json"],
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: [/node_modules/, path.resolve(__dirname, "client")], // added client folder to exclude
+        include: path.resolve(__dirname, "server"), // Include the entire server folder
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
         },

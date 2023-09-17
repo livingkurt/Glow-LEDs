@@ -1,7 +1,6 @@
 {
   "name": "glow_leds",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "main": "dist/server.js",
   "dependencies": {
@@ -47,7 +46,9 @@
     "table-scraper": "^1.0.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.15",
     "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.22.20",
     "@playwright/test": "^1.32.3",
     "babel-loader": "^9.1.3",
@@ -74,23 +75,28 @@
     "stylelint-prettier": "^2.0.0",
     "stylelint-scss": "^5.1.0",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
     "env-check": "cross-env NODE_ENV=production",
     "start:prod": "node --max_old_space_size=2560 dist/server.js",
-    "start:dev": "concurrently \"npm:server-dev\" \"npm:client\"",
-    "server-dev": "nodemon --ignore 'client/*' --max_old_space_size=2560 server.js",
+    "start:dev": "concurrently \"npm:transpile-watch\" \"npm:server-dev\" \"npm:client\"",
+    "transpile-watch": "babel server --out-dir dist --ignore node_modules --watch",
+    "server-dev": "nodemon --max_old_space_size=2560 dist/server.js",
     "client": "cd client && npm start",
+    "build": "babel server --out-dir dist",
+    "heroku-postbuild": "npm run build",
+    "transpile": "babel server --out-dir dist --ignore node_modules",
+    "watch": "webpack --mode development --watch",
     "install": "cd client && npm install --legacy-peer-deps",
-    "build": "webpack --mode production",
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint 'client/src/**/*.{js,jsx}' --cache",
     "lint:scss": "stylelint 'client/src/**/*.scss' --cache",
     "sitemap": "cd client && npm run generate-sitemap",
-    "heroku-postbuild": "npm run build && npm run build:client",
     "lint-staged": "$(npm bin)/lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
     "lint:js:fix": "npm run lint:js --fix",

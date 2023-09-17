@@ -26,7 +26,6 @@ export const determineOrderColors = order => {
     if (order.isPaid) {
       result = tableColors.active;
     }
-    ser;
     if (order.isUpdated) {
       result = tableColors.alt_color_5;
     }
