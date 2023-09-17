@@ -46,17 +46,11 @@
     "table-scraper": "^1.0.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.22.20",
     "@playwright/test": "^1.32.3",
-    "@types/bcryptjs": "^2.4.3",
-    "@types/express": "^4.17.17",
-    "@types/json2csv": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.2",
-    "@types/mongoose": "^5.7.32",
-    "@types/multer": "^1.4.7",
-    "@types/node": "^20.5.7",
-    "@types/nodemailer": "^6.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
     "concurrently": "^8.2.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.0.0",
@@ -73,44 +67,47 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "lint-staged": "^14.0.1",
     "nodemon": "^3.0.1",
+    "pre-commit": "^1.2.2",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-config-standard-scss": "^5.0.0",
     "stylelint-prettier": "^2.0.0",
-    "stylelint-scss": "^5.1.0",
-    "tslint": "^6.1.3",
-    "typescript": "^5.2.2"
+    "stylelint-scss": "^5.1.0"
   },
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
     "env-check": "cross-env NODE_ENV=production",
-    "tsc": "tsc --outDir dist",
-    "watch": "tsc -w --outDir dist",
-    "postinstall": "npm run tsc",
     "start:prod": "node --max_old_space_size=2560 dist/server.js",
-    "start:dev": "concurrently \"npm:server-dev\" \"npm:client\" \"npm:watch\"",
-    "server-dev": "nodemon --ignore 'client/*' --max_old_space_size=2560",
+    "start:dev": "concurrently \"npm:server-dev\" \"npm:client\"",
+    "transpile-watch": "babel server --out-dir dist --ignore node_modules --watch",
+    "server-dev": "nodemon --max_old_space_size=2560 dist/server.js",
     "client": "cd client && npm start",
+    "build": "babel server --out-dir dist",
+    "heroku-postbuild": "npm run build",
     "install": "cd client && npm install --legacy-peer-deps",
-    "build": "npm run tsc && npm run build:client",
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint 'client/src/**/*.{js,jsx}' --cache",
     "lint:scss": "stylelint 'client/src/**/*.scss' --cache",
     "sitemap": "cd client && npm run generate-sitemap",
-    "heroku-postbuild": "npm run build && npm run build:client",
-    "lint-staged": "$(npm bin)/lint-staged",
+    "lint-staged": "lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
     "lint:js:fix": "npm run lint:js --fix",
     "lint:scss:fix": "npm run lint:scss --fix",
-    "stylelint-check": "stylelint-config-prettier-check"
+    "stylelint-check": "stylelint-config-prettier-check",
+    "clean-install": "rm -rf node_modules && npm install",
+    "test": "jest",
+    "test:all": "npm --test-all"
   },
+  "pre-commit": [
+    "lint-staged"
+  ],
   "lint-staged": {
     "client/src/**/*.jsx": [
       "eslint --fix --cache"
     ],
-    "client/src/scss/**/*.scss": [
+    "client/src/**/*.scss": [
       "stylelint --fix --cache"
     ]
   }

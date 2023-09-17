@@ -24,7 +24,7 @@ import {
   REORDER_ROWS_SUCCESS,
   UPDATE_QUERY,
 } from "../actions/actionTypes";
-import { calcVisibleRows, determineFilters } from "../glTableHelpers";
+import { calcVisibleRows } from "../glTableHelpers";
 import defaultState from "./defaultState";
 
 const reducer =
