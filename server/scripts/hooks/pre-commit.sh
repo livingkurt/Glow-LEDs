@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Change this to the path of your file
-FILE="config.js"
+FILE="server/config.js"
 
 # Check if the environment variable in your file is set to process.env.ENVIRONMENT
 if ! grep -q 'const environment = process.env.ENVIRONMENT;' "$FILE"; then
@@ -20,7 +20,7 @@ fi
 
 
 # Change this to the path of your file
-FILE="background/monthly_worker.ts"
+FILE="server/background/monthly_worker.js"
 
 # Check if the date check in your file is commented out
 if grep -q '// if (today.getDate() === 1) {' "$FILE"; then
@@ -29,7 +29,7 @@ if grep -q '// if (today.getDate() === 1) {' "$FILE"; then
 fi
 
 # Change this to the path of your file
-FILE="background/weekly_worker.ts"
+FILE="server/background/weekly_worker.js"
 
 # Check if the date check in your file is commented out
 if grep -q '// if (today.getDay() === 5) {' "$FILE"; then

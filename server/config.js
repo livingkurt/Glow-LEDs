@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// const environment = process.env.ENVIRONMENT;
 // const environment = "staging";
 
 const decideEnvironment = ({ production, staging, development }) => {

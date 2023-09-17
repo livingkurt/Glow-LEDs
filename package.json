@@ -107,7 +107,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "./server/scripts/hooks/pre-commit.sh"
+      "pre-commit": "/Users/kurtlavacque/Desktop/Glow-LEDs/server/scripts/hooks/pre-commit.sh"
     }
   }
 }
