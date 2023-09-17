@@ -1,5 +1,3 @@
-// const environment = process.env.REACT_APP_ENVIRONMENT;
-
 const environment = process.env.REACT_APP_ENVIRONMENT; // could be 'development', 'staging', or 'production'
 
 const decideEnvironment = ({ production, staging, development }) => {
