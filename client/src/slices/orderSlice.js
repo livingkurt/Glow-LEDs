@@ -93,70 +93,70 @@ const orderPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listOrders.pending as any]: (state, { payload }) => {
+    [API.listOrders.pending]: (state, { payload }) => {
       state.loading = true;
       state.orders = [];
     },
-    [API.listOrders.fulfilled as any]: (state, { payload }) => {
+    [API.listOrders.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.orders = payload.orders;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Orders Found";
     },
-    [API.listOrders.rejected as any]: (state, { payload, error }) => {
+    [API.listOrders.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.listMyOrders.pending as any]: (state, { payload }) => {
+    [API.listMyOrders.pending]: (state, { payload }) => {
       state.loading = true;
       state.orders = [];
     },
-    [API.listMyOrders.fulfilled as any]: (state, { payload }) => {
+    [API.listMyOrders.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.orders = payload;
       state.message = "Orders Found";
     },
-    [API.listMyOrders.rejected as any]: (state, { payload, error }) => {
+    [API.listMyOrders.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createPayOrder.pending as any]: (state, { payload }) => {
+    [API.createPayOrder.pending]: (state, { payload }) => {
       state.loadingPayment = true;
       state.hideCheckoutButton = true;
     },
-    [API.createPayOrder.fulfilled as any]: (state, { payload }) => {
+    [API.createPayOrder.fulfilled]: (state, { payload }) => {
       state.loadingPayment = false;
       state.success = true;
       state.order = payload.order;
       state.message = "Order Created and Paid";
     },
-    [API.createPayOrder.rejected as any]: (state, { payload, error }) => {
+    [API.createPayOrder.rejected]: (state, { payload, error }) => {
       state.loadingPayment = false;
       // state.error = payload ? payload.error : error.message;
       // state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveOrder.pending as any]: (state, { payload }) => {
+    [API.saveOrder.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveOrder.fulfilled as any]: (state, { payload }) => {
+    [API.saveOrder.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Order Saved";
       state.shippingModal = false;
       state.edit_order_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveOrder.rejected as any]: (state, { payload, error }) => {
+    [API.saveOrder.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createNoPayOrder.pending as any]: (state, { payload }) => {
+    [API.createNoPayOrder.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.createNoPayOrder.fulfilled as any]: (state, { payload }) => {
+    [API.createNoPayOrder.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Order Saved";
       state.shippingModal = false;
@@ -165,118 +165,118 @@ const orderPage = createSlice({
       state.success_no_pay_order = true;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createNoPayOrder.rejected as any]: (state, { payload, error }) => {
+    [API.createNoPayOrder.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsOrder.pending as any]: (state, { payload }) => {
+    [API.detailsOrder.pending]: (state, { payload }) => {
       state.loading_order = true;
     },
-    [API.detailsOrder.fulfilled as any]: (state, { payload }) => {
+    [API.detailsOrder.fulfilled]: (state, { payload }) => {
       state.loading_order = false;
       state.order = payload;
       state.message = "Order Found";
     },
-    [API.detailsOrder.rejected as any]: (state, { payload, error }) => {
+    [API.detailsOrder.rejected]: (state, { payload, error }) => {
       state.loading_order = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteOrder.pending as any]: (state, { payload }) => {
+    [API.deleteOrder.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteOrder.fulfilled as any]: (state, { payload }) => {
+    [API.deleteOrder.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Order Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteOrder.rejected as any]: (state, { payload, error }) => {
+    [API.deleteOrder.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteMultipleOrders.pending as any]: (state, { payload }) => {
+    [API.deleteMultipleOrders.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteMultipleOrders.fulfilled as any]: (state, { payload }) => {
+    [API.deleteMultipleOrders.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Order Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultipleOrders.rejected as any]: (state, { payload, error }) => {
+    [API.deleteMultipleOrders.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.refundOrder.pending as any]: (state, { payload }) => {
+    [API.refundOrder.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.refundOrder.fulfilled as any]: (state, { payload }) => {
+    [API.refundOrder.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.refund = true;
       state.refundModal = false;
       state.message = "Order Refunded";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.refundOrder.rejected as any]: (state, { payload, error }) => {
+    [API.refundOrder.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.payOrder.pending as any]: (state, { payload }) => {
+    [API.payOrder.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.payOrder.fulfilled as any]: (state, { payload }) => {
+    [API.payOrder.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.message = "Order Paied";
     },
-    [API.payOrder.rejected as any]: (state, { payload, error }) => {
+    [API.payOrder.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.payOrderGuest.pending as any]: (state, { payload }) => {
+    [API.payOrderGuest.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.payOrderGuest.fulfilled as any]: (state, { payload }) => {
+    [API.payOrderGuest.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.message = "Order Paid Guest";
     },
-    [API.payOrderGuest.rejected as any]: (state, { payload, error }) => {
+    [API.payOrderGuest.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.transferOrders.pending as any]: (state, { payload }) => {
+    [API.transferOrders.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.transferOrders.fulfilled as any]: (state, { payload }) => {
+    [API.transferOrders.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.message = "Orders Transfered to New User";
     },
-    [API.transferOrders.rejected as any]: (state, { payload, error }) => {
+    [API.transferOrders.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
 
-    [API.buyLabel.fulfilled as any]: (state, { payload }) => {
+    [API.buyLabel.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createLabel.fulfilled as any]: (state, { payload }) => {
+    [API.createLabel.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createReturnLabel.fulfilled as any]: (state, { payload }) => {
+    [API.createReturnLabel.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createTracker.fulfilled as any]: (state, { payload }) => {
+    [API.createTracker.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    // [API.getShipments.fulfilled as any]: (state, { payload }) => {
+    // [API.getShipments.fulfilled]: (state, { payload }) => {
     //   state.order = payload.order;
     // },
   },

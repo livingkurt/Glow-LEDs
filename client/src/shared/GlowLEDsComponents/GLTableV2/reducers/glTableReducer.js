@@ -24,7 +24,7 @@ import {
   REORDER_ROWS_SUCCESS,
   UPDATE_QUERY,
 } from "../actions/actionTypes";
-import { calcVisibleRows, determineFilters } from "../glTableHelpers";
+import { calcVisibleRows } from "../glTableHelpers";
 import defaultState from "./defaultState";
 
 const reducer =
@@ -89,7 +89,7 @@ const reducer =
         return {
           ...state,
           availableFilters: availableFilters,
-          booleanFiltersFilters,
+          booleanFilters: booleanFilters,
           filters: { ...state.filters, ...defaultFilters },
           remote: {
             ...state.remote,

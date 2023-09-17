@@ -29,57 +29,57 @@ const settingPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listSettings.pending as any]: (state, { payload }) => {
+    [API.listSettings.pending]: (state, { payload }) => {
       state.loading = true;
       state.settings = [];
     },
-    [API.listSettings.fulfilled as any]: (state, { payload }) => {
+    [API.listSettings.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.settings = payload.settings;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Settings Found";
     },
-    [API.listSettings.rejected as any]: (state, { payload, error }) => {
+    [API.listSettings.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveSetting.pending as any]: (state, { payload }) => {
+    [API.saveSetting.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveSetting.fulfilled as any]: (state, { payload }) => {
+    [API.saveSetting.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Setting Saved";
     },
-    [API.saveSetting.rejected as any]: (state, { payload, error }) => {
+    [API.saveSetting.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
 
-    [API.detailsSetting.pending as any]: (state, { payload }) => {
+    [API.detailsSetting.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsSetting.fulfilled as any]: (state, { payload }) => {
+    [API.detailsSetting.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.setting = payload;
       state.message = "Setting Found";
     },
-    [API.detailsSetting.rejected as any]: (state, { payload, error }) => {
+    [API.detailsSetting.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteSetting.pending as any]: (state, { payload }) => {
+    [API.deleteSetting.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteSetting.fulfilled as any]: (state, { payload }) => {
+    [API.deleteSetting.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.setting = payload.setting;
       state.message = "Setting Deleted";
     },
-    [API.deleteSetting.rejected as any]: (state, { payload, error }) => {
+    [API.deleteSetting.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

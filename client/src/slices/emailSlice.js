@@ -90,81 +90,81 @@ const emailPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listEmails.pending as any]: (state, { payload }) => {
+    [API.listEmails.pending]: (state, { payload }) => {
       state.loading = true;
       state.emails = [];
     },
-    [API.listEmails.fulfilled as any]: (state, { payload }) => {
+    [API.listEmails.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.emails = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Emails Found";
     },
-    [API.listEmails.rejected as any]: (state, { payload, error }) => {
+    [API.listEmails.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveEmail.pending as any]: (state, { payload }) => {
+    [API.saveEmail.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveEmail.fulfilled as any]: (state, { payload }) => {
+    [API.saveEmail.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Email Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_email_modal = false;
     },
-    [API.saveEmail.rejected as any]: (state, { payload, error }) => {
+    [API.saveEmail.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsEmail.pending as any]: (state, { payload }) => {
+    [API.detailsEmail.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsEmail.fulfilled as any]: (state, { payload }) => {
+    [API.detailsEmail.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.email = payload;
       state.message = "Email Found";
     },
-    [API.detailsEmail.rejected as any]: (state, { payload, error }) => {
+    [API.detailsEmail.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteEmail.pending as any]: (state, { payload }) => {
+    [API.deleteEmail.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteEmail.fulfilled as any]: (state, { payload }) => {
+    [API.deleteEmail.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.email = email;
       state.message = "Email Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteEmail.rejected as any]: (state, { payload, error }) => {
+    [API.deleteEmail.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.sendContactEmail.pending as any]: (state, { payload }) => {
+    [API.sendContactEmail.pending]: (state, { payload }) => {
       state.loadingContactSend = true;
       state.successContactSend = false;
     },
-    [API.sendContactEmail.fulfilled as any]: (state, { payload }) => {
+    [API.sendContactEmail.fulfilled]: (state, { payload }) => {
       state.loadingContactSend = false;
       state.successContactSend = true;
     },
-    [API.sendContactEmail.rejected as any]: (state, { payload, error }) => {
+    [API.sendContactEmail.rejected]: (state, { payload, error }) => {
       state.loadingContactSend = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
 
-    [API.viewAnnouncement.pending as any]: (state, { payload }) => {
+    [API.viewAnnouncement.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.viewAnnouncement.fulfilled as any]: (state, { payload }) => {
+    [API.viewAnnouncement.fulfilled]: (state, { payload }) => {
       state.loading = false;
 
       const htmlToReactParser = new HtmlToReactParser();
@@ -172,7 +172,7 @@ const emailPage = createSlice({
       state.template = reactElement;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.viewAnnouncement.rejected as any]: (state, { payload, error }) => {
+    [API.viewAnnouncement.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const parcel_schema = new mongoose.Schema(
   {
@@ -9,10 +8,10 @@ const parcel_schema = new mongoose.Schema(
     height: { type: Number },
     volume: { type: Number },
     quantity_state: { type: Number },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

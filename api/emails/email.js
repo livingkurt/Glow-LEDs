@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const emailSchema = new mongoose.Schema(
   {

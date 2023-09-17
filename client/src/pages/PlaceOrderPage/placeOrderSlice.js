@@ -373,25 +373,25 @@ const placeOrder = createSlice({
     },
   },
   extraReducers: {
-    [API.shippingRates.pending as any]: (state, { payload }) => {
+    [API.shippingRates.pending]: (state, { payload }) => {
       state.loadingShipping = true;
     },
-    [API.shippingRates.fulfilled as any]: (state, { payload }) => {
+    [API.shippingRates.fulfilled]: (state, { payload }) => {
       state.loadingShipping = false;
       state.shipping_rates = payload.shipment;
       state.shipment_id = payload.shipment.id;
       state.parcel = payload.parcel._id;
     },
-    [API.shippingRates.rejected as any]: (state, { payload, error }) => {
+    [API.shippingRates.rejected]: (state, { payload, error }) => {
       state.loadingShipping = false;
       state.error_shipping = payload ? payload.error : error.message;
       state.error_happened = true;
     },
-    [API.getTaxRates.pending as any]: state => {
+    [API.getTaxRates.pending]: state => {
       state.loading_tax_rates = true;
       state.taxPrice = 0;
     },
-    [API.getTaxRates.fulfilled as any]: (state, { payload }) => {
+    [API.getTaxRates.fulfilled]: (state, { payload }) => {
       state.loading_tax_rates = false;
       const { tax_rate, shipping, itemsPrice } = payload;
       state.tax_rate = tax_rate;
@@ -403,22 +403,22 @@ const placeOrder = createSlice({
         }
       }
     },
-    [API.getTaxRates.rejected as any]: (state, { payload, error }) => {
+    [API.getTaxRates.rejected]: (state, { payload, error }) => {
       state.loading_tax_rates = false;
       state.error = payload ? payload.error : error.message;
     },
 
-    [API.createPayOrder.fulfilled as any]: (state, { payload }) => {
+    [API.createPayOrder.fulfilled]: (state, { payload }) => {
       return initialState;
     },
-    [API.createPayOrder.rejected as any]: (state, { payload, error }) => {
+    [API.createPayOrder.rejected]: (state, { payload, error }) => {
       state.loadingPayment = false;
       state.paymentValidations = payload.message;
     },
-    [API.validatePromoCode.fulfilled as any]: (state, { payload }) => {
+    [API.validatePromoCode.fulfilled]: (state, { payload }) => {
       state.promo_code_validations = payload.errors.promo_code;
     },
-    [API.getEnvironment.fulfilled as any]: (state, { payload }) => {
+    [API.getEnvironment.fulfilled]: (state, { payload }) => {
       console.log({ payload });
       state.environment = payload.environment;
       state.database = payload.database;

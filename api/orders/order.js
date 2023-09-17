@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const shippingSchema = {
   shipment_id: { type: String },

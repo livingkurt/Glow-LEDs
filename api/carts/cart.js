@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const cartItemsSchema = {
   name: { type: String, required: true },
@@ -42,28 +41,28 @@ const cartItemsSchema = {
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
-    required: true
+    required: true,
   },
   color_product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Product"
+    ref: "Product",
   },
   color_product_name: { type: String },
   secondary_color_product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Product"
+    ref: "Product",
   },
   secondary_color_product_name: { type: String },
   option_product_name: { type: String },
   option_product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Product"
+    ref: "Product",
   },
   secondary_product_name: { type: String },
   secondary_product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Product"
-  }
+    ref: "Product",
+  },
 };
 
 const cartSchema = new mongoose.Schema(
@@ -71,13 +70,13 @@ const cartSchema = new mongoose.Schema(
     cartItems: [cartItemsSchema],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
     },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

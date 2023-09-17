@@ -2,12 +2,7 @@ import isEmpty from "is-empty";
 // import Validator from 'validator';
 import axios, { AxiosResponse } from "axios";
 
-interface errors {
-  email;
-  password;
-}
-
-export const validate_promo_code = (data) => {
+export const validate_promo_code = data => {
   let errors;
   let isValid = true;
 
@@ -15,7 +10,7 @@ export const validate_promo_code = (data) => {
   const { promo_code, promos, current_user, items_price, cartItems, dispatch } = data;
 
   // Check if promo_code exists in the database
-  const promo = promos.find((p) => p.promo_code.toLowerCase() === promo_code.toLowerCase());
+  const promo = promos.find(p => p.promo_code.toLowerCase() === promo_code.toLowerCase());
   if (!promo) {
     errors.promo_code.push("Invalid promo code.");
     isValid = false;
@@ -178,11 +173,9 @@ export const validate_promo_code = (data) => {
 //   };
 // };
 
-export const validate_email = async (data: { email; password }) => {
+export const validate_email = async data => {
   let errors = {};
-  interface errors {
-    email;
-  }
+
   // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";
   // Email checks
@@ -200,12 +193,9 @@ export const validate_email = async (data: { email; password }) => {
     isValid: isEmpty(errors),
   };
 };
-export const validate_login = (data: { email; password }) => {
+export const validate_login = data => {
   let errors = {};
-  interface errors {
-    email;
-    password;
-  }
+
   // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
@@ -225,13 +215,7 @@ export const validate_login = (data: { email; password }) => {
   };
 };
 
-export const validate_registration = (data: {
-  first_name;
-  last_name;
-  email;
-  password;
-  rePassword;
-}) => {
+export const validate_registration = data => {
   let errors = {};
 
   // Convert empty fields to an empty string so we can use validator functions
@@ -311,17 +295,7 @@ export const validate_change_password = ({ currentPassword, password, rePassword
   };
 };
 
-export const validate_shipping = (data: {
-  email;
-  first_name;
-  last_name;
-  address_1;
-  city;
-  state;
-  postalCode;
-  country;
-  international;
-}) => {
+export const validate_shipping = data => {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -390,13 +364,13 @@ export const validate_shipping = (data: {
   };
 };
 
-const isEmpty2 = (str) => {
+const isEmpty2 = str => {
   return !str || str.length === 0;
 };
 const isEquals = (str_1, str_2) => {
   return str_1 === str_2;
 };
-const isLength = (str, length: { min; max }) => {
+const isLength = (str, length) => {
   if (str.length >= length.max && str.length <= length.min) {
     return false;
   } else {
@@ -404,14 +378,14 @@ const isLength = (str, length: { min; max }) => {
   }
 };
 
-const isEmail = (email) => {
+const isEmail = email => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return re.test(String(email).toLowerCase());
 };
 
-export const validate_payment = (data: { paymentMethod }) => {
+export const validate_payment = data => {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.paymentMethod = !isEmpty(data.paymentMethod) ? data.paymentMethod : "";
@@ -426,14 +400,7 @@ export const validate_payment = (data: { paymentMethod }) => {
   };
 };
 
-export const validate_contact = (data: {
-  first_name;
-  last_name;
-  email;
-  // order_number;
-  reason_for_contact;
-  message;
-}) => {
+export const validate_contact = data => {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.first_name = !isEmpty(data.first_name) ? data.first_name : "";
@@ -473,7 +440,7 @@ export const validate_contact = (data: {
   };
 };
 
-export const validate_profile = (data: { first_name; last_name; email }) => {
+export const validate_profile = data => {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.first_name = !isEmpty(data.first_name) ? data.first_name : "";
@@ -500,16 +467,11 @@ export const validate_profile = (data: { first_name; last_name; email }) => {
   };
 };
 
-export const validate_password_change = async (data: {
-  id;
-  current_password;
-  password;
-  rePassword;
-}) => {
+export const validate_password_change = async data => {
   //
   //
   let errors = {};
-  let request: AxiosResponse<any>;
+  let request;
   if (data.current_password) {
     try {
       request = await axios.post("/api/users/check_password/" + data.id, {
@@ -555,7 +517,7 @@ export const validate_password_change = async (data: {
   };
 };
 
-export const validate_passwords = async (data: { id; password; rePassword }) => {
+export const validate_passwords = async data => {
   //
   //
   let errors = {};
@@ -587,7 +549,7 @@ export const validate_passwords = async (data: { id; password; rePassword }) => 
   };
 };
 
-export const validate_affiliate = (data: { artist_name; years }) => {
+export const validate_affiliate = data => {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.artist_name = !isEmpty(data.artist_name) ? data.artist_name : "";

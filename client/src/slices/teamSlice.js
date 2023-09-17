@@ -65,56 +65,56 @@ const teamPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listTeams.pending as any]: (state, { payload }) => {
+    [API.listTeams.pending]: (state, { payload }) => {
       state.loading = true;
       state.teams = [];
     },
-    [API.listTeams.fulfilled as any]: (state, { payload }) => {
+    [API.listTeams.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.teams = payload.teams;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Teams Found";
     },
-    [API.listTeams.rejected as any]: (state, { payload, error }) => {
+    [API.listTeams.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveTeam.pending as any]: (state, { payload }) => {
+    [API.saveTeam.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveTeam.fulfilled as any]: (state, { payload }) => {
+    [API.saveTeam.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Team Saved";
     },
-    [API.saveTeam.rejected as any]: (state, { payload, error }) => {
+    [API.saveTeam.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsTeam.pending as any]: (state, { payload }) => {
+    [API.detailsTeam.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsTeam.fulfilled as any]: (state, { payload }) => {
+    [API.detailsTeam.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.team = payload;
       state.message = "Team Found";
     },
-    [API.detailsTeam.rejected as any]: (state, { payload, error }) => {
+    [API.detailsTeam.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteTeam.pending as any]: (state, { payload }) => {
+    [API.deleteTeam.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteTeam.fulfilled as any]: (state, { payload }) => {
+    [API.deleteTeam.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.team = payload.team;
       state.message = "Team Deleted";
     },
-    [API.deleteTeam.rejected as any]: (state, { payload, error }) => {
+    [API.deleteTeam.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

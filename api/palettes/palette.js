@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const paletteSchema = new mongoose.Schema(
   {
@@ -8,10 +7,10 @@ const paletteSchema = new mongoose.Schema(
     chip: { type: mongoose.Schema.Types.ObjectId, ref: "Chip" },
     colors: { type: Array },
     active: { type: Boolean },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

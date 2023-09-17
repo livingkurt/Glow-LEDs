@@ -51,7 +51,7 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
   const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(
     ([filterCategory, filterArray]) => {
       if (Object.keys(booleanFilters).includes(filterCategory)) {
-        return { key: filterCategory, nameFilters[filterCategory].label || filterCategory };
+        return { key: filterCategory, name: booleanFilters[filterCategory].label || filterCategory };
       } else if (filterArray.length > 1) {
         return {
           key: filterCategory,

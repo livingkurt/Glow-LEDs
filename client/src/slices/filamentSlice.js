@@ -41,56 +41,56 @@ const filamentPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listFilaments.pending as any]: (state, { payload }) => {
+    [API.listFilaments.pending]: (state, { payload }) => {
       state.loading = true;
       state.filaments = [];
     },
-    [API.listFilaments.fulfilled as any]: (state, { payload }) => {
+    [API.listFilaments.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.filaments = payload.filaments;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Filaments Found";
     },
-    [API.listFilaments.rejected as any]: (state, { payload, error }) => {
+    [API.listFilaments.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveFilament.pending as any]: (state, { payload }) => {
+    [API.saveFilament.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveFilament.fulfilled as any]: (state, { payload }) => {
+    [API.saveFilament.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Filament Saved";
     },
-    [API.saveFilament.rejected as any]: (state, { payload, error }) => {
+    [API.saveFilament.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsFilament.pending as any]: (state, { payload }) => {
+    [API.detailsFilament.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsFilament.fulfilled as any]: (state, { payload }) => {
+    [API.detailsFilament.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.filament = payload;
       state.message = "Filament Found";
     },
-    [API.detailsFilament.rejected as any]: (state, { payload, error }) => {
+    [API.detailsFilament.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteFilament.pending as any]: (state, { payload }) => {
+    [API.deleteFilament.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteFilament.fulfilled as any]: (state, { payload }) => {
+    [API.deleteFilament.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.filament = payload.filament;
       state.message = "Filament Deleted";
     },
-    [API.deleteFilament.rejected as any]: (state, { payload, error }) => {
+    [API.deleteFilament.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

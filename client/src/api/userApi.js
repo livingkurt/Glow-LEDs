@@ -11,13 +11,7 @@ import store from "../store";
 import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
 import { loginUpdateCartItems, updateCartItems } from "../helpers/userHelpers";
 
-export const getUsers = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}) => {
+export const getUsers = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/users`, {
       params: {
@@ -198,7 +192,7 @@ export const generatePasswordResetToken = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   "users/resetPassword",
-  async ({ token, password, rePassword }: { token; password; rePassword }, thunkApi) => {
+  async ({ token, password, rePassword }, thunkApi) => {
     const {
       users: {
         userPage: { current_user },

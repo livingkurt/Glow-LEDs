@@ -1,40 +1,40 @@
 import { set_expense } from "../../../slices/expenseSlice";
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const expenseFormFields = ({ expense, dispatch }: { expense; dispatch }) => {
+export const expenseFormFields = ({ expense, dispatch }) => {
   return {
     expense_name: {
       type: "text",
-      label: "Expense"
+      label: "Expense",
     },
     date_of_purchase: {
       type: "date",
-      label: "Date of Purchase"
+      label: "Date of Purchase",
     },
     amount: {
       type: "number",
-      label: "Amount"
+      label: "Amount",
     },
     application: {
       type: "text",
-      label: "Application"
+      label: "Application",
     },
     url: {
       type: "text",
-      label: "URL"
+      label: "URL",
     },
     documents: {
       type: "image_upload",
       label: "Documents",
       labelProp: "link",
       album: `${expense.expense_name} Documents`,
-      getOptionLabel: (option) => option.link,
-      onUpload: (value, key) => dispatch(set_expense({ documents: [...expense.documents, ...value] }))
+      getOptionLabel: option => option.link,
+      onUpload: (value, key) => dispatch(set_expense({ documents: [...expense.documents, ...value] })),
     },
     place_of_purchase: {
       type: "autocomplete_single",
       label: "Place of Purchase",
-      getOptionLabel: (option) => {
+      getOptionLabel: option => {
         if (typeof option === "string") {
           return toCapitalize(option);
         }
@@ -64,13 +64,13 @@ export const expenseFormFields = ({ expense, dispatch }: { expense; dispatch }) 
         "The Home Depot",
         "TopTea",
         "Venmo",
-        "Vinyl Disorder"
-      ]
+        "Vinyl Disorder",
+      ],
     },
     card: {
       type: "autocomplete_single",
       label: "Card",
-      getOptionLabel: (option) => {
+      getOptionLabel: option => {
         if (typeof option === "string") {
           return toCapitalize(option);
         }
@@ -100,13 +100,13 @@ export const expenseFormFields = ({ expense, dispatch }: { expense; dispatch }) 
         "Mastercard 2713",
         "Mastercard 7404",
         "Stripe",
-        "Venmo Balance"
-      ]
+        "Venmo Balance",
+      ],
     },
     category: {
       type: "autocomplete_single",
       label: "Category",
-      getOptionLabel: (option) => {
+      getOptionLabel: option => {
         if (typeof option === "string") {
           return toCapitalize(option);
         }
@@ -135,8 +135,8 @@ export const expenseFormFields = ({ expense, dispatch }: { expense; dispatch }) 
         "Shipping, Tools",
         "Supplies",
         "Tools",
-        "Website"
-      ]
-    }
+        "Website",
+      ],
+    },
   };
 };

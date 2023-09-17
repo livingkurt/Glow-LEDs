@@ -40,7 +40,7 @@ export const this_year_date_range = () => {
   return { start_date, end_date };
 };
 
-export const determine_code_tier = (affiliate, code_usage) | => {
+export const determine_code_tier = (affiliate, code_usage) => {
   if (affiliate.promoter) {
     if (code_usage === 0 || code_usage === 1) {
       return 10;
@@ -82,7 +82,7 @@ export const get_todays_date = () => {
   return todaysDate;
 };
 
-export const save_paycheck_to_expenses = async (data) => {
+export const save_paycheck_to_expenses = async data => {
   try {
     await axios.post(`/api/expenses`, data);
   } catch (error) {

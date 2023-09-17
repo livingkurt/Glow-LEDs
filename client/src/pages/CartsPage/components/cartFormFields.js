@@ -1,11 +1,11 @@
-export const cartFormFields = ({ products, users }: { products; users }) => {
+export const cartFormFields = ({ products, users }) => {
   return {
     user: {
       type: "autocomplete_single",
       label: "Users",
-      options: users.filter((user) => user.first_name && user.last_name),
+      options: users.filter(user => user.first_name && user.last_name),
       labelProp: "user",
-      getOptionLabel: (option) => `${option.first_name} ${option.last_name}`,
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
     cartItems: {
       type: "array",

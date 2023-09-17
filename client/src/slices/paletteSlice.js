@@ -41,56 +41,56 @@ const palettePage = createSlice({
     },
   },
   extraReducers: {
-    [API.listPalettes.pending as any]: (state, { payload }) => {
+    [API.listPalettes.pending]: (state, { payload }) => {
       state.loading = true;
       state.palettes = [];
     },
-    [API.listPalettes.fulfilled as any]: (state, { payload }) => {
+    [API.listPalettes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.palettes = payload.palettes;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Palettes Found";
     },
-    [API.listPalettes.rejected as any]: (state, { payload, error }) => {
+    [API.listPalettes.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.savePalette.pending as any]: (state, { payload }) => {
+    [API.savePalette.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.savePalette.fulfilled as any]: (state, { payload }) => {
+    [API.savePalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Palette Saved";
     },
-    [API.savePalette.rejected as any]: (state, { payload, error }) => {
+    [API.savePalette.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsPalette.pending as any]: (state, { payload }) => {
+    [API.detailsPalette.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsPalette.fulfilled as any]: (state, { payload }) => {
+    [API.detailsPalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.palette = payload;
       state.message = "Palette Found";
     },
-    [API.detailsPalette.rejected as any]: (state, { payload, error }) => {
+    [API.detailsPalette.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deletePalette.pending as any]: (state, { payload }) => {
+    [API.deletePalette.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deletePalette.fulfilled as any]: (state, { payload }) => {
+    [API.deletePalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.palette = payload.palette;
       state.message = "Palette Deleted";
     },
-    [API.deletePalette.rejected as any]: (state, { payload, error }) => {
+    [API.deletePalette.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -168,12 +168,12 @@ const shippingSlice = createSlice({
     },
   },
   extraReducers: {
-    [API.buyLabel.pending as any]: (state, { payload }) => {
+    [API.buyLabel.pending]: (state, { payload }) => {
       state.loading_label = true;
       state.invoice = "";
       state.label = "";
     },
-    [API.buyLabel.fulfilled as any]: (state, { payload }) => {
+    [API.buyLabel.fulfilled]: (state, { payload }) => {
       const { invoice, label } = payload;
       state.loading_label = false;
       state.invoice = invoice;
@@ -182,17 +182,17 @@ const shippingSlice = createSlice({
       printLabel(label);
       state.message = "Label Bought";
     },
-    [API.buyLabel.rejected as any]: (state, { payload, error }) => {
+    [API.buyLabel.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createLabel.pending as any]: (state, { payload }) => {
+    [API.createLabel.pending]: (state, { payload }) => {
       state.loading_label = true;
       state.invoice = "";
       state.label = "";
     },
-    [API.createLabel.fulfilled as any]: (state, { payload }) => {
+    [API.createLabel.fulfilled]: (state, { payload }) => {
       const { invoice, label } = payload;
       state.loading_label = false;
       state.invoice = invoice;
@@ -201,74 +201,74 @@ const shippingSlice = createSlice({
       printLabel(label);
       state.message = "Label Bought";
     },
-    [API.createLabel.rejected as any]: (state, { payload, error }) => {
+    [API.createLabel.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createReturnLabel.pending as any]: (state, { payload }) => {
+    [API.createReturnLabel.pending]: (state, { payload }) => {
       state.loading_label = true;
       state.invoice = "";
       state.label = "";
     },
-    [API.createReturnLabel.fulfilled as any]: (state, { payload }) => {
+    [API.createReturnLabel.fulfilled]: (state, { payload }) => {
       const { label } = payload;
       state.loading_label = false;
       state.label = label;
       state.message = "Label Bought";
     },
-    [API.createReturnLabel.rejected as any]: (state, { payload, error }) => {
+    [API.createReturnLabel.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createTracker.pending as any]: (state, { payload }) => {
+    [API.createTracker.pending]: (state, { payload }) => {
       state.loading_label = true;
     },
-    [API.createTracker.fulfilled as any]: (state, { payload }) => {
+    [API.createTracker.fulfilled]: (state, { payload }) => {
       state.loading_label = false;
     },
-    [API.createTracker.rejected as any]: (state, { payload, error }) => {
+    [API.createTracker.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
     },
-    [API.createPickup.pending as any]: (state, { payload }) => {
+    [API.createPickup.pending]: (state, { payload }) => {
       state.loading_label = true;
     },
-    [API.createPickup.fulfilled as any]: (state, { payload }) => {
+    [API.createPickup.fulfilled]: (state, { payload }) => {
       state.loading_label = false;
       state.pickup = payload.pickup;
       state.orders = payload.orders;
     },
-    [API.createPickup.rejected as any]: (state, { payload, error }) => {
+    [API.createPickup.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
     },
-    [API.confirmPickup.pending as any]: (state, { payload }) => {
+    [API.confirmPickup.pending]: (state, { payload }) => {
       state.loading_label = true;
     },
-    [API.confirmPickup.fulfilled as any]: (state, { payload }) => {
+    [API.confirmPickup.fulfilled]: (state, { payload }) => {
       state.loading_label = false;
       state.pickup = {};
       state.orders = {};
       state.create_pickup_modal = false;
     },
-    [API.confirmPickup.rejected as any]: (state, { payload, error }) => {
+    [API.confirmPickup.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
     },
-    [API.generateCSVLabel.pending as any]: (state, { payload }) => {
+    [API.generateCSVLabel.pending]: (state, { payload }) => {
       state.loading_label = true;
     },
-    [API.generateCSVLabel.fulfilled as any]: (state, { payload }) => {
+    [API.generateCSVLabel.fulfilled]: (state, { payload }) => {
       state.loading_label = false;
       state.csvLabel = payload;
     },
-    [API.generateCSVLabel.rejected as any]: (state, { payload, error }) => {
+    [API.generateCSVLabel.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
     },
-    [API.differentShippingRates.pending as any]: (state, { payload }) => {
+    [API.differentShippingRates.pending]: (state, { payload }) => {
       state.loading = true;
       state.shippingRates = [];
     },
-    [API.differentShippingRates.fulfilled as any]: (state, { payload }) => {
+    [API.differentShippingRates.fulfilled]: (state, { payload }) => {
       const { shipment } = payload;
       state.loading = false;
       state.success = true;
@@ -276,16 +276,16 @@ const shippingSlice = createSlice({
       state.shipment_id = shipment.id;
       state.message = "Orders Transfered to New User";
     },
-    [API.differentShippingRates.rejected as any]: (state, { payload, error }) => {
+    [API.differentShippingRates.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.customShippingRates.pending as any]: (state, { payload }) => {
+    [API.customShippingRates.pending]: (state, { payload }) => {
       state.loading = true;
       state.shippingRates = [];
     },
-    [API.customShippingRates.fulfilled as any]: (state, { payload }) => {
+    [API.customShippingRates.fulfilled]: (state, { payload }) => {
       const { shipment } = payload;
       state.loading = false;
       state.success = true;
@@ -293,36 +293,36 @@ const shippingSlice = createSlice({
       state.shipmentId = shipment.id;
       state.message = "Orders Transfered to New User";
     },
-    [API.customShippingRates.rejected as any]: (state, { payload, error }) => {
+    [API.customShippingRates.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createCustomLabel.pending as any]: (state, { payload }) => {
+    [API.createCustomLabel.pending]: (state, { payload }) => {
       state.loading = true;
       state.label = "";
     },
-    [API.createCustomLabel.fulfilled as any]: (state, { payload }) => {
+    [API.createCustomLabel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.label = payload.postage_label.label_url;
       printLabel(payload.postage_label.label_url);
       state.message = "Label Bought";
     },
-    [API.createCustomLabel.rejected as any]: (state, { payload, error }) => {
+    [API.createCustomLabel.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.getShipments.pending as any]: (state, { payload }) => {
+    [API.getShipments.pending]: (state, { payload }) => {
       state.loadingShipments = true;
       state.label = "";
     },
-    [API.getShipments.fulfilled as any]: (state, { payload }) => {
+    [API.getShipments.fulfilled]: (state, { payload }) => {
       state.loadingShipments = false;
       state.linkLabelModal = true;
       state.shipments = payload.shipments;
     },
-    [API.getShipments.rejected as any]: (state, { payload, error }) => {
+    [API.getShipments.rejected]: (state, { payload, error }) => {
       state.loadingShipments = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

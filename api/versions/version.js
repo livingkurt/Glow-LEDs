@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
-export {};
 
 const VersionSchema = new mongoose.Schema(
   {
     version: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

@@ -59,71 +59,71 @@ const paycheckPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listPaychecks.pending as any]: (state, { payload }) => {
+    [API.listPaychecks.pending]: (state, { payload }) => {
       state.loading = true;
       state.paychecks = [];
     },
-    [API.listPaychecks.fulfilled as any]: (state, { payload }) => {
+    [API.listPaychecks.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.paychecks = payload.paychecks;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Paychecks Found";
     },
-    [API.listPaychecks.rejected as any]: (state, { payload, error }) => {
+    [API.listPaychecks.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.savePaycheck.pending as any]: (state, { payload }) => {
+    [API.savePaycheck.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.savePaycheck.fulfilled as any]: (state, { payload }) => {
+    [API.savePaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Paycheck Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.savePaycheck.rejected as any]: (state, { payload, error }) => {
+    [API.savePaycheck.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsPaycheck.pending as any]: (state, { payload }) => {
+    [API.detailsPaycheck.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsPaycheck.fulfilled as any]: (state, { payload }) => {
+    [API.detailsPaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.paycheck = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Paycheck Found";
     },
-    [API.detailsPaycheck.rejected as any]: (state, { payload, error }) => {
+    [API.detailsPaycheck.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deletePaycheck.pending as any]: (state, { payload }) => {
+    [API.deletePaycheck.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deletePaycheck.fulfilled as any]: (state, { payload }) => {
+    [API.deletePaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.paycheck = payload.paycheck;
       state.message = "Paycheck Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deletePaycheck.rejected as any]: (state, { payload, error }) => {
+    [API.deletePaycheck.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteMultiplePaychecks.pending as any]: (state, { payload }) => {
+    [API.deleteMultiplePaychecks.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteMultiplePaychecks.fulfilled as any]: (state, { payload }) => {
+    [API.deleteMultiplePaychecks.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Paycheck Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultiplePaychecks.rejected as any]: (state, { payload, error }) => {
+    [API.deleteMultiplePaychecks.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -94,59 +94,59 @@ const contentPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listContents.pending as any]: (state, { payload }) => {
+    [API.listContents.pending]: (state, { payload }) => {
       state.loading = true;
       state.contents = [];
     },
-    [API.listContents.fulfilled as any]: (state, { payload }) => {
+    [API.listContents.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.contents = payload.contents;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Contents Found";
     },
-    [API.listContents.rejected as any]: (state, { payload, error }) => {
+    [API.listContents.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveContent.pending as any]: (state, { payload }) => {
+    [API.saveContent.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveContent.fulfilled as any]: (state, { payload }) => {
+    [API.saveContent.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Content Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_content_modal = false;
     },
-    [API.saveContent.rejected as any]: (state, { payload, error }) => {
+    [API.saveContent.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsContent.pending as any]: (state, { payload }) => {
+    [API.detailsContent.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsContent.fulfilled as any]: (state, { payload }) => {
+    [API.detailsContent.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.content = payload;
       state.message = "Content Found";
     },
-    [API.detailsContent.rejected as any]: (state, { payload, error }) => {
+    [API.detailsContent.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteContent.pending as any]: (state, { payload }) => {
+    [API.deleteContent.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteContent.fulfilled as any]: (state, { payload }) => {
+    [API.deleteContent.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.content = content;
       state.message = "Content Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteContent.rejected as any]: (state, { payload, error }) => {
+    [API.deleteContent.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -41,56 +41,56 @@ const featurePage = createSlice({
     },
   },
   extraReducers: {
-    [API.listFeatures.pending as any]: (state, { payload }) => {
+    [API.listFeatures.pending]: (state, { payload }) => {
       state.loading = true;
       state.features = [];
     },
-    [API.listFeatures.fulfilled as any]: (state, { payload }) => {
+    [API.listFeatures.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.features = payload.features;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Features Found";
     },
-    [API.listFeatures.rejected as any]: (state, { payload, error }) => {
+    [API.listFeatures.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveFeature.pending as any]: (state, { payload }) => {
+    [API.saveFeature.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveFeature.fulfilled as any]: (state, { payload }) => {
+    [API.saveFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Feature Saved";
     },
-    [API.saveFeature.rejected as any]: (state, { payload, error }) => {
+    [API.saveFeature.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsFeature.pending as any]: (state, { payload }) => {
+    [API.detailsFeature.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsFeature.fulfilled as any]: (state, { payload }) => {
+    [API.detailsFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.feature = payload;
       state.message = "Feature Found";
     },
-    [API.detailsFeature.rejected as any]: (state, { payload, error }) => {
+    [API.detailsFeature.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteFeature.pending as any]: (state, { payload }) => {
+    [API.deleteFeature.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteFeature.fulfilled as any]: (state, { payload }) => {
+    [API.deleteFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.feature = payload.feature;
       state.message = "Feature Deleted";
     },
-    [API.deleteFeature.rejected as any]: (state, { payload, error }) => {
+    [API.deleteFeature.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

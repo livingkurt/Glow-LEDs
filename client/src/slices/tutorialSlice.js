@@ -82,60 +82,60 @@ const tutorialPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listTutorials.pending as any]: (state, { payload }) => {
+    [API.listTutorials.pending]: (state, { payload }) => {
       state.loading = true;
       state.tutorials = [];
     },
-    [API.listTutorials.fulfilled as any]: (state, { payload }) => {
+    [API.listTutorials.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.tutorials = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Tutorials Found";
     },
-    [API.listTutorials.rejected as any]: (state, { payload, error }) => {
+    [API.listTutorials.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveTutorial.pending as any]: (state, { payload }) => {
+    [API.saveTutorial.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveTutorial.fulfilled as any]: (state, { payload }) => {
+    [API.saveTutorial.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.edit_tutorial_modal = false;
       state.success = true;
       state.message = "Tutorial Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveTutorial.rejected as any]: (state, { payload, error }) => {
+    [API.saveTutorial.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsTutorial.pending as any]: (state, { payload }) => {
+    [API.detailsTutorial.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsTutorial.fulfilled as any]: (state, { payload }) => {
+    [API.detailsTutorial.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.tutorial = payload;
       state.message = "Tutorial Found";
     },
-    [API.detailsTutorial.rejected as any]: (state, { payload, error }) => {
+    [API.detailsTutorial.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteTutorial.pending as any]: (state, { payload }) => {
+    [API.deleteTutorial.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteTutorial.fulfilled as any]: (state, { payload }) => {
+    [API.deleteTutorial.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.tutorial = payload.tutorial;
       state.message = "Tutorial Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteTutorial.rejected as any]: (state, { payload, error }) => {
+    [API.deleteTutorial.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

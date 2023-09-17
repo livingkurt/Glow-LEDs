@@ -1,23 +1,13 @@
 import { months, toCapitalize } from "../../../utils/helper_functions";
 
-export const affiliateFormFields = ({
-  products,
-  users,
-  chips,
-  promos,
-}: {
-  products;
-  users;
-  chips;
-  promos;
-}) => {
+export const affiliateFormFields = ({ products, users, chips, promos }) => {
   return {
     user: {
       type: "autocomplete_single",
       label: "Users",
       options: users,
       labelProp: "user",
-      getOptionLabel: (option) => `${option.first_name} ${option.last_name}`,
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       permissions: ["admin"],
     },
     artist_name: {
@@ -147,7 +137,7 @@ export const affiliateFormFields = ({
     sponsorMonthlyCheckins: {
       title: "Sponsor Monthly Checkins",
       labelProp: "sponsorMonthlyCheckins",
-      label: (item) => `${item.year} ${item.month}`,
+      label: item => `${item.year} ${item.month}`,
       type: "array",
       itemSchema: {
         type: "object",
@@ -155,7 +145,7 @@ export const affiliateFormFields = ({
           month: {
             type: "autocomplete_single",
             label: "Month",
-            getOptionLabel: (option) => {
+            getOptionLabel: option => {
               if (typeof option === "string") {
                 return option;
               }

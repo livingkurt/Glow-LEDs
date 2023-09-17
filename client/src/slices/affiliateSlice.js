@@ -133,82 +133,82 @@ const affiliatePage = createSlice({
     },
   },
   extraReducers: {
-    [API.listAffiliates.pending as any as any]: (state, { payload }) => {
+    [API.listAffiliates.pending]: (state, { payload }) => {
       state.loading = true;
       state.affiliates = [];
     },
-    [API.listAffiliates.fulfilled as any]: (state, { payload }) => {
+    [API.listAffiliates.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.affiliates = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Affiliates Found";
     },
-    [API.listAffiliates.rejected as any]: (state, { payload, error }) => {
+    [API.listAffiliates.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveAffiliate.pending as any]: (state, { payload }) => {
+    [API.saveAffiliate.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled as any]: (state, { payload }) => {
+    [API.saveAffiliate.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.edit_affiliate_modal = false;
       state.message = "Affiliate Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveAffiliate.rejected as any]: (state, { payload, error }) => {
+    [API.saveAffiliate.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsAffiliate.pending as any]: (state, { payload }) => {
+    [API.detailsAffiliate.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled as any]: (state, { payload }) => {
+    [API.detailsAffiliate.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.affiliate = payload;
       state.message = "Affiliate Found";
     },
-    [API.detailsAffiliate.rejected as any]: (state, { payload, error }) => {
+    [API.detailsAffiliate.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteAffiliate.pending as any]: (state, { payload }) => {
+    [API.deleteAffiliate.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled as any]: (state, { payload }) => {
+    [API.deleteAffiliate.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.affiliate = payload.affiliate;
       state.message = "Affiliate Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteAffiliate.rejected as any]: (state, { payload, error }) => {
+    [API.deleteAffiliate.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.monthlyCheckin.pending as any]: (state, { payload }) => {
+    [API.monthlyCheckin.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.monthlyCheckin.fulfilled as any]: (state, { payload }) => {
+    [API.monthlyCheckin.fulfilled]: (state, { payload }) => {
       state.monthlyCheckinModal = false;
       state.numberOfContent = 0;
       state.questionsConcerns = "";
     },
-    [API.monthlyCheckin.rejected as any]: (state, { payload, error }) => {
+    [API.monthlyCheckin.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.affiliateEarnings.pending as any]: (state, { payload }) => {
+    [API.affiliateEarnings.pending]: (state, { payload }) => {
       state.loading_year_earnings = true;
       state.loading_month_earnings = true;
     },
-    [API.affiliateEarnings.fulfilled as any]: (state, { payload }) => {
+    [API.affiliateEarnings.fulfilled]: (state, { payload }) => {
       const { data, type } = payload;
       if (type === "month") {
         state.month_earnings = data;
@@ -221,7 +221,7 @@ const affiliatePage = createSlice({
       state.message = "Affiliate Earnings Found";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.affiliateEarnings.rejected as any]: (state, { payload, error }) => {
+    [API.affiliateEarnings.rejected]: (state, { payload, error }) => {
       state.loading_month_earnings = false;
       state.loading_year_earnings = false;
       state.error = payload ? payload.error : error.message;

@@ -75,11 +75,11 @@ const surveyPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listSurveys.pending as any]: (state, { payload }) => {
+    [API.listSurveys.pending]: (state, { payload }) => {
       state.loading = true;
       state.surveys = [];
     },
-    [API.listSurveys.fulfilled as any]: (state, { payload }) => {
+    [API.listSurveys.fulfilled]: (state, { payload }) => {
       console.log({ payload });
       state.loading = false;
       state.surveys = payload.surveys;
@@ -87,48 +87,48 @@ const surveyPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Surveys Found";
     },
-    [API.listSurveys.rejected as any]: (state, { payload, error }) => {
+    [API.listSurveys.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveSurvey.pending as any]: (state, { payload }) => {
+    [API.saveSurvey.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveSurvey.fulfilled as any]: (state, { payload }) => {
+    [API.saveSurvey.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Survey Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_survey_modal = false;
     },
-    [API.saveSurvey.rejected as any]: (state, { payload, error }) => {
+    [API.saveSurvey.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsSurvey.pending as any]: (state, { payload }) => {
+    [API.detailsSurvey.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsSurvey.fulfilled as any]: (state, { payload }) => {
+    [API.detailsSurvey.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.survey = payload;
       state.message = "Survey Found";
     },
-    [API.detailsSurvey.rejected as any]: (state, { payload, error }) => {
+    [API.detailsSurvey.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteSurvey.pending as any]: (state, { payload }) => {
+    [API.deleteSurvey.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteSurvey.fulfilled as any]: (state, { payload }) => {
+    [API.deleteSurvey.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.survey = survey;
       state.message = "Survey Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteSurvey.rejected as any]: (state, { payload, error }) => {
+    [API.deleteSurvey.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

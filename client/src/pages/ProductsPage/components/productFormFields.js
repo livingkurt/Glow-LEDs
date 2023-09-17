@@ -7,15 +7,6 @@ export const productFormFields = ({
   product,
   onEdit,
   chips,
-}: {
-  products;
-  users;
-  // images;
-  categorys;
-  chips;
-  setState;
-  product;
-  onEdit;
 }) => {
   return {
     name: {
@@ -78,7 +69,7 @@ export const productFormFields = ({
       // options: images,
       labelProp: "link",
       album: `${product.name} Images`,
-      getOptionLabel: (option) => option.link,
+      getOptionLabel: option => option.link,
     },
 
     video: {
@@ -250,7 +241,7 @@ export const productFormFields = ({
       label: "Color Product",
       options: products,
       labelProp: "name",
-      onEdit: (product) => onEdit(product),
+      onEdit: product => onEdit(product),
     },
     color_product_name: {
       type: "text",
@@ -269,7 +260,7 @@ export const productFormFields = ({
       label: "Secondary Color Product",
       options: products,
       labelProp: "name",
-      onEdit: (product) => onEdit(product),
+      onEdit: product => onEdit(product),
     },
     secondary_color_product_name: {
       type: "text",
@@ -293,7 +284,7 @@ export const productFormFields = ({
       label: "Option Product",
       options: products,
       labelProp: "name",
-      onEdit: (product) => onEdit(product),
+      onEdit: product => onEdit(product),
     },
     option_images_object: {
       type: "image_upload",
@@ -312,7 +303,7 @@ export const productFormFields = ({
       label: "Secondary Product",
       options: products,
       labelProp: "name",
-      onEdit: (product) => onEdit(product),
+      onEdit: product => onEdit(product),
     },
     secondary_images_object: {
       type: "image_upload",
@@ -326,7 +317,7 @@ export const productFormFields = ({
       label: "Chips",
       options: chips,
       labelProp: "name",
-      onEdit: (chip) => onEdit(chip),
+      onEdit: chip => onEdit(chip),
     },
     reviews: {
       type: "array",
@@ -339,7 +330,7 @@ export const productFormFields = ({
             label: "Users",
             options: users,
             labelProp: "user",
-            getOptionLabel: (option) => (option ? `${option.first_name} ${option.last_name}` : ""),
+            getOptionLabel: option => (option ? `${option.first_name} ${option.last_name}` : ""),
           },
           first_name: {
             type: "text",

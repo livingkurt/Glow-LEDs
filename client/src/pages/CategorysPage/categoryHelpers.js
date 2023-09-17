@@ -1,49 +1,49 @@
-export const categoryFormFields = ({ categorys }: { categorys }) => {
+export const categoryFormFields = ({ categorys }) => {
   return {
     name: {
       type: "text",
       label: "Name",
-      required: true
+      required: true,
     },
     pathname: {
       type: "text",
-      label: "Pathname"
+      label: "Pathname",
     },
     nest_level: {
       type: "number",
-      label: "Nest Level"
+      label: "Nest Level",
     },
     display_order: {
       type: "number",
-      label: "Display Order"
+      label: "Display Order",
     },
     subcategorys: {
       type: "autocomplete_multiple",
       label: "Subcategories",
       options: categorys, // populate with categories
-      labelProp: "name"
+      labelProp: "name",
     },
     display: {
       type: "checkbox",
       label: "Display",
-      default: true
+      default: true,
     },
     meta_title: {
       type: "text",
-      label: "Meta Title"
+      label: "Meta Title",
     },
     meta_description: {
       type: "text_multiline",
-      label: "Meta Description"
+      label: "Meta Description",
     },
     meta_keywords: {
       type: "text_multiline",
-      label: "Meta Keywords"
+      label: "Meta Keywords",
     },
     masthead: {
       type: "checkbox",
       label: "Masthead",
-      default: false
-    }
+      default: false,
+    },
   };
 };

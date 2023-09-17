@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-export {};
 
 const token_schema = new mongoose.Schema(
   {
     token: { type: String },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

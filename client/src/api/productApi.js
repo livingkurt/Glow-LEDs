@@ -28,7 +28,7 @@ export const getProductFilters = async () => {
   const { data } = await axios.get(`/api/products/filters`);
   return data;
 };
-export const reorderProducts = async ({ reorderedItems }: { reorderedItems }) => {
+export const reorderProducts = async ({ reorderedItems }) => {
   try {
     return axios.put(`/api/products/reorder`, { reorderedItems });
   } catch (error) {
@@ -85,28 +85,19 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (i
   }
 });
 
-export const deleteMultipleProducts = createAsyncThunk(
-  "products/deleteMultipleProducts",
-  async (ids, thunkApi) => {
-    try {
-      const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
-      thunkApi.dispatch(showSuccess({ message: `Products Deleted` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const deleteMultipleProducts = createAsyncThunk("products/deleteMultipleProducts", async (ids, thunkApi) => {
+  try {
+    const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
+    thunkApi.dispatch(showSuccess({ message: `Products Deleted` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const saveProductReview = createAsyncThunk(
   "products/deleteProduct",
-  async (
-    {
-      product_pathname,
-      review,
-    }: { product_pathname; review: { name; rating; comment } },
-    thunkApi
-  ) => {
+  async ({ product_pathname, review }, thunkApi) => {
     const {
       users: {
         userPage: { current_user },
@@ -124,7 +115,7 @@ export const saveProductReview = createAsyncThunk(
 
 export const deleteProductReview = createAsyncThunk(
   "products/deleteProduct",
-  async ({ product_pathname, review_id }: { product_pathname; review_id }, thunkApi) => {
+  async ({ product_pathname, review_id }, thunkApi) => {
     try {
       const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`);
       thunkApi.dispatch(showSuccess({ message: `Product Review Deleted` }));

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const shippingSchema = {
   first_name: { type: String, default: "" },

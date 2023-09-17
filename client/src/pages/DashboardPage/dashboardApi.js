@@ -54,17 +54,16 @@ export const dashboardApi = createApi({
         `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getYearlyRevenueProductOrders: builder.query({
-      query: ({ productId }: { productId }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`,
+      query: ({ productId }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`,
     }),
     getMonthlyRevenueProductOrders: builder.query({
-      query: ({ year, productId }: { year; productId }) =>
-        `/orders/get_monthly_revenue_product_orders/${productId}/product?year=${year}`,
+      query: ({ year, productId }) => `/orders/get_monthly_revenue_product_orders/${productId}/product?year=${year}`,
     }),
     getProductAllTimeRevenueOrders: builder.query({
       query: id => `/orders/get_product_all_time_revenue_orders/${id},`,
     }),
     getProductRangeRevenueOrders: builder.query({
-      query: ({ productId, start_date, end_date }: { productId; start_date; end_date }) =>
+      query: ({ productId, start_date, end_date }) =>
         `/orders/${productId}/product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeRevenueOrders: builder.query({
@@ -87,23 +86,19 @@ export const dashboardApi = createApi({
       query: () => "/orders/get_all_time_tips_revenue_orders",
     }),
     getRangeAffiliateEarningsCodeUsage: builder.query({
-      query: ({ start_date, end_date }) =>
-        `/orders/affiliate_earnings?start_date=${start_date}&end_date=${end_date}`,
+      query: ({ start_date, end_date }) => `/orders/affiliate_earnings?start_date=${start_date}&end_date=${end_date}`,
     }),
     getAllTimePayouts: builder.query({
       query: () => "/paychecks/get_all_time_payouts",
     }),
     getRangePayouts: builder.query({
-      query: ({ start_date, end_date }) =>
-        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
+      query: ({ start_date, end_date }) => `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeExpenses: builder.query({
-      query: ({ start_date, end_date }) =>
-        `/expenses/get_range_expenses?start_date=${start_date}&end_date=${end_date}`,
+      query: ({ start_date, end_date }) => `/expenses/get_range_expenses?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeGloves: builder.query({
-      query: ({ start_date, end_date }) =>
-        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
+      query: ({ start_date, end_date }) => `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
     }),
     getProductRevenue: builder.query({
       query: ({ start_date, end_date }) =>
@@ -113,8 +108,7 @@ export const dashboardApi = createApi({
       query: () => `/products/current_stock`,
     }),
     getSponsorCheckinStatus: builder.query({
-      query: ({ start_date, end_date }) =>
-        `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`,
+      query: ({ start_date, end_date }) => `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`,
     }),
     getQuestionConcerns: builder.query({
       query: ({ start_date, end_date }) =>

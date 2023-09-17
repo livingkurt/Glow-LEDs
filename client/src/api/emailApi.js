@@ -9,13 +9,7 @@ import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
-export const getEmails = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}) => {
+export const getEmails = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/emails/table`, {
       params: {
@@ -85,48 +79,26 @@ export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathnam
   }
 });
 
-export const sendContactEmail = createAsyncThunk(
-  "emails/sendContactEmail",
-  async (
-    contact_info: {
-      first_name;
-      last_name;
-      email;
-      order_number;
-      reason_for_contact;
-      message;
-      inspirational_pictures;
-      artist_name;
-      instagram_handle;
-      facebook_name;
-      song_id;
-      quote;
-    },
-    thunkApi
-  ) => {
-    try {
-      const { data } = await axios.post("/api/emails/contact", contact_info);
-      axios.post("/api/emails/contact_confirmation", contact_info);
-      thunkApi.dispatch(showSuccess({ message: `Contact Email Sent` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const sendContactEmail = createAsyncThunk("emails/sendContactEmail", async (contact_info, thunkApi) => {
+  try {
+    const { data } = await axios.post("/api/emails/contact", contact_info);
+    axios.post("/api/emails/contact_confirmation", contact_info);
+    thunkApi.dispatch(showSuccess({ message: `Contact Email Sent` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
-export const viewAnnouncement = createAsyncThunk(
-  "emails/viewAnnouncement",
-  async ({ template }, thunkApi) => {
-    try {
-      const { data } = await axios.post("/api/emails/view_announcement", { template });
-      thunkApi.dispatch(showSuccess({ message: `Preview Updated` }));
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    }
+export const viewAnnouncement = createAsyncThunk("emails/viewAnnouncement", async ({ template }, thunkApi) => {
+  try {
+    const { data } = await axios.post("/api/emails/view_announcement", { template });
+    thunkApi.dispatch(showSuccess({ message: `Preview Updated` }));
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 export const sendAnnouncement = createAsyncThunk(
   "emails/sendAnnouncement",
   async ({ template, subject, test, time }, thunkApi) => {
@@ -159,18 +131,15 @@ export const sendEmailSubscription = createAsyncThunk(
 );
 
 // Similarly for other routes
-export const sendOrderEmail = createAsyncThunk(
-  "emails/sendOrderEmail",
-  async ({ order, subject, email }, thunkApi) => {
-    try {
-      const { data } = await axios.post("/api/emails/order", { order, subject, email });
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
-    }
+export const sendOrderEmail = createAsyncThunk("emails/sendOrderEmail", async ({ order, subject, email }, thunkApi) => {
+  try {
+    const { data } = await axios.post("/api/emails/order", { order, subject, email });
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    return thunkApi.rejectWithValue(error.response?.data);
   }
-);
+});
 
 export const sendRefundEmail = createAsyncThunk(
   "emails/sendRefundEmail",
@@ -351,23 +320,20 @@ export const sendEmail = createAsyncThunk("emails/sendEmail", async ({ template,
 });
 
 // save_html
-export const saveHtml = createAsyncThunk(
-  "emails/saveHtml",
-  async ({ template, email, access_token }, thunkApi) => {
-    try {
-      email = { ...email, html: template };
-      const { data } = await axios.put(`/api/emails/${email._id}`, email, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
-    }
+export const saveHtml = createAsyncThunk("emails/saveHtml", async ({ template, email, access_token }, thunkApi) => {
+  try {
+    email = { ...email, html: template };
+    const { data } = await axios.put(`/api/emails/${email._id}`, email, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+    return thunkApi.rejectWithValue(error.response?.data);
   }
-);
+});
 
 // print_invoice
 export const printInvoice = createAsyncThunk("emails/printInvoice", async (order, thunkApi) => {

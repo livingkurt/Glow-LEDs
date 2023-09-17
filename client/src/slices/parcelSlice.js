@@ -41,56 +41,56 @@ const parcelPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listParcels.pending as any]: (state, { payload }) => {
+    [API.listParcels.pending]: (state, { payload }) => {
       state.loading = true;
       state.parcels = [];
     },
-    [API.listParcels.fulfilled as any]: (state, { payload }) => {
+    [API.listParcels.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.parcels = payload.parcels;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Parcels Found";
     },
-    [API.listParcels.rejected as any]: (state, { payload, error }) => {
+    [API.listParcels.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveParcel.pending as any]: (state, { payload }) => {
+    [API.saveParcel.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveParcel.fulfilled as any]: (state, { payload }) => {
+    [API.saveParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Parcel Saved";
     },
-    [API.saveParcel.rejected as any]: (state, { payload, error }) => {
+    [API.saveParcel.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsParcel.pending as any]: (state, { payload }) => {
+    [API.detailsParcel.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsParcel.fulfilled as any]: (state, { payload }) => {
+    [API.detailsParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.parcel = payload;
       state.message = "Parcel Found";
     },
-    [API.detailsParcel.rejected as any]: (state, { payload, error }) => {
+    [API.detailsParcel.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteParcel.pending as any]: (state, { payload }) => {
+    [API.deleteParcel.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteParcel.fulfilled as any]: (state, { payload }) => {
+    [API.deleteParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.parcel = payload.parcel;
       state.message = "Parcel Deleted";
     },
-    [API.deleteParcel.rejected as any]: (state, { payload, error }) => {
+    [API.deleteParcel.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

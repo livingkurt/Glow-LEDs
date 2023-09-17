@@ -82,60 +82,60 @@ const wholesalerPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listWholesalers.pending as any]: (state, { payload }) => {
+    [API.listWholesalers.pending]: (state, { payload }) => {
       state.loading = true;
       state.wholesalers = [];
     },
-    [API.listWholesalers.fulfilled as any]: (state, { payload }) => {
+    [API.listWholesalers.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.wholesalers = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Wholesalers Found";
     },
-    [API.listWholesalers.rejected as any]: (state, { payload, error }) => {
+    [API.listWholesalers.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveWholesaler.pending as any]: (state, { payload }) => {
+    [API.saveWholesaler.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveWholesaler.fulfilled as any]: (state, { payload }) => {
+    [API.saveWholesaler.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.edit_wholesaler_modal = false;
       state.success = true;
       state.message = "Wholesaler Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveWholesaler.rejected as any]: (state, { payload, error }) => {
+    [API.saveWholesaler.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsWholesaler.pending as any]: (state, { payload }) => {
+    [API.detailsWholesaler.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsWholesaler.fulfilled as any]: (state, { payload }) => {
+    [API.detailsWholesaler.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.wholesaler = payload;
       state.message = "Wholesaler Found";
     },
-    [API.detailsWholesaler.rejected as any]: (state, { payload, error }) => {
+    [API.detailsWholesaler.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteWholesaler.pending as any]: (state, { payload }) => {
+    [API.deleteWholesaler.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteWholesaler.fulfilled as any]: (state, { payload }) => {
+    [API.deleteWholesaler.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.wholesaler = payload.wholesaler;
       state.message = "Wholesaler Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteWholesaler.rejected as any]: (state, { payload, error }) => {
+    [API.deleteWholesaler.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

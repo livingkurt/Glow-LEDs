@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const wholesaler_schema = new mongoose.Schema(
   {
@@ -7,10 +6,10 @@ const wholesaler_schema = new mongoose.Schema(
     company: { type: String },
     minimum_order_amount: { type: Number, default: 750 },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

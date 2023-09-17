@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-export {};
 
 const expenseSchema = new mongoose.Schema(
   {

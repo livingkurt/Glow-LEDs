@@ -41,56 +41,56 @@ const chipPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listChips.pending as any]: (state, { payload }) => {
+    [API.listChips.pending]: (state, { payload }) => {
       state.loading = true;
       state.chips = [];
     },
-    [API.listChips.fulfilled as any]: (state, { payload }) => {
+    [API.listChips.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chips = payload.chips;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Chips Found";
     },
-    [API.listChips.rejected as any]: (state, { payload, error }) => {
+    [API.listChips.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveChip.pending as any]: (state, { payload }) => {
+    [API.saveChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveChip.fulfilled as any]: (state, { payload }) => {
+    [API.saveChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Chip Saved";
     },
-    [API.saveChip.rejected as any]: (state, { payload, error }) => {
+    [API.saveChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsChip.pending as any]: (state, { payload }) => {
+    [API.detailsChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsChip.fulfilled as any]: (state, { payload }) => {
+    [API.detailsChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chip = payload;
       state.message = "Chip Found";
     },
-    [API.detailsChip.rejected as any]: (state, { payload, error }) => {
+    [API.detailsChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteChip.pending as any]: (state, { payload }) => {
+    [API.deleteChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteChip.fulfilled as any]: (state, { payload }) => {
+    [API.deleteChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chip = payload.chip;
       state.message = "Chip Deleted";
     },
-    [API.deleteChip.rejected as any]: (state, { payload, error }) => {
+    [API.deleteChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -7,7 +7,7 @@ import { refresh_sponsor_codes } from "./background/monthly_workers/refresh_spon
 import { payout_employees } from "./background/weekly_workers/payout_employees";
 import { set_loading } from "./dashboardSlice";
 
-export const getMonthStartEndDates = ({ month, year }: { month?; year? }) => {
+export const getMonthStartEndDates = ({ month, year }) => {
   if (month && year) {
     const monthNumber = new Date(Date.parse(`${month} 1, ${year}`)).getMonth();
     const start_date = new Date(year, monthNumber, 1);
@@ -51,7 +51,7 @@ export const months = [
   "December",
 ];
 
-export const run_daily_workers = (dispatch) => {
+export const run_daily_workers = dispatch => {
   const confirm = window.confirm("Are you sure you want to run the daily worker?");
   if (confirm) {
     dispatch(set_loading(true));
@@ -61,7 +61,7 @@ export const run_daily_workers = (dispatch) => {
   }
 };
 
-export const run_weekly_workers = (dispatch) => {
+export const run_weekly_workers = dispatch => {
   const confirm = window.confirm("Are you sure you want to run the weekly worker?");
   if (confirm) {
     dispatch(set_loading(true));
@@ -69,7 +69,7 @@ export const run_weekly_workers = (dispatch) => {
     dispatch(set_loading(false));
   }
 };
-export const run_monthly_workers = (dispatch) => {
+export const run_monthly_workers = dispatch => {
   const confirm = window.confirm("Are you sure you want to run the monthly worker?");
   if (confirm) {
     dispatch(set_loading(true));
@@ -81,7 +81,7 @@ export const run_monthly_workers = (dispatch) => {
   }
 };
 
-export const isLoading = (data) => {
+export const isLoading = data => {
   return !data.isLoading && data.data[0];
 };
 
@@ -103,7 +103,7 @@ export const combineYearlyRevenueAndExpenses = (revenueData, expensesData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
-    let expense = expensesData.find((exp) => exp.year === revenue.year);
+    let expense = expensesData.find(exp => exp.year === revenue.year);
 
     combinedData.push({
       year: revenue.year,
@@ -135,7 +135,7 @@ export const combineMonthlyRevenueAndExpenses = (revenueData, expensesData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
-    let expense = expensesData.find((exp) => exp.month === revenue.month);
+    let expense = expensesData.find(exp => exp.month === revenue.month);
 
     combinedData.push({
       month: revenue.month,
@@ -167,9 +167,7 @@ export const combineDailyRevenueAndExpenses = (revenueData, expensesData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
-    let expense = expensesData.find(
-      (exp) => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString()
-    );
+    let expense = expensesData.find(exp => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString());
 
     combinedData.push({
       date: revenue.date,

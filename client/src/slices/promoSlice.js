@@ -74,112 +74,112 @@ const promoPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listPromos.pending as any]: (state, { payload }) => {
+    [API.listPromos.pending]: (state, { payload }) => {
       state.loading = true;
       state.promos = [];
     },
-    [API.listPromos.fulfilled as any]: (state, { payload }) => {
+    [API.listPromos.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.promos = payload.promos;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Promos Found";
     },
-    [API.listPromos.rejected as any]: (state, { payload, error }) => {
+    [API.listPromos.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.listSponsorCodes.pending as any]: (state, { payload }) => {
+    [API.listSponsorCodes.pending]: (state, { payload }) => {
       state.loading = true;
       state.refreshCode = "";
       state.twentyFiveOffCode = "";
     },
-    [API.listSponsorCodes.fulfilled as any]: (state, { payload }) => {
+    [API.listSponsorCodes.fulfilled]: (state, { payload }) => {
       const { refreshCode, twentyFiveOffCode } = payload;
       state.loading = false;
       state.refreshCode = refreshCode;
       state.twentyFiveOffCode = twentyFiveOffCode;
       state.message = "Promos Found";
     },
-    [API.listSponsorCodes.rejected as any]: (state, { payload, error }) => {
+    [API.listSponsorCodes.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.savePromo.pending as any]: (state, { payload }) => {
+    [API.savePromo.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.savePromo.fulfilled as any]: (state, { payload }) => {
+    [API.savePromo.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Promo Saved";
       state.edit_promo_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.savePromo.rejected as any]: (state, { payload, error }) => {
+    [API.savePromo.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsPromo.pending as any]: (state, { payload }) => {
+    [API.detailsPromo.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsPromo.fulfilled as any]: (state, { payload }) => {
+    [API.detailsPromo.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.promo = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Promo Found";
     },
-    [API.detailsPromo.rejected as any]: (state, { payload, error }) => {
+    [API.detailsPromo.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deletePromo.pending as any]: (state, { payload }) => {
+    [API.deletePromo.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deletePromo.fulfilled as any]: (state, { payload }) => {
+    [API.deletePromo.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.promo = payload.promo;
       state.message = "Promo Deleted";
     },
-    [API.deletePromo.rejected as any]: (state, { payload, error }) => {
+    [API.deletePromo.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteMultiplePromos.pending as any]: (state, { payload }) => {
+    [API.deleteMultiplePromos.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteMultiplePromos.fulfilled as any]: (state, { payload }) => {
+    [API.deleteMultiplePromos.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Promo Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultiplePromos.rejected as any]: (state, { payload, error }) => {
+    [API.deleteMultiplePromos.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.refreshSponsorCodes.pending as any]: (state, { payload }) => {
+    [API.refreshSponsorCodes.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.refreshSponsorCodes.fulfilled as any]: (state, { payload }) => {
+    [API.refreshSponsorCodes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Sponsor Codes Refreshed";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.refreshSponsorCodes.rejected as any]: (state, { payload, error }) => {
+    [API.refreshSponsorCodes.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.validatePromoCode.pending as any]: (state, { payload }) => {
+    [API.validatePromoCode.pending]: (state, { payload }) => {
       state.loadingValidatePromoCode = true;
     },
-    [API.validatePromoCode.fulfilled as any]: (state, { payload }) => {
+    [API.validatePromoCode.fulfilled]: (state, { payload }) => {
       state.loadingValidatePromoCode = false;
     },
-    [API.validatePromoCode.rejected as any]: (state, { payload, error }) => {
+    [API.validatePromoCode.rejected]: (state, { payload, error }) => {
       state.loadingValidatePromoCode = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

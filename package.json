@@ -1,6 +1,7 @@
 {
   "name": "glow_leds",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "dist/server.js",
   "dependencies": {
@@ -80,7 +81,7 @@
     "env-check": "cross-env NODE_ENV=production",
     "start:prod": "node --max_old_space_size=2560 dist/server.js",
     "start:dev": "concurrently \"npm:server-dev\" \"npm:client\"",
-    "server-dev": "nodemon --ignore 'client/*' --max_old_space_size=2560",
+    "server-dev": "nodemon --ignore 'client/*' --max_old_space_size=2560 server.js",
     "client": "cd client && npm start",
     "install": "cd client && npm install --legacy-peer-deps",
     "build": "webpack --mode production",

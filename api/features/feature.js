@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const featureSchema = new mongoose.Schema(
   {
@@ -21,10 +20,10 @@ const featureSchema = new mongoose.Schema(
     pathname: { type: String },
     description: { type: String },
     release_date: { type: Date },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

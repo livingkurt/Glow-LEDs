@@ -67,59 +67,59 @@ const expensePage = createSlice({
     },
   },
   extraReducers: {
-    [API.listExpenses.pending as any]: (state, { payload }) => {
+    [API.listExpenses.pending]: (state, { payload }) => {
       state.loading = true;
       state.expenses = [];
     },
-    [API.listExpenses.fulfilled as any]: (state, { payload }) => {
+    [API.listExpenses.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.expenses = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Expenses Found";
     },
-    [API.listExpenses.rejected as any]: (state, { payload, error }) => {
+    [API.listExpenses.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveExpense.pending as any]: (state, { payload }) => {
+    [API.saveExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveExpense.fulfilled as any]: (state, { payload }) => {
+    [API.saveExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Expense Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_expense_modal = false;
     },
-    [API.saveExpense.rejected as any]: (state, { payload, error }) => {
+    [API.saveExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsExpense.pending as any]: (state, { payload }) => {
+    [API.detailsExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsExpense.fulfilled as any]: (state, { payload }) => {
+    [API.detailsExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.expense = payload;
       state.message = "Expense Found";
     },
-    [API.detailsExpense.rejected as any]: (state, { payload, error }) => {
+    [API.detailsExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteExpense.pending as any]: (state, { payload }) => {
+    [API.deleteExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteExpense.fulfilled as any]: (state, { payload }) => {
+    [API.deleteExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.expense = expense;
       state.message = "Expense Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteExpense.rejected as any]: (state, { payload, error }) => {
+    [API.deleteExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

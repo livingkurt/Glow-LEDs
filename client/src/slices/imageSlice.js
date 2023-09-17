@@ -84,71 +84,71 @@ const imagePage = createSlice({
     },
   },
   extraReducers: {
-    [API.listImages.pending as any]: (state, { payload }) => {
+    [API.listImages.pending]: (state, { payload }) => {
       state.loading = true;
       state.images = [];
     },
-    [API.listImages.fulfilled as any]: (state, { payload }) => {
+    [API.listImages.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.images = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Images Found";
     },
-    [API.listImages.rejected as any]: (state, { payload, error }) => {
+    [API.listImages.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveImage.pending as any]: (state, { payload }) => {
+    [API.saveImage.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveImage.fulfilled as any]: (state, { payload }) => {
+    [API.saveImage.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Image Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveImage.rejected as any]: (state, { payload, error }) => {
+    [API.saveImage.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsImage.pending as any]: (state, { payload }) => {
+    [API.detailsImage.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsImage.fulfilled as any]: (state, { payload }) => {
+    [API.detailsImage.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.image = payload;
       state.message = "Image Found";
     },
-    [API.detailsImage.rejected as any]: (state, { payload, error }) => {
+    [API.detailsImage.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.getImagesByLink.pending as any]: (state, { payload }) => {
+    [API.getImagesByLink.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.getImagesByLink.fulfilled as any]: (state, { payload }) => {
+    [API.getImagesByLink.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.image = payload;
       state.message = "Image Found";
     },
-    [API.getImagesByLink.rejected as any]: (state, { payload, error }) => {
+    [API.getImagesByLink.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteImage.pending as any]: (state, { payload }) => {
+    [API.deleteImage.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteImage.fulfilled as any]: (state, { payload }) => {
+    [API.deleteImage.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.image = payload.image;
       state.message = "Image Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteImage.rejected as any]: (state, { payload, error }) => {
+    [API.deleteImage.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

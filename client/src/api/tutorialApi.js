@@ -7,13 +7,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getTutorials = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}) => {
+export const getTutorials = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/tutorials`, {
       params: {
@@ -28,7 +22,7 @@ export const getTutorials = async ({
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
-export const reorderTutorials = async ({ reorderedItems }: { reorderedItems }) => {
+export const reorderTutorials = async ({ reorderedItems }) => {
   try {
     return axios.put(`/api/tutorials/reorder`, { reorderedItems });
   } catch (error) {
@@ -64,23 +58,20 @@ export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tu
   }
 });
 
-export const detailsTutorial = createAsyncThunk(
-  "tutorials/detailsTutorial",
-  async ({ pathname, id }, thunkApi) => {
-    try {
-      let response = {};
-      if (id) {
-        response = await axios.get(`/api/tutorials/${id}`);
-      } else if (pathname) {
-        response = await axios.get(`/api/tutorials/${pathname}/pathname`);
-      }
-      thunkApi.dispatch(showSuccess({ message: `Tutorial Found` }));
-      return response.data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const detailsTutorial = createAsyncThunk("tutorials/detailsTutorial", async ({ pathname, id }, thunkApi) => {
+  try {
+    let response = {};
+    if (id) {
+      response = await axios.get(`/api/tutorials/${id}`);
+    } else if (pathname) {
+      response = await axios.get(`/api/tutorials/${pathname}/pathname`);
     }
+    thunkApi.dispatch(showSuccess({ message: `Tutorial Found` }));
+    return response.data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id, thunkApi) => {
   try {

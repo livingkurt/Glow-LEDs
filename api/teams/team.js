@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const teamSchema = new mongoose.Schema(
   {
@@ -25,10 +24,10 @@ const teamSchema = new mongoose.Schema(
     rave_mob: { type: Boolean },
     sponsor: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

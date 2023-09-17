@@ -189,11 +189,11 @@ const userPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listUsers.pending as any]: (state, { payload }) => {
+    [API.listUsers.pending]: (state, { payload }) => {
       state.loading = true;
       state.users = [];
     },
-    [API.listUsers.fulfilled as any]: (state, { payload }) => {
+    [API.listUsers.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.users = payload.data;
       state.totalPages = payload.total_count;
@@ -201,15 +201,15 @@ const userPage = createSlice({
       state.message = "Users Found";
       state.loading = false;
     },
-    [API.listUsers.rejected as any]: (state, { payload, error }) => {
+    [API.listUsers.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveUser.pending as any]: (state, { payload }) => {
+    [API.saveUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveUser.fulfilled as any]: (state, { payload }) => {
+    [API.saveUser.fulfilled]: (state, { payload }) => {
       // const { profile } = payload;
       state.loading = false;
       state.message = "User Saved";
@@ -223,43 +223,43 @@ const userPage = createSlice({
       //   // window.location.reload();
       // }
     },
-    [API.saveUser.rejected as any]: (state, { payload, error }) => {
+    [API.saveUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsUser.pending as any]: (state, { payload }) => {
+    [API.detailsUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsUser.fulfilled as any]: (state, { payload }) => {
+    [API.detailsUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.user = payload;
       state.message = "User Found";
       state.loading = false;
     },
-    [API.detailsUser.rejected as any]: (state, { payload, error }) => {
+    [API.detailsUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteUser.pending as any]: (state, { payload }) => {
+    [API.deleteUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteUser.fulfilled as any]: (state, { payload }) => {
+    [API.deleteUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "User Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteUser.rejected as any]: (state, { payload, error }) => {
+    [API.deleteUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
       state.loading = false;
     },
-    [API.resetPassword.pending as any]: (state, { payload }) => {
+    [API.resetPassword.pending]: (state, { payload }) => {
       state.loadingResetPassword = true;
     },
-    [API.resetPassword.fulfilled as any]: (state, { payload }) => {
+    [API.resetPassword.fulfilled]: (state, { payload }) => {
       const { current_user, data } = payload;
 
       if (!current_user.isAdmin) {
@@ -272,56 +272,56 @@ const userPage = createSlice({
       state.message = "Password Reset";
       state.success = true;
     },
-    [API.resetPassword.rejected as any]: (state, { payload, error }) => {
+    [API.resetPassword.rejected]: (state, { payload, error }) => {
       state.loadingResetPassword = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.registerUser.pending as any]: (state, { payload }) => {
+    [API.registerUser.pending]: (state, { payload }) => {
       state.loading = true;
       state.registerationSuccess = false;
     },
-    [API.registerUser.fulfilled as any]: (state, { payload }) => {
+    [API.registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "User Registered";
       state.registerationSuccess = true;
       state.loginModal = false;
     },
-    [API.registerUser.rejected as any]: (state, { payload, error }) => {
+    [API.registerUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.verifyUser.pending as any]: (state, { payload }) => {
+    [API.verifyUser.pending]: (state, { payload }) => {
       state.verificationLoading = true;
       state.registerationSuccess = false;
     },
-    [API.verifyUser.fulfilled as any]: (state, { payload }) => {
+    [API.verifyUser.fulfilled]: (state, { payload }) => {
       state.verificationLoading = false;
       state.message = "User Registered";
       state.verificationSuccess = true;
     },
-    [API.verifyUser.rejected as any]: (state, { payload, error }) => {
+    [API.verifyUser.rejected]: (state, { payload, error }) => {
       state.verificationLoading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.resendVerification.pending as any]: (state, { payload }) => {
+    [API.resendVerification.pending]: (state, { payload }) => {
       state.loadingVerification = true;
     },
-    [API.resendVerification.fulfilled as any]: (state, { payload }) => {
+    [API.resendVerification.fulfilled]: (state, { payload }) => {
       state.loadingVerification = false;
       state.resendVerificationSucess = true;
     },
-    [API.resendVerification.rejected as any]: (state, { payload, error }) => {
+    [API.resendVerification.rejected]: (state, { payload, error }) => {
       state.loadingVerification = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.loginUser.pending as any]: (state, { payload }) => {
+    [API.loginUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.loginUser.fulfilled as any]: (state, { payload }) => {
+    [API.loginUser.fulfilled]: (state, { payload }) => {
       const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
@@ -334,17 +334,17 @@ const userPage = createSlice({
       state.loginSuccess = true;
     },
 
-    [API.loginUser.rejected as any]: (state, { payload, error }) => {
+    [API.loginUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.email_validations = payload.message;
       state.password_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.loginAsUser.pending as any]: (state, { payload }) => {
+    [API.loginAsUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.loginAsUser.fulfilled as any]: (state, { payload }) => {
+    [API.loginAsUser.fulfilled]: (state, { payload }) => {
       const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
@@ -356,15 +356,15 @@ const userPage = createSlice({
       state.message = "User Login Success";
       state.success = true;
     },
-    [API.loginAsUser.rejected as any]: (state, { payload, error }) => {
+    [API.loginAsUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.logoutUser.pending as any]: (state, { payload }) => {
+    [API.logoutUser.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.logoutUser.fulfilled as any]: (state, { payload }) => {
+    [API.logoutUser.fulfilled]: (state, { payload }) => {
       const { my_cart } = payload;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
@@ -373,31 +373,31 @@ const userPage = createSlice({
       state.current_user = {};
       state.loading = false;
     },
-    [API.logoutUser.rejected as any]: (state, { payload, error }) => {
+    [API.logoutUser.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.verifyEmailPasswordReset.pending as any]: (state, { payload }) => {
+    [API.verifyEmailPasswordReset.pending]: (state, { payload }) => {
       state.loadingPasswordReset = true;
     },
-    [API.verifyEmailPasswordReset.fulfilled as any]: (state, { payload }) => {
+    [API.verifyEmailPasswordReset.fulfilled]: (state, { payload }) => {
       state.loadingPasswordReset = false;
       state.email_validations = "";
     },
-    [API.verifyEmailPasswordReset.rejected as any]: (state, { payload, error }) => {
+    [API.verifyEmailPasswordReset.rejected]: (state, { payload, error }) => {
       state.loadingPasswordReset = false;
       state.email_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.generatePasswordResetToken.pending as any]: (state, { payload }) => {
+    [API.generatePasswordResetToken.pending]: (state, { payload }) => {
       state.loadingChangePassword = true;
     },
-    [API.generatePasswordResetToken.fulfilled as any]: (state, { payload }) => {
+    [API.generatePasswordResetToken.fulfilled]: (state, { payload }) => {
       state.loadingChangePassword = false;
       state.email_validations = "";
     },
-    [API.generatePasswordResetToken.rejected as any]: (state, { payload, error }) => {
+    [API.generatePasswordResetToken.rejected]: (state, { payload, error }) => {
       state.loadingChangePassword = false;
       state.email_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";

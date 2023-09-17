@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const categorySchema = new mongoose.Schema(
   {
@@ -13,10 +12,10 @@ const categorySchema = new mongoose.Schema(
     meta_description: String,
     meta_keywords: String,
     deleted: { type: Boolean, default: false },
-    masthead: { type: Boolean, default: false }
+    masthead: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

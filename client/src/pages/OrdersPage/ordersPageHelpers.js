@@ -1,6 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 import { daysBetween, determine_total } from "../../utils/helper_functions";
-import { setTimeout } from "timers";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 // const { printHtml } = require("print-html-element");
@@ -19,7 +18,7 @@ export const orderColors = [
   { name: "Paused", color: tableColors.paused },
 ];
 
-export const determineOrderColors = (order) => {
+export const determineOrderColors = order => {
   let result = "";
   if (!order.isPaid) {
     result = tableColors.inactive;
@@ -27,6 +26,7 @@ export const determineOrderColors = (order) => {
     if (order.isPaid) {
       result = tableColors.active;
     }
+    ser;
     if (order.isUpdated) {
       result = tableColors.alt_color_5;
     }
@@ -68,7 +68,7 @@ export const determineOrderColors = (order) => {
 //   return diffDays;
 // };
 
-export const sinceOrdered = (date) => {
+export const sinceOrdered = date => {
   const today = new Date();
   const numDays = daysBetween(today, date);
   if (numDays === 0) {
@@ -80,7 +80,7 @@ export const sinceOrdered = (date) => {
   }
 };
 
-export const determine_tracking_link = (tracking_number) => {
+export const determine_tracking_link = tracking_number => {
   const USPS_REGEX = /^[0-9]{20,22}$/; // Matches USPS tracking numbers
   const FEDEX_REGEX = /^[0-9]{12,15}$/; // Matches FedEx tracking numbers
   const UPS_REGEX = /^1Z[A-Z0-9]{16}$/; // Matches UPS tracking numbers
@@ -95,7 +95,7 @@ export const determine_tracking_link = (tracking_number) => {
   }
 };
 
-export const print_invoice = (contents) => {
+export const print_invoice = contents => {
   // // const contents = document.getElementById(id).innerHTML;
   // const frame1 = document.createElement("iframe");
   // frame1.name = "frame1";
@@ -120,7 +120,7 @@ export const print_invoice = (contents) => {
   return false;
 };
 
-export const print_label = (content) => {
+export const print_label = content => {
   // // const content = document.getElementById(id).innerHTML;
   // const frame1 = document.createElement("iframe");
   // frame1.name = "frame1";
@@ -150,7 +150,7 @@ export const print_label = (content) => {
   return false;
 };
 
-export const duplicateOrder = (order) => {
+export const duplicateOrder = order => {
   return {
     orderItems: order.orderItems,
     shipping: {
@@ -178,14 +178,14 @@ export const duplicateOrder = (order) => {
   };
 };
 
-export const sendEmail = (shipping) => {
+export const sendEmail = shipping => {
   const email = shipping.email;
   const subject = "About Your Glow LEDs Order";
   const emailBody = "Hi " + shipping.first_name + ",";
   document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
 };
 
-const waitForImagesToLoad = (htmlString) => {
+const waitForImagesToLoad = htmlString => {
   return new Promise(resolve => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
@@ -215,7 +215,7 @@ const waitForImagesToLoad = (htmlString) => {
   });
 };
 
-export const printLabel = async (label) => {
+export const printLabel = async label => {
   const html = `<div style="width: 100%;
   display: flex;
   height: auto;
@@ -238,7 +238,7 @@ export const printLabel = async (label) => {
   ]);
 };
 
-export const printInvoice = async (invoice) => {
+export const printInvoice = async invoice => {
   await waitForImagesToLoad(invoice);
 
   const d = new Printd();
@@ -254,21 +254,11 @@ export const printInvoice = async (invoice) => {
   ]);
 };
 
-export const updateOrderPrices = ({
-  orderItems,
-  shippingPrice,
-  taxPrice,
-  tip,
-}: {
-  orderItems;
-  shippingPrice;
-  taxPrice;
-  tip;
-}) => {
+export const updateOrderPrices = ({ orderItems, shippingPrice, taxPrice, tip }) => {
   let updatedItemsPrice = 0;
   // let updatedTaxPrice = 0;
 
-  orderItems.forEach((item) => {
+  orderItems.forEach(item => {
     updatedItemsPrice += item.price * item.qty;
   });
 
@@ -318,7 +308,7 @@ export const updateOrderItem = (index, value, order) => {
         package_length: value.package_length,
         package_width: value.package_width,
         package_height: value.package_height,
-        product_option: value?.product_options?.find((option) => option.default === true),
+        product_option: value?.product_options?.find(option => option.default === true),
         reviewed: value.reviewed,
         product: value,
         color_products: value.color_products,

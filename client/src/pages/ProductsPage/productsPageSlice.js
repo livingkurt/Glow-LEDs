@@ -202,40 +202,40 @@ const productsPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listProducts.pending as any]: (state, { payload }) => {
+    [API.listProducts.pending]: (state, { payload }) => {
       state.loading = true;
       state.products = [];
     },
-    [API.listProducts.fulfilled as any]: (state, { payload }) => {
+    [API.listProducts.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.products = payload.products;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Products Found";
     },
-    [API.listProducts.rejected as any]: (state, { payload, error }) => {
+    [API.listProducts.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveProduct.pending as any]: (state, { payload }) => {
+    [API.saveProduct.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveProduct.fulfilled as any]: (state, { payload }) => {
+    [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
       state.edit_product_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveProduct.rejected as any]: (state, { payload, error }) => {
+    [API.saveProduct.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsProduct.pending as any]: (state, { payload }) => {
+    [API.detailsProduct.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsProduct.fulfilled as any]: (state, { payload }) => {
+    [API.detailsProduct.fulfilled]: (state, { payload }) => {
       const start_date = new Date(payload.sale_start_date);
       const end_date = new Date(payload.sale_end_date);
       if (payload.sale_start_date) {
@@ -250,49 +250,49 @@ const productsPage = createSlice({
       state.product = payload;
       state.message = "Product Found";
     },
-    [API.detailsProduct.rejected as any]: (state, { payload, error }) => {
+    [API.detailsProduct.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteProduct.pending as any]: (state, { payload }) => {
+    [API.deleteProduct.pending]: (state, { payload }) => {
       state.loading = true;
       state.success = false;
     },
-    [API.deleteProduct.fulfilled as any]: (state, { payload }) => {
+    [API.deleteProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.product = payload.product;
       state.message = "Product Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteProduct.rejected as any]: (state, { payload, error }) => {
+    [API.deleteProduct.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteMultipleProducts.pending as any]: (state, { payload }) => {
+    [API.deleteMultipleProducts.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteMultipleProducts.fulfilled as any]: (state, { payload }) => {
+    [API.deleteMultipleProducts.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultipleProducts.rejected as any]: (state, { payload, error }) => {
+    [API.deleteMultipleProducts.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveProductReview.pending as any]: (state, { payload }) => {
+    [API.saveProductReview.pending]: (state, { payload }) => {
       state.loading = true;
       state.success = false;
     },
-    [API.saveProductReview.fulfilled as any]: (state, { payload }) => {
+    [API.saveProductReview.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.message = "Product Review Saved";
     },
-    [API.saveProductReview.rejected as any]: (state, { payload, error }) => {
+    [API.saveProductReview.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

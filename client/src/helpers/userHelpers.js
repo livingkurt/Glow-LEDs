@@ -1,15 +1,15 @@
 export const updateCartItems = (cartItems, cart_item) => {
   let new_cart_items = [];
-  const item_exists = cartItems.find((x) => deepEqual(x, cart_item));
+  const item_exists = cartItems.find(x => deepEqual(x, cart_item));
   if (item_exists) {
-    new_cart_items = cartItems.map((x) => (deepEqual(x, cart_item) ? cart_item : x));
+    new_cart_items = cartItems.map(x => (deepEqual(x, cart_item) ? cart_item : x));
   } else {
     new_cart_items = [...cartItems, cart_item];
   }
   return new_cart_items;
 };
 
-export const loginUpdateCartItems = (userCartItems[], anonymousCartItems[]) => {
+export const loginUpdateCartItems = (userCartItems, anonymousCartItems) => {
   const mergedCart = [...userCartItems];
 
   anonymousCartItems.forEach(anonymousItem => {

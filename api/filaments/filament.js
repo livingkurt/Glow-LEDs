@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const filamentSchema = new mongoose.Schema(
   {
@@ -7,10 +6,10 @@ const filamentSchema = new mongoose.Schema(
     color: { type: String },
     color_code: { type: String },
     active: { type: Boolean },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

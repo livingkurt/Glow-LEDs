@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-export {};
 
 const paycheck_schema = new mongoose.Schema(
   {
@@ -16,10 +15,10 @@ const paycheck_schema = new mongoose.Schema(
     paid: { type: Boolean },
     paid_at: { type: Date },
     reciept: { type: String },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

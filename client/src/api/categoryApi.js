@@ -4,16 +4,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
-import { showError, showSuccess } from "../slices/snackbarSlice";
+import { showError } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const getCategorys = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize,
-}) => {
+export const getCategorys = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/categorys`, {
       params: {
@@ -28,7 +22,7 @@ export const getCategorys = async ({
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
-export const reorderCategorys = async ({ reorderedItems }: { reorderedItems }) => {
+export const reorderCategorys = async ({ reorderedItems }) => {
   try {
     return axios.put(`/api/categorys/reorder`, { reorderedItems });
   } catch (error) {
@@ -61,22 +55,19 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
   }
 });
 
-export const detailsCategory = createAsyncThunk(
-  "categorys/detailsCategory",
-  async ({ pathname, id }, thunkApi) => {
-    try {
-      let response = {};
-      if (id) {
-        response = await axios.get(`/api/categorys/${id}`);
-      } else if (pathname) {
-        response = await axios.get(`/api/categorys/${pathname}/pathname`);
-      }
-      return response.data;
-    } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const detailsCategory = createAsyncThunk("categorys/detailsCategory", async ({ pathname, id }, thunkApi) => {
+  try {
+    let response = {};
+    if (id) {
+      response = await axios.get(`/api/categorys/${id}`);
+    } else if (pathname) {
+      response = await axios.get(`/api/categorys/${pathname}/pathname`);
     }
+    return response.data;
+  } catch (error) {
+    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-);
+});
 
 export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async (id, thunkApi) => {
   try {

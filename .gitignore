@@ -114,23 +114,8 @@ client/public/videos/full_sized_videos
 client/public/gifs/full_sized_gifs
 
 
-util.js
-server.js
-config.js
-passport.js
-
 temp
 
-routes/*.js
-models/*.js
-controllers/*.js
-helpers/*.js
-routes/api/*.js
-services/*.js
-db/*.js
-email_templates/*.js
-email_templates/pages/*.js
-email_templates/components/*.js
 
 certification/glowleds-key.pem
 

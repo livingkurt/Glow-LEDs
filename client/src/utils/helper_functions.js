@@ -1,23 +1,18 @@
 import { determine_secondary_product_name } from "./react_helper_functions";
 
-interface errors {
-  email;
-  password;
-}
-
-export const create_query = (query) => {
+export const create_query = query => {
   const params = new URLSearchParams(query);
   return params;
 };
 
-export const humanize = (str) => {
+export const humanize = str => {
   const frags = str.split("_");
   for (let i = 0; i < frags.length; i++) {
     frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
   }
   return frags.join(" ");
 };
-export const snake_case = (str) => {
+export const snake_case = str => {
   let snake_case = str;
   snake_case.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
   if (snake_case.substr(-1) === ")") {
@@ -41,7 +36,7 @@ export const removeDuplicates = (originalArray, prop) => {
   return newArray;
 };
 
-export const shuffle = (array) => {
+export const shuffle = array => {
   var currentIndex = array.length,
     randomIndex;
 
@@ -106,7 +101,7 @@ export const sizes_short = (width, product_name) => {
   }
 };
 
-export const sizes_conversion = (size) => {
+export const sizes_conversion = size => {
   switch (size) {
     case "S":
       return "Small";
@@ -135,7 +130,7 @@ export const sizes_conversion = (size) => {
 // 		? '?secondary=' + item.size ? item.size : item.option_product_name
 // 		: ''}`;
 // };
-export const determnine_link = (item) => {
+export const determnine_link = item => {
   //
   const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
     item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
@@ -166,7 +161,7 @@ export const determnine_link = (item) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
 // };
 
-export const determine_tracking_link = (tracking_number) => {
+export const determine_tracking_link = tracking_number => {
   if (tracking_number) {
     if (tracking_number.startsWith("1Z")) {
       return `https://www.ups.com/track?tracknum=${tracking_number}`;
@@ -190,13 +185,13 @@ export const determine_tracking_link = (tracking_number) => {
   }
 };
 
-export const prnt = (info) => {};
+export const prnt = info => {};
 
-export const toCapitalize = (string) => {
+export const toCapitalize = string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const determine_promoter_code_tier = (code_usage) => {
+export const determine_promoter_code_tier = code_usage => {
   if (code_usage === 0 || code_usage === 1) {
     return 20;
   } else if (code_usage >= 2 && code_usage <= 5) {
@@ -213,7 +208,7 @@ export const determine_promoter_code_tier = (code_usage) => {
     return 60;
   }
 };
-export const determine_sponsor_code_tier = (code_usage) => {
+export const determine_sponsor_code_tier = code_usage => {
   if (code_usage === 0 || code_usage === 1) {
     return 30;
   } else if (code_usage >= 2 && code_usage <= 5) {
@@ -227,14 +222,14 @@ export const determine_sponsor_code_tier = (code_usage) => {
   }
 };
 
-export const format_date = (isoDateString) => {
+export const format_date = isoDateString => {
   const date = new Date(isoDateString);
   const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
   const day = ("0" + date.getDate()).slice(-2);
   const year = date.getFullYear();
   return `${month}/${day}/${year}`;
 };
-export const format_time = (unformatted_time) => {
+export const format_time = unformatted_time => {
   let hour = unformatted_time.slice(11, 13);
   let formatted_hour = hour > 12 ? hour - 12 : hour;
   const minute = unformatted_time.slice(14, 16);
@@ -243,7 +238,7 @@ export const format_time = (unformatted_time) => {
   return formatted_time;
 };
 
-export const unformat_time = (formatted_time) => {
+export const unformat_time = formatted_time => {
   let hour = formatted_time.slice(11, 13);
   let formatted_hour = hour > 12 ? hour - 12 : hour;
   const minute = formatted_time.slice(14, 16);
@@ -252,7 +247,7 @@ export const unformat_time = (formatted_time) => {
   return formatted_time;
 };
 
-export const accurate_date = (date) => {
+export const accurate_date = date => {
   var tzo = -date.getTimezoneOffset(),
     dif = tzo >= 0 ? "+" : "-",
     pad = function (num) {
@@ -281,7 +276,7 @@ export const accurate_date = (date) => {
 
 // var dt = new Date();
 
-export const unformat_date = (formatted_date) => {
+export const unformat_date = formatted_date => {
   //
   const date = formatted_date.split("/");
   const day = date[1];
@@ -377,7 +372,7 @@ export const determine_total = (cartItems, isWholesaler) => {
   const today = new Date();
   let total = 0;
   if (cartItems) {
-    cartItems.forEach((item) => {
+    cartItems.forEach(item => {
       if (isWholesaler) {
         total = total + (item.wholesale_price || item.price) * item.qty;
       } else if (
@@ -415,11 +410,11 @@ const diffuser_colors = [
 export const determine_price = (color, diffuser_cap) => {
   let price = 11.99;
   if (diffuser_cap) {
-    price = colors.filter((cap_color) => {
+    price = colors.filter(cap_color => {
       return cap_color.color === colors;
     });
   } else {
-    price = diffuser_colors.filter((cap_color) => {
+    price = diffuser_colors.filter(cap_color => {
       return cap_color.color === colors;
     });
   }
@@ -482,7 +477,7 @@ export const hslToHex = (h, s, l) => {
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
   }
-  const toHex = (x) => {
+  const toHex = x => {
     const hex = Math.round(x * 255).toString(16);
     return hex.length === 1 ? "0" + hex : hex;
   };
@@ -490,8 +485,8 @@ export const hslToHex = (h, s, l) => {
 };
 
 export const calculate_affiliate_usage = (affiliates, orders) => {
-  return affiliates.map((affiliate) => {
-    const code_usage = orders.filter((order) => {
+  return affiliates.map(affiliate => {
+    const code_usage = orders.filter(order => {
       return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
     return {
@@ -499,15 +494,13 @@ export const calculate_affiliate_usage = (affiliates, orders) => {
       Uses: code_usage,
       Revenue: ` $${orders
         .filter(
-          (order) =>
-            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
         .filter(
-          (order) =>
-            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
         .toFixed(2)}`,
@@ -520,8 +513,8 @@ export const calculate_affiliate_usage = (affiliates, orders) => {
 };
 
 export const calculate_sponsor_usage = (affiliates, orders) => {
-  return affiliates.map((affiliate) => {
-    const code_usage = orders.filter((order) => {
+  return affiliates.map(affiliate => {
+    const code_usage = orders.filter(order => {
       return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
     return {
@@ -529,15 +522,13 @@ export const calculate_sponsor_usage = (affiliates, orders) => {
       Uses: code_usage,
       Revenue: ` $${orders
         .filter(
-          (order) =>
-            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
         .filter(
-          (order) =>
-            order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
         .toFixed(2)}`,
@@ -890,7 +881,7 @@ export const descriptions = {
     "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
 };
 
-export const description_determination = (category) => {
+export const description_determination = category => {
   if (category === "diffusers") {
     return descriptions.diffusers;
   }
@@ -935,12 +926,12 @@ export const update_products_url = (
   }
 };
 
-export const getUrlParameter = (location) => {
+export const getUrlParameter = location => {
   const search = location.search.split("?");
   const search_object = {};
   search
-    .filter((item) => item !== "")
-    .forEach((item) => {
+    .filter(item => item !== "")
+    .forEach(item => {
       search_object[item.split("=")[0]] = item.split("=")[1];
     });
   return search_object;
@@ -948,7 +939,7 @@ export const getUrlParameter = (location) => {
 
 export const sort_options = ["Category", "Newest", "Lowest", "Highest"];
 
-export const mutliDragAwareReorder = (args) => {
+export const mutliDragAwareReorder = args => {
   if (args.selectedProductIds.length > 1) {
     return reorderMultiDrag(args);
   }
@@ -1085,7 +1076,7 @@ const reorderMultiDrag = ({ entities, selectedProductIds, source, destination })
     const column = entities.columns[columnId];
 
     // remove the id's of the items that are selected
-    const remainingProductIds = column.product_ids.filter((id) => !selectedProductIds.includes(id));
+    const remainingProductIds = column.product_ids.filter(id => !selectedProductIds.includes(id));
 
     previous[column.id] = withNewProductIds(column, remainingProductIds);
     return previous;
@@ -1123,7 +1114,7 @@ const withNewProductIds = (column, product_ids) => ({
 });
 
 export const getHomeColumn = (entities, productId) => {
-  const columnId = entities.columnOrder.find((id) => {
+  const columnId = entities.columnOrder.find(id => {
     const column = entities.columns[id];
 
     return column.product_ids.includes(productId);
@@ -1171,7 +1162,7 @@ export const multiSelectTo = (entities, selectedProductIds, newProductId) => {
   // everything inbetween needs to have it's selection toggled.
   // with the exception of the start and end values which will always be selected
 
-  const toAdd = inBetween.filter((productId) => {
+  const toAdd = inBetween.filter(productId => {
     // if already selected: then no need to select it again
     if (selectedProductIds.includes(productId)) {
       return false;
@@ -1193,7 +1184,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-export const dates_in_year = (year) => {
+export const dates_in_year = year => {
   return [
     {
       month: "january",

@@ -58,60 +58,60 @@ const categoryPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listCategorys.pending as any]: (state, { payload }) => {
+    [API.listCategorys.pending]: (state, { payload }) => {
       state.loading = true;
       state.categorys = [];
     },
-    [API.listCategorys.fulfilled as any]: (state, { payload }) => {
+    [API.listCategorys.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.categorys = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Categorys Found";
     },
-    [API.listCategorys.rejected as any]: (state, { payload, error }) => {
+    [API.listCategorys.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveCategory.pending as any]: (state, { payload }) => {
+    [API.saveCategory.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveCategory.fulfilled as any]: (state, { payload }) => {
+    [API.saveCategory.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.edit_category_modal = false;
       state.success = true;
       state.message = "Category Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveCategory.rejected as any]: (state, { payload, error }) => {
+    [API.saveCategory.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsCategory.pending as any]: (state, { payload }) => {
+    [API.detailsCategory.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsCategory.fulfilled as any]: (state, { payload }) => {
+    [API.detailsCategory.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.category = payload;
       state.message = "Category Found";
     },
-    [API.detailsCategory.rejected as any]: (state, { payload, error }) => {
+    [API.detailsCategory.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteCategory.pending as any]: (state, { payload }) => {
+    [API.deleteCategory.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteCategory.fulfilled as any]: (state, { payload }) => {
+    [API.deleteCategory.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.category = payload.category;
       state.message = "Category Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteCategory.rejected as any]: (state, { payload, error }) => {
+    [API.deleteCategory.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
