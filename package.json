@@ -84,7 +84,7 @@
     "server-dev": "nodemon --max_old_space_size=2560 dist/server.js",
     "client": "cd client && npm start",
     "build": "babel server --out-dir dist",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && npm run build:client",
     "install": "cd client && npm install --legacy-peer-deps",
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
