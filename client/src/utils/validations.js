@@ -1,6 +1,6 @@
 import isEmpty from "is-empty";
 // import Validator from 'validator';
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export const validate_promo_code = data => {
   let errors;
