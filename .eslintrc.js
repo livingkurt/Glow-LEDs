@@ -14,6 +14,7 @@ module.exports = {
     "airbnb",
     "airbnb/hooks",
     "plugin:jest/recommended",
+    "plugin:cypress/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
@@ -141,6 +142,9 @@ module.exports = {
         },
       },
     ],
+  },
+  globals: {
+    "cy": "readonly",
   },
   settings: {
     react: {

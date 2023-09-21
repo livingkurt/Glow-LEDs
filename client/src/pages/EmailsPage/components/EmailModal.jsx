@@ -6,6 +6,8 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
+import { IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 const EmailModal = () => {
   const [email, set_email] = useState("");
@@ -89,7 +91,7 @@ const EmailModal = () => {
         width < 535 && "mh-auto-20px"
       }`}
     >
-      <span
+      <IconButton
         className="pos-abs right-15px top-10px close"
         data-testid="close_email_modal"
         onClick={() => {
@@ -98,8 +100,8 @@ const EmailModal = () => {
           localStorage.setItem("popup", JSON.stringify({ date: today, email: false }));
         }}
       >
-        &times;
-      </span>
+        <Close />
+      </IconButton>
       {complete ? (
         <ul className="column jc-b ai-c p-20px">
           <li className="mb-2rem">
