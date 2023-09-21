@@ -102,7 +102,6 @@
     "clean-install": "rm -rf node_modules package-lock.json client/node_modules client/package-lock.json && npm install && cd client && npm install && cd ..",
     "test": "jest",
     "test:all": "npm --test-all",
-    "test:frontend": "cd client && npm test",
     "test:backend": "npm test --config=jest.config.js"
   },
   "pre-commit": [
