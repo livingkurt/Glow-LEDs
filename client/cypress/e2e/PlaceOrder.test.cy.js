@@ -6,7 +6,7 @@ describe("Add to Cart", () => {
       win.localStorage.setItem("popup", '{"date":"2023-05-04T19:43:46.680Z","email":false}');
     });
 
-    cy.visit("http://localhost:3000/collections/all/products/2016_batteries"); // Navigate to the products page
+    cy.visit("/collections/all/products/2016_batteries"); // Navigate to the products page
     cy.contains("button", "Add To Cart").click();
 
     // Check for the snackbar
