@@ -39,8 +39,6 @@ describe("Place Order Flow", () => {
 
     cy.contains("button", "Continue").click();
 
-    cy.get(".__PrivateStripeElement iframe").click();
-
     // Type card details
     cy.getStripeElement("cardNumber").type("4242424242424242");
     cy.getStripeElement("cardExpiry").type("10/30");
