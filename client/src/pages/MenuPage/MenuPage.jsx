@@ -7,9 +7,12 @@ import { Loading } from "../../shared/SharedComponents";
 import { MenuItemD, MenuItemM } from "./components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { listContents } from "src/api";
+import * as API from "../../api";
 
 const MenuPage = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const pathname = params.pathname;
 
   const [items, set_items] = useState([]);
@@ -31,6 +34,9 @@ const MenuPage = () => {
         pathname === "sponsored_artists"
       ) {
         set_items(contents[0]?.home_page?.slideshow);
+      }
+      if (contents.length === 0) {
+        dispatch(API.listContents({ limit: 3, active: true }));
       }
     }
     return () => (clean = false);

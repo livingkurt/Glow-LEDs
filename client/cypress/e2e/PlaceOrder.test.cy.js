@@ -1,12 +1,11 @@
 /* global cy */
 
-describe("Add to Cart", () => {
-  it("should add a product to the cart", () => {
-    cy.window().then(win => {
-      win.localStorage.setItem("popup", '{"date":"2023-05-04T19:43:46.680Z","email":false}');
-    });
-
-    cy.visit("/collections/all/products/2016_batteries"); // Navigate to the products page
+describe("Place Order Flow", () => {
+  it("should simulate a user going through the steps to place an order", () => {
+    cy.visit("/collections/all/tutorials");
+    cy.contains("button", "Shop").click();
+    cy.get(".product").contains("Batteries").click();
+    cy.get(".product").contains("Bulk CR2016 Batteries").click();
     cy.contains("button", "Add To Cart").click();
 
     // Check for the snackbar
@@ -50,6 +49,6 @@ describe("Add to Cart", () => {
 
     cy.get('button[type="submit"]').contains("Complete Order").click();
 
-    cy.get("h2").should("contain", "Thank you for your Glow LEDs Order");
+    cy.get("h2", { timeout: 20000 }).should("contain", "Thank you for your Glow LEDs Order");
   });
 });

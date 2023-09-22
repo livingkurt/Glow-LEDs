@@ -36,3 +36,16 @@ Cypress.Commands.add("getStripeElement", fieldName => {
 
   return cy.get("iframe").its("0.contentDocument.body").should("not.be.empty").then(cy.wrap).find(selector);
 });
+
+// Runs before each test
+beforeEach(() => {
+  // cy.exec("node ../server/background/snapshot_db.js");
+  cy.window().then(win => {
+    win.localStorage.setItem("popup", '{"date":"2023-05-04T19:43:46.680Z","email":false}');
+  });
+});
+
+// Runs after each test
+// afterEach(() => {
+//   cy.exec("node ../server/background/restore_db.js");
+// });
