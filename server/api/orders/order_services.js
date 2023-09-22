@@ -291,7 +291,7 @@ export default {
       }
     }
   },
-  delete_last_orders_s: async params => {
+  test_delete_orders_s: async params => {
     try {
       return await order_db.remove_orders_db(params.id);
     } catch (error) {

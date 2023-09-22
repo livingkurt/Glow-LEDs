@@ -515,10 +515,10 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  delete_last_orders_c: async (req, res) => {
+  test_delete_orders_c: async (req, res) => {
     const { params } = req;
     try {
-      const order = await order_services.delete_last_orders_s(params);
+      const order = await order_services.test_delete_orders_s(params);
       if (order) {
         return res.status(204).send({ message: "Order Deleted" });
       }

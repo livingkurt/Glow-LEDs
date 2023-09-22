@@ -60,7 +60,7 @@ router.route("/glow/sample_testing").post(order_controller.sample_testing_orders
 router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
 
 router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.transfer_orders_c);
-router.route("/delete_last_order/:id").delete(order_controller.delete_last_orders_c);
+router.route("/test_delete/:id").delete(order_controller.test_delete_orders_c);
 
 router
   .route("/glow/:id")

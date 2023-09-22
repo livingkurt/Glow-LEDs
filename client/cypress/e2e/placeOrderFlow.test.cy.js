@@ -59,7 +59,7 @@ describe("Place Order Flow", () => {
       // Delete the order
       cy.request({
         method: "DELETE",
-        url: `/api/orders/delete_last_order/${orderId}`,
+        url: `/api/orders/test_delete/${orderId}`,
       });
     });
   });
