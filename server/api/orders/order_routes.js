@@ -44,8 +44,12 @@ router.route("/get_range_revenue_orders").get(order_controller.get_range_revenue
 router.route("/get_daily_revenue_orders").get(order_controller.get_daily_revenue_orders_c);
 router.route("/get_monthly_revenue_orders").get(order_controller.get_monthly_revenue_orders_c);
 router.route("/get_yearly_revenue_orders").get(order_controller.get_yearly_revenue_orders_c);
-router.route("/get_monthly_revenue_product_orders/:product_id/product").get(order_controller.get_monthly_revenue_product_orders_c);
-router.route("/get_yearly_revenue_product_orders/:product_id/product").get(order_controller.get_yearly_revenue_product_orders_c);
+router
+  .route("/get_monthly_revenue_product_orders/:product_id/product")
+  .get(order_controller.get_monthly_revenue_product_orders_c);
+router
+  .route("/get_yearly_revenue_product_orders/:product_id/product")
+  .get(order_controller.get_yearly_revenue_product_orders_c);
 router.route("/get_range_category_revenue_orders").get(order_controller.get_range_category_revenue_orders_c);
 router.route("/get_all_time_category_revenue_orders").get(order_controller.get_all_time_category_revenue_orders_c);
 router.route("/get_range_tips_revenue_orders").get(order_controller.get_range_tips_revenue_orders_c);
@@ -56,6 +60,7 @@ router.route("/glow/sample_testing").post(order_controller.sample_testing_orders
 router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
 
 router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.transfer_orders_c);
+router.route("/delete_last_order/:id").delete(order_controller.delete_last_orders_c);
 
 router
   .route("/glow/:id")
