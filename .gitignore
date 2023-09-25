@@ -130,3 +130,5 @@ client/src/scss/OLDSCSS.scss
 .aider.chat.history
 
 .stylelintcache
+
+db-snapshot.json

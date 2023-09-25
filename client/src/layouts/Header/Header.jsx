@@ -19,6 +19,7 @@ import { openLoginModal } from "../../slices/userSlice";
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [first_name, set_first_name] = useState("");
   const [loading, set_loading] = useState("");
   const [display, setDisplay] = useState(false);
@@ -62,7 +63,6 @@ const Header = () => {
   const open_cart = () => {
     dispatch(setCartDrawer(true));
   };
-  const dispatch = useDispatch();
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");

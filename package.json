@@ -102,8 +102,8 @@
     "clean-install": "rm -rf node_modules package-lock.json client/node_modules client/package-lock.json && npm install && cd client && npm install && cd ..",
     "test": "jest",
     "test:all": "npm --test-all",
-    "test:frontend": "npm test --config=client/jest.config.js",
-    "test:backend": "npm test --config=jest.config.js"
+    "test:backend": "npm test --config=jest.config.js",
+    "cypress:run": "cd client && npm run cypress:run"
   },
   "pre-commit": [
     "lint-staged"

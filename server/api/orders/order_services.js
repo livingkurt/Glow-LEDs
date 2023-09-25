@@ -291,6 +291,15 @@ export default {
       }
     }
   },
+  test_delete_orders_s: async params => {
+    try {
+      return await order_db.remove_orders_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   occurrences_orders_s: async () => {
     try {
       return await order_db.get_occurances_products_db();
