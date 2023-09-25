@@ -49,18 +49,18 @@ describe("Place Order Flow", () => {
 
     cy.get("h2", { timeout: 20000 }).should("contain", "Thank you for your Glow LEDs Order");
 
-    cy.url().then(url => {
-      const segments = url.split("/");
+    // cy.url().then(url => {
+    //   const segments = url.split("/");
 
-      const orderId = segments[segments.length - 1];
+    //   const orderId = segments[segments.length - 1];
 
-      console.log({ orderId });
+    //   console.log({ orderId });
 
-      // Delete the order
-      cy.request({
-        method: "DELETE",
-        url: `/api/orders/test_delete/${orderId}`,
-      });
-    });
+    //   // Delete the order
+    //   cy.request({
+    //     method: "DELETE",
+    //     url: `/api/orders/test_delete/${orderId}`,
+    //   });
+    // });
   });
 });
