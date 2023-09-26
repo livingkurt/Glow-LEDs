@@ -1,5 +1,5 @@
-import { facebook_catalog_upload } from "../client/src/pages/DashboardPage/background/daily_workers/facebook_catalog_upload";
-import { google_catalog_upload } from "../client/src/pages/DashboardPage/background/daily_workers/google_catalog_upload";
+const { facebook_catalog_upload } = require("./daily_workers/facebook_catalog_upload");
+const { google_catalog_upload } = require("./daily_workers/google_catalog_upload");
 
 const daily_worker = () => {
   facebook_catalog_upload();

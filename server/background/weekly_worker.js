@@ -1,5 +1,5 @@
-import { payout_employees } from "../../client/src/pages/DashboardPage/background/weekly_workers/payout_employees";
-import { check_stock } from "../../client/src/pages/DashboardPage/background/weekly_workers/check_stock";
+const { check_stock } = require("./weekly_workers/check_stock");
+const { payout_employees } = require("./weekly_workers/payout_employees");
 
 const getWeekNumber = d => {
   // Copy date so don't modify original

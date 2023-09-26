@@ -1,7 +1,7 @@
-import { payout_affiliates } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_affiliates";
-import { payout_teams } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_teams";
-import { payout_tips } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_tips";
-import { refresh_sponsor_codes } from "../client/src/pages/DashboardPage/background/monthly_workers/refresh_sponsor_codes";
+const { payout_affiliates } = require("./monthly_workers/payout_affiliates");
+const { payout_teams } = require("./monthly_workers/payout_teams");
+const { payout_tips } = require("./monthly_workers/payout_tips");
+const { refresh_sponsor_codes } = require("./monthly_workers/refresh_sponsor_codes");
 
 const monthly_worker = () => {
   // Get the current date
