@@ -330,7 +330,7 @@ const RelatedProductsSlideshow = ({
                         )}
                       </div>
                     ) : (
-                      <GLButton variant="inactive">Out of Stock</GLButton>
+                      <GLButton variant="inactive">Restocking Soon</GLButton>
                     )}
                   </div>
                 </span>
