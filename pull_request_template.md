@@ -8,4 +8,4 @@
 
 ### Author Checklist:
 
-- [ ] Jira issue relating to changes [CO-](https://glowleds.atlassian.net/browse/GL-)
+- [ ] Jira issue relating to changes [GL-](https://glowleds.atlassian.net/browse/GL-)
