@@ -180,7 +180,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
                     )}
                   </div>
                 ) : (
-                  <GLButton variant="inactive">Out of Stock</GLButton>
+                  <GLButton variant="inactive">Restocking Soon</GLButton>
                 )}
               </div>
             </span>

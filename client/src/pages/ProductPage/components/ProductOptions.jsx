@@ -176,7 +176,7 @@ const ProductOptions = () => {
       <li className="mv-1rem ai-c">
         <label className="mv-0px mr-10px title_font">Status:</label>{" "}
         <label>{determine_preorder(option_product_object, count_in_stock, "In Stock", product)}</label>
-        {/* <label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label> */}
+        {/* <label>{count_in_stock > 0 ? 'In Stock' : 'Restocking Soon'}</label> */}
       </li>
       {product.secondary_product_group && product.secondary_products && product.secondary_products.length > 0 && (
         <li>
@@ -655,7 +655,7 @@ export default ProductOptions;
 //           <div className="mv-1rem ai-c">
 //             <label className="mv-0px mr-10px title_font">Status:</label>{" "}
 //             <label>{determine_preorder(option_product_object, count_in_stock, "In Stock", product)}</label>
-//             {/* <label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label> */}
+//             {/* <label>{count_in_stock > 0 ? 'In Stock' : 'Restocking Soon'}</label> */}
 //           </div>
 //         </Grid>
 //         <Grid item xs={12}>
