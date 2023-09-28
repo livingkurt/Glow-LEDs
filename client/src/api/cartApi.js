@@ -24,108 +24,118 @@ export const getCarts = async ({ search, sorting, filters, page, pageSize }) => 
   }
 };
 
-export const listCarts = createAsyncThunk("carts/listCarts", async (query, thunkApi) => {
+export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/carts?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const addToCart = createAsyncThunk("carts/addToCart", async ({ cart, cart_item, type }, thunkApi) => {
-  try {
-    const {
-      users: {
-        userPage: { current_user },
-      },
-      carts: {
-        cartPage: { my_cart },
-      },
-    } = thunkApi.getState();
+export const addToCart = createAsyncThunk(
+  "carts/addToCart",
+  async ({ cart, cart_item, type }, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const {
+        users: {
+          userPage: { current_user },
+        },
+        carts: {
+          cartPage: { my_cart },
+        },
+      } = getState();
 
-    // Call handle_cart route whether the cart exists or not
-    let data;
-    if (cart._id) {
-      data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
-        cart_item,
-        cartItems: my_cart.cartItems,
-        current_user,
-      });
-    } else {
-      data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
+      // Call handle_cart route whether the cart exists or not
+      let data;
+      if (cart._id) {
+        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
+          cart_item,
+          cartItems: my_cart.cartItems,
+          current_user,
+        });
+      } else {
+        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
+      }
+      dispatch(showSuccess({ message: `Cart Item Added` }));
+
+      // Add current_user to the returned payload
+      return { data: data.data, type, current_user };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-    thunkApi.dispatch(showSuccess({ message: `Cart Item Added` }));
-
-    // Add current_user to the returned payload
-    return { data: data.data, type, current_user };
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
   }
-});
+);
 
-export const saveCart = createAsyncThunk("carts/saveCart", async (cart, thunkApi) => {
+export const saveCart = createAsyncThunk("carts/saveCart", async (cart, { dispatch, rejectWithValue }) => {
   try {
     if (!cart._id) {
       const { data } = await axios.post("/api/carts", cart);
-      thunkApi.dispatch(showSuccess({ message: `Cart Created` }));
+      dispatch(showSuccess({ message: `Cart Created` }));
       return { data };
     } else {
       const { data } = await axios.put(`/api/carts/${cart._id}`, cart);
-      thunkApi.dispatch(showSuccess({ message: `Cart Saved` }));
+      dispatch(showSuccess({ message: `Cart Saved` }));
       return { data };
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (cart, thunkApi) => {
-  try {
-    const {
-      users: {
-        userPage: { current_user },
-      },
-      carts: {
-        cartPage: { my_cart },
-      },
-    } = thunkApi.getState();
-    if (my_cart._id) {
-      await axios.put(`/api/carts/${cart._id}`, cart);
-      return { data: cart, current_user };
-    } else {
-      return { data: cart, current_user };
+export const updateQuantity = createAsyncThunk(
+  "carts/updateQuantity",
+  async (cart, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const {
+        users: {
+          userPage: { current_user },
+        },
+        carts: {
+          cartPage: { my_cart },
+        },
+      } = getState();
+      if (my_cart._id) {
+        await axios.put(`/api/carts/${cart._id}`, cart);
+        return { data: cart, current_user };
+      } else {
+        return { data: cart, current_user };
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
   }
-});
+);
 
-export const detailsCart = createAsyncThunk("carts/detailsCart", async (id, thunkApi) => {
+export const detailsCart = createAsyncThunk("carts/detailsCart", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/carts/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Cart Found` }));
+    dispatch(showSuccess({ message: `Cart Found` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", async (id, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/carts/${id}/user`);
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const getCurrentUserCart = createAsyncThunk(
+  "carts/getCurrentUserCart",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/carts/${id}/user`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const emptyCart = createAsyncThunk("carts/emptyCart", async (id, thunkApi) => {
+export const emptyCart = createAsyncThunk("carts/emptyCart", async (id, { dispatch, rejectWithValue }) => {
   try {
     if (id) {
       const { data } = await axios.post(`/api/carts/${id}/empty_cart`);
@@ -134,37 +144,40 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id, thunkApi
       return "Success";
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteCart = createAsyncThunk("carts/deleteCart", async (id, thunkApi) => {
+export const deleteCart = createAsyncThunk("carts/deleteCart", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/carts/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Cart Deleted` }));
+    dispatch(showSuccess({ message: `Cart Deleted` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteCartItem = createAsyncThunk("carts/deleteCartItem", async ({ item_index, type }, thunkApi) => {
-  try {
-    const {
-      users: {
-        userPage: { current_user },
-      },
-      carts: {
-        cartPage: { my_cart },
-      },
-    } = thunkApi.getState();
-    const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
-    thunkApi.dispatch(showSuccess({ message: `Cart Item Deleted` }));
-    return { data, type };
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const deleteCartItem = createAsyncThunk(
+  "carts/deleteCartItem",
+  async ({ item_index, type }, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const {
+        users: {
+          userPage: { current_user },
+        },
+        carts: {
+          cartPage: { my_cart },
+        },
+      } = getState();
+      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
+      dispatch(showSuccess({ message: `Cart Item Deleted` }));
+      return { data, type };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

@@ -29,98 +29,109 @@ export const getPromoFilters = async () => {
   return data;
 };
 
-export const listPromos = createAsyncThunk("promos/listPromos", async (query, thunkApi) => {
+export const listPromos = createAsyncThunk("promos/listPromos", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/promos?${create_query(query)}`);
 
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const listSponsorCodes = createAsyncThunk("promos/listSponsorCodes", async (affiliateId, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
-    thunkApi.dispatch(showSuccess({ message: `Sponsor Promos Found` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const listSponsorCodes = createAsyncThunk(
+  "promos/listSponsorCodes",
+  async (affiliateId, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
+      dispatch(showSuccess({ message: `Sponsor Promos Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const savePromo = createAsyncThunk("promos/savePromo", async (promo, thunkApi) => {
+export const savePromo = createAsyncThunk("promos/savePromo", async (promo, { dispatch, rejectWithValue }) => {
   try {
     if (!promo._id) {
       const { data } = await axios.post("/api/promos", promo);
-      thunkApi.dispatch(showSuccess({ message: `Promo Created` }));
+      dispatch(showSuccess({ message: `Promo Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/promos/${promo._id}`, promo);
-      thunkApi.dispatch(showSuccess({ message: `Promo Updated` }));
+      dispatch(showSuccess({ message: `Promo Updated` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id, thunkApi) => {
+export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/promos/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Promo Found` }));
+    dispatch(showSuccess({ message: `Promo Found` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathname, thunkApi) => {
+export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathname, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete("/api/promos/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Promo Deleted` }));
+    dispatch(showSuccess({ message: `Promo Deleted` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultiplePromos = createAsyncThunk("promo/deleteMultiplePromos", async (ids, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
-    thunkApi.dispatch(showSuccess({ message: `Promos Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const deleteMultiplePromos = createAsyncThunk(
+  "promo/deleteMultiplePromos",
+  async (ids, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
+      dispatch(showSuccess({ message: `Promos Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes", async (_data, thunkApi) => {
-  try {
-    const { data } = await axios.post(`/api/promos/refresh_sponsor_codes`, {});
-    thunkApi.dispatch(showSuccess({ message: `Sponsor Codes Refreshed` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const refreshSponsorCodes = createAsyncThunk(
+  "promo/refreshSponsorCodes",
+  async (_data, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/api/promos/refresh_sponsor_codes`, {});
+      dispatch(showSuccess({ message: `Sponsor Codes Refreshed` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 export const validatePromoCode = createAsyncThunk(
   "promo/validatePromoCode",
-  async ({ promo_code, current_user, cartItems }, thunkApi) => {
+  async ({ promo_code, current_user, cartItems }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/promos/validate/${promo_code}`, { cartItems, current_user });
       console.log({ data });
-      thunkApi.dispatch(showSuccess({ message: `Promo Code Validated` }));
+      dispatch(showSuccess({ message: `Promo Code Validated` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );

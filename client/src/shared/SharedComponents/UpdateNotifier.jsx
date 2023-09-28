@@ -24,12 +24,7 @@ const UpdateNotifier = () => {
 
       // Clean up the interval on unmount
       return () => clearInterval(interval);
-    } catch (error) {
-      // thunkApi.dispatch(showSuccess({
-      //   message: errorMessage(error),
-      //   severity: "error",
-      // });
-    }
+    } catch (error) {}
   }, [version]);
 
   const handleUpdate = () => {

@@ -23,51 +23,64 @@ export const getWholesalers = async ({ search, sorting, filters, page, pageSize 
   }
 };
 
-export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", async (query, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/wholesalers?${create_query(query)}`);
+export const listWholesalers = createAsyncThunk(
+  "wholesalers/listWholesalers",
+  async (query, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/wholesalers?${create_query(query)}`);
 
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
-  }
-});
-
-export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", async (wholesaler, thunkApi) => {
-  try {
-    if (!wholesaler._id) {
-      const { data } = await axios.post("/api/wholesalers", wholesaler);
-      thunkApi.dispatch(showSuccess({ message: `Wholesaler Created` }));
       return data;
-    } else {
-      const { data } = await axios.put(`/api/wholesalers/${wholesaler._id}`, wholesaler);
-      thunkApi.dispatch(showSuccess({ message: `Wholesaler Updated` }));
-      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
   }
-});
+);
 
-export const detailsWholesaler = createAsyncThunk("wholesalers/detailsWholesaler", async ({ id }, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/wholesalers/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Wholesaler Found` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const saveWholesaler = createAsyncThunk(
+  "wholesalers/saveWholesaler",
+  async (wholesaler, { dispatch, rejectWithValue }) => {
+    try {
+      if (!wholesaler._id) {
+        const { data } = await axios.post("/api/wholesalers", wholesaler);
+        dispatch(showSuccess({ message: `Wholesaler Created` }));
+        return data;
+      } else {
+        const { data } = await axios.put(`/api/wholesalers/${wholesaler._id}`, wholesaler);
+        dispatch(showSuccess({ message: `Wholesaler Updated` }));
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler", async (id, thunkApi) => {
-  try {
-    const { data } = await axios.delete(`/api/wholesalers/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Wholesaler Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const detailsWholesaler = createAsyncThunk(
+  "wholesalers/detailsWholesaler",
+  async ({ id }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/wholesalers/${id}`);
+      dispatch(showSuccess({ message: `Wholesaler Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
+
+export const deleteWholesaler = createAsyncThunk(
+  "wholesalers/deleteWholesaler",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(`/api/wholesalers/${id}`);
+      dispatch(showSuccess({ message: `Wholesaler Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

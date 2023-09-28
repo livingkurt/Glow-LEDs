@@ -19,7 +19,7 @@ export const { useGetAllShippingOrdersQuery } = placeOrderApi;
 
 export const getTaxRates = createAsyncThunk(
   "placeOrderPage/getTaxRates",
-  async ({ shipping, itemsPrice }, thunkApi) => {
+  async ({ shipping, itemsPrice }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get("/api/orders/tax_rates");
       const result = state_names.find(obj => {
@@ -28,35 +28,41 @@ export const getTaxRates = createAsyncThunk(
       const tax_rate = parseFloat(data[result?.long_name || shipping.state]) / 100;
       return { tax_rate, shipping, itemsPrice };
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      thunkApi.rejectWithValue(error.message);
+      dispatch(showError({ message: errorMessage(error) }));
+      rejectWithValue(error.message);
     }
   }
 );
-export const updateStock = createAsyncThunk("placeOrderPage/updateStock", async ({ cartItems }, thunkApi) => {
-  try {
-    axios.put("/api/products/update_stock", { cartItems });
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    thunkApi.rejectWithValue(error.message);
+export const updateStock = createAsyncThunk(
+  "placeOrderPage/updateStock",
+  async ({ cartItems }, { dispatch, rejectWithValue }) => {
+    try {
+      axios.put("/api/products/update_stock", { cartItems });
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      rejectWithValue(error.message);
+    }
   }
-});
-export const promoCodeUsed = createAsyncThunk("placeOrderPage/promoCodeUsed", async ({ promo_code }, thunkApi) => {
-  try {
-    return axios.put("/api/promos/code/" + promo_code);
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    thunkApi.rejectWithValue(error.message);
+);
+export const promoCodeUsed = createAsyncThunk(
+  "placeOrderPage/promoCodeUsed",
+  async ({ promo_code }, { dispatch, rejectWithValue }) => {
+    try {
+      return axios.put("/api/promos/code/" + promo_code);
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      rejectWithValue(error.message);
+    }
   }
-});
+);
 export const sendCodeUsedEmail = createAsyncThunk(
   "placeOrderPage/sendCodeUsedEmail",
-  async ({ promo_code }, thunkApi) => {
+  async ({ promo_code }, { dispatch, rejectWithValue }) => {
     try {
       return axios.post("/api/emails/code_used/" + promo_code);
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      thunkApi.rejectWithValue(error.message);
+      dispatch(showError({ message: errorMessage(error) }));
+      rejectWithValue(error.message);
     }
   }
 );

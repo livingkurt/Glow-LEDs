@@ -29,61 +29,67 @@ export const getContentFilters = async () => {
   return data;
 };
 
-export const listContents = createAsyncThunk("contents/listContents", async (query, thunkApi) => {
+export const listContents = createAsyncThunk("contents/listContents", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/contents?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveContent = createAsyncThunk("contents/saveContent", async (content, thunkApi) => {
+export const saveContent = createAsyncThunk("contents/saveContent", async (content, { dispatch, rejectWithValue }) => {
   try {
     if (!content._id) {
       const { data } = await axios.post("/api/contents", content);
-      thunkApi.dispatch(showSuccess({ message: `Content Created` }));
+      dispatch(showSuccess({ message: `Content Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/contents/${content._id}`, content);
-      thunkApi.dispatch(showSuccess({ message: `Content Updated` }));
+      dispatch(showSuccess({ message: `Content Updated` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsContent = createAsyncThunk("contents/detailsContent", async (id, thunkApi) => {
+export const detailsContent = createAsyncThunk("contents/detailsContent", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/contents/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Content Found` }));
+    dispatch(showSuccess({ message: `Content Found` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const getContentsByLink = createAsyncThunk("contents/getContentsByLink", async (link, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/contents/link`, { link });
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const getContentsByLink = createAsyncThunk(
+  "contents/getContentsByLink",
+  async (link, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/contents/link`, { link });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteContent = createAsyncThunk("contents/deleteContent", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.delete("/api/contents/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Content Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const deleteContent = createAsyncThunk(
+  "contents/deleteContent",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/contents/" + pathname);
+      dispatch(showSuccess({ message: `Content Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

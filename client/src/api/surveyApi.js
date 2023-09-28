@@ -31,7 +31,7 @@ export const getSurveyFilters = async () => {
 
 export const listSurveys = createAsyncThunk(
   "surveys/listSurveys",
-  async ({ search, sorting, filters, page, pageSize }, thunkApi) => {
+  async ({ search, sorting, filters, page, pageSize }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/surveys`, {
         params: {
@@ -44,57 +44,63 @@ export const listSurveys = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
-      return thunkApi.rejectWithValue(error.response?.data);
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );
 
-export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey, thunkApi) => {
+export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey, { dispatch, rejectWithValue }) => {
   try {
     if (!survey._id) {
       const { data } = await axios.post("/api/surveys", survey);
-      thunkApi.dispatch(showSuccess({ message: `Survey Created` }));
+      dispatch(showSuccess({ message: `Survey Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/surveys/${survey._id}`, survey);
-      thunkApi.dispatch(showSuccess({ message: `Survey Updated` }));
+      dispatch(showSuccess({ message: `Survey Updated` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id, thunkApi) => {
+export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/surveys/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Survey Found` }));
+    dispatch(showSuccess({ message: `Survey Found` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const getSurveysByLink = createAsyncThunk("surveys/getSurveysByLink", async (link, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/surveys/link`, { link });
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const getSurveysByLink = createAsyncThunk(
+  "surveys/getSurveysByLink",
+  async (link, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/surveys/link`, { link });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.delete("/api/surveys/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Survey Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const deleteSurvey = createAsyncThunk(
+  "surveys/deleteSurvey",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/surveys/" + pathname);
+      dispatch(showSuccess({ message: `Survey Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

@@ -29,61 +29,67 @@ export const getExpenseFilters = async () => {
   return data;
 };
 
-export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query, thunkApi) => {
+export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/expenses?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expense, thunkApi) => {
+export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expense, { dispatch, rejectWithValue }) => {
   try {
     if (!expense._id) {
       const { data } = await axios.post("/api/expenses", expense);
-      thunkApi.dispatch(showSuccess({ message: `Expense Created` }));
+      dispatch(showSuccess({ message: `Expense Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/expenses/${expense._id}`, expense);
-      thunkApi.dispatch(showSuccess({ message: `Expense Updated` }));
+      dispatch(showSuccess({ message: `Expense Updated` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id, thunkApi) => {
+export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/expenses/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Expense Found` }));
+    dispatch(showSuccess({ message: `Expense Found` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const getExpensesByLink = createAsyncThunk("expenses/getExpensesByLink", async (link, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/expenses/link`, { link });
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const getExpensesByLink = createAsyncThunk(
+  "expenses/getExpensesByLink",
+  async (link, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/expenses/link`, { link });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteExpense = createAsyncThunk("expenses/deleteExpense", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.delete("/api/expenses/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Expense Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const deleteExpense = createAsyncThunk(
+  "expenses/deleteExpense",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/expenses/" + pathname);
+      dispatch(showSuccess({ message: `Expense Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

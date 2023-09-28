@@ -24,61 +24,64 @@ export const getImages = async ({ search, sorting, filters, page, pageSize }) =>
   }
 };
 
-export const listImages = createAsyncThunk("images/listImages", async (query, thunkApi) => {
+export const listImages = createAsyncThunk("images/listImages", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/images?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveImage = createAsyncThunk("images/saveImage", async (image, thunkApi) => {
+export const saveImage = createAsyncThunk("images/saveImage", async (image, { dispatch, rejectWithValue }) => {
   try {
     if (!image._id) {
       const { data } = await axios.post("/api/images", image);
-      thunkApi.dispatch(showSuccess({ message: `Image Created` }));
+      dispatch(showSuccess({ message: `Image Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/images/${image._id}`, image);
-      thunkApi.dispatch(showSuccess({ message: `Image Saved` }));
+      dispatch(showSuccess({ message: `Image Saved` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsImage = createAsyncThunk("images/detailsImage", async (id, thunkApi) => {
+export const detailsImage = createAsyncThunk("images/detailsImage", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/images/${id}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const getImagesByLink = createAsyncThunk("images/getImagesByLink", async (link, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/images/link`, { link });
-    thunkApi.dispatch(showSuccess({ message: `Image Found` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const getImagesByLink = createAsyncThunk(
+  "images/getImagesByLink",
+  async (link, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/images/link`, { link });
+      dispatch(showSuccess({ message: `Image Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi) => {
+export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete("/api/images/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Image Deleted` }));
+    dispatch(showSuccess({ message: `Image Deleted` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
