@@ -8,17 +8,17 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const listTeams = createAsyncThunk("teams/listTeams", async (query, thunkApi) => {
+export const listTeams = createAsyncThunk("teams/listTeams", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/teams?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveTeam = createAsyncThunk("teams/saveTeam", async (team, thunkApi) => {
+export const saveTeam = createAsyncThunk("teams/saveTeam", async (team, { dispatch, rejectWithValue }) => {
   try {
     if (!team._id) {
       const { data } = await axios.post("/api/teams", team);
@@ -28,27 +28,27 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team, thunkApi
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname, thunkApi) => {
+export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/teams/${pathname}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, thunkApi) => {
+export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete("/api/teams/" + pathname);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });

@@ -29,65 +29,68 @@ export const getOrderFilters = async () => {
   return data;
 };
 
-export const listOrders = createAsyncThunk("orders/listOrders", async (query, thunkApi) => {
+export const listOrders = createAsyncThunk("orders/listOrders", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/orders/old?${create_query(query)}`);
 
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id, thunkApi) => {
+export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/orders/${user_id}/user`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const createNoPayOrder = createAsyncThunk("orders/createNoPayOrder", async (order, thunkApi) => {
-  try {
-    const { data } = await axios.post("/api/orders", order);
-    sessionStorage.removeItem("shippingAddress");
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const createNoPayOrder = createAsyncThunk(
+  "orders/createNoPayOrder",
+  async (order, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/orders", order);
+      sessionStorage.removeItem("shippingAddress");
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, thunkApi) => {
+export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { dispatch, rejectWithValue }) => {
   try {
     if (!order._id) {
       const { data } = await axios.post("/api/orders", order);
-      thunkApi.dispatch(showSuccess({ message: `Order Created` }));
+      dispatch(showSuccess({ message: `Order Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/orders/glow/${order._id}`, order);
-      thunkApi.dispatch(showSuccess({ message: `Order Saved` }));
+      dispatch(showSuccess({ message: `Order Saved` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
 export const createPayOrder = createAsyncThunk(
   "orders/createPayOrder",
-  async ({ order, paymentMethod, create_account, new_password }, thunkApi) => {
+  async ({ order, paymentMethod, create_account, new_password }, { dispatch, rejectWithValue, getState }) => {
     let user_id = null;
 
     const {
       users: {
         userPage: { current_user },
       },
-    } = thunkApi.getState();
+    } = getState();
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
@@ -124,104 +127,128 @@ export const createPayOrder = createAsyncThunk(
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error), duration: 10000 }));
-      return thunkApi.rejectWithValue(error.response?.data);
+      dispatch(showError({ message: errorMessage(error), duration: 10000 }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );
 
-export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id, thunkApi) => {
-  const {
-    users: {
-      userPage: { current_user },
-    },
-  } = thunkApi.getState();
-  try {
-    if (current_user && current_user.first_name) {
-      const { data } = await axios.get("/api/orders/secure/" + order_id);
-      thunkApi.dispatch(showSuccess({ message: `Order Found` }));
-      return data;
-    } else {
-      const { data } = await axios.get("/api/orders/guest/" + order_id);
-      thunkApi.dispatch(showSuccess({ message: `Order Found` }));
-      return data;
+export const detailsOrder = createAsyncThunk(
+  "orders/detailsOrder",
+  async (order_id, { dispatch, rejectWithValue, getState }) => {
+    const {
+      users: {
+        userPage: { current_user },
+      },
+    } = getState();
+    try {
+      if (current_user && current_user.first_name) {
+        const { data } = await axios.get("/api/orders/secure/" + order_id);
+        dispatch(showSuccess({ message: `Order Found` }));
+        return data;
+      } else {
+        const { data } = await axios.get("/api/orders/guest/" + order_id);
+        dispatch(showSuccess({ message: `Order Found` }));
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
   }
-});
+);
 
-export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id, thunkApi) => {
+export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/orders/glow/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Order Deleted` }));
+    dispatch(showSuccess({ message: `Order Deleted` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrders", async (ids, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const deleteMultipleOrders = createAsyncThunk(
+  "orders/deleteMultipleOrders",
+  async (ids, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 export const refundOrder = createAsyncThunk(
   "orders/refundOrder",
-  async ({ orderId, refundAmount, refundReason }, thunkApi) => {
+  async ({ orderId, refundAmount, refundReason }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/payments/${orderId}/refund`, {
         refundAmount,
         refundReason,
       });
-      thunkApi.dispatch(showSuccess({ message: `Order Refunded` }));
+      dispatch(showSuccess({ message: `Order Refunded` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );
-export const payOrder = createAsyncThunk("orders/payOrder", async ({ order, paymentMethod }, thunkApi) => {
-  try {
-    const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
-    thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const payOrder = createAsyncThunk(
+  "orders/payOrder",
+  async ({ order, paymentMethod }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
+      dispatch(showSuccess({ message: `Order Paid` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
-export const payOrderGuest = createAsyncThunk("orders/payOrderGuest", async ({ order, paymentMethod }, thunkApi) => {
-  try {
-    const { data } = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
-    thunkApi.dispatch(showSuccess({ message: `Order Paid` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+);
+export const payOrderGuest = createAsyncThunk(
+  "orders/payOrderGuest",
+  async ({ order, paymentMethod }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
+      dispatch(showSuccess({ message: `Order Paid` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const transferOrders = createAsyncThunk("orders/transferOrders", async ({ oldUserId, newUserId }, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/orders/${oldUserId}transfer/${newUserId}`);
-    thunkApi.dispatch(showSuccess({ message: `Orders Transfered` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const transferOrders = createAsyncThunk(
+  "orders/transferOrders",
+  async ({ oldUserId, newUserId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/orders/${oldUserId}transfer/${newUserId}`);
+      dispatch(showSuccess({ message: `Orders Transfered` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const invoiceOrder = createAsyncThunk("orders/invoiceOrder", async ({ orderId }, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
-    thunkApi.dispatch(showSuccess({ message: `Invoice Recieved` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const invoiceOrder = createAsyncThunk(
+  "orders/invoiceOrder",
+  async ({ orderId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
+      dispatch(showSuccess({ message: `Invoice Recieved` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

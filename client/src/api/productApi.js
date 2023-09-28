@@ -36,92 +36,101 @@ export const reorderProducts = async ({ reorderedItems }) => {
   }
 };
 
-export const listProducts = createAsyncThunk("products/listProducts", async (query, thunkApi) => {
+export const listProducts = createAsyncThunk("products/listProducts", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/products/grid?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveProduct = createAsyncThunk("products/saveProduct", async (product, thunkApi) => {
+export const saveProduct = createAsyncThunk("products/saveProduct", async (product, { dispatch, rejectWithValue }) => {
   try {
     if (!product._id) {
       const { data } = await axios.post("/api/products", product);
-      thunkApi.dispatch(showSuccess({ message: `Product Created` }));
+      dispatch(showSuccess({ message: `Product Created` }));
       return data;
     } else {
       const { data } = await axios.put(`/api/products/${product._id}`, product);
-      thunkApi.dispatch(showSuccess({ message: `Product Updated` }));
+      dispatch(showSuccess({ message: `Product Updated` }));
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsProduct = createAsyncThunk("products/detailsProduct", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/products/${pathname}`);
-    thunkApi.dispatch(showSuccess({ message: `Product Found` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const detailsProduct = createAsyncThunk(
+  "products/detailsProduct",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/products/${pathname}`);
+      dispatch(showSuccess({ message: `Product Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id, thunkApi) => {
+export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/products/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Product Deleted` }));
+    dispatch(showSuccess({ message: `Product Deleted` }));
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultipleProducts = createAsyncThunk("products/deleteMultipleProducts", async (ids, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
-    thunkApi.dispatch(showSuccess({ message: `Products Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const deleteMultipleProducts = createAsyncThunk(
+  "products/deleteMultipleProducts",
+  async (ids, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
+      dispatch(showSuccess({ message: `Products Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 export const saveProductReview = createAsyncThunk(
   "products/deleteProduct",
-  async ({ product_pathname, review }, thunkApi) => {
+  async ({ product_pathname, review }, { dispatch, rejectWithValue, getState }) => {
     const {
       users: {
         userPage: { current_user },
       },
-    } = thunkApi.getState();
+    } = getState();
     try {
       const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user });
-      thunkApi.dispatch(showSuccess({ message: `Product Review Saved` }));
+      dispatch(showSuccess({ message: `Product Review Saved` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );
 
 export const deleteProductReview = createAsyncThunk(
   "products/deleteProduct",
-  async ({ product_pathname, review_id }, thunkApi) => {
+  async ({ product_pathname, review_id }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`);
-      thunkApi.dispatch(showSuccess({ message: `Product Review Deleted` }));
+      dispatch(showSuccess({ message: `Product Review Deleted` }));
       return data;
     } catch (error) {
-      thunkApi.dispatch(showError({ message: errorMessage(error) }));
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );

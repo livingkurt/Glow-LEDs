@@ -8,17 +8,17 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-export const listSettings = createAsyncThunk("settings/listSettings", async (query, thunkApi) => {
+export const listSettings = createAsyncThunk("settings/listSettings", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/settings?${create_query(query)}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const saveSetting = createAsyncThunk("settings/saveSetting", async (setting, thunkApi) => {
+export const saveSetting = createAsyncThunk("settings/saveSetting", async (setting, { dispatch, rejectWithValue }) => {
   try {
     if (!setting._id) {
       const { data } = await axios.post("/api/settings", setting);
@@ -28,27 +28,30 @@ export const saveSetting = createAsyncThunk("settings/saveSetting", async (setti
       return data;
     }
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const detailsSetting = createAsyncThunk("settings/detailsSetting", async (id, thunkApi) => {
+export const detailsSetting = createAsyncThunk("settings/detailsSetting", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/settings/${id}`);
     return data;
   } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteSetting = createAsyncThunk("settings/deleteSetting", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.delete("/api/settings/" + pathname);
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const deleteSetting = createAsyncThunk(
+  "settings/deleteSetting",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/settings/" + pathname);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);

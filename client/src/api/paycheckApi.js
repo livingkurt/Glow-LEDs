@@ -29,62 +29,78 @@ export const getPaycheckFilters = async () => {
   return data;
 };
 
-export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/paychecks?${create_query(query)}`);
+export const listPaychecks = createAsyncThunk(
+  "paychecks/listPaychecks",
+  async (query, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/paychecks?${create_query(query)}`);
 
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
-  }
-});
-
-export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (paycheck, thunkApi) => {
-  try {
-    if (!paycheck._id) {
-      const { data } = await axios.post("/api/paychecks", paycheck);
-      thunkApi.dispatch(showSuccess({ message: `Paycheck Created` }));
       return data;
-    } else {
-      const { data } = await axios.put(`/api/paychecks/${paycheck._id}`, paycheck);
-      thunkApi.dispatch(showSuccess({ message: `Paycheck Updated` }));
-      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
   }
-});
+);
 
-export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/paychecks/${id}`);
-    thunkApi.dispatch(showSuccess({ message: `Paycheck Found` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const savePaycheck = createAsyncThunk(
+  "paychecks/savePaycheck",
+  async (paycheck, { dispatch, rejectWithValue }) => {
+    try {
+      if (!paycheck._id) {
+        const { data } = await axios.post("/api/paychecks", paycheck);
+        dispatch(showSuccess({ message: `Paycheck Created` }));
+        return data;
+      } else {
+        const { data } = await axios.put(`/api/paychecks/${paycheck._id}`, paycheck);
+        dispatch(showSuccess({ message: `Paycheck Updated` }));
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async (pathname, thunkApi) => {
-  try {
-    const { data } = await axios.delete("/api/paychecks/" + pathname);
-    thunkApi.dispatch(showSuccess({ message: `Paycheck Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
+export const detailsPaycheck = createAsyncThunk(
+  "paychecks/detailsPaycheck",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/paychecks/${id}`);
+      dispatch(showSuccess({ message: `Paycheck Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
-export const deleteMultiplePaychecks = createAsyncThunk("paycheck/deleteMultiplePaychecks", async (ids, thunkApi) => {
-  try {
-    const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
-    thunkApi.dispatch(showSuccess({ message: `Paychecks Deleted` }));
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
+export const deletePaycheck = createAsyncThunk(
+  "paychecks/deletePaycheck",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/paychecks/" + pathname);
+      dispatch(showSuccess({ message: `Paycheck Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
+
+export const deleteMultiplePaychecks = createAsyncThunk(
+  "paycheck/deleteMultiplePaychecks",
+  async (ids, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
+      dispatch(showSuccess({ message: `Paychecks Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

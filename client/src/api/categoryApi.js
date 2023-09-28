@@ -30,51 +30,64 @@ export const reorderCategorys = async ({ reorderedItems }) => {
   }
 };
 
-export const listCategorys = createAsyncThunk("categorys/listCategorys", async (query, thunkApi) => {
-  try {
-    const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
-  }
-});
-
-export const saveCategory = createAsyncThunk("categorys/saveCategory", async (category, thunkApi) => {
-  try {
-    if (!category._id) {
-      const { data } = await axios.post("/api/categorys", category);
+export const listCategorys = createAsyncThunk(
+  "categorys/listCategorys",
+  async (query, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
       return data;
-    } else {
-      const { data } = await axios.put(`/api/categorys/${category._id}`, category);
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const saveCategory = createAsyncThunk(
+  "categorys/saveCategory",
+  async (category, { dispatch, rejectWithValue }) => {
+    try {
+      if (!category._id) {
+        const { data } = await axios.post("/api/categorys", category);
+        return data;
+      } else {
+        const { data } = await axios.put(`/api/categorys/${category._id}`, category);
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const detailsCategory = createAsyncThunk(
+  "categorys/detailsCategory",
+  async ({ pathname, id }, { dispatch, rejectWithValue }) => {
+    try {
+      let response = {};
+      if (id) {
+        response = await axios.get(`/api/categorys/${id}`);
+      } else if (pathname) {
+        response = await axios.get(`/api/categorys/${pathname}/pathname`);
+      }
+      return response.data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const deleteCategory = createAsyncThunk(
+  "categorys/deleteCategory",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(`/api/categorys/${id}`);
       return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
   }
-});
-
-export const detailsCategory = createAsyncThunk("categorys/detailsCategory", async ({ pathname, id }, thunkApi) => {
-  try {
-    let response = {};
-    if (id) {
-      response = await axios.get(`/api/categorys/${id}`);
-    } else if (pathname) {
-      response = await axios.get(`/api/categorys/${pathname}/pathname`);
-    }
-    return response.data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-  }
-});
-
-export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async (id, thunkApi) => {
-  try {
-    const { data } = await axios.delete(`/api/categorys/${id}`);
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(showError({ message: errorMessage(error) }));
-    return thunkApi.rejectWithValue(error.response?.data);
-  }
-});
+);
