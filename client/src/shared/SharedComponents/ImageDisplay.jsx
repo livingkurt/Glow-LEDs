@@ -6,19 +6,21 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const ImageDisplay = ({ images, onChange, fieldName }) => {
   const remove_image = image_index => {
-    onChange(
-      images.filter((image, index) => {
-        return image_index !== index;
-      })
-    );
+    const updatedImages = images.filter((image, index) => {
+      return image_index !== index;
+    });
+
+    onChange(updatedImages); // Make sure to pass an object
   };
 
   const move = (startIndex, endIndex) => {
     const newImages = Array.from(images);
     const [removed] = newImages.splice(startIndex, 1);
     newImages.splice(endIndex, 0, removed);
-    onChange(newImages);
+
+    onChange(newImages); // Make sure to pass an object
   };
+
   const copyToClipboard = link => {
     navigator.clipboard.writeText(link);
   };

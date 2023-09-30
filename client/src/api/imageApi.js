@@ -63,9 +63,9 @@ export const detailsImage = createAsyncThunk("images/detailsImage", async (id, {
 
 export const getImagesByLink = createAsyncThunk(
   "images/getImagesByLink",
-  async (link, { dispatch, rejectWithValue }) => {
+  async ({ album, link }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/images/link`, { link });
+      const { data } = await axios.put(`/api/images/link`, { album, link });
       dispatch(showSuccess({ message: `Image Found` }));
       return data;
     } catch (error) {

@@ -1,10 +1,11 @@
 import { promisify } from "util";
-import { image_db } from "../images";
+import { Image, image_db } from "../images";
 import { getFilteredData } from "../api_helpers";
 import { ImgurClient } from "imgur";
 import path from "path";
 import appRoot from "app-root-path";
 import config from "../../config";
+import { convertDriveLinkToDirectLink } from "./image_helper";
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
@@ -41,14 +42,30 @@ export default {
     }
   },
   findByLink_images_s: async body => {
+    const { link, album } = body;
+    const convertedLink = convertDriveLinkToDirectLink(link);
     try {
-      return await image_db.findByLink_images_db(body.link);
+      const image = await Image.findOne({ link: convertedLink, deleted: false });
+      if (image) {
+        return image;
+      } else if (!image) {
+        // Create new image
+        const newImage = await image_db.create_images_db({
+          link: convertedLink,
+          album: album,
+        });
+        console.log({ newImage });
+
+        return newImage;
+      }
     } catch (error) {
+      console.log("Error:", error); // Log the error for debugging
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   upload_images_s: async (body, files) => {
     const { albumName } = body;
     const uploadedImageLinks = [];

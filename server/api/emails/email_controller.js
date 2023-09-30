@@ -288,15 +288,14 @@ export default {
     let mailRecipients = [];
     let mailSubject = "";
     let mailBodyData = {};
-
     if (promo) {
       if (promo_code === "inkybois") {
         const team = await team_db.findBy_teams_db({ promo_code });
         if (team) {
           const users = await Promise.all(
             team.affiliates.map(async affiliate_id => {
-              const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
-              return await user_db.findByAffiliateId_users_db(affiliate._id);
+              const affiliate = affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
+              return user_db.findByAffiliateId_users_db(affiliate._id);
             })
           );
           mailRecipients = users.map(user => user.email);
@@ -314,7 +313,7 @@ export default {
           };
         }
       } else {
-        const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+        const affiliate = affiliate_db.findBy_affiliates_db({ public_code: promo._id });
         if (affiliate) {
           const user = await user_db.findByAffiliateId_users_db(affiliate._id);
           mailRecipients = [user.email];

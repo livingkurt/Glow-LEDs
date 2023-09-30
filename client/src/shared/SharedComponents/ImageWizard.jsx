@@ -9,29 +9,35 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const dispatch = useDispatch();
   const imagePage = useSelector(state => state.images.imagePage);
   const { image } = imagePage;
-  const [text, setText] = useState("");
+  const [link, setLink] = useState("");
 
-  const handleSaveId = () => {
-    dispatch(API.getImagesByLink(text));
-  };
+  function extractThumbs2Links(text) {
+    const regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.jpg/g;
+    return text.match(regex);
+  }
 
-  useEffect(() => {
-    if (image && text) {
-      // Check if 'fieldState' is an array
+  const handleSaveId = async () => {
+    const foundLinks = extractThumbs2Links(link);
+
+    console.log({ foundLinks });
+
+    if (foundLinks) {
+      const fetchedImages = await Promise.all(
+        foundLinks.map(singleLink => dispatch(API.getImagesByLink({ album: fieldData.album, link: singleLink })))
+      );
+
       if (Array.isArray(fieldState)) {
-        onChange({ [fieldName]: [...fieldState, image] });
+        onChange([...fieldState, ...fetchedImages.map(({ payload }) => payload)]);
+      } else if (typeof fieldState === "object") {
+        // Merge object properties if fieldState is an object
+        // Note: This would overwrite properties if they have the same key
+        onChange({ ...fieldState, ...Object.assign({}, ...fetchedImages.map(({ payload }) => payload)) });
+      } else {
+        onChange(fetchedImages.map(({ payload }) => payload));
       }
-      // Check if 'fieldState' is an object
-      else if (typeof fieldState === "object") {
-        onChange({ [fieldName]: { ...fieldState, ...image } });
-      }
-      // Default case
-      else {
-        onChange({ [fieldName]: image });
-      }
-      setText("");
     }
-  }, [image]);
+    setLink("");
+  };
 
   const images = [fieldState].flat();
 
@@ -41,17 +47,18 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
       <ImageUploader onChange={onChange} album={fieldData.album} fieldName={fieldName} type="image" />
       <div className="ai-c g-10px">
         <TextField
-          label="Enter an Image ID"
+          label="Enter an Image Link"
+          multiline={Array.isArray(fieldState)}
           fullWidth
           margin="normal"
           size="small"
-          onChange={e => setText(e.target.value)}
+          onChange={e => setLink(e.target.value)}
         />
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>
           Save
         </Button>
       </div>
-      <ImageDisplay images={images} fieldName={fieldName} onChange={value => onChange({ [fieldName]: value })} />
+      <ImageDisplay images={images} fieldName={fieldName} onChange={value => onChange(value)} />
     </div>
   );
 };
