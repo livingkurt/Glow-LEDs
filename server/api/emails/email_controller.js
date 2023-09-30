@@ -288,7 +288,6 @@ export default {
     let mailRecipients = [];
     let mailSubject = "";
     let mailBodyData = {};
-
     if (promo) {
       if (promo_code === "inkybois") {
         const team = await team_db.findBy_teams_db({ promo_code });
@@ -332,7 +331,6 @@ export default {
           };
         }
       }
-
       if (mailRecipients.length > 0) {
         const mailOptions = {
           from: config.DISPLAY_INFO_EMAIL,

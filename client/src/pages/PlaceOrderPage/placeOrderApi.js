@@ -57,7 +57,7 @@ export const promoCodeUsed = createAsyncThunk(
 );
 export const sendCodeUsedEmail = createAsyncThunk(
   "placeOrderPage/sendCodeUsedEmail",
-  async ({ promo_code }, { dispatch, rejectWithValue }) => {
+  async (promo_code, { dispatch, rejectWithValue }) => {
     try {
       return axios.post("/api/emails/code_used/" + promo_code);
     } catch (error) {
