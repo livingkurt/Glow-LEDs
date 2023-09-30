@@ -294,7 +294,7 @@ export default {
         if (team) {
           const users = await Promise.all(
             team.affiliates.map(async affiliate_id => {
-              const affiliate = affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
+              const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
               return user_db.findByAffiliateId_users_db(affiliate._id);
             })
           );
@@ -313,7 +313,7 @@ export default {
           };
         }
       } else {
-        const affiliate = affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+        const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
         if (affiliate) {
           const user = await user_db.findByAffiliateId_users_db(affiliate._id);
           mailRecipients = [user.email];
@@ -331,7 +331,6 @@ export default {
           };
         }
       }
-
       if (mailRecipients.length > 0) {
         const mailOptions = {
           from: config.DISPLAY_INFO_EMAIL,
