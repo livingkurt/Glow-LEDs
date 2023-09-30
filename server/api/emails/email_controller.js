@@ -20,7 +20,7 @@ import {
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
 import { content_db } from "../contents";
-import { affiliate_db } from "../affiliates";
+import { Affiliate, affiliate_db } from "../affiliates";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
@@ -284,6 +284,7 @@ export default {
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const promo = await promo_db.findBy_promos_db({ promo_code });
+    console.log({ promo });
 
     let mailRecipients = [];
     let mailSubject = "";
@@ -295,8 +296,10 @@ export default {
         if (team) {
           const users = await Promise.all(
             team.affiliates.map(async affiliate_id => {
-              const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
-              return await user_db.findByAffiliateId_users_db(affiliate._id);
+              const affiliate = await Affiliate.findOne({ _id: affiliate_id._id.toString() });
+              const users = await User.find({ deleted: false, is_affiliated: true });
+              return users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
+              // return await user_db.findByAffiliateId_users_db(affiliate._id);
             })
           );
           mailRecipients = users.map(user => user.email);
@@ -314,9 +317,35 @@ export default {
           };
         }
       } else {
-        const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+        // TODO - For some reason I cant find by nested record id
+        // // Debug logs to understand what's happening
+        // const affiliateById = await Affiliate.findById("637849aa596602002956d895");
+        // console.log("Affiliate by ID:", affiliateById);
+
+        // const affiliateByPublicCode = await Affiliate.findOne({
+        //   public_code: affiliateById.public_code,
+        // });
+        // console.log("Affiliate by public_code as string:", affiliateByPublicCode);
+
+        // const affiliateByPublicCodeAsObjectId = await Affiliate.findOne({
+        //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
+        // }).lean();
+        // console.log("Affiliate by public_code as ObjectId:", affiliateByPublicCodeAsObjectId);
+
+        // console.log(typeof affiliateById.public_code, affiliateById.public_code instanceof mongoose.Types.ObjectId);
+        // const affiliate = await Affiliate.findOne({
+        //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
+        // });
+        const affiliates = await Affiliate.find({ deleted: false });
+        // Filter affiliates by public_code
+        const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
+
+        // const affiliate = await Affiliate.findOne({ public_code: promo._id.toString() });
         if (affiliate) {
-          const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+          const users = await User.find({ deleted: false, is_affiliated: true });
+          const user = users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
+          // const user = await user_db.findByAffiliateId_users_db(affiliate._id.toString());
+          console.log({ user });
           mailRecipients = [user.email];
           mailSubject = `Your code was just used!`;
           const stats = await order_services.code_usage_orders_s(
@@ -344,6 +373,7 @@ export default {
             unsubscribe: false,
           }),
         };
+        console.log({ mailRecipients });
         sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
     }
