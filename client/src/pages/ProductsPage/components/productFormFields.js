@@ -230,10 +230,10 @@ export const productFormFields = ({
       label: "Add-On Price",
       labelProp: "add_on_price",
     },
-    show_add_on: {
+    has_add_on: {
       type: "checkbox",
-      label: "Show Add-On",
-      labelProp: "show_add_on",
+      label: "Has Add-On",
+      labelProp: "has_add_on",
     },
 
     color_products: {

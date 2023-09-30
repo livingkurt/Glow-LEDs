@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema(
     brand: { type: String, required: true },
     price: { type: Number },
     wholesale_price: { type: Number },
-    wholesale_product: { type: Boolean },
+    wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
     category: { type: String, required: true },
     subcategory: { type: String },

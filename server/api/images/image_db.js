@@ -31,13 +31,11 @@ export default {
     }
   },
   findByLink_images_db: async link => {
-    try {
-      return await Image.findOne({ link: link });
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+    const image = await Image.findOne({ link: link });
+    if (image) {
+      return image;
     }
+    return null; // Returning null or undefined when not found
   },
   create_images_db: async body => {
     try {
