@@ -8,7 +8,12 @@ import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
 import { getProfileTitle } from "./profileHelpers";
-import { this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
+import {
+  last_month_date_range,
+  last_year_date_range,
+  this_month_date_range,
+  this_year_date_range,
+} from "../DashboardPage/background/worker_helpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
@@ -59,6 +64,8 @@ const ProfilePage = () => {
     let cleanup = true;
     const { start_date: month_start_date, end_date: month_end_date } = this_month_date_range();
     const { start_date: year_start_date, end_date: year_end_date } = this_year_date_range();
+    // const { start_date: month_start_date, end_date: month_end_date } = last_month_date_range();
+    // const { start_date: year_start_date, end_date: year_end_date } = last_year_date_range();
     if (cleanup) {
       if (user.is_affiliated && user?.affiliate) {
         dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));

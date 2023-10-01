@@ -22,6 +22,20 @@ export const last_month_date_range = () => {
   const end_date = endDate.toISOString().split("T")[0];
   return { start_date, end_date };
 };
+
+export const last_year_date_range = () => {
+  const currentYear = new Date().getFullYear();
+
+  // Calculate the previous year
+  const prevYear = currentYear - 1;
+
+  // Set start and end dates for the previous year
+  const start_date = `${prevYear}-01-01`;
+  const end_date = `${prevYear}-12-31`;
+
+  return { start_date, end_date };
+};
+
 export const this_month_date_range = () => {
   const today = new Date(); // get current date
   const year = today.getFullYear(); // get current year

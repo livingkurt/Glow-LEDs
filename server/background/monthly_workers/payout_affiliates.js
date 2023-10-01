@@ -23,6 +23,10 @@ export const payout_affiliates = async () => {
             affiliate?.public_code?.promo_code
           }?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
         );
+        console.log({
+          affiliate: affiliate?.artist_name,
+          if: affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1,
+        });
 
         if (affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1) {
           console.log({
@@ -35,26 +39,23 @@ export const payout_affiliates = async () => {
             stripe_connect_id: affiliate.user.stripe_connect_id,
             description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
           });
-          const data = {
-            Expense: `${affiliate.artist_name} Affiliate Earnings`,
-            Date: get_todays_date(),
-            Amount: promo_code_usage.earnings,
-            "Place of Purchase": "Stripe",
-            Card: "Stripe",
-            Category: ["Employee Paycheck"],
-          };
-          save_paycheck_to_expenses(data);
+
+          // await axios.post(`/api/expenses`, {
+          //   expense_name: `${affiliate.artist_name} Affiliate Earnings`,
+          //   date_of_purchase: get_todays_date(),
+          //   amount: promo_code_usage.earnings,
+          //   place_of_purchase: "Stripe",
+          //   card: "Stripe",
+          //   category: "Employee Paycheck",
+          // });
         }
         console.log({
-          affiliate: affiliate?._id,
-          user: affiliate?.user?._id,
+          affiliate: affiliate?.artist_name,
+          user: affiliate?.user?.first_name,
           amount: promo_code_usage.earnings,
           revenue: promo_code_usage.revenue,
-          promo_code: affiliate?.public_code?._id,
+          promo_code: affiliate?.public_code?.promo_code,
           uses: promo_code_usage.number_of_uses,
-          stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
-          paid: affiliate?.user?.stripe_connect_id ? true : false,
-          paid_at: new Date(),
         });
         await axios.post(`${domainUrl}/api/paychecks`, {
           affiliate: affiliate?._id,
