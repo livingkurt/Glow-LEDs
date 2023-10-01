@@ -409,8 +409,9 @@ const placeOrder = createSlice({
     },
 
     [API.createPayOrder.fulfilled]: (state, { payload }) => {
-      return initialState;
+      return { ...initialState, promo_code: state.promo_code };
     },
+
     [API.createPayOrder.rejected]: (state, { payload, error }) => {
       state.loadingPayment = false;
       state.paymentValidations = payload.message;
@@ -422,6 +423,9 @@ const placeOrder = createSlice({
       console.log({ payload });
       state.environment = payload.environment;
       state.database = payload.database;
+    },
+    [API.sendCodeUsedEmail.fulfilled]: (state, { payload }) => {
+      state.promo_code = "";
     },
   },
 });

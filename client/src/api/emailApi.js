@@ -199,20 +199,6 @@ export const sendAffiliateEmail = createAsyncThunk(
   }
 );
 
-// send_code_used_emails_a
-export const sendCodeUsedEmailsA = createAsyncThunk(
-  "emails/sendCodeUsedEmailsA",
-  async (promo_code, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.post("/api/emails/code_used/" + promo_code);
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 // send_feature_email
 export const sendFeatureEmail = createAsyncThunk(
   "emails/sendFeatureEmail",

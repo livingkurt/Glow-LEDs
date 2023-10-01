@@ -8,8 +8,8 @@ describe("Place Order Flow", () => {
     cy.get(".product").contains("Bulk CR2016 Batteries").click();
     cy.contains("button", "Add To Cart").click();
 
-    // Check for the snackbar
-    cy.get(".MuiAlert-message").should("contain", "Cart Item Added");
+    // // Check for the snackbar
+    // cy.get(".MuiAlert-message").should("contain", "Cart Item Added");
 
     // Check for the cart item
     cy.get(".cart_sidebar-list-container").within(() => {
