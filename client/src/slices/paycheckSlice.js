@@ -106,7 +106,6 @@ const paycheckPage = createSlice({
     },
     [API.deletePaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.paycheck = payload.paycheck;
       state.message = "Paycheck Deleted";
       state.remoteVersionRequirement = Date.now();
     },

@@ -95,7 +95,7 @@ export const deleteMultiplePaychecks = createAsyncThunk(
   "paycheck/deleteMultiplePaychecks",
   async (ids, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
+      const { data } = await axios.put(`/api/paychecks/delete_multiple`, { ids });
       dispatch(showSuccess({ message: `Paychecks Deleted` }));
       return data;
     } catch (error) {

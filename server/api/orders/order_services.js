@@ -384,51 +384,7 @@ export default {
       }
     }
   },
-  code_usage_orders_s: async (params, query) => {
-    const { start_date, end_date, sponsor } = query;
-    const { promo_code } = params;
-    try {
-      const sort = {};
 
-      const filter = {
-        deleted: false,
-        isPaid: true,
-        createdAt: {
-          $gte: start_date,
-          $lte: end_date,
-        },
-        promo_code: new RegExp(promo_code, "i"),
-      };
-
-      const limit = "0";
-      const page = "1";
-
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-
-      const number_of_uses = orders
-        .filter(order => order.promo_code)
-        .filter(order => order.promo_code.toLowerCase() === promo_code.toLowerCase()).length;
-      const revenue = orders
-        .filter(order => order.promo_code)
-        .filter(order => order.promo_code.toLowerCase() === promo_code.toLowerCase())
-        .reduce(
-          (a, order) =>
-            a +
-            order.totalPrice -
-            order.taxPrice -
-            (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0),
-          0
-        );
-      const earnings = sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
-
-      return { number_of_uses, revenue, earnings };
-      // return "Success";
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   affiliate_code_usage_orders_s: async (params, query) => {
     try {
       const sort = {};
@@ -1603,6 +1559,24 @@ export default {
     );
 
     return earnings;
+  },
+  code_usage_orders_s: async (params, query) => {
+    const { start_date, end_date, sponsor } = query;
+    const { promo_code } = params;
+    try {
+      const { number_of_uses, revenue, earnings } = await getCodeUsage({
+        promo_code,
+        start_date,
+        end_date,
+        sponsor,
+      });
+
+      return { number_of_uses, revenue, earnings };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   remove_multiple_orders_s: async body => {
     try {

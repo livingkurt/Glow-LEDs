@@ -216,10 +216,9 @@ export const getCodeUsage = async data => {
           (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0),
         0
       );
-    const earnings = sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
+    const earnings = sponsor === true || sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
 
     return { number_of_uses, revenue, earnings };
-    // return "Success";
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
