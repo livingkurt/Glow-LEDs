@@ -111,18 +111,26 @@ export const determine_addon_color = ({ has_add_on, show_add_on, secondary_color
   return false;
 };
 
+export const determineSoldOut = product => {
+  if (product.sold_out) {
+    return "Sold Out";
+  } else {
+    return "Restocking Soon";
+  }
+};
+
 export const determine_preorder = (option_product_object, count_in_stock, text, product) => {
   const choice = num => {
     if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
       if (option_product_object.count_in_stock > num) {
         return text;
       } else {
-        return "Restocking Soon";
+        return determineSoldOut(product);
       }
     } else if (count_in_stock > 0) {
       return text;
     } else {
-      return "Restocking Soon";
+      return determineSoldOut(product);
     }
   };
   if (product?.name?.includes("Refresh")) {
@@ -147,13 +155,13 @@ export const determine_add_to_cart = (product, secondary_product, count_in_stock
         text = "Add To Cart";
       } else {
         variant = "disabled";
-        text = "Restocking Soon";
+        text = determineSoldOut(product);
       }
     } else if (count_in_stock > 0) {
       text = "Add To Cart";
     } else {
       variant = "disabled";
-      text = "Restocking Soon";
+      text = determineSoldOut(product);
     }
   } else {
     if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
@@ -161,13 +169,13 @@ export const determine_add_to_cart = (product, secondary_product, count_in_stock
         text = "Add To Cart";
       } else {
         variant = "disabled";
-        text = "Restocking Soon";
+        text = determineSoldOut(product);
       }
     } else if (count_in_stock > 0) {
       text = "Add To Cart";
     } else {
       variant = "disabled";
-      text = "Restocking Soon";
+      text = determineSoldOut(product);
     }
   }
   return { variant, text };

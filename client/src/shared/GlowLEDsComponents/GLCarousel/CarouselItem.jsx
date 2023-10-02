@@ -6,6 +6,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import * as API from "../../../api";
+import { determineSoldOut } from "pages/ProductPage/productHelpers";
 
 const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
   const location = useLocation();
@@ -180,7 +181,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
                     )}
                   </div>
                 ) : (
-                  <GLButton variant="inactive">Restocking Soon</GLButton>
+                  <GLButton variant="inactive">{determineSoldOut(product)}</GLButton>
                 )}
               </div>
             </span>
