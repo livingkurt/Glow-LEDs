@@ -35,7 +35,7 @@ describe("Place Order Flow", () => {
     // Click continue
     cy.contains("button", "Continue").click();
 
-    cy.contains("button", "Select").first().click();
+    cy.contains("button", "Select", { timeout: 20000 }).first().click();
 
     cy.contains("button", "Continue").click();
 

@@ -88,13 +88,7 @@ export const product_page_sale_price_switch = (
     }
   }
 };
-const determine_preorder = product => {
-  if (product.preorder) {
-    return true;
-  } else {
-    return false;
-  }
-};
+
 export const sale_price_switch = ({ product, cartItem, background, isWholesaler }) => {
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
   if (product) {
@@ -111,7 +105,7 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
     ) {
       return (
         <label className="fs-18px">
-          {determine_preorder(product) ? "Preorder " : ""}
+          {product.preorder ? "Preorder " : ""}
           <label>${product.sale_price ? product.sale_price?.toFixed(2) : product.sale_price}</label>
           <label> ({(100 * (1 - product.sale_price / product.price)).toFixed(0)}% Off) </label>
           <label>
@@ -126,7 +120,7 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
     } else if (product.hasOwnProperty("previous_price") && product.previous_price) {
       return (
         <label className="fs-18px">
-          {determine_preorder(product) ? "Preorder " : ""}
+          {product.preorder ? "Preorder " : ""}
           <label>${product.price ? product.price?.toFixed(2) : product.price}</label>
           <label> ({(100 * (1 - product.price / product.previous_price)).toFixed(0)}% Off) </label>
           <label>
@@ -141,7 +135,7 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
     } else {
       return (
         <label className="fs-18px">
-          {determine_preorder(product) ? "Preorder " : ""} ${product.price ? product.price?.toFixed(2) : product.price}
+          {product.preorder ? "Preorder " : ""} ${product.price ? product.price?.toFixed(2) : product.price}
         </label>
       );
     }
@@ -158,7 +152,7 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   } else if (item.sale_price !== 0) {
     return (
       <label>
-        {determine_preorder(item) ? "Preorder " : ""}
+        {item.preorder ? "Preorder " : ""}
         {/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
         <del style={{ color: "#a03131" }}>
           <label style={{ color: color }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
@@ -169,7 +163,7 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   } else if (item.quantity === 0) {
     return (
       <label>
-        {determine_preorder(item) ? "Preorder " : ""}
+        {item.preorder ? "Preorder " : ""}
         <del style={{ color: "#a03131" }}>
           <label style={{ color: color, marginLeft: "7px" }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
         </del>{" "}
@@ -179,7 +173,7 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   } else {
     return (
       <label>
-        {determine_preorder(item) ? "Preorder " : ""} ${item.price && (item.price * item.qty).toFixed(2)}
+        {item.preorder ? "Preorder " : ""} ${item.price && (item.price * item.qty).toFixed(2)}
       </label>
     );
   }

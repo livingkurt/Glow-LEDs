@@ -1,13 +1,4 @@
-export const productFormFields = ({
-  products,
-  users,
-  // images,
-  categorys,
-  setState,
-  product,
-  onEdit,
-  chips,
-}) => {
+export const productFormFields = ({ products, users, categorys, product, onEdit, chips }) => {
   return {
     name: {
       type: "text",
@@ -125,6 +116,12 @@ export const productFormFields = ({
       type: "checkbox",
       label: "Hidden",
       labelProp: "hidden",
+      defaultValue: false,
+    },
+    sold_out: {
+      type: "checkbox",
+      label: "Sold Out",
+      labelProp: "sold_out",
       defaultValue: false,
     },
     sale_price: {

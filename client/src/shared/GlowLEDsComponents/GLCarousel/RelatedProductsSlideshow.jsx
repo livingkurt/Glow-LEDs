@@ -16,6 +16,7 @@ import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import Rating from "../GLRating/Rating";
 import * as API from "../../../api";
+import { determineSoldOut } from "../../../pages/ProductPage/productHelpers";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -330,7 +331,7 @@ const RelatedProductsSlideshow = ({
                         )}
                       </div>
                     ) : (
-                      <GLButton variant="inactive">Restocking Soon</GLButton>
+                      <GLButton variant="inactive">{determineSoldOut(product)}</GLButton>
                     )}
                   </div>
                 </span>
