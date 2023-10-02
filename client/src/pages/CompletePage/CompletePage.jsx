@@ -112,7 +112,7 @@ const CompletePage = () => {
   };
 
   const send_email = async () => {
-    if (config.NODE_ENV === "development") return;
+    if (config.NODE_ENV === "development" || config.NODE_ENV === "staging") return;
 
     if (params.type === "order") {
       dispatch(
