@@ -15,10 +15,9 @@ export const facebook_catalog_upload = async () => {
   try {
     // Fetch existing products from MongoDB
     const domainUrl = domain();
-    const { data } = await axios.get(`${domainUrl}/api/products?limit=0&hidden=false&option=false`);
+    const { data } = await axios.get(`${domainUrl}/api/products/facebook_catelog`);
 
-    // Your existing code to normalize the product data
-    const new_rows = data.data
+    const new_rows = data
       .filter(product => !product.hidden)
       .filter(product => product.category !== "options")
       .filter(product => product.option === false)

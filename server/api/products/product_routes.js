@@ -20,6 +20,7 @@ router.route("/reorder").put(product_controller.reorder_products_c);
 router.route("/delete_multiple").put(product_controller.remove_multiple_products_c);
 router.route("/current_stock").get(product_controller.current_stock_products_c);
 router.route("/:attribute/distinct").get(product_controller.distinct_products_c);
+router.route("/facebook_catelog").get(product_controller.facebook_catelog_products_c);
 // router
 //   .route("/compress_images")
 //   .post(product_controller.compress_images_products_c);

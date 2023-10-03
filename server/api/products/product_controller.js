@@ -241,4 +241,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  facebook_catelog_products_c: async (req, res) => {
+    try {
+      const product = await product_services.facebook_catelog_products_s();
+      if (product) {
+        return res.status(201).send(product);
+      }
+      return res.status(500).send({ message: "Error Finding Product Attributes" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };
