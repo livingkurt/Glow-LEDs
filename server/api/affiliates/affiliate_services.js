@@ -111,6 +111,7 @@ export default {
   monthly_checkin_affiliates_s: async (params, body) => {
     const { id } = params;
     const { questionsConcerns, numberOfContent, month, year } = body;
+    console.log({ questionsConcerns, numberOfContent, month, year, id });
 
     // Get previous month and year
     const prevDate = new Date();
@@ -124,7 +125,7 @@ export default {
         month: month,
         year: year,
         questionsConcerns: questionsConcerns,
-        numberOfContentOfContent,
+        numberOfContent,
         // add any additional fields here
       };
 
@@ -163,6 +164,7 @@ export default {
         return affiliate;
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
