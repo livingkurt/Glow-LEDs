@@ -3,6 +3,14 @@ const fs = require("fs");
 const Papa = require("papaparse");
 import { domain } from "../worker_helpers";
 
+const determineImage = (product, imageNum) => {
+  if (product.images_object && product.images_object[imageNum]) {
+    return product.images_object[imageNum].link;
+  } else {
+    return product.images[imageNum];
+  }
+};
+
 export const facebook_catalog_upload = async () => {
   try {
     // Fetch existing products from MongoDB
@@ -23,8 +31,8 @@ export const facebook_catalog_upload = async () => {
         condition: "New",
         price: `${product.price} USD`,
         link: `https://www.glow-leds.com/collections/all/products/${product.pathname}`,
-        image_link: product?.images_object[0]?.link,
-        additional_image_link: product?.images_object[1]?.link,
+        image_link: determineImage(product, 0),
+        additional_image_link: determineImage(product, 1),
         brand: "Glow LEDs",
         inventory: product.quantity,
         fb_product_category: "toys & games > electronic toys",
@@ -37,8 +45,6 @@ export const facebook_catalog_upload = async () => {
         color: product.color,
         size: product.size,
       }));
-
-    // ... existing code to filter and map data
 
     // Convert the normalized data to CSV
     const csv = Papa.unparse(new_rows);
