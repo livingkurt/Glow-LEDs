@@ -36,7 +36,6 @@ const ProfilePage = () => {
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user, message } = userPage;
-
   const { first_name } = user;
 
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -44,6 +43,8 @@ const ProfilePage = () => {
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading: loading_order } = orderPage;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { monthlyCheckinSuccess } = affiliatePage;
 
   useEffect(() => {
     let cleanup = true;
@@ -59,6 +60,15 @@ const ProfilePage = () => {
       cleanup = false;
     };
   }, []);
+  useEffect(() => {
+    let cleanup = true;
+    if (cleanup) {
+      dispatch(API.detailsUser(id || current_user._id));
+    }
+    return () => {
+      cleanup = false;
+    };
+  }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
 
   useEffect(() => {
     let cleanup = true;

@@ -12,9 +12,13 @@ const SponsorMonthlyCheckinModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
+  console.log({ month, year });
+
   useEffect(() => {
     if (user?.affiliate) {
-      const checkin = user?.affiliate?.sponsorMonthlyCheckins?.find(checkin => checkin.month === month && checkin.year === year);
+      const checkin = user?.affiliate?.sponsorMonthlyCheckins?.find(
+        checkin => checkin.month === month && checkin.year === year
+      );
       if (checkin) {
         dispatch(setCheckin(checkin));
       }
@@ -25,8 +29,9 @@ const SponsorMonthlyCheckinModal = () => {
     <GLActiionModal
       isOpen={monthlyCheckinModal}
       onConfirm={() => {
-        dispatch(API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent, month, year }));
-        dispatch(API.detailsUser(user._id));
+        dispatch(
+          API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent, month, year })
+        );
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
       title={"Sponsor Monthly Check In"}
@@ -61,11 +66,16 @@ const SponsorMonthlyCheckinModal = () => {
 
         <Grid item>
           <Typography variant="body1" gutterBottom>
-            Please follow the link below to upload at least 3 pieces of content to the corresponding month folder in the Google Drive.
+            Please follow the link below to upload at least 3 pieces of content to the corresponding month folder in the
+            Google Drive.
           </Typography>
         </Grid>
         <Grid item>
-          <Link href="https://drive.google.com/drive/folders/1shjx7y3Yqa6_UC3h-Fg0JMAhutX3hE6d?usp=sharing" target="_blank" rel="noopener">
+          <Link
+            href="https://drive.google.com/drive/folders/1shjx7y3Yqa6_UC3h-Fg0JMAhutX3hE6d?usp=sharing"
+            target="_blank"
+            rel="noopener"
+          >
             <Button variant="contained" color="primary" fullWidth>
               Google Drive
             </Button>

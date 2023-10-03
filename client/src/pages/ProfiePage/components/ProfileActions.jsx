@@ -8,11 +8,9 @@ import * as API from "../../../api";
 import { Box, Button, Typography } from "@mui/material";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
-import SponsorMonthlyCheckinModal from "./SponsorMonthlyCheckinModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 
 export const ProfileActions = () => {
-  let { id } = useParams();
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
@@ -27,7 +25,6 @@ export const ProfileActions = () => {
   const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(
     checkin => checkin.month === currentMonth && checkin.year === currentYear
   );
-
   const previousCheckin = user?.affiliate?.sponsorMonthlyCheckins?.find(
     checkin => checkin.month === previousMonth && checkin.year === currentYear
   );
