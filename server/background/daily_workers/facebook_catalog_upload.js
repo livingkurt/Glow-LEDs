@@ -44,7 +44,7 @@ export const facebook_catalog_upload = async () => {
     const csv = Papa.unparse(new_rows);
 
     // Save the CSV to a file
-    const csvFileName = "./static/facebook_product_catalog.csv";
+    const csvFileName = "./client/public/facebook_product_catalog.csv";
     fs.writeFile(csvFileName, csv, err => {
       if (err) throw err;
       console.log("CSV file has been saved.");

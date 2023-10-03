@@ -48,7 +48,6 @@ require("./passport")(passport);
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-app.use("/static", express.static(path.join(__dirname, "static")));
 if (config.NODE_ENV === "production") {
   app.use(express.static("dist"));
   app.use(express.static("client/build"));
