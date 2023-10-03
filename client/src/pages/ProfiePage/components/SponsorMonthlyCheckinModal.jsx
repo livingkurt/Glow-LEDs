@@ -4,15 +4,13 @@ import { closeMonthlyCheckinModal, setCheckin, setNumberOfContent, setQuestion }
 import * as API from "../../../api";
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 const SponsorMonthlyCheckinModal = () => {
   const dispatch = useDispatch();
-  let { id } = useParams();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { questionsConcerns, monthlyCheckinModal, numberOfContent, month, year } = affiliatePage;
   const userPage = useSelector(state => state.users.userPage);
-  const { user, current_user } = userPage;
+  const { user } = userPage;
 
   console.log({ month, year });
 
@@ -34,8 +32,6 @@ const SponsorMonthlyCheckinModal = () => {
         dispatch(
           API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent, month, year })
         );
-        // dispatch(API.detailsUser(user._id));
-        dispatch(API.detailsUser(id || current_user._id));
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
       title={"Sponsor Monthly Check In"}
