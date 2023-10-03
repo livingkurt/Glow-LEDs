@@ -13,6 +13,8 @@ export const facebook_catalog_upload = async () => {
     const new_rows = data.data
       .filter(product => !product.hidden)
       .filter(product => product.category !== "options")
+      .filter(product => product.option === false)
+      .sort((a, b) => (a.order > b.order ? 1 : -1))
       .map((product, i) => ({
         id: product._id,
         title: product.name,
@@ -28,7 +30,7 @@ export const facebook_catalog_upload = async () => {
         fb_product_category: "toys & games > electronic toys",
         google_product_category: "Toys & Games > Toys > Visual Toys",
         sale_price: `${product.sale_price && product.sale_price.toFixed(2)} USD`,
-        sale_price_effective_date: `${product.sale_start_date && product.sale_start_date.slice(0, -1)}/$
+        sale_price_effective_date: `${product.sale_start_date && product.sale_start_date.slice(0, -1)}/${
           product.sale_end_date && product.sale_end_date.slice(0, -1)
         }`,
         product_type: product.category,
@@ -42,7 +44,7 @@ export const facebook_catalog_upload = async () => {
     const csv = Papa.unparse(new_rows);
 
     // Save the CSV to a file
-    const csvFileName = "./facebook_product_catalog.csv";
+    const csvFileName = "./static/facebook_product_catalog.csv";
     fs.writeFile(csvFileName, csv, err => {
       if (err) throw err;
       console.log("CSV file has been saved.");
