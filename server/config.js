@@ -131,6 +131,10 @@ const config = {
   // Imgur
   IMGUR_ClIENT_ID: process.env.IMGUR_ClIENT_ID,
   IMGUR_ClIENT_SECRET: process.env.IMGUR_ClIENT_SECRET,
+
+  // Facebook
+  FACEBOOK_ACCESS_TOKEN: process.env.FACEBOOK_ACCESS_TOKEN,
+  FACEBOOK_CATALOG_ID: process.env.FACEBOOK_CATALOG_ID,
 };
 
 export default config;

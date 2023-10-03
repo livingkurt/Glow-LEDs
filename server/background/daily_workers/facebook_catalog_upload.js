@@ -1,104 +1,53 @@
 import axios from "axios";
-import config from "../config";
+const fs = require("fs");
+const Papa = require("papaparse");
 import { domain } from "../worker_helpers";
 
-const google_sheets_json = require("./google_sheet_credentials.json");
-
 export const facebook_catalog_upload = async () => {
-  google_sheets_json.web.client_secret = config.REACT_APP_GOOGLE_SHEETS_PRIVATE;
   try {
-    const { GoogleSpreadsheet } = require("google-spreadsheet");
-    const doc = new GoogleSpreadsheet("1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8");
-    await doc.useServiceAccountAuth({
-      client_email: config.INFO_EMAIL,
-      private_key: config.REACT_APP_GOOGLE_SHEETS_PRIVATE,
-    });
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    await sheet.clear();
-    await sheet.setHeaderRow([
-      "id",
-      "title",
-      "description",
-      "availability",
-      "condition",
-      "price",
-      "link",
-      "image_link",
-      "additional_image_link",
-      "brand",
-      "inventory",
-      "fb_product_category",
-      "google_product_category",
-      "sale_price",
-      "sale_price_effective_date",
-      "product_type",
-      "color",
-      "size",
-      // 'shipping_weight',
-      // 'item_group_id'
-    ]);
+    // Fetch existing products from MongoDB
     const domainUrl = domain();
     const { data } = await axios.get(`${domainUrl}/api/products?limit=0&hidden=false&option=false`);
 
-    const new_rows = data.products
+    // Your existing code to normalize the product data
+    const new_rows = data.data
       .filter(product => !product.hidden)
       .filter(product => product.category !== "options")
-      .map((product, i) => {
-        const id = product._id;
-        const title = product.name;
-        const description = product.description;
-        const availability = "In Stock";
-        const condition = "New";
-        const price = `${product.price} USD`;
-        const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
-        const image_link = product.images_object[0].link;
-        const additional_image_link = product.images_object[1].link;
-        const brand = "Glow LEDs";
-        const inventory = product.quantity;
-        const fb_product_category = "toys & games > electronic toys";
-        const google_product_category = "Toys & Games > Toys > Visual Toys";
-        const sale_price = `${product.sale_price && product.sale_price.toFixed(2)} USD`;
-        const sale_price_effective_date = `${product.sale_start_date && product.sale_start_date.slice(0, -1)}/${
+      .map((product, i) => ({
+        id: product._id,
+        title: product.name,
+        description: product.description,
+        availability: "In Stock",
+        condition: "New",
+        price: `${product.price} USD`,
+        link: `https://www.glow-leds.com/collections/all/products/${product.pathname}`,
+        image_link: product?.images_object[0]?.link,
+        additional_image_link: product?.images_object[1]?.link,
+        brand: "Glow LEDs",
+        inventory: product.quantity,
+        fb_product_category: "toys & games > electronic toys",
+        google_product_category: "Toys & Games > Toys > Visual Toys",
+        sale_price: `${product.sale_price && product.sale_price.toFixed(2)} USD`,
+        sale_price_effective_date: `${product.sale_start_date && product.sale_start_date.slice(0, -1)}/$
           product.sale_end_date && product.sale_end_date.slice(0, -1)
-        }`;
-        const product_type = product.category;
-        const color = product.color;
-        const size = product.size;
-        // const shipping_weight = `${product.weight_pounds
-        // 	? product.weight_pounds * 16 + product.weight_ounces
-        // 	: product.weight_ounces} oz`;
-        // const item_group_id = product.item_group_id ? product.item_group_id : '';
+        }`,
+        product_type: product.category,
+        color: product.color,
+        size: product.size,
+      }));
 
-        return {
-          id,
-          title,
-          description,
-          availability,
-          condition,
-          price,
-          link,
-          image_link,
-          additional_image_link,
-          brand,
-          inventory,
-          fb_product_category,
-          google_product_category,
-          sale_price,
-          sale_price_effective_date,
-          product_type,
-          color,
-          size,
-          // shipping_weight,
-          // item_group_id
-        };
-      });
+    // ... existing code to filter and map data
 
-    await sheet.addRows(new_rows);
-    await sheet.saveUpdatedCells();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
+    // Convert the normalized data to CSV
+    const csv = Papa.unparse(new_rows);
+
+    // Save the CSV to a file
+    const csvFileName = "./facebook_product_catalog.csv";
+    fs.writeFile(csvFileName, csv, err => {
+      if (err) throw err;
+      console.log("CSV file has been saved.");
+    });
+  } catch (err) {
+    console.error(err);
   }
 };

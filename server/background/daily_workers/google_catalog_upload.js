@@ -1,8 +1,8 @@
 import axios from "axios";
-import config from "../config";
+import config from "../../config";
 import { domain } from "../worker_helpers";
 
-const google_sheets_json = require("./glow-leds-f0566f7a7ebe.json");
+const google_sheets_json = require("../../../glow-leds-f0566f7a7ebe.json");
 
 export const google_catalog_upload = async () => {
   google_sheets_json.private_key = config.REACT_APP_GOOGLE_SHEETS_PRIVATE;
