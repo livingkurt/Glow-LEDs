@@ -489,7 +489,125 @@ export default {
   },
   facebook_catelog_products_s: async params => {
     try {
-      return await Product.find({ hidden: false, deleted: false }).sort({ order: -1 }).populate("images_object");
+      return await Product.find({ hidden: false, deleted: false, option: false })
+        .sort({ order: 1 })
+        .populate("images_object")
+        .populate("color_images_object")
+        .populate("secondary_color_images_object")
+        .populate("option_images_object")
+        .populate("secondary_images_object")
+        .populate("chips")
+        .populate("products")
+        .populate({
+          path: "color_products",
+          populate: [
+            {
+              path: "filament",
+            },
+            {
+              path: "images_object",
+            },
+            {
+              path: "categorys",
+            },
+            {
+              path: "subcategorys",
+            },
+            {
+              path: "collections",
+            },
+          ],
+        })
+        .populate({
+          path: "secondary_color_products",
+          populate: [
+            {
+              path: "filament",
+            },
+            {
+              path: "images_object",
+            },
+            {
+              path: "categorys",
+            },
+            {
+              path: "subcategorys",
+            },
+            {
+              path: "collections",
+            },
+          ],
+        })
+        .populate({
+          path: "option_products",
+          populate: [
+            {
+              path: "filament",
+            },
+            {
+              path: "images_object",
+            },
+            {
+              path: "categorys",
+            },
+            {
+              path: "subcategorys",
+            },
+            {
+              path: "collections",
+            },
+          ],
+        })
+        .populate("filament")
+        .populate({
+          path: "secondary_products",
+          populate: [
+            {
+              path: "filament",
+            },
+            {
+              path: "images_object",
+            },
+            {
+              path: "categorys",
+            },
+            {
+              path: "subcategorys",
+            },
+            {
+              path: "collections",
+            },
+
+            {
+              path: "color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "option_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+          ],
+        })
+        .populate("categorys")
+        .populate("subcategorys")
+        .populate("collections")
+        .populate("contributers");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
