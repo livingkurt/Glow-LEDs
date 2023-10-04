@@ -20,18 +20,20 @@ export const facebook_catalog_upload = async () => {
     const { data } = await axios.get(`${domainUrl}/api/products/facebook_catelog`);
 
     let csvRows = [];
-    let addedProductOptionIDs = {};
+    let processedProducts = {};
 
     for (let product of data) {
+      // Check if main product is already processed
       const mainProductNormalized = normalizeProductForCSV(product);
-      // console.log({ mainProductNormalized });
-
-      // Validate main product before pushing
-      if (isValidRow(mainProductNormalized)) {
-        csvRows.push(mainProductNormalized);
+      if (!processedProducts[product._id]) {
+        // Validate and add main product
+        if (isValidRow(mainProductNormalized)) {
+          csvRows.push(mainProductNormalized);
+          processedProducts[product._id] = true;
+        }
       }
 
-      // Handle variants.
+      // Handle variants
       let variantFields = [
         "products",
         "color_products",
@@ -43,33 +45,36 @@ export const facebook_catalog_upload = async () => {
       for (let field of variantFields) {
         for (let variantProduct of product[field]) {
           // Skip if this product option has already been added
-          if (addedProductOptionIDs[variantProduct._id]) continue;
+          if (processedProducts[variantProduct._id]) continue;
 
           let variantRow = normalizeProductForCSV(variantProduct);
-          variantRow.item_group_id = product._id; // Set the parent's ID as the item_group_id.
-          // console.log({ variantRow: variantRow.image_link, mainProductNormalized: mainProductNormalized.image_link });
+          variantRow.item_group_id = product._id;
 
-          // If the variant doesn't have its own image, inherit from the primary product
-          if (!variantRow.image_link) {
-            variantRow.image_link = mainProductNormalized.image_link;
-          }
-          if (!variantRow.additional_image_link) {
+          // Inherit properties from main product if missing in variant
+          if (!variantRow.image_link) variantRow.image_link = mainProductNormalized.image_link;
+          if (!variantRow.additional_image_link)
             variantRow.additional_image_link = mainProductNormalized.additional_image_link;
-          }
+          if (!variantRow.description || variantRow.description === "")
+            variantRow.description = mainProductNormalized.description;
+          if (
+            !variantRow.price ||
+            parseFloat(variantRow.price) === 0 ||
+            variantRow.price === "null USD" ||
+            variantRow.price === "0 USD"
+          )
+            variantRow.price = mainProductNormalized.price;
 
-          // Validate variant before pushing
+          // Validate and add variant
           if (isValidRow(variantRow)) {
             csvRows.push(variantRow);
-            addedProductOptionIDs[variantProduct._id] = true; // Mark as added
+            processedProducts[variantProduct._id] = true;
           }
         }
       }
     }
 
-    // Convert the CSV rows to a CSV string
+    // Convert rows to CSV and save
     const csv = Papa.unparse(csvRows);
-
-    // Save the CSV to a file
     const csvFileName = "./client/public/facebook_product_catalog.csv";
     fs.writeFile(csvFileName, csv, err => {
       if (err) throw err;
