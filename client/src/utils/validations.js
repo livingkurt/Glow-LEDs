@@ -351,7 +351,7 @@ export const validate_shipping = ({
     country.toLowerCase() === "united states" ||
     country.toLowerCase() === "united states of america"
   ) {
-    errors.country = "International Option Not Available for United States";
+    errors.country = "International option not available to United States";
   }
   if (international) {
     // Country checks
