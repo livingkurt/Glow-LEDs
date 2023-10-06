@@ -450,11 +450,6 @@ const Header = () => {
                         Edit All Data
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/gcode_continous">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Gcode
-                      </GLButton>
-                    </Link>
                     <Link to="/secure/glow/image_compressor">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Compressor

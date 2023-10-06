@@ -53,7 +53,6 @@ const adminRoutes = [
     path: "/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?",
     element: "EditProductPage",
   },
-  { path: "/secure/glow/gcode_continous", element: "GcodeContinousPage" },
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
   { path: "/secure/glow/products", element: "ProductsPage" },
   { path: "/secure/glow/orders", element: "OrdersPage" },
