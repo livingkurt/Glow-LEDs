@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -70,7 +70,7 @@ const EditTutorialModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_tutorial_modal}
         onConfirm={() => {
           dispatch(API.saveTutorial({ ...tutorial, affiliate: affiliate._id, pathname: generate_pathname() }));
@@ -92,7 +92,7 @@ const EditTutorialModal = () => {
           onChange={value => dispatch(set_tutorial(value))}
           loading={loading && loading_affiliates}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

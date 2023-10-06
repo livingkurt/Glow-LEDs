@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { open_edit_product_modal, set_edit_product_modal, set_product } from "../productsPageSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -40,7 +40,7 @@ const EditProductModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_product_modal}
         onConfirm={() => {
           dispatch(API.saveProduct({ ...product }));
@@ -61,7 +61,7 @@ const EditProductModal = () => {
           onChange={value => dispatch(set_product(value))}
           loading={loading && loading_users && loading_categorys}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { closeShippingModal } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { chooseShippingRate, reChooseShippingRate } from "../../../slices/shippingSlice";
@@ -35,7 +35,7 @@ const ShippingModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={shippingModal}
         onConfirm={() => {
           dispatch(
@@ -98,7 +98,7 @@ const ShippingModal = () => {
             </GLButton>
           </div>
         )}
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

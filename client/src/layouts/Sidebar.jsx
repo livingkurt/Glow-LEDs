@@ -949,11 +949,6 @@ const Sidebar = () => {
                     Edit All Data
                   </GLButton>
                 </Link>
-                <Link to="/secure/glow/gcode_continous">
-                  <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                    Gcode
-                  </GLButton>
-                </Link>
                 <Link to="/secure/glow/iamge_compressor">
                   <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                     Compressor

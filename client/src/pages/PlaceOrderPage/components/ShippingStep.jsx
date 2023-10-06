@@ -31,7 +31,7 @@ import {
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
@@ -493,7 +493,7 @@ const ShippingStep = () => {
         </div>
       )}
       {width < 400 && <hr />}
-      <GLActiionModal
+      <GLActionModal
         isOpen={showSaveShippingModal}
         onConfirm={() => {
           dispatch(
@@ -527,7 +527,7 @@ const ShippingStep = () => {
         <p>
           <strong>Note</strong>: You can change your saved address later from your profile page
         </p>
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

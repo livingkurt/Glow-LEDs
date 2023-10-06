@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_paycheck_modal, set_paycheck } from "../../../slices/paycheckSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -102,7 +102,7 @@ const EditPaycheckModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_paycheck_modal}
         onConfirm={() => {
           dispatch(
@@ -132,7 +132,7 @@ const EditPaycheckModal = () => {
           onChange={value => dispatch(set_paycheck(value))}
           loading={loading && loading_affiliates}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

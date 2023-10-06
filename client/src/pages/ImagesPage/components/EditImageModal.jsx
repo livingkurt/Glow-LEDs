@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_image_modal, set_image } from "../../../slices/imageSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -22,7 +22,7 @@ const EditImageModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_image_modal}
         onConfirm={() => {
           dispatch(API.saveImage(image));
@@ -39,7 +39,7 @@ const EditImageModal = () => {
         disableEscapeKeyDown
       >
         <GLForm formData={formFields} state={image} onChange={value => dispatch(set_image(value))} loading={loading} />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import GLBold from "../../../shared/GlowLEDsComponents/GLBold/GLBold";
@@ -24,7 +24,7 @@ const ProcessingConfirmModal = ({ choose_shipping_rate, rate }) => {
     dispatch(setOpen(false));
   };
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={open}
       onConfirm={() => handleConfirm(rate)}
       onCancel={handleClose}
@@ -44,7 +44,7 @@ const ProcessingConfirmModal = ({ choose_shipping_rate, rate }) => {
         for processing, which does not include shipping time. Larger orders may need more time. Remember, faster
         shipping doesn't speed up processing time. Please adjust your expectations accordingly.
       </Typography>
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 

@@ -1,4 +1,4 @@
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { Grid, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
@@ -16,7 +16,7 @@ const RefundOrderModal = () => {
     }
   };
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={refundModal}
       onConfirm={() => refundOrder(refundAmount)}
       onCancel={() => refundOrder(order.totalPrice)}
@@ -52,7 +52,7 @@ const RefundOrderModal = () => {
           />
         </Grid>
       </Grid>
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 

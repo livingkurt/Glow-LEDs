@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_content_modal, set_content } from "../../../slices/contentSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -16,7 +16,7 @@ const EditContentModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_content_modal}
         onConfirm={() => {
           dispatch(API.saveContent(content));
@@ -39,7 +39,7 @@ const EditContentModal = () => {
           }}
           loading={loading}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

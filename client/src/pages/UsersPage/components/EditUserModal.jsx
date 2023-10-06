@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_user_modal, set_user } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -186,7 +186,7 @@ const EditUserModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_user_modal}
         onConfirm={() => {
           dispatch(
@@ -212,7 +212,7 @@ const EditUserModal = () => {
           onChange={value => dispatch(set_user(value))}
           loading={loading && loading_affiliates}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

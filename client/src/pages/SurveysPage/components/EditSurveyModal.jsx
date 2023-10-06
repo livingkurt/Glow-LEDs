@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_survey_modal, set_survey } from "../../../slices/surveySlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -16,7 +16,7 @@ const EditSurveyModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_survey_modal}
         onConfirm={() => {
           dispatch(API.saveSurvey(survey));
@@ -39,7 +39,7 @@ const EditSurveyModal = () => {
           }}
           loading={loading}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

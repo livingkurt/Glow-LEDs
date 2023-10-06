@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_expense_modal, set_expense } from "../../../slices/expenseSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -17,7 +17,7 @@ const EditExpenseModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_expense_modal}
         onConfirm={() => {
           dispatch(API.saveExpense(expense));
@@ -38,7 +38,7 @@ const EditExpenseModal = () => {
           onChange={value => dispatch(set_expense(value))}
           loading={loading}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

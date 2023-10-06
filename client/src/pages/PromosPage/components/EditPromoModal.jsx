@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_promo_modal, set_promo } from "../../../slices/promoSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -40,7 +40,7 @@ const EditPromoModal = () => {
   });
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_promo_modal}
         onConfirm={() => {
           dispatch(API.savePromo(promo));
@@ -61,7 +61,7 @@ const EditPromoModal = () => {
           onChange={value => dispatch(set_promo(value))}
           loading={loading && loading_affiliates && loading_users && loading_categorys}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

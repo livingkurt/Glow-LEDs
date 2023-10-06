@@ -2,7 +2,6 @@ import { OrderPage } from "../../pages/OrderPage";
 import { PlaceOrderPage } from "../../pages/PlaceOrderPage";
 import { AdminChangePasswordPage } from "../../pages/ProfiePage/components";
 import { EditProductPage } from "../../pages/ProductsPage/components";
-import { GcodeContinousPage } from "../../pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
@@ -93,7 +92,6 @@ export const Components = {
 };
 export const AdminComponents = {
   EditProductPage,
-  GcodeContinousPage,
   DatabaseMigrationPage,
   ProductsPage,
   OrdersPage,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, FormControlLabel, Radio, RadioGroup, Typography, Grid, Paper } from "@mui/material";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useDispatch, useSelector } from "react-redux";
 import { close_modals } from "../../../slices/userSlice";
 import { attributes } from "../usersHelpers";
@@ -42,7 +42,7 @@ const CombineUserModal = () => {
   };
 
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={combine_user_modal}
       onConfirm={() => handleSubmit()}
       onAction={() => {
@@ -84,15 +84,31 @@ const CombineUserModal = () => {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Paper elevation={1} style={{ padding: "10px", margin: "10px 0" }}>
-                    <RadioGroup row value={selected[attribute] || ""} onChange={event => handleChange(attribute, event.target.value)}>
-                      <FormControlLabel value={`user1-${attribute}`} control={<Radio />} label={`${attribute} - ${user1[attribute]}`} />
+                    <RadioGroup
+                      row
+                      value={selected[attribute] || ""}
+                      onChange={event => handleChange(attribute, event.target.value)}
+                    >
+                      <FormControlLabel
+                        value={`user1-${attribute}`}
+                        control={<Radio />}
+                        label={`${attribute} - ${user1[attribute]}`}
+                      />
                     </RadioGroup>
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
                   <Paper elevation={1} style={{ padding: "10px", margin: "10px 0" }}>
-                    <RadioGroup row value={selected[attribute] || ""} onChange={event => handleChange(attribute, event.target.value)}>
-                      <FormControlLabel value={`user2-${attribute}`} control={<Radio />} label={`${attribute} - ${user2[attribute]}`} />
+                    <RadioGroup
+                      row
+                      value={selected[attribute] || ""}
+                      onChange={event => handleChange(attribute, event.target.value)}
+                    >
+                      <FormControlLabel
+                        value={`user2-${attribute}`}
+                        control={<Radio />}
+                        label={`${attribute} - ${user2[attribute]}`}
+                      />
                     </RadioGroup>
                   </Paper>
                 </Grid>
@@ -101,7 +117,7 @@ const CombineUserModal = () => {
           </Grid>
         ))}
       </Box>
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 
