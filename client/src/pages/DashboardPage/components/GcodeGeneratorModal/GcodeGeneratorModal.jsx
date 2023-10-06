@@ -1,7 +1,7 @@
 import React from "react";
 import { Loading } from "../../../../shared/SharedComponents";
 import GLActionModal from "../../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { combineGcode, parseGcode, readFile, saveContinuousGcode } from "./gcodeContinuousHelper";
+import { combineGcode, parseGcode, readFile, saveContinuousGcode } from "./gcodeGeneratorModalHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFiles,
