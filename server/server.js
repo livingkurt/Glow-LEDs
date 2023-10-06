@@ -63,22 +63,6 @@ app.listen(config.PORT, () => {
   console.log(`Server listening on port ${config.PORT}`);
 });
 
-app.post("/api/gcode", async (req, res) => {
-  try {
-    const filename = req.body.filename;
-    const data = req.body.gcode;
-    fs.writeFile(`~/Desktop/${filename}`, data, err => {
-      if (err) throw err;
-
-      res.send("Gcode Continous File Created");
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-});
-
 app.get("/api/bugsnag-test", function (req, res) {
   Bugsnag.notify(new Error("Test error"));
   res.send("Test error sent to Bugsnag");

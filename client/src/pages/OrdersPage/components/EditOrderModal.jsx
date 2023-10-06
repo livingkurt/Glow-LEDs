@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_order_modal, set_order } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -48,7 +48,7 @@ const EditOrderModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_order_modal}
         onConfirm={() => {
           dispatch(API.saveOrder({ ...order, isUpdated: true, updatedAt: new Date() }));
@@ -101,7 +101,7 @@ const EditOrderModal = () => {
           }}
           loading={loading && loading_users}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

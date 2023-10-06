@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TextField, Typography, Grid, Button, Link } from "@mui/material";
 import { closeMonthlyCheckinModal, setCheckin, setNumberOfContent, setQuestion } from "../../../slices/affiliateSlice";
 import * as API from "../../../api";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useEffect } from "react";
 
 const SponsorMonthlyCheckinModal = () => {
@@ -26,7 +26,7 @@ const SponsorMonthlyCheckinModal = () => {
   }, [user?.affiliate?.sponsorMonthlyCheckins, dispatch, user?.affiliate, month, year]);
 
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={monthlyCheckinModal}
       onConfirm={() => {
         dispatch(
@@ -99,7 +99,7 @@ const SponsorMonthlyCheckinModal = () => {
           </Typography>
         </Grid>
       </Grid>
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 

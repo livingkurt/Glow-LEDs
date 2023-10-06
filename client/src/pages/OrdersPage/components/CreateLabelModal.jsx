@@ -7,7 +7,7 @@ import {
   setToShipping,
 } from "../../../slices/shippingSlice";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import * as API from "../../../api";
 import { closeCreateLabelModal } from "../../../slices/shippingSlice";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -342,7 +342,7 @@ const CreateLabelModal = () => {
   };
 
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={createLabelModal}
       onConfirm={() => dispatch(API.createCustomLabel({ selectedRateId, shipmentId }))}
       onCancel={() => dispatch(closeCreateLabelModal())}
@@ -496,7 +496,7 @@ const CreateLabelModal = () => {
           Print Label
         </Button>
       )}
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 

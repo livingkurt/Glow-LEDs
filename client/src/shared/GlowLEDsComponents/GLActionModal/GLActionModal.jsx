@@ -1,10 +1,10 @@
 /* eslint-disable max-lines-per-function */
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./GLActiionModal.module.scss";
+import styles from "./GLActionModal.module.scss";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const GLActiionModal = ({
+const GLActionModal = ({
   id,
   isOpen,
   title,
@@ -114,7 +114,7 @@ const GLActiionModal = ({
   );
 };
 
-GLActiionModal.defaultProps = {
+GLActionModal.defaultProps = {
   id: null,
   isOpen: false,
   dividers: true,
@@ -146,7 +146,7 @@ GLActiionModal.defaultProps = {
   disableEscapeKeyDown: false,
 };
 
-GLActiionModal.propTypes = {
+GLActionModal.propTypes = {
   id: PropTypes.string,
   isOpen: PropTypes.bool,
   dividers: PropTypes.bool,
@@ -178,4 +178,4 @@ GLActiionModal.propTypes = {
   actionClasses: PropTypes.object,
 };
 
-export default GLActiionModal;
+export default GLActionModal;

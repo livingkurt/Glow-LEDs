@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { close_create_pickup_modal } from "../../../slices/shippingSlice";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import * as API from "../../../api";
 import TextField from "@mui/material/TextField";
 import { Grid, Button, Radio, FormControlLabel, RadioGroup, Typography } from "@mui/material";
@@ -52,7 +52,7 @@ const CreatePickupModal = () => {
   };
 
   return (
-    <GLActiionModal
+    <GLActionModal
       isOpen={create_pickup_modal}
       onConfirm={handleConfirmPickup}
       onCancel={() => dispatch(close_create_pickup_modal(false))}
@@ -124,7 +124,7 @@ const CreatePickupModal = () => {
           </Grid>
         )}
       </Grid>
-    </GLActiionModal>
+    </GLActionModal>
   );
 };
 

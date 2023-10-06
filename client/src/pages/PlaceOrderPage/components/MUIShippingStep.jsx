@@ -32,7 +32,7 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { isRequired, validateSection } from "../placeOrderHelpers";
 import { makeStyles } from "@mui/styles";
 import { fullName } from "../../UsersPage/usersHelpers";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { Info } from "@mui/icons-material";
 
 // const useStyles = makeStyles(theme => ({
@@ -397,7 +397,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         </div>
       )}
       {width < 400 && <hr />}
-      <GLActiionModal
+      <GLActionModal
         isOpen={showSaveShippingModal}
         onConfirm={() => {
           dispatch(
@@ -433,7 +433,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         <p>
           <strong>Note</strong>: You can change your saved address later from your profile page
         </p>
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { setTestEmail, set_edit_email_modal, set_email } from "../../../slices/emailSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -34,7 +34,7 @@ const EditEmailModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_email_modal}
         onConfirm={() => {
           dispatch(API.saveEmail(email));
@@ -91,7 +91,7 @@ const EditEmailModal = () => {
             </Box>
           </Grid>
         </Grid>
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

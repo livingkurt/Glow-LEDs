@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_wholesaler_modal, set_wholesaler } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
@@ -53,7 +53,7 @@ const EditWholesalerModal = () => {
 
   return (
     <div>
-      <GLActiionModal
+      <GLActionModal
         isOpen={edit_wholesaler_modal}
         onConfirm={() => {
           dispatch(
@@ -79,7 +79,7 @@ const EditWholesalerModal = () => {
           onChange={value => dispatch(set_wholesaler(value))}
           loading={loading && loading_users}
         />
-      </GLActiionModal>
+      </GLActionModal>
     </div>
   );
 };

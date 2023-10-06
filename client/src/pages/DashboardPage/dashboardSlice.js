@@ -20,7 +20,14 @@ const dashboardPage = createSlice({
     start_date: start_date,
     end_date: end_date,
     tabIndex: 0,
+    number_of_copies: 12,
+    gcode_name: [],
+    gcode_parts: {},
+    filename: "",
+    status: "",
     loading: false,
+    color_change: false,
+    gcodeContinuousModal: false,
   },
   reducers: {
     set_year: (state, { payload }) => {
@@ -47,9 +54,44 @@ const dashboardPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
+    set_number_of_copies: (state, { payload }) => {
+      state.number_of_copies = payload;
+    },
+    set_gcode_name: (state, { payload }) => {
+      state.gcode_name = payload;
+    },
+    set_gcode_parts: (state, { payload }) => {
+      state.gcode_parts = payload;
+    },
+    set_filename: (state, { payload }) => {
+      state.filename = payload;
+    },
+    set_status: (state, { payload }) => {
+      state.status = payload;
+    },
+    set_color_change: (state, { payload }) => {
+      state.color_change = payload;
+    },
+    setGcodeContinuousModal: (state, { payload }) => {
+      state.gcodeContinuousModal = payload;
+    },
   },
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, resetDateRange, set_loading, setTabIndex } =
-  dashboardPage.actions;
+export const {
+  set_year,
+  set_month,
+  set_start_date,
+  set_end_date,
+  resetDateRange,
+  set_loading,
+  setTabIndex,
+  set_number_of_copies,
+  set_gcode_name,
+  set_gcode_parts,
+  set_filename,
+  set_status,
+  set_color_change,
+  setGcodeContinuousModal,
+} = dashboardPage.actions;
 export default dashboardPage.reducer;
