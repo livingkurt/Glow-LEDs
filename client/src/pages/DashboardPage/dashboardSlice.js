@@ -1,7 +1,6 @@
 /* eslint-disable max-lines-per-function */
 
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "./dashboardApi";
 import { formatDate } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { getMonthStartEndDates, months } from "./dashboardHelpers";
 
@@ -20,13 +19,13 @@ const dashboardPage = createSlice({
     start_date: start_date,
     end_date: end_date,
     tabIndex: 0,
-    number_of_copies: 12,
-    gcode_name: [],
-    gcode_parts: {},
+    numberOfCopies: 12,
+    gcodeNames: [],
+    gcodeParts: {},
     filename: "",
     status: "",
     loading: false,
-    color_change: false,
+    changeColorOnPrintRemoval: false,
     gcodeContinuousModal: false,
   },
   reducers: {
@@ -54,26 +53,39 @@ const dashboardPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_number_of_copies: (state, { payload }) => {
-      state.number_of_copies = payload;
+    setNumberOfCopies: (state, { payload }) => {
+      state.numberOfCopies = payload;
     },
-    set_gcode_name: (state, { payload }) => {
-      state.gcode_name = payload;
+    setChangeColorOnPrintRemoval: (state, { payload }) => {
+      state.changeColorOnPrintRemoval = payload;
     },
-    set_gcode_parts: (state, { payload }) => {
-      state.gcode_parts = payload;
+    openGcodeContinuousModal: (state, { payload }) => {
+      state.gcodeContinuousModal = true;
     },
-    set_filename: (state, { payload }) => {
-      state.filename = payload;
+    resetGcodeGenerator: (state, { payload }) => {
+      state.filename = "";
+      state.gcodeNames = [];
+      state.gcodeParts = {};
     },
-    set_status: (state, { payload }) => {
-      state.status = payload;
+    closeGcodeGeneratorModal: (state, { payload }) => {
+      state.gcodeContinuousModal = false;
+      state.filename = "";
+      state.gcodeNames = [];
+      state.gcodeParts = {};
     },
-    set_color_change: (state, { payload }) => {
-      state.color_change = payload;
-    },
-    setGcodeContinuousModal: (state, { payload }) => {
-      state.gcodeContinuousModal = payload;
+    handleFiles: (state, action) => {
+      const { files } = action.payload;
+      for (let index = 0; index < files.length; index++) {
+        const num = index + 1;
+        const { beginningArray, middle_array, endingArray } = files[index];
+        state.gcodeParts["file_" + num] = {
+          ["beginning_" + num]: beginningArray,
+          ["middle_" + num]: middle_array,
+          ["ending_" + num]: endingArray,
+        };
+        state.filename = document.getElementById("file").files[0].name;
+        state.gcodeNames.push(document.getElementById("file").files[index].name);
+      }
     },
   },
 });
@@ -86,12 +98,15 @@ export const {
   resetDateRange,
   set_loading,
   setTabIndex,
-  set_number_of_copies,
-  set_gcode_name,
-  set_gcode_parts,
+  setNumberOfCopies,
+  set_gcodeNames,
+  set_gcodeParts,
   set_filename,
   set_status,
-  set_color_change,
-  setGcodeContinuousModal,
+  setChangeColorOnPrintRemoval,
+  openGcodeContinuousModal,
+  resetGcodeGenerator,
+  handleFiles,
+  closeGcodeGeneratorModal,
 } = dashboardPage.actions;
 export default dashboardPage.reducer;

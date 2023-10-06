@@ -5,14 +5,14 @@ import { API_Content } from "../../utils";
 import { parseGcode, readFile, remove_print, saveContinuousGcode } from "./gcodeContinuousHelper";
 
 function GcodeContinousPage() {
-  const [number_of_copies, set_number_of_copies] = useState(12);
-  const [gcode_name, set_gcode_name] = useState([]);
-  const [gcode_parts, set_gcode_parts] = useState({});
+  const [number_of_copies, setNumberOfCopies] = useState(12);
+  const [gcodeNames, set_gcodeNames] = useState([]);
+  const [gcodeParts, set_gcodeParts] = useState({});
 
   const [filename, set_filename] = useState("");
   const [status, set_status] = useState("");
   const [loading, set_loading] = useState(false);
-  const [color_change, set_color_change] = useState(false);
+  const [color_change, setChangeColorOnPrintRemoveal] = useState(false);
 
   const showFiles = async e => {
     e.preventDefault();
@@ -25,7 +25,7 @@ function GcodeContinousPage() {
       const { beginning_array, middle_array, ending_array } = parseGcode(text);
 
       const num = index + 1;
-      set_gcode_parts(parts => {
+      set_gcodeParts(parts => {
         return {
           ...parts,
           ["file_" + num]: {
@@ -37,41 +37,41 @@ function GcodeContinousPage() {
       });
 
       set_filename(document.getElementById("file").files[0].name);
-      set_gcode_name(name => {
+      set_gcodeNames(name => {
         return [...name, document.getElementById("file").files[index].name];
       });
     }
   };
 
-  const gcode_placer = async (gcode_array, number_of_copies) => {
-    const removePrintCode = remove_print(color_change);
+  const processGcode = async (gcode_array, number_of_copies) => {
+    const printRemovalGcode = remove_print(color_change);
     if (number_of_copies === 1) {
-      gcode_array = [...gcode_array, gcode_parts.file_1.middle_1, removePrintCode, gcode_parts.file_2.ending_2];
+      gcode_array = [...gcode_array, gcodeParts.file_1.middle_1, printRemovalGcode, gcodeParts.file_2.ending_2];
     } else if (number_of_copies === 2) {
       gcode_array = [
         ...gcode_array,
-        gcode_parts.file_1.middle_1,
-        removePrintCode,
-        gcode_parts.file_2.middle_2,
-        removePrintCode,
-        gcode_parts.file_2.ending_2,
+        gcodeParts.file_1.middle_1,
+        printRemovalGcode,
+        gcodeParts.file_2.middle_2,
+        printRemovalGcode,
+        gcodeParts.file_2.ending_2,
       ];
     } else if (number_of_copies > 2) {
       gcode_array = [
         ...gcode_array,
-        gcode_parts.file_1.middle_1,
-        removePrintCode,
-        gcode_parts.file_2.middle_2,
-        removePrintCode,
+        gcodeParts.file_1.middle_1,
+        printRemovalGcode,
+        gcodeParts.file_2.middle_2,
+        printRemovalGcode,
       ];
       for (let i = 2; i < number_of_copies; i++) {
         if (i % 2 === 0) {
-          gcode_array = [...gcode_array, gcode_parts.file_1.middle_1, removePrintCode];
+          gcode_array = [...gcode_array, gcodeParts.file_1.middle_1, printRemovalGcode];
         } else if (i % 2 === 1) {
-          gcode_array = [...gcode_array, gcode_parts.file_2.middle_2, removePrintCode];
+          gcode_array = [...gcode_array, gcodeParts.file_2.middle_2, printRemovalGcode];
         }
       }
-      gcode_array = [...gcode_array, gcode_parts.file_2.ending_2];
+      gcode_array = [...gcode_array, gcodeParts.file_2.ending_2];
     }
 
     const array = gcode_array.map(item => {
@@ -83,29 +83,29 @@ function GcodeContinousPage() {
     }
   };
 
-  const create_new_gcode = async e => {
+  const createNewGcode = async e => {
     e.preventDefault();
 
     set_loading(true);
-    let gcode_array = [gcode_parts.file_1.beginning_1];
-    gcode_placer(gcode_array, number_of_copies);
+    let gcode_array = [gcodeParts.file_1.beginning_1];
+    processGcode(gcode_array, number_of_copies);
     set_loading(false);
   };
   const create_cascade_gcode = async e => {
     e.preventDefault();
 
     set_loading(true);
-    let gcode_array = [gcode_parts.file_1.beginning_1];
+    let gcode_array = [gcodeParts.file_1.beginning_1];
     for (var i = 0; i <= number_of_copies; i += 2) {
-      gcode_placer(gcode_array, i);
+      processGcode(gcode_array, i);
     }
     set_loading(false);
   };
 
   const reset = () => {
     set_filename("");
-    set_gcode_name("");
-    set_gcode_parts({});
+    set_gcodeNames("");
+    set_gcodeParts({});
   };
 
   return (
@@ -121,7 +121,7 @@ function GcodeContinousPage() {
             <input className="btn primary" type="file" id="file" multiple onChange={e => showFiles(e)} />
           </label>
         </div>
-        {gcode_name.map(name => (
+        {gcodeNames.map(name => (
           <label className="form-item bg-secondary p-15px br-20px">{name}</label>
         ))}
 
@@ -131,7 +131,7 @@ function GcodeContinousPage() {
             type="number"
             className="w-50per"
             defaultValue={number_of_copies}
-            onChange={e => set_number_of_copies(e.target.value)}
+            onChange={e => setNumberOfCopies(e.target.value)}
           />
         </div>
         <div className="w-100per mb-2rem">
@@ -142,13 +142,13 @@ function GcodeContinousPage() {
             defaultChecked={color_change}
             id="color_change"
             onChange={e => {
-              set_color_change(e.target.checked);
+              setChangeColorOnPrintRemoveal(e.target.checked);
             }}
           />
         </div>
 
         <div className="form-item">
-          <GLButton variant="primary" className="w-100per" onClick={e => create_new_gcode(e)}>
+          <GLButton variant="primary" className="w-100per" onClick={e => createNewGcode(e)}>
             Make Continuous Gcode
           </GLButton>
         </div>

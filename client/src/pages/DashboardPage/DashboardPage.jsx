@@ -7,7 +7,7 @@ import { DatePicker } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
 import { AppBar, Paper, Tab, Tabs } from "@mui/material";
-import { setGcodeContinuousModal, setTabIndex } from "./dashboardSlice";
+import { openGcodeContinuousModal, setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
 import AffiliateEarnings from "./components/AffiliateEarnings";
@@ -17,7 +17,7 @@ import TotalsTable from "./components/TotalsTable";
 import AllProductRevenue from "./components/AllProductRevenue";
 import YearlyMonthlyProductRevenue from "./components/YearlyMonthlyProductRevenue";
 import SponsorCheckins from "./components/SponsorCheckins";
-import GcodeGeneratorModal from "./components/GcodeGeneratorModal";
+import GcodeGeneratorModal from "./components/GcodeGeneratorModal/GcodeGeneratorModal";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const DashboardPage = () => {
         <GLButton variant="primary" onClick={() => run_monthly_workers(dispatch)}>
           Run Monthly Workers
         </GLButton>
-        <GLButton variant="primary" onClick={() => dispatch(setGcodeContinuousModal(true))}>
+        <GLButton variant="primary" onClick={() => dispatch(openGcodeContinuousModal(true))}>
           Gcode Generater
         </GLButton>
       </div>

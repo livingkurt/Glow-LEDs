@@ -59,7 +59,7 @@ export const parseGcode = text => {
   return { beginning_array, middle_array, ending_array };
 };
 
-const update_filename = (filename, number_of_copies) => {
+const updateFilename = (filename, number_of_copies) => {
   const removed = filename.slice(4);
   const new_filename = `${number_of_copies}x ${removed}`;
 
@@ -67,7 +67,7 @@ const update_filename = (filename, number_of_copies) => {
 };
 
 export const saveContinuousGcode = ({ filename, gcode, number_of_copies }) => {
-  const newFilename = update_filename(filename, number_of_copies);
+  const newFilename = updateFilename(filename, number_of_copies);
   const blob = new Blob([gcode], { type: "text/plain" });
   const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
