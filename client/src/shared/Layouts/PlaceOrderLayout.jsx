@@ -1,8 +1,6 @@
-import { Box, Button, Grid } from "@mui/material";
-import Content from "../../layouts/Content";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowBack } from "@mui/icons-material";
 
 const PlaceOrderLayout = ({ children }) => {
   return (
