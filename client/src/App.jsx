@@ -22,6 +22,7 @@ import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
 import GLLoading from "./shared/GlowLEDsComponents/GLLoading/GLLoading";
 import GLLoginModal from "./shared/GlowLEDsComponents/GLLoginModal/GLLoginModal";
 import ProtectedRoute from "./shared/RouteComponents/ProtectedRoute";
+import MainLayout from "./shared/Layouts/MainLayout";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -68,20 +69,20 @@ const App = () => {
             <ScrollToTop>
               <Routes>
                 {privateRoutes.map((route, index) => {
-                  // console.log({ [route.element]: PrivateComponents[route.element] });
-
                   return (
                     <Route
                       key={index}
                       path={route.path}
                       exact={route.exact}
-                      element={<ProtectedRoute>{createElement(PrivateComponents[route.element])}</ProtectedRoute>}
+                      element={
+                        <ProtectedRoute>
+                          <MainLayout>{createElement(PrivateComponents[route.element])}</MainLayout>
+                        </ProtectedRoute>
+                      }
                     />
                   );
                 })}
                 {adminRoutes.map((route, index) => {
-                  // console.log({ [route.element]: AdminComponents[route.element] });
-
                   return (
                     <Route
                       key={index}
@@ -89,7 +90,7 @@ const App = () => {
                       exact={route.exact}
                       element={
                         <ProtectedRoute isAdminRoute={true}>
-                          {createElement(AdminComponents[route.element])}
+                          <MainLayout>{createElement(AdminComponents[route.element])}</MainLayout>
                         </ProtectedRoute>
                       }
                     />
@@ -98,14 +99,12 @@ const App = () => {
 
                 <Route path={"/"} exact={true} element={<HomePage />} />
                 {routes.map((route, index) => {
-                  // console.log({ [route.element]: Components[route.element] });
-
                   return (
                     <Route
                       key={index}
                       path={route.path}
                       exact={route.exact}
-                      element={createElement(Components[route.element])}
+                      element={<MainLayout>{createElement(Components[route.element])}</MainLayout>}
                     />
                   );
                 })}
