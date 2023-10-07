@@ -28,6 +28,7 @@ import {
   setShippingSaved,
   nextStep,
   setEmailValidations,
+  clearShippingRates,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
@@ -129,6 +130,7 @@ const ShippingStep = () => {
   };
 
   const submitShipping = () => {
+    dispatch(clearShippingRates());
     if (shipping && Object.keys(shipping).length > 0) {
       dispatch(setLoadingShipping(true));
       const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
