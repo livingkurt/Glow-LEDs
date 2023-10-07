@@ -1,11 +1,12 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import Content from "../../layouts/Content";
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowBack } from "@mui/icons-material";
 
 const PlaceOrderLayout = ({ children }) => {
   return (
-    <div className="place-order-content">
+    <div className="place-order-content fade_in">
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box display={"flex"} justifyContent={"center"}>
