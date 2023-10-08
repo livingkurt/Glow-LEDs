@@ -121,7 +121,7 @@ const ShippingChoice = () => {
               })}
             </div>
           )}
-          {shipping && !shipping.international && (
+          {shipping && !shipping.international && shipping_rates.rates && (
             <div>
               {normalizeDomesticRates(shipping_rates.rates).map((rate, index) => {
                 let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
