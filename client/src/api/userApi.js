@@ -8,8 +8,8 @@ import jwt_decode from "jwt-decode";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
-import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
-import { loginUpdateCartItems, updateCartItems } from "../helpers/userHelpers";
+import { handleTokenRefresh } from "./axiosInstance";
+import { loginUpdateCartItems } from "../helpers/userHelpers";
 
 export const getUsers = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -88,8 +88,6 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id, { disp
 export const registerUser = createAsyncThunk("users/registerUser", async (userData, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.post("/api/users/register", userData);
-    // axios.post("/api/emails/account_created", data);
-    // axios.post("/api/emails/verify", data);
     dispatch(showSuccess({ message: `User Registered` }));
     return data;
   } catch (error) {
@@ -157,13 +155,6 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
-export const refreshLogin = async (refresh_token, { dispatch, rejectWithValue }) => {
-  try {
-    return await axios.put("/api/users/refresh_login", { refresh_token });
-  } catch (error) {
-    dispatch(showError({ message: errorMessage(error) }));
-  }
-};
 
 export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData, { dispatch, rejectWithValue }) => {
   try {

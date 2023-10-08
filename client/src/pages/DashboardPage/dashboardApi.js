@@ -23,7 +23,6 @@ export const updateVersion = async () => {
 export const getEnvironment = createAsyncThunk("settings/getEnvironment", async () => {
   try {
     const { data } = await axios.get(`/api/settings/env`);
-    console.log({ data });
     return data;
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));

@@ -426,7 +426,6 @@ const placeOrder = createSlice({
       state.promo_code_validations = payload.errors.promo_code;
     },
     [API.getEnvironment.fulfilled]: (state, { payload }) => {
-      console.log({ payload });
       state.environment = payload.environment;
       state.database = payload.database;
     },

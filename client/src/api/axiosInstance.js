@@ -3,16 +3,6 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import jwt_decode from "jwt-decode";
 import store from "../store";
 import { set_current_user } from "../slices/userSlice";
-import * as API from "../api";
-
-export async function getFreshAccessToken(refresh_token) {
-  try {
-    const { data } = await API.refreshLogin(refresh_token);
-    return data.access_token;
-  } catch (error) {
-    throw error;
-  }
-}
 
 export function isTokenExpired(token) {
   try {
@@ -34,9 +24,10 @@ export const setAuthToken = accessToken => {
   }
 };
 
-export const refreshAccessToken = async refreshTokenValue => {
+export const refreshAccessToken = async refreshToken => {
   try {
-    const newAccessToken = await getFreshAccessToken(refreshTokenValue);
+    const { data } = await axios.put("/api/users/refresh_login", { refresh_token: refreshToken });
+    const newAccessToken = data.access_token;
     localStorage.setItem("accessToken", newAccessToken);
     setAuthToken(newAccessToken);
     const decoded = jwt_decode(newAccessToken);
@@ -57,22 +48,21 @@ export function setCurrentUser(accessToken) {
 }
 
 export async function handleTokenRefresh(forceRefresh = false) {
-  const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) {
+  const oldAccessToken = localStorage.getItem("accessToken");
+  if (!oldAccessToken) {
     return null; // <-- Redirect will occur in your route components
   }
 
-  const refreshTokenValue = localStorage.getItem("refreshToken"); // Get the refresh token from localStorage
-  if (!refreshTokenValue) return;
+  const refreshToken = localStorage.getItem("refreshToken"); // Get the refresh token from localStorage
+  if (!refreshToken) return;
 
-  if (isTokenExpired(accessToken) || forceRefresh) {
-    const newAccessToken = await refreshAccessToken(refreshTokenValue);
-    return newAccessToken || accessToken;
+  if (isTokenExpired(oldAccessToken) || forceRefresh) {
+    const newAccessToken = await refreshAccessToken(refreshToken);
+    return newAccessToken;
   } else {
-    const current_user = setCurrentUser(accessToken);
+    const current_user = setCurrentUser(oldAccessToken);
+    return oldAccessToken;
   }
-
-  return accessToken;
 }
 
 axios.interceptors.request.use(
