@@ -2,10 +2,11 @@
 
 describe("Place Order Flow", () => {
   it("should simulate a user going through the steps to place an order", () => {
-    cy.visit("/collections/all/tutorials");
-    cy.contains("button", "Shop").click();
-    cy.get(".product").contains("Batteries").click();
-    cy.get(".product").contains("Bulk CR2016 Batteries").click();
+    // cy.visit("/collections/all/tutorials");
+    // cy.contains("button", "Shop").click();
+    // cy.get(".product").contains("Batteries").click();
+    // cy.get(".product").contains("Bulk CR2016 Batteries").click();
+    cy.visit("/collections/all/products/double_chevron_decals");
     cy.contains("button", "Add To Cart").click();
 
     // // Check for the snackbar
@@ -13,7 +14,7 @@ describe("Place Order Flow", () => {
 
     // Check for the cart item
     cy.get(".cart_sidebar-list-container").within(() => {
-      cy.get("li").contains("Bulk CR2016 Batteries").should("exist");
+      cy.get("li").contains("Double Chevron Decals").should("exist");
     });
 
     cy.contains("button", "Proceed to Checkout").click();
