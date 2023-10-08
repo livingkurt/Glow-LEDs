@@ -25,11 +25,11 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        run: npm run cypress:run # Adjust this to your actual Cypress script
+        run: npm run cypress:run
 
       - name: Upload Cypress videos and screenshots as artifacts (optional)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-artifacts
-          path: cypress/videos, cypress/screenshots
+          path: client/cypress/videos, client/cypress/screenshots

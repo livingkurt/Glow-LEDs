@@ -22,6 +22,10 @@ const MenuPage = () => {
   const { contents } = contentPage;
 
   useEffect(() => {
+    dispatch(API.listContents({ limit: 3, active: true }));
+  }, []);
+
+  useEffect(() => {
     let clean = true;
     if (clean) {
       if (pathname === "featured") {
@@ -35,9 +39,9 @@ const MenuPage = () => {
       ) {
         set_items(contents[0]?.home_page?.slideshow);
       }
-      if (contents.length === 0) {
-        dispatch(API.listContents({ limit: 3, active: true }));
-      }
+
+      // if (contents.length === 0) {
+      // }
     }
     return () => (clean = false);
   }, [pathname]);

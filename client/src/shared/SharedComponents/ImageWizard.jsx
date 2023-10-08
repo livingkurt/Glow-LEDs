@@ -12,7 +12,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const [link, setLink] = useState("");
 
   function extractThumbs2Links(text) {
-    const regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.jpg/g;
+    const regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.(jpg|png)/g;
     return text.match(regex);
   }
 

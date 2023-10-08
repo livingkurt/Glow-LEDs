@@ -295,65 +295,67 @@ export const validate_change_password = ({ currentPassword, password, rePassword
   };
 };
 
-export const validate_shipping = data => {
+export const validate_shipping = ({
+  email,
+  first_name,
+  last_name,
+  address_1,
+  city,
+  state,
+  postalCode,
+  country,
+  international,
+}) => {
   let errors = {};
+
   // Convert empty fields to an empty string so we can use validator functions
-  data.email = !isEmpty(data.email) ? data.email : "";
-  data.first_name = !isEmpty(data.first_name) ? data.first_name : "";
-  data.last_name = !isEmpty(data.last_name) ? data.last_name : "";
-  data.address_1 = !isEmpty(data.address_1) ? data.address_1 : "";
-  data.city = !isEmpty(data.city) ? data.city : "";
-  data.state = !isEmpty(data.state) ? data.state : "";
-  data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : "";
-  data.country = !isEmpty(data.country) ? data.country : "";
-  // data.international = !isEmpty2(data.international) ? data.international : '';
+  email = !isEmpty(email) ? email : "";
+  first_name = !isEmpty(first_name) ? first_name : "";
+  last_name = !isEmpty(last_name) ? last_name : "";
+  address_1 = !isEmpty(address_1) ? address_1 : "";
+  city = !isEmpty(city) ? city : "";
+  state = !isEmpty(state) ? state : "";
+  postalCode = !isEmpty(postalCode) ? postalCode : "";
+  country = !isEmpty(country) ? country : "";
 
   // Email Name checks
-  if (data.hasOwnProperty("email")) {
-    if (isEmpty2(data.email)) {
-      errors.email = "Email field is required";
-    } else if (!isEmail(data.email)) {
-      errors.email = "Valid email required";
-    }
+  if (isEmpty2(email)) {
+    errors.email = "Email field is required";
+  } else if (!isEmail(email)) {
+    errors.email = "Valid email required";
   }
 
   // First Name checks
-  if (isEmpty2(data.first_name)) {
+  if (isEmpty2(first_name)) {
     errors.first_name = "First Name field is required";
   }
   // Last Name checks
-  if (isEmpty2(data.last_name)) {
+  if (isEmpty2(last_name)) {
     errors.last_name = "Last Name field is required";
   }
   // Address checks
-  if (isEmpty2(data.address_1)) {
+  if (isEmpty2(address_1)) {
     errors.address_1 = "Address field is required";
   }
   // City checks
-  if (isEmpty2(data.city)) {
+  if (isEmpty2(city)) {
     errors.city = "City field is required";
   }
   // State checks
-  if (isEmpty2(data.state)) {
+  if (isEmpty2(state)) {
     errors.state = "State field is required";
   }
-  // // Postal Code checks
-  // if (isEmpty2(data.postalCode)) {
-  // 	errors.postalCode = 'Postal Code field is required';
-  // }
-  // if (!data.international) {
-  // 	if (data.postalCode.toString().length < 5 || data.postalCode.toString().length > 5) {
-  // 		errors.postalCode = 'Postal Code must a valid Postal Code';
-  // 	}
-  // }
-
-  // // International checks
-  // if (isEmpty2(data.international)) {
-  // 	errors.international = 'Country field is required';
-  // }
-  if (data.international) {
+  // State checks
+  if (
+    (international && country.toLowerCase() === "us") ||
+    country.toLowerCase() === "united states" ||
+    country.toLowerCase() === "united states of america"
+  ) {
+    errors.country = "International option not available to United States";
+  }
+  if (international) {
     // Country checks
-    if (isEmpty2(data.country)) {
+    if (isEmpty2(country)) {
       errors.country = "Country field is required";
     }
   }
