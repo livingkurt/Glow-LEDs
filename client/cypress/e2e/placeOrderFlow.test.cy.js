@@ -6,14 +6,14 @@ describe("Place Order Flow", () => {
     // cy.contains("button", "Shop").click();
     // cy.get(".product").contains("Batteries").click();
     // cy.get(".product").contains("Bulk CR2016 Batteries").click();
-    cy.visit("/collections/all/products/2016_batteries");
-    cy.contains("button", "Add To Cart", { timeout: 20000 }).click();
+    cy.visit("/collections/all/products/double_chevron_decals");
+    cy.contains("button", "Add To Cart").click();
 
     // // Check for the snackbar
     // cy.get(".MuiAlert-message").should("contain", "Cart Item Added");
 
     // Check for the cart item
-    cy.get(".cart_sidebar-list-container", { timeout: 6000 }).within(() => {
+    cy.get(".cart_sidebar-list-container").within(() => {
       cy.get("li").contains("Bulk CR2016 Batteries").should("exist");
     });
 
