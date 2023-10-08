@@ -174,7 +174,6 @@ export default {
 
     if (isMatch) {
       const refreshToken = await getRefreshToken(user);
-      console.log({ login_users_s: refreshToken });
       return {
         _id: user.id,
         first_name: user.first_name,
@@ -284,60 +283,3 @@ export default {
       }
     }
   },
-  // checkemail_users_s: async (req, res) => {
-  // 	try {
-  //
-  // 		const user = await User.findOne({ email: req.body.email });
-  //
-  // 		if (user) {
-  // 			return res.status(400).send({ message: 'User Already Exists' });
-  // 		}
-  // 		// res.json({ message: "User Already Exists" })
-  // 		res.status(200).send({ message: 'No User Found' });
-  // 	} catch (error) {
-  //
-  // 		res.send(error);
-  // 	}
-  // },
-  // createadmin_users_s: async (req, res) => {
-  // 	try {
-  // 		const admin = new User({
-  // 			first_name: 'Kurt',
-  // 			last_name: 'LaVacque',
-  // 			email: 'lavacquek@icloud.com',
-  // 			password: 'admin',
-  // 			isVerified: true,
-  // 			isAdmin: true
-  // 		});
-  // 		const user = await User.findOne({ email: admin.email }).populate('affiliate');
-  // 		if (user) {
-  // 			return res.status(400).send({ message: 'Email already exists' });
-  // 		} else {
-  // 			bcrypt.genSalt(10, (err, salt) => {
-  // 				bcrypt.hash(admin.password, salt, async (err, hash) => {
-  // 					if (err) throw err;
-  // 					admin.password = hash;
-  // 					await admin.save();
-  // 					res.json({
-  // 						_id: admin.id,
-  // 						first_name: admin.first_name,
-  // 						last_name: admin.last_name,
-  // 						email: admin.email,
-  // 						affiliate: admin.affiliate,
-  // 						cart: admin.cart,
-  // 						is_affiliated: admin.is_affiliated,
-  // 						email_subscription: admin.email_subscription,
-  // 						isAdmin: admin.isAdmin,
-  // 						isVerified: admin.isVerified,
-  // 						shipping: admin.shipping,
-  // 						token: getAccessToken(admin)
-  // 					});
-  // 				});
-  // 			});
-  // 		}
-  // 	} catch (error) {
-  //
-  // 		res.send(error);
-  // 	}
-  // }
-};

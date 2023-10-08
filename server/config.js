@@ -32,6 +32,8 @@ const config = {
   // Local Authorization
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+  RESET_PASSWORD_TOKEN_SECRET: process.env.RESET_PASSWORD_TOKEN_SECRET,
+  VERIFY_USER_TOKEN_SECRET: process.env.VERIFY_USER_TOKEN_SECRET,
 
   // Sign in with Google
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
