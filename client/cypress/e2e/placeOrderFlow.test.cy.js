@@ -2,10 +2,11 @@
 
 describe("Place Order Flow", () => {
   it("should simulate a user going through the steps to place an order", () => {
-    cy.visit("/collections/all/tutorials");
-    cy.contains("button", "Shop").click();
-    cy.get(".product").contains("Batteries").click();
-    cy.get(".product").contains("Bulk CR2016 Batteries").click();
+    // cy.visit("/collections/all/tutorials");
+    // cy.contains("button", "Shop").click();
+    // cy.get(".product").contains("Batteries").click();
+    // cy.get(".product").contains("Bulk CR2016 Batteries").click();
+    cy.visit("/collections/all/products/2016_batteries");
     cy.contains("button", "Add To Cart", { timeout: 6000 }).click();
 
     // // Check for the snackbar
