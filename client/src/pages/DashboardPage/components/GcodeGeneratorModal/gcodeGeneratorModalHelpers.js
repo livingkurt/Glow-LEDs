@@ -45,7 +45,7 @@ export const parseGcode = text => {
 
   let endingArray = [];
   let endingBoolean = true;
-  for (let i = gcode.length - 1; i >= gcode.length - 300; i--) {
+  for (let i = gcode.length - 1; i >= gcode.length - 1000; i--) {
     if (gcode[i] === "G4 ; wait") {
       endingArray = [...endingArray, "G4 ; wait"];
       endingBoolean = false;
@@ -76,40 +76,35 @@ export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
 };
 
 export const combineGcode = ({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval }) => {
-  let gcodeArray = [gcodeParts.firstFile.beginning_1];
+  let gcodeArray = [gcodeParts.file_1.beginning_1];
   const printRemovalGcode = removePrint(changeColorOnPrintRemoval);
   if (numberOfCopies === 1) {
-    gcodeArray = [
-      ...gcodeArray,
-      gcodeParts.firstFile.firstMiddle,
-      printRemovalGcode,
-      gcodeParts.secondFile.secondending,
-    ];
+    gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode, gcodeParts.file_2.ending_2];
   } else if (numberOfCopies === 2) {
     gcodeArray = [
       ...gcodeArray,
-      gcodeParts.firstFile.firstMiddle,
+      gcodeParts.file_1.middle_1,
       printRemovalGcode,
-      gcodeParts.secondFile.secondMiddle,
+      gcodeParts.file_2.middle_2,
       printRemovalGcode,
-      gcodeParts.secondFile.secondending,
+      gcodeParts.file_2.ending_2,
     ];
   } else if (numberOfCopies > 2) {
     gcodeArray = [
       ...gcodeArray,
-      gcodeParts.firstFile.firstMiddle,
+      gcodeParts.file_1.middle_1,
       printRemovalGcode,
-      gcodeParts.secondFile.secondMiddle,
+      gcodeParts.file_2.middle_2,
       printRemovalGcode,
     ];
     for (let i = 2; i < numberOfCopies; i++) {
       if (i % 2 === 0) {
-        gcodeArray = [...gcodeArray, gcodeParts.firstFile.firstMiddle, printRemovalGcode];
+        gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode];
       } else if (i % 2 === 1) {
-        gcodeArray = [...gcodeArray, gcodeParts.secondFile.secondMiddle, printRemovalGcode];
+        gcodeArray = [...gcodeArray, gcodeParts.file_2.middle_2, printRemovalGcode];
       }
     }
-    gcodeArray = [...gcodeArray, gcodeParts.secondFile.secondending];
+    gcodeArray = [...gcodeArray, gcodeParts.file_2.ending_2];
   }
 
   const array = gcodeArray.map(item => {
