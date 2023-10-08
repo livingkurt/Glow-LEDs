@@ -14,7 +14,7 @@ describe("Place Order Flow", () => {
 
     // Check for the cart item
     cy.get(".cart_sidebar-list-container").within(() => {
-      cy.get("li").contains("Bulk CR2016 Batteries").should("exist");
+      cy.get("li").contains("Double Chevron Decals").should("exist");
     });
 
     cy.contains("button", "Proceed to Checkout").click();
