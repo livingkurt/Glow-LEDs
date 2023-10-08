@@ -58,7 +58,7 @@
     "eject": "react-scripts eject",
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --browser chrome --headed"
   },
   "eslintConfig": {
     "extends": [
@@ -91,7 +91,7 @@
     "child-process": "^1.0.2",
     "crypto-browserify": "^3.12.0",
     "customize-cra": "^1.0.0",
-    "cypress": "^13.2.0",
+    "cypress": "^13.3.0",
     "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-cypress": "^2.15.1",
