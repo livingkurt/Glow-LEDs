@@ -208,10 +208,10 @@ export default {
       if (user) {
         // Generate the access token here
         const access_token = getAccessToken(user);
+        console.log({ login_users_c: user.refresh_token });
         return res.status(200).send({
           success: true,
           access_token: access_token,
-          // Include the refresh_token in the response
           refresh_token: user.refresh_token,
         });
       }
@@ -220,26 +220,6 @@ export default {
     }
   },
 
-  login_as_user_users_c: async (req, res) => {
-    const { body } = req;
-    try {
-      const user = await user_services.login_as_user_users_s(body.email);
-      //
-      if (user) {
-        // Generate the access token here
-        const access_token = getAccessToken(user);
-        return res.status(200).send({
-          success: true,
-          access_token: access_token,
-          // Include the refresh_token in the response
-          refresh_token: user.refresh_token,
-        });
-      }
-      return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   refresh_login_users_c: async (req, res) => {
     try {
       // get refreshToken
@@ -265,6 +245,7 @@ export default {
           return res.status(200).send({
             success: true,
             access_token: access_token,
+            refresh_token: user.refresh_token,
           });
         }
       }
@@ -273,6 +254,26 @@ export default {
     }
   },
 
+  login_as_user_users_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const user = await user_services.login_as_user_users_s(body.email);
+      //
+      if (user) {
+        // Generate the access token here
+        const access_token = getAccessToken(user);
+        return res.status(200).send({
+          success: true,
+          access_token: access_token,
+          // Include the refresh_token in the response
+          refresh_token: user.refresh_token,
+        });
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   logout_users_c: async (req, res) => {
     try {
       //delete the refresh token saved in database:

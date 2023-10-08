@@ -33,12 +33,14 @@ export const isAuth = async (req, res, next) => {
         if (err.name === "TokenExpiredError") {
           // const refresh_token = req.body.refresh_token; // Or from wherever you keep it
           const refresh_token = req.headers["refresh-token"] || req.headers["Refresh-Token"];
+          console.log({ refresh_token, token });
 
           if (!refresh_token) {
             return res.status(403).send({ message: "Access denied, refresh token missing!" });
           }
 
-          const tokenDoc = await Token.findOne({ token: refresh_token });
+          const tokenDoc = await Token.findOne({ token: token });
+          console.log({ tokenDoc });
           if (!tokenDoc) {
             return res.status(401).send({ message: "Token expired!" });
           }

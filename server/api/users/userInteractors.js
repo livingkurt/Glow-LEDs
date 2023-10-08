@@ -20,7 +20,8 @@ export const getAccessToken = user => {
     },
     config.ACCESS_TOKEN_SECRET || "",
     {
-      expiresIn: "1hr",
+      expiresIn: "5000",
+      // expiresIn: "1hr",
     }
   );
 };
@@ -46,7 +47,8 @@ export const getRefreshToken = async user => {
         expiresIn: "30d",
       }
     );
-    await Token.create({ user: user._id, token: refreshToken });
+    const newToken = await Token.create({ user: user._id, token: refreshToken });
+    console.log({ newToken });
 
     return refreshToken;
   } catch (error) {

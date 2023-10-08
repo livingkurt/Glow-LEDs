@@ -121,16 +121,6 @@ export default {
       }
     }
   },
-  create_token_users_db: async token => {
-    try {
-      // return await Token.create(token);
-      return "";
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   update_users_db: async (id, body) => {
     try {
       const user = await User.findOne({ _id: id });

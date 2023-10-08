@@ -173,6 +173,8 @@ export default {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
+      const refreshToken = await getRefreshToken(user);
+      console.log({ login_users_s: refreshToken });
       return {
         _id: user.id,
         first_name: user.first_name,
@@ -186,31 +188,13 @@ export default {
         shipping: user.shipping,
         isWholesaler: user.isWholesaler,
         wholesaler: user.wholesaler,
-        refresh_token: await getRefreshToken(user),
+        refresh_token: refreshToken,
       };
     } else {
       throw new Error("Invalid Credentials");
     }
   },
-  login_as_user_users_s: async email => {
-    const user = await user_db.findByEmail_users_db(email);
 
-    return {
-      _id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      affiliate: user.affiliate,
-      email_subscription: user.email_subscription,
-      is_affiliated: user.is_affiliated,
-      isVerified: user.isVerified,
-      isAdmin: user.isAdmin,
-      shipping: user.shipping,
-      isWholesaler: user.isWholesaler,
-      wholesaler: user.wholesaler,
-      refresh_token: await getRefreshToken(user),
-    };
-  },
   refresh_login_users_s: async email => {
     const user = await user_db.findByEmail_users_db(email);
 
@@ -235,7 +219,25 @@ export default {
       refresh_token: existingToken?.token,
     };
   },
+  login_as_user_users_s: async email => {
+    const user = await user_db.findByEmail_users_db(email);
 
+    return {
+      _id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      affiliate: user.affiliate,
+      email_subscription: user.email_subscription,
+      is_affiliated: user.is_affiliated,
+      isVerified: user.isVerified,
+      isAdmin: user.isAdmin,
+      shipping: user.shipping,
+      isWholesaler: user.isWholesaler,
+      wholesaler: user.wholesaler,
+      refresh_token: await getRefreshToken(user),
+    };
+  },
   check_password_s: async (params, body) => {
     try {
       const user = await user_db.findById_users_db(params.id);
