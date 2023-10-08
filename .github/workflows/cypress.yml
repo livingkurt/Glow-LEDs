@@ -1,4 +1,5 @@
 name: Cypress Tests
+
 on:
   push:
     branches:
@@ -24,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        run: npx cypress run
+        run: npm run cypress:run # Adjust this to your actual Cypress script
 
       - name: Upload Cypress videos and screenshots as artifacts (optional)
         if: always()
