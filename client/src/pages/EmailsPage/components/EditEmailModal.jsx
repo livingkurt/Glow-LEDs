@@ -43,7 +43,7 @@ const EditEmailModal = () => {
           dispatch(set_edit_email_modal(false));
         }}
         onAction={() => {
-          dispatch(API.sendAnnouncement({ template, subject: email.subject, test }));
+          dispatch(API.sendAnnouncement({ template, subject: email.subject, test: testEmail }));
         }}
         maxWidth="xl"
         title={"Edit Email"}

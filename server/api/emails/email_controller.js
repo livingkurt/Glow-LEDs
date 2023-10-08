@@ -465,6 +465,7 @@ export default {
 
   send_announcement_emails_c: async (req, res) => {
     const { template, subject, test, time } = req.body;
+    console.log({ template, subject, test, time });
     const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const email = await email_db.findById_emails_db(template._id);
     // const all_emails = subscribed_users.map((user) => user.email);
