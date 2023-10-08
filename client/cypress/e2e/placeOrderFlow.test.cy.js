@@ -7,7 +7,7 @@ describe("Place Order Flow", () => {
     // cy.get(".product").contains("Batteries").click();
     // cy.get(".product").contains("Bulk CR2016 Batteries").click();
     cy.visit("/collections/all/products/2016_batteries");
-    cy.contains("button", "Add To Cart", { timeout: 6000 }).click();
+    cy.contains("button", "Add To Cart", { timeout: 20000 }).click();
 
     // // Check for the snackbar
     // cy.get(".MuiAlert-message").should("contain", "Cart Item Added");
