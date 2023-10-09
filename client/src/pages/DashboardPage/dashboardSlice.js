@@ -73,8 +73,8 @@ const dashboardPage = createSlice({
       state.gcodeNames = [];
       state.gcodeParts = {};
     },
-    handleFiles: (state, action) => {
-      const { files } = action.payload;
+    handleFiles: (state, { payload }) => {
+      const { files } = payload;
       for (let index = 0; index < files.length; index++) {
         const num = index + 1;
         const { beginningArray, middle_array, endingArray } = files[index];

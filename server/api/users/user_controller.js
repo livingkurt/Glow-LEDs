@@ -173,7 +173,7 @@ export default {
   verify_users_c: async (req, res) => {
     try {
       const { token } = req.params;
-      const { userId } = jwt.verify(token, "secret");
+      const { userId } = jwt.verify(token, config.VERIFY_USER_TOKEN_SECRET);
 
       await User.updateOne({ _id: userId }, { isVerified: true });
       const user = await User.findById(userId);
@@ -211,7 +211,6 @@ export default {
         return res.status(200).send({
           success: true,
           access_token: access_token,
-          // Include the refresh_token in the response
           refresh_token: user.refresh_token,
         });
       }
@@ -220,26 +219,6 @@ export default {
     }
   },
 
-  login_as_user_users_c: async (req, res) => {
-    const { body } = req;
-    try {
-      const user = await user_services.login_as_user_users_s(body.email);
-      //
-      if (user) {
-        // Generate the access token here
-        const access_token = getAccessToken(user);
-        return res.status(200).send({
-          success: true,
-          access_token: access_token,
-          // Include the refresh_token in the response
-          refresh_token: user.refresh_token,
-        });
-      }
-      return res.status(404).send({ message: "User Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   refresh_login_users_c: async (req, res) => {
     try {
       // get refreshToken
@@ -265,6 +244,7 @@ export default {
           return res.status(200).send({
             success: true,
             access_token: access_token,
+            refresh_token: user.refresh_token,
           });
         }
       }
@@ -273,6 +253,26 @@ export default {
     }
   },
 
+  login_as_user_users_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const user = await user_services.login_as_user_users_s(body.email);
+      //
+      if (user) {
+        // Generate the access token here
+        const access_token = getAccessToken(user);
+        return res.status(200).send({
+          success: true,
+          access_token: access_token,
+          // Include the refresh_token in the response
+          refresh_token: user.refresh_token,
+        });
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   logout_users_c: async (req, res) => {
     try {
       //delete the refresh token saved in database:
@@ -281,19 +281,16 @@ export default {
       await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error, message: "Internal Server Error!" });
     }
   },
 
   reset_password_users_c: async (req, res) => {
     const { token, password } = req.body;
-    console.log({ token, password });
     try {
       // Decoding token to get email
-      const decoded = jwt.verify(token, "yourSecretKey");
+      const decoded = jwt.verify(token, config.RESET_PASSWORD_TOKEN_SECRET);
       const user = await user_db.findByEmail_users_db(decoded.email);
-      console.log({ user });
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -365,12 +362,10 @@ export default {
   generate_password_reset_token_users_c: async (req, res) => {
     const { email, currentPassword } = req.body;
 
-    console.log({ currentPassword, email });
     try {
       const user = await user_db.findByEmail_users_db(email);
 
       const isMatch = await bcrypt.compare(currentPassword, user.password);
-      console.log({ isMatch, currentPassword, password: user.password });
 
       if (isMatch) {
         const token = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });

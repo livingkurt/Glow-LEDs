@@ -30,7 +30,6 @@ const GcodeGeneratorModal = () => {
       const parsed = parseGcode(text);
       parsedFiles.push(parsed);
     }
-
     dispatch(handleFiles({ files: parsedFiles }));
   };
 
