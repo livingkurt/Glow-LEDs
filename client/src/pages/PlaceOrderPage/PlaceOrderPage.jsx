@@ -14,6 +14,9 @@ import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
 import * as API from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
 import { setLoadingPayment } from "../../slices/orderSlice";
+import { Link } from "react-router-dom";
+import { Box, Button, Fade } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -133,7 +136,27 @@ const PlaceOrderPage = () => {
         <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
         <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
       </Helmet>
-      <CheckoutSteps success={success} show_payment={show_payment} shipping_completed={shipping_completed} />
+      <Box display={"flex"} justifyContent={"space-between"} wrap pl={2} pr={2}>
+        <div>
+          <Button
+            aria-label="Back"
+            style={{ color: "#fff" }}
+            onClick={() => navigate("/pages/menu/gloving")}
+            startIcon={<ArrowBack />}
+          >
+            <div className="mt-3px">Back to Shopping</div>
+          </Button>
+        </div>
+        {width > 960 && (
+          <CheckoutSteps success={success} show_payment={show_payment} shipping_completed={shipping_completed} />
+        )}
+        {width > 960 && (
+          <Button aria-label="Back" variant="contained" startIcon={<ArrowBack />} style={{ visibility: "hidden" }}>
+            Back to Shopping
+          </Button>
+        )}
+      </Box>
+
       <LoadingPayments />
       <LoadingShipping />
       <div className="placeorder">
