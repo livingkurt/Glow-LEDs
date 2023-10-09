@@ -12,8 +12,6 @@ const SponsorMonthlyCheckinModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
-  console.log({ month, year });
-
   useEffect(() => {
     if (user?.affiliate) {
       const checkin = user?.affiliate?.sponsorMonthlyCheckins?.find(

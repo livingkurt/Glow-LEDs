@@ -122,8 +122,8 @@ export default {
           type: "account_onboarding",
         });
         console.log({ accountLink });
+        return { newAffiliate, accountLink };
       }
-      return { newAffiliate, accountLink };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

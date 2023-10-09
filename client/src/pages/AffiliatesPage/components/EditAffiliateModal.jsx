@@ -95,7 +95,6 @@ const EditAffiliateModal = () => {
                   profile: location.pathname === "/secure/account/profile",
                 })
               );
-              dispatch(setCreateAffiliateStep(1));
             }
           }}
           onCancel={() => {
@@ -122,6 +121,9 @@ const EditAffiliateModal = () => {
               loading={loading && loading_users && loading_products && loading_chips && loading_promos}
             />
           )}
+          {/* {createAffiliateStep === 1 && (
+
+          )} */}
         </GLStepperModal>
       )}
     </div>
