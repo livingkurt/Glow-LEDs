@@ -143,7 +143,7 @@ export const orderFormFields = ({ users, products, promos }) => {
       label: "Promp Code",
       options: promos,
       getOptionLabel: option => option.promo_code,
-      getOptionSelected: option => option,
+      isOptionEqualToValue: option => option,
       labelProp: "promo_code",
       valueAttribute: "promo_code",
     },

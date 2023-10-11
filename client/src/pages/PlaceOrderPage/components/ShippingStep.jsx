@@ -218,7 +218,7 @@ const ShippingStep = () => {
                     options={all_shipping.isLoading ? [] : all_shipping.data}
                     getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                     optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
-                    getOptionSelected={(option, value) => option.uniqueKey === value.uniqueKey}
+                    isOptionEqualToValue={(option, value) => option.uniqueKey === value.uniqueKey}
                     name={"product"}
                     label={"Choose Shipping"}
                     onChange={(event, newValue) => {

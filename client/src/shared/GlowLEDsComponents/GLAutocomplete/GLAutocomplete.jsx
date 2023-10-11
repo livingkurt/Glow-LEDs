@@ -15,7 +15,6 @@ const GLAutocomplete = ({
   value,
   options,
   getOptionLabel,
-  getOptionSelected,
   helperText,
   label,
   variant,
@@ -43,6 +42,7 @@ const GLAutocomplete = ({
   margin,
   optionDisplay,
   customClasses,
+  isOptionEqualToValue,
   ...otherProps
 }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
@@ -62,14 +62,14 @@ const GLAutocomplete = ({
           onInputChange={onInputChange}
           options={options}
           getOptionLabel={option => (option ? getOptionLabel(option) || "" : "")}
-          getOptionSelected={(option, val) => (option && val ? getOptionSelected(option, val) : false)}
+          isOptionEqualToValue={(option, val) => (option && val ? isOptionEqualToValue(option, val) : false)}
           getOptionDisabled={option => {
             if (!option) return false;
             if (getOptionDisabled) return getOptionDisabled(option);
             if (chipsOptionsDisabled) return chipsOptionsDisabled(option);
             return false;
           }}
-          {...otherProps}
+          // {...otherProps}
           renderInput={params => (
             <TextField
               {...params}
@@ -159,10 +159,10 @@ GLAutocomplete.defaultProps = {
   value: [],
   options: [],
   getOptionLabel: option => (option ? option.name : ""),
-  getOptionSelected: (option, value) => option === value,
   getOptionDisabled: x => x,
   restrictCharacters: x => x,
   onInputChange: x => x,
+  isOptionEqualToValue: x => x,
   helperText: "",
   label: "",
   variant: "outlined",
@@ -192,7 +192,6 @@ GLAutocomplete.propTypes = {
   value: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string, PropTypes.number]),
   options: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   getOptionLabel: PropTypes.func,
-  getOptionSelected: PropTypes.func,
   restrictCharacters: PropTypes.func,
   getOptionDisabled: PropTypes.func,
   onInputChange: PropTypes.func,
@@ -208,6 +207,7 @@ GLAutocomplete.propTypes = {
   classes: PropTypes.object,
   inputColor: PropTypes.string,
   chipColor: PropTypes.func,
+  isOptionEqualToValue: PropTypes.func,
   inputType: PropTypes.string,
   limitTags: PropTypes.number,
   inputPropsTextField: PropTypes.object,

@@ -41,7 +41,7 @@ const YearlyMonthlyProductRevenue = ({
             }
             getOptionLabel={option => (option ? option.name : "")}
             optionDisplay={option => (option ? option.name : "")}
-            getOptionSelected={(option, value) => option._id === value._id}
+            isOptionEqualToValue={(option, value) => option._id === value._id}
             name={"product"}
             label={"Choose Product"}
             onChange={(event, value) => dispatch(set_product(value))}

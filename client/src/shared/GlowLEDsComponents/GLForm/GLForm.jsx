@@ -76,9 +76,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   key={fieldName}
                   autoComplete="new-password"
                   customClasses={classes}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.short_name === value.short_name;
-                  }}
+                  // isOptionEqualToValue={(option, value) => {
+                  //   return option.short_name === value.short_name;
+                  // }}
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
@@ -95,9 +95,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   optionDisplay={option =>
                     fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
                   }
-                  getOptionSelected={(option, value) =>
-                    fieldData.getOptionSelected ? fieldData.getOptionLabel(option) : option._id === value._id
-                  }
+                  isOptionEqualToValue={fieldData.isOptionEqualToValue}
                   name={fieldName}
                   label={fieldData.label}
                   onChange={(event, value) => {
@@ -134,7 +132,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   optionDisplay={option =>
                     fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
                   }
-                  getOptionSelected={(option, value) => option._id === value._id}
+                  isOptionEqualToValue={(option, value) => option._id === value._id}
                   fieldName={fieldName}
                   labelProp={fieldData.labelProp}
                   label={fieldData.label}
@@ -225,7 +223,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={fieldState || ""}
+                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
@@ -257,7 +255,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={fieldState || ""}
+                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
@@ -290,11 +288,13 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={formattedDate || ""}
+                  value={formattedDate !== null && formattedDate !== undefined ? formattedDate : ""}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "text_multiline":
+              console.log("fieldState type:", typeof fieldState, "Value:", fieldState);
+
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
@@ -323,13 +323,13 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   label={fieldData.label}
                   multiline
                   variant="outlined"
-                  value={fieldState || ""}
+                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "object":
               return (
-                <Paper className="p-10px mv-10px">
+                <Paper className="p-10px mv-10px" key={fieldName}>
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
@@ -348,6 +348,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "array":
               return (
                 <GLArray
+                  key={fieldName}
                   fieldName={fieldName}
                   fieldState={fieldState}
                   fieldData={fieldData}
@@ -361,6 +362,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "color_picker":
               return (
                 <GLColorPicker
+                  key={fieldName}
                   fieldName={fieldName}
                   fieldState={fieldState}
                   fieldData={fieldData}

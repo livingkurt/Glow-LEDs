@@ -88,7 +88,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
             options={years}
             optionDisplay={option => option}
             getOptionLabel={option => option}
-            getOptionSelected={(option, value) => option === value}
+            isOptionEqualToValue={(option, value) => option === value}
             name="year"
             label="Year"
             onChange={(e, value) => handleYearChange(value)}
@@ -101,7 +101,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
             options={months}
             optionDisplay={option => option}
             getOptionLabel={option => option}
-            getOptionSelected={(option, value) => option === value}
+            isOptionEqualToValue={(option, value) => option === value}
             name="month"
             label="Month"
             onChange={(e, value) => handleMonthChange(value)}
