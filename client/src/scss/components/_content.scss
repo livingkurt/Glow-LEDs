@@ -1,31 +1,42 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .content {
-	background-color: $theme_color_dark;
-	box-shadow: $bs_deep;
-	background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
-	border-radius: 20px;
-	margin: 20px auto;
-	padding: 2rem;
-	min-height: 65vh;
-	max-width: 1500px;
+  background-color: $theme_color_dark;
+  box-shadow: $bs_deep;
+  background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
+  border-radius: 20px;
+  margin: 20px auto;
+  padding: 2rem;
+  min-height: 65vh;
+  max-width: 1500px;
+}
+
+.place-order-content {
+  background-color: $theme_color_dark;
+  box-shadow: $bs_deep;
+  background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
+  // border-radius: 20px;
+  // margin: 20px auto;
+  padding: 2rem;
+  min-height: 100vh;
+  max-width: 100%;
 }
 
 .content_wide {
-	background-color: $theme_color_dark;
-	box-shadow: $bs_deep;
-	background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
-	border-radius: 20px;
-	margin: 20px auto;
-	padding: 2rem;
-	min-height: 65vh;
-	// max-width: 1500px;
-	width: 100%;
+  background-color: $theme_color_dark;
+  box-shadow: $bs_deep;
+  background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
+  border-radius: 20px;
+  margin: 20px auto;
+  padding: 2rem;
+  min-height: 65vh;
+  // max-width: 1500px;
+  width: 100%;
 }
 
 .inner_content {
-	font-family: $paragraph_font;
-	li {
-		margin: 10px 0;
-	}
+  font-family: $paragraph_font;
+  li {
+    margin: 10px 0;
+  }
 }

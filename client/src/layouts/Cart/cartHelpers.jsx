@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { set_success } from "../../slices/cartSlice";
 import { clear_order_state } from "../../slices/orderSlice";
 import { decide_warning, determine_total } from "../../utils/helper_functions";
+import { setLoadingPlaceOrderPage } from "../../pages/PlaceOrderPage/placeOrderSlice";
 
 export const useOutsideAlerter = (ref, dispatch) => {
   useEffect(() => {
@@ -24,13 +25,17 @@ export const useOutsideAlerter = (ref, dispatch) => {
 
 export const checkoutHandler = (dispatch, navigate, current_user, closeMenu) => {
   dispatch(clear_order_state());
+  // dispatch(setLoadingPlaceOrderPage(true));
 
+  // dispatch(setLoadingPlaceOrderPage(false));
   if (current_user.hasOwnProperty("first_name")) {
     navigate("/secure/checkout/placeorder");
   } else {
     navigate("/checkout/placeorder");
   }
   closeMenu();
+  // setTimeout(() => {
+  // }, 2000);
 };
 
 export const determine_wholesale_proceed = (current_user, cartItems) => {
