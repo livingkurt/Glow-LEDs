@@ -52,7 +52,7 @@ const GLAutocomplete = ({
       {loading ? (
         <Autocomplete
           disabled={disabled}
-          value={value}
+          value={value || null}
           size="small"
           color={inputColor}
           freeSolo={freeSolo}
@@ -61,9 +61,14 @@ const GLAutocomplete = ({
           multiple={multiple}
           onInputChange={onInputChange}
           options={options}
-          getOptionLabel={getOptionLabel}
-          getOptionSelected={getOptionSelected}
-          getOptionDisabled={chipsOptionsDisabled}
+          getOptionLabel={option => (option ? getOptionLabel(option) || "" : "")}
+          getOptionSelected={(option, val) => (option && val ? getOptionSelected(option, val) : false)}
+          getOptionDisabled={option => {
+            if (!option) return false;
+            if (getOptionDisabled) return getOptionDisabled(option);
+            if (chipsOptionsDisabled) return chipsOptionsDisabled(option);
+            return false;
+          }}
           {...otherProps}
           renderInput={params => (
             <TextField
@@ -199,7 +204,7 @@ GLAutocomplete.propTypes = {
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
   margin: PropTypes.string,
-  error: PropTypes.array,
+  error: PropTypes.bool,
   classes: PropTypes.object,
   inputColor: PropTypes.string,
   chipColor: PropTypes.func,

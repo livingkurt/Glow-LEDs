@@ -74,21 +74,25 @@ const GLPopper = ({
   return (
     <div>
       <MuiPopper
-        open={open}
+        open={open || false}
         anchorEl={anchorEl}
         placement={placement}
         disablePortal={false}
         className={classNames(classes.popper, popperClasses)}
         transition={transition}
-        modifiers={{
-          flip: {
+        modifiers={[
+          {
+            name: "flip",
             enabled: flip,
           },
-          preventOverflow: {
+          {
+            name: "preventOverflow",
             enabled: true,
-            boundariesElement,
+            options: {
+              boundariesElement,
+            },
           },
-        }}
+        ]}
       >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} timeout={350} style={{ transformOrigin: "0 0 0" }}>

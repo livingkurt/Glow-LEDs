@@ -1,19 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  Checkbox,
-  ClickAwayListener,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Paper,
-  Skeleton,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, Paper, Skeleton, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -23,11 +8,10 @@ import ImageWizard from "../../SharedComponents/ImageWizard";
 import { determine_shown_fields, formatDate, getEmptyObjectFromSchema, getValueByStringPath } from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
-import { SketchPicker } from "react-color";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import { ArrowBack, ArrowForward, Close, FileCopy } from "@mui/icons-material";
-import GLTabPanel from "../GLTabPanel/GLTabPanel";
+import GLColorPicker from "./components/GLColorPicker";
+import GLArray from "./components/GLArray";
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -363,188 +347,27 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "array":
               return (
-                <Paper className="p-10px mv-10px">
-                  <Typography component="h6" variant="h6" className="ta-c mb-15px">
-                    {fieldData.title}
-                  </Typography>
-                  <Paper style={{ backgroundColor: "#4e5061" }}>
-                    <AppBar position="sticky" color="transparent">
-                      <Tabs
-                        variant="scrollable"
-                        value={tabIndex}
-                        style={{ color: "lightgray" }}
-                        TabIndicatorProps={{ style: { backgroundColor: "white" } }}
-                        onChange={(event, newValue) => {
-                          setTabIndex(newValue);
-                        }}
-                      >
-                        {fieldState.length > 0 &&
-                          fieldState.map((item, index) => (
-                            <Tab
-                              value={index}
-                              label={
-                                typeof fieldData.label === "function" ? fieldData.label(item) : item[fieldData.label]
-                              }
-                              style={{ color: tabIndex === index ? "white" : "lightgray" }}
-                            />
-                          ))}
-                      </Tabs>
-                    </AppBar>
-                  </Paper>
-                  <Box sx={{ m: 3 }} />
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={() => {
-                      const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
-                      const newArray = [...fieldState, { ...emptyItem }];
-                      onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
-                      setTabIndex(newArray.length - 1);
-                    }}
-                  >
-                    Add Item
-                  </Button>
-                  <Box sx={{ m: 3 }} />
-                  {fieldState.length > 0 &&
-                    fieldState.map((item, index) => (
-                      <GLTabPanel value={tabIndex} index={index}>
-                        <IconButton
-                          color="secondary"
-                          onClick={() => {
-                            const newArray = [...fieldState];
-                            newArray.splice(index, 1);
-                            onChange({ [fieldName]: newArray }, "delete", index);
-                            setTabIndex(prevIndex => {
-                              if (prevIndex === newArray.length) {
-                                return newArray.length - 1;
-                              }
-                              return prevIndex > index ? prevIndex - 1 : prevIndex;
-                            });
-                          }}
-                        >
-                          <Close />
-                        </IconButton>
-                        <IconButton
-                          color="primary"
-                          onClick={() => {
-                            if (index > 0) {
-                              const newArray = [...fieldState];
-                              [newArray[index - 1], newArray[index]] = [newArray[index], newArray[index - 1]];
-                              onChange({ [fieldName]: newArray });
-                              setTabIndex(index - 1);
-                            }
-                          }}
-                        >
-                          <ArrowBack />
-                        </IconButton>
-                        <IconButton
-                          color="primary"
-                          onClick={() => {
-                            if (index < fieldState.length - 1) {
-                              const newArray = [...fieldState];
-                              [newArray[index + 1], newArray[index]] = [newArray[index], newArray[index + 1]];
-                              onChange({ [fieldName]: newArray });
-                              setTabIndex(index + 1);
-                            }
-                          }}
-                        >
-                          <ArrowForward />
-                        </IconButton>
-                        <IconButton
-                          color="primary"
-                          onClick={() => {
-                            const newArray = [...fieldState];
-                            // Clone the item you want to duplicate
-                            const clone = { ...newArray[index] };
-
-                            // Modify the name by appending 'Copy' at the end
-                            clone[fieldData.label] = `${clone[fieldData.label]} Copy`;
-
-                            // Insert the clone back into the array
-                            newArray.splice(index + 1, 0, clone);
-
-                            onChange({ [fieldName]: newArray }, "duplicate", index);
-                            setTabIndex(index + 1); // Optional: Move the tab index to the new copy
-                          }}
-                        >
-                          <FileCopy /> {/* Assuming you import FileCopy from Material-UI */}
-                        </IconButton>
-                        <GLForm
-                          formData={fieldData.itemSchema.fields}
-                          state={item}
-                          onChange={newItem => {
-                            const newArray = [...fieldState];
-                            newArray[index] = {
-                              ...newArray[index],
-                              ...newItem,
-                            };
-
-                            Object.keys(newItem).forEach(nestedFieldName => {
-                              const fullFieldName = `${fieldName}.${nestedFieldName}.${index}`;
-                              onChange({ [fieldName]: newArray }, fullFieldName, index);
-                            });
-                          }}
-                          loading={loading}
-                        />
-                      </GLTabPanel>
-                    ))}
-                </Paper>
+                <GLArray
+                  fieldName={fieldName}
+                  fieldState={fieldState}
+                  fieldData={fieldData}
+                  tabIndex={tabIndex}
+                  setTabIndex={setTabIndex}
+                  onChange={onChange}
+                  loading={loading}
+                  getEmptyObjectFromSchema={getEmptyObjectFromSchema}
+                />
               );
             case "color_picker":
-              const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
               return (
-                <Grid container key={fieldName} alignItems="center" spacing={2}>
-                  <Grid item>
-                    <Box
-                      sx={{
-                        padding: "5px",
-                        background: "#fff",
-                        borderRadius: "4px",
-                        boxShadow: 1,
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        setLocalState({ ...localState, [fieldName + "_picker"]: !localState[fieldName + "_picker"] })
-                      }
-                    >
-                      <Box
-                        sx={{
-                          width: "36px",
-                          height: "14px",
-                          borderRadius: "4px",
-                          bgcolor: fieldState || "#ffffff",
-                        }}
-                      />
-                    </Box>
-                    {localState[fieldName + "_picker"] && (
-                      <ClickAwayListener
-                        onClickAway={() => setLocalState({ ...localState, [fieldName + "_picker"]: false })}
-                      >
-                        <Box sx={{ position: "absolute", zIndex: "2" }}>
-                          <SketchPicker
-                            color={fieldState || "#ffffff"}
-                            presetColors={preset_colors}
-                            onChangeComplete={color => handleInputChange(fieldName, color.hex)}
-                          />
-                        </Box>
-                      </ClickAwayListener>
-                    )}
-                  </Grid>
-                  <Grid item xs>
-                    <TextField
-                      variant="outlined"
-                      type="text"
-                      size="small"
-                      margin="normal"
-                      fullWidth
-                      label={fieldData.label || "Background"}
-                      name={fieldName}
-                      id={fieldName}
-                      value={fieldState || ""}
-                      onChange={e => handleInputChange(fieldName, e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
+                <GLColorPicker
+                  fieldName={fieldName}
+                  fieldState={fieldState}
+                  fieldData={fieldData}
+                  handleInputChange={handleInputChange}
+                  localState={localState}
+                  setLocalState={setLocalState}
+                />
               );
             default:
               return <div></div>;

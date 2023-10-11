@@ -640,7 +640,7 @@ GLTableV2.propTypes = {
   columnDefs: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      display: PropTypes.func.isRequired,
+      display: PropTypes.oneOfType([PropTypes.func, PropTypes.string]).isRequired,
       // Describes how rows are compared when sorted by this column (e.g. if you sort by status
       // you might need to transform status string into a number)
       sortBy: PropTypes.func,
@@ -676,7 +676,7 @@ GLTableV2.propTypes = {
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
   cellProps: PropTypes.func,
-  dropdownComponent: PropTypes.func,
+  dropdownComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   dropdownAction: PropTypes.func,
   colors: PropTypes.array,
   noURLParams: PropTypes.bool,
