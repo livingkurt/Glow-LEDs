@@ -9,21 +9,15 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { listContents } from "src/api";
 import * as API from "../../api";
+import { setMenuItems } from "src/slices/contentSlice";
 
 const MenuPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const pathname = params.pathname;
 
-  const [items, set_items] = useState([]);
-  const [loading_pictures, set_loading_pictures] = useState(false);
-
   const contentPage = useSelector(state => state.contents.contentPage);
-  const { contents } = contentPage;
-
-  useEffect(() => {
-    dispatch(API.listContents({ limit: 3, active: true }));
-  }, []);
+  const { menuItems, loadingSlideshowImages } = contentPage;
 
   useEffect(() => {
     let clean = true;
@@ -37,11 +31,11 @@ const MenuPage = () => {
         pathname === "support" ||
         pathname === "sponsored_artists"
       ) {
-        set_items(contents[0]?.home_page?.slideshow);
+        dispatch(setMenuItems(determine_menu_items()));
       }
-
-      // if (contents.length === 0) {
-      // }
+      if (pathname === "gloving") {
+        dispatch(API.getSlideshowImages());
+      }
     }
     return () => (clean = false);
   }, [pathname]);
@@ -53,7 +47,7 @@ const MenuPage = () => {
     const { data: vfx } = await API_Features.get_features_by_category("vfx");
     if (glovers && artists && producers && vfx) {
       const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
-      set_items(menu_items);
+      dispatch(setMenuItems(menu_items));
     }
   };
 
@@ -93,11 +87,7 @@ const MenuPage = () => {
   };
 
   const determine_menu_items = content => {
-    if (pathname === "gloving") {
-      if (content) {
-        return content && content.home_page && content.home_page.slideshow;
-      }
-    } else if (pathname === "manuals") {
+    if (pathname === "manuals") {
       return (
         content &&
         content.home_page &&
@@ -251,16 +241,15 @@ const MenuPage = () => {
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
         />
       </Helmet>
-      <Loading loading={loading_pictures} />
+      <Loading loading={loadingSlideshowImages} />
       <div className="jc-c">
         <h1> {pathname === "gloving" ? "All Gloving" : humanize(pathname)}</h1>
       </div>
       <div className="product_big_screen">
         <div className="jc-c">
           <div className="jc-c wrap">
-            {!loading_pictures &&
-              items &&
-              items.map((item, index) => {
+            {menuItems &&
+              menuItems.map((item, index) => {
                 return <MenuItemD item={item} index={index} decide_url={decide_url} />;
               })}
           </div>
@@ -269,9 +258,8 @@ const MenuPage = () => {
       <div className="product_small_screen none">
         <div className="jc-c">
           <ul className="jc-c wrap">
-            {!loading_pictures &&
-              items &&
-              items.map((item, index) => {
+            {menuItems &&
+              menuItems.map((item, index) => {
                 return <MenuItemM item={item} index={index} decide_url={decide_url} />;
               })}
           </ul>

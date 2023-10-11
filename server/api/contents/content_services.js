@@ -82,6 +82,16 @@ export default {
       }
     }
   },
+  slideshow_contents_s: async query => {
+    try {
+      const slideshow = await Content.findOne({ active: true }).sort({ createdAt: -1 });
+      return slideshow;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAllEvents_contents_s: async query => {
     const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
     try {
