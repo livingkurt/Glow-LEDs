@@ -4,10 +4,10 @@ const colors = [
   { name: "Admin", color: "#525252" },
   { name: "Affiliated", color: "#7d5555" },
   { name: "Guest", color: "#3e6d6b" },
-  { name: "Employee", color: "#557d68" }
+  { name: "Employee", color: "#557d68" },
 ];
 
-export const determine_color = user => {
+export const determineColor = user => {
   let result = "";
   if (!user.isVerified) {
     result = colors[0].color;
@@ -53,10 +53,11 @@ const allAttributes = [
   "guest",
   "wholesaler",
   "isWholesaler",
-  "minimum_order_amount"
+  "minimum_order_amount",
 ];
 
-export const attributes = (user1, user2) => Array.from(new Set([...allAttributes, ...Object.keys(user1), ...Object.keys(user2)]));
+export const attributes = (user1, user2) =>
+  Array.from(new Set([...allAttributes, ...Object.keys(user1), ...Object.keys(user2)]));
 
 export const duplicateUser = user => {
   return {
@@ -66,6 +67,6 @@ export const duplicateUser = user => {
     _id: null,
     password: null,
     createdAt: null,
-    updatedAt: null
+    updatedAt: null,
   };
 };

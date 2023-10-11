@@ -1,6 +1,6 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 
-export const determine_color = paycheck => {
+export const determineColor = paycheck => {
   let result = "";
   if (paycheck.paid) {
     result = tableColors.active;

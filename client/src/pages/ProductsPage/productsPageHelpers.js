@@ -8,10 +8,10 @@ export const productColors = [
   { name: "Diffuser Caps", color: "#6c7ea9" },
   { name: "Accessories", color: "#925757" },
   { name: "EXO Diffusers", color: "#4162ad" },
-  { name: "Gloves", color: "#4f85a7" }
+  { name: "Gloves", color: "#4f85a7" },
 ];
 
-export const determine_color = product => {
+export const determineColor = product => {
   let result = "#797979";
 
   if (product.category === "gloves") {

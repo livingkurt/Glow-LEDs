@@ -392,7 +392,7 @@ GLForm.propTypes = {
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   state: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   nesting: PropTypes.any,
   index: PropTypes.any,
   setFormErrors: PropTypes.func,
@@ -404,6 +404,7 @@ GLForm.defaultProps = {
   setFormErrors: () => {},
   formErrors: {},
   classes: {},
+  loading: false,
 };
 
 export default GLForm;

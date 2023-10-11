@@ -9,7 +9,7 @@ import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getWholesalers } from "../../api";
-import { determine_color } from "./wholesalerHelper";
+import { determineColor } from "./wholesalerHelper";
 
 const WholesalersPage = () => {
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
@@ -78,7 +78,7 @@ const WholesalersPage = () => {
         namespaceScope="wholesalers"
         namespace="wholesalerTable"
         columnDefs={column_defs}
-        determine_color={determine_color}
+        determineColor={determineColor}
         loading={loading}
         enableRowSelect={true}
         titleActions={

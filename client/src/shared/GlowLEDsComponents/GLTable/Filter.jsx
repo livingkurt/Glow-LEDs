@@ -8,19 +8,16 @@ const Filter = ({ filterHandler, filter_options, state, title, width }) => {
           name="filterOrder"
           className={`filter_select w-${width || "221px"}`}
           onChange={filterHandler}
-          defaultValue={JSON.stringify(state)}
-          value={JSON.stringify(state)}
+          value={JSON.stringify(state)} // use this instead of 'selected' on option
         >
-          <option className="grey_option" selected="selected" value={""}>
+          <option className="grey_option" value={""}>
             {title || "Filter By Chip"}
           </option>
-          {filter_options.map((option, index) => {
-            return (
-              <option key={index} value={JSON.stringify(option)}>
-                {option.name}
-              </option>
-            );
-          })}
+          {filter_options.map((option, index) => (
+            <option key={index} value={JSON.stringify(option)}>
+              {option.name}
+            </option>
+          ))}
         </select>
         <span className="custom-arrow" />
       </div>

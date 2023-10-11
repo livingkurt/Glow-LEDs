@@ -147,7 +147,7 @@ const GLTableV2 = ({
   remoteVersionRequirement,
   remoteVersionRequirementType,
   remoteReorderApi,
-  determine_color,
+  determineColor,
   enableDragDrop,
   dropdownComponent,
   colors,
@@ -496,7 +496,7 @@ const GLTableV2 = ({
                                 handleRowSelection={handleRowSelection}
                                 rowProps={rowProps}
                                 cellProps={cellProps}
-                                determine_color={determine_color}
+                                determineColor={determineColor}
                                 dropdownAction={dropdownAction}
                               >
                                 {enableDropdownRow && expandRow === row[rowName] && (
@@ -505,7 +505,7 @@ const GLTableV2 = ({
                                       <GLTableRowDropdown
                                         row={row}
                                         enableRowSelect={enableRowSelect}
-                                        determine_color={determine_color}
+                                        determineColor={determineColor}
                                         isItemSelected={isItemSelected}
                                         dropdownRows={dropdownRows}
                                         dropdownColumnDefs={dropdownColumnDefs}
@@ -552,7 +552,7 @@ const GLTableV2 = ({
                       onRowClick={onRowClick}
                       rowProps={rowProps}
                       cellProps={cellProps}
-                      determine_color={determine_color}
+                      determineColor={determineColor}
                       dropdownAction={dropdownAction}
                       singleSelect={singleSelect}
                       selectedRows={selectedRows}
@@ -563,7 +563,7 @@ const GLTableV2 = ({
                             <GLTableRowDropdown
                               row={row}
                               enableRowSelect={enableRowSelect}
-                              determine_color={determine_color}
+                              determineColor={determineColor}
                               isItemSelected={isItemSelected}
                               dropdownRows={dropdownRows}
                               dropdownColumnDefs={dropdownColumnDefs}
@@ -607,7 +607,7 @@ GLTableV2.defaultProps = {
   titleActions: null,
   enableRowClick: false,
   loading: false,
-  determine_color: false,
+  determineColor: false,
   onRowClick: x => x,
   rowProps: () => ({}),
   cellProps: () => ({}),
@@ -660,7 +660,7 @@ GLTableV2.propTypes = {
   enableRowSelect: PropTypes.bool,
   enableDropdownRow: PropTypes.bool,
   restrictSearchChars: PropTypes.func,
-  determine_color: PropTypes.func,
+  determineColor: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   searchPlaceholder: PropTypes.string,
   rowName: PropTypes.string,
   minItemsToShowFilter: PropTypes.number,

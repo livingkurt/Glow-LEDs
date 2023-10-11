@@ -53,7 +53,7 @@ const TeamsPage = () => {
     { name: "Promoter", color: "#7d5555" },
   ];
 
-  const determine_color = team => {
+  const determineColor = team => {
     let result = "";
 
     if (team.sponsor) {
@@ -125,7 +125,7 @@ const TeamsPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(team),
+                      backgroundColor: determineColor(team),
                       fontSize: "16px",
                     }}
                   >

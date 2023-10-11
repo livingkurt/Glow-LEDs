@@ -141,7 +141,7 @@ const SurveysPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determineSurveyColors}
+        determineColor={determineSurveyColors}
         tableName={"Surveys"}
         namespaceScope="surveys"
         namespace="surveyTable"

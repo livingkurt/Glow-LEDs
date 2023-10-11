@@ -44,19 +44,19 @@
 //   };
 //   const getBackgroundColor = ({ isSelected, isDragging }) => {
 //     if (isDragging) {
-//       // return determine_color(product, isDragging, false);
+//       // return determineColor(product, isDragging, false);
 //       return "#4d5061";
 //     }
 
 //     if (isSelected) {
-//       // return determine_color(product, false, isSelected);
+//       // return determineColor(product, false, isSelected);
 //       return "#a7a7a7";
 //     }
 
-//     return determine_color(product, false, false);
+//     return determineColor(product, false, false);
 //   };
 
-//   const { product, determine_color, admin, snapshot, provided, disAppearProduct, isSelected, selectionCount } = props;
+//   const { product, determineColor, admin, snapshot, provided, disAppearProduct, isSelected, selectionCount } = props;
 //   const dispatch = useDispatch();
 
 //   //

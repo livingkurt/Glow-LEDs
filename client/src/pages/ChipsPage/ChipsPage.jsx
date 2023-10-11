@@ -61,7 +61,7 @@ const ChipsPage = () => {
     { name: "Inova", color: "#333333" },
   ];
 
-  const determine_color = chip => {
+  const determineColor = chip => {
     let result = "";
     if (chip.category === "el_nano") {
       result = colors[1].color;
@@ -153,7 +153,7 @@ const ChipsPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(chip),
+                      backgroundColor: determineColor(chip),
                       fontSize: "16px",
                     }}
                   >

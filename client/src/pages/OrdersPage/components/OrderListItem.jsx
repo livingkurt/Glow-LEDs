@@ -19,7 +19,7 @@ import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import * as API from "../../../api";
 import config from "../../../config";
 
-const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
+const OrderListItem = ({ order, determineColor, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -273,7 +273,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   return (
     <div
       style={{
-        backgroundColor: determine_color(order),
+        backgroundColor: determineColor(order),
         boxShadow: "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)",
         borderRadius: "2rem",
         padding: "1.5rem",

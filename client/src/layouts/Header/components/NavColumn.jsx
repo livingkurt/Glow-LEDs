@@ -25,7 +25,7 @@ const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list })
             />
           )}
           {column.rows.map(row => (
-            <DropdownButton {...row} show_hide={show_hide} />
+            <DropdownButton {...row} key={row._id} show_hide={show_hide} />
           ))}
         </div>
       ))}

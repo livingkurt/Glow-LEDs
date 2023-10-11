@@ -45,6 +45,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Head />
+
       <Router>
         <ScrollToTop>
           <Routes>

@@ -90,7 +90,7 @@ const EmailsPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determineEmailColors}
+        determineColor={determineEmailColors}
         tableName={"Emails"}
         namespaceScope="emails"
         namespace="emailTable"

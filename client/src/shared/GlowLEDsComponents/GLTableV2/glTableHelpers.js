@@ -280,7 +280,7 @@ export const getDisplayedRowsInfo = (count, page, rowsPerPage) => {
 
 export const selectedPage = newValue => (newValue === null ? "1" : newValue.toString());
 
-export const determineRowStyles = (row, isCheckboxDisabled, determine_color) => {
+export const determineRowStyles = (row, isCheckboxDisabled, determineColor) => {
   if (isCheckboxDisabled) {
     return {
       backgroundColor: "#808080", // gray in hexadecimal
@@ -290,7 +290,7 @@ export const determineRowStyles = (row, isCheckboxDisabled, determine_color) => 
     };
   }
 
-  const activeColor = determine_color ? determine_color(row) : tableColors.active;
+  const activeColor = determineColor ? determineColor(row) : tableColors.active;
   const darkActiveColor = darken(activeColor, 0.3);
 
   return {

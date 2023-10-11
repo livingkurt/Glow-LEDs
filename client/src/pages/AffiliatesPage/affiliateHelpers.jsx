@@ -3,10 +3,10 @@ const colors = [
   { name: "Promoter", color: "#7d5555" },
   { name: "Team", color: "#557d6c" },
   { name: "Not Active", color: "#757575" },
-  { name: "Rave Mob", color: "#55797d" }
+  { name: "Rave Mob", color: "#55797d" },
 ];
 
-export const determine_color = affiliate => {
+export const determineColor = affiliate => {
   if (affiliate.sponsor) {
     return colors[0].color;
   }

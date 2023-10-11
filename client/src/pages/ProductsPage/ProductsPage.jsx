@@ -9,7 +9,7 @@ import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { determine_color, productColors } from "./productsPageHelpers";
+import { determineColor, productColors } from "./productsPageHelpers";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -116,7 +116,7 @@ const ProductsPage = () => {
         remoteVersionRequirementType={"products/setRemoteVersionRequirement"}
         tableName={"Products"}
         colors={productColors}
-        determine_color={determine_color}
+        determineColor={determineColor}
         namespaceScope="products"
         namespace="productTable"
         columnDefs={column_defs}

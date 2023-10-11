@@ -165,7 +165,7 @@
 //     { name: "EXO Diffusers", color: "#4162ad" },
 //   ];
 
-//   const determine_color = (product, isSelected, isDragging) => {
+//   const determineColor = (product, isSelected, isDragging) => {
 //     let result = "#797979";
 
 //     if (product.category === "opyn") {
@@ -660,7 +660,7 @@
 //                                     size="50px"
 //                                     product={product}
 //                                     admin={true}
-//                                     determine_color={determine_color}
+//                                     determineColor={determineColor}
 //                                     isSelected={isSelected}
 //                                     selectionCount={state.selectedProductIds.length}
 //                                     toggleSelection={toggleSelection}
@@ -724,7 +724,7 @@
 //                                   size="50px"
 //                                   product={product}
 //                                   admin={true}
-//                                   determine_color={determine_color}
+//                                   determineColor={determineColor}
 //                                   isSelected={isSelected}
 //                                   selectionCount={state.selectedProductIds.length}
 //                                   toggleSelection={toggleSelection}

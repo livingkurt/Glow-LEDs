@@ -4,9 +4,9 @@ import MetaDataDisplay from "./MetaDataDisplay";
 import OrderActionButtons from "./OrderActionButtons";
 import OrderStatusButtons from "./OrderStatusButtons";
 
-const OrderDropdown = ({ row, determine_color, colspan }) => {
+const OrderDropdown = ({ row, determineColor, colspan }) => {
   return (
-    <TableRow className="p-10px w-100per" style={{ backgroundColor: determine_color(row) }}>
+    <TableRow className="p-10px w-100per" style={{ backgroundColor: determineColor(row) }}>
       <TableCell colSpan={colspan} style={{ color: "white" }}>
         <Grid container spacing={2} className="paragraph_font">
           <Grid item xs={3}>

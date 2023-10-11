@@ -8,7 +8,7 @@ import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal 
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { determine_color, duplicateUser, fullName } from "./usersHelpers";
+import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 
 const UsersPage = () => {
@@ -85,7 +85,7 @@ const UsersPage = () => {
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determine_color}
+        determineColor={determineColor}
         tableName={"Users"}
         namespaceScope="users"
         namespace="userTable"

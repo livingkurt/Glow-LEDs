@@ -1,7 +1,7 @@
 import { API_Products } from "..";
 import { snake_case } from "../helper_functions";
 
-export const determine_color_modifier = (category) => {
+export const determineColor_modifier = (category) => {
   if (category === "glowskinz") {
     return "Skin";
   } else if (category === "diffuser_caps") {

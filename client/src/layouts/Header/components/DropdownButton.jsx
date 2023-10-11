@@ -4,7 +4,7 @@ import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, permissions, extraContent }) => {
+const DropdownButton = ({ path, variant, className, name, id, show_hide, permissions, extraContent }) => {
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
   if (permissions && !permissions(current_user)) {
@@ -34,4 +34,4 @@ const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, per
   );
 };
 
-export default ButtonWithDropdown;
+export default DropdownButton;

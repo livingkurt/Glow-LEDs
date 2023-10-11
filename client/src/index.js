@@ -29,7 +29,8 @@ const ErrorBoundary = Bugsnag.getPlugin("react").createErrorBoundary(React);
 ReactDOM.render(
   <Provider store={store}>
     <ErrorBoundary FallbackComponent={ErrorView}>
-      <React.StrictMode>{path.pathname === "/links" ? <Links /> : <App />}</React.StrictMode>
+      <React.StrictMode>{<App />}</React.StrictMode>
+      {/* <React.StrictMode>{path.pathname === "/links" ? <Links /> : <App />}</React.StrictMode> */}
     </ErrorBoundary>
   </Provider>,
   document.getElementById("root")

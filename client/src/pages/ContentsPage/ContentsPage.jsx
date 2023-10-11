@@ -117,7 +117,7 @@ const ContentsPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determineContentColors}
+        determineColor={determineContentColors}
         tableName={"Contents"}
         namespaceScope="contents"
         namespace="contentTable"
