@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -93,7 +93,8 @@ const GLTableRow = ({
             },
           },
         }}
-        key={row._id || row.id}
+        key={`hardCodedUniqueKeyRow_${labelId}-row`}
+        data-fake-key={labelId}
         selected={enableRowSelect && isItemSelected}
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
@@ -104,7 +105,7 @@ const GLTableRow = ({
         {...rowProps(row)}
       >
         {enableRowSelect && (
-          <TableCell padding="checkbox" key={row._id || row.id}>
+          <TableCell padding="checkbox" key={`hardCodedUniqueKeyCheckbox_${labelId}_0`}>
             <Checkbox
               size="large"
               disabled={isCheckboxDisabled}
@@ -136,9 +137,11 @@ const GLTableRow = ({
         )}
         {columnDefs.map((column, index) => {
           const value = typeof column.display === "function" ? column.display(row) : row[column.display];
+          // console.log({ key: `hardCodedUniqueKeyCell_${labelId}_${index + 1}` });
           return (
             <TableCell
-              key={`${index}-${column.title}-${row._id || row.id}-${column.title}`} // Changed key
+              key={`hardCodedUniqueKeyCell_${labelId}_${index + 100}`}
+              data-fake-key={`hardCodedUniqueKeyCell_${labelId}_${index + 100}`}
               {...cellProps(row)}
               align={column.align}
               colSpan={column.colSpan || 1}

@@ -57,7 +57,7 @@ const GLArray = ({
       <Box sx={{ m: 3 }} />
       {fieldState.length > 0 &&
         fieldState.map((item, index) => (
-          <GLTabPanel value={tabIndex} index={index}>
+          <GLTabPanel value={tabIndex} index={index} key={index}>
             <IconButton
               color="secondary"
               onClick={() => {

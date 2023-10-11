@@ -477,7 +477,7 @@ const GLTableV2 = ({
                           <Draggable key={row._id || row.id} draggableId={row._id || row.id} index={index}>
                             {provided => (
                               <GLTableRow
-                                key={row._id || row.id}
+                                key={`${tableName && tableName.toLowerCase()}_${row._id || row.id}_${index}`}
                                 row={row}
                                 provided={provided}
                                 innerRef={provided.innerRef}
@@ -538,11 +538,11 @@ const GLTableV2 = ({
                 : visibleRows &&
                   visibleRows.map((row, index) => (
                     <GLTableRow
-                      key={row._id || row.id}
+                      key={`${tableName && tableName.toLowerCase()}_${row._id || row.id}_${index}`}
                       row={row}
                       enableRowSelect={enableRowSelect}
                       isItemSelected={isItemSelected(row._id || row.id, selectedRows)}
-                      labelId={`${tableName && tableName.toLowerCase()}-${index}`}
+                      labelId={`${tableName && tableName.toLowerCase()}_${row._id || row.id}_${index}`}
                       index={index}
                       columnDefs={columnDefs}
                       enableDropdownRow={enableDropdownRow}

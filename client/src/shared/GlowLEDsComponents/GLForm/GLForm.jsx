@@ -153,7 +153,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       size="large"
                       onChange={e => handleInputChange(fieldName, e.target.checked)}
                       checked={!!fieldState}
-                      error={formErrors && !!formErrors[fieldName]}
+                      // error={formErrors && !!formErrors[fieldName]}
                     />
                   }
                   label={fieldData.label}
@@ -205,9 +205,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   autoComplete="new-password"
                   className={classes.outlinedInput}
                   InputProps={{
-                    autocomplete: "new-password",
+                    autoComplete: "new-password",
                     form: {
-                      autocomplete: "off",
+                      autoComplete: "off",
                     },
                     className: classes.input,
                   }}
@@ -237,9 +237,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
-                    autocomplete: "new-password",
+                    autoComplete: "new-password",
                     form: {
-                      autocomplete: "off",
+                      autoComplete: "off",
                     },
                     className: classes.input,
                   }}
@@ -270,9 +270,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
-                    autocomplete: "new-password",
+                    autoComplete: "new-password",
                     form: {
-                      autocomplete: "off",
+                      autoComplete: "off",
                     },
                     className: classes.input,
                   }}
@@ -302,9 +302,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
                   InputProps={{
-                    autocomplete: "new-password",
+                    autoComplete: "new-password",
                     form: {
-                      autocomplete: "off",
+                      autoComplete: "off",
                     },
                     className: classes.input,
                   }}
