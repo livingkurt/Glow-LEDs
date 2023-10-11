@@ -75,13 +75,14 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listFeatures({}));
-      findAllGrid_products_a();
-      // get_display_content();
-    }
-    return () => (clean = false);
+    let clean = false; // Set to false initially
+
+    dispatch(API.listFeatures({}));
+    findAllGrid_products_a();
+
+    return () => {
+      clean = true; // Set to true during cleanup
+    };
   }, []);
 
   // const get_display_content = async () => {

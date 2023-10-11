@@ -383,7 +383,7 @@ GLForm.propTypes = {
     PropTypes.shape({
       type: PropTypes.string.isRequired,
       options: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       labelProp: PropTypes.string,
       getOptionLabel: PropTypes.func,
       onEdit: PropTypes.func,

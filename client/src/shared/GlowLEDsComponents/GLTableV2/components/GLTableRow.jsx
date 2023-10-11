@@ -98,7 +98,7 @@ const GLTableRow = ({
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
         data-test-multi={`${namespace}-row`}
-        ref={innerRef}
+        {...(innerRef ? { ref: innerRef } : {})}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         {...rowProps(row)}
@@ -167,7 +167,7 @@ GLTableRow.defaultProps = {
   extendedRowComponent: false,
   rowProps: () => ({}),
   cellProps: () => ({}),
-  innerRef: {},
+  innerRef: null,
   provided: {},
   dropdownAction: x => x,
 };

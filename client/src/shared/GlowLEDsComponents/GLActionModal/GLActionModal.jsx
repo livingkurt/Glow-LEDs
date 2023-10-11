@@ -101,7 +101,7 @@ const GLActionModal = ({
                   color={confirmColor}
                   disabled={confirmDisabled}
                   aria-label={confirmLabel}
-                  loading={confirmLoading}
+                  loading={confirmLoading ? "true" : undefined}
                 >
                   {confirmLabel}
                 </Button>
