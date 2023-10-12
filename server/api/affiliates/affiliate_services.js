@@ -118,7 +118,7 @@ export default {
         const accountLink = await stripe.accountLinks.create({
           account: account.id,
           refresh_url: `${domain()}/secure/account/profile`,
-          return_url: `${domain()}/secure/account/profile`,
+          return_url: `${domain()}/secure/account/profile?stripe_success=true`,
           type: "account_onboarding",
         });
         console.log({ accountLink });

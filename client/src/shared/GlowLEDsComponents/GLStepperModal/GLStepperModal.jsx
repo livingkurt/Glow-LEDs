@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
   stepper: {
-    maxWidth: "70%",
+    // maxWidth: "70%",
     flexGrow: 1,
     justifyContent: "space-between",
   },

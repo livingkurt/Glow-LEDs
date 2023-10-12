@@ -63,6 +63,7 @@ const affiliatePage = createSlice({
     files: [],
     monthlyCheckinModal: false,
     monthlyCheckinSuccess: false,
+    loadingSaveAffiliate: false,
     questionsConcerns: "",
     numberOfContent: 0,
     createAffiliateStep: 0,
@@ -159,11 +160,11 @@ const affiliatePage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveAffiliate.pending]: (state, { payload }) => {
-      state.loading = true;
+      state.loadingSaveAffiliate = true;
     },
     [API.saveAffiliate.fulfilled]: (state, { payload }) => {
       console.log({ payload });
-      state.loading = false;
+      state.loadingSaveAffiliate = false;
       state.success = true;
       state.createAffiliateStep = 1;
       state.stripeAccountLink = payload.accountLink.url;
@@ -171,7 +172,7 @@ const affiliatePage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveAffiliate.rejected]: (state, { payload, error }) => {
-      state.loading = false;
+      state.loadingSaveAffiliate = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

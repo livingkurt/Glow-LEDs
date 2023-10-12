@@ -69,7 +69,6 @@ const GLAutocomplete = ({
             if (chipsOptionsDisabled) return chipsOptionsDisabled(option);
             return false;
           }}
-          // {...otherProps}
           renderInput={params => (
             <TextField
               {...params}

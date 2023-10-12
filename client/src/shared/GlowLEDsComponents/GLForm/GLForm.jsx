@@ -223,7 +223,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
+                  value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
@@ -255,12 +255,13 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
+                  value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "date":
               const formattedDate = formatDate(fieldState);
+
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
@@ -288,13 +289,15 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={formattedDate !== null && formattedDate !== undefined ? formattedDate : ""}
+                  value={
+                    (formattedDate !== null && formattedDate !== undefined) || Object.keys(formattedDate).length > 0
+                      ? formattedDate
+                      : ""
+                  }
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "text_multiline":
-              console.log("fieldState type:", typeof fieldState, "Value:", fieldState);
-
               return (
                 <TextField
                   helperText={formErrors && formErrors[fieldName]}
@@ -323,7 +326,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   label={fieldData.label}
                   multiline
                   variant="outlined"
-                  value={fieldState !== null && fieldState !== undefined ? fieldState : ""}
+                  value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
