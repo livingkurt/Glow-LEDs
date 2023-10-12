@@ -102,6 +102,7 @@ export const verifyUser = createAsyncThunk("emails/verifyUser", async ({ token }
     dispatch(showSuccess({ message: `User Account Verified` }));
     return data;
   } catch (error) {
+    console.log({ error });
     dispatch(showError({ message: errorMessage(error) }));
   }
 });
