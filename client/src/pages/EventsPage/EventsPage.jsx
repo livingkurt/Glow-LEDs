@@ -47,7 +47,7 @@ const EventsPage = () => {
   ];
 
   const festivals_going = "Festival: ILLfest Music Arts Festival Austin, Tex.";
-  const determine_color = event => {
+  const determineColor = event => {
     const days = daysBetween(event.date, today);
 
     if (days < 7) {
@@ -144,7 +144,7 @@ const EventsPage = () => {
               className={`container`}
               style={{
                 backgroundColor: current_user?.isAdmin
-                  ? determine_color(event)
+                  ? determineColor(event)
                   : festivals_going.includes(event.title)
                   ? "#4d5061"
                   : "#6a6c80",

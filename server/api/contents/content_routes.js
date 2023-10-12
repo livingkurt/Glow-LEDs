@@ -12,6 +12,7 @@ router.route("/table").get(content_controller.get_table_contents_c);
 router.route("/events").get(content_controller.findAllEvents_contents_c);
 router.route("/youtube").get(content_controller.findAllYoutube_contents_c);
 router.route("/display").get(content_controller.findDisplay_contents_c);
+router.route("/slideshow").get(content_controller.slideshow_contents_c);
 
 router
   .route("/:id")

@@ -16,62 +16,68 @@ import first from "lodash/first";
 import sortBy from "lodash/sortBy";
 import { makeStyles } from "@mui/styles";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
-import { applyFilterSearch, removeAllFilters, removeFilter, toggleFilter, updateFilterDisplay } from "../actions/actions";
+import {
+  applyFilterSearch,
+  removeAllFilters,
+  removeFilter,
+  toggleFilter,
+  updateFilterDisplay,
+} from "../actions/actions";
 import GLPopper from "../../GLPopper/GLPopper";
-import { TextField } from "@mui/material";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
+import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
 
 export const useStyles = makeStyles(() => ({
   mainMenu: {
     minWidth: "235px",
-    maxHeight: "320px"
+    maxHeight: "320px",
   },
   mainMenuList: {
     maxHeight: "300px",
-    padding: "0px"
+    padding: "0px",
   },
   subMenu: {
     minWidth: "235px",
-    maxHeight: "500px"
+    maxHeight: "500px",
   },
   filterButton: {
-    margin: "10px 0px"
+    margin: "10px 0px",
   },
   menuItem: {
-    padding: "15px"
+    padding: "15px",
   },
   mainMenuItem: {
     display: "flex",
     width: "100%",
     fontSize: "16px",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   subMenuItem: {
     display: "flex",
     width: "100%",
-    fontSize: "16px"
+    fontSize: "16px",
   },
   mainMenuFooter: {
     display: "flex",
     justifyContent: "center",
-    height: "46px"
+    height: "46px",
   },
   menuItemsContainer: {
     maxHeight: "385px",
     overflowX: "hidden",
-    overflowY: "auto"
+    overflowY: "auto",
   },
   subMenuCounter: {
     padding: "9px 6px",
     margin: "8px",
     fontSize: "12px",
-    color: "#bdbdbd"
+    color: "#bdbdbd",
   },
   subMenuFooter: {
     display: "flex",
     justifyContent: "space-between",
-    height: "46px"
-  }
+    height: "46px",
+  },
 }));
 
 const GLTableFilterDropdown = ({
@@ -87,7 +93,7 @@ const GLTableFilterDropdown = ({
   filterSearch,
   isLoading,
   onChangeFunction,
-  disabled
+  disabled,
 }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -153,9 +159,13 @@ const GLTableFilterDropdown = ({
                 dense
               >
                 <div className={classes.mainMenuItem}>
-                  <div>{`${filterLabelsMap[mainMenuItem] || toCapitalize(mainMenuItem)} (${availableFilters[mainMenuItem]?.length})`}</div>
+                  <div>{`${filterLabelsMap[mainMenuItem] || toCapitalize(mainMenuItem)} (${
+                    availableFilters[mainMenuItem]?.length
+                  })`}</div>
                   <div>
-                    {filters && filters[mainMenuItem]?.length > 0 ? <Badge variant="dot" color="primary" overlap="rectangular" /> : null}
+                    {filters && filters[mainMenuItem]?.length > 0 ? (
+                      <Badge variant="dot" color="primary" overlap="rectangular" />
+                    ) : null}
                   </div>
                 </div>
               </MenuItem>
@@ -191,11 +201,14 @@ const GLTableFilterDropdown = ({
           >
             <MenuList>
               {subMenuItems && subMenuItems?.length > minItemsToShowFilter && (
-                <div data-test="matrix-sub-menu-input" style={{ paddingLeft: "10px", paddingRight: "10px", paddingBottom: "8px" }}>
-                  <TextField
+                <div
+                  data-test="matrix-sub-menu-input"
+                  style={{ paddingLeft: "10px", paddingRight: "10px", paddingBottom: "8px" }}
+                >
+                  <GLTextFieldV2
                     autoFocus
                     InputProps={{
-                      "data-test": "covalent-table-sub-menu-search-input"
+                      "data-test": "covalent-table-sub-menu-search-input",
                     }}
                     value={filterSearch}
                     name="filter_search"
@@ -206,7 +219,7 @@ const GLTableFilterDropdown = ({
                     iconFontSize="small"
                     onChange={e => dispatch(applyFilterSearch(namespace, e.target.value))}
                     style={{
-                      inputContainer: { marginTop: "0px", padding: "5px" }
+                      inputContainer: { marginTop: "0px", padding: "5px" },
                     }}
                   />
                 </div>
@@ -287,7 +300,7 @@ GLTableFilterDropdown.defaultProps = {
   filterSearch: "",
   isLoading: false,
   onChangeFunction: x => x,
-  disabled: false
+  disabled: false,
 };
 
 GLTableFilterDropdown.propTypes = {
@@ -303,7 +316,7 @@ GLTableFilterDropdown.propTypes = {
   filterSearch: PropTypes.string,
   isLoading: PropTypes.bool,
   onChangeFunction: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default GLTableFilterDropdown;

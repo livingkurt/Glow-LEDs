@@ -415,7 +415,7 @@ const PaymentStep = () => {
                       options={users.filter(user => !user.deleted).filter(user => user.first_name)}
                       getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                       optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
-                      getOptionSelected={(option, value) => option._id === value._id}
+                      isOptionEqualToValue={(option, value) => option._id === value._id}
                       name={"users"}
                       label={"Choose User"}
                       onChange={(event, newValue) => {

@@ -60,7 +60,7 @@ const ParcelsPage = () => {
     { name: "Bubble Mailer", color: "#448c89" },
   ];
 
-  const determine_color = parcel => {
+  const determineColor = parcel => {
     let result = "";
     if (parcel.type === "bubble_mailer") {
       result = colors[0].color;
@@ -128,7 +128,7 @@ const ParcelsPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(parcel),
+                      backgroundColor: determineColor(parcel),
                       fontSize: "16px",
                     }}
                   >

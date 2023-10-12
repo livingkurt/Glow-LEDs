@@ -15,7 +15,6 @@ const GLAutocomplete = ({
   value,
   options,
   getOptionLabel,
-  getOptionSelected,
   helperText,
   label,
   variant,
@@ -43,6 +42,7 @@ const GLAutocomplete = ({
   margin,
   optionDisplay,
   customClasses,
+  isOptionEqualToValue,
   ...otherProps
 }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
@@ -52,7 +52,7 @@ const GLAutocomplete = ({
       {loading ? (
         <Autocomplete
           disabled={disabled}
-          value={value}
+          value={value || null}
           size="small"
           color={inputColor}
           freeSolo={freeSolo}
@@ -61,10 +61,14 @@ const GLAutocomplete = ({
           multiple={multiple}
           onInputChange={onInputChange}
           options={options}
-          getOptionLabel={getOptionLabel}
-          getOptionSelected={getOptionSelected}
-          getOptionDisabled={chipsOptionsDisabled}
-          {...otherProps}
+          getOptionLabel={option => (option ? getOptionLabel(option) || "" : "")}
+          isOptionEqualToValue={(option, val) => (option && val ? isOptionEqualToValue(option, val) : false)}
+          getOptionDisabled={option => {
+            if (!option) return false;
+            if (getOptionDisabled) return getOptionDisabled(option);
+            if (chipsOptionsDisabled) return chipsOptionsDisabled(option);
+            return false;
+          }}
           renderInput={params => (
             <TextField
               {...params}
@@ -154,10 +158,10 @@ GLAutocomplete.defaultProps = {
   value: [],
   options: [],
   getOptionLabel: option => (option ? option.name : ""),
-  getOptionSelected: (option, value) => option === value,
   getOptionDisabled: x => x,
   restrictCharacters: x => x,
   onInputChange: x => x,
+  isOptionEqualToValue: x => x,
   helperText: "",
   label: "",
   variant: "outlined",
@@ -187,7 +191,6 @@ GLAutocomplete.propTypes = {
   value: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string, PropTypes.number]),
   options: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   getOptionLabel: PropTypes.func,
-  getOptionSelected: PropTypes.func,
   restrictCharacters: PropTypes.func,
   getOptionDisabled: PropTypes.func,
   onInputChange: PropTypes.func,
@@ -199,10 +202,11 @@ GLAutocomplete.propTypes = {
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
   margin: PropTypes.string,
-  error: PropTypes.array,
+  error: PropTypes.bool,
   classes: PropTypes.object,
   inputColor: PropTypes.string,
   chipColor: PropTypes.func,
+  isOptionEqualToValue: PropTypes.func,
   inputType: PropTypes.string,
   limitTags: PropTypes.number,
   inputPropsTextField: PropTypes.object,

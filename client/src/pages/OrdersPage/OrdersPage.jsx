@@ -53,7 +53,7 @@ const OrdersPage = () => {
               ))}
             </div>
             <div>
-              <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
+              <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={column_defs.length + 1} />
             </div>
             <div className="mt-10px">
               {row.order_note && (
@@ -189,14 +189,14 @@ const OrdersPage = () => {
         tableName={"Orders"}
         searchPlaceholder={"Search by ID, Name, Email, #code"}
         colors={orderColors}
-        determine_color={determineOrderColors}
+        determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
         columnDefs={column_defs}
         enableDropdownRow
         rowName={"_id"}
         dropdownComponent={row => (
-          <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
+          <OrderDropdown row={row} determineColor={determineOrderColors} colspan={column_defs.length + 1} />
         )}
         loading={loading}
         enableRowSelect={true}

@@ -8,7 +8,7 @@ import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slic
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { determine_color } from "./paychecksHelpers";
+import { determineColor } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 
@@ -111,7 +111,7 @@ const PaychecksPage = () => {
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determine_color}
+        determineColor={determineColor}
         tableName={"Paychecks"}
         namespaceScope="paychecks"
         namespace="paycheckTable"

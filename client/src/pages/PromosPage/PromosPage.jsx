@@ -8,7 +8,7 @@ import { open_create_promo_modal, open_edit_promo_modal } from "../../slices/pro
 import { EditPromoModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { determine_color } from "./promosHelpers";
+import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 
@@ -83,7 +83,7 @@ const PromosPage = () => {
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determine_color}
+        determineColor={determineColor}
         tableName={"Promos"}
         namespaceScope="promos"
         searchPlaceholder={"Search By Promo Code"}

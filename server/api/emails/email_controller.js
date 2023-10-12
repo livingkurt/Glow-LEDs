@@ -388,7 +388,7 @@ export default {
 
     if (user) {
       // Generate a JWT token for reset password
-      const resetToken = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+      const resetToken = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
 
       // Include the token in the reset URL
       const url = `${domain()}/account/reset_password?token=${resetToken}`;
@@ -553,7 +553,7 @@ export default {
   send_verified_emails_c: async (req, res) => {
     const { email } = req.body;
     const user = await user_db.findByEmail_users_db(email);
-    const token = jwt.sign({ userId: user._id }, "secret", { expiresIn: "1h" });
+    const token = jwt.sign({ userId: user._id }, config.VERIFY_USER_TOKEN_SECRET, { expiresIn: "1h" });
 
     console.log({ user, token });
     const mailOptions = {

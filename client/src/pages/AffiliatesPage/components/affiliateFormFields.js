@@ -139,6 +139,7 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       labelProp: "sponsorMonthlyCheckins",
       label: item => `${item.year} ${item.month}`,
       type: "array",
+      permissions: ["admin"],
       itemSchema: {
         type: "object",
         fields: {

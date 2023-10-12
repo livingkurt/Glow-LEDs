@@ -67,7 +67,7 @@ const ExpensesPage = () => {
     { name: "Refunds", color: "#4a4a4a" },
   ];
 
-  const determine_color = expense => {
+  const determineColor = expense => {
     let result = "";
     if (expense.category === "Supplies") {
       result = colors[0].color;
@@ -305,7 +305,7 @@ const ExpensesPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(expense),
+                      backgroundColor: determineColor(expense),
                       fontSize: "16px",
                     }}
                   >

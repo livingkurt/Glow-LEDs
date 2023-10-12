@@ -63,8 +63,8 @@ const GLActionModal = ({
             {actionLabel && (
               <div className={styles.actionButton}>
                 <Button
-                  dataTest="modal-action-button"
-                  customClassNames="actionButton"
+                  data-test="modal-action-button"
+                  // customClassNames="actionButton"
                   onClick={onAction}
                   variant={actionVariant}
                   color={actionColor}
@@ -79,8 +79,8 @@ const GLActionModal = ({
               {cancelLabel && (
                 <Button
                   id="modalCancelButton"
-                  dataTest="modal-cancel-button"
-                  customClassNames="cancelButton"
+                  data-test="modal-cancel-button"
+                  // customClassNames="cancelButton"
                   onClick={onCancel}
                   variant={cancelVariant}
                   color={cancelColor}
@@ -94,14 +94,14 @@ const GLActionModal = ({
               {confirmLabel && (
                 <Button
                   id="modalSubmitButton"
-                  dataTest="submit"
-                  customClassNames="submitButton"
+                  data-test="submit"
+                  // customClassNames="submitButton"
                   onClick={onConfirm}
                   variant={confirmVariant}
                   color={confirmColor}
                   disabled={confirmDisabled}
                   aria-label={confirmLabel}
-                  loading={confirmLoading}
+                  loading={confirmLoading ? "true" : undefined}
                 >
                   {confirmLabel}
                 </Button>

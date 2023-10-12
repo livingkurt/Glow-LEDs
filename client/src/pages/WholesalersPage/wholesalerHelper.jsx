@@ -1,9 +1,9 @@
 const colors = [
   { name: "Active", color: "#6f3c3c" },
-  { name: "Not Active", color: "#3e4c6d" }
+  { name: "Not Active", color: "#3e4c6d" },
 ];
 
-export const determine_color = paycheck => {
+export const determineColor = paycheck => {
   let result = "";
   if (paycheck.paid) {
     result = colors[0].color;

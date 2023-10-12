@@ -17,7 +17,7 @@ const DropdownDisplayV2 = ({
   options,
   value,
   getOptionLabel,
-  getOptionSelected,
+  isOptionEqualToValue,
   fieldName,
   label,
   labelProp,
@@ -44,7 +44,7 @@ const DropdownDisplayV2 = ({
                 value={Array.isArray(value) ? value : []}
                 options={Array.isArray(options) ? options : []}
                 getOptionLabel={getOptionLabel}
-                getOptionSelected={getOptionSelected}
+                isOptionEqualToValue={isOptionEqualToValue}
                 onChange={(e, value) => onChange(value)}
                 name={fieldName}
                 renderInput={params => (

@@ -241,7 +241,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
         label: "State",
         validate: value => isRequired(value, "State"),
         getOptionLabel: option => option.long_name,
-        getOptionSelected: (option, value) => option?.short_name === value,
+        isOptionEqualToValue: (option, value) => option?.short_name === value,
         getOptionValue: option => option?.short_name,
         valueAttribute: "short_name",
         options: state_names,

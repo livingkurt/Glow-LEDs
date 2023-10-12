@@ -2,10 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom"; // Add this line
 import { Provider } from "react-redux";
 import store from "./store";
-// import './scss/css_reset.scss';
 import "./scss/style.scss";
-
-// Remove this line: import { createRoot } from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import reportWebVitals from "./reportWebVitals";
@@ -18,6 +15,7 @@ import config from "./config";
 
 Bugsnag.start({
   apiKey: config.REACT_APP_BUGSNAG_KEY,
+  releaseStage: process.env.NODE_ENV || "development",
   plugins: [new BugsnagPluginReact()],
 });
 

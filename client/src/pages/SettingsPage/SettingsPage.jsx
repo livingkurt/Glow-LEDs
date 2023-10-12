@@ -64,7 +64,7 @@ const SettingsPage = () => {
     { name: "Not Paid", color: "#6f3c3c" },
   ];
 
-  const determine_color = setting => {
+  const determineColor = setting => {
     let result = "";
     if (setting.paid) {
       result = colors[0].color;
@@ -127,7 +127,7 @@ const SettingsPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(setting),
+                      backgroundColor: determineColor(setting),
                       fontSize: "16px",
                     }}
                   >

@@ -15,7 +15,7 @@ export const ProfileActions = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliate } = affiliatePage;
+  const { affiliate, stripeAccountLink, stripeAccountLinkModal } = affiliatePage;
 
   const date = new Date();
   date.setMonth(date.getMonth() - 1);

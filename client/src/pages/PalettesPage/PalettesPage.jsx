@@ -101,7 +101,7 @@ const PalettesPage = () => {
     { name: "Bubble Mailer", color: "#448c89" },
   ];
 
-  const determine_color = palette => {
+  const determineColor = palette => {
     let result = "";
     if (palette.type === "bubble_mailer") {
       result = colors[0].color;
@@ -169,7 +169,7 @@ const PalettesPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(palette),
+                      backgroundColor: determineColor(palette),
                       fontSize: "16px",
                     }}
                   >
