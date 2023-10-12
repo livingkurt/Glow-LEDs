@@ -163,11 +163,10 @@ const affiliatePage = createSlice({
       state.loadingSaveAffiliate = true;
     },
     [API.saveAffiliate.fulfilled]: (state, { payload }) => {
-      console.log({ payload });
       state.loadingSaveAffiliate = false;
       state.success = true;
       state.createAffiliateStep = 1;
-      state.stripeAccountLink = payload.accountLink.url;
+      state.stripeAccountLink = payload?.accountLink?.url;
       state.message = "Affiliate Saved";
       state.remoteVersionRequirement = Date.now();
     },
