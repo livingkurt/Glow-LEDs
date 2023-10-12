@@ -237,7 +237,6 @@ export default {
       ]);
       return dedupeAddresses(addresses);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
