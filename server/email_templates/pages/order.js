@@ -352,7 +352,7 @@ export default ({ email, order }) => {
 																		style="font-size:16px">Taxes</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.taxPrice ? order.taxPrice?.toFixed(2) : "0:00"}</strong>
+																<strong style="font-size:16px;color:white">$${order.taxPrice ? order.taxPrice?.toFixed(2) : "0.00"}</strong>
 															</td>
 														</tr>
 														<tr>
@@ -361,7 +361,7 @@ export default ({ email, order }) => {
 																		style="font-size:16px">Shipping</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : "0:00"}</strong>
+																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : "0.00"}</strong>
 															</td>
 														</tr>
 														${
@@ -373,7 +373,7 @@ export default ({ email, order }) => {
 																		style="font-size:16px">Shipping</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
-																<strong style="font-size:16px;color:white">$${order.tip ? order.tip?.toFixed(2) : "0:00"}</strong>
+																<strong style="font-size:16px;color:white">$${order.tip ? order.tip?.toFixed(2) : "0.00"}</strong>
 															</td>
 														</tr>`
                                 : ""
@@ -391,7 +391,7 @@ export default ({ email, order }) => {
 																		style="font-size:16px">Total</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																	style="font-size:24px;color:white">$ ${order.totalPrice ? order.totalPrice?.toFixed(2) : "0:00"}</strong></td>
+																	style="font-size:24px;color:white">$ ${order.totalPrice ? order.totalPrice?.toFixed(2) : "0.00"}</strong></td>
 														</tr>
 													</tbody>
 												</table>`
@@ -408,7 +408,7 @@ export default ({ email, order }) => {
 																		style="font-size:16px">Total</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																	style="font-size:16px;color:white">$${order.totalPrice ? order.totalPrice?.toFixed(2) : "0:00"}</strong></td>
+																	style="font-size:16px;color:white">$${order.totalPrice ? order.totalPrice?.toFixed(2) : "0.00"}</strong></td>
 														</tr>
 													</tbody>
 												</table>`
