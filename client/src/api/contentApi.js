@@ -80,6 +80,19 @@ export const getContentsByLink = createAsyncThunk(
   }
 );
 
+export const getSlideshowImages = createAsyncThunk(
+  "contents/getSlideshowImages",
+  async (_data, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/contents/slideshow`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const deleteContent = createAsyncThunk(
   "contents/deleteContent",
   async (pathname, { dispatch, rejectWithValue }) => {

@@ -2,11 +2,10 @@
 
 describe("Place Order Flow", () => {
   it("should simulate a user going through the steps to place an order", () => {
-    // cy.visit("/collections/all/tutorials");
-    // cy.contains("button", "Shop").click();
-    // cy.get(".product").contains("Batteries").click();
-    // cy.get(".product").contains("Bulk CR2016 Batteries").click();
-    cy.visit("/collections/all/products/double_chevron_decals");
+    cy.visit("/collections/all/tutorials");
+    cy.contains("button", "Shop").click();
+    cy.get(".product").contains("Batman Decals").click();
+    cy.get(".product").contains("Double Chevron Decals - 11").click();
     cy.contains("button", "Add To Cart").click();
 
     // // Check for the snackbar
