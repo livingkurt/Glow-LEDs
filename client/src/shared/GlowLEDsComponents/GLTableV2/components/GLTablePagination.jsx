@@ -161,7 +161,6 @@ const GLTablePagination = ({ count, page, rowsPerPage, namespace }) => {
 
 GLTablePagination.propTypes = {
   count: PropTypes.number.isRequired,
-  onRowsPerPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,

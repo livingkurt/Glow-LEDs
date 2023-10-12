@@ -64,7 +64,7 @@ const SurveysPage = () => {
     { name: "5 Rating", color: "#2e578a" },
   ];
 
-  const determine_color = survey => {
+  const determineColor = survey => {
     let result = "";
     if (survey.is_survey) {
       result = colors[0].color;
@@ -150,7 +150,7 @@ const SurveysPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(survey),
+                      backgroundColor: determineColor(survey),
                       fontSize: "16px",
                     }}
                   >

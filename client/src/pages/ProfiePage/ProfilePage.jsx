@@ -20,7 +20,7 @@ import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import ProfileAffiliateEarnings from "./components/ProfileAffiliateEarnings";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../utils/helper_functions";
-import { determine_color } from "../PaychecksPage/paychecksHelpers";
+import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { set_success } from "../../slices/userSlice";
 import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpers";
 import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
@@ -147,7 +147,7 @@ const ProfilePage = () => {
             <div>
               <OrderItemsDisplay
                 order={row}
-                determine_color={determineOrderColors}
+                determineColor={determineOrderColors}
                 colspan={orderColumnDefs.length + 1}
               />
             </div>
@@ -227,7 +227,7 @@ const ProfilePage = () => {
             <GLTableV2
               remoteApi={paychecksRemoteApi}
               remoteVersionRequirement={remoteVersionRequirement}
-              determine_color={determine_color}
+              determineColor={determineColor}
               noURLParams
               tableName={"Paychecks"}
               enableSearch={false}
@@ -246,7 +246,7 @@ const ProfilePage = () => {
             colors={orderColors}
             enableSearch={false}
             noURLParams
-            determine_color={determineOrderColors}
+            determineColor={determineOrderColors}
             namespaceScope="orders"
             namespace="orderTable"
             columnDefs={orderColumnDefs}

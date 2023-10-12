@@ -1,6 +1,6 @@
 import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../util";
 
-const determine_color = status => {
+const determineColor = status => {
   switch (status) {
     case "crafting":
       return "#4b7188";
@@ -102,7 +102,7 @@ export default ({ email, order, status, message_to_user }) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${determine_color(
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${determineColor(
             status
           )}; border-radius: 20px; padding:15px;">
           <tbody>
@@ -181,7 +181,7 @@ export default ({ email, order, status, message_to_user }) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: ${determine_color(
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: ${determineColor(
             status
           )}; border-radius: 20px;">
           <tbody>
@@ -339,7 +339,7 @@ export default ({ email, order, status, message_to_user }) => {
               <td style="font-family:helvetica;">
                 <center>
                   <table
-                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: ${determine_color(
+                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: ${determineColor(
                       status
                     )}; border-radius: 20px; padding:15px;">
                     <tbody>

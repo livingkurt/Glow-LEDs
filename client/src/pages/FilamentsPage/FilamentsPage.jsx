@@ -85,7 +85,7 @@ const FilamentsPage = () => {
     { name: "TPU", color: "#448c89" },
   ];
 
-  const determine_color = filament => {
+  const determineColor = filament => {
     let result = "";
     if (filament.type === "PETG") {
       result = colors[0].color;
@@ -166,7 +166,7 @@ const FilamentsPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(filament),
+                      backgroundColor: determineColor(filament),
                       fontSize: "16px",
                     }}
                   >

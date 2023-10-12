@@ -9,7 +9,7 @@ import { EditCartModal } from "./components";
 import * as API from "../../api";
 import { Button, IconButton } from "@mui/material";
 import { getCarts } from "../../api";
-import { determine_color } from "./cartsPageHelpers";
+import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -78,7 +78,7 @@ const CartsPage = () => {
         tableName={"Carts"}
         namespaceScope="carts"
         namespace="cartTable"
-        determine_color={determine_color}
+        determineColor={determineColor}
         columnDefs={column_defs}
         enableRowSelect={true}
         titleActions={

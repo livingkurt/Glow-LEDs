@@ -12,7 +12,7 @@ const colors = [
   // { name: 'Active', color: '#3f6561' }
 ];
 
-export const determine_color = promo => {
+export const determineColor = promo => {
   let result = "";
 
   // if (promo.percentage_off > 0) {

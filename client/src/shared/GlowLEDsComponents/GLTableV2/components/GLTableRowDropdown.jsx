@@ -18,7 +18,7 @@ const GLTableRowDropdown = ({
   namespace,
   dropdownColumnDefs,
   enableRowSelect,
-  determine_color,
+  determineColor,
   isItemSelected,
   labelId,
   onCellClick,
@@ -51,16 +51,16 @@ const GLTableRowDropdown = ({
                   size="large"
                   color="primary"
                   sx={{
-                    color: determine_color ? "white" : "",
+                    color: determineColor ? "white" : "",
                     "& .MuiSvgIcon-root": {
                       color: "white",
                     },
                     "& .Mui-checked": {
                       color: "white",
-                      backgroundColor: determine_color ? determine_color(subrow) : "#",
+                      backgroundColor: determineColor ? determineColor(subrow) : "#",
                     },
                     "&:hover": {
-                      backgroundColor: `${determine_color ? darken(determine_color(subrow), 0.3) : "white"} !important`,
+                      backgroundColor: `${determineColor ? darken(determineColor(subrow), 0.3) : "white"} !important`,
                     },
                   }}
                   // checked={enableRowSelect && isItemSelected(row._id || row.id, selectedRows)}

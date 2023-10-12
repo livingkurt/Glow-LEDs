@@ -63,8 +63,10 @@ const affiliatePage = createSlice({
     files: [],
     monthlyCheckinModal: false,
     monthlyCheckinSuccess: false,
+    loadingSaveAffiliate: false,
     questionsConcerns: "",
     numberOfContent: 0,
+    createAffiliateStep: 0,
   },
   reducers: {
     set_affiliate: (state, { payload }) => {
@@ -132,6 +134,13 @@ const affiliatePage = createSlice({
     addNewCheckin: (state, { payload }) => {
       state.affiliate = payload;
     },
+    showStripeAccountLink: (state, { payload }) => {
+      state.stripeAccountLinkModal = true;
+      state.stripeAccountLink = payload.link;
+    },
+    setCreateAffiliateStep: (state, { payload }) => {
+      state.createAffiliateStep = payload;
+    },
   },
   extraReducers: {
     [API.listAffiliates.pending]: (state, { payload }) => {
@@ -151,17 +160,19 @@ const affiliatePage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveAffiliate.pending]: (state, { payload }) => {
-      state.loading = true;
+      state.loadingSaveAffiliate = true;
     },
     [API.saveAffiliate.fulfilled]: (state, { payload }) => {
-      state.loading = false;
+      console.log({ payload });
+      state.loadingSaveAffiliate = false;
       state.success = true;
-      state.edit_affiliate_modal = false;
+      state.createAffiliateStep = 1;
+      state.stripeAccountLink = payload.accountLink.url;
       state.message = "Affiliate Saved";
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveAffiliate.rejected]: (state, { payload, error }) => {
-      state.loading = false;
+      state.loadingSaveAffiliate = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
@@ -251,5 +262,6 @@ export const {
   setNumberOfContent,
   setCheckin,
   addNewCheckin,
+  setCreateAffiliateStep,
 } = affiliatePage.actions;
 export default affiliatePage.reducer;

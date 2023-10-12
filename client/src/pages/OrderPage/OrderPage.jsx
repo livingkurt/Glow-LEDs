@@ -7,7 +7,7 @@ import { Loading, LoadingPayments } from "../../shared/SharedComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
-import { determine_color } from "../../utils/helpers/order_helpers";
+import { determineColor } from "../../utils/helpers/order_helpers";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Stripe } from "../../shared/SharedComponents/Stripe";
@@ -709,7 +709,7 @@ const OrderPage = () => {
             <div className="placeorder-info">
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determineColor(order),
                 }}
               >
                 <div className="column jc-b h-22rem w-25remm mb-1rem">
@@ -798,7 +798,7 @@ const OrderPage = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determineColor(order),
                 }}
               >
                 <div className="mb-1rem">Order #: {order._id}</div>
@@ -852,7 +852,7 @@ const OrderPage = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determineColor(order),
                 }}
               >
                 {order.isRefunded && (
@@ -933,7 +933,7 @@ ${order.shipping.email}`)
 
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determineColor(order),
                 }}
               >
                 <h2>Payment</h2>
@@ -951,14 +951,14 @@ ${order.shipping.email}`)
                 )}
               </div>
             </div>
-            <div className="placeorder-action" style={{ backgroundColor: width > 407 && determine_color(order) }}>
+            <div className="placeorder-action" style={{ backgroundColor: width > 407 && determineColor(order) }}>
               <ul>
                 <li>
                   <h2 style={{ marginTop: 0 }}>Order Summary</h2>
                 </li>
                 <div
                   style={{
-                    backgroundColor: width > 407 && determine_color(order),
+                    backgroundColor: width > 407 && determineColor(order),
                   }}
                 >
                   <ul className="cart-list-container mt-0px">

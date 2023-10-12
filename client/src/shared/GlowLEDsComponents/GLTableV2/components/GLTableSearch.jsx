@@ -2,17 +2,18 @@ import React, { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { applySearch } from "../actions/actions";
-import { TextField } from "@mui/material";
+import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
 
 const GLTableSearch = ({ placeholder, namespace, width, autoFocus, restrictSearchChars, search }) => {
   const dispatch = useDispatch();
-  const searchRef = useRef(null);
 
   const handleHotkey = useCallback(event => {
     if (event.metaKey && event.code === "Slash") {
-      const inputElement = searchRef.current.querySelector("input");
-      inputElement.focus();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const inputElement = document.querySelector("#search-field");
+      if (inputElement) {
+        inputElement.focus();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   }, []);
 
@@ -26,8 +27,7 @@ const GLTableSearch = ({ placeholder, namespace, width, autoFocus, restrictSearc
   }, [handleHotkey]);
 
   return (
-    <TextField
-      ref={searchRef}
+    <GLTextFieldV2
       value={search || ""}
       size="small"
       style={{ width }}

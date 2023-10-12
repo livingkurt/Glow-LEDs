@@ -13,7 +13,7 @@ import {
 import { API_Products } from "../../../utils";
 import useClipboard from "react-hook-clipboard";
 import {
-  determine_color_modifier,
+  determineColor_modifier,
   determine_secondary_color_modifier,
   determine_option_modifier,
   determine_secondary_modifier,
@@ -200,7 +200,7 @@ const EditProductPage = () => {
     let clean = true;
     if (clean) {
       if (product && product.category) {
-        dispatch(set_color_modifier(determine_color_modifier(product.category)));
+        dispatch(set_color_modifier(determineColor_modifier(product.category)));
         dispatch(set_secondary_color_modifier(determine_secondary_color_modifier(product.category)));
         dispatch(set_option_modifier(determine_option_modifier(product.category)));
       }
@@ -1538,7 +1538,7 @@ const EditProductPage = () => {
                                     type="text"
                                     name="color_modifier"
                                     id="color_modifier"
-                                    defaultValue={determine_color_modifier(product.category)}
+                                    defaultValue={determineColor_modifier(product.category)}
                                     className=""
                                     onChange={e => dispatch(set_product({ [e.target.name]: e.target.value }))}
                                   />

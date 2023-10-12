@@ -14,7 +14,7 @@ export const colors = [
   // { name: 'Refunded', color: '#a9a9a9' }
 ];
 
-export const determine_color = order => {
+export const determineColor = order => {
   let result = "";
   if (!order.isPaid) {
     result = tableColors.inactive;

@@ -10,7 +10,7 @@ import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
 import { Button, IconButton } from "@mui/material";
 import { getAffiliates } from "../../api";
-import { determine_color } from "./affiliateHelpers";
+import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
 
@@ -92,7 +92,7 @@ const AffiliatesPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determine_color}
+        determineColor={determineColor}
         tableName={"Affiliates"}
         namespaceScope="affiliates"
         namespace="affiliateTable"

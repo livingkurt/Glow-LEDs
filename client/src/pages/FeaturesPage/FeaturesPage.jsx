@@ -65,7 +65,7 @@ const FeaturesPage = () => {
     // { name: 'Refunded', color: '#a9a9a9' }
   ];
 
-  const determine_color = feature => {
+  const determineColor = feature => {
     let result = "";
     if (feature.category === "glovers") {
       result = colors[0].color;
@@ -142,7 +142,7 @@ const FeaturesPage = () => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(feature),
+                      backgroundColor: determineColor(feature),
                       fontSize: "16px",
                     }}
                   >

@@ -4,7 +4,7 @@ import { determnine_link } from "../../../utils/helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Grid from "@mui/material/Grid";
 
-const OrderItemsDisplay = ({ order, determine_color, colspan }) => {
+const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
   return (
     <Grid container>
       {order.orderItems.map((item, index) => {
@@ -25,13 +25,19 @@ const OrderItemsDisplay = ({ order, determine_color, colspan }) => {
                       />
                     )}
                     {item.secondary_image && (
-                      <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
+                      <div
+                        className={` double-image-cart${
+                          item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
+                        }`}
+                      >
                         <LazyImage
                           id="expandedImg"
                           alt={item.name}
                           title={item.name}
                           border={item.color_code}
-                          className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
+                          className={`details-image-cart-${
+                            item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
+                          } m-0px`}
                           src={item.display_image}
                         />
                         <LazyImage
@@ -39,7 +45,9 @@ const OrderItemsDisplay = ({ order, determine_color, colspan }) => {
                           alt={item.name}
                           title={item.name}
                           border={item.color_code}
-                          className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"} mr-15px`}
+                          className={`details-image-cart-${
+                            item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
+                          } mr-15px`}
                           src={item.secondary_image}
                         />
                       </div>
@@ -52,7 +60,7 @@ const OrderItemsDisplay = ({ order, determine_color, colspan }) => {
                     style={{
                       backgroundColor: "white",
                       color: "black",
-                      border: "1px solid #ccc"
+                      border: "1px solid #ccc",
                     }}
                   >
                     <div className="mt-3px ml-2px">{item.qty}</div>

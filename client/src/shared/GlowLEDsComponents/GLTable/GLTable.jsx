@@ -9,7 +9,7 @@ import Sort from "./Sort";
 const GLTable = ({
   rows,
   column_defs,
-  determine_color,
+  determineColor,
   colors,
   action_row,
   loading,
@@ -27,7 +27,7 @@ const GLTable = ({
   update_page,
   setSelectedRows,
   selectedRows = [],
-  showCheckboxes = true // new prop to show/hide checkboxes
+  showCheckboxes = true, // new prop to show/hide checkboxes
 }) => {
   const handleRowSelect = (event, row) => {
     if (event.target.checked) {
@@ -56,7 +56,7 @@ const GLTable = ({
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
               />
             </div>
@@ -67,7 +67,9 @@ const GLTable = ({
         <h1 style={{ textAlign: "center" }}>{title}</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        {search && set_search && handleListItems && <GLSearch search={search} set_search={set_search} handleListItems={handleListItems} />}
+        {search && set_search && handleListItems && (
+          <GLSearch search={search} set_search={set_search} handleListItems={handleListItems} />
+        )}
         {sort_options && sortHandler && <Sort sortHandler={sortHandler} sort_options={sort_options} />}
       </div>
 
@@ -78,7 +80,11 @@ const GLTable = ({
               <tr>
                 {showCheckboxes && (
                   <th className={gl_table_th}>
-                    <input type="checkbox" checked={selectedRows.length === rows.length} onChange={handleSelectAllRows} />
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.length === rows.length}
+                      onChange={handleSelectAllRows}
+                    />
                   </th>
                 )}
                 {column_defs.map(column => (
@@ -93,13 +99,17 @@ const GLTable = ({
                   key={index}
                   className={gl_table_tr}
                   style={{
-                    backgroundColor: determine_color(row, colors),
-                    fontSize: "16px"
+                    backgroundColor: determineColor(row, colors),
+                    fontSize: "16px",
                   }}
                 >
                   {showCheckboxes && (
                     <td className="p-10px">
-                      <input type="checkbox" checked={selectedRows.includes(row)} onChange={e => handleRowSelect(e, row)} />
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(row)}
+                        onChange={e => handleRowSelect(e, row)}
+                      />
                     </td>
                   )}
 

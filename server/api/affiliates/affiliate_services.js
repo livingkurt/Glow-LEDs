@@ -6,6 +6,14 @@ import config from "../../config";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
+import Stripe from "stripe";
+import { domain } from "../../background/worker_helpers";
+if (!config.STRIPE_KEY) {
+  throw new Error("STRIPE_KEY is not defined");
+}
+const stripe = new Stripe(config.STRIPE_KEY, {
+  apiVersion: "2023-08-16",
+});
 
 export default {
   findAll_affiliates_s: async query => {
@@ -101,7 +109,21 @@ export default {
       active: true,
     };
     try {
-      return await affiliate_db.create_affiliates_db(body, public_code, private_code);
+      const newAffiliate = await affiliate_db.create_affiliates_db(body, public_code, private_code);
+      if (newAffiliate) {
+        const account = await stripe.accounts.create({
+          type: "express",
+        });
+
+        const accountLink = await stripe.accountLinks.create({
+          account: account.id,
+          refresh_url: `${domain()}/secure/account/profile`,
+          return_url: `${domain()}/secure/account/profile?stripe_success=true`,
+          type: "account_onboarding",
+        });
+        console.log({ accountLink });
+        return { newAffiliate, accountLink };
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -164,7 +186,6 @@ export default {
         return affiliate;
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

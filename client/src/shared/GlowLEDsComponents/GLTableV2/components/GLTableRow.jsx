@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -23,7 +23,7 @@ const GLTableRow = ({
   handleRowSelection,
   rowProps,
   cellProps,
-  determine_color,
+  determineColor,
   provided,
   innerRef,
   dropdownAction,
@@ -59,7 +59,7 @@ const GLTableRow = ({
 
   const name = row[rowName] || row._id || row.id;
 
-  const styles = determineRowStyles(row, isCheckboxDisabled, determine_color);
+  const styles = determineRowStyles(row, isCheckboxDisabled, determineColor);
 
   return (
     <>
@@ -84,27 +84,28 @@ const GLTableRow = ({
           },
           "&.Mui-selected": {
             backgroundColor: `${
-              determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)
+              determineColor ? darken(determineColor(row), 0.3) : darken(tableColors.active, 0.3)
             } !important`,
             "&:hover": {
               backgroundColor: `${
-                determine_color ? darken(determine_color(row), 0.5) : darken(tableColors.active, 0.3)
+                determineColor ? darken(determineColor(row), 0.5) : darken(tableColors.active, 0.3)
               } !important`,
             },
           },
         }}
-        key={row._id || row.id}
+        key={`hardCodedUniqueKeyRow_${labelId}-row`}
+        data-fake-key={labelId}
         selected={enableRowSelect && isItemSelected}
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
         data-test-multi={`${namespace}-row`}
-        ref={innerRef}
+        {...(innerRef ? { ref: innerRef } : {})}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         {...rowProps(row)}
       >
         {enableRowSelect && (
-          <TableCell padding="checkbox" key={row._id || row.id}>
+          <TableCell padding="checkbox" key={`hardCodedUniqueKeyCheckbox_${labelId}_0`}>
             <Checkbox
               size="large"
               disabled={isCheckboxDisabled}
@@ -116,7 +117,7 @@ const GLTableRow = ({
                 },
                 "& .Mui-checked": {
                   color: "white",
-                  backgroundColor: determine_color ? determine_color(row) : "#",
+                  backgroundColor: determineColor ? determineColor(row) : "#",
                 },
                 "&:hover": {
                   backgroundColor: isCheckboxDisabled
@@ -134,12 +135,14 @@ const GLTableRow = ({
             />
           </TableCell>
         )}
-        {columnDefs.map(column => {
+        {columnDefs.map((column, index) => {
           const value = typeof column.display === "function" ? column.display(row) : row[column.display];
+          // console.log({ key: `hardCodedUniqueKeyCell_${labelId}_${index + 1}` });
           return (
             <TableCell
+              key={`hardCodedUniqueKeyCell_${labelId}_${index + 100}`}
+              data-fake-key={`hardCodedUniqueKeyCell_${labelId}_${index + 100}`}
               {...cellProps(row)}
-              key={`${column.title}-${row._id || row.id}`}
               align={column.align}
               colSpan={column.colSpan || 1}
               data-test={`${namespace}-cell`}
@@ -160,14 +163,14 @@ const GLTableRow = ({
 GLTableRow.defaultProps = {
   enableRowClick: false,
   onRowClick: x => x,
-  determine_color: false,
+  determineColor: false,
   rowName: "id",
   enableRowSelect: true,
   enableDropdownRow: false,
   extendedRowComponent: false,
   rowProps: () => ({}),
   cellProps: () => ({}),
-  innerRef: {},
+  innerRef: null,
   provided: {},
   dropdownAction: x => x,
 };
@@ -184,7 +187,7 @@ GLTableRow.propTypes = {
   enableRowClick: PropTypes.bool,
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
-  determine_color: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  determineColor: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   cellProps: PropTypes.func,
   dropdownAction: PropTypes.func,
   innerRef: PropTypes.object,

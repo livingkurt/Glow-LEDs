@@ -28,7 +28,6 @@ export default {
         res.status(500).send({ message: "Error Saving Payment" });
       }
     } catch (error) {
-      console.log({ error });
       res.status(500).send({
         error,
         message: error.message,

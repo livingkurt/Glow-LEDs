@@ -111,7 +111,7 @@ const ExpensesPage = () => {
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determineExpenseColors}
+        determineColor={determineExpenseColors}
         tableName={"Expenses"}
         namespaceScope="expenses"
         namespace="expenseTable"

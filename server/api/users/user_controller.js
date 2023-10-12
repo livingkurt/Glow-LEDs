@@ -141,7 +141,7 @@ export default {
           }
           try {
             const new_user = await user_db.create_users_db(user);
-            const token = jwt.sign({ userId: new_user._id }, "secret", { expiresIn: "1h" });
+            const token = jwt.sign({ userId: new_user._id }, config.VERIFY_USER_TOKEN_SECRET, { expiresIn: "1h" });
 
             const mailOptions = {
               from: config.DISPLAY_INFO_EMAIL,
@@ -333,7 +333,7 @@ export default {
 
       if (user) {
         // Generate a JWT token for reset password
-        const resetToken = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+        const resetToken = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
 
         // Include the token in the reset URL
         const url = `${domain()}/account/reset_password?token=${resetToken}`;
@@ -368,7 +368,7 @@ export default {
       const isMatch = await bcrypt.compare(currentPassword, user.password);
 
       if (isMatch) {
-        const token = jwt.sign({ email }, "yourSecretKey", { expiresIn: "1h" });
+        const token = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
         return res.status(200).send({ token });
       } else {
         return res.status(401).send({ message: "Passwords do not match" });

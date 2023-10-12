@@ -19,7 +19,7 @@ const determine_emoji = status => {
   }
 };
 
-const determine_color = status => {
+const determineColor = status => {
   switch (status) {
     case "delivered":
       return "#5c8883";
@@ -112,7 +112,7 @@ export default ({ order, status, title, tracker }) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${determine_color(
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${determineColor(
             status
           )}; border-radius: 20px; padding:15px;">
           <tbody>
@@ -183,7 +183,7 @@ export default ({ order, status, title, tracker }) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: ${determine_color(
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: ${determineColor(
             status
           )}; border-radius: 20px;">
           <tbody>
@@ -321,7 +321,7 @@ export default ({ order, status, title, tracker }) => {
               <td style="font-family:helvetica;">
                 <center>
                   <table
-                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: ${determine_color(
+                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: ${determineColor(
                       status
                     )}; border-radius: 20px; padding:15px;">
                     <tbody>
