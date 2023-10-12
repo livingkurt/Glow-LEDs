@@ -55,6 +55,8 @@ const contentPage = createSlice({
     content_modal: false,
     message: "",
     error: {},
+    menuItems: [],
+    loadingSlideshowImages: false,
   },
   reducers: {
     set_content: (state, { payload }) => {
@@ -91,6 +93,9 @@ const contentPage = createSlice({
     content_uploaded: (state, { payload }) => {
       state.upload_content_modal = false;
       state.remoteVersionRequirement = Date.now();
+    },
+    setMenuItems: (state, { payload }) => {
+      state.menuItems = payload;
     },
   },
   extraReducers: {
@@ -137,6 +142,19 @@ const contentPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.getSlideshowImages.pending]: (state, { payload }) => {
+      state.loadingSlideshowImages = true;
+    },
+    [API.getSlideshowImages.fulfilled]: (state, { payload }) => {
+      state.loadingSlideshowImages = false;
+      state.menuItems = payload.home_page.slideshow;
+      state.message = "Slideshow Found";
+    },
+    [API.getSlideshowImages.rejected]: (state, { payload, error }) => {
+      state.loadingSlideshowImages = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
     [API.deleteContent.pending]: (state, { payload }) => {
       state.loading = true;
     },
@@ -163,5 +181,6 @@ export const {
   close_content_modal,
   open_edit_content_modal,
   content_uploaded,
+  setMenuItems,
 } = contentPage.actions;
 export default contentPage.reducer;
