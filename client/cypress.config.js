@@ -12,10 +12,10 @@ const config = {
   chromeWebSecurity: false,
 };
 
-if (isCI) {
-  config.e2e.baseUrl = "https://glow-leds-dev.herokuapp.com"; // Replace with your CI server URL
-} else {
-  config.e2e.baseUrl = "http://localhost:3000"; // Your local server URL
-}
+config.e2e.baseUrl = "https://glow-leds-dev.herokuapp.com"; // Replace with your CI server URL
+// if (isCI) {
+// } else {
+//   config.e2e.baseUrl = "http://localhost:3000"; // Your local server URL
+// }
 
 module.exports = config;
