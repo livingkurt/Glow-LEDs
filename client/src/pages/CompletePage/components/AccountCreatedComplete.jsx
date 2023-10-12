@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { openLoginModal } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
+import { Box, Button } from "@mui/material";
 
 const AccountCreatedComplete = ({ current_user }) => {
   const params = useParams();
@@ -48,6 +49,11 @@ const AccountCreatedComplete = ({ current_user }) => {
         <>
           <h2 className="ta-c">Your Glow LEDs Account has been created!</h2>
           <h3 className="ta-c max-w-800px lh-30px m-auto">Thank you joining the Glow LEDs family!</h3>
+          <Box display="flex" justifyContent="center" mt={1}>
+            <Button variant="contained" onClick={() => dispatch(openLoginModal())}>
+              Login Here
+            </Button>
+          </Box>
           <div className="jc-c">
             <img
               src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" // Update this URL as needed
@@ -56,9 +62,7 @@ const AccountCreatedComplete = ({ current_user }) => {
             />
           </div>
           <h3 className="ta-c">Checkout our product categories below! Our collection is always growing!</h3>
-          <GLButton variant="nav" className="title_font" onClick={() => dispatch(openLoginModal())}>
-            Login
-          </GLButton>
+
           <div className="product_big_screen">
             <div className="jc-c">
               <div className="jc-c wrap">
