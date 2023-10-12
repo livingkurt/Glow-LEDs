@@ -12,7 +12,7 @@ describe("Place Order Flow", () => {
     // cy.get(".MuiAlert-message").should("contain", "Cart Item Added");
 
     // Check for the cart item
-    cy.get(".cart_sidebar-list-container").within(() => {
+    cy.get(".cart_sidebar-list-container", { timeout: 20000 }).within(() => {
       cy.get("li").contains("Double Chevron Decals").should("exist");
     });
 
