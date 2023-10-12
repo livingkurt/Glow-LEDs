@@ -18,6 +18,7 @@ import config from "./config";
 
 Bugsnag.start({
   apiKey: config.REACT_APP_BUGSNAG_KEY,
+  releaseStage: process.env.NODE_ENV || "development",
   plugins: [new BugsnagPluginReact()],
 });
 

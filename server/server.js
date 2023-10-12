@@ -17,6 +17,7 @@ const BugsnagPluginExpress = require("@bugsnag/plugin-express");
 Bugsnag.start({
   apiKey: config.BUGSNAG_KEY,
   plugins: [BugsnagPluginExpress],
+  releaseStage: process.env.NODE_ENV || "development",
 });
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
