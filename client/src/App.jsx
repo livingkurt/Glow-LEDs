@@ -1,5 +1,5 @@
 import { createElement, useEffect } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useSearchParams } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
 import { createTheme, ThemeProvider } from "@mui/material";
 import GLTheme from "./theme";

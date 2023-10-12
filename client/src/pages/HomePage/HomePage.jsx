@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import { API_Content, API_Products } from "../../utils";
@@ -11,9 +11,11 @@ import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import * as API from "../../api";
 import { set_show_search_bar } from "../../slices/settingSlice";
+import { openLoginModal } from "src/slices/userSlice";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [display, setDisplay] = useState(false);
   const [loading, set_loading] = useState(false);
@@ -26,6 +28,16 @@ const HomePage = () => {
 
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
+
+  useEffect(() => {
+    const register = searchParams.get("register");
+    const login = searchParams.get("login");
+    if (register === "true") {
+      dispatch(openLoginModal({ register: true }));
+    } else if (login === "true") {
+      dispatch(openLoginModal());
+    }
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);

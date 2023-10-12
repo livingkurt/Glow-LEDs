@@ -121,6 +121,7 @@ const userPage = createSlice({
     },
     openLoginModal: (state, { payload }) => {
       state.loginModal = true;
+      state.showRegister = payload?.register;
     },
     closeLoginModal: (state, { payload }) => {
       state.loginModal = false;
