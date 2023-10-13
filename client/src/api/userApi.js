@@ -74,6 +74,20 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id, { di
   }
 });
 
+export const saveStripeAccount = createAsyncThunk(
+  "users/saveStripeAccount",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/payments/stripe_account/${id}`);
+      dispatch(showSuccess({ message: `Stripe Account Saved` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/users/${id}`);

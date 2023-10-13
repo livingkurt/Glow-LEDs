@@ -4,7 +4,7 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import { set_edit_affiliate_modal, set_affiliate, setCreateAffiliateStep } from "../../../slices/affiliateSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { affiliateFormFields } from "./affiliateFormFields";
 import GLStepperModal from "src/shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
 import { Box, Typography } from "@mui/material";
@@ -31,9 +31,8 @@ const EditAffiliateModal = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
 
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const stripeSuccess = params.get("stripe_success") === "true";
+  const [searchParams] = useSearchParams();
+  const stripeSuccess = searchParams.get("stripe_success") === "true";
 
   useEffect(() => {
     let clean = true;
@@ -49,7 +48,7 @@ const EditAffiliateModal = () => {
       }
     }
     return () => (clean = false);
-  }, [dispatch]);
+  }, [dispatch, stripeSuccess]);
 
   const formFields = affiliateFormFields({
     products,
@@ -88,6 +87,7 @@ const EditAffiliateModal = () => {
       navigate(location.pathname);
     } else if (createAffiliateStep === 3) {
       dispatch(set_edit_affiliate_modal(false));
+      dispatch(API.saveStripeAccount(id || current_user._id));
       dispatch(API.detailsUser(id || current_user._id));
     }
   };
