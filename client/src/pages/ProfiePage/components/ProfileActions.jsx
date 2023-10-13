@@ -12,6 +12,7 @@ import ChangePasswordModal from "./ChangePasswordModal";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
+  let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
@@ -117,6 +118,17 @@ export const ProfileActions = () => {
           }}
         >
           Sign In as User
+        </Button>
+      )}
+      {current_user?.isAdmin && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(API.saveStripeAccount(id || current_user._id));
+          }}
+        >
+          Link User to Stripe Account
         </Button>
       )}
 
