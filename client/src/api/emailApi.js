@@ -397,9 +397,9 @@ export const getContent = createAsyncThunk("emails/getContent", async (content_i
 });
 export const sendAffiliateOnboardEmail = createAsyncThunk(
   "emails/sendAffiliateOnboardEmail",
-  async ({ userId }, { dispatch, rejectWithValue }) => {
+  async ({ userIds }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/emails/affiliate_onboard/${userId}`);
+      const { data } = await axios.post(`/api/emails/affiliate_onboard`, { userIds });
       dispatch(showSuccess({ message: "Affiliate Onboard Email Sent" }));
       return data;
     } catch (error) {

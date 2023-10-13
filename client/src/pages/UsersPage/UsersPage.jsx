@@ -70,7 +70,7 @@ const UsersPage = () => {
             <IconButton
               aria-label="Email"
               onClick={() => {
-                dispatch(API.sendAffiliateOnboardEmail({ userId: user._id }));
+                dispatch(API.sendAffiliateOnboardEmail({ userIds: [user._id] }));
               }}
             >
               <EmailIcon color="white" />
@@ -120,6 +120,20 @@ const UsersPage = () => {
                   }}
                 >
                   Delete Users
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    const confirm = window.confirm(
+                      `Are you sure you want to send an email to ${selectedRows.length} Users?`
+                    );
+                    if (confirm) {
+                      dispatch(API.sendAffiliateOnboardEmail({ userIds: selectedRows }));
+                    }
+                  }}
+                >
+                  Send Affiliate Onboard Email
                 </Button>
                 {selectedRows.length === 2 && (
                   <Button
