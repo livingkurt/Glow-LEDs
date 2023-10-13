@@ -88,6 +88,7 @@ const EditAffiliateModal = () => {
       navigate(location.pathname);
     } else if (createAffiliateStep === 3) {
       dispatch(set_edit_affiliate_modal(false));
+      dispatch(API.saveStripeAccount(id || current_user._id));
       dispatch(API.detailsUser(id || current_user._id));
     }
   };

@@ -1,3 +1,4 @@
+import { user_db } from "../users";
 import config from "../../config";
 import { Order } from "../orders";
 import { normalizeCustomerInfo, normalizePaymentInfo } from "./payment_helpers";
@@ -93,6 +94,40 @@ export default {
       });
 
       res.status(200).send({ message: `Transfer to Connected Account Success: ${transfer.id}` });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  stripe_account_payments_c: async (req, res) => {
+    const { user_id } = req.params;
+
+    try {
+      // Fetch the user from MongoDB
+      const user = await user_db.findById_users_db(user_id);
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      // Fetch the Stripe account using the email
+      const accounts = await stripe.accounts.list({
+        limit: 100,
+      });
+
+      // Find by email from accounts.data
+      const stripeAccount = accounts.data.find(account => account.email === user.email);
+
+      console.log({ stripeAccount });
+
+      if (!stripeAccount) {
+        return res.status(404).send({ message: "Stripe account not found" });
+      }
+
+      // Update the user with Stripe account ID
+      user.stripe_connect_id = stripeAccount.id;
+      await user.save();
+
+      res.status(200).send({ message: `Stripe Account Connected to: ${user_id}`, stripeAccountId });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }
