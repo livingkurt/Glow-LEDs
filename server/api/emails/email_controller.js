@@ -206,26 +206,10 @@ export default {
 
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
-  // affiliate_onboard_emails_c: async (req, res) => {
-  //   const { id } = req.params;
-  //   await user_db.update_users_db(id, { is_affiliated: true });
-  //   const data = await user_db.findById_users_db(id);
-  //   const mailOptions = {
-  //     from: config.DISPLAY_INFO_EMAIL,
-  //     to: data.email,
-  //     replyTo: data.email,
-  //     subject: "Glow LEDs Affiliate Onboard",
-  //     html: affiliate_onboard(data),
-  //   };
-
-  //   sendEmail(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
-  // },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;
-    const failedEmails = [];
 
     for (const id of userIds) {
-      // try {
       await user_db.update_users_db(id, { is_affiliated: true });
       const data = await user_db.findById_users_db(id);
 
@@ -237,16 +221,7 @@ export default {
       };
 
       await sendEmail(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
-      // } catch (error) {
-      //   failedEmails.push(id);
-      // }
     }
-
-    // if (failedEmails.length > 0) {
-    //   res.status(500).send({ message: "Some emails failed to send", failedEmails });
-    // } else {
-    //   res.status(200).send("Affiliate Onboarding Email Sent to all");
-    // }
   },
 
   send_affiliate_emails_c: async (req, res) => {
