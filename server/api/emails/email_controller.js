@@ -16,6 +16,7 @@ import {
   shipping_status,
   verify_email_password_reset,
   successful_password_reset,
+  affiliate_onboard,
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
@@ -205,6 +206,24 @@ export default {
 
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
+  affiliate_onboard_emails_c: async (req, res) => {
+    const { userIds } = req.body;
+
+    for (const id of userIds) {
+      await user_db.update_users_db(id, { is_affiliated: true });
+      const data = await user_db.findById_users_db(id);
+
+      const mailOptions = {
+        from: config.DISPLAY_INFO_EMAIL,
+        to: data.email,
+        subject: "Glow LEDs Affiliate Onboard",
+        html: affiliate_onboard(data),
+      };
+
+      await sendEmail(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
+    }
+  },
+
   send_affiliate_emails_c: async (req, res) => {
     const body = {
       affiliate: req.body.affiliate,

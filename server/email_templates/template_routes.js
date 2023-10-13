@@ -19,6 +19,7 @@ import {
   code_used,
   shipping_status,
   verify_email_password_reset,
+  affiliate_onboard,
 } from "./pages";
 import express from "express";
 import invoice from "./pages/invoice";
@@ -101,6 +102,10 @@ router.get("/refund", async (req, res) => {
 router.get("/current_stock", async (req, res) => {
   const data = await product_db.current_stock_products_db();
   res.send(App({ body: current_stock(data) }));
+});
+router.get("/affiliate_onboard", async (req, res) => {
+  const data = await user_db.findById_users_db("6527c4d2563238af50ee33aa");
+  res.send(affiliate_onboard(data));
 });
 router.get("/code_used", async (req, res) => {
   const promo_code = "cosmo";

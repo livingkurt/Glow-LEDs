@@ -12,6 +12,7 @@ export const determineEmailColors = content => {
 
 export const templates = [
   "account_created",
+  "affiliate_onboard",
   "verify",
   "reset_password",
   "reset_password",
@@ -23,5 +24,4 @@ export const templates = [
   "contact",
   "contact_confirmation",
   "custom_contact",
-  "account_created",
 ];

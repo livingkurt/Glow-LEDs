@@ -111,6 +111,7 @@ export const sendEmail = async (emailOptions, res, type, name) => {
         if (err) {
           res.status(500).send({ error: err, message: "Error Sending Email" });
         } else {
+          console.log(name);
           res.status(200).send({ message: "Email Successfully Sent" });
         }
       });

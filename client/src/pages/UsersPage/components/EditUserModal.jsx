@@ -49,7 +49,7 @@ const EditUserModal = () => {
       required: true,
     },
     email: {
-      type: "email",
+      type: "text",
       label: "Email",
       required: true,
     },
