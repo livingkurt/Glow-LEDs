@@ -117,17 +117,14 @@ export default {
       // Find by email from accounts.data
       const stripeAccount = accounts.data.find(account => account.email === user.email);
 
-      console.log({ stripeAccount });
-
       if (!stripeAccount) {
         return res.status(404).send({ message: "Stripe account not found" });
       }
 
       // Update the user with Stripe account ID
-      user.stripe_connect_id = stripeAccount.id;
-      await user.save();
+      await user_db.update_users_db({ _id: user._id }, { stripe_connect_id: stripeAccount.id });
 
-      res.status(200).send({ message: `Stripe Account Connected to: ${user_id}`, stripeAccountId });
+      res.status(200).send({ message: `Stripe Account Connected to: ${user.first_name} ${user.last_name}` });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }
