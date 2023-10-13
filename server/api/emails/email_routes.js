@@ -26,6 +26,7 @@ router.route("/reset_password").post(email_controller.send_successful_password_r
 router.route("/account_created").post(email_controller.send_account_created_emails_c);
 router.route("/send_shipping_status").post(email_controller.send_shipping_status_emails_c);
 router.route("/current_stock").post(email_controller.send_current_stock_emails_c);
+router.route("/affiliate_onboard/:id").put(email_controller.affiliate_onboard_emails_c);
 
 router.route("/verify").post(email_controller.send_verified_emails_c);
 

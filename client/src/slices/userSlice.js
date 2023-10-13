@@ -403,6 +403,18 @@ const userPage = createSlice({
       state.email_validations = payload.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.sendAffiliateOnboardEmail.pending]: (state, { payload }) => {
+      state.loadingAffiliateOnboardSend = true;
+    },
+    [API.sendAffiliateOnboardEmail.fulfilled]: (state, { payload }) => {
+      state.loadingAffiliateOnboardSend = false;
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.sendAffiliateOnboardEmail.rejected]: (state, { payload, error }) => {
+      state.loadingAffiliateOnboardSend = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 

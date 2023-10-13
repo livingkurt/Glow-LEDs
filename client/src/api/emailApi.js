@@ -395,3 +395,16 @@ export const getContent = createAsyncThunk("emails/getContent", async (content_i
     return rejectWithValue(error.response?.data);
   }
 });
+export const sendAffiliateOnboardEmail = createAsyncThunk(
+  "emails/sendAffiliateOnboardEmail",
+  async ({ userId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/emails/affiliate_onboard/${userId}`);
+      dispatch(showSuccess({ message: "Affiliate Onboard Email Sent" }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

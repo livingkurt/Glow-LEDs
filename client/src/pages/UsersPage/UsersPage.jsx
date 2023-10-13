@@ -7,13 +7,21 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import CloneIcon from "@mui/icons-material/Layers";
+import MountainIcon from "@mui/icons-material/Landscape";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import EmailIcon from "@mui/icons-material/Email";
+import { Loading } from "src/shared/SharedComponents";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
-  const { message, loading, remoteVersionRequirement } = userPage;
+  const { loading, remoteVersionRequirement, loadingAffiliateOnboardSend } = userPage;
 
   const userTable = useSelector(state => state.users.userTable);
   const { selectedRows, rows } = userTable;
@@ -27,44 +35,49 @@ const UsersPage = () => {
       { title: "Email", display: "email" },
       {
         title: "Guest",
-        display: user => (user.guest ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />),
+        display: user => (user.guest ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
       {
         title: "Affiliated",
-        display: user =>
-          user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: user => (user.is_affiliated ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
       {
         title: "Actions",
         display: user => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
+            <IconButton
               aria-label="Edit"
               onClick={() => {
                 dispatch(open_edit_user_modal(user));
               }}
             >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <EditIcon color="white" />
+            </IconButton>
+            <IconButton
               aria-label="Duplicate"
               onClick={() => {
                 const newDuplicateUser = duplicateUser(user);
                 dispatch(API.saveUser({ user: newDuplicateUser, profile: false }));
               }}
             >
-              <i className="fas fa-clone" />
-            </GLButton>
+              <CloneIcon color="white" />
+            </IconButton>
             <Link to={"/secure/glow/userprofile/" + user._id}>
-              <GLButton variant="icon" aria-label="view">
-                <i className="fas fa-mountain" />
-              </GLButton>
+              <IconButton aria-label="view">
+                <MountainIcon color="white" />
+              </IconButton>
             </Link>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteUser(user._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+            <IconButton
+              aria-label="Email"
+              onClick={() => {
+                dispatch(API.sendAffiliateOnboardEmail({ userId: user._id }));
+              }}
+            >
+              <EmailIcon color="white" />
+            </IconButton>
+            <IconButton aria-label="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
+              <DeleteIcon color="white" />
+            </IconButton>
           </div>
         ),
       },
@@ -80,7 +93,7 @@ const UsersPage = () => {
       <Helmet>
         <title>Admin Users | Glow LEDs</title>
       </Helmet>
-
+      <Loading loading={loadingAffiliateOnboardSend} />
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
