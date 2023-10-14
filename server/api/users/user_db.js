@@ -22,6 +22,7 @@ export default {
             },
           ],
         })
+        .populate("employee_code")
         .populate("wholesaler")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit));
@@ -48,6 +49,7 @@ export default {
             },
           ],
         })
+        .populate("employee_code")
         .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
@@ -72,6 +74,7 @@ export default {
             },
           ],
         })
+        .populate("employee_code")
         .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
