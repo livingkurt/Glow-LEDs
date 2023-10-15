@@ -2,8 +2,8 @@ const affiliate_onboard = ({ first_name }) => {
   return `
     <div>
       <p>Hi ${first_name},</p>
-      <p>We have converted your Glow LEDs account to an affiliate account!</p>
-      <p>Please follow the next steps to complete your onboarding process!</p>
+      <p>Congratulations! You have been accepted into the Official Glow LEDs Affiliate Team!</p>
+      <p>We have now converted your Glow LEDs account to an affiliate account, now you need to complete the following steps to finalize your admission.</p>
       <p><strong>Note: </strong>Before next steps, If you are currently logged in, please logout and log back in to continue.</p>
       <ol>
         <li>Navigate to your <a target="_blank" href="https://www.glow-leds.com/secure/account/profile">Profile Page</a></li>
