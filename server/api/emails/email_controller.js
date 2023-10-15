@@ -216,7 +216,7 @@ export default {
       const mailOptions = {
         from: config.DISPLAY_INFO_EMAIL,
         to: data.email,
-        subject: "Glow LEDs Affiliate Onboard",
+        subject: "Congratulations! Lets get you started!",
         html: affiliate_onboard(data),
       };
 
