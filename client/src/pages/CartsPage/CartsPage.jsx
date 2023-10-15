@@ -22,7 +22,7 @@ const CartsPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       {
         title: "Active",
@@ -79,7 +79,7 @@ const CartsPage = () => {
         namespaceScope="carts"
         namespace="cartTable"
         determineColor={determineColor}
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_cart_modal())}>

@@ -24,7 +24,7 @@ const ExpensesPage = () => {
   const { image_display_modal, selected_image } = imagePage;
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Date Added", display: expense => expense.date_of_purchase && format_date(expense.date_of_purchase) },
       {
@@ -115,7 +115,7 @@ const ExpensesPage = () => {
         tableName={"Expenses"}
         namespaceScope="expenses"
         namespace="expenseTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

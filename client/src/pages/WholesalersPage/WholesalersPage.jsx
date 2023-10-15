@@ -17,7 +17,7 @@ const WholesalersPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       {
         title: "Active",
@@ -77,7 +77,7 @@ const WholesalersPage = () => {
         tableName={"Wholesalers"}
         namespaceScope="wholesalers"
         namespace="wholesalerTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         determineColor={determineColor}
         loading={loading}
         enableRowSelect={true}

@@ -4,12 +4,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_product_modal, open_edit_product_modal } from "./productsPageSlice";
+import {
+  openProductOptionsGeneratorModal,
+  open_create_product_modal,
+  open_edit_product_modal,
+} from "./productsPageSlice";
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
+import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
+import IconButton from "@mui/material/IconButton";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import EditIcon from "@mui/icons-material/Edit";
+import LandscapeIcon from "@mui/icons-material/Landscape";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -20,20 +33,19 @@ const ProductsPage = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (product.name) {
-      dispatch(open_edit_product_modal(product));
-    }
-  }, [dispatch, product]);
+  // useEffect(() => {
+  //   if (product.name) {
+  //     dispatch(open_edit_product_modal(product));
+  //   }
+  // }, [dispatch, product]);
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Product Name", display: "name" },
       {
         title: "Hidden",
         display: product => (
-          <GLButton
-            variant="icon"
+          <IconButton
             onClick={() => {
               dispatch(
                 API.saveProduct({
@@ -44,8 +56,8 @@ const ProductsPage = () => {
             }}
             aria-label={product.active ? "deactivate" : "activate"}
           >
-            {product.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-          </GLButton>
+            {product.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+          </IconButton>
         ),
       },
       { title: "Category", display: "category" },
@@ -56,23 +68,22 @@ const ProductsPage = () => {
         title: "Actions",
         display: row => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
+            <IconButton
               aria-label="Edit"
               onClick={() => {
                 dispatch(API.detailsProduct(row._id));
+                dispatch(open_edit_product_modal());
               }}
             >
-              <i className="fas fa-edit" />
-            </GLButton>
+              <EditIcon color="white" />
+            </IconButton>
             <Link to={`/collections/all/products/${row.pathname}`}>
-              <GLButton variant="icon" aria-label="Use as Template">
-                <i className="fas fa-mountain" />
-              </GLButton>
+              <IconButton aria-label="View Product Page">
+                <LandscapeIcon color="white" />
+              </IconButton>
             </Link>
-            <GLButton
-              variant="icon"
-              aria-label="Use as Template"
+            <IconButton
+              aria-label="Copy Product"
               onClick={() =>
                 dispatch(
                   API.saveProduct({
@@ -84,11 +95,20 @@ const ProductsPage = () => {
                 )
               }
             >
-              <i className="fas fa-clone" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteProduct(row.pathname))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <FileCopyIcon color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Product Options Generator"
+              onClick={() => {
+                dispatch(API.detailsProduct(row._id));
+                dispatch(openProductOptionsGeneratorModal());
+              }}
+            >
+              <CreateNewFolderIcon color="white" />
+            </IconButton>
+            <IconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} aria-label="Delete">
+              <DeleteIcon color="white" />
+            </IconButton>
           </div>
         ),
       },
@@ -119,10 +139,10 @@ const ProductsPage = () => {
         determineColor={determineColor}
         namespaceScope="products"
         namespace="productTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         enableDropdownRow
         rowName={"name"}
-        dropdownColumnDefs={column_defs}
+        dropdownColumnDefs={columnDefs}
         dropdownRows={row =>
           [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()
         }
@@ -152,6 +172,7 @@ const ProductsPage = () => {
         }
       />
       <EditProductModal />
+      <ProductOptionsGeneratorModal />
     </div>
   );
 };

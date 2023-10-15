@@ -17,7 +17,7 @@ const CategorysPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Name", display: "name" },
       {
@@ -63,7 +63,7 @@ const CategorysPage = () => {
         tableName={"Categorys"}
         namespaceScope="categorys"
         namespace="categoryTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

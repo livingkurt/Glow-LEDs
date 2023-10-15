@@ -28,7 +28,7 @@ const UsersPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Date", display: row => new Date(row.createdAt).toLocaleDateString() },
       { title: "Name", display: user => fullName(user) },
@@ -102,7 +102,7 @@ const UsersPage = () => {
         tableName={"Users"}
         namespaceScope="users"
         namespace="userTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

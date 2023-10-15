@@ -23,7 +23,7 @@ const PaychecksPage = () => {
 
   const today = date.toISOString();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
       {
@@ -115,7 +115,7 @@ const PaychecksPage = () => {
         tableName={"Paychecks"}
         namespaceScope="paychecks"
         namespace="paycheckTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

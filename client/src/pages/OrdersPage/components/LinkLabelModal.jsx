@@ -27,7 +27,7 @@ const LinkLabelModal = () => {
     }
   }, [dispatch, linkLabelModal, order.shipping]);
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       {
         title: "Date",
@@ -95,7 +95,7 @@ const LinkLabelModal = () => {
                 tableName={"Shipments"}
                 namespaceScope="shipping"
                 namespace="shippingTable"
-                columnDefs={column_defs}
+                columnDefs={columnDefs}
                 loading={loadingShipments}
                 enableRowSelect={true}
                 noURLParams

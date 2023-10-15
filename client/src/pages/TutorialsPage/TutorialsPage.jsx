@@ -15,7 +15,7 @@ const TutorialsPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       {
         title: "Active",
@@ -85,7 +85,7 @@ const TutorialsPage = () => {
         tableName={"Tutorials"}
         namespaceScope="tutorials"
         namespace="tutorialTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect
         enableDragDrop

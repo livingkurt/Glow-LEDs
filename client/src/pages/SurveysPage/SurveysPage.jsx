@@ -24,7 +24,7 @@ const SurveysPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "createdAt", display: survey => survey.createdAt && format_date(survey.createdAt) },
       {
@@ -145,7 +145,7 @@ const SurveysPage = () => {
         tableName={"Surveys"}
         namespaceScope="surveys"
         namespace="surveyTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

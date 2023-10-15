@@ -24,7 +24,7 @@ const ImagesPage = () => {
   const { message, loading, remoteVersionRequirement, image_display_modal, selected_image } = imagePage;
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Date Added", display: image => image.createdAt && format_date(image.createdAt) },
       {
@@ -80,7 +80,7 @@ const ImagesPage = () => {
         tableName={"Images"}
         namespaceScope="images"
         namespace="imageTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

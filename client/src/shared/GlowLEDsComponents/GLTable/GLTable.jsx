@@ -8,7 +8,7 @@ import Sort from "./Sort";
 
 const GLTable = ({
   rows,
-  column_defs,
+  columnDefs,
   determineColor,
   colors,
   action_row,
@@ -87,7 +87,7 @@ const GLTable = ({
                     />
                   </th>
                 )}
-                {column_defs.map(column => (
+                {columnDefs.map(column => (
                   <th className={gl_table_th}>{column.title}</th>
                 ))}
                 {action_row && <th className={gl_table_th}>Actions</th>}
@@ -113,7 +113,7 @@ const GLTable = ({
                     </td>
                   )}
 
-                  {column_defs.map(column => {
+                  {columnDefs.map(column => {
                     const value = typeof column.display === "function" ? column.display(row) : row[column.display];
                     return (
                       <td className="p-10px" style={{ minWidth: column.width }}>

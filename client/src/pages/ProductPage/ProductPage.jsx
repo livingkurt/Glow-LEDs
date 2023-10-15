@@ -15,6 +15,7 @@ import ProductPageHead from "./components/ProductPageHead";
 import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
 import { Box, Grid, Skeleton } from "@mui/material";
 import ProductPageSkeleton from "./components/ProductPageSkeleton";
+import { EditProductModal } from "../ProductsPage/components";
 
 const ProductPage = () => {
   const params = useParams();
@@ -76,11 +77,7 @@ const ProductPage = () => {
             </div>
             {current_user?.isAdmin && (
               <div className="br-10px">
-                <GLButton
-                  variant="secondary"
-                  className=" w-300px"
-                  onClick={e => dispatch(open_edit_product_modal(product))}
-                >
+                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal())}>
                   Edit Product
                 </GLButton>
               </div>
@@ -90,7 +87,7 @@ const ProductPage = () => {
 
         <Loading loading={loading} error={error} />
         <Loading loading={loadingAddToCart} />
-
+        <EditProductModal />
         {loading && <ProductPageSkeleton />}
         {!loading && product && (
           <div className="">
