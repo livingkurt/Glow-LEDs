@@ -7,7 +7,7 @@ import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
 import { determine_total } from "../../utils/helper_functions";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
 

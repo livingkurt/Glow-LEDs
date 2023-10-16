@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GLButton } from "..";
-import useWindowDimensions from "../../Hooks/windowDimensions";
+import useWindowDimensions from "../../Hooks/useWindowDimensions";
 
 const ReadMore = ({ children, className, style, length, pre }) => {
   const [show_text, set_show_text] = useState(false);

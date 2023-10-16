@@ -1,7 +1,7 @@
 import React from "react";
 
 import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import {
   set_order_note,
   set_production_note,

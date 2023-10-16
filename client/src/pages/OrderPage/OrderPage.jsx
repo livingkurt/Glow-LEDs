@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { determineColor } from "../../utils/helpers/order_helpers";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";

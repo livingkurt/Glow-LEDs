@@ -4,13 +4,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
-    "baseUrl": "./"
-    // "paths": {
-    //   "components/*": ["src/components/*"],
-    //   "utils/*": ["src/utils/*"],
-    //   "layouts/*": ["src/layouts/*"],
-    //   "pages/*": ["src/pages/*"]
-    // }
+    "baseUrl": "./src",
+    "paths": {
+      "glow/GlowLEDsComponents/*": ["shared/GlowLEDsComponents/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

@@ -4,7 +4,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_shipping } from "../../../utils/validations";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./ReactGoogleAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";

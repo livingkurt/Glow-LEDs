@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";

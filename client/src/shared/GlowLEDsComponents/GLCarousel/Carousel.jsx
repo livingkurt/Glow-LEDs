@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CarouselItem from "./CarouselItem";
 import { Loading } from "../../SharedComponents";
-import useWindowDimensions from "../../Hooks/windowDimensions";
+import useWindowDimensions from "../../Hooks/useWindowDimensions";
 import { API_Products } from "../../../utils";
 import { shuffle } from "../../../utils/helper_functions";
 import { browser_check, mobile_check } from "../../../utils/react_helper_functions";

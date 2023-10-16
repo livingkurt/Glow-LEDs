@@ -15,7 +15,7 @@ import { determine_product_name, determine_product_name_string } from "../../../
 import { API_Emails, API_Orders, API_Shipping } from "../../../utils";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { OrderStatusButtons } from "../../OrderPage/components";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import * as API from "../../../api";
 import config from "../../../config";
 

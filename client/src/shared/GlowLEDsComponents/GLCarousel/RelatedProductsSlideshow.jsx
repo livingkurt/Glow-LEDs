@@ -11,7 +11,7 @@ import {
   mobile_check,
   sale_price_switch,
 } from "../../../utils/react_helper_functions";
-import useWindowDimensions from "../../Hooks/windowDimensions";
+import useWindowDimensions from "../../Hooks/useWindowDimensions";
 import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import Rating from "../GLRating/Rating";

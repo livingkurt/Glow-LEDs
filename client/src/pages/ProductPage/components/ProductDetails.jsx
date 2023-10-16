@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { humanize, manuals, sizes, toCapitalize } from "../../../utils/helper_functions";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReadMore from "../../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { Reviews } from ".";

@@ -5,7 +5,7 @@ import {
   determine_secondary_product_name,
   product_page_sale_price_switch,
 } from "../../../utils/react_helper_functions";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";

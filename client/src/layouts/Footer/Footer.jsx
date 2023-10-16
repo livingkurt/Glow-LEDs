@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { footerLinks, socialMediaLinks } from "./footerHelpers";
 
 const Footer = () => {

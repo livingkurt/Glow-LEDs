@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import { setEmailValidations, set_is_guest, showHideSteps, nextStep } from "../placeOrderSlice";

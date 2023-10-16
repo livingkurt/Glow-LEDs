@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useWindowDimensions from "../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../shared/Hooks/useWindowDimensions";
 import { GLButton } from "../shared/GlowLEDsComponents";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../api";
