@@ -17,7 +17,7 @@ const EditFilamentModal = () => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true }));
-      dispatch(API.listCategorys());
+      dispatch(API.listCategorys({ type: "filament_tags" }));
     }
     return () => {
       clean = false;

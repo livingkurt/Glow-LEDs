@@ -3,8 +3,10 @@ import { tableColors } from "src/shared/GlowLEDsComponents/GLTableV2/glTableHelp
 export const filamentFormFields = ({ categorys }) => {
   return {
     type: {
-      type: "text",
+      type: "autocomplete_single",
       label: "Type",
+      options: ["PETG", "TPU"],
+      getOptionLabel: option => option,
     },
     color: {
       type: "text",
@@ -14,10 +16,10 @@ export const filamentFormFields = ({ categorys }) => {
       type: "text",
       label: "Color Code",
     },
-    category: {
-      type: "autocomplete_single",
-      label: "Category",
-      options: categorys,
+    tags: {
+      type: "autocomplete_multiple",
+      label: "Tags",
+      options: categorys.filter(category => category.type === "filament_tags"),
       labelProp: "name",
     },
     active: {

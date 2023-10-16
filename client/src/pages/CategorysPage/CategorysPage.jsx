@@ -21,6 +21,7 @@ const CategorysPage = () => {
     () => [
       { title: "Name", display: "name" },
       { title: "Type", display: "type" },
+      { title: "Pathname", display: "pathname" },
       { title: "Subcategories", display: row => row.subcategorys.map(subcategory => subcategory.name).join(" ,") },
       { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
       {

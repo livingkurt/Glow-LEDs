@@ -5,7 +5,7 @@ export default {
     try {
       return await Filament.find(filter)
         .sort(sort)
-        .populate("category")
+        .populate("tags")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -17,7 +17,7 @@ export default {
   },
   findById_filaments_db: async id => {
     try {
-      return await Filament.findOne({ _id: id });
+      return await Filament.findOne({ _id: id }).populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -26,9 +26,11 @@ export default {
   },
   findMy_filaments_db: async user_id => {
     try {
-      return await Filament.find({ deleted: false, user: user_id }).sort({
-        _id: -1,
-      });
+      return await Filament.find({ deleted: false, user: user_id })
+        .sort({
+          _id: -1,
+        })
+        .populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

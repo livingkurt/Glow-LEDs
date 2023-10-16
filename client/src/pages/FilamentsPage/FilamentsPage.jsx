@@ -27,7 +27,7 @@ const FilamentsPage = () => {
         title: "Active",
         display: filament => (filament.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
-      { title: "Category", display: row => row.category },
+      { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
         title: "Actions",
         display: filament => (

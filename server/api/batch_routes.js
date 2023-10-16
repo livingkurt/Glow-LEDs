@@ -2266,6 +2266,19 @@ router.route("/migrate_surveys").put(async (req, res) => {
   }
 });
 
+router.route("/delete_old_categories").put(async (req, res) => {
+  try {
+    // Remove existing filament_tags categories to avoid duplicate seeding
+    await Category.deleteMany({});
+
+    await Product.updateMany({ categorys: { $exists: true, $not: { $size: 0 } } }, { $set: { categorys: [] } });
+
+    res.status(200).json({ success: true, message: "Categories seeded successfully!" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
 // Function to convert string to Title Case
 function toTitleCase(str) {
   return str
@@ -2370,6 +2383,73 @@ router.route("/generate_categories").put(async (req, res) => {
 
     res.status(200).json({ success: true, message: "Categories generated and products updated successfully" });
   } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
+router.route("/seed_filament_tags").put(async (req, res) => {
+  try {
+    // List of categories from the image
+    const categories = [
+      { name: "Framez Colors", type: "filament_tags", pathname: "framez_colors" },
+      { name: "Diffuser Adapters Colors", type: "filament_tags", pathname: "diffuser_adapter_colors" },
+      { name: "Diffuser Caps Colors", type: "filament_tags", pathname: "diffuser_caps_colors" },
+      { name: "Diffusers Colors", type: "filament_tags", pathname: "diffuser_colors" },
+      { name: "EXO Diffusers Plug Colors", type: "filament_tags", pathname: "exo_diffusers_plug_color" },
+      { name: "EXO Diffusers Skeleton Colors", type: "filament_tags", pathname: "exo_diffuser_skeleton_colors" },
+      { name: "Sledz Colors", type: "filament_tags", pathname: "sledz_colors" },
+      { name: "OPYN Glowskinz Colors", type: "filament_tags", pathname: "opyn_glowskinz_colors" },
+      { name: "CLOZD Glowskinz Colors", type: "filament_tags", pathname: "clozd_glowskinz_colors" },
+    ];
+
+    // Remove existing filament_tags categories to avoid duplicate seeding
+    await Category.deleteMany({ type: "filament_tags" });
+
+    // Create the new categories
+    await Category.insertMany(categories);
+
+    res.status(200).json({ success: true, message: "Categories seeded successfully!" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
+export const clozdGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple"];
+export const opynGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple", "Black"];
+export const sledColors = ["Clear", "Red", "Green", "Blue", "Purple", "Black", "White"];
+export const exoDiffusersSkeletonColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
+export const exoDiffusersPlugColors = ["Frosted", "Red", "Green", "Blue", "Purple"];
+export const diffusersColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
+export const diffuserCapsCapColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
+export const diffuserCapsAdapterColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
+export const framezColors = ["Clear", "Red", "Green", "Blue", "Purple"];
+
+router.route("/link_categories_to_filament").put(async (req, res) => {
+  try {
+    // Define a mapping from category variable names to their normal-case names
+    const categoriesMapping = {
+      clozdGlowskinzColors: "CLOZD Glowskinz Colors",
+      opynGlowskinzColors: "OPYN Glowskinz Colors",
+      sledColors: "Sledz Colors",
+      exoDiffusersSkeletonColors: "EXO Diffusers Skeleton Colors",
+      exoDiffusersPlugColors: "EXO Diffusers Plug Colors",
+      diffusersColors: "Diffusers Colors",
+      diffuserCapsCapColors: "Diffuser Caps Colors",
+      diffuserCapsAdapterColors: "Diffuser Adapters Colors",
+      framezColors: "Framez Colors",
+    };
+
+    for (const [arrayName, categoryName] of Object.entries(categoriesMapping)) {
+      const categoryColors = eval(arrayName); // Get the array using its string name
+      const categoryDoc = await Category.findOne({ name: categoryName });
+
+      for (const color of categoryColors) {
+        await Filament.updateMany({ color }, { $addToSet: { tags: categoryDoc._id } });
+      }
+    }
+    res.status(200).json({ success: true, message: "Categories seeded successfully!" });
+  } catch (error) {
+    console.log({ error });
     res.status(500).json({ success: false, message: "Something went wrong", error });
   }
 });

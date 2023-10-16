@@ -37,7 +37,7 @@ export const categoryColors = [
 ];
 
 export const determineCategoryColors = category => {
-  let result = "";
+  let result = tableColors.active;
 
   if (category.type === "category") {
     result = tableColors.active;

@@ -4,7 +4,7 @@ import { getFilteredData } from "../api_helpers";
 export default {
   findAll_categorys_s: async query => {
     try {
-      const sort_options = ["name"];
+      const sort_options = ["name", "type", "pathname"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name" });
       const categorys = await category_db.findAll_categorys_db(filter, sort, limit, page);
       const count = await category_db.count_categorys_db(filter);
