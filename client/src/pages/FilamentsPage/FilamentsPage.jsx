@@ -20,14 +20,27 @@ const FilamentsPage = () => {
 
   const columnDefs = useMemo(
     () => [
-      { title: "Color", display: "color" },
-      { title: "Type", display: "type" },
-      { title: "Color Code", display: "color_code" },
       {
         title: "Active",
         display: filament => (filament.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
-      { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
+      { title: "Color Name", display: "color" },
+      { title: "Type", display: "type" },
+      { title: "Color Code", display: "color_code" },
+      {
+        title: "Display Color",
+        display: filament => (
+          <div
+            style={{
+              width: "100px",
+              height: "30px",
+              borderRadius: "10px",
+              backgroundColor: filament.color_code,
+            }}
+          ></div>
+        ),
+      },
+      // { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
         title: "Actions",
         display: filament => (
