@@ -36,13 +36,33 @@ const ProductOptionsGeneratorModal = () => {
             <InputLabel>Product Option Type</InputLabel>
             <Select
               value={selectedOptionType}
-              onChange={e => dispatch(previewProductOptions(e.target.value))}
+              // onChange={e => dispatch(previewProductOptions({ optionType: e.target.value, productId: product.id }))}
               label="Type"
             >
               <MenuItem value={"Color"}>Color</MenuItem>
               <MenuItem value={"Secondary Color"}>Secondary Color</MenuItem>
               <MenuItem value={"Option"}>Option</MenuItem>
               <MenuItem value={"Secondary"}>Secondary</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Color Product Type</InputLabel>
+            <Select
+              value={selectedOptionType}
+              // onChange={e => dispatch(previewProductOptions({ optionType: e.target.value, productId: product.id }))}
+              label="Type"
+            >
+              <MenuItem value={"CLOZD Glowskinz Colors"}>CLOZD Glowskinz Colors</MenuItem>
+              <MenuItem value={"OPYN Glowskinz Colors"}>OPYN Glowskinz Colors</MenuItem>
+              <MenuItem value={"Sledz Colors"}>Sledz Colors</MenuItem>
+              <MenuItem value={"EXO Diffusers Skeleton Colors"}>EXO Diffusers Skeleton Colors</MenuItem>
+              <MenuItem value={"EXO Diffusers Plug Colors"}>EXO Diffusers Plug Colors</MenuItem>
+              <MenuItem value={"Diffusers Colors"}>Diffusers Colors</MenuItem>
+              <MenuItem value={"Diffuser Caps Colors"}>Diffuser Caps Colors</MenuItem>
+              <MenuItem value={"Diffuser Adapters Colors"}>Diffuser Adapters Colors</MenuItem>
+              <MenuItem value={"Framez Colors"}>Framez Colors</MenuItem>
             </Select>
           </FormControl>
         </Grid>
