@@ -3,10 +3,32 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
-
 import { create_query } from "../utils/helper_functions";
-import { showError, showSuccess } from "../slices/snackbarSlice";
+import { showError } from "../slices/snackbarSlice";
 import store from "../store";
+
+export const getFilaments = async ({ search, sorting, filters, page, pageSize }) => {
+  try {
+    return await axios.get(`/api/filaments/table`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+export const reorderFilaments = async ({ reorderedItems }) => {
+  try {
+    return axios.put(`/api/filaments/reorder`, { reorderedItems });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
 
 export const listFilaments = createAsyncThunk(
   "filaments/listFilaments",
@@ -41,10 +63,15 @@ export const saveFilament = createAsyncThunk(
 
 export const detailsFilament = createAsyncThunk(
   "filaments/detailsFilament",
-  async (id, { dispatch, rejectWithValue }) => {
+  async ({ pathname, id }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/filaments/${id}`);
-      return data;
+      let response = {};
+      if (id) {
+        response = await axios.get(`/api/filaments/${id}`);
+      } else if (pathname) {
+        response = await axios.get(`/api/filaments/${pathname}/pathname`);
+      }
+      return response.data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
@@ -54,9 +81,9 @@ export const detailsFilament = createAsyncThunk(
 
 export const deleteFilament = createAsyncThunk(
   "filaments/deleteFilament",
-  async (pathname, { dispatch, rejectWithValue }) => {
+  async (id, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.delete("/api/filaments/" + pathname);
+      const { data } = await axios.delete(`/api/filaments/${id}`);
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

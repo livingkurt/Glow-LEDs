@@ -1,7 +1,30 @@
 import { filament_db } from "../filaments";
 import { determine_filter } from "../../util";
+import { getFilteredData } from "../api_helpers";
 
 export default {
+  get_table_filaments_s: async query => {
+    try {
+      const sort_options = ["color", "type", "color_code", "active", "category"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        // normalizeFilters: normalizeFilamentFilters,
+        // normalizeSearch: normalizeFilamentSearch,
+      });
+      const filaments = await filament_db.findAll_filaments_db(filter, sort, limit, page);
+      const count = await filament_db.count_filaments_db(filter);
+      return {
+        data: filaments,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_filaments_s: async query => {
     try {
       const page = query.page ? query.page : "1";

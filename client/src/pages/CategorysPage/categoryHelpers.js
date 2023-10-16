@@ -1,3 +1,5 @@
+import { tableColors } from "src/shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
+
 export const categoryFormFields = ({ categorys }) => {
   return {
     name: {
@@ -5,17 +7,9 @@ export const categoryFormFields = ({ categorys }) => {
       label: "Name",
       required: true,
     },
-    pathname: {
+    type: {
       type: "text",
-      label: "Pathname",
-    },
-    nest_level: {
-      type: "number",
-      label: "Nest Level",
-    },
-    display_order: {
-      type: "number",
-      label: "Display Order",
+      label: "Type",
     },
     subcategorys: {
       type: "autocomplete_multiple",
@@ -23,27 +17,37 @@ export const categoryFormFields = ({ categorys }) => {
       options: categorys, // populate with categories
       labelProp: "name",
     },
-    display: {
-      type: "checkbox",
-      label: "Display",
-      default: true,
+    collections: {
+      type: "autocomplete_multiple",
+      label: "Collections",
+      options: categorys, // populate with categories
+      labelProp: "name",
     },
-    meta_title: {
+    pathname: {
       type: "text",
-      label: "Meta Title",
-    },
-    meta_description: {
-      type: "text_multiline",
-      label: "Meta Description",
-    },
-    meta_keywords: {
-      type: "text_multiline",
-      label: "Meta Keywords",
-    },
-    masthead: {
-      type: "checkbox",
-      label: "Masthead",
-      default: false,
+      label: "Pathname",
     },
   };
+};
+
+export const categoryColors = [
+  { name: "Category", color: tableColors.active },
+  { name: "Subcategory", color: tableColors.alt_color_2 },
+  { name: "Collection", color: tableColors.alt_color_1 },
+];
+
+export const determineCategoryColors = category => {
+  let result = "";
+
+  if (category.type === "category") {
+    result = tableColors.active;
+  }
+  if (category.type === "subcategory") {
+    result = tableColors.alt_color_2;
+  }
+  if (category.type === "collection") {
+    result = tableColors.alt_color_1;
+  }
+
+  return result;
 };

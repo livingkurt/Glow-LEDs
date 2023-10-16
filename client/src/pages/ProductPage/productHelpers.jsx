@@ -333,3 +333,13 @@ export const determine_secondary_product_name = (name, item) => {
     return name.includes("-") ? name.split("-")[1].trim() : name;
   }
 };
+
+export const clozdGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple"];
+export const opynGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple", "Black"];
+export const sledColors = ["Clear", "Red", "Green", "Blue", "Purple", "Black", "White"];
+export const exoDiffusersSkeletonColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
+export const exoDiffusersPlugColors = ["Frosted", "Red", "Green", "Blue", "Purple"];
+export const diffusersColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
+export const diffuserCapsCapColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
+export const diffuserCapsAdapterColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
+export const framezColors = ["Clear", "Red", "Green", "Blue", "Purple"];

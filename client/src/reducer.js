@@ -67,7 +67,10 @@ const reducers = {
     expenseTable: glTableReducer("expenseTable", {}),
   }),
   features: featureSlice,
-  filaments: filamentSlice,
+  filaments: combineReducers({
+    filamentPage: filamentSlice,
+    filamentTable: glTableReducer("filamentTable", {}),
+  }),
   orders: combineReducers({
     orderPage: orderSlice,
     orderTable: glTableReducer("orderTable", {

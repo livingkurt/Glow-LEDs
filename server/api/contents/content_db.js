@@ -3,7 +3,6 @@ import { Content } from "../contents";
 
 export default {
   findAll_contents_db: async (filter, sort, limit, page) => {
-    console.log({ filter, sort, limit, page });
     try {
       return await Content.find(filter)
         .populate("home_page.image_object")
