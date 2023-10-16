@@ -245,13 +245,18 @@ export const productFormFields = ({ products, users, categorys, product, onEdit,
       label: "Color Product Name",
       labelProp: "color_product_name",
     },
+    color_group_name: {
+      type: "text",
+      label: "Color Group Name",
+      labelProp: "color_group_name",
+    },
     color_images_object: {
       type: "image_upload",
       label: "Color Images",
-      // options: images,
       labelProp: "link",
       album: `${product.name} Color Images`,
     },
+
     secondary_color_products: {
       type: "autocomplete_multiple",
       label: "Secondary Color Product",
@@ -263,6 +268,11 @@ export const productFormFields = ({ products, users, categorys, product, onEdit,
       type: "text",
       label: "Secondary Color Product Name",
       labelProp: "secondary_color_product_name",
+    },
+    secondary_color_group_name: {
+      type: "text",
+      label: "Secondary Color Group Name",
+      labelProp: "secondary_color_group_name",
     },
     secondary_color_images_object: {
       type: "image_upload",
