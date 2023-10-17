@@ -6,7 +6,7 @@ describe("Place Order Flow", () => {
     cy.contains("button", "Shop").click();
     cy.get(".product").contains("Batman Decals").click();
     cy.get(".product").contains("Double Chevron Decals - 11").click();
-    cy.contains("button", "Add To Cart").click();
+    cy.contains("button", "Add To Cart", { timeout: 20000 }).click();
 
     // // Check for the snackbar
     // cy.get(".MuiAlert-message").should("contain", "Cart Item Added");

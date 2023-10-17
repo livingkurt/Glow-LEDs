@@ -17,36 +17,35 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
   const dispatch = useDispatch();
 
   const handleFirstPageButtonClick = () => {
-    dispatch(updatePage(namespace, droppableId, 0));
+    dispatch(updatePage(namespace, 0));
   };
 
   const handleBackButtonClick = () => {
-    dispatch(updatePage(namespace, droppableId, page - 1));
+    dispatch(updatePage(namespace, page - 1));
   };
 
   const handleNextButtonClick = () => {
-    dispatch(updatePage(namespace, droppableId, page + 1));
+    dispatch(updatePage(namespace, page + 1));
   };
 
   const handleLastPageButtonClick = () => {
-    dispatch(updatePage(namespace, droppableId, Math.max(0, Math.ceil(count / rowsPerPage) - 1)));
+    dispatch(updatePage(namespace, Math.max(0, Math.ceil(count / rowsPerPage) - 1)));
   };
 
   const handleSelectedPageChange = (event, newValue) => {
     const selectedValue = selectedPage(newValue);
-    dispatch(updatePage(namespace, droppableId, parseInt(selectedValue, 10) - 1));
+    dispatch(updatePage(namespace, parseInt(selectedValue, 10) - 1));
   };
-
   return (
-    <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
-      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label={`first page ${location}`}>
+    <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }} data-test="pagination-component">
+      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
         <FirstPageIcon style={{ fontSize: "25px" }} />
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label="previous page"
-        data-test={`previous-button-${location}`}
+        data-test="previous-button"
       >
         <KeyboardArrowLeft style={{ fontSize: "25px" }} />
       </IconButton>
@@ -54,10 +53,7 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
         value={page + 1}
         onChange={handleSelectedPageChange}
         getOptionLabel={option => option.toString()}
-        getOptionSelected={(option, value) => option === value}
-        disableClearable
         options={pageItems(rowsPerPage, count)}
-        freeSolo={false}
         style={{ width: 120 }}
         renderInput={params => (
           <TextField
@@ -65,7 +61,7 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
             variant="outlined"
             size="small"
             sx={{
-              width: 80,
+              width: 120,
               "& .MuiInputBase-root": {
                 fontSize: "0.8rem", // Adjust the font size here
                 alignItems: "center", // Align the elements vertically in the center
@@ -76,7 +72,7 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
             }}
             inputProps={{
               ...params.inputProps,
-              "aria-label": `select page ${location}`,
+              "aria-label": "select page",
             }}
           />
         )}
@@ -85,14 +81,14 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
         onClick={handleNextButtonClick}
         disabled={page >= totalPages(rowsPerPage, count) - 1}
         aria-label="next page"
-        data-test={`next-button-${location}`}
+        data-test="next-button"
       >
         <KeyboardArrowRight style={{ fontSize: "25px" }} />
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= totalPages(rowsPerPage, count) - 1}
-        aria-label={`last page ${location}`}
+        aria-label="last page"
       >
         <LastPageIcon style={{ fontSize: "25px" }} />
       </IconButton>
