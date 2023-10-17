@@ -1,4 +1,4 @@
-import { facebook_catalog_upload } from "./background/daily_workers/facebook_catalog_upload";
+import axios from "axios";
 import { google_catalog_upload } from "./background/daily_workers/google_catalog_upload";
 import { payout_affiliates } from "./background/monthly_workers/payout_affiliates";
 import { payout_teams } from "./background/monthly_workers/payout_teams";
@@ -51,11 +51,11 @@ export const months = [
   "December",
 ];
 
-export const run_daily_workers = dispatch => {
+export const run_daily_workers = async dispatch => {
   const confirm = window.confirm("Are you sure you want to run the daily worker?");
   if (confirm) {
     dispatch(set_loading(true));
-    facebook_catalog_upload();
+    await axios.get(`/api/products/facebook_catelog`);
     google_catalog_upload();
     dispatch(set_loading(false));
   }
