@@ -173,7 +173,6 @@ export default {
     const { params, body } = req;
     try {
       const promo = await promo_services.validate_promo_code_promos_s(params, body);
-      console.log({ promo });
       if (promo) {
         return res.status(200).send(promo);
       }

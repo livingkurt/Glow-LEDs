@@ -72,7 +72,7 @@ const PaymentStep = () => {
   const check_code = async e => {
     e.preventDefault();
 
-    const request = await dispatch(API.validatePromoCode({ promo_code, current_user, cartItems }));
+    const request = await dispatch(API.validatePromoCode({ promo_code, current_user, cartItems, shipping }));
     console.log({ request });
 
     if (request.payload.isValid) {

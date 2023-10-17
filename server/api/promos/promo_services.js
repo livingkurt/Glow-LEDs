@@ -347,7 +347,7 @@ export default {
   },
   validate_promo_code_promos_s: async (params, body) => {
     const { promo_code } = params;
-    const { current_user, cartItems } = body;
+    const { current_user, cartItems, shipping } = body;
     const errors = { promo_code: [] };
     const isValid = true;
     try {
@@ -404,6 +404,17 @@ export default {
         return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
       }
 
+      const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
+      const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
+      if (affiliate) {
+        if (affiliate && affiliate.user.email === current_user.email) {
+          return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
+        }
+        if (shipping.first_name === current_user.first_name && shipping.last_name === current_user.last_name) {
+          return { isValid: false, errors: { shipping: "You can't use your own public promo code." } };
+        }
+      }
+
       // // Check if promo is associated with an affiliate and validate
       // if (promo.affiliate) {
       //   const affiliate = await Affiliate.findOne({ user: current_user._id }).exec();
@@ -416,7 +427,6 @@ export default {
       // if (promo.user && promo.user.toString() !== current_user._id.toString()) {
       //   return { isValid: false, errors: { promo_code: "This promo code is not associated with your account." } };
       // }
-      console.log({ isValid, errors, promo });
       return { isValid, errors, promo };
     } catch (error) {
       if (error instanceof Error) {
