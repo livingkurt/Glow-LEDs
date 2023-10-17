@@ -2454,4 +2454,27 @@ router.route("/link_categories_to_filament").put(async (req, res) => {
   }
 });
 
+router.route("/xxl_revenue").get(async (req, res) => {
+  try {
+    // Query to find all orders that have XXL-sized gloves
+    const ordersWithXXL = await Order.find({ "orderItems.option_product.size": "XXL" }).exec();
+
+    let totalRevenue = 0;
+
+    // Loop through each order to calculate the total revenue
+    ordersWithXXL.forEach(order => {
+      order.orderItems.forEach(item => {
+        if (item.option_product && item.option_product.size === "XXL") {
+          totalRevenue += item.qty * item.price;
+        }
+      });
+    });
+
+    res.status(200).json({ success: true, totalRevenue });
+  } catch (error) {
+    console.log({ error });
+    res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
 export default router;
