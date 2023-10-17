@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EmailIcon from "@mui/icons-material/Email";
-import { Loading } from "src/shared/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);

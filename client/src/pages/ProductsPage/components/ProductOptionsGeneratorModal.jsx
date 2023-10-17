@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActionModal from "src/shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { FormControl, InputLabel, Select, MenuItem, Typography, Grid } from "@mui/material";
 import { closeProductOptionsGeneratorModal, previewProductOptions } from "../productsPageSlice";
+import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 
 const ProductOptionsGeneratorModal = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { tableColors } from "src/shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
+import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 
 export const categoryFormFields = ({ categorys }) => {
   return {

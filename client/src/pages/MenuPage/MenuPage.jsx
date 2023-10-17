@@ -7,9 +7,8 @@ import { Loading } from "../../shared/SharedComponents";
 import { MenuItemD, MenuItemM } from "./components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { listContents } from "src/api";
 import * as API from "../../api";
-import { setMenuItems } from "src/slices/contentSlice";
+import { setMenuItems } from "../../slices/contentSlice";
 
 const MenuPage = () => {
   const params = useParams();
