@@ -2,7 +2,7 @@ import { Cart, Container, Content, Footer, Header, Sidebar } from "../../layouts
 import React, { useState } from "react";
 import { isBrowser } from "react-device-detect";
 import Headroom from "react-headroom";
-import useWindowDimensions from "../Hooks/windowDimensions";
+import useWindowDimensions from "../Hooks/useWindowDimensions";
 
 const MainLayout = ({ children }) => {
   const [visible, setVisible] = useState(true);

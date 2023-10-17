@@ -5,13 +5,13 @@ import { EditProductPage } from "../../pages/ProductsPage/components";
 import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
-import { EditPaycheckPage, PaychecksPage } from "../../pages/PaychecksPage";
+import { PaychecksPage } from "../../pages/PaychecksPage";
 import { EditSettingPage, SettingsPage } from "../../pages/SettingsPage";
-import { CategorysPage, EditCategoryPage } from "../../pages/CategorysPage";
+import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "../../pages/PalettesPage";
-import { EditFilamentPage, FilamentsPage } from "../../pages/FilamentsPage";
+import { FilamentsPage } from "../../pages/FilamentsPage";
 import { DashboardPage } from "../../pages/DashboardPage";
 import { ExpensesPage } from "../../pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
@@ -104,12 +104,9 @@ export const AdminComponents = {
   PalettesPage,
   FilamentsPage,
   ProfilePage,
-  EditPaycheckPage,
   EditSettingPage,
-  EditCategoryPage,
   EditParcelPage,
   EditPalettePage,
-  EditFilamentPage,
   AdminChangePasswordPage,
   DashboardPage,
   EditFeaturePage,

@@ -20,7 +20,7 @@ const PromosPage = () => {
   const { selectedRows } = promoTable;
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Date", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       {
@@ -88,7 +88,7 @@ const PromosPage = () => {
         namespaceScope="promos"
         searchPlaceholder={"Search By Promo Code"}
         namespace="promoTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

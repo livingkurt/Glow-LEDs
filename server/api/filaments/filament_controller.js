@@ -1,6 +1,18 @@
 import { filament_services } from "../filaments";
 
 export default {
+  get_table_filaments_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const filaments = await filament_services.get_table_filaments_s(query);
+      if (filaments) {
+        return res.status(200).send(filaments);
+      }
+      return res.status(404).send({ message: "Filaments Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_filaments_c: async (req, res) => {
     const { query } = req;
     try {

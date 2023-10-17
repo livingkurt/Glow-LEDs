@@ -9,7 +9,7 @@ import { productFormFields } from "./productFormFields";
 const EditProductModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
-  const { edit_product_modal, product, loading, products } = productsPage;
+  const { edit_product_modal, product, loading, products, selectedOption } = productsPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
   const categoryPage = useSelector(state => state.categorys.categoryPage);

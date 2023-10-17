@@ -2,7 +2,6 @@ import { Checkbox, FormControlLabel, Paper, Skeleton, TextField, Typography } fr
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
-import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
 import { determine_shown_fields, formatDate, getEmptyObjectFromSchema, getValueByStringPath } from "./glFormHelpers";
@@ -12,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import GLColorPicker from "./components/GLColorPicker";
 import GLArray from "./components/GLArray";
+import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
   const userPage = useSelector(state => state.users.userPage);

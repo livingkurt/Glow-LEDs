@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { API_Emails, API_Promos } from "../../../utils";
 import { validate_email } from "../../../utils/validations";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
 import { IconButton } from "@mui/material";

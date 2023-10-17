@@ -1,20 +1,20 @@
-/* eslint-disable max-lines-per-function */
-
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api";
+import * as API from "../api/filamentApi";
 
 const filamentPage = createSlice({
   name: "filamentPage",
   initialState: {
     loading: false,
     filaments: [],
-    filament: {},
+    filament: {
+      name: "",
+    },
+    remoteVersionRequirement: 0,
+    edit_filament_modal: false,
+    filament_modal: false,
     message: "",
+    success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_filament: (state, { payload }) => {
@@ -27,17 +27,34 @@ const filamentPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_success: (state, { payload }) => {
+      state.success = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    set_edit_filament_modal: (state, { payload }) => {
+      state.edit_filament_modal = payload;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_create_filament_modal: (state, { payload }) => {
+      state.edit_filament_modal = true;
+      state.filament = {
+        name: "",
+      };
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    open_edit_filament_modal: (state, { payload }) => {
+      state.edit_filament_modal = true;
+      state.filament = payload;
+    },
+    close_filament_modal: (state, { payload }) => {
+      state.filament_modal = false;
+      state.filament = {
+        name: "",
+      };
+    },
+    open_filament_modal: (state, { payload }) => {
+      state.filament_modal = true;
+      state.filament = payload;
+    },
+    setRemoteVersionRequirement: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -47,8 +64,8 @@ const filamentPage = createSlice({
     },
     [API.listFilaments.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.filaments = payload.filaments;
-      state.totalPages = payload.totalPages;
+      state.filaments = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Filaments Found";
     },
@@ -62,7 +79,10 @@ const filamentPage = createSlice({
     },
     [API.saveFilament.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.edit_filament_modal = false;
+      state.success = true;
       state.message = "Filament Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveFilament.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -89,6 +109,7 @@ const filamentPage = createSlice({
       state.loading = false;
       state.filament = payload.filament;
       state.message = "Filament Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteFilament.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -98,5 +119,14 @@ const filamentPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_filament } = filamentPage.actions;
+export const {
+  set_loading,
+  set_filament,
+  set_edit_filament_modal,
+  open_create_filament_modal,
+  open_filament_modal,
+  close_filament_modal,
+  open_edit_filament_modal,
+  setRemoteVersionRequirement,
+} = filamentPage.actions;
 export default filamentPage.reducer;

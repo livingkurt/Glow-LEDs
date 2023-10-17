@@ -22,7 +22,7 @@ const EmailsPage = () => {
   const { loading, remoteVersionRequirement } = emailPage;
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "createdAt", display: email => email.createdAt && format_date(email.createdAt) },
       {
@@ -94,7 +94,7 @@ const EmailsPage = () => {
         tableName={"Emails"}
         namespaceScope="emails"
         namespace="emailTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

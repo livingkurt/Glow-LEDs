@@ -4,14 +4,14 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import { API_Content, API_Products } from "../../utils";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import * as API from "../../api";
 import { set_show_search_bar } from "../../slices/settingSlice";
-import { openLoginModal } from "src/slices/userSlice";
+import { openLoginModal } from "../../slices/userSlice";
 
 const HomePage = () => {
   const navigate = useNavigate();

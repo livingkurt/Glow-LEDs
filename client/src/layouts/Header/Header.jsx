@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../Banner";
-import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { API_Products } from "../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";

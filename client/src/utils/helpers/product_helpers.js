@@ -1,7 +1,7 @@
 import { API_Products } from "..";
 import { snake_case } from "../helper_functions";
 
-export const determineColor_modifier = (category) => {
+export const determineColor_modifier = category => {
   if (category === "glowskinz") {
     return "Skin";
   } else if (category === "diffuser_caps") {
@@ -13,7 +13,7 @@ export const determineColor_modifier = (category) => {
   }
 };
 
-export const determine_secondary_color_modifier = (category) => {
+export const determine_secondary_color_modifier = category => {
   if (category === "glowskinz") {
     return "Sled";
   } else if (category === "diffuser_caps") {
@@ -25,7 +25,7 @@ export const determine_secondary_color_modifier = (category) => {
   }
 };
 
-export const determine_option_modifier = (category) => {
+export const determine_option_modifier = category => {
   if (category === "glowskinz") {
     return "";
   } else if (category === "diffuser_caps") {
@@ -37,7 +37,7 @@ export const determine_option_modifier = (category) => {
   }
 };
 
-export const determine_secondary_modifier = (category) => {
+export const determine_secondary_modifier = category => {
   if (category === "glowskinz") {
     return "Style";
   } else if (category === "diffuser_caps") {
@@ -68,16 +68,16 @@ const no_state = {
   facts: "",
   description: "",
   chips: [],
-  video: ""
+  video: "",
 };
 
-const save_products = (list, product, products, set_products: Function) => {
+const save_products = (list, product, products, set_products) => {
   list.map(async (item, index) => {
     const new_product = { ...product, ...item };
     delete new_product._id;
     const { data } = await API_Products.create_products_a(new_product);
     if (products) {
-      set_products((products) => [...products, data]);
+      set_products(products => [...products, data]);
     } else {
       set_products([data]);
     }
@@ -86,10 +86,10 @@ const save_products = (list, product, products, set_products: Function) => {
 
 export const create_color_products = async (
   product,
-  set_color_products: Function,
+  set_color_products,
   color_products,
   color_modifier,
-  color_images
+  color_images_object
 ) => {
   let list = [];
   if (product.category === "glowskinz" && product.subcategory === "clozd" && product.collection === "capez") {
@@ -103,8 +103,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: true,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
 
       {
@@ -116,8 +116,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -128,8 +128,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -140,8 +140,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -152,8 +152,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -164,8 +164,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[7] ? [color_images[7]] : [],
-        ...no_state
+        images_object: color_images_object[7] ? [color_images_object[7]] : [],
+        ...no_state,
       },
       {
         name: `Frosted ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -176,8 +176,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Black ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -188,8 +188,8 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `White ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -200,9 +200,9 @@ export const create_color_products = async (
         product_collection: "capez",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "glowskinz" && product.subcategory === "clozd") {
     list = [
@@ -215,8 +215,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Frosted ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -227,8 +227,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -239,8 +239,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Emerald ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -251,8 +251,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -263,8 +263,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -275,8 +275,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -287,8 +287,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -299,9 +299,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[7] ? [color_images[7]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[7] ? [color_images_object[7]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "glowskinz" && product.subcategory === "opyn") {
     list = [
@@ -314,8 +314,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Frosted ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -326,9 +326,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
         secondary_products: [],
-        ...no_state
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -339,8 +339,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Emerald ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -351,8 +351,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -363,8 +363,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -375,8 +375,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -387,8 +387,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -399,8 +399,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[7] ? [color_images[7]] : [],
-        ...no_state
+        images_object: color_images_object[7] ? [color_images_object[7]] : [],
+        ...no_state,
       },
       {
         name: `Black  ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -411,9 +411,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[9] ? [color_images[9]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[9] ? [color_images_object[9]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "diffuser_caps") {
     if (product.subcategory === "diffuser_adapters") {
@@ -427,8 +427,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: true,
-          images: color_images[0] ? [color_images[0]] : [],
-          ...no_state
+          images_object: color_images_object[0] ? [color_images_object[0]] : [],
+          ...no_state,
         },
         {
           name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -439,8 +439,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[1] ? [color_images[1]] : [],
-          ...no_state
+          images_object: color_images_object[1] ? [color_images_object[1]] : [],
+          ...no_state,
         },
         {
           name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -451,8 +451,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[2] ? [color_images[2]] : [],
-          ...no_state
+          images_object: color_images_object[2] ? [color_images_object[2]] : [],
+          ...no_state,
         },
         {
           name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -463,8 +463,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[3] ? [color_images[3]] : [],
-          ...no_state
+          images_object: color_images_object[3] ? [color_images_object[3]] : [],
+          ...no_state,
         },
         {
           name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -475,8 +475,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[4] ? [color_images[4]] : [],
-          ...no_state
+          images_object: color_images_object[4] ? [color_images_object[4]] : [],
+          ...no_state,
         },
         {
           name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -487,9 +487,9 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[5] ? [color_images[5]] : [],
-          ...no_state
-        }
+          images_object: color_images_object[5] ? [color_images_object[5]] : [],
+          ...no_state,
+        },
       ];
     } else {
       list = [
@@ -502,8 +502,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: true,
-          images: color_images[0] ? [color_images[0]] : [],
-          ...no_state
+          images_object: color_images_object[0] ? [color_images_object[0]] : [],
+          ...no_state,
         },
         {
           name: `White ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -514,8 +514,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[1] ? [color_images[1]] : [],
-          ...no_state
+          images_object: color_images_object[1] ? [color_images_object[1]] : [],
+          ...no_state,
         },
         {
           name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -526,8 +526,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[2] ? [color_images[2]] : [],
-          ...no_state
+          images_object: color_images_object[2] ? [color_images_object[2]] : [],
+          ...no_state,
         },
         {
           name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -538,8 +538,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[3] ? [color_images[3]] : [],
-          ...no_state
+          images_object: color_images_object[3] ? [color_images_object[3]] : [],
+          ...no_state,
         },
         {
           name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -550,8 +550,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[4] ? [color_images[4]] : [],
-          ...no_state
+          images_object: color_images_object[4] ? [color_images_object[4]] : [],
+          ...no_state,
         },
         {
           name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -562,8 +562,8 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[5] ? [color_images[5]] : [],
-          ...no_state
+          images_object: color_images_object[5] ? [color_images_object[5]] : [],
+          ...no_state,
         },
         {
           name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -574,9 +574,9 @@ export const create_color_products = async (
           product_collection: "colors",
           item_group_id: product._id,
           default_option: false,
-          images: color_images[6] ? [color_images[6]] : [],
-          ...no_state
-        }
+          images_object: color_images_object[6] ? [color_images_object[6]] : [],
+          ...no_state,
+        },
       ];
     }
   } else if (product.category === "diffusers") {
@@ -590,8 +590,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -602,8 +602,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -614,8 +614,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -626,8 +626,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -638,8 +638,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -650,9 +650,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "exo_diffusers") {
     list = [
@@ -665,8 +665,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `White ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -677,8 +677,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -689,8 +689,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -701,8 +701,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -713,8 +713,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
 
       {
@@ -726,8 +726,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -738,9 +738,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "batteries") {
     list = [
@@ -753,8 +753,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -765,8 +765,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -777,8 +777,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -789,8 +789,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -801,8 +801,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -813,8 +813,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Black ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -825,8 +825,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
       },
       {
         name: `Clear ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -837,9 +837,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[7] ? [color_images[7]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[7] ? [color_images_object[7]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.product_collection === "novaskinz") {
     list = [
@@ -852,8 +852,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: color_images[0] ? [color_images[0]] : [],
-        ...no_state
+        images_object: color_images_object[0] ? [color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -864,8 +864,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[1] ? [color_images[1]] : [],
-        ...no_state
+        images_object: color_images_object[1] ? [color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Emerald ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -876,8 +876,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[2] ? [color_images[2]] : [],
-        ...no_state
+        images_object: color_images_object[2] ? [color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -888,8 +888,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[3] ? [color_images[3]] : [],
-        ...no_state
+        images_object: color_images_object[3] ? [color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -900,8 +900,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[4] ? [color_images[4]] : [],
-        ...no_state
+        images_object: color_images_object[4] ? [color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -912,8 +912,8 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[5] ? [color_images[5]] : [],
-        ...no_state
+        images_object: color_images_object[5] ? [color_images_object[5]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${color_modifier && " - " + color_modifier}`,
@@ -924,9 +924,9 @@ export const create_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: color_images[6] ? [color_images[6]] : [],
-        ...no_state
-      }
+        images_object: color_images_object[6] ? [color_images_object[6]] : [],
+        ...no_state,
+      },
     ];
   }
   save_products(list, product, color_products, set_color_products);
@@ -934,10 +934,10 @@ export const create_color_products = async (
 
 export const create_secondary_color_products = async (
   product,
-  set_secondary_color_products: Function,
+  set_secondary_color_products,
   secondary_color_products,
   secondary_color_modifier,
-  secondary_color_images
+  secondary_color_images_object
 ) => {
   let list = [];
   if (product.category === "glowskinz") {
@@ -951,8 +951,8 @@ export const create_secondary_color_products = async (
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: [secondary_color_images[0]],
-        ...no_state
+        images_object: [secondary_color_images_object[0]],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -963,8 +963,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[2]],
-        ...no_state
+        images_object: [secondary_color_images_object[2]],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -975,8 +975,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[3]],
-        ...no_state
+        images_object: [secondary_color_images_object[3]],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -987,8 +987,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[4]],
-        ...no_state
+        images_object: [secondary_color_images_object[4]],
+        ...no_state,
       },
 
       {
@@ -1000,8 +1000,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[5]],
-        ...no_state
+        images_object: [secondary_color_images_object[5]],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1012,8 +1012,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[6]],
-        ...no_state
+        images_object: [secondary_color_images_object[6]],
+        ...no_state,
       },
       {
         name: `Frosted ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1024,8 +1024,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[1]],
-        ...no_state
+        images_object: [secondary_color_images_object[1]],
+        ...no_state,
       },
       {
         name: `Black ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1036,8 +1036,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[7]],
-        ...no_state
+        images_object: [secondary_color_images_object[7]],
+        ...no_state,
       },
       {
         name: `White ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1048,9 +1048,9 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[7]],
-        ...no_state
-      }
+        images_object: [secondary_color_images_object[7]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "diffuser_caps") {
     list = [
@@ -1064,8 +1064,8 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: true,
         price: 8,
-        images: secondary_color_images[0] ? [secondary_color_images[0]] : [],
-        ...no_state
+        images_object: secondary_color_images_object[0] ? [secondary_color_images_object[0]] : [],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1077,8 +1077,8 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         price: 8,
-        images: secondary_color_images[1] ? [secondary_color_images[1]] : [],
-        ...no_state
+        images_object: secondary_color_images_object[1] ? [secondary_color_images_object[1]] : [],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1090,8 +1090,8 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         price: 8,
-        images: secondary_color_images[2] ? [secondary_color_images[2]] : [],
-        ...no_state
+        images_object: secondary_color_images_object[2] ? [secondary_color_images_object[2]] : [],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1103,8 +1103,8 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         price: 8,
-        images: secondary_color_images[3] ? [secondary_color_images[3]] : [],
-        ...no_state
+        images_object: secondary_color_images_object[3] ? [secondary_color_images_object[3]] : [],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1116,8 +1116,8 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         price: 8,
-        images: secondary_color_images[4] ? [secondary_color_images[4]] : [],
-        ...no_state
+        images_object: secondary_color_images_object[4] ? [secondary_color_images_object[4]] : [],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1129,9 +1129,9 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         price: 8,
-        images: secondary_color_images[5] ? [secondary_color_images[5]] : [],
-        ...no_state
-      }
+        images_object: secondary_color_images_object[5] ? [secondary_color_images_object[5]] : [],
+        ...no_state,
+      },
     ];
   } else if (product.category === "diffusers") {
     list = [];
@@ -1146,8 +1146,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[0]],
-        ...no_state
+        images_object: [secondary_color_images_object[0]],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1158,8 +1158,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[1]],
-        ...no_state
+        images_object: [secondary_color_images_object[1]],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1170,8 +1170,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[2]],
-        ...no_state
+        images_object: [secondary_color_images_object[2]],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1182,8 +1182,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[3]],
-        ...no_state
+        images_object: [secondary_color_images_object[3]],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1194,8 +1194,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[4]],
-        ...no_state
+        images_object: [secondary_color_images_object[4]],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1206,9 +1206,9 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[5]],
-        ...no_state
-      }
+        images_object: [secondary_color_images_object[5]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "batteries") {
     list = [];
@@ -1223,8 +1223,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[0]],
-        ...no_state
+        images_object: [secondary_color_images_object[0]],
+        ...no_state,
       },
       {
         name: `Red ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1235,8 +1235,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[2]],
-        ...no_state
+        images_object: [secondary_color_images_object[2]],
+        ...no_state,
       },
       {
         name: `Green ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1247,8 +1247,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[3]],
-        ...no_state
+        images_object: [secondary_color_images_object[3]],
+        ...no_state,
       },
       {
         name: `Blue ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1259,8 +1259,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[4]],
-        ...no_state
+        images_object: [secondary_color_images_object[4]],
+        ...no_state,
       },
       {
         name: `Violet ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1271,8 +1271,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[5]],
-        ...no_state
+        images_object: [secondary_color_images_object[5]],
+        ...no_state,
       },
       {
         name: `Purple ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1283,8 +1283,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[6]],
-        ...no_state
+        images_object: [secondary_color_images_object[6]],
+        ...no_state,
       },
       {
         name: `Frosted ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1295,8 +1295,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[1]],
-        ...no_state
+        images_object: [secondary_color_images_object[1]],
+        ...no_state,
       },
       {
         name: `Black ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1307,8 +1307,8 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[8]],
-        ...no_state
+        images_object: [secondary_color_images_object[8]],
+        ...no_state,
       },
       {
         name: `White ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,
@@ -1319,9 +1319,9 @@ export const create_secondary_color_products = async (
         product_collection: "secondary_colors",
         item_group_id: product._id,
         default_option: false,
-        images: [secondary_color_images[7]],
-        ...no_state
-      }
+        images_object: [secondary_color_images_object[7]],
+        ...no_state,
+      },
     ];
   }
   save_products(list, product, secondary_color_products, set_secondary_color_products);
@@ -1329,10 +1329,10 @@ export const create_secondary_color_products = async (
 
 export const create_option_products = async (
   product,
-  set_option_products: Function,
+  set_option_products,
   option_products,
   option_modifier,
-  option_images
+  option_images_object
 ) => {
   let list = [];
   if (product.category === "glowskinz" && product.subcategory === "clozd") {
@@ -1346,8 +1346,8 @@ export const create_option_products = async (
         price: (product.price * 0.1495747874).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[0]],
-        ...no_state
+        images_object: [option_images_object[0]],
+        ...no_state,
       },
       {
         name: `${product.name} - 8${option_modifier && " - " + option_modifier}`,
@@ -1358,8 +1358,8 @@ export const create_option_products = async (
         price: (product.price * 0.899949975).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[1]],
-        ...no_state
+        images_object: [option_images_object[1]],
+        ...no_state,
       },
       {
         name: `${product.name} - 10${option_modifier && " - " + option_modifier}`,
@@ -1370,9 +1370,9 @@ export const create_option_products = async (
         price: product.price,
         item_group_id: product._id,
         default_option: true,
-        images: [option_images[2]],
-        ...no_state
-      }
+        images_object: [option_images_object[2]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "glowskinz" && product.subcategory === "opyn") {
     list = [
@@ -1385,8 +1385,8 @@ export const create_option_products = async (
         price: (product.price * 0.1495747874).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[0]],
-        ...no_state
+        images_object: [option_images_object[0]],
+        ...no_state,
       },
       {
         name: `${product.name} - 8${option_modifier && " - " + option_modifier}`,
@@ -1397,8 +1397,8 @@ export const create_option_products = async (
         price: (product.price * 0.899949975).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[1]],
-        ...no_state
+        images_object: [option_images_object[1]],
+        ...no_state,
       },
       {
         name: `${product.name} - 10${option_modifier && " - " + option_modifier}`,
@@ -1409,9 +1409,9 @@ export const create_option_products = async (
         price: product.price,
         item_group_id: product._id,
         default_option: true,
-        images: [option_images[2]],
-        ...no_state
-      }
+        images_object: [option_images_object[2]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "diffuser_caps") {
     list = [
@@ -1424,8 +1424,8 @@ export const create_option_products = async (
         price: 0,
         item_group_id: product._id,
         default_option: true,
-        images: [option_images[0]],
-        ...no_state
+        images_object: [option_images_object[0]],
+        ...no_state,
       },
       {
         name: `${product.name} - 20 mm (Mega${option_modifier && " - " + option_modifier})`,
@@ -1436,9 +1436,9 @@ export const create_option_products = async (
         price: 0,
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[1]],
-        ...no_state
-      }
+        images_object: [option_images_object[1]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "diffusers") {
     list = [];
@@ -1457,8 +1457,8 @@ export const create_option_products = async (
         price: (product.price * 0.4611239415).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[0]],
-        ...no_state
+        images_object: [option_images_object[0]],
+        ...no_state,
       },
       {
         name: `${product.name} - 2${option_modifier && " - " + option_modifier}`,
@@ -1469,8 +1469,8 @@ export const create_option_products = async (
         price: product.price,
         item_group_id: product._id,
         default_option: true,
-        images: [option_images[1]],
-        ...no_state
+        images_object: [option_images_object[1]],
+        ...no_state,
       },
       {
         name: `${product.name} - 4${option_modifier && " - " + option_modifier}`,
@@ -1481,8 +1481,8 @@ export const create_option_products = async (
         price: (product.price * 1.9237875289).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[2]],
-        ...no_state
+        images_object: [option_images_object[2]],
+        ...no_state,
       },
       {
         name: `${product.name} - 10${option_modifier && " - " + option_modifier}`,
@@ -1493,8 +1493,8 @@ export const create_option_products = async (
         price: 59.99,
         item_group_id: product._id,
         default_option: true,
-        images: [option_images[3]],
-        ...no_state
+        images_object: [option_images_object[3]],
+        ...no_state,
       },
       {
         name: `${product.name} - 1 Skin${option_modifier && " - " + option_modifier}`,
@@ -1505,8 +1505,8 @@ export const create_option_products = async (
         price: (product.price * 0.1495747874).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[4]],
-        ...no_state
+        images_object: [option_images_object[4]],
+        ...no_state,
       },
       {
         name: `${product.name} - 1 Sled${option_modifier && " - " + option_modifier}`,
@@ -1517,9 +1517,9 @@ export const create_option_products = async (
         price: (product.price * 0.1495747874).toFixed(2),
         item_group_id: product._id,
         default_option: false,
-        images: [option_images[5]],
-        ...no_state
-      }
+        images_object: [option_images_object[5]],
+        ...no_state,
+      },
     ];
   }
   save_products(list, product, option_products, set_option_products);
@@ -1527,10 +1527,10 @@ export const create_option_products = async (
 
 export const create_secondary_products = async (
   product,
-  set_secondary_products: Function,
+  set_secondary_products,
   secondary_products,
   secondary_modifier,
-  secondary_images
+  secondary_images_object
 ) => {
   let list = [];
   if (product.name.includes("Nanoskinz")) {
@@ -1542,7 +1542,7 @@ export const create_secondary_products = async (
         subcategory: "options",
         product_collection: "sizes",
         price: 0,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Bubble Button (Atoms)`,
@@ -1551,8 +1551,8 @@ export const create_secondary_products = async (
         subcategory: "options",
         product_collection: "sizes",
         price: 0,
-        item_group_id: product._id
-      }
+        item_group_id: product._id,
+      },
     ];
   } else if (product.name.includes("Omniskinz")) {
     list = [
@@ -1564,7 +1564,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Coffin Sleds`,
@@ -1574,7 +1574,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Coin Sleds`,
@@ -1584,7 +1584,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Nano Sleds (spectra EVO)`,
@@ -1594,7 +1594,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Nano Sleds (Atoms)`,
@@ -1604,7 +1604,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - OSM Sleds`,
@@ -1614,7 +1614,7 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Vortex Sleds`,
@@ -1624,8 +1624,8 @@ export const create_secondary_products = async (
         subcategory: "clozd",
         product_collection: "sleds",
         price: 9.99,
-        item_group_id: product._id
-      }
+        item_group_id: product._id,
+      },
     ];
   } else if (product.category === "diffuser_caps") {
     list = [];
@@ -1641,8 +1641,8 @@ export const create_secondary_products = async (
         item_group_id: product._id,
         hidden: true,
         default_option: false,
-        images: [secondary_images[0]],
-        ...no_state
+        images_object: [secondary_images_object[0]],
+        ...no_state,
       },
       {
         name: `${product.name} - Mini${secondary_modifier && " - " + secondary_modifier}`,
@@ -1654,8 +1654,8 @@ export const create_secondary_products = async (
         item_group_id: product._id,
         default_option: false,
         hidden: true,
-        images: [secondary_images[1]],
-        ...no_state
+        images_object: [secondary_images_object[1]],
+        ...no_state,
       },
       {
         name: `${product.name} - Classic${secondary_modifier && " - " + secondary_modifier}`,
@@ -1667,8 +1667,8 @@ export const create_secondary_products = async (
         item_group_id: product._id,
         default_option: true,
         hidden: true,
-        images: [secondary_images[2]],
-        ...no_state
+        images_object: [secondary_images_object[2]],
+        ...no_state,
       },
       {
         name: `${product.name} - Mega${secondary_modifier && " - " + secondary_modifier}`,
@@ -1680,9 +1680,9 @@ export const create_secondary_products = async (
         item_group_id: product._id,
         default_option: false,
         hidden: true,
-        images: [secondary_images[3]],
-        ...no_state
-      }
+        images_object: [secondary_images_object[3]],
+        ...no_state,
+      },
     ];
   } else if (product.category === "exo_diffusers") {
     list = [];
@@ -1697,7 +1697,7 @@ export const create_secondary_products = async (
         subcategory: "options",
         product_collection: "sizes",
         price: 0,
-        item_group_id: product._id
+        item_group_id: product._id,
       },
       {
         name: `${product.name} - Bubble Mod (Atoms)`,
@@ -1706,8 +1706,8 @@ export const create_secondary_products = async (
         subcategory: "options",
         product_collection: "sizes",
         price: 0,
-        item_group_id: product._id
-      }
+        item_group_id: product._id,
+      },
     ];
   }
   save_products(list, product, secondary_products, set_secondary_products);

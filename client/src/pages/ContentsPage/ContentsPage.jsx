@@ -24,7 +24,7 @@ const ContentsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "createdAt", display: content => content.createdAt && format_date(content.createdAt) },
       {
@@ -121,7 +121,7 @@ const ContentsPage = () => {
         tableName={"Contents"}
         namespaceScope="contents"
         namespace="contentTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

@@ -31,7 +31,7 @@ const OrdersPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       { title: "Order Placed", display: row => format_date(row.createdAt) },
       {
@@ -53,7 +53,7 @@ const OrdersPage = () => {
               ))}
             </div>
             <div>
-              <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={column_defs.length + 1} />
+              <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} />
             </div>
             <div className="mt-10px">
               {row.order_note && (
@@ -192,11 +192,11 @@ const OrdersPage = () => {
         determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         enableDropdownRow
         rowName={"_id"}
         dropdownComponent={row => (
-          <OrderDropdown row={row} determineColor={determineOrderColors} colspan={column_defs.length + 1} />
+          <OrderDropdown row={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} />
         )}
         loading={loading}
         enableRowSelect={true}

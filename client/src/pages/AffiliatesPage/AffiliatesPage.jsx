@@ -26,7 +26,7 @@ const AffiliatesPage = () => {
 
   const dispatch = useDispatch();
 
-  const column_defs = useMemo(
+  const columnDefs = useMemo(
     () => [
       {
         title: "Active",
@@ -96,7 +96,7 @@ const AffiliatesPage = () => {
         tableName={"Affiliates"}
         namespaceScope="affiliates"
         namespace="affiliateTable"
-        columnDefs={column_defs}
+        columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={

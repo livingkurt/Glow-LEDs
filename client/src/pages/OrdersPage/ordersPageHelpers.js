@@ -366,10 +366,14 @@ export const handleProductChange = (index, value, dispatch, order, isUpdatePrice
 
 export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) => {
   let updatedPrices = {};
+  let updatedOrderItems = [...order.orderItems]; // assuming orderItems is an array
+
+  // Assuming value.orderItems contains the updated 'qty'
+  updatedOrderItems = value.orderItems;
 
   if (isUpdatePricesActive) {
     updatedPrices = updateOrderPrices({
-      orderItems: value.orderItems,
+      orderItems: updatedOrderItems,
       shippingPrice: order.shippingPrice,
       taxPrice: order.taxPrice,
       tip: order.tip,
@@ -378,6 +382,7 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
 
   const finalUpdatedOrder = {
     ...order,
+    orderItems: updatedOrderItems,
     ...updatedPrices,
   };
 
