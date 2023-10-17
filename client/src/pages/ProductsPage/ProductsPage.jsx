@@ -33,12 +33,6 @@ const ProductsPage = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (product.name) {
-  //     dispatch(open_edit_product_modal(product));
-  //   }
-  // }, [dispatch, product]);
-
   const columnDefs = useMemo(
     () => [
       { title: "Product Name", display: "name" },
