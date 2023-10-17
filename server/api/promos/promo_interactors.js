@@ -98,7 +98,7 @@ export const generateSponsorCodes = async affiliate => {
       user: affiliate.user._id,
       promo_code: `r${make_private_code(5)}`,
       admin_only: false,
-      sponsor_only: true,
+      sponsor_only: false,
       single_use: true,
       used_once: false,
       excluded_categories: [],

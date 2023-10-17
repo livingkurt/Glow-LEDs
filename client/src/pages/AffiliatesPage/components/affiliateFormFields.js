@@ -4,8 +4,8 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
   return {
     user: {
       type: "autocomplete_single",
-      label: "Users",
-      options: users,
+      label: "User",
+      options: users.filter(user => user.first_name && user.last_name),
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       permissions: ["admin"],

@@ -105,6 +105,7 @@ const EditAffiliateModal = () => {
               })
             );
             dispatch(API.detailsUser(id || current_user._id));
+            dispatch(set_edit_affiliate_modal(false));
           }}
           onCancel={() => {
             dispatch(set_edit_affiliate_modal(false));

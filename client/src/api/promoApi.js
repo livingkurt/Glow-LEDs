@@ -123,11 +123,13 @@ export const refreshSponsorCodes = createAsyncThunk(
 
 export const validatePromoCode = createAsyncThunk(
   "promo/validatePromoCode",
-  async ({ promo_code, current_user, cartItems }, { dispatch, rejectWithValue }) => {
+  async ({ promo_code, current_user, cartItems, shipping }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/promos/validate/${promo_code}`, { cartItems, current_user });
+      const { data } = await axios.put(`/api/promos/${promo_code}/validate`, { cartItems, current_user, shipping });
       console.log({ data });
-      dispatch(showSuccess({ message: `Promo Code Validated` }));
+      if (!data?.errors) {
+        dispatch(showSuccess({ message: `Promo Code Validated` }));
+      }
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
