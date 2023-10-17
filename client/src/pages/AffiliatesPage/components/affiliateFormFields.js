@@ -12,19 +12,19 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
     },
     artist_name: {
       type: "text",
-      label: "Artist Name",
+      label: "Glover Name",
     },
     location: {
       type: "text",
-      label: "Location",
+      label: "City, State",
     },
     style: {
-      type: "text",
-      label: "Style",
+      type: "text multiline",
+      label: "Describe your gloving style",
     },
     inspiration: {
       type: "text",
-      label: "Inspiration",
+      label: "What are your Gloving Inspirations",
     },
     start_year: {
       type: "text",
@@ -32,23 +32,23 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
     },
     bio: {
       type: "text_multiline",
-      label: "Bio",
+      label: "Bio about you and your gloving career so far, your goals, etc.",
     },
     instagram_link: {
       type: "text",
-      label: "Instagram Link",
+      label: "Instagram Share Link",
     },
     tiktok_link: {
       type: "text",
-      label: "TikTok Link",
+      label: "TikTok Share Link",
     },
     youtube_link: {
       type: "text",
-      label: "YouTube Link",
+      label: "YouTube Share Link",
     },
     facebook_link: {
       type: "text",
-      label: "Facebook Link",
+      label: "Facebook Share Link",
     },
 
     chips: {
@@ -104,11 +104,6 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       label: "Pathname",
       permissions: ["admin"],
     },
-    // answers: {
-    //   type: "array",
-    //   label: "Answers",
-    //   permissions: ["admin"],
-    // },
     promoter: {
       type: "checkbox",
       label: "Promoter",
