@@ -6,10 +6,10 @@ import { closeConfirm } from "../../../slices/snackbarSlice";
 const GLConfirmModal = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector(state => state.snackbar);
-  const { openConfirmModal, confirmTitle, confirmMessage, onConfirm } = snackbar;
+  const { confirmModal, confirmTitle, confirmMessage, onConfirm } = snackbar;
 
   return (
-    <Dialog open={openConfirmModal} onClose={() => dispatch(closeConfirm(false))}>
+    <Dialog open={confirmModal} onClose={() => dispatch(closeConfirm(false))}>
       <DialogTitle>{confirmTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>{confirmMessage}</DialogContentText>

@@ -4,7 +4,7 @@ const snackbarPage = createSlice({
   name: "snackbarPage",
   initialState: {
     open: false,
-    openConfirmModal: false,
+    confirmModal: false,
     message: "",
     severity: "success",
     horizontal: "center",
@@ -12,6 +12,8 @@ const snackbarPage = createSlice({
     duration: 4000,
     loading: false,
     error: "",
+    confirmMessage: "",
+    confirmTitle: "",
     onConfirm: () => {},
   },
   reducers: {
@@ -41,14 +43,14 @@ const snackbarPage = createSlice({
       state.loading = false;
     },
     showConfirm: (state, { payload }) => {
-      state.openConfirmModal = true;
+      state.confirmModal = true;
       state.confirmMessage = payload?.message;
       state.confirmTitle = payload?.title;
       state.onConfirm = payload?.onConfirm;
       state.loading = false;
     },
     closeConfirm: (state, { payload }) => {
-      state.openConfirmModal = false;
+      state.confirmModal = false;
       state.message = "";
       state.loading = false;
     },
