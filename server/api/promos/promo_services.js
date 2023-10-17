@@ -407,11 +407,26 @@ export default {
       const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
       const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
       if (affiliate) {
-        if (affiliate && affiliate.user.email === current_user.email) {
-          return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
-        }
-        if (shipping.first_name === current_user.first_name && shipping.last_name === current_user.last_name) {
-          return { isValid: false, errors: { shipping: "You can't use your own public promo code." } };
+        if (Object.keys(current_user).length > 0) {
+          if (affiliate.user.email.toLowerCase() === current_user.email.toLowerCase()) {
+            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
+          }
+          if (
+            shipping.first_name.toLowerCase() === current_user.first_name.toLowerCase() &&
+            shipping.last_name.toLowerCase() === current_user.last_name.toLowerCase()
+          ) {
+            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
+          }
+        } else {
+          if (
+            shipping.first_name.toLowerCase() === affiliate.user.first_name.toLowerCase() &&
+            shipping.last_name.toLowerCase() === affiliate.user.last_name.toLowerCase()
+          ) {
+            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
+          }
+          if (shipping.email === affiliate.user.email) {
+            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
+          }
         }
       }
 
@@ -429,6 +444,7 @@ export default {
       // }
       return { isValid, errors, promo };
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

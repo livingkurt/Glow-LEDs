@@ -16,6 +16,7 @@ import {
   activatePromo,
   setLoadingPayment,
   set_user,
+  set_promo_code_validations,
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -86,6 +87,7 @@ const PaymentStep = () => {
         })
       );
     } else {
+      dispatch(set_promo_code_validations(request.payload.errors.promo_code));
       dispatch(set_promo_code(""));
     }
   };
