@@ -2457,7 +2457,9 @@ router.route("/link_categories_to_filament").put(async (req, res) => {
 router.route("/xxl_revenue").get(async (req, res) => {
   try {
     // Query to find all orders that have XXL-sized gloves
-    const ordersWithXXL = await Order.find({ "orderItems.option_product.size": "XXL" }).exec();
+    const ordersWithXXL = await Order.find({ deleted: false, isPaid: true }).exec();
+    // const ordersWithXXL = await Order.find({ "orderItems.option_product.size": "XXL" }).exec();
+    console.log({ ordersWithXXL });
 
     let totalRevenue = 0;
 
