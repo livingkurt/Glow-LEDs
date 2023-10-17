@@ -2454,4 +2454,65 @@ router.route("/link_categories_to_filament").put(async (req, res) => {
   }
 });
 
+router.route("/xxl_revenue").get(async (req, res) => {
+  try {
+    // Query to find all orders that have XXL-sized gloves
+    // const ordersWithXXL = await Order.find({ deleted: false, isPaid: true }).exec();
+    const ordersWithXXL = await Order.find({
+      $and: [
+        { "orderItems.category": "gloves" },
+        // { "orderItems.name": { $regex: "V1", $options: "i" } },
+        // { "orderItems.size": "XXL" },
+      ],
+    }).exec();
+
+    let totalRevenue = 0;
+    let numberOfPairsSold = 0;
+    let numberOfOrders = 0;
+    let glovesPrice = 0;
+    const ORIGINAL_BATTERY_COST = 18.99;
+    const FIRST_GLOVE_COST = 3.95;
+    const SECOND_GLOVE_COST = 1.99;
+    const PAIRS_IN_REFRESH_PACK = 6;
+    // Loop through each order to calculate the total revenue
+    ordersWithXXL.forEach(order => {
+      order.orderItems.forEach(item => {
+        console.log({ name: item.name, size: item?.size });
+        if (item.name === "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)" && item.size === "XXL") {
+          // You can conditionally check the discount rate if it varies, and then apply it
+          let discountRate;
+          if (item.price === 34.99) {
+            discountRate = 0.18;
+            glovesPrice = FIRST_GLOVE_COST;
+          } else if (item.price === 26.99) {
+            discountRate = 0.37;
+            glovesPrice = SECOND_GLOVE_COST;
+          }
+
+          const originalPackCost = glovesPrice * PAIRS_IN_REFRESH_PACK + ORIGINAL_BATTERY_COST;
+
+          const discountedPackCost = originalPackCost * (1 - discountRate);
+
+          totalRevenue += item.qty * discountedPackCost;
+          numberOfPairsSold += item.qty * 6;
+          numberOfOrders += 1;
+        } else if (item.name === "Supreme Gloves V1" && item.size === "XXL") {
+          totalRevenue += item.qty * item.price;
+          numberOfPairsSold += item.qty;
+          numberOfOrders += 1;
+        } else if (item.name === "XXL Supreme Gloves V1" && item.size === "XXL") {
+          totalRevenue += item.qty * item.price;
+          numberOfPairsSold += item.qty;
+          numberOfOrders += 1;
+        }
+      });
+    });
+
+    res.status(200).json({ success: true, totalRevenue, numberOfPairsSold, numberOfOrders });
+  } catch (error) {
+    console.log({ error });
+    res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
 export default router;
