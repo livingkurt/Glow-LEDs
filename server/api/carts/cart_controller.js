@@ -79,6 +79,9 @@ export default {
     const { body } = req;
     try {
       const cart = await cart_services.add_to_cart_carts_s(body);
+      if (body.cartItems.length === cart.cartItems.length) {
+        return res.status(500).send({ message: "Can only buy a single Sizing Sampler per order" });
+      }
       if (cart) {
         return res.status(200).send(cart);
       }
