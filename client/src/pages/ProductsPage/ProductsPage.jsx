@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import {
   openProductOptionsGeneratorModal,
@@ -26,7 +25,7 @@ import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
-  const { message, loading, remoteVersionRequirement, product } = productsPage;
+  const { loading, remoteVersionRequirement } = productsPage;
 
   const productTable = useSelector(state => state.products.productTable);
   const { selectedRows } = productTable;
