@@ -58,7 +58,7 @@
     "eject": "react-scripts eject",
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --headed"
   },
   "eslintConfig": {
     "extends": [
