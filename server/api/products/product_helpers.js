@@ -112,3 +112,40 @@ export const normalizeProductSearch = query => {
 
   return search;
 };
+
+export const determineImage = (product, imageNum) => {
+  if (product.images_object && product.images_object[imageNum]) {
+    if (typeof product.images_object[imageNum].link === "function") {
+      return product.images[imageNum];
+    }
+    return product.images_object[imageNum].link;
+  } else {
+    return "";
+  }
+};
+
+export const transformProducts = products => {
+  return products
+    .filter(product => product.category !== "options")
+    .sort((a, b) => (a.order > b.order ? 1 : -1))
+    .map((product, i) => ({
+      id: product._id,
+      title: product.name,
+      description: product.description,
+      availability: "In Stock",
+      condition: "New",
+      price: `${product.price} USD`,
+      link: `https://www.glow-leds.com/collections/all/products/${product.pathname}`,
+      image_link: determineImage(product, 0),
+      additional_image_link: determineImage(product, 1),
+      brand: "Glow LEDs",
+      inventory: product.quantity,
+      fb_product_category: "toys & games > electronic toys",
+      google_product_category: "Toys & Games > Toys > Visual Toys",
+      sale_price: `${product.sale_price && product.sale_price.toFixed(2)} USD`,
+      sale_price_effective_date: `${product?.sale_start_date}/${product?.sale_end_date}`,
+      product_type: product.category,
+      color: product.color,
+      size: product.size,
+    }));
+};

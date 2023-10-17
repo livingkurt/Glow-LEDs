@@ -1,13 +1,17 @@
 import { Product, product_db } from "../products";
 import {
+  determineImage,
   dimminish_batteries_stock,
   dimminish_refresh_stock,
   dimminish_supremes_stock,
   normalizeProductFilters,
   normalizeProductSearch,
+  transformProducts,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../util";
 import { getFilteredData } from "../api_helpers";
+const fs = require("fs");
+const Papa = require("papaparse");
 
 // const sharp = require("sharp");
 
@@ -489,7 +493,7 @@ export default {
   },
   facebook_catelog_products_s: async params => {
     try {
-      return await Product.find({ hidden: false, deleted: false, option: false })
+      const products = await Product.find({ hidden: false, deleted: false, option: false })
         .sort({ order: 1 })
         .populate("images_object")
         .populate("color_images_object")
@@ -608,7 +612,19 @@ export default {
         .populate("subcategorys")
         .populate("collections")
         .populate("contributers");
+
+      const transformedProducts = transformProducts(products);
+
+      const csv = Papa.unparse(transformedProducts);
+
+      const csvFileName = "./client/public/facebook_product_catalog.csv";
+      fs.writeFile(csvFileName, csv, err => {
+        if (err) throw err;
+        console.log("CSV file has been saved.");
+      });
+      return transformedProducts;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

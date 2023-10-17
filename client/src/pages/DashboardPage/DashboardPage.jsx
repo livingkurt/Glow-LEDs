@@ -4,9 +4,8 @@ import * as API from "../../api";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import { AppBar, Paper, Tab, Tabs } from "@mui/material";
+import { AppBar, Button, Paper, Tab, Tabs } from "@mui/material";
 import { openGcodeContinuousModal, setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
@@ -57,18 +56,18 @@ const DashboardPage = () => {
       </Helmet>
       <h2 className="ta-c w-100per jc-c fs-30px">Glow LEDs Dashboard</h2>
       <div className="jc-b w-100per">
-        <GLButton variant="primary" onClick={() => run_daily_workers(dispatch)}>
+        <Button variant="contained" onClick={() => run_daily_workers(dispatch)}>
           Run Daily Workers
-        </GLButton>
-        <GLButton variant="primary" onClick={() => run_weekly_workers(dispatch)}>
+        </Button>
+        <Button variant="contained" onClick={() => run_weekly_workers(dispatch)}>
           Run Weekly Workers
-        </GLButton>
-        <GLButton variant="primary" onClick={() => run_monthly_workers(dispatch)}>
+        </Button>
+        <Button variant="contained" onClick={() => run_monthly_workers(dispatch)}>
           Run Monthly Workers
-        </GLButton>
-        <GLButton variant="primary" onClick={() => dispatch(openGcodeContinuousModal(true))}>
+        </Button>
+        <Button variant="contained" onClick={() => dispatch(openGcodeContinuousModal(true))}>
           Gcode Generater
-        </GLButton>
+        </Button>
       </div>
       <Loading
         loading={
