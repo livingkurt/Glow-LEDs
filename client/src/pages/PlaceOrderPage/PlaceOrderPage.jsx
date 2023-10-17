@@ -17,6 +17,7 @@ import { setLoadingPayment } from "../../slices/orderSlice";
 import { Link } from "react-router-dom";
 import { Box, Button, Fade } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
+import { showConfirm } from "../../slices/snackbarSlice";
 
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -141,7 +142,15 @@ const PlaceOrderPage = () => {
           <Button
             aria-label="Back"
             style={{ color: "#fff" }}
-            onClick={() => navigate("/pages/menu/gloving")}
+            onClick={() => {
+              dispatch(
+                showConfirm({
+                  title: "Confirm Exit",
+                  message: "Are you sure you want to exit checkout?",
+                  onConfirm: () => navigate("/pages/menu/gloving"),
+                })
+              );
+            }}
             startIcon={<ArrowBack />}
           >
             <div className="mt-3px">Back to Shopping</div>
