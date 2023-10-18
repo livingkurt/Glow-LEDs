@@ -11,13 +11,29 @@ import config from "../config";
 
 export const getOrders = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/orders`, {
+    return await axios.get(`/api/orders/table`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
         filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
+export const getMyOrders = async ({ search, sorting, filters, page, pageSize }, userId) => {
+  try {
+    return await axios.get(`/api/orders/table/${userId}/user`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        // filters: JSON.stringify(filters),
       },
     });
   } catch (error) {

@@ -6,8 +6,65 @@ import { team_db } from "../teams";
 import { getFilteredData } from "../api_helpers";
 import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
 import { user_db } from "../users";
+import { mongodbFindAll } from "../api_interactors";
 
 export default {
+  get_table_paychecks_s: async query => {
+    try {
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePaycheckFilters,
+        // normalizeSearch: normalizePaycheckSearch
+      });
+      const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
+      const count = await paycheck_db.count_paychecks_db(filter);
+      return {
+        data: paychecks,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_affiliate_table_paychecks_s: async (query, params) => {
+    try {
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePaycheckFilters,
+        // normalizeSearch: normalizePaycheckSearch
+      });
+      const paychecks = await mongodbFindAll(
+        "paychecks",
+        {
+          filter: { ...filter, affiliate: params.affiliate_id },
+          sort,
+          limit,
+          page,
+        },
+        { user: "users", affiliate: "affiliates", team: "teams" }
+      );
+      return {
+        data: paychecks,
+        total_count: paychecks.length,
+        currentPage: 0,
+      };
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   findAll_paychecks_s: async query => {
     try {
       const sort_options = ["createdAt", "paid_at", "paid", "amount"];

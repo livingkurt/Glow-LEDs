@@ -10,7 +10,7 @@ import store from "../store";
 
 export const getPaychecks = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/paychecks`, {
+    return await axios.get(`/api/paychecks/table`, {
       params: {
         limit: pageSize,
         page: page,
@@ -19,6 +19,25 @@ export const getPaychecks = async ({ search, sorting, filters, page, pageSize })
         filters: JSON.stringify(filters),
       },
     });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
+export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, affiliateId) => {
+  console.log({ search, sorting, filters, page, pageSize }, affiliateId);
+  try {
+    const res = await axios.get(`/api/paychecks/table/${affiliateId}/affiliate`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+    console.log({ res });
+    return res;
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }

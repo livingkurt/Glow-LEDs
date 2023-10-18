@@ -3,6 +3,30 @@ import { affiliate_db } from "../affiliates";
 import { order_services } from "../orders";
 
 export default {
+  get_table_orders_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.get_table_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(404).send({ message: "Orders Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  get_user_table_orders_c: async (req, res) => {
+    const { query, params } = req;
+    try {
+      const orders = await order_services.get_user_table_orders_s(query, params);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(404).send({ message: "Orders Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_orders_c: async (req, res) => {
     const { query } = req;
     try {

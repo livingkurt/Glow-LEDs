@@ -10,6 +10,8 @@ router.route("/delete_multiple").put(paycheck_controller.remove_multiple_paychec
 router.route("/filters").get(paycheck_controller.create_filters_paychecks_c);
 router.route("/get_range_payouts").get(paycheck_controller.get_range_payouts_paychecks_c);
 router.route("/get_all_time_payouts").get(paycheck_controller.get_all_time_payouts_paychecks_c);
+router.route("/table").get(paycheck_controller.get_table_paychecks_c);
+router.route("/table/:affiliate_id/affiliate").get(paycheck_controller.get_affiliate_table_paychecks_c);
 
 router
   .route("/:id")

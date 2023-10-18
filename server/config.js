@@ -24,6 +24,11 @@ const config = {
     staging: process.env.MONGODB_URI_STAGING,
     development: process.env.MONGODB_URI_DEV,
   }),
+  MONGODB_DATABASE: decideEnvironment({
+    production: process.env.MONGODB_DATABASE_PROD,
+    staging: process.env.MONGODB_DATABASE_STAGING,
+    development: process.env.MONGODB_DATABASE_DEV,
+  }),
   // Environment
   ENVIRONMENT: environment,
   NODE_ENV: process.env.NODE_ENV,

@@ -187,13 +187,10 @@ const ProfilePage = () => {
   );
 
   const paychecksRemoteApi = useCallback(
-    options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
+    options => API.getMyPaychecks(options, user?.affiliate?._id),
     [user?.affiliate?._id]
   );
-  const ordersRemoteApi = useCallback(
-    options => API.getOrders({ ...options, filters: { ...options.filters, user: [user._id] } }),
-    [user._id]
-  );
+  const ordersRemoteApi = useCallback(options => API.getMyOrders(options, user._id), [user._id]);
 
   return (
     <div className="p-20px inner_content">
@@ -240,19 +237,21 @@ const ProfilePage = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <GLTableV2
-            remoteApi={ordersRemoteApi}
-            tableName={"Orders"}
-            colors={orderColors}
-            enableSearch={false}
-            noURLParams
-            determineColor={determineOrderColors}
-            namespaceScope="orders"
-            namespace="orderTable"
-            columnDefs={orderColumnDefs}
-            loading={loading_order}
-            enableRowSelect={false}
-          />
+          {user._id && (
+            <GLTableV2
+              remoteApi={ordersRemoteApi}
+              tableName={"Orders"}
+              colors={orderColors}
+              enableSearch={false}
+              noURLParams
+              determineColor={determineOrderColors}
+              namespaceScope="orders"
+              namespace="orderTable"
+              columnDefs={orderColumnDefs}
+              loading={loading_order}
+              enableRowSelect={false}
+            />
+          )}
         </Grid>
       </Grid>
       <SponsorMonthlyCheckinModal />

@@ -46,6 +46,30 @@ export default {
       }
     }
   },
+  get_user_table_orders_s: async (query, params) => {
+    try {
+      const sort_options = ["createdAt", "user.first_name", "totalPrice"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "shipping.first_name",
+        // normalizeFilters: normalizeOrderFilters,
+        // normalizeSearch: normalizeOrderSearch,
+      });
+      const scopedByUser = params.user_id ? { ...filter, user: params.user_id } : filter;
+      const orders = await order_db.table_orders_db(scopedByUser, sort, limit, page);
+      const count = await order_db.count_orders_db(scopedByUser);
+      return {
+        data: orders,
+        total_count: count,
+        currentPage: parseInt(page),
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_orders_s: async query => {
     try {
       const sort_options = ["createdAt", "user.first_name", "totalPrice"];
