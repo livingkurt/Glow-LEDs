@@ -75,8 +75,7 @@ const initialState = {
   hideCheckoutButton: false,
   paymentValidations: "",
   showSaveShippingModal: false,
-  environment: "prod",
-  database: "prod",
+  environment: "production",
   shippingSaved: false,
   modalText: false,
   shippingValidations: {
