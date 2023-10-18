@@ -2,28 +2,28 @@ import mongoose from "mongoose";
 import config from "../config";
 const { MongoClient, ObjectId } = require("mongodb");
 
-// export const mongodbFindAll = async (collectionName, options) => {
-//   const client = await MongoClient.connect(config.MONGODB_URI);
-//   const db = client.db(config.MONGODB_DATABASE);
-//   const collection = db.collection(collectionName);
+export const mongodbFindAllNoPopulate = async (collectionName, options) => {
+  const client = await MongoClient.connect(config.MONGODB_URI);
+  const db = client.db(config.MONGODB_DATABASE);
+  const collection = db.collection(collectionName);
 
-//   // For sorting
-//   const sort = options.sort || {};
-//   const filter = options.filter || {};
+  // For sorting
+  const sort = options.sort || {};
+  const filter = options.filter || {};
 
-//   // For pagination
-//   const limit = options.limit ? parseInt(options.limit) : 0;
-//   const skip = options.page ? Math.max(parseInt(options.page), 0) * limit : 0;
+  // For pagination
+  const limit = options.limit ? parseInt(options.limit) : 0;
+  const skip = options.page ? Math.max(parseInt(options.page), 0) * limit : 0;
 
-//   const cursor = collection.find(filter).sort(sort).skip(skip).limit(limit);
+  const cursor = collection.find(filter).sort(sort).skip(skip).limit(limit);
 
-//   const result = await cursor.toArray();
+  const result = await cursor.toArray();
 
-//   console.log({ result });
+  console.log({ result });
 
-//   client.close(); // Close the connection
-//   return result;
-// };
+  client.close(); // Close the connection
+  return result;
+};
 
 export const mongodbFindAll = async (collectionName, options, populateMap) => {
   const client = await MongoClient.connect(config.MONGODB_URI);
@@ -67,58 +67,3 @@ export const mongodbFindAll = async (collectionName, options, populateMap) => {
   client.close();
   return result;
 };
-
-// export const mongodbFindAll = async (collectionName, options, populateMap) => {
-//   const client = await MongoClient.connect(config.MONGODB_URI);
-//   const db = client.db(config.MONGODB_DATABASE);
-//   const collection = db.collection(collectionName);
-
-//   // For sorting
-//   const sort = options.sort || {};
-//   const filter = options.filter || {};
-
-//   // For pagination
-//   const limit = options.limit ? parseInt(options.limit) : 0;
-//   const skip = options.page ? Math.max(parseInt(options.page), 0) * limit : 0;
-
-//   // Initialize aggregation pipeline
-//   let aggregatePipeline = [{ $match: filter }, { $sort: sort }, { $skip: skip }, { $limit: limit }];
-
-//   collection
-//     .aggregate([
-//       {
-//         $lookup: {
-//           from: "affiliates",
-//           localField: "affiliate",
-//           foreignField: "_id",
-//           as: "affiliate",
-//         },
-//       },
-//     ])
-//     .exec((err, result) => {
-//       console.log(result);
-//     });
-
-//   // Populate fields
-//   if (populateMap && typeof populateMap === "object") {
-//     for (const [field, fromCollection] of Object.entries(populateMap)) {
-//       const lookupStage = {
-//         $lookup: {
-//           from: fromCollection,
-//           localField: field,
-//           foreignField: "_id",
-//           as: field,
-//         },
-//       };
-//       console.log({ lookupStage });
-//       aggregatePipeline.push(lookupStage);
-//       // To unwind the populated array for single-object relationships
-//       // aggregatePipeline.push({ $unwind: { path: `$${field}`, preserveNullAndEmptyArrays: true } });
-//     }
-//   }
-
-//   const result = await collection.aggregate(aggregatePipeline).toArray();
-//   console.log({ result });
-//   client.close(); // Close the connection
-//   return result;
-// };

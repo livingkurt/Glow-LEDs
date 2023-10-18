@@ -1,13 +1,11 @@
 import { month_dates } from "../../util";
 import { affiliate_db } from "../affiliates";
 import { order_db } from "../orders";
-import config from "../../config";
-import { Paycheck, paycheck_db } from "../paychecks";
+import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 import { getFilteredData } from "../api_helpers";
 import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
 import { user_db } from "../users";
-import mongoose from "mongoose";
 import { mongodbFindAll } from "../api_interactors";
 
 export default {
@@ -67,82 +65,6 @@ export default {
     }
   },
 
-  // get_affiliate_table_paychecks_s: async (query, params) => {
-  //   try {
-  //     const paychecks = await Paycheck.find({ deleted: false }).populate("affiliate").exec();
-  //     // Filter paychecks by affliate_id
-  //     const filteredPaychecks = paychecks.filter(paycheck => {
-  //       if (paycheck?.affiliate) {
-  //         return paycheck?.affiliate?._id.toString() === params.affiliate_id;
-  //       }
-  //     });
-
-  //     const paycheckQueryWithoutType = await Paycheck.find({
-  //       deleted: false,
-  //       affiliate: params.affiliate_id,
-  //     });
-  //     const paycheckQuery = await Paycheck.find({
-  //       deleted: false,
-  //       affiliate: new mongoose.Types.ObjectId(params.affiliate_id),
-  //     });
-  //     console.log({
-  //       paycheckQueryLength: paycheckQuery.length,
-  //       filteredPaychecksLength: filteredPaychecks.length,
-  //       paycheckQueryWithoutTypeLength: paycheckQueryWithoutType.length,
-  //     });
-  //     return {
-  //       data: filteredPaychecks,
-  //       total_count: filteredPaychecks.length,
-  //       currentPage: 0,
-  //     };
-  //   } catch (error) {
-  //     console.log({ error });
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
-
-  // get_affiliate_table_paychecks_s: async (query, params) => {
-  //   try {
-  //     // const sort_options = ["createdAt", "paid_at", "paid", "amount"];
-  //     // const { filter, sort, limit, page } = getFilteredData({
-  //     //   query,
-  //     //   sort_options,
-  //     //   search_name: "affiliate",
-  //     //   normalizeFilters: normalizePaycheckFilters,
-  //     //   // normalizeSearch: normalizePaycheckSearch
-  //     // });
-  //     // const scopedByAffiliate = params.affiliate_id ? { ...filter, affiliate: params.affiliate_id } : filter;
-  //     // console.log({ scopedByAffiliate });
-
-  //     // const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
-  //     // const count = await paycheck_db.count_paychecks_db(filter);
-  //     // console.log({ scopedByAffiliate });
-  //     // const filteredPaychecks = paychecks.filter(paycheck => {
-  //     //   // console.log({ affiliate: paycheck?.affiliate });
-  //     //   if (paycheck?.affiliate) {
-  //     //     console.log({ affiliate: paycheck.affiliate._id, params: new mongoose.Types.ObjectId(params.affiliate_id) });
-  //     //     return paycheck?.affiliate?._id === new mongoose.Types.ObjectId(params.affiliate_id);
-  //     //   }
-  //     // });
-  //     // console.log({
-  //     //   data: filteredPaychecks,
-  //     //   total_count: filteredPaychecks.length,
-  //     //   currentPage: page,
-  //     // });
-  //     return {
-  //       data: filteredPaychecks,
-  //       total_count: filteredPaychecks.length,
-  //       currentPage: page,
-  //     };
-  //   } catch (error) {
-  //     console.log({ error });
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
   findAll_paychecks_s: async query => {
     try {
       const sort_options = ["createdAt", "paid_at", "paid", "amount"];
