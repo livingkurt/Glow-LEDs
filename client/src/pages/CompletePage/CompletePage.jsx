@@ -30,7 +30,7 @@ const CompletePage = () => {
     let clean = true;
     if (clean) {
       update_data();
-      send_email();
+      // send_email();
     }
     return () => {
       clean = false;
