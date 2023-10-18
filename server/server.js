@@ -20,12 +20,7 @@ Bugsnag.start({
   releaseStage: process.env.NODE_ENV || "development",
 });
 
-mongoose
-  .connect(config.MONGODB_URI || "", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch(error => console.log(error));
+mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
 const app = express();
 
