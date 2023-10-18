@@ -4,6 +4,7 @@ const snackbarPage = createSlice({
   name: "snackbarPage",
   initialState: {
     open: false,
+    confirmModal: false,
     message: "",
     severity: "success",
     horizontal: "center",
@@ -11,6 +12,9 @@ const snackbarPage = createSlice({
     duration: 4000,
     loading: false,
     error: "",
+    confirmMessage: "",
+    confirmTitle: "",
+    onConfirm: () => {},
   },
   reducers: {
     showSuccess: (state, { payload }) => {
@@ -38,8 +42,29 @@ const snackbarPage = createSlice({
     stopLoading: state => {
       state.loading = false;
     },
+    showConfirm: (state, { payload }) => {
+      state.confirmModal = true;
+      state.confirmMessage = payload?.message;
+      state.confirmTitle = payload?.title;
+      state.onConfirm = payload?.onConfirm;
+      state.loading = false;
+    },
+    closeConfirm: (state, { payload }) => {
+      state.confirmModal = false;
+      state.message = "";
+      state.loading = false;
+    },
   },
 });
 
-export const { hideSnackbar, showSuccess, showError, startLoading, stopLoading } = snackbarPage.actions;
+export const {
+  closeConfirm,
+  setConfirmAction,
+  hideSnackbar,
+  showSuccess,
+  showError,
+  startLoading,
+  stopLoading,
+  showConfirm,
+} = snackbarPage.actions;
 export default snackbarPage.reducer;

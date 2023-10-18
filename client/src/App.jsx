@@ -20,6 +20,7 @@ import GLLoginModal from "./shared/GlowLEDsComponents/GLLoginModal/GLLoginModal"
 import ProtectedRoute from "./shared/RouteComponents/ProtectedRoute";
 import MainLayout from "./shared/Layouts/MainLayout";
 import PlaceOrderLayout from "./shared/Layouts/PlaceOrderLayout";
+import GLConfirmModal from "./shared/GlowLEDsComponents/GLConfirmModal/GLConfirmModal";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -122,6 +123,7 @@ const App = () => {
         <GLLoginModal />
       </Router>
       <GLSnackbar />
+      <GLConfirmModal />
     </ThemeProvider>
   );
 };
