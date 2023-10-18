@@ -6,6 +6,7 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
+router.route("/table/:user_id/user").get(order_controller.get_user_table_orders_c);
 router.route("/filters").get(order_controller.create_filters_orders_c);
 router.route("/").get(isAuth, order_controller.findAll_orders_c).post(order_controller.create_orders_c);
 router.route("/old").get(order_controller.findAllOld_orders_c);
@@ -63,7 +64,6 @@ router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.tr
 router.route("/test_delete/:id").delete(order_controller.test_delete_orders_c);
 
 router.route("/table").get(order_controller.get_table_orders_c);
-router.route("/table/:user_id/user").get(order_controller.get_user_table_orders_c);
 
 router
   .route("/glow/:id")

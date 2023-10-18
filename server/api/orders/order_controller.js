@@ -16,9 +16,9 @@ export default {
     }
   },
   get_user_table_orders_c: async (req, res) => {
-    const { query } = req;
+    const { query, params } = req;
     try {
-      const orders = await order_services.get_user_table_orders_s(query);
+      const orders = await order_services.get_user_table_orders_s(query, params);
       if (orders) {
         return res.status(200).send(orders);
       }

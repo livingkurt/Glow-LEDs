@@ -13,10 +13,10 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  get_user_table_paychecks_c: async (req, res) => {
-    const { query } = req;
+  get_affiliate_table_paychecks_c: async (req, res) => {
+    const { query, params } = req;
     try {
-      const paychecks = await paycheck_services.get_user_table_paychecks_s(query);
+      const paychecks = await paycheck_services.get_affiliate_table_paychecks_s(query, params);
       if (paychecks) {
         return res.status(200).send(paychecks);
       }
