@@ -3,11 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
-
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 import config from "../config";
+import { sendOrderEmail } from "./emailApi";
 
 export const getOrders = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -106,6 +106,7 @@ export const createPayOrder = createAsyncThunk(
       users: {
         userPage: { current_user },
       },
+      placeOrder: { environment },
     } = getState();
 
     try {
@@ -140,6 +141,22 @@ export const createPayOrder = createAsyncThunk(
 
       const { data: order_created } = await axios.post("/api/orders", { ...order, user: user_id });
       const { data: payment_created } = await axios.put(`/api/payments/${order_created._id}/pay`, { paymentMethod });
+      if (environment === "production") {
+        dispatch(
+          sendOrderEmail({
+            order: order_created,
+            subject: "Thank you for your Glow LEDs Order",
+            email: order.shipping.email,
+          })
+        );
+        dispatch(
+          sendOrderEmail({
+            order: order_created,
+            subject: "New Order Created by " + order.shipping.first_name,
+            email: config.REACT_APP_INFO_EMAIL,
+          })
+        );
+      }
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {
