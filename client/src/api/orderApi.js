@@ -24,6 +24,22 @@ export const getOrders = async ({ search, sorting, filters, page, pageSize }) =>
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
+
+export const getMyOrders = async ({ search, sorting, filters, page, pageSize, userId }) => {
+  try {
+    return await axios.get(`/api/orders/${userId}/user`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
 export const getOrderFilters = async () => {
   const { data } = await axios.get(`/api/orders/filters`);
   return data;

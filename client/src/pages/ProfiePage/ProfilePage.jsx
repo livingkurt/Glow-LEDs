@@ -187,11 +187,11 @@ const ProfilePage = () => {
   );
 
   const paychecksRemoteApi = useCallback(
-    options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
+    options => API.getMyPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
     [user?.affiliate?._id]
   );
   const ordersRemoteApi = useCallback(
-    options => API.getOrders({ ...options, filters: { ...options.filters, user: [user._id] } }),
+    options => API.getMyOrders({ ...options, filters: { ...options.filters, user: [user._id] } }),
     [user._id]
   );
 

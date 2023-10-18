@@ -24,6 +24,22 @@ export const getPaychecks = async ({ search, sorting, filters, page, pageSize })
   }
 };
 
+export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize, userId }) => {
+  try {
+    return await axios.get(`/api/paychecks/${userId}/user`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
 export const getPaycheckFilters = async () => {
   const { data } = await axios.get(`/api/paychecks/filters`);
   return data;

@@ -8,6 +8,52 @@ import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_in
 import { user_db } from "../users";
 
 export default {
+  get_table_paychecks_s: async query => {
+    try {
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePaycheckFilters,
+        // normalizeSearch: normalizePaycheckSearch
+      });
+      const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
+      const count = await paycheck_db.count_paychecks_db(filter);
+      return {
+        data: paychecks,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_user_table_paychecks_s: async query => {
+    try {
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePaycheckFilters,
+        // normalizeSearch: normalizePaycheckSearch
+      });
+      const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
+      const count = await paycheck_db.count_paychecks_db(filter);
+      return {
+        data: paychecks,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_paychecks_s: async query => {
     try {
       const sort_options = ["createdAt", "paid_at", "paid", "amount"];
