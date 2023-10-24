@@ -1,4 +1,4 @@
-export const orderFormFields = ({ users, products, promos }) => {
+export const orderFormFields = ({ users, products, promos, all_shipping }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -175,6 +175,10 @@ export const orderFormFields = ({ users, products, promos }) => {
     shipping: {
       type: "object",
       title: "Shipping",
+      label: "Choose Shipping",
+      options: !all_shipping.isLoading && all_shipping.data.filter(user => user.first_name && user.last_name),
+      labelProp: "shipping",
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       fields: {
         shipment_id: {
           type: "text",
@@ -294,7 +298,7 @@ export const orderFormFields = ({ users, products, promos }) => {
           product: {
             type: "autocomplete_single",
             label: "Product",
-            options: products.filter(product => product.option === false && product.hidden === false),
+            options: products.filter(product => product.option === false),
             labelProp: "name",
             required: true,
           },
