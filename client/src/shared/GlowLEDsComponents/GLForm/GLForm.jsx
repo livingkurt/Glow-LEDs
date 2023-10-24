@@ -68,7 +68,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
         } else if (determine_shown_fields(fieldData, current_user)) {
           switch (fieldData.type) {
             case "autocomplete_single":
-              const selectedOption = fieldData.valueAttribute
+              const selected = fieldData.valueAttribute
                 ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                 : fieldState;
               return (
@@ -82,7 +82,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
-                  value={selectedOption || ""}
+                  value={selected || ""}
                   // value={fieldState || ""}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
@@ -331,11 +331,45 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 />
               );
             case "object":
+              const selectedOption = fieldData.valueAttribute
+                ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
+                : fieldState;
               return (
                 <Paper className="p-10px mv-10px" key={fieldName}>
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
+                  <GLAutocomplete
+                    key={fieldName}
+                    autoComplete="new-password"
+                    customClasses={classes}
+                    // isOptionEqualToValue={(option, value) => {
+                    //   return option.short_name === value.short_name;
+                    // }}
+                    helperText={formErrors && formErrors[fieldName]}
+                    error={formErrors && !!formErrors[fieldName]}
+                    margin="normal"
+                    value={selectedOption || ""}
+                    // value={fieldState || ""}
+                    options={determineOptions(fieldData, localState) || []}
+                    getOptionLabel={option =>
+                      option
+                        ? fieldData.getOptionLabel
+                          ? fieldData.getOptionLabel(option)
+                          : option[fieldData.labelProp]
+                        : ""
+                    }
+                    optionDisplay={option =>
+                      fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
+                    }
+                    isOptionEqualToValue={fieldData.isOptionEqualToValue}
+                    name={fieldName}
+                    label={fieldData.label}
+                    onChange={(event, value) => {
+                      const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
+                      handleInputChange(fieldName, savedValue);
+                    }}
+                  />
                   <GLForm
                     formData={fieldData.fields}
                     state={fieldState}

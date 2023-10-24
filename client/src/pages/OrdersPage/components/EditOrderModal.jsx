@@ -16,6 +16,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
+  const all_shipping = API.useGetAllShippingOrdersQuery();
   const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
 
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -44,6 +45,7 @@ const EditOrderModal = () => {
     users,
     products,
     promos,
+    all_shipping,
   });
 
   return (
