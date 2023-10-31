@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import DropdownButton from "./DropdownButton";
 
 const DrawerItem = ({ columns, show_hide_nested }) => {
@@ -30,7 +30,7 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
           return (
             <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
-                <GLButton variant={item.variant} className={item.className}>
+                <GLButton variant="nav" className="ta-l">
                   {item.name}
                 </GLButton>
               </Link>

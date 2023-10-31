@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useWindowDimensions from "../shared/Hooks/useWindowDimensions";
-import { GLButton } from "../shared/GlowLEDsComponents";
+import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useDispatch, useSelector } from "react-redux";
-import * as API from "../api";
+import * as API from "../../../api";
 import { Box } from "@mui/material";
-import { toCapitalize } from "../utils/helper_functions";
+import { toCapitalize } from "../../../utils/helper_functions";
 
 const Banner = () => {
   const { width } = useWindowDimensions();

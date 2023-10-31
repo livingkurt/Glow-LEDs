@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -14,13 +14,13 @@ const DropdownButton = ({ path, variant, className, name, id, show_hide, permiss
     <div className="nav-btn-container">
       {path.includes("#") ? (
         <HashLink to={path} className="w-100per">
-          <GLButton variant={variant} className={className} fullWidth>
+          <GLButton variant="nav" className="ta-l" fullWidth>
             {name} {extraContent}
           </GLButton>
         </HashLink>
       ) : (
         <Link to={path} className="w-100per">
-          <GLButton variant={variant} className={className} fullWidth>
+          <GLButton variant="nav" className="ta-l" fullWidth>
             {name} {extraContent}
           </GLButton>
         </Link>

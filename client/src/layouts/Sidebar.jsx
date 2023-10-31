@@ -20,8 +20,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-    dispatch(API.logoutUser(refreshToken));
+    dispatch(API.logoutUser());
     closeMenu();
     navigate("/");
   };
