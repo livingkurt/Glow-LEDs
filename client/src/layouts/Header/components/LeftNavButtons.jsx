@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 const LeftNavButtons = () => {
   const dispatch = useDispatch();
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   return (
     <div className="menu_button w-233px">
       <Link to="/" aria-label="Home Page">

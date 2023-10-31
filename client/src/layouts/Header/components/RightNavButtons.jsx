@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-
-import { rightNav } from "../headerHelpers";
+import { determineDropdown, determineName, rightNav } from "../headerHelpers";
 import { ShoppingCart } from "@mui/icons-material";
 import { set_first_name } from "../../../slices/settingSlice";
-import * as API from "../../../api";
 import { setCartDrawer } from "../../../slices/cartSlice";
 
 const RightNavButtons = () => {
@@ -28,7 +26,7 @@ const RightNavButtons = () => {
       }
     }
     return () => (clean = false);
-  }, [current_user]);
+  }, [current_user, dispatch]);
 
   return (
     <div>
@@ -62,9 +60,9 @@ const RightNavButtons = () => {
                   aria-label={item.ariaLabel}
                   onClick={() => item.onClick && item.onClick()}
                 >
-                  {typeof item.name === "function" ? item.name(current_user) : item.name}
+                  {determineName(item, current_user)}
                 </GLButton>
-                {item.columns && item.name(current_user) !== "Login" && (
+                {determineDropdown(item, current_user) && (
                   <ul className="dropdown-content hover_fade_in w-150px">
                     {item.columns.map((column, colIndex) => (
                       <div key={colIndex}>
@@ -75,7 +73,7 @@ const RightNavButtons = () => {
                               className="w-100per ta-l"
                               onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
                             >
-                              {typeof row.name === "function" ? row.name(current_user) : row.name}
+                              {determineName(row, current_user)}
                             </GLButton>
                           </Link>
                         ))}
