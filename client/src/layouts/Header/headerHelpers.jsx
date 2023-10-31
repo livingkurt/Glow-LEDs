@@ -852,8 +852,8 @@ const admin = {
     },
 
     {
-      name: "Compressor",
-      path: "/secure/glow/image_compressor",
+      name: "Update Version",
+      path: "",
       onClick: () => updateVersion(),
       _id: 9132,
     },

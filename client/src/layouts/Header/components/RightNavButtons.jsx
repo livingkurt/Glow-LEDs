@@ -63,7 +63,7 @@ const RightNavButtons = () => {
                   {determineName(item, current_user)}
                 </GLButton>
                 {determineDropdown(item, current_user) && (
-                  <ul className="dropdown-content hover_fade_in w-150px">
+                  <ul className="dropdown-content hover_fade_in w-175px">
                     {item.columns.map((column, colIndex) => (
                       <div key={colIndex}>
                         {column.rows.map((row, rowIndex) => (
