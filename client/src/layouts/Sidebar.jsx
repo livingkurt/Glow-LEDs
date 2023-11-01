@@ -86,23 +86,6 @@ const Sidebar = () => {
       transitionDuration={{ enter: 700, exit: 700 }}
     >
       <div style={{ backgroundColor: "#333333", height: "100%", color: "white", maxWidth: "40rem" }}>
-        {/* <div className="logo_text mh-auto ai-c p-1rem pb-0px">
-				<Link to="/" aria-label="Home Page">
-					<div className="h-40px w-40px">
-						<img
-							className="zoom logo_s"
-							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-							alt="Glow LEDs Logo"
-							title="Small Logo"
-						/>
-					</div>
-				</Link>
-				<Link to="/" aria-label="Home Page">
-					<div className="row">
-						<label className="ml-5px fs-25px mv-0px ff-h">Glow LEDs</label>
-					</div>
-				</Link>
-			</div> */}
         <div />
         <div className="h-40px bg-primary ta-c title_font ai-c w-100per">
           <p className="w-100per fs-20px mt-24px">Find Your Glow</p>
@@ -135,7 +118,7 @@ const Sidebar = () => {
           </Link>
         </div>
 
-        <nav className="h-63vh">
+        <nav className="h-63vh" aria-label="Sidebar naviation">
           <Link to="/">
             <GLButton className="sidebar-btn primary" onClick={closeMenu}>
               Home
@@ -203,25 +186,6 @@ const Sidebar = () => {
                   </GLButton>
                 </div>
                 <ul className="sidebar_dropdown_secondary_container" id="gloving_dropdown">
-                  {/* {browser_check() !== "safari" ? (
-                  <Link to="/collections/all/products/glowstringz_v2">
-                    <GLButton
-                      className={`sidebar-btn nested  special_font gradient-btn`}
-                      onClick={closeMenu}
-                    >
-                      <span>GLOWSTRINGZ V2</span>
-                    </GLButton>
-                  </Link>
-                ) : (
-                  <Link
-                    to="/collections/all/products/glowstringz_v2"
-                    onClick={closeMenu}
-                  >
-                    <GLButton  className={`sidebar-btn nested `}>
-                      <span>Glowstringz V2</span>
-                    </GLButton>
-                  </Link>
-                )} */}
                   <div className="sidebar_dropdown_nested">
                     <div className="sidebar-btn-container">
                       <GLButton className="sidebar-btn nested" onClick={closeMenu}>
@@ -237,7 +201,6 @@ const Sidebar = () => {
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="glowskinz_dropdown_2">
                       <div className="sidebar_dropdown_nested">
-                        {/* <GLButton  className="sidebar-btn secondary">Collections</GLButton> */}
                         <div className="sidebar-btn-container">
                           <Link
                             to="/collections/all/products/category/glowskinz/subcategory/clozd"
@@ -295,7 +258,6 @@ const Sidebar = () => {
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="exo_diffuseres_dropdown">
                       <div className="sidebar_dropdown_nested">
-                        {/* <GLButton  className="sidebar-btn secondary">Collections</GLButton> */}
                         <div className="sidebar-btn-container">
                           <Link to="/collections/all/products/category/exo_diffuser" className="w-100per">
                             <GLButton className="sidebar-btn nested-2" onClick={closeMenu}>
@@ -350,7 +312,6 @@ const Sidebar = () => {
                     </div>
                     <ul className="sidebar_dropdown_nested_container" id="glowskinz_dropdown_4">
                       <div className="sidebar_dropdown_nested">
-                        {/* <GLButton  className="sidebar-btn secondary">Collections</GLButton> */}
                         <div className="sidebar-btn-container">
                           <Link to="/pages/menu/collections" className="w-100per">
                             <GLButton className="sidebar-btn nested-2" onClick={closeMenu}>
@@ -570,39 +531,7 @@ const Sidebar = () => {
                   Stickers
                 </GLButton>
               </Link>
-              {/* <Link to="/collections/all/products/custom_product_deposit">
-              <GLButton  className="sidebar-btn secondary" onClick={closeMenu}>
-                Customize Any Product!
-              </GLButton>
-            </Link> */}
-              {/* <Link to="/collections/all/products/glowstringz_v2">
-							<GLButton  className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
-								Glowstringz V2
-							</GLButton>
-						</Link> */}
-              {/* {browser_check() !== 'safari' ? (
-							<Link to="/collections/all/products/glowstringz_v2">
-								<GLButton
-									className={`sidebar-btn secondary  special_font gradient-btn`}
-									onClick={closeMenu}
-								>
-									<span>GLOWSTRINGZ V2</span>
-								</GLButton>
-							</Link>
-						) : (
-							<Link to="/collections/all/products/glowstringz_v2" onClick={closeMenu}>
-								<GLButton  className={`sidebar-btn secondary `}>
-									<span>Glowstringz V2</span>
-								</GLButton>
-							</Link>
-						)} */}
             </ul>
-            {/* <GLButton
-						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-						onClick={() => show_hide('products_dropdown')}
-					>
-						<ExpandMore  className="fs256px"/>
-					</GLButton> */}
           </div>
           <Link to="/collections/all/tutorials">
             <GLButton className="sidebar-btn primary" onClick={closeMenu}>
@@ -610,34 +539,6 @@ const Sidebar = () => {
             </GLButton>
           </Link>
           <div className="sidebar_dropdown">
-            {/* <div className="sidebar-btn-container">
-            <GLButton className="sidebar-btn primary" onClick={closeMenu}>
-              <Link to="/collections/all/sponsors">Our Team</Link>
-            </GLButton>
-            <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("our_team_dropdown")} aria-label="Show">
-              <ExpandMore  className="fs256px"/>
-            </GLButton>
-          </div>
-          <ul className="sidebar_dropdown_container" id="our_team_dropdown">
-            <div className="sidebar_dropdown_nested">
-              <Link to="/collections/all/sponsors">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Sponsored Glovers
-                </GLButton>
-              </Link>
-              <Link to="/collections/all/teams">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Sponsored Teams
-                </GLButton>
-              </Link>
-              <Link to="/collections/all/teams/category/rave_mob">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Rave Mob
-                </GLButton>
-              </Link>
-            </div>
-          </ul> */}
-
             <div className="sidebar-btn-container">
               <GLButton className="sidebar-btn primary" onClick={closeMenu}>
                 <Link to="/pages/menu/featured">Community</Link>
@@ -703,9 +604,6 @@ const Sidebar = () => {
             </ul>
           </div>
           <div className="sidebar_dropdown">
-            {/* <GLButton  className="sidebar-btn primary" onClick={closeMenu}>
-						<Link to="/pages/menu/support">Support</Link>
-					</GLButton> */}
             <div className="sidebar-btn-container">
               <GLButton className="sidebar-btn primary" onClick={closeMenu}>
                 <Link to="/pages/menu/support">Support</Link>
@@ -781,33 +679,15 @@ const Sidebar = () => {
                   About
                 </GLButton>
               </Link>
-              {/* <Link to="/pages/events">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Events
-              </GLButton>
-            </Link> */}
-              {/* <Link to="/pages/menu/manuals">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Manuals
-              </GLButton>
-            </Link> */}
-
               <Link to="/pages/terms">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Terms and Conditions
                 </GLButton>
               </Link>
             </ul>
-            {/* <GLButton
-						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-						onClick={() => show_hide('support_dropdown')}
-					>
-						<ExpandMore  className="fs256px"/>
-					</GLButton> */}
           </div>
           {current_user?.isAdmin && (
             <div className="sidebar_dropdown">
-              {/* <GLButton  className="sidebar-btn primary">Admin</GLButton> */}
               <div className="sidebar-btn-container">
                 <GLButton className="sidebar-btn primary" onClick={closeMenu}>
                   Admin

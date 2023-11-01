@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer className="ta-c w-100per mt-5rem h-450px">
-      <div className="footer-image">
+      <nav className="footer-nav" aria-label="Footer navigation">
         <Link to="/" aria-label="Home Page">
           <div className="">
             <img
@@ -48,7 +48,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-      </div>
+      </nav>
     </footer>
   );
 };

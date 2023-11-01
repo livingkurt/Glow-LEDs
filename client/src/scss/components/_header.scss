@@ -4,10 +4,12 @@ header {
   background-color: $theme_color_header;
   color: $theme_color_phrase_font;
   box-shadow: $bs_deep;
-  padding-bottom: 15px;
 }
 
 .top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 15px;
   padding-top: 15px;
   list-style-type: none;
@@ -15,6 +17,8 @@ header {
   left: 0;
   z-index: 100;
   top: 0;
+  // margin-top: 22px;
+  width: 100%;
 }
 .dropdown-nav:hover .nav-dropdown {
   display: flex;

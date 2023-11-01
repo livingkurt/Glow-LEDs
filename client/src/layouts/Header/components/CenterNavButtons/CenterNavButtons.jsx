@@ -75,7 +75,7 @@ const CenterNavButtons = () => {
   return (
     <div className="column jc-c mh-auto">
       <GlowLEDsTextLogo />
-      <nav className="jc-b nav_bar">
+      <div className="jc-b nav_bar">
         {navItems.map(item => (
           <div key={item.name} className="dropdown-nav">
             <Link to={item.path} aria-label={item.ariaLabel}>
@@ -101,7 +101,7 @@ const CenterNavButtons = () => {
             )}
           </div>
         ))}
-      </nav>
+      </div>
     </div>
   );
 };
