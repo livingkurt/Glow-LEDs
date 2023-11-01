@@ -68,6 +68,7 @@ const glowskinz = {
         _id: 7,
         id: "clozd_dropdown",
         subSideDrawer: {
+          id: "clozd_dropdown",
           subDrawerItems: [
             {
               name: "Classics",
@@ -153,6 +154,7 @@ const diffuser_caps = {
         _id: 219,
         id: "collections_dropdown",
         subSideDrawer: {
+          id: "collections_dropdown",
           subDrawerItems: [
             {
               name: "Texture",

@@ -20,6 +20,9 @@ const settingPage = createSlice({
     last_id: "",
     current_id: "",
     chip_name: "",
+    openId: "",
+    drawerColumnId: "",
+    subDrawerColumnId: "",
   },
   reducers: {
     set_setting: (state, { payload }) => {
@@ -58,6 +61,27 @@ const settingPage = createSlice({
     },
     set_chip_name: (state, { payload }) => {
       state.chip_name = payload;
+    },
+    setOpenDrawerColumnId: (state, { payload }) => {
+      let id;
+      // Toggle the drawer
+      if (state.drawerColumnId === payload) {
+        id = "";
+      } else {
+        id = payload;
+      }
+      state.drawerColumnId = id;
+      state.subDrawerColumnId = "";
+    },
+    setOpenSubDrawerColumnId: (state, { payload }) => {
+      let id;
+      // Toggle the drawer
+      if (state.subDrawerColumnId === payload) {
+        id = "";
+      } else {
+        id = payload;
+      }
+      state.subDrawerColumnId = id;
     },
   },
   extraReducers: {
@@ -131,5 +155,7 @@ export const {
   set_last_id,
   set_current_id,
   set_chip_name,
+  setOpenDrawerColumnId,
+  setOpenSubDrawerColumnId,
 } = settingPage.actions;
 export default settingPage.reducer;

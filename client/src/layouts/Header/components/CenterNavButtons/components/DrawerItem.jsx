@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import SingleDrawerItem from "./SingleDrawerItem";
+import { useSelector } from "react-redux";
 
-const DrawerItem = ({ columns, show_hide_nested }) => {
+const DrawerItem = ({ columns, updateSubDrawerColumnId }) => {
+  const settingPage = useSelector(state => state.settings);
+  const { drawerColumnId } = settingPage;
   // Create a normalized array
   const normalizedItems = [];
 
@@ -24,27 +25,22 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
   });
 
   return (
-    <>
-      {normalizedItems.map(item => {
+    <div>
+      {normalizedItems.map((item, index) => {
         if (item.type === "sideDrawer") {
           return (
-            <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
-              <Link to={item.path}>
-                <GLButton variant="nav" className="ta-l">
-                  {item.name}
-                </GLButton>
-              </Link>
-              <hr className="w-95per m-0px" />
-              {item.drawerItems.map((drawerItem, index) => (
-                <DropdownButton key={`${item.id}-${index}`} {...drawerItem} show_hide={show_hide_nested} />
-              ))}
-            </div>
+            <SingleDrawerItem
+              key={index}
+              item={item}
+              drawerColumnId={drawerColumnId}
+              columnId={item.id}
+              updateSubDrawerColumnId={updateSubDrawerColumnId}
+            />
           );
         }
-
         return null;
       })}
-    </>
+    </div>
   );
 };
 
