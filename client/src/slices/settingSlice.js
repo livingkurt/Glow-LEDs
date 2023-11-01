@@ -12,6 +12,14 @@ const settingPage = createSlice({
     message: "",
     error: {},
     show_search_bar: true,
+    first_name: "",
+    display: false,
+    options: [],
+    pathname: "",
+    search: "",
+    last_id: "",
+    current_id: "",
+    chip_name: "",
   },
   reducers: {
     set_setting: (state, { payload }) => {
@@ -26,6 +34,30 @@ const settingPage = createSlice({
     },
     set_show_search_bar: (state, { payload }) => {
       state.show_search_bar = payload;
+    },
+    set_first_name: (state, { payload }) => {
+      state.first_name = payload;
+    },
+    setDisplay: (state, { payload }) => {
+      state.display = payload;
+    },
+    set_options: (state, { payload }) => {
+      state.options = payload;
+    },
+    set_pathname: (state, { payload }) => {
+      state.pathname = payload;
+    },
+    set_search: (state, { payload }) => {
+      state.search = payload;
+    },
+    set_last_id: (state, { payload }) => {
+      state.last_id = payload;
+    },
+    set_current_id: (state, { payload }) => {
+      state.current_id = payload;
+    },
+    set_chip_name: (state, { payload }) => {
+      state.chip_name = payload;
     },
   },
   extraReducers: {
@@ -87,5 +119,17 @@ const settingPage = createSlice({
   },
 });
 
-export const { set_loading, set_setting, set_show_search_bar } = settingPage.actions;
+export const {
+  set_loading,
+  set_setting,
+  set_show_search_bar,
+  set_first_name,
+  setDisplay,
+  set_options,
+  set_pathname,
+  set_search,
+  set_last_id,
+  set_current_id,
+  set_chip_name,
+} = settingPage.actions;
 export default settingPage.reducer;

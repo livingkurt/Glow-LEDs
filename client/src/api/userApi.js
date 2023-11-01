@@ -153,14 +153,15 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData, { 
 
 export const logoutUser = createAsyncThunk(
   "users/logoutUser",
-  async (refresh_token, { dispatch, rejectWithValue, getState }) => {
+  async (_args, { dispatch, rejectWithValue, getState }) => {
     const {
       carts: {
         cartPage: { my_cart },
       },
     } = getState();
+    const refreshToken = localStorage.getItem("refreshToken");
     try {
-      await axios.put("/api/users/logout", { refresh_token });
+      await axios.put("/api/users/logout", { refresh_token: refreshToken });
       dispatch(showSuccess({ message: `User Logged Out` }));
       return { my_cart };
     } catch (error) {

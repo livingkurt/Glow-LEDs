@@ -31,9 +31,8 @@ const EmailStep = () => {
 
   const submit_logout = e => {
     e.preventDefault();
-    const refreshToken = localStorage.getItem("refreshToken");
     navigate("/checkout/placeorder");
-    dispatch(API.logoutUser(refreshToken));
+    dispatch(API.logoutUser());
   };
 
   const { width } = useWindowDimensions();

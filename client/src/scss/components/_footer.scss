@@ -1,10 +1,10 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 footer {
   background: linear-gradient(0deg, $theme_color_primary 0%, #00000000 100%);
 }
 
-.footer-image {
+.footer-nav {
   position: relative;
   img {
     width: 350px;
@@ -13,6 +13,6 @@ footer {
     left: 50%;
     margin: -50px 0px 0px -50px;
     transform: translate(-35%, -18%);
-    opacity: .2;
+    opacity: 0.2;
   }
 }
