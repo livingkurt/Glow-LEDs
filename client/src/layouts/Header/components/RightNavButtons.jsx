@@ -58,7 +58,7 @@ const RightNavButtons = () => {
                   variant="nav"
                   className="title_font"
                   aria-label={item.ariaLabel}
-                  onClick={() => item.onClick && item.onClick()}
+                  onClick={() => item.onClick && item.onClick(current_user)}
                 >
                   {determineName(item, current_user)}
                 </GLButton>
