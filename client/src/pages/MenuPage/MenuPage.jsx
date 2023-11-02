@@ -249,7 +249,7 @@ const MenuPage = () => {
           <div className="jc-c wrap">
             {menuItems &&
               menuItems.map((item, index) => {
-                return <MenuItemD item={item} index={index} decide_url={decide_url} />;
+                return <MenuItemD item={item} index={index} key={index} decide_url={decide_url} />;
               })}
           </div>
         </div>
@@ -259,7 +259,7 @@ const MenuPage = () => {
           <ul className="jc-c wrap">
             {menuItems &&
               menuItems.map((item, index) => {
-                return <MenuItemM item={item} index={index} decide_url={decide_url} />;
+                return <MenuItemM item={item} index={index} key={index} decide_url={decide_url} />;
               })}
           </ul>
         </div>

@@ -53,7 +53,7 @@ const RightNavButtons = () => {
         {rightNav(dispatch).map(
           (item, index) =>
             item.permissions(current_user) && (
-              <div key={item._id} className="dropdown">
+              <div key={index} className="dropdown">
                 <GLButton
                   variant="nav"
                   className="title_font"
@@ -67,7 +67,7 @@ const RightNavButtons = () => {
                     {item.columns.map((column, colIndex) => (
                       <div key={colIndex}>
                         {column.rows.map((row, rowIndex) => (
-                          <Link key={row._id} to={row.path}>
+                          <Link key={rowIndex} to={row.path}>
                             <GLButton
                               variant="nav"
                               className="w-100per ta-l"
