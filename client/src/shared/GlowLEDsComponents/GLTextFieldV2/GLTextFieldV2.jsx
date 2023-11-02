@@ -38,17 +38,26 @@ const GLTextFieldV2 = ({
   inputProps,
   upperCase,
   lowerCase,
+  noSpace,
   ...otherProps
 }) => {
   const handleChange = event => {
     let newValue = event.target.value;
-    console.log({ newValue, upperCase, lowerCase });
+
+    // Convert the value to uppercase if upperCase is true
     if (upperCase) {
       newValue = newValue.toUpperCase();
     }
+    // Convert the value to lowercase if lowerCase is true
     if (lowerCase) {
       newValue = newValue.toLowerCase();
     }
+    // Remove all spaces if noSpace is true
+    if (noSpace) {
+      // This will remove all spaces from the string
+      newValue = newValue.replace(/ /g, "");
+    }
+    // Finally, call the original onChange handler with the modified value
     if (onChange) {
       onChange({ ...event, target: { ...event.target, value: newValue } });
     }
@@ -64,7 +73,7 @@ const GLTextFieldV2 = ({
 
   const shouldRenderIcon = icon && iconPosition;
 
-  return loading ? (
+  return (
     <div data-test="mui-text-field-container">
       <TextField
         classes={{ ...classes }}
@@ -75,7 +84,7 @@ const GLTextFieldV2 = ({
         fullWidth={fullWidth}
         type={type}
         disabled={disabled}
-        onChange={onChange}
+        onChange={handleChange}
         label={label}
         variant={variant}
         autoFocus={autoFocus}
@@ -93,15 +102,43 @@ const GLTextFieldV2 = ({
         InputProps={{
           startAdornment: shouldRenderIcon && iconPosition === "start" ? setInputAdornment() : null,
           endAdornment: shouldRenderIcon && iconPosition === "end" ? setInputAdornment() : null,
-          onKeyDown: restrictCharacters,
-
           ...InputProps,
         }}
       />
     </div>
-  ) : (
-    <Skeleton variant="text" height={80} animation="wave" style={{ margin: "-20px 0px" }} />
   );
+};
+
+GLTextFieldV2.defaultProps = {
+  value: undefined,
+  classes: null,
+  icon: null,
+  iconFontSize: "inherit",
+  iconColor: "inherit",
+  iconPosition: null,
+  helperText: null,
+  placeholder: null,
+  displayHelperText: false,
+  required: false,
+  error: false,
+  fullWidth: true,
+  variant: "outlined",
+  label: null,
+  type: "text",
+  name: null,
+  dataTest: "mui-text-field-container",
+  autoFocus: false,
+  restrictCharacters: x => x,
+  maxLength: null,
+  InputProps: {},
+  disabled: false,
+  multiline: false,
+  minRows: 1,
+  maxRows: 10,
+  loading: false,
+  upperCase: false,
+  lowerCase: false,
+  noSpace: false,
 };
 
 GLTextFieldV2.propTypes = {
@@ -138,6 +175,7 @@ GLTextFieldV2.propTypes = {
   loading: PropTypes.bool,
   upperCase: PropTypes.bool,
   lowerCase: PropTypes.bool,
+  noSpace: PropTypes.bool,
 };
 
 export default GLTextFieldV2;

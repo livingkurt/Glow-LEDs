@@ -218,7 +218,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   }}
                   key={fieldName}
                   name={fieldName}
-                  loading={loading}
                   margin="normal"
                   size="small"
                   fullWidth
@@ -226,6 +225,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   label={fieldData.label}
                   upperCase={fieldData.upperCase}
                   lowerCase={fieldData.lowerCase}
+                  noSpace={fieldData.noSpace}
                   restrictCharacters={fieldData?.restrictCharacters}
                   variant="outlined"
                   value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}
@@ -329,6 +329,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   fullWidth
                   type={fieldData.type}
                   label={fieldData.label}
+                  upperCase={fieldData.upperCase}
+                  lowerCase={fieldData.lowerCase}
+                  noSpace={fieldData.noSpace}
                   multiline
                   variant="outlined"
                   value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}

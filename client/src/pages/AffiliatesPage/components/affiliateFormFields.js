@@ -19,6 +19,7 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       label: "Public Promo Code Name, it can be your glover name or something else",
       modes: ["create"],
       upperCase: true,
+      noSpace: true,
       restrictCharacters: e => {
         if (e.key === " ") {
           e.preventDefault();
