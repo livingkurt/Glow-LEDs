@@ -35,8 +35,25 @@ const GLTextFieldV2 = ({
   maxRows,
   minRows,
   loading,
+  inputProps,
+  upperCase,
+  lowerCase,
   ...otherProps
 }) => {
+  const handleChange = event => {
+    let newValue = event.target.value;
+    console.log({ newValue, upperCase, lowerCase });
+    if (upperCase) {
+      newValue = newValue.toUpperCase();
+    }
+    if (lowerCase) {
+      newValue = newValue.toLowerCase();
+    }
+    if (onChange) {
+      onChange({ ...event, target: { ...event.target, value: newValue } });
+    }
+  };
+
   const setInputAdornment = () => (
     <InputAdornment position={iconPosition}>
       <Icon color={iconColor} fontSize={iconFontSize}>
@@ -83,37 +100,8 @@ const GLTextFieldV2 = ({
       />
     </div>
   ) : (
-    <Skeleton variant="text" height={100} animation="wave" />
+    <Skeleton variant="text" height={80} animation="wave" style={{ margin: "-20px 0px" }} />
   );
-};
-
-GLTextFieldV2.defaultProps = {
-  value: undefined,
-  classes: null,
-  icon: null,
-  iconFontSize: "inherit",
-  iconColor: "inherit",
-  iconPosition: null,
-  helperText: null,
-  placeholder: null,
-  displayHelperText: false,
-  required: false,
-  error: false,
-  fullWidth: true,
-  variant: "outlined",
-  label: null,
-  type: "text",
-  name: null,
-  dataTest: "mui-text-field-container",
-  autoFocus: false,
-  restrictCharacters: x => x,
-  maxLength: null,
-  InputProps: {},
-  disabled: false,
-  multiline: false,
-  minRows: 1,
-  maxRows: 10,
-  loading: true,
 };
 
 GLTextFieldV2.propTypes = {
@@ -148,6 +136,8 @@ GLTextFieldV2.propTypes = {
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
   loading: PropTypes.bool,
+  upperCase: PropTypes.bool,
+  lowerCase: PropTypes.bool,
 };
 
 export default GLTextFieldV2;

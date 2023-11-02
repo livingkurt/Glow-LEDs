@@ -14,6 +14,19 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       type: "text",
       label: "Glover Name",
     },
+    promo_code_name: {
+      type: "text",
+      label: "Public Promo Code Name, it can be your glover name or something else",
+      modes: ["create"],
+      upperCase: true,
+      restrictCharacters: e => {
+        if (e.key === " ") {
+          e.preventDefault();
+          return false;
+        }
+        return e;
+      },
+    },
     location: {
       type: "text",
       label: "City, State",

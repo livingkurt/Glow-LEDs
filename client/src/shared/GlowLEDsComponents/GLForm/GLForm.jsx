@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Paper, Skeleton, TextField, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -12,8 +12,9 @@ import { debounce } from "lodash";
 import GLColorPicker from "./components/GLColorPicker";
 import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
+import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
 
-const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes }) => {
+const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -65,7 +66,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
           } else {
             return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
           }
-        } else if (determine_shown_fields(fieldData, current_user)) {
+        } else if (determine_shown_fields(fieldData, current_user, mode)) {
           switch (fieldData.type) {
             case "autocomplete_single":
               const selected = fieldData.valueAttribute
@@ -197,7 +198,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "text":
               return (
-                <TextField
+                <GLTextFieldV2
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
                   autoComplete="new-password"
@@ -217,11 +218,15 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   }}
                   key={fieldName}
                   name={fieldName}
+                  loading={loading}
                   margin="normal"
                   size="small"
                   fullWidth
                   type={fieldData.type}
                   label={fieldData.label}
+                  upperCase={fieldData.upperCase}
+                  lowerCase={fieldData.lowerCase}
+                  restrictCharacters={fieldData?.restrictCharacters}
                   variant="outlined"
                   value={typeof fieldState === "object" && Object.keys(fieldState).length === 0 ? "" : fieldState}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
@@ -229,7 +234,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "number":
               return (
-                <TextField
+                <GLTextFieldV2
                   helperText={formErrors && formErrors[fieldName]}
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
@@ -263,7 +268,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               const formattedDate = formatDate(fieldState);
 
               return (
-                <TextField
+                <GLTextFieldV2
                   helperText={formErrors && formErrors[fieldName]}
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
@@ -299,7 +304,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "text_multiline":
               return (
-                <TextField
+                <GLTextFieldV2
                   helperText={formErrors && formErrors[fieldName]}
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
