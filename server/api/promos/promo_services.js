@@ -404,31 +404,38 @@ export default {
         return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
       }
 
+      // ... (other code remains the same)
+
       const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
       const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
-      if (affiliate) {
+
+      if (affiliate && affiliate.user) {
+        const affiliateEmail = affiliate.user.email ? affiliate.user.email.toLowerCase() : null;
+        const currentEmail = current_user.email ? current_user.email.toLowerCase() : null;
+        const affiliateFirstName = affiliate.user.first_name ? affiliate.user.first_name.toLowerCase() : null;
+        const affiliateLastName = affiliate.user.last_name ? affiliate.user.last_name.toLowerCase() : null;
+        const shippingFirstName = shipping.first_name ? shipping.first_name.toLowerCase() : null;
+        const shippingLastName = shipping.last_name ? shipping.last_name.toLowerCase() : null;
+        const shippingEmail = shipping.email ? shipping.email.toLowerCase() : null;
+
         if (Object.keys(current_user).length > 0) {
-          if (affiliate.user.email.toLowerCase() === current_user.email.toLowerCase()) {
+          if (currentEmail && affiliateEmail === currentEmail) {
             return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
           }
-          if (
-            shipping.first_name.toLowerCase() === current_user.first_name.toLowerCase() &&
-            shipping.last_name.toLowerCase() === current_user.last_name.toLowerCase()
-          ) {
+          if (shippingFirstName === affiliateFirstName && shippingLastName === affiliateLastName) {
             return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
           }
         } else {
-          if (
-            shipping.first_name.toLowerCase() === affiliate.user.first_name.toLowerCase() &&
-            shipping.last_name.toLowerCase() === affiliate.user.last_name.toLowerCase()
-          ) {
+          if (shippingFirstName === affiliateFirstName && shippingLastName === affiliateLastName) {
             return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
           }
-          if (shipping.email === affiliate.user.email) {
+          if (shippingEmail && affiliateEmail === shippingEmail) {
             return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
           }
         }
       }
+
+      // ... (rest of the code)
 
       // // Check if promo is associated with an affiliate and validate
       // if (promo.affiliate) {
