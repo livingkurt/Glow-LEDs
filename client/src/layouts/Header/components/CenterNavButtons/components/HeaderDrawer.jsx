@@ -26,7 +26,7 @@ const HeaderDrawer = ({ columns }) => {
       {normalizedItems.map(item => {
         if (item.type === "sideDrawer") {
           return (
-            <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
+            <div className="header-drawer hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
                 <GLButton variant="nav" className="ta-l">
                   {item.name}
@@ -34,7 +34,7 @@ const HeaderDrawer = ({ columns }) => {
               </Link>
               <hr className="w-95per m-0px" />
               {item.drawerItems.map((drawerItem, index) => (
-                <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="drawerItem" />
+                <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="headerDrawer" />
               ))}
             </div>
           );

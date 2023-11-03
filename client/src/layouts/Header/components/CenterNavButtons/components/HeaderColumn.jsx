@@ -48,7 +48,7 @@ const HeaderColumn = ({ columns }) => {
             />
           )}
           {column.rows.map(row => (
-            <HeaderDrawerButton {...row} key={row._id} from="navColumn" />
+            <HeaderDrawerButton {...row} key={row._id} from="headerColumn" />
           ))}
         </div>
       ))}

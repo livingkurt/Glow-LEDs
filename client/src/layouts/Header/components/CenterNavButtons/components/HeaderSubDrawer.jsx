@@ -31,7 +31,7 @@ const HeaderSubDrawer = ({ columns }) => {
         if (item.type === "subSideDrawer") {
           console.log({ id: item.id });
           return (
-            <div className="nav-dropdown-nested-content hover_fade_in" id={item.id} key={item.id}>
+            <div className="header-subdrawer hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
                 <GLButton variant="nav" className="ta-l">
                   {item.name}
@@ -39,7 +39,11 @@ const HeaderSubDrawer = ({ columns }) => {
               </Link>
               <hr className="w-95per m-0px" />
               {item.subHeaderDrawers.map((subHeaderDrawer, index) => (
-                <HeaderDrawerButton key={`${subHeaderDrawer.id}-${index}`} {...subHeaderDrawer} from="drawerItem" />
+                <HeaderDrawerButton
+                  key={`${subHeaderDrawer.id}-${index}`}
+                  {...subHeaderDrawer}
+                  from="headerSubDrawer"
+                />
               ))}
             </div>
           );

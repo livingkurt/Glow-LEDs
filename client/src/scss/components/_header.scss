@@ -38,7 +38,7 @@ header {
   margin: 0;
   // box-shadow: $bs_deep;
 }
-.nav-dropdown-subcategory-content {
+.header-drawer {
   // display: none;
   white-space: nowrap;
   overflow: hidden;
@@ -52,13 +52,13 @@ header {
   transition: all 0.5s;
 }
 
-.show-dropdown {
+.show-header-drawer {
   // display: block !important;
   max-width: 250px;
   transition: all 0.5s;
 }
 
-.nav-dropdown-nested-content {
+.header-subdrawer {
   display: flex;
   flex-direction: column;
   white-space: nowrap;
@@ -72,7 +72,7 @@ header {
   // max-width: 250px;
   transition: all 0.5s;
 }
-.show-dropdown-nested {
+.show-header-subdrawer {
   // display: block !important;
   max-width: 250px;
   transition: all 0.5s;

@@ -18,9 +18,9 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
   const elems = document.querySelectorAll(`.${dropdownClass}`);
 
   // Always close nested dropdowns when a subcategory is toggled
-  const nestedElems = document.querySelectorAll(".nav-dropdown-nested-content.show-dropdown-nested");
+  const nestedElems = document.querySelectorAll(".header-subdrawer.show-header-subdrawer");
   nestedElems.forEach(el => {
-    el.classList.remove("show-dropdown-nested");
+    el.classList.remove("show-header-subdrawer");
   });
 
   let isAlreadyOpen = false;

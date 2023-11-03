@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { toggleDropdown } from "../../../headerHelpers";
 
@@ -31,18 +31,18 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
         <GLButton
           className="nav-btn-dropdown"
           onClick={() => {
-            if (from === "navColumn") {
+            if (from === "headerColumn") {
               toggleDropdown({
                 id,
-                dropdownClass: `nav-dropdown-subcategory-content`,
-                toggleClass: `show-dropdown`,
+                dropdownClass: `header-drawer`,
+                toggleClass: `show-header-drawer`,
               });
             }
-            if (from === "drawerItem" || from === "subHeaderDrawer") {
+            if (from === "headerDrawer" || from === "headerSubDrawer") {
               toggleDropdown({
                 id,
-                dropdownClass: `nav-dropdown-nested-content`,
-                toggleClass: `show-dropdown-nested`,
+                dropdownClass: `header-subdrawer`,
+                toggleClass: `show-header-subdrawer`,
               });
             }
           }}
