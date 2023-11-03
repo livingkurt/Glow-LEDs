@@ -6,12 +6,8 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { toggleDropdown } from "../../../headerHelpers";
 
 const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from }) => {
-  const dispatch = useDispatch();
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
-
-  const settingPage = useSelector(state => state.settings);
-  const { last_id } = settingPage;
 
   if (permissions && !permissions(current_user)) {
     return null;
@@ -40,8 +36,6 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
                 id,
                 dropdownClass: `nav-dropdown-subcategory-content`,
                 toggleClass: `show-dropdown`,
-                dispatch,
-                last_id,
               });
             }
             if (from === "drawerItem" || from === "subHeaderDrawer") {
@@ -49,8 +43,6 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
                 id,
                 dropdownClass: `nav-dropdown-nested-content`,
                 toggleClass: `show-dropdown-nested`,
-                dispatch,
-                last_id,
               });
             }
           }}

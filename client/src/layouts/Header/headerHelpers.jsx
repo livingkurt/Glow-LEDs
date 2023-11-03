@@ -2,7 +2,6 @@ import { updateVersion } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
-import { set_current_id, set_last_id } from "../../slices/settingSlice";
 
 export const determineDropdown = (item, current_user) => {
   if (typeof item.name === "function" && item.name(current_user) === "Login") {
@@ -15,8 +14,7 @@ export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
 };
 
-export const toggleDropdown = ({ id, dropdownClass, toggleClass, dispatch, last_id }) => {
-  dispatch(set_current_id(id));
+export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
   const elems = document.querySelectorAll(`.${dropdownClass}`);
 
   // Always close nested dropdowns when a subcategory is toggled
@@ -41,9 +39,6 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass, dispatch, last_
     // Open the current menu only if it was not already open
     current_menu.classList.add(toggleClass);
   }
-
-  // Set the last id to the current id if opening, otherwise reset it
-  dispatch(set_last_id(isAlreadyOpen ? null : id));
 };
 
 const features = {
