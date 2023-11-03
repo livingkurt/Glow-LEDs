@@ -32,7 +32,7 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
       {normalizedItems.map(item => {
         if (item.type === "subSideDrawer") {
           return (
-            <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
+            <div className="nav-dropdown-nested-content hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
                 <GLButton variant="nav" className="ta-l">
                   {item.name}
