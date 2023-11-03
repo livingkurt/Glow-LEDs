@@ -7,7 +7,7 @@ export const formatDate = dateString => {
   return formattedDate;
 };
 
-export const determine_shown_fields = (fieldData, current_user) => {
+export const determine_shown_fields = (fieldData, current_user, mode) => {
   let result = true;
   if (fieldData.type !== "array_of_objects") {
     result = false;
@@ -24,6 +24,9 @@ export const determine_shown_fields = (fieldData, current_user) => {
     }
   } else {
     result = true;
+  }
+  if (fieldData.modes && !fieldData.modes.includes(mode)) {
+    result = false;
   }
   return result;
 };

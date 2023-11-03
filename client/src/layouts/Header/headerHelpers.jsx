@@ -910,7 +910,9 @@ export const rightNav = dispatch => {
         (current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) || "Login",
       path: "/secure/account/profile",
       _id: 10138,
-      onClick: () => dispatch(openLoginModal()),
+      onClick: current_user =>
+        !(current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) &&
+        dispatch(openLoginModal()),
       dataTestId: "community_button",
       columns: [user],
       headerLocation: "center",

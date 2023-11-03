@@ -77,8 +77,9 @@ export default {
     }
   },
   create_affiliates_s: async body => {
+    const { user, promo_code_name } = body;
     const public_code = {
-      promo_code: body.artist_name.toLowerCase(),
+      promo_code: promo_code_name.toLowerCase(),
       admin_only: false,
       affiliate_only: false,
       single_use: false,
@@ -94,7 +95,7 @@ export default {
     };
     const private_code = {
       promo_code: make_private_code(6),
-      user: body.user,
+      user: user,
       admin_only: false,
       affiliate_only: true,
       single_use: false,

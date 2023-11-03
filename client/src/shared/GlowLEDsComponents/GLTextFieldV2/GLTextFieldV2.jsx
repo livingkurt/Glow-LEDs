@@ -35,8 +35,34 @@ const GLTextFieldV2 = ({
   maxRows,
   minRows,
   loading,
+  inputProps,
+  upperCase,
+  lowerCase,
+  noSpace,
   ...otherProps
 }) => {
+  const handleChange = event => {
+    let newValue = event.target.value;
+
+    // Convert the value to uppercase if upperCase is true
+    if (upperCase) {
+      newValue = newValue.toUpperCase();
+    }
+    // Convert the value to lowercase if lowerCase is true
+    if (lowerCase) {
+      newValue = newValue.toLowerCase();
+    }
+    // Remove all spaces if noSpace is true
+    if (noSpace) {
+      // This will remove all spaces from the string
+      newValue = newValue.replace(/ /g, "");
+    }
+    // Finally, call the original onChange handler with the modified value
+    if (onChange) {
+      onChange({ ...event, target: { ...event.target, value: newValue } });
+    }
+  };
+
   const setInputAdornment = () => (
     <InputAdornment position={iconPosition}>
       <Icon color={iconColor} fontSize={iconFontSize}>
@@ -47,7 +73,7 @@ const GLTextFieldV2 = ({
 
   const shouldRenderIcon = icon && iconPosition;
 
-  return loading ? (
+  return (
     <div data-test="mui-text-field-container">
       <TextField
         classes={{ ...classes }}
@@ -58,7 +84,7 @@ const GLTextFieldV2 = ({
         fullWidth={fullWidth}
         type={type}
         disabled={disabled}
-        onChange={onChange}
+        onChange={handleChange}
         label={label}
         variant={variant}
         autoFocus={autoFocus}
@@ -76,14 +102,10 @@ const GLTextFieldV2 = ({
         InputProps={{
           startAdornment: shouldRenderIcon && iconPosition === "start" ? setInputAdornment() : null,
           endAdornment: shouldRenderIcon && iconPosition === "end" ? setInputAdornment() : null,
-          onKeyDown: restrictCharacters,
-
           ...InputProps,
         }}
       />
     </div>
-  ) : (
-    <Skeleton variant="text" height={100} animation="wave" />
   );
 };
 
@@ -113,7 +135,10 @@ GLTextFieldV2.defaultProps = {
   multiline: false,
   minRows: 1,
   maxRows: 10,
-  loading: true,
+  loading: false,
+  upperCase: false,
+  lowerCase: false,
+  noSpace: false,
 };
 
 GLTextFieldV2.propTypes = {
@@ -148,6 +173,9 @@ GLTextFieldV2.propTypes = {
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
   loading: PropTypes.bool,
+  upperCase: PropTypes.bool,
+  lowerCase: PropTypes.bool,
+  noSpace: PropTypes.bool,
 };
 
 export default GLTextFieldV2;

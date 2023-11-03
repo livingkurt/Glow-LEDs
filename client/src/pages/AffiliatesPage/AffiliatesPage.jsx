@@ -8,7 +8,7 @@ import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../sl
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
@@ -18,6 +18,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { EditPromoModal } from "../PromosPage/components";
+import { open_edit_promo_modal } from "../../slices/promoSlice";
 
 const AffiliatesPage = () => {
   const location = useLocation();
@@ -56,8 +58,26 @@ const AffiliatesPage = () => {
         display: affiliate => `${affiliate.private_code && affiliate.private_code.percentage_off}%`,
       },
       { title: "User", display: affiliate => fullName(affiliate.user) },
-      { title: "Public Code", display: affiliate => affiliate.private_code && affiliate.public_code.promo_code },
-      { title: "Private Code", display: affiliate => affiliate.private_code && affiliate.private_code.promo_code },
+      {
+        title: "Public Code",
+        display: affiliate => (
+          <Tooltip title="Click to edit public code">
+            <div style={{ cursor: "pointer" }} onClick={() => dispatch(open_edit_promo_modal(affiliate?.public_code))}>
+              {affiliate?.public_code?.promo_code?.toUpperCase()}
+            </div>
+          </Tooltip>
+        ),
+      },
+      {
+        title: "Private Code",
+        display: affiliate => (
+          <Tooltip title="Click to edit private code">
+            <div style={{ cursor: "pointer" }} onClick={() => dispatch(open_edit_promo_modal(affiliate?.private_code))}>
+              {affiliate?.private_code?.promo_code?.toUpperCase()}
+            </div>
+          </Tooltip>
+        ),
+      },
 
       {
         title: "Actions",
@@ -106,6 +126,7 @@ const AffiliatesPage = () => {
         }
       />
       <EditAffiliateModal />
+      <EditPromoModal />
     </div>
   );
 };

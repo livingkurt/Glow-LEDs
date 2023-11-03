@@ -120,6 +120,7 @@ const EditAffiliateModal = () => {
           <GLForm
             formData={formFields}
             state={affiliate}
+            mode="edit"
             onChange={value => dispatch(set_affiliate(value))}
             loading={loading && loading_users && loading_products && loading_chips && loading_promos}
           />
@@ -149,6 +150,7 @@ const EditAffiliateModal = () => {
             <GLForm
               formData={formFields}
               state={affiliate}
+              mode="create"
               onChange={value => dispatch(set_affiliate(value))}
               loading={loading && loading_users && loading_products && loading_chips && loading_promos}
             />
