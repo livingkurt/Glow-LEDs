@@ -16,23 +16,34 @@ export const determineName = (item, current_user) => {
 };
 
 export const toggleDropdown = ({ id, dropdownClass, toggleClass, dispatch, last_id }) => {
-  console.log({ id, dropdownClass, toggleClass, dispatch, last_id });
   dispatch(set_current_id(id));
   const elems = document.querySelectorAll(`.${dropdownClass}`);
 
-  [].forEach.call(elems, el => {
+  // Always close nested dropdowns when a subcategory is toggled
+  const nestedElems = document.querySelectorAll(".nav-dropdown-nested-content.show-dropdown-nested");
+  nestedElems.forEach(el => {
+    el.classList.remove("show-dropdown-nested");
+  });
+
+  let isAlreadyOpen = false;
+  const current_menu = document.getElementById(id);
+
+  if (current_menu && current_menu.classList.contains(toggleClass)) {
+    isAlreadyOpen = true;
+  }
+
+  // Close all dropdowns of the same class
+  elems.forEach(el => {
     el.classList.remove(toggleClass);
   });
 
-  const current_menu = document.getElementById(id);
-  console.log({ current_menu });
-  if (current_menu && last_id === id) {
-    current_menu?.classList.remove(toggleClass);
-  } else {
-    current_menu?.classList.add(toggleClass);
+  if (!isAlreadyOpen) {
+    // Open the current menu only if it was not already open
+    current_menu.classList.add(toggleClass);
   }
 
-  dispatch(set_last_id(id));
+  // Set the last id to the current id if opening, otherwise reset it
+  dispatch(set_last_id(isAlreadyOpen ? null : id));
 };
 
 const features = {
