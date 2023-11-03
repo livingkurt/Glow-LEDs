@@ -14,6 +14,33 @@ export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
 };
 
+export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
+  const elems = document.querySelectorAll(`.${dropdownClass}`);
+
+  // Always close nested dropdowns when a subcategory is toggled
+  const nestedElems = document.querySelectorAll(".header-subdrawer.show-header-subdrawer");
+  nestedElems.forEach(el => {
+    el.classList.remove("show-header-subdrawer");
+  });
+
+  let isAlreadyOpen = false;
+  const current_menu = document.getElementById(id);
+
+  if (current_menu && current_menu.classList.contains(toggleClass)) {
+    isAlreadyOpen = true;
+  }
+
+  // Close all dropdowns of the same class
+  elems.forEach(el => {
+    el.classList.remove(toggleClass);
+  });
+
+  if (!isAlreadyOpen) {
+    // Open the current menu only if it was not already open
+    current_menu.classList.add(toggleClass);
+  }
+};
+
 const features = {
   name: "Featured",
   path: "/collections/all/products/category/our_picks",
@@ -68,7 +95,8 @@ const glowskinz = {
         _id: 7,
         id: "clozd_dropdown",
         subSideDrawer: {
-          subDrawerItems: [
+          id: "clozd_dropdown",
+          subHeaderDrawers: [
             {
               name: "Classics",
               path: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics",
@@ -86,7 +114,7 @@ const glowskinz = {
         name: "OPYN Glowskinz",
         path: "/collections/all/products/category/glowskinz/subcategory/opyn",
         _id: 110,
-        subDrawerItems: [],
+        subHeaderDrawers: [],
       },
     ],
   },
@@ -106,7 +134,7 @@ const exo_diffusers = {
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
           id: "exo_diffusers_collections_dropdown",
-          subDrawerItems: [
+          subHeaderDrawers: [
             {
               name: "Platonic Solids",
               path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids",
@@ -153,7 +181,7 @@ const diffuser_caps = {
         _id: 219,
         id: "collections_dropdown",
         subSideDrawer: {
-          subDrawerItems: [
+          subHeaderDrawers: [
             {
               name: "Texture",
               path: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture",

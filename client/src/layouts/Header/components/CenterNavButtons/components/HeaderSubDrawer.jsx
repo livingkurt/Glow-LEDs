@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import HeaderDrawerButton from "./HeaderDrawerButton";
 
-const SubDrawerItem = ({ columns, show_hide_nested }) => {
+const HeaderSubDrawer = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -14,12 +14,10 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
           if (drawerItem.subSideDrawer) {
             normalizedItems.push({
               type: "subSideDrawer",
-              id: `${drawerItem._id}-drawerItem-${index}`,
+              id: drawerItem.id,
               path: drawerItem.path,
-              variant: drawerItem.subSideDrawer.variant,
-              className: drawerItem.subSideDrawer.className,
               name: drawerItem.name,
-              subDrawerItems: drawerItem.subSideDrawer.subDrawerItems,
+              subHeaderDrawers: drawerItem.subSideDrawer.subHeaderDrawers,
             });
           }
         });
@@ -31,16 +29,21 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
     <>
       {normalizedItems.map(item => {
         if (item.type === "subSideDrawer") {
+          console.log({ id: item.id });
           return (
-            <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
+            <div className="header-subdrawer hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
                 <GLButton variant="nav" className="ta-l">
                   {item.name}
                 </GLButton>
               </Link>
               <hr className="w-95per m-0px" />
-              {item.subDrawerItems.map((subDrawerItem, index) => (
-                <DropdownButton key={`${subDrawerItem.id}-${index}`} {...subDrawerItem} show_hide={show_hide_nested} />
+              {item.subHeaderDrawers.map((subHeaderDrawer, index) => (
+                <HeaderDrawerButton
+                  key={`${subHeaderDrawer.id}-${index}`}
+                  {...subHeaderDrawer}
+                  from="headerSubDrawer"
+                />
               ))}
             </div>
           );
@@ -51,4 +54,4 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
   );
 };
 
-export default SubDrawerItem;
+export default HeaderSubDrawer;

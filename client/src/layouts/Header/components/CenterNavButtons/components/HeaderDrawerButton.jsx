@@ -3,10 +3,12 @@ import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { toggleDropdown } from "../../../headerHelpers";
 
-const DropdownButton = ({ path, variant, className, name, id, show_hide, permissions, extraContent }) => {
+const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from }) => {
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
+
   if (permissions && !permissions(current_user)) {
     return null;
   }
@@ -26,7 +28,26 @@ const DropdownButton = ({ path, variant, className, name, id, show_hide, permiss
         </Link>
       )}
       {id && (
-        <GLButton className="nav-btn-dropdown" onClick={() => show_hide(id)} aria-label="Show">
+        <GLButton
+          className="nav-btn-dropdown"
+          onClick={() => {
+            if (from === "headerColumn") {
+              toggleDropdown({
+                id,
+                dropdownClass: `header-drawer`,
+                toggleClass: `show-header-drawer`,
+              });
+            }
+            if (from === "headerDrawer" || from === "headerSubDrawer") {
+              toggleDropdown({
+                id,
+                dropdownClass: `header-subdrawer`,
+                toggleClass: `show-header-subdrawer`,
+              });
+            }
+          }}
+          aria-label="Show"
+        >
           <PlayArrowIcon color="white" />
         </GLButton>
       )}
@@ -34,4 +55,4 @@ const DropdownButton = ({ path, variant, className, name, id, show_hide, permiss
   );
 };
 
-export default DropdownButton;
+export default HeaderDrawerButton;
