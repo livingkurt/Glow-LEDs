@@ -31,7 +31,7 @@ const HeaderColumn = ({ columns }) => {
   return (
     <>
       {columns?.map(column => (
-        <div key={column._id} className="nav-column">
+        <div key={column._id} className="header-column">
           <Link to={column.path}>
             <GLButton variant="nav" className="ta-l title_font w-100per fs-18px">
               {column.name}

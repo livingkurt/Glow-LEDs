@@ -13,7 +13,7 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
     return null;
   }
   return (
-    <div className="nav-btn-container">
+    <div className="header-drawer-button-container">
       {path.includes("#") ? (
         <HashLink to={path} className="w-100per">
           <GLButton variant="nav" className="ta-l" fullWidth>
@@ -29,7 +29,7 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
       )}
       {id && (
         <GLButton
-          className="nav-btn-dropdown"
+          className="header-drawer-button"
           onClick={() => {
             if (from === "headerColumn") {
               toggleDropdown({
