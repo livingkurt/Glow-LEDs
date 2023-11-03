@@ -48,7 +48,9 @@ button {
 .btn.disabled {
   background: #3f3f3f;
   color: #727171;
-  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);
+  box-shadow:
+    inset 0 2px 4px 0 rgb(0 0 0 / 20%),
+    0 3px 10px 0 rgb(0 0 0 / 19%);
 }
 // .btn.primary {
 // 	background-color: #865858;
@@ -274,4 +276,44 @@ button {
   border: 1px white solid;
   font-family: "phrase_font";
   padding-top: 3px;
+}
+
+.gradient-btn {
+  // background: linear-gradient(90deg, #83d8ff, #faa9d7, #fff6a1, #80cef1);
+  // background: -webkit-linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  // border-color: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 200%;
+  // -webkit-text-stroke: 1px white !important;
+  font-size: 18px;
+  text-align: center;
+  // letter-spacing: 6px;
+  font-family: $paragraph_font;
+  // font-family: "special_font";
+  // transition: all 2s ease;
+}
+
+.gradient-btn:hover {
+  // background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  // background-size: 200%;
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 400%;
+  }
+}
+
+.gradient-btn {
+  span {
+    display: block;
+    display: inline-block;
+  }
 }

@@ -10,7 +10,7 @@ const Header = () => {
     <header>
       <nav aria-label="Main navigation">
         <Banner />
-        <div className="top-header">
+        <div className="header-main">
           <LeftNavButtons />
           <CenterNavButtons />
           <RightNavButtons />

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import HeaderDrawerButton from "./HeaderDrawerButton";
 
-const DrawerItem = ({ columns, show_hide_nested }) => {
+const HeaderDrawer = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -14,8 +14,6 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
           type: "sideDrawer",
           id: row.id,
           path: row.path,
-          variant: row.sideDrawer,
-          className: row.sideDrawer.className,
           name: row.name,
           drawerItems: row.sideDrawer.drawerItems,
         });
@@ -28,7 +26,7 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
       {normalizedItems.map(item => {
         if (item.type === "sideDrawer") {
           return (
-            <div className="nav-dropdown-subcategory-content hover_fade_in" id={item.id} key={item.id}>
+            <div className="header-drawer hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>
                 <GLButton variant="nav" className="ta-l">
                   {item.name}
@@ -36,7 +34,7 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
               </Link>
               <hr className="w-95per m-0px" />
               {item.drawerItems.map((drawerItem, index) => (
-                <DropdownButton key={`${item.id}-${index}`} {...drawerItem} show_hide={show_hide_nested} />
+                <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="headerDrawer" />
               ))}
             </div>
           );
@@ -48,4 +46,4 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
   );
 };
 
-export default DrawerItem;
+export default HeaderDrawer;
