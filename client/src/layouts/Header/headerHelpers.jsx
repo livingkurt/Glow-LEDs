@@ -2,6 +2,7 @@ import { updateVersion } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
+import { set_current_id, set_last_id } from "../../slices/settingSlice";
 
 export const determineDropdown = (item, current_user) => {
   if (typeof item.name === "function" && item.name(current_user) === "Login") {
@@ -12,6 +13,25 @@ export const determineDropdown = (item, current_user) => {
 
 export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
+};
+
+export const toggleDropdown = ({ id, dropdownClass, toggleClass, dispatch, last_id }) => {
+  console.log({ id, dropdownClass, toggleClass, dispatch, last_id });
+  dispatch(set_current_id(id));
+  const elems = document.querySelectorAll(`.${dropdownClass}`);
+
+  [].forEach.call(elems, el => {
+    el.classList.remove(toggleClass);
+  });
+
+  const current_menu = document.getElementById(id);
+  if (last_id === id) {
+    current_menu.classList.remove(toggleClass);
+  } else {
+    current_menu.classList.add(toggleClass);
+  }
+
+  dispatch(set_last_id(id));
 };
 
 const features = {

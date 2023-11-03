@@ -40,7 +40,7 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
               </Link>
               <hr className="w-95per m-0px" />
               {item.subDrawerItems.map((subDrawerItem, index) => (
-                <DropdownButton key={`${subDrawerItem.id}-${index}`} {...subDrawerItem} show_hide={show_hide_nested} />
+                <DropdownButton key={`${subDrawerItem.id}-${index}`} {...subDrawerItem} from="drawerItem" />
               ))}
             </div>
           );
