@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import DropdownButton from "./DropdownButton";
 
-const DrawerItem = ({ columns, show_hide_nested }) => {
+const DrawerItem = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -14,8 +14,6 @@ const DrawerItem = ({ columns, show_hide_nested }) => {
           type: "sideDrawer",
           id: row.id,
           path: row.path,
-          variant: row.sideDrawer,
-          className: row.sideDrawer.className,
           name: row.name,
           drawerItems: row.sideDrawer.drawerItems,
         });

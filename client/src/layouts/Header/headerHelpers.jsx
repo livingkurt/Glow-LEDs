@@ -25,10 +25,11 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass, dispatch, last_
   });
 
   const current_menu = document.getElementById(id);
-  if (last_id === id) {
-    current_menu.classList.remove(toggleClass);
+  console.log({ current_menu });
+  if (current_menu && last_id === id) {
+    current_menu?.classList.remove(toggleClass);
   } else {
-    current_menu.classList.add(toggleClass);
+    current_menu?.classList.add(toggleClass);
   }
 
   dispatch(set_last_id(id));
@@ -88,6 +89,7 @@ const glowskinz = {
         _id: 7,
         id: "clozd_dropdown",
         subSideDrawer: {
+          id: "clozd_dropdown",
           subDrawerItems: [
             {
               name: "Classics",

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import DropdownButton from "./DropdownButton";
 
-const SubDrawerItem = ({ columns, show_hide_nested }) => {
+const SubDrawerItem = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -14,10 +14,8 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
           if (drawerItem.subSideDrawer) {
             normalizedItems.push({
               type: "subSideDrawer",
-              id: `${drawerItem._id}-drawerItem-${index}`,
+              id: drawerItem.id,
               path: drawerItem.path,
-              variant: drawerItem.subSideDrawer.variant,
-              className: drawerItem.subSideDrawer.className,
               name: drawerItem.name,
               subDrawerItems: drawerItem.subSideDrawer.subDrawerItems,
             });
@@ -31,6 +29,7 @@ const SubDrawerItem = ({ columns, show_hide_nested }) => {
     <>
       {normalizedItems.map(item => {
         if (item.type === "subSideDrawer") {
+          console.log({ id: item.id });
           return (
             <div className="nav-dropdown-nested-content hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>

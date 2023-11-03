@@ -1,25 +1,21 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { navItems } from "../../headerHelpers";
 import { GLButton } from "../../../../shared/GlowLEDsComponents";
 import NavColumn from "./components/NavColumn";
 import DrawerItem from "./components/DrawerItem";
 import SubDrawerItem from "./components/SubDrawerItem";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as API from "../../../../api";
 import GlowLEDsTextLogo from "./components/GlowLEDsTextLogo";
-import { set_current_id, set_last_id } from "../../../../slices/settingSlice";
 
 const CenterNavButtons = () => {
   const dispatch = useDispatch();
 
-  const settingPage = useSelector(state => state.settings);
-  const { last_id } = settingPage;
-
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listChips({}));
+      dispatch(API.listChips());
     }
     return () => (clean = false);
   }, [dispatch]);
