@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { navItems } from "../../headerHelpers";
 import { GLButton } from "../../../../shared/GlowLEDsComponents";
-import NavColumn from "./components/NavColumn";
-import DrawerItem from "./components/DrawerItem";
-import SubDrawerItem from "./components/SubDrawerItem";
+import HeaderColumn from "./components/HeaderColumn";
+import HeaderDrawer from "./components/HeaderDrawer";
+import HeaderSubDrawer from "./components/HeaderSubDrawer";
 import { useDispatch } from "react-redux";
 import * as API from "../../../../api";
 import GlowLEDsTextLogo from "./components/GlowLEDsTextLogo";
@@ -34,10 +34,10 @@ const CenterNavButtons = () => {
             {item.columns && (
               <div className="hover_fade_in nav-dropdown">
                 <div className="jc-c">
-                  <NavColumn columns={item.columns} />
-                  <DrawerItem columns={item.columns} />
-                  <SubDrawerItem columns={item.columns} />
-                  <NavColumn columns={item.otherColumns} />
+                  <HeaderColumn columns={item.columns} />
+                  <HeaderDrawer columns={item.columns} />
+                  <HeaderSubDrawer columns={item.columns} />
+                  <HeaderColumn columns={item.otherColumns} />
                 </div>
               </div>
             )}

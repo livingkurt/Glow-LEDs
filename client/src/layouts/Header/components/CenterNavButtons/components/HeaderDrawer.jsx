@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import HeaderDrawerButton from "./HeaderDrawerButton";
 
-const DrawerItem = ({ columns }) => {
+const HeaderDrawer = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -34,7 +34,7 @@ const DrawerItem = ({ columns }) => {
               </Link>
               <hr className="w-95per m-0px" />
               {item.drawerItems.map((drawerItem, index) => (
-                <DropdownButton key={`${item.id}-${index}`} {...drawerItem} from="drawerItem" />
+                <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="drawerItem" />
               ))}
             </div>
           );
@@ -46,4 +46,4 @@ const DrawerItem = ({ columns }) => {
   );
 };
 
-export default DrawerItem;
+export default HeaderDrawer;

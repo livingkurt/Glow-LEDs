@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import HeaderDrawerButton from "./HeaderDrawerButton";
 import Filter from "../../../../../shared/GlowLEDsComponents/GLTable/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { set_chip_name } from "../../../../../slices/settingSlice";
 import { update_products_url } from "../../../../../utils/helper_functions";
 import * as API from "../../../../../api";
 
-const NavColumn = ({ columns }) => {
+const HeaderColumn = ({ columns }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const settingPage = useSelector(state => state.settings);
@@ -48,7 +48,7 @@ const NavColumn = ({ columns }) => {
             />
           )}
           {column.rows.map(row => (
-            <DropdownButton {...row} key={row._id} from="navColumn" />
+            <HeaderDrawerButton {...row} key={row._id} from="navColumn" />
           ))}
         </div>
       ))}
@@ -56,4 +56,4 @@ const NavColumn = ({ columns }) => {
   );
 };
 
-export default NavColumn;
+export default HeaderColumn;

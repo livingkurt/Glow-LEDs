@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { toggleDropdown } from "../../../headerHelpers";
 
-const DropdownButton = ({ path, name, id, permissions, extraContent, from }) => {
+const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from }) => {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
@@ -44,7 +44,7 @@ const DropdownButton = ({ path, name, id, permissions, extraContent, from }) => 
                 last_id,
               });
             }
-            if (from === "drawerItem" || from === "subDrawerItem") {
+            if (from === "drawerItem" || from === "subHeaderDrawer") {
               toggleDropdown({
                 id,
                 dropdownClass: `nav-dropdown-nested-content`,
@@ -63,4 +63,4 @@ const DropdownButton = ({ path, name, id, permissions, extraContent, from }) => 
   );
 };
 
-export default DropdownButton;
+export default HeaderDrawerButton;

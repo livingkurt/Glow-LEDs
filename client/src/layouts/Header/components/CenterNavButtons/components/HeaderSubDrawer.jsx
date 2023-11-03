@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import DropdownButton from "./DropdownButton";
+import HeaderDrawerButton from "./HeaderDrawerButton";
 
-const SubDrawerItem = ({ columns }) => {
+const HeaderSubDrawer = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -17,7 +17,7 @@ const SubDrawerItem = ({ columns }) => {
               id: drawerItem.id,
               path: drawerItem.path,
               name: drawerItem.name,
-              subDrawerItems: drawerItem.subSideDrawer.subDrawerItems,
+              subHeaderDrawers: drawerItem.subSideDrawer.subHeaderDrawers,
             });
           }
         });
@@ -38,8 +38,8 @@ const SubDrawerItem = ({ columns }) => {
                 </GLButton>
               </Link>
               <hr className="w-95per m-0px" />
-              {item.subDrawerItems.map((subDrawerItem, index) => (
-                <DropdownButton key={`${subDrawerItem.id}-${index}`} {...subDrawerItem} from="drawerItem" />
+              {item.subHeaderDrawers.map((subHeaderDrawer, index) => (
+                <HeaderDrawerButton key={`${subHeaderDrawer.id}-${index}`} {...subHeaderDrawer} from="drawerItem" />
               ))}
             </div>
           );
@@ -50,4 +50,4 @@ const SubDrawerItem = ({ columns }) => {
   );
 };
 
-export default SubDrawerItem;
+export default HeaderSubDrawer;

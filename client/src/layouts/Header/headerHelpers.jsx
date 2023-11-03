@@ -101,7 +101,7 @@ const glowskinz = {
         id: "clozd_dropdown",
         subSideDrawer: {
           id: "clozd_dropdown",
-          subDrawerItems: [
+          subHeaderDrawers: [
             {
               name: "Classics",
               path: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics",
@@ -119,7 +119,7 @@ const glowskinz = {
         name: "OPYN Glowskinz",
         path: "/collections/all/products/category/glowskinz/subcategory/opyn",
         _id: 110,
-        subDrawerItems: [],
+        subHeaderDrawers: [],
       },
     ],
   },
@@ -139,7 +139,7 @@ const exo_diffusers = {
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
           id: "exo_diffusers_collections_dropdown",
-          subDrawerItems: [
+          subHeaderDrawers: [
             {
               name: "Platonic Solids",
               path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids",
@@ -186,7 +186,7 @@ const diffuser_caps = {
         _id: 219,
         id: "collections_dropdown",
         subSideDrawer: {
-          subDrawerItems: [
+          subHeaderDrawers: [
             {
               name: "Texture",
               path: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture",
