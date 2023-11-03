@@ -25,14 +25,14 @@ const CenterNavButtons = () => {
       <GlowLEDsTextLogo />
       <div className="jc-b nav_bar">
         {navItems.map(item => (
-          <div key={item.name} className="dropdown-nav">
+          <div key={item.name} className="header-center-dropdown-container">
             <Link to={item.path} aria-label={item.ariaLabel}>
               <GLButton variant="nav" className="title_font fs-17px" data-testid={item.dataTestId}>
                 {item.name}
               </GLButton>
             </Link>
             {item.columns && (
-              <div className="hover_fade_in nav-dropdown">
+              <div className="header-center-dropdown hover_fade_in">
                 <div className="jc-c">
                   <HeaderColumn columns={item.columns} />
                   <HeaderDrawer columns={item.columns} />

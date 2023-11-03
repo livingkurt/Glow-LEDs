@@ -20,12 +20,12 @@ header {
   // margin-top: 22px;
   width: 100%;
 }
-.dropdown-nav:hover .nav-dropdown {
+.header-center-dropdown-container:hover .header-center-dropdown {
   display: flex;
   flex-direction: column;
 }
 
-.nav-dropdown {
+.header-center-dropdown {
   background: linear-gradient(180deg, $theme_color_header 0%, $theme_color_primary 100%);
   position: absolute;
   display: none;
