@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
-import { toCapitalize } from "../../../utils/helper_functions";
 
 const Banner = () => {
   const { width } = useWindowDimensions();
@@ -12,30 +10,12 @@ const Banner = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
 
-  const placeOrder = useSelector(state => state.placeOrder);
-  const { environment } = placeOrder;
-
   return (
     <div>
-      {(environment === "development" || environment === "staging") && (
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          className="banner"
-          style={{ backgroundColor: "#ac4545", height: 30 }}
-        >
-          <div>
-            {`------------------------- `}
-            {toCapitalize(environment)} Environment
-            {` -------------------------`}
-          </div>
-        </Box>
-      )}
       <div className="banner">
         <div className="max-w-1500px m-auto jc-b">
           {contents.length > 0 && contents[0] && contents[0].banner && (
-            <div className={`row ${width < 600 ? "m-auto" : "ml-10px"}`}>
+            <div className={`${width < 600 ? "m-auto" : "ml-10px"} mv-3px`}>
               {contents[0].banner.button && contents[0].banner.link && (
                 <Link to={contents[0].banner.link && contents[0].banner.link}>
                   <GLButton className="banner-button">{contents[0].banner.label}</GLButton>

@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import CenterNavButtons from "./components/CenterNavButtons/CenterNavButtons";
 import { listContents } from "../../api";
 import { useDispatch } from "react-redux";
+import Environment from "./components/Environment";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,8 @@ const Header = () => {
 
   return (
     <header>
-      <nav aria-label="Main navigation">
+      <nav aria-label="Main navigation" className="pb-2rem">
+        <Environment />
         <Banner />
         <div className="header-main">
           <LeftNavButtons />
