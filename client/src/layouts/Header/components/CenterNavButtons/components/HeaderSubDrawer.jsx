@@ -29,7 +29,6 @@ const HeaderSubDrawer = ({ columns }) => {
     <>
       {normalizedItems.map(item => {
         if (item.type === "subSideDrawer") {
-          console.log({ id: item.id });
           return (
             <div className="header-subdrawer hover_fade_in" id={item.id} key={item.id}>
               <Link to={item.path}>

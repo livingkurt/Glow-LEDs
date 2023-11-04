@@ -148,6 +148,7 @@ const contentPage = createSlice({
     [API.getSlideshowImages.fulfilled]: (state, { payload }) => {
       state.loadingSlideshowImages = false;
       state.menuItems = payload.home_page.slideshow;
+      state.banner = payload.banner;
       state.message = "Slideshow Found";
     },
     [API.getSlideshowImages.rejected]: (state, { payload, error }) => {
