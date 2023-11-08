@@ -122,7 +122,7 @@ const ProfilePage = () => {
         display: paycheck =>
           paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
-      { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
+      { title: "Amount", display: paycheck => `$${paycheck.amount?.toFixed(2)}` },
     ],
     []
   );
@@ -169,7 +169,7 @@ const ProfilePage = () => {
         ),
       },
 
-      { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
+      { title: "Total", display: row => `$${row.totalPrice?.toFixed(2)}` },
       {
         title: "Actions",
         display: row => (

@@ -906,10 +906,11 @@ export const navItems = [
   },
   {
     name: "Learn",
-    path: "/pages/learn",
+    path: "/collections/all/tutorials",
+    // path: "/pages/learn",
     _id: 9135,
     dataTestId: "learn_button",
-    columns: [learn, tutorials],
+    // columns: [learn, tutorials],
     otherColumns: [tips],
     headerLocation: "center",
   },
