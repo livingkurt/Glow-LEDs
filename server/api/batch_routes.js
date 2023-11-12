@@ -13,7 +13,7 @@ import { Survey } from "./surveys";
 import { Paycheck } from "./paychecks";
 import { Parcel } from "./parcels";
 import Chip from "./chips/chip";
-import { snake_case } from "../util";
+import { snake_case } from "../utils/util";
 import { Filament } from "./filaments";
 import { Image, image_db, image_services } from "./images";
 import { Category } from "./categorys";

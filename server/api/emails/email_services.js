@@ -1,4 +1,4 @@
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 import { user_db } from "../users";
 import { email_db } from "../emails";
 import config from "../../config";

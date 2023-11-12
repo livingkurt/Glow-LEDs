@@ -1,4 +1,4 @@
-import { make_private_code } from "../../util";
+import { make_private_code } from "../../utils/util";
 import promo_db from "./promo_db";
 
 export const normalizePromoFilters = input => {

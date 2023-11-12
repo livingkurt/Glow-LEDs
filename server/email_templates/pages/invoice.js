@@ -1,5 +1,10 @@
 import config from "../../config";
-import { email_sale_price_switch, determine_product_name, determin_card_logo_images, format_date } from "../../util";
+import {
+  email_sale_price_switch,
+  determine_product_name,
+  determin_card_logo_images,
+  format_date,
+} from "../../utils/util";
 
 export default ({ order, isSponsor }) => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">

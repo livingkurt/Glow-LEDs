@@ -1,5 +1,5 @@
 import { cart_db } from "../carts";
-import { deepEqual } from "../../util";
+import { deepEqual } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { updateCartItems } from "./cart_helpers";
 

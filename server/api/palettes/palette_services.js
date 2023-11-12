@@ -1,5 +1,5 @@
 import { palette_db } from "../palettes";
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 
 export default {
   findAll_palettes_s: async query => {

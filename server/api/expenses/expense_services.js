@@ -1,14 +1,14 @@
 import { Expense, expense_db } from "../expenses";
-import {
-  determine_category,
-  determine_application,
-  determine_filter,
-  determine_place,
-  unformat_date,
-} from "../../util";
+import { determine_filter, unformat_date } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import config from "../../config";
-import { normalizeExpenseFilters, normalizeExpenseSearch } from "./expense_helpers";
+import {
+  determine_application,
+  determine_category,
+  determine_place,
+  normalizeExpenseFilters,
+  normalizeExpenseSearch,
+} from "./expense_helpers";
 
 const Airtable = require("airtable");
 

@@ -1,7 +1,7 @@
 import { Content, content_db } from "../contents";
 const axios = require("axios");
 import { parse } from "node-html-parser";
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 import { normalizeContentFilters, normalizeContentSearch } from "./content_helpers";
 import { getFilteredData } from "../api_helpers";
 

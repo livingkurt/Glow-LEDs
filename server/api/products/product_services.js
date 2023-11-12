@@ -8,7 +8,7 @@ import {
   normalizeProductSearch,
   transformProducts,
 } from "./product_helpers";
-import { categories, determine_filter, snake_case, subcategories } from "../../util";
+import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 const fs = require("fs");
 const Papa = require("papaparse");

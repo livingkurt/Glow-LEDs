@@ -1,5 +1,5 @@
 import config from "../../config";
-import { toCapitalize } from "../../util";
+import { toCapitalize } from "../../utils/util";
 
 export default ({ feature }) => {
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">

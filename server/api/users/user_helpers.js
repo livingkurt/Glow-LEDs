@@ -1,4 +1,4 @@
-import { isEmail } from "../../util";
+import { isEmail } from "../../utils/util";
 
 export const normalizeUserFilters = input => {
   const output = {};

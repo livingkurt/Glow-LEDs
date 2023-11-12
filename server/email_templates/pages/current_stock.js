@@ -1,4 +1,4 @@
-import { format_date } from "../../util";
+import { format_date } from "../../utils/util";
 
 export default products => {
   const date = new Date();

@@ -25,7 +25,6 @@ export const getPaychecks = async ({ search, sorting, filters, page, pageSize })
 };
 
 export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, affiliateId) => {
-  console.log({ search, sorting, filters, page, pageSize }, affiliateId);
   try {
     const res = await axios.get(`/api/paychecks/table/${affiliateId}/affiliate`, {
       params: {

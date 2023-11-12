@@ -1,4 +1,4 @@
-import { determine_code_tier, format_date, months } from "../../util";
+import { determine_code_tier, format_date, months } from "../../utils/util";
 
 export default ({ name, promo_code, percentage_off, number_of_uses, earnings }) => {
   const date = new Date();

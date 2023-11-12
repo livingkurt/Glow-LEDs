@@ -25,7 +25,7 @@ import { Affiliate, affiliate_db } from "../affiliates";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
-import { determine_code_tier, format_date, toCapitalize } from "../../util";
+import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
 import { sendEmail, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";

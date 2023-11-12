@@ -155,3 +155,157 @@ export const deleteTempFile = path => {
     }
   }
 };
+
+export const determine_category = place_of_purchase => {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Business";
+  } else if (place_of_purchase.includes("THROWLIGHTS") || place_of_purchase.includes("Throwlights")) {
+    return "Equipment";
+  } else if (place_of_purchase.includes("GOOGLE") || place_of_purchase.includes("Google")) {
+    return "Website";
+  } else if (place_of_purchase.includes("PRUSA") || place_of_purchase.includes("Prusa")) {
+    return "Equipment";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Equipment";
+  } else if (place_of_purchase.includes("HOBBY") || place_of_purchase.includes("Hobby")) {
+    return "Equipment";
+  } else if (place_of_purchase.includes("DIGI KEY") || place_of_purchase.includes("Digi key")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("EASYPOST") || place_of_purchase.includes("Easypost")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("PAYPAL") || place_of_purchase.includes("PayPal")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("HEROKU") || place_of_purchase.includes("Heroku")) {
+    return "Website";
+  } else if (place_of_purchase.includes("ALIBABA") || place_of_purchase.includes("Alibaba")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("PAK") || place_of_purchase.includes("Pak")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("KANDEKREATIONS") || place_of_purchase.includes("Kandekreations")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("FUTURISTIC") || place_of_purchase.includes("Futuristic")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("LEDGLOVES") || place_of_purchase.includes("LEDGloves")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("EMAZING") || place_of_purchase.includes("Emazing")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
+    return "Entertainment";
+  } else {
+    return "Not Categorized";
+  }
+};
+export const determine_place = place_of_purchase => {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Amazon";
+  } else if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Pirate Ship";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "DollarTree";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "The Home Depot";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Glow LEDs";
+  } else if (place_of_purchase.includes("THROWLIGHTS") || place_of_purchase.includes("Throwlights")) {
+    return "Throwlights";
+  } else if (place_of_purchase.includes("PRUSA") || place_of_purchase.includes("Prusa")) {
+    return "Prusa";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Emazinglights";
+  } else if (place_of_purchase.includes("GOOGLE") || place_of_purchase.includes("Google")) {
+    return "Google";
+  } else if (place_of_purchase.includes("HOBBY") || place_of_purchase.includes("Hobby")) {
+    return "Hobby Lobby";
+  } else if (place_of_purchase.includes("DIGI KEY") || place_of_purchase.includes("Digi key")) {
+    return "Digi Key";
+  } else if (place_of_purchase.includes("EASYPOST") || place_of_purchase.includes("Easypost")) {
+    return "EasyPost";
+  } else if (place_of_purchase.includes("PAYPAL") || place_of_purchase.includes("PayPal")) {
+    return "PayPal";
+  } else if (place_of_purchase.includes("HEROKU") || place_of_purchase.includes("Heroku")) {
+    return "Heroku";
+  } else if (place_of_purchase.includes("ALIBABA") || place_of_purchase.includes("Alibaba")) {
+    return "Alibaba";
+  } else if (place_of_purchase.includes("PAK") || place_of_purchase.includes("Pak")) {
+    return "PAK Mail";
+  } else if (place_of_purchase.includes("KANDEKREATIONS") || place_of_purchase.includes("Kandekreations")) {
+    return "Kandekreations";
+  } else if (place_of_purchase.includes("FUTURISTIC") || place_of_purchase.includes("Futuristic")) {
+    return "Futuristic";
+  } else if (place_of_purchase.includes("LEDGLOVES") || place_of_purchase.includes("LEDGloves")) {
+    return "LEDGloves";
+  } else if (place_of_purchase.includes("EMAZING") || place_of_purchase.includes("Emazing")) {
+    return "EmazingLights";
+  } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
+    return "Spec's";
+  } else {
+    return "Unknown";
+  }
+};
+export const determine_application = place_of_purchase => {
+  if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Products";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Test Purchases";
+  } else if (place_of_purchase.includes("PRUSA") || place_of_purchase.includes("Prusa")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("THROWLIGHTS") || place_of_purchase.includes("Throwlights")) {
+    return "Accessories";
+  } else if (place_of_purchase.includes("GOOGLE") || place_of_purchase.includes("Google")) {
+    return "Website";
+  } else if (place_of_purchase.includes("HOBBY") || place_of_purchase.includes("Hobby")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("DIGI KEY") || place_of_purchase.includes("Digi key")) {
+    return "Products";
+  } else if (place_of_purchase.includes("EASYPOST") || place_of_purchase.includes("Easypost")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("PAYPAL") || place_of_purchase.includes("PayPal")) {
+    return "Products";
+  } else if (place_of_purchase.includes("HEROKU") || place_of_purchase.includes("Heroku")) {
+    return "Website";
+  } else if (place_of_purchase.includes("ALIBABA") || place_of_purchase.includes("Alibaba")) {
+    return "Products";
+  } else if (place_of_purchase.includes("PAK") || place_of_purchase.includes("Pak")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("KANDEKREATIONS") || place_of_purchase.includes("Kandekreations")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("FUTURISTIC") || place_of_purchase.includes("Futuristic")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("LEDGLOVES") || place_of_purchase.includes("LEDGloves")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("EMAZING") || place_of_purchase.includes("Emazing")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
+    return "Entertainment";
+  } else {
+    return "Unknown";
+  }
+};

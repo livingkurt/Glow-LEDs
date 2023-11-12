@@ -1,5 +1,5 @@
 import { filament_db } from "../filaments";
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 
 export default {
