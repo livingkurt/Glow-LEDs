@@ -1,4 +1,4 @@
-import { format_date, determine_product_name, determine_tracking_link, shipping_status_steps } from "../../util";
+import { format_date, determine_product_name, determine_tracking_link, shipping_status_steps } from "../../utils/util";
 
 const determine_emoji = status => {
   switch (status) {

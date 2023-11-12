@@ -1,13 +1,14 @@
-import { determine_filter, make_private_code, snake_case } from "../../util";
+import { determine_filter, make_private_code, snake_case } from "../../utils/util";
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
 import config from "../../config";
 import { generateSponsorCodes } from "../promos/promo_interactors";
-import { monthToNum } from "./affiliate_helpers";
+import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
 import Stripe from "stripe";
 import { domain } from "../../background/worker_helpers";
+import { createStripeAccountLink } from "./affiliate_interactors";
 if (!config.STRIPE_KEY) {
   throw new Error("STRIPE_KEY is not defined");
 }
@@ -78,51 +79,12 @@ export default {
   },
   create_affiliates_s: async body => {
     const { user, promo_code_name } = body;
-    const public_code = {
-      promo_code: promo_code_name.toLowerCase(),
-      admin_only: false,
-      affiliate_only: false,
-      single_use: false,
-      used_once: false,
-      excluded_categories: [],
-      excluded_products: [],
-      percentage_off: 10,
-      free_shipping: false,
-      time_limit: false,
-      start_date: "2021-01-01",
-      end_date: "2021-01-01",
-      active: true,
-    };
-    const private_code = {
-      promo_code: make_private_code(6),
-      user: user,
-      admin_only: false,
-      affiliate_only: true,
-      single_use: false,
-      used_once: false,
-      excluded_categories: [],
-      excluded_products: [],
-      percentage_off: 10,
-      free_shipping: false,
-      time_limit: false,
-      start_date: "2021-01-01",
-      end_date: "2021-01-01",
-      active: true,
-    };
+    const public_code = createPublicPromoCode(promo_code_name);
+    const private_code = createPrivatePromoCode(user);
     try {
       const newAffiliate = await affiliate_db.create_affiliates_db(body, public_code, private_code);
       if (newAffiliate) {
-        const account = await stripe.accounts.create({
-          type: "express",
-        });
-
-        const accountLink = await stripe.accountLinks.create({
-          account: account.id,
-          refresh_url: `${domain()}/secure/account/profile`,
-          return_url: `${domain()}/secure/account/profile?stripe_success=true`,
-          type: "account_onboarding",
-        });
-        console.log({ accountLink });
+        const accountLink = await createStripeAccountLink();
         return { newAffiliate, accountLink };
       }
     } catch (error) {

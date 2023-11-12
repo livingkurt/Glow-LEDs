@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { isEmail } from "../../util";
+import { isEmail } from "../../utils/util";
 import order_db from "./order_db";
 
 export const normalizeOrderFilters = input => {

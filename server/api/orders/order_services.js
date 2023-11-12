@@ -14,7 +14,7 @@ import {
   removeDuplicates,
   subcategories,
   toCapitalize,
-} from "../../util";
+} from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { getCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
 import { Cart } from "../carts";

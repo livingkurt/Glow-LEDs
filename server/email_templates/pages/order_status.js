@@ -1,4 +1,4 @@
-import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../util";
+import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../utils/util";
 
 const determineColor = status => {
   switch (status) {

@@ -1,5 +1,5 @@
 import config from "../../config";
-import { determine_tracking_carrier } from "../../util";
+import { determine_tracking_carrier } from "../../utils/util";
 import { order_db } from "../orders";
 import { parcel_db } from "../parcels";
 import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";

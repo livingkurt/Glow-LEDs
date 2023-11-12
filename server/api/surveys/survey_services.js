@@ -1,4 +1,4 @@
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { survey_db } from "../surveys";
 import { normalizeSurveyFilters, normalizeSurveySearch } from "./survey_helpers";

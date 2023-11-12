@@ -4,7 +4,7 @@ import {
   determine_product_name,
   determin_card_logo_images_white,
   order_status_steps,
-} from "../../util";
+} from "../../utils/util";
 
 export default ({ email, order }) => {
   return `<table style="width:100%;border-spacing:0; padding: 10px;">

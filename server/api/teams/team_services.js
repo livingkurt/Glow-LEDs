@@ -1,5 +1,5 @@
 import { team_db } from "../teams";
-import { determine_filter } from "../../util";
+import { determine_filter } from "../../utils/util";
 
 export default {
   findAll_teams_s: async query => {

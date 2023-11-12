@@ -219,23 +219,7 @@ const ProfilePage = () => {
         <Grid item xs={12}>
           <ProfileAffiliateEarnings />
         </Grid>
-        <Grid item xs={12}>
-          {user && user?.affiliate?._id && (
-            <GLTableV2
-              remoteApi={paychecksRemoteApi}
-              remoteVersionRequirement={remoteVersionRequirement}
-              determineColor={determineColor}
-              noURLParams
-              tableName={"Paychecks"}
-              enableSearch={false}
-              namespaceScope="paychecks"
-              namespace="paycheckTable"
-              columnDefs={paycheckColumnDefs}
-              loading={loading}
-              enableRowSelect={false}
-            />
-          )}
-        </Grid>
+
         <Grid item xs={12}>
           {user._id && (
             <GLTableV2
@@ -249,6 +233,23 @@ const ProfilePage = () => {
               namespace="orderTable"
               columnDefs={orderColumnDefs}
               loading={loading_order}
+              enableRowSelect={false}
+            />
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          {user && user?.affiliate?._id && (
+            <GLTableV2
+              remoteApi={paychecksRemoteApi}
+              remoteVersionRequirement={remoteVersionRequirement}
+              determineColor={determineColor}
+              noURLParams
+              tableName={"Paychecks"}
+              enableSearch={false}
+              namespaceScope="paychecks"
+              namespace="paycheckTable"
+              columnDefs={paycheckColumnDefs}
+              loading={loading}
               enableRowSelect={false}
             />
           )}

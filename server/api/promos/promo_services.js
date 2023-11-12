@@ -4,7 +4,7 @@ import {
   determine_sponsor_code_tier,
   make_private_code,
   month_dates,
-} from "../../util";
+} from "../../utils/util";
 import { Affiliate, affiliate_db } from "../affiliates";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";

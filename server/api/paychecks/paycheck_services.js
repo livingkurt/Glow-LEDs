@@ -1,4 +1,4 @@
-import { month_dates } from "../../util";
+import { month_dates } from "../../utils/util";
 import { affiliate_db } from "../affiliates";
 import { order_db } from "../orders";
 import { paycheck_db } from "../paychecks";
@@ -42,19 +42,23 @@ export default {
         normalizeFilters: normalizePaycheckFilters,
         // normalizeSearch: normalizePaycheckSearch
       });
+      console.log({ filter, sort, limit, page, params });
       const paychecks = await mongodbFindAll(
         "paychecks",
         {
-          filter: { ...filter, affiliate: params.affiliate_id },
+          filter: { ...filter },
           sort,
-          limit,
+          limit: 0,
           page,
         },
         { user: "users", affiliate: "affiliates", team: "teams" }
       );
+      console.log({
+        paychecks: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
+      });
       return {
-        data: paychecks,
-        total_count: paychecks.length,
+        data: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
+        total_count: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id).length,
         currentPage: 0,
       };
     } catch (error) {
