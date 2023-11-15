@@ -17,25 +17,31 @@ const ProfileAffiliateMetrics = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
   const { refreshCode, twentyFiveOffCode } = promoPage;
 
+  const entity = user.team || user.affiliate;
+
+  console.log({ entity });
+
   return (
     <div className="group_item w-100per">
-      {user.is_affiliated && user.affiliate && user.affiliate.public_code && (
+      {user.is_affiliated && user.affiliate && entity.public_code && (
         <div className="mb-20px ">
           <h2 className="group_images">Affiliate Metrics</h2>
           <div className="mb-20px">
             <h3>Public Code</h3>
-            <label>{user.affiliate && user.affiliate.public_code.promo_code.toUpperCase()}</label>
+            <label>{entity && entity.public_code.promo_code.toUpperCase()}</label>
           </div>
           <div className="mb-20px">
             <h3>Private Code</h3>
-            <label>{user.affiliate && user.affiliate.private_code.promo_code.toUpperCase()}</label>
+            <label>{entity && entity.private_code.promo_code.toUpperCase()}</label>
           </div>
-          <div className="mb-20px">
-            <h3>Projected Private Code Discount</h3>
-            <label>
-              {!loading_month_earnings && determine_code_tier(user.affiliate, month_earnings.number_of_uses)}% Off
-            </label>
-          </div>
+          {!user.affiliate.team && (
+            <div className="mb-20px">
+              <h3>Projected Private Code Discount</h3>
+              <label>
+                {!loading_month_earnings && determine_code_tier(entity, month_earnings.number_of_uses)}% Off
+              </label>
+            </div>
+          )}
           {user.affiliate.sponsor && (
             <>
               <div className="mb-20px">
@@ -50,7 +56,7 @@ const ProfileAffiliateMetrics = () => {
           )}
           <div className="mb-20px">
             <h3>Promo Code URL</h3>
-            <label>https://www.glow-leds.com?code={user.affiliate.public_code.promo_code.toUpperCase()}</label>
+            <label>https://www.glow-leds.com?code={entity.public_code.promo_code.toUpperCase()}</label>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button

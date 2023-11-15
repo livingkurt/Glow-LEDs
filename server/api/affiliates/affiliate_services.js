@@ -2,18 +2,9 @@ import { determine_filter, make_private_code, snake_case } from "../../utils/uti
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
-import config from "../../config";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
-import Stripe from "stripe";
-import { domain } from "../../background/worker_helpers";
-if (!config.STRIPE_KEY) {
-  throw new Error("STRIPE_KEY is not defined");
-}
-const stripe = new Stripe(config.STRIPE_KEY, {
-  apiVersion: "2023-08-16",
-});
 
 export default {
   findAll_affiliates_s: async query => {
@@ -78,12 +69,13 @@ export default {
   },
   create_affiliates_s: async body => {
     const { user, promo_code_name, artist_name } = body;
+
     const public_code = createPublicPromoCode(promo_code_name || artist_name);
     const private_code = createPrivatePromoCode(user);
     try {
       const newAffiliate = await affiliate_db.create_affiliates_db(body, public_code, private_code);
       if (newAffiliate) {
-        const accountLink = await createStripeAccountLink(stripe);
+        const accountLink = await createStripeAccountLink();
         return { newAffiliate, accountLink };
       }
     } catch (error) {

@@ -13,7 +13,6 @@ const TopCategories = ({ category_items, closeMenu }) => {
         <div className="wrapper">
           {category_items &&
             category_items.slice(0, 4).map((item, index) => {
-              console.log({ item });
               return (
                 <div className={`product jc-c m-auto`} style={{ height: "unset" }} key={index}>
                   {item.label && (

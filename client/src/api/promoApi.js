@@ -126,7 +126,6 @@ export const validatePromoCode = createAsyncThunk(
   async ({ promo_code, current_user, cartItems, shipping }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/promos/${promo_code}/validate`, { cartItems, current_user, shipping });
-      console.log({ data });
       if (!data?.errors) {
         dispatch(showSuccess({ message: `Promo Code Validated` }));
       }

@@ -44,7 +44,6 @@ const Survey = () => {
       user: current_user && current_user._id,
       survey: surveys && surveys[0] && surveys[0]._id,
     };
-    console.log({ payload });
 
     dispatch(API.saveSurvey(payload));
     setQuestionAnswers({});

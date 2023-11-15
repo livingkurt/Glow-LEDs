@@ -46,13 +46,13 @@ export const saveTeam = createAsyncThunk(
       } = getState();
 
       const newTeam = !team._id;
-
+      const teamWithCaptain = {
+        ...team,
+        captain: user?.affiliate._id,
+        affiliates: [user?.affiliate?._id],
+      };
       if (newTeam) {
-        const { data } = await axios.post("/api/teams", {
-          ...team,
-          captain: team?.captain?._id || user?.affiliate._id,
-          affiliates: [...team, team?.captain?._id || user?.affiliate?._id],
-        });
+        const { data } = await axios.post("/api/teams", teamWithCaptain);
         dispatch(showSuccess({ message: `Team Created` }));
         if (profile) {
           await dispatch(API.saveUser({ user: { _id: current_user._id, team: data.newTeam._id }, profile }));
@@ -139,7 +139,6 @@ export const teamMonthlyCheckin = createAsyncThunk(
         year,
       });
       dispatch(showSuccess({ message: `Checkin Success` }));
-      console.log({ data });
       await handleTokenRefresh(true);
       return data;
     } catch (error) {

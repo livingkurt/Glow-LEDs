@@ -1,17 +1,9 @@
 import { Team, team_db } from "../teams";
+import { user_db } from "../users";
 import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import config from "../../config";
 import { createStripeAccountLink } from "../affiliates/affiliate_interactors";
 import { createPublicPromoCode, createPrivatePromoCode, monthToNum } from "../affiliates/affiliate_helpers";
-import Stripe from "stripe";
-import { domain } from "../../background/worker_helpers";
-if (!config.STRIPE_KEY) {
-  throw new Error("STRIPE_KEY is not defined");
-}
-const stripe = new Stripe(config.STRIPE_KEY, {
-  apiVersion: "2023-08-16",
-});
 
 export default {
   findAll_teams_s: async query => {
@@ -120,13 +112,20 @@ export default {
     }
   },
   create_teams_s: async body => {
-    const { user, promo_code_name, team_name } = body;
+    const { user, promo_code_name, team_name, captain } = body;
+
     const public_code = createPublicPromoCode(promo_code_name || team_name);
     const private_code = createPrivatePromoCode(user);
     try {
       const newTeam = await team_db.create_teams_db(body, public_code, private_code);
+
+      await user_db.update_users_db(user, { team: newTeam._id });
+      // await affiliate_db.update_affiliates_db(newTeam.captain, {
+      //   public_code: newTeam.public_code._id,
+      //   private_code: newTeam.private_code._id,
+      // });
       if (newTeam) {
-        const accountLink = await createStripeAccountLink(stripe);
+        const accountLink = await createStripeAccountLink();
         return { newTeam, accountLink };
       }
     } catch (error) {

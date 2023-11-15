@@ -69,7 +69,7 @@ const EditTeamModal = () => {
     if (createTeamStep === 0) {
       dispatch(
         API.saveTeam({
-          team: { ...team, user: team?.user?._id || current_user._id },
+          team,
           profile: location.pathname === "/secure/account/profile",
         })
       );

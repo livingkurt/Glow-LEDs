@@ -1,3 +1,4 @@
+import { Promo } from "../promos";
 import { Team } from "../teams";
 
 export default {
@@ -70,9 +71,17 @@ export default {
       }
     }
   },
-  create_teams_db: async body => {
+  create_teams_db: async (body, public_code, private_code) => {
     try {
-      return await Team.create(body);
+      const pub_code = await Promo.create(public_code);
+      const priv_code = await Promo.create(private_code);
+      if (pub_code && priv_code) {
+        return await Team.create({
+          ...body,
+          public_code: pub_code._id,
+          private_code: priv_code._id,
+        });
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
