@@ -56,6 +56,7 @@ const useProfilePage = () => {
         if (user?.affiliate?.sponsor) {
           dispatch(API.listSponsorCodes(user?.affiliate._id));
         }
+        dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }));
 
         dispatch(
           API.affiliateEarnings({
@@ -76,27 +77,26 @@ const useProfilePage = () => {
           })
         );
       }
-      if (user.is_affiliated && user?.team) {
-        dispatch(API.listPaychecks({ team: user?.team._id || current_user.team }));
-
-        dispatch(
-          API.affiliateEarnings({
-            promo_code: user?.team?.public_code?.promo_code,
-            start_date: month_start_date,
-            end_date: month_end_date,
-            sponsor: user?.affiliate?.sponsor,
-            type: "month",
-          })
-        );
-        dispatch(
-          API.affiliateEarnings({
-            promo_code: user?.team?.public_code?.promo_code,
-            start_date: year_start_date,
-            end_date: year_end_date,
-            sponsor: user?.affiliate?.sponsor,
-            type: "year",
-          })
-        );
+      if (user.is_affiliated) {
+        // dispatch(API.listPaychecks({ team: user?.team._id || current_user.team }));
+        // dispatch(
+        //   API.affiliateEarnings({
+        //     promo_code: user?.team?.public_code?.promo_code,
+        //     start_date: month_start_date,
+        //     end_date: month_end_date,
+        //     sponsor: user?.affiliate?.sponsor,
+        //     type: "month",
+        //   })
+        // );
+        // dispatch(
+        //   API.affiliateEarnings({
+        //     promo_code: user?.team?.public_code?.promo_code,
+        //     start_date: year_start_date,
+        //     end_date: year_end_date,
+        //     sponsor: user?.affiliate?.sponsor,
+        //     type: "year",
+        //   })
+        // );
       }
     }
     return () => {

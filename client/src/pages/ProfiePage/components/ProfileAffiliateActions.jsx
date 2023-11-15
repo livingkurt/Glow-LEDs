@@ -13,17 +13,19 @@ const ProfileAffiliateMetrics = () => {
 
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { month_earnings, loading_month_earnings } = affiliatePage;
+  const teamPage = useSelector(state => state.teams.teamPage);
+  const { team } = teamPage;
 
   const promoPage = useSelector(state => state.promos.promoPage);
   const { refreshCode, twentyFiveOffCode } = promoPage;
 
-  const entity = user.team || user.affiliate;
+  const entity = user.is_affiliated && team?.team_name?.length > 0 ? team : user?.affiliate;
 
   console.log({ entity });
 
   return (
     <div className="group_item w-100per">
-      {user.is_affiliated && user.affiliate && entity.public_code && (
+      {entity.public_code && (
         <div className="mb-20px ">
           <h2 className="group_images">Affiliate Metrics</h2>
           <div className="mb-20px">
@@ -34,7 +36,7 @@ const ProfileAffiliateMetrics = () => {
             <h3>Private Code</h3>
             <label>{entity && entity.private_code.promo_code.toUpperCase()}</label>
           </div>
-          {!user.affiliate.team && (
+          {!entity.team && (
             <div className="mb-20px">
               <h3>Projected Private Code Discount</h3>
               <label>
@@ -42,7 +44,7 @@ const ProfileAffiliateMetrics = () => {
               </label>
             </div>
           )}
-          {user.affiliate.sponsor && (
+          {entity.sponsor && (
             <>
               <div className="mb-20px">
                 <h3>Monthly Sponsor Code ($25 off)</h3>
@@ -64,7 +66,7 @@ const ProfileAffiliateMetrics = () => {
               color="primary"
               fullWidth
               onClick={() =>
-                copyToClipboard(`https://www.glow-leds.com?code=${user.affiliate.public_code.promo_code.toUpperCase()}`)
+                copyToClipboard(`https://www.glow-leds.com?code=${entity.public_code.promo_code.toUpperCase()}`)
               }
             >
               Copy Link to Clipboard

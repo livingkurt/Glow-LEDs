@@ -36,7 +36,7 @@ export default {
   },
   findByPathname_affiliates_db: async pathname => {
     try {
-      return await Affiliate.findOne({ pathname: pathname })
+      return await Affiliate.findOne({ pathname: pathname, deleted: false })
         .populate("user")
         .populate("chips")
         .populate("products")
@@ -50,7 +50,7 @@ export default {
   },
   findById_affiliates_db: async id => {
     try {
-      return await Affiliate.findOne({ _id: id })
+      return await Affiliate.findOne({ _id: id, deleted: false })
         .populate("user")
         .populate("chips")
         .populate("products")
@@ -228,7 +228,7 @@ export default {
 
   update_affiliates_db: async (id, body) => {
     try {
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       if (affiliate) {
         return await Affiliate.updateOne({ _id: id }, body);
       }
@@ -240,7 +240,7 @@ export default {
   },
   remove_affiliates_db: async id => {
     try {
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       if (affiliate) {
         return await Affiliate.updateOne({ _id: id }, { deleted: true });
       }

@@ -17,7 +17,7 @@ export default {
   },
   findByPathname_features_db: async pathname => {
     try {
-      return await Feature.findOne({ pathname: pathname }).populate("user");
+      return await Feature.findOne({ pathname: pathname, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -35,7 +35,7 @@ export default {
   },
   update_features_db: async (id, body) => {
     try {
-      const feature = await Feature.findOne({ _id: id });
+      const feature = await Feature.findOne({ _id: id, deleted: false });
       if (feature) {
         return await Feature.updateOne({ _id: id }, body);
       }
@@ -47,7 +47,7 @@ export default {
   },
   remove_features_db: async id => {
     try {
-      const feature = await Feature.findOne({ _id: id });
+      const feature = await Feature.findOne({ _id: id, deleted: false });
       if (feature) {
         return await Feature.updateOne({ _id: id }, { deleted: true });
       }

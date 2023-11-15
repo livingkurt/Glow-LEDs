@@ -392,7 +392,7 @@ export default {
 
   reviews_products_s: async (params, body, user) => {
     try {
-      // const product = await Product.findOne({ pathname: params.pathname });
+      // const product = await Product.findOne({ pathname: params.pathname, deleted: false });
       const product = await product_db.findById_products_db(params.pathname);
       if (product) {
         product.reviews = [

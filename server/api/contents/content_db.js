@@ -22,7 +22,7 @@ export default {
   },
   findById_contents_db: async id => {
     try {
-      return await Content.findOne({ _id: id })
+      return await Content.findOne({ _id: id, deleted: false })
         .populate("home_page.image_object")
         .populate("home_page.images_object")
         .populate("home_page.images_object")
@@ -45,7 +45,7 @@ export default {
   },
   update_contents_db: async (id, body) => {
     try {
-      const content = await Content.findOne({ _id: id });
+      const content = await Content.findOne({ _id: id, deleted: false });
       if (content) {
         return await Content.updateOne({ _id: id }, body);
       }
@@ -57,7 +57,7 @@ export default {
   },
   remove_contents_db: async id => {
     try {
-      const content = await Content.findOne({ _id: id });
+      const content = await Content.findOne({ _id: id, deleted: false });
       if (content) {
         return await Content.updateOne({ _id: id }, { deleted: true });
       }

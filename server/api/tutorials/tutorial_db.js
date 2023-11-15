@@ -26,7 +26,7 @@ export default {
   },
   findByPathname_tutorials_db: async pathname => {
     try {
-      return await Tutorial.findOne({ pathname: pathname }).populate("affiliate");
+      return await Tutorial.findOne({ pathname: pathname, deleted: false }).populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -35,7 +35,7 @@ export default {
   },
   findById_tutorials_db: async id => {
     try {
-      return await Tutorial.findOne({ _id: id }).populate("affiliate");
+      return await Tutorial.findOne({ _id: id, deleted: false }).populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -54,7 +54,7 @@ export default {
   update_tutorials_db: async (params, body) => {
     const { id } = params;
     try {
-      const tutorial = await Tutorial.findOne({ _id: id });
+      const tutorial = await Tutorial.findOne({ _id: id, deleted: false });
       if (tutorial) {
         return await Tutorial.updateOne({ _id: id }, body);
       }
@@ -66,7 +66,7 @@ export default {
   },
   remove_tutorials_db: async params => {
     try {
-      const tutorial = await Tutorial.findOne({ pathname: params.pathname });
+      const tutorial = await Tutorial.findOne({ pathname: params.pathname, deleted: false });
       if (tutorial) {
         return await Tutorial.updateOne({ pathname: params.pathname }, { deleted: true });
       }

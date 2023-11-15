@@ -78,7 +78,7 @@ export default {
 
   remove_carts_db: async id => {
     try {
-      const cart = await Cart.findOne({ _id: id });
+      const cart = await Cart.findOne({ _id: id, deleted: false });
       if (cart) {
         return await Cart.deleteOne({ _id: id });
       }

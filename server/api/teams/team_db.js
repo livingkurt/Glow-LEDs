@@ -21,7 +21,7 @@ export default {
   },
   findById_teams_db: async id => {
     try {
-      return await Team.findOne({ _id: id })
+      return await Team.findOne({ _id: i, deleted: falsed })
         .populate("affiliates")
         .populate("public_code")
         .populate("private_code")
@@ -34,7 +34,7 @@ export default {
   },
   findByPathname_teams_db: async pathname => {
     try {
-      return await Team.findOne({ pathname })
+      return await Team.findOne({ pathname, deleted: false })
         .populate("affiliates")
         .populate("public_code")
         .populate("private_code")
@@ -60,7 +60,7 @@ export default {
   },
   findByAffiliate_teams_db: async affiliate_id => {
     try {
-      return await Team.find({ affiliates: { $in: [affiliate_id] } })
+      return await Team.findOne({ affiliates: { $in: [affiliate_id] }, deleted: false })
         .populate("affiliates")
         .populate("public_code")
         .populate("private_code")
@@ -90,7 +90,7 @@ export default {
   },
   update_teams_db: async (id, body) => {
     try {
-      const team = await Team.findOne({ _id: id });
+      const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {
         return await Team.updateOne({ _id: id }, body);
       }
@@ -102,9 +102,9 @@ export default {
   },
   remove_teams_db: async id => {
     try {
-      const team = await Team.findOne({ _id: id });
+      const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {
-        return await Team.updateOne({ _id: id }, { deleted: true });
+        return await Team.updateOne({ _id: team._id }, { deleted: true });
       }
     } catch (error) {
       if (error instanceof Error) {

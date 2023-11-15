@@ -16,7 +16,7 @@ export default {
   },
   findById_chips_db: async id => {
     try {
-      return await Chip.findOne({ _id: id });
+      return await Chip.findOne({ _id: id, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -25,7 +25,7 @@ export default {
   },
   findByName_chips_db: async name => {
     try {
-      return await Chip.findOne({ name: name });
+      return await Chip.findOne({ name: name, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -43,7 +43,7 @@ export default {
   },
   update_chips_db: async (id, body) => {
     try {
-      const chip = await Chip.findOne({ _id: id });
+      const chip = await Chip.findOne({ _id: id, deleted: false });
       if (chip) {
         return await Chip.updateOne({ _id: id }, body);
       }
@@ -55,7 +55,7 @@ export default {
   },
   remove_chips_db: async id => {
     try {
-      const chip = await Chip.findOne({ _id: id });
+      const chip = await Chip.findOne({ _id: id, deleted: false });
       if (chip) {
         return await Chip.updateOne({ _id: id }, { deleted: true });
       }

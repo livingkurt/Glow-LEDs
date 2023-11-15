@@ -112,8 +112,8 @@ router.get("/code_used", async (req, res) => {
   const date = new Date();
   const monthNumber = date.getMonth();
   const year = date.getFullYear();
-  const promo = await promo_db.findBy_promos_db({ promo_code });
-  const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo?._id });
+  const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
+  const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo?._id, deleted: false });
   const stats = await order_services.affiliate_code_usage_orders_s(
     { promo_code },
     {

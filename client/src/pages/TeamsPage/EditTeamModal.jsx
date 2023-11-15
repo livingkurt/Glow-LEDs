@@ -89,7 +89,7 @@ const EditTeamModal = () => {
 
   return (
     <div>
-      {team._id ? (
+      {team?._id ? (
         <GLActionModal
           isOpen={edit_team_modal}
           onConfirm={() => {

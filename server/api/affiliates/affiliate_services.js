@@ -104,7 +104,7 @@ export default {
         // add any additional fields here
       };
 
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       if (affiliate) {
         const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
           checkin => checkin.month === month && checkin.year === year
@@ -302,7 +302,7 @@ export default {
   generate_sponsor_codes_affiliates_s: async params => {
     const { id } = params;
     try {
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       await generateSponsorCodes(affiliate);
       return affiliate;
     } catch (error) {

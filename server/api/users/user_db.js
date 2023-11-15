@@ -81,7 +81,7 @@ export default {
   },
   findById_users_db: async id => {
     try {
-      return await User.findOne({ _id: id })
+      return await User.findOne({ _id: id, deleted: false })
         .populate({
           path: "affiliate",
           populate: [
@@ -117,7 +117,7 @@ export default {
   },
   findByAffiliateId_users_db: async id => {
     try {
-      return await User.findOne({ affiliate: id })
+      return await User.findOne({ affiliate: id, deleted: false })
         .populate({
           path: "affiliate",
           populate: [
@@ -152,7 +152,7 @@ export default {
   },
   findByEmail_users_db: async email => {
     try {
-      return await User.findOne({ email }).populate("wholesaler");
+      return await User.findOne({ email, deleted: false }).populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -170,7 +170,7 @@ export default {
   },
   update_users_db: async (id, body) => {
     try {
-      const user = await User.findOne({ _id: id });
+      const user = await User.findOne({ _id: id, deleted: false });
 
       if (user) {
         return await User.updateOne({ _id: id }, body);
@@ -183,7 +183,7 @@ export default {
   },
   remove_users_db: async id => {
     try {
-      const user = await User.findOne({ _id: id });
+      const user = await User.findOne({ _id: id, deleted: false });
       if (user) {
         return await User.updateOne({ _id: id }, { deleted: true });
       }

@@ -72,10 +72,10 @@ export const ProfileActions = () => {
           variant="contained"
           color="secondary"
           onClick={() => {
-            console.log({ team: user?.team });
-            if (user?.team?._id) {
-              dispatch(API.detailsTeam({ id: user?.team?._id }));
-            }
+            // console.log({ team: user?.team });
+            // if (user?.team?._id) {
+            //   dispatch(API.detailsTeam({ id: user?.team?._id }));
+            // }
             dispatch(open_edit_team_modal(team));
           }}
         >

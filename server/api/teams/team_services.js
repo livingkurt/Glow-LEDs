@@ -95,7 +95,7 @@ export default {
   },
   findByAffiliate_teams_s: async params => {
     try {
-      return await team_db.findByAffiliate_teams_db(params.id);
+      return await team_db.findByAffiliate_teams_db(params.affiliate_id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -119,7 +119,7 @@ export default {
     try {
       const newTeam = await team_db.create_teams_db(body, public_code, private_code);
 
-      await user_db.update_users_db(user, { team: newTeam._id });
+      // await user_db.update_users_db(user, { team: newTeam._id });
       // await affiliate_db.update_affiliates_db(newTeam.captain, {
       //   public_code: newTeam.public_code._id,
       //   private_code: newTeam.private_code._id,
@@ -172,7 +172,7 @@ export default {
         // add any additional fields here
       };
 
-      const team = await Team.findOne({ _id: id });
+      const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {
         const existingCheckinIndex = team.teamMonthlyCheckins.findIndex(
           checkin => checkin.month === month && checkin.year === year

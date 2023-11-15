@@ -18,7 +18,7 @@ export default {
   },
   findById_emails_db: async id => {
     try {
-      return await Email.findOne({ _id: id }).populate("image_object").populate("images_object");
+      return await Email.findOne({ _id: id, deleted: false }).populate("image_object").populate("images_object");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -36,7 +36,7 @@ export default {
   },
   update_emails_db: async (id, body) => {
     try {
-      const email = await Email.findOne({ _id: id });
+      const email = await Email.findOne({ _id: id, deleted: false });
       if (email) {
         return await Email.updateOne({ _id: id }, body);
       }
@@ -48,7 +48,7 @@ export default {
   },
   remove_emails_db: async id => {
     try {
-      const email = await Email.findOne({ _id: id });
+      const email = await Email.findOne({ _id: id, deleted: false });
       if (email) {
         return await Email.updateOne({ _id: id }, { deleted: true });
       }
