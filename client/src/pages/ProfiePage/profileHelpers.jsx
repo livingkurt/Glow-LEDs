@@ -89,3 +89,7 @@ export const monthCheckinStatus = ({ user, currentMonth, currentYear, previousMo
   const previousCheckin = affiliatePreviousCheckin || teamPreviousCheckin;
   return { checkinCompleted, previousCheckin };
 };
+
+export const checkinButtonLabel = ({ checkin, teamCaptain, month }) => {
+  return `${checkin ? "Edit" : `Start ${teamCaptain}` ? "Team" : "Sponsor"} Monthly Checkin for ${month}`;
+};

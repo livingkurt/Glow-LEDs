@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Loading } from "../../../shared/SharedComponents";
-import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
 
 const ProfileAffiliateEarnings = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -19,8 +17,8 @@ const ProfileAffiliateEarnings = () => {
       {!loading_year_earnings &&
         !loading_month_earnings &&
         user.is_affiliated &&
-        user.affiliate &&
-        user.affiliate.public_code &&
+        month_earnings &&
+        year_earnings &&
         promos && (
           <>
             <h2 className="ta-c">Affiliate Earnings</h2>

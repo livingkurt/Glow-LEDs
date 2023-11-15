@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -42,60 +42,115 @@ const useProfilePage = () => {
       cleanup = false;
     };
   }, []);
-  useEffect(() => {
-    let cleanup = true;
-    if (cleanup) {
-      dispatch(API.detailsUser(id || current_user._id));
-    }
-    return () => {
-      cleanup = false;
-    };
-  }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
+
+  const [hasFetchedTeam, setHasFetchedTeam] = useState(false);
 
   useEffect(() => {
-    let cleanup = true;
-
-    if (cleanup) {
-      if (user.is_affiliated && user?.affiliate) {
-        dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
-        if (user?.affiliate?.sponsor) {
-          dispatch(API.listSponsorCodes(user?.affiliate._id));
-        }
-        dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }));
-
-        dispatch(
-          API.affiliateEarnings({
-            promo_code: user?.affiliate?.public_code?.promo_code,
-            start_date: month_start_date,
-            end_date: month_end_date,
-            sponsor: user?.affiliate?.sponsor,
-            type: "month",
-          })
-        );
-        dispatch(
-          API.affiliateEarnings({
-            promo_code: user?.affiliate?.public_code?.promo_code,
-            start_date: year_start_date,
-            end_date: year_end_date,
-            sponsor: user?.affiliate?.sponsor,
-            type: "year",
-          })
-        );
+    // Fetch initial data
+    if (user.is_affiliated && user?.affiliate && !hasFetchedTeam) {
+      dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
+      if (user?.affiliate?.sponsor) {
+        dispatch(API.listSponsorCodes(user?.affiliate._id));
       }
+      dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }))
+        .then(() => setHasFetchedTeam(true))
+        .catch(console.error);
     }
-    return () => {
-      cleanup = false;
-    };
+  }, [user.is_affiliated, user?.affiliate, current_user.affiliate, dispatch, hasFetchedTeam]);
+
+  useEffect(() => {
+    // Dispatch affiliateEarnings once team details are fetched
+    if (hasFetchedTeam) {
+      const public_code_source = team && team?.team_name?.length > 0 ? team : user?.affiliate?.public_code;
+
+      dispatch(
+        API.affiliateEarnings({
+          promo_code: public_code_source?.promo_code,
+          start_date: month_start_date,
+          end_date: month_end_date,
+          sponsor: user?.affiliate?.sponsor,
+          type: "month",
+        })
+      );
+      dispatch(
+        API.affiliateEarnings({
+          promo_code: public_code_source?.promo_code,
+          start_date: year_start_date,
+          end_date: year_end_date,
+          sponsor: user?.affiliate?.sponsor,
+          type: "year",
+        })
+      );
+
+      // Reset the flag if needed
+      // setHasFetchedTeam(false);
+    }
   }, [
-    current_user.affiliate,
     dispatch,
-    month_end_date,
+    hasFetchedTeam,
     month_start_date,
-    user?.affiliate,
-    user.is_affiliated,
-    year_end_date,
+    month_end_date,
     year_start_date,
+    year_end_date,
+    team,
+    user?.affiliate?.public_code,
+    user?.affiliate?.sponsor,
   ]);
+
+  // useEffect(() => {
+  //   let cleanup = true;
+  //   if (cleanup) {
+  //     dispatch(API.detailsUser(id || current_user._id));
+  //   }
+  //   return () => {
+  //     cleanup = false;
+  //   };
+  // }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
+
+  // useEffect(() => {
+  //   let cleanup = true;
+
+  //   if (cleanup) {
+  //     if (user.is_affiliated && user?.affiliate) {
+  //       dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
+  //       if (user?.affiliate?.sponsor) {
+  //         dispatch(API.listSponsorCodes(user?.affiliate._id));
+  //       }
+  //       dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }));
+
+  //       dispatch(
+  //         API.affiliateEarnings({
+  //           promo_code: user?.affiliate?.public_code?.promo_code,
+  //           start_date: month_start_date,
+  //           end_date: month_end_date,
+  //           sponsor: user?.affiliate?.sponsor,
+  //           type: "month",
+  //         })
+  //       );
+  //       dispatch(
+  //         API.affiliateEarnings({
+  //           promo_code: user?.affiliate?.public_code?.promo_code,
+  //           start_date: year_start_date,
+  //           end_date: year_end_date,
+  //           sponsor: user?.affiliate?.sponsor,
+  //           type: "year",
+  //         })
+  //       );
+  //     }
+  //   }
+  //   return () => {
+  //     cleanup = false;
+  //   };
+  // }, [
+  //   current_user.affiliate,
+  //   dispatch,
+  //   month_end_date,
+  //   month_start_date,
+  //   user?.affiliate,
+  //   user.is_affiliated,
+  //   year_end_date,
+  //   year_start_date,
+  // ]);
 
   useEffect(() => {
     let cleanup = true;

@@ -11,7 +11,7 @@ import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
 import { open_edit_team_modal } from "../../../slices/teamSlice";
 import EditTeamModal from "../../TeamsPage/EditTeamModal";
-import { monthCheckinStatus } from "../profileHelpers";
+import { checkinButtonLabel, monthCheckinStatus } from "../profileHelpers";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -72,10 +72,6 @@ export const ProfileActions = () => {
           variant="contained"
           color="secondary"
           onClick={() => {
-            // console.log({ team: user?.team });
-            // if (user?.team?._id) {
-            //   dispatch(API.detailsTeam({ id: user?.team?._id }));
-            // }
             dispatch(open_edit_team_modal(team));
           }}
         >
@@ -97,8 +93,11 @@ export const ProfileActions = () => {
                 dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
               }}
             >
-              {previousCheckin ? "Edit" : "Start"} {user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Checkin
-              for {previousMonth}
+              {checkinButtonLabel({
+                checkin: previousCheckin,
+                teamCaptain: user?.affiliate?.teamCaptain,
+                month: previousMonth,
+              })}
             </Button>
           )}
           {!checkinCompleted && (
@@ -113,8 +112,11 @@ export const ProfileActions = () => {
               dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
             }}
           >
-            {checkinCompleted ? "Edit" : "Start"} {user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Checkin
-            for {currentMonth}
+            {checkinButtonLabel({
+              checkin: checkinCompleted,
+              teamCaptain: user?.affiliate?.teamCaptain,
+              month: currentMonth,
+            })}
           </Button>
         </>
       )}
