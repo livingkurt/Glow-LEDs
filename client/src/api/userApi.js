@@ -51,7 +51,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
       return { data, profile };
     } else {
       const { data } = await axios.put(`/api/users/${user._id}`, user);
-      dispatch(showSuccess({ message: `User Updated` }));
+
       if (profile) {
         await handleTokenRefresh(true);
       }
@@ -66,7 +66,6 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
 export const detailsUser = createAsyncThunk("users/detailsUser", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/users/${id}`);
-    dispatch(showSuccess({ message: `User Found` }));
     return data;
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));

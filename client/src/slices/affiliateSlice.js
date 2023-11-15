@@ -218,6 +218,22 @@ const affiliatePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.teamMonthlyCheckin.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.monthlyCheckinSuccess = false;
+    },
+    [API.teamMonthlyCheckin.fulfilled]: (state, { payload }) => {
+      state.monthlyCheckinModal = false;
+      state.numberOfContent = 0;
+      state.questionsConcerns = "";
+      state.monthlyCheckinSuccess = true;
+    },
+    [API.teamMonthlyCheckin.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.monthlyCheckinSuccess = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
     [API.affiliateEarnings.pending]: (state, { payload }) => {
       state.loading_year_earnings = true;
       state.loading_month_earnings = true;

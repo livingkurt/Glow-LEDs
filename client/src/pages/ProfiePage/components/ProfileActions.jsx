@@ -11,6 +11,7 @@ import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
 import { open_edit_team_modal } from "../../../slices/teamSlice";
 import EditTeamModal from "../../TeamsPage/EditTeamModal";
+import { monthCheckinStatus } from "../profileHelpers";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,12 @@ export const ProfileActions = () => {
   const previousMonth = date.toLocaleString("default", { month: "long" });
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const currentYear = new Date().getFullYear();
-  const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === currentMonth && checkin.year === currentYear
-  );
-  const previousCheckin = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === previousMonth && checkin.year === currentYear
-  );
+  const { checkinCompleted, previousCheckin } = monthCheckinStatus({
+    user,
+    currentMonth,
+    currentYear,
+    previousMonth,
+  });
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -66,7 +67,7 @@ export const ProfileActions = () => {
           Edit Affiliate Profile
         </Button>
       )}
-      {user.is_affiliated && user.affiliate.teamCaptain && (
+      {user.is_affiliated && user?.affiliate?.teamCaptain && (
         <Button
           variant="contained"
           color="secondary"
@@ -96,7 +97,8 @@ export const ProfileActions = () => {
                 dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
               }}
             >
-              {previousCheckin ? "Edit" : "Start"} Sponsor Monthly Checkin for {previousMonth}
+              {previousCheckin ? "Edit" : "Start"} {user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Checkin
+              for {previousMonth}
             </Button>
           )}
           {!checkinCompleted && (
@@ -111,7 +113,8 @@ export const ProfileActions = () => {
               dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
             }}
           >
-            {checkinCompleted ? "Edit" : "Start"} Sponsor Monthly Checkin for {currentMonth}
+            {checkinCompleted ? "Edit" : "Start"} {user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Checkin
+            for {currentMonth}
           </Button>
         </>
       )}

@@ -138,6 +138,8 @@ export const teamMonthlyCheckin = createAsyncThunk(
         month,
         year,
       });
+      dispatch(showSuccess({ message: `Checkin Success` }));
+      console.log({ data });
       await handleTokenRefresh(true);
       return data;
     } catch (error) {

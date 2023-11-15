@@ -5,7 +5,7 @@ import * as API from "../../../api";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useEffect } from "react";
 
-const SponsorMonthlyCheckinModal = () => {
+const SponsorMonthlyCheckinModal = ({ type }) => {
   const dispatch = useDispatch();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { questionsConcerns, monthlyCheckinModal, numberOfContent, month, year } = affiliatePage;
@@ -27,7 +27,7 @@ const SponsorMonthlyCheckinModal = () => {
     <GLActionModal
       isOpen={monthlyCheckinModal}
       onConfirm={() => {
-        if (user.affiliate.teamCaptain) {
+        if (user?.affiliate?.teamCaptain) {
           dispatch(
             API.teamMonthlyCheckin({
               teamId: user.team._id,
@@ -50,7 +50,7 @@ const SponsorMonthlyCheckinModal = () => {
         }
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
-      title={"Sponsor Monthly Check In"}
+      title={`${user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Check In`}
       confirmLabel={"Confirm"}
       confirmColor="primary"
       confirmDisabled={numberOfContent < 3}

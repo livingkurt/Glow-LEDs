@@ -3,7 +3,7 @@ import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import config from "../../config";
 import { createStripeAccountLink } from "../affiliates/affiliate_interactors";
-import { createPublicPromoCode, createPrivatePromoCode } from "../affiliates/affiliate_helpers";
+import { createPublicPromoCode, createPrivatePromoCode, monthToNum } from "../affiliates/affiliate_helpers";
 import Stripe from "stripe";
 import { domain } from "../../background/worker_helpers";
 if (!config.STRIPE_KEY) {
@@ -130,7 +130,6 @@ export default {
         return { newTeam, accountLink };
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -204,11 +203,12 @@ export default {
         }
 
         // Save the updated affiliate
-        await affiliate.save();
+        await team.save();
 
-        return affiliate;
+        return team;
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

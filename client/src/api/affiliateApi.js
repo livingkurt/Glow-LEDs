@@ -154,6 +154,7 @@ export const sponsorMonthlyCheckin = createAsyncThunk(
         month,
         year,
       });
+      dispatch(showSuccess({ message: `Checkin Success` }));
       await handleTokenRefresh(true);
       return data;
     } catch (error) {
