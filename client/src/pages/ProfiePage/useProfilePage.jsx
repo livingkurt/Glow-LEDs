@@ -97,60 +97,15 @@ const useProfilePage = () => {
     user?.affiliate?.sponsor,
   ]);
 
-  // useEffect(() => {
-  //   let cleanup = true;
-  //   if (cleanup) {
-  //     dispatch(API.detailsUser(id || current_user._id));
-  //   }
-  //   return () => {
-  //     cleanup = false;
-  //   };
-  // }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
-
-  // useEffect(() => {
-  //   let cleanup = true;
-
-  //   if (cleanup) {
-  //     if (user.is_affiliated && user?.affiliate) {
-  //       dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
-  //       if (user?.affiliate?.sponsor) {
-  //         dispatch(API.listSponsorCodes(user?.affiliate._id));
-  //       }
-  //       dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }));
-
-  //       dispatch(
-  //         API.affiliateEarnings({
-  //           promo_code: user?.affiliate?.public_code?.promo_code,
-  //           start_date: month_start_date,
-  //           end_date: month_end_date,
-  //           sponsor: user?.affiliate?.sponsor,
-  //           type: "month",
-  //         })
-  //       );
-  //       dispatch(
-  //         API.affiliateEarnings({
-  //           promo_code: user?.affiliate?.public_code?.promo_code,
-  //           start_date: year_start_date,
-  //           end_date: year_end_date,
-  //           sponsor: user?.affiliate?.sponsor,
-  //           type: "year",
-  //         })
-  //       );
-  //     }
-  //   }
-  //   return () => {
-  //     cleanup = false;
-  //   };
-  // }, [
-  //   current_user.affiliate,
-  //   dispatch,
-  //   month_end_date,
-  //   month_start_date,
-  //   user?.affiliate,
-  //   user.is_affiliated,
-  //   year_end_date,
-  //   year_start_date,
-  // ]);
+  useEffect(() => {
+    let cleanup = true;
+    if (cleanup) {
+      dispatch(API.detailsUser(id || current_user._id));
+    }
+    return () => {
+      cleanup = false;
+    };
+  }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
 
   useEffect(() => {
     let cleanup = true;
