@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
-import { EditTeamModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
 import { Button, IconButton, Tooltip } from "@mui/material";
@@ -20,6 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
+import { EditTeamModal } from "./components";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -52,12 +52,12 @@ const TeamsPage = () => {
           </IconButton>
         ),
       },
-      { title: "Artist Name", display: "artist_name" },
+      { title: "Team Name", display: "team_name" },
       {
         title: "Percentage Off",
         display: team => `${team.private_code && team.private_code.percentage_off}%`,
       },
-      { title: "User", display: team => fullName(team.user) },
+      { title: "User", display: team => fullName(team.captain) },
       {
         title: "Public Code",
         display: team => (
@@ -87,9 +87,9 @@ const TeamsPage = () => {
               <EditIcon color="white" />
             </IconButton>
 
-            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(team._id))}>
+            {/* <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(team._id))}>
               <PolylineIcon color="white" />
-            </IconButton>
+            </IconButton> */}
 
             <IconButton onClick={() => dispatch(API.deleteTeam(team._id))} aria-label="Delete">
               <DeleteIcon color="white" />
@@ -125,7 +125,7 @@ const TeamsPage = () => {
           </Button>
         }
       />
-      <EditTeamModal />
+      {/* <EditTeamModal /> */}
       <EditPromoModal />
     </div>
   );

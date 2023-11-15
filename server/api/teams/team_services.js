@@ -1,5 +1,6 @@
 import { team_db } from "../teams";
 import { determine_filter } from "../../utils/util";
+import { getFilteredData } from "../api_helpers";
 
 export default {
   findAll_teams_s: async query => {
@@ -42,6 +43,29 @@ export default {
         // Handle the case where count is undefined
         throw new Error("Count is undefined");
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_teams_s: async query => {
+    try {
+      const sort_options = ["active", "team_name", "percentage_off", "captain", "public_code", "private_code"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        // normalizeFilters: normalizePromoFilters,
+        // normalizeSearch: normalizePromoSearch,
+      });
+      console.log({ filter, sort, limit, page });
+      const teams = await team_db.findAll_teams_db(filter, sort, limit, page);
+      const count = await team_db.count_teams_db(filter);
+      return {
+        data: teams,
+        total_count: count,
+        currentPage: page,
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

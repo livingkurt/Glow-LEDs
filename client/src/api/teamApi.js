@@ -1,12 +1,28 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
-
 import { create_query } from "../utils/helper_functions";
-import { showError, showSuccess } from "../slices/snackbarSlice";
+import { showError } from "../slices/snackbarSlice";
 import store from "../store";
+
+import * as API from "../api";
+
+export const getTeams = async ({ search, sorting, filters, page, pageSize }) => {
+  try {
+    return await axios.get(`/api/teams/table`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
 
 export const listTeams = createAsyncThunk("teams/listTeams", async (query, { dispatch, rejectWithValue }) => {
   try {
@@ -18,24 +34,56 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query, { dis
   }
 });
 
-export const saveTeam = createAsyncThunk("teams/saveTeam", async (team, { dispatch, rejectWithValue }) => {
-  try {
-    if (!team._id) {
-      const { data } = await axios.post("/api/teams", team);
-      return data;
-    } else {
-      const { data } = await axios.put(`/api/teams/${team._id}`, team);
-      return data;
+export const saveTeam = createAsyncThunk(
+  "teams/saveTeam",
+  async ({ team, profile }, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const {
+        users: {
+          userPage: { current_user },
+        },
+      } = getState();
+
+      const newTeam = !team._id;
+
+      if (newTeam) {
+        const { data } = await axios.post("/api/teams", team);
+        if (profile) {
+          await dispatch(API.saveUser({ user: { _id: current_user._id, team: data.newTeam._id }, profile }));
+        }
+        return data;
+      } else {
+        const { data } = await axios.put(`/api/teams/${team._id}`, team);
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
-  } catch (error) {
-    dispatch(showError({ message: errorMessage(error) }));
-    return rejectWithValue(error.response?.data);
   }
-});
+);
 
-export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname, { dispatch, rejectWithValue }) => {
+export const detailsTeam = createAsyncThunk(
+  "teams/detailsTeam",
+  async ({ pathname, id }, { dispatch, rejectWithValue }) => {
+    try {
+      if (id) {
+        const { data } = await axios.get(`/api/teams/${id}`);
+        return data;
+      } else if (pathname) {
+        const { data } = await axios.get(`/api/teams/${pathname}/pathname`);
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (id, { dispatch, rejectWithValue }) => {
   try {
-    const { data } = await axios.get(`/api/teams/${pathname}`);
+    const { data } = await axios.delete(`/api/teams/${id}`);
     return data;
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));
@@ -43,12 +91,64 @@ export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname
   }
 });
 
-export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, { dispatch, rejectWithValue }) => {
-  try {
-    const { data } = await axios.delete("/api/teams/" + pathname);
-    return data;
-  } catch (error) {
-    dispatch(showError({ message: errorMessage(error) }));
-    return rejectWithValue(error.response?.data);
+// export const generateSponsorCodes = createAsyncThunk(
+//   "teams/generateSponsorCodes",
+//   async (id, { dispatch, rejectWithValue }) => {
+//     try {
+//       const { data } = await axios.post(`/api/teams/${id}/generate_sponsor_codes`);
+
+//       dispatch(showSuccess({ message: `Codes Generated` }));
+//       return data;
+//     } catch (error) {
+//       dispatch(showError({ message: errorMessage(error) }));
+//       return rejectWithValue(error.response?.data);
+//     }
+//   }
+// );
+
+// export const create_rave_mob_teams = createAsyncThunk(
+//   "teams/create_rave_mob_teams",
+//   async (csv, { dispatch, rejectWithValue }) => {
+//     try {
+//       const { data } = await axios.put("/api/teams/create_rave_mob_teams", { csv });
+//       return data;
+//     } catch (error) {
+//       dispatch(showError({ message: errorMessage(error) }));
+//       return rejectWithValue(error.response?.data);
+//     }
+//   }
+// );
+
+export const teamEarnings = createAsyncThunk(
+  "teams/teamEarnings",
+  async ({ promo_code, start_date, end_date, sponsor, type }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`
+      );
+      return { data, type };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
+
+// export const monthlyCheckin = createAsyncThunk(
+//   "team/monthlyCheckin",
+//   async ({ teamId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
+//     try {
+//       const { data } = await axios.put(`/api/teams/${teamId}/monthly_checkin`, {
+//         questionsConcerns,
+//         numberOfContent,
+//         month,
+//         year,
+//       });
+//       await handleTokenRefresh(true);
+//       return data;
+//     } catch (error) {
+//       dispatch(showError({ message: errorMessage(error) }));
+//       return rejectWithValue(error.response?.data);
+//     }
+//   }
+// );
