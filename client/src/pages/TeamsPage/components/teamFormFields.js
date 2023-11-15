@@ -16,9 +16,9 @@ export const teamFormFields = ({ users, promos, affiliates }) => {
     },
     affiliates: {
       type: "autocomplete_multiple",
-      label: "Color Product",
+      label: "Team Members",
       options: affiliates,
-      labelProp: "name",
+      labelProp: "artist_name",
       permissions: ["admin"],
     },
     promo_code_name: {
@@ -41,11 +41,11 @@ export const teamFormFields = ({ users, promos, affiliates }) => {
     },
     start_year: {
       type: "text",
-      label: "The year you started gloving",
+      label: "The year you your team was founded",
     },
     bio: {
       type: "text_multiline",
-      label: "Bio about you and your gloving career so far, your goals, etc.",
+      label: "Bio about you and your team and members, your goals, etc.",
     },
     instagram_link: {
       type: "text",

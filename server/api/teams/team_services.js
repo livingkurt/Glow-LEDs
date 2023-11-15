@@ -2,6 +2,8 @@ import { Team, team_db } from "../teams";
 import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { createStripeAccountLink } from "../affiliates/affiliate_interactors";
+import { createPublicPromoCode } from "../affiliates/affiliate_helpers";
+import { createPrivatePromoCode } from "../affiliates/affiliate_helpers";
 
 export default {
   findAll_teams_s: async query => {
@@ -101,8 +103,8 @@ export default {
     }
   },
   create_teams_s: async body => {
-    const { user, promo_code_name } = body;
-    const public_code = createPublicPromoCode(promo_code_name);
+    const { user, promo_code_name, team_name } = body;
+    const public_code = createPublicPromoCode(promo_code_name || team_name);
     const private_code = createPrivatePromoCode(user);
     try {
       const newTeam = await team_db.create_teams_db(body, public_code, private_code);

@@ -42,7 +42,6 @@ export default {
         normalizeFilters: normalizePaycheckFilters,
         // normalizeSearch: normalizePaycheckSearch
       });
-      console.log({ filter, sort, limit, page, params });
       const paychecks = await mongodbFindAll(
         "paychecks",
         {
@@ -53,9 +52,6 @@ export default {
         },
         { user: "users", affiliate: "affiliates", team: "teams" }
       );
-      console.log({
-        paychecks: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
-      });
       return {
         data: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
         total_count: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id).length,
