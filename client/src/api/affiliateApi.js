@@ -53,12 +53,14 @@ export const saveAffiliate = createAsyncThunk(
 
       if (newAffiliate) {
         const { data } = await axios.post("/api/affiliates", affiliate);
+        dispatch(showSuccess({ message: `Affiliate Created` }));
         if (profile) {
           await dispatch(API.saveUser({ user: { _id: current_user._id, affiliate: data.newAffiliate._id }, profile }));
         }
         return data;
       } else {
         const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate);
+        dispatch(showSuccess({ message: `Affiliate Updated` }));
         return data;
       }
     } catch (error) {

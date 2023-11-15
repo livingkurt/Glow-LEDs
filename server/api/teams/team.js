@@ -15,7 +15,7 @@ const teamCheckinSchema = new mongoose.Schema(
 const teamSchema = new mongoose.Schema(
   {
     affiliates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" }],
-    captain: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    captain: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
     teamMonthlyCheckins: [teamCheckinSchema],
     team_name: { type: String },
     instagram_handle: { type: String },

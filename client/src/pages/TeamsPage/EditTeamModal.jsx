@@ -19,7 +19,7 @@ const EditTeamModal = () => {
   const { edit_team_modal, team, loading, createTeamStep, stripeAccountLink, loadingSaveTeam } = teamPage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users, current_user } = userPage;
+  const { users, loading: loading_users, current_user, user } = userPage;
 
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
@@ -95,7 +95,7 @@ const EditTeamModal = () => {
           onConfirm={() => {
             dispatch(
               API.saveTeam({
-                team: { ...team, user: team?.user?._id || current_user._id },
+                team,
                 profile: location.pathname === "/secure/account/profile",
               })
             );

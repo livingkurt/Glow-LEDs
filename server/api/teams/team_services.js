@@ -83,6 +83,15 @@ export default {
       }
     }
   },
+  findById_teams_s: async params => {
+    try {
+      return await team_db.findById_teams_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findByPathname_teams_s: async params => {
     try {
       return await team_db.findByPathname_teams_db(params.pathname);
@@ -129,7 +138,7 @@ export default {
   },
   update_teams_s: async (params, body) => {
     try {
-      return await team_db.update_teams_db(params.pathname, body);
+      return await team_db.update_teams_db(params.id, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -138,7 +147,7 @@ export default {
   },
   remove_teams_s: async params => {
     try {
-      return await team_db.remove_teams_db(params.pathname);
+      return await team_db.remove_teams_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

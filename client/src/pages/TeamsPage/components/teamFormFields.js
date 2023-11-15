@@ -4,10 +4,9 @@ export const teamFormFields = ({ users, promos, affiliates }) => {
   return {
     captain: {
       type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
+      label: "Team Captain",
+      options: affiliates,
+      labelProp: "artist_name",
       permissions: ["admin"],
     },
     team_name: {

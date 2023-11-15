@@ -41,20 +41,26 @@ export const saveTeam = createAsyncThunk(
     try {
       const {
         users: {
-          userPage: { current_user },
+          userPage: { current_user, user },
         },
       } = getState();
 
       const newTeam = !team._id;
 
       if (newTeam) {
-        const { data } = await axios.post("/api/teams", team);
+        const { data } = await axios.post("/api/teams", {
+          ...team,
+          captain: team?.captain?._id || user?.affiliate._id,
+          affiliates: [...team, team?.captain?._id || user?.affiliate?._id],
+        });
+        dispatch(showSuccess({ message: `Team Created` }));
         if (profile) {
           await dispatch(API.saveUser({ user: { _id: current_user._id, team: data.newTeam._id }, profile }));
         }
         return data;
       } else {
         const { data } = await axios.put(`/api/teams/${team._id}`, team);
+        dispatch(showSuccess({ message: `Team Updated` }));
         return data;
       }
     } catch (error) {

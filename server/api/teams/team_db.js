@@ -18,6 +18,19 @@ export default {
       }
     }
   },
+  findById_teams_db: async id => {
+    try {
+      return await Team.findOne({ _id: id })
+        .populate("affiliates")
+        .populate("public_code")
+        .populate("private_code")
+        .populate("captain");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findByPathname_teams_db: async pathname => {
     try {
       return await Team.findOne({ pathname })
