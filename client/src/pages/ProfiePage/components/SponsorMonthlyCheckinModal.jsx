@@ -27,9 +27,27 @@ const SponsorMonthlyCheckinModal = () => {
     <GLActionModal
       isOpen={monthlyCheckinModal}
       onConfirm={() => {
-        dispatch(
-          API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent, month, year })
-        );
+        if (user.affiliate.teamCaptain) {
+          dispatch(
+            API.teamMonthlyCheckin({
+              teamId: user.team._id,
+              questionsConcerns,
+              numberOfContent,
+              month,
+              year,
+            })
+          );
+        } else {
+          dispatch(
+            API.sponsorMonthlyCheckin({
+              affiliateId: user.affiliate._id,
+              questionsConcerns,
+              numberOfContent,
+              month,
+              year,
+            })
+          );
+        }
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
       title={"Sponsor Monthly Check In"}

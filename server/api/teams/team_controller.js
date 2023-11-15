@@ -25,6 +25,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  team_monthly_checkin_teams_c: async (req, res) => {
+    const { body, params } = req;
+    try {
+      const team = await team_services.team_monthly_checkin_teams_s(params, body);
+      if (team) {
+        return res.status(201).send(team);
+      }
+      return res.status(500).send({ message: "Error Creating Affiliate" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findByPathname_teams_c: async (req, res) => {
     const { params } = req;
     try {

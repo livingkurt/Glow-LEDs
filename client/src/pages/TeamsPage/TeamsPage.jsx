@@ -87,9 +87,9 @@ const TeamsPage = () => {
               <EditIcon color="white" />
             </IconButton>
 
-            {/* <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(team._id))}>
+            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateTeamCodes(team._id))}>
               <PolylineIcon color="white" />
-            </IconButton> */}
+            </IconButton>
 
             <IconButton onClick={() => dispatch(API.deleteTeam(team._id))} aria-label="Delete">
               <DeleteIcon color="white" />

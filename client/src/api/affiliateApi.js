@@ -114,8 +114,8 @@ export const generateSponsorCodes = createAsyncThunk(
   }
 );
 
-export const create_rave_mob_affiliates = createAsyncThunk(
-  "affiliates/create_rave_mob_affiliates",
+export const createRaveMobAffiliates = createAsyncThunk(
+  "affiliates/createRaveMobAffiliates",
   async (csv, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv });
@@ -142,8 +142,8 @@ export const affiliateEarnings = createAsyncThunk(
   }
 );
 
-export const monthlyCheckin = createAsyncThunk(
-  "affiliate/monthlyCheckin",
+export const sponsorMonthlyCheckin = createAsyncThunk(
+  "affiliate/sponsorMonthlyCheckin",
   async ({ affiliateId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, {

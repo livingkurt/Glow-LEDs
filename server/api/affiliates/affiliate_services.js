@@ -93,10 +93,9 @@ export default {
       }
     }
   },
-  monthly_checkin_affiliates_s: async (params, body) => {
+  sponsor_monthly_checkin_affiliates_s: async (params, body) => {
     const { id } = params;
     const { questionsConcerns, numberOfContent, month, year } = body;
-    console.log({ questionsConcerns, numberOfContent, month, year, id });
 
     // Get previous month and year
     const prevDate = new Date();

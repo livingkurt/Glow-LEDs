@@ -9,6 +9,8 @@ import { Box, Button, Typography } from "@mui/material";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
+import { open_edit_team_modal } from "../../../slices/teamSlice";
+import EditTeamModal from "../../TeamsPage/EditTeamModal";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -16,7 +18,9 @@ export const ProfileActions = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliate, stripeAccountLink, stripeAccountLinkModal } = affiliatePage;
+  const { affiliate } = affiliatePage;
+  const teamPage = useSelector(state => state.teams.teamPage);
+  const { team } = teamPage;
 
   const date = new Date();
   date.setMonth(date.getMonth() - 1);
@@ -62,7 +66,21 @@ export const ProfileActions = () => {
           Edit Affiliate Profile
         </Button>
       )}
-      {user.is_affiliated && user?.affiliate?.sponsor && (
+      {user.is_affiliated && user.affiliate.teamCaptain && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            if (user?.team?._id) {
+              dispatch(API.detailsTeam({ id: user?.team?._id }));
+            }
+            dispatch(open_edit_team_modal(team));
+          }}
+        >
+          Edit Team Profile
+        </Button>
+      )}
+      {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
         <>
           {!previousCheckin && (
             <Typography variant="body1" gutterBottom>
@@ -133,6 +151,7 @@ export const ProfileActions = () => {
       )}
 
       <EditAffiliateModal />
+      <EditTeamModal />
       <EditWholesalerModal />
       <ChangePasswordModal />
     </Box>

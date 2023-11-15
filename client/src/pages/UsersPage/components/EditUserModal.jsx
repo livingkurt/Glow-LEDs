@@ -4,9 +4,8 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import { set_edit_user_modal, set_user } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { toCapitalize } from "../../../utils/helper_functions";
+import { userFormFields } from "../userFormFields";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
@@ -18,6 +17,9 @@ const EditUserModal = () => {
   const { affiliate } = user;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
+
+  const teamPage = useSelector(state => state.teams.teamPage);
+  const { teams, loading: loading_teams } = teamPage;
 
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
   const { wholesalers, loading: loading_wholesalers } = wholesalerPage;
@@ -31,158 +33,19 @@ const EditUserModal = () => {
       dispatch(API.listAffiliates({ active: true, limit: 0, page: 0 }));
       dispatch(API.listWholesalers());
       dispatch(API.listPromos({}));
+      dispatch(API.listTeams({}));
     }
     return () => {
       clean = false;
     };
   }, [dispatch]);
 
-  const formFields = {
-    first_name: {
-      type: "text",
-      label: "First Name",
-      required: true,
-    },
-    last_name: {
-      type: "text",
-      label: "Last Name",
-      required: true,
-    },
-    email: {
-      type: "text",
-      label: "Email",
-      required: true,
-    },
-    stripe_connect_id: {
-      type: "text",
-      label: "Stripe Connect ID",
-      permissions: ["admin"],
-    },
-    isAdmin: {
-      type: "checkbox",
-      label: "Is Admin",
-      permissions: ["admin"],
-    },
-    isVerified: {
-      type: "checkbox",
-      label: "Is Verified",
-      permissions: ["admin"],
-    },
-    is_affiliated: {
-      type: "checkbox",
-      label: "Is Affiliated",
-      permissions: ["admin"],
-    },
-    is_employee: {
-      type: "checkbox",
-      label: "Is Employee",
-      permissions: ["admin"],
-    },
-    weekly_wage: {
-      type: "number",
-      label: "Weekly Wage",
-      permissions: ["admin"],
-    },
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliates",
-      options: affiliates,
-      labelProp: "affiliate",
-      getOptionLabel: option => option.artist_name,
-      permissions: ["admin"],
-    },
-    t_shirt_size: {
-      type: "autocomplete_single",
-      label: "T-Shirt Size",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-      options: ["Small", "Medium", "Large", "X-Large", "XX-Large"],
-    },
-    glove_size: {
-      type: "autocomplete_single",
-      label: "Glove Size",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-      options: ["Small", "Medium", "Large", "X-Large", "XX-Large"],
-    },
-    employee_code: {
-      type: "autocomplete_single",
-      label: "Employee Code",
-      options: promos,
-      labelProp: "promo_code",
-      permissions: ["admin"],
-    },
-    email_subscription: {
-      type: "checkbox",
-      label: "Email Subscription",
-    },
-    guest: {
-      type: "checkbox",
-      label: "Guest",
-      permissions: ["admin"],
-    },
-    wholesaler: {
-      type: "autocomplete_single",
-      label: "Wholesalers",
-      options: wholesalers,
-      labelProp: "wholesaler",
-      getOptionLabel: option => option.company,
-      permissions: ["admin"],
-    },
-    isWholesaler: {
-      type: "checkbox",
-      label: "Is Wholesaler",
-      permissions: ["admin"],
-    },
-    shipping: {
-      type: "object",
-      title: "Shipping Information",
-      fields: {
-        first_name: {
-          type: "text",
-          label: "First Name",
-        },
-        last_name: {
-          type: "text",
-          label: "Last Name",
-        },
-        address_1: {
-          type: "text",
-          label: "Address Line 1",
-        },
-        address_2: {
-          type: "text",
-          label: "Address Line 2",
-        },
-        city: {
-          type: "text",
-          label: "City",
-        },
-        state: {
-          type: "text",
-          label: "State",
-        },
-        postalCode: {
-          type: "text",
-          label: "Postal Code",
-        },
-        international: {
-          type: "checkbox",
-          label: "International",
-        },
-        country: {
-          type: "text",
-          label: "Country",
-        },
-      },
-    },
-  };
+  const formFields = userFormFields({
+    affiliates,
+    wholesalers,
+    promos,
+    teams,
+  });
 
   return (
     <div>

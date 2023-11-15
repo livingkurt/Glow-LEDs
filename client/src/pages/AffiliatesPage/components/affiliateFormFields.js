@@ -133,6 +133,11 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       label: "Team",
       permissions: ["admin"],
     },
+    teamCaptain: {
+      type: "checkbox",
+      label: "Team Captain",
+      permissions: ["admin"],
+    },
     sponsor: {
       type: "checkbox",
       label: "Sponsor",

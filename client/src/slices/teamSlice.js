@@ -149,7 +149,7 @@ const teamPage = createSlice({
     },
     [API.listTeams.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.teams = payload.data;
+      state.teams = payload.teams;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Teams Found";
@@ -202,17 +202,17 @@ const teamPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.monthlyCheckin.pending]: (state, { payload }) => {
+    [API.teamMonthlyCheckin.pending]: (state, { payload }) => {
       state.loading = true;
       state.monthlyCheckinSuccess = false;
     },
-    [API.monthlyCheckin.fulfilled]: (state, { payload }) => {
+    [API.teamMonthlyCheckin.fulfilled]: (state, { payload }) => {
       state.monthlyCheckinModal = false;
       state.numberOfContent = 0;
       state.questionsConcerns = "";
       state.monthlyCheckinSuccess = true;
     },
-    [API.monthlyCheckin.rejected]: (state, { payload, error }) => {
+    [API.teamMonthlyCheckin.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.monthlyCheckinSuccess = false;
       state.error = payload ? payload.error : error.message;

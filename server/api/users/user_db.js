@@ -22,6 +22,17 @@ export default {
             },
           ],
         })
+        .populate({
+          path: "team",
+          populate: [
+            {
+              path: "public_code",
+            },
+            {
+              path: "private_code",
+            },
+          ],
+        })
         .populate("employee_code")
         .populate("wholesaler")
         .limit(parseInt(limit))
@@ -46,6 +57,17 @@ export default {
             },
             {
               path: "products",
+            },
+          ],
+        })
+        .populate({
+          path: "team",
+          populate: [
+            {
+              path: "public_code",
+            },
+            {
+              path: "private_code",
             },
           ],
         })
@@ -74,6 +96,17 @@ export default {
             },
           ],
         })
+        .populate({
+          path: "team",
+          populate: [
+            {
+              path: "public_code",
+            },
+            {
+              path: "private_code",
+            },
+          ],
+        })
         .populate("employee_code")
         .populate("wholesaler");
     } catch (error) {
@@ -96,6 +129,17 @@ export default {
             },
             {
               path: "products",
+            },
+          ],
+        })
+        .populate({
+          path: "team",
+          populate: [
+            {
+              path: "public_code",
+            },
+            {
+              path: "private_code",
             },
           ],
         })
