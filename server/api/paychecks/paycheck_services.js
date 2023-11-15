@@ -49,10 +49,8 @@ export default {
       if (team_id.length > 0) {
         filter.team = new mongoose.Types.ObjectId(team_id);
       }
-      console.log({ filter });
       const paychecks = await paycheck_db.table_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
-      console.log({ affiliatePaychecks: paychecks });
       return {
         data: paychecks,
         total_count: count,
