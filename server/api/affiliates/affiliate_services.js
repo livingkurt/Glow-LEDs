@@ -6,6 +6,14 @@ import config from "../../config";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
+import Stripe from "stripe";
+import { domain } from "../../background/worker_helpers";
+if (!config.STRIPE_KEY) {
+  throw new Error("STRIPE_KEY is not defined");
+}
+const stripe = new Stripe(config.STRIPE_KEY, {
+  apiVersion: "2023-08-16",
+});
 
 export default {
   findAll_affiliates_s: async query => {
@@ -75,7 +83,7 @@ export default {
     try {
       const newAffiliate = await affiliate_db.create_affiliates_db(body, public_code, private_code);
       if (newAffiliate) {
-        const accountLink = await createStripeAccountLink();
+        const accountLink = await createStripeAccountLink(stripe);
         return { newAffiliate, accountLink };
       }
     } catch (error) {

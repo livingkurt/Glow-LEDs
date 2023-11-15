@@ -1,9 +1,17 @@
 import { Team, team_db } from "../teams";
 import { determine_filter } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
+import config from "../../config";
 import { createStripeAccountLink } from "../affiliates/affiliate_interactors";
-import { createPublicPromoCode } from "../affiliates/affiliate_helpers";
-import { createPrivatePromoCode } from "../affiliates/affiliate_helpers";
+import { createPublicPromoCode, createPrivatePromoCode } from "../affiliates/affiliate_helpers";
+import Stripe from "stripe";
+import { domain } from "../../background/worker_helpers";
+if (!config.STRIPE_KEY) {
+  throw new Error("STRIPE_KEY is not defined");
+}
+const stripe = new Stripe(config.STRIPE_KEY, {
+  apiVersion: "2023-08-16",
+});
 
 export default {
   findAll_teams_s: async query => {
@@ -109,10 +117,11 @@ export default {
     try {
       const newTeam = await team_db.create_teams_db(body, public_code, private_code);
       if (newTeam) {
-        const accountLink = await createStripeAccountLink();
+        const accountLink = await createStripeAccountLink(stripe);
         return { newTeam, accountLink };
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
