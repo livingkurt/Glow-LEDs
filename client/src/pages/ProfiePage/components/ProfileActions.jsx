@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { openChangePasswordModal, open_edit_user_modal } from "../../../slices/userSlice";
 import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
