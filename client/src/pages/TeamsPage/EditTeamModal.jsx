@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { set_edit_team_modal, set_team, setCreateTeamStep } from "../../../slices/teamSlice";
-import * as API from "../../../api";
-import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
+import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+import { set_edit_team_modal, set_team, setCreateTeamStep } from "../../slices/teamSlice";
+import * as API from "../../api";
+import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { teamFormFields } from "./teamFormFields";
+import { teamFormFields } from "./components/teamFormFields";
 import { Box, Typography } from "@mui/material";
-import GLStepperModal from "../../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
-import { Loading } from "../../../shared/SharedComponents";
+import GLStepperModal from "../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
+import { Loading } from "../../shared/SharedComponents";
 
 const EditTeamModal = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,8 @@ const EditTeamModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users, current_user } = userPage;
 
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { products, loading: loading_products } = productsPage;
-
-  const chipPage = useSelector(state => state.chips);
-  const { chips, loading: loading_chips } = chipPage;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates, loading: loading_affiliates } = affiliatePage;
 
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
@@ -37,7 +34,7 @@ const EditTeamModal = () => {
     let clean = true;
     if (clean) {
       dispatch(API.listUsers({}));
-      dispatch(API.listProducts({ option: false, hidden: false }));
+      dispatch(API.listAffiliates());
       dispatch(API.listPromos({}));
       dispatch(API.listChips({}));
       // Check for stripe_success=true
@@ -50,9 +47,8 @@ const EditTeamModal = () => {
   }, [dispatch, stripeSuccess]);
 
   const formFields = teamFormFields({
-    products,
+    affiliates,
     users,
-    chips,
     promos,
   });
 
@@ -121,7 +117,7 @@ const EditTeamModal = () => {
             state={team}
             mode="edit"
             onChange={value => dispatch(set_team(value))}
-            loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+            loading={loading && loading_users && loading_affiliates && loading_promos}
           />
         </GLActionModal>
       ) : (
@@ -149,7 +145,7 @@ const EditTeamModal = () => {
               state={team}
               mode="create"
               onChange={value => dispatch(set_team(value))}
-              loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+              loading={loading && loading_users && loading_affiliates && loading_promos}
             />
           )}
           {createTeamStep === 1 && (

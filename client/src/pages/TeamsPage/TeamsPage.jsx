@@ -19,7 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
-import { EditTeamModal } from "./components";
+import EditTeamModal from "./EditTeamModal";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -125,7 +125,7 @@ const TeamsPage = () => {
           </Button>
         }
       />
-      {/* <EditTeamModal /> */}
+      <EditTeamModal />
       <EditPromoModal />
     </div>
   );

@@ -1,8 +1,8 @@
-import { months, toCapitalize } from "../../../utils/helper_functions";
+import { months } from "../../../utils/helper_functions";
 
-export const teamFormFields = ({ products, users, chips, promos }) => {
+export const teamFormFields = ({ users, promos, affiliates }) => {
   return {
-    user: {
+    captain: {
       type: "autocomplete_single",
       label: "User",
       options: users.filter(user => user.first_name && user.last_name),
@@ -10,9 +10,16 @@ export const teamFormFields = ({ products, users, chips, promos }) => {
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       permissions: ["admin"],
     },
-    artist_name: {
+    team_name: {
       type: "text",
-      label: "Glover Name",
+      label: "Team Name",
+    },
+    affiliates: {
+      type: "autocomplete_multiple",
+      label: "Color Product",
+      options: affiliates,
+      labelProp: "name",
+      permissions: ["admin"],
     },
     promo_code_name: {
       type: "text",
@@ -31,14 +38,6 @@ export const teamFormFields = ({ products, users, chips, promos }) => {
     location: {
       type: "text",
       label: "City, State",
-    },
-    style: {
-      type: "text multiline",
-      label: "Describe your gloving style",
-    },
-    inspiration: {
-      type: "text",
-      label: "What are your Gloving Inspirations",
     },
     start_year: {
       type: "text",
@@ -63,19 +62,6 @@ export const teamFormFields = ({ products, users, chips, promos }) => {
     facebook_link: {
       type: "text",
       label: "Facebook Share Link",
-    },
-
-    chips: {
-      type: "autocomplete_multiple",
-      label: "Microlights you currently have",
-      options: chips,
-      labelProp: "name",
-    },
-    products: {
-      type: "autocomplete_multiple",
-      label: "Glow LEDs Gear you currently have",
-      options: products,
-      labelProp: "name",
     },
     public_code: {
       type: "autocomplete_single",
@@ -128,11 +114,6 @@ export const teamFormFields = ({ products, users, chips, promos }) => {
       label: "Rave Mob",
       permissions: ["admin"],
     },
-    team: {
-      type: "checkbox",
-      label: "Team",
-      permissions: ["admin"],
-    },
     sponsor: {
       type: "checkbox",
       label: "Sponsor",
@@ -143,8 +124,8 @@ export const teamFormFields = ({ products, users, chips, promos }) => {
       label: "Active",
       permissions: ["admin"],
     },
-    sponsorMonthlyCheckins: {
-      title: "Sponsor Monthly Checkins",
+    teamMonthlyCheckins: {
+      title: "Team Monthly Checkins",
       labelProp: "sponsorMonthlyCheckins",
       label: item => `${item.year} ${item.month}`,
       type: "array",
