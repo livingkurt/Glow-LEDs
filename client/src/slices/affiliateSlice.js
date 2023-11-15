@@ -257,6 +257,9 @@ const affiliatePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.savePromo.fulfilled]: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
+    },
   },
 });
 
