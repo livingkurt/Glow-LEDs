@@ -1,6 +1,6 @@
 import { months } from "../../../utils/helper_functions";
 
-export const teamFormFields = ({ users, promos, affiliates }) => {
+export const teamFormFields = ({ team, promos, affiliates }) => {
   return {
     captain: {
       type: "autocomplete_single",
@@ -42,6 +42,28 @@ export const teamFormFields = ({ users, promos, affiliates }) => {
       type: "text",
       label: "The year you your team was founded",
     },
+    images_object: {
+      type: "image_upload",
+      label: "Images",
+      labelProp: "link",
+      album: `${team.team_name} Images`,
+      permissions: ["admin"],
+    },
+    map_image_object: {
+      type: "image_upload",
+      label: "Map Image",
+      labelProp: "link",
+      album: `${team.team_name} Map Image`,
+      permissions: ["admin"],
+    },
+    profile_image_object: {
+      type: "image_upload",
+      label: "Profile Image",
+      labelProp: "link",
+      album: `${team.team_name} Profile Image`,
+      permissions: ["admin"],
+    },
+
     bio: {
       type: "text_multiline",
       label: "Bio about you and your team and members, your goals, etc.",

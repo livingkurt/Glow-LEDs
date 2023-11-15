@@ -19,7 +19,7 @@ const EditTeamModal = () => {
   const { edit_team_modal, team, loading, createTeamStep, stripeAccountLink, loadingSaveTeam } = teamPage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users, current_user, user } = userPage;
+  const { loading: loading_users, current_user } = userPage;
 
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
@@ -48,7 +48,7 @@ const EditTeamModal = () => {
 
   const formFields = teamFormFields({
     affiliates,
-    users,
+    team,
     promos,
   });
 

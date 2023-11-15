@@ -115,15 +115,9 @@ export default {
     const { user, promo_code_name, team_name, captain } = body;
 
     const public_code = createPublicPromoCode(promo_code_name || team_name);
-    const private_code = createPrivatePromoCode(user);
+    const private_code = createPrivatePromoCode(user, 30);
     try {
       const newTeam = await team_db.create_teams_db(body, public_code, private_code);
-
-      // await user_db.update_users_db(user, { team: newTeam._id });
-      // await affiliate_db.update_affiliates_db(newTeam.captain, {
-      //   public_code: newTeam.public_code._id,
-      //   private_code: newTeam.private_code._id,
-      // });
       if (newTeam) {
         const accountLink = await createStripeAccountLink();
         return { newTeam, accountLink };
