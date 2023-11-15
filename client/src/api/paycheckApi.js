@@ -24,17 +24,32 @@ export const getPaychecks = async ({ search, sorting, filters, page, pageSize })
   }
 };
 
-export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, affiliateId) => {
+export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, { affiliateId, teamId }) => {
   try {
-    return await axios.get(`/api/paychecks/table/${affiliateId}/affiliate`, {
-      params: {
-        limit: pageSize,
-        page: page,
-        search: search,
-        sort: sorting,
-        filters: JSON.stringify(filters),
-      },
-    });
+    if (teamId) {
+      return await axios.get(`/api/paychecks/table/filter`, {
+        params: {
+          limit: pageSize,
+          page: page,
+          search: search,
+          sort: sorting,
+          filters: JSON.stringify(filters),
+          affiliate_id: affiliateId,
+          team_id: teamId,
+        },
+      });
+    }
+    // if (teamId) {
+    //   return await axios.get(`/api/paychecks/table/${teamId}/team`, {
+    //     params: {
+    //       limit: pageSize,
+    //       page: page,
+    //       search: search,
+    //       sort: sorting,
+    //       filters: JSON.stringify(filters),
+    //     },
+    //   });
+    // }
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }

@@ -2,6 +2,7 @@ import { Paycheck } from "../paychecks";
 
 export default {
   findAll_paychecks_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Paycheck.find(filter)
         .sort(sort)
@@ -10,6 +11,25 @@ export default {
         .populate("team")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_paychecks_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
+    try {
+      return await Paycheck.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .populate("team")
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+
         .exec();
     } catch (error) {
       if (error instanceof Error) {

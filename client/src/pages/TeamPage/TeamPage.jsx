@@ -10,7 +10,7 @@ import * as API from "../../api";
 const TeamPage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { team } = teamPage;
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;

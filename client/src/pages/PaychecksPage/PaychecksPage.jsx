@@ -32,7 +32,7 @@ const PaychecksPage = () => {
           paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       {
-        title: "Affiliate",
+        title: "Affiliate/Team",
         display: paycheck =>
           paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name,
       },

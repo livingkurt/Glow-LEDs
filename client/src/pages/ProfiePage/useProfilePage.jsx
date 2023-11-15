@@ -22,6 +22,12 @@ const useProfilePage = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { monthlyCheckinSuccess } = affiliatePage;
 
+  const teamPage = useSelector(state => state.teams.teamPage);
+  const { team } = teamPage;
+
+  const { start_date: month_start_date, end_date: month_end_date } = this_month_date_range();
+  const { start_date: year_start_date, end_date: year_end_date } = this_year_date_range();
+
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
@@ -48,8 +54,7 @@ const useProfilePage = () => {
 
   useEffect(() => {
     let cleanup = true;
-    const { start_date: month_start_date, end_date: month_end_date } = this_month_date_range();
-    const { start_date: year_start_date, end_date: year_end_date } = this_year_date_range();
+
     if (cleanup) {
       if (user.is_affiliated && user?.affiliate) {
         dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
@@ -77,32 +82,57 @@ const useProfilePage = () => {
           })
         );
       }
-      if (user.is_affiliated) {
-        // dispatch(API.listPaychecks({ team: user?.team._id || current_user.team }));
-        // dispatch(
-        //   API.affiliateEarnings({
-        //     promo_code: user?.team?.public_code?.promo_code,
-        //     start_date: month_start_date,
-        //     end_date: month_end_date,
-        //     sponsor: user?.affiliate?.sponsor,
-        //     type: "month",
-        //   })
-        // );
-        // dispatch(
-        //   API.affiliateEarnings({
-        //     promo_code: user?.team?.public_code?.promo_code,
-        //     start_date: year_start_date,
-        //     end_date: year_end_date,
-        //     sponsor: user?.affiliate?.sponsor,
-        //     type: "year",
-        //   })
-        // );
-      }
     }
     return () => {
       cleanup = false;
     };
-  }, [dispatch, user?.affiliate, user?.affiliate?.public_code, user?.affiliate?.sponsor, user.is_affiliated]);
+  }, [
+    current_user.affiliate,
+    dispatch,
+    month_end_date,
+    month_start_date,
+    user?.affiliate,
+    user.is_affiliated,
+    year_end_date,
+    year_start_date,
+  ]);
+
+  useEffect(() => {
+    let cleanup = true;
+    if (cleanup) {
+      dispatch(API.listPaychecks({ team: team._id }));
+
+      dispatch(
+        API.affiliateEarnings({
+          promo_code: team?.public_code?.promo_code,
+          start_date: month_start_date,
+          end_date: month_end_date,
+          sponsor: true,
+          type: "month",
+        })
+      );
+      dispatch(
+        API.affiliateEarnings({
+          promo_code: team?.public_code?.promo_code,
+          start_date: year_start_date,
+          end_date: year_end_date,
+          sponsor: true,
+          type: "year",
+        })
+      );
+    }
+    return () => {
+      cleanup = false;
+    };
+  }, [
+    dispatch,
+    month_end_date,
+    month_start_date,
+    team._id,
+    team?.public_code?.promo_code,
+    year_end_date,
+    year_start_date,
+  ]);
 
   const paycheckColumnDefs = useMemo(
     () => [
@@ -183,8 +213,8 @@ const useProfilePage = () => {
   );
 
   const paychecksRemoteApi = useCallback(
-    options => API.getMyPaychecks(options, user?.affiliate?._id),
-    [user?.affiliate?._id]
+    options => API.getMyPaychecks(options, { affiliateId: user?.affiliate?._id, teamId: team._id }),
+    [team._id, user?.affiliate?._id]
   );
   const ordersRemoteApi = useCallback(options => API.getMyOrders(options, user._id), [user._id]);
   return {
