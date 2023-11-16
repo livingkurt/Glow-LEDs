@@ -17,6 +17,7 @@ export const getAccessToken = user => {
       is_affiliated: user.is_affiliated,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
+      team: user.team,
     },
     config.ACCESS_TOKEN_SECRET || "",
     {
@@ -38,6 +39,7 @@ export const getRefreshToken = async user => {
         email_subscription: user.email_subscription,
         shipping: user.shipping,
         is_affiliated: user.is_affiliated,
+        team: user.team,
         wholesaler: user.wholesaler,
         isWholesaler: user.isWholesaler,
       },

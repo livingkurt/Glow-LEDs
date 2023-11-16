@@ -37,7 +37,7 @@ export default {
   },
   findById_promos_db: async id => {
     try {
-      return await Promo.findOne({ _id: id })
+      return await Promo.findOne({ _id: id, deleted: false })
         .populate("affiliate")
         .populate("user")
         .populate("excluded_categories")
@@ -67,7 +67,7 @@ export default {
   },
   findByCode_promos_db: async promo_code => {
     try {
-      return await Promo.findOne({ promo_code: promo_code })
+      return await Promo.findOne({ promo_code: promo_code, deleted: false })
         .populate("affiliate")
         .populate("user")
         .populate("excluded_categories")
@@ -91,7 +91,7 @@ export default {
   },
   update_promos_db: async (id, body) => {
     try {
-      const promo = await Promo.findOne({ _id: id });
+      const promo = await Promo.findOne({ _id: id, deleted: false });
       if (promo) {
         return await Promo.updateOne({ _id: id }, body);
       }
@@ -103,7 +103,7 @@ export default {
   },
   remove_promos_db: async id => {
     try {
-      const promo = await Promo.findOne({ _id: id });
+      const promo = await Promo.findOne({ _id: id, deleted: false });
       if (promo) {
         return await Promo.updateOne({ _id: id }, { deleted: true });
       }

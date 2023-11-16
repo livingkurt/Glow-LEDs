@@ -49,10 +49,10 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  monthly_checkin_affiliates_c: async (req, res) => {
+  sponsor_monthly_checkin_affiliates_c: async (req, res) => {
     const { body, params } = req;
     try {
-      const affiliate = await affiliate_services.monthly_checkin_affiliates_s(params, body);
+      const affiliate = await affiliate_services.sponsor_monthly_checkin_affiliates_s(params, body);
       if (affiliate) {
         return res.status(201).send(affiliate);
       }

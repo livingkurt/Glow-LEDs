@@ -17,7 +17,7 @@ export default {
   },
   findById_expenses_db: async id => {
     try {
-      return await Expense.findOne({ _id: id }).populate("documents");
+      return await Expense.findOne({ _id: id, deleted: false }).populate("documents");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -35,7 +35,7 @@ export default {
   },
   update_expenses_db: async (id, body) => {
     try {
-      const expense = await Expense.findOne({ _id: id });
+      const expense = await Expense.findOne({ _id: id, deleted: false });
       if (expense) {
         return await Expense.updateOne({ _id: id }, body);
       }
@@ -47,7 +47,7 @@ export default {
   },
   remove_expenses_db: async id => {
     try {
-      const expense = await Expense.findOne({ _id: id });
+      const expense = await Expense.findOne({ _id: id, deleted: false });
       if (expense) {
         return await Expense.updateOne({ _id: id }, { deleted: true });
       }

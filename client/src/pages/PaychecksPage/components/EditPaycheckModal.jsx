@@ -4,6 +4,7 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import { set_edit_paycheck_modal, set_paycheck } from "../../../slices/paycheckSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
+import { paycheckFormFields } from "../paycheckformFields";
 
 const EditPaycheckModal = () => {
   const dispatch = useDispatch();
@@ -11,13 +12,13 @@ const EditPaycheckModal = () => {
   const { edit_paycheck_modal, paycheck, loading } = paycheckPage;
   const { affiliate, user, team, promo_code } = paycheck;
 
-  const affiliatePage = useSelector(state => state.affiliates);
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
 
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
 
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { teams, loading: loading_teams } = teamPage;
 
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -36,84 +37,14 @@ const EditPaycheckModal = () => {
     };
   }, [dispatch, paycheck._id]);
 
-  const formFields = {
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "artist_name",
-    },
-    user: {
-      type: "autocomplete_single",
-      label: "Users",
-      options: users,
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
-    team: {
-      type: "autocomplete_single",
-      label: "User",
-      options: teams,
-      labelProp: "artist_name",
-    },
-    promo_code: {
-      type: "autocomplete_single",
-      label: "User",
-      options: promos,
-      labelProp: "artist_name",
-    },
-    amount: {
-      type: "number",
-      label: "Amount",
-    },
-    revenue: {
-      type: "number",
-      label: "Revenue",
-    },
-    earned: {
-      type: "number",
-      label: "Earned",
-    },
-    uses: {
-      type: "number",
-      label: "Uses",
-    },
-    venmo: {
-      type: "number",
-      label: "Venmo",
-    },
-    stripe_connect_id: {
-      type: "number",
-      label: "Stripe Connect ID",
-    },
-    paid: {
-      type: "number",
-      label: "Paid",
-    },
-    paid_at: {
-      type: "number",
-      label: "Paid At",
-    },
-    reciept: {
-      type: "number",
-      label: "Reciept",
-    },
-  };
+  const formFields = paycheckFormFields({ users, promos, teams, affiliates });
 
   return (
     <div>
       <GLActionModal
         isOpen={edit_paycheck_modal}
         onConfirm={() => {
-          dispatch(
-            API.savePaycheck({
-              ...paycheck,
-              affiliate: affiliate._id,
-              user: user._id,
-              team: team._id,
-              promo_code: promo_code._id,
-            })
-          );
+          dispatch(API.savePaycheck(paycheck));
           dispatch(API.listAffiliates({ active: true }));
         }}
         onCancel={() => {

@@ -9,7 +9,7 @@ import * as API from "../../api";
 
 const AllTeamsPage = () => {
   const params = useParams();
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { teams, loading, error } = teamPage;
   const dispatch = useDispatch();
   const category = params.category ? params.category : "";

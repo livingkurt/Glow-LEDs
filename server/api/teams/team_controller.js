@@ -13,6 +13,42 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_teams_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const teams = await team_services.table_teams_s(query);
+      if (teams) {
+        return res.status(200).send(teams);
+      }
+      return res.status(404).send({ message: "Promos Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  team_monthly_checkin_teams_c: async (req, res) => {
+    const { body, params } = req;
+    try {
+      const team = await team_services.team_monthly_checkin_teams_s(params, body);
+      if (team) {
+        return res.status(201).send(team);
+      }
+      return res.status(500).send({ message: "Error Creating Affiliate" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  findById_teams_c: async (req, res) => {
+    const { params } = req;
+    try {
+      const team = await team_services.findById_teams_s(params);
+      if (team) {
+        return res.status(200).send(team);
+      }
+      return res.status(404).send({ message: "Team Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findByPathname_teams_c: async (req, res) => {
     const { params } = req;
     try {

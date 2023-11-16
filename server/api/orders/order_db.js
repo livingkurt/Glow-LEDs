@@ -5,6 +5,7 @@ import { dedupeAddresses } from "./order_helpers";
 
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -75,7 +76,7 @@ export default {
 
   findById_orders_db: async id => {
     try {
-      return await Order.findOne({ _id: id })
+      return await Order.findOne({ _id: id, deleted: false })
         .populate("user")
         .populate("orderItems.color_product")
         .populate("orderItems.secondary_color_product")
@@ -128,7 +129,7 @@ export default {
   },
   update_orders_db: async (id, body) => {
     try {
-      const order = await Order.findOne({ _id: id });
+      const order = await Order.findOne({ _id: id, deleted: false });
       if (order) {
         return await Order.updateOne({ _id: id }, body);
       }
@@ -140,7 +141,7 @@ export default {
   },
   remove_orders_db: async id => {
     try {
-      const order = await Order.findOne({ _id: id });
+      const order = await Order.findOne({ _id: id, deleted: false });
       if (order) {
         return await Order.updateOne({ _id: id }, { deleted: true });
       }
@@ -180,7 +181,7 @@ export default {
       const products_with_names = await Promise.all(
         products.map(async product => {
           // Get the product
-          const p = await Product.findOne({ _id: product._id });
+          const p = await Product.findOne({ _id: product._id, deleted: false });
           // Return the product with the name
           return {
             name: p ? p.name : "No Name",

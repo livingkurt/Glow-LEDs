@@ -302,7 +302,7 @@ export default {
     const { promo_code } = req.params;
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
-    const promo = await promo_db.findBy_promos_db({ promo_code });
+    const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
     console.log({ promo });
 
     let mailRecipients = [];
@@ -311,11 +311,11 @@ export default {
 
     if (promo) {
       if (promo_code === "inkybois") {
-        const team = await team_db.findBy_teams_db({ promo_code });
+        const team = await team_db.findBy_teams_db({ promo_code, deleted: false });
         if (team) {
           const users = await Promise.all(
             team.affiliates.map(async affiliate_id => {
-              const affiliate = await Affiliate.findOne({ _id: affiliate_id._id.toString() });
+              const affiliate = await Affiliate.findOne({ _id: affiliate_id._id.toString(), deleted: false });
               const users = await User.find({ deleted: false, is_affiliated: true });
               return users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
               // return await user_db.findByAffiliateId_users_db(affiliate._id);
@@ -597,7 +597,7 @@ export default {
       const event = req.body;
       if (event["object"] === "Event" && event["description"] === "tracker.updated") {
         const tracker = event.result;
-        const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
+        const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
 
         const updateOrder = (isStatus, statusAt) => {
           order[isStatus] = true;

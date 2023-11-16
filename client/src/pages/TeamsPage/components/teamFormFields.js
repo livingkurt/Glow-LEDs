@@ -1,18 +1,24 @@
-import { months, toCapitalize } from "../../../utils/helper_functions";
+import { months } from "../../../utils/helper_functions";
 
-export const affiliateFormFields = ({ products, users, chips, promos }) => {
+export const teamFormFields = ({ team, promos, affiliates }) => {
   return {
-    user: {
+    captain: {
       type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
+      label: "Team Captain",
+      options: affiliates,
+      labelProp: "artist_name",
       permissions: ["admin"],
     },
-    artist_name: {
+    team_name: {
       type: "text",
-      label: "Glover Name",
+      label: "Team Name",
+    },
+    affiliates: {
+      type: "autocomplete_multiple",
+      label: "Team Members",
+      options: affiliates,
+      labelProp: "artist_name",
+      permissions: ["admin"],
     },
     promo_code_name: {
       type: "text",
@@ -32,21 +38,35 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       type: "text",
       label: "City, State",
     },
-    style: {
-      type: "text multiline",
-      label: "Describe your gloving style",
-    },
-    inspiration: {
-      type: "text",
-      label: "What are your Gloving Inspirations",
-    },
     start_year: {
       type: "text",
-      label: "The year you started gloving",
+      label: "The year you your team was founded",
     },
+    images_object: {
+      type: "image_upload",
+      label: "Images",
+      labelProp: "link",
+      album: `${team.team_name} Images`,
+      permissions: ["admin"],
+    },
+    map_image_object: {
+      type: "image_upload",
+      label: "Map Image",
+      labelProp: "link",
+      album: `${team.team_name} Map Image`,
+      permissions: ["admin"],
+    },
+    profile_image_object: {
+      type: "image_upload",
+      label: "Profile Image",
+      labelProp: "link",
+      album: `${team.team_name} Profile Image`,
+      permissions: ["admin"],
+    },
+
     bio: {
       type: "text_multiline",
-      label: "Bio about you and your gloving career so far, your goals, etc.",
+      label: "Bio about you and your team and members, your goals, etc.",
     },
     instagram_link: {
       type: "text",
@@ -63,19 +83,6 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
     facebook_link: {
       type: "text",
       label: "Facebook Share Link",
-    },
-
-    chips: {
-      type: "autocomplete_multiple",
-      label: "Microlights you currently have",
-      options: chips,
-      labelProp: "name",
-    },
-    products: {
-      type: "autocomplete_multiple",
-      label: "Glow LEDs Gear you currently have",
-      options: products,
-      labelProp: "name",
     },
     public_code: {
       type: "autocomplete_single",
@@ -128,16 +135,6 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       label: "Rave Mob",
       permissions: ["admin"],
     },
-    team: {
-      type: "checkbox",
-      label: "Team",
-      permissions: ["admin"],
-    },
-    teamCaptain: {
-      type: "checkbox",
-      label: "Team Captain",
-      permissions: ["admin"],
-    },
     sponsor: {
       type: "checkbox",
       label: "Sponsor",
@@ -148,8 +145,8 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       label: "Active",
       permissions: ["admin"],
     },
-    sponsorMonthlyCheckins: {
-      title: "Sponsor Monthly Checkins",
+    teamMonthlyCheckins: {
+      title: "Team Monthly Checkins",
       labelProp: "sponsorMonthlyCheckins",
       label: item => `${item.year} ${item.month}`,
       type: "array",

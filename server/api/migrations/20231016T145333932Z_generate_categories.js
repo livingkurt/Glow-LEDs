@@ -25,7 +25,7 @@ module.exports = {
 
       if (product.category) {
         const categoryName = toTitleCase(product.category);
-        existingCategory = await Category.findOne({ name: categoryName, type: "category" });
+        existingCategory = await Category.findOne({ name: categoryName, type: "category", deleted: false });
 
         if (!existingCategory) {
           existingCategory = new Category({
@@ -42,7 +42,7 @@ module.exports = {
 
       if (product.subcategory) {
         const subCategoryName = toTitleCase(product.subcategory);
-        existingSubCategory = await Category.findOne({ name: subCategoryName, type: "subcategory" });
+        existingSubCategory = await Category.findOne({ name: subCategoryName, type: "subcategory", deleted: false });
 
         if (!existingSubCategory) {
           existingSubCategory = new Category({
@@ -66,7 +66,7 @@ module.exports = {
 
       if (product.product_collection) {
         const collectionName = toTitleCase(product.product_collection);
-        existingCollection = await Category.findOne({ name: collectionName, type: "collection" });
+        existingCollection = await Category.findOne({ name: collectionName, type: "collection", deleted: false });
 
         if (!existingCollection) {
           existingCollection = new Category({

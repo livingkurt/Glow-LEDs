@@ -19,7 +19,7 @@ export default {
   },
   findById_surveys_db: async id => {
     try {
-      return await Survey.findOne({ _id: id }).populate("user").populate("order").populate("survey");
+      return await Survey.findOne({ _id: id, deleted: false }).populate("user").populate("order").populate("survey");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -37,7 +37,7 @@ export default {
   },
   update_surveys_db: async (id, body) => {
     try {
-      const survey = await Survey.findOne({ _id: id });
+      const survey = await Survey.findOne({ _id: id, deleted: false });
       if (survey) {
         return await Survey.updateOne({ _id: id }, body);
       }
@@ -49,7 +49,7 @@ export default {
   },
   remove_surveys_db: async id => {
     try {
-      const survey = await Survey.findOne({ _id: id });
+      const survey = await Survey.findOne({ _id: id, deleted: false });
       if (survey) {
         return await Survey.updateOne({ _id: id }, { deleted: true });
       }

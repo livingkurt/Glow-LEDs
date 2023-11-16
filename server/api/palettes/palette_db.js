@@ -17,7 +17,7 @@ export default {
   },
   findById_palettes_db: async id => {
     try {
-      return await Palette.findOne({ _id: id });
+      return await Palette.findOne({ _id: id, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -44,7 +44,7 @@ export default {
   },
   update_palettes_db: async (id, body) => {
     try {
-      const palette = await Palette.findOne({ _id: id });
+      const palette = await Palette.findOne({ _id: id, deleted: false });
       if (palette) {
         return await Palette.updateOne({ _id: id }, body);
       }
@@ -56,7 +56,7 @@ export default {
   },
   remove_palettes_db: async id => {
     try {
-      const palette = await Palette.findOne({ _id: id });
+      const palette = await Palette.findOne({ _id: id, deleted: false });
       if (palette) {
         return await Palette.updateOne({ _id: id }, { deleted: true });
       }

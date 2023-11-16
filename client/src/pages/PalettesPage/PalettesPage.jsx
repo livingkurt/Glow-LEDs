@@ -28,7 +28,7 @@ const PalettesPage = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates } = affiliatePage;
 
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { teams } = teamPage;
 
   setTimeout(() => {

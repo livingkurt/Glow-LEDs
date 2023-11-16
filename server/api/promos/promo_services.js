@@ -354,7 +354,7 @@ export default {
       const itemsPrice = determineCartTotal(cartItems, current_user.isWholesaler);
 
       // Check if promo_code exists in the database
-      const promo = await Promo.findOne({ promo_code: promo_code.toLowerCase() });
+      const promo = await Promo.findOne({ promo_code: promo_code.toLowerCase(), deleted: false });
       if (!promo) {
         return { isValid: false, errors: { promo_code: "Invalid promo code." } };
       }

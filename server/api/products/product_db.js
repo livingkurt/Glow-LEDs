@@ -480,7 +480,7 @@ export default {
   },
   remove_products_db: async id => {
     try {
-      const product = await Product.findOne({ _id: id });
+      const product = await Product.findOne({ _id: id, deleted: false });
 
       if (product) {
         // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err, records) => {

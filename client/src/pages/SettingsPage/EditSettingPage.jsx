@@ -19,7 +19,7 @@ const EditSettingPage = () => {
   const settingPage = useSelector(state => state.settings);
   const { settings: settings_list, setting, loading, error } = settingPage;
 
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { teams } = teamPage;
 
   const set_state = () => {

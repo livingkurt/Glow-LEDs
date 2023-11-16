@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { openChangePasswordModal, open_edit_user_modal } from "../../../slices/userSlice";
 import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
@@ -9,6 +9,9 @@ import { Box, Button, Typography } from "@mui/material";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
+import { open_edit_team_modal } from "../../../slices/teamSlice";
+import EditTeamModal from "../../TeamsPage/EditTeamModal";
+import { checkinButtonLabel, monthCheckinStatus } from "../profileHelpers";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -16,19 +19,21 @@ export const ProfileActions = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliate, stripeAccountLink, stripeAccountLinkModal } = affiliatePage;
+  const { affiliate } = affiliatePage;
+  const teamPage = useSelector(state => state.teams.teamPage);
+  const { team } = teamPage;
 
   const date = new Date();
   date.setMonth(date.getMonth() - 1);
   const previousMonth = date.toLocaleString("default", { month: "long" });
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const currentYear = new Date().getFullYear();
-  const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === currentMonth && checkin.year === currentYear
-  );
-  const previousCheckin = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === previousMonth && checkin.year === currentYear
-  );
+  const { checkinCompleted, previousCheckin } = monthCheckinStatus({
+    user,
+    currentMonth,
+    currentYear,
+    previousMonth,
+  });
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -62,7 +67,18 @@ export const ProfileActions = () => {
           Edit Affiliate Profile
         </Button>
       )}
-      {user.is_affiliated && user?.affiliate?.sponsor && (
+      {user.is_affiliated && user?.affiliate?.teamCaptain && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(open_edit_team_modal(team));
+          }}
+        >
+          Edit Team Profile
+        </Button>
+      )}
+      {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
         <>
           {!previousCheckin && (
             <Typography variant="body1" gutterBottom>
@@ -77,7 +93,11 @@ export const ProfileActions = () => {
                 dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
               }}
             >
-              {previousCheckin ? "Edit" : "Start"} Sponsor Monthly Checkin for {previousMonth}
+              {checkinButtonLabel({
+                checkin: previousCheckin,
+                teamCaptain: user?.affiliate?.teamCaptain,
+                month: previousMonth,
+              })}
             </Button>
           )}
           {!checkinCompleted && (
@@ -92,7 +112,11 @@ export const ProfileActions = () => {
               dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
             }}
           >
-            {checkinCompleted ? "Edit" : "Start"} Sponsor Monthly Checkin for {currentMonth}
+            {checkinButtonLabel({
+              checkin: checkinCompleted,
+              teamCaptain: user?.affiliate?.teamCaptain,
+              month: currentMonth,
+            })}
           </Button>
         </>
       )}
@@ -133,6 +157,7 @@ export const ProfileActions = () => {
       )}
 
       <EditAffiliateModal />
+      <EditTeamModal />
       <EditWholesalerModal />
       <ChangePasswordModal />
     </Box>

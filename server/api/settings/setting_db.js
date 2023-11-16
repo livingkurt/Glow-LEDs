@@ -19,7 +19,7 @@ export default {
   },
   findById_settings_db: async id => {
     try {
-      return await Setting.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
+      return await Setting.findOne({ _id: id, deleted: false }).populate("user").populate("affiliate").populate("team");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -37,7 +37,7 @@ export default {
   },
   update_settings_db: async (id, body) => {
     try {
-      const setting = await Setting.findOne({ _id: id });
+      const setting = await Setting.findOne({ _id: id, deleted: false });
       if (setting) {
         return await Setting.updateOne({ _id: id }, body);
       }
@@ -49,7 +49,7 @@ export default {
   },
   remove_settings_db: async id => {
     try {
-      const setting = await Setting.findOne({ _id: id });
+      const setting = await Setting.findOne({ _id: id, deleted: false });
       if (setting) {
         return await Setting.updateOne({ _id: id }, { deleted: true });
       }

@@ -16,7 +16,7 @@ export default {
   },
   findById_parcels_db: async id => {
     try {
-      return await Parcel.findOne({ _id: id }).populate("user").populate("affiliate");
+      return await Parcel.findOne({ _id: id, deleted: false }).populate("user").populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -34,7 +34,7 @@ export default {
   },
   update_parcels_db: async (id, body) => {
     try {
-      const parcel = await Parcel.findOne({ _id: id });
+      const parcel = await Parcel.findOne({ _id: id, deleted: false });
       if (parcel) {
         return await Parcel.updateOne({ _id: id }, body);
       }
@@ -46,7 +46,7 @@ export default {
   },
   remove_parcels_db: async id => {
     try {
-      const parcel = await Parcel.findOne({ _id: id });
+      const parcel = await Parcel.findOne({ _id: id, deleted: false });
       if (parcel) {
         return await Parcel.updateOne({ _id: id }, { deleted: true });
       }

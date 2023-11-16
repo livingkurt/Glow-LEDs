@@ -20,14 +20,14 @@ import { ContentsPage } from "../../pages/ContentsPage";
 import { ProductsDisplayPage } from "../../pages/ProductsGridPage/components";
 import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
-import { EditPromoPage, PromosPage } from "../../pages/PromosPage";
+import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
-import { EditTeamPage, TeamsPage } from "../../pages/TeamsPage";
 import { ChipsPage, EditChipPage } from "../../pages/ChipsPage";
 import { ProfilePage } from "../../pages/ProfiePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
+import TeamsPage from "../../pages/TeamsPage/TeamsPage";
 import { ImagesPage } from "../../pages/ImagesPage";
 import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfiePage/components";
 import ShippingPage from "../../pages/ProfiePage/components/UserShippingPage";
@@ -116,8 +116,6 @@ export const AdminComponents = {
   ContentsPage,
   ProductsDisplayPage,
   AnnouncementEmail,
-  EditPromoPage,
-  EditTeamPage,
   EditChipPage,
   PromosPage,
   AffiliatesPage,

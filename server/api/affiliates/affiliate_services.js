@@ -2,19 +2,9 @@ import { determine_filter, make_private_code, snake_case } from "../../utils/uti
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
-import config from "../../config";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
-import Stripe from "stripe";
-import { domain } from "../../background/worker_helpers";
-import { createStripeAccountLink } from "./affiliate_interactors";
-if (!config.STRIPE_KEY) {
-  throw new Error("STRIPE_KEY is not defined");
-}
-const stripe = new Stripe(config.STRIPE_KEY, {
-  apiVersion: "2023-08-16",
-});
 
 export default {
   findAll_affiliates_s: async query => {
@@ -78,8 +68,9 @@ export default {
     }
   },
   create_affiliates_s: async body => {
-    const { user, promo_code_name } = body;
-    const public_code = createPublicPromoCode(promo_code_name);
+    const { user, promo_code_name, artist_name } = body;
+
+    const public_code = createPublicPromoCode(promo_code_name || artist_name);
     const private_code = createPrivatePromoCode(user);
     try {
       const newAffiliate = await affiliate_db.create_affiliates_db(body, public_code, private_code);
@@ -93,10 +84,9 @@ export default {
       }
     }
   },
-  monthly_checkin_affiliates_s: async (params, body) => {
+  sponsor_monthly_checkin_affiliates_s: async (params, body) => {
     const { id } = params;
     const { questionsConcerns, numberOfContent, month, year } = body;
-    console.log({ questionsConcerns, numberOfContent, month, year, id });
 
     // Get previous month and year
     const prevDate = new Date();
@@ -114,7 +104,7 @@ export default {
         // add any additional fields here
       };
 
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       if (affiliate) {
         const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
           checkin => checkin.month === month && checkin.year === year
@@ -312,7 +302,7 @@ export default {
   generate_sponsor_codes_affiliates_s: async params => {
     const { id } = params;
     try {
-      const affiliate = await Affiliate.findOne({ _id: id });
+      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
       await generateSponsorCodes(affiliate);
       return affiliate;
     } catch (error) {

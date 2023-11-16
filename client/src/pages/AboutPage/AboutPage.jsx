@@ -18,7 +18,7 @@ const AboutPage = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_sponsors, error } = affiliatePage;
 
-  const teamPage = useSelector(state => state.teams);
+  const teamPage = useSelector(state => state.teams.teamPage);
   const { teams, loading: loading_team, error: error_team } = teamPage;
 
   const userPage = useSelector(state => state.users.userPage);

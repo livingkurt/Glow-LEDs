@@ -27,7 +27,7 @@ export default {
   },
   findByPathname_wholesalers_db: async pathname => {
     try {
-      return await Wholesaler.findOne({ pathname: pathname }).populate("user");
+      return await Wholesaler.findOne({ pathname: pathname, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -36,7 +36,7 @@ export default {
   },
   findById_wholesalers_db: async id => {
     try {
-      return await Wholesaler.findOne({ _id: id }).populate("user");
+      return await Wholesaler.findOne({ _id: id, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -54,7 +54,7 @@ export default {
   },
   update_wholesalers_db: async (params, body) => {
     try {
-      const wholesaler = await Wholesaler.findOne({ _id: params.id });
+      const wholesaler = await Wholesaler.findOne({ _id: params.id, deleted: false });
       if (wholesaler) {
         return await Wholesaler.updateOne({ _id: params.id }, body);
       }
@@ -66,7 +66,7 @@ export default {
   },
   remove_wholesalers_db: async params => {
     try {
-      const wholesaler = await Wholesaler.findOne({ pathname: params.pathname });
+      const wholesaler = await Wholesaler.findOne({ pathname: params.pathname, deleted: false });
       if (wholesaler) {
         return await Wholesaler.updateOne({ pathname: params.pathname }, { deleted: true });
       }

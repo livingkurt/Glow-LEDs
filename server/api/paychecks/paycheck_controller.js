@@ -25,6 +25,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  get_team_table_paychecks_c: async (req, res) => {
+    const { query, params } = req;
+    try {
+      const paychecks = await paycheck_services.get_team_table_paychecks_s(query, params);
+      if (paychecks) {
+        return res.status(200).send(paychecks);
+      }
+      return res.status(404).send({ message: "Paychecks Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_paychecks_c: async (req, res) => {
     const { query } = req;
     try {

@@ -18,7 +18,7 @@ export default {
   },
   findById_categorys_db: async id => {
     try {
-      return await Category.findOne({ _id: id }).populate("subcategorys").populate("collections");
+      return await Category.findOne({ _id: id, deleted: false }).populate("subcategorys").populate("collections");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -36,7 +36,7 @@ export default {
   },
   update_categorys_db: async (id, body) => {
     try {
-      const category = await Category.findOne({ _id: id });
+      const category = await Category.findOne({ _id: id, deleted: false });
       if (category) {
         return await Category.updateOne({ _id: id }, body);
       }
@@ -48,7 +48,7 @@ export default {
   },
   remove_categorys_db: async id => {
     try {
-      const category = await Category.findOne({ _id: id });
+      const category = await Category.findOne({ _id: id, deleted: false });
       if (category) {
         return await Category.updateOne({ _id: id }, { deleted: true });
       }

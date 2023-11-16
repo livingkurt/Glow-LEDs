@@ -1,5 +1,13 @@
+import { domain } from "../../background/worker_helpers";
+import config from "../../config";
+import Stripe from "stripe";
+
+const stripe = new Stripe(config.STRIPE_KEY, {
+  apiVersion: "2023-08-16",
+});
+
 // Function to create a Stripe account link
-export const createStripeAccountLink = async accountId => {
+export const createStripeAccountLink = async () => {
   const account = await stripe.accounts.create({
     type: "express",
   });

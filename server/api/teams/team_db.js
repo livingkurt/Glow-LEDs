@@ -1,3 +1,4 @@
+import { Promo } from "../promos";
 import { Team } from "../teams";
 
 export default {
@@ -10,8 +11,21 @@ export default {
         .populate("captain")
         .sort(sort)
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findById_teams_db: async id => {
+    try {
+      return await Team.findOne({ _id: i, deleted: falsed })
+        .populate("affiliates")
+        .populate("public_code")
+        .populate("private_code")
+        .populate("captain");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -20,7 +34,7 @@ export default {
   },
   findByPathname_teams_db: async pathname => {
     try {
-      return await Team.findOne({ pathname })
+      return await Team.findOne({ pathname, deleted: false })
         .populate("affiliates")
         .populate("public_code")
         .populate("private_code")
@@ -46,7 +60,7 @@ export default {
   },
   findByAffiliate_teams_db: async affiliate_id => {
     try {
-      return await Team.find({ affiliates: { $in: [affiliate_id] } })
+      return await Team.findOne({ affiliates: { $in: [affiliate_id] }, deleted: false })
         .populate("affiliates")
         .populate("public_code")
         .populate("private_code")
@@ -57,9 +71,17 @@ export default {
       }
     }
   },
-  create_teams_db: async body => {
+  create_teams_db: async (body, public_code, private_code) => {
     try {
-      return await Team.create(body);
+      const pub_code = await Promo.create(public_code);
+      const priv_code = await Promo.create(private_code);
+      if (pub_code && priv_code) {
+        return await Team.create({
+          ...body,
+          public_code: pub_code._id,
+          private_code: priv_code._id,
+        });
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -68,7 +90,7 @@ export default {
   },
   update_teams_db: async (id, body) => {
     try {
-      const team = await Team.findOne({ _id: id });
+      const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {
         return await Team.updateOne({ _id: id }, body);
       }
@@ -80,9 +102,9 @@ export default {
   },
   remove_teams_db: async id => {
     try {
-      const team = await Team.findOne({ _id: id });
+      const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {
-        return await Team.updateOne({ _id: id }, { deleted: true });
+        return await Team.updateOne({ _id: team._id }, { deleted: true });
       }
     } catch (error) {
       if (error instanceof Error) {

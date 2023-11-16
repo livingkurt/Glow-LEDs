@@ -31,7 +31,7 @@ export default {
     }
   },
   findByLink_images_db: async link => {
-    const image = await Image.findOne({ link: link });
+    const image = await Image.findOne({ link: link, deleted: false });
     if (image) {
       return image;
     }
@@ -48,7 +48,7 @@ export default {
   },
   update_images_db: async (id, body) => {
     try {
-      const image = await Image.findOne({ _id: id });
+      const image = await Image.findOne({ _id: id, deleted: false });
       if (image) {
         return await Image.updateOne({ _id: id }, body);
       }
@@ -60,7 +60,7 @@ export default {
   },
   remove_images_db: async id => {
     try {
-      const image = await Image.findOne({ _id: id });
+      const image = await Image.findOne({ _id: id, deleted: false });
       if (image) {
         return await Image.updateOne({ _id: id }, { deleted: true });
       }

@@ -5,9 +5,10 @@ import * as API from "../api";
 import { format_date } from "../utils/helper_functions";
 
 const paycheck = {
-  id: "",
-  affiliate: "",
-  team: "",
+  id: null,
+  affiliate: null,
+  team: null,
+  promo_code: null,
   amount: 0,
   venmo: "",
   paid: "",
@@ -81,6 +82,7 @@ const paycheckPage = createSlice({
     [API.savePaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Paycheck Saved";
+      state.paycheck_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.savePaycheck.rejected]: (state, { payload, error }) => {

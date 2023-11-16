@@ -17,7 +17,7 @@ export default {
   },
   findById_filaments_db: async id => {
     try {
-      return await Filament.findOne({ _id: id }).populate("tags");
+      return await Filament.findOne({ _id: id, deleted: false }).populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -48,7 +48,7 @@ export default {
   },
   update_filaments_db: async (id, body) => {
     try {
-      const filament = await Filament.findOne({ _id: id });
+      const filament = await Filament.findOne({ _id: id, deleted: false });
       if (filament) {
         return await Filament.updateOne({ _id: id }, body);
       }
@@ -60,7 +60,7 @@ export default {
   },
   remove_filaments_db: async id => {
     try {
-      const filament = await Filament.findOne({ _id: id });
+      const filament = await Filament.findOne({ _id: id, deleted: false });
       if (filament) {
         return await Filament.updateOne({ _id: id }, { deleted: true });
       }

@@ -24,19 +24,19 @@ export const getPaychecks = async ({ search, sorting, filters, page, pageSize })
   }
 };
 
-export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, affiliateId) => {
+export const getMyPaychecks = async ({ search, sorting, filters, page, pageSize }, { affiliateId, teamId }) => {
   try {
-    const res = await axios.get(`/api/paychecks/table/${affiliateId}/affiliate`, {
+    return await axios.get(`/api/paychecks/table/filter`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
         sort: sorting,
         filters: JSON.stringify(filters),
+        affiliate_id: affiliateId,
+        team_id: teamId,
       },
     });
-    console.log({ res });
-    return res;
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }

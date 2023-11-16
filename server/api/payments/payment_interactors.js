@@ -1,9 +1,7 @@
 import config from "../../config";
 
 import Stripe from "stripe";
-if (!config.STRIPE_KEY) {
-  throw new Error("STRIPE_KEY is not defined");
-}
+
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
 });

@@ -84,7 +84,7 @@ export default {
   },
   slideshow_contents_s: async query => {
     try {
-      const slideshow = await Content.findOne({ active: true }).sort({ createdAt: -1 });
+      const slideshow = await Content.findOne({ active: true, deleted: false }).sort({ createdAt: -1 });
       return slideshow;
     } catch (error) {
       if (error instanceof Error) {

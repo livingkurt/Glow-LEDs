@@ -2,6 +2,7 @@ import { Paycheck } from "../paychecks";
 
 export default {
   findAll_paychecks_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Paycheck.find(filter)
         .sort(sort)
@@ -17,9 +18,31 @@ export default {
       }
     }
   },
+  table_paychecks_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
+    try {
+      return await Paycheck.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .populate("team")
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findById_paychecks_db: async id => {
     try {
-      return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
+      return await Paycheck.findOne({ _id: id, deleted: false })
+        .populate("user")
+        .populate("affiliate")
+        .populate("team");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -58,7 +81,7 @@ export default {
   },
   update_paychecks_db: async (id, body) => {
     try {
-      const paycheck = await Paycheck.findOne({ _id: id });
+      const paycheck = await Paycheck.findOne({ _id: id, deleted: false });
       if (paycheck) {
         return await Paycheck.updateOne({ _id: id }, body);
       }
@@ -70,7 +93,7 @@ export default {
   },
   remove_paychecks_db: async id => {
     try {
-      const paycheck = await Paycheck.findOne({ _id: id });
+      const paycheck = await Paycheck.findOne({ _id: id, deleted: false });
       if (paycheck) {
         return await Paycheck.updateOne({ _id: id }, { deleted: true });
       }

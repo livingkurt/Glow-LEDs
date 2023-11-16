@@ -7,6 +7,7 @@ import { getFilteredData } from "../api_helpers";
 import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
 import { user_db } from "../users";
 import { mongodbFindAll } from "../api_interactors";
+import mongoose from "mongoose";
 
 export default {
   get_table_paychecks_s: async query => {
@@ -34,35 +35,28 @@ export default {
   },
   get_affiliate_table_paychecks_s: async (query, params) => {
     try {
-      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const sort_options = ["createdAt", "affiliate.first_name", "totalPrice"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
-        search_name: "affiliate",
-        normalizeFilters: normalizePaycheckFilters,
-        // normalizeSearch: normalizePaycheckSearch
+        search_name: "shipping.first_name",
       });
-      console.log({ filter, sort, limit, page, params });
-      const paychecks = await mongodbFindAll(
-        "paychecks",
-        {
-          filter: { ...filter },
-          sort,
-          limit: 0,
-          page,
-        },
-        { user: "users", affiliate: "affiliates", team: "teams" }
-      );
-      console.log({
-        paychecks: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
-      });
+      const affiliate_id = query.affiliate_id ? query.affiliate_id : "";
+      const team_id = query.team_id ? query.team_id : "";
+      if (affiliate_id.length > 0 && team_id.length === 0) {
+        filter.affiliate = new mongoose.Types.ObjectId(affiliate_id);
+      }
+      if (team_id.length > 0) {
+        filter.team = new mongoose.Types.ObjectId(team_id);
+      }
+      const paychecks = await paycheck_db.table_paychecks_db(filter, sort, limit, page);
+      const count = await paycheck_db.count_paychecks_db(filter);
       return {
-        data: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id),
-        total_count: paychecks.filter(paycheck => paycheck?.affiliate?._id.toString() === params.affiliate_id).length,
-        currentPage: 0,
+        data: paychecks,
+        total_count: count,
+        currentPage: parseInt(page),
       };
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

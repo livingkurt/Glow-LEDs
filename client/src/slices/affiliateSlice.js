@@ -202,17 +202,33 @@ const affiliatePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.monthlyCheckin.pending]: (state, { payload }) => {
+    [API.sponsorMonthlyCheckin.pending]: (state, { payload }) => {
       state.loading = true;
       state.monthlyCheckinSuccess = false;
     },
-    [API.monthlyCheckin.fulfilled]: (state, { payload }) => {
+    [API.sponsorMonthlyCheckin.fulfilled]: (state, { payload }) => {
       state.monthlyCheckinModal = false;
       state.numberOfContent = 0;
       state.questionsConcerns = "";
       state.monthlyCheckinSuccess = true;
     },
-    [API.monthlyCheckin.rejected]: (state, { payload, error }) => {
+    [API.sponsorMonthlyCheckin.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.monthlyCheckinSuccess = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.teamMonthlyCheckin.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.monthlyCheckinSuccess = false;
+    },
+    [API.teamMonthlyCheckin.fulfilled]: (state, { payload }) => {
+      state.monthlyCheckinModal = false;
+      state.numberOfContent = 0;
+      state.questionsConcerns = "";
+      state.monthlyCheckinSuccess = true;
+    },
+    [API.teamMonthlyCheckin.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.monthlyCheckinSuccess = false;
       state.error = payload ? payload.error : error.message;
@@ -240,6 +256,9 @@ const affiliatePage = createSlice({
       state.loading_year_earnings = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.savePromo.fulfilled]: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
     },
   },
 });

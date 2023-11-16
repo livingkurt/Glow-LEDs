@@ -116,7 +116,10 @@ const reducers = {
     surveyPage: surveySlice,
     surveyTable: glTableReducer("surveyTable", {}),
   }),
-  teams: teamSlice,
+  teams: combineReducers({
+    teamPage: teamSlice,
+    teamTable: glTableReducer("teamTable", {}),
+  }),
   users: combineReducers({
     userPage: userSlice,
     userTable: glTableReducer("userTable", {

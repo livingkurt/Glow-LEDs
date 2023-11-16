@@ -1,3 +1,5 @@
+import { make_private_code } from "../../util";
+
 export const monthToNum = monthName => {
   const monthNames = [
     "January",
@@ -36,7 +38,7 @@ export const createPublicPromoCode = promoCodeName => {
 };
 
 // Function to create a private promo code
-export const createPrivatePromoCode = user => {
+export const createPrivatePromoCode = (user, percentageOff = 10) => {
   return {
     promo_code: make_private_code(6),
     user: user,
@@ -46,7 +48,7 @@ export const createPrivatePromoCode = user => {
     used_once: false,
     excluded_categories: [],
     excluded_products: [],
-    percentage_off: 10,
+    percentage_off: percentageOff,
     free_shipping: false,
     time_limit: false,
     start_date: "2021-01-01",
