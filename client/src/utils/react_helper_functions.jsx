@@ -305,8 +305,9 @@ const first_dash = item => {
 
 const second_dash = item => {
   if (
-    item.name === "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)" ||
-    item.name === "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)"
+    item.name === "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
+    item.name === "Supreme V1 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
+    item.name === "Ultra Refresh Pack (6 Pairs Ultra Gloves + 120 Batteries)"
   ) {
     return "-";
   }
@@ -396,7 +397,7 @@ export const determine_option_product_name = (name, category, subcategory) => {
   //
   try {
     if (name) {
-      if (name.split("-")[0].trim() === "Supreme Gloves") {
+      if (name.split("-")[0].trim() === "Supreme Gloves" || name.split("-")[0].trim() === "Ultra Gloves") {
         return name.split("-")[1].trim();
       } else if (name.split("-")[0].trim() === "Diffuser") {
         return name.split("-")[1].trim();

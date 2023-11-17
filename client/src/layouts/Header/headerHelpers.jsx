@@ -304,7 +304,7 @@ const essentials = {
   _id: 439,
   rows: [
     {
-      name: "Supreme Gloves",
+      name: "Gloves",
       path: "/collections/all/products/category/gloves/subcategory/singles",
       _id: 440,
     },

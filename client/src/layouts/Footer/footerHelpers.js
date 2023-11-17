@@ -25,8 +25,8 @@ export const footerLinks = [
     title: "Essentials",
     minWidth: 950,
     links: [
-      { text: "Supreme Gloves", url: "/collections/all/products/supremes" },
-      { text: "Refresh Packs", url: "/collections/all/products/refresh_pack" },
+      { text: "Gloves", url: "/collections/all/products/gloves/subcategory/singles" },
+      { text: "Refresh Packs", url: "/collections/all/products/category/gloves/subcategory/refresh" },
       { text: "Sizing Sampler", url: "/collections/all/products/supremes_sizing_sampler_pack" },
       { text: "Coin Batteries", url: "/collections/all/products/category/batteries/subcategory/coin" },
       { text: "Battery Storage", url: "/collections/all/products/category/batteries/subcategory/storage" },

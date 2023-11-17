@@ -151,6 +151,10 @@ export const productFormFields = ({ products, users, categorys, product, onEdit,
       label: "Pathname",
       labelProp: "pathname",
     },
+    size: {
+      type: "text",
+      label: "Size",
+    },
     meta_title: {
       type: "text",
       label: "Meta Title",

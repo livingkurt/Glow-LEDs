@@ -450,7 +450,7 @@ const Sidebar = () => {
               <ul className="sidebar_dropdown_secondary_container" id="glowskinz_dropdown_6">
                 <Link to="/collections/all/products/category/gloves/subcategory/singles">
                   <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                    Supreme Gloves
+                    Gloves
                   </GLButton>
                 </Link>
                 <Link to="/collections/all/products/category/gloves/subcategory/refresh">

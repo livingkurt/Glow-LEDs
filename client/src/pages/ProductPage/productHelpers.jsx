@@ -37,10 +37,13 @@ export const determine_alt_skin_name = (subcategory, name) => {
 };
 export const determine_sampler_pack_name = name => {
   if (name.includes("Supreme Gloves V1")) {
-    return "Sizing Sampler Pack V1";
+    return "Supreme Gloves Sizing Sampler Pack V1";
   }
   if (name.includes("Supreme Gloves V2")) {
-    return "Sizing Sampler Pack V2";
+    return "Supreme Gloves Sizing Sampler Pack V2";
+  }
+  if (name.includes("Ultra Gloves")) {
+    return "Ultra Gloves Sizing Sampler Pack";
   }
 };
 export const determine_sampler_pack_pathname = name => {
@@ -50,12 +53,17 @@ export const determine_sampler_pack_pathname = name => {
   if (name.includes("Supreme Gloves V2")) {
     return "supreme_gloves_v2_sizing_sampler_pack";
   }
+  if (name.includes("Ultra Gloves")) {
+    return "ultra_gloves_sizing_sampler_pack";
+  }
 };
 
 export const determine_sizing_quick_look = name => {
   if (
-    name === "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
-    name === "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)" ||
+    name === "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
+    name === "Supreme V1 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
+    name === "Ultra Refresh Pack (6 Pairs Ultra Gloves + 120 Batteries)" ||
+    name === "Ultra Gloves" ||
     name === "Supreme Gloves V2" ||
     name === "Supreme Gloves V1"
   ) {
@@ -63,15 +71,20 @@ export const determine_sizing_quick_look = name => {
   }
 };
 export const determine_sampler = name => {
-  if (name === "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)" || name === "Supreme Gloves V2") {
+  if (
+    name === "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
+    name === "Supreme Gloves V2" ||
+    name === "Ultra Gloves"
+  ) {
     return true;
   }
 };
 
 export const names_hide_add_to_cart = [
   "Diffuser Caps + Adapters Starter Kit V4",
-  "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)",
-  "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)",
+  "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)",
+  "Supreme V1 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)",
+  "Ultra Refresh Pack (6 Pairs Ultra Gloves + 120 Batteries)",
   "CLOZD Batman Decals",
   "CLOZD Outline + Slim Batman Decals",
   "OPYN Batman Decals",
@@ -80,6 +93,7 @@ export const names_hide_add_to_cart = [
   "CLOZD Novaskinz",
   "Supreme Gloves V1 Sizing Sampler Pack",
   "Supreme Gloves V2 Sizing Sampler Pack",
+  "Ultra Gloves Sizing Sampler Pack",
   "Capez",
   "CLOZD Omniskinz",
   "CLOZD Omniskinz Sleds",

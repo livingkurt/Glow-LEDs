@@ -75,7 +75,7 @@ export const sizes = (width, product_name) => {
   ];
   if (product_name?.includes("V1")) {
     return supremes_v1;
-  } else if (product_name?.includes("V2")) {
+  } else if (product_name?.includes("V2") || product_name?.includes("Ultra Gloves")) {
     return supremes_v2;
   }
 };
@@ -96,7 +96,7 @@ export const sizes_short = (width, product_name) => {
   };
   if (product_name?.includes("V1")) {
     return supremes_v1;
-  } else if (product_name?.includes("V2")) {
+  } else if (product_name?.includes("V2") || product_name?.includes("Ultra Gloves")) {
     return supremes_v2;
   }
 };

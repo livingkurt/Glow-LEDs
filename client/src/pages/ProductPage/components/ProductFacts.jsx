@@ -46,6 +46,7 @@ const ProductFacts = () => {
         {category === "gloves" &&
           determine_sampler(name) &&
           !(
+            name.includes("Ultra Gloves Sizing Sampler Pack") ||
             name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
             name.includes("Supreme Gloves V2 Sizing Sampler Pack")
           ) && (

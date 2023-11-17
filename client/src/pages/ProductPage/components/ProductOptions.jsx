@@ -377,7 +377,7 @@ const ProductOptions = () => {
           {determine_sizing_quick_look(product?.name) && (
             <ul className="mb-10px">
               <hr />
-              <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
+              <h3 className="title_font jc-c fs-20px"> {size && sizes_conversion(size)}</h3>{" "}
               <li className="jc-c ta-c w-100oer lh-30px">
                 {product?.name?.includes("V1")
                   ? 'We recommend getting a size up compared to other company"s gloves'
@@ -399,6 +399,7 @@ const ProductOptions = () => {
                   <li>
                     {product.category === "gloves" &&
                       !(
+                        product.name.includes("Ultra Gloves Sizing Sampler Pack") ||
                         product.name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
                         product.name.includes("Supreme Gloves V2 Sizing Sampler Pack")
                       ) && (

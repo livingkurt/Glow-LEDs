@@ -70,6 +70,9 @@ export const updateCartItems = (cartItems, cart_item) => {
   if (cart_item.name === "Supreme Gloves V2 Sizing Sampler Pack" && alreadyContainsSpecificProduct) {
     return cartItems;
   }
+  if (cart_item.name === "Ultra Gloves Sizing Sampler Pack" && alreadyContainsSpecificProduct) {
+    return cartItems;
+  }
 
   const updatedItems = cartItems.map(x => {
     if (areCartItemsEqual(x, cart_item)) {
