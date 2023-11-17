@@ -36,10 +36,10 @@ async function generateSitemap() {
 
         values?.forEach(value => {
           const dynamicUrl = url.replace(`:${param}`, value.pathname);
-          sitemapXML += generateUrlXML(`https://www.glow-leds.com/${dynamicUrl}`);
+          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`);
         });
       } else {
-        sitemapXML += generateUrlXML(`https://www.glow-leds.com/${url}`);
+        sitemapXML += generateUrlXML(`https://www.glow-leds.com${url}`);
       }
     });
 
