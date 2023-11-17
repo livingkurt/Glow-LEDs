@@ -155,6 +155,14 @@ export const productFormFields = ({ products, users, categorys, product, onEdit,
       type: "text",
       label: "Size",
     },
+    color: {
+      type: "text",
+      label: "Color",
+    },
+    color_code: {
+      type: "text",
+      label: "Color Code",
+    },
     meta_title: {
       type: "text",
       label: "Meta Title",

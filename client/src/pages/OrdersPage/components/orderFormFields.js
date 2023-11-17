@@ -329,12 +329,18 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
           color: {
             type: "text",
             label: "Color",
-            labelProp: "color",
+          },
+          color_code: {
+            type: "text",
+            label: "Color Code",
           },
           secondary_color: {
             type: "text",
             label: "Secondary Color",
-            labelProp: "secondary_color",
+          },
+          secondary_color_code: {
+            type: "text",
+            label: "Secondary Color Code",
           },
           color_group_name: {
             type: "text",
