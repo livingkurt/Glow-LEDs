@@ -483,10 +483,10 @@ export default {
   },
 
   send_announcement_emails_c: async (req, res) => {
-    const { template, subject, test, time } = req.body;
-    console.log({ template, subject, test, time });
+    const { id, test } = req.params;
     const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
-    const email = await email_db.findById_emails_db(template._id);
+    const email = await email_db.findById_emails_db(id);
+    // console.log({ email, test });
     // const all_emails = subscribed_users.map((user) => user.email);
 
     // Set the number of emails to send per iteration
@@ -497,10 +497,10 @@ export default {
 
     // Set the time to wait between iterations (in milliseconds)
     const waitTime = 10000;
-    if (test) {
-      // // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
+    if (test === "true") {
+      // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
       const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
-      send_multiple_emails(test_emails, time, email, template, subject, res);
+      send_multiple_emails(test_emails, email, res);
     } else {
       for (let i = 0; i < iterations; i++) {
         // Get the start and end indices for the current iteration
@@ -510,7 +510,7 @@ export default {
         // Create an array of email addresses for the current iteration
         const emailAddresses = subscribed_users.slice(startIndex, endIndex).map(user => user.email);
 
-        send_multiple_emails(emailAddresses, time, email, template, subject, res);
+        send_multiple_emails(emailAddresses, email, res);
         console.log(`${i + 1} Sending emails to ${emailAddresses.length} users`);
         await new Promise(resolve => setTimeout(resolve, waitTime));
       }

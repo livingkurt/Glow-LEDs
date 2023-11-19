@@ -4,7 +4,13 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
-import { determine_shown_fields, formatDate, getEmptyObjectFromSchema, getValueByStringPath } from "./glFormHelpers";
+import {
+  determine_shown_fields,
+  formatDate,
+  formatDateTime,
+  getEmptyObjectFromSchema,
+  getValueByStringPath,
+} from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
 import { useEffect, useMemo, useState } from "react";
@@ -297,6 +303,46 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   value={
                     (formattedDate !== null && formattedDate !== undefined) || Object.keys(formattedDate).length > 0
                       ? formattedDate
+                      : ""
+                  }
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
+                />
+              );
+            case "datetime":
+              const formattedDateTime = formatDateTime(fieldState);
+              console.log({ fieldState, formattedDateTime });
+              return (
+                <GLTextFieldV2
+                  helperText={formErrors && formErrors[fieldName]}
+                  autoComplete="new-password"
+                  error={formErrors && !!formErrors[fieldName]}
+                  className={classes.outlinedInput}
+                  InputProps={{
+                    autoComplete: "new-password",
+                    form: {
+                      autoComplete: "off",
+                    },
+                    className: classes.input,
+                  }}
+                  InputLabelProps={{
+                    className: classes.label,
+                  }}
+                  FormHelperTextProps={{
+                    className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                  }}
+                  key={fieldName}
+                  name={fieldName}
+                  margin="normal"
+                  size="small"
+                  fullWidth
+                  type={"datetime-local"}
+                  label={fieldData.label}
+                  variant="outlined"
+                  // value={fieldState || ""}
+                  value={
+                    (formattedDateTime !== null && formattedDateTime !== undefined) ||
+                    Object.keys(formattedDateTime).length > 0
+                      ? formattedDateTime
                       : ""
                   }
                   onChange={e => handleInputChange(fieldName, e.target.value)}

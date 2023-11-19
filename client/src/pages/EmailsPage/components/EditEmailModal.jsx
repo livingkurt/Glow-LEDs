@@ -6,6 +6,7 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { emailFormFields } from "./emailFormFields";
 import { Box, Button, Checkbox, FormControlLabel, Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 let debounceTimer;
 
@@ -42,16 +43,12 @@ const EditEmailModal = () => {
         onCancel={() => {
           dispatch(set_edit_email_modal(false));
         }}
-        onAction={() => {
-          dispatch(API.sendAnnouncement({ template, subject: email.subject, test: testEmail }));
-        }}
         maxWidth="xl"
         title={"Edit Email"}
         confirmLabel={"Save"}
         confirmColor="primary"
         cancelLabel={"Cancel"}
         cancelColor="secondary"
-        actionLabel={`Send ${testEmail && "Test "}Email`}
         actionColor="secondary"
         disableEscapeKeyDown
       >

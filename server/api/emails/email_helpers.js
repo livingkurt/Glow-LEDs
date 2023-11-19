@@ -6,41 +6,41 @@ const cron = require("node-cron");
 const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
 
-export const send_multiple_emails = async (emailAddresses, time, email, template, subject, res) => {
+export const send_multiple_emails = async (emailAddresses, email, res) => {
+  const { subject, scheduled_at } = email;
   try {
     const mailOptions = {
       to: config.INFO_EMAIL,
       from: config.DISPLAY_INFO_EMAIL,
       subject: subject,
       html: App({
-        body: announcement(template),
+        body: announcement(email),
         unsubscribe: true,
-        header_footer_color: template.header_footer_color,
+        header_footer_color: email.header_footer_color,
       }),
       bcc: emailAddresses,
     };
 
-    const date = new Date(time);
-    email.subject = subject;
-    if (time.length > 0) {
-      email.status = "scheduled";
-      email.scheduled_at = time;
-      email.save();
-      cron.schedule(
-        `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
-        () => {
-          sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-          email.status = "sent";
-          email.save();
-        },
-        {
-          scheduled: true,
-          timezone: "America/Rainy_River",
-        }
-      );
-    } else {
-      sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-    }
+    const date = new Date(scheduled_at);
+    console.log({ subject, scheduled_at, date });
+    // if (scheduled_at.length > 0) {
+    //   email.status = "scheduled";
+    //   email.save();
+    //   cron.schedule(
+    //     `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
+    //     () => {
+    //       sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+    //       email.status = "sent";
+    //       email.save();
+    //     },
+    //     {
+    //       scheduled: true,
+    //       timezone: "America/Rainy_River",
+    //     }
+    //   );
+    // } else {
+    //   sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+    // }
   } catch (err) {
     return "Error Sending Email";
   }

@@ -22,7 +22,7 @@ const emailSchema = new mongoose.Schema(
     link: { type: String },
     html: { type: String },
     scheduled_at: { type: Date },
-    status: { type: String, default: "draft" },
+    status: { type: String, default: "Draft" },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

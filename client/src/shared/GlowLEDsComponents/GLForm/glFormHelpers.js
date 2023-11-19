@@ -6,7 +6,13 @@ export const formatDate = dateString => {
   const formattedDate = `${year}-${month}-${day}`;
   return formattedDate;
 };
-
+export const formatDateTime = dateString => {
+  if (dateString.length > 0) {
+    const date = dateString.split("T")[0];
+    const time = dateString.split("T")[1].substring(0, 4);
+    return `${date}T${time}`;
+  }
+};
 export const determine_shown_fields = (fieldData, current_user, mode) => {
   let result = true;
   if (fieldData.type !== "array_of_objects") {

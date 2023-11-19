@@ -56,7 +56,7 @@ export const run_daily_workers = async dispatch => {
   if (confirm) {
     dispatch(set_loading(true));
     await axios.get(`/api/products/facebook_catelog`);
-    google_catalog_upload();
+    // google_catalog_upload();
     dispatch(set_loading(false));
   }
 };
