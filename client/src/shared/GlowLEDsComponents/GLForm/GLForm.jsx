@@ -158,6 +158,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   label={fieldData.label}
                 />
               );
+            case "title":
+              return (
+                <Typography key={fieldName} variant={fieldData.variant} align={fieldData.align}>
+                  {fieldData.label}
+                </Typography>
+              );
             case "autocomplete_address":
               return (
                 <GoogleAutocomplete

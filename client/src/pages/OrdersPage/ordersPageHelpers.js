@@ -307,7 +307,6 @@ export const updateOrderItem = (index, value, order) => {
         package_length: value.package_length,
         package_width: value.package_width,
         package_height: value.package_height,
-        product_option: value?.product_options?.find(option => option.default === true),
         reviewed: value.reviewed,
         product: value,
         color_products: value.color_products,
