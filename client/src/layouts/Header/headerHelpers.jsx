@@ -278,6 +278,7 @@ const diffusers = {
 const enhancers = {
   name: "Enhancers",
   path: "/pages/menu/gloving",
+  id: "enhancers_dropdown",
   _id: 336,
   rows: [
     glowskinz,
@@ -300,6 +301,7 @@ const enhancers = {
 
 const essentials = {
   name: "Essentials",
+  id: "essentials_dropdown",
   path: "/collections/all/products/category/essentials",
   _id: 439,
   rows: [
@@ -338,6 +340,7 @@ const essentials = {
 };
 const community = {
   name: "Community",
+  id: "community_dropdown",
   path: "/pages/menu/support",
   _id: 446,
   rows: [
@@ -391,6 +394,7 @@ const community = {
 
 const learn = {
   name: "Learn",
+  id: "learn_dropdown",
   path: "/pages/learn",
   _id: 1055,
   rows: [
@@ -423,6 +427,7 @@ const learn = {
 };
 const tutorials = {
   name: "Tutorials",
+  id: "tutorials_dropdown",
   path: "/pages/learn",
   _id: 1061,
   rows: [
@@ -585,6 +590,7 @@ const tutorials = {
 };
 const tips = {
   name: "Gloving Tips",
+  id: "tips_dropdown",
   path: "/pages/learn",
   _id: 1089,
   rows: [
@@ -602,6 +608,7 @@ const tips = {
 };
 const support = {
   name: "Support",
+  id: "support_dropdown",
   path: "/pages/menu/support",
   _id: 592,
   rows: [
@@ -675,6 +682,7 @@ const support = {
 
 const user = {
   name: "User",
+  id: "user_dropdown",
   rows: [
     {
       name: "Profile",
@@ -696,6 +704,7 @@ const user = {
 
 const admin = {
   name: "Admin",
+  id: "admin_dropdown",
   rows: [
     {
       name: "Dashboard",
@@ -898,6 +907,7 @@ export const navItems = [
   {
     name: "Shop",
     path: "/pages/menu/gloving",
+    id: "shop_dropdown",
     _id: 9134,
     dataTestId: "shop_button",
     columns: [features, enhancers],
@@ -907,15 +917,17 @@ export const navItems = [
   {
     name: "Learn",
     path: "/collections/all/tutorials",
+    id: "learn_dropdown",
     // path: "/pages/learn",
     _id: 9135,
     dataTestId: "learn_button",
     // columns: [learn, tutorials],
-    otherColumns: [tips],
+    // otherColumns: [tips],
     headerLocation: "center",
   },
   {
     name: "Community",
+    id: "community_dropdown",
     path: "/pages/menu/support",
     _id: 10136,
     dataTestId: "community_button",
@@ -924,6 +936,7 @@ export const navItems = [
   },
   {
     name: "Support",
+    id: "support_dropdown",
     path: "/pages/menu/support",
     _id: 10137,
     dataTestId: "support_button",
@@ -943,12 +956,14 @@ export const rightNav = dispatch => {
         !(current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) &&
         dispatch(openLoginModal()),
       dataTestId: "community_button",
+      id: "user_dropdown",
       columns: [user],
       headerLocation: "center",
       permissions: x => true,
     },
     {
       name: "Admin",
+      id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
       columns: [admin],
@@ -956,3 +971,10 @@ export const rightNav = dispatch => {
     },
   ];
 };
+
+export const sidebarItems = dispatch => [
+  navItems[0],
+  rightNav(dispatch)[0],
+  ...navItems.slice(1),
+  rightNav(dispatch)[1],
+];
