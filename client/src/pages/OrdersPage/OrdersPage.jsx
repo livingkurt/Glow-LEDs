@@ -119,7 +119,7 @@ const OrdersPage = () => {
       {
         title: "Actions",
         display: row => (
-          <div>
+          <div className="jc-b">
             <IconButton
               aria-label="Edit"
               onClick={() => {
