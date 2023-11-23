@@ -25,8 +25,8 @@ const Sidebar = () => {
     >
       <SidebarCloseButton />
       <List>
-        {sidebarItems(dispatch).map(item => (
-          <SidebarItem key={item._id} item={item} level={0} handleDrawerToggle={handleDrawerToggle} />
+        {sidebarItems(dispatch).map((item, index) => (
+          <SidebarItem key={`${item._id}-${index}`} item={item} level={0} handleDrawerToggle={handleDrawerToggle} />
         ))}
       </List>
     </Drawer>
