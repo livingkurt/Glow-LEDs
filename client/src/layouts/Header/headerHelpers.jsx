@@ -10,8 +10,33 @@ export const determineDropdown = (item, current_user) => {
   return true;
 };
 
+export const hasChildren = item =>
+  item.rows?.length > 0 ||
+  item.columns?.length > 0 ||
+  item.column?.length > 0 ||
+  item.otherColumns?.length > 0 ||
+  item.sideDrawer?.drawerItems?.length > 0 ||
+  item.subSideDrawer?.subHeaderDrawers?.length > 0;
+
 export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
+};
+
+export const determineBackgroundColor = level => {
+  switch (level) {
+    case 0:
+      return "#333333";
+    case 1:
+      return "#4c526d";
+    case 2:
+      return "#343a52";
+    case 3:
+      return "#282c3b";
+    case 4:
+      return "#1d202b";
+    default:
+      return "#999999";
+  }
 };
 
 export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
@@ -151,12 +176,12 @@ const exo_diffusers = {
 
       {
         name: "Polyhedrons",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/clozd/collection/polyhedrons",
+        path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons",
         _id: 115,
       },
       {
         name: "Domes",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/clozd/collection/domes",
+        path: "/collections/all/products/category/exo_diffusers/subcategory/domes",
         _id: 116,
       },
     ],
@@ -172,7 +197,7 @@ const diffuser_caps = {
     drawerItems: [
       {
         name: "Diffuser Caps Starter Kit",
-        path: "/collections/all/products/category/diffuser_caps_adapters_starter_kit",
+        path: "/collections/all/products/diffuser_caps_adapters_starter_kit",
         _id: 118,
       },
       {
@@ -341,7 +366,7 @@ const essentials = {
 const community = {
   name: "Community",
   id: "community_dropdown",
-  path: "/pages/menu/support",
+  // path: "/pages/menu/community",
   _id: 446,
   rows: [
     {
@@ -928,10 +953,11 @@ export const navItems = [
   {
     name: "Community",
     id: "community_dropdown",
-    path: "/pages/menu/support",
+    // path: "/pages/menu/community",
     _id: 10136,
     dataTestId: "community_button",
     columns: [community],
+    column: community.rows,
     headerLocation: "center",
   },
   {
@@ -941,6 +967,7 @@ export const navItems = [
     _id: 10137,
     dataTestId: "support_button",
     columns: [support],
+    column: support.rows,
     headerLocation: "center",
   },
 ];
@@ -958,6 +985,7 @@ export const rightNav = dispatch => {
       dataTestId: "community_button",
       id: "user_dropdown",
       columns: [user],
+      column: user.rows,
       headerLocation: "center",
       permissions: x => true,
     },
@@ -967,6 +995,7 @@ export const rightNav = dispatch => {
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
       columns: [admin],
+      column: admin.rows,
       headerLocation: "center",
     },
   ];

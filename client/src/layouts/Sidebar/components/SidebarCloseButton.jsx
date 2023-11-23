@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { setSideNavDrawer } from "../../../slices/cartSlice";
+import { useDispatch } from "react-redux";
 
-const SidebarCloseButton = ({ closeMenu }) => {
+const SidebarCloseButton = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="h-40px bg-primary ta-c title_font ai-c w-100per">
-        <p className="w-100per fs-20px mt-24px">Find Your Glow</p>
+        <p className="w-100per fs-20px mt-24px" style={{ color: "white" }}>
+          Find Your Glow
+        </p>
       </div>
       <div className="ai-c">
         <div className="ai-c">
@@ -21,7 +26,11 @@ const SidebarCloseButton = ({ closeMenu }) => {
             </div>
           </Link>
 
-          <GLButton className="sidebar_close_button" aria-label="Close" onClick={closeMenu}>
+          <GLButton
+            className="sidebar_close_button"
+            aria-label="Close"
+            onClick={() => dispatch(setSideNavDrawer(false))}
+          >
             <div className="box ">
               <div className="side-btn active">
                 <span className="span" />
