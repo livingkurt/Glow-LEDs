@@ -160,7 +160,7 @@ const EditProductPage = () => {
     extra_cost,
   } = product;
 
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips: chips_list } = chipPage;
 
   const filamentPage = useSelector(state => state.filaments);

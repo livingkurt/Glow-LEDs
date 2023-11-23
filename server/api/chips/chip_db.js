@@ -6,7 +6,7 @@ export default {
       return await Chip.find(filter)
         .sort(sort)
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

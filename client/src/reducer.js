@@ -51,7 +51,10 @@ const reducers = {
       sorting: [0, "desc"],
     }),
   }),
-  chips: chipSlice,
+  chips: combineReducers({
+    chipPage: chipSlice,
+    chipTable: glTableReducer("chipTable", {}),
+  }),
   contents: combineReducers({
     contentPage: contentSlice,
     contentTable: glTableReducer("contentTable", {}),

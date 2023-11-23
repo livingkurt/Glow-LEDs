@@ -14,7 +14,7 @@ const EditProductModal = () => {
   const { users, loading: loading_users } = userPage;
   const categoryPage = useSelector(state => state.categorys.categoryPage);
   const { categorys, loading: loading_categorys } = categoryPage;
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
 
   useEffect(() => {

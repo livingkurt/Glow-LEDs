@@ -55,7 +55,7 @@ const Sidebar = () => {
     return () => (clean = false);
   }, [dispatch]);
 
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips: chips_list } = chipPage;
 
   const [chip_name, set_chip_name] = useState();

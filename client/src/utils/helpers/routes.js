@@ -79,7 +79,6 @@ const adminRoutes = [
   { path: "/secure/glow/display_products", element: "ProductsDisplayPage" },
   { path: "/secure/glow/emails/announcement/:id", element: "AnnouncementEmail" },
   { path: "/secure/glow/emails", element: "EmailsPage" },
-  { path: "/secure/glow/editchip/:id?", element: "EditChipPage" },
   { path: "/secure/glow/promos", element: "PromosPage" },
   { path: "/secure/glow/affiliates", element: "AffiliatesPage" },
   { path: "/secure/glow/teams", element: "TeamsPage" },

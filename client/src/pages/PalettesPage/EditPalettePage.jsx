@@ -18,7 +18,7 @@ const EditPalettePage = () => {
   const [preset_colors, set_preset_colors] = useState(["red", "green", "blue"]);
   // const [ chip_object, set_chip_object ] = useState({});
 
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips: chips_list } = chipPage;
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);

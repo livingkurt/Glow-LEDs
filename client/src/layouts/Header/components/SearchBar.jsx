@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setDisplay, set_options } from "../../../slices/settingSlice";
-import { set_search } from "../../../slices/chipSlice";
+import { setDisplay, set_options, set_search } from "../../../slices/settingSlice";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Search } from "@mui/icons-material";
 import { API_Products } from "../../../utils";

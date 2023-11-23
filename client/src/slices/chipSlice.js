@@ -3,18 +3,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const chip = {
+  id: "",
+  chip_name: "",
+  application: "",
+  url: "",
+  place_of_purchase: "",
+  date_of_purchase: "",
+  category: "",
+  card: "",
+  amount: 0,
+  documents: [],
+};
+
 const chipPage = createSlice({
   name: "chipPage",
   initialState: {
     loading: false,
     chips: [],
-    chip: {},
+    chip: chip,
+    remoteVersionRequirement: 0,
+    edit_chip_modal: false,
+    upload_chip_modal: false,
+    chip_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_chip: (state, { payload }) => {
@@ -27,70 +40,86 @@ const chipPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = true;
+      state.chip = chip;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = true;
+      state.chip = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = false;
+      state.upload_chip_modal = false;
+      state.chip_modal = false;
+      state.chip = chip;
+    },
+    open_chip_modal: (state, { payload }) => {
+      state.chip_modal = true;
+      state.chip = payload;
+    },
+    chip_uploaded: (state, { payload }) => {
+      state.upload_chip_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
-    [API.listChips.pending]: (state, { payload }) => {
+    [API.listExpenses.pending]: (state, { payload }) => {
       state.loading = true;
       state.chips = [];
     },
-    [API.listChips.fulfilled]: (state, { payload }) => {
+    [API.listExpenses.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.chips = payload.chips;
-      state.totalPages = payload.totalPages;
+      state.chips = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
-      state.message = "Chips Found";
+      state.message = "Expenses Found";
     },
-    [API.listChips.rejected]: (state, { payload, error }) => {
+    [API.listExpenses.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveChip.pending]: (state, { payload }) => {
+    [API.saveExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveChip.fulfilled]: (state, { payload }) => {
+    [API.saveExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.message = "Chip Saved";
+      state.message = "Expense Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_chip_modal = false;
     },
-    [API.saveChip.rejected]: (state, { payload, error }) => {
+    [API.saveExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsChip.pending]: (state, { payload }) => {
+    [API.detailsExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsChip.fulfilled]: (state, { payload }) => {
+    [API.detailsExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chip = payload;
-      state.message = "Chip Found";
+      state.message = "Expense Found";
     },
-    [API.detailsChip.rejected]: (state, { payload, error }) => {
+    [API.detailsExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteChip.pending]: (state, { payload }) => {
+    [API.deleteExpense.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteChip.fulfilled]: (state, { payload }) => {
+    [API.deleteExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.chip = payload.chip;
-      state.message = "Chip Deleted";
+      state.chip = chip;
+      state.message = "Expense Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteChip.rejected]: (state, { payload, error }) => {
+    [API.deleteExpense.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
@@ -98,5 +127,14 @@ const chipPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_chip } = chipPage.actions;
+export const {
+  set_loading,
+  set_chip,
+  set_edit_chip_modal,
+  open_create_chip_modal,
+  open_chip_modal,
+  close_chip_modal,
+  open_edit_chip_modal,
+  chip_uploaded,
+} = chipPage.actions;
 export default chipPage.reducer;

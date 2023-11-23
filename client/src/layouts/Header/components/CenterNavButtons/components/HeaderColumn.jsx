@@ -14,7 +14,7 @@ const HeaderColumn = ({ columns }) => {
   const settingPage = useSelector(state => state.settings);
   const { chip_name } = settingPage;
 
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
 
   const filterHandler = e => {
