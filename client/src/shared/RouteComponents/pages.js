@@ -6,7 +6,6 @@ import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
-import { EditSettingPage, SettingsPage } from "../../pages/SettingsPage";
 import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
@@ -97,14 +96,12 @@ export const AdminComponents = {
   OrdersPage,
   UsersPage,
   PaychecksPage,
-  SettingsPage,
   CategorysPage,
   SurveysPage,
   ParcelsPage,
   PalettesPage,
   FilamentsPage,
   ProfilePage,
-  EditSettingPage,
   EditParcelPage,
   EditPalettePage,
   AdminChangePasswordPage,

@@ -53,10 +53,8 @@ export default {
         // normalizeFilters: normalizeChipFilters,
         normalizeSearch: normalizeChipSearch,
       });
-      console.log({ filter, sort, limit, page });
       const chips = await chip_db.findAll_chips_db(filter, sort, limit, page);
       const count = await chip_db.count_chips_db(filter);
-      console.log({ chips });
       return {
         data: chips,
         total_count: count,

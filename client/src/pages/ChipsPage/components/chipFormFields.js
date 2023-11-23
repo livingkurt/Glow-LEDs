@@ -68,24 +68,21 @@ export const chipFormFields = ({ chip, categorys }) => {
       getOptionLabel: option => option.link,
     },
     dimensions: {
-      type: "array",
-      title: "Available Colors",
-      label: "name",
-      itemSchema: {
-        type: "object",
-        fields: {
-          legnth: {
-            type: "text",
-            label: "Length",
-          },
-          width: {
-            type: "text",
-            label: "Width",
-          },
-          height: {
-            type: "text",
-            label: "Height",
-          },
+      type: "object",
+      title: "Dimensions",
+      label: "dimensions",
+      fields: {
+        legnth: {
+          type: "text",
+          label: "Length",
+        },
+        width: {
+          type: "text",
+          label: "Width",
+        },
+        height: {
+          type: "text",
+          label: "Height",
         },
       },
     },

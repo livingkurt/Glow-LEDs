@@ -808,11 +808,6 @@ const Sidebar = () => {
                     Categorys
                   </GLButton>
                 </Link>
-                <Link to="/secure/glow/settings">
-                  <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                    Settings
-                  </GLButton>
-                </Link>
                 <Link to="/secure/glow/palettes">
                   <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                     Palettes

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determineDropdown, determineName, rightNav } from "../headerHelpers";
 import { ShoppingCart } from "@mui/icons-material";
-import { set_first_name } from "../../../slices/settingSlice";
+import { set_first_name } from "../../../slices/glowLedsSlice";
 import { setCartDrawer } from "../../../slices/cartSlice";
 
 const RightNavButtons = () => {

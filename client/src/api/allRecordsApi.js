@@ -52,9 +52,6 @@ export const allRecordsApi = createApi({
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,
     }),
-    settings: builder.query({
-      query: query => `/settings?${create_query(query)}`,
-    }),
     surveys: builder.query({
       query: query => `/surveys?${create_query(query)}`,
     }),

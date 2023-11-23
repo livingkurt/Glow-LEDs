@@ -4,8 +4,8 @@ import { Box } from "@mui/material";
 import { toCapitalize } from "../../../utils/helper_functions";
 
 const Environment = () => {
-  const placeOrder = useSelector(state => state.placeOrder);
-  const { environment } = placeOrder;
+  const glowLeds = useSelector(state => state.glowLeds);
+  const { environment } = glowLeds;
 
   return (
     <div>

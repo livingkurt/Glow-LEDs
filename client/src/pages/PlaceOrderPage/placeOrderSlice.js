@@ -424,10 +424,7 @@ const placeOrder = createSlice({
     [API.validatePromoCode.fulfilled]: (state, { payload }) => {
       state.promo_code_validations = payload.errors.promo_code;
     },
-    [API.getEnvironment.fulfilled]: (state, { payload }) => {
-      state.environment = payload.environment;
-      state.database = payload.database;
-    },
+
     [API.sendCodeUsedEmail.fulfilled]: (state, { payload }) => {
       state.promo_code = "";
     },

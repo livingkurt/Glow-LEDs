@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { EditChipModal } from "./components";
+import EditChipModal from "./components/EditChipModal";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { open_create_chip_modal, open_edit_chip_modal } from "../../slices/chipSlice";
@@ -82,7 +82,7 @@ const ChipsPage = () => {
           </Button>
         }
       />
-      {/* <EditChipModal /> */}
+      <EditChipModal />
     </div>
   );
 };
