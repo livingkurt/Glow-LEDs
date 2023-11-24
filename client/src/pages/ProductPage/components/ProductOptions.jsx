@@ -89,6 +89,9 @@ const ProductOptions = () => {
 
   const handleAddToCart = () => {
     const cart_item = {
+      // length: length,
+      // width: width,
+      // height: height,
       product: product._id,
       color_product,
       color_code,
@@ -125,6 +128,7 @@ const ProductOptions = () => {
       pathname: params.pathname,
       category: product.category,
       subcategory: product.subcategory,
+      product_collection: product.product_collection,
       qty: parseInt(qty),
       finite_stock: product.finite_stock,
       count_in_stock: product.count_in_stock,
