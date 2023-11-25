@@ -8,7 +8,7 @@ import { openRefundModal, open_create_order_modal, open_edit_order_modal } from 
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { determineOrderColors, duplicateOrder, orderColors, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
@@ -20,6 +20,7 @@ import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
 import { format_date } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
+import { Delete, Edit, FileCopy, Landscape, Money } from "@mui/icons-material";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -119,42 +120,38 @@ const OrdersPage = () => {
         title: "Actions",
         display: row => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
+            <IconButton
               aria-label="Edit"
               onClick={() => {
                 dispatch(API.detailsOrder(row._id));
                 dispatch(open_edit_order_modal(order));
               }}
             >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <Edit color="white" />
+            </IconButton>
+            <IconButton
               aria-label="Duplicate"
               onClick={() => {
                 const newDuplicateOrder = duplicateOrder(row);
                 dispatch(API.saveOrder(newDuplicateOrder));
               }}
             >
-              <i className="fas fa-clone" />
-            </GLButton>
+              <FileCopy color="white" />
+            </IconButton>
             <Link to={`/secure/account/order/${row._id}`}>
-              <GLButton variant="icon" aria-label="view">
-                <i className="fas fa-mountain" />
-              </GLButton>
+              <IconButton aria-label="View Product Page">
+                <Landscape color="white" />
+              </IconButton>
             </Link>
-            <GLButton
-              variant="icon"
+            <IconButton
               onClick={() => {
                 dispatch(openRefundModal(row));
               }}
               aria-label="Refund"
             >
-              <i className="fas fa-hand-holding-usd"></i>
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <Money color="white" />
+            </IconButton>
+            <IconButton
               onClick={() => {
                 const confirm = window.confirm("Are you sure you want DELETE this order?");
                 if (confirm) {
@@ -163,8 +160,8 @@ const OrdersPage = () => {
               }}
               aria-label="Delete"
             >
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <Delete color="white" />
+            </IconButton>
           </div>
         ),
       },

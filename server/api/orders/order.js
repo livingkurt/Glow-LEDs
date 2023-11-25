@@ -1,5 +1,79 @@
 import mongoose from "mongoose";
 
+const orderItemSchema = new mongoose.Schema(
+  {
+    name: { type: String },
+    qty: { type: Number },
+    display_image: { type: String },
+    secondary_image: { type: String },
+    color: { type: String },
+    secondary_color: { type: String },
+    color_group_name: { type: String },
+    secondary_color_group_name: { type: String },
+    secondary_color_code: { type: String },
+    secondary_group_name: { type: String },
+    option_group_name: { type: String },
+    color_code: { type: String },
+    price: { type: Number },
+    add_on_price: { type: Number },
+    show_add_on: { type: Boolean },
+    category: { type: String },
+    count_in_stock: { type: Number },
+    subcategory: { type: String },
+    product_collection: { type: String },
+    pathname: { type: String },
+    size: { type: String },
+    preorder: { type: Boolean },
+    sale_price: { type: Number },
+    sale_start_date: { type: Date },
+    sale_end_date: { type: Date },
+    package_volume: { type: Number },
+    weight_pounds: { type: Number },
+    weight_ounces: { type: Number },
+    package_length: { type: Number },
+    package_width: { type: Number },
+    package_height: { type: Number },
+    processing_time: [{ type: Number }],
+    quantity: { type: Number },
+    finite_stock: { type: Number },
+    wholesale_product: { type: Boolean },
+    wholesale_price: { type: Number },
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    color_product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    color_product_name: { type: String },
+    secondary_color_product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    secondary_color_product_name: { type: String },
+    option_product_name: { type: String },
+    option_product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    secondary_product_name: { type: String },
+    secondary_product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    is_printing: { type: Boolean, default: false },
+    is_crafting: { type: Boolean, default: false },
+    is_crafted: { type: Boolean, default: false },
+    is_packaged: { type: Boolean, default: false },
+    reviewed: { type: Boolean, default: false },
+    review_email_sent: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const shippingSchema = {
   shipment_id: { type: String },
   shipping_rate: { type: Object },
@@ -53,84 +127,6 @@ const messageSchema = {
   admin: { type: Boolean },
   deleted: { type: Boolean, default: false },
 };
-
-const productOptionsSchema = new mongoose.Schema({
-  name: { type: String },
-  price: { type: Number },
-  sale_price: { type: Number, default: 0 },
-  size: { type: Number },
-  color: { type: String },
-});
-
-const orderItemSchema = new mongoose.Schema(
-  {
-    name: { type: String },
-    qty: { type: Number },
-    display_image: { type: String },
-    secondary_image: { type: String },
-    color: { type: String },
-    secondary_color: { type: String },
-    color_group_name: { type: String },
-    is_printing: { type: Boolean, default: false },
-    is_crafting: { type: Boolean, default: false },
-    is_crafted: { type: Boolean, default: false },
-    is_packaged: { type: Boolean, default: false },
-    secondary_color_group_name: { type: String },
-    secondary_color_code: { type: String },
-    secondary_group_name: { type: String },
-    option_group_name: { type: String },
-    color_code: { type: String },
-    price: { type: Number },
-    add_on_price: { type: Number },
-    show_add_on: { type: Boolean },
-    category: { type: String },
-    count_in_stock: { type: Number },
-    subcategory: { type: String },
-    pathname: { type: String },
-    size: { type: String },
-    preorder: { type: Boolean },
-    sale_price: { type: Number },
-    package_volume: { type: Number },
-    weight_pounds: { type: Number },
-    weight_ounces: { type: Number },
-    length: { type: Number },
-    width: { type: Number },
-    height: { type: Number },
-    package_length: { type: Number },
-    package_width: { type: Number },
-    package_height: { type: Number },
-    reviewed: { type: Boolean, default: false },
-    review_email_sent: { type: Boolean, default: false },
-    product_option: productOptionsSchema,
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    color_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    color_product_name: { type: String },
-    secondary_color_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    secondary_color_product_name: { type: String },
-    option_product_name: { type: String },
-    option_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    secondary_product_name: { type: String },
-    secondary_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
 
 const orderSchema = new mongoose.Schema(
   {
