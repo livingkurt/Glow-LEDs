@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { FileCopy } from "@mui/icons-material";
 
 const ChipsPage = () => {
   const chipPage = useSelector(state => state.chips.chipPage);
@@ -45,7 +46,21 @@ const ChipsPage = () => {
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
             </IconButton>
-
+            <IconButton
+              aria-label="Copy Chip"
+              onClick={() =>
+                dispatch(
+                  API.saveChip({
+                    ...chip,
+                    _id: null,
+                    name: `${chip.name} Copy`,
+                    pathname: `${chip.pathname}_copy`,
+                  })
+                )
+              }
+            >
+              <FileCopy color="white" />
+            </IconButton>
             <IconButton onClick={() => dispatch(API.deleteChip(chip._id))} aria-label="Delete">
               <DeleteIcon color="white" />
             </IconButton>

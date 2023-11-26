@@ -67,59 +67,59 @@ const chipPage = createSlice({
     },
   },
   extraReducers: {
-    [API.listExpenses.pending]: (state, { payload }) => {
+    [API.listChips.pending]: (state, { payload }) => {
       state.loading = true;
       state.chips = [];
     },
-    [API.listExpenses.fulfilled]: (state, { payload }) => {
+    [API.listChips.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chips = payload.data;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
-      state.message = "Expenses Found";
+      state.message = "Chips Found";
     },
-    [API.listExpenses.rejected]: (state, { payload, error }) => {
+    [API.listChips.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveExpense.pending]: (state, { payload }) => {
+    [API.saveChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.saveExpense.fulfilled]: (state, { payload }) => {
+    [API.saveChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.message = "Expense Saved";
+      state.message = "Chip Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_chip_modal = false;
     },
-    [API.saveExpense.rejected]: (state, { payload, error }) => {
+    [API.saveChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsExpense.pending]: (state, { payload }) => {
+    [API.detailsChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsExpense.fulfilled]: (state, { payload }) => {
+    [API.detailsChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chip = payload;
-      state.message = "Expense Found";
+      state.message = "Chip Found";
     },
-    [API.detailsExpense.rejected]: (state, { payload, error }) => {
+    [API.detailsChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteExpense.pending]: (state, { payload }) => {
+    [API.deleteChip.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteExpense.fulfilled]: (state, { payload }) => {
+    [API.deleteChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chip = chip;
-      state.message = "Expense Deleted";
+      state.message = "Chip Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteExpense.rejected]: (state, { payload, error }) => {
+    [API.deleteChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
