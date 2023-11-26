@@ -13,7 +13,7 @@ const Filter = ({ filterHandler, filter_options, state, title, width }) => {
           <option className="grey_option" value={""}>
             {title || "Filter By Chip"}
           </option>
-          {filter_options.map((option, index) => (
+          {filter_options?.map((option, index) => (
             <option key={index} value={JSON.stringify(option)}>
               {option.name}
             </option>

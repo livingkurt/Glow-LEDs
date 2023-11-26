@@ -5,15 +5,23 @@ import * as API from "../api";
 
 const chip = {
   id: "",
-  chip_name: "",
-  application: "",
-  url: "",
-  place_of_purchase: "",
-  date_of_purchase: "",
+  name: "",
+  company: "",
   category: "",
-  card: "",
-  amount: 0,
-  documents: [],
+  category_object: {},
+  programmmable: false,
+  number_of_modes: 0,
+  characteristics: "",
+  colors_per_mode: 0,
+  pathname: "",
+  image: "",
+  image_object: {},
+  colors: [],
+  dimensions: {
+    height: 0,
+    width: 0,
+    length: 0,
+  },
 };
 
 const chipPage = createSlice({
@@ -73,7 +81,7 @@ const chipPage = createSlice({
     },
     [API.listChips.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.chips = payload.data;
+      state.chips = payload;
       state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Chips Found";
