@@ -1,5 +1,7 @@
+import { getFilteredData } from "../api_helpers";
 import { determine_filter } from "../../utils/util";
 import { chip_db } from "../chips";
+import { normalizeChipSearch } from "./chip_helpers";
 
 export default {
   findAll_chips_s: async query => {
@@ -35,6 +37,29 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_chips_s: async query => {
+    try {
+      const sort_options = ["name", "company", "category", "programmable"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "name",
+        // normalizeFilters: normalizeChipFilters,
+        normalizeSearch: normalizeChipSearch,
+      });
+      const chips = await chip_db.findAll_chips_db(filter, sort, limit, page);
+      const count = await chip_db.count_chips_db(filter);
+      return {
+        data: chips,
+        total_count: count,
+        currentPage: page,
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

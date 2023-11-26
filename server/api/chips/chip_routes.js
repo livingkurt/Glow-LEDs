@@ -4,6 +4,7 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
+router.route("/table").get(chip_controller.table_chips_c);
 router.route("/").get(chip_controller.findAll_chips_c).post(isAuth, isAdmin, chip_controller.create_chips_c);
 
 router.route("/:name").get(chip_controller.findByName_chips_c);

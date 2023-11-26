@@ -877,14 +877,6 @@ const admin = {
       onClick: x => true,
       _id: 9126,
     },
-
-    {
-      name: "Settings",
-      path: "/secure/glow/settings",
-      onClick: x => true,
-      _id: 9127,
-    },
-
     {
       name: "Palettes",
       path: "/secure/glow/palettes",
@@ -904,13 +896,6 @@ const admin = {
       path: "/secure/glow/edit_all_data",
       onClick: x => true,
       _id: 9130,
-    },
-
-    {
-      name: "Gcode",
-      path: "/secure/glow/gcode_continous",
-      onClick: x => true,
-      _id: 9131,
     },
 
     {

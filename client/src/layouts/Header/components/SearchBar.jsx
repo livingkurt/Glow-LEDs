@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setDisplay, set_options } from "../../../slices/settingSlice";
-import { set_search } from "../../../slices/chipSlice";
+import { setDisplay, set_options, set_search } from "../../../slices/glowLedsSlice";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Search } from "@mui/icons-material";
 import { API_Products } from "../../../utils";
@@ -15,8 +14,8 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
   const dispatch = useDispatch();
-  const settingPage = useSelector(state => state.settings);
-  const { show_search_bar, options, pathname, search, display } = settingPage;
+  const glowLeds = useSelector(state => state.glowLeds);
+  const { show_search_bar, options, pathname, search, display } = glowLeds;
 
   const { width } = useWindowDimensions();
 

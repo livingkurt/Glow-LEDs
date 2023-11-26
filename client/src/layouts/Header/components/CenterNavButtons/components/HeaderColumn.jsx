@@ -4,17 +4,17 @@ import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import HeaderDrawerButton from "./HeaderDrawerButton";
 import Filter from "../../../../../shared/GlowLEDsComponents/GLTable/Filter";
 import { useDispatch, useSelector } from "react-redux";
-import { set_chip_name } from "../../../../../slices/settingSlice";
+import { set_chip_name } from "../../../../../slices/glowLedsSlice";
 import { update_products_url } from "../../../../../utils/helper_functions";
 import * as API from "../../../../../api";
 
 const HeaderColumn = ({ columns }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const settingPage = useSelector(state => state.settings);
-  const { chip_name } = settingPage;
+  const glowLeds = useSelector(state => state.glowLeds);
+  const { chip_name } = glowLeds;
 
-  const chipPage = useSelector(state => state.chips);
+  const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
 
   const filterHandler = e => {

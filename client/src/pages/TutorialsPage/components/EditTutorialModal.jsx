@@ -4,7 +4,8 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case, toCapitalize } from "../../../utils/helper_functions";
+import { snake_case } from "../../../utils/helper_functions";
+import { tutorialFormFields } from "./tutorialFormFields";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
@@ -29,44 +30,7 @@ const EditTutorialModal = () => {
     return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
   };
 
-  const formFields = {
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "artist_name",
-    },
-    title: {
-      type: "text",
-      label: "Title",
-    },
-    video: {
-      type: "text",
-      label: "Video",
-    },
-    description: {
-      type: "text_multiline",
-      label: "Description",
-    },
-    level: {
-      type: "autocomplete_single",
-      label: "Difficulty",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-      options: ["beginner", "intermediate", "advanced"],
-    },
-    order: {
-      type: "text",
-      label: "Order",
-    },
-    active: {
-      type: "checkbox",
-      label: "Active",
-    },
-  };
+  const formFields = tutorialFormFields({ affiliates });
 
   return (
     <div>
