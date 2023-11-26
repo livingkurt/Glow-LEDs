@@ -14,7 +14,7 @@ import {
   paycheckSlice,
   productsPageSlice,
   promoSlice,
-  settingSlice,
+  glowLedsSlice,
   surveySlice,
   teamSlice,
   userSlice,
@@ -51,7 +51,10 @@ const reducers = {
       sorting: [0, "desc"],
     }),
   }),
-  chips: chipSlice,
+  chips: combineReducers({
+    chipPage: chipSlice,
+    chipTable: glTableReducer("chipTable", {}),
+  }),
   contents: combineReducers({
     contentPage: contentSlice,
     contentTable: glTableReducer("contentTable", {}),
@@ -101,7 +104,7 @@ const reducers = {
     promoPage: promoSlice,
     promoTable: glTableReducer("promoTable", {}),
   }),
-  settings: settingSlice,
+  glowLeds: glowLedsSlice,
   shipping: combineReducers({
     shippingPage: shippingSlice,
     shippingTable: glTableReducer("shippingTable", {

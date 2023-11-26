@@ -20,20 +20,18 @@ const ProfileAffiliateMetrics = () => {
 
   const entity = user.is_affiliated && team?.team_name?.length > 0 ? team : user?.affiliate;
 
-  const { public_code, private_code } = entity;
-
   return (
     <div className="group_item w-100per">
-      {public_code && (
+      {entity?.public_code && (
         <div className="mb-20px ">
           <h2 className="group_images">Affiliate Metrics</h2>
           <div className="mb-20px">
             <h3>Public Code</h3>
-            <label>{public_code.promo_code.toUpperCase()}</label>
+            <label>{entity?.public_code.promo_code.toUpperCase()}</label>
           </div>
           <div className="mb-20px">
             <h3>Private Code</h3>
-            <label>{private_code.promo_code.toUpperCase()}</label>
+            <label>{entity?.private_code.promo_code.toUpperCase()}</label>
           </div>
           {entity?.artist_name && (
             <div className="mb-20px">
@@ -57,14 +55,16 @@ const ProfileAffiliateMetrics = () => {
           )}
           <div className="mb-20px">
             <h3>Promo Code URL</h3>
-            <label>https://www.glow-leds.com?code={public_code.promo_code.toUpperCase()}</label>
+            <label>https://www.glow-leds.com?code={entity?.public_code.promo_code.toUpperCase()}</label>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
               variant="contained"
               color="primary"
               fullWidth
-              onClick={() => copyToClipboard(`https://www.glow-leds.com?code=${public_code.promo_code.toUpperCase()}`)}
+              onClick={() =>
+                copyToClipboard(`https://www.glow-leds.com?code=${entity?.public_code.promo_code.toUpperCase()}`)
+              }
             >
               Copy Link to Clipboard
             </Button>

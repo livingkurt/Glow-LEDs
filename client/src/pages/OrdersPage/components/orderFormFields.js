@@ -1,4 +1,6 @@
-export const orderFormFields = ({ users, products, promos, all_shipping }) => {
+import { humanize } from "../../../utils/helper_functions";
+
+export const orderFormFields = ({ users, products, promos, all_shipping, parcels }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -113,6 +115,35 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
       type: "date",
       label: "Delivered At",
     },
+    isPickup: {
+      type: "checkbox",
+      label: "Is Pickup",
+      default: false,
+    },
+    pickupAt: {
+      type: "date",
+      label: "Pickup At",
+    },
+    isPaused: {
+      type: "checkbox",
+      label: "Is Paused",
+      default: false,
+    },
+    pausedAt: {
+      type: "date",
+      label: "Paused At",
+    },
+
+    isUpdated: {
+      type: "checkbox",
+      label: "Is Updated",
+      default: false,
+    },
+    updatedAt: {
+      type: "date",
+      label: "Updated At",
+    },
+
     isRefunded: {
       type: "checkbox",
       label: "Is Refunded",
@@ -133,6 +164,28 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
     tip: {
       type: "number",
       label: "Tip",
+    },
+    parcel: {
+      type: "autocomplete_single",
+      label: "Parcels",
+      options: parcels,
+      labelProp: "parcel",
+      getOptionLabel: parcel => {
+        if (!parcel) {
+          return "";
+        }
+
+        let { type, length, width, height } = parcel;
+        if (type && length && width) {
+          if (type === "bubble_mailer") {
+            return `${humanize(type)} - ${length} X ${width}`;
+          } else if (height) {
+            return `${humanize(type)} - ${length} X ${width} X ${height}`;
+          }
+        }
+
+        return "";
+      },
     },
     // promo_code: {
     //   type: "text",
@@ -156,6 +209,10 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
       label: "Tracking URL",
     },
     return_tracking_number: {
+      type: "text",
+      label: "Return Tracking Number",
+    },
+    return_tracking_url: {
       type: "text",
       label: "Return Tracking Number",
     },
@@ -330,10 +387,7 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
             type: "text",
             label: "Color",
           },
-          color_code: {
-            type: "text",
-            label: "Color Code",
-          },
+
           secondary_color: {
             type: "text",
             label: "Secondary Color",
@@ -355,12 +409,6 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
           color_code: {
             type: "text",
             label: "Color Code",
-            labelProp: "color_code",
-          },
-          secondary_color_code: {
-            type: "text",
-            label: "Secondary Color Code",
-            labelProp: "secondary_color_code",
           },
           price: {
             type: "number",
@@ -433,21 +481,6 @@ export const orderFormFields = ({ users, products, promos, all_shipping }) => {
             type: "number",
             label: "Count in Stock",
             labelProp: "count_in_stock",
-          },
-          length: {
-            type: "number",
-            label: "Length",
-            labelProp: "length",
-          },
-          width: {
-            type: "number",
-            label: "Width",
-            labelProp: "width",
-          },
-          height: {
-            type: "number",
-            label: "Height",
-            labelProp: "height",
           },
           package_length: {
             type: "number",

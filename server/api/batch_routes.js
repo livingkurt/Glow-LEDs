@@ -524,14 +524,9 @@ router.route("/remove_product_options").put(async (req, res) => {
   const products = await Product.updateMany(
     {},
     {
-      // $rename: { shipping_price: 'volume' }
-      // $set: {
-      // 	product_options: []
-      // }
       $unset: { product_options: 1 },
     },
     { multi: true }
-    // { upsert: true }
   );
 
   res.send(products);
@@ -552,7 +547,6 @@ router.route("/add_vortex_option_to_diffusers").put(async (req, res) => {
         option_product_group: true,
         option_products: ["62732d2853e344002be8037f", "6261b1fd2fc16b002b58c2f7"],
       },
-      // $unset: { product_options: 1 },
     },
     { multi: true }
     // { upsert: true }
@@ -846,7 +840,6 @@ router.route("/updated_capez_price").put(async (req, res) => {
       $set: {
         price: 4,
       },
-      // $unset: { product_options: 1 },
     },
     { multi: true }
     // { upsert: true }

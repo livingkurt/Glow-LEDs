@@ -10,7 +10,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import * as API from "../../api";
-import { set_show_search_bar } from "../../slices/settingSlice";
+import { set_show_search_bar } from "../../slices/glowLedsSlice";
 import { openLoginModal } from "../../slices/userSlice";
 
 const HomePage = () => {

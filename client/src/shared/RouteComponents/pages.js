@@ -1,12 +1,10 @@
 import { OrderPage } from "../../pages/OrderPage";
 import { PlaceOrderPage } from "../../pages/PlaceOrderPage";
 import { AdminChangePasswordPage } from "../../pages/ProfiePage/components";
-import { EditProductPage } from "../../pages/ProductsPage/components";
 import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
-import { EditSettingPage, SettingsPage } from "../../pages/SettingsPage";
 import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
@@ -17,12 +15,12 @@ import { ExpensesPage } from "../../pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
+import ChipsPage from "../../pages/ChipsPage/ChipsPage";
 import { ProductsDisplayPage } from "../../pages/ProductsGridPage/components";
 import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
-import { ChipsPage, EditChipPage } from "../../pages/ChipsPage";
 import { ProfilePage } from "../../pages/ProfiePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
@@ -91,20 +89,17 @@ export const Components = {
   TrackOrderPage,
 };
 export const AdminComponents = {
-  EditProductPage,
   DatabaseMigrationPage,
   ProductsPage,
   OrdersPage,
   UsersPage,
   PaychecksPage,
-  SettingsPage,
   CategorysPage,
   SurveysPage,
   ParcelsPage,
   PalettesPage,
   FilamentsPage,
   ProfilePage,
-  EditSettingPage,
   EditParcelPage,
   EditPalettePage,
   AdminChangePasswordPage,
@@ -116,7 +111,6 @@ export const AdminComponents = {
   ContentsPage,
   ProductsDisplayPage,
   AnnouncementEmail,
-  EditChipPage,
   PromosPage,
   AffiliatesPage,
   TeamsPage,

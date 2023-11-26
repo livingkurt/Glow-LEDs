@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_chips_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const chips = await chip_services.table_chips_s(query);
+      if (chips) {
+        return res.status(200).send(chips);
+      }
+      return res.status(404).send({ message: "Chips Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_chips_c: async (req, res) => {
     const { params } = req;
     try {

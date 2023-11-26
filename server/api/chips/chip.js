@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const chip_dimensions_schema = {
-  chip_height: { type: Number },
-  chip_width: { type: Number },
-  chip_length: { type: Number },
+  height: { type: Number },
+  width: { type: Number },
+  length: { type: Number },
 };
 const chip_color_schema = {
   name: { type: String },
@@ -15,6 +15,7 @@ const chip_schema = new mongoose.Schema(
     name: { type: String },
     company: { type: String },
     category: { type: String },
+    category_object: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     programmmable: { type: Boolean },
     number_of_modes: { type: Number },
     characteristics: { type: String },
@@ -22,6 +23,7 @@ const chip_schema = new mongoose.Schema(
     colors: [chip_color_schema],
     pathname: { type: String },
     image: { type: String },
+    image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     dimensions: chip_dimensions_schema,
     deleted: { type: Boolean, default: false },
   },

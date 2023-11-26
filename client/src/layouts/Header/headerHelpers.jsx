@@ -10,8 +10,33 @@ export const determineDropdown = (item, current_user) => {
   return true;
 };
 
+export const hasChildren = item =>
+  item.rows?.length > 0 ||
+  item.columns?.length > 0 ||
+  item.column?.length > 0 ||
+  item.otherColumns?.length > 0 ||
+  item.sideDrawer?.drawerItems?.length > 0 ||
+  item.subSideDrawer?.subHeaderDrawers?.length > 0;
+
 export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
+};
+
+export const determineBackgroundColor = level => {
+  switch (level) {
+    case 0:
+      return "#333333";
+    case 1:
+      return "#4c526d";
+    case 2:
+      return "#343a52";
+    case 3:
+      return "#282c3b";
+    case 4:
+      return "#1d202b";
+    default:
+      return "#999999";
+  }
 };
 
 export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
@@ -151,12 +176,12 @@ const exo_diffusers = {
 
       {
         name: "Polyhedrons",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/clozd/collection/polyhedrons",
+        path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons",
         _id: 115,
       },
       {
         name: "Domes",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/clozd/collection/domes",
+        path: "/collections/all/products/category/exo_diffusers/subcategory/domes",
         _id: 116,
       },
     ],
@@ -172,7 +197,7 @@ const diffuser_caps = {
     drawerItems: [
       {
         name: "Diffuser Caps Starter Kit",
-        path: "/collections/all/products/category/diffuser_caps_adapters_starter_kit",
+        path: "/collections/all/products/diffuser_caps_adapters_starter_kit",
         _id: 118,
       },
       {
@@ -278,6 +303,7 @@ const diffusers = {
 const enhancers = {
   name: "Enhancers",
   path: "/pages/menu/gloving",
+  id: "enhancers_dropdown",
   _id: 336,
   rows: [
     glowskinz,
@@ -300,6 +326,7 @@ const enhancers = {
 
 const essentials = {
   name: "Essentials",
+  id: "essentials_dropdown",
   path: "/collections/all/products/category/essentials",
   _id: 439,
   rows: [
@@ -338,7 +365,8 @@ const essentials = {
 };
 const community = {
   name: "Community",
-  path: "/pages/menu/support",
+  id: "community_dropdown",
+  // path: "/pages/menu/community",
   _id: 446,
   rows: [
     {
@@ -391,6 +419,7 @@ const community = {
 
 const learn = {
   name: "Learn",
+  id: "learn_dropdown",
   path: "/pages/learn",
   _id: 1055,
   rows: [
@@ -423,6 +452,7 @@ const learn = {
 };
 const tutorials = {
   name: "Tutorials",
+  id: "tutorials_dropdown",
   path: "/pages/learn",
   _id: 1061,
   rows: [
@@ -585,6 +615,7 @@ const tutorials = {
 };
 const tips = {
   name: "Gloving Tips",
+  id: "tips_dropdown",
   path: "/pages/learn",
   _id: 1089,
   rows: [
@@ -602,6 +633,7 @@ const tips = {
 };
 const support = {
   name: "Support",
+  id: "support_dropdown",
   path: "/pages/menu/support",
   _id: 592,
   rows: [
@@ -675,6 +707,7 @@ const support = {
 
 const user = {
   name: "User",
+  id: "user_dropdown",
   rows: [
     {
       name: "Profile",
@@ -696,6 +729,7 @@ const user = {
 
 const admin = {
   name: "Admin",
+  id: "admin_dropdown",
   rows: [
     {
       name: "Dashboard",
@@ -843,14 +877,6 @@ const admin = {
       onClick: x => true,
       _id: 9126,
     },
-
-    {
-      name: "Settings",
-      path: "/secure/glow/settings",
-      onClick: x => true,
-      _id: 9127,
-    },
-
     {
       name: "Palettes",
       path: "/secure/glow/palettes",
@@ -873,13 +899,6 @@ const admin = {
     },
 
     {
-      name: "Gcode",
-      path: "/secure/glow/gcode_continous",
-      onClick: x => true,
-      _id: 9131,
-    },
-
-    {
       name: "Update Version",
       path: "",
       onClick: () => updateVersion(),
@@ -898,6 +917,7 @@ export const navItems = [
   {
     name: "Shop",
     path: "/pages/menu/gloving",
+    id: "shop_dropdown",
     _id: 9134,
     dataTestId: "shop_button",
     columns: [features, enhancers],
@@ -907,27 +927,32 @@ export const navItems = [
   {
     name: "Learn",
     path: "/collections/all/tutorials",
+    id: "learn_dropdown",
     // path: "/pages/learn",
     _id: 9135,
     dataTestId: "learn_button",
     // columns: [learn, tutorials],
-    otherColumns: [tips],
+    // otherColumns: [tips],
     headerLocation: "center",
   },
   {
     name: "Community",
-    path: "/pages/menu/support",
+    id: "community_dropdown",
+    // path: "/pages/menu/community",
     _id: 10136,
     dataTestId: "community_button",
     columns: [community],
+    column: community.rows,
     headerLocation: "center",
   },
   {
     name: "Support",
+    id: "support_dropdown",
     path: "/pages/menu/support",
     _id: 10137,
     dataTestId: "support_button",
     columns: [support],
+    column: support.rows,
     headerLocation: "center",
   },
 ];
@@ -943,16 +968,27 @@ export const rightNav = dispatch => {
         !(current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) &&
         dispatch(openLoginModal()),
       dataTestId: "community_button",
+      id: "user_dropdown",
       columns: [user],
+      column: user.rows,
       headerLocation: "center",
       permissions: x => true,
     },
     {
       name: "Admin",
+      id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
       columns: [admin],
+      column: admin.rows,
       headerLocation: "center",
     },
   ];
 };
+
+export const sidebarItems = dispatch => [
+  navItems[0],
+  rightNav(dispatch)[0],
+  ...navItems.slice(1),
+  rightNav(dispatch)[1],
+];

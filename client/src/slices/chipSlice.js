@@ -3,18 +3,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const chip = {
+  id: "",
+  name: "",
+  company: "",
+  category: "",
+  category_object: {},
+  programmmable: false,
+  number_of_modes: 0,
+  characteristics: "",
+  colors_per_mode: 0,
+  pathname: "",
+  image: "",
+  image_object: {},
+  colors: [],
+  dimensions: {
+    height: 0,
+    width: 0,
+    length: 0,
+  },
+};
+
 const chipPage = createSlice({
   name: "chipPage",
   initialState: {
     loading: false,
     chips: [],
-    chip: {},
+    chip: chip,
+    remoteVersionRequirement: 0,
+    edit_chip_modal: false,
+    upload_chip_modal: false,
+    chip_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_chip: (state, { payload }) => {
@@ -27,17 +48,30 @@ const chipPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = true;
+      state.chip = chip;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = true;
+      state.chip = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_chip_modal: (state, { payload }) => {
+      state.edit_chip_modal = false;
+      state.upload_chip_modal = false;
+      state.chip_modal = false;
+      state.chip = chip;
+    },
+    open_chip_modal: (state, { payload }) => {
+      state.chip_modal = true;
+      state.chip = payload;
+    },
+    chip_uploaded: (state, { payload }) => {
+      state.upload_chip_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -63,6 +97,8 @@ const chipPage = createSlice({
     [API.saveChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Chip Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_chip_modal = false;
     },
     [API.saveChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -87,8 +123,9 @@ const chipPage = createSlice({
     },
     [API.deleteChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.chip = payload.chip;
+      state.chip = chip;
       state.message = "Chip Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteChip.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -98,5 +135,14 @@ const chipPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_chip } = chipPage.actions;
+export const {
+  set_loading,
+  set_chip,
+  set_edit_chip_modal,
+  open_create_chip_modal,
+  open_chip_modal,
+  close_chip_modal,
+  open_edit_chip_modal,
+  chip_uploaded,
+} = chipPage.actions;
 export default chipPage.reducer;

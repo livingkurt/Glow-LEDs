@@ -1,6 +1,15 @@
+import config from "../../config";
 import express from "express";
 import Version from "./version";
 const router = express.Router();
+
+router.get("/environment", async (req, res) => {
+  try {
+    res.status(201).send({ environment: config.ENVIRONMENT });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 router.get("/", async (req, res) => {
   try {

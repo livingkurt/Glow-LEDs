@@ -60,7 +60,6 @@ const ProductThumbCarouselItem = ({ product, size, style }) => {
               <label className="product-price">
                 {sale_price_switch({
                   product: product,
-                  cartItem: product.product_options,
                   isWholesaler: current_user?.isWholesaler,
                 })}
               </label>

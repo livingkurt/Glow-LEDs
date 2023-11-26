@@ -417,10 +417,6 @@ export const navigation = [
         link: "/secure/glow/categorys",
       },
       {
-        title: "Settings",
-        link: "/secure/glow/settings",
-      },
-      {
         title: "Palettes",
         link: "/secure/glow/palettes",
       },
@@ -431,10 +427,6 @@ export const navigation = [
       {
         title: "Edit All Data",
         link: "/secure/glow/edit_all_data",
-      },
-      {
-        title: "Gcode",
-        link: "/secure/glow/gcode_continous",
       },
       {
         title: "Compressor",

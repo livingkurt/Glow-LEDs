@@ -6,29 +6,6 @@ import store from "../../store";
 import { showError, showSuccess } from "../../slices/snackbarSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const updateVersion = async () => {
-  try {
-    const { data } = await axios.put(`/api/versions/increment`);
-    store.dispatch(
-      showSuccess({
-        message: `Version updated to ${data.version}`,
-      })
-    );
-    return data;
-  } catch (error) {
-    store.dispatch(showError({ message: errorMessage(error) }));
-  }
-};
-
-export const getEnvironment = createAsyncThunk("settings/getEnvironment", async () => {
-  try {
-    const { data } = await axios.get(`/api/settings/env`);
-    return data;
-  } catch (error) {
-    store.dispatch(showError({ message: errorMessage(error) }));
-  }
-});
-
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
