@@ -48,7 +48,7 @@ const chipPage = createSlice({
     [API.listChips.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.chips = payload.chips;
-      state.totalPages = payload.totalPages;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Chips Found";
     },
