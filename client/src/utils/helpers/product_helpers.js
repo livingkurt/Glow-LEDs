@@ -54,7 +54,6 @@ const no_state = {
   option_products: [],
   color_products: [],
   secondary_color_products: [],
-  product_options: [],
   option_products_name: "",
   color_products_name: "",
   secondary_color_products_name: "",

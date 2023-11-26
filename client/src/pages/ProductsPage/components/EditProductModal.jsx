@@ -16,6 +16,8 @@ const EditProductModal = () => {
   const { categorys, loading: loading_categorys } = categoryPage;
   const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
+  const filamentPage = useSelector(state => state.filaments.filamentPage);
+  const { filaments } = filamentPage;
 
   useEffect(() => {
     let clean = true;
@@ -23,6 +25,7 @@ const EditProductModal = () => {
       dispatch(API.listProducts({ option: true }));
       dispatch(API.listUsers({}));
       dispatch(API.listCategorys({}));
+      dispatch(API.listFilaments({}));
     }
     return () => {
       clean = false;
@@ -36,6 +39,7 @@ const EditProductModal = () => {
     chips,
     onEdit: product => dispatch(open_edit_product_modal(product)),
     product,
+    filaments,
   });
 
   return (
