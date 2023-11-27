@@ -50,6 +50,7 @@ export default {
         return await Content.updateOne({ _id: id }, body);
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

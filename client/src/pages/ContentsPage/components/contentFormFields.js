@@ -19,6 +19,7 @@ export const contentFormFields = ({ content }) => {
 
         images_object: {
           type: "image_upload",
+          image_type: "object",
           label: "Images",
           // options: images,
           labelProp: "images_object",
@@ -26,6 +27,7 @@ export const contentFormFields = ({ content }) => {
         },
         banner_image_object: {
           type: "image_upload",
+          image_type: "object",
           label: "Rectangle Image",
           // options: images,
           labelProp: "banner_image_object",
