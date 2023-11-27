@@ -187,7 +187,7 @@ const CompletePage = () => {
             <link rel="canonical" href={data.link} />
             <meta property="og:url" content={data.link} />
           </Helmet>
-          {current_user?.isAdmin && (
+          {/* {current_user?.isAdmin && (
             <div className="jc-b mb-1rem">
               <Link to="/secure/glow/emails">
                 <GLButton variant="primary" className="mh-10px">
@@ -204,7 +204,7 @@ const CompletePage = () => {
                 Send Email
               </GLButton>
             </div>
-          )}
+          )} */}
           {params.type === "order" && <OrderComplete current_user={current_user} order_id={params.id} />}
           {params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}
           {params.type === "email" && <EmailComplete current_user={current_user} />}
