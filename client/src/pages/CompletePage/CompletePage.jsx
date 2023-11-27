@@ -22,8 +22,8 @@ const CompletePage = () => {
           <title>Complete | Glow LEDs</title>
           <meta property="og:title" content="Check Email" />
           <meta name="twitter:title" content="Check Email" />
-          <link rel="canonical" href={`https://www.glow-leds.com//pages/complete/${params.type}`} />
-          <meta property="og:url" content={`https://www.glow-leds.com//pages/complete/${params.type}`} />
+          <link rel="canonical" href={`https://www.glow-leds.com/pages/complete/${params.type}`} />
+          <meta property="og:url" content={`https://www.glow-leds.com/pages/complete/${params.type}`} />
         </Helmet>
         {params.type === "order" && <OrderComplete current_user={current_user} order_id={params.id} />}
         {params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}

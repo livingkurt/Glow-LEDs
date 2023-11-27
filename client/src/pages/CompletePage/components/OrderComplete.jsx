@@ -126,14 +126,14 @@ const OrderComplete = ({ current_user, order_id }) => {
               </div>
             </div>
           </div>
-          {/* <div id="myModal" style={{ display: show_modal ? "block" : "none" }} className="modal fade_in">
-          <div className="modal-content">
-            <span className="close" onClick={() => set_show_modal(false)}>
-              &times;
-            </span>
-            <Survey order_id={order_id} />
+          <div id="myModal" style={{ display: show_modal ? "block" : "none" }} className="modal fade_in">
+            <div className="modal-content">
+              <span className="close" onClick={() => set_show_modal(false)}>
+                &times;
+              </span>
+              <Survey order_id={order_id} />
+            </div>
           </div>
-        </div> */}
         </div>
       </div>
     </div>
