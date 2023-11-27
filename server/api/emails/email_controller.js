@@ -136,6 +136,7 @@ export default {
       title: "Thank you for your purchase!",
       order: req.body.order,
     };
+    console.log({ body });
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
