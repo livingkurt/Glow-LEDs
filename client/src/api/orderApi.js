@@ -71,6 +71,20 @@ export const createNoPayOrder = createAsyncThunk(
   async (order, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.post("/api/orders", order);
+      dispatch(
+        sendOrderEmail({
+          order: data,
+          subject: "Thank you for your Glow LEDs Order",
+          email: order.shipping.email,
+        })
+      );
+      dispatch(
+        sendOrderEmail({
+          order: data,
+          subject: "New Order Created by " + order.shipping.first_name,
+          email: config.REACT_APP_INFO_EMAIL,
+        })
+      );
       sessionStorage.removeItem("shippingAddress");
       return data;
     } catch (error) {
@@ -141,7 +155,7 @@ export const createPayOrder = createAsyncThunk(
 
       const { data: order_created } = await axios.post("/api/orders", { ...order, user: user_id });
       const { data: payment_created } = await axios.put(`/api/payments/${order_created._id}/pay`, { paymentMethod });
-      if (environment === "production") {
+      if (environment === "production" && environment === "development") {
         dispatch(
           sendOrderEmail({
             order: order_created,

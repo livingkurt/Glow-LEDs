@@ -6,8 +6,11 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { emailFormFields } from "./emailFormFields";
 import { Box, Button, Checkbox, FormControlLabel, Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
+import { showConfirm } from "../../../slices/snackbarSlice";
+import { useRef } from "react";
 
 let debounceTimer;
+let runOnce;
 
 const EditEmailModal = () => {
   const dispatch = useDispatch();
@@ -20,11 +23,24 @@ const EditEmailModal = () => {
 
   const [debounceValue, setDebounceValue] = useState(null);
 
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    if (email && !hasFetched.current) {
+      dispatch(API.viewAnnouncement({ template: email }));
+      hasFetched.current = true;
+    }
+  }, [email]);
+
+  useEffect(() => {
+    dispatch(API.viewAnnouncement({ template: email }));
+  }, [email]);
+
   useEffect(() => {
     if (debounceValue) {
       debounceTimer = setTimeout(() => {
         dispatch(API.viewAnnouncement({ template: email }));
-      }, 1000); // 500ms debounce time
+      }, 2000); // 500ms debounce time
     }
 
     return () => {
@@ -42,49 +58,27 @@ const EditEmailModal = () => {
         onCancel={() => {
           dispatch(set_edit_email_modal(false));
         }}
-        onAction={() => {
-          dispatch(API.sendAnnouncement({ template, subject: email.subject, test: testEmail }));
-        }}
         maxWidth="xl"
         title={"Edit Email"}
         confirmLabel={"Save"}
         confirmColor="primary"
         cancelLabel={"Cancel"}
         cancelColor="secondary"
-        actionLabel={`Send ${testEmail && "Test "}Email`}
         actionColor="secondary"
         disableEscapeKeyDown
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            {/* GLForm */}
-            <Grid item xs={12}>
-              <GLForm
-                formData={formFields}
-                state={email}
-                onChange={value => {
-                  dispatch(set_email(value));
-                  setDebounceValue(value);
-                }}
-                loading={loading}
-              />
-            </Grid>
-            {/* Test Email Checkbox */}
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name={"testEmail"}
-                    size="large"
-                    onChange={e => dispatch(setTestEmail(e.target.checked))}
-                    checked={testEmail}
-                  />
-                }
-                label={"Test Email"}
-              />
-            </Grid>
+            <GLForm
+              formData={formFields}
+              state={email}
+              onChange={value => {
+                dispatch(set_email(value));
+                setDebounceValue(value);
+              }}
+              loading={loading}
+            />
           </Grid>
-          {/* Template */}
           <Grid item xs={6}>
             <Box m={2}>
               <Paper>{template}</Paper>

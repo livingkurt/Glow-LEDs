@@ -108,6 +108,7 @@ node_modules
 client/node_modules
 client/build
 DS_STORE
+DS_Store
 
 client/public/images/full_sized_images
 client/public/videos/full_sized_videos

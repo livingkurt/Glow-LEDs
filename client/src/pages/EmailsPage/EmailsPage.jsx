@@ -14,12 +14,13 @@ import SendIcon from "@mui/icons-material/Send";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContentCopy } from "@mui/icons-material";
+import { BugReport, ContentCopy, Email } from "@mui/icons-material";
 import { determineEmailColors, templates } from "./emailsPageHelpers";
+import { showConfirm } from "../../slices/snackbarSlice";
 
 const EmailsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { loading, remoteVersionRequirement } = emailPage;
+  const { loading, remoteVersionRequirement, template } = emailPage;
   const dispatch = useDispatch();
 
   const columnDefs = useMemo(
@@ -51,6 +52,28 @@ const EmailsPage = () => {
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>
               <EditIcon color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Send Test Email"
+              onClick={() => {
+                dispatch(API.sendAnnouncement({ emailId: email._id, testEmail: true }));
+              }}
+            >
+              <BugReport color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Send Test Email"
+              onClick={() => {
+                dispatch(
+                  showConfirm({
+                    title: "Confirm Email Send",
+                    message: `Are you sure you want to Send Official Email?`,
+                    onConfirm: () => dispatch(API.sendAnnouncement({ emailId: email._id })),
+                  })
+                );
+              }}
+            >
+              <Email color="white" />
             </IconButton>
             <IconButton
               aria-label="Edit"

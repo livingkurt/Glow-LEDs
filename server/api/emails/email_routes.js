@@ -13,7 +13,7 @@ router.route("/order_status").post(email_controller.send_order_status_emails_c);
 router.route("/review").post(email_controller.send_review_emails_c);
 router.route("/affiliate").post(email_controller.send_affiliate_emails_c);
 router.route("/feature").post(email_controller.send_feature_emails_c);
-router.route("/announcement").post(email_controller.send_announcement_emails_c);
+router.route("/:id/announcement/:test").post(email_controller.send_announcement_emails_c);
 router.route("/code_used/:promo_code").post(email_controller.send_code_used_emails_c);
 router.route("/view_announcement").post(email_controller.view_announcement_emails_c);
 

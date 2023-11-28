@@ -109,15 +109,10 @@ export const viewAnnouncement = createAsyncThunk(
 );
 export const sendAnnouncement = createAsyncThunk(
   "emails/sendAnnouncement",
-  async ({ template, subject, test, time }, { dispatch, rejectWithValue }) => {
+  async ({ emailId, testEmail }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.post("/api/emails/announcement", {
-        template,
-        subject,
-        test,
-        time,
-      });
-      dispatch(showSuccess({ message: `${test && "Test "}Emails Sent` }));
+      const { data } = await axios.post(`/api/emails/${emailId}/announcement/${testEmail ? "true" : "false"}`);
+      dispatch(showSuccess({ message: `${testEmail && "Test "}Emails Sent` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
