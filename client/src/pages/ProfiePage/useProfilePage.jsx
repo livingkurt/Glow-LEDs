@@ -47,47 +47,47 @@ const useProfilePage = () => {
 
   useEffect(() => {
     // Fetch initial data
-    if (user.is_affiliated && user?.affiliate && !hasFetchedTeam) {
+    if (user.is_affiliated && user?.affiliate) {
       dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
       if (user?.affiliate?.sponsor) {
         dispatch(API.listSponsorCodes(user?.affiliate._id));
       }
-      dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }))
-        .then(() => setHasFetchedTeam(true))
-        .catch(console.error);
+      // dispatch(API.detailsTeam({ affiliateId: user?.affiliate._id || current_user.affiliate }))
+      //   .then(() => setHasFetchedTeam(true))
+      //   .catch(console.error);
     }
-  }, [user.is_affiliated, user?.affiliate, current_user.affiliate, dispatch, hasFetchedTeam]);
+  }, [user.is_affiliated, user?.affiliate, current_user.affiliate, dispatch]);
 
   useEffect(() => {
     // Dispatch affiliateEarnings once team details are fetched
-    if (hasFetchedTeam) {
-      const public_code_source = team && team?.team_name?.length > 0 ? team : user?.affiliate?.public_code;
+    // if (hasFetchedTeam) {
+    const public_code_source = team && team?.team_name?.length > 0 ? team : user?.affiliate?.public_code;
 
-      dispatch(
-        API.affiliateEarnings({
-          promo_code: public_code_source?.promo_code,
-          start_date: month_start_date,
-          end_date: month_end_date,
-          sponsor: user?.affiliate?.sponsor,
-          type: "month",
-        })
-      );
-      dispatch(
-        API.affiliateEarnings({
-          promo_code: public_code_source?.promo_code,
-          start_date: year_start_date,
-          end_date: year_end_date,
-          sponsor: user?.affiliate?.sponsor,
-          type: "year",
-        })
-      );
+    dispatch(
+      API.affiliateEarnings({
+        promo_code: public_code_source?.promo_code,
+        start_date: month_start_date,
+        end_date: month_end_date,
+        sponsor: user?.affiliate?.sponsor,
+        type: "month",
+      })
+    );
+    dispatch(
+      API.affiliateEarnings({
+        promo_code: public_code_source?.promo_code,
+        start_date: year_start_date,
+        end_date: year_end_date,
+        sponsor: user?.affiliate?.sponsor,
+        type: "year",
+      })
+    );
 
-      // Reset the flag if needed
-      // setHasFetchedTeam(false);
-    }
+    // Reset the flag if needed
+    // setHasFetchedTeam(false);
+    // }
   }, [
     dispatch,
-    hasFetchedTeam,
+    // hasFetchedTeam,
     month_start_date,
     month_end_date,
     year_start_date,

@@ -18,30 +18,32 @@ const ProfileAffiliateMetrics = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
   const { refreshCode, twentyFiveOffCode } = promoPage;
 
-  const entity = user.is_affiliated && team?.team_name?.length > 0 ? team : user?.affiliate;
+  // const entity = user.is_affiliated && team?.team_name?.length > 0 ? team : user?.affiliate;
+
+  // console.log({ entity });
 
   return (
     <div className="group_item w-100per">
-      {entity?.public_code && (
+      {user.is_affiliated && user?.affiliate && user?.affiliate?.public_code && (
         <div className="mb-20px ">
           <h2 className="group_images">Affiliate Metrics</h2>
           <div className="mb-20px">
             <h3>Public Code</h3>
-            <label>{entity?.public_code.promo_code.toUpperCase()}</label>
+            <label>{user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
           </div>
           <div className="mb-20px">
             <h3>Private Code</h3>
-            <label>{entity?.private_code.promo_code.toUpperCase()}</label>
+            <label>{user?.affiliate?.private_code.promo_code.toUpperCase()}</label>
           </div>
-          {entity?.artist_name && (
+          {user?.affiliate?.artist_name && (
             <div className="mb-20px">
               <h3>Projected Private Code Discount</h3>
               <label>
-                {!loading_month_earnings && determine_code_tier(entity, month_earnings.number_of_uses)}% Off
+                {!loading_month_earnings && determine_code_tier(user?.affiliate, month_earnings.number_of_uses)}% Off
               </label>
             </div>
           )}
-          {entity?.sponsor && (
+          {user?.affiliate?.sponsor && (
             <>
               <div className="mb-20px">
                 <h3>Monthly Sponsor Code ($25 off)</h3>
@@ -55,7 +57,7 @@ const ProfileAffiliateMetrics = () => {
           )}
           <div className="mb-20px">
             <h3>Promo Code URL</h3>
-            <label>https://www.glow-leds.com?code={entity?.public_code.promo_code.toUpperCase()}</label>
+            <label>https://www.glow-leds.com?code={user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
@@ -63,7 +65,9 @@ const ProfileAffiliateMetrics = () => {
               color="primary"
               fullWidth
               onClick={() =>
-                copyToClipboard(`https://www.glow-leds.com?code=${entity?.public_code.promo_code.toUpperCase()}`)
+                copyToClipboard(
+                  `https://www.glow-leds.com?code=${user?.affiliate?.public_code.promo_code.toUpperCase()}`
+                )
               }
             >
               Copy Link to Clipboard
