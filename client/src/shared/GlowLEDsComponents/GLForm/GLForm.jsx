@@ -8,6 +8,7 @@ import {
   determine_shown_fields,
   formatDate,
   formatDateTime,
+  formatDateTimeLocal,
   getEmptyObjectFromSchema,
   getValueByStringPath,
 } from "./glFormHelpers";
@@ -60,7 +61,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
           if (fieldData.type === "checkbox") {
             return (
               <Skeleton
-                key={fieldName}
+                key={`${fieldName}-${fieldData.type}`}
                 variant="circle"
                 width={200}
                 height={20}
@@ -68,9 +69,23 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               />
             );
           } else if (fieldData.type === "array" || fieldData.type === "object") {
-            return <Skeleton key={fieldName} variant="rectangular" height={500} style={{ marginTop: 22 }} />;
+            return (
+              <Skeleton
+                key={`${fieldName}-${fieldData.type}`}
+                variant="rectangular"
+                height={500}
+                style={{ marginTop: 22 }}
+              />
+            );
           } else {
-            return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
+            return (
+              <Skeleton
+                key={`${fieldName}-${fieldData.type}`}
+                variant="rectangular"
+                height={40}
+                style={{ marginTop: 22 }}
+              />
+            );
           }
         } else if (determine_shown_fields(fieldData, current_user, mode)) {
           switch (fieldData.type) {
@@ -80,7 +95,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 : fieldState;
               return (
                 <GLAutocomplete
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   autoComplete="new-password"
                   customClasses={classes}
                   // isOptionEqualToValue={(option, value) => {
@@ -125,7 +140,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "autocomplete_multiple":
               return (
                 <DropdownDisplayV2
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   margin="normal"
                   value={fieldState || ""}
                   options={fieldData.options || []}
@@ -151,7 +166,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "checkbox":
               return (
                 <FormControlLabel
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   control={
                     <Checkbox
                       name={fieldName}
@@ -166,14 +181,14 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "title":
               return (
-                <Typography key={fieldName} variant={fieldData.variant} align={fieldData.align}>
+                <Typography key={`${fieldName}-${fieldData.type}`} variant={fieldData.variant} align={fieldData.align}>
                   {fieldData.label}
                 </Typography>
               );
             case "autocomplete_address":
               return (
                 <GoogleAutocomplete
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
@@ -228,7 +243,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   FormHelperTextProps={{
                     className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   margin="normal"
                   size="small"
@@ -264,7 +279,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   FormHelperTextProps={{
                     className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   margin="normal"
                   size="small"
@@ -298,7 +313,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   FormHelperTextProps={{
                     className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   margin="normal"
                   size="small"
@@ -315,8 +330,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 />
               );
             case "datetime":
-              const formattedDateTime = formatDateTime(fieldState);
-              console.log({ fieldState, formattedDateTime });
               return (
                 <GLTextFieldV2
                   helperText={formErrors && formErrors[fieldName]}
@@ -332,11 +345,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   }}
                   InputLabelProps={{
                     className: classes.label,
+                    shrink: true, // Always keep the label shrunk
                   }}
                   FormHelperTextProps={{
                     className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   margin="normal"
                   size="small"
@@ -344,8 +358,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   type={"datetime-local"}
                   label={fieldData.label}
                   variant="outlined"
-                  // value={fieldState || ""}
-                  value={formattedDateTime !== null && formattedDateTime !== undefined ? formattedDateTime : ""}
+                  value={formatDateTimeLocal(fieldState)}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
@@ -369,7 +382,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   FormHelperTextProps={{
                     className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                   }}
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   name={fieldName}
                   margin="normal"
                   size="small"
@@ -390,12 +403,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                 : fieldState;
               return (
-                <Paper className="p-10px mv-10px" key={fieldName}>
+                <Paper className="p-10px mv-10px" key={`${fieldName}-${fieldData.type}`}>
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
                   <GLAutocomplete
-                    key={fieldName}
+                    key={`${fieldName}-${fieldData.type}`}
                     autoComplete="new-password"
                     customClasses={classes}
                     // isOptionEqualToValue={(option, value) => {
@@ -440,7 +453,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "array":
               return (
                 <GLArray
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   fieldName={fieldName}
                   fieldState={fieldState}
                   fieldData={fieldData}
@@ -454,7 +467,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             case "color_picker":
               return (
                 <GLColorPicker
-                  key={fieldName}
+                  key={`${fieldName}-${fieldData.type}`}
                   fieldName={fieldName}
                   fieldState={fieldState}
                   fieldData={fieldData}

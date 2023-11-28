@@ -1,10 +1,13 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 
-export const determineEmailColors = content => {
-  let result = tableColors.active;
+export const determineEmailColors = email => {
+  let result = tableColors.waiting;
 
-  if (!content.active) {
-    result = tableColors.waiting;
+  if (email.status === "Sent") {
+    result = tableColors.completed;
+  }
+  if (email.status === "Draft") {
+    result = tableColors.active;
   }
 
   return result;

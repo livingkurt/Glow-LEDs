@@ -1,13 +1,13 @@
 import App from "../../email_templates/App";
 import { announcement } from "../../email_templates/pages";
 import config from "../../config";
+import { user_db } from "../users";
 
-const cron = require("node-cron");
 const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
 
 export const send_multiple_emails = async (emailAddresses, email, res) => {
-  const { subject, scheduled_at } = email;
+  const { subject } = email;
   try {
     const mailOptions = {
       to: config.INFO_EMAIL,
@@ -21,28 +21,42 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
       bcc: emailAddresses,
     };
 
-    const date = new Date(scheduled_at);
-    console.log({ subject, scheduled_at, date });
-    if (scheduled_at && scheduled_at.length > 0) {
-      email.status = "scheduled";
-      email.save();
-      cron.schedule(
-        `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
-        () => {
-          sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-          email.status = "sent";
-          email.save();
-        },
-        {
-          scheduled: true,
-          timezone: "America/Rainy_River",
-        }
-      );
-    } else {
-      sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-    }
+    email.status = "Sent";
+    email.save();
+    sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
   } catch (err) {
     return "Error Sending Email";
+  }
+};
+
+export const sendEmailsInBatches = async (email, res, testEmails = null) => {
+  const emailsPerIteration = 100;
+  let subscribed_users;
+  let emailAddresses;
+  let iterations;
+
+  if (testEmails) {
+    emailAddresses = testEmails;
+    iterations = 1; // Only one iteration needed for test emails
+  } else {
+    subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
+    iterations = Math.ceil(subscribed_users.length / emailsPerIteration);
+  }
+
+  for (let i = 0; i < iterations; i++) {
+    if (!testEmails) {
+      const startIndex = i * emailsPerIteration;
+      const endIndex = startIndex + emailsPerIteration;
+      emailAddresses = subscribed_users.slice(startIndex, endIndex).map(user => user.email);
+    }
+
+    // await send_multiple_emails(emailAddresses, email, res);
+    console.log(`Batch ${i + 1}: Sent emails to ${emailAddresses.length} users`);
+
+    if (!testEmails) {
+      // If not testing, wait before sending the next batch
+      await new Promise(resolve => setTimeout(resolve, 10000));
+    }
   }
 };
 

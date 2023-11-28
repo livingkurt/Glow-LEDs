@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { setTestEmail, set_edit_email_modal, set_email } from "../../../slices/emailSlice";
+import { set_edit_email_modal, set_email } from "../../../slices/emailSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { emailFormFields } from "./emailFormFields";
-import { Box, Button, Checkbox, FormControlLabel, Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
-import { showConfirm } from "../../../slices/snackbarSlice";
 import { useRef } from "react";
 
 let debounceTimer;
-let runOnce;
 
 const EditEmailModal = () => {
   const dispatch = useDispatch();
@@ -32,15 +30,17 @@ const EditEmailModal = () => {
     }
   }, [email]);
 
-  useEffect(() => {
-    dispatch(API.viewAnnouncement({ template: email }));
-  }, [email]);
+  const debounceKeys = ["status", "scheduled_at", "active", "link", "subject"];
 
   useEffect(() => {
-    if (debounceValue) {
+    const keys = Object.keys(debounceValue || {});
+    const shouldDebounce = keys.some(key => debounceKeys.includes(key));
+
+    if (debounceValue && !shouldDebounce) {
+      console.log({ debounceValue });
       debounceTimer = setTimeout(() => {
         dispatch(API.viewAnnouncement({ template: email }));
-      }, 2000); // 500ms debounce time
+      }, 2000); // 2000ms debounce time
     }
 
     return () => {

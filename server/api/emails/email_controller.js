@@ -26,7 +26,7 @@ import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
-import { sendEmail, send_multiple_emails } from "./email_helpers";
+import { sendEmail, sendEmailsInBatches, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { team_db } from "../teams";
@@ -34,6 +34,7 @@ const jwt = require("jsonwebtoken");
 import config from "../../config";
 import verify from "../../email_templates/pages/verify";
 import { domain } from "../../email_templates/email_template_helpers";
+import Email from "./email";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -483,39 +484,37 @@ export default {
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
   },
 
+  send_scheduled_emails_c: async (req, res) => {
+    try {
+      // Find all emails that are scheduled to be sent and the time has passed
+      const emailsToSend = await Email.find({
+        status: "Scheduled",
+        scheduled_at: { $lte: new Date() },
+        active: true,
+        deleted: false,
+      });
+
+      for (const email of emailsToSend) {
+        await sendEmailsInBatches(email, res); // Use the helper function
+
+        email.status = "Sent";
+        await email.save();
+      }
+
+      res.status(200).send({ message: "Scheduled emails have been processed." });
+    } catch (error) {
+      console.error("Error sending scheduled emails:", error);
+      res.status(500).send({ message: "Error sending scheduled emails", error: error });
+    }
+  },
   send_announcement_emails_c: async (req, res) => {
     const { id, test } = req.params;
-    const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const email = await email_db.findById_emails_db(id);
-    console.log({ email, test, id });
-    // const all_emails = subscribed_users.map((user) => user.email);
-
-    // Set the number of emails to send per iteration
-    const emailsPerIteration = 100;
-
-    // Calculate the number of iterations required
-    const iterations = Math.ceil(subscribed_users.length / emailsPerIteration);
-
-    // Set the time to wait between iterations (in milliseconds)
-    const waitTime = 10000;
     if (test === "true") {
-      // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
-      const test_emails = ["lavacquek@icloud.com"];
-      // const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
-      send_multiple_emails(test_emails, email, res);
+      const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
+      await sendEmailsInBatches(email, res, test_emails);
     } else {
-      for (let i = 0; i < iterations; i++) {
-        // Get the start and end indices for the current iteration
-        const startIndex = i * emailsPerIteration;
-        const endIndex = startIndex + emailsPerIteration;
-
-        // Create an array of email addresses for the current iteration
-        const emailAddresses = subscribed_users.slice(startIndex, endIndex).map(user => user.email);
-
-        send_multiple_emails(emailAddresses, email, res);
-        console.log(`${i + 1} Sending emails to ${emailAddresses.length} users`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
-      }
+      await sendEmailsInBatches(email, res);
     }
   },
   view_announcement_emails_c: async (req, res) => {

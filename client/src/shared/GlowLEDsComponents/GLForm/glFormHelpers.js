@@ -6,13 +6,19 @@ export const formatDate = dateString => {
   const formattedDate = `${year}-${month}-${day}`;
   return formattedDate;
 };
-export const formatDateTime = dateString => {
-  if (dateString.length > 0) {
-    const date = dateString.split("T")[0];
-    const time = dateString.split("T")[1].substring(0, 4);
-    return `${date}T${time}`;
-  }
+export const formatDateTimeLocal = isoString => {
+  if (!isoString) return "";
+
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
+
 export const determine_shown_fields = (fieldData, current_user, mode) => {
   let result = true;
   if (fieldData.type !== "array_of_objects") {
