@@ -345,12 +345,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   label={fieldData.label}
                   variant="outlined"
                   // value={fieldState || ""}
-                  value={
-                    (formattedDateTime !== null && formattedDateTime !== undefined) ||
-                    Object.keys(formattedDateTime).length > 0
-                      ? formattedDateTime
-                      : ""
-                  }
+                  value={formattedDateTime !== null && formattedDateTime !== undefined ? formattedDateTime : ""}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );

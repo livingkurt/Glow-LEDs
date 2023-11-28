@@ -23,12 +23,12 @@ export const emailFormFields = ({ email }) => {
       options: ["Draft", "Scheduled", "Sent"],
     },
 
-    background_color: { type: "color_picker", label: "Background Color" },
-    title_color: { type: "color_picker", label: "Title Color" },
-    text_color: { type: "color_picker", label: "Text Color" },
-    module_color: { type: "color_picker", label: "Module Color" },
-    header_footer_color: { type: "color_picker", label: "Header Footer Color" },
-    button_color: { type: "color_picker", label: "Button Color" },
+    background_color: { type: "color_picker", label: "Background Color", defaultColor: "#7d7c7c" },
+    title_color: { type: "color_picker", label: "Title Color", defaultColor: "#333333" },
+    text_color: { type: "color_picker", label: "Text Color", defaultColor: "#fff" },
+    module_color: { type: "color_picker", label: "Module Color", defaultColor: "#585858" },
+    header_footer_color: { type: "color_picker", label: "Header Footer Color", defaultColor: "#333333" },
+    button_color: { type: "color_picker", label: "Button Color", defaultColor: "#4c4f60" },
     scheduled_at: { type: "datetime", label: "Scheduled At" },
     active: { type: "checkbox", label: "Active", default: true },
   };

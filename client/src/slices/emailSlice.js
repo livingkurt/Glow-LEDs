@@ -6,12 +6,12 @@ const HtmlToReactParser = require("html-to-react").Parser;
 
 const email = {
   "email_type": "Announcments",
-  "header_footer_color": "",
-  "background_color": "",
-  "module_color": "",
-  "button_color": "",
-  "text_color": "",
-  "title_color": "",
+  "header_footer_color": "#333333",
+  "background_color": "#7d7c7c",
+  "module_color": "#585858",
+  "button_color": "#4c4f60",
+  "text_color": "#ffffff",
+  "title_color": "#ffffff",
   "subject": "",
   "h1": "",
   "image": "",

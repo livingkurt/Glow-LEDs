@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const emailSchema = new mongoose.Schema(
   {
     email_type: { type: String, default: "Announcments" },
-    header_footer_color: { type: String },
-    background_color: { type: String },
-    module_color: { type: String },
-    button_color: { type: String },
-    text_color: { type: String },
-    title_color: { type: String },
+    header_footer_color: { type: String, default: "#333333" },
+    background_color: { type: String, default: "#7d7c7c" },
+    module_color: { type: String, default: "#585858" },
+    button_color: { type: String, default: "#4c4f60" },
+    text_color: { type: String, default: "#ffffff" },
+    title_color: { type: String, default: "#ffffff" },
     subject: { type: String },
     h1: { type: String },
     image: { type: String },

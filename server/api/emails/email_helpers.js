@@ -23,24 +23,24 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
 
     const date = new Date(scheduled_at);
     console.log({ subject, scheduled_at, date });
-    // if (scheduled_at.length > 0) {
-    //   email.status = "scheduled";
-    //   email.save();
-    //   cron.schedule(
-    //     `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
-    //     () => {
-    //       sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-    //       email.status = "sent";
-    //       email.save();
-    //     },
-    //     {
-    //       scheduled: true,
-    //       timezone: "America/Rainy_River",
-    //     }
-    //   );
-    // } else {
-    //   sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-    // }
+    if (scheduled_at && scheduled_at.length > 0) {
+      email.status = "scheduled";
+      email.save();
+      cron.schedule(
+        `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
+        () => {
+          sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+          email.status = "sent";
+          email.save();
+        },
+        {
+          scheduled: true,
+          timezone: "America/Rainy_River",
+        }
+      );
+    } else {
+      sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+    }
   } catch (err) {
     return "Error Sending Email";
   }

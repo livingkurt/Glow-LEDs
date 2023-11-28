@@ -24,7 +24,7 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
               width: "36px",
               height: "14px",
               borderRadius: "4px",
-              bgcolor: fieldState || "#ffffff",
+              bgcolor: fieldState || fieldData.defaultColor,
             }}
           />
         </Box>
@@ -32,7 +32,7 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
           <ClickAwayListener onClickAway={() => setLocalState({ ...localState, [fieldName + "_picker"]: false })}>
             <Box sx={{ position: "absolute", zIndex: "2" }}>
               <SketchPicker
-                color={fieldState || "#ffffff"}
+                color={fieldState || fieldData.defaultColor}
                 presetColors={preset_colors}
                 onChangeComplete={color => handleInputChange(fieldName, color.hex)}
               />
@@ -50,7 +50,7 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
           label={fieldData.label || "Background"}
           name={fieldName}
           id={fieldName}
-          value={fieldState || ""}
+          value={fieldState || fieldData.defaultColor}
           onChange={e => handleInputChange(fieldName, e.target.value)}
         />
       </Grid>

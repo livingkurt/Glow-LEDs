@@ -487,7 +487,7 @@ export default {
     const { id, test } = req.params;
     const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const email = await email_db.findById_emails_db(id);
-    // console.log({ email, test });
+    console.log({ email, test, id });
     // const all_emails = subscribed_users.map((user) => user.email);
 
     // Set the number of emails to send per iteration
@@ -500,7 +500,8 @@ export default {
     const waitTime = 10000;
     if (test === "true") {
       // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
-      const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
+      const test_emails = ["lavacquek@icloud.com"];
+      // const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
       send_multiple_emails(test_emails, email, res);
     } else {
       for (let i = 0; i < iterations; i++) {
