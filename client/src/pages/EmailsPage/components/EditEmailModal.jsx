@@ -13,7 +13,7 @@ let debounceTimer;
 const EditEmailModal = () => {
   const dispatch = useDispatch();
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { edit_email_modal, email, loading, template, testEmail } = emailPage;
+  const { edit_email_modal, email, loading, template } = emailPage;
 
   const formFields = emailFormFields({
     email,
@@ -28,7 +28,7 @@ const EditEmailModal = () => {
       dispatch(API.viewAnnouncement({ template: email }));
       hasFetched.current = true;
     }
-  }, [email]);
+  }, [dispatch, email]);
 
   const debounceKeys = ["status", "scheduled_at", "active", "link", "subject"];
 

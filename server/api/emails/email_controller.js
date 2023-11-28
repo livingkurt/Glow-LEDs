@@ -432,22 +432,6 @@ export default {
       res.status(500).send({ message: "You do not have an account with us" });
     }
   },
-  // send_verify_email_password_reset_emails_c: async (req, res) => {
-  //   console.log({ req_body: req.body });
-  //   const mailOptions = {
-  //     from: config.DISPLAY_INFO_EMAIL,
-  //     to: req.body.data.email,
-  //     subject: "Glow LEDs Password Reset",
-  //     html: App({
-  //       body: reset_password({
-  //         ...req.body,
-  //         title: "Glow LEDs Password Reset",
-  //       }),
-  //       unsubscribe: false,
-  //     }),
-  //   };
-  //   sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
-  // },
   send_successful_password_reset_emails_c: async (req, res) => {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
