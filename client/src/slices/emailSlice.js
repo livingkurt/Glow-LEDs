@@ -24,7 +24,7 @@ const email = {
   "button": "",
   "link": "",
   "html": "",
-  "scheduled_at": null,
+  "scheduled_at": "",
   "status": "draft",
   "active": true,
   "deleted": false,
@@ -45,6 +45,7 @@ const emailPage = createSlice({
     testEmail: true,
     loadingContactSend: false,
     successContactSend: false,
+    loadingSendAnnouncment: false,
   },
   reducers: {
     set_email: (state, { payload }) => {
@@ -174,6 +175,19 @@ const emailPage = createSlice({
     },
     [API.viewAnnouncement.rejected]: (state, { payload, error }) => {
       state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.sendAnnouncement.pending]: (state, { payload }) => {
+      state.loadingSendAnnouncment = true;
+    },
+    [API.sendAnnouncement.fulfilled]: (state, { payload }) => {
+      state.loadingSendAnnouncment = false;
+
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.sendAnnouncement.rejected]: (state, { payload, error }) => {
+      state.loadingSendAnnouncment = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

@@ -17,10 +17,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { BugReport, ContentCopy, Email } from "@mui/icons-material";
 import { determineEmailColors, templates } from "./emailsPageHelpers";
 import { showConfirm } from "../../slices/snackbarSlice";
+import { Loading } from "../../shared/SharedComponents";
 
 const EmailsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { loading, remoteVersionRequirement, template } = emailPage;
+  const { loading, remoteVersionRequirement, loadingSendAnnouncment } = emailPage;
   const dispatch = useDispatch();
 
   const columnDefs = useMemo(
@@ -29,9 +30,9 @@ const EmailsPage = () => {
       {
         title: "Status",
         display: email =>
-          email.status === "draft" ? (
+          email.status === "Draft" ? (
             <DescriptionIcon color="white" />
-          ) : email.status === "scheduled" ? (
+          ) : email.status === "Scheduled" ? (
             <AccessTimeIcon color="white" />
           ) : (
             <SendIcon color="white" />
@@ -60,6 +61,19 @@ const EmailsPage = () => {
               }}
             >
               <BugReport color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Schedule Email"
+              onClick={() => {
+                dispatch(
+                  API.saveEmail({
+                    ...email,
+                    status: "Scheduled",
+                  })
+                );
+              }}
+            >
+              <AccessTimeIcon color="white" />
             </IconButton>
             <IconButton
               aria-label="Send Test Email"
@@ -109,7 +123,7 @@ const EmailsPage = () => {
       <Helmet>
         <title>Admin Emails | Glow LEDs</title>
       </Helmet>
-
+      <Loading loading={loadingSendAnnouncment} />
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
