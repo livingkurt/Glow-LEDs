@@ -13,7 +13,6 @@ import * as API from "../../api";
 import { set_image, unset_state } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
 import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
-import { Box, Grid, Skeleton } from "@mui/material";
 import ProductPageSkeleton from "./components/ProductPageSkeleton";
 import { EditProductModal } from "../ProductsPage/components";
 
