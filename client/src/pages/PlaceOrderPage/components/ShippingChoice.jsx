@@ -125,7 +125,7 @@ const ShippingChoice = () => {
             <div>
               {normalizeDomesticRates(shipping_rates.rates).map((rate, index) => {
                 let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
-                let displayRate = isFreeShipping ? "Free" : `$${parseFloat(rate.retail_rate || rate.rate).toFixed(2)}`;
+                let displayRate = isFreeShipping ? "Free" : `$${parseFloat(rate?.retail_rate || rate.rate).toFixed(2)}`;
 
                 return (
                   <div className="rate-container mv-1rem jc-b ai-c" key={index}>

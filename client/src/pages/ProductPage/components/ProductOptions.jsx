@@ -150,7 +150,13 @@ const ProductOptions = () => {
     }
   };
 
-  const { text, variant } = determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object);
+  const { text, variant, tooltip } = determine_add_to_cart({
+    product,
+    secondary_product,
+    count_in_stock,
+    option_product_object,
+    cartItems: my_cart.cartItems,
+  });
 
   return (
     <ul>
@@ -452,7 +458,11 @@ const ProductOptions = () => {
           )}
         </div>
         {product.name !== "Glowstringz V2" && (
-          <GLTooltip tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}>
+          <GLTooltip
+            tooltip={
+              (variant === "disabled" && (tooltip || "You must choose an option before adding to you cart")) || ""
+            }
+          >
             <GLButton
               variant={variant}
               data-testid="add_to_cart_button"

@@ -2,7 +2,7 @@ export const areCartItemsEqual = (item1, item2) => {
   // List the fields you're interested in
   const fields = [
     "name",
-    "qty",
+    // "qty",
     "display_image",
     "secondary_image",
     "color",
@@ -62,17 +62,6 @@ export const areCartItemsEqual = (item1, item2) => {
 
 export const updateCartItems = (cartItems, cart_item) => {
   let found = false;
-
-  // Check if the cart already contains 'Supreme Gloves V2 Sizing Sampler Pack'
-  const alreadyContainsSpecificProduct = cartItems.some(x => x.name.includes("Sizing Sampler Pack"));
-
-  // If adding 'Supreme Gloves V2 Sizing Sampler Pack' and it already exists in the cart, return cartItems as is
-  if (cart_item.name === "Supreme Gloves V2 Sizing Sampler Pack" && alreadyContainsSpecificProduct) {
-    return cartItems;
-  }
-  if (cart_item.name === "Ultra Gloves Sizing Sampler Pack" && alreadyContainsSpecificProduct) {
-    return cartItems;
-  }
 
   const updatedItems = cartItems.map(x => {
     if (areCartItemsEqual(x, cart_item)) {
