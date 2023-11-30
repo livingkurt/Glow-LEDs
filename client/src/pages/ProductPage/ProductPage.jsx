@@ -178,7 +178,7 @@ const ProductPage = () => {
             <ProductDetails />
           </div>
         )}
-        {!loading && product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+        {/* {!loading && product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
           <div className=" w-100per m-auto">
             <RelatedProductsSlideshow
               product_category={product.category}
@@ -231,7 +231,7 @@ const ProductPage = () => {
               category="all"
             />
           </div>
-        )}
+        )} */}
       </div>
     )
   );
