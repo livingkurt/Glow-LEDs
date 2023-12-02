@@ -280,7 +280,7 @@ export const orderFormFields = ({ users, products, promos, all_shipping, parcels
           required: true,
         },
         email: {
-          type: "email",
+          type: "text",
           label: "Email",
           required: true,
         },

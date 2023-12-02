@@ -21,11 +21,14 @@ const EditPromoModal = () => {
   const categoryPage = useSelector(state => state.categorys.categoryPage);
   const { categorys, loading: loading_categorys } = categoryPage;
 
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { products, loading: loading_products } = productsPage;
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true }));
       dispatch(API.listUsers({}));
+      dispatch(API.listProducts({}));
       dispatch(API.listCategorys({}));
     }
     return () => {
@@ -37,6 +40,7 @@ const EditPromoModal = () => {
     affiliates,
     users,
     categorys,
+    products,
   });
   return (
     <div>
@@ -59,7 +63,7 @@ const EditPromoModal = () => {
           formData={formFields}
           state={promo}
           onChange={value => dispatch(set_promo(value))}
-          loading={loading && loading_affiliates && loading_users && loading_categorys}
+          loading={loading && loading_affiliates && loading_users && loading_categorys && loading_products}
         />
       </GLActionModal>
     </div>

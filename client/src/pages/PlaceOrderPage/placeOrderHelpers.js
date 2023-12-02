@@ -127,18 +127,18 @@ export const isFasterShipping = ({ shipping, rate, index }) =>
   (!shipping.international && serviceNames[index] !== "USPS: Standard") ||
   (shipping.international && mapServiceName(rate.service) !== "First Class");
 
-export const applyPercentageOff = (state, items_price, validPromo, tax_rate) => {
-  const newItemsPrice = items_price - items_price * (validPromo.percentage_off / 100);
-  state.itemsPrice = newItemsPrice;
-  state.taxPrice = tax_rate * newItemsPrice;
+export const applyPercentageOff = (state, eligibleTotal, validPromo, tax_rate) => {
+  const discount = eligibleTotal * (validPromo.percentage_off / 100);
+  state.itemsPrice -= discount;
+  state.taxPrice = tax_rate * state.itemsPrice;
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} ${validPromo.percentage_off}% Off`;
 };
 
-export const applyAmountOff = (state, items_price, validPromo, tax_rate) => {
-  const newItemsPrice = validPromo.amount_off > items_price ? 0 : items_price - validPromo.amount_off;
-  state.itemsPrice = newItemsPrice;
-  state.taxPrice = tax_rate * newItemsPrice;
-  state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} $${validPromo.amount_off} Off`;
+export const applyAmountOff = (state, eligibleTotal, validPromo, tax_rate) => {
+  const discount = Math.min(validPromo.amount_off, eligibleTotal);
+  state.itemsPrice -= discount;
+  state.taxPrice = tax_rate * state.itemsPrice;
+  state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} $${discount} Off`;
 };
 
 export const applyFreeShipping = (state, validPromo) => {
@@ -147,49 +147,51 @@ export const applyFreeShipping = (state, validPromo) => {
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
 
-// Check if a product is included or excluded
-export const isProductValidForPromo = (productId, validPromo) => {
-  if (validPromo.include) {
-    return validPromo.included_products.includes(productId);
-  }
-  if (validPromo.exclude) {
-    return !validPromo.excluded_products.includes(productId);
-  }
-  return true;
-};
-
-// Check if a category is included or excluded
-export const isCategoryValidForPromo = (categoryId, validPromo) => {
-  if (validPromo.include) {
-    return validPromo.included_categories.includes(categoryId);
-  }
-  if (validPromo.exclude) {
-    return !validPromo.excluded_categories.includes(categoryId);
-  }
-  return true;
-};
-
 // Calculate the new total price based on included or excluded products and categories
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
   const today = new Date();
-  let total = 0;
+  let totalEligibleForDiscount = 0;
+  let totalExcludedFromDiscount = 0;
+
   cartItems.forEach(item => {
-    if (
-      isProductValidForPromo(item.product, validPromo) &&
-      isCategoryValidForPromo(item.product.category, validPromo)
+    const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
+    const salePrice =
+      today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0
+        ? item.sale_price
+        : itemPrice;
+    const finalPrice = salePrice * item.qty;
+
+    if (validPromo.included_products.includes(item._id) || validPromo.included_categories.includes(item.category)) {
+      totalEligibleForDiscount += finalPrice;
+    } else if (
+      !validPromo.excluded_products.includes(item._id) &&
+      !validPromo.excluded_categories.includes(item.category)
     ) {
-      if (isWholesaler) {
-        total += (item.wholesale_price || item.price) * item.qty;
-      } else if (
-        today >= new Date(item.sale_start_date) &&
-        today <= new Date(item.sale_end_date) &&
-        item.sale_price !== 0
-      ) {
-        total += item.sale_price * item.qty;
-      } else {
-        total += item.price * item.qty;
-      }
+      totalExcludedFromDiscount += finalPrice;
     }
   });
-  return total;
+
+  return { totalEligibleForDiscount, totalExcludedFromDiscount };
 };
+
+// // Check if a product is included or excluded
+// export const isProductValidForPromo = (productId, validPromo) => {
+//   if (validPromo.include) {
+//     return validPromo.included_products.includes(productId);
+//   }
+//   if (validPromo.exclude) {
+//     return !validPromo.excluded_products.includes(productId);
+//   }
+//   return true;
+// };
+
+// // Check if a category is included or excluded
+// export const isCategoryValidForPromo = (categoryId, validPromo) => {
+//   if (validPromo.include) {
+//     return validPromo.included_categories.includes(categoryId);
+//   }
+//   if (validPromo.exclude) {
+//     return !validPromo.excluded_categories.includes(categoryId);
+//   }
+//   return true;
+// };
