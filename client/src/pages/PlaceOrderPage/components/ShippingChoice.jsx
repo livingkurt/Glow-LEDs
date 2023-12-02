@@ -123,25 +123,30 @@ const ShippingChoice = () => {
           )}
           {shipping && !shipping.international && shipping_rates.rates && (
             <div>
-              {normalizeDomesticRates(shipping_rates.rates).map((rate, index) => {
-                let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
-                let displayRate = isFreeShipping ? "Free" : `$${parseFloat(rate?.retail_rate || rate.rate).toFixed(2)}`;
+              {normalizeDomesticRates(shipping_rates.rates)
+                .filter(Boolean)
+                .map((rate, index) => {
+                  let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
+                  console.log({ rate });
+                  let displayRate = isFreeShipping
+                    ? "Free"
+                    : `$${parseFloat(rate?.retail_rate || rate?.rate).toFixed(2)}`;
 
-                return (
-                  <div className="rate-container mv-1rem jc-b ai-c" key={index}>
-                    <div className="shipping_rates jc-b w-100per wrap">
-                      <label className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</label>
-                      <div className="jc-b max-w-150px w-100per">
-                        <label>{determine_service(rate)}</label>
-                        <label>{displayRate}</label>
+                  return (
+                    <div className="rate-container mv-1rem jc-b ai-c" key={index}>
+                      <div className="shipping_rates jc-b w-100per wrap">
+                        <label className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</label>
+                        <div className="jc-b max-w-150px w-100per">
+                          <label>{determine_service(rate)}</label>
+                          <label>{displayRate}</label>
+                        </div>
                       </div>
+                      <GLButton variant="rates" onClick={() => handleOpen(rate, index)}>
+                        Select
+                      </GLButton>
                     </div>
-                    <GLButton variant="rates" onClick={() => handleOpen(rate, index)}>
-                      Select
-                    </GLButton>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           )}
         </div>
