@@ -1,4 +1,4 @@
-export const promoFormFields = ({ affiliates, users, categorys, products, setState, promo }) => {
+export const promoFormFields = ({ affiliates, users, categorys, products }) => {
   return {
     affiliate: {
       type: "autocomplete_single",

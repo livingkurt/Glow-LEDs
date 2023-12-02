@@ -284,16 +284,22 @@ const placeOrder = createSlice({
     activatePromo: (state, { payload }) => {
       const { tax_rate, activePromoCodeIndicator, validPromo, cartItems, current_user } = payload;
 
-      const items_price = calculateNewItemsPrice({ cartItems, validPromo, isWholesaler: current_user?.isWholesaler });
+      const totalEligibleForDiscount = calculateNewItemsPrice({
+        cartItems,
+        validPromo,
+        isWholesaler: current_user?.isWholesaler,
+      });
+
+      // const items_price = totalEligibleForDiscount + totalExcludedFromDiscount;
 
       if (validPromo) {
         if (activePromoCodeIndicator) {
           state.promo_code_validations = "Can only use one promo code at a time";
         } else {
           if (validPromo.percentage_off) {
-            applyPercentageOff(state, items_price, validPromo, tax_rate);
+            applyPercentageOff(state, totalEligibleForDiscount, validPromo, tax_rate);
           } else if (validPromo.amount_off) {
-            applyAmountOff(state, items_price, validPromo, tax_rate);
+            applyAmountOff(state, totalEligibleForDiscount, validPromo, tax_rate);
           }
 
           if (validPromo.free_shipping) {

@@ -9,7 +9,7 @@ import { Affiliate, affiliate_db } from "../affiliates";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { Promo, promo_db } from "../promos";
-import { determineCartTotal, extractCodes } from "./promo_helpers";
+import { containsIncludedItems, containsOnlyExcludedItems, determineCartTotal, extractCodes } from "./promo_helpers";
 import {
   deactivateOldCodes,
   generateSponsorCodes,
@@ -435,20 +435,20 @@ export default {
         }
       }
 
-      // ... (rest of the code)
+      // Check if the promo code has included products/categories and if cart contains them
+      if (promo.included_products.length > 0 || promo.included_categories.length > 0) {
+        if (!containsIncludedItems(cartItems, promo.included_products, promo.included_categories)) {
+          return { isValid: false, errors: { promo_code: "Cart does not contain included products or categories." } };
+        }
+      }
 
-      // // Check if promo is associated with an affiliate and validate
-      // if (promo.affiliate) {
-      //   const affiliate = await Affiliate.findOne({ user: current_user._id }).exec();
-      //   if (!affiliate || affiliate._id.toString() !== promo.affiliate.toString()) {
-      //     return { isValid: false, errors: { promo_code: "This promo code does not match your affiliate." } };
-      //   }
-      // }
+      // Check if the promo code has excluded products/categories and if cart contains only these
+      if (promo.excluded_products.length > 0 || promo.excluded_categories.length > 0) {
+        if (containsOnlyExcludedItems(cartItems, promo.excluded_products, promo.excluded_categories)) {
+          return { isValid: false, errors: { promo_code: "Cart contains only excluded products or categories." } };
+        }
+      }
 
-      // // Validate the user
-      // if (promo.user && promo.user.toString() !== current_user._id.toString()) {
-      //   return { isValid: false, errors: { promo_code: "This promo code is not associated with your account." } };
-      // }
       return { isValid, errors, promo };
     } catch (error) {
       console.log({ error });
