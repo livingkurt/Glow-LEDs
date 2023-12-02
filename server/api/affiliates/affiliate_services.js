@@ -4,6 +4,7 @@ import { user_db } from "../users";
 import Affiliate from "./affiliate";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
+import { createStripeAccountLink } from "./affiliate_interactors";
 const bcrypt = require("bcryptjs");
 
 export default {
