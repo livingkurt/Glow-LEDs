@@ -96,7 +96,7 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
       emailAddresses = subscribed_users.slice(startIndex, endIndex).map(user => user.email);
     }
 
-    // await send_multiple_emails(emailAddresses, email, res);
+    await send_multiple_emails(emailAddresses, email, res);
     console.log(`Batch ${i + 1}: Sent emails to ${emailAddresses.length} users`);
 
     if (!testEmails) {
