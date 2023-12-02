@@ -10,9 +10,44 @@ const cors = require("cors");
 const passport = require("passport");
 const compression = require("compression");
 const fs = require("fs");
+import { google } from "googleapis"; // Import Google's OAuth libraries
 
 const Bugsnag = require("@bugsnag/js");
 const BugsnagPluginExpress = require("@bugsnag/plugin-express");
+
+const oauthClients = {};
+
+async function initializeOAuthClient(type, credentials) {
+  const oauth2Client = new google.auth.OAuth2(
+    credentials.client_id,
+    credentials.client_secret,
+    "https://developers.google.com/oauthplayground"
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: credentials.refresh_token,
+  });
+
+  // Refresh and store the access token for this client
+  const { token } = await oauth2Client.getAccessToken();
+  oauthClients[type] = { client: oauth2Client, accessToken: token, user: credentials.user };
+}
+
+// Initialize all OAuth clients on server start
+async function initializeAllOAuthClients() {
+  await initializeOAuthClient("contact", {
+    user: config.CONTACT_EMAIL,
+    client_id: config.GOOGLE_CONTACT_OAUTH_ID,
+    client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
+    refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN,
+  });
+  await initializeOAuthClient("info", {
+    user: config.INFO_EMAIL,
+    client_id: config.GOOGLE_INFO_OAUTH_ID,
+    client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
+    refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
+  });
+}
 
 Bugsnag.start({
   apiKey: config.BUGSNAG_KEY,
@@ -60,11 +95,23 @@ if (config.NODE_ENV === "production") {
 
 app.use(bugsnagMiddleware.errorHandler);
 
-app.listen(config.PORT, () => {
-  console.log(`Server listening on port ${config.PORT}`);
-});
+initializeAllOAuthClients()
+  .then(() => {
+    app.listen(config.PORT, () => {
+      console.log(`Server listening on port ${config.PORT}`);
+    });
+  })
+  .catch(error => {
+    console.error("Failed to initialize OAuth clients", error);
+    process.exit(1);
+  });
+// app.listen(config.PORT, () => {
+//   console.log(`Server listening on port ${config.PORT}`);
+// });
 
 app.get("/api/bugsnag-test", function (req, res) {
   Bugsnag.notify(new Error("Test error"));
   res.send("Test error sent to Bugsnag");
 });
+
+export { oauthClients }; // Export oauthClients
