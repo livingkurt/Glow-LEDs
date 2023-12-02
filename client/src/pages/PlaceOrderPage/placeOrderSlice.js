@@ -284,7 +284,7 @@ const placeOrder = createSlice({
     activatePromo: (state, { payload }) => {
       const { tax_rate, activePromoCodeIndicator, validPromo, cartItems, current_user } = payload;
 
-      const { totalEligibleForDiscount, totalExcludedFromDiscount } = calculateNewItemsPrice({
+      const totalEligibleForDiscount = calculateNewItemsPrice({
         cartItems,
         validPromo,
         isWholesaler: current_user?.isWholesaler,

@@ -151,7 +151,6 @@ export const applyFreeShipping = (state, validPromo) => {
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
   const today = new Date();
   let totalEligibleForDiscount = 0;
-  let totalExcludedFromDiscount = 0;
 
   cartItems.forEach(item => {
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
@@ -161,37 +160,15 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
         : itemPrice;
     const finalPrice = salePrice * item.qty;
 
-    if (validPromo.included_products.includes(item._id) || validPromo.included_categories.includes(item.category)) {
+    const isIncluded =
+      validPromo.included_products.includes(item.product) || validPromo.included_categories.includes(item.category);
+    const isExcluded =
+      validPromo.excluded_products.includes(item.product) || validPromo.excluded_categories.includes(item.category);
+
+    if ((isIncluded || (!isIncluded && !isExcluded)) && !isExcluded) {
       totalEligibleForDiscount += finalPrice;
-    } else if (
-      !validPromo.excluded_products.includes(item._id) &&
-      !validPromo.excluded_categories.includes(item.category)
-    ) {
-      totalExcludedFromDiscount += finalPrice;
     }
   });
 
-  return { totalEligibleForDiscount, totalExcludedFromDiscount };
+  return totalEligibleForDiscount;
 };
-
-// // Check if a product is included or excluded
-// export const isProductValidForPromo = (productId, validPromo) => {
-//   if (validPromo.include) {
-//     return validPromo.included_products.includes(productId);
-//   }
-//   if (validPromo.exclude) {
-//     return !validPromo.excluded_products.includes(productId);
-//   }
-//   return true;
-// };
-
-// // Check if a category is included or excluded
-// export const isCategoryValidForPromo = (categoryId, validPromo) => {
-//   if (validPromo.include) {
-//     return validPromo.included_categories.includes(categoryId);
-//   }
-//   if (validPromo.exclude) {
-//     return !validPromo.excluded_categories.includes(categoryId);
-//   }
-//   return true;
-// };
