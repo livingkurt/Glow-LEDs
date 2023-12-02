@@ -31,6 +31,14 @@ export const payout_tips = async () => {
       paid: true,
       paid_at: new Date(),
     });
+    await axios.post(`${domainUrl}/api/expenses`, {
+      expense_name: `Tip Earnings`,
+      date_of_purchase: get_todays_date(),
+      amount: tips[0].total_tips || 0,
+      place_of_purchase: "Stripe",
+      card: "Stripe",
+      category: `Tips Payout ${user.first_name} ${user.last_name}`,
+    });
 
     await axios.post(`${domainUrl}/api/paychecks`, {
       user: user?._id,

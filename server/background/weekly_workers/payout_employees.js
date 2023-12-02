@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { get_todays_date } from "../worker_helpers";
 import { domain } from "../worker_helpers";
 
 export const payout_employees = async () => {
@@ -11,22 +11,23 @@ export const payout_employees = async () => {
     const employees = data.data;
     employees.map(async employee => {
       if (employee?.weekly_wage && employee.stripe_connect_id) {
-        await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
-          amount: employee?.weekly_wage,
-          stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
-        });
-        console.log({
-          amount: employee?.weekly_wage,
-          stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
-        });
+        // await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
+        //   amount: employee?.weekly_wage,
+        //   stripe_connect_id: employee.stripe_connect_id,
+        //   description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
+        // });
+        // console.log({
+        //   amount: employee?.weekly_wage,
+        //   stripe_connect_id: employee.stripe_connect_id,
+        //   description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
+        // });
         await axios.post(`${domainUrl}/api/paychecks`, {
           user: employee?._id,
           amount: employee?.weekly_wage,
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
           paid_at: new Date(),
+          email: employee.email,
         });
         console.log({
           user: employee?._id,
@@ -34,8 +35,9 @@ export const payout_employees = async () => {
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
           paid_at: new Date(),
+          email: employee.email,
         });
-        await axios.post(`/api/expenses`, {
+        await axios.post(`${domainUrl}/api/expenses`, {
           expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
           place_of_purchase: "Stripe",
           date_of_purchase: get_todays_date(),

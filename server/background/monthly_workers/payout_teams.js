@@ -1,6 +1,6 @@
 import axios from "axios";
-import { last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import { domain } from "../worker_helpers";
+import { last_month_date_range, get_todays_date } from "../worker_helpers";
+import { domain } from "../../../../helpers/sharedHelpers";
 
 export const payout_teams = async () => {
   try {
@@ -28,15 +28,14 @@ export const payout_teams = async () => {
             stripe_connect_id: team.captain.stripe_connect_id,
             description: `Monthly Payout for ${team.team_name}`,
           });
-          const data = {
-            Expense: `${team.team_name} Affiliate Earnings`,
-            Date: get_todays_date(),
-            Amount: promo_code_usage.earnings || 0, // ensure that Amount is a number and not undefined
-            "Place of Purchase": "Stripe",
-            Card: "Stripe",
-            Category: ["Employee Paycheck"],
-          };
-          save_paycheck_to_expenses(data);
+          await axios.post(`${domainUrl}/api/expenses`, {
+            expense_name: `${team.team_name} Team Earnings`,
+            date_of_purchase: get_todays_date(),
+            amount: promo_code_usage.earnings,
+            place_of_purchase: "Stripe",
+            card: "Stripe",
+            category: "Team Paycheck",
+          });
         }
         console.log({
           team: team?._id,
@@ -59,6 +58,7 @@ export const payout_teams = async () => {
           stripe_connect_id: team?.captain?.stripe_connect_id || null,
           paid: team?.captain?.stripe_connect_id ? true : false,
           paid_at: new Date(),
+          email: team?.captain?.email,
         });
       })
     );

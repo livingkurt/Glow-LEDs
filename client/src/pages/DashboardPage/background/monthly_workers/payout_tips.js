@@ -1,5 +1,5 @@
 import axios from "axios";
-import { last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { last_month_date_range, get_todays_date } from "../worker_helpers";
 import { domain } from "../../../../helpers/sharedHelpers";
 
 export const payout_tips = async () => {
@@ -38,16 +38,17 @@ export const payout_tips = async () => {
       stripe_connect_id: user?.stripe_connect_id ?? null,
       paid: true,
       paid_at: new Date(),
+      email: user?.email,
     });
-    const data = {
-      Expense: `${user.first_name} ${user.last_name} Paycheck`,
-      Date: get_todays_date(),
-      Amount: tips[0].total_tips || 0, // ensure that Amount is a number and not undefined
-      "Place of Purchase": "Stripe",
-      Card: "Stripe",
-      Category: ["Employee Paycheck"],
-    };
-    save_paycheck_to_expenses(data);
+
+    await axios.post(`${domainUrl}/api/expenses`, {
+      expense_name: `Tip Earnings`,
+      date_of_purchase: get_todays_date(),
+      amount: tips[0].total_tips || 0,
+      place_of_purchase: "Stripe",
+      card: "Stripe",
+      category: `Tips Payout ${user.first_name} ${user.last_name}`,
+    });
   } catch (error) {
     console.log("error", error);
   }

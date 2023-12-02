@@ -31,12 +31,14 @@ import { months } from "../utils/util";
 import { user_db } from "../api/users";
 import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
+import { paycheck_db } from "../api/paychecks";
 import current_stock from "./pages/current_stock";
 import { product_db } from "../api/products";
 import config from "../config";
 import mongoose from "mongoose";
 import verify from "./pages/verify";
 import { domain } from "./email_template_helpers";
+import paycheck from "./pages/paycheck";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {
@@ -132,6 +134,28 @@ router.get("/code_used", async (req, res) => {
       title: "Welcome to the Team!",
     })
   );
+});
+router.get("/paycheck", async (req, res) => {
+  const paycheck = await paycheck_db.findById_paychecks_db("64a11a605157930002f3eb94");
+  const body = {
+    email: {
+      show_image: true,
+      active: true,
+      deleted: false,
+      email_type: "Order",
+      h1: "Paycheck has been sent!",
+      image: "",
+      h2: "we are starting production on your order. We will notify your as your order progresses.",
+      createdAt: "2020-11-19T16:24:12.273Z",
+      updatedAt: "2021-07-06T18:52:09.037Z",
+      images: [],
+      p: "",
+    },
+
+    title: "Paycheck has been sent!",
+    order: orderDocument,
+  };
+  res.send(App({ body: paycheck(body), unsubscribe: false }));
 });
 router.get("/order", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("64a11a605157930002f3eb94");

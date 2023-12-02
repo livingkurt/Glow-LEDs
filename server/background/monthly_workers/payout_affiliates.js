@@ -1,11 +1,6 @@
 import axios from "axios";
 
-import {
-  last_month_date_range,
-  determine_code_tier,
-  get_todays_date,
-  save_paycheck_to_expenses,
-} from "../worker_helpers";
+import { last_month_date_range, determine_code_tier, get_todays_date } from "../worker_helpers";
 import { domain } from "../worker_helpers";
 
 export const payout_affiliates = async () => {
@@ -40,14 +35,14 @@ export const payout_affiliates = async () => {
             description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
           });
 
-          // await axios.post(`/api/expenses`, {
-          //   expense_name: `${affiliate.artist_name} Affiliate Earnings`,
-          //   date_of_purchase: get_todays_date(),
-          //   amount: promo_code_usage.earnings,
-          //   place_of_purchase: "Stripe",
-          //   card: "Stripe",
-          //   category: "Employee Paycheck",
-          // });
+          await axios.post(`${domainUrl}/api/expenses`, {
+            expense_name: `${affiliate.artist_name} Affiliate Earnings`,
+            date_of_purchase: get_todays_date(),
+            amount: promo_code_usage.earnings,
+            place_of_purchase: "Stripe",
+            card: "Stripe",
+            category: "Affiliate Paycheck",
+          });
         }
         console.log({
           affiliate: affiliate?.artist_name,
@@ -67,6 +62,7 @@ export const payout_affiliates = async () => {
           stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
           paid: affiliate?.user?.stripe_connect_id ? true : false,
           paid_at: new Date(),
+          email: affiliate.user.email,
         });
         const percentage_off = determine_code_tier(affiliate, promo_code_usage.number_of_uses);
         await axios.put(`${domainUrl}/api/promos/${affiliate?.private_code?._id}`, {

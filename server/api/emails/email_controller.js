@@ -30,6 +30,7 @@ import { determine_code_tier, format_date, toCapitalize } from "../../utils/util
 import { sendEmail, sendEmailsInBatches, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
+import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 const jwt = require("jsonwebtoken");
 import config from "../../config";
@@ -207,6 +208,20 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
+  },
+  send_paycheck_emails_c: async (req, res) => {
+    const { email } = req.body;
+
+    const mailOptions = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: email,
+      subject: "Your Glow LEDs Paycheck",
+      html: App({
+        body: paycheck(req.body),
+      }),
+    };
+
+    sendEmail(mailOptions, res, "info", "Paycheck Email Sent to " + email);
   },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;
