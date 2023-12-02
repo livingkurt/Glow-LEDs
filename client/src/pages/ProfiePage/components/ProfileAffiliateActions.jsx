@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
 import { determine_terms_link } from "../profileHelpers";
 import useClipboard from "react-hook-clipboard";
 import { Box, Button } from "@mui/material";
+import { determine_sponsor_code_tier } from "../../../utils/helper_functions";
 
 const ProfileAffiliateMetrics = () => {
   const [clipboard, copyToClipboard] = useClipboard();
@@ -39,7 +39,8 @@ const ProfileAffiliateMetrics = () => {
             <div className="mb-20px">
               <h3>Projected Private Code Discount</h3>
               <label>
-                {!loading_month_earnings && determine_code_tier(user?.affiliate, month_earnings.number_of_uses)}% Off
+                {!loading_month_earnings && determine_sponsor_code_tier(user?.affiliate, month_earnings.number_of_uses)}
+                % Off
               </label>
             </div>
           )}

@@ -93,3 +93,21 @@ export const monthCheckinStatus = ({ user, currentMonth, currentYear, previousMo
 export const checkinButtonLabel = ({ checkin, teamCaptain, month }) => {
   return `${checkin ? "Edit" : `Start ${teamCaptain}` ? "Team" : "Sponsor"} Monthly Checkin for ${month}`;
 };
+
+export const this_month_date_range = () => {
+  const today = new Date(); // get current date
+  const year = today.getFullYear(); // get current year
+  const month = today.getMonth() + 1; // get current month (0-indexed)
+  const start_date = `${year}-${month.toString().padStart(2, "0")}-01`;
+  const lastDayOfMonth = new Date(year, month, 0).getDate();
+  const end_date = `${year}-${month.toString().padStart(2, "0")}-${lastDayOfMonth.toString().padStart(2, "0")}`;
+  return { start_date, end_date };
+};
+
+export const this_year_date_range = () => {
+  const today = new Date(); // get current date
+  const year = today.getFullYear(); // get current year
+  const start_date = `${year}-01-01`;
+  const end_date = `${year}-12-31`;
+  return { start_date, end_date };
+};

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 import * as API from "../../api";
-import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
+import { determineTabName, run_daily_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { Loading } from "../../shared/SharedComponents";
@@ -59,12 +59,12 @@ const DashboardPage = () => {
         <Button variant="contained" onClick={() => run_daily_workers(dispatch)}>
           Run Daily Workers
         </Button>
-        <Button variant="contained" onClick={() => run_weekly_workers(dispatch)}>
+        {/* <Button variant="contained" onClick={() => run_weekly_workers(dispatch)}>
           Run Weekly Workers
         </Button>
         <Button variant="contained" onClick={() => run_monthly_workers(dispatch)}>
           Run Monthly Workers
-        </Button>
+        </Button> */}
         <Button variant="contained" onClick={() => dispatch(openGcodeContinuousModal(true))}>
           Gcode Generater
         </Button>

@@ -4,7 +4,6 @@ import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { useParams } from "react-router-dom";
 import "./ProfilePage.scss";
-import { this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
 import { format_date } from "../../utils/helper_functions";
 import { set_success } from "../../slices/userSlice";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
@@ -12,6 +11,7 @@ import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { Link } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
+import { this_month_date_range, this_year_date_range } from "./profileHelpers";
 
 const useProfilePage = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,4 @@
 import axios from "axios";
-import { google_catalog_upload } from "./background/daily_workers/google_catalog_upload";
-import { payout_affiliates } from "./background/monthly_workers/payout_affiliates";
-import { payout_teams } from "./background/monthly_workers/payout_teams";
-import { payout_tips } from "./background/monthly_workers/payout_tips";
-import { refresh_sponsor_codes } from "./background/monthly_workers/refresh_sponsor_codes";
-import { payout_employees } from "./background/weekly_workers/payout_employees";
 import { set_loading } from "./dashboardSlice";
 
 export const getMonthStartEndDates = ({ month, year }) => {
@@ -61,25 +55,25 @@ export const run_daily_workers = async dispatch => {
   }
 };
 
-export const run_weekly_workers = dispatch => {
-  const confirm = window.confirm("Are you sure you want to run the weekly worker?");
-  if (confirm) {
-    dispatch(set_loading(true));
-    payout_employees();
-    dispatch(set_loading(false));
-  }
-};
-export const run_monthly_workers = dispatch => {
-  const confirm = window.confirm("Are you sure you want to run the monthly worker?");
-  if (confirm) {
-    dispatch(set_loading(true));
-    payout_affiliates();
-    payout_teams();
-    payout_tips();
-    refresh_sponsor_codes();
-    dispatch(set_loading(false));
-  }
-};
+// export const run_weekly_workers = dispatch => {
+//   const confirm = window.confirm("Are you sure you want to run the weekly worker?");
+//   if (confirm) {
+//     dispatch(set_loading(true));
+//     payout_employees();
+//     dispatch(set_loading(false));
+//   }
+// };
+// export const run_monthly_workers = dispatch => {
+//   const confirm = window.confirm("Are you sure you want to run the monthly worker?");
+//   if (confirm) {
+//     dispatch(set_loading(true));
+//     payout_affiliates();
+//     payout_teams();
+//     payout_tips();
+//     refresh_sponsor_codes();
+//     dispatch(set_loading(false));
+//   }
+// };
 
 export const isLoading = data => {
   return !data.isLoading && data.data[0];
