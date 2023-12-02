@@ -35,15 +35,22 @@ export const payout_employees = async () => {
           paid: true,
           paid_at: new Date(),
         });
-        const data = {
+        await axios.post(`/api/expenses`, {
           expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
           place_of_purchase: "Stripe",
           date_of_purchase: get_todays_date(),
           category: "Employee Paycheck",
           card: "Stripe",
-          amount: employee?.weekly_wage || 0, // ensure that Amount is a number and not undefined
-        };
-        save_paycheck_to_expenses(data);
+          amount: employee?.weekly_wage || 0,
+        });
+        console.log({
+          expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
+          place_of_purchase: "Stripe",
+          date_of_purchase: get_todays_date(),
+          category: "Employee Paycheck",
+          card: "Stripe",
+          amount: employee?.weekly_wage || 0,
+        });
       }
     });
   } catch (error) {

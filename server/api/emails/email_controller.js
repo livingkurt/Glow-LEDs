@@ -17,6 +17,7 @@ import {
   verify_email_password_reset,
   successful_password_reset,
   affiliate_onboard,
+  current_stock,
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
@@ -201,7 +202,7 @@ export default {
       to: config.INFO_EMAIL,
       subject: "Glow LEDs Current Stock",
       html: App({
-        body: order_status(data),
+        body: current_stock(data),
       }),
     };
 

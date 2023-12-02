@@ -290,8 +290,6 @@ const placeOrder = createSlice({
         isWholesaler: current_user?.isWholesaler,
       });
 
-      // const items_price = totalEligibleForDiscount + totalExcludedFromDiscount;
-
       if (validPromo) {
         if (activePromoCodeIndicator) {
           state.promo_code_validations = "Can only use one promo code at a time";

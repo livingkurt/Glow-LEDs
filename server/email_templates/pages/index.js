@@ -15,3 +15,4 @@ export { default as email_subscription } from "./email_subscription";
 export { default as code_used } from "./code_used";
 export { default as shipping_status } from "./shipping_status";
 export { default as affiliate_onboard } from "./affiliate_onboard";
+export { default as current_stock } from "./current_stock";
