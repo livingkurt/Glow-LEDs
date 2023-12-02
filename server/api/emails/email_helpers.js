@@ -2,9 +2,55 @@ import App from "../../email_templates/App";
 import { announcement } from "../../email_templates/pages";
 import config from "../../config";
 import { user_db } from "../users";
+import { oauthClients } from "../../server";
 
 const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
+
+const createTransporter = async type => {
+  try {
+    const { client, accessToken, user } = oauthClients[type];
+    console.log({ client, accessToken, user });
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      pool: true,
+      auth: {
+        type: "OAuth2",
+        user: user, // Use the stored user email
+        accessToken,
+        clientId: client._clientId,
+        clientSecret: client._clientSecret,
+        refreshToken: client.credentials.refresh_token,
+      },
+    });
+
+    return transporter;
+  } catch (error) {
+    console.error("Error creating transporter:", error);
+    return "Error Creating Transporter";
+  }
+};
+
+export const sendEmail = async (emailOptions, res, type, name) => {
+  const emailTransporter = await createTransporter(type);
+  console.log({ emailTransporter });
+  try {
+    if (emailTransporter) {
+      await emailTransporter.sendMail(emailOptions, (err, data) => {
+        if (err) {
+          res.status(500).send({ error: err, message: "Error Sending Email" });
+        } else {
+          console.log(name);
+          res.status(200).send({ message: "Email Successfully Sent" });
+        }
+      });
+    } else {
+      res.status(500).send({ message: "Error Sending Email" });
+    }
+  } catch (error) {
+    console.log({ sendEmail: error });
+  }
+};
 
 export const send_multiple_emails = async (emailAddresses, email, res) => {
   const { subject } = email;
@@ -60,82 +106,66 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
   }
 };
 
-const createTransporter = async type => {
-  try {
-    const OAuth2 = google.auth.OAuth2;
-    let credentials = {};
-    if (type === "contact") {
-      credentials = {
-        user: config.CONTACT_EMAIL,
-        client_id: config.GOOGLE_CONTACT_OAUTH_ID,
-        client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
-        refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN,
-      };
-    } else {
-      credentials = {
-        user: config.INFO_EMAIL,
-        client_id: config.GOOGLE_INFO_OAUTH_ID,
-        client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
-        refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
-      };
-    }
+// const createTransporter = async type => {
+//   try {
+//     const OAuth2 = google.auth.OAuth2;
+//     let credentials = {};
+//     if (type === "contact") {
+//       credentials = {
+//         user: config.CONTACT_EMAIL,
+//         client_id: config.GOOGLE_CONTACT_OAUTH_ID,
+//         client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
+//         refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN,
+//       };
+//     } else {
+//       credentials = {
+//         user: config.INFO_EMAIL,
+//         client_id: config.GOOGLE_INFO_OAUTH_ID,
+//         client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
+//         refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
+//       };
+//     }
 
-    const oauth2Client = new OAuth2(
-      credentials.client_id,
-      credentials.client_secret,
-      "https://developers.google.com/oauthplayground"
-    );
-    oauth2Client.setCredentials({
-      refresh_token: credentials.refresh_token,
-    });
+//     const oauth2Client = new OAuth2(
+//       credentials.client_id,
+//       credentials.client_secret,
+//       "https://developers.google.com/oauthplayground"
+//     );
+//     oauth2Client.setCredentials({
+//       refresh_token: credentials.refresh_token,
+//     });
+//     // console.log({ oauth2Client, credentials });
 
-    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) {
-          reject();
-        }
-        resolve(token);
-      });
-    });
+//     const accessToken = await new Promise((resolve, reject) => {
+//       oauth2Client.getAccessToken((err, token) => {
+//         if (err) {
+//           console.log({ err });
+//           reject();
+//         }
+//         resolve(token);
+//       });
+//     });
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
-      auth: {
-        type: "OAuth2",
-        user: credentials.user,
-        accessToken,
-        clientId: credentials.client_id,
-        clientSecret: credentials.client_secret,
-        refreshToken: credentials.refresh_token,
-      },
-    });
+//     console.log({ accessToken });
 
-    return transporter;
-  } catch (error) {
-    return "Error Creating Transporter";
-  }
-};
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       pool: true,
+//       auth: {
+//         type: "OAuth2",
+//         user: credentials.user,
+//         accessToken,
+//         clientId: credentials.client_id,
+//         clientSecret: credentials.client_secret,
+//         refreshToken: credentials.refresh_token,
+//       },
+//     });
 
-export const sendEmail = async (emailOptions, res, type, name) => {
-  const emailTransporter = await createTransporter(type);
-  try {
-    if (emailTransporter) {
-      await emailTransporter.sendMail(emailOptions, (err, data) => {
-        if (err) {
-          res.status(500).send({ error: err, message: "Error Sending Email" });
-        } else {
-          console.log(name);
-          res.status(200).send({ message: "Email Successfully Sent" });
-        }
-      });
-    } else {
-      res.status(500).send({ message: "Error Sending Email" });
-    }
-  } catch (error) {
-    console.log({ sendEmail: error });
-  }
-};
+//     return transporter;
+//   } catch (error) {
+//     return "Error Creating Transporter";
+//   }
+// };
 
 export const normalizeEmailFilters = input => {
   const output = {};
