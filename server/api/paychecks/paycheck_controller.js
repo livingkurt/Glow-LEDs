@@ -1,3 +1,4 @@
+import { email_controller } from "../emails";
 import { paycheck_db, paycheck_services } from "../paychecks";
 
 export default {
@@ -91,6 +92,9 @@ export default {
     const { body } = req;
     try {
       const paycheck = await paycheck_services.create_paychecks_s(body);
+      if (body?.email && body?.amount > 0 && body?.stripe_connect_id) {
+        email_controller.send_paycheck_emails_c(req, res);
+      }
       if (paycheck) {
         return res.status(201).send(paycheck);
       }

@@ -10,7 +10,6 @@ const nodemailer = require("nodemailer");
 const createTransporter = async type => {
   try {
     const { client, accessToken, user } = oauthClients[type];
-    console.log({ client, accessToken, user });
     const transporter = nodemailer.createTransport({
       service: "gmail",
       pool: true,
@@ -33,7 +32,6 @@ const createTransporter = async type => {
 
 export const sendEmail = async (emailOptions, res, type, name) => {
   const emailTransporter = await createTransporter(type);
-  console.log({ emailTransporter });
   try {
     if (emailTransporter) {
       await emailTransporter.sendMail(emailOptions, (err, data) => {

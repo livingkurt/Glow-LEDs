@@ -19,7 +19,7 @@ const weekly_worker = () => {
   // Get the current date
   const today = new Date();
   // Check if today is Friday (the 5th day of the week)
-  if (today.getDay() === 6) {
+  if (today.getDay() === 5) {
     // Check if it's an even week
     if (getWeekNumber(today) % 2 === 0) {
       // Run the code that you only want to run once every two weeks

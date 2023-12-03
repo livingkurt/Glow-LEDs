@@ -1,126 +1,63 @@
 import { format_date } from "../../utils/util";
 
-export default products => {
-  const date = new Date();
-  return `<table style="width:100%;border-spacing:0;padding:10px">
-	<tr style="font-size:16px">
-	<td>
-		<table style="border-spacing:0;margin:auto">
-			<tbody>
-				<tr style="font-family:helvetica;border-radius:4px">
-					<td>
-						<h1
-							style="text-align:center;font-family:helvetica;color:#333333;font-size:50px;margin-top:0px;margin-bottom:10px;">
-							Current Stock Report </h1>
-						<h4
-							style="text-align:center;font-family:helvetica;color:#333333;font-size:30px;margin-top:0px;margin-bottom:10px;">
-							As of ${format_date(date.toISOString())}</h4>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</td>
-</tr>
-  <tr>
-    <td style="font-family:helvetica;border:0">
-      <center>
-        <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px;">
-          <tbody>
-            <tr>
-              <td style="font-family:helvetica">
+export default ({ first_name, amount, stripe_connect_id, paid_at }) => {
+  return `<table
+	style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">
+	<tbody>
+		<tr style="font-size:16px">
+			<td>
+				<table style="border-spacing:0;margin:auto">
+					<tbody>
+						<tr style="font-family:helvetica;border-radius:4px">
+							<td>
+								<h1
+									style="text-align:center;font-family:helvetica;color:#333333;font-size:50px;margin-top:0px;margin-bottom:10px;">
+									Hi ${first_name}! </h1>
+								<h4
+									style="text-align:center;font-family:helvetica;color:#333333;font-size:30px;margin-top:0px;margin-bottom:10px;">
+									Your earnings are on the way!</h4>
+							</td>
 
-                <table
-                  style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
-                  <tbody>
+						</tr>
+					</tbody>
+				</table>
+				<table style="border-spacing:0;margin:auto">
+					<tbody>
+					<tr>
+					<h4 style="margin-bottom: 10px; color: #333333;">Your earnings will begin the process of transferring to your bank account the next business day, and you will see it refected in your bank account within the next week.</h4>
+			</tr>
 
-									<td style="width: 50%;" colspan="2">
-									<h2 style="text-align: center;">Current Supremes V2 Stock</h2>
-								</td>
-                    ${products
-                      ?.filter(
-                        row => (row.subcategory === "gloves" || row.category === "gloves") && row.name.includes("V2")
-                      )
-                      .map(product => {
-                        return `
-                    <tr>
-                      <td style="width: 50%;">
-                        <h2 style="margin-bottom: 10px;font-size:20px;">${product.name}</h2>
-                      </td>
-                      <td style="font-size:18px;width: 100%;text-align: left; margin-left: 100%;"><h2 style="margin-bottom: 10px;font-size:20px;">${product.count_in_stock} Gloves</h2> </td>
-                    </tr>
-                    `;
-                      })
-                      .join("")}
-
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
-          <tbody>
-            <tr>
-              <td style="font-family:helvetica">
-                <table
-                  style="max-width:575px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
-                  <tbody>
-									<td style="width: 50%;" colspan="2">
-									<h2 style="text-align: center;">Current Supremes V1 Stock</h2>
-								</td>
-                    ${products
-                      ?.filter(
-                        row => (row.subcategory === "gloves" || row.category === "gloves") && !row.name.includes("V2")
-                      )
-                      .map(product => {
-                        return `
-                    <tr>
-                      <td style="width: 50%;">
-                        <h2 style="margin-bottom: 10px;font-size:20px;">${product.name}</h2>
-                      </td>
-                      <td style="font-size:18px;width: 100%;text-align: left; margin-left: 100%;"><h2 style="margin-bottom: 10px;font-size:20px;">${product.count_in_stock} Gloves</h2> </td>
-                    </tr>
-                    `;
-                      })
-                      .join("")}
-
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
-          <tbody>
-            <tr>
-              <td style="font-family:helvetica">
-                <table
-                  style="max-width:575px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
-                  <tbody>
-									<tr>
-									<td style="width: 50%;" colspan="2">
-										<h2 style="text-align: center;">Current Battery Stock</h2>
+					</tbody>
+				</table>
+				<table width="100%" style="max-width:800px;margin:auto;">
+					<tr>
+						<table
+							style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
+							<tbody>
+								<tr>
+									<td colspan="2" style="text-align:center">
+										<h4 style="margin-bottom: 10px;font-size:20px;">Issue Date: ${format_date(paid_at)}</h4>
 									</td>
-									${products
-                    ?.filter(row => row.category === "batteries")
-                    .map(product => {
-                      return `
-									<tr>
-										<td style="width: 50%;">
-											<h2 style="margin-bottom: 10px;font-size:20px;">${product.name}</h2>
-										</td>
-										<td style="font-size:18px;width: 100%;text-align: left; margin-left: 100%;"><h2 style="margin-bottom: 10px;font-size:20px;">${product.count_in_stock} Batteries</h2> </td>
-									</tr>
-									`;
-                    })
-                    .join("")}
+								</tr>
+								<tr>
+									<td style="font-size:30px;height:30px;  width: 50%; text-align: center;">
+										<h4 style="margin-bottom: 10px;">Stripe ID: </h4>
+									</td>
+									<td style="font-size:30px;height:30px;  width: 50%;text-align: center;">
+										<h4 style="margin-bottom: 10px;">Earnings:</h4>
+									</td>
+								</tr>
+								<tr>
+                <td style="font-size:16px;height:30px; width: 50%;text-align: center;">${stripe_connect_id}</td>
+                <td style="font-size:30px;height:30px;width: 50%; text-align: center;">$${amount?.toFixed(2)}</td>
+								</tr>
 
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
 
-      </center>
-    </td>
-  </tr>
+							</tbody>
+						</table>
+
+			</td>
+		</tr>
+	</tbody>
 </table>`;
 };

@@ -37,6 +37,7 @@ import config from "../../config";
 import verify from "../../email_templates/pages/verify";
 import { domain } from "../../email_templates/email_template_helpers";
 import Email from "./email";
+import paycheck from "../../email_templates/pages/paycheck";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -210,12 +211,12 @@ export default {
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
   send_paycheck_emails_c: async (req, res) => {
-    const { email } = req.body;
+    const { email, subject } = req.body;
 
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: "Your Glow LEDs Paycheck",
+      subject: subject,
       html: App({
         body: paycheck(req.body),
       }),
