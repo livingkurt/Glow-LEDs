@@ -22,5 +22,5 @@ export const determineColor = affiliate => {
   if (!affiliate.active) {
     return colors[3].color;
   }
-  return "";
+  return colors[1].color;
 };
