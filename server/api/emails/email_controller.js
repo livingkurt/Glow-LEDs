@@ -17,6 +17,7 @@ import {
   verify_email_password_reset,
   successful_password_reset,
   affiliate_onboard,
+  current_stock,
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
@@ -29,12 +30,14 @@ import { determine_code_tier, format_date, toCapitalize } from "../../utils/util
 import { sendEmail, sendEmailsInBatches, send_multiple_emails } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
+import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 const jwt = require("jsonwebtoken");
 import config from "../../config";
 import verify from "../../email_templates/pages/verify";
 import { domain } from "../../email_templates/email_template_helpers";
 import Email from "./email";
+import paycheck from "../../email_templates/pages/paycheck";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -201,11 +204,25 @@ export default {
       to: config.INFO_EMAIL,
       subject: "Glow LEDs Current Stock",
       html: App({
-        body: order_status(data),
+        body: current_stock(data),
       }),
     };
 
     sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
+  },
+  send_paycheck_emails_c: async (req, res) => {
+    const { email, subject } = req.body;
+
+    const mailOptions = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: email,
+      subject: subject,
+      html: App({
+        body: paycheck(req.body),
+      }),
+    };
+
+    sendEmail(mailOptions, res, "info", "Paycheck Email Sent to " + email);
   },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;

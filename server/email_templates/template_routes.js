@@ -31,12 +31,14 @@ import { months } from "../utils/util";
 import { user_db } from "../api/users";
 import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
+import { paycheck_db } from "../api/paychecks";
 import current_stock from "./pages/current_stock";
 import { product_db } from "../api/products";
 import config from "../config";
 import mongoose from "mongoose";
 import verify from "./pages/verify";
 import { domain } from "./email_template_helpers";
+import paycheck from "./pages/paycheck";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {
@@ -132,6 +134,12 @@ router.get("/code_used", async (req, res) => {
       title: "Welcome to the Team!",
     })
   );
+});
+router.get("/paycheck", async (req, res) => {
+  const paycheckDocument = await paycheck_db.findById_paychecks_db("656bc32d9701b7f4b9b9bd43");
+  console.log({ paycheckDocument });
+
+  res.send(App({ body: paycheck(paycheckDocument), unsubscribe: false }));
 });
 router.get("/order", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("64a11a605157930002f3eb94");

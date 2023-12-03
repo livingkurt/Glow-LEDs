@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { get_todays_date } from "../worker_helpers";
 import { domain } from "../worker_helpers";
 
 export const payout_employees = async () => {
@@ -9,7 +9,8 @@ export const payout_employees = async () => {
       `${domainUrl}/api/users?search=&filters=%7B"employees"%3A%5B"only_employees"%5D%7D&page=0&pageSize=10&sorting=%5B0%2C"asc"%5D`
     );
     const employees = data.data;
-    employees.map(async employee => {
+
+    for (const employee of employees) {
       if (employee?.weekly_wage && employee.stripe_connect_id) {
         await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
           amount: employee?.weekly_wage,
@@ -27,6 +28,9 @@ export const payout_employees = async () => {
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
           paid_at: new Date(),
+          first_name: employee?.first_name,
+          email: employee.email,
+          subject: "Your Glow LEDs Employee Earnings",
         });
         console.log({
           user: employee?._id,
@@ -34,21 +38,30 @@ export const payout_employees = async () => {
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
           paid_at: new Date(),
+          email: employee.email,
         });
-        const data = {
+        await axios.post(`${domainUrl}/api/expenses`, {
           expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
           place_of_purchase: "Stripe",
           date_of_purchase: get_todays_date(),
           category: "Employee Paycheck",
           card: "Stripe",
-          amount: employee?.weekly_wage || 0, // ensure that Amount is a number and not undefined
-        };
-        save_paycheck_to_expenses(data);
+          amount: employee?.weekly_wage || 0,
+        });
+        console.log({
+          expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
+          place_of_purchase: "Stripe",
+          date_of_purchase: get_todays_date(),
+          category: "Employee Paycheck",
+          card: "Stripe",
+          amount: employee?.weekly_wage || 0,
+        });
       }
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+
+      // Delay between each iteration
+      await new Promise(resolve => setTimeout(resolve, 10000)); // 10 seconds delay
     }
+  } catch (error) {
+    console.log("error", error);
   }
 };

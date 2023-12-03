@@ -27,4 +27,6 @@ export const templates = [
   "contact",
   "contact_confirmation",
   "custom_contact",
+  "current_stock",
+  "paycheck",
 ];

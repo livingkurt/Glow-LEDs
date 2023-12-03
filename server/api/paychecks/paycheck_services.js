@@ -8,6 +8,7 @@ import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_in
 import { user_db } from "../users";
 import { mongodbFindAll } from "../api_interactors";
 import mongoose from "mongoose";
+import { email_controller } from "../emails";
 
 export default {
   get_table_paychecks_s: async query => {
@@ -128,6 +129,7 @@ export default {
   create_paychecks_s: async body => {
     try {
       return await paycheck_db.create_paychecks_db(body);
+      return response;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
