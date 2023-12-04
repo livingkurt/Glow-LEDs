@@ -98,14 +98,10 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   key={`${fieldName}-${fieldData.type}`}
                   autoComplete="new-password"
                   customClasses={classes}
-                  // isOptionEqualToValue={(option, value) => {
-                  //   return option.short_name === value.short_name;
-                  // }}
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
                   value={selected || ""}
-                  // value={fieldState || ""}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
                     option

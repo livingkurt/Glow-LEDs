@@ -1,6 +1,6 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const tutorialFormFields = affiliates => {
+export const tutorialFormFields = ({ affiliates }) => {
   return {
     affiliate: {
       type: "autocomplete_single",

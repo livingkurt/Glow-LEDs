@@ -15,6 +15,7 @@ const EditTutorialModal = () => {
 
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
+  console.log({ affiliates });
 
   useEffect(() => {
     let clean = true;
