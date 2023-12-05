@@ -76,7 +76,7 @@ const TutorialsGridPage = () => {
                 style={{ cursor: "pointer" }}
               />
               <h3 style={{ color: "white" }} className="ta-c">
-                {item.title} by {item?.affiliate.artist_name}
+                {item.title} by {item?.affiliate?.artist_name}
               </h3>
             </Grid>
           ))}

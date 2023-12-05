@@ -9,7 +9,7 @@ import store from "../store";
 
 export const getProducts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    const response = await axios.get(`/api/products`, {
+    const response = await axios.get(`/api/products/table`, {
       params: {
         limit: pageSize,
         page: page,
@@ -38,7 +38,7 @@ export const reorderProducts = async ({ reorderedItems }) => {
 
 export const listProducts = createAsyncThunk("products/listProducts", async (query, { dispatch, rejectWithValue }) => {
   try {
-    const { data } = await axios.get(`/api/products/grid?${create_query(query)}`);
+    const { data } = await axios.get(`/api/products?${create_query(query)}`);
     return data;
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));

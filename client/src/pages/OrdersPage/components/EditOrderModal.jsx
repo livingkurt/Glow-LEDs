@@ -13,9 +13,12 @@ import {
   handleQtyChange,
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { useProductsQuery } from "../../../api/allRecordsApi";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
+  const productsQuery = useProductsQuery({ option: false, hidden: false });
+
   const all_shipping = API.useGetAllShippingOrdersQuery();
   const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
 
@@ -23,8 +26,10 @@ const EditOrderModal = () => {
   const { edit_order_modal, order, loading } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { products } = productsPage;
+
+  // const productsPage = useSelector(state => state.products.productsPage);
+  // const { products } = productsPage;
+
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
 
@@ -33,7 +38,6 @@ const EditOrderModal = () => {
     if (clean) {
       dispatch(API.listOrders({ option: true }));
       dispatch(API.listUsers({}));
-      dispatch(API.listProducts({}));
       dispatch(API.listPromos({}));
     }
     return () => {
@@ -43,7 +47,7 @@ const EditOrderModal = () => {
 
   const formFields = orderFormFields({
     users,
-    products,
+    productsQuery,
     promos,
     all_shipping,
   });

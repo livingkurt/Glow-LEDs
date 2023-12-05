@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { setDisplay, set_options, set_search } from "../../../slices/glowLedsSlice";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Search } from "@mui/icons-material";
-import { API_Products } from "../../../utils";
-import { set_loading } from "../../../slices/affiliateSlice";
 import { humanize } from "../../../utils/helper_functions";
 import { categories, subcategories } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
+import { useProductsQuery } from "../../../api/allRecordsApi";
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -16,16 +15,20 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const glowLeds = useSelector(state => state.glowLeds);
   const { show_search_bar, options, pathname, search, display } = glowLeds;
-
   const { width } = useWindowDimensions();
 
+  const { data: productsData, isLoading, isError } = useProductsQuery({ option: false, hidden: false });
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      findAllGrid_products_a();
+    if (productsData && !isLoading && !isError) {
+      const newOptions = [
+        ...options,
+        ...categories.map(category => ({ name: humanize(category) })),
+        ...subcategories.map(subcategory => ({ name: humanize(subcategory) })),
+        ...productsData,
+      ];
+      dispatch(set_options(newOptions));
     }
-    return () => (clean = false);
-  }, []);
+  }, [productsData, isLoading, isError, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -51,24 +54,6 @@ const SearchBar = () => {
     if (wrap && !wrap.contains(event.target)) {
       dispatch(setDisplay(false));
     }
-  };
-
-  const findAllGrid_products_a = async () => {
-    dispatch(set_loading(true));
-    const { data } = await API_Products.findAllGrid_products_a();
-
-    const newOptions = [
-      ...options,
-      ...categories.map(category => {
-        return { name: humanize(category) };
-      }),
-      ...subcategories.map(category => {
-        return { name: humanize(category) };
-      }),
-      ...data.products.filter(product => !product.option).filter(product => !product.hidden),
-    ];
-    dispatch(set_options(newOptions));
-    dispatch(set_loading(false));
   };
 
   return (

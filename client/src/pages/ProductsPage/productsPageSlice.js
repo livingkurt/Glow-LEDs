@@ -136,9 +136,7 @@ const productsPage = createSlice({
     },
     [API.listProducts.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.products = payload.products;
-      state.totalPages = payload.totalPages;
-      state.page = payload.currentPage;
+      state.products = payload;
       state.message = "Products Found";
     },
     [API.listProducts.rejected]: (state, { payload, error }) => {

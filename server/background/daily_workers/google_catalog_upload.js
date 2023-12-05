@@ -32,7 +32,7 @@ export const google_catalog_upload = async () => {
     const domainUrl = domain();
     const { data } = await axios.get(`${domainUrl}/api/products?limit=0&hidden=false&option=false`);
 
-    const new_rows = data.products
+    const new_rows = data
       .filter(product => !product.hidden)
       .map((product, i) => {
         const id = product._id;

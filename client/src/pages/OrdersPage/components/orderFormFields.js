@@ -1,6 +1,6 @@
 import { humanize } from "../../../utils/helper_functions";
 
-export const orderFormFields = ({ users, products, promos, all_shipping, parcels }) => {
+export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -355,7 +355,8 @@ export const orderFormFields = ({ users, products, promos, all_shipping, parcels
           product: {
             type: "autocomplete_single",
             label: "Product",
-            options: products.filter(product => product.option === false),
+            options: !productsQuery?.isLoading ? productsQuery?.data : [],
+            loading: productsQuery?.isLoading,
             labelProp: "name",
             required: true,
           },

@@ -3,7 +3,7 @@ import { create_query } from "./helper_functions";
 
 const product_routes = {
   findAllGrid_products_a: query => {
-    return axios.get(`/api/products/grid?${create_query(query)}`);
+    return axios.get(`/api/products?${create_query(query)}`);
   },
   findById_products_a: id => {
     return axios.get("/api/products/" + id);

@@ -25,6 +25,17 @@ export default {
       }
     }
   },
+  findByPathname_categorys_db: async pathname => {
+    try {
+      return await Category.findOne({ pathname: pathname, deleted: false })
+        .populate("subcategorys")
+        .populate("collections");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   create_categorys_db: async body => {
     try {
       return await Category.create(body);

@@ -39,8 +39,10 @@ const SponsorPage = () => {
   }, [affiliate]);
 
   const find_team = async () => {
-    const { data } = await API_Users.get_teams(affiliate._id);
-    set_teams(data);
+    try {
+      const { data } = await API_Users.get_teams(affiliate._id);
+      set_teams(data);
+    } catch (error) {}
   };
 
   const date = new Date();

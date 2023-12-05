@@ -18,6 +18,64 @@ const Papa = require("papaparse");
 export default {
   findAll_products_s: async query => {
     try {
+      const page = query.page ? query.page : "1";
+      const limit = query.limit ? query.limit : "0";
+
+      let search = {};
+      if (categories.includes(snake_case(query.search))) {
+        search = query.search
+          ? {
+              category: {
+                $regex: snake_case(query.search),
+                $options: "i",
+              },
+            }
+          : {};
+      } else if (subcategories.includes(snake_case(query.search))) {
+        search = query.search
+          ? {
+              subcategory: {
+                $regex: snake_case(query.search),
+                $options: "i",
+              },
+            }
+          : {};
+      } else {
+        search = query.search
+          ? {
+              name: {
+                $regex: query.search.toLowerCase(),
+                $options: "i",
+              },
+            }
+          : {};
+      }
+
+      const filter = determine_filter(query, search);
+
+      const sort_query = query.sort && query.sort.toLowerCase();
+      let sort = { order: 1, _id: -1 };
+      if (sort_query === "lowest") {
+        sort = { price: 1 };
+      } else if (sort_query === "highest") {
+        sort = { price: -1 };
+      } else if (sort_query === "category") {
+        sort = { category: 1 };
+      } else if (sort_query === "hidden") {
+        sort = { hidden: -1 };
+      } else if (sort_query === "newest") {
+        sort = { _id: -1 };
+      }
+      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
+      return products;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_products_s: async query => {
+    try {
       const sort_options = ["name", "hidden", "category", "order", "price"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
