@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_products_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const products = await product_services.table_products_s(query);
+      if (products) {
+        return res.status(200).send(products);
+      }
+      return res.status(404).send({ message: "Products Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   create_filters_products_c: async (req, res) => {
     const { query } = req;
     try {

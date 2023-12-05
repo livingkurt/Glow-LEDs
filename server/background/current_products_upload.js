@@ -7,7 +7,7 @@ const current_products_upload = async () => {
   try {
     const { data } = await axios.get("https://www.glow-leds.com/api/products?limit=0&hidden=false&option=false");
 
-    const new_rows = data.products
+    const new_rows = data
       .filter(product => !product.hidden)
       .filter(product => product.category !== "options")
       .map((product, i) => {

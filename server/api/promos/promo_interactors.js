@@ -1,5 +1,7 @@
+import { product_db } from "../products";
 import { make_private_code } from "../../utils/util";
 import promo_db from "./promo_db";
+import { category_db } from "../categorys";
 
 export const normalizePromoFilters = input => {
   const output = {};
@@ -75,6 +77,10 @@ export const generateSponsorCodes = async affiliate => {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
 
+    const refreshPackProducts = await product_db.findAll_products_db({ subcategory: "refresh" }, {}, "0", "0");
+
+    const refreshPackProductIds = refreshPackProducts.map(product => product._id);
+
     const private_code = {
       promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
       user: affiliate.user._id,
@@ -102,7 +108,7 @@ export const generateSponsorCodes = async affiliate => {
       single_use: true,
       used_once: false,
       excluded_categories: [],
-      included_products: ["61a9501f914391295a266c8b"],
+      included_products: refreshPackProductIds,
       percentage_off: 0,
       amount_off: 34.99,
       free_shipping: true,

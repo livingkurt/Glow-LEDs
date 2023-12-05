@@ -93,6 +93,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               const selected = fieldData.valueAttribute
                 ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                 : fieldState;
+
               return (
                 <GLAutocomplete
                   key={`${fieldName}-${fieldData.type}`}
@@ -101,8 +102,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}
                   margin="normal"
+                  loading={!fieldData.loading}
                   value={selected || ""}
-                  options={determineOptions(fieldData, localState) || []}
+                  options={(!fieldData.loading && determineOptions(fieldData, localState)) || []}
                   getOptionLabel={option =>
                     option
                       ? fieldData.getOptionLabel

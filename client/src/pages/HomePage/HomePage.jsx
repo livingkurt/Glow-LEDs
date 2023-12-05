@@ -3,28 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
-import { API_Content, API_Products } from "../../utils";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import { Loading, Notification } from "../../shared/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
-import * as API from "../../api";
-import { set_show_search_bar } from "../../slices/glowLedsSlice";
+import { setDisplay, set_options, set_show_search_bar, set_search } from "../../slices/glowLedsSlice";
 import { openLoginModal } from "../../slices/userSlice";
+import { useProductsQuery } from "../../api/allRecordsApi";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [display, setDisplay] = useState(false);
-  const [loading, set_loading] = useState(false);
-  const [options, set_options] = useState([]);
-  const [search, set_search] = useState("");
-  const [message, set_message] = useState("");
+  const glowLeds = useSelector(state => state.glowLeds);
+  const { options, search, display } = glowLeds;
+
   const wrapperRef = useRef(null);
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
@@ -44,7 +41,7 @@ const HomePage = () => {
     const code = queryParams.get("code");
     if (code) {
       sessionStorage.setItem("promo_code", code);
-      set_message(`Code ${code} Added to Checkout`);
+      // set_message(`Code ${code} Added to Checkout`);
     }
   }, []);
 
@@ -65,13 +62,13 @@ const HomePage = () => {
   const handleClickOutside = event => {
     const { current: wrap } = wrapperRef;
     if (wrap && !wrap.contains(event.target)) {
-      setDisplay(false);
+      dispatch(setDisplay(false));
     }
   };
 
   const update_list = product => {
-    set_search(product);
-    setDisplay(false);
+    dispatch(set_search(product));
+    dispatch(setDisplay(false));
     navigate("/collections/all/products?search=" + product);
   };
 
@@ -86,38 +83,19 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
+  const { data: productsData, isLoading, isError } = useProductsQuery({ option: false, hidden: false });
+  console.log({ productsData, isLoading, isError });
   useEffect(() => {
-    let clean = false; // Set to false initially
-
-    dispatch(API.listFeatures({}));
-    findAllGrid_products_a();
-
-    return () => {
-      clean = true; // Set to true during cleanup
-    };
-  }, []);
-
-  // const get_display_content = async () => {
-  //   const { data } = await API_Content.get_display_content();
-
-  //   if (data) {
-  //     set_slideshow(data[0].home_page.slideshow);
-  //   }
-  // };
-  const findAllGrid_products_a = async () => {
-    set_loading(true);
-    const { data } = await API_Products.findAllGrid_products_a();
-    set_options([
-      ...categories.map(category => {
-        return { name: humanize(category) };
-      }),
-      ...subcategories.map(category => {
-        return { name: humanize(category) };
-      }),
-      ...data.products.filter(product => !product.option).filter(product => !product.hidden),
-    ]);
-    set_loading(false);
-  };
+    if (productsData && !isLoading && !isError) {
+      const newOptions = [
+        ...options,
+        ...categories.map(category => ({ name: humanize(category) })),
+        ...subcategories.map(subcategory => ({ name: humanize(subcategory) })),
+        ...productsData,
+      ];
+      dispatch(set_options(newOptions));
+    }
+  }, [productsData, isLoading, isError, dispatch]);
 
   const determine_welcome_font_size = width => {
     if (width > 1500) {
@@ -227,11 +205,11 @@ const HomePage = () => {
                           <input
                             id="auto"
                             autoComplete="off"
-                            onClick={() => setDisplay(true)}
+                            onClick={() => dispatch(setDisplay(true))}
                             className="form_input search mv-0px w-100per fs-20px"
                             placeholder="Find Your Glow Here"
                             value={search}
-                            onChange={e => set_search(e.target.value)}
+                            onChange={e => dispatch(set_search(e.target.value))}
                           />
                           {display && (
                             <div className="pos-abs bg-primary br-10px">
@@ -293,11 +271,11 @@ const HomePage = () => {
                           <input
                             id="auto"
                             autoComplete="off"
-                            onClick={() => setDisplay(true)}
+                            onClick={() => dispatch(setDisplay(true))}
                             className="form_input search mv-0px w-100per fs-20px"
                             placeholder="Find Your Glow Here"
                             value={search}
-                            onChange={e => set_search(e.target.value)}
+                            onChange={e => dispatch(set_search(e.target.value))}
                           />
                           {display && (
                             <div className="pos-abs bg-primary br-10px">
@@ -362,11 +340,11 @@ const HomePage = () => {
                           <input
                             id="auto"
                             autoComplete="off"
-                            onClick={() => setDisplay(true)}
+                            onClick={() => dispatch(setDisplay(true))}
                             className="form_input search mv-0px w-100per fs-20px"
                             placeholder="Find Your Glow Here"
                             value={search}
-                            onChange={e => set_search(e.target.value)}
+                            onChange={e => dispatch(set_search(e.target.value))}
                           />
                           {display && (
                             <div className="pos-abs bg-primary br-10px z-pos-2">
@@ -426,11 +404,11 @@ const HomePage = () => {
                         <input
                           id="auto"
                           autoComplete="off"
-                          onClick={() => setDisplay(true)}
+                          onClick={() => dispatch(setDisplay(true))}
                           className="form_input search mv-0px w-100per fs-20px"
                           placeholder="Find Your Glow Here"
                           value={search}
-                          onChange={e => set_search(e.target.value)}
+                          onChange={e => dispatch(set_search(e.target.value))}
                         />
                         {display && (
                           <div className="pos-abs bg-primary br-10px z-pos-2">

@@ -35,11 +35,9 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
     set_loading(true);
     const { data } = await API_Products.findAllGrid_products_a({ category });
 
-    set_products(typeof data === "object" && data.products.filter(product => product.pathname !== product_pathname));
+    set_products(typeof data === "object" && data.filter(product => product.pathname !== product_pathname));
     if (random) {
-      set_products(
-        typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== product_pathname))
-      );
+      set_products(typeof data === "object" && shuffle(data.filter(product => product.pathname !== product_pathname)));
     }
     set_loading(false);
   };
