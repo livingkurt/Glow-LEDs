@@ -38,20 +38,10 @@ export default {
           }
         : {};
       const filter = determine_filter(query, search);
-      const sort_query = query.sort && query.sort.toLowerCase();
       const sort = { name: 1 };
 
       const filaments = await filament_db.findAll_filaments_db(filter, sort, limit, page);
-      const count = await filament_db.count_filaments_db(filter);
-      if (count !== undefined) {
-        return {
-          filaments,
-          totalPages: Math.ceil(count / parseInt(limit)),
-          currentPage: page,
-        };
-      } else {
-        throw new Error("Count is undefined");
-      }
+      return filaments;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
