@@ -64,9 +64,7 @@ const filamentPage = createSlice({
     },
     [API.listFilaments.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.filaments = payload.data;
-      state.totalPages = payload.total_count;
-      state.page = payload.currentPage;
+      state.filaments = payload;
       state.message = "Filaments Found";
     },
     [API.listFilaments.rejected]: (state, { payload, error }) => {
