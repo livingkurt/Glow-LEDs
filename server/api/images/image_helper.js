@@ -1,10 +1,18 @@
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
+import config from "../../config";
+const axios = require("axios");
+import image_db from "./image_db";
+import { promisify } from "util";
+const Jimp = require("jimp");
+const fs = require("fs");
+const deleteFile = promisify(fs.unlink);
+const readdir = promisify(fs.readdir);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "tmp/");
   },
   filename: function (req, file, cb) {
     const fileExtension = path.extname(file.originalname);
@@ -63,4 +71,48 @@ export const convertDriveLinkToDirectLink = shareLink => {
 
   // Return the original link if it's not a Google Drive link or if the match failed
   return shareLink;
+};
+
+export const compressImage = async (imagePath, outputDir) => {
+  const outputFilePath = path.join(outputDir, path.basename(imagePath));
+
+  const jimpImage = await Jimp.read(imagePath);
+  await jimpImage.resize(Jimp.AUTO, 800).quality(90).writeAsync(outputFilePath);
+
+  return outputFilePath;
+};
+
+export const uploadImageToImgur = async (imagePath, albumDeletehash) => {
+  const imageData = fs.createReadStream(imagePath);
+  const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
+    headers: {
+      Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
+      "Content-Type": "multipart/form-data",
+    },
+    params: { album: albumDeletehash },
+  });
+  return imgResponse.data.data.link;
+};
+export const createImgurAlbum = async albumName => {
+  const albumResponse = await axios.post(
+    "https://api.imgur.com/3/album",
+    { title: albumName, privacy: "hidden" },
+    {
+      headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
+    }
+  );
+  return albumResponse.data.data;
+};
+
+export const deleteImages = async (uploadedFiles, uploadsDir) => {
+  await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
+};
+
+export const createImageRecords = async (uploadedImageLinks, albumName) => {
+  return await Promise.all(uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName })));
+};
+
+export const findImages = async uploadsDir => {
+  const uploadedFiles = await readdir(uploadsDir);
+  return uploadedFiles;
 };
