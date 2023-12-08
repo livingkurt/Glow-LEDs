@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { User } from "./users";
-import { Expense } from "./expenses";
+import { Expense, expense_db } from "./expenses";
 import { Product } from "./products";
 import { Feature } from "./features";
 import { Order } from "./orders";
@@ -10,7 +10,7 @@ import { Affiliate } from "./affiliates";
 import { Content } from "./contents";
 import { Promo } from "./promos";
 import { Survey } from "./surveys";
-import { Paycheck } from "./paychecks";
+import { Paycheck, paycheck_db } from "./paychecks";
 import { Parcel } from "./parcels";
 import Chip from "./chips/chip";
 import { snake_case } from "../utils/util";
@@ -27,6 +27,11 @@ import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
 import { Parser } from "json2csv";
 import config from "../config";
 import * as csv from "fast-csv";
+import Stripe from "stripe";
+
+const stripe = new Stripe(config.STRIPE_KEY, {
+  apiVersion: "2023-08-16",
+});
 
 const router = express.Router();
 
@@ -2505,6 +2510,186 @@ router.route("/xxl_revenue").get(async (req, res) => {
   } catch (error) {
     console.log({ error });
     res.status(500).json({ success: false, message: "Something went wrong", error });
+  }
+});
+
+router.route("/backfill_stripe_fees").put(async (req, res) => {
+  try {
+    const startDate = new Date("2020-08-10");
+    const endDate = new Date();
+
+    let hasMore = true;
+    let lastPaymentIntentId = null;
+
+    while (hasMore) {
+      const paymentIntentsParams = {
+        created: {
+          gte: Math.floor(startDate.getTime() / 1000),
+          lte: Math.floor(endDate.getTime() / 1000),
+        },
+        limit: 100, // adjust as needed
+      };
+
+      if (lastPaymentIntentId) {
+        paymentIntentsParams.starting_after = lastPaymentIntentId;
+      }
+
+      const paymentIntentsResponse = await stripe.paymentIntents.list(paymentIntentsParams);
+
+      const paymentIntents = paymentIntentsResponse.data;
+      hasMore = paymentIntentsResponse.has_more;
+
+      for (const intent of paymentIntents) {
+        const charges = await stripe.charges.list({
+          payment_intent: intent.id,
+        });
+
+        for (const charge of charges.data) {
+          const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
+          console.log({ fee: balanceTransaction.fee / 100 });
+          await expense_db.create_expenses_db({
+            expense_name: "Stripe Fee",
+            amount: balanceTransaction.fee / 100,
+            category: "Stripe Fee",
+            date_of_purchase: new Date(balanceTransaction.created * 1000),
+            place_of_purchase: "Stripe",
+            application: "Payments",
+          });
+        }
+      }
+
+      if (paymentIntents.length > 0) {
+        lastPaymentIntentId = paymentIntents[paymentIntents.length - 1].id;
+      } else {
+        hasMore = false;
+      }
+    }
+
+    res.status(200).send({ message: "Backfill completed successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+// router.route("/backfill_paychecks").put(async (req, res) => {
+//   try {
+//     const startDate = new Date("2020-08-10");
+//     let hasMore = true;
+//     let lastPayoutId = null;
+
+//     while (hasMore) {
+// const payoutParams = {
+//   created: {
+//     gte: Math.floor(startDate.getTime() / 1000),
+//   },
+//   limit: 100, // adjust as needed
+// };
+
+// if (lastPayoutId) {
+//   payoutParams.starting_after = lastPayoutId;
+// }
+
+// const payoutsResponse = await stripe.payouts.list(payoutParams);
+
+// const payouts = payoutsResponse.data;
+// hasMore = payoutsResponse.has_more;
+
+//       for (const payout of payouts) {
+//         // Create Paycheck record
+//         await paycheck_db.create_paychecks_db({
+//           // You need to determine how to populate fields like affiliate, user, team, etc.
+//           amount: payout.amount / 100, // Stripe amounts are in smallest currency unit (e.g., cents)
+//           stripe_connect_id: payout.destination, // Assuming this is the relevant field
+//           paid: payout.status === "paid",
+//           paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000) : null,
+//           // reciept: payout.id, // Using Stripe payout ID as receipt.
+//         });
+
+//         // Create Expense record
+//         await expense_db.create_expenses_db({
+//           expense_name: "Payout to " + payout.destination, // Adjust as needed
+//           amount: payout.amount / 100,
+//           category: "Payout",
+//           date_of_purchase: new Date(payout.created * 1000),
+//           place_of_purchase: "Stripe Connect",
+//           application: "Payments",
+//         });
+
+//         lastPayoutId = payout.id; // Update the last processed payoutId
+//       }
+//     }
+
+//     res.status(200).send({ message: "Backfill completed successfully." });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// });
+
+router.route("/backfill_paychecks").put(async (req, res) => {
+  try {
+    const startDate = new Date("2020-08-10");
+    let hasMore = true;
+    let lastPayoutId = null;
+    const paychecks = [];
+    const expenses = [];
+
+    while (hasMore) {
+      const payoutParams = {
+        created: {
+          gte: Math.floor(startDate.getTime() / 1000),
+        },
+        limit: 100, // adjust as needed
+      };
+
+      if (lastPayoutId) {
+        payoutParams.starting_after = lastPayoutId;
+      }
+
+      const payoutsResponse = await stripe.payouts.list(payoutParams);
+
+      const payouts = payoutsResponse.data;
+      console.log({ payouts });
+      hasMore = payoutsResponse.has_more;
+
+      for (const payout of payouts) {
+        // Accumulate Paycheck data
+        paychecks.push({
+          amount: payout.amount / 100,
+          stripe_connect_id: payout.destination,
+          paid: payout.status === "paid",
+          paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000).toISOString() : null,
+        });
+
+        // Accumulate Expense data
+        expenses.push({
+          expense_name: "Payout to " + payout.destination,
+          amount: payout.amount / 100,
+          category: "Payout",
+          date_of_purchase: new Date(payout.created * 1000).toISOString(),
+          place_of_purchase: "Stripe Connect",
+          application: "Payments",
+        });
+
+        lastPayoutId = payout.id;
+      }
+    }
+
+    // Convert data to CSV
+    const paycheckParser = new Parser({ fields: Object.keys(paychecks[0]) });
+    const paycheckCsv = paycheckParser.parse(paychecks);
+
+    const expenseParser = new Parser({ fields: Object.keys(expenses[0]) });
+    const expenseCsv = expenseParser.parse(expenses);
+
+    // Write CSV to files
+    fs.writeFileSync("./paychecks.csv", paycheckCsv);
+    fs.writeFileSync("./expenses.csv", expenseCsv);
+
+    res.status(200).send({ message: "CSV files created successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 });
 
