@@ -1,3 +1,4 @@
+import { expense_db } from "../expenses";
 import config from "../../config";
 
 import Stripe from "stripe";
@@ -47,30 +48,34 @@ export const createPaymentIntent = async (customer, paymentInformation) => {
   }
 };
 
-// Function to confirm a payment intent
+// Function to confirm a payment intent and fetch fees
 export const confirmPaymentIntent = async (result, paymentMethodId) => {
   try {
     const confirmedResult = await stripe.paymentIntents.confirm(result.id, {
       payment_method: paymentMethodId,
     });
-    console.log({ charges: confirmedResult });
+
+    // Fetch all charges for this payment intent
+    const charges = await stripe.charges.list({
+      payment_intent: confirmedResult.id,
+    });
+
+    // Assuming the relevant charge is the first one (adjust logic if needed)
+    const relevantCharge = charges.data[0];
 
     // Retrieve balance transaction to get Stripe fee
-    // const balanceTransaction = await stripe.balanceTransactions.retrieve(
-    //   confirmedResult.charges.data[0].balance_transaction
-    // );
+    const balanceTransaction = await stripe.balanceTransactions.retrieve(relevantCharge.balance_transaction);
+    const stripeFee = balanceTransaction.fee;
 
-    // const stripeFee = balanceTransaction.fee;
-
-    // await expense_db.create_expenses_db({
-    //   expense_name: "Stripe Fee",
-    //   amount: stripeFee,
-    //   category: "Stripe Fee",
-    //   date_of_purchase: Date.now(),
-    //   place_of_purchase: "Stripe",
-    //   application: "Payments",
-    // });
-    // console.log({ stripeFee });
+    // Create an expense record for the Stripe fee
+    await expense_db.create_expenses_db({
+      expense_name: "Stripe Fee",
+      amount: stripeFee / 100,
+      category: "Stripe Fee",
+      date_of_purchase: Date.now(),
+      place_of_purchase: "Stripe",
+      application: "Payments",
+    });
     return confirmedResult;
   } catch (error) {
     console.log({ error });
