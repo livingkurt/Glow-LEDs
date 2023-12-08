@@ -1,17 +1,18 @@
-import { promisify } from "util";
 import { Image, image_db } from "../images";
 import { getFilteredData } from "../api_helpers";
-import { ImgurClient } from "imgur";
+
 import path from "path";
 import appRoot from "app-root-path";
-import config from "../../config";
-import { convertDriveLinkToDirectLink } from "./image_helper";
-const fs = require("fs");
-const axios = require("axios");
-const util = require("util");
-const Jimp = require("jimp");
-const deleteFile = util.promisify(fs.unlink);
-const readdir = util.promisify(fs.readdir);
+import {
+  compressImage,
+  convertDriveLinkToDirectLink,
+  createImageRecords,
+  createImgurAlbum,
+  deleteImages,
+  findImages,
+  uploadImageToImgur,
+} from "./image_helper";
+
 // const client = new ImgurClient({ clientId: config.IMGUR_ClIENT_ID });
 
 export default {
@@ -69,51 +70,20 @@ export default {
   upload_images_s: async (body, files) => {
     const { albumName } = body;
     const uploadedImageLinks = [];
+    const uploadsDir = path.join(appRoot.path, "tmp");
     try {
-      const albumResponse = await axios.post(
-        "https://api.imgur.com/3/album",
-        { title: albumName, privacy: "hidden" },
-        {
-          headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
-        }
-      );
-      const album = albumResponse.data.data;
+      const album = await createImgurAlbum(albumName);
 
       for (const image of files) {
-        const compressedImagePath = path.join(appRoot.path, "tmp", image.filename);
-
-        // Resize and compress the image using Jimp
-        const jimpImage = await Jimp.read(image.path);
-        await jimpImage
-          .resize(Jimp.AUTO, 800) // Resize the height to 800px and scale the width accordingly
-          .quality(90) // adjust quality to a moderate level
-          .writeAsync(compressedImagePath);
-
-        // Get the size of the compressed file (optional)
-        const stats = fs.statSync(compressedImagePath);
-        const fileSizeInBytes = stats.size;
-        console.log(`Compressed file size: ${fileSizeInBytes} bytes`);
-
-        const imageData = fs.createReadStream(compressedImagePath);
-        const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
-          headers: {
-            Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
-            "Content-Type": "multipart/form-data",
-          },
-          params: { album: album.deletehash },
-        });
-        uploadedImageLinks.push(imgResponse.data.data.link);
+        const compressedImagePath = await compressImage(image.path, uploadsDir);
+        const imageLink = await uploadImageToImgur(compressedImagePath, album.deletehash);
+        uploadedImageLinks.push(imageLink);
       }
 
-      const images = await Promise.all(
-        uploadedImageLinks.map(async link => {
-          return await image_db.create_images_db({ link, album: albumName });
-        })
-      );
+      const images = await createImageRecords(uploadedImageLinks, albumName);
 
-      const uploadsDir = path.join(appRoot.path, "tmp");
-      const uploadedFiles = await readdir(uploadsDir);
-      await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
+      const uploadedFiles = await findImages(uploadsDir);
+      await deleteImages(uploadedFiles, uploadsDir);
 
       return images;
     } catch (error) {
@@ -123,44 +93,6 @@ export default {
       }
     }
   },
-
-  // upload_images_s: async (body, files) => {
-  //   const { albumName } = body;
-  //   const deleteFile = promisify(fs.unlink);
-
-  //   try {
-  //     const uploadedImageLinks = [];
-  //     const album = await client.createAlbum(albumName);
-  //     for (const image of files) {
-  //       try {
-  //         const upload = await client.upload({
-  //           image: fs.createReadStream(image.path),
-  //           album: album.deletehash // optional
-  //         });
-  //         uploadedImageLinks.push(upload.data.link);
-  //       } catch (error) {
-  //         if (error instanceof Error) {
-  //           throw new Error(error.message);
-  //         }
-  //       }
-  //     }
-  //     // Create a image record in an array
-  //     const images = await Promise.all(
-  //       uploadedImageLinks.map(async (link) => {
-  //         return await image_db.create_images_db({ link, album: albumName });
-  //       })
-  //     );
-  //     // Delete all files in uploads directory
-  //     const uploadsDir = path.join(appRoot.path, "uploads");
-  //     const uploadedFiles = await promisify(fs.readdir)(uploadsDir);
-  //     await Promise.all(uploadedFiles.map((file) => deleteFile(path.join(uploadsDir, file))));
-  //     return images;
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
   create_images_s: async body => {
     try {
       return await image_db.create_images_db(body);
