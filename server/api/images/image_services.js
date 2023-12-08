@@ -97,7 +97,7 @@ export default {
         })
       );
 
-      const uploadsDir = path.join(appRoot.path, "uploads");
+      const uploadsDir = path.join(appRoot.path, "tmp");
       const uploadedFiles = await readdir(uploadsDir);
       await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
 
