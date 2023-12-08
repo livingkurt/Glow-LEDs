@@ -9,7 +9,7 @@ import { convertDriveLinkToDirectLink } from "./image_helper";
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
-
+const Jimp = require("jimp");
 const deleteFile = util.promisify(fs.unlink);
 const readdir = util.promisify(fs.readdir);
 // const client = new ImgurClient({ clientId: config.IMGUR_ClIENT_ID });
@@ -80,7 +80,21 @@ export default {
       const album = albumResponse.data.data;
 
       for (const image of files) {
-        const imageData = fs.createReadStream(image.path);
+        const compressedImagePath = path.join(appRoot.path, "tmp", image.filename);
+
+        // Resize and compress the image using Jimp
+        const jimpImage = await Jimp.read(image.path);
+        await jimpImage
+          .resize(Jimp.AUTO, 800) // Resize the height to 800px and scale the width accordingly
+          .quality(90) // adjust quality to a moderate level
+          .writeAsync(compressedImagePath);
+
+        // Get the size of the compressed file (optional)
+        const stats = fs.statSync(compressedImagePath);
+        const fileSizeInBytes = stats.size;
+        console.log(`Compressed file size: ${fileSizeInBytes} bytes`);
+
+        const imageData = fs.createReadStream(compressedImagePath);
         const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
           headers: {
             Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
@@ -103,11 +117,13 @@ export default {
 
       return images;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   // upload_images_s: async (body, files) => {
   //   const { albumName } = body;
   //   const deleteFile = promisify(fs.unlink);
