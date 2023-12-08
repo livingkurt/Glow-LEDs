@@ -7,6 +7,7 @@ import {
   openProductOptionsGeneratorModal,
   open_create_product_modal,
   open_edit_product_modal,
+  set_loading,
 } from "./productsPageSlice";
 import { EditProductModal } from "./components";
 import * as API from "../../api";
@@ -22,6 +23,7 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import axios from "axios";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -158,6 +160,22 @@ const ProductsPage = () => {
                 Delete Products
               </Button>
             )}
+
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={async () => {
+                const confirm = window.confirm("Are you sure you want to generate the product catelog?");
+                if (confirm) {
+                  dispatch(set_loading(true));
+                  await axios.get(`/api/products/facebook_catelog`);
+                  // google_catalog_upload();
+                  dispatch(set_loading(false));
+                }
+              }}
+            >
+              Generate Product Catelog CSV
+            </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
               Create Product
             </Button>
