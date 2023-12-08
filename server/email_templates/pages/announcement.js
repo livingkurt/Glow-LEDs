@@ -27,9 +27,9 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                 <table style="width:100%;border-spacing:0">
                   <tbody>
                     <tr>
-                      <p
-                        style="text-align:center;line-height:20px;font-family:helvetica;color:;font-size:16px;margin-top:10px;margin-bottom:10px;">
-                        ${h2}</p>
+                      <h2
+                        style="text-align:center;font-family:helvetica;margin-top:10px;margin-bottom:10px;">
+                        ${h2}</h2>
                     </tr>
                   </tbody>
                 </table>
@@ -192,7 +192,7 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                         p
                           ? `
                       <pre
-                        style="max-width: 800px; text-align:center; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
+                        style="max-width: 800px; text-align:left; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
                       `
                           : ""
                       }
