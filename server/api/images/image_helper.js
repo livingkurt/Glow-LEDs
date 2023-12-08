@@ -76,10 +76,13 @@ export const convertDriveLinkToDirectLink = shareLink => {
 export const compressImage = async (imagePath, outputDir) => {
   // Ensure the output directory exists, create if not
   if (!fs.existsSync(outputDir)) {
+    console.log("Creating output directory");
     fs.mkdirSync(outputDir, { recursive: true });
   }
+  console.log({ imagePath, outputDir, basename: path.basename(imagePath) });
 
   const outputFilePath = path.join(outputDir, path.basename(imagePath));
+  console.log({ outputFilePath });
 
   const jimpImage = await Jimp.read(imagePath);
   await jimpImage.resize(Jimp.AUTO, 800).quality(90).writeAsync(outputFilePath);

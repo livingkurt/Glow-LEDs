@@ -71,6 +71,7 @@ export default {
     const { albumName } = body;
     const uploadedImageLinks = [];
     const uploadsDir = path.join(appRoot.path, "tmp");
+    console.log({ uploadsDir });
     try {
       const album = await createImgurAlbum(albumName);
 
