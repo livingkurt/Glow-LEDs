@@ -53,8 +53,27 @@ export const confirmPaymentIntent = async (result, paymentMethodId) => {
     const confirmedResult = await stripe.paymentIntents.confirm(result.id, {
       payment_method: paymentMethodId,
     });
+    console.log({ charges: confirmedResult });
+
+    // Retrieve balance transaction to get Stripe fee
+    // const balanceTransaction = await stripe.balanceTransactions.retrieve(
+    //   confirmedResult.charges.data[0].balance_transaction
+    // );
+
+    // const stripeFee = balanceTransaction.fee;
+
+    // await expense_db.create_expenses_db({
+    //   expense_name: "Stripe Fee",
+    //   amount: stripeFee,
+    //   category: "Stripe Fee",
+    //   date_of_purchase: Date.now(),
+    //   place_of_purchase: "Stripe",
+    //   application: "Payments",
+    // });
+    // console.log({ stripeFee });
     return confirmedResult;
   } catch (error) {
+    console.log({ error });
     if (error instanceof Error) {
       throw new Error(error.message);
     }
