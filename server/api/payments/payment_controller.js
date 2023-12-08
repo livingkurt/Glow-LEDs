@@ -2,7 +2,13 @@ import { user_db } from "../users";
 import config from "../../config";
 import { Order } from "../orders";
 import { normalizeCustomerInfo, normalizePaymentInfo } from "./payment_helpers";
-import { confirmPaymentIntent, createOrUpdateCustomer, createPaymentIntent, updateOrder } from "./payment_interactors";
+import {
+  confirmPaymentIntent,
+  createOrUpdateCustomer,
+  createPaymentIntent,
+  logStripeFeeToExpenses,
+  updateOrder,
+} from "./payment_interactors";
 import Stripe from "stripe";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -19,6 +25,7 @@ export default {
       const customer = await createOrUpdateCustomer(current_userrmation);
       const paymentIntent = await createPaymentIntent(customer, paymentInformation);
       const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
+      await logStripeFeeToExpenses(confirmedPayment);
       const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod);
 
       if (updatedOrder) {
