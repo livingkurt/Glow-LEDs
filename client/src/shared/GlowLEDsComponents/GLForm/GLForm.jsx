@@ -104,6 +104,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   margin="normal"
                   loading={!fieldData.loading}
                   value={selected || ""}
+                  disabled={fieldData.disabled}
                   options={(!fieldData.loading && determineOptions(fieldData, localState)) || []}
                   getOptionLabel={option =>
                     option
@@ -154,6 +155,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   }
                   isOptionEqualToValue={(option, value) => option._id === value._id}
                   fieldName={fieldName}
+                  disabled={fieldData.disabled}
                   labelProp={fieldData.labelProp}
                   label={fieldData.label}
                   onChange={value => handleInputChange(fieldName, value)}
@@ -228,6 +230,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   error={formErrors && !!formErrors[fieldName]}
                   autoComplete="new-password"
                   className={classes.outlinedInput}
+                  disabled={fieldData.disabled}
                   InputProps={{
                     autoComplete: "new-password",
                     form: {
@@ -264,6 +267,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
+                  disabled={fieldData.disabled}
                   InputProps={{
                     autoComplete: "new-password",
                     form: {
@@ -298,6 +302,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
+                  disabled={fieldData.disabled}
                   InputProps={{
                     autoComplete: "new-password",
                     form: {
@@ -334,6 +339,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
+                  disabled={fieldData.disabled}
                   InputProps={{
                     autoComplete: "new-password",
                     form: {
@@ -367,6 +373,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   autoComplete="new-password"
                   error={formErrors && !!formErrors[fieldName]}
                   className={classes.outlinedInput}
+                  disabled={fieldData.disabled}
                   InputProps={{
                     autoComplete: "new-password",
                     form: {
@@ -409,6 +416,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     key={`${fieldName}-${fieldData.type}`}
                     autoComplete="new-password"
                     customClasses={classes}
+                    disabled={fieldData.disabled}
                     // isOptionEqualToValue={(option, value) => {
                     //   return option.short_name === value.short_name;
                     // }}

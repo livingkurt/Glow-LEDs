@@ -5,6 +5,8 @@ export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
     _id: {
       type: "text",
       label: "ID",
+      permissions: ["admin"],
+      disabled: true,
     },
     first_name: {
       type: "text",

@@ -5,6 +5,8 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
     _id: {
       type: "text",
       label: "ID",
+      permissions: ["admin"],
+      disabled: true,
     },
     user: {
       type: "autocomplete_single",
