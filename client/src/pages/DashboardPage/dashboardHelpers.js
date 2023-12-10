@@ -135,7 +135,6 @@ export const combineMonthlyRevenueAndExpenses = (revenueData, expensesData, payc
   for (let revenue of revenueData) {
     let expense = expensesData.find(exp => exp.month === revenue.month);
     let paycheck = paycheckData.find(pay => pay.month === revenue.month);
-    console.log({ paycheck, expense });
 
     combinedData.push({
       month: revenue.month,
