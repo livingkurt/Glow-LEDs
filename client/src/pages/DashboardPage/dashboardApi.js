@@ -100,6 +100,16 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }) =>
         `/expenses/get_daily_expenses_expenses?start_date=${start_date}&end_date=${end_date}`,
     }),
+    getYearlyPaycheckOrders: builder.query({
+      query: () => "/paychecks/get_yearly_paychecks_paychecks",
+    }),
+    getMonthlyPaycheckOrders: builder.query({
+      query: ({ year }) => `/paychecks/get_monthly_paychecks_paychecks?year=${year}`,
+    }),
+    getDailyPaycheckOrders: builder.query({
+      query: ({ start_date, end_date }) =>
+        `/paychecks/get_daily_paychecks_paychecks?start_date=${start_date}&end_date=${end_date}`,
+    }),
   }),
 });
 
@@ -129,6 +139,9 @@ export const {
   useGetYearlyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
   useGetDailyExpenseOrdersQuery,
+  useGetYearlyPaycheckOrdersQuery,
+  useGetMonthlyPaycheckOrdersQuery,
+  useGetDailyPaycheckOrdersQuery,
   useGetQuestionConcernsQuery,
 } = dashboardApi;
 

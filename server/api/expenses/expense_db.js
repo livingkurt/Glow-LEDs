@@ -26,9 +26,11 @@ export default {
   },
   create_expenses_db: async body => {
     try {
+      console.log({ body });
       return await Expense.create(body);
     } catch (error) {
       if (error instanceof Error) {
+        console.log({ error });
         throw new Error(error.message);
       }
     }
@@ -51,6 +53,15 @@ export default {
       if (expense) {
         return await Expense.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  remove_multiple_expenses_db: async ids => {
+    try {
+      return await Expense.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

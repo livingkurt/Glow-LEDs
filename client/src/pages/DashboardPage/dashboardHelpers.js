@@ -93,11 +93,12 @@ export const determineTabName = (month, year) => {
   }
 };
 
-export const combineYearlyRevenueAndExpenses = (revenueData, expensesData) => {
+export const combineYearlyRevenueAndExpenses = (revenueData, expensesData, paycheckData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
     let expense = expensesData.find(exp => exp.year === revenue.year);
+    let paycheck = paycheckData.find(pay => pay.year === revenue.year);
 
     combinedData.push({
       year: revenue.year,
@@ -105,31 +106,36 @@ export const combineYearlyRevenueAndExpenses = (revenueData, expensesData) => {
       revenueMonthlyAverage: revenue.monthlyAverage,
       expense: expense ? expense.amount : 0,
       expenseMonthlyAverage: expense ? expense.monthlyAverage : 0,
+      paycheck: paycheck ? paycheck.amount : 0,
     });
   }
 
-  for (let expense of expensesData) {
-    if (!combinedData.find(data => data.year === expense.year)) {
+  // Add expense-only and paycheck-only entries
+  [...expensesData, ...paycheckData].forEach(item => {
+    if (!combinedData.find(data => data.year === item.year)) {
       combinedData.push({
-        year: expense.year,
+        year: item.year,
         revenue: 0,
         revenueMonthlyAverage: 0,
-        expense: expense.amount,
-        expenseMonthlyAverage: expense.monthlyAverage,
+        expense: item.amount || 0,
+        expenseMonthlyAverage: item.monthlyAverage || 0,
+        paycheck: item.amount || 0,
       });
     }
-  }
+  });
 
   combinedData.sort((a, b) => a.year - b.year);
 
   return combinedData;
 };
 
-export const combineMonthlyRevenueAndExpenses = (revenueData, expensesData) => {
+export const combineMonthlyRevenueAndExpenses = (revenueData, expensesData, paycheckData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
     let expense = expensesData.find(exp => exp.month === revenue.month);
+    let paycheck = paycheckData.find(pay => pay.month === revenue.month);
+    console.log({ paycheck, expense });
 
     combinedData.push({
       month: revenue.month,
@@ -137,31 +143,37 @@ export const combineMonthlyRevenueAndExpenses = (revenueData, expensesData) => {
       revenueDailyAverage: revenue.dailyAverage,
       expense: expense ? expense.amount : 0,
       expenseDailyAverage: expense ? expense.dailyAverage : 0,
+      paycheck: paycheck ? paycheck.amount : 0,
     });
   }
 
-  for (let expense of expensesData) {
-    if (!combinedData.find(data => data.month === expense.month)) {
+  // Add expense-only and paycheck-only entries
+  [...expensesData, ...paycheckData].forEach(item => {
+    if (!combinedData.find(data => data.month === item.month)) {
       combinedData.push({
-        month: expense.month,
+        month: item.month,
         revenue: 0,
         revenueDailyAverage: 0,
-        expense: expense.amount,
-        expenseDailyAverage: expense.dailyAverage,
+        expense: item.amount || 0,
+        expenseDailyAverage: item.dailyAverage || 0,
+        paycheck: item.amount || 0,
       });
     }
-  }
+  });
 
   combinedData.sort((a, b) => a.month - b.month);
 
   return combinedData;
 };
 
-export const combineDailyRevenueAndExpenses = (revenueData, expensesData) => {
+export const combineDailyRevenueAndExpenses = (revenueData, expensesData, paycheckData) => {
   let combinedData = [];
 
   for (let revenue of revenueData) {
     let expense = expensesData.find(exp => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString());
+    let paycheck = paycheckData.find(
+      pay => new Date(pay.date).toDateString() === new Date(revenue.date).toDateString()
+    );
 
     combinedData.push({
       date: revenue.date,
@@ -169,22 +181,25 @@ export const combineDailyRevenueAndExpenses = (revenueData, expensesData) => {
       revenueHourlyAverage: revenue.hourlyAverage,
       expense: expense ? expense.amount : 0,
       expenseHourlyAverage: expense ? expense.hourlyAverage : 0,
+      paycheck: paycheck ? paycheck.amount : 0,
     });
   }
 
-  for (let expense of expensesData) {
-    if (!combinedData.find(data => new Date(data.date).toDateString() === new Date(expense.date).toDateString())) {
+  // Add expense-only and paycheck-only entries
+  [...expensesData, ...paycheckData].forEach(item => {
+    if (!combinedData.find(data => new Date(data.date).toDateString() === new Date(item.date).toDateString())) {
       combinedData.push({
-        date: expense.date,
+        date: item.date,
         revenue: 0,
         revenueHourlyAverage: 0,
-        expense: expense.amount,
-        expenseHourlyAverage: expense.hourlyAverage,
+        expense: item.amount || 0,
+        expenseHourlyAverage: item.hourlyAverage || 0,
+        paycheck: item.amount || 0,
       });
     }
-  }
+  });
 
-  combinedData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // This sorts by date
+  combinedData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return combinedData;
 };

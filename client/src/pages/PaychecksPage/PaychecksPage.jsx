@@ -41,6 +41,7 @@ const PaychecksPage = () => {
         display: paycheck => (paycheck.user ? fullName(paycheck.user) : ""),
       },
 
+      { title: "Description", display: "description" },
       { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
       {
         title: "Team",

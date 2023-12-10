@@ -154,4 +154,16 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  remove_multiple_expenses_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const expense = await expense_services.remove_multiple_expenses_s(body);
+      if (expense) {
+        return res.status(204).send({ message: "Expense Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Expense" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

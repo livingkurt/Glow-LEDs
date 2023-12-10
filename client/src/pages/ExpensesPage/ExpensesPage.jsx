@@ -22,6 +22,9 @@ const ExpensesPage = () => {
   const { message, loading, remoteVersionRequirement } = expensePage;
   const imagePage = useSelector(state => state.images.imagePage);
   const { image_display_modal, selected_image } = imagePage;
+
+  const expenseTable = useSelector(state => state.expenses.expenseTable);
+  const { selectedRows } = expenseTable;
   const dispatch = useDispatch();
 
   const columnDefs = useMemo(
@@ -119,9 +122,25 @@ const ExpensesPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_expense_modal())}>
-            Create Expense
-          </Button>
+          <div className="row g-10px">
+            {selectedRows.length > 1 && (
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Expenses?`);
+                  if (confirm) {
+                    dispatch(API.deleteMultipleExpenses(selectedRows));
+                  }
+                }}
+              >
+                Delete Expenses
+              </Button>
+            )}
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_expense_modal())}>
+              Create Expense
+            </Button>
+          </div>
         }
       />
       <GLImageModal

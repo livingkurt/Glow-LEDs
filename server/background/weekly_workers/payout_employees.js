@@ -15,7 +15,7 @@ export const payout_employees = async () => {
         await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
           amount: employee?.weekly_wage,
           stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
+          description: `Biweekly Payout for ${employee.first_name} ${employee.last_name}`,
         });
         console.log({
           amount: employee?.weekly_wage,

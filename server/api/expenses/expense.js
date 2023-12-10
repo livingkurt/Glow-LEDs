@@ -11,6 +11,7 @@ const expenseSchema = new mongoose.Schema(
     card: { type: String },
     amount: { type: Number },
     documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    paycheck: { type: mongoose.Schema.Types.ObjectId, ref: "Paycheck" },
     airtable_id: { type: String },
     airtable_invoice_links: { type: Array },
     deleted: { type: Boolean, default: false },

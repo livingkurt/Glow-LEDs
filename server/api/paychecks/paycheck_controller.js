@@ -163,13 +163,37 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  get_all_time_payouts_paychecks_c: async (req, res) => {
+  get_daily_paychecks_paychecks_c: async (req, res) => {
+    const { start_date, end_date } = req.query;
     try {
-      const paycheck = await paycheck_db.get_all_time_payouts_paychecks_db();
+      const paycheck = await paycheck_db.get_daily_paychecks_paychecks_db(start_date, end_date);
       if (paycheck) {
         return res.status(200).send(paycheck);
       }
-      return res.status(500).send({ message: "Error Deleting Paycheck" });
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  get_monthly_paychecks_paychecks_c: async (req, res) => {
+    const { year } = req.query;
+    try {
+      const paycheck = await paycheck_db.get_monthly_paychecks_paychecks_db(year);
+      if (paycheck) {
+        return res.status(200).send(paycheck);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  get_yearly_paychecks_paychecks_c: async (req, res) => {
+    try {
+      const paycheck = await paycheck_db.get_yearly_paychecks_paychecks_db();
+      if (paycheck) {
+        return res.status(200).send(paycheck);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }

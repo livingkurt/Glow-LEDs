@@ -6,6 +6,7 @@ const paycheck_schema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
     promo_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
+    description: { type: String },
     amount: { type: Number },
     revenue: { type: Number },
     earned: { type: Number },

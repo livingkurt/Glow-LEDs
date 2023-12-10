@@ -28,6 +28,8 @@ import { Parser } from "json2csv";
 import config from "../config";
 import * as csv from "fast-csv";
 import Stripe from "stripe";
+import { Team } from "./teams";
+const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -2516,7 +2518,7 @@ router.route("/xxl_revenue").get(async (req, res) => {
 router.route("/backfill_stripe_fees").put(async (req, res) => {
   try {
     const startDate = new Date("2020-08-10");
-    const endDate = new Date();
+    const endDate = new Date("2023-11-18");
 
     let hasMore = true;
     let lastPaymentIntentId = null;
@@ -2545,16 +2547,20 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
         });
 
         for (const charge of charges.data) {
-          const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
-          console.log({ fee: balanceTransaction.fee / 100 });
-          await expense_db.create_expenses_db({
-            expense_name: "Stripe Fee",
-            amount: balanceTransaction.fee / 100,
-            category: "Stripe Fee",
-            date_of_purchase: new Date(balanceTransaction.created * 1000),
-            place_of_purchase: "Stripe",
-            application: "Payments",
-          });
+          if (charge.balance_transaction) {
+            const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
+            console.log({ fee: balanceTransaction.fee / 100, date: new Date(balanceTransaction.created * 1000) });
+            await expense_db.create_expenses_db({
+              expense_name: "Stripe Fee",
+              amount: balanceTransaction.fee / 100,
+              category: "Stripe Fee",
+              date_of_purchase: new Date(balanceTransaction.created * 1000),
+              place_of_purchase: "Stripe",
+              application: "Payments",
+            });
+          } else {
+            console.log(`Skipping charge with ID ${charge.id} as it has no balance transaction.`);
+          }
         }
       }
 
@@ -2571,55 +2577,162 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
 // router.route("/backfill_paychecks").put(async (req, res) => {
 //   try {
 //     const startDate = new Date("2020-08-10");
-//     let hasMore = true;
-//     let lastPayoutId = null;
+//     const paychecks = [];
+//     const expenses = [];
 
-//     while (hasMore) {
-// const payoutParams = {
-//   created: {
-//     gte: Math.floor(startDate.getTime() / 1000),
-//   },
-//   limit: 100, // adjust as needed
-// };
+//     // Fetch all users with a Stripe Connect ID
+//     // const users = await User.find({}).populate("affiliate");
+//     const user = await User.findOne({ stripe_connect_id: "acct_1LLGlqQWeCRZgEbL" }).populate("affiliate");
 
-// if (lastPayoutId) {
-//   payoutParams.starting_after = lastPayoutId;
-// }
+//     // for (const user of users) {
+//     //   let hasMore = true;
+//     //   let lastPayoutId = null;
 
-// const payoutsResponse = await stripe.payouts.list(payoutParams);
+//     //   while (hasMore) {
+//     const payoutParams = {
+//       created: {
+//         gte: Math.floor(startDate.getTime() / 1000),
+//       },
+//       limit: 100, // adjust as needed
+//     };
 
-// const payouts = payoutsResponse.data;
-// hasMore = payoutsResponse.has_more;
+//     // if (lastPayoutId) {
+//     //   payoutParams.starting_after = lastPayoutId;
+//     // }
 
-//       for (const payout of payouts) {
-//         // Create Paycheck record
-//         await paycheck_db.create_paychecks_db({
-//           // You need to determine how to populate fields like affiliate, user, team, etc.
-//           amount: payout.amount / 100, // Stripe amounts are in smallest currency unit (e.g., cents)
-//           stripe_connect_id: payout.destination, // Assuming this is the relevant field
+//     // try {
+//     //   payoutsResponse = await stripe.payouts.list(payoutParams, { stripeAccount: user.stripe_connect_id });
+//     // } catch (error) {
+//     //   console.error(`Failed to fetch payouts for user ${user.affiliate.artist_name}: ${error.message}`);
+//     //   continue; // Skip to the next user if payouts cannot be fetched
+//     // }
+//     const { data } = await stripe.payouts.list(payoutParams, { stripeAccount: "acct_1LLGlqQWeCRZgEbL" });
+
+//     for (const payout of data) {
+//       console.log({
+//         artist_name: user?.affiliate?.artist_name,
+//         amount: payout.amount / 100,
+//         length: payout.length,
+//       });
+//       // Process each payout
+// paychecks.push({
+//   user: user?._id,
+//   fullName: user.first_name + " " + user.last_name,
+//   amount: payout.amount / 100,
+//   affiliate: user?.affiliate?._id,
+//   artist_name: user?.affiliate?.artist_name,
+//   email: user?.email,
+//   stripe_connect_id: user.stripe_account_id,
+//   paid: payout.status === "paid",
+//   paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000).toISOString() : null,
+// });
+
+// // Accumulate Expense data
+// expenses.push({
+//   expense_name: "Payout to " + user.first_name + " " + user.last_name,
+//   amount: payout.amount / 100,
+//   category: "Payout",
+//   date_of_purchase: new Date(payout.created * 1000).toISOString(),
+//   place_of_purchase: "Stripe Connect",
+//   application: "Payments",
+// });
+
+//       // lastPayoutId = payout.id;
+//     }
+//     // }
+//     // }
+//     // Convert data to CSV
+// const paycheckParser = new Parser({ fields: Object.keys(paychecks[0]) });
+// const paycheckCsv = paycheckParser.parse(paychecks);
+
+// const expenseParser = new Parser({ fields: Object.keys(expenses[0]) });
+// const expenseCsv = expenseParser.parse(expenses);
+
+// // Write CSV to files
+// fs.writeFileSync("./paychecks.csv", paycheckCsv);
+// fs.writeFileSync("./expenses.csv", expenseCsv);
+
+//     res.status(200).send({ message: "CSV files created successfully." });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// });
+
+// router.route("/backfill_paychecks").put(async (req, res) => {
+//   try {
+//     const startDate = new Date("2020-08-10");
+//     const paychecks = [];
+//     const expenses = [];
+
+//     // Fetch all users with a Stripe Connect ID
+//     // const users = await User.find({ stripe_connect_id: { $exists: true } }).populate("affiliate");
+
+//     const transferParams = {
+//       created: {
+//         gte: Math.floor(startDate.getTime() / 1000),
+//       },
+//       limit: 100, // adjust as needed
+//       // destination: user.stripe_connect_id,
+//     };
+
+//     try {
+//       const transfersResponse = await stripe.transfers.list(transferParams);
+//       const transfers = transfersResponse.data;
+//       // console.log({ transfers });
+
+//       for (const transfer of transfers) {
+//         const user = await User.findOne({ stripe_connect_id: transfer.destination }).populate("affiliate");
+//         console.log({ user, destination: transfer.destination });
+//         // Process each transfer
+//         console.log({
+//           artist_name: user?.affiliate?.artist_name,
+//           first_name: user?.first_name,
+//           amount: transfer.amount / 100,
+//         });
+//         paychecks.push({
+//           user: user?._id,
+//           fullName: user.first_name + " " + user.last_name,
+//           amount: payout.amount / 100,
+//           affiliate: user?.affiliate?._id,
+//           artist_name: user?.affiliate?.artist_name,
+//           email: user?.email,
+//           stripe_connect_id: user.stripe_account_id,
 //           paid: payout.status === "paid",
-//           paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000) : null,
-//           // reciept: payout.id, // Using Stripe payout ID as receipt.
+//           paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000).toISOString() : null,
 //         });
 
-//         // Create Expense record
-//         await expense_db.create_expenses_db({
-//           expense_name: "Payout to " + payout.destination, // Adjust as needed
+//         // Accumulate Expense data
+//         expenses.push({
+//           expense_name: "Payout to " + user.first_name + " " + user.last_name,
 //           amount: payout.amount / 100,
 //           category: "Payout",
-//           date_of_purchase: new Date(payout.created * 1000),
+//           date_of_purchase: new Date(payout.created * 1000).toISOString(),
 //           place_of_purchase: "Stripe Connect",
 //           application: "Payments",
 //         });
-
-//         lastPayoutId = payout.id; // Update the last processed payoutId
 //       }
+//     } catch (error) {
+//       console.error(`Failed to fetch transfers for user ${error.message}`);
+//       // Continue to the next user if transfers cannot be fetched
 //     }
 
-//     res.status(200).send({ message: "Backfill completed successfully." });
+//     // Convert data to CSV and write to files
+//     const paycheckParser = new Parser({ fields: Object.keys(paychecks[0]) });
+//     const paycheckCsv = paycheckParser.parse(paychecks);
+
+//     const expenseParser = new Parser({ fields: Object.keys(expenses[0]) });
+//     const expenseCsv = expenseParser.parse(expenses);
+
+//     // Write CSV to files
+//     fs.writeFileSync("./paychecks.csv", paycheckCsv);
+//     fs.writeFileSync("./expenses.csv", expenseCsv);
+
+//     res.status(200).send({ message: "CSV files created successfully." });
 //   } catch (error) {
 //     console.error(error);
 //     res.status(500).send({ error: error.message });
@@ -2629,64 +2742,185 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
 router.route("/backfill_paychecks").put(async (req, res) => {
   try {
     const startDate = new Date("2020-08-10");
+    const validTransfers = [];
     let hasMore = true;
-    let lastPayoutId = null;
-    const paychecks = [];
-    const expenses = [];
+    let lastTransferId = null;
+    const users = await User.find({ stripe_connect_id: { $regex: /.+/ } }).populate("affiliate");
+    const connectIds = users.map(user => user.stripe_connect_id);
+    console.log({ connectIds });
 
     while (hasMore) {
-      const payoutParams = {
+      const transferParams = {
         created: {
           gte: Math.floor(startDate.getTime() / 1000),
         },
         limit: 100, // adjust as needed
       };
 
-      if (lastPayoutId) {
-        payoutParams.starting_after = lastPayoutId;
+      if (lastTransferId) {
+        transferParams.starting_after = lastTransferId;
       }
 
-      const payoutsResponse = await stripe.payouts.list(payoutParams);
+      const transfersResponse = await stripe.transfers.list(transferParams);
+      const transfers = transfersResponse.data;
+      hasMore = transfersResponse.has_more;
 
-      const payouts = payoutsResponse.data;
-      console.log({ payouts });
-      hasMore = payoutsResponse.has_more;
+      for (const transfer of transfers) {
+        const isConnectAccount = connectIds.includes(transfer.destination);
+        if (transfer.destination && isConnectAccount) {
+          const user = await User.findOne({ stripe_connect_id: transfer.destination }).populate("affiliate");
+          console.log({
+            name: user.first_name + " " + user.last_name,
+            destination: transfer.destination,
+            created: new Date(transfer.created * 1000).toISOString(),
+          });
+          // Process and store each transfer in the validTransfers array
+          validTransfers.push({
+            user_id: user?._id,
+            affiliate_id: user?.affiliate?._id,
+            description: transfer.description,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            amount: transfer.amount / 100,
+            artist_name: user?.affiliate?.artist_name,
+            email: user?.email,
+            stripe_connect_id: user.stripe_account_id,
+            paid: true,
+            paid_at: transfer.created ? new Date(transfer.created * 1000).toISOString() : null,
+          });
+        }
+      }
 
-      for (const payout of payouts) {
-        // Accumulate Paycheck data
-        paychecks.push({
-          amount: payout.amount / 100,
-          stripe_connect_id: payout.destination,
-          paid: payout.status === "paid",
-          paid_at: payout.arrival_date ? new Date(payout.arrival_date * 1000).toISOString() : null,
+      // Update the last processed transferId
+      if (transfers.length > 0) {
+        lastTransferId = transfers[transfers.length - 1].id;
+      } else {
+        hasMore = false;
+      }
+    }
+    // Convert data to CSV and write to files
+    const transferParser = new Parser({ fields: Object.keys(validTransfers[0]) });
+    const transferCsv = transferParser.parse(validTransfers);
+
+    // Write CSV to files
+    fs.writeFileSync("./transfers.csv", transferCsv);
+
+    res.status(200).send({ message: "CSV files created successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/import_paychecks").put(async (req, res) => {
+  try {
+    // Read the CSV file
+    const fileContent = fs.readFileSync("./cody_transfers.csv", "utf8");
+
+    // Parse the CSV content with Papa Parse
+    const parsedData = Papa.parse(fileContent, {
+      header: true,
+      skipEmptyLines: true,
+      complete: result => {
+        // Process each record and insert into the database
+        result.data.forEach(async record => {
+          const newPaycheck = new Paycheck({
+            // Map your CSV columns to your schema fields
+            affiliate: record.affiliate_id ? record.affiliate_id : null,
+            description: record.description,
+            user: record.user_id,
+            amount: Number(record.amount),
+            stripe_connect_id: record.stripe_connect_id,
+            paid: record.paid === "TRUE",
+            paid_at: record.paid_at ? new Date(record.paid_at) : null,
+          });
+          console.log({ newPaycheck });
+          await newPaycheck.save();
         });
+      },
+    });
 
-        // Accumulate Expense data
-        expenses.push({
-          expense_name: "Payout to " + payout.destination,
-          amount: payout.amount / 100,
-          category: "Payout",
-          date_of_purchase: new Date(payout.created * 1000).toISOString(),
-          place_of_purchase: "Stripe Connect",
-          application: "Payments",
-        });
+    res.status(200).send({ message: "Paychecks Imported successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 
-        lastPayoutId = payout.id;
+router.route("/import_all_paychecks").put(async (req, res) => {
+  try {
+    const fileContent = fs.readFileSync("./affiliate_transfers.csv", "utf8");
+
+    Papa.parse(fileContent, {
+      header: true,
+      skipEmptyLines: true,
+      complete: async result => {
+        for (const record of result.data) {
+          const affiliateId = record.affiliate_id ? new mongoose.Types.ObjectId(record.affiliate_id) : null;
+          if (affiliateId) {
+            // Check if a paycheck with the same amount and affiliate already exists
+            const existingPaychecks = await Paycheck.find({
+              affiliate: affiliateId,
+              // amount: parseFloat(record.amount),
+            });
+
+            const existingPaycheck = existingPaychecks.filter(paycheck => {
+              // console.log({ paycheck: parseFloat(paycheck.amount.toFixed(2)), record: parseFloat(record.amount) });
+              return parseFloat(paycheck.amount.toFixed(2)) === parseFloat(record.amount);
+            });
+
+            // console.log({ existingPaycheck });
+
+            if (existingPaycheck.length === 0) {
+              const newPaycheck = new Paycheck({
+                affiliate: affiliateId,
+                description: record.description,
+                user: record.user_id,
+                amount: parseFloat(record.amount),
+                stripe_connect_id: record.stripe_connect_id,
+                paid: record.paid === "TRUE",
+                paid_at: record.paid_at ? new Date(record.paid_at) : null,
+              });
+
+              console.log({ amount: parseFloat(record.amount), description: record.description });
+              await newPaycheck.save();
+            }
+          }
+        }
+
+        res.status(200).send({ message: "Paychecks Imported successfully" });
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Create a route that updates all paychecks description
+router.route("/update_paychecks_description").put(async (req, res) => {
+  try {
+    const paychecks = await Paycheck.find({ deleted: false }).populate("affiliate");
+
+    for (const paycheck of paychecks) {
+      if (paycheck.affiliate && !paycheck.description) {
+        if (paycheck.affiliate.user) {
+          // Find user by affiliate id
+          const user = await User.findOne({ _id: paycheck.affiliate.user });
+
+          const description = `Monthly Payout for ${user.first_name} ${user.last_name}`;
+          console.log({ description, user: user._id });
+          await Paycheck.updateOne({ _id: paycheck._id }, { $set: { description, user: user._id } });
+        }
+      } else if (paycheck.team && !paycheck.description) {
+        const team = await Team.findOne({ _id: paycheck.team });
+        const description = `Monthly Payout for ${team.team_name}`;
+        console.log({ description, user: team.captain });
+        await Paycheck.updateOne({ _id: paycheck._id }, { $set: { description, user: team.captain } });
       }
     }
 
-    // Convert data to CSV
-    const paycheckParser = new Parser({ fields: Object.keys(paychecks[0]) });
-    const paycheckCsv = paycheckParser.parse(paychecks);
-
-    const expenseParser = new Parser({ fields: Object.keys(expenses[0]) });
-    const expenseCsv = expenseParser.parse(expenses);
-
-    // Write CSV to files
-    fs.writeFileSync("./paychecks.csv", paycheckCsv);
-    fs.writeFileSync("./expenses.csv", expenseCsv);
-
-    res.status(200).send({ message: "CSV files created successfully." });
+    res.status(200).send({ message: "Paychecks updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });

@@ -2,9 +2,7 @@ import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTabl
 import { format_date } from "../../../utils/helper_functions";
 import {
   combineDailyRevenueAndExpenses,
-  combineData,
   combineMonthlyRevenueAndExpenses,
-  combineRevenueAndExpenses,
   combineYearlyRevenueAndExpenses,
   conditionalColor,
   months,
@@ -19,21 +17,32 @@ const YearlyMonthlyDailyRevenue = ({
   yearly_expenses,
   daily_expenses,
   monthly_expenses,
+  yearly_paychecks,
+  daily_paychecks,
+  monthly_paychecks,
 }) => {
   let combinedYearlyData = [];
 
-  if (yearly_revenue.isSuccess && yearly_expenses.isSuccess) {
-    combinedYearlyData = combineYearlyRevenueAndExpenses(yearly_revenue.data, yearly_expenses.data);
+  if (yearly_revenue.isSuccess && yearly_expenses.isSuccess && yearly_paychecks.isSuccess) {
+    combinedYearlyData = combineYearlyRevenueAndExpenses(
+      yearly_revenue.data,
+      yearly_expenses.data,
+      yearly_paychecks.data
+    );
   }
   let combinedMonthlyData = [];
 
-  if (monthly_revenue.isSuccess && monthly_expenses.isSuccess) {
-    combinedMonthlyData = combineMonthlyRevenueAndExpenses(monthly_revenue.data, monthly_expenses.data);
+  if (monthly_revenue.isSuccess && monthly_expenses.isSuccess && monthly_paychecks.isSuccess) {
+    combinedMonthlyData = combineMonthlyRevenueAndExpenses(
+      monthly_revenue.data,
+      monthly_expenses.data,
+      monthly_paychecks.data
+    );
   }
   let combinedDailyData = [];
 
-  if (daily_revenue.isSuccess && daily_expenses.isSuccess) {
-    combinedDailyData = combineDailyRevenueAndExpenses(daily_revenue.data, daily_expenses.data);
+  if (daily_revenue.isSuccess && daily_expenses.isSuccess && daily_paychecks.isSuccess) {
+    combinedDailyData = combineDailyRevenueAndExpenses(daily_revenue.data, daily_expenses.data, daily_paychecks.data);
   }
 
   return (
@@ -47,11 +56,13 @@ const YearlyMonthlyDailyRevenue = ({
               columnDefs={[
                 { title: "Year", display: "year" },
                 { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                // { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
                 {
                   title: "Profit",
-                  display: row => `$${(row.revenue - row.expense)?.toFixed(2)}`,
-                  conditionalColor: row => conditionalColor(row.revenue, row.expense),
+                  display: row => `$${(row.revenue - row.expense + row.paycheck)?.toFixed(2)}`,
+                  conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
                 },
                 { title: "Revenue Monthly Average", display: row => `$${row.revenueMonthlyAverage?.toFixed(2)}` },
                 { title: "Expense Monthly Average", display: row => `$${row.expenseMonthlyAverage?.toFixed(2)}` },
@@ -69,11 +80,13 @@ const YearlyMonthlyDailyRevenue = ({
               columnDefs={[
                 { title: "Year", display: row => months[row.month - 1] },
                 { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                // { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
                 {
                   title: "Profit",
-                  display: row => `$${(row.revenue - row.expense)?.toFixed(2)}`,
-                  conditionalColor: row => conditionalColor(row.revenue, row.expense),
+                  display: row => `$${(row.revenue - row.expense + row.paycheck)?.toFixed(2)}`,
+                  conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
                 },
                 { title: "Daily Average", display: row => `$${row.revenueDailyAverage?.toFixed(2)}` },
                 { title: "Expense Daily Average", display: row => `$${row.expenseDailyAverage?.toFixed(2)}` },
@@ -91,11 +104,13 @@ const YearlyMonthlyDailyRevenue = ({
               columnDefs={[
                 { title: "Day", display: row => format_date(row.date) },
                 { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                // { title: "Expenses", display: row => `-$${row.expense?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
                 {
                   title: "Profit",
-                  display: row => `$${(row.revenue - row.expense)?.toFixed(2)}`,
-                  conditionalColor: row => conditionalColor(row.revenue, row.expense),
+                  display: row => `$${(row.revenue - row.expense + row.paycheck)?.toFixed(2)}`,
+                  conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
                 },
                 { title: "Hourly Average", display: row => `$${row.revenueHourlyAverage?.toFixed(2)}` },
                 { title: "Expense Hourly Average", display: row => `$${row.expenseHourlyAverage?.toFixed(2)}` },
