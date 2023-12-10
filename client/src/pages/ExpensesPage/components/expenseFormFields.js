@@ -1,5 +1,6 @@
 import { set_expense } from "../../../slices/expenseSlice";
 import { toCapitalize } from "../../../utils/helper_functions";
+import { determineRepeatOnOptions } from "../expensesPageHelpers";
 
 export const expenseFormFields = ({ expense, dispatch }) => {
   return {
@@ -137,6 +138,40 @@ export const expenseFormFields = ({ expense, dispatch }) => {
         "Tools",
         "Website",
       ],
+    },
+    is_subscription: {
+      type: "checkbox",
+      label: "Is Subscription",
+    },
+    subscription: {
+      type: "object",
+      title: "Subscription",
+      fields: {
+        amount: { type: "text", label: "Amount" },
+        frequency: {
+          type: "autocomplete_single",
+          label: "Frequency",
+          getOptionLabel: option => {
+            if (typeof option === "string") {
+              return toCapitalize(option);
+            }
+          },
+          options: ["Weekly", "Monthly", "Yearly"],
+        },
+        repeats_on: {
+          type: "autocomplete_single",
+          label: "Repeats On",
+          getOptionLabel: option => {
+            if (typeof option === "string") {
+              return toCapitalize(option);
+            }
+          },
+          // Days of the month
+          options: determineRepeatOnOptions(expense.subscription.frequency),
+        },
+        // repeats_on: { type: "date", label: "Repeats On" },
+        valid_to: { type: "date", label: "Valid To" },
+      },
     },
   };
 };

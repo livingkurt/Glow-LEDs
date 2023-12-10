@@ -166,4 +166,16 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  subscriptions_expenses_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const expense = await expense_services.subscriptions_expenses_s(body);
+      if (expense) {
+        return res.status(204).send({ message: "Subscription Expenses Logged" });
+      }
+      return res.status(500).send({ message: "Error Logging Subscription Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

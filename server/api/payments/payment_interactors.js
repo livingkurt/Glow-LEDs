@@ -105,6 +105,7 @@ export const logStripeFeeToExpenses = async confirmedResult => {
       category: "Stripe Fee",
       date_of_purchase: Date.now(),
       place_of_purchase: "Stripe",
+      card: "Stripe",
       application: "Payments",
     });
   } catch (feeError) {
