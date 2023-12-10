@@ -156,7 +156,7 @@ export const expenseFormFields = ({ expense, dispatch }) => {
               return toCapitalize(option);
             }
           },
-          options: ["Daily", "Weekly", "Biweekly", "Monthly", "Yearly"],
+          options: ["Weekly", "Monthly", "Yearly"],
         },
         repeats_on: {
           type: "autocomplete_single",
