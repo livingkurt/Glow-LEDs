@@ -13,13 +13,13 @@ import { email_controller } from "../emails";
 export default {
   get_table_paychecks_s: async query => {
     try {
-      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const sort_options = ["paid_at", "paid", "amount"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
         search_name: "affiliate",
         normalizeFilters: normalizePaycheckFilters,
-        // normalizeSearch: normalizePaycheckSearch
+        normalizeSearch: normalizePaycheckSearch,
       });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
@@ -72,7 +72,7 @@ export default {
         sort_options,
         search_name: "affiliate",
         normalizeFilters: normalizePaycheckFilters,
-        // normalizeSearch: normalizePaycheckSearch
+        // normalizeSearch: normalizePaycheckSearch,
       });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
@@ -90,6 +90,7 @@ export default {
   create_filters_paychecks_s: async query => {
     const affiliates = await affiliate_db.findAll_affiliates_db({ active: true }, {}, "0", "1");
     const users = await user_db.findAll_users_db({ is_employee: true }, {}, "0", "1");
+
     try {
       const availableFilters = {
         paid: [],
@@ -129,7 +130,6 @@ export default {
   create_paychecks_s: async body => {
     try {
       return await paycheck_db.create_paychecks_db(body);
-      return response;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

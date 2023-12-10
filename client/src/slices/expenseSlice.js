@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const expense = {
-  id: "",
+  id: null,
   expense_name: "",
   application: "",
   url: "",
@@ -120,6 +120,19 @@ const expensePage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.deleteExpense.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.deleteMultipleExpenses.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.deleteMultipleExpenses.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.message = "Expense Deleted";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.deleteMultipleExpenses.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

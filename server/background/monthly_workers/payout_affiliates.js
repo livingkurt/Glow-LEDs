@@ -30,20 +30,6 @@ export const payout_affiliates = async () => {
           stripe_connect_id: affiliate.user.stripe_connect_id,
           description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
         });
-
-        await axios.post(`${domainUrl}/api/expenses`, {
-          expense_name: `${affiliate.artist_name} Affiliate Earnings`,
-          date_of_purchase: get_todays_date(),
-          amount: promo_code_usage.earnings,
-          place_of_purchase: "Stripe",
-          card: "Stripe",
-          category: "Affiliate Paycheck",
-        });
-        console.log({
-          amount: promo_code_usage.earnings,
-          stripe_connect_id: affiliate.user.stripe_connect_id,
-          description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
-        });
       }
       console.log({
         affiliate: affiliate?._id,

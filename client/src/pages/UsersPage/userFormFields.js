@@ -2,6 +2,12 @@ import { toCapitalize } from "../../utils/helper_functions";
 
 export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
   return {
+    _id: {
+      type: "text",
+      label: "ID",
+      permissions: ["admin"],
+      disabled: true,
+    },
     first_name: {
       type: "text",
       label: "First Name",

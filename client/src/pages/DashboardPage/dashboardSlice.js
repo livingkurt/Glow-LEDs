@@ -14,8 +14,8 @@ const todayISO = new Date().toISOString();
 const dashboardPage = createSlice({
   name: "dashboardPage",
   initialState: {
-    year: currentYear.toString(),
-    month: currentMonth,
+    year: "",
+    month: "",
     start_date: start_date,
     end_date: end_date,
     tabIndex: 0,

@@ -29,15 +29,14 @@ export const normalizePaycheckFilters = input => {
 };
 
 export const normalizePaycheckSearch = query => {
-  const search = query.search
-    ? {
-        "$affiliate.artist_name": {
-          $regex: query.search.toLowerCase(),
-          $options: "i",
-        },
-      }
-    : {};
-
+  let search = {};
+  if (query.search) {
+    const amountNumber = parseFloat(query.search);
+    if (!isNaN(amountNumber)) {
+      search.amount = amountNumber;
+    }
+  }
+  console.log({ search });
   return search;
 };
 

@@ -38,6 +38,11 @@ const DashboardPage = () => {
   const daily_expenses = API.useGetDailyExpenseOrdersQuery({ start_date, end_date });
   const monthly_expenses = API.useGetMonthlyExpenseOrdersQuery({ year });
   const yearly_expenses = API.useGetYearlyExpenseOrdersQuery();
+  const daily_paychecks = API.useGetDailyPaycheckOrdersQuery({ start_date, end_date });
+  const monthly_paychecks = API.useGetMonthlyPaycheckOrdersQuery({ year });
+  const yearly_paychecks = API.useGetYearlyPaycheckOrdersQuery();
+
+  console.log({ daily_paychecks, monthly_paychecks, yearly_paychecks });
   const range_payouts = API.useGetRangePayoutsQuery({ start_date, end_date });
   const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
   const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
@@ -56,15 +61,6 @@ const DashboardPage = () => {
       </Helmet>
       <h2 className="ta-c w-100per jc-c fs-30px">Glow LEDs Dashboard</h2>
       <div className="jc-b w-100per">
-        <Button variant="contained" onClick={() => run_daily_workers(dispatch)}>
-          Run Daily Workers
-        </Button>
-        {/* <Button variant="contained" onClick={() => run_weekly_workers(dispatch)}>
-          Run Weekly Workers
-        </Button>
-        <Button variant="contained" onClick={() => run_monthly_workers(dispatch)}>
-          Run Monthly Workers
-        </Button> */}
         <Button variant="contained" onClick={() => dispatch(openGcodeContinuousModal(true))}>
           Gcode Generater
         </Button>
@@ -124,6 +120,9 @@ const DashboardPage = () => {
             yearly_expenses={yearly_expenses}
             daily_expenses={daily_expenses}
             monthly_expenses={monthly_expenses}
+            yearly_paychecks={yearly_paychecks}
+            daily_paychecks={daily_paychecks}
+            monthly_paychecks={monthly_paychecks}
           />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={1}>

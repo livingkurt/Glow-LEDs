@@ -14,6 +14,10 @@ export const paycheckFormFields = ({ users, promos, teams, affiliates }) => {
       options: affiliates,
       labelProp: "artist_name",
     },
+    description: {
+      type: "text",
+      label: "Description",
+    },
 
     team: {
       type: "autocomplete_single",

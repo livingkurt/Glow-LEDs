@@ -57,6 +57,15 @@ export default {
       }
     }
   },
+  remove_multiple_expenses_db: async ids => {
+    try {
+      return await Expense.updateMany({ _id: { $in: ids } }, { deleted: true });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   count_expenses_db: async filter => {
     try {
       return await Expense.countDocuments(filter);

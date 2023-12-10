@@ -2,6 +2,12 @@ import { months, toCapitalize } from "../../../utils/helper_functions";
 
 export const affiliateFormFields = ({ products, users, chips, promos }) => {
   return {
+    _id: {
+      type: "text",
+      label: "ID",
+      permissions: ["admin"],
+      disabled: true,
+    },
     user: {
       type: "autocomplete_single",
       label: "User",

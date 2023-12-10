@@ -321,4 +321,13 @@ export default {
       }
     }
   },
+  remove_multiple_expenses_s: async body => {
+    try {
+      return await expense_db.remove_multiple_expenses_db(body.ids);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 };

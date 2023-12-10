@@ -93,3 +93,17 @@ export const deleteExpense = createAsyncThunk(
     }
   }
 );
+
+export const deleteMultipleExpenses = createAsyncThunk(
+  "paycheck/deleteMultipleExpenses",
+  async (ids, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/expenses/delete_multiple`, { ids });
+      dispatch(showSuccess({ message: `Expenses Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
