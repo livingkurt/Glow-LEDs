@@ -26,11 +26,9 @@ export default {
   },
   create_expenses_db: async body => {
     try {
-      console.log({ body });
       return await Expense.create(body);
     } catch (error) {
       if (error instanceof Error) {
-        console.log({ error });
         throw new Error(error.message);
       }
     }
