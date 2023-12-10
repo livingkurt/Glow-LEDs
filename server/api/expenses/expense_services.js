@@ -383,7 +383,7 @@ export default {
         })
       );
 
-      return newExpenses;
+      return "Success";
     } catch (error) {
       console.error("Error processing subscription expenses: ", error);
       throw new Error();
