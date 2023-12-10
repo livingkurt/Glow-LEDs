@@ -25,14 +25,6 @@ export const payout_teams = async () => {
           stripe_connect_id: team.captain.stripe_connect_id,
           description: `Monthly Payout for ${team.team_name}`,
         });
-        await axios.post(`${domainUrl}/api/expenses`, {
-          expense_name: `${team.team_name} Team Earnings`,
-          date_of_purchase: get_todays_date(),
-          amount: promo_code_usage.earnings,
-          place_of_purchase: "Stripe",
-          card: "Stripe",
-          category: "Team Paycheck",
-        });
       }
       console.log({
         team: team?._id,

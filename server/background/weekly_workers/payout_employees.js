@@ -40,22 +40,6 @@ export const payout_employees = async () => {
           paid_at: new Date(),
           email: employee.email,
         });
-        await axios.post(`${domainUrl}/api/expenses`, {
-          expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
-          place_of_purchase: "Stripe",
-          date_of_purchase: get_todays_date(),
-          category: "Employee Paycheck",
-          card: "Stripe",
-          amount: employee?.weekly_wage || 0,
-        });
-        console.log({
-          expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
-          place_of_purchase: "Stripe",
-          date_of_purchase: get_todays_date(),
-          category: "Employee Paycheck",
-          card: "Stripe",
-          amount: employee?.weekly_wage || 0,
-        });
       }
 
       // Delay between each iteration
