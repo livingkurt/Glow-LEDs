@@ -330,4 +330,63 @@ export default {
       }
     }
   },
+  subscriptions_expenses_s: async () => {
+    try {
+      const today = new Date();
+      const currentDayOfMonth = String(today.getDate()).padStart(2, "0"); // For monthly frequency
+      const currentDayOfWeek = today.toLocaleString("en-US", { weekday: "long" }); // For weekly frequency
+      const currentMonth = today.toLocaleString("en-US", { month: "long" }); // For yearly frequency
+
+      const allSubscriptions = await Expense.find({
+        is_subscription: true,
+        deleted: false,
+      });
+
+      const todaysSubscriptions = allSubscriptions.filter(subscription => {
+        const validToFormatted = subscription.subscription.valid_to
+          ? new Date(subscription.subscription.valid_to).toISOString().split("T")[0]
+          : null;
+
+        let isDueToday = false;
+        switch (subscription.subscription.frequency) {
+          case "Weekly":
+            isDueToday = subscription.subscription.repeats_on === currentDayOfWeek;
+            break;
+          case "Monthly":
+            isDueToday = String(subscription.subscription.repeats_on) === currentDayOfMonth;
+            break;
+          case "Yearly":
+            isDueToday = subscription.subscription.repeats_on === currentMonth;
+            break;
+        }
+
+        return isDueToday && (!validToFormatted || today.toISOString().split("T")[0] <= validToFormatted);
+      });
+
+      console.log({ todaysSubscriptions });
+
+      const newExpenses = await Promise.all(
+        todaysSubscriptions.map(async subscription => {
+          const newExpenseData = {
+            expense_name: subscription.expense_name,
+            application: subscription.application,
+            invoice_url: subscription.invoice_url,
+            place_of_purchase: subscription.place_of_purchase,
+            date_of_purchase: new Date(), // current date as the purchase date
+            category: subscription.category,
+            card: subscription.card,
+            amount: subscription.subscription.amount, // amount from subscription
+            is_subscription: false, // since this is a one-time expense record
+          };
+
+          return await Expense.create(newExpenseData);
+        })
+      );
+
+      return newExpenses;
+    } catch (error) {
+      console.error("Error processing subscription expenses: ", error);
+      throw new Error();
+    }
+  },
 };

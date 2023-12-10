@@ -14,6 +14,13 @@ const expense = {
   card: "",
   amount: 0,
   documents: [],
+  is_subscription: false,
+  subscription: {
+    amount: 0,
+    frequency: "",
+    start_date: "",
+    end_date: "",
+  },
 };
 
 const expensePage = createSlice({

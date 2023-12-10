@@ -37,6 +37,9 @@ export const determineExpenseColors = expense => {
   if (expense.category.includes("3D Printer")) {
     result = tableColors.active;
   }
+  if (expense.is_subscription) {
+    result = tableColors.completed;
+  }
   if (expense.category.includes("Affiliate Earnings")) {
     result = tableColors.alt_color_5;
   }
@@ -55,9 +58,6 @@ export const determineExpenseColors = expense => {
   if (expense.category.includes("Website")) {
     result = tableColors.waiting;
   }
-  if (expense.category.includes("Employee Paycheck")) {
-    result = tableColors.completed;
-  }
   if (
     expense.category.includes("Restaurants") ||
     expense.category.includes("Food") ||
@@ -66,4 +66,29 @@ export const determineExpenseColors = expense => {
     result = tableColors.paused;
   }
   return result;
+};
+
+export const determineRepeatOnOptions = frequency => {
+  if (frequency === "Weekly") {
+    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  }
+  if (frequency === "Monthly") {
+    return Array.from({ length: 31 }, (_, i) => `${i + 1}`);
+  }
+  if (frequency === "Yearly") {
+    return [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+  }
 };

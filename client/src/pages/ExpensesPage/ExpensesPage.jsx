@@ -2,7 +2,6 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditExpenseModal } from "./components";
 import * as API from "../../api";
@@ -19,7 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { message, loading, remoteVersionRequirement } = expensePage;
+  const { loading, remoteVersionRequirement } = expensePage;
   const imagePage = useSelector(state => state.images.imagePage);
   const { image_display_modal, selected_image } = imagePage;
 
@@ -47,40 +46,32 @@ const ExpensesPage = () => {
         display: "card",
       },
       // {
-      //   title: "Airtable ID",
-      //   display: "airtable_id"
+      //   title: "Documents",
+      //   display: expense =>
+      //     expense?.documents.map(document => {
+      //       return (
+      //         <div className="jc-c">
+      //           <img
+      //             src={document.link}
+      //             alt={"receipt"}
+      //             style={{ width: "50px", height: "50px" }}
+      //             onClick={() => dispatch(open_image_display_modal(document.link))}
+      //           />
+      //         </div>
+      //       );
+      //     }),
       // },
       // {
-      //   title: "Invoice URL",
-      //   display: expense => <div style={{ overflow: "hidden", width: "100px" }}>{expense.invoice_url}</div>
+      //   title: "Invoice Links",
+      //   display: expense => (
+      //     <div style={{ overflow: "hidden", width: "100px" }}>
+      //       {expense?.airtable_invoice_links.map(links => links).join(", ")}
+      //     </div>
+      //   ),
       // },
       {
-        title: "Documents",
-        display: expense =>
-          expense?.documents.map(document => {
-            return (
-              <div className="jc-c">
-                <img
-                  src={document.link}
-                  alt={"receipt"}
-                  style={{ width: "50px", height: "50px" }}
-                  onClick={() => dispatch(open_image_display_modal(document.link))}
-                />
-              </div>
-            );
-          }),
-      },
-      {
-        title: "Invoice Links",
-        display: expense => (
-          <div style={{ overflow: "hidden", width: "100px" }}>
-            {expense?.airtable_invoice_links.map(links => links).join(", ")}
-          </div>
-        ),
-      },
-      {
         title: "Amount",
-        display: expense => expense.amount && `$${expense.amount.toFixed(2)}`,
+        display: expense => (expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00"),
       },
 
       {
