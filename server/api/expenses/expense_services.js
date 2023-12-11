@@ -363,9 +363,7 @@ export default {
         return isDueToday && (!validToFormatted || today.toISOString().split("T")[0] <= validToFormatted);
       });
 
-      console.log({ todaysSubscriptions });
-
-      const newExpenses = await Promise.all(
+      await Promise.all(
         todaysSubscriptions.map(async subscription => {
           const newExpenseData = {
             expense_name: subscription.expense_name,
@@ -377,6 +375,7 @@ export default {
             card: subscription.card,
             amount: subscription.subscription.amount, // amount from subscription
             is_subscription: false, // since this is a one-time expense record
+            parent_subscription: subscription._id, // reference to the subscription
           };
 
           return await Expense.create(newExpenseData);
@@ -386,6 +385,70 @@ export default {
       return "Success";
     } catch (error) {
       console.error("Error processing subscription expenses: ", error);
+      throw new Error();
+    }
+  },
+  backfill_subscriptions_expenses_s: async params => {
+    const { id } = params;
+    try {
+      const today = new Date();
+      const subscription = await Expense.findById(id);
+
+      if (!subscription || !subscription.is_subscription || subscription.deleted) {
+        throw new Error("Subscription not found or invalid");
+      }
+
+      const startDate = new Date(subscription.date_of_purchase); // Start date of the subscription
+      const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // End of the current month
+
+      for (let date = new Date(startDate); date <= endDate; date.setMonth(date.getMonth() + 1)) {
+        const dayOfMonth = parseInt(subscription.subscription.repeats_on, 10) || startDate.getDate();
+        const purchaseDate = new Date(date.getFullYear(), date.getMonth(), dayOfMonth);
+        // Ensure purchaseDate does not exceed the last day of the month
+        const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        if (purchaseDate > monthEnd) {
+          purchaseDate.setDate(monthEnd.getDate());
+        }
+
+        const rangeStart = new Date(purchaseDate);
+        rangeStart.setDate(purchaseDate.getDate() - 1); // One day before
+        rangeStart.setHours(0, 0, 0, 0);
+
+        const rangeEnd = new Date(purchaseDate);
+        rangeEnd.setDate(purchaseDate.getDate() + 1); // One day after
+        rangeEnd.setHours(23, 59, 59, 999);
+
+        const existingExpense = await Expense.findOne({
+          parent_subscription: subscription._id,
+          date_of_purchase: {
+            $gte: rangeStart,
+            $lt: rangeEnd,
+          },
+          deleted: false,
+        });
+
+        if (!existingExpense) {
+          // Create a new expense record for this month
+          const newExpenseData = {
+            expense_name: subscription.expense_name,
+            application: subscription.application,
+            invoice_url: subscription.invoice_url,
+            place_of_purchase: subscription.place_of_purchase,
+            date_of_purchase: purchaseDate, // Use the start of the month as the purchase date
+            category: subscription.category,
+            card: subscription.card,
+            amount: subscription.subscription.amount, // amount from subscription
+            is_subscription: false, // since this is a one-time expense record
+            parent_subscription: subscription._id, // reference to the subscription
+          };
+
+          await Expense.create(newExpenseData);
+        }
+      }
+
+      return "Backfill complete";
+    } catch (error) {
+      console.error("Error backfilling subscription expenses: ", error);
       throw new Error();
     }
   },

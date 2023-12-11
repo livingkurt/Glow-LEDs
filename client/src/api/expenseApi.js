@@ -107,3 +107,17 @@ export const deleteMultipleExpenses = createAsyncThunk(
     }
   }
 );
+
+export const backfillSubscriptions = createAsyncThunk(
+  "paycheck/backfillSubscriptions",
+  async (expenseId, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/expenses/${expenseId}/subscriptions/backfill`);
+      dispatch(showSuccess({ message: `Subscriptions Backfill Complete` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

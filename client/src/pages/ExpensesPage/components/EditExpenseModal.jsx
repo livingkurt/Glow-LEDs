@@ -4,16 +4,24 @@ import { set_edit_expense_modal, set_expense } from "../../../slices/expenseSlic
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { expenseFormFields } from "./expenseFormFields";
+import { useEffect } from "react";
 
 const EditExpenseModal = () => {
   const dispatch = useDispatch();
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { edit_expense_modal, expense, loading } = expensePage;
+  const { edit_expense_modal, expense, loading, expenses } = expensePage;
+
+  useEffect(() => {
+    dispatch(API.listExpenses({ is_subscription: true }));
+  }, []);
 
   const formFields = expenseFormFields({
     expense,
+    expenses,
     dispatch,
   });
+
+  console.log({ expense });
 
   return (
     <div>

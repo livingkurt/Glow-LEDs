@@ -178,4 +178,16 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  backfill_subscriptions_expenses_c: async (req, res) => {
+    const { params } = req;
+    try {
+      const expense = await expense_services.backfill_subscriptions_expenses_s(params);
+      if (expense) {
+        return res.status(204).send({ message: "Backfill Subscription Expenses Logged" });
+      }
+      return res.status(500).send({ message: "Error Logging Backfill Subscription Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

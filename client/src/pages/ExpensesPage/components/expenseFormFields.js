@@ -2,7 +2,7 @@ import { set_expense } from "../../../slices/expenseSlice";
 import { toCapitalize } from "../../../utils/helper_functions";
 import { determineRepeatOnOptions } from "../expensesPageHelpers";
 
-export const expenseFormFields = ({ expense, dispatch }) => {
+export const expenseFormFields = ({ expense, dispatch, expenses }) => {
   return {
     expense_name: {
       type: "text",
@@ -139,10 +139,18 @@ export const expenseFormFields = ({ expense, dispatch }) => {
         "Website",
       ],
     },
+    parent_subscription: {
+      type: "autocomplete_single",
+      label: "Parent Subscription",
+      options: expenses.filter(expense => expense.is_subscription),
+      labelProp: "expense_name",
+      getOptionLabel: option => option.expense_name,
+    },
     is_subscription: {
       type: "checkbox",
       label: "Is Subscription",
     },
+
     subscription: {
       type: "object",
       title: "Subscription",

@@ -6,6 +6,7 @@ export default {
       return await Expense.find(filter)
         .sort(sort)
         .populate("documents")
+        .populate("parent_subscription")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -17,7 +18,7 @@ export default {
   },
   findById_expenses_db: async id => {
     try {
-      return await Expense.findOne({ _id: id, deleted: false }).populate("documents");
+      return await Expense.findOne({ _id: id, deleted: false }).populate("documents").populate("parent_subscription");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

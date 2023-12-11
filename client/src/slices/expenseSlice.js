@@ -144,6 +144,19 @@ const expensePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.backfillSubscriptions.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.backfillSubscriptions.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.message = "Backfill Subscriptions Success";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.backfillSubscriptions.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
