@@ -98,6 +98,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 <GLAutocomplete
                   key={`${fieldName}-${fieldData.type}`}
                   autoComplete="new-password"
+                  freeSolo
                   customClasses={classes}
                   helperText={formErrors && formErrors[fieldName]}
                   error={formErrors && !!formErrors[fieldName]}

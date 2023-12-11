@@ -167,7 +167,7 @@ export const expenseFormFields = ({ expense, dispatch }) => {
             }
           },
           // Days of the month
-          options: determineRepeatOnOptions(expense.subscription.frequency),
+          options: determineRepeatOnOptions(expense?.subscription?.frequency),
         },
         // repeats_on: { type: "date", label: "Repeats On" },
         valid_to: { type: "date", label: "Valid To" },
