@@ -20,6 +20,7 @@ router.route("/create_all_expenses_s").post(expense_controller.create_all_expens
 router.route("/total_expenses").get(expense_controller.findAllByDate_expenses_c);
 router.route("/delete_multiple").put(expense_controller.remove_multiple_expenses_c);
 router.route("/subscriptions").put(expense_controller.subscriptions_expenses_c);
+router.route("/:id/subscriptions/backfill").put(expense_controller.backfill_subscriptions_expenses_c);
 
 router
   .route("/:id")

@@ -15,6 +15,7 @@ import { determineExpenseColors } from "./expensesPageHelpers";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import BackupTableIcon from "@mui/icons-material/BackupTable";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -26,9 +27,18 @@ const ExpensesPage = () => {
   const { selectedRows } = expenseTable;
   const dispatch = useDispatch();
 
+  const formatDate = dateString => {
+    const date = new Date(dateString);
+    const year = date.getUTCFullYear();
+    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
+    const day = ("0" + date.getUTCDate()).slice(-2);
+    const formattedDate = `${month}/${day}/${year}`;
+    return formattedDate;
+  };
+
   const columnDefs = useMemo(
     () => [
-      { title: "Date Added", display: expense => expense.date_of_purchase && format_date(expense.date_of_purchase) },
+      { title: "Date Added", display: expense => expense.date_of_purchase && formatDate(expense.date_of_purchase) },
       {
         title: "Expense",
         display: "expense_name",
@@ -81,6 +91,19 @@ const ExpensesPage = () => {
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
             </IconButton>
+            {expense.is_subscription && (
+              <IconButton
+                aria-label="Edit"
+                onClick={() => {
+                  const confirm = window.confirm(`Are you sure you want to backfill ${expense.expense_name}?`);
+                  if (confirm) {
+                    dispatch(API.backfillSubscriptions(expense._id));
+                  }
+                }}
+              >
+                <BackupTableIcon color="white" />
+              </IconButton>
+            )}
 
             <IconButton onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
               <DeleteIcon color="white" />

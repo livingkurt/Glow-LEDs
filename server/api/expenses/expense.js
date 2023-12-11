@@ -21,6 +21,7 @@ const expenseSchema = new mongoose.Schema(
     airtable_id: { type: String },
     airtable_invoice_links: { type: Array },
     subscription: subscriptionSchema,
+    parent_subscription: { type: mongoose.Schema.Types.ObjectId, ref: "Expense" },
     is_subscription: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
   },
