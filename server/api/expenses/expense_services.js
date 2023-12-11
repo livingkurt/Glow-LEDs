@@ -400,6 +400,7 @@ export default {
 
       const startDate = new Date(subscription.date_of_purchase); // Start date of the subscription
       const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // End of the current month
+      const validToDate = subscription.subscription.valid_to ? new Date(subscription.subscription.valid_to) : null;
 
       for (let date = new Date(startDate); date <= endDate; date.setMonth(date.getMonth() + 1)) {
         const dayOfMonth = parseInt(subscription.subscription.repeats_on, 10) || startDate.getDate();
@@ -408,6 +409,11 @@ export default {
         const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         if (purchaseDate > monthEnd) {
           purchaseDate.setDate(monthEnd.getDate());
+        }
+
+        // Check against valid_to date
+        if (validToDate && purchaseDate > validToDate) {
+          continue; // Skip to next month if purchaseDate is after valid_to date
         }
 
         const rangeStart = new Date(purchaseDate);
@@ -426,7 +432,6 @@ export default {
           },
           deleted: false,
         });
-
         if (!existingExpense) {
           // Create a new expense record for this month
           const newExpenseData = {
