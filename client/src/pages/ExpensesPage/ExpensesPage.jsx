@@ -121,6 +121,7 @@ const ExpensesPage = () => {
               row.date_of_purchase &&
               row.amount &&
               row.category &&
+              row.irs_category &&
               row.expense_name &&
               row.place_of_purchase &&
               row.card
@@ -129,6 +130,7 @@ const ExpensesPage = () => {
             date_of_purchase: new Date(row.date_of_purchase),
             amount: parseFloat(row.amount),
             category: row.category,
+            irs_category: row.irs_category,
             expense_name: row.expense_name,
             place_of_purchase: row.place_of_purchase,
             card: row.card,

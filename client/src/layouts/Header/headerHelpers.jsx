@@ -746,6 +746,13 @@ const admin = {
     },
 
     {
+      name: "Expenses",
+      path: "/secure/glow/expenses",
+      onClick: x => true,
+      _id: 8122,
+    },
+
+    {
       name: "Products",
       path: `/secure/glow/products?search=&filters=%7B"hidden"%3A%5B%5D%2C"options"%3A%5B%5D%7D&page=0&pageSize=10&sorting=%5B3%2C"desc"%5D`,
       onClick: x => true,
@@ -841,13 +848,6 @@ const admin = {
       path: "/secure/glow/emails",
       onClick: x => true,
       _id: 8121,
-    },
-
-    {
-      name: "Expenses",
-      path: "/secure/glow/expenses",
-      onClick: x => true,
-      _id: 8122,
     },
 
     {
