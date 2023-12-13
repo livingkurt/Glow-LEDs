@@ -150,18 +150,11 @@ const SponsorPage = () => {
 									);
 								})}
 							</div> */}
-              <div>
+              {/* <div>
                 <h3 className="">Team{teams > 1 && "'s"}</h3>
                 {teams.map((team, index) => {
                   return (
                     <Link to={"/collections/all/teams/" + team.pathname} className="pos-rel" key={index}>
-                      {/* <h3
-												className="pos-abs fs-25px w-200px"
-												style={{ top: '-146px', left: '27%' }}
-											>
-												{team.team_name}
-											</h3> */}
-
                       <img
                         className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                         alt="Team Name"
@@ -180,7 +173,7 @@ const SponsorPage = () => {
                     </Link>
                   );
                 })}
-              </div>
+              </div> */}
               <div>
                 <h3 className="">Follow {affiliate.artist_name} </h3>
                 <div className="mt-2rem wrap  ">
