@@ -47,6 +47,16 @@ export const expenseFormFields = ({ expense, dispatch, expenses, filters }) => {
       },
       options: filters?.availableFilters?.category,
     },
+    irs_category: {
+      type: "autocomplete_single",
+      label: "IRS Category",
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+      options: filters?.availableFilters?.irs_category,
+    },
     parent_subscription: {
       type: "autocomplete_single",
       label: "Parent Subscription",
