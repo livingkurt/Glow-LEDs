@@ -37,6 +37,10 @@ const GLAutocomplete = ({
   chipsOptionsDisabled,
   inputPropsTextField,
   onInputChange,
+  onOpen,
+  onClose,
+  onHighlightChange,
+  onKeyDown,
   chipLabel,
   textFieldDataTest,
   margin,
@@ -60,6 +64,10 @@ const GLAutocomplete = ({
           limitTags={limitTags}
           multiple={multiple}
           onInputChange={onInputChange}
+          onOpen={onOpen}
+          onClose={onClose}
+          onHighlightChange={onHighlightChange}
+          onKeyDown={onKeyDown}
           options={options}
           getOptionLabel={option => (option ? getOptionLabel(option) || "" : "")}
           isOptionEqualToValue={(option, val) => (option && val ? isOptionEqualToValue(option, val) : false)}
@@ -161,6 +169,10 @@ GLAutocomplete.defaultProps = {
   getOptionDisabled: x => x,
   restrictCharacters: x => x,
   onInputChange: x => x,
+  onOpen: x => x,
+  onClose: x => x,
+  onHighlightChange: x => x,
+  onKeyDown: x => x,
   isOptionEqualToValue: x => x,
   helperText: "",
   label: "",
@@ -194,6 +206,10 @@ GLAutocomplete.propTypes = {
   restrictCharacters: PropTypes.func,
   getOptionDisabled: PropTypes.func,
   onInputChange: PropTypes.func,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  onHighlightChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
   helperText: PropTypes.string,
   label: PropTypes.string,
   variant: PropTypes.string,

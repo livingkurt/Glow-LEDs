@@ -85,7 +85,7 @@ const reducers = {
   parcels: parcelSlice,
   paychecks: combineReducers({
     paycheckPage: paycheckSlice,
-    paycheckTable: glTableReducer("paycheckTable", { sorting: [0, "desc"] }),
+    paycheckTable: glTableReducer("paycheckTable", { sorting: [0, "asc"] }),
   }),
   images: combineReducers({
     imagePage: imageSlice,

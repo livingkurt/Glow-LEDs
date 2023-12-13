@@ -11,6 +11,10 @@ export const getMonthStartEndDates = ({ month, year }) => {
     const start_date = new Date(year, 0, 1);
     const end_date = new Date(year, 11, 31);
     return { start_date: start_date.toISOString().substring(0, 10), end_date: end_date.toISOString().substring(0, 10) };
+  } else {
+    // Default start date when year is not provided
+    const todayISO = new Date().toISOString();
+    return { start_date: "2020-08-01", end_date: todayISO };
   }
 };
 

@@ -27,6 +27,9 @@ export const normalizeExpenseFilters = input => {
         break;
     }
   });
+  if (input.is_subscription && input.is_subscription.includes("only_is_subscription")) {
+    output.is_subscription = true;
+  }
   return output;
 };
 

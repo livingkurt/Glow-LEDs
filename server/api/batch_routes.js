@@ -2926,5 +2926,75 @@ router.route("/update_paychecks_description").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+router.route("/merge_expenses_categories").put(async (req, res) => {
+  try {
+    const cards = ["Stripe Fee"];
+    await Expense.updateMany({ category: { $in: cards } }, { $set: { card: "Stripe" } });
+
+    res.status(200).send({ message: "Expenses updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Mapping of your categories to IRS categories
+const categoryMapping = {
+  "3D Printer Accessories": "Tools and Equipment",
+  "3D Printing Supplies": "Tools and Equipment",
+  "Advertising": "Advertising and Promotion",
+  "Air Travel": "Travel",
+  "Cleaning Supplies": "Supplies",
+  "Coffee Shops": "Meals",
+  "Cutter Accessories": "Tools and Equipment",
+  "Cutter Supplies": "Tools and Equipment",
+  "Electronic Accessories": "Supplies",
+  "Electronic Supplies": "Supplies",
+  "Electronics Supplies": "Supplies",
+  "Event Tickets": "Advertising and Promotion",
+  "Fees": "Bank Fees",
+  "Filament": "Supplies",
+  "Food": "Meals",
+  "Food & Dining": "Meals",
+  "Food Delivery": "Meals",
+  "Foreign Transaction Fee": "Bank Fees",
+  "Gas": "Car and Truck Expenses",
+  "Hotel": "Travel",
+  "Internet": "Utilities",
+  "Legal": "Legal and Professional Services",
+  "Marketing": "Advertising and Promotion",
+  "Merch": "Advertising and Promotion",
+  "Office": "Office Expense",
+  "Outsourcing": "Contract Labor",
+  "Parking": "Travel",
+  "Product": "Inventory Purchase",
+  "Rave Mob": "Advertising and Promotion",
+  "Restaurants": "Meals",
+  "Ride Share": "Travel",
+  "Shipping": "Shipping and Postage",
+  "Shopping": "Supplies",
+  "Storage": "Rent or Lease",
+  "Stripe Account Funding": "Other Expenses",
+  "Stripe Fee": "Bank Fees",
+  "Supplies": "Supplies",
+  "Tools": "Tools and Equipment",
+  "Travel": "Travel",
+  "Website": "Advertising and Promotion",
+  "Wellbeing": "Employee Benefit Programs",
+};
+
+router.route("/irs_expenses_categories").put(async (req, res) => {
+  try {
+    // Loop through each category and update the expenses in bulk
+    for (const [category, irsCategory] of Object.entries(categoryMapping)) {
+      await Expense.updateMany({ category: category }, { $set: { irs_category: irsCategory } });
+    }
+
+    res.status(200).send({ message: "IRS Categories updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 
 export default router;

@@ -45,11 +45,8 @@ export default {
   buy_label_shipping_s: async params => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      console.log({ order });
       const { shipping_rate, shipment_id } = order.shipping;
-      console.log({ shipping_rate, shipment_id });
       const label = await buyLabel({ shipment_id, shipping_rate });
-      console.log({ label });
       await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {

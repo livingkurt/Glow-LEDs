@@ -15,6 +15,7 @@ const Airtable = require("airtable");
 export default {
   findAll_expenses_s: async query => {
     try {
+      console.log({ query });
       const sort_options = ["date_of_purchase", "expense_name", "place_of_purchase", "card", "category", "amount"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
@@ -41,9 +42,16 @@ export default {
       const availableFilters = {
         place_of_purchase: await Expense.distinct("place_of_purchase"),
         category: await Expense.distinct("category"),
+        irs_category: await Expense.distinct("irs_category"),
         card: await Expense.distinct("card"),
+        is_subscription: ["only_is_subscription"],
       };
-      return { availableFilters };
+      const booleanFilters = {
+        is_subscription: {
+          label: "Show Subscriptions",
+        },
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -81,6 +89,16 @@ export default {
   create_expenses_s: async body => {
     try {
       return await expense_db.create_expenses_db(body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  bulk_create_expenses_s: async body => {
+    const { expenses } = body;
+    try {
+      return await expense_db.bulk_create_expenses_db(expenses);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -34,6 +34,15 @@ export default {
       }
     }
   },
+  bulk_create_expenses_db: async expenses => {
+    try {
+      return await Expense.insertMany(expenses);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   update_expenses_db: async (id, body) => {
     try {
       const expense = await Expense.findOne({ _id: id, deleted: false });
@@ -271,6 +280,43 @@ export default {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
+    }
+  },
+  get_expenses_by_category_expenses_db: async (start_date, end_date) => {
+    try {
+      const expenses = await Expense.aggregate([
+        {
+          $match: {
+            deleted: false,
+            date_of_purchase: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: "$irs_category",
+            totalAmount: { $sum: "$amount" },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            irs_category: "$_id",
+            totalAmount: 1,
+          },
+        },
+      ]);
+
+      // Convert array to object
+      return expenses.reduce((acc, category) => {
+        acc[category.irs_category] = category.totalAmount;
+        return acc;
+      }, {});
+    } catch (err) {
+      console.error("Aggregation error:", err);
+      throw err;
     }
   },
 };

@@ -20,6 +20,7 @@ const YearlyMonthlyDailyRevenue = ({
   yearly_paychecks,
   daily_paychecks,
   monthly_paychecks,
+  expensesByCategory,
 }) => {
   let combinedYearlyData = [];
 
@@ -43,6 +44,13 @@ const YearlyMonthlyDailyRevenue = ({
 
   if (daily_revenue.isSuccess && daily_expenses.isSuccess && daily_paychecks.isSuccess) {
     combinedDailyData = combineDailyRevenueAndExpenses(daily_revenue.data, daily_expenses.data, daily_paychecks.data);
+  }
+  let combinedCategoryData = [];
+  if (expensesByCategory.isSuccess) {
+    combinedCategoryData = Object.entries(expensesByCategory.data).map(([category, amount]) => ({
+      category,
+      amount,
+    }));
   }
 
   return (
@@ -111,6 +119,20 @@ const YearlyMonthlyDailyRevenue = ({
                 { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
                 { title: "Hourly Average", display: row => `$${row.revenueHourlyAverage?.toFixed(2)}` },
                 { title: "Expense Hourly Average", display: row => `$${row.expenseHourlyAverage?.toFixed(2)}` },
+              ]}
+            />
+          )}
+        </>
+      )}
+      {combinedCategoryData && (
+        <>
+          {combinedCategoryData.length > 0 && (
+            <GLDisplayTable
+              title={"Daily Revenue"}
+              rows={combinedCategoryData}
+              columnDefs={[
+                { title: "Category", display: "category" },
+                { title: "Amount", display: row => `$${row.amount.toFixed(2)}` },
               ]}
             />
           )}

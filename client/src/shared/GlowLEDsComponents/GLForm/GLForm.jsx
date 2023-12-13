@@ -52,6 +52,27 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
 
   const [tabIndex, setTabIndex] = useState(0);
 
+  const [inputValue, setInputValue] = useState("");
+  const [highlightedOption, setHighlightedOption] = useState(null);
+
+  const handleEnterKeyPress = (event, fieldData, fieldName) => {
+    if (event.key === "Enter") {
+      const selectedOption =
+        highlightedOption ||
+        fieldData.options.find(opt =>
+          fieldData.getOptionLabel
+            ? fieldData.getOptionLabel(opt) === inputValue
+            : opt[fieldData.labelProp] === inputValue
+        );
+      if (selectedOption) {
+        const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(selectedOption) : selectedOption;
+        handleInputChange(fieldName, savedValue);
+      } else {
+        handleInputChange(fieldName, inputValue);
+      }
+    }
+  };
+
   return (
     <>
       {Object.keys(formData).map(fieldName => {
@@ -123,6 +144,21 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   onChange={(event, value) => {
                     const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
                     handleInputChange(fieldName, savedValue);
+                  }}
+                  inputValue={inputValue}
+                  onHighlightChange={(event, option, reason) => {
+                    if (reason === "keyboard" || reason === "auto") {
+                      setHighlightedOption(option);
+                    }
+                  }}
+                  onInputChange={(event, newInputValue, reason) => {
+                    if (reason === "input") {
+                      setInputValue(newInputValue);
+                      setHighlightedOption(null); // Clear highlighted option when user types
+                    }
+                  }}
+                  onKeyDown={event => {
+                    handleEnterKeyPress(event, fieldData, fieldName);
                   }}
                 />
               );
@@ -490,28 +526,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       })}
     </>
   );
-};
-
-GLForm.propTypes = {
-  formData: PropTypes.objectOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      options: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-      label: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-      labelProp: PropTypes.string,
-      getOptionLabel: PropTypes.func,
-      onEdit: PropTypes.func,
-      setGeneratedAddress: PropTypes.func,
-    })
-  ).isRequired,
-  onChange: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
-  loading: PropTypes.bool,
-  nesting: PropTypes.any,
-  index: PropTypes.any,
-  setFormErrors: PropTypes.func,
-  formErrors: PropTypes.object,
-  classes: PropTypes.object,
 };
 
 GLForm.defaultProps = {

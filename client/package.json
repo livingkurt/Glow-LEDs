@@ -23,6 +23,7 @@
     "is-empty": "^1.2.0",
     "lodash": "^4.17.21",
     "node-sass": "^9.0.0",
+    "papaparse": "^5.4.1",
     "print-html-element": "^0.5.1",
     "printd": "^1.6.0",
     "react": "^17.0.2",

@@ -5,23 +5,28 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { expenseFormFields } from "./expenseFormFields";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const EditExpenseModal = () => {
   const dispatch = useDispatch();
   const expensePage = useSelector(state => state.expenses.expensePage);
   const { edit_expense_modal, expense, loading, expenses } = expensePage;
 
-  useEffect(() => {
+  const [filters, setFilters] = useState({});
+
+  useEffect(async () => {
     dispatch(API.listExpenses({ is_subscription: true }));
+    const response = await API.getExpenseFilters();
+    console.log({ filters });
+    setFilters(response);
   }, []);
 
   const formFields = expenseFormFields({
     expense,
     expenses,
+    filters,
     dispatch,
   });
-
-  console.log({ expense });
 
   return (
     <div>
