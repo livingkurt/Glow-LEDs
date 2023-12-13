@@ -283,7 +283,6 @@ export default {
     }
   },
   get_expenses_by_category_expenses_db: async (start_date, end_date) => {
-    console.log({ start_date, end_date });
     try {
       const expenses = await Expense.aggregate([
         {
