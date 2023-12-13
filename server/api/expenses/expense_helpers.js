@@ -23,6 +23,12 @@ export const normalizeExpenseFilters = input => {
         }
         break;
 
+      case "irs_category":
+        for (const irs_category of input.irs_category) {
+          output["irs_category"] = irs_category;
+        }
+        break;
+
       default:
         break;
     }

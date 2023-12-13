@@ -35,7 +35,7 @@ const dashboardPage = createSlice({
     resetDateRange: (state, { payload }) => {
       state.year = "";
       state.month = "";
-      state.start_date = "2020-08-01";
+      state.start_date = "2018-01-01";
       state.end_date = formatDate(todayISO);
     },
     set_month: (state, { payload }) => {
