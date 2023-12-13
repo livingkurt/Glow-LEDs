@@ -22,7 +22,6 @@ const GcodeGeneratorModal = () => {
 
   const showFiles = async e => {
     const allFiles = e.target.files;
-    console.log({ allFiles });
     const parsedFiles = [];
 
     for (let index = 0; index < allFiles.length; index++) {

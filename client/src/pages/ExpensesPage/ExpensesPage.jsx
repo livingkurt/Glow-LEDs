@@ -7,22 +7,16 @@ import { EditExpenseModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getExpenses } from "../../api";
-import { format_date } from "../../utils/helper_functions";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
-import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
+import { close_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors } from "./expensesPageHelpers";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import { ContentCopy } from "@mui/icons-material";
-import "handsontable/dist/handsontable.full.min.css";
-import Handsontable from "handsontable/base";
-import { registerAllModules } from "handsontable/registry";
-import { HotTable } from "@handsontable/react";
 import Papa from "papaparse";
-registerAllModules();
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -117,8 +111,6 @@ const ExpensesPage = () => {
 
   const showFiles = async e => {
     const file = e.target.files[0];
-    console.log({ file });
-    // const parsedFiles = [];
 
     Papa.parse(file, {
       header: true,
@@ -152,24 +144,6 @@ const ExpensesPage = () => {
       <Helmet>
         <title>Admin Expenses | Glow LEDs</title>
       </Helmet>
-
-      {/* <HotTable
-        data={[
-          ["Date Purchased", "Expense", "Place of Purchase", "Category", "Card", "Amount"],
-          ...expenses.map(expense => [
-            expense.date_of_purchase && formatDate(expense.date_of_purchase),
-            expense.expense_name,
-            expense.place_of_purchase,
-            expense.category,
-            expense.card,
-            expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00",
-          ]),
-        ]}
-        rowHeaders={true}
-        colHeaders={true}
-        height="auto"
-        licenseKey="non-commercial-and-evaluation" // for non-commercial use only
-      /> */}
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
