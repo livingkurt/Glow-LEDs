@@ -23,9 +23,18 @@ const PaychecksPage = () => {
 
   const today = date.toISOString();
 
+  const formatDate = dateString => {
+    const date = new Date(dateString);
+    const year = date.getUTCFullYear();
+    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
+    const day = ("0" + date.getUTCDate()).slice(-2);
+    const formattedDate = `${month}/${day}/${year}`;
+    return formattedDate;
+  };
+
   const columnDefs = useMemo(
     () => [
-      { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
+      { title: "Date Paid", display: paycheck => paycheck.paid_at && formatDate(paycheck.paid_at) },
       {
         title: "Paid",
         display: paycheck =>
@@ -60,13 +69,8 @@ const PaychecksPage = () => {
               onClick={() =>
                 dispatch(
                   API.savePaycheck({
-                    amount: paycheck.amount,
-                    affiliate: paycheck.affiliate,
-                    team: paycheck.team,
-                    venmo: paycheck.venmo,
-                    receipt: paycheck.receipt,
-                    paid: true,
-                    paid_at: format_date(today),
+                    ...paycheck,
+                    _id: null,
                   })
                 )
               }
@@ -80,8 +84,6 @@ const PaychecksPage = () => {
                 dispatch(
                   API.savePaycheck({
                     ...paycheck,
-                    paid: true,
-                    paid_at: format_date(today),
                   })
                 )
               }

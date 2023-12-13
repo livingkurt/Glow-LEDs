@@ -34,37 +34,35 @@ export const determineExpenseColors = expense => {
   //   "Tools, Electronic Supplies, Electronic Accessories",
   //   "Website"
   // ];
-  if (expense.category.includes("3D Printer")) {
-    result = tableColors.active;
-  }
-  if (expense.is_subscription) {
-    result = tableColors.completed;
-  }
-  if (expense.category.includes("Affiliate Earnings")) {
-    result = tableColors.alt_color_5;
-  }
-  if (expense.category.includes("Electronic")) {
-    result = tableColors.alt_color_3;
-  }
-  if (expense.category.includes("Filament")) {
-    result = tableColors.alt_color_4;
-  }
-  if (expense.category.includes("Shipping")) {
-    result = tableColors.alt_color_1;
-  }
-  if (expense.category.includes("Tools")) {
-    result = tableColors.alt_color_2;
-  }
-  if (expense.category.includes("Website")) {
-    result = tableColors.waiting;
-  }
-  if (
-    expense.category.includes("Restaurants") ||
-    expense.category.includes("Food") ||
-    expense.category.includes("Lunch")
-  ) {
-    result = tableColors.paused;
-  }
+  // if (expense.category.includes("3D Printer")) {
+  //   result = tableColors.active;
+  // }
+  // if (expense.is_subscription) {
+  //   result = tableColors.completed;
+  // }
+
+  // if (expense.category.includes("Electronic")) {
+  //   result = tableColors.alt_color_3;
+  // }
+  // if (expense.category.includes("Filament")) {
+  //   result = tableColors.alt_color_4;
+  // }
+  // if (expense.category.includes("Shipping")) {
+  //   result = tableColors.alt_color_1;
+  // }
+  // if (expense.category.includes("Tools")) {
+  //   result = tableColors.alt_color_2;
+  // }
+  // if (expense.category.includes("Website")) {
+  //   result = tableColors.waiting;
+  // }
+  // if (
+  //   expense.category.includes("Restaurants") ||
+  //   expense.category.includes("Food") ||
+  //   expense.category.includes("Lunch")
+  // ) {
+  //   result = tableColors.paused;
+  // }
   return result;
 };
 

@@ -120,9 +120,16 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   isOptionEqualToValue={fieldData.isOptionEqualToValue}
                   name={fieldName}
                   label={fieldData.label}
-                  onChange={(event, value) => {
-                    const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
-                    handleInputChange(fieldName, savedValue);
+                  onChange={(event, value, reason) => {
+                    if (reason === "selectOption") {
+                      // Handle selection from the list of options
+                      const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
+                      handleInputChange(fieldName, savedValue);
+                    } else if (reason === "createOption") {
+                      // Handle freeSolo input
+                      // You can customize this part as per your requirement
+                      handleInputChange(fieldName, value);
+                    }
                   }}
                 />
               );

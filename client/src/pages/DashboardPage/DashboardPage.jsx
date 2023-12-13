@@ -50,6 +50,8 @@ const DashboardPage = () => {
 
   const monthly_product_revenue = API.useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
   const yearly_product_revenue = API.useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
+  const expensesByCategory = API.useGetExpensesByCategoryQuery({ start_date, end_date });
+  console.log({ expensesByCategory });
   // const range_product_revenue = API.useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
   // const range_gloves = API.useGetRangeGlovesQuery({ start_date, end_date });
   const currentStock = API.useGetCurrentStockQuery();
@@ -123,6 +125,7 @@ const DashboardPage = () => {
             yearly_paychecks={yearly_paychecks}
             daily_paychecks={daily_paychecks}
             monthly_paychecks={monthly_paychecks}
+            expensesByCategory={expensesByCategory}
           />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={1}>

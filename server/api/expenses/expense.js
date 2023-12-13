@@ -15,6 +15,7 @@ const expenseSchema = new mongoose.Schema(
     place_of_purchase: { type: String },
     date_of_purchase: { type: Date },
     category: { type: String },
+    irs_category: { type: String },
     card: { type: String },
     amount: { type: Number },
     documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],

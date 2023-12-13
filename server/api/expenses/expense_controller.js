@@ -62,6 +62,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  bulk_create_expenses_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const expense = await expense_services.bulk_create_expenses_s(body);
+      if (expense) {
+        return res.status(201).send(expense);
+      }
+      return res.status(500).send({ message: "Error Creating Expense" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   get_airtable_expenses_c: async (req, res) => {
     try {
       const expense = await expense_services.get_airtable_expenses_s();
@@ -123,6 +135,18 @@ export default {
     const { start_date, end_date } = req.query;
     try {
       const expense = await expense_db.get_daily_expenses_expenses_db(start_date, end_date);
+      if (expense) {
+        return res.status(200).send(expense);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  get_expenses_by_category_expenses_c: async (req, res) => {
+    const { start_date, end_date } = req.query;
+    try {
+      const expense = await expense_db.get_expenses_by_category_expenses_db(start_date, end_date);
       if (expense) {
         return res.status(200).send(expense);
       }

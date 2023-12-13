@@ -100,6 +100,10 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }) =>
         `/expenses/get_daily_expenses_expenses?start_date=${start_date}&end_date=${end_date}`,
     }),
+    getExpensesByCategory: builder.query({
+      query: ({ start_date, end_date }) =>
+        `/expenses/get_expenses_by_category_expenses?start_date=${start_date}&end_date=${end_date}`,
+    }),
     getYearlyPaycheckOrders: builder.query({
       query: () => "/paychecks/get_yearly_paychecks_paychecks",
     }),
@@ -143,6 +147,7 @@ export const {
   useGetMonthlyPaycheckOrdersQuery,
   useGetDailyPaycheckOrdersQuery,
   useGetQuestionConcernsQuery,
+  useGetExpensesByCategoryQuery,
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year) => {

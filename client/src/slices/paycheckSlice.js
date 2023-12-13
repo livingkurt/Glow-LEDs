@@ -82,7 +82,7 @@ const paycheckPage = createSlice({
     [API.savePaycheck.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Paycheck Saved";
-      state.paycheck_modal = false;
+      state.edit_paycheck_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.savePaycheck.rejected]: (state, { payload, error }) => {

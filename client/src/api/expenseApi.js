@@ -121,3 +121,17 @@ export const backfillSubscriptions = createAsyncThunk(
     }
   }
 );
+export const bulkSaveExpenses = createAsyncThunk(
+  "paycheck/bulkSaveExpenses",
+  async (expenses, { dispatch, rejectWithValue }) => {
+    console.log({ expenses });
+    try {
+      const { data } = await axios.post(`/api/expenses/bulk`, { expenses });
+      dispatch(showSuccess({ message: `Bulk Save Complete` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

@@ -16,10 +16,17 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
+import { ContentCopy } from "@mui/icons-material";
+import "handsontable/dist/handsontable.full.min.css";
+import Handsontable from "handsontable/base";
+import { registerAllModules } from "handsontable/registry";
+import { HotTable } from "@handsontable/react";
+import Papa from "papaparse";
+registerAllModules();
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { loading, remoteVersionRequirement } = expensePage;
+  const { loading, remoteVersionRequirement, expenses } = expensePage;
   const imagePage = useSelector(state => state.images.imagePage);
   const { image_display_modal, selected_image } = imagePage;
 
@@ -38,7 +45,7 @@ const ExpensesPage = () => {
 
   const columnDefs = useMemo(
     () => [
-      { title: "Date Added", display: expense => expense.date_of_purchase && formatDate(expense.date_of_purchase) },
+      { title: "Date Purchased", display: expense => expense.date_of_purchase && formatDate(expense.date_of_purchase) },
       {
         title: "Expense",
         display: "expense_name",
@@ -48,37 +55,13 @@ const ExpensesPage = () => {
         display: "place_of_purchase",
       },
       {
-        title: "Category",
-        display: "category",
+        title: "IRS Category",
+        display: "irs_category",
       },
       {
         title: "Card",
         display: "card",
       },
-      // {
-      //   title: "Documents",
-      //   display: expense =>
-      //     expense?.documents.map(document => {
-      //       return (
-      //         <div className="jc-c">
-      //           <img
-      //             src={document.link}
-      //             alt={"receipt"}
-      //             style={{ width: "50px", height: "50px" }}
-      //             onClick={() => dispatch(open_image_display_modal(document.link))}
-      //           />
-      //         </div>
-      //       );
-      //     }),
-      // },
-      // {
-      //   title: "Invoice Links",
-      //   display: expense => (
-      //     <div style={{ overflow: "hidden", width: "100px" }}>
-      //       {expense?.airtable_invoice_links.map(links => links).join(", ")}
-      //     </div>
-      //   ),
-      // },
       {
         title: "Amount",
         display: expense => (expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00"),
@@ -90,6 +73,20 @@ const ExpensesPage = () => {
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
+            </IconButton>
+            <IconButton
+              aria-label="Edit"
+              onClick={() =>
+                dispatch(
+                  API.saveExpense({
+                    ...expense,
+                    _id: null,
+                    expense_name: `${expense.expense_name} Copy`,
+                  })
+                )
+              }
+            >
+              <ContentCopy color="white" />
             </IconButton>
             {expense.is_subscription && (
               <IconButton
@@ -118,12 +115,61 @@ const ExpensesPage = () => {
   const remoteApi = useCallback(options => getExpenses(options), []);
   const remoteFiltersApi = useCallback(() => API.getExpenseFilters(), []);
 
+  const showFiles = async e => {
+    const file = e.target.files[0];
+    console.log({ file });
+    // const parsedFiles = [];
+
+    Papa.parse(file, {
+      header: true,
+      complete: function (results) {
+        const expenses = results.data
+          .filter(
+            row =>
+              row.date_of_purchase &&
+              row.amount &&
+              row.category &&
+              row.expense_name &&
+              row.place_of_purchase &&
+              row.card
+          )
+          .map(row => ({
+            date_of_purchase: new Date(row.date_of_purchase),
+            amount: parseFloat(row.amount),
+            category: row.category,
+            expense_name: row.expense_name,
+            place_of_purchase: row.place_of_purchase,
+            card: row.card,
+          }));
+        console.log({ expenses });
+        dispatch(API.bulkSaveExpenses(expenses));
+      },
+    });
+  };
+
   return (
     <div className="main_container p-20px">
       <Helmet>
         <title>Admin Expenses | Glow LEDs</title>
       </Helmet>
 
+      {/* <HotTable
+        data={[
+          ["Date Purchased", "Expense", "Place of Purchase", "Category", "Card", "Amount"],
+          ...expenses.map(expense => [
+            expense.date_of_purchase && formatDate(expense.date_of_purchase),
+            expense.expense_name,
+            expense.place_of_purchase,
+            expense.category,
+            expense.card,
+            expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00",
+          ]),
+        ]}
+        rowHeaders={true}
+        colHeaders={true}
+        height="auto"
+        licenseKey="non-commercial-and-evaluation" // for non-commercial use only
+      /> */}
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
@@ -151,6 +197,12 @@ const ExpensesPage = () => {
                 Delete Expenses
               </Button>
             )}
+            <div>
+              <Button variant="contained" color="primary" component="label" fullWidth>
+                Import CSV
+                <input type="file" id="file" hidden multiple onChange={e => showFiles(e)} />
+              </Button>
+            </div>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_expense_modal())}>
               Create Expense
             </Button>
