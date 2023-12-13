@@ -2517,7 +2517,7 @@ router.route("/xxl_revenue").get(async (req, res) => {
 
 router.route("/backfill_stripe_fees").put(async (req, res) => {
   try {
-    const startDate = new Date("2020-08-10");
+    const startDate = new Date("2018-01-01");
     const endDate = new Date("2023-11-18");
 
     let hasMore = true;
@@ -2580,7 +2580,7 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
 
 // router.route("/backfill_paychecks").put(async (req, res) => {
 //   try {
-//     const startDate = new Date("2020-08-10");
+//     const startDate = new Date("2018-01-01");
 //     const paychecks = [];
 //     const expenses = [];
 
@@ -2665,7 +2665,7 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
 
 // router.route("/backfill_paychecks").put(async (req, res) => {
 //   try {
-//     const startDate = new Date("2020-08-10");
+//     const startDate = new Date("2018-01-01");
 //     const paychecks = [];
 //     const expenses = [];
 
@@ -2741,7 +2741,7 @@ router.route("/backfill_stripe_fees").put(async (req, res) => {
 
 router.route("/backfill_paychecks").put(async (req, res) => {
   try {
-    const startDate = new Date("2020-08-10");
+    const startDate = new Date("2018-01-01");
     const validTransfers = [];
     let hasMore = true;
     let lastTransferId = null;
