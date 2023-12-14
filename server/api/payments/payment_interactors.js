@@ -102,10 +102,10 @@ export const logStripeFeeToExpenses = async confirmedResult => {
     await expense_db.create_expenses_db({
       expense_name: "Stripe Fee",
       amount: stripeFee / 100,
-      category: "Stripe Fee",
+      category: "Stripe Fees",
       date_of_purchase: Date.now(),
       place_of_purchase: "Stripe",
-      irs_category: "Bank Fee",
+      irs_category: "Bank Fees",
       card: "Stripe",
       application: "Payments",
     });
