@@ -35,6 +35,7 @@ export const payout_tips = async () => {
       user: user?._id,
       amount: tips[0].total_tips,
       stripe_connect_id: user?.stripe_connect_id ?? null,
+      description: `Tips Payout for ${user.first_name} ${user.last_name}`,
       paid: true,
       paid_at: new Date(),
       first_name: user?.first_name,

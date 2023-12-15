@@ -122,6 +122,9 @@ export default {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
             },
+            irs_category: {
+              $nin: ["Travel", "Meals", "Rent or Lease", "Car and Truck Expenses"],
+            },
           },
         },
         {
@@ -172,6 +175,9 @@ export default {
         {
           $match: {
             deleted: false,
+            irs_category: {
+              $nin: ["Travel", "Meals", "Rent or Lease", "Car and Truck Expenses"],
+            },
           },
         },
         {
@@ -223,6 +229,9 @@ export default {
             date_of_purchase: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
+            },
+            irs_category: {
+              $nin: ["Travel", "Meals", "Rent or Lease", "Car and Truck Expenses"],
             },
           },
         },
