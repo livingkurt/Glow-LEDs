@@ -20,12 +20,13 @@ export const payout_employees = async () => {
         console.log({
           amount: employee?.weekly_wage,
           stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
+          description: `Biweekly Payout for ${employee.first_name} ${employee.last_name}`,
         });
         await axios.post(`${domainUrl}/api/paychecks`, {
           user: employee?._id,
           amount: employee?.weekly_wage,
           stripe_connect_id: employee?.stripe_connect_id || null,
+          description: `Biweekly Payout for ${employee.first_name} ${employee.last_name}`,
           paid: true,
           paid_at: new Date(),
           first_name: employee?.first_name,

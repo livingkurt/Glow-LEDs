@@ -128,7 +128,7 @@ const YearlyMonthlyDailyRevenue = ({
         <>
           {combinedCategoryData.length > 0 && (
             <GLDisplayTable
-              title={"Daily Revenue"}
+              title={"IRS Category Expenses"}
               rows={combinedCategoryData}
               columnDefs={[
                 { title: "Category", display: "category" },

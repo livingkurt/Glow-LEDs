@@ -76,7 +76,7 @@ const DashboardPage = () => {
         }
       />
       <Loading loading={loading} />
-      <div className="m-auto w-100per max-w-1000px">
+      <div className="m-auto w-100per">
         <DatePicker
           year={year}
           month={month}

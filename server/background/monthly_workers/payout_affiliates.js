@@ -40,6 +40,7 @@ export const payout_affiliates = async () => {
         uses: promo_code_usage.number_of_uses,
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
         paid: affiliate?.user?.stripe_connect_id ? true : false,
+        description: `Monthly Payout for ${affiliate?.user.first_name} ${affiliate?.user.last_name}`,
         paid_at: new Date(),
         email: affiliate.user.email,
       });
@@ -52,6 +53,7 @@ export const payout_affiliates = async () => {
         uses: promo_code_usage.number_of_uses,
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
         paid: affiliate?.user?.stripe_connect_id ? true : false,
+        description: `Monthly Payout for ${affiliate?.user.first_name} ${affiliate?.user.last_name}`,
         first_name: affiliate.user?.first_name,
         paid_at: new Date(),
         email: affiliate.user.email,
