@@ -37,7 +37,7 @@ export const payout_teams = async () => {
         paid: team?.captain?.stripe_connect_id ? true : false,
         paid_at: new Date(),
         first_name: team?.captain?.first_name,
-        email: team?.captain?.email,\
+        email: team?.captain?.email,
         description: `Monthly Team Payout for ${team?.captain.first_name} ${team?.captain.last_name}`,
       });
       await axios.post(`${domainUrl}/api/paychecks`, {
