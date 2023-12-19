@@ -70,21 +70,17 @@ export default {
   upload_images_s: async (body, files) => {
     const { albumName } = body;
     const uploadedImageLinks = [];
-    const uploadsDir = path.join(appRoot.path, "tmp");
-    console.log({ uploadsDir });
     try {
       const album = await createImgurAlbum(albumName);
 
       for (const image of files) {
-        const compressedImagePath = await compressImage(image.path, uploadsDir);
-        const imageLink = await uploadImageToImgur(compressedImagePath, album.deletehash);
+        // Use image.buffer instead of image.path
+        const compressedImageBuffer = await compressImage(image.buffer);
+        const imageLink = await uploadImageToImgur(compressedImageBuffer, album.deletehash);
         uploadedImageLinks.push(imageLink);
       }
 
       const images = await createImageRecords(uploadedImageLinks, albumName);
-
-      const uploadedFiles = await findImages(uploadsDir);
-      await deleteImages(uploadedFiles, uploadsDir);
 
       return images;
     } catch (error) {

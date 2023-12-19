@@ -25,7 +25,9 @@
   "scss.validate": false,
   "stylelint.packageManager": "yarn",
   "ruby.lint": { "rubocop": { "useBundler": true } },
-  "editor.codeActionsOnSave": { "source.fixAll": true },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
   "terminal.integrated.lineHeight": 1.3,
   "terminal.integrated.cursorStyle": "line",

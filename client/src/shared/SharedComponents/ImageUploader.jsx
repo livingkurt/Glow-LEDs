@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
-import { Box, Button, Container, Grid, TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Button, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
+import { Loading } from "../../shared/SharedComponents";
 
 const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [albumName, setAlbumName] = useState(album);
 
@@ -30,9 +31,12 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
     setAlbumName(event.target.value);
   };
 
+  // At the top of your component
+  const fileInputRef = useRef(null);
+
   const handleSubmit = async event => {
     event.preventDefault();
-
+    setLoading(true);
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("images", files[i]);
@@ -46,7 +50,15 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
         },
       });
       onChange(response.data);
+      setLoading(false);
       dispatch(clear_image({}));
+
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setFiles([]);
+      setPreviewUrls([]);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -56,6 +68,7 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
 
   return (
     <div className="pv-20px">
+      <Loading loading={loading} />
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sm={9}>
@@ -71,7 +84,14 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
           </Grid>
           <Grid item xs={12} sm={3} container justifyContent="space-around">
             <div>
-              <input type="file" hidden onChange={handleFileChange} id={`${fieldName}-upload-input`} multiple />
+              <input
+                type="file"
+                hidden
+                onChange={handleFileChange}
+                id={`${fieldName}-upload-input`}
+                multiple
+                ref={fileInputRef}
+              />
               <label htmlFor={`${fieldName}-upload-input`}>
                 <Button variant="contained" component="span">
                   Select

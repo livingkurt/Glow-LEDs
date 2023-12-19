@@ -164,14 +164,18 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               );
             case "image_upload":
               return (
-                <>
-                  <ImageWizard
-                    fieldData={fieldData}
-                    fieldState={fieldState}
-                    fieldName={fieldName}
-                    onChange={value => handleInputChange(fieldName, value)}
-                  />
-                </>
+                <ImageWizard
+                  fieldData={fieldData}
+                  fieldState={fieldState}
+                  fieldName={fieldName}
+                  onChange={value => {
+                    if (Array.isArray(fieldState)) {
+                      handleInputChange(fieldName, [...fieldState, ...value]);
+                    } else if (typeof fieldState === "object") {
+                      handleInputChange(fieldName, value);
+                    }
+                  }}
+                />
               );
             case "autocomplete_multiple":
               return (
