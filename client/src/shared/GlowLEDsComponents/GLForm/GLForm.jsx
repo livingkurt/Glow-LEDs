@@ -205,6 +205,21 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 />
               );
             case "checkbox":
+              return (
+                <FormControlLabel
+                  key={`${fieldName}-${fieldData.type}`}
+                  control={
+                    <Checkbox
+                      name={fieldName}
+                      size="large"
+                      onChange={e => handleInputChange(fieldName, e.target.checked)}
+                      checked={!!fieldState}
+                      // error={formErrors && !!formErrors[fieldName]}
+                    />
+                  }
+                  label={fieldData.label}
+                />
+              );
             case "title":
               return (
                 <Typography key={`${fieldName}-${fieldData.type}`} variant={fieldData.variant} align={fieldData.align}>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { open_edit_product_modal, set_edit_product_modal, set_product } from "../productsPageSlice";
+import { set_edit_product_modal, set_product } from "../productsPageSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
