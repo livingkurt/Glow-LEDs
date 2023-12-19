@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
-import { Box, Button, Container, Grid, TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Button, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";

@@ -37,7 +37,6 @@ const EditProductModal = () => {
     users,
     categorys,
     chips,
-    onEdit: product => dispatch(open_edit_product_modal(product)),
     product,
     filaments,
   });
@@ -62,7 +61,9 @@ const EditProductModal = () => {
         <GLForm
           formData={formFields}
           state={product}
-          onChange={value => dispatch(set_product(value))}
+          onChange={value => {
+            dispatch(set_product(value));
+          }}
           loading={loading && loading_users && loading_categorys}
         />
       </GLActionModal>
