@@ -10,33 +10,33 @@ const fs = require("fs");
 const deleteFile = promisify(fs.unlink);
 const readdir = promisify(fs.readdir);
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "tmp/");
-  },
-  filename: function (req, file, cb) {
-    const fileExtension = path.extname(file.originalname);
-    const fileName = uuidv4() + fileExtension;
-    cb(null, fileName);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "tmp/");
+//   },
+//   filename: function (req, file, cb) {
+//     const fileExtension = path.extname(file.originalname);
+//     const fileName = uuidv4() + fileExtension;
+//     cb(null, fileName);
+//   },
+// });
 
-// Set up multer middleware for handling file uploads
-export const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
-  fileFilter: function (req, file, cb) {
-    const fileTypes = /jpeg|jpg|png|gif/;
-    const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
-    if (mimeType && extName) {
-      return cb(null, true);
-    }
-    //  else {
-    //   cb("Error: Images only!");
-    // }
-  },
-});
+// // Set up multer middleware for handling file uploads
+// export const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
+//   fileFilter: function (req, file, cb) {
+//     const fileTypes = /jpeg|jpg|png|gif/;
+//     const mimeType = fileTypes.test(file.mimetype);
+//     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+//     if (mimeType && extName) {
+//       return cb(null, true);
+//     }
+//     //  else {
+//     //   cb("Error: Images only!");
+//     // }
+//   },
+// });
 
 export const convertDriveLinkToDirectLink = shareLink => {
   // Check if the link is already a direct Google Drive link
@@ -73,8 +73,8 @@ export const convertDriveLinkToDirectLink = shareLink => {
   return shareLink;
 };
 
-export const compressImage = async imagePath => {
-  const jimpImage = await Jimp.read(imagePath);
+export const compressImage = async imageBuffer => {
+  const jimpImage = await Jimp.read(imageBuffer);
   await jimpImage.resize(Jimp.AUTO, 800).quality(90);
   return await jimpImage.getBufferAsync(Jimp.MIME_JPEG);
 };
@@ -88,6 +88,35 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
     params: { album: albumDeletehash },
   });
   return imgResponse.data.data.link;
+};
+export const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
+  fileFilter: function (req, file, cb) {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    if (mimeType && extName) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Error: Images only!"));
+    }
+  },
+});
+
+export const createImgurAlbum = async albumName => {
+  const albumResponse = await axios.post(
+    "https://api.imgur.com/3/album",
+    { title: albumName, privacy: "hidden" },
+    {
+      headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
+    }
+  );
+  return albumResponse.data.data;
+};
+
+export const createImageRecords = async (uploadedImageLinks, albumName) => {
+  return await Promise.all(uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName })));
 };
 
 // export const compressImage = async (imagePath, outputDir) => {
@@ -118,24 +147,10 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
 //   });
 //   return imgResponse.data.data.link;
 // };
-export const createImgurAlbum = async albumName => {
-  const albumResponse = await axios.post(
-    "https://api.imgur.com/3/album",
-    { title: albumName, privacy: "hidden" },
-    {
-      headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
-    }
-  );
-  return albumResponse.data.data;
-};
 
 // export const deleteImages = async (uploadedFiles, uploadsDir) => {
 //   await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
 // };
-
-export const createImageRecords = async (uploadedImageLinks, albumName) => {
-  return await Promise.all(uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName })));
-};
 
 // export const findImages = async uploadsDir => {
 //   const uploadedFiles = await readdir(uploadsDir);

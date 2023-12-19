@@ -74,7 +74,8 @@ export default {
       const album = await createImgurAlbum(albumName);
 
       for (const image of files) {
-        const compressedImageBuffer = await compressImage(image.path);
+        // Use image.buffer instead of image.path
+        const compressedImageBuffer = await compressImage(image.buffer);
         const imageLink = await uploadImageToImgur(compressedImageBuffer, album.deletehash);
         uploadedImageLinks.push(imageLink);
       }
