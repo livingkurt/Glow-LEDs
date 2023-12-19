@@ -32,8 +32,6 @@ const EditProductModal = () => {
     };
   }, [dispatch, product._id]);
 
-  console.log({ chips });
-
   const formFields = productFormFields({
     products,
     users,
