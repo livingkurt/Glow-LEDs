@@ -73,26 +73,14 @@ export const convertDriveLinkToDirectLink = shareLink => {
   return shareLink;
 };
 
-export const compressImage = async (imagePath, outputDir) => {
-  // Ensure the output directory exists, create if not
-  if (!fs.existsSync(outputDir)) {
-    console.log("Creating output directory");
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-  console.log({ imagePath, outputDir, basename: path.basename(imagePath) });
-
-  const outputFilePath = path.join(outputDir, path.basename(imagePath));
-  console.log({ outputFilePath });
-
+export const compressImage = async imagePath => {
   const jimpImage = await Jimp.read(imagePath);
-  await jimpImage.resize(Jimp.AUTO, 800).quality(90).writeAsync(outputFilePath);
-
-  return outputFilePath;
+  await jimpImage.resize(Jimp.AUTO, 800).quality(90);
+  return await jimpImage.getBufferAsync(Jimp.MIME_JPEG);
 };
 
-export const uploadImageToImgur = async (imagePath, albumDeletehash) => {
-  const imageData = fs.createReadStream(imagePath);
-  const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
+export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
+  const imgResponse = await axios.post("https://api.imgur.com/3/image", imageBuffer, {
     headers: {
       Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
       "Content-Type": "multipart/form-data",
@@ -101,6 +89,35 @@ export const uploadImageToImgur = async (imagePath, albumDeletehash) => {
   });
   return imgResponse.data.data.link;
 };
+
+// export const compressImage = async (imagePath, outputDir) => {
+//   // Ensure the output directory exists, create if not
+//   if (!fs.existsSync(outputDir)) {
+//     console.log("Creating output directory");
+//     fs.mkdirSync(outputDir, { recursive: true });
+//   }
+//   console.log({ imagePath, outputDir, basename: path.basename(imagePath) });
+
+//   const outputFilePath = path.join(outputDir, path.basename(imagePath));
+//   console.log({ outputFilePath });
+
+//   const jimpImage = await Jimp.read(imagePath);
+//   await jimpImage.resize(Jimp.AUTO, 800).quality(90).writeAsync(outputFilePath);
+
+//   return outputFilePath;
+// };
+
+// export const uploadImageToImgur = async (imagePath, albumDeletehash) => {
+//   const imageData = fs.createReadStream(imagePath);
+//   const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
+//     headers: {
+//       Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
+//       "Content-Type": "multipart/form-data",
+//     },
+//     params: { album: albumDeletehash },
+//   });
+//   return imgResponse.data.data.link;
+// };
 export const createImgurAlbum = async albumName => {
   const albumResponse = await axios.post(
     "https://api.imgur.com/3/album",
@@ -112,15 +129,15 @@ export const createImgurAlbum = async albumName => {
   return albumResponse.data.data;
 };
 
-export const deleteImages = async (uploadedFiles, uploadsDir) => {
-  await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
-};
+// export const deleteImages = async (uploadedFiles, uploadsDir) => {
+//   await Promise.all(uploadedFiles.map(file => deleteFile(path.join(uploadsDir, file))));
+// };
 
 export const createImageRecords = async (uploadedImageLinks, albumName) => {
   return await Promise.all(uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName })));
 };
 
-export const findImages = async uploadsDir => {
-  const uploadedFiles = await readdir(uploadsDir);
-  return uploadedFiles;
-};
+// export const findImages = async uploadsDir => {
+//   const uploadedFiles = await readdir(uploadsDir);
+//   return uploadedFiles;
+// };
