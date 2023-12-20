@@ -20,7 +20,7 @@ const Sidebar = () => {
       anchor="left"
       open={sideNavDrawer}
       onClose={handleDrawerToggle}
-      transitionDuration={{ enter: 700, exit: 700 }}
+      transitionDuration={{ enter: 500, exit: 400 }}
       sx={{ "& .MuiDrawer-paper": { boxSizing: "border-box", width: "40rem", backgroundColor: "#333333" } }}
     >
       <SidebarCloseButton />

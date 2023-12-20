@@ -34,6 +34,7 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
         >
           <Typography
             onClick={() => {
+              dispatch(setSideNavDrawer(false));
               if (item.path) {
                 if (typeof item.name === "function" && item.name(current_user) === "Login") {
                 } else {
@@ -43,7 +44,6 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
               if (item.onClick) {
                 item.onClick(dispatch, navigate, location);
               }
-              dispatch(setSideNavDrawer(false));
             }}
             sx={{ my: 0, cursor: "pointer", flexGrow: 1 }}
           >
