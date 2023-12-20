@@ -29,6 +29,9 @@ import {
   nextStep,
   setEmailValidations,
   clearShippingRates,
+  activatePromo,
+  set_promo_code,
+  set_promo_code_validations,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
@@ -62,6 +65,7 @@ const ShippingStep = () => {
     shippingSaved,
     shippingValidations,
     modalText,
+    tax_rate,
   } = placeOrder;
 
   const {
@@ -174,8 +178,33 @@ const ShippingStep = () => {
     dispatch(API.shippingRates({ order, verify_shipping: verify }));
   };
 
-  const next_step = step => {
+  const next_step = async step => {
     dispatch(nextStep(step));
+    const promo_code_storage = sessionStorage.getItem("promo_code");
+    if (promo_code_storage && promo_code_storage.length > 0) {
+      console.log({ promo_code_storage });
+      dispatch(set_promo_code(promo_code_storage.toUpperCase()));
+
+      const request = await dispatch(
+        API.validatePromoCode({ promo_code: promo_code_storage.toUpperCase(), current_user, cartItems, shipping })
+      );
+      console.log({ request });
+
+      if (request.payload.isValid) {
+        dispatch(
+          activatePromo({
+            cartItems,
+            tax_rate,
+            activePromoCodeIndicator,
+            current_user,
+            validPromo: request.payload.promo,
+          })
+        );
+      } else {
+        dispatch(set_promo_code_validations(request.payload.errors.promo_code));
+        dispatch(set_promo_code(""));
+      }
+    }
 
     if (step === "shipping" && shipping.email.length === 0) {
       dispatch(setEmailValidations("Email Field Empty"));
