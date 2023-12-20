@@ -43,7 +43,6 @@ const HomePage = () => {
     if (code) {
       sessionStorage.setItem("promo_code", code);
       dispatch(showSuccess({ message: `Code ${code} Added to Checkout` }));
-      // set_message(`Code ${code} Added to Checkout`);
     }
   }, []);
 
