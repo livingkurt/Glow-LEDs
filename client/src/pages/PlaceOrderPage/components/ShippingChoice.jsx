@@ -60,11 +60,6 @@ const ShippingChoice = () => {
     const sortedRates = normalizeDomesticRates(shipping_rates.rates);
     const freeShipping = isFreeShipping({ shipping, items_price, rate, sortedRates });
     dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping }));
-    const promo_code_storage = sessionStorage.getItem("promo_code");
-    if (promo_code_storage && promo_code_storage.length > 0) {
-      dispatch(chooseShippingRateWithPromo({ promo_code_storage }));
-      dispatch(activatePromo({ items_price, tax_rate, activePromoCodeIndicator, code: promo_code_storage, promos }));
-    }
 
     dispatch(finalizeShippingRate());
   };

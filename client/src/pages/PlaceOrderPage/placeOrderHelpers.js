@@ -152,7 +152,7 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
   const today = new Date();
   let totalEligibleForDiscount = 0;
 
-  cartItems.forEach(item => {
+  cartItems?.forEach(item => {
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
     const salePrice =
       today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0

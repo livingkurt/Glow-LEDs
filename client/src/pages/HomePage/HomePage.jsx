@@ -11,6 +11,7 @@ import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { setDisplay, set_options, set_show_search_bar, set_search } from "../../slices/glowLedsSlice";
 import { openLoginModal } from "../../slices/userSlice";
 import { useProductsQuery } from "../../api/allRecordsApi";
+import { showSuccess } from "../../slices/snackbarSlice";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const HomePage = () => {
     const code = queryParams.get("code");
     if (code) {
       sessionStorage.setItem("promo_code", code);
-      // set_message(`Code ${code} Added to Checkout`);
+      dispatch(showSuccess({ message: `Code ${code} Added to Checkout` }));
     }
   }, []);
 
