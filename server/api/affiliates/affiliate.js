@@ -43,6 +43,7 @@ const affiliateSchema = new mongoose.Schema(
     venmo: { type: String },
     pathname: { type: String },
     answers: { type: Array },
+    sponsorTeamCaptain: { type: Boolean, default: false },
     teamCaptain: { type: Boolean, default: false },
     promoter: { type: Boolean, default: true },
     rave_mob: { type: Boolean, default: false },

@@ -49,6 +49,17 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  payout_affiliates_c: async (req, res) => {
+    try {
+      const affiliate = await affiliate_services.payout_affiliates_s();
+      if (affiliate) {
+        return res.status(201).send(affiliate);
+      }
+      return res.status(500).send({ message: "Error Creating Affiliate" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   sponsor_monthly_checkin_affiliates_c: async (req, res) => {
     const { body, params } = req;
     try {

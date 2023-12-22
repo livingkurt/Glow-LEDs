@@ -7,9 +7,11 @@ import {
   createOrUpdateCustomer,
   createPaymentIntent,
   logStripeFeeToExpenses,
+  payoutConnectAccount,
   updateOrder,
 } from "./payment_interactors";
 import Stripe from "stripe";
+import payment_services from "./payment_services";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -82,21 +84,9 @@ export default {
     }
   },
   secure_payout_payments_c: async (req, res) => {
-    const { stripe_connect_id, amount, description } = req.body;
+    const { body } = req;
     try {
-      const transferAmount = Math.round(amount * 100); // amount to transfer, in cents
-      const transferCurrency = "USD"; // currency for the transfer
-      const transferDescription = description; // description for the transfer
-      const connectedAccountId = stripe_connect_id; // ID of the connected account to transfer to
-
-      // Create the recurring transfer
-      const transfer = await stripe.transfers.create({
-        amount: transferAmount,
-        currency: transferCurrency,
-        description: transferDescription,
-        destination: connectedAccountId,
-        metadata: { transfer_group: "weekly_payout" },
-      });
+      const transfer = payoutConnectAccount(body);
 
       res.status(200).send({ message: `Transfer to Connected Account Success: ${transfer.id}` });
     } catch (error) {

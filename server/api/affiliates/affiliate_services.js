@@ -1,10 +1,14 @@
-import { determine_filter, make_private_code, snake_case } from "../../utils/util";
+import { determine_code_tier, determine_filter, make_private_code, snake_case } from "../../utils/util";
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
 import { generateSponsorCodes } from "../promos/promo_interactors";
 import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
 import { createStripeAccountLink } from "./affiliate_interactors";
+import { getCodeUsage } from "../orders/order_interactors";
+import { last_month_date_range } from "../../background/worker_helpers";
+import { paycheck_services } from "../paychecks";
+import { Promo, promo_services } from "../promos";
 const bcrypt = require("bcryptjs");
 
 export default {
@@ -80,6 +84,83 @@ export default {
         return { newAffiliate, accountLink };
       }
     } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  payout_affiliates_s: async () => {
+    try {
+      // const { start_date, end_date } = last_month_date_range();
+      const affiliates = await affiliate_db.findAll_affiliates_db(
+        { active: true, deleted: false, rave_mob: false },
+        {},
+        "0",
+        "1"
+      );
+      for (const affiliate of affiliates) {
+        const { number_of_uses, revenue, earnings } = await getCodeUsage({
+          promo_code: affiliate.public_code.promo_code,
+          start_date: "2023-01-01",
+          end_date: "2023-01-31",
+          sponsor: affiliate.sponsor,
+          sponsorTeamCaptain: affiliate?.sponsorTeamCaptain,
+        });
+        console.log({
+          affiliate: affiliate?.artist_name,
+          if: affiliate?.user?.stripe_connect_id && earnings >= 1,
+        });
+        // if (affiliate?.user?.stripe_connect_id && earnings >= 1) {
+        //   await payoutConnectAccount({
+        //     amount: earnings,
+        //     stripe_connect_id: affiliate.user.stripe_connect_id,
+        //     description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
+        //   });
+        // }
+        console.log({
+          affiliate: affiliate?._id,
+          user: affiliate?.user?._id,
+          amount: earnings,
+          revenue: revenue,
+          promo_code: affiliate?.public_code?._id,
+          uses: number_of_uses,
+          stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
+          paid: affiliate?.user?.stripe_connect_id ? true : false,
+          description: affiliate.user
+            ? `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`
+            : `Monthly Payout for ${affiliate?.artist_name}`,
+          paid_at: new Date(),
+          email: affiliate.user?.email,
+        });
+
+        await paycheck_services.create_paychecks_s({
+          affiliate: affiliate._id,
+          user: affiliate.user._id,
+          amount: earnings,
+          revenue,
+          promo_code: affiliate.public_code._id,
+          uses: number_of_uses,
+          stripe_connect_id: affiliate.user.stripe_connect_id || null,
+          paid: affiliate.user.stripe_connect_id ? true : false,
+          description: affiliate.user
+            ? `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`
+            : `Monthly Payout for ${affiliate?.artist_name}`,
+          paid_at: new Date(),
+          email: affiliate?.user?.email,
+        });
+
+        const percentage_off = determine_code_tier(affiliate, number_of_uses);
+        console.log({
+          percentage_off,
+        });
+        await promo_services.update_promos_s(affiliate.public_code._id, { ...affiliate.public_code, percentage_off });
+        if (affiliate.user?.email && affiliate.user?.amount > 0 && affiliate.user?.stripe_connect_id) {
+          email_controller.send_paycheck_emails_c(req, res);
+        }
+      }
+      return "Success";
+    } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

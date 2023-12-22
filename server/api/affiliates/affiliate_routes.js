@@ -14,6 +14,7 @@ router.route("/:id/generate_sponsor_codes").post(affiliate_controller.generate_s
 router.route("/checkin_status").get(affiliate_controller.checkin_status_affiliates_c);
 router.route("/question_concerns").get(affiliate_controller.question_concerns_affiliates_c);
 router.route("/:id/monthly_checkin").put(affiliate_controller.sponsor_monthly_checkin_affiliates_c);
+router.route("/payout").post(affiliate_controller.payout_affiliates_c);
 
 router
   .route("/:id")
