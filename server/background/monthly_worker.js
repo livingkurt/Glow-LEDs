@@ -7,9 +7,9 @@ const monthly_worker = () => {
   // Get the current date
   const today = new Date();
   // Check if today is the first of the month
-  payout_affiliates();
   if (today.getDate() === 1) {
     // Run the code that you only want to run once a month
+    payout_affiliates();
     payout_teams();
     payout_tips();
     refresh_sponsor_codes();

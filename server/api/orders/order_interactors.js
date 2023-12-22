@@ -183,7 +183,6 @@ export const normalizeOrderSearch = query => {
 };
 
 export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, sponsorTeamCaptain }) => {
-  console.log({ promo_code, start_date, end_date, sponsor, sponsorTeamCaptain });
   try {
     const sort = {};
 
