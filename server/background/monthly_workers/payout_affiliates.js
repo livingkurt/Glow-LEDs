@@ -12,7 +12,7 @@ export const payout_affiliates = async () => {
 
     for (const affiliate of affiliates) {
       const { data: promo_code_usage } = await axios.get(
-        `${domainUrl}/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
+        `${domainUrl}/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate?.sponsor}&sponsorTeamCaptain=${affiliate?.sponsorTeamCaptain}`
       );
       console.log({
         affiliate: affiliate?.artist_name,

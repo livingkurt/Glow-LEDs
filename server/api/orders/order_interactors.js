@@ -182,8 +182,8 @@ export const normalizeOrderSearch = query => {
   return search;
 };
 
-export const getCodeUsage = async data => {
-  const { promo_code, start_date, end_date, sponsor } = data;
+export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, sponsorTeamCaptain }) => {
+  console.log({ promo_code, start_date, end_date, sponsor, sponsorTeamCaptain });
   try {
     const sort = {};
 
@@ -216,8 +216,13 @@ export const getCodeUsage = async data => {
           (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0),
         0
       );
-    const earnings = sponsor === true || sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
-
+    let earnings = revenue * 0.1;
+    if (sponsor === true || sponsor === "true") {
+      earnings = revenue * 0.15;
+    }
+    if (sponsorTeamCaptain === true || sponsorTeamCaptain === "true") {
+      earnings = revenue * 0.2;
+    }
     return { number_of_uses, revenue, earnings };
   } catch (error) {
     if (error instanceof Error) {

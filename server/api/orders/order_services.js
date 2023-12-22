@@ -1571,11 +1571,13 @@ export default {
       filtered_affiliates.map(async affiliate => {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
+        const sponsorTeamCaptain = affiliate.sponsorTeamCaptain;
         const { number_of_uses, revenue, earnings } = await getCodeUsage({
           promo_code,
           start_date,
           end_date,
           sponsor,
+          sponsorTeamCaptain,
         });
 
         return { number_of_uses, revenue, earnings, artist_name: affiliate.artist_name };
@@ -1585,7 +1587,7 @@ export default {
     return earnings;
   },
   code_usage_orders_s: async (params, query) => {
-    const { start_date, end_date, sponsor } = query;
+    const { start_date, end_date, sponsor, sponsorTeamCaptain } = query;
     const { promo_code } = params;
     try {
       const { number_of_uses, revenue, earnings } = await getCodeUsage({
@@ -1593,6 +1595,7 @@ export default {
         start_date,
         end_date,
         sponsor,
+        sponsorTeamCaptain,
       });
 
       return { number_of_uses, revenue, earnings };

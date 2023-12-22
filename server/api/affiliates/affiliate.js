@@ -48,6 +48,7 @@ const affiliateSchema = new mongoose.Schema(
     rave_mob: { type: Boolean, default: false },
     team: { type: Boolean, default: false },
     sponsor: { type: Boolean, default: false },
+    sponsorTeamCaptain: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },
