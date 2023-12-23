@@ -69,6 +69,7 @@ const useProfilePage = () => {
         start_date: month_start_date,
         end_date: month_end_date,
         sponsor: user?.affiliate?.sponsor,
+        sponsorTeamCaptain: user?.affiliate?.sponsorTeamCaptain,
         type: "month",
       })
     );
@@ -78,6 +79,7 @@ const useProfilePage = () => {
         start_date: year_start_date,
         end_date: year_end_date,
         sponsor: user?.affiliate?.sponsor,
+        sponsorTeamCaptain: user?.affiliate?.sponsorTeamCaptain,
         type: "year",
       })
     );
@@ -87,7 +89,6 @@ const useProfilePage = () => {
     // }
   }, [
     dispatch,
-    // hasFetchedTeam,
     month_start_date,
     month_end_date,
     year_start_date,
@@ -95,6 +96,7 @@ const useProfilePage = () => {
     team,
     user?.affiliate?.public_code,
     user?.affiliate?.sponsor,
+    user?.affiliate?.sponsorTeamCaptain,
   ]);
 
   useEffect(() => {
@@ -118,6 +120,7 @@ const useProfilePage = () => {
           start_date: month_start_date,
           end_date: month_end_date,
           sponsor: true,
+          sponsorTeamCaptain: false,
           type: "month",
         })
       );
@@ -127,6 +130,7 @@ const useProfilePage = () => {
           start_date: year_start_date,
           end_date: year_end_date,
           sponsor: true,
+          sponsorTeamCaptain: false,
           type: "year",
         })
       );
