@@ -7,7 +7,6 @@ import * as API from "../../../api";
 const CurrentStock = () => {
   const dispatch = useDispatch();
   const currentStock = API.useGetCurrentStockQuery();
-  console.log({ currentStock });
   return (
     <div>
       <Typography variant="h4" align="center">
