@@ -210,8 +210,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
       .reduce(
         (a, order) =>
           a +
-          order.totalPrice -
-          order.taxPrice -
+          order.itemsPrice -
           (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0),
         0
       );
