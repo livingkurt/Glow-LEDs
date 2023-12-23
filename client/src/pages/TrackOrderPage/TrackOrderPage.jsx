@@ -24,19 +24,22 @@ const TrackOrderPage = () => {
             style={{
               textAlign: "center",
               width: "100%",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             Track Your Order
           </h1>
           <li>
             <label htmlFor="order_number">Order Number</label>
-            <input type="order_number" id="order_number" name="order_number" onChange={e => set_order_number(e.target.value.trim())} />
+            <input
+              type="order_number"
+              id="order_number"
+              name="order_number"
+              onChange={e => set_order_number(e.target.value.trim())}
+            />
           </li>
           <li>
-            <Link
-              to={current_user && current_user.first_name ? "/secure/account/order/" + order_number : "/checkout/order/" + order_number}
-            >
+            <Link to={"/checkout/order/" + order_number}>
               <GLButton variant="primary" className="w-100per">
                 View Order
               </GLButton>
