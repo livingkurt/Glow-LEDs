@@ -32,17 +32,6 @@ const DashboardPage = () => {
   const tips_range_revenue = API.useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
   const affiliate_earnings_code_usage = API.useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
   const all_product_revenue = API.useGetProductRevenueQuery({ start_date, end_date });
-  const daily_revenue = API.useGetDailyRevenueOrdersQuery({ start_date, end_date });
-  const monthly_revenue = API.useGetMonthlyRevenueOrdersQuery({ year });
-  const yearly_revenue = API.useGetYearlyRevenueOrdersQuery();
-  const daily_expenses = API.useGetDailyExpenseOrdersQuery({ start_date, end_date });
-  const monthly_expenses = API.useGetMonthlyExpenseOrdersQuery({ year });
-  const yearly_expenses = API.useGetYearlyExpenseOrdersQuery();
-  const daily_paychecks = API.useGetDailyPaycheckOrdersQuery({ start_date, end_date });
-  const monthly_paychecks = API.useGetMonthlyPaycheckOrdersQuery({ year });
-  const yearly_paychecks = API.useGetYearlyPaycheckOrdersQuery();
-
-  console.log({ daily_paychecks, monthly_paychecks, yearly_paychecks });
   const range_payouts = API.useGetRangePayoutsQuery({ start_date, end_date });
   const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
   const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
@@ -50,11 +39,8 @@ const DashboardPage = () => {
 
   const monthly_product_revenue = API.useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
   const yearly_product_revenue = API.useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
-  const expensesByCategory = API.useGetExpensesByCategoryQuery({ start_date, end_date });
-  console.log({ expensesByCategory });
   // const range_product_revenue = API.useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
   // const range_gloves = API.useGetRangeGlovesQuery({ start_date, end_date });
-  const currentStock = API.useGetCurrentStockQuery();
 
   return (
     <div className="main_container p-20px">
@@ -67,14 +53,7 @@ const DashboardPage = () => {
           Gcode Generater
         </Button>
       </div>
-      <Loading
-        loading={
-          daily_revenue.isLoading &&
-          monthly_revenue.isLoading &&
-          category_range_revenue.isLoading &&
-          yearly_revenue.isLoading
-        }
-      />
+
       <Loading loading={loading} />
       <div className="m-auto w-100per">
         <DatePicker
@@ -113,20 +92,7 @@ const DashboardPage = () => {
           </AppBar>
         </Paper>
         <GLTabPanel value={tabIndex} index={0}>
-          <YearlyMonthlyDailyRevenue
-            month={month}
-            year={year}
-            yearly_revenue={yearly_revenue}
-            daily_revenue={daily_revenue}
-            monthly_revenue={monthly_revenue}
-            yearly_expenses={yearly_expenses}
-            daily_expenses={daily_expenses}
-            monthly_expenses={monthly_expenses}
-            yearly_paychecks={yearly_paychecks}
-            daily_paychecks={daily_paychecks}
-            monthly_paychecks={monthly_paychecks}
-            expensesByCategory={expensesByCategory}
-          />
+          <YearlyMonthlyDailyRevenue />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={1}>
           <AffiliateEarnings month={month} year={year} affiliate_earnings_code_usage={affiliate_earnings_code_usage} />
@@ -154,7 +120,7 @@ const DashboardPage = () => {
             questionConcerns={questionConcerns}
           />
         </GLTabPanel>
-        <CurrentStock currentStock={currentStock} />
+        <CurrentStock />
         <GcodeGeneratorModal />
       </div>
     </div>

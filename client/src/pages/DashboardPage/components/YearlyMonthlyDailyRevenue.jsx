@@ -7,21 +7,25 @@ import {
   conditionalColor,
   months,
 } from "../dashboardHelpers";
+import * as API from "../../../api";
+import { useSelector } from "react-redux";
+import { Loading } from "../../../shared/SharedComponents";
 
-const YearlyMonthlyDailyRevenue = ({
-  month,
-  year,
-  yearly_revenue,
-  daily_revenue,
-  monthly_revenue,
-  yearly_expenses,
-  daily_expenses,
-  monthly_expenses,
-  yearly_paychecks,
-  daily_paychecks,
-  monthly_paychecks,
-  expensesByCategory,
-}) => {
+const YearlyMonthlyDailyRevenue = () => {
+  const dashboardPage = useSelector(state => state.dashboards);
+
+  const { year, month, start_date, end_date } = dashboardPage;
+
+  const daily_revenue = API.useGetDailyRevenueOrdersQuery({ start_date, end_date });
+  const monthly_revenue = API.useGetMonthlyRevenueOrdersQuery({ year });
+  const yearly_revenue = API.useGetYearlyRevenueOrdersQuery();
+  const daily_expenses = API.useGetDailyExpenseOrdersQuery({ start_date, end_date });
+  const monthly_expenses = API.useGetMonthlyExpenseOrdersQuery({ year });
+  const yearly_expenses = API.useGetYearlyExpenseOrdersQuery();
+  const daily_paychecks = API.useGetDailyPaycheckOrdersQuery({ start_date, end_date });
+  const monthly_paychecks = API.useGetMonthlyPaycheckOrdersQuery({ year });
+  const yearly_paychecks = API.useGetYearlyPaycheckOrdersQuery();
+  const expensesByCategory = API.useGetExpensesByCategoryQuery({ start_date, end_date });
   let combinedYearlyData = [];
 
   if (yearly_revenue.isSuccess && yearly_expenses.isSuccess && yearly_paychecks.isSuccess) {
@@ -55,6 +59,7 @@ const YearlyMonthlyDailyRevenue = ({
 
   return (
     <>
+      <Loading loading={daily_revenue.isLoading && monthly_revenue.isLoading && yearly_revenue.isLoading} />
       {!month && !year && (
         <div>
           {combinedYearlyData.length > 0 && (

@@ -1,10 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import axios from "axios";
-import Covy from "../../shared/GlowLEDsComponents/GLCovy/GLCovy";
-import { errorMessage } from "../../helpers/sharedHelpers";
-import store from "../../store";
-import { showError, showSuccess } from "../../slices/snackbarSlice";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
