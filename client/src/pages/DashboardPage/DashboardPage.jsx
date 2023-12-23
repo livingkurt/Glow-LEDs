@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 import * as API from "../../api";
-import { determineTabName, run_daily_workers } from "./dashboardHelpers";
+import { determineTabName } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { Loading } from "../../shared/SharedComponents";
