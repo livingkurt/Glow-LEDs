@@ -234,29 +234,6 @@ const affiliatePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.affiliateEarnings.pending]: (state, { payload }) => {
-      state.loading_year_earnings = true;
-      state.loading_month_earnings = true;
-    },
-    [API.affiliateEarnings.fulfilled]: (state, { payload }) => {
-      const { data, type } = payload;
-      if (type === "month") {
-        state.month_earnings = data;
-        state.loading_month_earnings = false;
-      } else if (type === "year") {
-        state.year_earnings = data;
-        state.loading_year_earnings = false;
-      }
-
-      state.message = "Affiliate Earnings Found";
-      state.remoteVersionRequirement = Date.now();
-    },
-    [API.affiliateEarnings.rejected]: (state, { payload, error }) => {
-      state.loading_month_earnings = false;
-      state.loading_year_earnings = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
     [API.savePromo.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },

@@ -130,35 +130,6 @@ export const createRaveMobAffiliates = createAsyncThunk(
   }
 );
 
-// export const monthlyffiliateEarnings",
-//   async ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }, { dispatch, rejectWithValue }) => {
-//     try {
-//       const { data } = await axios.get(
-//         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}&sponsorTeamCaptain=${sponsorTeamCaptain}`
-//       );
-//       return { data, type };
-//     } catch (error) {
-//       dispatch(showError({ message: errorMessage(error) }));
-//       return rejectWithValue(error.response?.data);
-//     }
-//   }
-// );
-
-export const affiliateEarnings = createAsyncThunk(
-  "affiliates/affiliateEarnings",
-  async ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(
-        `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}&sponsorTeamCaptain=${sponsorTeamCaptain}`
-      );
-      return { data, type };
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 export const sponsorMonthlyCheckin = createAsyncThunk(
   "affiliate/sponsorMonthlyCheckin",
   async ({ affiliateId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
