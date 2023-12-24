@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
@@ -129,6 +130,20 @@ export const createRaveMobAffiliates = createAsyncThunk(
   }
 );
 
+// export const monthlyffiliateEarnings",
+//   async ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }, { dispatch, rejectWithValue }) => {
+//     try {
+//       const { data } = await axios.get(
+//         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}&sponsorTeamCaptain=${sponsorTeamCaptain}`
+//       );
+//       return { data, type };
+//     } catch (error) {
+//       dispatch(showError({ message: errorMessage(error) }));
+//       return rejectWithValue(error.response?.data);
+//     }
+//   }
+// );
+
 export const affiliateEarnings = createAsyncThunk(
   "affiliates/affiliateEarnings",
   async ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }, { dispatch, rejectWithValue }) => {
@@ -163,3 +178,23 @@ export const sponsorMonthlyCheckin = createAsyncThunk(
     }
   }
 );
+
+export const affiliateApi = createApi({
+  reducerPath: "affiliateApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  endpoints: builder => ({
+    affiliateEarnings: builder.query({
+      query: ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }) =>
+        `/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}&sponsorTeamCaptain=${sponsorTeamCaptain}`,
+    }),
+    monthlyAffiliateEarnings: builder.query({
+      query: ({ promo_code, start_date, end_date, sponsor, type, sponsorTeamCaptain }) =>
+        `/orders/monthly_code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}&sponsorTeamCaptain=${sponsorTeamCaptain}`,
+    }),
+    sponsorCodes: builder.query({
+      query: ({ affiliateId }) => `/promos/${affiliateId}/sponsor_codes`,
+    }),
+  }),
+});
+
+export const { useAffiliateEarningsQuery, useSponsorCodesQuery, useMonthlyAffiliateEarningsQuery } = affiliateApi;

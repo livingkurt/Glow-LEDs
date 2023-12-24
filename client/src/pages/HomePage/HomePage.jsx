@@ -85,7 +85,6 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const { data: productsData, isLoading, isError } = useProductsQuery({ option: false, hidden: false });
-  console.log({ productsData, isLoading, isError });
   useEffect(() => {
     if (productsData && !isLoading && !isError) {
       const newOptions = [

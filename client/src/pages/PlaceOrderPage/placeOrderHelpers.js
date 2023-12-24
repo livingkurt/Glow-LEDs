@@ -83,7 +83,6 @@ export const displayRate = ({ current_shipping_speed, shipping }) =>
       ).toFixed(2)}`;
 
 export const normalizeDomesticRates = rates => {
-  console.log({ rates });
   const USPSRates = rates.filter(rate => rate.carrier === "USPS");
   const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
   const sortedUSPSRates = USPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));

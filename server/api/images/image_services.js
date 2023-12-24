@@ -55,12 +55,10 @@ export default {
           link: convertedLink,
           album: album,
         });
-        console.log({ newImage });
 
         return newImage;
       }
     } catch (error) {
-      console.log("Error:", error); // Log the error for debugging
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -84,7 +82,6 @@ export default {
 
       return images;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

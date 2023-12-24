@@ -183,7 +183,6 @@ const userPage = createSlice({
       state.changePasswordModal = false;
     },
     setChangeValidations: (state, { payload }) => {
-      console.log({ payload });
       state.current_password_validations = payload.currentPassword;
       state.password_validations = payload.password;
       state.re_password_validations = payload.rePassword;

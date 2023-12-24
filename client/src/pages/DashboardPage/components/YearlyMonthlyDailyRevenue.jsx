@@ -27,6 +27,7 @@ const YearlyMonthlyDailyRevenue = () => {
   const yearly_paychecks = API.useGetYearlyPaycheckOrdersQuery();
   const expensesByCategory = API.useGetExpensesByCategoryQuery({ start_date, end_date });
   let combinedYearlyData = [];
+  console.log({ monthly_revenue });
 
   if (yearly_revenue.isSuccess && yearly_expenses.isSuccess && yearly_paychecks.isSuccess) {
     combinedYearlyData = combineYearlyRevenueAndExpenses(
@@ -90,7 +91,7 @@ const YearlyMonthlyDailyRevenue = () => {
               title={"Monthly Revenue"}
               rows={combinedMonthlyData}
               columnDefs={[
-                { title: "Year", display: row => months[row.month - 1] },
+                { title: "Month", display: row => months[row.month - 1] },
                 { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
                 { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
                 {

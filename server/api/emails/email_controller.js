@@ -295,7 +295,6 @@ export default {
   },
   send_admin_contact_emails_c: async (req, res) => {
     const { email, first_name } = req.body;
-    console.log({ email });
 
     const mailOptions = {
       from: config.DISPLAY_CONTACT_EMAIL,
@@ -321,7 +320,6 @@ export default {
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
-    console.log({ promo });
 
     let mailRecipients = [];
     let mailSubject = "";
@@ -357,19 +355,15 @@ export default {
         // TODO - For some reason I cant find by nested record id
         // // Debug logs to understand what's happening
         // const affiliateById = await Affiliate.findById("637849aa596602002956d895");
-        // console.log("Affiliate by ID:", affiliateById);
 
         // const affiliateByPublicCode = await Affiliate.findOne({
         //   public_code: affiliateById.public_code,
         // });
-        // console.log("Affiliate by public_code as string:", affiliateByPublicCode);
 
         // const affiliateByPublicCodeAsObjectId = await Affiliate.findOne({
         //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
         // }).lean();
-        // console.log("Affiliate by public_code as ObjectId:", affiliateByPublicCodeAsObjectId);
 
-        // console.log(typeof affiliateById.public_code, affiliateById.public_code instanceof mongoose.Types.ObjectId);
         // const affiliate = await Affiliate.findOne({
         //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
         // });
@@ -382,7 +376,6 @@ export default {
           const users = await User.find({ deleted: false, is_affiliated: true });
           const user = users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
           // const user = await user_db.findByAffiliateId_users_db(affiliate._id.toString());
-          console.log({ user });
           mailRecipients = [user.email];
           mailSubject = `Your code was just used!`;
           const stats = await order_services.code_usage_orders_s(
@@ -410,18 +403,14 @@ export default {
             unsubscribe: false,
           }),
         };
-        console.log({ mailRecipients });
         sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
     }
   },
   send_verify_email_password_reset_emails_c: async (req, res) => {
     const email = req.body.email;
-    console.log({ email });
 
     const user = await user_db.findByEmail_users_db(email);
-
-    console.log({ user });
 
     if (user) {
       // Generate a JWT token for reset password
@@ -503,7 +492,6 @@ export default {
 
       res.status(200).send({ message: "Scheduled emails have been processed." });
     } catch (error) {
-      console.error("Error sending scheduled emails:", error);
       res.status(500).send({ message: "Error sending scheduled emails", error: error });
     }
   },
@@ -575,7 +563,6 @@ export default {
     const user = await user_db.findByEmail_users_db(email);
     const token = jwt.sign({ userId: user._id }, config.VERIFY_USER_TOKEN_SECRET, { expiresIn: "1h" });
 
-    console.log({ user, token });
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,

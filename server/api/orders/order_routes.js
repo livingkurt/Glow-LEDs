@@ -17,6 +17,7 @@ router.route("/tax_rates").get(order_controller.tax_rates_orders_c);
 router.route("/all_affiliate_code_usage/:year?/:month?").get(order_controller.all_affiliate_code_usage_orders_c);
 router.route("/promo_code_usage/:year?/:month?").get(order_controller.promo_code_usage_orders_c);
 router.route("/code_usage/:promo_code").get(order_controller.code_usage_orders_c);
+router.route("/monthly_code_usage/:promo_code").get(order_controller.monthly_code_usage_orders_c);
 router.route("/income/:year?/:month?").get(order_controller.income_orders_c);
 router.route("/each_day_income/:date").get(order_controller.each_day_income_orders_c);
 router.route("/each_month_income/:date").get(order_controller.each_month_income_orders_c);

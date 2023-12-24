@@ -1,5 +1,4 @@
 export default ({ h1, h2, images_object, p, button, link, module_color, button_color, text_color, title_color }) => {
-  console.log({ images_object });
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">

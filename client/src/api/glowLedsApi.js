@@ -22,7 +22,6 @@ export const updateVersion = async () => {
 export const getEnvironment = createAsyncThunk("glowLeds/getEnvironment", async () => {
   try {
     const { data } = await axios.get(`/api/versions/environment`);
-    console.log({ data });
     return data;
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));

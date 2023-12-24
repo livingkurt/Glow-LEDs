@@ -20,7 +20,6 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
     if (location.pathname === "/secure/checkout/placeorder") {
       return "/checkout/placeorder";
     }
-    console.log({ location });
 
     return "/";
   };
@@ -52,7 +51,6 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
     // Remove the 'manualNavigation' flag from session storage
     sessionStorage.removeItem("manualNavigation");
   }, [current_user, isTokenRefreshed]);
-
 
   useEffect(() => {
     (async () => {

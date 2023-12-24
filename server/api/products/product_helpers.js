@@ -64,7 +64,6 @@ export const dimminish_batteries_stock = async (product, item) => {
 export const normalizeProductFilters = input => {
   const output = {};
   Object.keys(input).forEach(key => {
-    console.log({ input });
     switch (key) {
       case "category":
         for (const category of input.category) {

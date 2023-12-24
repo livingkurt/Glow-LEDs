@@ -16,7 +16,7 @@ import {
   toCapitalize,
 } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { getCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
+import { getCodeUsage, getMonthlyCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
 import { Cart } from "../carts";
 const scraper = require("table-scraper");
 
@@ -93,20 +93,6 @@ export default {
       }
     }
   },
-  // findAll_orders_s: async (query) => {
-  //   const { limit, page, search, sort, filters } = query;
-  //   console.log({ query });
-  //   try {
-  //     const orders = await order_db.findAll_orders_db(JSON.parse(filters), sort, limit, page);
-  //     return {
-  //       orders,
-  //     };
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
   create_filters_orders_s: async query => {
     try {
       const availableFilters = {
@@ -1597,8 +1583,26 @@ export default {
         sponsor,
         sponsorTeamCaptain,
       });
-
       return { number_of_uses, revenue, earnings };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  monthly_code_usage_orders_s: async (params, query) => {
+    const { start_date, end_date, sponsor, sponsorTeamCaptain } = query;
+    const { promo_code } = params;
+    try {
+      const monthlyEarnings = await getMonthlyCodeUsage({
+        promo_code,
+        start_date,
+        end_date,
+        sponsor,
+        sponsorTeamCaptain,
+      });
+
+      return monthlyEarnings;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

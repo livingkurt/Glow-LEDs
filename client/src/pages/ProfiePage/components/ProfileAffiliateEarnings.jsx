@@ -1,73 +1,38 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Loading } from "../../../shared/SharedComponents";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
-const ProfileAffiliateEarnings = () => {
+const ProfileAffiliateEarnings = ({ yearlyEarnings, currentMonthEarnings }) => {
   const userPage = useSelector(state => state.users.userPage);
-  const { user, error } = userPage;
+  const { user } = userPage;
 
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { month_earnings, year_earnings, loading_year_earnings, loading_month_earnings } = affiliatePage;
-
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
-
-  const teamPage = useSelector(state => state.teams.teamPage);
-  const { team } = teamPage;
-
-  const entity = user.is_affiliated && team?.team_name?.length > 0 ? team : user?.affiliate;
+  const EarningsCard = ({ title, data }) => (
+    <Card sx={{ minWidth: 275, marginBottom: 2 }}>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="h5" component="div">
+          Revenue: ${parseFloat(data?.revenue).toFixed(2)}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Earned: ${data?.earnings.toFixed(2)}
+        </Typography>
+        <Typography variant="body2">Uses: {data?.number_of_uses}</Typography>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div>
-      {!loading_year_earnings && !loading_month_earnings && entity && month_earnings && year_earnings && promos && (
+      {user.is_affiliated && (
         <>
-          <h2 className="ta-c">Affiliate Earnings</h2>
-          <Loading loading={loading_year_earnings} error={error} />
-          <Loading loading={loading_month_earnings} error={error}>
-            <table className="styled-table w-100per">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Revenue</th>
-                  <th>Earned</th>
-                  <th>Uses</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  style={{
-                    backgroundColor: "#656a87",
-                  }}
-                >
-                  <th>Current Month</th>
-                  <th>${!loading_month_earnings && parseFloat(month_earnings?.revenue).toFixed(2)}</th>
-                  <th>
-                    $
-                    {!loading_month_earnings &&
-                      parseFloat(
-                        user?.affiliate?.promoter ? 0.1 * month_earnings?.revenue : 0.15 * month_earnings?.revenue
-                      ).toFixed(2)}
-                  </th>
-                  <th>{!loading_month_earnings && month_earnings?.number_of_uses}</th>
-                </tr>
-                <tr
-                  style={{
-                    backgroundColor: "#656a87",
-                  }}
-                >
-                  <th>Current Year</th>
-                  <th>${!loading_year_earnings && parseFloat(year_earnings?.revenue).toFixed(2)}</th>
-                  <th>
-                    $
-                    {!loading_year_earnings &&
-                      parseFloat(
-                        user?.affiliate?.promoter ? 0.1 * year_earnings?.revenue : 0.15 * year_earnings?.revenue
-                      ).toFixed(2)}
-                  </th>
-                  <th>{!loading_year_earnings && year_earnings?.number_of_uses}</th>
-                </tr>
-              </tbody>
-            </table>
+          <Loading loading={yearlyEarnings.isLoading || currentMonthEarnings.isLoading}>
+            {!currentMonthEarnings.isLoading && <EarningsCard title="Current Month" data={currentMonthEarnings.data} />}
+            {!yearlyEarnings.isLoading && <EarningsCard title="Current Year" data={yearlyEarnings.data} />}
           </Loading>
         </>
       )}

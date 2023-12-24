@@ -122,7 +122,6 @@ const ShippingChoice = () => {
                 .filter(Boolean)
                 .map((rate, index) => {
                   let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
-                  console.log({ rate });
                   let displayRate = isFreeShipping
                     ? "Free"
                     : `$${parseFloat(rate?.retail_rate || rate?.rate).toFixed(2)}`;

@@ -82,7 +82,6 @@ export const detailsTeam = createAsyncThunk(
         return data;
       } else if (affiliateId) {
         const { data } = await axios.get(`/api/teams/${affiliateId}/affiliate`);
-        console.log({ data });
         return data;
       }
     } catch (error) {

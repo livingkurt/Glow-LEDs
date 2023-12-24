@@ -182,13 +182,11 @@ const ShippingStep = () => {
     dispatch(nextStep(step));
     const promo_code_storage = sessionStorage.getItem("promo_code");
     if (promo_code_storage && promo_code_storage.length > 0) {
-      console.log({ promo_code_storage });
       dispatch(set_promo_code(promo_code_storage.toUpperCase()));
 
       const request = await dispatch(
         API.validatePromoCode({ promo_code: promo_code_storage.toUpperCase(), current_user, cartItems, shipping })
       );
-      console.log({ request });
 
       if (request.payload.isValid) {
         dispatch(

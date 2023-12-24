@@ -308,35 +308,6 @@ const GLTableV2 = ({
   const rowCount = remoteCount || filteredRows.length;
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
 
-  // const onDragEnd = result => {
-  //   if (!result.destination) {
-  //     return;
-  //   }
-  //   const sourceIndex = result.source.index;
-  //   const destinationIndex = result.destination.index;
-
-  //   let newItems = [...visibleRows];
-  //   const selectedItems = newItems.filter(item => selectedRows.includes(item._id));
-
-  //   newItems = newItems.filter(item => !selectedRows.includes(item._id));
-
-  //   if (sourceIndex < destinationIndex) {
-  //     newItems.splice(destinationIndex - selectedItems.length + 1, 0, ...selectedItems);
-  //   } else {
-  //     newItems.splice(destinationIndex, 0, ...selectedItems);
-  //   }
-
-  //   dispatch(
-  //     reorderRows(namespace, {
-  //       reorderedItems: newItems,
-  //       remoteVersionRequirementType,
-  //       remoteReorderApi,
-  //       page,
-  //       pageSize,
-  //     })
-  //   );
-  // };
-
   const handleRowSelection = (id, cmdPressed) => {
     if (!cmdPressed) {
       dispatch(selectRow([id]));

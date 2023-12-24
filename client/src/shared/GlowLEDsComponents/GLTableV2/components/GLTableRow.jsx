@@ -137,7 +137,6 @@ const GLTableRow = ({
         )}
         {columnDefs.map((column, index) => {
           const value = typeof column.display === "function" ? column.display(row) : row[column.display];
-          // console.log({ key: `hardCodedUniqueKeyCell_${labelId}_${index + 1}` });
           return (
             <TableCell
               key={`hardCodedUniqueKeyCell_${labelId}_${index + 100}`}

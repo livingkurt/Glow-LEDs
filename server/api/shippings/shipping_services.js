@@ -149,19 +149,15 @@ export default {
         phone: config.PHONE_NUMBER,
         email: config.INFO_EMAIL,
       });
-      console.log({ orderIds });
       const orders = await Order.find({ _id: { $in: orderIds } });
-      console.log({ orders });
 
       const shipmentIds = orders.map(order => order.shipping.shipment_id);
       const shipments = await Promise.all(shipmentIds.map(id => EasyPost.Shipment.retrieve(id)));
-      console.log({ shipments });
       if (shipments) {
         // Create a batch with the shipments
         const batch = await EasyPost.Batch.create({
           shipments: shipments,
         });
-        console.log({ batch });
 
         const pickup = await EasyPost.Pickup.create({
           address: homeAddress,
@@ -174,7 +170,6 @@ export default {
           instructions: "Pick up on front porch please.",
           batch: batch,
         });
-        console.log({ pickup, orders });
         return { pickup, orders };
       }
     } catch (error) {
