@@ -53,8 +53,6 @@ const useAffiliateProfilePage = () => {
     }
   );
 
-  console.log({ monthlyEarnings });
-
   const sponsorCodes = API.useSponsorCodesQuery(
     {
       affiliateId: user?.affiliate?._id,
