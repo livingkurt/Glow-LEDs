@@ -10,7 +10,6 @@ import { getProfileTitle } from "./profileHelpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
-import ProfileAffiliateEarnings from "./components/ProfileAffiliateEarnings";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpers";
