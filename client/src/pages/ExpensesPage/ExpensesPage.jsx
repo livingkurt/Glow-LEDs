@@ -135,7 +135,6 @@ const ExpensesPage = () => {
             place_of_purchase: row.place_of_purchase,
             card: row.card,
           }));
-        console.log({ expenses });
         dispatch(API.bulkSaveExpenses(expenses));
       },
     });

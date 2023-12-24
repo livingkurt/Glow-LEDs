@@ -451,7 +451,6 @@ export default {
 
       return { isValid, errors, promo };
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

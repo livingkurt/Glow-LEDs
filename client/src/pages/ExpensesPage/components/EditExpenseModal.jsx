@@ -17,7 +17,6 @@ const EditExpenseModal = () => {
   useEffect(async () => {
     dispatch(API.listExpenses({ is_subscription: true }));
     const response = await API.getExpenseFilters();
-    console.log({ filters });
     setFilters(response);
   }, []);
 

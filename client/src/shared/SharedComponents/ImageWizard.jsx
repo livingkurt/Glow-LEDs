@@ -19,8 +19,6 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const handleSaveId = async () => {
     const foundLinks = extractThumbs2Links(link);
 
-    console.log({ foundLinks });
-
     if (foundLinks) {
       const fetchedImages = await Promise.all(
         foundLinks.map(singleLink => dispatch(API.getImagesByLink({ album: fieldData.album, link: singleLink })))

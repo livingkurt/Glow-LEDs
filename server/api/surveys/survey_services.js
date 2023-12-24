@@ -28,7 +28,6 @@ export default {
   },
   findAll_surveys_s: async query => {
     const { limit, page, search, sort, filters } = query;
-    console.log({ query });
     try {
       const surveys = await survey_db.findAll_surveys_db(JSON.parse(filters), sort, limit, page);
       return {

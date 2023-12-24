@@ -36,7 +36,6 @@ export const normalizePaycheckSearch = query => {
       search.amount = amountNumber;
     }
   }
-  console.log({ search });
   return search;
 };
 

@@ -55,7 +55,7 @@ export const areCartItemsEqual = (item1, item2) => {
     if (val1 === val2) {
       return true;
     } else {
-      console.log({ field, val1, val2 });
+      return false;
     }
   });
 };

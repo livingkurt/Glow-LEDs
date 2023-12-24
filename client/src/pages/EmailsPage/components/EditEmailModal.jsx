@@ -37,7 +37,6 @@ const EditEmailModal = () => {
     const shouldDebounce = keys.some(key => debounceKeys.includes(key));
 
     if (debounceValue && !shouldDebounce) {
-      console.log({ debounceValue });
       debounceTimer = setTimeout(() => {
         dispatch(API.viewAnnouncement({ template: email }));
       }, 2000); // 2000ms debounce time

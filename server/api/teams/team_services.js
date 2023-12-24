@@ -61,7 +61,6 @@ export default {
         // normalizeFilters: normalizePromoFilters,
         // normalizeSearch: normalizePromoSearch,
       });
-      console.log({ filter, sort, limit, page });
       const teams = await team_db.findAll_teams_db(filter, sort, limit, page);
       const count = await team_db.count_teams_db(filter);
       return {
@@ -190,7 +189,6 @@ export default {
           }
           // // If the check-in is for the previous month and year, generate sponsor codes
           // if (month === prevMonth && year === prevYear) {
-          //   console.log("Generating sponsor codes...");
           //   await generateSponsorCodes(team);
           // }
         }
@@ -201,7 +199,6 @@ export default {
         return team;
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

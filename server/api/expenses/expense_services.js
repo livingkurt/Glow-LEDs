@@ -15,7 +15,6 @@ const Airtable = require("airtable");
 export default {
   findAll_expenses_s: async query => {
     try {
-      console.log({ query });
       const sort_options = ["date_of_purchase", "expense_name", "place_of_purchase", "card", "category", "amount"];
       const { filter, sort, limit, page } = getFilteredData({
         query,

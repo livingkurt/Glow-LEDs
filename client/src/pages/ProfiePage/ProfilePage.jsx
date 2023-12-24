@@ -10,13 +10,15 @@ import { getProfileTitle } from "./profileHelpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
-import ProfileAffiliateEarnings from "./components/ProfileAffiliateEarnings";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpers";
 import { Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
-import useProfilePage from "./useProfilePage";
+import useUserProfilePage from "./useUserProfilePage";
+import useAffiliateProfilePage from "./useAffiliateProfilePage";
+import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
+import { months } from "../DashboardPage/dashboardHelpers";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -30,7 +32,15 @@ const ProfilePage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading: loading_order } = orderPage;
 
-  const { orderColumnDefs, paycheckColumnDefs, ordersRemoteApi, paychecksRemoteApi } = useProfilePage();
+  const { orderColumnDefs, ordersRemoteApi } = useUserProfilePage();
+  const {
+    paycheckColumnDefs,
+    paychecksRemoteApi,
+    yearlyEarnings,
+    currentMonthEarnings,
+    sponsorCodes,
+    monthlyEarnings,
+  } = useAffiliateProfilePage();
 
   return (
     <div className="p-20px inner_content">
@@ -54,12 +64,32 @@ const ProfilePage = () => {
           <ProfileActions />
         </Grid>
         <Grid item xs={12} md={6}>
-          <ProfileAffiliateMetrics />
-        </Grid>
-        <Grid item xs={12}>
-          <ProfileAffiliateEarnings />
+          <ProfileAffiliateMetrics
+            sponsorCodes={sponsorCodes}
+            currentMonthEarnings={currentMonthEarnings}
+            yearlyEarnings={yearlyEarnings}
+          />
         </Grid>
 
+        <Grid item xs={12}>
+          {user && user?.affiliate?._id && (
+            <GLDisplayTable
+              title={"Monthly Revenue"}
+              rows={
+                !monthlyEarnings.isLoading &&
+                monthlyEarnings.data &&
+                monthlyEarnings.data.length > 0 &&
+                [...monthlyEarnings.data].sort((a, b) => a.month - b.month) // Sorting by month
+              }
+              columnDefs={[
+                { title: "Month", display: row => months[row.month - 1] },
+                { title: "Number of Uses", display: row => row.number_of_uses },
+                { title: "Earnings", display: row => `-$${row.earnings.toFixed(2)}` },
+                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
+              ]}
+            />
+          )}
+        </Grid>
         <Grid item xs={12}>
           {user._id && (
             <GLTableV2

@@ -171,6 +171,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  monthly_code_usage_orders_c: async (req, res) => {
+    const { params, query } = req;
+    try {
+      const orders = await order_services.monthly_code_usage_orders_s(params, query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   affiliate_code_usage_orders_c: async (req, res) => {
     const { params, query } = req;
     try {
