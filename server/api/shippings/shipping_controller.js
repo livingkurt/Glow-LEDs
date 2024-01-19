@@ -53,9 +53,9 @@ export default {
   },
 
   create_return_label_shipping_c: async (req, res) => {
-    const { params } = req;
+    const { params, query } = req;
     try {
-      const shipping = await shipping_services.create_return_label_shipping_s(params);
+      const shipping = await shipping_services.create_return_label_shipping_s(params, query);
       if (shipping) {
         return res.status(200).send(shipping);
       }

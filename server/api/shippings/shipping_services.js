@@ -104,11 +104,15 @@ export default {
       }
     }
   },
-  create_return_label_shipping_s: async params => {
+  create_return_label_shipping_s: async (params, query) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
 
-      const { shipment } = await createShippingRates({ order, returnLabel: true });
+      const { shipment } = await createShippingRates({
+        order,
+        returnLabel: true,
+        returnToHeadquarters: query.return_to_headquarters,
+      });
 
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
       await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
