@@ -129,6 +129,15 @@ const OrderActionButtons = ({ order }) => {
           Buy Return Label
         </GLButton>
       )}
+      {!order.shipping.return_shipping_label && (
+        <GLButton
+          variant="secondary"
+          className="w-100per mv-5px"
+          onClick={() => dispatch(API.createReturnLabel({ orderId: order._id, returnToHeadquarters: true }))}
+        >
+          Buy Return Label To Headquarters
+        </GLButton>
+      )}
       {order.shipping.return_shipping_label && (
         <GLButton
           variant="secondary"

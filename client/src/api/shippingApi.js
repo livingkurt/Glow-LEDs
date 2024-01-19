@@ -73,9 +73,14 @@ export const createTracker = createAsyncThunk(
 );
 export const createReturnLabel = createAsyncThunk(
   "shipping/createReturnLabel",
-  async ({ orderId }, { dispatch, rejectWithValue }) => {
+  async ({ orderId, returnToHeadquarters }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/shipping/${orderId}/create_return_label`, {});
+      const { data } = await axios.put(
+        `/api/shipping/${orderId}/create_return_label?return_to_headquarters=${
+          returnToHeadquarters ? "true" : "false"
+        }`,
+        {}
+      );
       dispatch(showSuccess({ message: `Return Label Created` }));
       return data;
     } catch (error) {

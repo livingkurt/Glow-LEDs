@@ -147,8 +147,9 @@ export const createLabel = async ({ order, shipping_rate }) => {
   }
 };
 
-export const createShippingRates = async ({ order, returnLabel }) => {
+export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
+    console.log({ order, returnLabel, returnToHeadquarters });
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
     const parcel = determine_parcel(order.orderItems, parcels);
 
@@ -165,7 +166,7 @@ export const createShippingRates = async ({ order, returnLabel }) => {
       phone: config.PHONE_NUMBER,
     };
 
-    const returnAddress = {
+    const productionReturnAddress = {
       street1: config.PRODUCTION_ADDRESS,
       email: config.INFO_EMAIL,
       city: config.PRODUCTION_CITY,
@@ -175,6 +176,23 @@ export const createShippingRates = async ({ order, returnLabel }) => {
       company: "Glow LEDs",
       phone: config.PHONE_NUMBER,
     };
+
+    let returnAddress = productionReturnAddress;
+
+    const headquartersReturnAddress = {
+      street1: config.HEADQUARTERS_ADDRESS,
+      email: config.INFO_EMAIL,
+      city: config.HEADQUARTERS_CITY,
+      state: config.HEADQUARTERS_STATE,
+      zip: config.HEADQUARTERS_POSTAL_CODE,
+      country: config.HEADQUARTERS_COUNTRY,
+      company: "Glow LEDs",
+      phone: config.PHONE_NUMBER,
+    };
+
+    if (returnToHeadquarters === "true") {
+      returnAddress = headquartersReturnAddress;
+    }
 
     const shipment = await EasyPost.Shipment.create({
       to_address: returnLabel ? returnAddress : customerAddress,
