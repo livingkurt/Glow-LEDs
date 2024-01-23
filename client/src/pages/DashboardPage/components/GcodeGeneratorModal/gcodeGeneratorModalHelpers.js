@@ -6,7 +6,7 @@ M300 S4698.868 P200 ; D8
 M300 S5274.04 P200 ; E8
 M300 S6271.93 P200 ; G8
 
-G4 S20
+G4 S5
 
 G1 X105 Y195 Z1 F8000 ; Lower
 
@@ -36,7 +36,7 @@ export const parseGcode = text => {
 
   // Identify the start of the gcode (beginning)
   for (let i = 0; i < gcode.length; i++) {
-    if (gcode[i].includes("M142 S36 ; set heatbreak target temp")) {
+    if (gcode[i].includes("M83 ; use relative distances for extrusion")) {
       beginningBoolean = false;
       beginningArray = [...beginningArray, gcode[i]];
       middle_start = i + 1;
@@ -50,7 +50,7 @@ export const parseGcode = text => {
   let endingArray = [];
   let endingBoolean = true;
   for (let i = gcode.length - 1; i >= 0; i--) {
-    if (gcode[i].includes("; Filament-specific end gcode")) {
+    if (gcode[i].includes(";TYPE:Custom")) {
       endingArray = [gcode[i], ...endingArray];
       endingBoolean = false;
       middle_finished = i;
