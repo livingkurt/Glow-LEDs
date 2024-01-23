@@ -29,11 +29,18 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
     </Card>
   );
 
+  const determineTitle = () => {
+    if (user.affiliate.sponsorTeamCaptain) return "Sponsor Team Captain Metrics";
+    if (user.affiliate.sponsor) return "Sponsor Metrics";
+    if (user.affiliate.promoter) return "Promoter Metrics";
+    return "Affiliate Metrics"; // default title
+  };
+
   return (
     <div className="group_item w-100per">
       {user.is_affiliated && user?.affiliate && user?.affiliate?.public_code && (
         <div className="mb-20px ">
-          <h2 className="group_images">Affiliate Metrics</h2>
+          <h2 className="group_images">{determineTitle()}</h2>
           <Loading loading={yearlyEarnings.isLoading || currentMonthEarnings.isLoading}>
             {!currentMonthEarnings.isLoading && <EarningsCard title="Current Month" data={currentMonthEarnings.data} />}
             {!yearlyEarnings.isLoading && <EarningsCard title="Current Year" data={yearlyEarnings.data} />}

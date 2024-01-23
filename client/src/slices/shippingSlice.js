@@ -154,6 +154,7 @@ const shippingSlice = createSlice({
     resetRates: (state, { payload }) => {
       state.shippingRates = [];
       state.shipmentId = "";
+      state.label = "";
       state.selectedRateId = "";
     },
     openLinkLabelModal: (state, { payload }) => {

@@ -1,7 +1,14 @@
 import React from "react";
 import { Loading } from "../../../../shared/SharedComponents";
 import GLActionModal from "../../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { combineGcode, parseGcode, readFile, saveContinuousGcode } from "./gcodeGeneratorModalHelpers";
+import {
+  combineGcode,
+  parseGcode,
+  readFile,
+  saveContinuousGcode,
+  saveContinuousBgcode,
+  updateFilename,
+} from "./gcodeGeneratorModalHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFiles,
@@ -11,7 +18,7 @@ import {
   setNumberOfCopies,
   closeGcodeGeneratorModal,
 } from "../../dashboardSlice";
-import { Box, Button, Checkbox, FormControlLabel, Grid, List, Paper, TextField } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Grid, List, Paper, TextField, Typography } from "@mui/material";
 
 const GcodeGeneratorModal = () => {
   const dispatch = useDispatch();
@@ -38,6 +45,7 @@ const GcodeGeneratorModal = () => {
     const gcode = combineGcode({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval });
     if (numberOfCopies !== 0) {
       saveContinuousGcode({ filename, gcode, numberOfCopies });
+      // saveContinuousBgcode({ filename, gcode, numberOfCopies });
     }
     dispatch(set_loading(false));
   };
@@ -104,6 +112,14 @@ const GcodeGeneratorModal = () => {
             </List>
           ))}
         </Grid>
+        {gcodeNames.length > 0 && (
+          <Grid item xs={12}>
+            <Typography variant="h6">New Filename</Typography>
+            <Paper>
+              <Box p={3}>{updateFilename(gcodeNames.length > 0 ? gcodeNames[0] : "", numberOfCopies)}</Box>
+            </Paper>
+          </Grid>
+        )}
       </Grid>
     </GLActionModal>
   );

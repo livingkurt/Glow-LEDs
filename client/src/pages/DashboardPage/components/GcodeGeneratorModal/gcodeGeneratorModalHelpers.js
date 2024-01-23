@@ -6,7 +6,7 @@ M300 S4698.868 P200 ; D8
 M300 S5274.04 P200 ; E8
 M300 S6271.93 P200 ; G8
 
-G4 S20
+G4 S5
 
 G1 X105 Y195 Z1 F8000 ; Lower
 
@@ -33,35 +33,48 @@ export const parseGcode = text => {
   let beginningBoolean = true;
   let middle_start = 0;
   let middle_finished = 0;
-  for (let i = 0; i <= 100; i++) {
-    if (gcode[i] === "M83 ; use relative distances for extrusion") {
+
+  // Identify the start of the gcode (beginning)
+  for (let i = 0; i < gcode.length; i++) {
+    if (gcode[i].includes("M83 ; use relative distances for extrusion")) {
       beginningBoolean = false;
       beginningArray = [...beginningArray, gcode[i]];
       middle_start = i + 1;
+      break;
     } else if (beginningBoolean) {
       beginningArray = [...beginningArray, gcode[i]];
     }
   }
 
+  // Identify the end of the gcode (ending)
   let endingArray = [];
   let endingBoolean = true;
-  for (let i = gcode.length - 1; i >= gcode.length - 1000; i--) {
-    if (gcode[i] === "G4 ; wait") {
-      endingArray = [...endingArray, "G4 ; wait"];
+  for (let i = gcode.length - 1; i >= 0; i--) {
+    if (gcode[i].includes(";TYPE:Custom")) {
+      endingArray = [gcode[i], ...endingArray];
       endingBoolean = false;
       middle_finished = i;
+      break;
     } else if (endingBoolean) {
-      endingArray = [...endingArray, gcode[i]];
+      endingArray = [gcode[i], ...endingArray];
     }
   }
+
+  // Extract the middle section of the gcode
   const middle_array = gcode.slice(middle_start, middle_finished);
 
   return { beginningArray, middle_array, endingArray };
 };
 
-const updateFilename = (filename, numberOfCopies) => {
-  const removed = filename.slice(4);
-  const new_filename = `${numberOfCopies}x ${removed}`;
+export const updateFilename = (filename, numberOfCopies) => {
+  const mainFilename = filename.slice(4).split("_").slice(0, -1).join("_");
+
+  const time = filename?.split("_").pop().split(".")[0];
+  const newTime = parseInt(time) * numberOfCopies;
+  const hours = Math.floor(newTime / 60);
+  const minutes = newTime % 60;
+  const formattedTime = `${hours}h${minutes}m`;
+  const new_filename = `${numberOfCopies}x ${mainFilename}_${formattedTime}.gcode`;
 
   return new_filename;
 };
@@ -69,6 +82,18 @@ const updateFilename = (filename, numberOfCopies) => {
 export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
   const newFilename = updateFilename(filename, numberOfCopies);
   const blob = new Blob([gcode], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = window.URL.createObjectURL(blob);
+  link.download = newFilename;
+  link.click();
+};
+
+export const saveContinuousBgcode = ({ filename, gcode, numberOfCopies }) => {
+  // Convert Gcode to binary format (bgcode)
+  const bgcode = new TextEncoder().encode(gcode);
+
+  const newFilename = updateFilename(filename, numberOfCopies).replace(".gcode", ".bgcode");
+  const blob = new Blob([bgcode], { type: "application/octet-stream" });
   const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
   link.download = newFilename;

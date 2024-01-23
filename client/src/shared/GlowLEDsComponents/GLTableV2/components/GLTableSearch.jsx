@@ -12,6 +12,7 @@ const GLTableSearch = ({ placeholder, namespace, width, autoFocus, restrictSearc
       const inputElement = document.querySelector("#search-field");
       if (inputElement) {
         inputElement.focus();
+        inputElement.select(); // This line will select the text inside the input
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
