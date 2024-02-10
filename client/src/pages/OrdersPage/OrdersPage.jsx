@@ -78,8 +78,21 @@ const OrdersPage = () => {
         title: "Total",
         display: row => (
           <div>
-            {!row.isRefunded && (
+            {row?.payment?.charge?.amount / 100 - row.totalPrice?.toFixed(2) === 0 && (
               <div>
+                <div>${row.totalPrice?.toFixed(2)}</div>
+              </div>
+            )}
+            {row.totalPrice !== 0 && row?.payment?.charge?.amount / 100 - row.totalPrice?.toFixed(2) !== 0 && (
+              <div>
+                <div>
+                  <del style={{ color: "red" }}>
+                    <label style={{ color: "white" }}>
+                      <div>${(row?.payment?.charge?.amount / 100).toFixed(2)}</div>
+                    </label>
+                  </del>
+                </div>
+                <div>${(row.totalPrice - row?.payment?.charge?.amount / 100)?.toFixed(2)}</div>
                 <div>${row.totalPrice?.toFixed(2)}</div>
               </div>
             )}
