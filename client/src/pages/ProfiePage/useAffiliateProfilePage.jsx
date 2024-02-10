@@ -23,7 +23,7 @@ const useAffiliateProfilePage = () => {
       sponsorTeamCaptain: user?.affiliate?.sponsorTeamCaptain,
     },
     {
-      skip: !user?.affiliate.public_code?.promo_code || !year_start_date || !year_end_date,
+      skip: !user?.affiliate?.public_code?.promo_code || !year_start_date || !year_end_date,
     }
   );
 
@@ -36,7 +36,7 @@ const useAffiliateProfilePage = () => {
       sponsorTeamCaptain: user?.affiliate?.sponsorTeamCaptain,
     },
     {
-      skip: !user?.affiliate.public_code?.promo_code || !month_start_date || !month_end_date,
+      skip: !user?.affiliate?.public_code?.promo_code || !month_start_date || !month_end_date,
     }
   );
 
@@ -49,7 +49,7 @@ const useAffiliateProfilePage = () => {
       sponsorTeamCaptain: user?.affiliate?.sponsorTeamCaptain,
     },
     {
-      skip: !user?.affiliate.public_code?.promo_code || !year_start_date || !year_end_date,
+      skip: !user?.affiliate?.public_code?.promo_code || !year_start_date || !year_end_date,
     }
   );
 
@@ -69,7 +69,7 @@ const useAffiliateProfilePage = () => {
       {
         title: "Affiliate",
         display: paycheck =>
-          paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name,
+          paycheck.affiliate ? paycheck.affiliate?.artist_name : paycheck.team && paycheck.team.team_name,
       },
       {
         title: "Paid",
