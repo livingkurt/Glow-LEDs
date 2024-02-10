@@ -98,10 +98,9 @@ const MaintenancePage = () => {
                 height="560"
                 title="Diffuser Caps"
                 style={{ borderRadius: "20px" }}
-                src="https://www.youtube.com/embed/CaC-86DAql4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                src="https://www.youtube.com/embed/CaC-86DAql4"
                 frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="1"
+                allowfullscreen
               />
             </div>
           </div>
@@ -124,10 +123,9 @@ const MaintenancePage = () => {
                 height="560"
                 title="Glowstringz"
                 style={{ borderRadius: "20px" }}
-                src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                src="https://www.youtube.com/embed/TCArM88Ll1s"
                 frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="1"
+                allowfullscreen
               />
             </div>
           </div>
