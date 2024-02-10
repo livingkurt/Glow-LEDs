@@ -78,10 +78,9 @@ const FAQPage = () => {
                       height="560"
                       title="glowskinz"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/s49fiZPC5G0"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>
@@ -173,10 +172,9 @@ const FAQPage = () => {
                       height="560"
                       title="Using Diffuser Caps and Adapters"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/FJbKd0ClkFM?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/FJbKd0ClkFM"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>
@@ -217,10 +215,9 @@ const FAQPage = () => {
                       height="560"
                       title="	Orienting Your Diffuser Caps"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/vG4qgtrotkw"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>

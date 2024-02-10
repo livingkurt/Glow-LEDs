@@ -205,10 +205,9 @@ const ProductDetails = () => {
                     height="560"
                     title={video.title}
                     style={{ borderRadius: "20px" }}
-                    src={`https://www.youtube.com/embed/${video.video}?mute=1&showinfo=0&rel=0&autoplay=0&loop=1`}
+                    src={`https://www.youtube.com/embed/${video.video}`}
                     frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen="1"
+                    allowfullscreen
                   />
                 </div>
               </div>
@@ -217,41 +216,6 @@ const ProductDetails = () => {
         </GLTabPanel>
       )}
       <GLTabPanel value={tabIndex} index={4} style={{ borderRadius: "10px 0px 10px 10px" }}>
-        {!product.video ? (
-          <h2
-            style={{
-              textAlign: "center",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            Video Coming Soon!
-          </h2>
-        ) : (
-          <div className="jc-c column m-0px">
-            <h2
-              style={{
-                textAlign: "center",
-                width: "100%",
-                justifyContent: "center",
-              }}
-            >
-              Watch the Video Below to Learn More
-            </h2>
-            <div className="iframe-container">
-              <iframe
-                width="996"
-                height="560"
-                title={product.name}
-                style={{ borderRadius: "20px" }}
-                src={`https://www.youtube.com/embed/${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="1"
-              />
-            </div>
-          </div>
-        )}
         <div className="p-1rem">
           {/* {product.category === "glowskinz" && (
               <img
@@ -389,7 +353,40 @@ const ProductDetails = () => {
           </div>
         )}
       </GLTabPanel>
-      {/* Add more tab panels here */}
+      {!product.video ? (
+        <h2
+          style={{
+            textAlign: "center",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          Video Coming Soon!
+        </h2>
+      ) : (
+        <div className="jc-c column m-0px">
+          <h2
+            style={{
+              textAlign: "center",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          >
+            Watch the Video Below to Learn More
+          </h2>
+          <div className="iframe-container">
+            <iframe
+              width="996"
+              height="560"
+              title={product.name}
+              style={{ borderRadius: "20px" }}
+              src={`https://www.youtube.com/embed/${product.video}`}
+              frameborder="0"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
