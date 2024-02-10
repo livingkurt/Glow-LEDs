@@ -1,13 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./TutorialsGridPage.scss";
-import Grid from "@mui/material/Grid";
-import CardMedia from "@mui/material/CardMedia";
 import TutorialModal from "./component/TutorialModal";
 import { close_tutorial_modal, open_tutorial_modal } from "../../slices/tutorialSlice";
-import { Loading } from "../../shared/SharedComponents";
+import TutorialSection from "./component/TutorialSection";
+import { Grid } from "@mui/material";
 
 const TutorialsGridPage = () => {
   const dispatch = useDispatch();
@@ -51,6 +50,10 @@ const TutorialsGridPage = () => {
     navigate(newPath);
   };
 
+  const beginnerTutorials = tutorials?.filter(item => item.level === "beginner");
+  const intermediateTutorials = tutorials?.filter(item => item.level === "intermediate");
+  const advancedTutorials = tutorials?.filter(item => item.level === "advanced");
+
   return (
     <div>
       <h1 className="ta-c">Learn Gloving</h1>
@@ -58,34 +61,32 @@ const TutorialsGridPage = () => {
       <p>
         Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
         to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help you
-        improve your skills and create your own unique light shows. Get ready to leave your audiance speechless with
-        your mesmorizing moves!
+        improve your skills and create your own unique light shows. Get ready to leave your audience speechless with
+        your mesmerizing moves!
       </p>
-      <h2 className="ta-c">Beginner</h2>
-      <Loading loading={loading}>
-        <Grid container spacing={2}>
-          {tutorials?.map(item => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={item.video}>
-              <CardMedia
-                component="img"
-                image={`http://img.youtube.com/vi/${item.video}/hqdefault.jpg`}
-                alt={item.title}
-                loading="lazy"
-                className="br-20px"
-                onClick={() => handleOpen(item)}
-                style={{ cursor: "pointer" }}
-              />
-              <h3 style={{ color: "white" }} className="ta-c">
-                {item.title} by {item?.affiliate?.artist_name}
-              </h3>
-            </Grid>
-          ))}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TutorialSection
+            title="Beginner"
+            defaultOpen
+            tutorials={beginnerTutorials}
+            handleOpen={handleOpen}
+            loading={loading}
+          />
         </Grid>
-      </Loading>
-      <h2 className="ta-c">More to Come!</h2>
-      <p className="ta-c">
-        We will release videos on a regular basis, so be sure to check back often for new tutorials!
-      </p>
+        <Grid item xs={12}>
+          <TutorialSection
+            title="Intermediate"
+            tutorials={intermediateTutorials}
+            handleOpen={handleOpen}
+            loading={loading}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TutorialSection title="Advanced" tutorials={advancedTutorials} handleOpen={handleOpen} loading={loading} />
+        </Grid>
+      </Grid>
+
       <TutorialModal selectedTutorial={tutorial} handleClose={handleClose} open={tutorial_modal} />
     </div>
   );

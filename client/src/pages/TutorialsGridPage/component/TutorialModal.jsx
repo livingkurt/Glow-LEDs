@@ -13,7 +13,7 @@ const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
           height="400"
           src={`https://www.youtube.com/embed/${selectedTutorial?.video}`}
           title={selectedTutorial?.title}
-          frameBorder="0"
+          frameborder="0"
           style={{ borderRadius: "20px" }}
           allowFullScreen
         ></iframe>
