@@ -1,10 +1,8 @@
 import { affiliate_db } from "../affiliates";
-import { expense_db } from "../expenses";
 import { Order, order_db } from "../orders";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import {
-  categories,
   dates_in_year,
   determine_filter,
   determine_promoter_code_tier,
@@ -12,13 +10,16 @@ import {
   isEmail,
   month_dates,
   removeDuplicates,
-  subcategories,
   toCapitalize,
 } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { getCodeUsage, getMonthlyCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
-import { Cart } from "../carts";
-const scraper = require("table-scraper");
+import {
+  getCodeUsage,
+  getMonthlyCodeUsage,
+  normalizeOrderFilters,
+  normalizeOrderSearch,
+  scrapeTable,
+} from "./order_interactors";
 
 const today = new Date();
 
@@ -467,10 +468,10 @@ export default {
   },
   tax_rates_orders_s: async () => {
     try {
-      const updatedSalesTaxes = "http://www.salestaxinstitute.com/resources/rates";
       const result = {};
-
-      const tableData = await scraper.get(updatedSalesTaxes);
+      console.log("Tax Rates");
+      const tableData = await getTaxRates();
+      console.log({ tableData });
 
       const tempData = tableData[1];
       tempData.map(state => {

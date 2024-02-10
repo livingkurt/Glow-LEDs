@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { isEmail } from "../../utils/util";
-import order_db from "./order_db";
 import Order from "./order";
+import axios from "axios";
+import fetch from "node-fetch";
+const { JSDOM } = require("jsdom");
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -290,5 +292,54 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
     if (error instanceof Error) {
       throw new Error(error.message);
     }
+  }
+};
+
+export const scrapeTable = async url => {
+  const response = await axios.get(url);
+
+  if (response.status >= 400) {
+    throw new Error("The website requested returned an error!");
+  }
+
+  const body = response.data;
+  const dom = new JSDOM(body);
+  const tables = dom.window.document.querySelectorAll("table");
+
+  return Array.from(tables).map(table => {
+    const html = table.outerHTML;
+    return tabletojson.convert(html)[0];
+  });
+};
+
+export const getTaxRates = async url => {
+  try {
+    // Use axios to get the HTML content from the URL
+    const { data } = await axios.get(url);
+    // Use jsdom to parse the HTML content
+    const dom = new JSDOM(data);
+    const document = dom.window.document;
+
+    const taxRates = [];
+    const rows = document.querySelectorAll("table.chart tbody tr");
+
+    rows.forEach(row => {
+      const state = row.querySelector("td.state a")?.textContent.trim();
+      const stateRate = row.querySelector("td.state_rate p")?.textContent.trim();
+      const rangeOfLocalRates = row.querySelector("td.range_of_local_rates p")?.textContent.trim();
+      const localRatesApplyToUseTax = row.querySelector("td.local_rates_apply_to_use_tax p")?.textContent.trim();
+
+      taxRates.push({
+        state,
+        stateRate,
+        rangeOfLocalRates,
+        localRatesApplyToUseTax,
+      });
+    });
+
+    return taxRates;
+  } catch (error) {
+    console.error("Error fetching tax rates:", error);
+    throw error;
   }
 };
