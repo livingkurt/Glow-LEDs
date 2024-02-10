@@ -88,18 +88,6 @@ export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
   link.click();
 };
 
-export const saveContinuousBgcode = ({ filename, gcode, numberOfCopies }) => {
-  // Convert Gcode to binary format (bgcode)
-  const bgcode = new TextEncoder().encode(gcode);
-
-  const newFilename = updateFilename(filename, numberOfCopies).replace(".gcode", ".bgcode");
-  const blob = new Blob([bgcode], { type: "application/octet-stream" });
-  const link = document.createElement("a");
-  link.href = window.URL.createObjectURL(blob);
-  link.download = newFilename;
-  link.click();
-};
-
 export const combineGcode = ({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval }) => {
   let gcodeArray = [gcodeParts.file_1.beginning_1];
   const printRemovalGcode = removePrint(changeColorOnPrintRemoval);

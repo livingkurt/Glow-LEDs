@@ -45,7 +45,6 @@ const GcodeGeneratorModal = () => {
     const gcode = combineGcode({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval });
     if (numberOfCopies !== 0) {
       saveContinuousGcode({ filename, gcode, numberOfCopies });
-      // saveContinuousBgcode({ filename, gcode, numberOfCopies });
     }
     dispatch(set_loading(false));
   };
@@ -99,7 +98,7 @@ const GcodeGeneratorModal = () => {
         <Grid item xs={12}>
           <Button variant="contained" color="primary" component="label" fullWidth>
             Choose gcode files
-            <input type="file" id="file" hidden multiple onChange={e => showFiles(e)} />
+            <input type="file" id="file" hidden multiple accept=".gcode" onChange={e => showFiles(e)} />
           </Button>
         </Grid>
 
