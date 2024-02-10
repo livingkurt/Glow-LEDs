@@ -46,7 +46,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query, { dis
 export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profile }, { dispatch, rejectWithValue }) => {
   try {
     if (!user._id) {
-      const { data } = await axios.post("/api/users", user);
+      const { data } = await axios.post("/api/users", { ...user, email_subscription: true });
       dispatch(showSuccess({ message: `User Created` }));
       return { data, profile };
     } else {

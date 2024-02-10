@@ -42,6 +42,10 @@ const UsersPage = () => {
         display: user => (user.is_affiliated ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
       },
       {
+        title: "Subscribed",
+        display: user => (user.email_subscription ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+      },
+      {
         title: "Actions",
         display: user => (
           <div className="jc-b">
