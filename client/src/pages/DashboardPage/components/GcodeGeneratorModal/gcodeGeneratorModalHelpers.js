@@ -66,7 +66,7 @@ export const parseGcode = text => {
   return { beginningArray, middle_array, endingArray };
 };
 
-export const updateFilename = (filename, numberOfCopies) => {
+export const updateFilenameDepreciated = (filename, numberOfCopies) => {
   const mainFilename = filename.slice(4).split("_").slice(0, -1).join("_");
 
   const time = filename?.split("_").pop().split(".")[0];
@@ -79,8 +79,33 @@ export const updateFilename = (filename, numberOfCopies) => {
   return new_filename;
 };
 
-export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
-  const newFilename = updateFilename(filename, numberOfCopies);
+export const updateFilename = (filename, numberOfCopies) => {
+  // Extract the version and the rest of the name, assuming version is the first part
+  let [version, ...rest] = filename.split(" ");
+  // Joining the rest back together for further processing
+  let restJoined = rest.join(" ");
+  // Finding the position to start slicing from by locating the first underscore
+  // after "1_2 -" and removing it along with anything before it
+  let mainFilenameStart = restJoined.indexOf(" - ") + 3; // Plus 3 to skip " - "
+  let mainFilename = restJoined.substring(mainFilenameStart).split("_").slice(0, -1).join("_");
+
+  const time = filename.split("_").pop().split(".")[0];
+  const newTime = parseInt(time) * numberOfCopies;
+  const hours = Math.floor(newTime / 60);
+  const minutes = newTime % 60;
+  const formattedTime = `${hours}h${minutes}m`;
+
+  // Constructing the new filename with numberOfCopies right after the version
+  const new_filename = `${version} ${numberOfCopies}x - ${mainFilename}_${formattedTime}.gcode`;
+
+  return new_filename;
+};
+
+export const saveContinuousGcode = ({ filename, gcode, numberOfCopies, depreciatedFilename }) => {
+  let newFilename = updateFilename(filename, numberOfCopies);
+  if (depreciatedFilename) {
+    newFilename = updateFilenameDepreciated(filename, numberOfCopies);
+  }
   const blob = new Blob([gcode], { type: "text/plain" });
   const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);

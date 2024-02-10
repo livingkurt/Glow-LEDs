@@ -24,8 +24,16 @@ const GcodeGeneratorModal = () => {
   const dispatch = useDispatch();
   const dashboardPage = useSelector(state => state.dashboards);
 
-  const { loading, gcodeContinuousModal, numberOfCopies, gcodeNames, gcodeParts, filename, changeColorOnPrintRemoval } =
-    dashboardPage;
+  const {
+    loading,
+    gcodeContinuousModal,
+    numberOfCopies,
+    gcodeNames,
+    gcodeParts,
+    filename,
+    changeColorOnPrintRemoval,
+    depreciatedFilename,
+  } = dashboardPage;
 
   const showFiles = async e => {
     const allFiles = e.target.files;
@@ -44,7 +52,7 @@ const GcodeGeneratorModal = () => {
     dispatch(set_loading(true));
     const gcode = combineGcode({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval });
     if (numberOfCopies !== 0) {
-      saveContinuousGcode({ filename, gcode, numberOfCopies });
+      saveContinuousGcode({ filename, gcode, numberOfCopies, depreciatedFilename });
     }
     dispatch(set_loading(false));
   };
@@ -55,13 +63,13 @@ const GcodeGeneratorModal = () => {
       onConfirm={() => createNewGcode()}
       onCancel={() => dispatch(closeGcodeGeneratorModal())}
       onAction={() => dispatch(resetGcodeGenerator())}
-      title={"Gcode Generater"}
+      title={"Gcode Generator"}
       confirmDisabled={gcodeNames.length === 0}
       confirmLabel={"Generate"}
       confirmColor="primary"
       cancelLabel={"Cancel"}
       cancelColor="secondary"
-      actionLabel={"Reset Rates"}
+      actionLabel={"Reset Generator"}
       actionColor="secondary"
       disableEscapeKeyDown
     >
@@ -93,6 +101,21 @@ const GcodeGeneratorModal = () => {
               />
             }
             label={"Change Color on Print Removal"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name={"deprecieatedFilename"}
+                size="large"
+                onChange={e => {
+                  dispatch(setChangeColorOnPrintRemoval(e.target.checked));
+                }}
+                checked={changeColorOnPrintRemoval}
+              />
+            }
+            label={"Depreciated Filename"}
           />
         </Grid>
         <Grid item xs={12}>
