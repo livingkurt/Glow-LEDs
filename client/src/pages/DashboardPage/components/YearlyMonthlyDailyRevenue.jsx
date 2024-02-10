@@ -27,7 +27,6 @@ const YearlyMonthlyDailyRevenue = () => {
   const yearly_paychecks = API.useGetYearlyPaycheckOrdersQuery();
   const expensesByCategory = API.useGetExpensesByCategoryQuery({ start_date, end_date });
   let combinedYearlyData = [];
-  console.log({ monthly_revenue });
 
   if (yearly_revenue.isSuccess && yearly_expenses.isSuccess && yearly_paychecks.isSuccess) {
     combinedYearlyData = combineYearlyRevenueAndExpenses(
@@ -68,17 +67,26 @@ const YearlyMonthlyDailyRevenue = () => {
               title={"Yearly Revenue and Expenses"}
               rows={combinedYearlyData}
               columnDefs={[
-                { title: "Year", display: "year" },
-                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                { title: "Year", display: "year", sortable: true },
+                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}`, sortable: true },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}`, sortable: true },
                 {
                   title: "Profit",
                   display: row => `$${(row.revenue - (row.expense + row.paycheck))?.toFixed(2)}`,
                   conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
+                  sortable: true,
                 },
-                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
-                { title: "Revenue Monthly Average", display: row => `$${row.revenueMonthlyAverage?.toFixed(2)}` },
-                { title: "Expense Monthly Average", display: row => `$${row.expenseMonthlyAverage?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}`, sortable: true },
+                {
+                  title: "Revenue Monthly Average",
+                  display: row => `$${row.revenueMonthlyAverage?.toFixed(2)}`,
+                  sortable: true,
+                },
+                {
+                  title: "Expense Monthly Average",
+                  display: row => `$${row.expenseMonthlyAverage?.toFixed(2)}`,
+                  sortable: true,
+                },
               ]}
             />
           )}
@@ -91,17 +99,22 @@ const YearlyMonthlyDailyRevenue = () => {
               title={"Monthly Revenue"}
               rows={combinedMonthlyData}
               columnDefs={[
-                { title: "Month", display: row => months[row.month - 1] },
-                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                { title: "Month", display: row => months[row.month - 1], sortable: true },
+                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}`, sortable: true },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}`, sortable: true },
                 {
                   title: "Profit",
                   display: row => `$${(row.revenue - (row.expense + row.paycheck))?.toFixed(2)}`,
                   conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
+                  sortable: true,
                 },
-                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
-                { title: "Daily Average", display: row => `$${row.revenueDailyAverage?.toFixed(2)}` },
-                { title: "Expense Daily Average", display: row => `$${row.expenseDailyAverage?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}`, sortable: true },
+                { title: "Daily Average", display: row => `$${row.revenueDailyAverage?.toFixed(2)}`, sortable: true },
+                {
+                  title: "Expense Daily Average",
+                  display: row => `$${row.expenseDailyAverage?.toFixed(2)}`,
+                  sortable: true,
+                },
               ]}
             />
           )}
@@ -114,17 +127,22 @@ const YearlyMonthlyDailyRevenue = () => {
               title={"Daily Revenue"}
               rows={combinedDailyData}
               columnDefs={[
-                { title: "Day", display: row => format_date(row.date) },
-                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
-                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}` },
+                { title: "Day", display: row => format_date(row.date), sortable: true },
+                { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}`, sortable: true },
+                { title: "Expenses", display: row => `-$${(row.expense + row.paycheck)?.toFixed(2)}`, sortable: true },
                 {
                   title: "Profit",
                   display: row => `$${(row.revenue - (row.expense + row.paycheck))?.toFixed(2)}`,
                   conditionalColor: row => conditionalColor(row.revenue, row.expense + row.paycheck),
+                  sortable: true,
                 },
-                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}` },
-                { title: "Hourly Average", display: row => `$${row.revenueHourlyAverage?.toFixed(2)}` },
-                { title: "Expense Hourly Average", display: row => `$${row.expenseHourlyAverage?.toFixed(2)}` },
+                { title: "Payouts", display: row => `-$${row.paycheck?.toFixed(2)}`, sortable: true },
+                { title: "Hourly Average", display: row => `$${row.revenueHourlyAverage?.toFixed(2)}`, sortable: true },
+                {
+                  title: "Expense Hourly Average",
+                  display: row => `$${row.expenseHourlyAverage?.toFixed(2)}`,
+                  sortable: true,
+                },
               ]}
             />
           )}
@@ -136,9 +154,10 @@ const YearlyMonthlyDailyRevenue = () => {
             <GLDisplayTable
               title={"IRS Category Expenses"}
               rows={combinedCategoryData}
+              defaultSorting={[1, "desc"]}
               columnDefs={[
-                { title: "Category", display: "category" },
-                { title: "Amount", display: row => `$${row.amount.toFixed(2)}` },
+                { title: "Category", display: "category", sortable: true },
+                { title: "Amount", display: row => `$${row.amount.toFixed(2)}`, sortable: true },
               ]}
             />
           )}
