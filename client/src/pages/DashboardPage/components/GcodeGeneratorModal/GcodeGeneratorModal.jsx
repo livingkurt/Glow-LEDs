@@ -3,11 +3,10 @@ import { Loading } from "../../../../shared/SharedComponents";
 import GLActionModal from "../../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import {
   combineGcode,
+  determineFilename,
   parseGcode,
   readFile,
   saveContinuousGcode,
-  saveContinuousBgcode,
-  updateFilename,
 } from "./gcodeGeneratorModalHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,6 +16,8 @@ import {
   set_loading,
   setNumberOfCopies,
   closeGcodeGeneratorModal,
+  setCustomFilename,
+  setHoldDuration,
 } from "../../dashboardSlice";
 import { Box, Button, Checkbox, FormControlLabel, Grid, List, Paper, TextField, Typography } from "@mui/material";
 
@@ -33,6 +34,8 @@ const GcodeGeneratorModal = () => {
     filename,
     changeColorOnPrintRemoval,
     depreciatedFilename,
+    customFilename,
+    holdDuration,
   } = dashboardPage;
 
   const showFiles = async e => {
@@ -50,9 +53,10 @@ const GcodeGeneratorModal = () => {
 
   const createNewGcode = async () => {
     dispatch(set_loading(true));
-    const gcode = combineGcode({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval });
+    const gcode = combineGcode({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval, holdDuration });
     if (numberOfCopies !== 0) {
-      saveContinuousGcode({ filename, gcode, numberOfCopies, depreciatedFilename });
+      console.log({ customFilename });
+      saveContinuousGcode({ filename, gcode, numberOfCopies, depreciatedFilename, customFilename });
     }
     dispatch(set_loading(false));
   };
@@ -76,6 +80,31 @@ const GcodeGeneratorModal = () => {
       <Loading loading={loading} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
+          <TextField
+            size="small"
+            value={customFilename}
+            fullWidth
+            margin="normal"
+            name="filename"
+            label="New Filename (Optional)"
+            variant="outlined"
+            onChange={e => dispatch(setCustomFilename(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            size="small"
+            value={holdDuration}
+            fullWidth
+            type="number"
+            margin="normal"
+            name="holdDuration"
+            label="Hold Duration (Between Prints) in Seconds"
+            variant="outlined"
+            onChange={e => dispatch(setHoldDuration(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={6}>
           <TextField
             size="small"
             value={numberOfCopies}
@@ -104,21 +133,6 @@ const GcodeGeneratorModal = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name={"deprecieatedFilename"}
-                size="large"
-                onChange={e => {
-                  dispatch(setChangeColorOnPrintRemoval(e.target.checked));
-                }}
-                checked={changeColorOnPrintRemoval}
-              />
-            }
-            label={"Depreciated Filename"}
-          />
-        </Grid>
-        <Grid item xs={12}>
           <Button variant="contained" color="primary" component="label" fullWidth>
             Choose gcode files
             <input type="file" id="file" hidden multiple accept=".gcode" onChange={e => showFiles(e)} />
@@ -138,7 +152,9 @@ const GcodeGeneratorModal = () => {
           <Grid item xs={12}>
             <Typography variant="h6">New Filename</Typography>
             <Paper>
-              <Box p={3}>{updateFilename(gcodeNames.length > 0 ? gcodeNames[0] : "", numberOfCopies)}</Box>
+              <Box p={3}>
+                {determineFilename(gcodeNames.length > 0 ? gcodeNames[0] : "", numberOfCopies, customFilename)}
+              </Box>
             </Paper>
           </Grid>
         )}

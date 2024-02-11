@@ -27,7 +27,9 @@ const dashboardPage = createSlice({
     loading: false,
     changeColorOnPrintRemoval: false,
     gcodeContinuousModal: false,
+    customFilename: "",
     depreciatedFilename: false,
+    holdDuration: 5,
   },
   reducers: {
     set_year: (state, { payload }) => {
@@ -57,11 +59,17 @@ const dashboardPage = createSlice({
     setNumberOfCopies: (state, { payload }) => {
       state.numberOfCopies = payload;
     },
+    setCustomFilename: (state, { payload }) => {
+      state.customFilename = payload;
+    },
     setChangeColorOnPrintRemoval: (state, { payload }) => {
       state.changeColorOnPrintRemoval = payload;
     },
     setDeprecieatedFilename: (state, { payload }) => {
       state.deprecieatedFilename = payload;
+    },
+    setHoldDuration: (state, { payload }) => {
+      state.holdDuration = payload;
     },
     openGcodeContinuousModal: (state, { payload }) => {
       state.gcodeContinuousModal = true;
@@ -113,5 +121,7 @@ export const {
   handleFiles,
   closeGcodeGeneratorModal,
   setDeprecieatedFilename,
+  setCustomFilename,
+  setHoldDuration,
 } = dashboardPage.actions;
 export default dashboardPage.reducer;
