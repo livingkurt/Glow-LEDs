@@ -46,28 +46,36 @@ export const parseGcode = text => {
   return { beginningArray, middle_array, endingArray };
 };
 
-export const determineFilename = (filename, numberOfCopies, customFilename = "") => {
-  // Extract the version and the rest of the name, assuming version is the first part
-  const [version, ...rest] = filename.split(" ");
-  const restJoined = rest.join(" ");
-  const mainFilenameStart = restJoined.indexOf(" - ") + 3; // Plus 3 to skip " - "
-
-  let mainFilename;
-  if (customFilename) {
-    const detailPart = filename.split("0.").slice(1).join("0.");
-    mainFilename = `${customFilename}_0.${detailPart}`;
-  } else {
-    mainFilename = restJoined.substring(mainFilenameStart).split("_").slice(0, -1).join("_");
-  }
-
+export const calculateFormattedTime = (filename, numberOfCopies) => {
   const time = filename.split("_").pop().split(".")[0];
-  const newTime = parseInt(time, 10) * numberOfCopies;
+  const newTime = parseInt(time) * numberOfCopies;
   const hours = Math.floor(newTime / 60);
   const minutes = newTime % 60;
-  const formattedTime = `${hours}h${minutes}m`;
+  return `${hours}h${minutes}m`;
+};
 
-  // Constructing the new filename with numberOfCopies right after the version
-  return `${version} ${numberOfCopies}x ${mainFilename}_${formattedTime}.gcode`;
+export const determineFilename = (filename, numberOfCopies, customFilename = "") => {
+  const formattedTime = calculateFormattedTime(filename, numberOfCopies);
+  let [version, ...rest] = filename.split(" ");
+  let mainPart, extension;
+
+  if (customFilename && customFilename.length > 0) {
+    // For customFilename, extract base without time, appending customFilename and new time
+    const baseParts = filename.split("_");
+    extension = baseParts.pop().split(".").pop(); // Extracts the extension
+    baseParts.pop(); // Remove the old time part
+    mainPart = `${customFilename}_${baseParts.slice(1).join("_")}`; // Reconstructs mainPart with customFilename
+  } else {
+    // No customFilename provided; extract main part and replace time
+    let restJoined = rest.join(" ");
+    let mainFilenameStart = restJoined.indexOf(" - ") + 3;
+    mainPart = restJoined.substring(mainFilenameStart).split("_").slice(0, -1).join("_");
+    extension = filename.split(".").pop(); // Extracts the extension from the original filename
+  }
+
+  // Constructs the new filename without duplicating the extension or incorrectly appending the time
+  const newFilename = `${version} ${numberOfCopies}x ${mainPart}_${formattedTime}.${extension}`;
+  return newFilename;
 };
 
 export const saveContinuousGcode = ({ filename, gcode, numberOfCopies, customFilename }) => {
