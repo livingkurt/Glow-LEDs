@@ -83,11 +83,23 @@ const GcodeGeneratorModal = () => {
       <Loading loading={loading} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
+          <Typography variant="h6" fontSize={16}>
+            Step 1: Select any number of gcode files
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
           <Button variant="contained" color="primary" component="label" fullWidth>
             Choose gcode files
             <input type="file" id="file" hidden multiple accept=".gcode" onChange={e => showFiles(e)} />
           </Button>
         </Grid>
+        {numberOfFiles > 0 && (
+          <Grid item xs={12}>
+            <Typography variant="h6" fontSize={16}>
+              Step 2: Add Modifications
+            </Typography>
+          </Grid>
+        )}
         {numberOfFiles > 0 && (
           <Grid item xs={12}>
             <TextField
@@ -175,7 +187,9 @@ const GcodeGeneratorModal = () => {
         </Grid>
         {gcodeNames.length > 0 && (
           <Grid item xs={12}>
-            <Typography variant="h6">New Filename</Typography>
+            <Typography variant="h6" fontSize={16}>
+              New Filename
+            </Typography>
             <Paper>
               <Box p={3}>
                 {determineFilename(gcodeNames.length > 0 ? gcodeNames[0] : "", numberOfCopies, customFilename)}
