@@ -1,11 +1,9 @@
 # Pull Request Tasks and Guidelines
 
-### Description
-
-<!--  summary of the change and any relevant motivation and context -->
+Jira issue relating to changes [GL-](https://glowleds.atlassian.net/browse/GL-)
 
 ---
 
-### Author Checklist:
+### Description
 
-- [ ] Jira issue relating to changes [GL-](https://glowleds.atlassian.net/browse/GL-)
+<!--  summary of the change and any relevant motivation and context -->
