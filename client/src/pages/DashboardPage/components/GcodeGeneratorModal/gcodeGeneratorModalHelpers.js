@@ -107,41 +107,27 @@ G1 X105 Y30 Z1 F8000 ; Shake it Out
 ${changeColorOnPrintRemoval ? "M600; Change Color" : ""}
 `.split("\n");
 
-export const combineGcode = ({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval, holdDuration }) => {
-  let gcodeArray = [gcodeParts.file_1.beginning_1];
-  const printRemovalGcode = removePrint(changeColorOnPrintRemoval, holdDuration);
-  if (numberOfCopies === 1) {
-    gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode, gcodeParts.file_2.ending_2];
-  } else if (numberOfCopies === 2) {
-    gcodeArray = [
-      ...gcodeArray,
-      gcodeParts.file_1.middle_1,
-      printRemovalGcode,
-      gcodeParts.file_2.middle_2,
-      printRemovalGcode,
-      gcodeParts.file_2.ending_2,
-    ];
-  } else if (numberOfCopies > 2) {
-    gcodeArray = [
-      ...gcodeArray,
-      gcodeParts.file_1.middle_1,
-      printRemovalGcode,
-      gcodeParts.file_2.middle_2,
-      printRemovalGcode,
-    ];
-    for (let i = 2; i < numberOfCopies; i++) {
-      if (i % 2 === 0) {
-        gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode];
-      } else if (i % 2 === 1) {
-        gcodeArray = [...gcodeArray, gcodeParts.file_2.middle_2, printRemovalGcode];
+export const combineGcode = ({ gcodeParts, numberOfCycles, changeColorOnPrintRemoval, holdDuration }) => {
+  let gcodeArray = [];
+
+  for (let copyIndex = 0; copyIndex < numberOfCycles; copyIndex++) {
+    Object.keys(gcodeParts).forEach((partKey, index) => {
+      const part = gcodeParts[partKey];
+      if (index === 0 && copyIndex === 0) {
+        // Add beginning only once at the start
+        gcodeArray.push(...part.beginning);
       }
-    }
-    gcodeArray = [...gcodeArray, gcodeParts.file_2.ending_2];
+      gcodeArray.push(...part.middle);
+      if (changeColorOnPrintRemoval || holdDuration > 0) {
+        const printRemovalGcode = removePrint(changeColorOnPrintRemoval, holdDuration);
+        gcodeArray.push(...printRemovalGcode);
+      }
+      if (index === Object.keys(gcodeParts).length - 1 && copyIndex === numberOfCycles - 1) {
+        // Add ending only once at the end
+        gcodeArray.push(...part.ending);
+      }
+    });
   }
 
-  const array = gcodeArray.map(item => {
-    return item.join("\n");
-  });
-  const gcode = array.join("\n");
-  return gcode;
+  return gcodeArray.join("\n");
 };
