@@ -20,7 +20,11 @@ import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
 import { format_date } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
-import { Delete, Edit, FileCopy, Landscape, Money } from "@mui/icons-material";
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+import FileCopy from "@mui/icons-material/FileCopy";
+import Landscape from "@mui/icons-material/Landscape";
+import Money from "@mui/icons-material/Money";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);

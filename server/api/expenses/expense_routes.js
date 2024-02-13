@@ -10,7 +10,6 @@ router
   .route("/")
   .get(isAuth, isAdmin, expense_controller.findAll_expenses_c)
   .post(expense_controller.create_expenses_c);
-router.route("/airtable").post(expense_controller.get_airtable_expenses_c);
 router.route("/get_range_expenses").get(expense_controller.get_range_expenses_expenses_c);
 router.route("/get_daily_expenses_expenses").get(expense_controller.get_daily_expenses_expenses_c);
 router.route("/get_monthly_expenses_expenses").get(expense_controller.get_monthly_expenses_expenses_c);

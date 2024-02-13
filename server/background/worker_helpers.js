@@ -115,27 +115,3 @@ export const save_paycheck_to_expenses = async data => {
     }
   }
 };
-// export const save_paycheck_to_expenses = async (data) => {
-//   try {
-//     const response = await axios.post(
-//       `https://api.airtable.com/v0/${baseId}/${tableIdOrName}`,
-//       {
-//         records: [
-//           {
-//             fields: data
-//           }
-//         ]
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${config.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
-//           "Content-Type": "application/json"
-//         }
-//       }
-//     );
-//    } catch (error) {
-//   if (error instanceof Error) {
-//     throw new Error(error.message);
-//   }
-// }
-// };
