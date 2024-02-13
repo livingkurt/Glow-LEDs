@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { Grow, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Popper as MuiPopper } from "@mui/material";
@@ -78,7 +77,7 @@ const GLPopper = ({
         anchorEl={anchorEl}
         placement={placement}
         disablePortal={false}
-        className={classNames(classes.popper, popperClasses)}
+        className={`${classes.popper} ${popperClasses ? popperClasses : ""}`}
         transition={transition}
         modifiers={[
           {
@@ -96,7 +95,7 @@ const GLPopper = ({
       >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} timeout={350} style={{ transformOrigin: "0 0 0" }}>
-            <Paper className={classNames(classes.paper, paperClasses)}>{children}</Paper>
+            <Paper className={`${classes.paper} ${paperClasses ? paperClasses : ""}`}>{children}</Paper>
           </Grow>
         )}
       </MuiPopper>

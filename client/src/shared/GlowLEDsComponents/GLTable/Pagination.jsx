@@ -1,12 +1,11 @@
 import React from "react";
-import classnames from "classnames";
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
-import { GLButton } from "..";
 import { IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
+
 const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
-  const { width, height } = userWindowDimensions();
+  const { width } = userWindowDimensions();
 
   const paginationRange = usePagination({
     currentPage: parseInt(currentPage),
@@ -20,22 +19,12 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
     return null;
   }
 
-  // const onNext = () => {
-  // 	onPageChange(currentPage + 1);
-  // };
-
-  // const onPrevious = () => {
-  // 	onPageChange(currentPage - 1);
-  // };
-
   let lastPage = paginationRange[paginationRange.length - 1];
-  //
+
   return (
-    <ul className={classnames("pagination-container", { [className]: className })}>
+    <ul className={`pagination-container ${className ? className : ""}`}>
       <li
-        className={classnames("pagination-item", {
-          disabled: currentPage === 1,
-        })}
+        className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
         <IconButton variant="contained" className="w-40px">
@@ -55,9 +44,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
 
           return (
             <li
-              className={classnames("pagination-item", {
-                page: pageNumber === currentPage,
-              })}
+              className={`pagination-item ${pageNumber === currentPage ? "page" : ""}`}
               key={pageNumber}
               onClick={e => onPageChange(e, pageNumber)}
             >
@@ -68,9 +55,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
           );
         })}
       <li
-        className={classnames("pagination-item", {
-          disabled: currentPage === lastPage,
-        })}
+        className={`pagination-item ${currentPage === lastPage ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >
         <IconButton variant="contained" className="w-40px">
