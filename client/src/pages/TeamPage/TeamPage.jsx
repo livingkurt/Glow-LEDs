@@ -91,10 +91,9 @@ const TeamPage = () => {
                   height="560"
                   title="Team Video"
                   style={{ borderRadius: "20px" }}
-                  src={`https://www.youtube.com/embed/${team.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
+                  src={`https://www.youtube.com/embed/${team.video}`}
                   frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen="1"
+                  allowfullscreen
                 />
               </div>
             </div>

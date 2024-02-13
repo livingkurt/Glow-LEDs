@@ -125,10 +125,9 @@ const ManualPage = () => {
                 height="560"
                 title={video.title}
                 style={{ borderRadius: "20px" }}
-                src={`https://www.youtube.com/embed/${video.video}?mute=1&showinfo=0&rel=0&autoplay=0&loop=1`}
+                src={`https://www.youtube.com/embed/${video.video}`}
                 frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="1"
+                allowfullscreen
               />
             </div>
           </div>

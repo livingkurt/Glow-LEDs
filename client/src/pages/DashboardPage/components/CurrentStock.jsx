@@ -15,6 +15,7 @@ const CurrentStock = () => {
       <GLDisplayTable
         title={"Current Gloves Stock"}
         loading={currentStock.isLoading && currentStock.data}
+        defaultSorting={[0, "desc"]}
         onEdit={async value => {
           dispatch(API.saveProduct(value));
           currentStock.refetch();
@@ -23,12 +24,15 @@ const CurrentStock = () => {
           !currentStock.isLoading &&
           currentStock.data?.filter(row => row.subcategory === "gloves" || row.category === "gloves")
         }
+        defaultSortColumn={"Name"}
+        defaultSort={"desc"}
         columnDefs={[
-          { title: "Name", display: "name" },
+          { title: "Name", display: "name", sortable: true },
           {
             title: "Count in Stock",
             display: row => row?.count_in_stock,
             attribute: "count_in_stock",
+            sortable: true,
           },
         ]}
       />
@@ -37,6 +41,7 @@ const CurrentStock = () => {
         title={"Current Battery Stock"}
         loading={currentStock.isLoading && currentStock.data}
         rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
+        defaultSorting={[0, "desc"]}
         onEdit={async value => {
           dispatch(API.saveProduct(value));
           if (value.option_products.length > 0) {
@@ -58,9 +63,11 @@ const CurrentStock = () => {
 
           currentStock.refetch();
         }}
+        defaultSortColumn={"Name"}
+        defaultSort={"desc"}
         columnDefs={[
-          { title: "Name", display: "name" },
-          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock" },
+          { title: "Name", display: "name", sortable: true },
+          { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock", sortable: true },
         ]}
       />
     </div>

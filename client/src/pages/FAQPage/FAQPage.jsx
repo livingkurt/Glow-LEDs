@@ -78,10 +78,9 @@ const FAQPage = () => {
                       height="560"
                       title="glowskinz"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/s49fiZPC5G0"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>
@@ -139,15 +138,25 @@ const FAQPage = () => {
                     Spectra, OSM2, Oracles, Supernova, Trinity,
                   </pre>
                 </div>
+                <div className="row ">
+                  <h4 className="title_font mr-1rem mt-26px">Duo:</h4>
+                  <pre className="paragraph_font">Duos</pre>
+                </div>
+                <div className="row ">
+                  <h4 className="title_font mr-1rem mt-26px">Synergys:</h4>
+                  <pre className="paragraph_font">Synergy's, Aurora Nano V2s</pre>
+                </div>
                 <div className="ai-c">
                   <h4 className="title_font mr-1rem">Apollo: </h4>
                   <pre className="paragraph_font">Apollos</pre>
                 </div>
                 <div className="ai-c">
                   <h4 className="title_font mr-1rem"> Nano: </h4>
-                  <pre className="paragraph_font">
-                    Atoms, Aurora Nanos, Ions, QT 6 Mode, Ubers, Chroma Evos, Spectra Evos
-                  </pre>
+                  <pre className="paragraph_font">Atoms, Aurora Nanos, Ions, QT 6 Mode, Ubers</pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem"> EVO: </h4>
+                  <pre className="paragraph_font">Chroma Evos, Spectra Evos</pre>
                 </div>
                 <div className="ai-c">
                   <h4 className="title_font mr-1rem">Inova: </h4>
@@ -173,10 +182,9 @@ const FAQPage = () => {
                       height="560"
                       title="Using Diffuser Caps and Adapters"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/FJbKd0ClkFM?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/FJbKd0ClkFM"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>
@@ -217,10 +225,9 @@ const FAQPage = () => {
                       height="560"
                       title="	Orienting Your Diffuser Caps"
                       style={{ borderRadius: "20px" }}
-                      src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      src="https://www.youtube.com/embed/vG4qgtrotkw"
                       frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="1"
+                      allowfullscreen
                     />
                   </div>
                 </div>

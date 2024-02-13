@@ -228,10 +228,9 @@ const SponsorPage = () => {
                   height="560"
                   title="sponsor"
                   style={{ borderRadius: "20px" }}
-                  src={`https://www.youtube.com/embed/${affiliate.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
+                  src={`https://www.youtube.com/embed/${affiliate.video}`}
                   frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen="1"
+                  allowfullscreen
                 />
               </div>
             </div>

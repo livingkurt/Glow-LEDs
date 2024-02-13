@@ -1,5 +1,4 @@
 /* eslint-disable max-lines-per-function */
-
 import { createSlice } from "@reduxjs/toolkit";
 import { formatDate } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { getMonthStartEndDates, months } from "./dashboardHelpers";
@@ -20,6 +19,7 @@ const dashboardPage = createSlice({
     end_date: end_date,
     tabIndex: 0,
     numberOfCopies: 12,
+    numberOfCycles: 6,
     gcodeNames: [],
     gcodeParts: {},
     filename: "",
@@ -27,6 +27,10 @@ const dashboardPage = createSlice({
     loading: false,
     changeColorOnPrintRemoval: false,
     gcodeContinuousModal: false,
+    customFilename: "",
+    depreciatedFilename: false,
+    holdDuration: 5,
+    numberOfFiles: 0,
   },
   reducers: {
     set_year: (state, { payload }) => {
@@ -55,9 +59,23 @@ const dashboardPage = createSlice({
     },
     setNumberOfCopies: (state, { payload }) => {
       state.numberOfCopies = payload;
+      state.numberOfCycles = payload / state.numberOfFiles;
+    },
+    setNumberOfCycles: (state, { payload }) => {
+      state.numberOfCycles = payload;
+      state.numberOfCopies = payload * state.numberOfFiles;
+    },
+    setCustomFilename: (state, { payload }) => {
+      state.customFilename = payload;
     },
     setChangeColorOnPrintRemoval: (state, { payload }) => {
       state.changeColorOnPrintRemoval = payload;
+    },
+    setDeprecieatedFilename: (state, { payload }) => {
+      state.deprecieatedFilename = payload;
+    },
+    setHoldDuration: (state, { payload }) => {
+      state.holdDuration = payload;
     },
     openGcodeContinuousModal: (state, { payload }) => {
       state.gcodeContinuousModal = true;
@@ -66,22 +84,25 @@ const dashboardPage = createSlice({
       state.filename = "";
       state.gcodeNames = [];
       state.gcodeParts = {};
+      state.numberOfFiles = 0;
     },
     closeGcodeGeneratorModal: (state, { payload }) => {
       state.gcodeContinuousModal = false;
       state.filename = "";
       state.gcodeNames = [];
       state.gcodeParts = {};
+      state.numberOfFiles = 0;
     },
     handleFiles: (state, { payload }) => {
       const { files } = payload;
+      state.numberOfFiles = files.length;
       for (let index = 0; index < files.length; index++) {
         const num = index + 1;
         const { beginningArray, middle_array, endingArray } = files[index];
         state.gcodeParts["file_" + num] = {
-          ["beginning_" + num]: beginningArray,
-          ["middle_" + num]: middle_array,
-          ["ending_" + num]: endingArray,
+          "beginning": beginningArray,
+          "middle": middle_array,
+          "ending": endingArray,
         };
         state.filename = document.getElementById("file").files[0].name;
         state.gcodeNames.push(document.getElementById("file").files[index].name);
@@ -108,5 +129,9 @@ export const {
   resetGcodeGenerator,
   handleFiles,
   closeGcodeGeneratorModal,
+  setDeprecieatedFilename,
+  setCustomFilename,
+  setHoldDuration,
+  setNumberOfCycles,
 } = dashboardPage.actions;
 export default dashboardPage.reducer;

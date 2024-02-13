@@ -69,43 +69,52 @@ export const activeKeys = (assignmentFilters, nonTagFilters) =>
 
 const applySearch = (currentRows, search, searchBy) => currentRows.filter(row => searchBy(row, search));
 
-const applySort = (currentRows, sorting, columnDefs) => {
+export const applySort = (currentRows, sorting, columnDefs) => {
   if (sorting.length > 0) {
-    return [...currentRows].sort((a, b) => {
-      const evaluateRow = row => {
-        const sortBy = columnDefs[sorting[0]].sortBy;
-        const display = columnDefs[sorting[0]].display;
-        // if no sortBy given then sort by "display" field (e.g "title")
-        if (sortBy) {
-          return sortBy(row);
+    return (
+      currentRows &&
+      [...currentRows]?.sort((a, b) => {
+        const evaluateRow = row => {
+          const sortBy = columnDefs[sorting[0]].sortBy;
+          let display = columnDefs[sorting[0]].display;
+          // if no sortBy given then sort by "display" field (e.g "title")
+          if (sortBy) {
+            return sortBy(row);
+          } else {
+            let value = (typeof display === "function" ? display(row) : row[display]) || "";
+            if (typeof value === "string") {
+              let numberValue = parseFloat(value.replace(/[^0-9.-]+/g, ""));
+              return isNaN(numberValue) ? value : numberValue;
+            } else {
+              return value;
+            }
+          }
+        };
+
+        // this block allows for custom sorting of special characters and places null values at the end of list
+        const alphabet = "*!@_.()#^&%$-=+~01234567989abcdefghijklmnopqrstuvwxyz";
+        const row_a = typeof evaluateRow(a) === "string" ? evaluateRow(a).toLowerCase() : evaluateRow(a);
+        const row_b = typeof evaluateRow(b) === "string" ? evaluateRow(b).toLowerCase() : evaluateRow(b);
+        const index_a =
+          evaluateRow(a) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_a[0]) : alphabet.length;
+        const index_b =
+          evaluateRow(b) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_b[0]) : alphabet.length;
+
+        const order = sorting[1] === "asc" ? 1 : -1;
+
+        if (index_a === index_b) {
+          if (evaluateRow(a) < evaluateRow(b)) {
+            return -order;
+          }
+          if (evaluateRow(a) > evaluateRow(b)) {
+            return order;
+          }
+          return 0;
         } else {
-          return (typeof display === "function" ? display(row) : row[display]) || "";
+          return order * (index_a - index_b);
         }
-      };
-
-      // this block allows for custom sorting of special characters and places null values at the end of list
-      const alphabet = "*!@_.()#^&%$-=+~01234567989abcdefghijklmnopqrstuvwxyz";
-      const row_a = typeof evaluateRow(a) === "string" ? evaluateRow(a).toLowerCase() : evaluateRow(a);
-      const row_b = typeof evaluateRow(b) === "string" ? evaluateRow(b).toLowerCase() : evaluateRow(b);
-      const index_a =
-        evaluateRow(a) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_a[0]) : alphabet.length;
-      const index_b =
-        evaluateRow(b) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_b[0]) : alphabet.length;
-
-      const order = sorting[1] === "asc" ? 1 : -1;
-
-      if (index_a === index_b) {
-        if (evaluateRow(a) < evaluateRow(b)) {
-          return -order;
-        }
-        if (evaluateRow(a) > evaluateRow(b)) {
-          return order;
-        }
-        return 0;
-      } else {
-        return order * (index_a - index_b);
-      }
-    });
+      })
+    );
   } else {
     return currentRows;
   }

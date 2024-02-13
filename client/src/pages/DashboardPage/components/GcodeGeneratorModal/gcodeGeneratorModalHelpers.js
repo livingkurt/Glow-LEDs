@@ -1,23 +1,3 @@
-export const removePrint = changeColorOnPrintRemoval =>
-  `G1 X105 Y195 Z50 F8000 ; Move up and back
-
-M300 S3520 P200 ; A7
-M300 S4698.868 P200 ; D8
-M300 S5274.04 P200 ; E8
-M300 S6271.93 P200 ; G8
-
-G4 S5
-
-G1 X105 Y195 Z1 F8000 ; Lower
-
-G1 X105 Y1 Z1 F8000 ; Remove Print
-G1 X105 Y30 Z1 F8000 ; Shake it Out
-G1 X105 Y1 Z1 F8000 ; Shake it Out
-G1 X105 Y30 Z1 F8000 ; Shake it Out
-
-${changeColorOnPrintRemoval ? "M600; Change Color" : ""}
-`.split("\n");
-
 export const readFile = file => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -66,21 +46,40 @@ export const parseGcode = text => {
   return { beginningArray, middle_array, endingArray };
 };
 
-export const updateFilename = (filename, numberOfCopies) => {
-  const mainFilename = filename.slice(4).split("_").slice(0, -1).join("_");
-
-  const time = filename?.split("_").pop().split(".")[0];
+export const calculateFormattedTime = (filename, numberOfCopies) => {
+  const time = filename.split("_").pop().split(".")[0];
   const newTime = parseInt(time) * numberOfCopies;
   const hours = Math.floor(newTime / 60);
   const minutes = newTime % 60;
-  const formattedTime = `${hours}h${minutes}m`;
-  const new_filename = `${numberOfCopies}x ${mainFilename}_${formattedTime}.gcode`;
-
-  return new_filename;
+  return `${hours}h${minutes}m`;
 };
 
-export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
-  const newFilename = updateFilename(filename, numberOfCopies);
+export const determineFilename = (filename, numberOfCopies, customFilename = "") => {
+  const formattedTime = calculateFormattedTime(filename, numberOfCopies);
+  let [version, ...rest] = filename.split(" ");
+  let mainPart, extension;
+
+  if (customFilename && customFilename.length > 0) {
+    // For customFilename, extract base without time, appending customFilename and new time
+    const baseParts = filename.split("_");
+    extension = baseParts.pop().split(".").pop(); // Extracts the extension
+    baseParts.pop(); // Remove the old time part
+    mainPart = `${customFilename}_${baseParts.slice(1).join("_")}`; // Reconstructs mainPart with customFilename
+  } else {
+    // No customFilename provided; extract main part and replace time
+    let restJoined = rest.join(" ");
+    let mainFilenameStart = restJoined.indexOf(" - ") + 3;
+    mainPart = restJoined.substring(mainFilenameStart).split("_").slice(0, -1).join("_");
+    extension = filename.split(".").pop(); // Extracts the extension from the original filename
+  }
+
+  // Constructs the new filename without duplicating the extension or incorrectly appending the time
+  const newFilename = `${version} ${numberOfCopies}x ${mainPart}_${formattedTime}.${extension}`;
+  return newFilename;
+};
+
+export const saveContinuousGcode = ({ filename, gcode, numberOfCopies, customFilename }) => {
+  let newFilename = determineFilename(filename, numberOfCopies, customFilename);
   const blob = new Blob([gcode], { type: "text/plain" });
   const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
@@ -88,53 +87,47 @@ export const saveContinuousGcode = ({ filename, gcode, numberOfCopies }) => {
   link.click();
 };
 
-export const saveContinuousBgcode = ({ filename, gcode, numberOfCopies }) => {
-  // Convert Gcode to binary format (bgcode)
-  const bgcode = new TextEncoder().encode(gcode);
+export const removePrint = (changeColorOnPrintRemoval, holdDuration) =>
+  `G1 X105 Y195 Z50 F8000 ; Move up and back
 
-  const newFilename = updateFilename(filename, numberOfCopies).replace(".gcode", ".bgcode");
-  const blob = new Blob([bgcode], { type: "application/octet-stream" });
-  const link = document.createElement("a");
-  link.href = window.URL.createObjectURL(blob);
-  link.download = newFilename;
-  link.click();
-};
+M300 S3520 P200 ; A7
+M300 S4698.868 P200 ; D8
+M300 S5274.04 P200 ; E8
+M300 S6271.93 P200 ; G8
 
-export const combineGcode = ({ gcodeParts, numberOfCopies, changeColorOnPrintRemoval }) => {
-  let gcodeArray = [gcodeParts.file_1.beginning_1];
-  const printRemovalGcode = removePrint(changeColorOnPrintRemoval);
-  if (numberOfCopies === 1) {
-    gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode, gcodeParts.file_2.ending_2];
-  } else if (numberOfCopies === 2) {
-    gcodeArray = [
-      ...gcodeArray,
-      gcodeParts.file_1.middle_1,
-      printRemovalGcode,
-      gcodeParts.file_2.middle_2,
-      printRemovalGcode,
-      gcodeParts.file_2.ending_2,
-    ];
-  } else if (numberOfCopies > 2) {
-    gcodeArray = [
-      ...gcodeArray,
-      gcodeParts.file_1.middle_1,
-      printRemovalGcode,
-      gcodeParts.file_2.middle_2,
-      printRemovalGcode,
-    ];
-    for (let i = 2; i < numberOfCopies; i++) {
-      if (i % 2 === 0) {
-        gcodeArray = [...gcodeArray, gcodeParts.file_1.middle_1, printRemovalGcode];
-      } else if (i % 2 === 1) {
-        gcodeArray = [...gcodeArray, gcodeParts.file_2.middle_2, printRemovalGcode];
+G4 S${holdDuration}
+
+G1 X105 Y195 Z1 F8000 ; Lower
+
+G1 X105 Y1 Z1 F8000 ; Remove Print
+G1 X105 Y30 Z1 F8000 ; Shake it Out
+G1 X105 Y1 Z1 F8000 ; Shake it Out
+G1 X105 Y30 Z1 F8000 ; Shake it Out
+
+${changeColorOnPrintRemoval ? "M600; Change Color" : ""}
+`.split("\n");
+
+export const combineGcode = ({ gcodeParts, numberOfCycles, changeColorOnPrintRemoval, holdDuration }) => {
+  let gcodeArray = [];
+
+  for (let copyIndex = 0; copyIndex < numberOfCycles; copyIndex++) {
+    Object.keys(gcodeParts).forEach((partKey, index) => {
+      const part = gcodeParts[partKey];
+      if (index === 0 && copyIndex === 0) {
+        // Add beginning only once at the start
+        gcodeArray.push(...part.beginning);
       }
-    }
-    gcodeArray = [...gcodeArray, gcodeParts.file_2.ending_2];
+      gcodeArray.push(...part.middle);
+      if (changeColorOnPrintRemoval || holdDuration > 0) {
+        const printRemovalGcode = removePrint(changeColorOnPrintRemoval, holdDuration);
+        gcodeArray.push(...printRemovalGcode);
+      }
+      if (index === Object.keys(gcodeParts).length - 1 && copyIndex === numberOfCycles - 1) {
+        // Add ending only once at the end
+        gcodeArray.push(...part.ending);
+      }
+    });
   }
 
-  const array = gcodeArray.map(item => {
-    return item.join("\n");
-  });
-  const gcode = array.join("\n");
-  return gcode;
+  return gcodeArray.join("\n");
 };

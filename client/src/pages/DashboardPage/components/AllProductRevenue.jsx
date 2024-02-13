@@ -1,5 +1,4 @@
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
-import { humanize } from "../../../utils/helper_functions";
 
 const AllProductRevenue = ({ all_product_revenue }) => {
   return (
@@ -8,15 +7,12 @@ const AllProductRevenue = ({ all_product_revenue }) => {
         <GLDisplayTable
           title="Product Sales"
           loading={all_product_revenue.isLoading && all_product_revenue?.data}
-          rows={
-            !all_product_revenue.isLoading &&
-            all_product_revenue?.data &&
-            [...all_product_revenue.data].sort((a, b) => b.totalRevenue - a.totalRevenue)
-          }
+          rows={!all_product_revenue.isLoading && all_product_revenue?.data}
+          defaultSorting={[2, "desc"]}
           columnDefs={[
-            { title: "Name", display: "name" },
-            { title: "Revenue", display: row => `$${row.totalRevenue.toFixed(2)}` },
-            { title: "Quantity Sold", display: "totalQuantity" }
+            { title: "Name", display: "name", sortable: true },
+            { title: "Revenue", display: row => `$${row.totalRevenue.toFixed(2)}`, sortable: true },
+            { title: "Quantity Sold", display: "totalQuantity", sortable: true },
           ]}
         />
       )}
