@@ -1,4 +1,3 @@
-import { consoleLogFn } from "@scout_apm/scout-apm/dist/lib/types";
 import { Content } from "../contents";
 
 export default {

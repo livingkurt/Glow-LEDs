@@ -49,30 +49,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  findAllEvents_contents_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const contents = await content_services.findAllEvents_contents_s(query);
-      if (contents) {
-        return res.status(200).send(contents);
-      }
-      return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  findAllYoutube_contents_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const contents = await content_services.findAllYoutube_contents_s(query);
-      if (contents) {
-        return res.status(200).send(contents);
-      }
-      return res.status(404).send({ message: "Contents Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   findById_contents_c: async (req, res) => {
     const { params } = req;
     try {

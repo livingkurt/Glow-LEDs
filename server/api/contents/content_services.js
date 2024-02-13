@@ -1,7 +1,4 @@
 import { Content, content_db } from "../contents";
-const axios = require("axios");
-import { parse } from "node-html-parser";
-import { determine_filter } from "../../utils/util";
 import { normalizeContentFilters, normalizeContentSearch } from "./content_helpers";
 import { getFilteredData } from "../api_helpers";
 
@@ -86,84 +83,6 @@ export default {
     try {
       const slideshow = await Content.findOne({ active: true, deleted: false }).sort({ createdAt: -1 });
       return slideshow;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  findAllEvents_contents_s: async query => {
-    const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
-    try {
-      const { data } = await axios.get(url);
-      const root = parse(data);
-      const titles_html = root.querySelectorAll(".wideeventTitle");
-      const dates_html = root.querySelectorAll(".wideeventDate");
-      const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map(node => node.childNodes.map(node => node.childNodes[0].childNodes[0]._rawText));
-      //
-      const links = titles_html.map(node => node.childNodes.map(node => node.rawAttrs.split("'")[1]));
-      //
-      const dates = dates_html.map(node => node.childNodes[0]._rawText);
-      const cities = venues_html.map(node => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
-      const states = venues_html.map(node => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
-      const venues = venues_html.map(node => node.childNodes[2].childNodes[0]._rawText);
-      const ages = venues_html.map(node => node.childNodes[3]._rawText.replace(" &middot; ", ""));
-      let events = [];
-      titles.forEach((event, index) => {
-        events = [
-          ...events,
-          {
-            title: titles[index][0].replace("&#8211; ", "").replace("&#038; ", ""),
-            date: dates[index],
-            venue: venues[index],
-            city: cities[index],
-            state: states[index],
-            age: ages[index],
-            link: links[index],
-          },
-        ];
-      });
-      return events;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  findAllYoutube_contents_s: async query => {
-    const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
-    try {
-      const { data } = await axios.get(url);
-      const root = parse(data);
-      const titles_html = root.querySelectorAll(".wideeventTitle");
-      const dates_html = root.querySelectorAll(".wideeventDate");
-      const venues_html = root.querySelectorAll(".wideeventVenue");
-      const titles = titles_html.map(node => node.childNodes.map(node => node.childNodes[0].childNodes[0]._rawText));
-      //
-      const links = titles_html.map(node => node.childNodes.map(node => node.rawAttrs.split("'")[1]));
-      //
-      const dates = dates_html.map(node => node.childNodes[0]._rawText);
-      const cities = venues_html.map(node => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
-      const states = venues_html.map(node => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
-      const venues = venues_html.map(node => node.childNodes[2].childNodes[0]._rawText);
-      const ages = venues_html.map(node => node.childNodes[3]._rawText.replace(" &middot; ", ""));
-      let events = [];
-      titles.forEach((event, index) => {
-        events = [
-          ...events,
-          {
-            title: titles[index][0].replace("&#8211; ", "").replace("&#038; ", ""),
-            date: dates[index],
-            venue: venues[index],
-            city: cities[index],
-            state: states[index],
-            age: ages[index],
-            link: links[index],
-          },
-        ];
-      });
-      return events;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
