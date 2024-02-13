@@ -17,10 +17,9 @@ import {
 } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { getCodeUsage, getMonthlyCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
-import { Cart } from "../carts";
-const scraper = require("table-scraper");
-
-const today = new Date();
+import { states } from "./order_helpers";
+const SalesTax = require("sales-tax");
+SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
 export default {
   get_table_orders_s: async query => {
@@ -465,23 +464,32 @@ export default {
       }
     }
   },
-  tax_rates_orders_s: async () => {
+  tax_rates_orders_s: async query => {
+    const { state, country } = query;
+
     try {
-      const updatedSalesTaxes = "http://www.salestaxinstitute.com/resources/rates";
-      const result = {};
+      // Fetch the sales tax for the given state and country
+      const taxInfo = await SalesTax.getSalesTax(country, state);
 
-      const tableData = await scraper.get(updatedSalesTaxes);
+      // Prepare the result based on the fetched tax information
+      if (taxInfo && taxInfo.rate !== undefined) {
+        // Constructing an object with relevant tax information
+        const result = {
+          state: state,
+          country: country,
+          taxRate: `${taxInfo.rate * 100}%`,
+          type: taxInfo.type, // Assuming you might be interested in the type of tax (VAT, GST, etc.)
+          area: taxInfo.area, // Useful if you want to know the tax jurisdiction area (national, regional, worldwide)
+        };
 
-      const tempData = tableData[1];
-      tempData.map(state => {
-        const percentage = state["State Rate"];
-        result[state["State"]] = percentage.slice(0, percentage.indexOf("%") + 1);
-      });
-      return result;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
+        return result;
+      } else {
+        console.log(`No tax rate information available for ${state}, ${country}.`);
+        return { error: "Tax rate information not available" };
       }
+    } catch (error) {
+      console.error(`Failed to get sales tax for ${state}, ${country}:`, error);
+      throw new Error(error.message);
     }
   },
   all_affiliate_code_usage_orders_s: async (params, query) => {

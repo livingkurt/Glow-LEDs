@@ -196,8 +196,9 @@ export default {
     }
   },
   tax_rates_orders_c: async (req, res) => {
+    const { query } = req;
     try {
-      const orders = await order_services.tax_rates_orders_s();
+      const orders = await order_services.tax_rates_orders_s(query);
       if (orders) {
         return res.status(200).send(orders);
       }
