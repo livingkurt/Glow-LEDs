@@ -2486,4 +2486,37 @@ router.route("/irs_expenses_categories").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_status").put(async (req, res) => {
+  try {
+    const orders = await Order.find({ deleted: false });
+
+    for (const order of orders) {
+      if (order.isDelivered) {
+        order.status = "delivered";
+      } else if (order.isOutForDelivery) {
+        order.status = "out_for_delivery";
+      } else if (order.isInTransit) {
+        order.status = "in_transit";
+      } else if (order.isShipped) {
+        order.status = "shipped";
+      } else if (order.isPackaged) {
+        order.status = "packaged";
+      } else if (order.isCrafted) {
+        order.status = "crafted";
+      } else if (order.isCrafting) {
+        order.status = "crafting";
+      } else if (order.isPaid) {
+        order.status = "paid";
+      }
+
+      await order.save();
+    }
+
+    res.status(200).send({ message: "Status migrated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;
