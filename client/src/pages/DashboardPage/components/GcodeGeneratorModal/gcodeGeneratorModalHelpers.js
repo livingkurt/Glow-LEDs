@@ -93,6 +93,7 @@ export const removePrintAndCleanNozzle = (changeColorOnPrintRemoval, holdDuratio
   // Remove print logic
   let gcode = `G1 X105 Y195 Z50 F8000 ; Move up and back
 
+
 M300 S3520 P200 ; A7
 M300 S4698.868 P200 ; D8
 M300 S5274.04 P200 ; E8
@@ -106,6 +107,10 @@ G1 X105 Y1 Z1 F8000 ; Remove Print
 G1 X105 Y30 Z1 F8000 ; Shake it Out
 G1 X105 Y1 Z1 F8000 ; Shake it Out
 G1 X105 Y30 Z1 F8000 ; Shake it Out
+
+
+
+G28 Z ; Re-home Z-axis to ensure accurate start height for the next print
 
 ${changeColorOnPrintRemoval ? "M600; Change Color" : ""}
 `;
