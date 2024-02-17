@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Install client dependencies
-        run: npm run install --prefix client
+        run: npm install --prefix client
 
       - name: Build backend
         run: npm run build
