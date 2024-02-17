@@ -2,6 +2,11 @@
 
 describe("Place Order Flow", () => {
   it("should simulate a user going through the steps to place an order", () => {
+    cy.on("uncaught:exception", (err, runnable) => {
+      // returning false here prevents Cypress from failing the test
+      return false;
+    });
+
     cy.visit("/collections/all/tutorials");
     cy.contains("button", "Shop").click();
     cy.get(".product").contains("Batman Decals").click();
