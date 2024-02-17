@@ -74,7 +74,7 @@ export const determineFilename = (filename, numberOfCopies, customFilename = "")
   }
 
   // Constructs the new filename without duplicating the extension or incorrectly appending the time
-  const newFilename = `${version} ${numberOfCopies}x ${mainPart}_${formattedTime}.${extension}`;
+  const newFilename = `${version} ${numberOfCopies}x ${mainPart.trim()}_${formattedTime}.${extension}`;
   return newFilename;
 };
 
@@ -87,8 +87,11 @@ export const saveContinuousGcode = ({ filename, gcode, numberOfCopies, customFil
   link.click();
 };
 
-export const removePrint = (changeColorOnPrintRemoval, holdDuration) =>
-  `G1 X105 Y195 Z50 F8000 ; Move up and back
+export const removePrintAndCleanNozzle = (changeColorOnPrintRemoval, holdDuration) => {
+  let yPosition = 1; // Initial Y position for the first cleaning routine
+
+  // Remove print logic
+  let gcode = `G1 X105 Y195 Z50 F8000 ; Move up and back
 
 M300 S3520 P200 ; A7
 M300 S4698.868 P200 ; D8
@@ -105,7 +108,26 @@ G1 X105 Y1 Z1 F8000 ; Shake it Out
 G1 X105 Y30 Z1 F8000 ; Shake it Out
 
 ${changeColorOnPrintRemoval ? "M600; Change Color" : ""}
-`.split("\n");
+`;
+
+  // Increment Y position to avoid previous cleaning residue
+  yPosition += 5; // Move back just enough to not hit the previous
+
+  // Nozzle cleaning routine with updated Y position
+  gcode += `
+; Nozzle cleaning routine
+G92 E0 ; reset extruder position
+G1 E4 F2400 ; deretraction
+G0 X105 Y${yPosition} Z0.2 F500 ; move to start purge position
+G1 X115 E4 F500 ; purge
+G1 X125 E4 F650 ; purge
+G1 X135 E4 F800 ; purge
+G0 X140 Z0.05 F8000 ; wipe, move close to the bed
+G0 X145 Z0.2 F8000 ; wipe, move quickly away from the bed
+`;
+
+  return gcode.split("\n");
+};
 
 export const combineGcode = ({ gcodeParts, numberOfCycles, changeColorOnPrintRemoval, holdDuration }) => {
   let gcodeArray = [];
@@ -119,7 +141,7 @@ export const combineGcode = ({ gcodeParts, numberOfCycles, changeColorOnPrintRem
       }
       gcodeArray.push(...part.middle);
       if (changeColorOnPrintRemoval || holdDuration > 0) {
-        const printRemovalGcode = removePrint(changeColorOnPrintRemoval, holdDuration);
+        const printRemovalGcode = removePrintAndCleanNozzle(changeColorOnPrintRemoval, holdDuration);
         gcodeArray.push(...printRemovalGcode);
       }
       if (index === Object.keys(gcodeParts).length - 1 && copyIndex === numberOfCycles - 1) {
