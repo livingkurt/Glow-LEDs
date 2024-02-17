@@ -1,7 +1,4 @@
 import Product from "./product";
-import Airtable from "airtable";
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
-const CurrentProducts = base("Current Products");
 import mongoose from "mongoose";
 
 export default {
@@ -356,39 +353,6 @@ export default {
 
   create_products_db: async body => {
     try {
-      // const fields = [
-      //   {
-      //     fields: {
-      //       title: body.name,
-      //       description: body.description,
-      //       availability: "In Stock",
-      //       condition: "New",
-      //       price: `${body.price} USD`,
-      //       link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-      //       image_link: body.images[0],
-      //       additional_image_link: body.images[1],
-      //       brand: "Glow LEDs",
-      //       inventory: body.count_in_stock,
-      //       fb_product_category: "toys & games > electronic toys",
-      //       google_product_category: "Toys & Games > Toys > Visual Toys",
-      //       sale_price: `${body.sale_price && body.sale_price.toFixed(2)} USD`,
-      //       sale_price_effective_date: "",
-      //       product_type: body.category,
-      //       color: body.color,
-      //       size: body.size,
-      //       id: body._id
-      //     }
-      //   }
-      // ];
-      // CurrentProducts.create(fields, async (err, updated_records) => {
-      //   if (err) {
-      //
-      //     return;
-      //   }
-      //   updated_records.forEach(function (record) {
-      //
-      //   });
-      // });
       return await Product.create(body);
     } catch (error) {
       if (error instanceof Error) {
@@ -405,69 +369,7 @@ export default {
       } else {
         query = { pathname: id };
       }
-      // if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
-      //   query = { _id: id };
-      // } else {
-      //   query = { pathname: id };
-      // }
       const product = await Product.findOne(query);
-      // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err, records) => {
-      //   if (err) {
-      //
-      //     const fields = [
-      //       {
-      //         fields: {
-      //           title: body.name,
-      //           description: body.description,
-      //           price: `${body.price} USD`,
-      //           link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-      //           image_link: body.images[0],
-      //           additional_image_link: body.images[1],
-      //           category: body.category,
-      //           id: body._id
-      //         }
-      //       }
-      //     ];
-      //     CurrentProducts.create(fields, async (err, updated_records) => {
-      //       if (err) {
-      //
-      //         return;
-      //       }
-      //       updated_records.forEach(function (record) {
-      //
-      //       });
-      //     });
-      //     return;
-      //   }
-      //   const fields = [
-      //     {
-      //       id: records[0].id,
-      //       fields: {
-      //         title: body.name,
-      //         description: body.description,
-      //         price: `${body.price} USD`,
-      //         link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-      //         image_link: body.images[0],
-      //         additional_image_link: body.images[1],
-      //         category: body.category,
-      //         id: body._id
-      //       }
-      //     }
-      //   ];
-      //   try {
-      //     CurrentProducts.update(fields, async (err, updated_records) => {
-      //       if (err) {
-      //
-      //         return;
-      //       }
-      //       updated_records.forEach(function (record) {
-      //
-      //       });
-      //     });
-      //   } catch (error) {
-      //
-      //   }
-      // });
       if (product) {
         const updated = await Product.updateOne(query, body);
         return updated;
@@ -483,26 +385,7 @@ export default {
       const product = await Product.findOne({ _id: id, deleted: false });
 
       if (product) {
-        // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err, records) => {
-        //   if (err) {
-        //
-        //     return;
-        //   }
-        //   if (records.length > 0) {
-        //     try {
-        //       CurrentProducts.destroy([records[0].id], (err, deletedRecords) => {
-        //         if (err) {
-        //           console.error(err);
-        //           return;
-        //         }
-        //       });
-        //     } catch (error) {
-        //
-        //     }
-        //   }
-        // });
         return await Product.updateOne({ _id: id }, { deleted: true });
-        // return await Product.deleteOne({ _id: id });
       }
     } catch (error) {
       if (error instanceof Error) {

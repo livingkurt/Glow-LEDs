@@ -74,15 +74,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  get_airtable_expenses_c: async (req, res) => {
-    try {
-      const expense = await expense_services.get_airtable_expenses_s();
-      // if (expense) {
-      return res.status(201).send(expense);
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   create_all_expenses_c: async (req, res) => {
     const { body } = req;
     try {

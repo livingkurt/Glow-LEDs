@@ -2,7 +2,6 @@ import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHe
 import { daysBetween, determine_total } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
-// const { printHtml } = require("print-html-element");
 
 export const orderColors = [
   { name: "Not Paid", color: tableColors.inactive },
