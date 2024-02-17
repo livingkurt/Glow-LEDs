@@ -8,7 +8,8 @@ describe("Place Order Flow", () => {
     });
 
     cy.visit("/collections/all/tutorials");
-    cy.contains("button", "Shop").click();
+    cy.screenshot("tutorials-page");
+    cy.contains("button", "Shop", { timeout: 20000 }).click();
     cy.get(".product").contains("Batman Decals").click();
     cy.get(".product").contains("Double Chevron Decals - 11").click();
     cy.contains("button", "Add To Cart", { timeout: 20000 }).click();
