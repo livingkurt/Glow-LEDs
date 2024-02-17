@@ -11,5 +11,6 @@ module.exports = defineConfig({
     supportFile: "cypress/support/e2e.js", // Make sure this path is correct
   },
   projectId: "ubcka4",
+  screenshotOnRunFailure: true,
   chromeWebSecurity: false,
 });

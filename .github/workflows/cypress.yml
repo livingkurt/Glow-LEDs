@@ -11,6 +11,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_BUGSNAG_KEY: ${{ secrets.REACT_APP_BUGSNAG_KEY }}
+      BUGSNAG_KEY: ${{ secrets.BUGSNAG_KEY }}
 
     steps:
       - name: Checkout code
@@ -46,8 +49,6 @@ jobs:
         run: npm run cypress:run
         env:
           NODE_ENV: test
-          REACT_APP_BUGSNAG_KEY: ${{ secrets.REACT_APP_BUGSNAG_KEY }}
-          BUGSNAG_KEY: ${{ secrets.BUGSNAG_KEY }}
           CI: true
 
       - name: Upload Cypress videos and screenshots as artifacts (optional)
