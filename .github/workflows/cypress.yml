@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - run: cat .env >> $GITHUB_ENV
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
@@ -45,6 +46,7 @@ jobs:
       - name: Run Cypress tests
         run: npm run cypress:run
         env:
+          NODE_ENV: test
           CI: true
 
       - name: Upload Cypress videos and screenshots as artifacts (optional)
