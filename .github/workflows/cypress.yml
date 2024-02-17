@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - run: cat .env >> $GITHUB_ENV
+      - run: cat client/.env >> $GITHUB_ENV
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
