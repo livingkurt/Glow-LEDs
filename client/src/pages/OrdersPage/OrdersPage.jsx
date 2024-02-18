@@ -9,7 +9,7 @@ import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@mui/material";
-import { determineOrderColors, duplicateOrder, orderColors, sinceOrdered } from "./ordersPageHelpers";
+import { OrderStatusColors, determineOrderColors, duplicateOrder, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -189,7 +189,7 @@ const OrdersPage = () => {
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}
         searchPlaceholder={"Search by ID, Name, Email, #code"}
-        colors={orderColors}
+        colors={Object.values(OrderStatusColors)}
         determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"

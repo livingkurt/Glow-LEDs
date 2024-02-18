@@ -96,28 +96,26 @@ export default {
     try {
       const availableFilters = {
         order_status: [
-          "isPaid",
-          "isCrafting",
-          "isCrafted",
-          "isPackaged",
-          "isShipped",
-          "isInTransit",
-          "isOutForDelivery",
-          "isDelivered",
+          "Unpaid",
+          "Paid",
+          "Label Created",
+          "Crafting",
+          "Crafted",
+          "Packaged",
+          "Shipped",
+          "InTransit",
+          "OutForDelivery",
+          "Delivered",
+          "Return Label Created",
           "isPaused",
           "isRefunded",
+          "isUpdated",
         ],
         shipping: ["international"],
         carrier: ["usps", "ups", "fedex"],
         users: await Order.distinct("user").populate("user"),
-        isPaid: [],
       };
-      const booleanFilters = {
-        isPaid: {
-          label: "isPaid",
-        },
-      };
-      return { availableFilters, booleanFilters };
+      return { availableFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -166,74 +164,7 @@ export default {
       }
       const sort_query = query.sort && query.sort.toLowerCase();
       let sort = { createdAt: -1 };
-      let filter = { deleted: false };
-      if (sort_query === "lowest") {
-        sort = { totalPrice: 1 };
-      } else if (sort_query === "highest") {
-        sort = { totalPrice: -1 };
-      } else if (sort_query === "date") {
-        sort = { createdAt: -1 };
-      } else if (sort_query === "paid") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: false,
-          isCrafted: false,
-          isPackaged: false,
-          isShipped: false,
-          isDelivered: false,
-        };
-      } else if (sort_query === "crafting") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: true,
-          isCrafted: false,
-          isPackaged: false,
-          isShipped: false,
-          isDelivered: false,
-        };
-      } else if (sort_query === "crafted") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: true,
-          isCrafted: true,
-          isPackaged: false,
-          isShipped: false,
-          isDelivered: false,
-        };
-      } else if (sort_query === "packaged") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: true,
-          isCrafted: true,
-          isPackaged: true,
-          isShipped: false,
-          isDelivered: false,
-        };
-      } else if (sort_query === "shipped") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: true,
-          isCrafted: true,
-          isPackaged: true,
-          isShipped: true,
-          isDelivered: false,
-        };
-      } else if (sort_query === "delivered") {
-        filter = {
-          deleted: false,
-          isPaid: true,
-          isCrafting: true,
-          isCrafted: true,
-          isPackaged: true,
-          isShipped: true,
-          isDelivered: true,
-        };
-      }
+      let filter = { deleted: false, status: sort_query };
       const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, limit, page);
       const count = await order_db.count_orders_db({ ...filter, ...search });
       if (count !== undefined) {
@@ -401,7 +332,7 @@ export default {
       // const filter = {
       //   deleted: false,
       //   promo_code: params.promo_code,
-      //   isPaid: true,
+      //   status: "paid",
       //   createdAt: {
       //     $gte: new Date(start_date),
       //     $lte: new Date(end_date)
@@ -413,7 +344,7 @@ export default {
         const end_date = month_dates(query.month, query.year).end_date;
         filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
@@ -425,7 +356,7 @@ export default {
         const end_date = query.year + "-12-31";
         filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
@@ -433,7 +364,7 @@ export default {
           },
         };
       } else {
-        filter = { deleted: false, promo_code: params.promo_code, isPaid: true };
+        filter = { deleted: false, promo_code: params.promo_code, status: "paid" };
       }
 
       const limit = "0";
@@ -503,7 +434,7 @@ export default {
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -514,14 +445,14 @@ export default {
         const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        o_filter = { deleted: false, isPaid: true };
+        o_filter = { deleted: false, status: "paid" };
       }
 
       let a_filter = { deleted: false, active: true };
@@ -668,7 +599,7 @@ export default {
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -679,14 +610,14 @@ export default {
         const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
-          isPaid: true,
+          status: "paid",
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        o_filter = { deleted: false, isPaid: true };
+        o_filter = { deleted: false, status: "paid" };
       }
 
       const p_filter = determine_filter(query, {});
@@ -795,11 +726,7 @@ export default {
       const sort = {};
       const filter = {
         deleted: false,
-        isCrafting: true,
-        isCrafted: true,
-        isPackaged: true,
-        isShipped: false,
-        isDelivered: false,
+        status: "packaged",
       };
       const limit = "0";
       const page = "1";
@@ -830,7 +757,7 @@ export default {
     // const { month, year } = params;
     const o_filter = {
       deleted: false,
-      isPaid: true,
+      status: "paid",
     };
     const e_filter = {
       deleted: false,
@@ -1044,7 +971,7 @@ export default {
   //   // const { month, year } = params;
   //   const o_filter = {
   //     deleted: false,
-  //     isPaid: true
+  //     status: "paid"
   //   };
   //   const e_filter = {
   //     deleted: false
@@ -1684,7 +1611,7 @@ export default {
           totalPrice: 0,
           taxPrice: 0,
           shippingPrice: 0,
-          isPaid: true,
+          status: "paid",
           paidAt: Date.now(),
           // Add other necessary fields here
         });

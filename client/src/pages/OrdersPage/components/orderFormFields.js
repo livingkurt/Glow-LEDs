@@ -1,4 +1,4 @@
-import { humanize } from "../../../utils/helper_functions";
+import { humanize, toCapitalize } from "../../../utils/helper_functions";
 
 export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels }) => {
   return {
@@ -34,11 +34,27 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
       label: "Guest",
       default: false,
     },
-    isPaid: {
-      type: "checkbox",
-      label: "Is Paid",
-      default: false,
+    status: {
+      type: "autocomplete_single",
+      label: "Status",
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+      options: [
+        "unpaid",
+        "paid",
+        "crafting",
+        "crafted",
+        "packaged",
+        "shipped",
+        "in_transit",
+        "out_for_delivery",
+        "delivered",
+      ],
     },
+
     paidAt: {
       type: "date",
       label: "Paid At",
@@ -52,74 +68,41 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
       type: "date",
       label: "Reassured At",
     },
-    isCrafting: {
-      type: "checkbox",
-      label: "Is Crafting",
-      default: false,
-    },
     craftingAt: {
       type: "date",
       label: "Crafting At",
     },
-    isCrafted: {
-      type: "checkbox",
-      label: "Is Crafted",
-      default: false,
-    },
+
     craftedAt: {
       type: "date",
       label: "Crafted At",
     },
-    isPackaged: {
-      type: "checkbox",
-      label: "Is Packaged",
-      default: false,
-    },
+
     packagedAt: {
       type: "date",
       label: "Packaged At",
     },
-    isShipped: {
-      type: "checkbox",
-      label: "Is Shipped",
-      default: false,
-    },
+
     shippedAt: {
       type: "date",
       label: "Shipped At",
     },
-    isInTransit: {
-      type: "checkbox",
-      label: "Is In Transit",
-      default: false,
-    },
+
     inTransitAt: {
       type: "date",
       label: "In Transit At",
     },
-    isOutForDelivery: {
-      type: "checkbox",
-      label: "Is Out For Delivery",
-      default: false,
-    },
+
     outForDeliveryAt: {
       type: "date",
       label: "Out For Delivery At",
     },
-    isDelivered: {
-      type: "checkbox",
-      label: "Is Delivered",
-      default: false,
-    },
+
     deliveredAt: {
       type: "date",
       label: "Delivered At",
     },
-    isPickup: {
-      type: "checkbox",
-      label: "Is Pickup",
-      default: false,
-    },
+
     pickupAt: {
       type: "date",
       label: "Pickup At",

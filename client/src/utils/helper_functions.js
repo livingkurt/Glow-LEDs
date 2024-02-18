@@ -190,6 +190,12 @@ export const prnt = info => {};
 export const toCapitalize = string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+export const toTitleCase = string => {
+  return string
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 export const determine_promoter_code_tier = code_usage => {
   if (code_usage === 0 || code_usage === 1) {

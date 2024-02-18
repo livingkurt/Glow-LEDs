@@ -43,6 +43,7 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.return_tracking_url = tracker.public_url;
       order.return_tracking_number = label.tracking_code;
       order.shipping.return_shipping_label = label;
+      order.status = "return_label_created";
     } else {
       order.shipping.shipment_tracker = label.tracker.id;
       order.tracking_number = label.tracking_code;
@@ -50,6 +51,7 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.shipping.shipping_label = label;
       order.shipping.shipping_rate = shipping_rate;
       order.shipping.shipment_id = label.id;
+      order.status = "label_created";
     }
 
     await order_db.update_orders_db(order._id, order);

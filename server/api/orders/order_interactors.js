@@ -10,79 +10,35 @@ export const normalizeOrderFilters = input => {
       case "order_status":
         for (const status of input.order_status) {
           switch (status) {
-            case "isPaid":
-              output["isPaid"] = true;
-              output["isCrafting"] = false;
-              output["isCrafted"] = false;
-              output["isPackaged"] = false;
-              output["isShipped"] = false;
-              output["isDelivered"] = false;
+            case "Paid":
+              output["status"] = "paid";
               break;
-            case "isCrafting":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = false;
-              output["isPackaged"] = false;
-              output["isShipped"] = false;
-              output["isDelivered"] = false;
+            case "Crafting":
+              output["status"] = "crafting";
               break;
-            case "isCrafted":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = false;
-              output["isShipped"] = false;
-              output["isDelivered"] = false;
+            case "Crafted":
+              output["status"] = "crafted";
               break;
-            case "isPackaged":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = true;
-              output["isShipped"] = false;
-              output["isDelivered"] = false;
+            case "Packaged":
+              output["status"] = "packaged";
               break;
-            case "isShipped":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = true;
-              output["isShipped"] = true;
-              output["isDelivered"] = false;
+            case "Shipped":
+              output["status"] = "shipped";
               break;
-            case "isInTransit":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = true;
-              output["isShipped"] = true;
-              output["isInTransit"] = true;
-              output["isOutForDelivery"] = false;
-              output["isDelivered"] = false;
+            case "InTransit":
+              output["status"] = "in_transit";
               break;
-            case "isOutForDelivery":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = true;
-              output["isShipped"] = true;
-              output["isInTransit"] = true;
-              output["isOutForDelivery"] = true;
-              output["isDelivered"] = false;
+            case "OutForDelivery":
+              output["status"] = "out_for_delivery";
               break;
-            case "isDelivered":
-              output["isPaid"] = true;
-              output["isCrafting"] = true;
-              output["isCrafted"] = true;
-              output["isPackaged"] = true;
-              output["isShipped"] = true;
-              output["isInTransit"] = true;
-              output["isOutForDelivery"] = true;
-              output["isDelivered"] = true;
+            case "Delivered":
+              output["status"] = "delivered";
               break;
             case "isRefunded":
-              output["isPaid"] = true;
               output["isRefunded"] = true;
+              break;
+            case "isPaused":
+              output["isPaused"] = true;
               break;
           }
         }
@@ -108,9 +64,9 @@ export const normalizeOrderFilters = input => {
           }
         }
         break;
-      case "isPaid":
-        if (!input.isPaid.includes(1)) {
-          output["isPaid"] = false;
+      case "Unpaid":
+        if (!input.Paid.includes(1)) {
+          output["status"] = "unpaid";
         }
         break;
 
@@ -187,7 +143,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
   try {
     const matchFilter = {
       deleted: false,
-      isPaid: true,
+      status: "paid",
       createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
       promo_code: new RegExp(`^${promo_code}$`, "i"), // Adjusted to match the entire string
     };
@@ -244,7 +200,7 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
   try {
     const matchFilter = {
       deleted: false,
-      isPaid: true,
+      status: "paid",
       createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
       promo_code: new RegExp(`^${promo_code}$`, "i"),
     };

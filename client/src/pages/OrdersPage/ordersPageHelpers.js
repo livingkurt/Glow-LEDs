@@ -3,56 +3,30 @@ import { daysBetween, determine_total } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 
-export const orderColors = [
-  { name: "Not Paid", color: tableColors.inactive },
-  { name: "Paid", color: tableColors.active },
-  { name: "Updated", color: tableColors.alt_color_5 },
-  { name: "Label Created", color: tableColors.alt_color_4 },
-  { name: "Crafting", color: tableColors.alt_color_1 },
-  { name: "Crafted", color: tableColors.alt_color_1 },
-  { name: "Packaged", color: tableColors.alt_color_2 },
-  { name: "Shipped", color: tableColors.waiting },
-  { name: "Delivered", color: tableColors.completed },
-  { name: "International", color: tableColors.alt_color_3 },
-  { name: "Paused", color: tableColors.paused },
-];
+export const OrderStatusColors = {
+  unpaid: { name: "Unpaid", color: "#6d3e3e" },
+  paid: { name: "Paid", color: "#3e4c6d" },
+  label_created: { name: "Label Created", color: "#276e64" },
+  crafting: { name: "Crafting", color: "#4b7188" },
+  crafted: { name: "Crafted", color: "#3c596a" },
+  packaged: { name: "Packaged", color: "#6f5f7d" },
+  shipped: { name: "Shipped", color: "#898989" },
+  in_transit: { name: "In Transit", color: "#707070" },
+  out_for_delivery: { name: "Out for Delivery", color: "#4f4f4f" },
+  delivered: { name: "Delivered", color: "#333333" },
+  return_label_created: { name: "Return Label Created", color: "#1e544c" },
+};
 
 export const determineOrderColors = order => {
-  let result = "";
-  if (!order.isPaid) {
-    result = tableColors.inactive;
-  } else {
-    if (order.isPaid) {
-      result = tableColors.active;
-    }
-    if (order.isUpdated) {
-      result = tableColors.alt_color_5;
-    }
-    if (order.shipping.international) {
-      result = tableColors.alt_color_3;
-    }
-    if (order.shipping.shipping_label) {
-      result = tableColors.alt_color_4;
-    }
-    if (order.isCrafting) {
-      result = tableColors.alt_color_1;
-    }
-    if (order.isCrafted) {
-      result = tableColors.alt_color_1;
-    }
-    if (order.isPackaged) {
-      result = tableColors.alt_color_2;
-    }
-    if (order.isShipped) {
-      result = tableColors.waiting;
-    }
-    if (order.isDelivered) {
-      result = tableColors.completed;
-    }
-    if (order.isPaused) {
-      result = tableColors.paused;
-    }
+  let result = OrderStatusColors[order.status]?.color;
+
+  if (order.isUpdated) {
+    result = "#3a5363";
   }
+  if (order.isPaused) {
+    result = "#33323e";
+  }
+
   return result;
 };
 
@@ -434,5 +408,36 @@ export const handlePromoCode = (value, order, dispatch) => {
 
     // Dispatch the updated order state
     dispatch(set_order(updatedOrder));
+  }
+};
+
+export const OrderStatusEnum = {
+  UNPAID: "unpaid",
+  PAID: "paid",
+  LABEL_CREATED: "label_created",
+  CRAFTING: "crafting",
+  CRAFTED: "crafted",
+  PACKAGED: "packaged",
+  SHIPPED: "shipped",
+  IN_TRANSIT: "in_transit",
+  OUT_FOR_DELIVERY: "out_for_delivery",
+  DELIVERED: "delivered",
+  RETURN_LABEL_CREATED: "return_label_created",
+};
+
+export const nextStatus = (status, titleCase = false) => {
+  switch (status) {
+    case "unpaid":
+      return titleCase ? "Paid" : "paid";
+    case "paid":
+      return titleCase ? "Crafting" : "crafting";
+    case "crafting":
+      return titleCase ? "Crafted" : "crafted";
+    case "crafted":
+      return titleCase ? "Packaged" : "packaged";
+    case "packaged":
+      return titleCase ? "Shipped" : "shipped";
+    default:
+      return titleCase ? "Unpaid" : "unpaid";
   }
 };

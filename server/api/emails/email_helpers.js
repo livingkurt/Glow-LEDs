@@ -142,3 +142,15 @@ export const normalizeEmailSearch = query => {
 
   return search;
 };
+
+export const toCamelCase = string => {
+  const words = string.split("_");
+  const camelCaseWords = words.map((word, index) => {
+    if (index === 0) {
+      return word.toLowerCase();
+    } else {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }
+  });
+  return camelCaseWords.join("");
+};

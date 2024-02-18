@@ -16,37 +16,6 @@ export default {
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
 
         .exec();
-      // const orders = await Order.aggregate([
-      //   { $match: filter },
-      //   { $sort: sort },
-      //   {
-      //     $project: {
-      //       _id: 1,
-      //       createdAt: 1,
-      //       name: {
-      //         $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
-      //       },
-      //       orderItems: 1,
-      //       totalPrice: 1,
-      //       payment: { paymentMethod: 1 },
-      //       isPaid: 1,
-      //       isReassured: 1,
-      //       isPaused: 1,
-      //       isCrafted: 1,
-      //       isPackaged: 1,
-      //       isShipped: 1,
-      //       shipping: 1,
-      //       promo_code: 1,
-      //       order_note: 1,
-      //       production_note: 1,
-      //       tracking_number: 1,
-      //       return_tracking_number: 1
-      //     }
-      //   },
-      //   { $skip: Math.max(parseInt(page), 0) * parseInt(limit) },
-      //   { $limit: parseInt(limit) }
-      // ]);
-      // return orders;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -247,7 +216,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -291,7 +260,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -339,7 +308,7 @@ export default {
   //       {
   //         $match: {
   //           deleted: false,
-  //           isPaid: true,
+  //           status: "paid",
   //           createdAt: {
   //             $gte: new Date(start_date),
   //             $lt: new Date(end_date)
@@ -387,7 +356,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -455,7 +424,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -520,7 +489,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -574,7 +543,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -623,7 +592,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -693,7 +662,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             "orderItems.product": id,
             createdAt: {
               $gte: new Date(start_date),
@@ -734,7 +703,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -775,7 +744,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -800,7 +769,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -830,7 +799,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -872,7 +841,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -1018,7 +987,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),

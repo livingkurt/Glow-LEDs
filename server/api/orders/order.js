@@ -131,14 +131,15 @@ const messageSchema = {
 const OrderStatusEnum = {
   UNPAID: "unpaid",
   PAID: "paid",
+  LABEL_CREATED: "label_created",
   CRAFTING: "crafting",
   CRAFTED: "crafted",
   PACKAGED: "packaged",
-  PICKUP: "pickup",
   SHIPPED: "shipped",
   IN_TRANSIT: "in_transit",
   OUT_FOR_DELIVERY: "out_for_delivery",
   DELIVERED: "delivered",
+  RETURN_LABEL_CREATED: "return_label_created",
 };
 
 const orderSchema = new mongoose.Schema(

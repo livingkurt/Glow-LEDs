@@ -27,7 +27,7 @@ import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
-import { sendEmail, sendEmailsInBatches, send_multiple_emails } from "./email_helpers";
+import { sendEmail, sendEmailsInBatches, send_multiple_emails, toCamelCase } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { paycheck_db } from "../paychecks";
@@ -587,9 +587,9 @@ export default {
         const tracker = event.result;
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
 
-        const updateOrder = (isStatus, statusAt) => {
-          order[isStatus] = true;
-          order[statusAt] = new Date();
+        const updateOrder = status => {
+          order.status = status;
+          order[`${toCamelCase(status)}At`] = new Date();
           order.save();
         };
 
@@ -613,18 +613,18 @@ export default {
         if (
           tracker.status === "delivered" ||
           tracker.status === "out_for_delivery" ||
-          (tracker.status === "in_transit" && order.isShipped === false)
+          (tracker.status === "in_transit" && order.status === "shipped")
         ) {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
         }
         if (tracker.status === "delivered") {
-          updateOrder("isDelivered", "deliveredAt");
+          updateOrder("delivered");
         } else if (tracker.status === "out_for_delivery") {
-          updateOrder("isOutForDelivery", "outForDeliveryAt");
-        } else if (order.isShipped === true && tracker.status === "in_transit") {
-          updateOrder("isInTransit", "inTransitAt");
+          updateOrder("out_for_delivery");
+        } else if (order.status === "shipped" && tracker.status === "in_transit") {
+          updateOrder("in_ransit");
         } else if (tracker.status === "in_transit") {
-          updateOrder("isShipped", "shippedAt");
+          updateOrder("shipped");
         }
       } else {
         res.status(200).send("Not a Tracker event, so nothing to do here for now...");

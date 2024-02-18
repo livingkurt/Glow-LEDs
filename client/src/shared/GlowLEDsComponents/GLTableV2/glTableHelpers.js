@@ -208,6 +208,7 @@ export const tableColors = {
   alt_color_3: "#874d72",
   alt_color_4: "#2c796e",
   alt_color_5: "#3a5363",
+  alt_color_6: "#7d5f5f",
 };
 
 export const reorder = (list, startIndex, endIndex) => {
