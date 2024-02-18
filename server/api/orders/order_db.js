@@ -6,22 +6,77 @@ import { dedupeAddresses } from "./order_helpers";
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
     try {
-      return await Order.find(filter)
-        .sort(sort)
-        .populate("user")
-        .populate("orderItems.product")
-        .populate("orderItems.secondary_product")
-        .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+      // Define custom sort logic
+      const customSortStage = {
+        $addFields: {
+          customSortOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$isPaused", true] }, then: 1 },
+                { case: { $eq: ["$isUpdated", true] }, then: 2 },
+                { case: { $eq: ["$status", "unpaid"] }, then: 3 },
+                { case: { $eq: ["$status", "paid"] }, then: 4 },
+                { case: { $eq: ["$status", "label_created"] }, then: 5 },
+                { case: { $eq: ["$status", "crafting"] }, then: 6 },
+                { case: { $eq: ["$status", "crafted"] }, then: 7 },
+                { case: { $eq: ["$status", "packaged"] }, then: 8 },
+                { case: { $eq: ["$status", "shipped"] }, then: 9 },
+                { case: { $eq: ["$status", "in_transit"] }, then: 10 },
+                { case: { $eq: ["$status", "out_for_delivery"] }, then: 11 },
+                { case: { $eq: ["$status", "delivered"] }, then: 12 },
+                { case: { $eq: ["$status", "return_label_created"] }, then: 13 },
+              ],
+              default: 14, // Assign a default order for documents not matching any case
+            },
+          },
+        },
+      };
 
-        .exec();
+      // Convert existing simple sort to be compatible with aggregation
+      // Assuming `sort` is in the form { field: 1 } or { field: -1 }
+      const existingSortStage = { $sort: { customSortOrder: 1 } }; // Add custom sort order
+
+      // Pagination stages
+      const limitStage = { $limit: parseInt(limit) + Math.max(parseInt(page), 0) * parseInt(limit) };
+      const skipStage = { $skip: Math.max(parseInt(page), 0) * parseInt(limit) };
+
+      // Construct the aggregation pipeline
+      const pipeline = [
+        { $match: filter },
+        customSortStage,
+        existingSortStage,
+        skipStage,
+        limitStage,
+        // Populate stages (if needed, convert them to lookups)
+      ];
+
+      // Execute the aggregation pipeline
+      return await Order.aggregate(pipeline).exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
+  // table_orders_db: async (filter, sort, limit, page) => {
+  //   try {
+  //     return await Order.find(filter)
+  //       .sort(sort)
+  //       .populate("user")
+  //       .populate("orderItems.product")
+  //       .populate("orderItems.secondary_product")
+  //       .sort(sort)
+  //       .limit(parseInt(limit))
+  //       .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+
+  //       .exec();
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
 
   findAll_orders_db: async (filter, sort, limit, page) => {
     try {

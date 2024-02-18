@@ -127,7 +127,7 @@ const OrderStatusButtons = ({ order }) => {
             color="secondary"
             variant="contained"
             fullWidth
-            onClick={() => updateOrder("updated", order.isUpdated ? false : true)}
+            onClick={() => updateOrder("updated", !order.isUpdated)}
           >
             {order.isUpdated ? "Unset" : "Set"} to Updated
           </Button>
@@ -137,7 +137,7 @@ const OrderStatusButtons = ({ order }) => {
             color="secondary"
             variant="contained"
             fullWidth
-            onClick={() => updateOrder("reassured", order.isReassured ? false : true)}
+            onClick={() => updateOrder("reassured", !order.isReassured)}
           >
             {order.isReassured ? "Unset" : "Set"} to Reassured
           </Button>
@@ -147,7 +147,7 @@ const OrderStatusButtons = ({ order }) => {
             color="secondary"
             variant="contained"
             fullWidth
-            onClick={() => updateOrder("paused", order.isPaused ? false : true)}
+            onClick={() => updateOrder("paused", !order.isPaused)}
           >
             {order.isPaused ? "Unset" : "Set"} to Paused
           </Button>
@@ -157,7 +157,7 @@ const OrderStatusButtons = ({ order }) => {
             color="secondary"
             variant="contained"
             fullWidth
-            onClick={() => updateOrder("refunded", order.isRefunded ? false : true)}
+            onClick={() => updateOrder("refunded", !order.isRefunded)}
           >
             {order.isRefunded ? "Unset" : "Set"} to Refunded
           </Button>
