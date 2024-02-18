@@ -37,6 +37,10 @@ const OrderStatusButtons = ({ order }) => {
           updatePayload.isPaused = !order.isPaused;
           updatePayload.pausedAt = new Date();
           break;
+        case "prioritized":
+          updatePayload.isPrioritized = !order.isPrioritized;
+          updatePayload.prioritizedAt = new Date();
+          break;
         case "refunded":
           updatePayload.isRefunded = !order.isRefunded;
           updatePayload.refundedAt = new Date();
@@ -79,48 +83,59 @@ const OrderStatusButtons = ({ order }) => {
     <div>
       <Loading loading={loading_label} />
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <h3 className="fs-20px mv-5px">Status {toTitleCase(order.status)}</h3>
-        </Grid>
-        {order.status !== "paid" ? (
+        {order.status && (
           <>
-            {order.status !== "shipped" && (
+            <Grid item xs={12}>
+              <h3 className="fs-20px mv-5px">Status {toTitleCase(order.status)}</h3>
+            </Grid>
+            {order.status !== "paid" ? (
+              <>
+                {order.status !== "shipped" && (
+                  <Grid item xs={12}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      fullWidth
+                      onClick={() => updateOrder(nextStatus(order.status), true)}
+                    >
+                      Set Status to {nextStatus(order.status, true)}
+                    </Button>
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <div className="mt-n15px mb-n5px">
+                    <GLAutocomplete
+                      value={order.status}
+                      variant={"filled"}
+                      options={Object.values(OrderStatusEnum)}
+                      optionDisplay={option => toTitleCase(option)}
+                      getOptionLabel={option => toTitleCase(option)}
+                      fullWidth
+                      isOptionEqualToValue={(option, value) => option === value}
+                      name="status"
+                      label="Jump To Status"
+                      onChange={(e, value) => updateOrder(value, false)}
+                    />
+                  </div>
+                </Grid>
+              </>
+            ) : (
               <Grid item xs={12}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                  onClick={() => updateOrder(nextStatus(order.status), true)}
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  border="1px solid"
+                  borderRadius={1}
+                  p={1}
                 >
-                  Set Status to {nextStatus(order.status, true)}
-                </Button>
+                  <Typography variant="h3" fontSize={16} textAlign="center">
+                    Buy Label to Change Status
+                  </Typography>
+                </Box>
               </Grid>
             )}
-            <Grid item xs={12}>
-              <div className="mt-n15px mb-n5px">
-                <GLAutocomplete
-                  value={order.status}
-                  variant={"filled"}
-                  options={Object.values(OrderStatusEnum)}
-                  optionDisplay={option => toTitleCase(option)}
-                  getOptionLabel={option => toTitleCase(option)}
-                  fullWidth
-                  isOptionEqualToValue={(option, value) => option === value}
-                  name="status"
-                  label="Jump To Status"
-                  onChange={(e, value) => updateOrder(value, false)}
-                />
-              </div>
-            </Grid>
           </>
-        ) : (
-          <Grid item xs={12}>
-            <Box display="flex" justifyContent="center" alignItems="center" border="1px solid" borderRadius={1} p={1}>
-              <Typography variant="h3" fontSize={16} textAlign="center">
-                Buy Label to Change Status
-              </Typography>
-            </Box>
-          </Grid>
         )}
         <Grid item xs={12}>
           <Button
@@ -130,6 +145,16 @@ const OrderStatusButtons = ({ order }) => {
             onClick={() => updateOrder("updated", !order.isUpdated)}
           >
             {order.isUpdated ? "Unset" : "Set"} to Updated
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            color="secondary"
+            variant="contained"
+            fullWidth
+            onClick={() => updateOrder("prioritized", !order.isPrioritized)}
+          >
+            {order.isPrioritized ? "Unset" : "Set"} to Prioritized
           </Button>
         </Grid>
         <Grid item xs={12}>

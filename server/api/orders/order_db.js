@@ -5,41 +5,58 @@ import { dedupeAddresses } from "./order_helpers";
 
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
     try {
-      // Define custom sort logic
+      // Define custom sort logic with nuanced handling for sorting by date and status
       const customSortStage = {
         $addFields: {
-          customSortOrder: {
+          prioritySortOrder: {
             $switch: {
               branches: [
-                { case: { $eq: ["$isPaused", true] }, then: 1 },
-                { case: { $eq: ["$isUpdated", true] }, then: 2 },
-                { case: { $eq: ["$status", "unpaid"] }, then: 3 },
-                { case: { $eq: ["$status", "paid"] }, then: 4 },
-                { case: { $eq: ["$status", "label_created"] }, then: 5 },
-                { case: { $eq: ["$status", "crafting"] }, then: 6 },
-                { case: { $eq: ["$status", "crafted"] }, then: 7 },
-                { case: { $eq: ["$status", "packaged"] }, then: 8 },
-                { case: { $eq: ["$status", "shipped"] }, then: 9 },
-                { case: { $eq: ["$status", "in_transit"] }, then: 10 },
-                { case: { $eq: ["$status", "out_for_delivery"] }, then: 11 },
-                { case: { $eq: ["$status", "delivered"] }, then: 12 },
-                { case: { $eq: ["$status", "return_label_created"] }, then: 13 },
+                { case: { $eq: ["$isPrioritized", true] }, then: 1 },
+                { case: { $eq: ["$isPaused", true] }, then: 2 },
+                { case: { $eq: ["$isUpdated", true] }, then: 3 },
               ],
-              default: 14, // Assign a default order for documents not matching any case
+              default: 4, // Assign a default order for documents not matching any priority conditions
+            },
+          },
+          statusSortOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$status", "shipped"] }, then: 1 },
+                { case: { $eq: ["$status", "in_transit"] }, then: 2 },
+                { case: { $eq: ["$status", "out_for_delivery"] }, then: 3 },
+                { case: { $eq: ["$status", "delivered"] }, then: 4 },
+              ],
+              default: 0, // Orders not in the specified statuses should not be sorted by status
+            },
+          },
+          sortByDateDescending: {
+            $cond: {
+              if: { $gt: ["$statusSortOrder", 0] }, // If statusSortOrder is greater than 0, sort these by date descending
+              then: -1, // For statuses to be sorted from newest to oldest
+              else: 0, // Do not sort by this field for other documents
             },
           },
         },
       };
 
-      // Convert existing simple sort to be compatible with aggregation
-      // Assuming `sort` is in the form { field: 1 } or { field: -1 }
-      const existingSortStage = { $sort: { customSortOrder: 1 } }; // Add custom sort order
+      // Adjust the existing sort stage to prioritize by prioritySortOrder, then statusSortOrder, and finally by date
+      const existingSortStage = {
+        $sort: {
+          prioritySortOrder: 1,
+          statusSortOrder: 1,
+          sortByDateDescending: 1, // Sort by descending date for specified statuses
+          createdAt: 1, // Finally, sort by ascending date for all other documents
+        },
+      };
 
-      // Pagination stages
-      const limitStage = { $limit: parseInt(limit) + Math.max(parseInt(page), 0) * parseInt(limit) };
-      const skipStage = { $skip: Math.max(parseInt(page), 0) * parseInt(limit) };
+      // Corrected Pagination stages
+      const skipAmount = Math.max(parseInt(page) - 1, 0) * parseInt(limit);
+      const limitAmount = parseInt(limit);
 
+      const limitStage = { $limit: limitAmount };
+      const skipStage = { $skip: skipAmount };
       // Construct the aggregation pipeline
       const pipeline = [
         { $match: filter },
@@ -47,7 +64,7 @@ export default {
         existingSortStage,
         skipStage,
         limitStage,
-        // Populate stages (if needed, convert them to lookups)
+        // Add $lookup stages for population if necessary
       ];
 
       // Execute the aggregation pipeline

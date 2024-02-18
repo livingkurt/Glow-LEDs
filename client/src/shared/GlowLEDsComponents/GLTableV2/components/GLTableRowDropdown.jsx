@@ -3,7 +3,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { makeStyles } from "@mui/styles";
-import { determineHover } from "../glTableHelpers";
+import { determineHover, tableColors } from "../glTableHelpers";
 import { Checkbox, darken } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
@@ -60,7 +60,7 @@ const GLTableRowDropdown = ({
                       backgroundColor: determineColor ? determineColor(subrow) : "#",
                     },
                     "&:hover": {
-                      backgroundColor: `${determineColor ? darken(determineColor(subrow), 0.3) : "white"} !important`,
+                      backgroundColor: `${determineColor ? darken(determineColor(subrow) || tableColors.active, 0.3) : "white"} !important`,
                     },
                   }}
                   // checked={enableRowSelect && isItemSelected(row._id || row.id, selectedRows)}

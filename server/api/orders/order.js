@@ -168,6 +168,7 @@ const orderSchema = new mongoose.Schema(
     isUpdated: { type: Boolean, default: false },
     isPaused: { type: Boolean, default: false },
     isError: { type: Boolean, default: false },
+    isPrioritized: { type: Boolean, default: false },
     // Date fields for each status change
     reassuredAt: { type: Date },
     refundedAt: { type: Date },

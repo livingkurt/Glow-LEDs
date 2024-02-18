@@ -26,6 +26,9 @@ export const determineOrderColors = order => {
   if (order.isPaused) {
     result = "#33323e";
   }
+  if (order.isPrioritized) {
+    result = "#c4891e";
+  }
 
   return result;
 };

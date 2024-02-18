@@ -301,7 +301,15 @@ export const determineRowStyles = (row, isCheckboxDisabled, determineColor) => {
   }
 
   const activeColor = determineColor ? determineColor(row) : tableColors.active;
-  const darkActiveColor = darken(activeColor, 0.3);
+  if (!activeColor) {
+    return {
+      backgroundColor: "white",
+      color: "black",
+      hoverBackgroundColor: "#f0f0f0",
+      checkboxColor: "black",
+    };
+  }
+  const darkActiveColor = darken(activeColor || tableColors.active, 0.3);
 
   return {
     backgroundColor: activeColor,
