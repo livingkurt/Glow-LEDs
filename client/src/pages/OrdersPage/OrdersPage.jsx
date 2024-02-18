@@ -2,14 +2,20 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
+import { GLAutocomplete, GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { openRefundModal, open_create_order_modal, open_edit_order_modal } from "../../slices/orderSlice";
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@mui/material";
-import { OrderStatusColors, determineOrderColors, duplicateOrder, sinceOrdered } from "./ordersPageHelpers";
+import {
+  OrderStatusColors,
+  OrderStatusEnum,
+  determineOrderColors,
+  duplicateOrder,
+  sinceOrdered,
+} from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -18,7 +24,7 @@ import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shi
 import CreatePickupModal from "./components/CreatePickupModal";
 import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
-import { format_date } from "../../utils/helper_functions";
+import { format_date, toTitleCase } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
@@ -202,32 +208,65 @@ const OrdersPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <div className="row g-10px">
+          <div className="row g-10px ai-c">
             {selectedRows.length > 1 && (
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={() => {
-                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Orders?`);
+              <GLAutocomplete
+                value={order.status}
+                variant={"outlined"}
+                options={[
+                  ...Object.values(OrderStatusEnum),
+                  "Set isRefunded",
+                  "Set isUpdated",
+                  "Set isReassured",
+                  "Set isPaused",
+                  "Unset isRefunded",
+                  "Unset isUpdated",
+                  "Unset isReassured",
+                  "Unset isPaused",
+                ]}
+                optionDisplay={option => toTitleCase(option)}
+                getOptionLabel={option => toTitleCase(option)}
+                fullWidth
+                isOptionEqualToValue={(option, value) => option === value}
+                name="status"
+                label="Batch Set Status"
+                onChange={(e, value) => {
+                  const confirm = window.confirm(
+                    `Are you sure you want to Update Status on ${selectedRows.length} Orders?`
+                  );
                   if (confirm) {
-                    dispatch(API.deleteMultipleOrders(selectedRows));
+                    dispatch(API.updateMultipleOrderStatus({ ids: selectedRows, status: value }));
                   }
                 }}
-              >
-                Delete Orders
-              </Button>
+              />
             )}
-            {selectedRows.length > 0 && (
-              <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
-                Create UPS Pickup
+            <div className="row g-10px ai-c">
+              {selectedRows.length > 1 && (
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Orders?`);
+                    if (confirm) {
+                      dispatch(API.deleteMultipleOrders(selectedRows));
+                    }
+                  }}
+                >
+                  Delete Orders
+                </Button>
+              )}
+              {selectedRows.length > 0 && (
+                <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
+                  Create UPS Pickup
+                </Button>
+              )}
+              <Button color="secondary" variant="contained" onClick={() => dispatch(openCreateLabelModal())}>
+                Create Label
               </Button>
-            )}
-            <Button color="secondary" variant="contained" onClick={() => dispatch(openCreateLabelModal())}>
-              Create Label
-            </Button>
-            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
-              Create Order
-            </Button>
+              <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
+                Create Order
+              </Button>
+            </div>
           </div>
         }
       />

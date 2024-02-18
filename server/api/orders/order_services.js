@@ -1553,6 +1553,16 @@ export default {
       }
     }
   },
+  update_multiple_status_orders_s: async body => {
+    const { ids, status } = body;
+    try {
+      return await order_db.update_multiple_status_orders_db({ ids, status });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   transfer_orders_s: async params => {
     const { oldUserId, newUserId } = params;
 

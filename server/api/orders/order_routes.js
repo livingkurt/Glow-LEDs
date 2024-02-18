@@ -58,6 +58,7 @@ router.route("/get_range_gloves_data_orders").get(order_controller.get_range_glo
 
 router.route("/glow/sample_testing").post(order_controller.sample_testing_orders_c);
 router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
+router.route("/glow/update_multiple_status").put(order_controller.update_multiple_status_orders_c);
 
 router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.transfer_orders_c);
 router.route("/test_delete/:id").delete(order_controller.test_delete_orders_c);

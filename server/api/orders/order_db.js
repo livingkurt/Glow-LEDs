@@ -1084,4 +1084,23 @@ export default {
       }
     }
   },
+  update_multiple_status_orders_db: async ({ ids, status }) => {
+    try {
+      const updateFields = {};
+      if (status.startsWith("Set ")) {
+        const fieldName = status.substring(4);
+        updateFields[fieldName] = true;
+      } else if (status.startsWith("Unset ")) {
+        const fieldName = status.substring(6);
+        updateFields[fieldName] = false;
+      } else {
+        updateFields.status = status;
+      }
+      return await Order.updateMany({ _id: { $in: ids } }, updateFields);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 };
