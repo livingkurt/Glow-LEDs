@@ -5,7 +5,7 @@ import { API_Emails } from "../../../utils";
 import { toCapitalize, toTitleCase } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import config from "../../../config";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { OrderStatusEnum, nextStatus } from "../ordersPageHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
@@ -82,30 +82,46 @@ const OrderStatusButtons = ({ order }) => {
         <Grid item xs={12}>
           <h3 className="fs-20px mv-5px">Status {toTitleCase(order.status)}</h3>
         </Grid>
-        <Grid item xs={12}>
-          <Button
-            color="primary"
-            variant="contained"
-            fullWidth
-            onClick={() => updateOrder(nextStatus(order.status), true)}
-          >
-            Set Status to ({nextStatus(order.status, true)})
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <GLAutocomplete
-            value={order.status}
-            variant={"filled"}
-            options={Object.values(OrderStatusEnum)}
-            optionDisplay={option => toTitleCase(option)}
-            getOptionLabel={option => toTitleCase(option)}
-            fullWidth
-            isOptionEqualToValue={(option, value) => option === value}
-            name="status"
-            label="Jump To Status"
-            onChange={(e, value) => updateOrder(value, false)}
-          />
-        </Grid>
+        {order.status !== "paid" ? (
+          <>
+            {order.status !== "shipped" && (
+              <Grid item xs={12}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                  onClick={() => updateOrder(nextStatus(order.status), true)}
+                >
+                  Set Status to {nextStatus(order.status, true)}
+                </Button>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <div className="mt-n15px mb-n5px">
+                <GLAutocomplete
+                  value={order.status}
+                  variant={"filled"}
+                  options={Object.values(OrderStatusEnum)}
+                  optionDisplay={option => toTitleCase(option)}
+                  getOptionLabel={option => toTitleCase(option)}
+                  fullWidth
+                  isOptionEqualToValue={(option, value) => option === value}
+                  name="status"
+                  label="Jump To Status"
+                  onChange={(e, value) => updateOrder(value, false)}
+                />
+              </div>
+            </Grid>
+          </>
+        ) : (
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center" alignItems="center" border="1px solid" borderRadius={1} p={1}>
+              <Typography variant="h3" fontSize={16} textAlign="center">
+                Buy Label to Change Status
+              </Typography>
+            </Box>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Button
             color="secondary"

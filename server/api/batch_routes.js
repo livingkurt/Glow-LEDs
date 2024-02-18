@@ -2505,6 +2505,10 @@ router.route("/migrate_status").put(async (req, res) => {
         order.status = "crafted";
       } else if (order.isCrafting) {
         order.status = "crafting";
+      } else if (order.shipping.return_shipping_label) {
+        order.status = "return_shipping_label";
+      } else if (order.shipping.shipping_label) {
+        order.status = "label_created";
       } else if (order.isPaid) {
         order.status = "paid";
       }

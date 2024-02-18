@@ -429,7 +429,7 @@ export const nextStatus = (status, titleCase = false) => {
   switch (status) {
     case "unpaid":
       return titleCase ? "Paid" : "paid";
-    case "paid":
+    case "label_created":
       return titleCase ? "Crafting" : "crafting";
     case "crafting":
       return titleCase ? "Crafted" : "crafted";
