@@ -52,7 +52,7 @@ export default {
       };
 
       // Corrected Pagination stages
-      const skipAmount = Math.max(parseInt(page) - 1, 0) * parseInt(limit);
+      const skipAmount = Math.max(parseInt(page), 0) * parseInt(limit);
       const limitAmount = parseInt(limit);
 
       const limitStage = { $limit: limitAmount };

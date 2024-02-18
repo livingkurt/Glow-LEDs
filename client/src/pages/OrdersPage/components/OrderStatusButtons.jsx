@@ -152,8 +152,13 @@ const OrderStatusButtons = ({ order }) => {
             color="secondary"
             variant="contained"
             fullWidth
-            onClick={() => updateOrder("prioritized", !order.isPrioritized)}
+            onClick={() => updateOrder("updated", !order.isUpdated)}
           >
+            {order.isUpdated ? "Unset" : "Set"} to Updated
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("prioritized", false)}>
             {order.isPrioritized ? "Unset" : "Set"} to Prioritized
           </Button>
         </Grid>
@@ -168,12 +173,7 @@ const OrderStatusButtons = ({ order }) => {
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <Button
-            color="secondary"
-            variant="contained"
-            fullWidth
-            onClick={() => updateOrder("paused", !order.isPaused)}
-          >
+          <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("paused", false)}>
             {order.isPaused ? "Unset" : "Set"} to Paused
           </Button>
         </Grid>
