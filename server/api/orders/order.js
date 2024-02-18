@@ -134,6 +134,7 @@ const OrderStatusEnum = {
   CRAFTING: "crafting",
   CRAFTED: "crafted",
   PACKAGED: "packaged",
+  PICKUP: "pickup",
   SHIPPED: "shipped",
   IN_TRANSIT: "in_transit",
   OUT_FOR_DELIVERY: "out_for_delivery",
