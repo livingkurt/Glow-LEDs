@@ -74,7 +74,7 @@ export const determineFilename = (filename, numberOfCopies, customFilename = "")
   }
 
   // Constructs the new filename without duplicating the extension or incorrectly appending the time
-  const newFilename = `${version} ${numberOfCopies}x ${mainPart}_${formattedTime}.${extension}`;
+  const newFilename = `${version} ${numberOfCopies}x ${mainPart.trim()}_${formattedTime}.${extension}`;
   return newFilename;
 };
 
