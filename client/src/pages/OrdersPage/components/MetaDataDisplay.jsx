@@ -53,7 +53,7 @@ const MetaDataDisplay = ({ row }) => {
 
     dispatch(set_loading_label(false));
   };
-  const totalRefundAmount = row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100;
+  const totalRefundAmount = row?.payment?.refund.reduce((a, c) => a + c.amount, 0) / 100;
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -88,7 +88,7 @@ const MetaDataDisplay = ({ row }) => {
           Total Price Paid:
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${(row.payment.charge.amount / 100)?.toFixed(2)}
+          ${(row?.payment?.charge?.amount / 100)?.toFixed(2)}
         </Typography>
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
@@ -105,7 +105,7 @@ const MetaDataDisplay = ({ row }) => {
           Outstanding Balance:
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${(row.payment.charge.amount / 100 - row.totalPrice)?.toFixed(2)}
+          ${(row?.payment?.charge?.amount / 100 - row.totalPrice)?.toFixed(2)}
         </Typography>
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
