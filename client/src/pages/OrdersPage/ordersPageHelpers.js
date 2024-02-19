@@ -15,6 +15,7 @@ export const OrderStatusColors = {
   out_for_delivery: { name: "Out for Delivery", color: "#4f4f4f" },
   delivered: { name: "Delivered", color: "#333333" },
   return_label_created: { name: "Return Label Created", color: "#1e544c" },
+  canceled: { name: "Canceled", color: "#2f0000" },
 };
 
 export const determineOrderColors = order => {
@@ -426,6 +427,7 @@ export const OrderStatusEnum = {
   OUT_FOR_DELIVERY: "out_for_delivery",
   DELIVERED: "delivered",
   RETURN_LABEL_CREATED: "return_label_created",
+  CANCELED: "canceled",
 };
 
 export const nextStatus = (status, titleCase = false) => {

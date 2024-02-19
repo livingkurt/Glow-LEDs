@@ -5,7 +5,7 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import { set_loading_label } from "../../../slices/orderSlice";
 import config from "../../../config";
 import * as API from "../../../api";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
@@ -53,19 +53,68 @@ const MetaDataDisplay = ({ row }) => {
 
     dispatch(set_loading_label(false));
   };
+  const totalRefundAmount = row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100;
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <h3 className="fs-20px mv-5px">Meta Data</h3>
       </Grid>
-      <Grid item xs={12}>
-        <div>ID #: {row._id}</div>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          ID #:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          {row._id}
+        </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <div>Payment Method: {row?.payment?.paymentMethod}</div>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Payment Method:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          {row?.payment?.paymentMethod}
+        </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <div>Promo Code: {row.promo_code}</div>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Promo Code:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          {row.promo_code}
+        </Typography>
+      </Grid>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Total Price Paid:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          ${(row.payment.charge.amount / 100)?.toFixed(2)}
+        </Typography>
+      </Grid>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Total Price:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          ${row.totalPrice?.toFixed(2)}
+        </Typography>
+      </Grid>
+
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Outstanding Balance:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          ${(row.payment.charge.amount / 100 - row.totalPrice)?.toFixed(2)}
+        </Typography>
+      </Grid>
+      <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+        <Typography component="label" className="mv-0px mr-5px">
+          Total Refund:
+        </Typography>
+        <Typography component="label" className=" mv-0px">
+          ${totalRefundAmount?.toFixed(2)}
+        </Typography>
       </Grid>
       {row.tracking_number && (
         <Grid item xs={12}>
