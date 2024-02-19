@@ -10,8 +10,14 @@ export const normalizeOrderFilters = input => {
       case "order_status":
         for (const status of input.order_status) {
           switch (status) {
+            case "Unpaid":
+              output["status"] = "unpaid";
+              break;
             case "Paid":
               output["status"] = "paid";
+              break;
+            case "Label Created":
+              output["status"] = "label_created";
               break;
             case "Crafting":
               output["status"] = "crafting";
@@ -25,10 +31,10 @@ export const normalizeOrderFilters = input => {
             case "Shipped":
               output["status"] = "shipped";
               break;
-            case "InTransit":
+            case "In Transit":
               output["status"] = "in_transit";
               break;
-            case "OutForDelivery":
+            case "Out For Delivery":
               output["status"] = "out_for_delivery";
               break;
             case "Delivered":
@@ -39,6 +45,9 @@ export const normalizeOrderFilters = input => {
               break;
             case "isPaused":
               output["isPaused"] = true;
+              break;
+            case "Return Label Created":
+              output["status"] = "return_label_created";
               break;
           }
         }
