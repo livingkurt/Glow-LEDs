@@ -22,11 +22,12 @@ export default {
           statusSortOrder: {
             $switch: {
               branches: [
-                { case: { $eq: ["$status", "shipped"] }, then: 1 },
-                { case: { $eq: ["$status", "in_transit"] }, then: 2 },
-                { case: { $eq: ["$status", "out_for_delivery"] }, then: 3 },
-                { case: { $eq: ["$status", "delivered"] }, then: 4 },
-                { case: { $eq: ["$status", "canceled"] }, then: 5 },
+                { case: { $eq: ["$status", "packaged"] }, then: 1 },
+                { case: { $eq: ["$status", "shipped"] }, then: 2 },
+                { case: { $eq: ["$status", "in_transit"] }, then: 3 },
+                { case: { $eq: ["$status", "out_for_delivery"] }, then: 4 },
+                { case: { $eq: ["$status", "delivered"] }, then: 5 },
+                { case: { $eq: ["$status", "canceled"] }, then: 6 },
               ],
               default: 0, // Orders not in the specified statuses should not be sorted by status
             },

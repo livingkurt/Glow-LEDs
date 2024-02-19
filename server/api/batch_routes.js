@@ -2488,7 +2488,7 @@ router.route("/irs_expenses_categories").put(async (req, res) => {
 
 router.route("/migrate_status").put(async (req, res) => {
   try {
-    const orders = await Order.find({ deleted: false }).limit(100);
+    const orders = await Order.find({ deleted: false });
 
     for (const order of orders) {
       if (order.isDelivered) {
