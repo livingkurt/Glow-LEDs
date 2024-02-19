@@ -12,7 +12,7 @@ import CovalentTableNextPrevious from "./GLTableNextPrevious";
 import { Divider } from "@mui/material";
 import useContainerDimensions from "../../../Hooks/useContainerDimensions";
 
-const GLTablePagination = ({ count, page, namespace, rowsPerPage, location, droppableId }) => {
+const GLTablePagination = ({ count, page, namespace, rowsPerPage, location }) => {
   const dispatch = useDispatch();
 
   const { containerRef, dimensions } = useContainerDimensions();
@@ -30,7 +30,7 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location, drop
           </Typography>
           <Autocomplete
             value={rowsPerPage}
-            onChange={(e, value) => dispatch(updatePageSize(namespace, droppableId, value))}
+            onChange={(e, value) => dispatch(updatePageSize(namespace, value))}
             disableClearable
             className="mr-20px"
             getOptionLabel={option => option.toString()}
@@ -66,7 +66,6 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location, drop
             count={count}
             location={location}
             namespace={namespace}
-            droppableId={droppableId}
           />
         )}
         <Box
@@ -93,7 +92,6 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location, drop
               count={count}
               location={location}
               namespace={namespace}
-              droppableId={droppableId}
             />
           </Box>
         </>
@@ -102,16 +100,12 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location, drop
   );
 };
 
-GLTablePagination.defaultProps = {
-  droppableId: null,
-};
 GLTablePagination.propTypes = {
   count: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
-  droppableId: PropTypes.string,
 };
 
 export default GLTablePagination;
