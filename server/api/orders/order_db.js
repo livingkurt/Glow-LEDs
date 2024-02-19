@@ -5,7 +5,6 @@ import { dedupeAddresses } from "./order_helpers";
 
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
-    console.log({ filter, sort, limit, page });
     try {
       // Define custom sort logic with nuanced handling for sorting by date and status
       const customSortStage = {
