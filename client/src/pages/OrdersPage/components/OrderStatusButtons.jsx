@@ -18,7 +18,7 @@ const OrderStatusButtons = ({ order }) => {
     let updatePayload = { ...order };
 
     // Handling primary status changes with corresponding date fields
-    if (Object.keys(orderStatusColors).includes(status.toUpperCase())) {
+    if (Object.keys(orderStatusColors).includes(status)) {
       if (order.status !== status) {
         updatePayload = { ...updatePayload, status, [`${status}At`]: new Date() };
       }
