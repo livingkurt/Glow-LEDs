@@ -17,12 +17,17 @@ export const orderStatusColors = {
   return_label_created: { name: "Return Label Created", color: "#1e544c" },
   canceled: { name: "Canceled", color: "#2f0000" },
 };
+export const orderExceptionStatusColors = {
+  isPrioritized: { name: "isPrioritized", color: "#c4891e" },
+  isPaused: { name: "isPaused", color: "#33323e" },
+  isUpdated: { name: "isUpdated", color: "#4d3a63" },
+};
 
 export const determineOrderColors = order => {
   let result = orderStatusColors[order.status]?.color;
 
   if (order.isUpdated) {
-    result = "#3a5363";
+    result = "#4d3a63";
   }
   if (order.isPaused) {
     result = "#33323e";
