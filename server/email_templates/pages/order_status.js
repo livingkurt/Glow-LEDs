@@ -5,7 +5,7 @@ const determineColor = status => {
     case "crafting":
       return "#4b7188";
     case "crafted":
-      return "#4b7188";
+      return "#3c596a";
     case "packaged":
       return "#6f5f7d";
     case "shipped":
@@ -13,7 +13,7 @@ const determineColor = status => {
     case "reassured":
       return "#585858";
     case "updated":
-      return "#4b7188";
+      return "#3a5363";
     default:
       break;
   }

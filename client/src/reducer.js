@@ -78,7 +78,6 @@ const reducers = {
   orders: combineReducers({
     orderPage: orderSlice,
     orderTable: glTableReducer("orderTable", {
-      sorting: [0, "asc"],
       nonTagFilters: ["order_status", "shipping"],
     }),
   }),

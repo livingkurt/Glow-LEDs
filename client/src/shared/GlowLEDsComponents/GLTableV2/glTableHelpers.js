@@ -208,6 +208,7 @@ export const tableColors = {
   alt_color_3: "#874d72",
   alt_color_4: "#2c796e",
   alt_color_5: "#3a5363",
+  alt_color_6: "#7d5f5f",
 };
 
 export const reorder = (list, startIndex, endIndex) => {
@@ -300,7 +301,15 @@ export const determineRowStyles = (row, isCheckboxDisabled, determineColor) => {
   }
 
   const activeColor = determineColor ? determineColor(row) : tableColors.active;
-  const darkActiveColor = darken(activeColor, 0.3);
+  if (!activeColor) {
+    return {
+      backgroundColor: "white",
+      color: "black",
+      hoverBackgroundColor: "#f0f0f0",
+      checkboxColor: "black",
+    };
+  }
+  const darkActiveColor = darken(activeColor || tableColors.active, 0.3);
 
   return {
     backgroundColor: activeColor,

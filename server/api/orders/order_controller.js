@@ -528,6 +528,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  update_multiple_status_orders_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const order = await order_services.update_multiple_status_orders_s(body);
+      if (order) {
+        return res.status(204).send({ message: "Order Statuses Updated" });
+      }
+      return res.status(500).send({ message: "Error Updating Order Statuses" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   transfer_orders_c: async (req, res) => {
     const { params } = req;
     try {

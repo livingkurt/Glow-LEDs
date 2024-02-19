@@ -94,11 +94,7 @@ const PaymentStep = () => {
   // const data = new Date()
   const today = new Date();
 
-  const create_order_without_paying = async ({ isPaid }) => {
-    // create an order
-
-    const order_paid = isPaid ? isPaid : paid ? paid : false;
-
+  const create_order_without_paying = async () => {
     dispatch(
       API.saveOrder({
         orderItems: cartItems,
@@ -119,8 +115,8 @@ const PaymentStep = () => {
         tip,
         promo_code,
         parcel: parcel ? parcel : null,
-        isPaid: order_paid,
-        paidAt: order_paid ? today : null,
+        status: "paid",
+        paidAt: paid ? today : null,
       })
     );
 
@@ -135,7 +131,7 @@ const PaymentStep = () => {
     sessionStorage.removeItem("shippingAddress");
   };
 
-  const create_no_payment_order = async ({ isPaid }) => {
+  const create_no_payment_order = async () => {
     dispatch(setLoadingPayment(true));
     dispatch(
       API.createNoPayOrder({
@@ -157,8 +153,8 @@ const PaymentStep = () => {
         tip,
         promo_code,
         parcel: parcel ? parcel : null,
-        isPaid: isPaid ? isPaid : false,
-        paidAt: isPaid ? today : null,
+        status: "paid",
+        paidAt: today,
       })
     );
   };
@@ -348,7 +344,7 @@ const PaymentStep = () => {
                   <p htmlFor="password">Payment is not necessary at this time</p>
                   <GLButton
                     onClick={() => {
-                      create_no_payment_order({ isPaid: true });
+                      create_no_payment_order();
                     }}
                     variant="primary"
                     className="w-100per bob mb-12px"

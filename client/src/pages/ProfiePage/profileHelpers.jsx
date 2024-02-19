@@ -1,39 +1,3 @@
-const order_colors = [
-  { name: "Not Paid", color: "#6d3e3e" },
-  { name: "Paid", color: "#3e4c6d" },
-  { name: "Crafting", color: "#4b7188" },
-  { name: "Crafted", color: "#4b7188" },
-  { name: "Packaged", color: "#6f5f7d" },
-  { name: "Shipped", color: "#636363" },
-  { name: "Delivered", color: "#333333" },
-];
-
-export const determine_order_color = order => {
-  let result = "";
-  if (!order.isPaid) {
-    result = order_colors[0].color;
-  }
-  if (order.isPaid) {
-    result = order_colors[1].color;
-  }
-  if (order.isCrafting) {
-    result = order_colors[2].color;
-  }
-  if (order.isCrafted) {
-    result = order_colors[2].color;
-  }
-  if (order.isPackaged) {
-    result = order_colors[3].color;
-  }
-  if (order.isShipped) {
-    result = order_colors[4].color;
-  }
-  if (order.isDelivered) {
-    result = order_colors[5].color;
-  }
-  return result;
-};
-
 export const affiliateLinks = {
   promoter: {
     termsLink: "https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing",

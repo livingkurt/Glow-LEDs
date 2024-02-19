@@ -6,53 +6,94 @@ import { dedupeAddresses } from "./order_helpers";
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
     try {
-      return await Order.find(filter)
-        .sort(sort)
-        .populate("user")
-        .populate("orderItems.product")
-        .populate("orderItems.secondary_product")
-        .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+      // Define custom sort logic with nuanced handling for sorting by date and status
+      const customSortStage = {
+        $addFields: {
+          prioritySortOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$isPrioritized", true] }, then: 1 },
+                { case: { $eq: ["$isPaused", true] }, then: 2 },
+                { case: { $eq: ["$isUpdated", true] }, then: 3 },
+              ],
+              default: 4, // Assign a default order for documents not matching any priority conditions
+            },
+          },
+          statusSortOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$status", "shipped"] }, then: 1 },
+                { case: { $eq: ["$status", "in_transit"] }, then: 2 },
+                { case: { $eq: ["$status", "out_for_delivery"] }, then: 3 },
+                { case: { $eq: ["$status", "delivered"] }, then: 4 },
+                { case: { $eq: ["$status", "canceled"] }, then: 5 },
+              ],
+              default: 0, // Orders not in the specified statuses should not be sorted by status
+            },
+          },
+          sortByDateDescending: {
+            $cond: {
+              if: { $gt: ["$statusSortOrder", 0] }, // If statusSortOrder is greater than 0, sort these by date descending
+              then: -1, // For statuses to be sorted from newest to oldest
+              else: 0, // Do not sort by this field for other documents
+            },
+          },
+        },
+      };
 
-        .exec();
-      // const orders = await Order.aggregate([
-      //   { $match: filter },
-      //   { $sort: sort },
-      //   {
-      //     $project: {
-      //       _id: 1,
-      //       createdAt: 1,
-      //       name: {
-      //         $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
-      //       },
-      //       orderItems: 1,
-      //       totalPrice: 1,
-      //       payment: { paymentMethod: 1 },
-      //       isPaid: 1,
-      //       isReassured: 1,
-      //       isPaused: 1,
-      //       isCrafted: 1,
-      //       isPackaged: 1,
-      //       isShipped: 1,
-      //       shipping: 1,
-      //       promo_code: 1,
-      //       order_note: 1,
-      //       production_note: 1,
-      //       tracking_number: 1,
-      //       return_tracking_number: 1
-      //     }
-      //   },
-      //   { $skip: Math.max(parseInt(page), 0) * parseInt(limit) },
-      //   { $limit: parseInt(limit) }
-      // ]);
-      // return orders;
+      // Adjust the existing sort stage to prioritize by prioritySortOrder, then statusSortOrder, and finally by date
+      const existingSortStage = {
+        $sort: {
+          prioritySortOrder: 1,
+          statusSortOrder: 1,
+          sortByDateDescending: 1, // Sort by descending date for specified statuses
+          createdAt: 1, // Finally, sort by ascending date for all other documents
+        },
+      };
+
+      // Corrected Pagination stages
+      const skipAmount = Math.max(parseInt(page), 0) * parseInt(limit);
+      const limitAmount = parseInt(limit);
+
+      const limitStage = { $limit: limitAmount };
+      const skipStage = { $skip: skipAmount };
+      // Construct the aggregation pipeline
+      const pipeline = [
+        { $match: filter },
+        customSortStage,
+        existingSortStage,
+        skipStage,
+        limitStage,
+        // Add $lookup stages for population if necessary
+      ];
+
+      // Execute the aggregation pipeline
+      return await Order.aggregate(pipeline).exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
+  // table_orders_db: async (filter, sort, limit, page) => {
+  //   try {
+  //     return await Order.find(filter)
+  //       .sort(sort)
+  //       .populate("user")
+  //       .populate("orderItems.product")
+  //       .populate("orderItems.secondary_product")
+  //       .sort(sort)
+  //       .limit(parseInt(limit))
+  //       .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+
+  //       .exec();
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
 
   findAll_orders_db: async (filter, sort, limit, page) => {
     try {
@@ -247,7 +288,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -291,7 +332,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -339,7 +380,7 @@ export default {
   //       {
   //         $match: {
   //           deleted: false,
-  //           isPaid: true,
+  //           status: "paid",
   //           createdAt: {
   //             $gte: new Date(start_date),
   //             $lt: new Date(end_date)
@@ -387,7 +428,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -455,7 +496,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -520,7 +561,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -574,7 +615,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -623,7 +664,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -693,7 +734,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             "orderItems.product": id,
             createdAt: {
               $gte: new Date(start_date),
@@ -734,7 +775,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -775,7 +816,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -800,7 +841,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -830,7 +871,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -872,7 +913,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
           },
         },
         {
@@ -1018,7 +1059,7 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true,
+            status: "paid",
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -1054,6 +1095,25 @@ export default {
   remove_multiple_orders_db: async ids => {
     try {
       return await Order.updateMany({ _id: { $in: ids } }, { deleted: true });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  update_multiple_status_orders_db: async ({ ids, status }) => {
+    try {
+      const updateFields = {};
+      if (status.startsWith("Set ")) {
+        const fieldName = status.substring(4);
+        updateFields[fieldName] = true;
+      } else if (status.startsWith("Unset ")) {
+        const fieldName = status.substring(6);
+        updateFields[fieldName] = false;
+      } else {
+        updateFields.status = status;
+      }
+      return await Order.updateMany({ _id: { $in: ids } }, updateFields);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

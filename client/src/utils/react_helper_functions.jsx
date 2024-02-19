@@ -556,7 +556,7 @@ export const order_status_steps = (order, status) => {
       </div>
       <div
         style={
-          order.isPaid
+          order.status === "paid"
             ? {
                 borderTop: ".3rem white solid",
                 color: "$font_color",

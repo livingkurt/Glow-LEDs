@@ -12,7 +12,7 @@ import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
-import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpers";
+import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 import { Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 import useUserProfilePage from "./useUserProfilePage";
@@ -95,7 +95,7 @@ const ProfilePage = () => {
             <GLTableV2
               remoteApi={ordersRemoteApi}
               tableName={"Orders"}
-              colors={orderColors}
+              colors={Object.values(orderStatusColors)}
               enableSearch={false}
               noURLParams
               determineColor={determineOrderColors}

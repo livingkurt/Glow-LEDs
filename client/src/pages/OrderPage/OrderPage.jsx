@@ -7,15 +7,14 @@ import { Loading, LoadingPayments } from "../../shared/SharedComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import { determineColor } from "../../utils/helpers/order_helpers";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Stripe } from "../../shared/SharedComponents/Stripe";
-import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
 import config from "../../config";
+import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 
 const OrderPage = () => {
   const params = useParams();
@@ -283,8 +282,8 @@ const OrderPage = () => {
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-      ? frame1.contentDocument.document
-      : frame1.contentDocument;
+        ? frame1.contentDocument.document
+        : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(contents);
@@ -320,8 +319,8 @@ const OrderPage = () => {
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-      ? frame1.contentDocument.document
-      : frame1.contentDocument;
+        ? frame1.contentDocument.document
+        : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(`<div style="width: 100%;
@@ -636,7 +635,7 @@ const OrderPage = () => {
             <meta property="og:url" content={"https://www.glow-leds.com/secure/account/order/" + params.id} />
           </Helmet>
           <Loading loading={loading_shipping_rates} />
-          {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
+          {order.status === "paid" ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
           <div className="mb-10px ml-20px jc-b">
             <div>
               {current_user?.isAdmin && (
@@ -709,7 +708,7 @@ const OrderPage = () => {
             <div className="placeorder-info">
               <div
                 style={{
-                  backgroundColor: width > 407 && determineColor(order),
+                  backgroundColor: width > 407 && determineOrderColors(order),
                 }}
               >
                 <div className="column jc-b h-22rem w-25remm mb-1rem">
@@ -717,7 +716,11 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isPaid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.status === "paid" ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </div>
                       <div className="mh-10px">Paid</div>
 
@@ -727,7 +730,7 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isCrafting ? (
+                        {order.status === "crafting" ? (
                           <i className="fas fa-check-circle" />
                         ) : (
                           <i className="fas fa-times-circle" />
@@ -741,7 +744,7 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isCrafted ? (
+                        {order.status === "crafted" ? (
                           <i className="fas fa-check-circle" />
                         ) : (
                           <i className="fas fa-times-circle" />
@@ -755,7 +758,7 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isPackaged ? (
+                        {order.status === "packaged" ? (
                           <i className="fas fa-check-circle" />
                         ) : (
                           <i className="fas fa-times-circle" />
@@ -769,7 +772,7 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isShipped ? (
+                        {order.status === "shipped" ? (
                           <i className="fas fa-check-circle" />
                         ) : (
                           <i className="fas fa-times-circle" />
@@ -783,7 +786,7 @@ const OrderPage = () => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px row">
-                        {order.isDelivered ? (
+                        {order.status === "delivered" ? (
                           <i className="fas fa-check-circle" />
                         ) : (
                           <i className="fas fa-times-circle" />
@@ -798,7 +801,7 @@ const OrderPage = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determineColor(order),
+                  backgroundColor: width > 407 && determineOrderColors(order),
                 }}
               >
                 <div className="mb-1rem">Order #: {order._id}</div>
@@ -852,7 +855,7 @@ const OrderPage = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determineColor(order),
+                  backgroundColor: width > 407 && determineOrderColors(order),
                 }}
               >
                 {order.isRefunded && (
@@ -933,13 +936,13 @@ ${order.shipping.email}`)
 
               <div
                 style={{
-                  backgroundColor: width > 407 && determineColor(order),
+                  backgroundColor: width > 407 && determineOrderColors(order),
                 }}
               >
                 <h2>Payment</h2>
                 <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
                   <p style={{ marginBottom: "0px" }}>
-                    {order.isPaid ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
+                    {order.status === "paid" ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
                   </p>
                 </div>
                 {current_user?.isAdmin && (
@@ -951,14 +954,14 @@ ${order.shipping.email}`)
                 )}
               </div>
             </div>
-            <div className="placeorder-action" style={{ backgroundColor: width > 407 && determineColor(order) }}>
+            <div className="placeorder-action" style={{ backgroundColor: width > 407 && determineOrderColors(order) }}>
               <ul>
                 <li>
                   <h2 style={{ marginTop: 0 }}>Order Summary</h2>
                 </li>
                 <div
                   style={{
-                    backgroundColor: width > 407 && determineColor(order),
+                    backgroundColor: width > 407 && determineOrderColors(order),
                   }}
                 >
                   <ul className="cart-list-container mt-0px">
@@ -1061,7 +1064,7 @@ ${order.shipping.email}`)
                 )}
 
                 <li className="placeorder-actions-payment" style={{ display: "flex", justifyContent: "center" }} />
-                {!order.isPaid && <Stripe pay_order={pay_order} />}
+                {!order.status === "paid" && <Stripe pay_order={pay_order} />}
 
                 {order.promo_code && (
                   <div className="">
@@ -1085,271 +1088,6 @@ ${order.shipping.email}`)
                   </div>
                 )}
               </ul>
-
-              {current_user?.isAdmin && (
-                <div className="column">
-                  <label htmlFor="message_to_user">Message to User</label>
-                  <input
-                    type="text"
-                    // value={message_to_user}
-                    name="message_to_user"
-                    id="message_to_user"
-                    onChange={e => localStorage.setItem("message_to_user", e.target.value)}
-                  />
-                </div>
-              )}
-
-              {current_user?.isAdmin && (
-                <div>
-                  <div className="jc-b">
-                    <div className="column jc-b w-100per mr-1rem">
-                      <OrderStatusButtons
-                        order={order}
-                        update_order_payment_state={update_order_payment_state}
-                        update_order_state={update_order_state}
-                        send_order_email={send_order_email}
-                        send_refund_email={send_refund_email}
-                      />
-                    </div>
-                    <div className="column jc-b w-100per">
-                      {order.shipping.shipping_label && (
-                        <GLButton variant="secondary" className="mv-5px" onClick={() => view_label()}>
-                          Print Label
-                        </GLButton>
-                      )}
-                      {current_user?.isAdmin && (
-                        <GLButton variant="secondary" className="w-100per mv-5px " onClick={get_invoice}>
-                          Print Invoice
-                        </GLButton>
-                      )}
-                      {hide_label_button && !order.shipping.shipping_label && (
-                        <GLButton variant="primary" className="mv-5px" onClick={() => buy_label()}>
-                          Buy Label
-                        </GLButton>
-                      )}
-                      <GLButton variant="secondary" className="mv-5px">
-                        <Link to={"/secure/glow/editorder/" + order._id}>Edit Order</Link>
-                      </GLButton>
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => dispatch(API.deleteOrder(order._id))}
-                      >
-                        Delete Order
-                      </GLButton>
-                      {hide_label_button && (
-                        <GLButton variant="secondary" className="mv-5px" onClick={e => get_shipping_rates(e)}>
-                          Change Shipping Speed
-                        </GLButton>
-                      )}
-                      {hide_label_button &&
-                        shipping_rates &&
-                        shipping_rates.map((rate, index) => {
-                          return (
-                            <div className=" mv-1rem jc-b  ai-c" key={index}>
-                              <div className="shipping_rates jc-b w-100per wrap ">
-                                <div className="service">{rate.carrier}</div>
-                                <div className="service">{rate.service}</div>
-
-                                <div>${parseFloat(rate.rate).toFixed(2)}</div>
-                                <div>
-                                  {rate.delivery_days} {rate.delivery_days === 1 ? "Day" : "Days"}
-                                </div>
-                              </div>
-                              <GLButton className="rates" onClick={e => choose_shipping_rate(e, rate, rate.service)}>
-                                Select
-                              </GLButton>
-                            </div>
-                          );
-                        })}
-                      {!hide_label_button && rate && (
-                        <div className=" mv-1rem jc-b ai-c w-100per">
-                          <div className="shipping_rates jc-b w-100per ">
-                            <div>
-                              {rate.speed} ${parseFloat(rate.rate.rate)}
-                              {rate.rate.delivery_days} {rate.rate.delivery_days === 1 ? "Day" : "Days"}
-                            </div>
-                          </div>
-                          <GLButton className="rates w-10rem" onClick={e => re_choose_shipping_rate(e)}>
-                            Change
-                          </GLButton>
-                        </div>
-                      )}
-                      {!hide_label_button && (
-                        <GLButton variant="primary" className="mv-5px" onClick={() => buy_new_speed_label()}>
-                          Buy New Speed Label
-                        </GLButton>
-                      )}
-
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("first")}>
-                        {!order.shipping.shipping_label ? "Create First Class Label" : "Create First Class New Label"}
-                      </GLButton>
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("priority")}>
-                        {!order.shipping.shipping_label ? "Create Priority Label" : "Create New Prioirty Label"}
-                      </GLButton>
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("express")}>
-                        {!order.shipping.shipping_label ? "Create Express Label" : "Create New Express Label"}
-                      </GLButton>
-
-                      {!order.shipping.return_shipping_label && (
-                        <GLButton variant="secondary" className="mv-5px" onClick={() => create_return_label()}>
-                          Create Return Label
-                        </GLButton>
-                      )}
-                      {order.shipping.return_shipping_label && (
-                        <GLButton variant="secondary" className="mv-5px" onClick={() => view_return_label()}>
-                          View Return Label
-                        </GLButton>
-                      )}
-                      {/* {order.shipping.return_shipping_label && (
-												<GLButton
-													variant="secondary" className="mv-5px w-100per"
-													onClick={(e) =>
-														download_return_label(
-															order.shipping.return_shipping_label.postage_label
-																.label_url,
-															'Return Label',
-															e
-														)}
-												>
-													Download Return Label
-												</GLButton>
-											)} */}
-                      {order.shipping.return_shipping_label && (
-                        <a
-                          href={order.shipping.return_shipping_label.postage_label?.label_url}
-                          style={{ width: "100%" }}
-                          target="_blank"
-                          rel="noreferrer"
-                          download={order.shipping.return_shipping_label.postage_label?.label_url}
-                        >
-                          <GLButton variant="secondary" className="mv-5px w-100per">
-                            Download Return Label
-                          </GLButton>
-                        </a>
-                      )}
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => create_duplicate_order(order._id)}
-                      >
-                        Create Duplicate Order
-                      </GLButton>
-
-                      {/* <GLButton
-										variant="primary" className="mv-5px "
-										onClick={() =>
-											update_order_state(
-												order,
-												order.isCrafted,
-												'isCrafted',
-												'craftedAt'
-											)}
-									>
-										{order.isCrafted ? 'Unset to Crafted' : 'Set to Crafted'}
-									</GLButton>
-									<GLButton
-										variant="primary" className="mv-5px "
-										onClick={() =>
-											update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
-									>
-										{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-									</GLButton>
-									<GLButton
-										variant="primary" className="mv-5px "
-										onClick={() =>
-											update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
-									>
-										{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-									</GLButton>
-									<GLButton
-										variant="primary" className="mv-5px "
-										onClick={() =>
-											update_order_state(order, order.isDelivered, 'isDelivered', 'deliveredAt')}
-									>
-										{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-									</GLButton>
-									<GLButton variant="primary">
-										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-									</GLButton> */}
-                    </div>
-                  </div>
-                  {/* {current_user?.isAdmin && (
-                    <div className="mv-10px">
-                      <label htmlFor="promo_code">Promo Code</label>
-                      <form onSubmit={e => check_code(e)} className="row">
-                        <input
-                          type="text"
-                          name="promo_code"
-                          id="promo_code"
-                          className="w-100per"
-                          style={{
-                            textTransform: "uppercase"
-                          }}
-                          onChange={e => {
-                            set_promo_code(e.target.value.toUpperCase());
-                          }}
-                        />
-                        <GLButton
-                          type="submit"
-                          variant="primary"
-                          style={{
-                            curser: "pointer"
-                          }}
-                        >
-                          Apply
-                        </GLButton>
-                      </form>
-                    </div>
-                  )} */}
-                  <div className="mv-10px">
-                    <label htmlFor="refund_amount">Refund Amount</label>
-                    <div className="row">
-                      <input
-                        type="text"
-                        value={refund_amount}
-                        name="refund_amount"
-                        id="refund_amount"
-                        className="w-100per"
-                        onChange={e => set_refund_amount(e.target.value)}
-                      />
-                    </div>
-                    <div className="mv-10px">
-                      <label htmlFor="refund_reason">Refund Reason</label>
-                      <div className="row">
-                        <input
-                          type="text"
-                          value={refund_reason}
-                          name="refund_reason"
-                          id="refund_reason"
-                          className="w-100per"
-                          onChange={e => set_refund_reason(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="">
-                      <GLButton
-                        variant="primary"
-                        className="mv-5px w-100per"
-                        onClick={() => update_refund_state(refund_amount)}
-                      >
-                        Refund Partial Amount
-                      </GLButton>
-                      <GLButton
-                        variant="primary"
-                        className="mv-5px w-100per"
-                        onClick={() => update_refund_state(order.totalPrice)}
-                      >
-                        Refund Full Amount
-                      </GLButton>
-
-                      <GLButton variant="secondary" className="mv-5px w-100per">
-                        <Link to={"/secure/glow/emails/order/" + order._id + "/order/false"}>View Email</Link>
-                      </GLButton>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

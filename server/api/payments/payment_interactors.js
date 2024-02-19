@@ -67,7 +67,7 @@ export const confirmPaymentIntent = async (result, paymentMethodId) => {
 // Function to confirm a payment intent
 export const updateOrder = async (order, confirmedPayment, paymentMethod) => {
   try {
-    order.isPaid = true;
+    order.status = "paid";
     order.paidAt = Date.now();
     order.payment = {
       paymentMethod: "stripe",

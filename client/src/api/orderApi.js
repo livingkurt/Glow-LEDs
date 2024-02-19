@@ -229,6 +229,19 @@ export const deleteMultipleOrders = createAsyncThunk(
   }
 );
 
+export const updateMultipleOrderStatus = createAsyncThunk(
+  "orders/deleteMultipleOrders",
+  async ({ ids, status }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/orders/glow/update_multiple_status`, { ids, status });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const refundOrder = createAsyncThunk(
   "orders/refundOrder",
   async ({ orderId, refundAmount, refundReason }, { dispatch, rejectWithValue }) => {

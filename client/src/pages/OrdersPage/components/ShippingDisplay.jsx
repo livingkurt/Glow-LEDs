@@ -54,23 +54,23 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Carrier:{" "}
+                Carrier:
               </Typography>
               <Typography component="label" className=" mv-0px">
-                {shipping.shipping_rate.carrier}{" "}
+                {shipping.shipping_rate.carrier}
               </Typography>
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Speed:{" "}
+                Speed:
               </Typography>
               <Typography component="label" className=" mv-0px">
-                {toTitleCaseSnakeCase(shipping.shipping_rate.service)}{" "}
+                {toTitleCaseSnakeCase(shipping.shipping_rate.service)}
               </Typography>
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Delivery Time:{" "}
+                Delivery Time:
               </Typography>
               <Typography component="label" className=" mv-0px">
                 {determine_service(shipping.shipping_rate)}
@@ -78,7 +78,7 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Rate:{" "}
+                Rate:
               </Typography>
               <Typography component="label" className=" mv-0px">
                 ${shipping.shipping_rate.retail_rate || shipping.shipping_rate.rate}

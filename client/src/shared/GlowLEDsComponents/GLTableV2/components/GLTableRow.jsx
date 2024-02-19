@@ -84,11 +84,13 @@ const GLTableRow = ({
           },
           "&.Mui-selected": {
             backgroundColor: `${
-              determineColor ? darken(determineColor(row), 0.3) : darken(tableColors.active, 0.3)
+              determineColor ? darken(determineColor(row) || tableColors.active, 0.3) : darken(tableColors.active, 0.3)
             } !important`,
             "&:hover": {
               backgroundColor: `${
-                determineColor ? darken(determineColor(row), 0.5) : darken(tableColors.active, 0.3)
+                determineColor
+                  ? darken(determineColor(row) || tableColors.active, 0.5)
+                  : darken(tableColors.active, 0.3)
               } !important`,
             },
           },

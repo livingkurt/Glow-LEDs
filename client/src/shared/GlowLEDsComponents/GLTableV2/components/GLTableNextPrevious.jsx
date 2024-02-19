@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { updatePage } from "../actions/actions";
 import { pageItems, selectedPage, totalPages } from "../glTableHelpers";
 
-const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, location, droppableId }) => {
+const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
   const dispatch = useDispatch();
 
   const handleFirstPageButtonClick = () => {
@@ -96,16 +96,12 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage, locati
   );
 };
 
-CovalentTableNextPrevious.defaultProps = {
-  droppableId: null,
-};
 CovalentTableNextPrevious.propTypes = {
   count: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
-  droppableId: PropTypes.string,
 };
 
 export default CovalentTableNextPrevious;

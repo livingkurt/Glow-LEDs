@@ -83,8 +83,7 @@ const GLAutocomplete = ({
               className={customClasses?.outlinedInput}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
               sx={{
-                backgroundColor: "white", // This changes the background color
-                "& .MuiFilledInput-root": {
+                "& .MuiInputBase-root": {
                   backgroundColor: "white", // This also ensures the filled variant has a white background
                 },
               }}
