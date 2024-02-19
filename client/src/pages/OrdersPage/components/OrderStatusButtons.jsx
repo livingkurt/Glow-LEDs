@@ -6,7 +6,7 @@ import { toCapitalize, toTitleCase } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import config from "../../../config";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { OrderStatusEnum, nextStatus } from "../ordersPageHelpers";
+import { orderStatusColors, nextStatus } from "../ordersPageHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
 const OrderStatusButtons = ({ order }) => {
@@ -18,7 +18,7 @@ const OrderStatusButtons = ({ order }) => {
     let updatePayload = { ...order };
 
     // Handling primary status changes with corresponding date fields
-    if (Object.keys(OrderStatusEnum).includes(status.toUpperCase())) {
+    if (Object.keys(orderStatusColors).includes(status.toUpperCase())) {
       if (order.status !== status) {
         updatePayload = { ...updatePayload, status, [`${status}At`]: new Date() };
       }
@@ -66,13 +66,13 @@ const OrderStatusButtons = ({ order }) => {
   const send_order_status_email = async status => {
     // Email sending logic remains unchanged
     const emailSubject =
-      status in OrderStatusEnum ? "Your Order has been " + toCapitalize(status) + "!" : "Order Update";
+      status in orderStatusColors ? "Your Order has been " + orderStatusColors[status] + "!" : "Order Update";
     const emailMessageToUser = ""; // Define your message to the user here
 
     await API_Emails.send_order_status_email(order, emailSubject, order.shipping.email, status, emailMessageToUser);
     await API_Emails.send_order_status_email(
       order,
-      `${order.shipping.first_name}'s Order has been ${toCapitalize(status)}!`,
+      `${order.shipping.first_name}'s Order has been ${orderStatusColors[status]}!`,
       config.REACT_APP_INFO_EMAIL,
       status,
       emailMessageToUser
@@ -104,24 +104,43 @@ const OrderStatusButtons = ({ order }) => {
                 </Box>
               </Grid>
             )}
-            {order.status !== "paid" && order.status !== "shipped" && order.status !== "canceled" && (
+            {order.status === "packaged" && (
               <Grid item xs={12}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                  onClick={() => updateOrder(nextStatus(order.status), true)}
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  border="1px solid"
+                  borderRadius={1}
+                  p={1}
                 >
-                  Set Status to {nextStatus(order.status, true)}
-                </Button>
+                  <Typography variant="h3" fontSize={16} textAlign="center">
+                    Will Change to Shipped
+                  </Typography>
+                </Box>
               </Grid>
             )}
+            {order.status !== "paid" &&
+              order.status !== "shipped" &&
+              order.status !== "canceled" &&
+              order.status !== "packaged" && (
+                <Grid item xs={12}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    onClick={() => updateOrder(nextStatus(order.status), true)}
+                  >
+                    Set Status to {nextStatus(order.status, true)}
+                  </Button>
+                </Grid>
+              )}
             <Grid item xs={12}>
               <div className="mt-n15px mb-n5px">
                 <GLAutocomplete
                   value={order.status}
                   variant={"filled"}
-                  options={Object.values(OrderStatusEnum)}
+                  options={Object.keys(orderStatusColors)}
                   optionDisplay={option => toTitleCase(option)}
                   getOptionLabel={option => toTitleCase(option)}
                   fullWidth
@@ -142,6 +161,11 @@ const OrderStatusButtons = ({ order }) => {
           </Grid>
         )}
         <Grid item xs={12}>
+          <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_status_email(order.status)}>
+            Send {order.status} Status Email
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
           <Button
             color="secondary"
             variant="contained"
@@ -151,6 +175,7 @@ const OrderStatusButtons = ({ order }) => {
             {order.isUpdated ? "Unset" : "Set"} to Updated
           </Button>
         </Grid>
+
         <Grid item xs={12}>
           <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("prioritized", false)}>
             {order.isPrioritized ? "Unset" : "Set"} to Prioritized

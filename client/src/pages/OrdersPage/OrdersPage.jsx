@@ -9,13 +9,7 @@ import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@mui/material";
-import {
-  OrderStatusColors,
-  OrderStatusEnum,
-  determineOrderColors,
-  duplicateOrder,
-  sinceOrdered,
-} from "./ordersPageHelpers";
+import { orderStatusColors, determineOrderColors, duplicateOrder, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -195,7 +189,7 @@ const OrdersPage = () => {
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}
         searchPlaceholder={"Search by ID, Name, Email, #code"}
-        colors={Object.values(OrderStatusColors)}
+        colors={Object.values(orderStatusColors)}
         determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
@@ -214,7 +208,7 @@ const OrdersPage = () => {
                 value={order.status}
                 variant={"outlined"}
                 options={[
-                  ...Object.values(OrderStatusEnum),
+                  ...Object.keys(orderStatusColors),
                   "Set isRefunded",
                   "Set isUpdated",
                   "Set isReassured",

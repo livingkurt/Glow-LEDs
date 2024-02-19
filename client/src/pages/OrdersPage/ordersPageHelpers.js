@@ -3,7 +3,7 @@ import { daysBetween, determine_total } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 
-export const OrderStatusColors = {
+export const orderStatusColors = {
   unpaid: { name: "Unpaid", color: "#6d3e3e" },
   paid: { name: "Paid", color: "#3e4c6d" },
   label_created: { name: "Label Created", color: "#276e64" },
@@ -19,7 +19,7 @@ export const OrderStatusColors = {
 };
 
 export const determineOrderColors = order => {
-  let result = OrderStatusColors[order.status]?.color;
+  let result = orderStatusColors[order.status]?.color;
 
   if (order.isUpdated) {
     result = "#3a5363";
@@ -415,21 +415,6 @@ export const handlePromoCode = (value, order, dispatch) => {
   }
 };
 
-export const OrderStatusEnum = {
-  UNPAID: "unpaid",
-  PAID: "paid",
-  LABEL_CREATED: "label_created",
-  CRAFTING: "crafting",
-  CRAFTED: "crafted",
-  PACKAGED: "packaged",
-  SHIPPED: "shipped",
-  IN_TRANSIT: "in_transit",
-  OUT_FOR_DELIVERY: "out_for_delivery",
-  DELIVERED: "delivered",
-  RETURN_LABEL_CREATED: "return_label_created",
-  CANCELED: "canceled",
-};
-
 export const nextStatus = (status, titleCase = false) => {
   switch (status) {
     case "unpaid":
@@ -440,8 +425,6 @@ export const nextStatus = (status, titleCase = false) => {
       return titleCase ? "Crafted" : "crafted";
     case "crafted":
       return titleCase ? "Packaged" : "packaged";
-    case "packaged":
-      return titleCase ? "Shipped" : "shipped";
     default:
       return titleCase ? "Unpaid" : "unpaid";
   }

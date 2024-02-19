@@ -117,41 +117,47 @@ const MetaDataDisplay = ({ row }) => {
         </Typography>
       </Grid>
       {row.tracking_number && (
-        <Grid item xs={12}>
-          <label className="phrase_font">Tracking Number: </label>
-
-          <a
-            href={row.tracking_url ? row.tracking_url : determine_tracking_link(row.tracking_number)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mv-2rem"
-            style={{
-              textDecoration: "underline",
-              color: "white",
-            }}
-          >
-            {row.tracking_number}
-          </a>
+        <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+          <Typography component="label" className="mv-0px mr-5px">
+            Tracking Number:
+          </Typography>
+          <Typography component="label" className=" mv-0px">
+            <a
+              href={row.tracking_url ? row.tracking_url : determine_tracking_link(row.tracking_number)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mv-2rem"
+              style={{
+                textDecoration: "underline",
+                color: "white",
+              }}
+            >
+              {row.tracking_number}
+            </a>
+          </Typography>
         </Grid>
       )}
       {row.return_tracking_number && (
-        <Grid item xs={12}>
-          <label className="phrase_font">Return Tracking Number: </label>
-
-          <a
-            href={
-              row.return_tracking_url ? row.return_tracking_url : determine_tracking_link(row.return_tracking_number)
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mv-2rem"
-            style={{
-              textDecoration: "underline",
-              color: "white",
-            }}
-          >
-            {row.return_tracking_number}
-          </a>
+        <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+          <Typography component="label" className="mv-0px mr-5px">
+            Return Tracking Number:{" "}
+          </Typography>
+          <Typography component="label" className=" mv-0px">
+            <a
+              href={
+                row.return_tracking_url ? row.return_tracking_url : determine_tracking_link(row.return_tracking_number)
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mv-2rem"
+              style={{
+                textDecoration: "underline",
+                color: "white",
+              }}
+            >
+              {row.return_tracking_number}
+            </a>
+          </Typography>
         </Grid>
       )}
       <Grid item xs={12}>
