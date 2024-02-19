@@ -66,13 +66,15 @@ const OrderStatusButtons = ({ order }) => {
   const send_order_status_email = async status => {
     // Email sending logic remains unchanged
     const emailSubject =
-      status in orderStatusColors ? "Your Order has been " + orderStatusColors[status] + "!" : "Order Update";
+      status in orderStatusColors
+        ? `Your Order has ${status === "crafting" ? "begun" : "been"} ${orderStatusColors[status].name}!`
+        : "Order Update";
     const emailMessageToUser = ""; // Define your message to the user here
 
     await API_Emails.send_order_status_email(order, emailSubject, order.shipping.email, status, emailMessageToUser);
     await API_Emails.send_order_status_email(
       order,
-      `${order.shipping.first_name}'s Order has been ${orderStatusColors[status]}!`,
+      `${order.shipping.first_name}'s Order has ${status === "crafting" ? "begun" : "been"} ${orderStatusColors[status].name}!`,
       config.REACT_APP_INFO_EMAIL,
       status,
       emailMessageToUser
@@ -120,21 +122,18 @@ const OrderStatusButtons = ({ order }) => {
                 </Box>
               </Grid>
             )}
-            {order.status !== "paid" &&
-              order.status !== "shipped" &&
-              order.status !== "canceled" &&
-              order.status !== "packaged" && (
-                <Grid item xs={12}>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    fullWidth
-                    onClick={() => updateOrder(nextStatus(order.status), true)}
-                  >
-                    Set Status to {nextStatus(order.status, true)}
-                  </Button>
-                </Grid>
-              )}
+            {(order.status === "label_created" || order.status === "crafted" || order.status === "crafting") && (
+              <Grid item xs={12}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                  onClick={() => updateOrder(nextStatus(order.status), true)}
+                >
+                  Set Status to {nextStatus(order.status, true)}
+                </Button>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <div className="mt-n15px mb-n5px">
                 <GLAutocomplete
@@ -160,11 +159,23 @@ const OrderStatusButtons = ({ order }) => {
             </Button>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_status_email(order.status)}>
-            Send {order.status} Status Email
-          </Button>
-        </Grid>
+        {(order.status === "paid" ||
+          order.status === "shipped" ||
+          order.status === "crafted" ||
+          order.status === "crafting" ||
+          order.status === "shipped" ||
+          order.status === "packaged") && (
+          <Grid item xs={12}>
+            <Button
+              color="secondary"
+              variant="contained"
+              fullWidth
+              onClick={() => send_order_status_email(order.status)}
+            >
+              Send {toTitleCase(order.status)} Status Email
+            </Button>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Button
             color="secondary"

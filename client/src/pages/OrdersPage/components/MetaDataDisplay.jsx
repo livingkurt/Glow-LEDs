@@ -53,7 +53,7 @@ const MetaDataDisplay = ({ row }) => {
 
     dispatch(set_loading_label(false));
   };
-  const totalRefundAmount = row?.payment?.refund.reduce((a, c) => a + c.amount, 0) / 100;
+  const totalRefundAmount = row?.payment?.refund ? row?.payment?.refund?.reduce((a, c) => a + c.amount, 0) / 100 : 0;
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -119,7 +119,7 @@ const MetaDataDisplay = ({ row }) => {
       {row.tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
-            Tracking Number:
+            Tracking #:
           </Typography>
           <Typography component="label" className=" mv-0px">
             <a
@@ -140,7 +140,7 @@ const MetaDataDisplay = ({ row }) => {
       {row.return_tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
-            Return Tracking Number:{" "}
+            Return Tracking #:{" "}
           </Typography>
           <Typography component="label" className=" mv-0px">
             <a
