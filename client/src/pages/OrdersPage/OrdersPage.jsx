@@ -9,7 +9,13 @@ import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@mui/material";
-import { orderStatusColors, determineOrderColors, duplicateOrder, sinceOrdered } from "./ordersPageHelpers";
+import {
+  orderStatusColors,
+  determineOrderColors,
+  duplicateOrder,
+  sinceOrdered,
+  orderExceptionStatusColors,
+} from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -189,7 +195,7 @@ const OrdersPage = () => {
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}
         searchPlaceholder={"Search by ID, Name, Email, #code"}
-        colors={Object.values(orderStatusColors)}
+        colors={[...Object.values(orderExceptionStatusColors), ...Object.values(orderStatusColors)]}
         determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
@@ -209,14 +215,16 @@ const OrdersPage = () => {
                 variant={"outlined"}
                 options={[
                   ...Object.keys(orderStatusColors),
-                  "Set isRefunded",
-                  "Set isUpdated",
-                  "Set isReassured",
+                  "Set isPrioritized",
                   "Set isPaused",
-                  "Unset isRefunded",
-                  "Unset isUpdated",
-                  "Unset isReassured",
+                  "Set isUpdated",
+                  "Set isRefunded",
+                  "Set isReassured",
+                  "Unset isPrioritized",
                   "Unset isPaused",
+                  "Unset isUpdated",
+                  "Unset isRefunded",
+                  "Unset isReassured",
                 ]}
                 optionDisplay={option => toTitleCase(option)}
                 getOptionLabel={option => toTitleCase(option)}
