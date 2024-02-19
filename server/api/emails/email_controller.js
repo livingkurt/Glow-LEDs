@@ -622,7 +622,7 @@ export default {
         } else if (tracker.status === "out_for_delivery") {
           updateOrder("out_for_delivery");
         } else if (order.status === "shipped" && tracker.status === "in_transit") {
-          updateOrder("in_ransit");
+          updateOrder("in_transit");
         } else if (tracker.status === "in_transit") {
           updateOrder("shipped");
         }
