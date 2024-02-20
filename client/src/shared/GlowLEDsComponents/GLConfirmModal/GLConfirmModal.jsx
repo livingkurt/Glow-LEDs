@@ -1,30 +1,58 @@
-import React from "react";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  TextField,
+  Grid,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeConfirm } from "../../../slices/snackbarSlice";
 
 const GLConfirmModal = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector(state => state.snackbar);
-  const { confirmModal, confirmTitle, confirmMessage, onConfirm } = snackbar;
+  const { confirmModal, confirmTitle, confirmMessage, onConfirm, confirmInputLabel } = snackbar;
+  const [inputText, setInputText] = useState("");
+
+  const handleConfirm = () => {
+    dispatch(closeConfirm(false));
+    onConfirm(inputText);
+  };
 
   return (
-    <Dialog open={confirmModal} onClose={() => dispatch(closeConfirm(false))}>
+    <Dialog open={confirmModal} onClose={() => dispatch(closeConfirm(false))} maxWidth="md">
       <DialogTitle>{confirmTitle}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{confirmMessage}</DialogContentText>
+        <Grid container spacing={2}>
+          {confirmMessage && (
+            <Grid item xs={12}>
+              <DialogContentText>{confirmMessage}</DialogContentText>
+            </Grid>
+          )}
+
+          {confirmInputLabel && (
+            <Grid item xs={12} mt={2}>
+              <TextField
+                value={inputText}
+                onChange={e => setInputText(e.target.value)}
+                label={confirmInputLabel}
+                fullWidth
+                multiline
+                style={{ width: 800 }}
+              />
+            </Grid>
+          )}
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => dispatch(closeConfirm(false))} color="primary">
           No
         </Button>
-        <Button
-          onClick={() => {
-            dispatch(closeConfirm(false));
-            onConfirm();
-          }}
-          color="primary"
-        >
+        <Button onClick={handleConfirm} color="primary">
           Yes
         </Button>
       </DialogActions>

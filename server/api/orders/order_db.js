@@ -59,15 +59,9 @@ export default {
 
       const limitStage = { $limit: limitAmount };
       const skipStage = { $skip: skipAmount };
+
       // Construct the aggregation pipeline
-      const pipeline = [
-        { $match: filter },
-        customSortStage,
-        existingSortStage,
-        skipStage,
-        limitStage,
-        // Add $lookup stages for population if necessary
-      ];
+      const pipeline = [{ $match: filter }, customSortStage, existingSortStage, skipStage, limitStage];
 
       // Execute the aggregation pipeline
       return await Order.aggregate(pipeline).exec();

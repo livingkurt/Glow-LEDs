@@ -27,7 +27,6 @@ const OrderStatusButtons = ({ order }) => {
       switch (status) {
         case "updated":
           updatePayload.isUpdated = !order.isUpdated;
-          updatePayload.updatedAt = new Date();
           break;
         case "reassured":
           updatePayload.isReassured = !order.isReassured;

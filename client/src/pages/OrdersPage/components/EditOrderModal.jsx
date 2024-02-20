@@ -14,6 +14,7 @@ import {
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useProductsQuery } from "../../../api/allRecordsApi";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const EditOrderModal = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { edit_order_modal, order, loading } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users } = userPage;
+  const { users, loading: loading_users, current_user } = userPage;
 
   // const productsPage = useSelector(state => state.products.productsPage);
   // const { products } = productsPage;
@@ -57,7 +58,27 @@ const EditOrderModal = () => {
       <GLActionModal
         isOpen={edit_order_modal}
         onConfirm={() => {
-          dispatch(API.saveOrder({ ...order, isUpdated: true, updatedAt: new Date() }));
+          dispatch(
+            showConfirm({
+              title: "Update Change Log",
+              inputLabel: "Describe the change you made to order",
+              onConfirm: inputText =>
+                dispatch(
+                  API.saveOrder({
+                    ...order,
+                    isUpdated: true,
+                    change_log: [
+                      ...order.change_log,
+                      {
+                        change: inputText,
+                        changedAt: new Date(),
+                        changedBy: current_user,
+                      },
+                    ],
+                  })
+                ),
+            })
+          );
         }}
         onCancel={() => {
           dispatch(set_edit_order_modal(false));
