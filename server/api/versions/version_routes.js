@@ -29,7 +29,10 @@ router.post("/create", async (req, res) => {
 });
 router.put("/increment", async (req, res) => {
   try {
-    const version = await Version.findOne();
+    let version = await Version.findOne();
+    if (!version) {
+      version = await Version.create({ version: 1 });
+    }
     await Version.updateOne({ _id: version._id }, { version: version.version + 1 });
     res.json({ version: version.version + 1 });
   } catch (err) {

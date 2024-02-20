@@ -9,7 +9,8 @@ import config from "./config";
 const cors = require("cors");
 const passport = require("passport");
 const compression = require("compression");
-import { Server } from "socket.io";
+import { createServer } from "http";
+import { Server as SocketIOServer } from "socket.io";
 import { google } from "googleapis"; // Import Google's OAuth libraries
 
 const Bugsnag = require("@bugsnag/js");
@@ -59,13 +60,13 @@ mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error)
 
 const app = express();
 
-const io = new Server({
+const server = createServer(app); // Attach Express to HTTP Server
+const io = new SocketIOServer(server, {
   cors: {
     origin: ["http://localhost:3000", "https://glow-leds.com", "https://glow-leds-dev.herokuapp.com"],
+    credentials: true,
   },
 });
-
-io.listen(4000);
 
 app.all("*", function (req, res, next) {
   const origin = req.get("origin");
@@ -89,12 +90,10 @@ app.use(passport.initialize());
 
 io.on("connection", socket => {
   console.log("a user connected");
-  socket.emit("testEvent", { msg: "Hello from server" });
 });
 
 app.use((req, res, next) => {
   req.io = io;
-  console.log("Middleware to attach io to req is running");
   next();
 });
 require("./passport")(passport);
@@ -115,7 +114,7 @@ app.use(bugsnagMiddleware.errorHandler);
 
 initializeAllOAuthClients()
   .then(() => {
-    app.listen(config.PORT, () => {
+    server.listen(config.PORT, () => {
       console.log(`Server listening on port ${config.PORT}`);
     });
   })
@@ -123,9 +122,6 @@ initializeAllOAuthClients()
     console.error("Failed to initialize OAuth clients", error);
     process.exit(1);
   });
-// app.listen(config.PORT, () => {
-//   console.log(`Server listening on port ${config.PORT}`);
-// });
 
 app.get("/api/bugsnag-test", function (req, res) {
   Bugsnag.notify(new Error("Test error"));

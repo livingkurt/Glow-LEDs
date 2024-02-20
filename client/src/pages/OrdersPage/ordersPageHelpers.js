@@ -437,5 +437,14 @@ export const nextStatus = (status, titleCase = false) => {
   }
 };
 
-const URL = process.env.NODE_ENV === "production" ? "https://glow-leds.com" : "http://localhost:4000";
-export const socket = io(URL, { autoConnect: false });
+const URL = () => {
+  switch (config.ENVIRONMENT) {
+    case "production":
+      return "https://glow-leds.com";
+    case "staging":
+      return "https://glow-leds-dev.herokuapp.com";
+    default:
+      return "http://localhost:8080";
+  }
+};
+export const socket = io(URL(), { autoConnect: false });
