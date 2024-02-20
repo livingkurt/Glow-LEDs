@@ -128,6 +128,13 @@ const messageSchema = {
   deleted: { type: Boolean, default: false },
 };
 
+const changeLogSchema = {
+  change: { type: String },
+  changedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  changedAt: { type: Date },
+  deleted: { type: Boolean, default: false },
+};
+
 const OrderStatusEnum = {
   UNPAID: "unpaid",
   PAID: "paid",
@@ -187,22 +194,9 @@ const orderSchema = new mongoose.Schema(
     deliveredAt: { type: Date },
     status: { type: String, enum: Object.values(OrderStatusEnum), default: OrderStatusEnum.UNPAID },
     guest: { type: Boolean, default: false },
-    // Old Statuses
-    isPaid: { type: Boolean, default: false },
-    isPickup: { type: Boolean, default: false },
-    isReassured: { type: Boolean, default: false },
-    isUpdated: { type: Boolean, default: false },
-    isManufactured: { type: Boolean, default: false },
-    isCrafting: { type: Boolean, default: false },
-    isCrafted: { type: Boolean, default: false },
-    isPackaged: { type: Boolean, default: false },
-    isShipped: { type: Boolean, default: false },
-    isInTransit: { type: Boolean, default: false },
-    isOutForDelivery: { type: Boolean, default: false },
-    isDelivered: { type: Boolean, default: false },
-    //
     parcel: { type: mongoose.Schema.Types.ObjectId, ref: "Parcel" },
     order_note: { type: String },
+    change_log: [changeLogSchema],
     production_note: { type: String },
     tip: { type: Number },
     promo_code: { type: String },

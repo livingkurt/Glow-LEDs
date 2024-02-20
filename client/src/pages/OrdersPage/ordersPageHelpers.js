@@ -434,3 +434,14 @@ export const nextStatus = (status, titleCase = false) => {
       return titleCase ? "Unpaid" : "unpaid";
   }
 };
+
+export const determineSetToIsUpdated = status => {
+  switch (status) {
+    case "unpaid":
+      return false;
+    case "paid":
+      return false;
+    default:
+      return true;
+  }
+};

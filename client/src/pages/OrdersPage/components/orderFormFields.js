@@ -54,11 +54,6 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
         "delivered",
       ],
     },
-
-    paidAt: {
-      type: "date",
-      label: "Paid At",
-    },
     isReassured: {
       type: "checkbox",
       label: "Is Reassured",
@@ -68,6 +63,36 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
       type: "date",
       label: "Reassured At",
     },
+    isPaused: {
+      type: "checkbox",
+      label: "Is Paused",
+      default: false,
+    },
+    pausedAt: {
+      type: "date",
+      label: "Paused At",
+    },
+
+    isUpdated: {
+      type: "checkbox",
+      label: "Is Updated",
+      default: false,
+    },
+
+    isRefunded: {
+      type: "checkbox",
+      label: "Is Refunded",
+      default: false,
+    },
+    refundedAt: {
+      type: "date",
+      label: "Refunded At",
+    },
+    paidAt: {
+      type: "date",
+      label: "Paid At",
+    },
+
     craftingAt: {
       type: "date",
       label: "Crafting At",
@@ -107,35 +132,7 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
       type: "date",
       label: "Pickup At",
     },
-    isPaused: {
-      type: "checkbox",
-      label: "Is Paused",
-      default: false,
-    },
-    pausedAt: {
-      type: "date",
-      label: "Paused At",
-    },
 
-    isUpdated: {
-      type: "checkbox",
-      label: "Is Updated",
-      default: false,
-    },
-    updatedAt: {
-      type: "date",
-      label: "Updated At",
-    },
-
-    isRefunded: {
-      type: "checkbox",
-      label: "Is Refunded",
-      default: false,
-    },
-    refundedAt: {
-      type: "date",
-      label: "Refunded At",
-    },
     order_note: {
       type: "text",
       label: "Order Note",

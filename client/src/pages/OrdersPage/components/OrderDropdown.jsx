@@ -1,4 +1,4 @@
-import { Grid, TableCell, TableRow } from "@mui/material";
+import { Box, Grid, Paper, TableCell, TableRow, Typography } from "@mui/material";
 import ShippingDisplay from "./ShippingDisplay";
 import MetaDataDisplay from "./MetaDataDisplay";
 import OrderActionButtons from "./OrderActionButtons";
@@ -20,6 +20,32 @@ const OrderDropdown = ({ row, determineColor, colspan }) => {
           </Grid>
           <Grid item xs={3}>
             <OrderStatusButtons order={row} />
+          </Grid>
+          <Grid item xs={12}>
+            {row.change_log && row.change_log.length > 0 && (
+              <>
+                <Typography variant="h6">Change Log</Typography>
+                {row.change_log
+                  .sort((a, b) => new Date(b.changedAt) - new Date(a.changedAt))
+                  .map((log, i) => (
+                    <Paper>
+                      <Box key={i} mt={2} p={2} display="flex" flexDirection="row">
+                        <Typography variant="body1">
+                          {new Date(log.changedAt).toLocaleString("en-US", {
+                            month: "2-digit",
+                            day: "2-digit",
+                            year: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })}{" "}
+                          - Changed By - {log.changedBy} - Change Description: {log.change}
+                        </Typography>
+                      </Box>
+                    </Paper>
+                  ))}
+              </>
+            )}
           </Grid>
         </Grid>
       </TableCell>
