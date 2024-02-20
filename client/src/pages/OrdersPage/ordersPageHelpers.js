@@ -2,6 +2,8 @@ import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHe
 import { daysBetween, determine_total } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
+import config from "../../config";
+import { io } from "socket.io-client";
 
 export const orderStatusColors = {
   unpaid: { name: "Unpaid", color: "#6d3e3e" },
@@ -434,3 +436,6 @@ export const nextStatus = (status, titleCase = false) => {
       return titleCase ? "Unpaid" : "unpaid";
   }
 };
+
+const URL = process.env.NODE_ENV === "production" ? "https://glow-leds.com" : "http://localhost:4000";
+export const socket = io(URL, { autoConnect: false });
