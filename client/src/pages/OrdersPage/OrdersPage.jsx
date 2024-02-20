@@ -49,20 +49,17 @@ const OrdersPage = () => {
 
   const dispatch = useDispatch();
 
-  const [isConnected, setIsConnected] = useState(socket.connected);
-
   useEffect(() => {
     socket.connect(); // Ensure connection on component mount
 
     const onConnect = () => {
       console.log("Connected");
-      setIsConnected(true);
       dispatch(showSuccess({ message: `Socket Connected` }));
     };
 
     const onDisconnect = () => {
       console.log("Disconnected");
-      setIsConnected(false);
+
       dispatch(showSuccess({ message: `Socket Disconnected` }));
     };
 
