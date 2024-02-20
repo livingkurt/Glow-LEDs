@@ -6,7 +6,6 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { orderFormFields } from "./orderFormFields";
 import {
-  determineSetToIsUpdated,
   handleDelete,
   handleDuplicate,
   handleProductChange,
@@ -15,7 +14,6 @@ import {
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useProductsQuery } from "../../../api/allRecordsApi";
-import { GLTextField } from "../../../shared/GlowLEDsComponents";
 import { showConfirm } from "../../../slices/snackbarSlice";
 
 const EditOrderModal = () => {
