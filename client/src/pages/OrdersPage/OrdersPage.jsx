@@ -52,13 +52,14 @@ const OrdersPage = () => {
   useEffect(() => {
     socket.connect(); // Ensure connection on component mount
 
-    const onConnect = () => {
+    const onConnect = reason => {
       console.log("Connected");
+      console.log("Connected", reason);
       dispatch(showSuccess({ message: `Socket Connected` }));
     };
 
-    const onDisconnect = () => {
-      console.log("Disconnected");
+    const onDisconnect = reason => {
+      console.log("Disconnected due to", reason);
       dispatch(showSuccess({ message: `Socket Disconnected` }));
     };
 

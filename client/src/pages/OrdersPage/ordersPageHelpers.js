@@ -450,4 +450,4 @@ const URL = () => {
       return "http://localhost:8080";
   }
 };
-export const socket = io(URL(), { autoConnect: false });
+export const socket = io(URL(), { autoConnect: false, transports: ["websocket"] });
