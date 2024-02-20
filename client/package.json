@@ -46,7 +46,8 @@
     "sass-loader": "^13.3.2",
     "socket.io-client": "^4.7.4",
     "validator": "^13.6.0",
-    "web-vitals": "^3.4.0"
+    "web-vitals": "^3.4.0",
+    "react-app-rewired": "^2.2.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -98,7 +99,6 @@
     "net-browserify": "^0.2.4",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
-    "react-app-rewired": "^2.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tls-browserify": "^0.2.2",
