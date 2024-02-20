@@ -440,10 +440,13 @@ export const nextStatus = (status, titleCase = false) => {
 const URL = () => {
   switch (config.ENVIRONMENT) {
     case "production":
+      console.log({ URL: "https://glow-leds.com", env: config.ENVIRONMENT });
       return "https://glow-leds.com";
     case "staging":
+      console.log({ URL: "https://glow-leds-dev.herokuapp.com", env: config.ENVIRONMENT });
       return "https://glow-leds-dev.herokuapp.com";
     default:
+      console.log({ URL: "http://localhost:8080", env: config.ENVIRONMENT });
       return "http://localhost:8080";
   }
 };
