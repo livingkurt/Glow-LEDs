@@ -61,7 +61,7 @@ const app = express();
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://glow-leds.com", "https://glow-leds-dev.herokuapp.com"],
   },
 });
 
