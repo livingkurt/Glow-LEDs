@@ -57,11 +57,13 @@ const OrdersPage = () => {
     const onConnect = () => {
       console.log("Connected");
       setIsConnected(true);
+      dispatch(showSuccess({ message: `Socket Connected` }));
     };
 
     const onDisconnect = () => {
       console.log("Disconnected");
       setIsConnected(false);
+      dispatch(showSuccess({ message: `Socket Disconnected` }));
     };
 
     const onOrdersChanged = () => {
