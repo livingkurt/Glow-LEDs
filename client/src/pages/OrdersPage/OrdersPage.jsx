@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
 import { GLAutocomplete, GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { openRefundModal, open_create_order_modal, open_edit_order_modal } from "../../slices/orderSlice";
+import {
+  openRefundModal,
+  open_create_order_modal,
+  open_edit_order_modal,
+  setRemoteVersionRequirement,
+} from "../../slices/orderSlice";
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
@@ -15,6 +20,7 @@ import {
   duplicateOrder,
   sinceOrdered,
   orderExceptionStatusColors,
+  socket,
 } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
@@ -31,16 +37,54 @@ import Edit from "@mui/icons-material/Edit";
 import FileCopy from "@mui/icons-material/FileCopy";
 import Landscape from "@mui/icons-material/Landscape";
 import Money from "@mui/icons-material/Money";
+import { showSuccess } from "../../slices/snackbarSlice";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { message, loading, loading_order, remoteVersionRequirement, order } = orderPage;
+  const { loading, remoteVersionRequirement, order } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const orderTable = useSelector(state => state.orders.orderTable);
   const { selectedRows } = orderTable;
 
   const dispatch = useDispatch();
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+  useEffect(() => {
+    socket.connect(); // Ensure connection on component mount
+
+    const onConnect = () => {
+      console.log("Connected");
+      setIsConnected(true);
+      dispatch(showSuccess({ message: `Socket Connected` }));
+    };
+
+    const onDisconnect = () => {
+      console.log("Disconnected");
+      setIsConnected(false);
+      dispatch(showSuccess({ message: `Socket Disconnected` }));
+    };
+
+    const onOrdersChanged = () => {
+      console.log("ordersChanged event received");
+      dispatch(setRemoteVersionRequirement());
+      dispatch(showSuccess({ message: `Orders Refreshed` }));
+    };
+
+    // Register event listeners
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("ordersChanged", onOrdersChanged);
+
+    // Cleanup function to remove event listeners
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("ordersChanged", onOrdersChanged);
+      socket.disconnect(); // Consider if you need to disconnect when component unmounts
+    };
+  }, []);
 
   const columnDefs = useMemo(
     () => [

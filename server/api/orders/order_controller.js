@@ -93,6 +93,8 @@ export default {
     try {
       const order = await order_services.create_orders_s(body);
       if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(201).send(order);
       }
       return res.status(500).send(order);
@@ -105,6 +107,8 @@ export default {
     try {
       const order = await order_services.update_orders_s(params, body);
       if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(200).send(order);
       }
       return res.status(500).send({ message: "Error Updating Order" });
@@ -117,6 +121,8 @@ export default {
     try {
       const order = await order_services.remove_orders_s(params);
       if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
@@ -521,6 +527,8 @@ export default {
     try {
       const order = await order_services.remove_multiple_orders_s(body);
       if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
@@ -533,6 +541,8 @@ export default {
     try {
       const order = await order_services.update_multiple_status_orders_s(body);
       if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(204).send({ message: "Order Statuses Updated" });
       }
       return res.status(500).send({ message: "Error Updating Order Statuses" });

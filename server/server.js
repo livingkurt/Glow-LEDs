@@ -9,7 +9,7 @@ import config from "./config";
 const cors = require("cors");
 const passport = require("passport");
 const compression = require("compression");
-const fs = require("fs");
+import { Server } from "socket.io";
 import { google } from "googleapis"; // Import Google's OAuth libraries
 
 const Bugsnag = require("@bugsnag/js");
@@ -59,6 +59,14 @@ mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error)
 
 const app = express();
 
+const io = new Server({
+  cors: {
+    origin: ["http://localhost:3000", "https://glow-leds.com", "https://glow-leds-dev.herokuapp.com"],
+  },
+});
+
+io.listen(4000);
+
 app.all("*", function (req, res, next) {
   const origin = req.get("origin");
   res.header("Access-Control-Allow-Origin", origin);
@@ -79,6 +87,16 @@ app.use(sslRedirect());
 
 app.use(passport.initialize());
 
+io.on("connection", socket => {
+  console.log("a user connected");
+  socket.emit("testEvent", { msg: "Hello from server" });
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  console.log("Middleware to attach io to req is running");
+  next();
+});
 require("./passport")(passport);
 
 app.use(routes);
