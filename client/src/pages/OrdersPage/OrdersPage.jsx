@@ -59,7 +59,6 @@ const OrdersPage = () => {
 
     const onDisconnect = () => {
       console.log("Disconnected");
-
       dispatch(showSuccess({ message: `Socket Disconnected` }));
     };
 
