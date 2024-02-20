@@ -63,7 +63,12 @@ const app = express();
 const server = createServer(app); // Attach Express to HTTP Server
 const io = new SocketIOServer(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://glow-leds.com", "https://glow-leds-dev.herokuapp.com"],
+    origin: [
+      "http://localhost:3000",
+      "https://glow-leds.com",
+      "https://www.glow-leds.com",
+      "https://glow-leds-dev.herokuapp.com",
+    ],
     credentials: true,
   },
 });
