@@ -440,8 +440,8 @@ export const nextStatus = (status, titleCase = false) => {
 const URL = () => {
   switch (config.REACT_APP_ENVIRONMENT) {
     case "production":
-      console.log({ URL: "https://glow-leds.com", env: config.REACT_APP_ENVIRONMENT });
-      return "https://glow-leds.com";
+      console.log({ URL: "https://www.glow-leds.com", env: config.REACT_APP_ENVIRONMENT });
+      return "https://www.glow-leds.com";
     case "staging":
       console.log({ URL: "https://glow-leds-dev.herokuapp.com", env: config.REACT_APP_ENVIRONMENT });
       return "https://glow-leds-dev.herokuapp.com";
