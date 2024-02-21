@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/server.js",
   "dependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.22.20",
     "@bugsnag/js": "^7.20.2",
     "@bugsnag/plugin-express": "^7.19.0",
     "@easypost/api": "^7.2.0",
@@ -36,10 +40,6 @@
     "stripe": "^13.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.15",
-    "@babel/core": "^7.22.20",
-    "@babel/node": "^7.22.19",
-    "@babel/preset-env": "^7.22.20",
     "babel-jest": "^29.7.0",
     "concurrently": "^8.2.1",
     "cross-env": "^7.0.3",
@@ -95,6 +95,10 @@
     "test:backend": "npm test --config=jest.config.js",
     "cypress:run": "cd client && npm run cypress:run",
     "g": "node server/scripts/generateMigration.js"
+  },
+  "engines": {
+    "node": "18.19.1",
+    "npm": "10.2.4"
   },
   "pre-commit": [
     "lint-staged"

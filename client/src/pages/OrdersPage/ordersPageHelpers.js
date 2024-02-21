@@ -438,13 +438,16 @@ export const nextStatus = (status, titleCase = false) => {
 };
 
 const URL = () => {
-  switch (config.ENVIRONMENT) {
+  switch (config.REACT_APP_ENVIRONMENT) {
     case "production":
-      return "https://glow-leds.com";
+      console.log({ URL: "https://www.glow-leds.com", env: config.REACT_APP_ENVIRONMENT });
+      return "https://www.glow-leds.com";
     case "staging":
+      console.log({ URL: "https://glow-leds-dev.herokuapp.com", env: config.REACT_APP_ENVIRONMENT });
       return "https://glow-leds-dev.herokuapp.com";
     default:
+      console.log({ URL: "http://localhost:8080", env: config.REACT_APP_ENVIRONMENT });
       return "http://localhost:8080";
   }
 };
-export const socket = io(URL(), { autoConnect: false });
+export const socket = io(URL(), { autoConnect: false, transports: ["websocket"] });
