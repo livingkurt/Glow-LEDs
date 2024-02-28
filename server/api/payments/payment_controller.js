@@ -27,7 +27,8 @@ export default {
       const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
       await logStripeFeeToExpenses(confirmedPayment);
       const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod);
-
+      console.log("ordersChanged socket triggered");
+      req.io.emit("ordersChanged");
       if (updatedOrder) {
         res.send({ message: "Order Paid.", order: updatedOrder });
       } else {
@@ -70,6 +71,8 @@ export default {
         const updated = await Order.updateOne({ _id: order_id }, order);
 
         if (updated) {
+          console.log("ordersChanged socket triggered");
+          req.io.emit("ordersChanged");
           res.send(order);
         } else {
           res.status(404).send({ message: "Order not Updated." });
