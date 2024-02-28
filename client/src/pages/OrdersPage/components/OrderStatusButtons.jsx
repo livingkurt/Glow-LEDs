@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import * as API from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { API_Emails } from "../../../utils";
-import { toCapitalize, toTitleCase } from "../../../utils/helper_functions";
+import { toTitleCase } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import config from "../../../config";
 import { Box, Button, Grid, Typography } from "@mui/material";
@@ -127,9 +127,9 @@ const OrderStatusButtons = ({ order }) => {
                   color="primary"
                   variant="contained"
                   fullWidth
-                  onClick={() => updateOrder(nextStatus(order.status), true)}
+                  onClick={() => updateOrder(nextStatus(order.status, order.orderItems), true)}
                 >
-                  Set Status to {nextStatus(order.status, true)}
+                  Set Status to {nextStatus(order.status, order.orderItems, true)}
                 </Button>
               </Grid>
             )}

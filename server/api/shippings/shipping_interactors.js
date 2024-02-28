@@ -51,7 +51,16 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.shipping.shipping_label = label;
       order.shipping.shipping_rate = shipping_rate;
       order.shipping.shipment_id = label.id;
-      order.status = "label_created";
+      const hasFiniteStock = order.orderItems.some(item => item.finite_stock === true);
+      const hasInfiniteStock = order.orderItems.some(item => item.finite_stock === false);
+
+      if (hasFiniteStock && !hasInfiniteStock) {
+        order.status = "label_created";
+      }
+
+      if (hasInfiniteStock) {
+        order.status = "crafting";
+      }
     }
 
     await order_db.update_orders_db(order._id, order);
