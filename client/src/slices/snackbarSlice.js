@@ -15,6 +15,7 @@ const snackbarPage = createSlice({
     confirmMessage: "",
     confirmTitle: "",
     onConfirm: () => {},
+    onClose: () => {},
     input: false,
   },
   reducers: {
@@ -49,6 +50,7 @@ const snackbarPage = createSlice({
       state.confirmTitle = payload?.title;
       state.confirmInputLabel = payload?.inputLabel;
       state.onConfirm = payload?.onConfirm;
+      state.onClose = payload?.onClose;
       state.loading = false;
     },
     closeConfirm: (state, { payload }) => {

@@ -171,3 +171,9 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
 
   return totalEligibleForDiscount;
 };
+
+export const constructOutOfStockMessage = outOfStockNames => {
+  const multipleItems = outOfStockNames.length > 1;
+  const outOfStockNamesString = multipleItems ? outOfStockNames.join(", ") : outOfStockNames[0];
+  return `The following item${multipleItems ? "s" : ""} ${multipleItems ? "are" : "is"} out of stock: ${outOfStockNamesString}. Select Yes to remove ${multipleItems ? "them" : "it"} and continue or No to exit checkout to update your cart.`;
+};

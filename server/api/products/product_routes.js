@@ -22,6 +22,7 @@ router.route("/current_stock").get(product_controller.current_stock_products_c);
 router.route("/:attribute/distinct").get(product_controller.distinct_products_c);
 router.route("/facebook_catelog").get(product_controller.facebook_catelog_products_c);
 router.route("/table").get(product_controller.table_products_c);
+router.route("/check_stock").post(product_controller.check_stock_products_c);
 // router
 //   .route("/compress_images")
 //   .post(product_controller.compress_images_products_c);

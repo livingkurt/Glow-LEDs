@@ -240,6 +240,25 @@ export default {
       }
     }
   },
+  check_stock_products_s: async body => {
+    console.log({ body });
+    const { cartItems } = body;
+    const outOfStockItems = []; // Store details of out-of-stock items
+    try {
+      for (const item of cartItems) {
+        const product = await Product.findOne({ _id: item.product, deleted: false });
+        if (!product || (product.finite_stock && product.count_in_stock < item.qty)) {
+          // Include product name along with the ID
+          outOfStockItems.push({ id: item.product, name: product ? product.name : "Unknown Product" });
+        }
+      }
+      return outOfStockItems; // Return the details of out of stock items
+    } catch (error) {
+      console.log({ error });
+      throw error;
+    }
+  },
+
   create_products_s: async body => {
     try {
       return await product_db.create_products_db(body);

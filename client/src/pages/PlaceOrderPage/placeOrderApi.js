@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { showError } from "../../slices/snackbarSlice";
+import { showError, showSuccess } from "../../slices/snackbarSlice";
 import { errorMessage } from "../../helpers/sharedHelpers";
 
 export const placeOrderApi = createApi({
@@ -58,6 +58,19 @@ export const sendCodeUsedEmail = createAsyncThunk(
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       rejectWithValue(error.message);
+    }
+  }
+);
+
+export const checkStock = createAsyncThunk(
+  "placeOrderPage/checkStock",
+  async (cartItems, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/api/products/check_stock`, { cartItems });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
     }
   }
 );

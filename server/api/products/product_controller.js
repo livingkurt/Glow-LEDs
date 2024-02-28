@@ -63,6 +63,20 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  check_stock_products_c: async (req, res) => {
+    const { body } = req;
+
+    try {
+      const product = await product_services.check_stock_products_s(body);
+
+      if (product) {
+        return res.status(200).send(product);
+      }
+      return res.status(404).send({ message: "Product Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   create_products_c: async (req, res) => {
     const { body } = req;
     try {

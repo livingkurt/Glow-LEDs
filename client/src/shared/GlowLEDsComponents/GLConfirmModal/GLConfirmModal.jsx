@@ -15,7 +15,7 @@ import { closeConfirm } from "../../../slices/snackbarSlice";
 const GLConfirmModal = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector(state => state.snackbar);
-  const { confirmModal, confirmTitle, confirmMessage, onConfirm, confirmInputLabel } = snackbar;
+  const { confirmModal, confirmTitle, confirmMessage, onConfirm, onClose, confirmInputLabel } = snackbar;
   const [inputText, setInputText] = useState("");
 
   const handleConfirm = () => {
@@ -23,8 +23,13 @@ const GLConfirmModal = () => {
     onConfirm(inputText);
   };
 
+  const handleClose = () => {
+    dispatch(closeConfirm(false));
+    onClose(inputText);
+  };
+
   return (
-    <Dialog open={confirmModal} onClose={() => dispatch(closeConfirm(false))} maxWidth="md">
+    <Dialog open={confirmModal} onClose={() => handleClose()} maxWidth="md">
       <DialogTitle>{confirmTitle}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
@@ -49,7 +54,7 @@ const GLConfirmModal = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => dispatch(closeConfirm(false))} color="primary">
+        <Button onClick={() => handleClose()} color="primary">
           No
         </Button>
         <Button onClick={handleConfirm} color="primary">

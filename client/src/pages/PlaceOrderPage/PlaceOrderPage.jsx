@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Fade } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { showConfirm } from "../../slices/snackbarSlice";
+import { constructOutOfStockMessage } from "./placeOrderHelpers";
 
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -44,6 +45,44 @@ const PlaceOrderPage = () => {
     }
     return () => (clean = false);
   }, [dispatch]);
+
+  useEffect(() => {
+    let clean = true;
+
+    const removeOutOfStockItems = outOfStockItems => {
+      outOfStockItems.forEach(({ id }) => {
+        const itemIndex = cartItems.findIndex(item => item.product === id);
+        if (itemIndex !== -1) {
+          dispatch(API.deleteCartItem({ item_index: itemIndex, type: "add_to_cart" }));
+        }
+      });
+    };
+
+    const fetchData = async () => {
+      if (clean && cartItems.length !== 0) {
+        const response = await dispatch(API.checkStock(cartItems));
+        if (response.payload && response.payload.length !== 0) {
+          const outOfStockNames = response.payload.map(item => item.name);
+          const message = constructOutOfStockMessage(outOfStockNames);
+
+          dispatch(
+            showConfirm({
+              title: "Out of Stock",
+              message: message,
+              onConfirm: () => removeOutOfStockItems(response.payload),
+              onClose: () => navigate("/checkout/cart"),
+            })
+          );
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      clean = false;
+    };
+  }, [dispatch, cartItems, navigate]);
 
   useEffect(() => {
     let clean = true;
