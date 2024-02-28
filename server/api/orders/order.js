@@ -35,7 +35,7 @@ const orderItemSchema = new mongoose.Schema(
     package_height: { type: Number },
     processing_time: [{ type: Number }],
     quantity: { type: Number },
-    finite_stock: { type: Number },
+    finite_stock: { type: Boolean },
     wholesale_product: { type: Boolean },
     wholesale_price: { type: Number },
     product: {

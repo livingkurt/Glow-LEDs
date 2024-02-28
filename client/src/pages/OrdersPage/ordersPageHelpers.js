@@ -422,21 +422,37 @@ export const handlePromoCode = (value, order, dispatch) => {
   }
 };
 
-export const nextStatus = (status, titleCase = false) => {
-  switch (status) {
-    case "unpaid":
-      return titleCase ? "Paid" : "paid";
-    case "label_created":
-      return titleCase ? "Crafting" : "crafting";
-    case "crafting":
-      return titleCase ? "Crafted" : "crafted";
-    case "crafted":
-      return titleCase ? "Packaged" : "packaged";
-    default:
-      return titleCase ? "Unpaid" : "unpaid";
-  }
-};
+export const nextStatus = (currentStatus, orderItems) => {
+  console.log({ orderItems });
+  const hasFiniteStock = orderItems.some(item => item.finite_stock === true);
+  const hasInfiniteStock = orderItems.some(item => item.finite_stock === false);
 
+  if (hasFiniteStock && !hasInfiniteStock) {
+    switch (currentStatus) {
+      case "paid":
+        return "label_created";
+      case "label_created":
+        return "packaged";
+      default:
+        return currentStatus;
+    }
+  }
+
+  if (hasInfiniteStock) {
+    switch (currentStatus) {
+      case "paid":
+        return "crafting";
+      case "crafting":
+        return "crafted";
+      case "crafted":
+        return "packaged";
+      default:
+        return currentStatus;
+    }
+  }
+
+  return currentStatus;
+};
 const URL = () => {
   switch (config.REACT_APP_ENVIRONMENT) {
     case "production":
