@@ -1,53 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { determnine_link } from "../../utils/helper_functions";
+import { determine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
-import { GLButton } from "../GlowLEDsComponents";
-import { deleteCartItem } from "../../api";
-import { Delete } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
 
-const CartItem = ({ index, item, check_item_as_crafted }) => {
-  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
-  const dispatch = useDispatch();
-
+const CartItem = ({ index, item }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-
-  setTimeout(() => {
-    set_loading_checkboxes(false);
-  }, 500);
 
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        {check_item_as_crafted && current_user?.isAdmin && (
-          <div>
-            {loading_checkboxes ? (
-              <div>Loading...</div>
-            ) : (
-              <div className="mv-1rem jc-c mr-2rem">
-                <input
-                  type="checkbox"
-                  name="is_crafted"
-                  defaultChecked={item.is_crafted}
-                  style={{
-                    transform: "scale(1.5)",
-                  }}
-                  className=""
-                  id="is_crafted"
-                  onChange={e => {
-                    check_item_as_crafted(index);
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        )}
-        <Link to={determnine_link(item)}>
+        <Link to={determine_link(item)}>
           <div className="">
             {!item.secondary_image && (
               <LazyImage
@@ -92,16 +58,6 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
           <Link to={"/collections/all/products/" + item.pathname} className="m-0px">
             <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
           </Link>
-          {current_user?.isAdmin && (
-            <div className="ai-c">
-              <IconButton
-                onClick={() => dispatch(deleteCartItem({ item_index: index, type: "add_to_cart" }))}
-                aria-label="Delete"
-              >
-                <Delete />
-              </IconButton>
-            </div>
-          )}
         </div>
         {cart_item_name(item)}
 
@@ -110,33 +66,6 @@ const CartItem = ({ index, item, check_item_as_crafted }) => {
             Qty:
           </label>
           <label>{item.qty}</label>
-          {/* {show_qty ? (
-						<div className="custom-select">
-							<select
-								defaultValue={parseInt(item.qty)}
-								value={parseInt(item.qty)}
-								className="qty_select_dropdown"
-								onChange={(e) => {
-									dispatch(
-										addToCart({
-											...item,
-											pathname: item.pathname,
-											qty: parseInt(e.target.value)
-										})
-									);
-								}}
-							>
-								{[ ...Array(item.quantity).keys() ].map((x, index) => (
-									<option key={index} defaultValue={parseInt(x + 1)}>
-										{parseInt(x + 1)}
-									</option>
-								))}
-							</select>
-							<span className="custom-arrow" />
-						</div>
-					) : (
-						<label>{item.qty}</label>
-					)} */}
           <div className="cart-price fs-16px">
             {sale_price_switch({ product: item, isWholesaler: current_user?.isWholesaler })}
           </div>
