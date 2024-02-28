@@ -61,6 +61,13 @@ const cartPage = createSlice({
         cart: { ...state.cart, ...updated_cart },
       };
     },
+    set_my_cart: (state, { payload }) => {
+      const updated_cart = payload;
+      return {
+        ...state,
+        my_cart: { ...state.cart, ...updated_cart },
+      };
+    },
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
@@ -307,5 +314,6 @@ export const {
   setCartDrawer,
   setSideNavDrawer,
   updateGoogleShipping,
+  set_my_cart,
 } = cartPage.actions;
 export default cartPage.reducer;

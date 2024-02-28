@@ -65,7 +65,6 @@ export const productInitalState = {
   categorys: [],
   subcategorys: [],
   subcategory: "",
-  countInStock: 0,
   count_in_stock: 0,
   quantity: 0,
   finite_stock: false,

@@ -12,12 +12,13 @@ import { OrderSummaryStep, ShippingStep } from "./components";
 import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
 
 import * as API from "../../api";
-import { save_shipping } from "../../slices/cartSlice";
+import { save_shipping, set_my_cart } from "../../slices/cartSlice";
 import { setLoadingPayment } from "../../slices/orderSlice";
 import { Link } from "react-router-dom";
 import { Box, Button, Fade } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { showConfirm } from "../../slices/snackbarSlice";
+import { constructOutOfStockMessage } from "./placeOrderHelpers";
 
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -44,6 +45,60 @@ const PlaceOrderPage = () => {
     }
     return () => (clean = false);
   }, [dispatch]);
+
+  useEffect(() => {
+    let clean = true;
+
+    const removeOutOfStockItems = async outOfStockItems => {
+      // Filter the cartItems to exclude out-of-stock items
+      const updatedCartItems = cartItems.filter(
+        cartItem =>
+          !outOfStockItems.some(
+            outOfStockItem =>
+              cartItem.product === outOfStockItem.id && cartItem.option_product === outOfStockItem.optionId
+          )
+      );
+
+      console.log({ my_cart, updatedCartItems });
+      // Construct the updated cart object
+      const updatedCart = {
+        ...my_cart, // Assuming `cart` is the current state of the cart including `_id` and other properties
+        cartItems: updatedCartItems,
+      };
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      // Save the updated cart
+      await dispatch(set_my_cart(updatedCart));
+      await dispatch(API.saveCart(updatedCart));
+    };
+
+    const fetchData = async () => {
+      if (clean && cartItems.length !== 0) {
+        const response = await dispatch(API.checkStock(cartItems));
+        console.log({ response: response.payload }); // For debugging
+        if (response.payload && response.payload.length !== 0) {
+          // Use the new function to construct the message with option details
+          const message = constructOutOfStockMessage(response.payload);
+
+          dispatch(
+            showConfirm({
+              title: "Notice: Out of Stock Items",
+              message: message,
+              onConfirm: () => {
+                removeOutOfStockItems(response.payload);
+              },
+              onClose: () => navigate("/checkout/cart"),
+            })
+          );
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      clean = false;
+    };
+  }, [dispatch, cartItems, navigate, my_cart]);
 
   useEffect(() => {
     let clean = true;
@@ -147,7 +202,7 @@ const PlaceOrderPage = () => {
                 showConfirm({
                   title: "Confirm Exit",
                   message: "Are you sure you want to exit checkout?",
-                  onConfirm: () => navigate("/pages/menu/gloving"),
+                  onConfirm: () => navigate("/checkout/cart"),
                 })
               );
             }}
