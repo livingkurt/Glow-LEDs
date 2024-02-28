@@ -241,20 +241,43 @@ export default {
     }
   },
   check_stock_products_s: async body => {
-    console.log({ body });
     const { cartItems } = body;
     const outOfStockItems = []; // Store details of out-of-stock items
     try {
       for (const item of cartItems) {
-        const product = await Product.findOne({ _id: item.product, deleted: false });
-        if (!product || (product.finite_stock && product.count_in_stock < item.qty)) {
-          // Include product name along with the ID
-          outOfStockItems.push({ id: item.product, name: product ? product.name : "Unknown Product" });
+        const product = await Product.findOne({ _id: item.product, deleted: false }).populate("option_products");
+        if (!product) {
+          // If the main product doesn't exist
+          outOfStockItems.push({ id: item.product, name: "Unknown Product" });
+          continue;
+        }
+        let isOutOfStock = product.finite_stock && product.count_in_stock < item.qty;
+        let optionProductOutOfStock = false;
+        let optionProductId = null; // Placeholder for the option product ID
+
+        // Check if the product is an option product and has other option products related
+        if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
+          // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
+          const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
+          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.qty) {
+            isOutOfStock = true;
+            optionProductOutOfStock = true;
+            optionProductId = optionProduct._id; // Capture the option product's unique ID
+          }
+        }
+
+        if (isOutOfStock) {
+          // Include product name along with the ID, and now also include the option product ID if applicable
+          outOfStockItems.push({
+            id: item.product,
+            optionId: optionProductId, // Include this in the response
+            name: product.name,
+            option: optionProductOutOfStock ? `Size: ${item.size}` : "",
+          });
         }
       }
       return outOfStockItems; // Return the details of out of stock items
     } catch (error) {
-      console.log({ error });
       throw error;
     }
   },
