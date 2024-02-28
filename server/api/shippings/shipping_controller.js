@@ -7,6 +7,8 @@ export default {
     try {
       const shipping = await shipping_services.buy_label_shipping_s(params);
       if (shipping) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
@@ -32,6 +34,8 @@ export default {
     try {
       const shipping = await shipping_services.refund_label_shipping_s(params);
       if (shipping) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
@@ -44,6 +48,8 @@ export default {
     try {
       const shipping = await shipping_services.create_tracker_shipping_s(params);
       if (shipping) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(200).send(shipping);
       }
       return res.status(404).send({ message: "Shipping Not Found" });
@@ -57,6 +63,8 @@ export default {
     try {
       const shipping = await shipping_services.create_return_label_shipping_s(params, query);
       if (shipping) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
         return res.status(200).send(shipping);
       }
       return res.status(500).send({ message: "Error Updating Shipping" });
