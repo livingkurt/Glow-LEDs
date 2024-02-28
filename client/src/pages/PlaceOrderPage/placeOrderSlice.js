@@ -432,26 +432,6 @@ const placeOrder = createSlice({
     [API.sendCodeUsedEmail.fulfilled]: (state, { payload }) => {
       state.promo_code = "";
     },
-    // [API.checkStock.pending]: state => {
-    //   state.loading_tax_rates = true;
-    //   state.taxPrice = 0;
-    // },
-    // [API.checkStock.fulfilled]: (state, { payload }) => {
-    //   state.loading_tax_rates = false;
-    //   const { tax_rate, shipping, itemsPrice } = payload;
-    //   state.tax_rate = tax_rate;
-    //   if (!isNaN(tax_rate)) {
-    //     if (shipping.international) {
-    //       state.taxPrice = 0;
-    //     } else {
-    //       state.taxPrice = tax_rate * itemsPrice;
-    //     }
-    //   }
-    // },
-    // [API.checkStock.rejected]: (state, { payload, error }) => {
-    //   state.loading_tax_rates = false;
-    //   state.error = payload ? payload.error : error.message;
-    // },
   },
 });
 
