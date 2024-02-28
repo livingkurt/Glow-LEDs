@@ -13,7 +13,7 @@ import {
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import {
   orderStatusColors,
   determineOrderColors,
@@ -38,6 +38,7 @@ import FileCopy from "@mui/icons-material/FileCopy";
 import Landscape from "@mui/icons-material/Landscape";
 import Money from "@mui/icons-material/Money";
 import { showSuccess } from "../../slices/snackbarSlice";
+import { ShoppingCart } from "@mui/icons-material";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -46,6 +47,8 @@ const OrdersPage = () => {
   const { current_user } = userPage;
   const orderTable = useSelector(state => state.orders.orderTable);
   const { selectedRows } = orderTable;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
 
   const dispatch = useDispatch();
 
@@ -156,63 +159,74 @@ const OrdersPage = () => {
           </div>
         ),
       },
-      // { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
-      // display: row => (
-      //   <div className="w-200px">
-      //     <div className="jc-b w-100per">
-      //       Subtotal: ${row.orderItems?.reduce((a, c) => parseInt(a) + parseInt(c.price) * parseInt(c.qty), 0).toFixed(2)}
-      //     </div>
-      //     <div className="jc-b w-100per">Tax: ${row.taxPrice.toFixed(2)}</div>
-      //     <div className="jc-b w-100per">Shipping: ${row.shippingPrice.toFixed(2)}</div>
-      //     <div className="jc-b w-100per">Total: ${row.totalPrice.toFixed(2)}</div>
-      //   </div>
-      // )
       {
         title: "Actions",
         display: row => (
           <div className="jc-b">
-            <IconButton
-              aria-label="Edit"
-              onClick={() => {
-                dispatch(API.detailsOrder(row._id));
-                dispatch(open_edit_order_modal(order));
-              }}
-            >
-              <Edit color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Duplicate"
-              onClick={() => {
-                const newDuplicateOrder = duplicateOrder(row);
-                dispatch(API.saveOrder(newDuplicateOrder));
-              }}
-            >
-              <FileCopy color="white" />
-            </IconButton>
-            <Link to={`/secure/account/order/${row._id}`}>
-              <IconButton aria-label="View Product Page">
-                <Landscape color="white" />
+            <Tooltip title="Edit">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => {
+                  dispatch(API.detailsOrder(row._id));
+                  dispatch(open_edit_order_modal(order));
+                }}
+              >
+                <Edit color="white" />
               </IconButton>
-            </Link>
-            <IconButton
-              onClick={() => {
-                dispatch(openRefundModal(row));
-              }}
-              aria-label="Refund"
-            >
-              <Money color="white" />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                const confirm = window.confirm("Are you sure you want DELETE this order?");
-                if (confirm) {
-                  dispatch(API.deleteOrder(row._id));
-                }
-              }}
-              aria-label="Delete"
-            >
-              <Delete color="white" />
-            </IconButton>
+            </Tooltip>
+            <Tooltip title="Duplicate">
+              <IconButton
+                aria-label="Duplicate"
+                onClick={() => {
+                  const newDuplicateOrder = duplicateOrder(row);
+                  dispatch(API.saveOrder(newDuplicateOrder));
+                }}
+              >
+                <FileCopy color="white" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="View Order Page">
+              <Link to={`/secure/account/order/${row._id}`}>
+                <IconButton aria-label="View Order Page">
+                  <Landscape color="white" />
+                </IconButton>
+              </Link>
+            </Tooltip>
+            <Tooltip title="Refund">
+              <IconButton
+                onClick={() => {
+                  dispatch(openRefundModal(row));
+                }}
+                aria-label="Refund"
+              >
+                <Money color="white" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Add Order Items To Cart">
+              <IconButton
+                onClick={() => {
+                  row.orderItems.map(item =>
+                    dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" }))
+                  );
+                }}
+                aria-label="Add to Cart"
+              >
+                <ShoppingCart color="white" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                onClick={() => {
+                  const confirm = window.confirm("Are you sure you want DELETE this order?");
+                  if (confirm) {
+                    dispatch(API.deleteOrder(row._id));
+                  }
+                }}
+                aria-label="Delete"
+              >
+                <Delete color="white" />
+              </IconButton>
+            </Tooltip>
           </div>
         ),
       },

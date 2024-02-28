@@ -1,627 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { determine_total, determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { determine_tracking_link, format_date, toTitleCase } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { Loading, LoadingPayments } from "../../shared/SharedComponents";
-import { API_Emails, API_Orders, API_Shipping } from "../../utils";
-import useClipboard from "react-hook-clipboard";
+import { Loading } from "../../shared/SharedComponents";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
-import { Stripe } from "../../shared/SharedComponents/Stripe";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
-import config from "../../config";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
+import { Box } from "@mui/material";
 
 const OrderPage = () => {
   const params = useParams();
   const location = useLocation();
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
-
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
 
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderPage;
-
-  const parcelPage = useSelector(state => state.parcels);
-  const { parcels } = parcelPage;
-
-  const [loading_label, set_loading_label] = useState(false);
-  const [product, set_product] = useState("");
-  const [secondary_product, set_secondary_product] = useState("");
-  const [product_object, set_product_object] = useState("");
-  const [payment_loading, set_payment_loading] = useState(false);
-  const [payment_method, set_payment_method] = useState("");
-  const [loading_email, set_loading_email] = useState("");
-
-  const [order_state, set_order_state] = useState({});
-  const [clipboard, copyToClipboard] = useClipboard();
-
-  const [refund_state, set_refund_state] = useState({});
-  const [refund_amount, set_refund_amount] = useState();
-  const [refund_reason, set_refund_reason] = useState("");
-  const [all_orders, set_all_orders] = useState("");
-  const [loading_shipping_rates, set_loading_shipping_rates] = useState("");
-  const [shipping_rate, set_shipping_rate] = useState({});
-  const [shipment_id, set_shipment_id] = useState("");
-  const [shipping_rates, set_shipping_rates] = useState([]);
-  const [package_dimensions, set_package_dimensions] = useState({});
-  const [hide_label_button, set_hide_label_button] = useState(true);
-  const [rate, set_rate] = useState("");
-  const [order_items, set_order_items] = useState([]);
-
-  const [message_to_user, set_message_to_user] = useState("");
-
-  const update_refund_state = amount => {
-    set_loading_label(true);
-    const confirm = window.confirm("Are you sure you want to Refund this Order?");
-    if (confirm) {
-      dispatch(
-        API.refundOrder({ order, refundResult: true, refund_amount: parseFloat(amount).toFixed(2), refund_reason })
-      );
-      set_refund_state(true);
-    }
-
-    set_loading_label(false);
-  };
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (refund) {
-        set_refund_state(refund.isRefunded);
-        dispatch(API.detailsOrder(params.id));
-      }
-    }
-    return () => (clean = false);
-  }, [refund]);
+  const { loading, order, error } = orderPage;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.detailsOrder(params.id));
-      dispatch(API.listPromos({}));
     }
     return () => (clean = false);
   }, [dispatch, params.id]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (order) {
-        set_order_state(order);
-        set_order_items(order.orderItems);
-      }
-    }
-    return () => (clean = false);
-  }, [order]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (product_object) {
-        set_product(product_object._id);
-      }
-    }
-    return () => (clean = false);
-  }, [product_object]);
-
-  const pay_order = paymentMethod => {
-    set_payment_loading(true);
-    if (current_user) {
-      dispatch(API.payOrder({ order, paymentMethod }));
-    } else {
-      dispatch(API.payOrderGuest({ order, paymentMethod }));
-    }
-  };
-
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     if (successPay && order) {
-  //       // navigate('/secure/checkout/paymentcomplete/' + order._id);
-  //       navigate("/secure/checkout/order/receipt/" + order._id + "/order/true");
-  //       dispatch(API.detailsOrder(params.id));
-  //       set_payment_loading(false);
-  //       dispatch(API.emptyCart(my_cart._id));
-  //     } else if (errorPay) {
-  //     }
-  //   }
-  //   return () => (clean = false);
-  // }, [successPay]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (errorPay) {
-        set_payment_loading(false);
-      }
-    }
-    return () => (clean = false);
-  }, [errorPay]);
-
-  const navigate = useNavigate();
-
-  const [show_color, set_show_color] = useState(false);
-
-  const update_order_state = (order, state, is_action, action_at) => {
-    set_loading_email(true);
-    if (state) {
-      set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.saveOrder(order, false, is_action, action_at));
-    } else {
-      set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.saveOrder(order, true, is_action, action_at));
-      send_email(action_at.slice(0, -2));
-    }
-    setTimeout(() => {
-      dispatch(API.detailsOrder(params.id));
-    }, 200);
-    set_loading_email(false);
-  };
-
-  const send_email = async (status, message_to_user) => {
-    await API_Emails.send_order_status_email(
-      order,
-      "Your Order has been " + toCapitalize(status) + "!",
-      order.shipping.email,
-      status,
-      message_to_user
-    );
-    await API_Emails.send_order_status_email(
-      order,
-      order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      config.REACT_APP_INFO_EMAIL,
-      status,
-      message_to_user
-    );
-  };
-
-  const send_paid_email = async () => {
-    const { data: order } = await API_Orders.findById_orders_a(params.id);
-    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL
-    );
-  };
-  const update_order_payment_state = (order, state, is_action) => {
-    if (state) {
-      set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.saveOrder(order, false, payment_method));
-    } else {
-      set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.saveOrder(order, true, payment_method));
-      send_paid_email();
-    }
-    setTimeout(() => {
-      dispatch(API.detailsOrder(params.id));
-    }, 200);
-  };
-
-  const create_label = async speed => {
-    set_loading_label(true);
-    const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
-    const { data: invoice } = await API_Orders.get_invoice(order);
-    setTimeout(() => {
-      print_invoice(invoice);
-    }, 1500);
-    setTimeout(() => {
-      print_label(data.postage_label.label_url);
-    }, 1000);
-
-    if (data) {
-      set_loading_label(false);
-    }
-
-    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-
-    dispatch(API.detailsOrder(params.id));
-  };
-
-  const create_return_label = async () => {
-    set_loading_label(true);
-    const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
-    print_label(data.postage_label.label_url);
-
-    if (data) {
-      set_loading_label(false);
-    }
-
-    const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
-
-    dispatch(API.detailsOrder(params.id));
-  };
-
-  const buy_label = async () => {
-    set_loading_label(true);
-
-    const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
-    const { data: invoice } = await API_Orders.get_invoice(order);
-    // show_label(data.postage_label.label_url);
-    setTimeout(() => {
-      print_invoice(invoice);
-    }, 1500);
-    setTimeout(() => {
-      print_label(data.postage_label.label_url);
-    }, 1000);
-
-    if (data) {
-      set_loading_label(false);
-    }
-
-    const request = await API_Shipping.add_(order, data.tracking_code, data);
-
-    dispatch(API.detailsOrder(params.id));
-  };
-
-  const get_invoice = async () => {
-    const { data: invoice } = await API_Orders.get_invoice(order);
-
-    print_invoice(invoice);
-  };
-
-  const print_invoice = contents => {
-    // const contents = document.getElementById(id).innerHTML;
-    const frame1 = document.createElement("iframe");
-    frame1.name = "frame1";
-    frame1.style.position = "absolute";
-    frame1.style.top = "-1000000px";
-    document.body.appendChild(frame1);
-    const frameDoc = frame1.contentWindow
-      ? frame1.contentWindow
-      : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
-    frameDoc.document.open();
-    frameDoc.document.write("</head><body>");
-    frameDoc.document.write(contents);
-    frameDoc.document.write("</body></html>");
-    frameDoc.document.close();
-    setTimeout(function () {
-      window.frames["frame1"].focus();
-      window.frames["frame1"].print();
-      document.body.removeChild(frame1);
-    }, 500);
-    return false;
-  };
-
-  const view_label = async () => {
-    // show_label(order.shipping.shipping_label.postage_label.label_url);
-    print_label(order.shipping.shipping_label.postage_label.label_url);
-  };
-  const view_return_label = async () => {
-    // show_label(order.shipping.shipping_label.postage_label.label_url);
-    print_label(order.shipping.return_shipping_label.postage_label.label_url);
-  };
-
-  const [fetching, setFetching] = useState(false);
-  const [error_img, set_error_img] = useState(false);
-
-  const print_label = content => {
-    // const content = document.getElementById(id).innerHTML;
-    const frame1 = document.createElement("iframe");
-    frame1.name = "frame1";
-    frame1.style.position = "absolute";
-    frame1.style.top = "-1000000px";
-    document.body.appendChild(frame1);
-    const frameDoc = frame1.contentWindow
-      ? frame1.contentWindow
-      : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
-    frameDoc.document.open();
-    frameDoc.document.write("</head><body>");
-    frameDoc.document.write(`<div style="width: 100%;
-    display: flex;
-    height: 100%;
-    align-items: center;;">
-        <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
-    </div>`);
-    frameDoc.document.write("</body></html>");
-    frameDoc.document.close();
-    setTimeout(function () {
-      window.frames["frame1"].focus();
-      window.frames["frame1"].print();
-      document.body.removeChild(frame1);
-    }, 500);
-    return false;
-  };
-
-  const create_duplicate_order = () => {
-    dispatch(
-      API.saveOrder({
-        orderItems: order.orderItems,
-        shipping: {
-          ...order.shipping,
-          shipment_id: null,
-          shipping_rate: null,
-          shipping_label: null,
-        },
-        itemsPrice: order.itemsPrice,
-        shippingPrice: 0,
-        taxPrice: 0,
-        totalPrice: 0,
-        user: order.user._id,
-        order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
-        production_note: order.production_note,
-      })
-    );
-    dispatch(API.listOrders({}));
-  };
-
-  const move_left = e => {
-    e.preventDefault();
-
-    if (all_orders) {
-      let current_order_index = all_orders.map(item => item._id).indexOf(order._id);
-      let left_order_index = current_order_index + 1;
-      if (left_order_index >= all_orders.length) {
-        left_order_index = 0;
-      }
-      navigate("/secure/account/order/" + all_orders[left_order_index]._id);
-    }
-  };
-  const move_right = e => {
-    e.preventDefault();
-    if (all_orders) {
-      let current_order_index = all_orders.map(item => item._id).indexOf(order._id);
-      let right_order_index = current_order_index - 1;
-      if (right_order_index === -1) {
-        right_order_index = all_orders.length - 1;
-      }
-      navigate("/secure/account/order/" + all_orders[right_order_index]._id);
-    }
-  };
-
-  const get_shipping_rates = async e => {
-    e.preventDefault();
-    set_loading_shipping_rates(true);
-
-    const { data } = await API_Shipping.get_different_shipping_rates({
-      shipment_id: order.shipping.shipment_id,
-      current_user,
-      order,
-    });
-
-    set_shipping_rates(data.shipment.rates);
-    set_shipment_id(data.shipment.id);
-    set_loading_shipping_rates(false);
-  };
-
-  const buy_new_speed_label = async () => {
-    set_loading_label(true);
-    const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, shipping_rate);
-    print_label(data.postage_label.label_url);
-    if (data) {
-      set_loading_label(false);
-    }
-    dispatch(
-      API.saveOrder({
-        ...order,
-        shipping: { ...order.shipping, shipment_id, shipping_rate },
-      })
-    );
-    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-    dispatch(API.detailsOrder(params.id));
-    navigate("/secure/glow/emails/invoice/" + order._id);
-  };
-
-  const address = {
-    first_name: "Kurt",
-    last_name: "LaVacque",
-    address_1: config.REACT_APP_PRODUCTION_ADDRESS,
-    city: config.REACT_APP_PRODUCTION_CITY,
-    state: config.REACT_APP_PRODUCTION_STATE,
-    postalCode: config.REACT_APP_PRODUCTION_POSTAL_CODE,
-    country: config.REACT_APP_PRODUCTION_COUNTRY,
-    phone: config.REACT_APP_HEADQUARTERS_PHONE_NUMBER,
-    email: config.REACT_APP_INFO_EMAIL,
-    company: "Glow LEDs",
-  };
-
-  const update_parcel = (e, parcel) => {
-    e.preventDefault();
-    parcel = JSON.parse(parcel);
-
-    set_package_dimensions({
-      ...package_dimensions,
-      package_length: parcel.length || 0,
-      package_width: parcel.width || 0,
-      package_height: parcel.height || 0,
-    });
-  };
-
-  const choose_shipping_rate = (e, rate, speed) => {
-    e.preventDefault();
-    // setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
-    // setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
-
-    set_hide_label_button(false);
-    set_shipping_rate(rate);
-    set_rate({ rate, speed });
-  };
-
-  const re_choose_shipping_rate = e => {
-    e.preventDefault();
-    // setShippingPrice(0);
-    // setPreviousShippingPrice(0);
-    set_hide_label_button(true);
-    set_shipping_rate({});
-  };
-
-  const add_items_to_cart = () => {
-    order.orderItems.map(item => dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" })));
-  };
-
-  const send_order_email = async () => {
-    set_loading_label(true);
-    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL
-    );
-
-    set_loading_label(false);
-  };
-
-  const send_refund_email = async () => {
-    set_loading_label(true);
-    await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(
-      order,
-      "New Refunded for " + order.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL,
-      true
-    );
-
-    set_loading_label(false);
-  };
-
-  const check_item_as_crafted = async index => {
-    let new_order_items = [...order_items];
-    new_order_items[index] = {
-      ...new_order_items[index],
-      is_crafted: order_items[index].is_crafted ? false : true,
-    };
-    set_order_items(new_order_items);
-    dispatch(
-      API.saveOrder({
-        ...order,
-        orderItems: [...new_order_items],
-      })
-    );
-  };
-
-  const [promo_code, set_promo_code] = useState("");
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
-
-  const [promo_code_validations, set_promo_code_validations] = useState("");
-  const items_price = determine_total(order_items, current_user?.isWholesaler);
-  const [show_message, set_show_message] = useState("");
-  const [itemsPrice, setItemsPrice] = useState(items_price);
-  const [tax_rate, set_tax_rate] = useState(0);
-  const [taxPrice, setTaxPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [shippingPrice, setShippingPrice] = useState(0);
-  const [free_shipping_message, set_free_shipping_message] = useState("------");
-  const [show_promo_code_input_box, set_show_promo_code_input_box] = useState(true);
-
-  const check_code = e => {
-    e.preventDefault();
-
-    const data = {
-      promo_code: promo_code,
-      promos,
-      current_user,
-      items_price,
-      cartItems,
-    };
-    //
-    const request = validate_promo_code(data);
-
-    set_promo_code_validations(request.errors.promo_code);
-
-    if (request.isValid) {
-      activate_promo_code(promo_code.toLowerCase());
-    } else {
-      set_promo_code("");
-    }
-  };
-
-  const activate_promo_code = code => {
-    const promo = promos.find(promo => promo.promo_code === code.toLowerCase());
-
-    let promo_excluded = 0;
-
-    let promo_included = 0;
-    // setPreviousShippingPrice(shippingPrice);
-    if (promo) {
-      // if (promo.exclude) {
-      //   const category_cart_items = cartItems
-      //     .filter(item => promo.excluded_categories.includes(item.category))
-      //     .reduce((a, item) => a + item.price, 0);
-      //   const product_cart_items = cartItems
-      //     .filter(item => promo.excluded_products.includes(item._id))
-      //     .reduce((a, item) => a + item.price, 0);
-      //   promo_excluded = category_cart_items + product_cart_items;
-      // }
-      // if (promo.include) {
-      //   const category_cart_items = cartItems.filter(item => promo.included_categories.includes(item.category));
-
-      //   const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
-
-      //   promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
-      //   if (promo_included) {
-      //     update_promo();
-      //   } else {
-      //     set_promo_code_validations("Promo Code Not Valid");
-      //     set_show_promo_code_input_box(true);
-      //   }
-      // }
-
-      if (show_message) {
-        set_promo_code_validations("Can only use one promo code at a time");
-      } else {
-        // if (!promo.include) {
-        update_promo(promo, promo_excluded);
-        // }
-      }
-    }
-  };
-
-  const update_promo = (promo, promo_excluded) => {
-    if (promo.percentage_off) {
-      if (items_price === promo_excluded) {
-        set_promo_code_validations("All Items Excluded from Promo");
-        return;
-      }
-      setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
-      setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100)));
-    } else if (promo.amount_off) {
-      if (promo.amount_off > items_price) {
-        setItemsPrice(0);
-        setTaxPrice(0);
-      } else {
-        setItemsPrice(items_price - promo.amount_off);
-        setTaxPrice(tax_rate * (items_price - promo.amount_off));
-      }
-      // setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
-      // setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
-    }
-    if (promo.free_shipping) {
-      setShippingPrice(0);
-      set_free_shipping_message("Free");
-      set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
-    }
-    if (promo.percentage_off) {
-      set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
-    } else if (promo.amount_off) {
-      set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
-    }
-    // else  {
-    // 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
-    // }
-    // set_show_message(
-    // 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
-    // 		? `${promo.percentage_off}% Off`
-    // 		: `$${promo.amount_off} Off`}`
-    // );
-    set_show_promo_code_input_box(false);
-  };
 
   return (
     <Loading loading={loading} error={error}>
@@ -634,7 +48,6 @@ const OrderPage = () => {
             <link rel="canonical" href={"https://www.glow-leds.com/secure/account/order/" + params.id} />
             <meta property="og:url" content={"https://www.glow-leds.com/secure/account/order/" + params.id} />
           </Helmet>
-          <Loading loading={loading_shipping_rates} />
           {order.status === "paid" ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
           <div className="mb-10px ml-20px jc-b">
             <div>
@@ -649,61 +62,7 @@ const OrderPage = () => {
                 </Link>
               )}
             </div>
-            {current_user?.isAdmin && (
-              <GLButton variant="secondary" onClick={() => add_items_to_cart()}>
-                Add Items to Cart
-              </GLButton>
-            )}
           </div>
-
-          {current_user?.isAdmin && (
-            <div className="row">
-              <div className="ai-c">
-                <GLButton
-                  style={{ borderRadius: "50%" }}
-                  variant="icon"
-                  className="h-59px"
-                  onClick={e => move_left(e)}
-                  aria-label="Previous"
-                >
-                  <i className="fas fa-arrow-circle-left fs-40px" />
-                </GLButton>
-              </div>
-              <h2
-                style={{
-                  textAlign: "center",
-                  width: "100%",
-                  marginRight: "auto",
-                  justifyContent: "center",
-                }}
-                className="ta-c "
-              >
-                <div
-                  onClick={() =>
-                    navigate("/collections/all/products/" + product?.pathname, {
-                      state: { prevPath: location.pathname },
-                    })
-                  }
-                >
-                  {loading ? "Product" : product.name}
-                </div>
-              </h2>
-              <div className="ai-c">
-                <GLButton
-                  style={{ borderRadius: "50%" }}
-                  variant="icon"
-                  className="h-59px"
-                  onClick={e => move_right(e)}
-                  aria-label="Next"
-                >
-                  <i className="fas fa-arrow-circle-right fs-40px" />
-                </GLButton>
-              </div>
-            </div>
-          )}
-          <Loading loading={loading_label} />
-          <Loading loading={loading_email} />
-          <LoadingPayments loading={payment_loading} error={errorPay} />
           <div className="placeorder br-20px" style={{}}>
             <div className="placeorder-info">
               <div
@@ -711,147 +70,20 @@ const OrderPage = () => {
                   backgroundColor: width > 407 && determineOrderColors(order),
                 }}
               >
-                <div className="column jc-b h-22rem w-25remm mb-1rem">
-                  <h2>Order Status</h2>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px">
-                        {order.status === "paid" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Paid</div>
-
-                      <div>{!order.paidAt ? "" : format_date(order.paidAt)}</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px">
-                        {order.status === "crafting" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Crafting</div>
-
-                      <div>{!order.craftingAt ? "" : format_date(order.craftingAt)}</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px">
-                        {order.status === "crafted" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Crafted</div>
-
-                      <div>{!order.craftedAt ? "" : format_date(order.craftedAt)}</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px">
-                        {order.status === "packaged" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Packaged</div>
-
-                      <div>{!order.packagedAt ? "" : format_date(order.packagedAt)}</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px">
-                        {order.status === "shipped" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Shipped</div>
-
-                      <div>{!order.shippedAt ? "" : format_date(order.shippedAt)}</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="row ai-c">
-                      <div className="mv-5px row">
-                        {order.status === "delivered" ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
-                      </div>
-                      <div className="mh-10px">Delivered</div>
-
-                      <div>{!order.deliveredAt ? "" : format_date(order.deliveredAt)}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  backgroundColor: width > 407 && determineOrderColors(order),
-                }}
-              >
-                <div className="mb-1rem">Order #: {order._id}</div>
-                {order.tracking_number &&
-                  order.tracking_number.length > 0 &&
-                  determine_tracking_link(order.tracking_number) && (
-                    <div>
-                      Tracking #:{" "}
-                      <a
-                        href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mv-2rem"
-                        style={{
-                          textDecoration: "underline",
-                          color: "white",
-                        }}
-                      >
-                        {order.tracking_number}
-                      </a>
-                    </div>
-                  )}
-
-                {current_user?.isAdmin && order.return_tracking_number && (
-                  <div className="w-100per column mt-1rem">
-                    <label>
-                      Return Tracking #:{" "}
-                      <a
-                        href={determine_tracking_link(order.return_tracking_number)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mv-2rem"
-                        style={{
-                          textDecoration: "underline",
-                          color: "white",
-                        }}
-                      >
-                        {order.return_tracking_number}
-                      </a>
-                    </label>
-                  </div>
-                )}
-
-                <h2>Email</h2>
-                <div className="jc-b w-100per mb-1rem" style={{ borderTop: ".1rem white solid" }} />
-                <div className="jc-b wrap w-100per">
-                  <div className="paragraph_font lh-25px mb-1rem">
-                    <div>{order.shipping.email}</div>
-                  </div>
-                </div>
+                <Box display="flex" alignItems={"center"} justifyContent={"space-between"}>
+                  <h2>Email</h2>
+                  <div>{order.shipping.email}</div>
+                </Box>
+                <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
+                <Box display="flex" alignItems={"center"} justifyContent={"space-between"}>
+                  <h2>Order Status:</h2>
+                  <p>{toTitleCase(order.status)}</p>
+                </Box>
+                <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
+                <Box display="flex" alignItems={"center"} justifyContent={"space-between"}>
+                  <h2>Order #:</h2>
+                  {order._id}
+                </Box>
               </div>
               <div
                 style={{
@@ -868,7 +100,47 @@ const OrderPage = () => {
                 <div className="wrap jc-b">
                   <div className="w-100per ">
                     <h2>Shipping</h2>
-                    <div className="jc-b w-100per mb-1rem" style={{ borderTop: ".1rem white solid" }} />
+                    <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
+                    {order.tracking_number &&
+                      order.tracking_number.length > 0 &&
+                      determine_tracking_link(order.tracking_number) && (
+                        <Box display="flex" alignItems={"center"} justifyContent={"space-between"}>
+                          <h3>Tracking #:</h3>
+                          <a
+                            href={
+                              order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              textDecoration: "underline",
+                              color: "white",
+                            }}
+                          >
+                            {order.tracking_number}
+                          </a>
+                        </Box>
+                      )}
+
+                    {current_user?.isAdmin && order.return_tracking_number && (
+                      <Box display="flex" alignItems={"center"} justifyContent={"space-between"}>
+                        <label>
+                          <h3>Return #:</h3>
+                          <a
+                            href={determine_tracking_link(order.return_tracking_number)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              textDecoration: "underline",
+                              color: "white",
+                            }}
+                          >
+                            {order.return_tracking_number}
+                          </a>
+                        </label>
+                      </Box>
+                    )}
+                    <h3>Address</h3>
                     <div className="jc-b wrap w-100per">
                       <div className="paragraph_font lh-25px mb-1rem">
                         <div>
@@ -883,54 +155,45 @@ const OrderPage = () => {
                         </div>
                         <div>{order.shipping.international && "International"}</div>
                       </div>
-                      {order.shipping.shipping_rate && (
-                        <div className="max-w-300px w-100per lh-25px">
-                          <div className="ai-c jc-b w-100per">
-                            <label className="mv-0px mr-5px">Carrier: </label>
-                            <label className=" mv-0px">{order.shipping.shipping_rate.carrier} </label>
-                          </div>
-                          <div className="ai-c jc-b w-100per">
-                            <label className="mv-0px mr-5px">Speed: </label>
-                            <label className=" mv-0px">{order.shipping.shipping_rate.service} </label>
-                          </div>
-                          <div className="ai-c jc-b w-100per">
-                            <label className="mv-0px mr-5px">Delivery Time: </label>
-                            <label className=" mv-0px">
-                              {order.shipping.shipping_rate.est_delivery_days}{" "}
-                              {order.shipping.shipping_rate.est_delivery_days === 1 ? "Day" : "Days"}{" "}
-                            </label>
-                          </div>
-                          <div className="ai-c jc-b w-100per">
-                            <label className="mv-0px mr-5px">Rate: </label>
-                            <label className=" mv-0px">${order.shipping.shipping_rate.retail_rate}</label>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
-                  <div>
-                    {current_user?.isAdmin && (
-                      <GLButton
-                        variant="secondary"
-                        className="w-200px mv-10px mr-1rem"
-                        onClick={() =>
-                          copyToClipboard(`
-${order.shipping.first_name} ${order.shipping.last_name}
-${order.shipping.address_1} ${order.shipping.address_2}
-${order.shipping.city}, ${order.shipping.state}
-${order.shipping.postalCode} ${order.shipping.country}
-${order.shipping.email}`)
-                        }
-                      >
-                        Copy to clipboard
-                      </GLButton>
-                    )}
-                    {current_user?.isAdmin && (
-                      <Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
-                        <GLButton variant="secondary">View User</GLButton>
-                      </Link>
-                    )}
-                  </div>
+                </div>
+                <div className="w-100per ">
+                  <h3>Speed</h3>
+                  {order.shipping.shipping_rate && (
+                    <div className=" w-100per lh-25px">
+                      <div className="ai-c jc-b w-100per">
+                        <label className="mv-0px mr-5px">Carrier: </label>
+                        <label className=" mv-0px">{order.shipping.shipping_rate.carrier} </label>
+                      </div>
+                      <div className="ai-c jc-b w-100per">
+                        <label className="mv-0px mr-5px">Speed: </label>
+                        <label className=" mv-0px">{order.shipping.shipping_rate.service} </label>
+                      </div>
+                      <div className="ai-c jc-b w-100per">
+                        <label className="mv-0px mr-5px">Estimated Processing Time: </label>
+                        <label className=" mv-0px">
+                          {cartItems.some(item => item.processing_time) && (
+                            <div>
+                              {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
+                              {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
+                            </div>
+                          )}
+                        </label>
+                      </div>
+                      <div className="ai-c jc-b w-100per">
+                        <label className="mv-0px mr-5px">Estimated Delivery Time: </label>
+                        <label className=" mv-0px">
+                          {order.shipping.shipping_rate.est_delivery_days}{" "}
+                          {order.shipping.shipping_rate.est_delivery_days === 1 ? "Business Day" : " Business Days"}{" "}
+                        </label>
+                      </div>
+                      <div className="ai-c jc-b w-100per">
+                        <label className="mv-0px mr-5px">Rate: </label>
+                        <label className=" mv-0px">${order.shipping.shipping_rate.retail_rate}</label>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -942,7 +205,7 @@ ${order.shipping.email}`)
                 <h2>Payment</h2>
                 <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
                   <p style={{ marginBottom: "0px" }}>
-                    {order.status === "paid" ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
+                    {order.status !== "unpaid" && order.paidAt ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
                   </p>
                 </div>
                 {current_user?.isAdmin && (
@@ -971,14 +234,7 @@ ${order.shipping.email}`)
                     {order.orderItems.length === 0 ? (
                       <div>Cart is empty</div>
                     ) : (
-                      order.orderItems.map((item, index) => (
-                        <CartItem
-                          check_item_as_crafted={check_item_as_crafted}
-                          item={item}
-                          index={index}
-                          show_qty={false}
-                        />
-                      ))
+                      order.orderItems.map((item, index) => <CartItem item={item} index={index} show_qty={false} />)
                     )}
                   </ul>
                 </div>
@@ -1062,9 +318,6 @@ ${order.shipping.email}`)
                     </div>
                   </li>
                 )}
-
-                <li className="placeorder-actions-payment" style={{ display: "flex", justifyContent: "center" }} />
-                {!order.status === "paid" && <Stripe pay_order={pay_order} />}
 
                 {order.promo_code && (
                   <div className="">

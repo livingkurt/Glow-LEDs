@@ -123,14 +123,14 @@ export const sizes_conversion = size => {
   }
 };
 
-// export const determnine_link = (item) => {
+// export const determine_link = (item) => {
 // 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
 // 		? '?secondary_color=' + item.secondary_color
 // 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
 // 		? '?secondary=' + item.size ? item.size : item.option_product_name
 // 		: ''}`;
 // };
-export const determnine_link = item => {
+export const determine_link = item => {
   //
   const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
     item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
@@ -144,7 +144,7 @@ export const determnine_link = item => {
 };
 
 // item.size ? item.size : item.option_product_name
-// export const determnine_link = (item) => {
+// export const determine_link = (item) => {
 //
 // 	const link = `/collections/all/products/${item.pathname}${item.color
 // 		? '?color=' + item.color
