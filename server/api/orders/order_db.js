@@ -284,7 +284,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
           },
         },
         {
@@ -328,7 +328,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -376,7 +376,7 @@ export default {
   //       {
   //         $match: {
   //           deleted: false,
-  //           status: "paid",
+  //           status: { $nin: ["unpaid", "canceled"] },
   //           createdAt: {
   //             $gte: new Date(start_date),
   //             $lt: new Date(end_date)
@@ -424,7 +424,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -492,7 +492,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
           },
         },
         {
@@ -557,7 +557,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
@@ -611,7 +611,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
           },
         },
         {
@@ -660,7 +660,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -730,7 +730,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             "orderItems.product": id,
             createdAt: {
               $gte: new Date(start_date),
@@ -771,7 +771,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -812,7 +812,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
           },
         },
         {
@@ -837,7 +837,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -867,7 +867,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -909,7 +909,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
           },
         },
         {
@@ -1055,7 +1055,7 @@ export default {
         {
           $match: {
             deleted: false,
-            status: "paid",
+            status: { $nin: ["unpaid", "canceled"] },
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
