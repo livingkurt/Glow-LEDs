@@ -218,37 +218,6 @@ const AboutPage = () => {
           </h2>
 
           <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
-            Employees
-          </h2>
-
-          <Loading loading={loading_users} error={error}>
-            <div>
-              <div className="product_big_screen">
-                {users && (
-                  <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {users?.map((user, index) => (
-                      <EmployeeItemD size="300px" key={index} user={user} />
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <div className="product_small_screen none">
-                {users && (
-                  <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {users?.map((user, index) => (
-                      <EmployeeItemM size="300px" key={index} user={user} />
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-            {affiliates?.length === 0 && (
-              <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
-            )}
-          </Loading>
-
-          <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
             Sponsored Artists
           </h2>
 
