@@ -152,7 +152,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
   try {
     const matchFilter = {
       deleted: false,
-      status: "paid",
+      status: { $nin: ["unpaid", "canceled"] },
       createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
       promo_code: new RegExp(`^${promo_code}$`, "i"), // Adjusted to match the entire string
     };
@@ -209,7 +209,7 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
   try {
     const matchFilter = {
       deleted: false,
-      status: "paid",
+      status: { $nin: ["unpaid", "canceled"] },
       createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
       promo_code: new RegExp(`^${promo_code}$`, "i"),
     };
