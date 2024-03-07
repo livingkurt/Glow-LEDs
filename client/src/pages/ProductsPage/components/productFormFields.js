@@ -233,17 +233,254 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       align: "center",
       variant: "h6",
     },
-    macro_product: {
-      type: "checkbox",
-      label: "Macro Product",
+    // macro_product: {
+    //   type: "checkbox",
+    //   label: "Macro Product",
+    // },
+    // option: {
+    //   type: "checkbox",
+    //   label: "Option",
+    // },
+    // default_option: {
+    //   type: "checkbox",
+    //   label: "Default Option",
+    // },
+
+    // color_product_title: {
+    //   label: "Color Products",
+    //   type: "title",
+    //   align: "center",
+    //   variant: "h6",
+    // },
+    // color_products: {
+    //   type: "autocomplete_multiple",
+    //   label: "Color Product",
+    //   options: products,
+    //   labelProp: "name",
+    // },
+    // color_product_name: {
+    //   type: "text",
+    //   label: "Color Product Name",
+    // },
+    // color_group_name: {
+    //   type: "text",
+    //   label: "Color Group Name",
+    // },
+    // color_images_object: {
+    //   type: "image_upload",
+    //   label: "Color Images",
+    //   labelProp: "link",
+    //   album: `${product.name} Color Images`,
+    // },
+    // color_product_group: {
+    //   type: "checkbox",
+    //   label: "Color Product Group",
+    // },
+    // secondary_color_product_title: {
+    //   label: "Secondary Color Products",
+    //   type: "title",
+    //   align: "center",
+    //   variant: "h6",
+    // },
+    // secondary_color_products: {
+    //   type: "autocomplete_multiple",
+    //   label: "Secondary Color Product",
+    //   options: products,
+    //   labelProp: "name",
+    // },
+    // secondary_color_product_name: {
+    //   type: "text",
+    //   label: "Secondary Color Product Name",
+    // },
+    // secondary_color_group_name: {
+    //   type: "text",
+    //   label: "Secondary Color Group Name",
+    // },
+    // secondary_product_group: {
+    //   type: "checkbox",
+    //   label: "Secondary Product Group",
+    // },
+    // secondary_group_name: {
+    //   type: "text",
+    //   label: "Secondary Group Name",
+    // },
+    // secondary_color_images_object: {
+    //   type: "image_upload",
+    //   label: "Secondary Color Images",
+    //   labelProp: "link",
+    //   album: `${product.name} Secondary Color Images`,
+    // },
+
+    // secondary_color_product_group: {
+    //   type: "checkbox",
+    //   label: "Secondary Color Product Group",
+    // },
+    // option_product_title: {
+    //   label: "Option Products",
+    //   type: "title",
+    //   align: "center",
+    //   variant: "h6",
+    // },
+    // option_product_name: {
+    //   type: "text",
+    //   label: "Option Product Name",
+    //   labelProp: "option_product_name",
+    // },
+    // option_group_name: {
+    //   type: "text",
+    //   label: "Option Group Name",
+    // },
+    // option_product_group: {
+    //   type: "check",
+    //   label: "Option Product Group",
+    // },
+    // option_products: {
+    //   type: "autocomplete_multiple",
+    //   label: "Option Product",
+    //   options: products,
+    //   labelProp: "name",
+    // },
+    // option_images_object: {
+    //   type: "image_upload",
+    //   label: "Option Images",
+    //   labelProp: "link",
+    //   album: `${product.name} Option Images`,
+    // },
+    // secondary_product_title: {
+    //   label: "Secondary Products",
+    //   type: "title",
+    //   align: "center",
+    //   variant: "h6",
+    // },
+    // secondary_product_name: {
+    //   type: "text",
+    //   label: "Secondary Product Name",
+    //   labelProp: "secondary_product_name",
+    // },
+    // secondary_products: {
+    //   type: "autocomplete_multiple",
+    //   label: "Secondary Product",
+    //   options: products,
+    //   labelProp: "name",
+    // },
+    // secondary_images_object: {
+    //   type: "image_upload",
+    //   label: "Secondary Images",
+    //   labelProp: "link",
+    //   album: `${product.name} Secondary Images`,
+    // },
+    chips: {
+      type: "autocomplete_multiple",
+      label: "Chips",
+      options: chips,
+      labelProp: "name",
     },
-    option: {
-      type: "checkbox",
-      label: "Option",
+    filament: {
+      type: "autocomplete_single",
+      label: "Filament",
+      options: filaments,
+      getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
+      labelProp: "name",
     },
-    default_option: {
-      type: "checkbox",
-      label: "Default Option",
+    contributers: {
+      type: "autocomplete_multiple",
+      label: "Contributers",
+      options: users,
+      labelProp: "first_name",
+    },
+    // rating: {
+    //   type: "number",
+    //   label: "Rating",
+    //   default: 0,
+    // },
+    // numReviews: {
+    //   type: "number",
+    //   label: "Number of Reviews",
+    //   default: 0,
+    // },
+    // reviews: {
+    //   type: "array",
+    //   title: "Reviews",
+    //   itemSchema: {
+    //     type: "object",
+    //     fields: {
+    //       user: {
+    //         type: "autocomplete_single",
+    //         label: "Users",
+    //         options: users,
+    //         labelProp: "user",
+    //         getOptionLabel: option => (option ? `${option.first_name} ${option.last_name}` : ""),
+    //       },
+    //       first_name: {
+    //         type: "text",
+    //         label: "First Name",
+    //         labelProp: "first_name",
+    //       },
+    //       last_name: {
+    //         type: "text",
+    //         label: "Last Name",
+    //         labelProp: "last_name",
+    //       },
+    //       rating: {
+    //         type: "number",
+    //         label: "Rating",
+    //         labelProp: "rating",
+    //         required: true,
+    //       },
+    //       comment: {
+    //         type: "text",
+    //         label: "Comment",
+    //         labelProp: "comment",
+    //         required: true,
+    //       },
+    //     },
+    //   },
+    // },
+    options: {
+      type: "array",
+      label: item => item.name,
+      title: "Product Options",
+      itemSchema: {
+        type: "object",
+        fields: {
+          name: {
+            type: "text",
+            label: "Option Name",
+            labelProp: "name",
+          },
+          optionType: {
+            type: "text",
+            label: "Option Type",
+            labelProp: "optionType",
+          },
+          values: {
+            type: "array",
+            title: "Values",
+            label: item => item.value,
+            itemSchema: {
+              type: "object",
+              fields: {
+                value: { type: "text", label: "Value" },
+                isDefault: { type: "checkbox", label: "Default Option" },
+                additionalCost: { type: "number", label: "Additional Cost" },
+                product: {
+                  type: "autocomplete_single",
+                  label: "Option Product",
+                  options: products,
+                  labelProp: "name",
+                },
+                images: {
+                  type: "image_upload",
+                  image_type: "object",
+                  label: "Images",
+                  labelProp: "images",
+                  album: `${product.name} Images`,
+                },
+              },
+            },
+          },
+        },
+      },
     },
 
     sale_title: {
@@ -290,197 +527,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
     assembly_time: {
       type: "number",
       label: "Assembly Time",
-    },
-
-    color_product_title: {
-      label: "Color Products",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    color_products: {
-      type: "autocomplete_multiple",
-      label: "Color Product",
-      options: products,
-      labelProp: "name",
-    },
-    color_product_name: {
-      type: "text",
-      label: "Color Product Name",
-    },
-    color_group_name: {
-      type: "text",
-      label: "Color Group Name",
-    },
-    color_images_object: {
-      type: "image_upload",
-      label: "Color Images",
-      labelProp: "link",
-      album: `${product.name} Color Images`,
-    },
-    color_product_group: {
-      type: "checkbox",
-      label: "Color Product Group",
-    },
-    secondary_color_product_title: {
-      label: "Secondary Color Products",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    secondary_color_products: {
-      type: "autocomplete_multiple",
-      label: "Secondary Color Product",
-      options: products,
-      labelProp: "name",
-    },
-    secondary_color_product_name: {
-      type: "text",
-      label: "Secondary Color Product Name",
-    },
-    secondary_color_group_name: {
-      type: "text",
-      label: "Secondary Color Group Name",
-    },
-    secondary_product_group: {
-      type: "checkbox",
-      label: "Secondary Product Group",
-    },
-    secondary_group_name: {
-      type: "text",
-      label: "Secondary Group Name",
-    },
-    secondary_color_images_object: {
-      type: "image_upload",
-      label: "Secondary Color Images",
-      labelProp: "link",
-      album: `${product.name} Secondary Color Images`,
-    },
-
-    secondary_color_product_group: {
-      type: "checkbox",
-      label: "Secondary Color Product Group",
-    },
-    option_product_title: {
-      label: "Option Products",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    option_product_name: {
-      type: "text",
-      label: "Option Product Name",
-      labelProp: "option_product_name",
-    },
-    option_group_name: {
-      type: "text",
-      label: "Option Group Name",
-    },
-    option_product_group: {
-      type: "check",
-      label: "Option Product Group",
-    },
-    option_products: {
-      type: "autocomplete_multiple",
-      label: "Option Product",
-      options: products,
-      labelProp: "name",
-    },
-    option_images_object: {
-      type: "image_upload",
-      label: "Option Images",
-      labelProp: "link",
-      album: `${product.name} Option Images`,
-    },
-    secondary_product_title: {
-      label: "Secondary Products",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    secondary_product_name: {
-      type: "text",
-      label: "Secondary Product Name",
-      labelProp: "secondary_product_name",
-    },
-    secondary_products: {
-      type: "autocomplete_multiple",
-      label: "Secondary Product",
-      options: products,
-      labelProp: "name",
-    },
-    secondary_images_object: {
-      type: "image_upload",
-      label: "Secondary Images",
-      labelProp: "link",
-      album: `${product.name} Secondary Images`,
-    },
-    chips: {
-      type: "autocomplete_multiple",
-      label: "Chips",
-      options: chips,
-      labelProp: "name",
-    },
-    filament: {
-      type: "autocomplete_single",
-      label: "Filament",
-      options: filaments,
-      getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
-      labelProp: "name",
-    },
-    contributers: {
-      type: "autocomplete_multiple",
-      label: "Contributers",
-      options: users,
-      labelProp: "first_name",
-    },
-    rating: {
-      type: "number",
-      label: "Rating",
-      default: 0,
-    },
-    numReviews: {
-      type: "number",
-      label: "Number of Reviews",
-      default: 0,
-    },
-    reviews: {
-      type: "array",
-      title: "Reviews",
-      itemSchema: {
-        type: "object",
-        fields: {
-          user: {
-            type: "autocomplete_single",
-            label: "Users",
-            options: users,
-            labelProp: "user",
-            getOptionLabel: option => (option ? `${option.first_name} ${option.last_name}` : ""),
-          },
-          first_name: {
-            type: "text",
-            label: "First Name",
-            labelProp: "first_name",
-          },
-          last_name: {
-            type: "text",
-            label: "Last Name",
-            labelProp: "last_name",
-          },
-          rating: {
-            type: "number",
-            label: "Rating",
-            labelProp: "rating",
-            required: true,
-          },
-          comment: {
-            type: "text",
-            label: "Comment",
-            labelProp: "comment",
-            required: true,
-          },
-        },
-      },
     },
   };
 };

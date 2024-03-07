@@ -27,6 +27,8 @@ const optionValueSchema = new mongoose.Schema({
 const optionSchema = new mongoose.Schema({
   name: { type: String, required: true }, // e.g., "Color", "Size"
   values: [optionValueSchema],
+  optionType: { type: String, required: true },
+  isAddOn: { type: Boolean, default: false },
 });
 
 const productSchema = new mongoose.Schema(

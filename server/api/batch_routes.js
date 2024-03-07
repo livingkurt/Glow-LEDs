@@ -2623,9 +2623,14 @@ router.route("/migrate_product_options").put(async (req, res) => {
 
           const option = {
             name: optionName,
+            optionType:
+              optionName === "Color" || optionName === "Secondary Color" || optionName === "Included Product"
+                ? "dropdown"
+                : "buttons",
+            isAddOn: mainProduct.has_add_on && optionName === "Secondary Color" ? true : false,
             values: variations.map(variation => ({
               value: variation[valueKey],
-              additionalCost: variation.extra_cost || 0,
+              additionalCost: mainProduct.has_add_on && optionName === "Secondary Color" ? mainProduct.add_on_price : 0,
               product: variation._id,
               isDefault: !!variation.default_option,
             })),
