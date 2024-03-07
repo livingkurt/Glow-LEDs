@@ -9,23 +9,47 @@ on:
       - staging
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_BUGSNAG_KEY: ${{ secrets.REACT_APP_BUGSNAG_KEY }}
+      BUGSNAG_KEY: ${{ secrets.BUGSNAG_KEY }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "18.x"
+          cache: "npm"
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm install
+
+      - name: Install client dependencies
+        run: npm install --prefix client
+
+      - name: Build backend
+        run: npm run build
+
+      - name: Build frontend
+        run: CI=false npm run build --prefix client
+
+      - name: Start Backend Server
+        run: npm run start:prod &
+        env:
+          NODE_ENV: production
+
+      - name: Serve Frontend
+        run: npx serve -s client/build -l 3000 &
 
       - name: Run Cypress tests
         run: npm run cypress:run
+        env:
+          NODE_ENV: test
+          CI: true
 
       - name: Upload Cypress videos and screenshots as artifacts (optional)
         if: always()
