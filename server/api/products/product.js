@@ -22,6 +22,7 @@ const optionValueSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   images: [{ type: String }], // Specific images for this option value, if necessary
   isDefault: { type: Boolean, default: false },
+  replacePrice: { type: Boolean, default: false },
 });
 
 const optionSchema = new mongoose.Schema({

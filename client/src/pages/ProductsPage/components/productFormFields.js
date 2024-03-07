@@ -1,3 +1,5 @@
+import { toCapitalize } from "../../../utils/helper_functions";
+
 export const productFormFields = ({ products, users, categorys, product, chips, filaments }) => {
   return {
     product_info_title: {
@@ -183,9 +185,18 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             labelProp: "name",
           },
           optionType: {
-            type: "text",
+            type: "autocomplete_single",
             label: "Option Type",
-            labelProp: "optionType",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return toCapitalize(option);
+              }
+            },
+            options: ["dropdown", "buttons"],
+          },
+          isAddOn: {
+            type: "checkbox",
+            label: "Is Add-On",
           },
           values: {
             type: "array",
@@ -196,6 +207,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
               fields: {
                 value: { type: "text", label: "Value" },
                 isDefault: { type: "checkbox", label: "Default Option" },
+                replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
                 additionalCost: { type: "number", label: "Additional Cost" },
                 product: {
                   type: "autocomplete_single",

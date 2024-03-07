@@ -207,139 +207,149 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
+        .populate({
+          path: "options.values.product", // Adjusted to populate products within options.values
+          populate: [
+            { path: "filament" },
+            { path: "images_object" },
+            { path: "categorys" },
+            { path: "subcategorys" },
+            { path: "collections" },
+          ],
+        })
         .populate("images_object")
         .populate("color_images_object")
         .populate("secondary_color_images_object")
         .populate("option_images_object")
         .populate("secondary_images_object")
         .populate("chips")
-        .populate("products")
-        .populate({
-          path: "color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
-        .populate({
-          path: "secondary_color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
-        .populate({
-          path: "option_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
+        // .populate("products")
+        // .populate({
+        //   path: "color_products",
+        //   populate: [
+        //     {
+        //       path: "filament",
+        //     },
+        //     {
+        //       path: "images_object",
+        //     },
+        //     {
+        //       path: "categorys",
+        //     },
+        //     {
+        //       path: "subcategorys",
+        //     },
+        //     {
+        //       path: "collections",
+        //     },
+        //   ],
+        // })
+        // .populate({
+        //   path: "secondary_color_products",
+        //   populate: [
+        //     {
+        //       path: "filament",
+        //     },
+        //     {
+        //       path: "images_object",
+        //     },
+        //     {
+        //       path: "categorys",
+        //     },
+        //     {
+        //       path: "subcategorys",
+        //     },
+        //     {
+        //       path: "collections",
+        //     },
+        //   ],
+        // })
+        // .populate({
+        //   path: "option_products",
+        //   populate: [
+        //     {
+        //       path: "filament",
+        //     },
+        //     {
+        //       path: "images_object",
+        //     },
+        //     {
+        //       path: "categorys",
+        //     },
+        //     {
+        //       path: "subcategorys",
+        //     },
+        //     {
+        //       path: "collections",
+        //     },
+        //   ],
+        // })
         .populate("filament")
-        .populate({
-          path: "secondary_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
+        // .populate({
+        //   path: "secondary_products",
+        //   populate: [
+        //     {
+        //       path: "filament",
+        //     },
+        //     {
+        //       path: "images_object",
+        //     },
+        //     {
+        //       path: "categorys",
+        //     },
+        //     {
+        //       path: "subcategorys",
+        //     },
+        //     {
+        //       path: "collections",
+        //     },
 
-            {
-              path: "color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "secondary_color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "option_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "secondary_color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-          ],
-        })
+        //     {
+        //       path: "color_products",
+        //       populate: [
+        //         {
+        //           path: "filament",
+        //         },
+        //         {
+        //           path: "images_object",
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       path: "secondary_color_products",
+        //       populate: [
+        //         {
+        //           path: "filament",
+        //         },
+        //         {
+        //           path: "images_object",
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       path: "option_products",
+        //       populate: [
+        //         {
+        //           path: "filament",
+        //         },
+        //         {
+        //           path: "images_object",
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       path: "secondary_color_products",
+        //       populate: [
+        //         {
+        //           path: "filament",
+        //         },
+        //         {
+        //           path: "images_object",
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // })
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")

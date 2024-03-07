@@ -2523,97 +2523,13 @@ router.route("/migrate_status").put(async (req, res) => {
 
 router.route("/migrate_product_options").put(async (req, res) => {
   try {
-    // Assuming 'macro_product' identifies main products
     const mainProducts = await Product.find({ macro_product: true, deleted: false });
+    console.log("Total main products:", mainProducts.length);
 
-    for (let mainProduct of mainProducts) {
-      const options = []; // Placeholder for new options structure
+    for (let i = 0; i < mainProducts.length; i++) {
+      const mainProduct = mainProducts[i];
+      console.log(`Processing main product ${i + 1} of ${mainProducts.length}`);
 
-      // Migrate Color Options
-      if (mainProduct.color_products && mainProduct.color_products.length > 0) {
-        const colorVariations = await Product.find({ "_id": { $in: mainProduct.color_products } });
-        const colorOption = {
-          name: "Color",
-          values: colorVariations.map(variation => ({
-            value: variation.color,
-            additionalCost: variation.extra_cost || 0,
-            products: [variation._id],
-            isDefault: !!variation.default_option,
-          })),
-        };
-        options.push(colorOption);
-      }
-
-      // Migrate Secondary Color Options
-      if (mainProduct.secondary_color_products && mainProduct.secondary_color_products.length > 0) {
-        const secondaryColorVariations = await Product.find({
-          "_id": { $in: mainProduct.secondary_color_products },
-        });
-        const secondaryColorOption = {
-          name: "Secondary Color",
-          values: secondaryColorVariations.map(variation => ({
-            value: variation.color, // Assuming secondary color variations use the 'color' field as well
-            additionalCost: variation.extra_cost || 0,
-            products: [variation._id],
-            isDefault: !!variation.default_option,
-          })),
-        };
-        options.push(secondaryColorOption);
-      }
-
-      // Migrate Option Products (assuming these are sizes for simplification)
-      if (mainProduct.option_products && mainProduct.option_products.length > 0) {
-        const sizeVariations = await Product.find({ "_id": { $in: mainProduct.option_products } });
-        const sizeOption = {
-          name: "Size",
-          values: sizeVariations.map(variation => ({
-            value: variation.size,
-            additionalCost: variation.extra_cost || 0,
-            products: [variation._id],
-            isDefault: !!variation.default_option,
-          })),
-        };
-        options.push(sizeOption);
-      }
-
-      // Migrate Secondary Products (assuming these are included products)
-      if (mainProduct.secondary_products && mainProduct.secondary_products.length > 0) {
-        const includedProductVariations = await Product.find({
-          "_id": { $in: mainProduct.secondary_products },
-        });
-        const includedProductOption = {
-          name: "Included Product",
-          values: includedProductVariations.map(variation => ({
-            value: variation.name, // Use product name for the value
-            additionalCost: variation.extra_cost || 0,
-            products: [variation._id],
-            isDefault: !!variation.default_option,
-          })),
-        };
-        options.push(includedProductOption);
-      }
-
-      // Update the main product with the new options structure
-      await Product.findByIdAndUpdate(mainProduct._id, {
-        options: options,
-        // $unset: { color_products: "", secondary_color_products: "", option_products: "", secondary_products: "" },
-      });
-
-      // Since variations are now linked through options, no need to mark them individually unless needed for other purposes
-    }
-
-    res.status(200).send({ message: "Product Option Migration successful" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-router.route("/migrate_product_options").put(async (req, res) => {
-  try {
-    const mainProducts = await Product.find({ macro_product: true, deleted: false });
-
-    for (let mainProduct of mainProducts) {
       const options = []; // Placeholder for new options structure
 
       // Function to process each type of product option
@@ -2628,12 +2544,16 @@ router.route("/migrate_product_options").put(async (req, res) => {
                 ? "dropdown"
                 : "buttons",
             isAddOn: mainProduct.has_add_on && optionName === "Secondary Color" ? true : false,
-            values: variations.map(variation => ({
-              value: variation[valueKey],
-              additionalCost: mainProduct.has_add_on && optionName === "Secondary Color" ? mainProduct.add_on_price : 0,
-              product: variation._id,
-              isDefault: !!variation.default_option,
-            })),
+            values: variations.map(variation => {
+              return {
+                value: variation[valueKey],
+                replacePrice: variation.price > 0 && variation.price !== mainProduct.price ? true : false,
+                additionalCost:
+                  mainProduct.has_add_on && optionName === "Secondary Color" ? mainProduct.add_on_price : 0,
+                product: variation._id,
+                isDefault: !!variation.default_option,
+              };
+            }),
           };
           options.push(option);
 
@@ -2648,18 +2568,31 @@ router.route("/migrate_product_options").put(async (req, res) => {
       };
 
       // Migrate Color Options
-      await processOptionType(mainProduct.color_products, "Color", "color");
+      console.log("Processing Color Options");
+      await processOptionType(mainProduct.color_products, mainProduct.color_group_name || "Color", "color");
 
       // Migrate Secondary Color Options
-      await processOptionType(mainProduct.secondary_color_products, "Secondary Color", "color");
+      console.log("Processing Secondary Color Options");
+      await processOptionType(
+        mainProduct.secondary_color_products,
+        mainProduct.secondary_color_group_name || "Secondary Color",
+        "color"
+      );
 
       // Migrate Option Products (assuming these are sizes for simplification)
-      await processOptionType(mainProduct.option_products, "Size", "size");
+      console.log("Processing Option Products");
+      await processOptionType(mainProduct.option_products, mainProduct.option_group_name || "Size", "size");
 
       // Migrate Secondary Products (assuming these are included products)
-      await processOptionType(mainProduct.secondary_products, "Included Product", "name");
+      console.log("Processing Secondary Products");
+      await processOptionType(
+        mainProduct.secondary_products,
+        mainProduct.secondary_group_name || "Included Product",
+        "name"
+      );
 
       // Update the main product with the new options structure
+      console.log("Updating main product");
       await Product.findByIdAndUpdate(mainProduct._id, {
         options: options,
         // Consider uncommenting the $unset operation if you wish to clean up old fields
@@ -2667,6 +2600,7 @@ router.route("/migrate_product_options").put(async (req, res) => {
       });
     }
 
+    // res.status(200).send(mainProducts);
     res.status(200).send({ message: "Product Option Migration successful" });
   } catch (error) {
     console.error(error);
