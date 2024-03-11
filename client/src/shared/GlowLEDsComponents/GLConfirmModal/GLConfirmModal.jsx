@@ -25,7 +25,9 @@ const GLConfirmModal = () => {
 
   const handleClose = () => {
     dispatch(closeConfirm(false));
-    onClose(inputText);
+    if (onClose) {
+      onClose(inputText);
+    }
   };
 
   return (
