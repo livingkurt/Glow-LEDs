@@ -22,11 +22,11 @@ const OrderDropdown = ({ row, determineColor, colspan }) => {
             <OrderStatusButtons order={row} />
           </Grid>
           <Grid item xs={12}>
-            {row.change_log && row.change_log.length > 0 && (
+            {row?.change_log && row?.change_log?.length > 0 && (
               <>
                 <Typography variant="h6">Change Log</Typography>
-                {row.change_log
-                  .sort((a, b) => new Date(b.changedAt) - new Date(a.changedAt))
+                {[...row?.change_log]
+                  ?.sort((a, b) => new Date(b.changedAt) - new Date(a.changedAt))
                   .map((log, i) => (
                     <Paper>
                       <Box key={i} mt={2} p={2} display="flex" flexDirection="row">
