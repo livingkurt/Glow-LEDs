@@ -1,7 +1,6 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
-import { showConfirm } from "../../../slices/snackbarSlice";
 
 export const productFormFields = ({ products, users, categorys, product, chips, filaments, dispatch }) => {
   return {
@@ -218,32 +217,13 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                   options: products,
                   labelProp: "name",
                   onEditButtonClick: selectedProduct => {
-                    dispatch(
-                      showConfirm({
-                        title: "Warning!",
-                        message:
-                          "You are about to replace edited product with new product. Are you sure you want to proceed?",
-                        onConfirm: () => {
-                          console.log(selectedProduct);
-                          dispatch(saveToEditProductHistory(product));
-                          dispatch(API.detailsProduct(selectedProduct._id));
-                        },
-                      })
-                    );
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.detailsProduct(selectedProduct._id));
                   },
                   onCreateNewButtonClick: selectedProduct => {
-                    dispatch(
-                      showConfirm({
-                        title: "Warning!",
-                        message:
-                          "You are about to replace edited product with new product. Are you sure you want to proceed?",
-                        onConfirm: () => {
-                          console.log(selectedProduct);
-                          dispatch(saveToEditProductHistory(product));
-                          dispatch(API.detailsProduct(selectedProduct._id));
-                        },
-                      })
-                    );
+                    console.log(selectedProduct);
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.saveProduct({ ...selectedProduct }));
                   },
                   showEditButton: true,
                 },

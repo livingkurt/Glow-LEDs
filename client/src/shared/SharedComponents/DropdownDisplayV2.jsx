@@ -2,10 +2,8 @@ import TextField from "@mui/material/TextField";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import { Icon, List, Paper, Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";

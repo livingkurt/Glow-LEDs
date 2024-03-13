@@ -158,6 +158,10 @@ const productsPage = createSlice({
     [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
+      console.log({ payload });
+      if (payload.created) {
+        state.product = payload.data;
+      }
       if (state.editProductHistory.length > 0) {
         state.product = state.editProductHistory[state.editProductHistory.length - 1];
       } else if (state.editProductHistory.length === 0) {
