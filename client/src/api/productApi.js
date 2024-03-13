@@ -51,11 +51,11 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
     if (!product._id) {
       const { data } = await axios.post("/api/products", product);
       dispatch(showSuccess({ message: `Product Created` }));
-      return data;
+      return { data, created: true };
     } else {
       const { data } = await axios.put(`/api/products/${product._id}`, product);
       dispatch(showSuccess({ message: `Product Updated` }));
-      return data;
+      return { data, edited: true };
     }
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));

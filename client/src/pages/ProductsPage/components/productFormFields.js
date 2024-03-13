@@ -1,6 +1,8 @@
 import { toCapitalize } from "../../../utils/helper_functions";
+import * as API from "../../../api";
+import { saveToEditProductHistory } from "../productsPageSlice";
 
-export const productFormFields = ({ products, users, categorys, product, chips, filaments }) => {
+export const productFormFields = ({ products, users, categorys, product, chips, filaments, dispatch }) => {
   return {
     product_info_title: {
       label: "Product Info",
@@ -214,6 +216,16 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                   label: "Option Product",
                   options: products,
                   labelProp: "name",
+                  onEditButtonClick: selectedProduct => {
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.detailsProduct(selectedProduct._id));
+                  },
+                  onCreateNewButtonClick: selectedProduct => {
+                    console.log(selectedProduct);
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.saveProduct({ ...selectedProduct }));
+                  },
+                  showEditButton: true,
                 },
                 images: {
                   type: "image_upload",

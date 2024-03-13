@@ -41,6 +41,7 @@ const productsPage = createSlice({
     limit: 10,
     selectedOptionType: "",
     productOptionsGeneratorModal: "",
+    editProductHistory: [],
   },
   reducers: {
     set_product: (state, { payload }) => {
@@ -49,6 +50,13 @@ const productsPage = createSlice({
         ...state,
         product: { ...state.product, ...updated_product },
       };
+    },
+    saveToEditProductHistory: (state, { payload }) => {
+      state.editProductHistory.push(payload);
+    },
+    goBackInEditProductHistory: (state, { payload }) => {
+      state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      state.editProductHistory.pop();
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
@@ -150,7 +158,15 @@ const productsPage = createSlice({
     [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
-      state.edit_product_modal = false;
+      console.log({ payload });
+      if (payload.created) {
+        state.product = payload.data;
+      }
+      if (state.editProductHistory.length > 0) {
+        state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      } else if (state.editProductHistory.length === 0) {
+        state.edit_product_modal = false;
+      }
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveProduct.rejected]: (state, { payload, error }) => {
@@ -252,5 +268,7 @@ export const {
   openProductOptionsGeneratorModal,
   closeProductOptionsGeneratorModal,
   previewProductOptions,
+  saveToEditProductHistory,
+  goBackInEditProductHistory,
 } = productsPage.actions;
 export default productsPage.reducer;

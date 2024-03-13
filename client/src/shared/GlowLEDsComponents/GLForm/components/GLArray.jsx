@@ -15,7 +15,7 @@ const GLArray = ({
   getEmptyObjectFromSchema,
 }) => {
   return (
-    <Paper className="p-10px mv-10px">
+    <Paper className="p-10px mv-10px" elevation={5}>
       <Typography component="h6" variant="h6" className="ta-c mb-15px">
         {fieldData.title}
       </Typography>

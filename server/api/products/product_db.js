@@ -379,11 +379,7 @@ export default {
       } else {
         query = { pathname: id };
       }
-      const product = await Product.findOne(query);
-      if (product) {
-        const updated = await Product.updateOne(query, body);
-        return updated;
-      }
+      return await Product.findOneAndUpdate(query, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
