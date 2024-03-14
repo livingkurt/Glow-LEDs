@@ -53,7 +53,6 @@ const productSchema = new mongoose.Schema(
     categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    inventoryCount: { type: Number, required: true },
     quantity: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
     facts: { type: String },
