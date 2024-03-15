@@ -80,7 +80,7 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                           primary={
                             <div className="jc-fe">
                               <GLIconButton
-                                title="Edit"
+                                tooltip="Edit"
                                 onClick={() => {
                                   dispatch(API.detailsProduct(value.product._id));
                                   dispatch(open_edit_product_modal());
@@ -89,7 +89,7 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                                 <EditIcon color="white" />
                               </GLIconButton>
                               <GLIconButton
-                                title="Copy Product"
+                                tooltip="Copy Product"
                                 onClick={() =>
                                   dispatch(
                                     API.saveProduct({
@@ -105,7 +105,7 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                               </GLIconButton>
                               <GLIconButton
                                 onClick={() => dispatch(API.deleteProduct(value.product.pathname))}
-                                title="Delete"
+                                tooltip="Delete"
                               >
                                 <DeleteIcon color="white" />
                               </GLIconButton>
