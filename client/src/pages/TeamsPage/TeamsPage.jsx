@@ -20,6 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
 import EditTeamModal from "./EditTeamModal";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const TeamsPage = () => {
       {
         title: "Active",
         display: team => (
-          <IconButton
+          <GLIconButton
             color="white"
             onClick={() => {
               dispatch(
@@ -46,10 +47,10 @@ const TeamsPage = () => {
                 })
               );
             }}
-            aria-label={team.active ? "deactivate" : "activate"}
+            title={team.active ? "deactivate" : "activate"}
           >
             {team.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+          </GLIconButton>
         ),
       },
       { title: "Team Name", display: "team_name" },
@@ -83,17 +84,17 @@ const TeamsPage = () => {
         title: "Actions",
         display: team => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateTeamCodes(team._id))}>
+            <GLIconButton tooltip="Generate Team Codes" onClick={() => dispatch(API.generateTeamCodes(team._id))}>
               <PolylineIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteTeam(team._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteTeam(team._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

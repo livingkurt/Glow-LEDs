@@ -20,8 +20,6 @@ const EditProductModal = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
 
-  console.log({ editProductHistory });
-
   useEffect(() => {
     let clean = true;
     if (clean) {

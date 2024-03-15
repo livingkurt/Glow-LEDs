@@ -20,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const AffiliatesPage = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const AffiliatesPage = () => {
       {
         title: "Active",
         display: affiliate => (
-          <IconButton
+          <GLIconButton
             color="white"
             onClick={() => {
               dispatch(
@@ -46,10 +47,10 @@ const AffiliatesPage = () => {
                 })
               );
             }}
-            aria-label={affiliate.active ? "deactivate" : "activate"}
+            title={affiliate.active ? "deactivate" : "activate"}
           >
             {affiliate.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+          </GLIconButton>
         ),
       },
       { title: "Artist Name", display: "artist_name" },
@@ -83,17 +84,17 @@ const AffiliatesPage = () => {
         title: "Actions",
         display: affiliate => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
+            <GLIconButton title="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}>
+            <GLIconButton title="Edit" onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}>
               <PolylineIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} title="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditFilamentModal from "./components/EditFilamentModal";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const FilamentsPage = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
@@ -45,21 +46,21 @@ const FilamentsPage = () => {
         title: "Actions",
         display: filament => (
           <div className="jc-b">
-            <IconButton
+            <GLIconButton
               variant="contained"
-              aria-label="Edit"
+              tooltip="Edit"
               onClick={() => dispatch(open_edit_filament_modal(filament))}
             >
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton
+            <GLIconButton
               variant="contained"
               onClick={() => dispatch(API.deleteFilament(filament._id))}
-              aria-label="Delete"
+              tooltip="Delete"
             >
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },
