@@ -55,7 +55,7 @@ const Review = ({ product, pathname }) => {
 
   useEffect(() => {
     if (success) {
-      dispatch(API.detailsProduct(pathname));
+      dispatch(API.detailsProduct({ pathname }));
       setReviewModal("none");
       dispatch(set_success(false));
     }

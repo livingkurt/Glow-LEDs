@@ -218,7 +218,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                   labelProp: "name",
                   onEditButtonClick: selectedProduct => {
                     dispatch(saveToEditProductHistory(product));
-                    dispatch(API.detailsProduct(selectedProduct._id));
+                    dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
                   },
                   onCreateNewButtonClick: selectedProduct => {
                     console.log(selectedProduct);

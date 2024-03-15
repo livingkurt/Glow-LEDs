@@ -36,7 +36,7 @@ const ProductPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.detailsProduct(params.pathname));
+      dispatch(API.detailsProduct({ pathname: params.pathname }));
     }
     return () => {
       dispatch(unset_state());

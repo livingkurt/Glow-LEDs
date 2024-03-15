@@ -65,11 +65,11 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 
 export const detailsProduct = createAsyncThunk(
   "products/detailsProduct",
-  async (pathname, { dispatch, rejectWithValue }) => {
+  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/products/${pathname}`);
       dispatch(showSuccess({ message: `Product Found` }));
-      return data;
+      return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);

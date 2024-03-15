@@ -3,12 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import {
-  openProductOptionsGeneratorModal,
-  open_create_product_modal,
-  open_edit_product_modal,
-  set_loading,
-} from "./productsPageSlice";
+import { openProductOptionsGeneratorModal, open_create_product_modal, set_loading } from "./productsPageSlice";
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
@@ -62,13 +57,13 @@ const ProductsPage = () => {
       { title: "Count In Stock", display: "count_in_stock" },
       {
         title: "Actions",
+        nonSelectable: true,
         display: row => (
           <div className="jc-b">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
-                dispatch(API.detailsProduct(row._id));
-                dispatch(open_edit_product_modal());
+                dispatch(API.detailsProduct({ pathname: row._id, openEditModal: true }));
               }}
             >
               <EditIcon color="white" />
@@ -96,7 +91,7 @@ const ProductsPage = () => {
             <GLIconButton
               tooltip="Product Options Generator"
               onClick={() => {
-                dispatch(API.detailsProduct(row._id));
+                dispatch(API.detailsProduct({ pathname: row._id }));
                 dispatch(openProductOptionsGeneratorModal());
               }}
             >

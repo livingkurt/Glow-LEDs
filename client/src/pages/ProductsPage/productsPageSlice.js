@@ -178,19 +178,23 @@ const productsPage = createSlice({
       state.loading = true;
     },
     [API.detailsProduct.fulfilled]: (state, { payload }) => {
-      const start_date = new Date(payload.sale_start_date);
-      const end_date = new Date(payload.sale_end_date);
-      if (payload.sale_start_date) {
+      const { data, openEditModal } = payload;
+      const start_date = new Date(data.sale_start_date);
+      const end_date = new Date(data.sale_end_date);
+      if (data.sale_start_date) {
         state.sale_start_date = format_date(accurate_date(start_date));
         state.sale_start_time = format_time(accurate_date(start_date));
       }
-      if (payload.sale_end_date) {
+      if (data.sale_end_date) {
         state.sale_end_date = format_date(accurate_date(end_date));
         state.sale_end_time = format_time(accurate_date(end_date));
       }
       state.loading = false;
-      state.product = payload;
+      state.product = data;
       state.message = "Product Found";
+      if (openEditModal) {
+        state.edit_product_modal = true;
+      }
     },
     [API.detailsProduct.rejected]: (state, { payload, error }) => {
       state.loading = false;

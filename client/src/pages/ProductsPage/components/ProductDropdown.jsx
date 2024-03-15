@@ -12,6 +12,7 @@ import GLFlexGrid from "../../../shared/GlowLEDsComponents/GLFlexGrid/GLFlexGrid
 
 const ProductDropdown = ({ row, determineColor, colspan }) => {
   const dispatch = useDispatch();
+  console.log({ row });
   return (
     <TableRow sx={{ backgroundColor: determineColor(row), p: 0 }}>
       <TableCell colSpan={colspan}>
@@ -27,78 +28,64 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                 </Typography>
                 {option.isAddOn && (
                   <Typography variant="body2" gutterBottom>
-                    Is Add-On:
+                    Is Add-On
                   </Typography>
                 )}
                 <Divider />
                 <List dense>
                   {option.values?.map(value => (
                     <ListItem key={value._id} sx={{ p: 0 }}>
-                      {console.log({ product: value.product })}
                       <ListItemText
                         primary={
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <Typography variant="body2">{value.value}</Typography>
-                            {value.isDefault && <Chip label="Default" size="small" color="primary" />}
+                          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                              <Typography variant="body2">{value.value}</Typography>
+                              {value.isDefault && <Chip label="Default" size="small" color="primary" />}
+                            </Box>
+                            <Box display={"flex"} justifyContent={"flex-end"}>
+                              {value.additionalCost > 0 && (
+                                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+                                  <Typography variant="body2">${value.additionalCost.toFixed(2)}</Typography>
+                                  {/* <GLBoolean tooltip={"Replace Price"} boolean={value.replacePrice} /> */}
+                                </Box>
+                              )}
+                              {value.replacePrice && (
+                                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+                                  <Typography variant="body2">${value.product.price}</Typography>
+                                </Box>
+                              )}
+                              <GLIconButton
+                                tooltip="Edit"
+                                onClick={() => {
+                                  dispatch(API.detailsProduct({ pathname: value.product._id, openEditModal: true }));
+                                  dispatch(open_edit_product_modal());
+                                }}
+                              >
+                                <EditIcon color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                tooltip="Copy Product"
+                                onClick={() =>
+                                  dispatch(
+                                    API.saveProduct({
+                                      ...value.product,
+                                      _id: null,
+                                      name: `${value.product.name} Copy`,
+                                      pathname: `${value.product.pathname}_copy`,
+                                    })
+                                  )
+                                }
+                              >
+                                <FileCopyIcon color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                onClick={() => dispatch(API.deleteProduct(value.product.pathname))}
+                                tooltip="Delete"
+                              >
+                                <DeleteIcon color="white" />
+                              </GLIconButton>
+                            </Box>
                           </Box>
-                        }
-                        secondary={
-                          ((value.replacePrice && value.additionalCost > 0) ||
-                            (option.isAddOn && value.replacePrice)) && (
-                            <Typography variant="body2">
-                              ${value.additionalCost.toFixed(2)}
-                              <GLBoolean boolean={value.replacePrice} />
-                            </Typography>
-                          )
-                        }
-                      />
-                      <ListItemText
-                        primary={
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            {((value.replacePrice && value.additionalCost > 0) ||
-                              (option.isAddOn && value.replacePrice)) && (
-                              <Typography variant="body2">
-                                ${value.additionalCost.toFixed(2)}
-                                <GLBoolean boolean={value.replacePrice} />
-                              </Typography>
-                            )}
-                          </Box>
-                        }
-                      />
-                      <ListItemText
-                        primary={
-                          <div className="jc-fe">
-                            <GLIconButton
-                              tooltip="Edit"
-                              onClick={() => {
-                                dispatch(API.detailsProduct(value.product._id));
-                                dispatch(open_edit_product_modal());
-                              }}
-                            >
-                              <EditIcon color="white" />
-                            </GLIconButton>
-                            <GLIconButton
-                              tooltip="Copy Product"
-                              onClick={() =>
-                                dispatch(
-                                  API.saveProduct({
-                                    ...value.product,
-                                    _id: null,
-                                    name: `${value.product.name} Copy`,
-                                    pathname: `${value.product.pathname}_copy`,
-                                  })
-                                )
-                              }
-                            >
-                              <FileCopyIcon color="white" />
-                            </GLIconButton>
-                            <GLIconButton
-                              onClick={() => dispatch(API.deleteProduct(value.product.pathname))}
-                              tooltip="Delete"
-                            >
-                              <DeleteIcon color="white" />
-                            </GLIconButton>
-                          </div>
                         }
                       />
                     </ListItem>
