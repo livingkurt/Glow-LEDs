@@ -53,15 +53,12 @@ const productPage = createSlice({
     set_name: (state, { payload }) => {
       state.name = payload;
     },
-
     setQty: (state, { payload }) => {
       state.qty = payload;
     },
-
     set_price: (state, { payload }) => {
       state.price = payload;
     },
-
     set_image: (state, { payload }) => {
       state.image = payload;
     },
@@ -71,11 +68,9 @@ const productPage = createSlice({
     set_sale_price: (state, { payload }) => {
       state.sale_price = payload;
     },
-
     set_color_products: (state, { payload }) => {
       state.color_products = payload;
     },
-
     set_secondary_image: (state, { payload }) => {
       state.secondary_image = payload;
     },
@@ -85,19 +80,15 @@ const productPage = createSlice({
     set_option_products: (state, { payload }) => {
       state.option_products = payload;
     },
-
     set_secondary_color: (state, { payload }) => {
       state.secondary_color = payload;
     },
-
     set_secondary_color_code: (state, { payload }) => {
       state.secondary_color_code = payload;
     },
-
     set_secondary_products: (state, { payload }) => {
       state.secondary_products = payload;
     },
-
     set_show_add_on: (state, { payload }) => {
       state.show_add_on = payload;
     },

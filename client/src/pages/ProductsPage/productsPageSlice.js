@@ -136,6 +136,9 @@ const productsPage = createSlice({
     previewProductOptions: (state, { payload }) => {
       state.productOptionsGeneratorModal = false;
     },
+    addOption: (state, { payload }) => {
+      state.productOptionsGeneratorModal = false;
+    },
   },
   extraReducers: {
     [API.listProducts.pending]: (state, { payload }) => {
@@ -274,5 +277,6 @@ export const {
   previewProductOptions,
   saveToEditProductHistory,
   goBackInEditProductHistory,
+  addOption,
 } = productsPage.actions;
 export default productsPage.reducer;

@@ -301,6 +301,43 @@ export default {
       }
     }
   },
+  create_option_products_s: async (params, body) => {
+    const { id, option_product_id } = params;
+    const { newOptionProductData } = body;
+    try {
+      const product = await product_db.findById_products_db(id);
+      let optionProduct;
+      if (option_product_id) {
+        optionProduct = await product_db.findById_products_db(option_product_id);
+        optionProduct = {
+          ...optionProduct,
+          _id: null,
+          name: `${optionProduct.name} Copy`,
+          pathname: `${optionProduct.pathname}_copy`,
+        };
+      } else if (newOptionProductData) {
+        optionProduct = newOptionProductData;
+      }
+      const newOptionProduct = await product_db.create_products_db(optionProduct);
+      if (product && optionProduct) {
+        const optionIndex = product.options.findIndex(option =>
+          option.values.some(value => value.product.toString() === option_product_id)
+        );
+        if (optionIndex !== -1) {
+          product.options[optionIndex].values.push(newOptionProduct);
+          return await product_db.update_products_db(id, product);
+        } else {
+          throw new Error("Option not found for the option product.");
+        }
+      } else {
+        throw new Error("Error in Creating Option Product.");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   reorder_products_s: async body => {
     try {
       const { reorderedItems } = body;

@@ -1,9 +1,20 @@
-import { TableCell, TableRow, Typography, List, ListItem, ListItemText, Box, Chip, Divider } from "@mui/material";
+import {
+  TableCell,
+  TableRow,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Chip,
+  Divider,
+  Button,
+} from "@mui/material";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useDispatch } from "react-redux";
-import { open_edit_product_modal } from "../productsPageSlice";
+import { addOption, open_edit_product_modal } from "../productsPageSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -58,20 +69,18 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                                 tooltip="Edit"
                                 onClick={() => {
                                   dispatch(API.detailsProduct({ pathname: value.product._id, openEditModal: true }));
-                                  dispatch(open_edit_product_modal());
                                 }}
                               >
                                 <EditIcon color="white" />
                               </GLIconButton>
                               <GLIconButton
-                                tooltip="Copy Product"
+                                tooltip="Create New Option Product From "
                                 onClick={() =>
                                   dispatch(
-                                    API.saveProduct({
-                                      ...value.product,
-                                      _id: null,
-                                      name: `${value.product.name} Copy`,
-                                      pathname: `${value.product.pathname}_copy`,
+                                    API.createOptionProduct({
+                                      productId: row._id,
+                                      optionProductId: value.product._id,
+                                      optionId: option._id,
                                     })
                                   )
                                 }
@@ -90,6 +99,26 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                       />
                     </ListItem>
                   ))}
+                  <ListItem sx={{ p: 0 }}>
+                    <ListItemText
+                      primary={
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={() =>
+                            dispatch(
+                              addOption({
+                                row,
+                                optionId: option._id,
+                              })
+                            )
+                          }
+                        >
+                          Add Option
+                        </Button>
+                      }
+                    />
+                  </ListItem>
                 </List>
               </Box>
             ))}
