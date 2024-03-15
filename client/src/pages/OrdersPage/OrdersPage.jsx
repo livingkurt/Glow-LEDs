@@ -161,6 +161,7 @@ const OrdersPage = () => {
       },
       {
         title: "Actions",
+        nonSelectable: true,
         display: row => (
           <div className="jc-b">
             <Tooltip title="Edit">

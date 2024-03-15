@@ -41,6 +41,7 @@ const ChipsPage = () => {
       },
       {
         title: "Actions",
+        nonSelectable: true,
         display: chip => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>

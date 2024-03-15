@@ -81,6 +81,7 @@ const AffiliatesPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: affiliate => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>

@@ -63,6 +63,7 @@ const ExpensesPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: expense => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>

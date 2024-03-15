@@ -43,6 +43,7 @@ const FilamentsPage = () => {
       // { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
         title: "Actions",
+        nonSelectable: true,
         display: filament => (
           <div className="jc-b">
             <IconButton

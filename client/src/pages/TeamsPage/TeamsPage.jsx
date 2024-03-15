@@ -81,6 +81,7 @@ const TeamsPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: team => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>

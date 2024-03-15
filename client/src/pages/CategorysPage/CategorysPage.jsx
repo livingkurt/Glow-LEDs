@@ -26,6 +26,7 @@ const CategorysPage = () => {
       { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
       {
         title: "Actions",
+        nonSelectable: true,
         display: category => (
           <div className="jc-b">
             <IconButton

@@ -59,6 +59,7 @@ const PaychecksPage = () => {
       },
       {
         title: "Actions",
+        nonSelectable: true,
         display: paycheck => (
           <div className="jc-b">
             <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>

@@ -56,6 +56,7 @@ const ContentsPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: content => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>

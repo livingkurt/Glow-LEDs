@@ -80,6 +80,7 @@ const SurveysPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: survey => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>

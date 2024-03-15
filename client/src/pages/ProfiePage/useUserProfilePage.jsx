@@ -74,6 +74,7 @@ const useUserProfilePage = () => {
       { title: "Total", display: row => `$${row.totalPrice?.toFixed(2)}` },
       {
         title: "Actions",
+        nonSelectable: true,
         display: row => (
           <div className="jc-b">
             <Link to={`/secure/account/order/${row._id}`}>

@@ -49,6 +49,7 @@ const EmailsPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: email => (
           <div className="jc-b">
             <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>

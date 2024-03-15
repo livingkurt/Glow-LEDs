@@ -51,6 +51,7 @@ const ImagesPage = () => {
 
       {
         title: "Actions",
+        nonSelectable: true,
         display: image => (
           <div className="jc-b">
             <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>

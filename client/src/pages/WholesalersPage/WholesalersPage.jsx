@@ -42,6 +42,7 @@ const WholesalersPage = () => {
       { title: "Minimum Order Amount", display: "minimum_order_amount" },
       {
         title: "Actions",
+        nonSelectable: true,
         display: wholesaler => (
           <div className="jc-b">
             <GLButton

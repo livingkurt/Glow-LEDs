@@ -43,6 +43,7 @@ const TutorialsPage = () => {
       { title: "Categorys", display: "categorys" },
       {
         title: "Actions",
+        nonSelectable: true,
         display: tutorial => (
           <div className="jc-b">
             <GLButton

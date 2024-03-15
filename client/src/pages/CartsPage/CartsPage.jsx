@@ -48,6 +48,7 @@ const CartsPage = () => {
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
         title: "Actions",
+        nonSelectable: true,
         display: cart => (
           <div className="jc-b">
             <IconButton variant="contained" aria-label="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>

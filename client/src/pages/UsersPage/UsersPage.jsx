@@ -47,6 +47,7 @@ const UsersPage = () => {
       },
       {
         title: "Actions",
+        nonSelectable: true,
         display: user => (
           <div className="jc-b">
             <IconButton

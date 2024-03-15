@@ -187,7 +187,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
             </span>
             <div
               onClick={() => {
-                dispatch(API.detailsProduct(product.pathname));
+                dispatch(API.detailsProduct({ pathname: product.pathname }));
                 navigate("/collections/all/products/" + product?.pathname, { state: { prevPath: location.pathname } });
               }}
             >
