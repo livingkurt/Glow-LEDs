@@ -6,6 +6,7 @@ import { determine_product_name, sale_price_switch } from "../../../utils/react_
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
+import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const CartItem = ({ item, index, dispatch, current_user }) => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -72,13 +73,13 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
             <Link to={`/collections/all/products/${item.pathname}`}>{determine_product_name(item, true)}</Link>
           </div>
           <div className="mb-10px">
-            <IconButton
+            <GLIconButton
               variant="contained"
               onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
-              aria-label="Delete"
+              title="Delete"
             >
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         </div>
 

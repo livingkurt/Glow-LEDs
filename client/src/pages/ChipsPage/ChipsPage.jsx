@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FileCopy } from "@mui/icons-material";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const ChipsPage = () => {
   const chipPage = useSelector(state => state.chips.chipPage);
@@ -43,11 +44,11 @@ const ChipsPage = () => {
         title: "Actions",
         display: chip => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Copy Chip"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Copy Chip"
               onClick={() =>
                 dispatch(
                   API.saveChip({
@@ -60,10 +61,10 @@ const ChipsPage = () => {
               }
             >
               <FileCopy color="white" />
-            </IconButton>
-            <IconButton onClick={() => dispatch(API.deleteChip(chip._id))} aria-label="Delete">
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteChip(chip._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

@@ -6,6 +6,7 @@ import { GLButton } from "../GlowLEDsComponents";
 import * as API from "../../api";
 import { ArrowDownward, ArrowUpward, Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement, display_key, item_group_id }) => {
   const dispatch = useDispatch();
@@ -79,9 +80,9 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
                     <div className="promo_code mv-1rem row jc-b  w-100per" key={index}>
                       <div className="ai-c w-100per jc-b">
                         <div>
-                          <IconButton onClick={e => remove_list_item(index, e)} aria-label="Delete">
+                          <GLIconButton onClick={e => remove_list_item(index, e)} tooltip="Delete">
                             <Close />
-                          </IconButton>
+                          </GLIconButton>
                           <Link to={`/secure/glow/editproduct/${item.pathname}/false`}>
                             {display_key === "first_name"
                               ? `${item[display_key]} ${item.last_name}`
@@ -91,23 +92,23 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
                         <div className="row">
                           <div className="ai-c">
                             {index > 0 && (
-                              <IconButton
+                              <GLIconButton
                                 className="ml-5px mt-5px"
                                 onClick={e => move(index, index - 1, list_items)}
-                                aria-label="Move Up"
+                                tooltip="Move Up"
                               >
                                 <ArrowUpward />
-                              </IconButton>
+                              </GLIconButton>
                             )}
 
                             {index < list_items.length - 1 && (
-                              <IconButton
+                              <GLIconButton
                                 className="ml-5px mb-5px"
                                 onClick={e => move(index, index + 1, list_items)}
-                                aria-label="Move Down"
+                                tooltip="Move Down"
                               >
                                 <ArrowDownward />
-                              </IconButton>
+                              </GLIconButton>
                             )}
                           </div>
                           {/* <Link

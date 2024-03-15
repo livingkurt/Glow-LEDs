@@ -17,6 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import { ContentCopy } from "@mui/icons-material";
 import Papa from "papaparse";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -65,11 +66,11 @@ const ExpensesPage = () => {
         title: "Actions",
         display: expense => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit"
               onClick={() =>
                 dispatch(
                   API.saveExpense({
@@ -81,10 +82,10 @@ const ExpensesPage = () => {
               }
             >
               <ContentCopy color="white" />
-            </IconButton>
+            </GLIconButton>
             {expense.is_subscription && (
-              <IconButton
-                aria-label="Edit"
+              <GLIconButton
+                tooltip="Edit"
                 onClick={() => {
                   const confirm = window.confirm(`Are you sure you want to backfill ${expense.expense_name}?`);
                   if (confirm) {
@@ -93,12 +94,12 @@ const ExpensesPage = () => {
                 }}
               >
                 <BackupTableIcon color="white" />
-              </IconButton>
+              </GLIconButton>
             )}
 
-            <IconButton onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteExpense(expense._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

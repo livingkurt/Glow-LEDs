@@ -27,6 +27,8 @@ const GLTableRowDropdown = ({
   // const [selectedRows, selectedRows] = useState([]);
   const subRows = dropdownRows(row);
 
+  console.log({ subRows });
+
   return (
     <>
       {subRows.map(subrow => {

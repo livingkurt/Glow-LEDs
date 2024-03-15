@@ -8,6 +8,7 @@ import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { Drawer, IconButton } from "@mui/material";
 import { setCartDrawer } from "../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -84,9 +85,9 @@ const Cart = () => {
                   </div>
 
                   <div>
-                    <IconButton aria-label="Close" onClick={closeMenu}>
+                    <GLIconButton title="Close" onClick={closeMenu}>
                       <CloseIcon color="white" />
-                    </IconButton>
+                    </GLIconButton>
                   </div>
                 </div>
               </div>

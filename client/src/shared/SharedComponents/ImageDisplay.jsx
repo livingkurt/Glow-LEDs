@@ -3,6 +3,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { FileCopy } from "@mui/icons-material";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const ImageDisplay = ({ images, onChange, fieldName }) => {
   const remove_image = image_index => {
@@ -70,12 +71,12 @@ const ImageDisplay = ({ images, onChange, fieldName }) => {
                           />
                           <Typography style={{ color: "white" }}>{picture.link}</Typography>
                           <Stack direction="row" justifyContent="flex-end">
-                            <IconButton onClick={() => copyToClipboard(picture.link)} aria-label="Copy">
+                            <GLIconButton onClick={() => copyToClipboard(picture.link)} tooltip="Copy">
                               <FileCopy style={{ color: "white", fontSize: "20px" }} />
-                            </IconButton>
-                            <IconButton onClick={() => remove_image(index)} aria-label="Delete">
+                            </GLIconButton>
+                            <GLIconButton onClick={() => remove_image(index)} tooltip="Delete">
                               <Delete style={{ color: "white", fontSize: "20px" }} />
-                            </IconButton>
+                            </GLIconButton>
                           </Stack>
                         </Stack>
                       </Box>

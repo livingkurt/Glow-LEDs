@@ -10,6 +10,7 @@ import { Button, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { determineCategoryColors } from "./categoryHelpers";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const CategorysPage = () => {
   const categoryPage = useSelector(state => state.categorys.categoryPage);
@@ -28,21 +29,21 @@ const CategorysPage = () => {
         title: "Actions",
         display: category => (
           <div className="jc-b">
-            <IconButton
+            <GLIconButton
               variant="contained"
-              aria-label="Edit"
+              tooltip="Edit"
               onClick={() => dispatch(open_edit_category_modal(category))}
             >
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton
+            <GLIconButton
               variant="contained"
               onClick={() => dispatch(API.deleteCategory(category._id))}
-              aria-label="Delete"
+              tooltip="Delete"
             >
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

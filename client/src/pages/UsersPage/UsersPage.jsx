@@ -18,6 +18,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EmailIcon from "@mui/icons-material/Email";
 import { Loading } from "../../shared/SharedComponents";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -49,39 +50,39 @@ const UsersPage = () => {
         title: "Actions",
         display: user => (
           <div className="jc-b">
-            <IconButton
-              aria-label="Edit"
+            <GLIconButton
+              tooltip="Edit"
               onClick={() => {
                 dispatch(open_edit_user_modal(user));
               }}
             >
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Duplicate"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() => {
                 const newDuplicateUser = duplicateUser(user);
                 dispatch(API.saveUser({ user: newDuplicateUser, profile: false }));
               }}
             >
               <CloneIcon color="white" />
-            </IconButton>
+            </GLIconButton>
             <Link to={"/secure/glow/userprofile/" + user._id}>
-              <IconButton aria-label="view">
+              <GLIconButton tooltip="view">
                 <MountainIcon color="white" />
-              </IconButton>
+              </GLIconButton>
             </Link>
-            <IconButton
-              aria-label="Email"
+            <GLIconButton
+              tooltip="Send Affiliate Onboard Email"
               onClick={() => {
                 dispatch(API.sendAffiliateOnboardEmail({ userIds: [user._id] }));
               }}
             >
               <EmailIcon color="white" />
-            </IconButton>
-            <IconButton aria-label="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
+            </GLIconButton>
+            <GLIconButton tooltip="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

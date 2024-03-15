@@ -2,6 +2,7 @@ import React from "react";
 import GLButton from "../GLButton/GLButton";
 import { IconButton } from "@mui/material";
 import { Search } from "@mui/icons-material";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
 const GLSearch = ({ set_search, search, submitHandler, className }) => {
   return (
@@ -15,9 +16,9 @@ const GLSearch = ({ set_search, search, submitHandler, className }) => {
           onChange={set_search}
           className="form_input search mv-0px"
         />
-        <IconButton type="submit" variant="contained" className="w-50px mb-0px" aria-label="Search">
+        <GLIconButton type="submit" variant="contained" className="w-50px mb-0px" tooltip="Search">
           <Search />
-        </IconButton>
+        </GLIconButton>
       </div>
     </form>
   );

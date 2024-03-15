@@ -18,6 +18,7 @@ import { BugReport, ContentCopy, Email } from "@mui/icons-material";
 import { determineEmailColors, templates } from "./emailsPageHelpers";
 import { showConfirm } from "../../slices/snackbarSlice";
 import { Loading } from "../../shared/SharedComponents";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const EmailsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -51,19 +52,19 @@ const EmailsPage = () => {
         title: "Actions",
         display: email => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Send Test Email"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Send Test Email"
               onClick={() => {
                 dispatch(API.sendAnnouncement({ emailId: email._id, testEmail: true }));
               }}
             >
               <BugReport color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Schedule Email"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Schedule Email"
               onClick={() => {
                 dispatch(
                   API.saveEmail({
@@ -74,9 +75,9 @@ const EmailsPage = () => {
               }}
             >
               <AccessTimeIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Send Test Email"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Send Test Email"
               onClick={() => {
                 dispatch(
                   showConfirm({
@@ -88,9 +89,9 @@ const EmailsPage = () => {
               }}
             >
               <Email color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit"
               onClick={() =>
                 dispatch(
                   API.saveEmail({
@@ -104,11 +105,11 @@ const EmailsPage = () => {
               }
             >
               <ContentCopy color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteEmail(email._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteEmail(email._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

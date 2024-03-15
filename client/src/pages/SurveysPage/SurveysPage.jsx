@@ -17,6 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const SurveysPage = () => {
   const surveyPage = useSelector(state => state.surveys.surveyPage);
@@ -82,11 +83,11 @@ const SurveysPage = () => {
         title: "Actions",
         display: survey => (
           <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveSurvey({
@@ -100,9 +101,9 @@ const SurveysPage = () => {
               }
             >
               <ContentCopy color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Create Email"
               onClick={() => {
                 dispatch(
                   API.saveEmail({
@@ -118,11 +119,11 @@ const SurveysPage = () => {
               }}
             >
               <EmailIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteSurvey(survey._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteSurvey(survey._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },

@@ -12,6 +12,7 @@ import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const DropdownDisplayV2 = ({
   options,
@@ -97,16 +98,17 @@ const DropdownDisplayV2 = ({
                           <ListItemText primary={item[labelProp]} />
                           <ListItemSecondaryAction>
                             {onEdit && (
-                              <IconButton edge="end" onClick={() => onEdit(item)}>
+                              <GLIconButton tooltip="Edit" edge="end" onClick={() => onEdit(item)}>
                                 <EditIcon sx={{ color: "white" }} />
-                              </IconButton>
+                              </GLIconButton>
                             )}
-                            <IconButton
+                            <GLIconButton
                               edge="end"
+                              tooltip="Delete"
                               onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}
                             >
                               <DeleteIcon sx={{ color: "white" }} />
-                            </IconButton>
+                            </GLIconButton>
                           </ListItemSecondaryAction>
                         </ListItem>
                       )}

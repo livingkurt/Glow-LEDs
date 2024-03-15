@@ -15,6 +15,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -27,7 +28,7 @@ const CartsPage = () => {
       {
         title: "Active",
         display: cart => (
-          <IconButton
+          <GLIconButton
             variant="contained"
             onClick={() => {
               dispatch(
@@ -37,10 +38,10 @@ const CartsPage = () => {
                 })
               );
             }}
-            aria-label={cart.active ? "deactivate" : "activate"}
+            title={cart.active ? "deactivate" : "activate"}
           >
             {cart.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+          </GLIconButton>
         ),
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
@@ -50,13 +51,13 @@ const CartsPage = () => {
         title: "Actions",
         display: cart => (
           <div className="jc-b">
-            <IconButton variant="contained" aria-label="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
+            <GLIconButton variant="contained" tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
+            <GLIconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },
