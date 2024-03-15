@@ -3,13 +3,14 @@ import { allRecordsApi } from "./api/allRecordsApi";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
-import { affiliateApi } from "./api";
+import { affiliateApi, productApi } from "./api";
 
 const apiMiddleware = [
   dashboardApi.middleware,
   placeOrderApi.middleware,
   allRecordsApi.middleware,
   affiliateApi.middleware,
+  productApi.middleware,
 ];
 
 const store = configureStore({

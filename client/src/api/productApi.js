@@ -6,6 +6,7 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const getProducts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -153,16 +154,18 @@ export const deleteProductReview = createAsyncThunk(
   }
 );
 
-// export const productApi = createApi({
-//   reducerPath: "productApi",
-//   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-//   endpoints: builder => ({
-//     getProductQuantitiesOrders: builder.query({
-//       query: () => "/orders/get_product_quantities_orders"
-//     }),
-//   })
-// });
+export const productApi = createApi({
+  reducerPath: "productApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  endpoints: builder => ({
+    product: builder.query({
+      query: pathname => ({ url: `/products/${pathname}`, method: "get" }),
+      transformResponse: response => {
+        console.log({ response });
+        return response;
+      },
+    }),
+  }),
+});
 
-// export const {
-
-// } = productApi;
+export const { useProductQuery } = productApi;
