@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
-import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
@@ -24,6 +23,8 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import axios from "axios";
+import ProductDropdown from "./components/ProductDropdown";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -40,7 +41,7 @@ const ProductsPage = () => {
       {
         title: "Hidden",
         display: product => (
-          <IconButton
+          <GLIconButton
             onClick={() => {
               dispatch(
                 API.saveProduct({
@@ -52,7 +53,7 @@ const ProductsPage = () => {
             aria-label={product.active ? "deactivate" : "activate"}
           >
             {product.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+          </GLIconButton>
         ),
       },
       { title: "Category", display: "category" },
@@ -63,22 +64,22 @@ const ProductsPage = () => {
         title: "Actions",
         display: row => (
           <div className="jc-b">
-            <IconButton
-              aria-label="Edit"
+            <GLIconButton
+              tooltip="Edit"
               onClick={() => {
                 dispatch(API.detailsProduct(row._id));
                 dispatch(open_edit_product_modal());
               }}
             >
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
             <Link to={`/collections/all/products/${row.pathname}`}>
-              <IconButton aria-label="View Product Page">
+              <GLIconButton tooltip="View Product Page">
                 <LandscapeIcon color="white" />
-              </IconButton>
+              </GLIconButton>
             </Link>
-            <IconButton
-              aria-label="Copy Product"
+            <GLIconButton
+              tooltip="Copy Product"
               onClick={() =>
                 dispatch(
                   API.saveProduct({
@@ -91,19 +92,19 @@ const ProductsPage = () => {
               }
             >
               <FileCopyIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Product Options Generator"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Product Options Generator"
               onClick={() => {
                 dispatch(API.detailsProduct(row._id));
                 dispatch(openProductOptionsGeneratorModal());
               }}
             >
               <CreateNewFolderIcon color="white" />
-            </IconButton>
-            <IconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} aria-label="Delete">
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
+            </GLIconButton>
           </div>
         ),
       },
@@ -137,10 +138,9 @@ const ProductsPage = () => {
         columnDefs={columnDefs}
         enableDropdownRow
         rowName={"name"}
-        dropdownColumnDefs={columnDefs}
-        dropdownRows={row =>
-          [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()
-        }
+        dropdownComponent={row => (
+          <ProductDropdown row={row} determineColor={determineColor} colspan={columnDefs.length + 1} />
+        )}
         loading={loading}
         enableRowSelect
         enableDragDrop

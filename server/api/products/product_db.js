@@ -11,6 +11,16 @@ export default {
         .populate("option_products")
         .populate("secondary_products")
         .populate("categorys")
+        .populate({
+          path: "options.values.product", // Adjusted to populate products within options.values
+          populate: [
+            { path: "filament" },
+            { path: "images_object" },
+            { path: "categorys" },
+            { path: "subcategorys" },
+            { path: "collections" },
+          ],
+        })
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -24,6 +34,16 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
+        .populate({
+          path: "options.values.product", // Adjusted to populate products within options.values
+          populate: [
+            { path: "filament" },
+            { path: "images_object" },
+            { path: "categorys" },
+            { path: "subcategorys" },
+            { path: "collections" },
+          ],
+        })
         .populate("images_object")
         .populate("color_images_object")
         .populate("secondary_color_images_object")
