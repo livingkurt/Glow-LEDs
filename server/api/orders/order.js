@@ -1,8 +1,10 @@
+import { optionSchema } from "../products/product";
 import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema(
   {
     name: { type: String },
+    selectedOptions: [optionSchema],
     qty: { type: Number },
     display_image: { type: String },
     secondary_image: { type: String },

@@ -8,7 +8,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
-import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
+import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import * as API from "../../api";
 import { set_image, unset_state } from "./productPageSlice";
 import ProductPageHead from "./components/ProductPageHead";
@@ -76,7 +76,7 @@ const ProductPage = () => {
             </div>
             {current_user?.isAdmin && (
               <div className="br-10px">
-                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal())}>
+                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(openEditProductModal())}>
                   Edit Product
                 </GLButton>
               </div>

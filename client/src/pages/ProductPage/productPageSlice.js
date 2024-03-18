@@ -1,6 +1,23 @@
 /* eslint-disable max-lines-per-function */
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { showError, showSuccess } from "../../slices/snackbarSlice";
+import axios from "axios";
+import { errorMessage } from "../../helpers/sharedHelpers";
+
+export const detailsProductPage = createAsyncThunk(
+  "products/detailsProductPage",
+  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/products/${pathname}`);
+      dispatch(showSuccess({ message: `Product Found` }));
+      return { data, openEditModal };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 const productPage = createSlice({
   name: "productPage",
@@ -48,8 +65,109 @@ const productPage = createSlice({
     review_modal: "none",
     rating: 5,
     comment: "",
+    product: {},
+    productPageLoading: true,
+    customizedProduct: {
+      name: "",
+      description: "",
+      images_object: [],
+      facts: "",
+      included_items: "",
+      qty: 1,
+      images: [],
+      price: 0,
+      previousPriceWithAddOn: 0,
+      wholesale_price: 0,
+      previous_price: 0,
+      sale_price: 0,
+      size: "",
+      quantity: 1,
+      count_in_stock: 0,
+      image: "",
+      secondary_image: "",
+      secondary_images: [],
+      dimensions: {},
+      show_add_on: false,
+      add_on_price: 0,
+      setHasAddOn: false,
+      tabIndex: 0,
+      review_modal: "none",
+      rating: 5,
+      comment: "",
+      selectedOptions: [],
+    },
   },
   reducers: {
+    setCustomizedProduct: (state, { payload }) => {
+      const customizedProduct = payload;
+      return {
+        ...state,
+        customizedProduct: { ...state.customizedProduct, ...customizedProduct },
+      };
+    },
+    selectOption: (state, { payload }) => {
+      const { selectedOption, index } = payload;
+
+      if (Object.keys(selectedOption).length === 0) {
+        state.customizedProduct.selectedOptions.splice(index, 1);
+        const basePrice = state.product.price;
+        // Calculate the additional cost from all selected options
+        const additionalCost = state.customizedProduct.selectedOptions.reduce(
+          (total, option) => total + (option?.additionalCost || 0),
+          0
+        );
+
+        // Update the price with the base price and additional cost
+        state.customizedProduct.price = basePrice + additionalCost;
+      } else {
+        state.customizedProduct.selectedOptions[index] = selectedOption;
+        if (selectedOption?.product?.images_object.length > 0) {
+          state.customizedProduct.images_object = selectedOption.product.images_object;
+        }
+        if (selectedOption?.product?.description) {
+          state.customizedProduct.description = selectedOption.product.description;
+        }
+        if (selectedOption?.product?.facts) {
+          state.customizedProduct.facts = selectedOption.product.facts;
+        }
+        // Handle price updates
+        if (selectedOption?.replacePrice) {
+          state.customizedProduct.price = selectedOption.product.price;
+          state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
+        } else {
+          // Calculate the base price without additional costs
+          const basePrice = state.product.price;
+
+          // Initialize the previousPriceWithAddOn if it hasn't been set
+          if (!state.customizedProduct.previousPriceWithAddOn) {
+            state.customizedProduct.previousPriceWithAddOn = basePrice;
+          }
+
+          // Calculate the additional cost from all selected options
+          const additionalCost = state.customizedProduct.selectedOptions.reduce(
+            (total, option) => total + (option?.additionalCost || 0),
+            0
+          );
+
+          // Update the price with the base price and additional cost
+          state.customizedProduct.price = basePrice + additionalCost;
+        }
+        if (selectedOption?.product.qty || selectedOption?.product.quantity) {
+          state.customizedProduct.quantity = selectedOption?.product.qty || selectedOption?.product.quantity;
+        }
+        if (selectedOption?.product.count_in_stock > 0) {
+          state.customizedProduct.quantity = selectedOption?.product.count_in_stock;
+        }
+        if (selectedOption?.product.previous_price > 0) {
+          state.customizedProduct.previous_price = selectedOption?.product.previous_price;
+        }
+      }
+    },
+    setHasAddOn: (state, { payload }) => {
+      const { selectedOption, index } = payload;
+      state.customizedProduct.selectedOptions[index] = selectedOption;
+      state.setHasAddOn = payload;
+    },
     set_name: (state, { payload }) => {
       state.name = payload;
     },
@@ -381,7 +499,55 @@ const productPage = createSlice({
       state.show_add_on = !show_add_on;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [detailsProductPage.pending]: (state, { payload }) => {
+      state.productPageLoading = true;
+    },
+    [detailsProductPage.fulfilled]: (state, { payload }) => {
+      const { data } = payload;
+      console.log({ options: payload?.options });
+      return {
+        ...state,
+        productPageLoading: false,
+        product: data,
+        customizedProduct: {
+          name: data.name,
+          description: data.description,
+          images_object: data.images_object,
+          facts: data.facts,
+          included_items: data.included_items,
+          qty: data.qty,
+          images: data.images,
+          price: data.price,
+          wholesale_price: data.wholesale_price,
+          previous_price: data.previous_price,
+          sale_price: data.sale_price,
+          size: data.size,
+          quantity: data.quantity,
+          count_in_stock: data.count_in_stock,
+          image: data.image,
+          secondary_image: data.secondary_image,
+          secondary_images: data.secondary_images,
+          dimensions: data.dimensions,
+          show_add_on: data.show_add_on,
+          add_on_price: data.add_on_price,
+          has_add_on: data.has_add_on,
+          tabIndex: data.tabIndex,
+          review_modal: data.review_modal,
+          rating: data.rating,
+          comment: data.comment,
+          selectedOptions: data?.options?.map(option => ({
+            isAddOn: option.isAddOn,
+            ...option.values.find(value => value.isDefault),
+          })),
+        },
+      };
+    },
+    [detailsProductPage.rejected]: (state, { payload }) => {
+      state.productPageLoading = false;
+      state.error = payload;
+    },
+  },
 });
 
 export const {
@@ -420,5 +586,8 @@ export const {
   update_secondary_product_state,
   unset_state,
   update_universal_state,
+  setCustomizedProduct,
+  selectOption,
+  setHasAddOn,
 } = productPage.actions;
 export default productPage.reducer;

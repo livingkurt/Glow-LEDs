@@ -71,9 +71,9 @@ const productsPage = createSlice({
       state.edit_product_modal = true;
       state.product = productInitalState;
     },
-    open_edit_product_modal: (state, { payload }) => {
+    openEditProductModal: (state, { payload }) => {
       state.edit_product_modal = true;
-      // state.product = payload;
+      state.product = payload;
     },
     close_edit_product_modal: (state, { payload }) => {
       state.edit_product_modal = false;
@@ -246,6 +246,47 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.detailsProductPage.pending]: (state, { payload }) => {
+      state.productPageLoading = true;
+    },
+    [API.detailsProductPage.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        productPageLoading: false,
+        product: payload,
+        customizedProduct: {
+          name: payload.name,
+          description: payload.description,
+          facts: payload.facts,
+          included_items: payload.included_items,
+          qty: payload.qty,
+          images: payload.images,
+          price: payload.price,
+          wholesale_price: payload.wholesale_price,
+          previous_price: payload.previous_price,
+          sale_price: payload.sale_price,
+          size: payload.size,
+          quantity: payload.quantity,
+          count_in_stock: payload.count_in_stock,
+          image: payload.image,
+          secondary_image: payload.secondary_image,
+          secondary_images: payload.secondary_images,
+          dimensions: payload.dimensions,
+          show_add_on: payload.show_add_on,
+          add_on_price: payload.add_on_price,
+          has_add_on: payload.has_add_on,
+          tabIndex: payload.tabIndex,
+          review_modal: payload.review_modal,
+          rating: payload.rating,
+          comment: payload.comment,
+          // selectedOptions: payload.options.map(option => option.values.find(value => value.isDefault)),
+        },
+      };
+    },
+    [API.detailsProductPage.rejected]: (state, { payload }) => {
+      state.productPageLoading = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -269,7 +310,7 @@ export const {
   open_create_product_modal,
   open_product_modal,
   close_edit_product_modal,
-  open_edit_product_modal,
+  openEditProductModal,
   setRemoteVersionRequirement,
   setSelectedOptionType,
   openProductOptionsGeneratorModal,

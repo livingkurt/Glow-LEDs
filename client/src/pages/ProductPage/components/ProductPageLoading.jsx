@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Grid, Skeleton } from "@mui/material";
 
-const ProductPageSkeleton = () => {
-  return (
+const ProductPageLoading = ({ loading, children }) => {
+  return loading ? (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={12} md={6} lg={4}>
         <Skeleton className="br-20px" variant="rectangular" height={400} sx={{ bgcolor: "#4e5061" }} animation="wave" />
       </Grid>
 
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={12} md={6} lg={4}>
         <Box maxWidth="100%">
           <Skeleton className="br-20px" variant="text" height={60} sx={{ bgcolor: "#4e5061" }} animation="wave" />
           <Skeleton
@@ -29,7 +29,7 @@ const ProductPageSkeleton = () => {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sm={12} md={4}>
+      <Grid item xs={12} sm={12} md={12} lg={4}>
         <Skeleton className="br-20px" variant="rectangular" height={200} sx={{ bgcolor: "#4e5061" }} animation="wave" />
       </Grid>
 
@@ -89,7 +89,9 @@ const ProductPageSkeleton = () => {
         </Grid>
       </Grid>
     </Grid>
+  ) : (
+    children
   );
 };
 
-export default ProductPageSkeleton;
+export default ProductPageLoading;

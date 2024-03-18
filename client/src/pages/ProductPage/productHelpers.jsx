@@ -15,6 +15,22 @@ import {
   update_universal_state,
 } from "./productPageSlice";
 
+// Helper function to check if the count of non-addon options is different
+export const isOptionCountDifferent = (product, customizedProduct) => {
+  const productOptions = getNonAddOnOptions(product?.options);
+  const selectedOptions = getNonAddOnOptions(customizedProduct?.selectedOptions);
+
+  return productOptions.length !== selectedOptions.length;
+};
+
+// Helper function to filter out add-on options and get their IDs
+export const getNonAddOnOptions = (options = []) => {
+  return options
+    .filter(option => option && !option.isAddOn)
+    .map(option => option._id)
+    .filter(Boolean);
+};
+
 export const determine_alt_skin_pathname = (subcategory, pathname) => {
   if (subcategory === "clozd") {
     const empty_pathname = pathname.substring(5);

@@ -7,6 +7,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setCustomizedProduct } from "../pages/ProductPage/productPageSlice";
 
 export const getProducts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -96,6 +97,20 @@ export const detailsProduct = createAsyncThunk(
   }
 );
 
+export const detailsProductPage = createAsyncThunk(
+  "products/productPage/detailsProductPage",
+  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/products/${pathname}`);
+      dispatch(showSuccess({ message: `Product Found` }));
+      return { data, openEditModal };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/products/${id}`);
@@ -162,6 +177,36 @@ export const productApi = createApi({
       query: pathname => ({ url: `/products/${pathname}`, method: "get" }),
       transformResponse: response => {
         console.log({ response });
+        // Run actions here
+        store.dispatch(
+          setCustomizedProduct({
+            name: response.name,
+            description: response.description,
+            facts: response.facts,
+            included_items: response.included_items,
+            qty: response.qty,
+            images: response.images,
+            price: response.price,
+            wholesale_price: response.wholesale_price,
+            previous_price: response.previous_price,
+            sale_price: response.sale_price,
+            size: response.size,
+            quantity: response.quantity,
+            count_in_stock: response.count_in_stock,
+            image: response.image,
+            secondary_image: response.secondary_image,
+            secondary_images: response.secondary_images,
+            dimensions: response.dimensions,
+            show_add_on: response.show_add_on,
+            add_on_price: response.add_on_price,
+            has_add_on: response.has_add_on,
+            tabIndex: response.tabIndex,
+            review_modal: response.review_modal,
+            rating: response.rating,
+            comment: response.comment,
+            selectedOptions: response.options.map(option => option.values.find(value => value.isDefault)),
+          })
+        );
         return response;
       },
     }),

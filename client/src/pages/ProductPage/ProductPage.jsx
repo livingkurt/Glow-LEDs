@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Grid,
@@ -12,10 +12,11 @@ import {
   MenuItem,
   ToggleButtonGroup,
   ToggleButton,
+  Button,
+  Paper,
 } from "@mui/material";
-import * as API from "../../api";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { isBrowser } from "react-device-detect";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,19 +28,56 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/zoom";
+import ProductPageHead from "./components/ProductPageHead";
+import { EditProductModal } from "../ProductsPage/components";
+import { openEditProductModal } from "../ProductsPage/productsPageSlice";
+import { ProductFacts } from "./components";
+import CustomizationOption from "./components/CustomizationOption";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
+import { detailsProductPage } from "./productPageSlice";
+import ProductPageLoading from "./components/ProductPageLoading";
+import { isOptionCountDifferent } from "./productHelpers";
 
 const ProductPage = () => {
   const params = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: product, error, isLoading, isFetching, isSuccess } = API.useProductQuery(params.pathname);
+
+  useEffect(() => {
+    dispatch(detailsProductPage({ pathname: params.pathname }));
+  }, [dispatch, params.pathname]);
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+  const productPage = useSelector(state => state.products.productPage);
+  const { customizedProduct, product, productPageLoading } = productPage;
+
+  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images_object } = customizedProduct;
+
+  console.log({ customizedProduct });
 
   return (
     <Box>
-      {isSuccess && (
+      <ProductPageHead />
+      <Box display="flex" justifyContent={"space-between"}>
+        <Box className="mb-10px">
+          <Link to={location.state?.prevPath || "/collections/all/products"} className="m-auto">
+            <GLButtonV2 variant="contained" color="secondary">
+              Back to Products
+            </GLButtonV2>
+          </Link>
+        </Box>
+        {current_user?.isAdmin && (
+          <Box className="br-10px">
+            <GLButtonV2 variant="contained" color="secondary" onClick={e => dispatch(openEditProductModal(product))}>
+              Edit Product
+            </GLButtonV2>
+          </Box>
+        )}
+      </Box>
+      <ProductPageLoading loading={productPageLoading}>
         <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box borderRadius={20}>
               <Swiper
                 spaceBetween={50}
@@ -58,10 +96,10 @@ const ProductPage = () => {
                   zIndex: 1, // set a lower z-index value
                 }}
               >
-                {product?.images_object.map((image, index) => (
+                {images_object?.map((image, index) => (
                   <div key={index}>
                     <SwiperSlide>
-                      <img src={image?.link} alt={product?.name} style={{ maxWidth: "100%", borderRadius: 20 }} />
+                      <img src={image?.link} alt={name} style={{ maxWidth: "100%", borderRadius: 20 }} />
                     </SwiperSlide>
                   </div>
                 ))}
@@ -69,119 +107,70 @@ const ProductPage = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box>
-              <Typography variant="h4" component="h1" gutterBottom>
-                {product.name}
+              <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
+                {name}
               </Typography>
 
               {/* Rating and Reviews */}
-              <Box display="flex" alignItems="center" mb={2}>
-                <Rating value={product.rating} precision={0.5} readOnly />
-                <Typography variant="body2" ml={1}>
-                  ({product.numReviews} reviews)
-                </Typography>
-              </Box>
-              {/* Price */}
-              <Typography variant="h5" gutterBottom>
-                Price: ${product.price}
+              {numReviews > 0 && (
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Rating value={rating} precision={0.5} readOnly />
+                  <Typography variant="body2" ml={1}>
+                    ({numReviews} reviews)
+                  </Typography>
+                </Box>
+              )}
+              <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
+                Price: ${price}
               </Typography>
-              <Typography variant="body1" gutterBottom>
-                {product.facts.split("\n").map((fact, index) => (
-                  <li key={index}>{fact}</li>
-                ))}
-              </Typography>
-
-              {/* Category and Subcategory */}
-              <Box mb={2}>
-                <Chip
-                  style={{ backgroundColor: "#4c526d", color: "#fff", fontSize: "1.1rem" }}
-                  size="medium"
-                  onClick={() => navigate(`/collections/all/products/category/${product.category}`)}
-                  label={`Category: ${product.category}`}
-                  variant="contained"
-                />
-                {product.subcategory && (
-                  <Chip
-                    style={{ backgroundColor: "#4c526d", color: "#fff", fontSize: "1.1rem" }}
-                    size="medium"
-                    onClick={() =>
-                      navigate(
-                        `/collections/all/products/category/${product.category}/subcategory/${product.subcategory}`
-                      )
-                    }
-                    label={`Subcategory: ${product.subcategory}`}
-                    variant="contained"
-                    ml={1}
-                  />
-                )}
-                {product.product_collection && (
-                  <Chip
-                    style={{ backgroundColor: "#4c526d", color: "#fff", fontSize: "1.1rem" }}
-                    size="medium"
-                    onClick={() =>
-                      navigate(
-                        `/collections/all/products/category/${product.category}/subcategory/${product.subcategory}/collection/${product.product_collection}`
-                      )
-                    }
-                    label={`Product Collection: ${product.product_collection}`}
-                    variant="contained"
-                    ml={1}
-                  />
-                )}
-              </Box>
-
-              <Divider />
-
-              {/* Options Section */}
-              <Box mt={2}>
-                <Typography variant="h6" gutterBottom>
-                  Options
-                </Typography>
-                {product.options.map((option, index) => (
-                  <Box key={index} mb={2}>
-                    <Typography variant="subtitle1" gutterBottom>
-                      {option.name}
-                    </Typography>
-                    {option.optionType === "dropdown" ? (
-                      <FormControl fullWidth>
-                        <InputLabel id={`option-${index}-label`}>Select {option.name}</InputLabel>
-                        <Select
-                          labelId={`option-${index}-label`}
-                          id={`option-${index}`}
-                          label={`Select ${option.name}`}
-                        >
-                          {option.values.map((value, valueIndex) => (
-                            <MenuItem key={valueIndex} value={value.value}>
-                              {value.value}
-                              {value.additionalCost > 0 && ` (+ $${value.additionalCost})`}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    ) : option.optionType === "buttons" ? (
-                      <ToggleButtonGroup
-                        aria-label={`${option.name} group`}
-                        value={option.values.find(value => value.isDefault)?.value}
-                        exclusive
-                        color="primary"
-                        // onChange={handleChange}
-                      >
-                        {option.values.map((value, valueIndex) => (
-                          <ToggleButton key={valueIndex} value={value.value} aria-label={value.value}>
-                            {value.value}
-                            {value.additionalCost > 0 && ` (+ $${value.additionalCost})`}
-                          </ToggleButton>
-                        ))}
-                      </ToggleButtonGroup>
-                    ) : null}
-                  </Box>
-                ))}
-              </Box>
+              <ProductFacts
+                category={category}
+                subcategory={subcategory}
+                pathname={pathname}
+                name={name}
+                facts={facts}
+              />
             </Box>
           </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={4}>
+            <Paper sx={{ backgroundColor: "#585858", color: "white", borderRadius: 5, p: 2 }}>
+              <Typography variant="h6" gutterBottom></Typography>
+              <Typography variant="h6" gutterBottom>
+                Customize
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
+                In Stock
+              </Typography>
+              {product?.options?.map((option, index) => (
+                <CustomizationOption
+                  key={index}
+                  index={index}
+                  option={option}
+                  selectedOption={customizedProduct?.selectedOptions[index]}
+                />
+              ))}
+              <Box mt={2}>
+                <GLButtonV2
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  tooltip={isOptionCountDifferent(product, customizedProduct) && "You must select all options"}
+                  disabled={isOptionCountDifferent(product, customizedProduct)}
+                >
+                  Add To Cart
+                </GLButtonV2>
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
         </Grid>
-      )}
+      </ProductPageLoading>
+
+      <EditProductModal />
     </Box>
   );
 };
