@@ -20,7 +20,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
 
   const handleChange = value => {
     // Find the full option object based on the value
-    const fullOption = option.values.find(opt => opt.value === value);
+    const fullOption = option.values.find(opt => opt.name === value);
     // Dispatch the full option object
     dispatch(selectOption({ index, selectedOption: fullOption }));
   };
@@ -65,7 +65,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
               <Select
                 labelId={`option-${index}-label`}
                 id={`option-${index}`}
-                value={selectedOption?.value}
+                value={selectedOption?.name}
                 onChange={e => handleChange(e.target.value)}
                 placeholder={`Select ${option.name}`}
                 displayEmpty
@@ -80,8 +80,8 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
                   Select {option.name}
                 </MenuItem>
                 {option.values.map((value, valueIndex) => (
-                  <MenuItem key={valueIndex} value={value.value}>
-                    {value.value}
+                  <MenuItem key={valueIndex} value={value.name}>
+                    {value.name}
                     {value.additionalCost > 0 && ` (+ $${value.additionalCost})`}
                   </MenuItem>
                 ))}
@@ -90,7 +90,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
           ) : option.optionType === "buttons" ? (
             <ToggleButtonGroup
               aria-label={`${option.name} group`}
-              value={selectedOption?.value}
+              value={selectedOption?.name}
               exclusive
               color="primary"
               onChange={e => handleChange(e.target.value)}
@@ -111,13 +111,13 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
               {option.values.map((value, valueIndex) => (
                 <ToggleButton
                   key={valueIndex}
-                  value={value.value}
-                  aria-label={value.value}
+                  value={value.name}
+                  aria-label={value.name}
                   sx={{
                     "&:hover": { backgroundColor: "#393e55" },
                   }}
                 >
-                  {value.value}
+                  {value.name}
                   {value.additionalCost > 0 && ` (+ $${value.additionalCost})`}
                 </ToggleButton>
               ))}

@@ -38,7 +38,7 @@ export const updatePrice = (state, additionalCost) => {
 export const calculateAdditionalCost = selectedOptions =>
   selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
 
-export const updateProductDetailsFromOption = (state, index, selectedOption) => {
+export const updateProductDetailsFromOption = (state, selectedOption) => {
   console.log({ selectedOption });
   const { product } = selectedOption;
   if (selectedOption.product.images_object.length > 0) {

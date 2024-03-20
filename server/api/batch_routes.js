@@ -2548,8 +2548,8 @@ router.route("/migrate_product_options").put(async (req, res) => {
             additionalCost: mainProduct.has_add_on && optionName === "Cape Color" ? 4 : 0,
             values: variations.map(variation => {
               return {
-                value: variation[valueKey],
-                images: variation.images_object,
+                name: variation[valueKey],
+                // images: variation.images_object,
                 product: variation._id,
                 isDefault: !!variation.default_option,
               };

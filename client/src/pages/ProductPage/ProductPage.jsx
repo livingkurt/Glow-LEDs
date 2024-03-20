@@ -1,22 +1,7 @@
 import React, { useEffect } from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  Divider,
-  Chip,
-  Rating,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  ToggleButtonGroup,
-  ToggleButton,
-  Button,
-  Paper,
-} from "@mui/material";
+import { Box, Grid, Typography, Divider, Rating, Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { isBrowser } from "react-device-detect";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";

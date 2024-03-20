@@ -200,17 +200,19 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             type: "checkbox",
             label: "Is Add-On",
           },
+          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+          additionalCost: { type: "number", label: "Additional Cost" },
+          splitImage: { type: "number", label: "Split Image Number" },
           values: {
             type: "array",
             title: "Option Choices",
-            label: item => item.value,
+            label: item => item.name,
             itemSchema: {
               type: "object",
               fields: {
-                value: { type: "text", label: "Value" },
+                name: { type: "text", label: "Name" },
                 isDefault: { type: "checkbox", label: "Default Option" },
-                replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-                additionalCost: { type: "number", label: "Additional Cost" },
+
                 product: {
                   type: "autocomplete_single",
                   label: "Option Product",
@@ -226,13 +228,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                     dispatch(API.saveProduct({ ...selectedProduct }));
                   },
                   showEditButton: true,
-                },
-                images: {
-                  type: "image_upload",
-                  image_type: "object",
-                  label: "Images",
-                  labelProp: "images",
-                  album: `${product.name} Images`,
                 },
               },
             },
