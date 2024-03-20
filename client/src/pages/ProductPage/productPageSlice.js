@@ -73,11 +73,12 @@ const productPage = createSlice({
     comment: "",
     product: {},
     productPageLoading: true,
-    currentOptions: [],
+
     customizedProduct: {
       name: "",
       description: "",
       images_object: [],
+      display_images: [],
       facts: "",
       included_items: "",
       qty: 1,
@@ -102,6 +103,7 @@ const productPage = createSlice({
       rating: 5,
       comment: "",
       selectedOptions: [],
+      currentOptions: [],
     },
   },
   reducers: {
@@ -467,12 +469,12 @@ const productPage = createSlice({
     },
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
-      console.log({ options: payload?.options });
+      console.log({ data });
       return {
         ...state,
         productPageLoading: false,
         product: data,
-        currentOptions: data?.options,
+
         customizedProduct: {
           name: data.name,
           description: data.description,
@@ -498,10 +500,15 @@ const productPage = createSlice({
           review_modal: data.review_modal,
           rating: data.rating,
           comment: data.comment,
-          selectedOptions: data?.options?.map(option => ({
-            isAddOn: option.isAddOn,
-            ...option.values.find(value => value.isDefault),
-          })),
+          selectedOptions: data?.options
+            ?.filter(option => !option.isAddOn)
+            ?.map(option => ({
+              ...option.values.find(value => value.isDefault),
+              isAddOn: option.isAddOn,
+              replacePrice: option.replacePrice,
+              additionalCost: option.additionalCost,
+            })),
+          currentOptions: data?.options,
         },
       };
     },

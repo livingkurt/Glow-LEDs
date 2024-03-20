@@ -21,16 +21,15 @@ const optionValueSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   // images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this optièon value, if necessary
   isDefault: { type: Boolean, default: false },
-  replacePrice: { type: Boolean, default: false },
-  additionalCost: { type: Number, default: 0 },
-  isAddOn: { type: Boolean, default: false },
-  splitImage: { type: Number, default: 0 },
 });
 
 export const optionSchema = new mongoose.Schema({
   name: { type: String, required: true }, // e.g., "Color", "Size"
   values: [optionValueSchema],
   optionType: { type: String, required: true },
+  replacePrice: { type: Boolean, default: false },
+  additionalCost: { type: Number, default: 0 },
+  isAddOn: { type: Boolean, default: false },
 });
 
 const productSchema = new mongoose.Schema(
