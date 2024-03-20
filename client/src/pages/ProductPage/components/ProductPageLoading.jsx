@@ -5,7 +5,13 @@ const ProductPageLoading = ({ loading, children }) => {
   return loading ? (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={6} lg={4}>
-        <Skeleton className="br-20px" variant="rectangular" height={400} sx={{ bgcolor: "#4e5061" }} animation="wave" />
+        <Skeleton
+          className="br-20px"
+          variant="rectangular"
+          height="100%"
+          sx={{ bgcolor: "#4e5061" }}
+          animation="wave"
+        />
       </Grid>
 
       <Grid item xs={12} sm={12} md={6} lg={4}>

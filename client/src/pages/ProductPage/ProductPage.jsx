@@ -35,11 +35,12 @@ const ProductPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
-  const { customizedProduct, product, productPageLoading, currentOptions } = productPage;
+  const { customizedProduct, product, productPageLoading } = productPage;
 
-  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images } = customizedProduct;
+  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
+    customizedProduct;
 
-  console.log({ customizedProduct, currentOptions });
+  console.log({ customizedProduct });
 
   return (
     <Box>
@@ -63,7 +64,7 @@ const ProductPage = () => {
       <ProductPageLoading loading={productPageLoading}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={4}>
-            <Box borderRadius={20}>
+            <Box borderRadius={20} display={"flex"}>
               <Swiper
                 spaceBetween={50}
                 modules={[Navigation, Pagination, Scrollbar, A11y, Zoom]}
