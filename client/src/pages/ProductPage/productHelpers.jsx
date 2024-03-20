@@ -31,6 +31,65 @@ export const getNonAddOnOptions = (options = []) => {
     .filter(Boolean);
 };
 
+export const updatePrice = (state, additionalCost) => {
+  state.customizedProduct.price = state.product.price + additionalCost;
+};
+
+export const calculateAdditionalCost = selectedOptions =>
+  selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
+
+export const updateProductDetailsFromOption = (state, index, selectedOption) => {
+  console.log({ selectedOption });
+  const { product } = selectedOption;
+  if (selectedOption.product.images_object.length > 0) {
+    state.customizedProduct.images = selectedOption.product.images_object;
+  }
+  // When product options are available, update the currentOptions based on option names
+  if (product?.options?.length > 0) {
+    // Create a map of new options by their names for easy lookup
+    const newOptionsByName = product.options.reduce((acc, option) => {
+      acc[option.name] = option;
+      return acc;
+    }, {});
+
+    // Map existing options to replace with new ones based on name, or keep existing if no match
+    state.currentOptions = state.currentOptions.map(existingOption => {
+      // Check if a matching new option exists by name
+      const replacementOption = newOptionsByName[existingOption.name];
+      return replacementOption || existingOption; // Use the replacement if it exists; otherwise, keep the existing option
+    });
+  }
+
+  if (product?.description) {
+    state.customizedProduct.description = product.description;
+  }
+  if (product?.facts) {
+    state.customizedProduct.facts = product.facts;
+  }
+  if (product?.qty || product?.quantity) {
+    state.customizedProduct.quantity = product.qty || product.quantity;
+  }
+  if (product?.count_in_stock > 0) {
+    state.customizedProduct.quantity = product.count_in_stock;
+  }
+  if (product?.previous_price > 0) {
+    state.customizedProduct.previous_price = product.previous_price;
+  }
+};
+
+export const handlePriceReplacement = (state, selectedOption) => {
+  if (selectedOption?.replacePrice) {
+    state.customizedProduct.price = selectedOption.product.price;
+    state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
+  } else {
+    if (!state.customizedProduct.previousPriceWithAddOn) {
+      state.customizedProduct.previousPriceWithAddOn = state.product.price;
+    }
+    const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
+    updatePrice(state, additionalCost);
+  }
+};
+
 export const determine_alt_skin_pathname = (subcategory, pathname) => {
   if (subcategory === "clozd") {
     const empty_pathname = pathname.substring(5);

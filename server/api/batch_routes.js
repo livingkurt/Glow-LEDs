@@ -2541,12 +2541,15 @@ router.route("/migrate_product_options").put(async (req, res) => {
             name: optionName,
             optionType: valueKey === "size" || optionName === "Size" ? "buttons" : "dropdown",
             isAddOn: mainProduct.has_add_on && optionName === "Cape Color" ? true : false,
+            replacePrice:
+              (valueKey === "size" || optionName === "Size") && !mainProduct.has_add_on && !optionName === "Cape Color"
+                ? true
+                : false,
+            additionalCost: mainProduct.has_add_on && optionName === "Cape Color" ? 4 : 0,
             values: variations.map(variation => {
               return {
                 value: variation[valueKey],
-                replacePrice:
-                  variation.price > 0 && !mainProduct.has_add_on && !optionName === "Cape Color" ? true : false,
-                additionalCost: mainProduct.has_add_on && optionName === "Cape Color" ? 4 : 0,
+                images: variation.images_object,
                 product: variation._id,
                 isDefault: !!variation.default_option,
               };

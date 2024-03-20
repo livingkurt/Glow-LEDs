@@ -68,6 +68,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
                 value={selectedOption?.value}
                 onChange={e => handleChange(e.target.value)}
                 placeholder={`Select ${option.name}`}
+                displayEmpty
                 sx={{
                   backgroundColor: "#4d5061",
                   color: "white",
@@ -75,6 +76,9 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
                   "&.Mui-focused": { backgroundColor: "#393e55" },
                 }}
               >
+                <MenuItem disabled key={0} value={undefined}>
+                  Select {option.name}
+                </MenuItem>
                 {option.values.map((value, valueIndex) => (
                   <MenuItem key={valueIndex} value={value.value}>
                     {value.value}

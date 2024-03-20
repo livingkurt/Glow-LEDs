@@ -42,6 +42,16 @@ export default {
             { path: "categorys" },
             { path: "subcategorys" },
             { path: "collections" },
+            {
+              path: "options.values.product", // Add another nesting of options.values.product
+              populate: [
+                { path: "filament" },
+                { path: "images_object" },
+                { path: "categorys" },
+                { path: "subcategorys" },
+                { path: "collections" },
+              ],
+            },
           ],
         })
         .populate("images_object")
@@ -235,6 +245,16 @@ export default {
             { path: "categorys" },
             { path: "subcategorys" },
             { path: "collections" },
+            {
+              path: "options.values.product", // Add another nesting of options.values.product
+              populate: [
+                { path: "filament" },
+                { path: "images_object" },
+                { path: "categorys" },
+                { path: "subcategorys" },
+                { path: "collections" },
+              ],
+            },
           ],
         })
         .populate("images_object")

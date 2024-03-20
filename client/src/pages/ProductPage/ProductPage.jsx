@@ -50,11 +50,11 @@ const ProductPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
-  const { customizedProduct, product, productPageLoading } = productPage;
+  const { customizedProduct, product, productPageLoading, currentOptions } = productPage;
 
-  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images_object } = customizedProduct;
+  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images } = customizedProduct;
 
-  console.log({ customizedProduct });
+  console.log({ customizedProduct, currentOptions });
 
   return (
     <Box>
@@ -76,7 +76,7 @@ const ProductPage = () => {
         )}
       </Box>
       <ProductPageLoading loading={productPageLoading}>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box borderRadius={20}>
               <Swiper
@@ -96,7 +96,7 @@ const ProductPage = () => {
                   zIndex: 1, // set a lower z-index value
                 }}
               >
-                {images_object?.map((image, index) => (
+                {images?.map((image, index) => (
                   <div key={index}>
                     <SwiperSlide>
                       <img src={image?.link} alt={name} style={{ maxWidth: "100%", borderRadius: 20 }} />
@@ -143,7 +143,7 @@ const ProductPage = () => {
               <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
                 In Stock
               </Typography>
-              {product?.options?.map((option, index) => (
+              {currentOptions?.map((option, index) => (
                 <CustomizationOption
                   key={index}
                   index={index}
@@ -156,7 +156,9 @@ const ProductPage = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  tooltip={isOptionCountDifferent(product, customizedProduct) && "You must select all options"}
+                  tooltip={
+                    isOptionCountDifferent(product, customizedProduct) && "You must select all options to Add To Cart"
+                  }
                   disabled={isOptionCountDifferent(product, customizedProduct)}
                 >
                   Add To Cart

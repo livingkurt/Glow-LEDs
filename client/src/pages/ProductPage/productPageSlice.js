@@ -4,6 +4,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showError, showSuccess } from "../../slices/snackbarSlice";
 import axios from "axios";
 import { errorMessage } from "../../helpers/sharedHelpers";
+import {
+  calculateAdditionalCost,
+  handlePriceReplacement,
+  updatePrice,
+  updateProductDetailsFromOption,
+} from "./productHelpers";
 
 export const detailsProductPage = createAsyncThunk(
   "products/detailsProductPage",
@@ -67,6 +73,7 @@ const productPage = createSlice({
     comment: "",
     product: {},
     productPageLoading: true,
+    currentOptions: [],
     customizedProduct: {
       name: "",
       description: "",
@@ -110,57 +117,12 @@ const productPage = createSlice({
 
       if (Object.keys(selectedOption).length === 0) {
         state.customizedProduct.selectedOptions.splice(index, 1);
-        const basePrice = state.product.price;
-        // Calculate the additional cost from all selected options
-        const additionalCost = state.customizedProduct.selectedOptions.reduce(
-          (total, option) => total + (option?.additionalCost || 0),
-          0
-        );
-
-        // Update the price with the base price and additional cost
-        state.customizedProduct.price = basePrice + additionalCost;
+        const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
+        updatePrice(state, additionalCost);
       } else {
         state.customizedProduct.selectedOptions[index] = selectedOption;
-        if (selectedOption?.product?.images_object.length > 0) {
-          state.customizedProduct.images_object = selectedOption.product.images_object;
-        }
-        if (selectedOption?.product?.description) {
-          state.customizedProduct.description = selectedOption.product.description;
-        }
-        if (selectedOption?.product?.facts) {
-          state.customizedProduct.facts = selectedOption.product.facts;
-        }
-        // Handle price updates
-        if (selectedOption?.replacePrice) {
-          state.customizedProduct.price = selectedOption.product.price;
-          state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
-        } else {
-          // Calculate the base price without additional costs
-          const basePrice = state.product.price;
-
-          // Initialize the previousPriceWithAddOn if it hasn't been set
-          if (!state.customizedProduct.previousPriceWithAddOn) {
-            state.customizedProduct.previousPriceWithAddOn = basePrice;
-          }
-
-          // Calculate the additional cost from all selected options
-          const additionalCost = state.customizedProduct.selectedOptions.reduce(
-            (total, option) => total + (option?.additionalCost || 0),
-            0
-          );
-
-          // Update the price with the base price and additional cost
-          state.customizedProduct.price = basePrice + additionalCost;
-        }
-        if (selectedOption?.product.qty || selectedOption?.product.quantity) {
-          state.customizedProduct.quantity = selectedOption?.product.qty || selectedOption?.product.quantity;
-        }
-        if (selectedOption?.product.count_in_stock > 0) {
-          state.customizedProduct.quantity = selectedOption?.product.count_in_stock;
-        }
-        if (selectedOption?.product.previous_price > 0) {
-          state.customizedProduct.previous_price = selectedOption?.product.previous_price;
-        }
+        updateProductDetailsFromOption(state, index, selectedOption);
+        handlePriceReplacement(state, selectedOption);
       }
     },
     setHasAddOn: (state, { payload }) => {
@@ -510,14 +472,14 @@ const productPage = createSlice({
         ...state,
         productPageLoading: false,
         product: data,
+        currentOptions: data?.options,
         customizedProduct: {
           name: data.name,
           description: data.description,
-          images_object: data.images_object,
+          images: data.images_object,
           facts: data.facts,
           included_items: data.included_items,
           qty: data.qty,
-          images: data.images,
           price: data.price,
           wholesale_price: data.wholesale_price,
           previous_price: data.previous_price,

@@ -18,19 +18,18 @@ const reviewSchema = new mongoose.Schema(
 
 const optionValueSchema = new mongoose.Schema({
   value: { type: String, required: true }, // e.g., "Blue", "Large"
-  additionalCost: { type: Number, default: 0 },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
-  images: [{ type: String }], // Specific images for this option value, if necessary
+  images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this option value, if necessary
   isDefault: { type: Boolean, default: false },
-  replacePrice: { type: Boolean, default: false },
 });
 
 export const optionSchema = new mongoose.Schema({
   name: { type: String, required: true }, // e.g., "Color", "Size"
   values: [optionValueSchema],
   optionType: { type: String, required: true },
+  replacePrice: { type: Boolean, default: false },
+  additionalCost: { type: Number, default: 0 },
   isAddOn: { type: Boolean, default: false },
-  updateImages: { type: Boolean, default: false },
 });
 
 const productSchema = new mongoose.Schema(
