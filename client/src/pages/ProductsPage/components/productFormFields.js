@@ -196,12 +196,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             },
             options: ["dropdown", "buttons"],
           },
-          isAddOn: {
-            type: "checkbox",
-            label: "Is Add-On",
-          },
-          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-          additionalCost: { type: "number", label: "Additional Cost" },
           splitImage: { type: "number", label: "Split Image Number" },
           values: {
             type: "array",
@@ -212,7 +206,12 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
               fields: {
                 name: { type: "text", label: "Name" },
                 isDefault: { type: "checkbox", label: "Default Option" },
-
+                isAddOn: {
+                  type: "checkbox",
+                  label: "Is Add-On",
+                },
+                replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+                additionalCost: { type: "number", label: "Additional Cost" },
                 product: {
                   type: "autocomplete_single",
                   label: "Option Product",
