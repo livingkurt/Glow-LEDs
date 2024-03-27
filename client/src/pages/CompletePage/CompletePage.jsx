@@ -115,20 +115,22 @@ const CompletePage = () => {
     // if (config.NODE_ENV === "development" || config.NODE_ENV === "staging") return;
 
     if (params.type === "order") {
-      dispatch(
-        API.sendOrderEmail({
-          order,
-          subject: "Thank you for your Glow LEDs Order",
-          email: order.shipping.email,
-        })
-      );
-      dispatch(
-        API.sendOrderEmail({
-          order,
-          subject: "New Order Created by " + order.shipping.first_name,
-          email: config.REACT_APP_INFO_EMAIL,
-        })
-      );
+      if (order?.shipping?.email) {
+        dispatch(
+          API.sendOrderEmail({
+            order,
+            subject: "Thank you for your Glow LEDs Order",
+            email: order.shipping.email,
+          })
+        );
+        dispatch(
+          API.sendOrderEmail({
+            order,
+            subject: "New Order Created by " + order.shipping.first_name,
+            email: config.REACT_APP_INFO_EMAIL,
+          })
+        );
+      }
 
       if (order.orderItems.some(item => item.category === "custom")) {
         // Use your custom thunk for sending custom contact emails
