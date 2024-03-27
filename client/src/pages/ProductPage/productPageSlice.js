@@ -467,7 +467,7 @@ const productPage = createSlice({
     },
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
-      console.log({ options: payload?.options });
+      console.log({ data });
       return {
         ...state,
         productPageLoading: false,
@@ -500,6 +500,8 @@ const productPage = createSlice({
           comment: data.comment,
           selectedOptions: data?.options?.map(option => ({
             isAddOn: option.isAddOn,
+            replacePrice: option.replacePrice,
+            additionalCost: option.additionalCost,
             ...option.values.find(value => value.isDefault),
           })),
         },

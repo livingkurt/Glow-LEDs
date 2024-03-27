@@ -78,6 +78,7 @@ export const updateProductDetailsFromOption = (state, index, selectedOption) => 
 };
 
 export const handlePriceReplacement = (state, selectedOption) => {
+  console.log({ selectedOption });
   if (selectedOption?.replacePrice) {
     state.customizedProduct.price = selectedOption.product.price;
     state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
