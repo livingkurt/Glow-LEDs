@@ -615,13 +615,18 @@ export default {
           tracker.status === "out_for_delivery" ||
           (tracker.status === "in_transit" && order.status === "shipped")
         ) {
-          sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+          if (tracker.status === "in_transit" && order.status !== "in_transit") {
+            sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+            updateOrder("in_transit");
+          } else if (tracker.status !== "in_transit") {
+            sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+          }
         }
         if (tracker.status === "delivered") {
           updateOrder("delivered");
         } else if (tracker.status === "out_for_delivery") {
           updateOrder("out_for_delivery");
-        } else if (order.status === "shipped" && tracker.status === "in_transit") {
+        } else if (tracker.status === "in_transit" && order.status !== "in_transit") {
           updateOrder("in_transit");
         } else if (tracker.status === "in_transit") {
           updateOrder("shipped");
