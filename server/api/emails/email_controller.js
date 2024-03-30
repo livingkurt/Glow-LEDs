@@ -617,7 +617,6 @@ export default {
         ) {
           if (tracker.status === "in_transit" && order.status !== "in_transit") {
             sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
-            updateOrder("in_transit");
           } else if (tracker.status !== "in_transit") {
             sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
           }
@@ -626,6 +625,8 @@ export default {
           updateOrder("delivered");
         } else if (tracker.status === "out_for_delivery") {
           updateOrder("out_for_delivery");
+        } else if (tracker.status === "in_transit" && order.status !== "in_transit") {
+          updateOrder("in_transit");
         } else if (tracker.status === "in_transit") {
           updateOrder("shipped");
         }
