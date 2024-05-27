@@ -69,7 +69,7 @@ const SponsorPage = () => {
       {affiliate && (
         <div className="">
           <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => navigate.goBack()}>
+            <GLButton variant="secondary" onClick={() => navigate(-1)}>
               Back
             </GLButton>
             {/* {current_user?.isAdmin && (
