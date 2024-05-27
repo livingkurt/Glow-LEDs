@@ -92,9 +92,7 @@ const OrdersPage = () => {
       {
         title: "Name",
         display: row => (
-          <Link to={current_user.isAdmin && `/secure/glow/userprofile/${row?.user?._id}`}>
-            {fullName(row.shipping)}
-          </Link>
+          <Link to={current_user.isAdmin && `/secure/glow/userprofile/${row?.user}`}>{fullName(row.shipping)}</Link>
         ),
       },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
