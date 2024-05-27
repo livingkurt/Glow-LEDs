@@ -1,4 +1,5 @@
 import { Image } from "../images";
+import mongoose from "mongoose";
 
 export default {
   findAll_images_db: async (filter, sort, limit, page) => {
@@ -18,7 +19,7 @@ export default {
     let query = {};
 
     try {
-      if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+      if (id && mongoose.isValidObjectId(id)) {
         query = { _id: id };
       } else {
         query = { link: id };

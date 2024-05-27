@@ -1,9 +1,9 @@
 import { Product, product_db } from "../products";
 import {
   determineImage,
-  dimminish_batteries_stock,
-  dimminish_refresh_stock,
-  dimminish_supremes_stock,
+  diminish_batteries_stock,
+  diminish_refresh_pack_stock,
+  diminish_single_glove_stock,
   normalizeProductFilters,
   normalizeProductSearch,
   transformProducts,
@@ -408,13 +408,16 @@ export default {
     try {
       cartItems.forEach(async item => {
         const product = await product_db.findById_products_db(item.product);
+        console.log({ finite_stock: product.finite_stock, subcategory: product.subcategory });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
-            dimminish_supremes_stock(product, item);
+            diminish_single_glove_stock(product, item);
+          } else if (product.subcategory === "sampler") {
+            diminish_sampler_stock(product, item);
           } else if (product.subcategory === "refresh") {
-            dimminish_refresh_stock(product, item);
+            diminish_refresh_pack_stock(product, item);
           } else if (product.subcategory === "coin") {
-            dimminish_batteries_stock(product, item);
+            diminish_batteries_stock(product, item);
           }
         }
       });
