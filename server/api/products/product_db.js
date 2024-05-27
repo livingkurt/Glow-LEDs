@@ -201,7 +201,7 @@ export default {
     let query = {};
 
     try {
-      if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+      if (id && mongoose.isValidObjectId(id)) {
         query = { _id: id };
       } else {
         query = { pathname: id };
