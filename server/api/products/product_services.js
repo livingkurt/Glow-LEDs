@@ -1,6 +1,6 @@
 import { Product, product_db } from "../products";
 import {
-  determineImage,
+  diminish_sampler_stock,
   diminish_batteries_stock,
   diminish_refresh_pack_stock,
   diminish_single_glove_stock,
@@ -408,7 +408,6 @@ export default {
     try {
       cartItems.forEach(async item => {
         const product = await product_db.findById_products_db(item.product);
-        console.log({ finite_stock: product.finite_stock, subcategory: product.subcategory });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
             diminish_single_glove_stock(product, item);
