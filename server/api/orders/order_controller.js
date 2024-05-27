@@ -90,7 +90,19 @@ export default {
   },
   create_orders_c: async (req, res) => {
     const { body } = req;
+
     try {
+      // Check if any orderItem has subcategory "sampler" and qty greater than 1
+      const hasSamplerWithQtyGreaterThanOne = body.orderItems.some(
+        item => item.subcategory === "sampler" && item.qty > 1
+      );
+
+      if (hasSamplerWithQtyGreaterThanOne) {
+        return res.status(400).send({
+          message: "Only one sampler pack allowed per order.",
+        });
+      }
+
       const order = await order_services.create_orders_s(body);
       if (order) {
         console.log("ordersChanged socket triggered");
