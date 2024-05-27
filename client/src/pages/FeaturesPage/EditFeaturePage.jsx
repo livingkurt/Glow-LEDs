@@ -476,7 +476,7 @@ const EditFeaturePage = () => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton variant="secondary" onClick={() => navigate.goBack()}>
+                    <GLButton variant="secondary" onClick={() => navigate(-1)}>
                       Back to Features
                     </GLButton>
                   </li>

@@ -62,7 +62,7 @@ const ChangePasswordPage = () => {
         <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
       </Helmet>
       <div className="mb-10px">
-        <GLButton variant="secondary" onClick={() => navigate.goBack()}>
+        <GLButton variant="secondary" onClick={() => navigate(-1)}>
           Back to Profile
         </GLButton>
       </div>
