@@ -12,7 +12,17 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
 
   const { my_cart } = cartPage;
   return (
-    <li key={index} className="ph-1rem">
+    <li
+      key={index}
+      style={{
+        display: "flex",
+        paddingBottom: "1rem",
+        marginBottom: "1rem",
+        borderBottom: "0.1rem #c0c0c0 solid",
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
+      }}
+    >
       <div className="ai-c">
         <Link to={"/collections/all/products/" + item.pathname}>
           <div className="mb-10px">
@@ -22,6 +32,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
                 alt={item.name}
                 className="br-10px w-70px h-70px"
                 title="Product Image"
+                size={{ maxWidth: "10rem", maxHeight: "10rem", borderRadius: "10px", marginRight: "10px" }}
               />
             )}
             {item.secondary_image && (
@@ -38,6 +49,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
                     item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
                   } m-0px`}
                   src={item.display_image}
+                  size={{ maxWidth: "10rem", maxHeight: "10rem", borderRadius: "10px", marginRight: "10px" }}
                 />
                 <LazyImage
                   id="expandedSecondaryImg"
@@ -47,6 +59,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
                     item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
                   } `}
                   src={item.secondary_image}
+                  size={{ maxWidth: "10rem", maxHeight: "10rem", borderRadius: "10px", marginRight: "10px" }}
                 />
               </div>
             )}
