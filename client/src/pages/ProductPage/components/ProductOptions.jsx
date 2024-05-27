@@ -436,7 +436,7 @@ const ProductOptions = () => {
                     dispatch(setQty(e.target.value));
                   }}
                 >
-                  {[...Array(quantity).keys()].map((x, index) => (
+                  {[...Array(current_user?.isWholesaler ? 500 : quantity).keys()].map((x, index) => (
                     <option key={index} defaultValue={x + 1}>
                       {x + 1}
                     </option>
