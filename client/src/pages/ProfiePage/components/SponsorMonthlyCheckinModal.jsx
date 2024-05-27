@@ -88,7 +88,7 @@ const SponsorMonthlyCheckinModal = ({ type }) => {
         </Grid>
         <Grid item>
           <Link
-            href="https://drive.google.com/drive/folders/1shjx7y3Yqa6_UC3h-Fg0JMAhutX3hE6d?usp=sharing"
+            href="https://drive.google.com/drive/folders/1o6cH2k_wj3RJEEmM1Q5oM_OFIhvP5F44?usp=sharing"
             target="_blank"
             rel="noopener"
           >
