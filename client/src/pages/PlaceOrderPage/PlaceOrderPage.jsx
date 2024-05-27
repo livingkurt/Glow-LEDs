@@ -136,12 +136,12 @@ const PlaceOrderPage = () => {
 
   const finishOrder = () => {
     dispatch(setLoadingPayment(false));
+    dispatch(API.updateStock({ cartItems }));
     dispatch(API.emptyCart(my_cart._id));
     if (promo_code) {
       dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
       dispatch(API.sendCodeUsedEmail(promo_code.toLowerCase()));
     }
-    dispatch(API.updateStock({ cartItems }));
     sessionStorage.removeItem("shippingAddress");
     sessionStorage.setItem("manualNavigation", "true");
     navigate("/pages/complete/order/" + order._id);
