@@ -33,7 +33,7 @@ const CartPage = () => {
     }
   };
 
-  const dimminish_stock = async () => {
+  const diminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
   };
 
@@ -100,7 +100,7 @@ const CartPage = () => {
               </GLButton>
             )}
             {current_user?.isAdmin && (
-              <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
+              <GLButton onClick={() => diminish_stock()} variant="primary" className="w-100per bob">
                 Dimmish Stock
               </GLButton>
             )}
