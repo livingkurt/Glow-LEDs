@@ -123,7 +123,6 @@ const chipPage = createSlice({
     },
     [API.deleteChip.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.chip = chip;
       state.message = "Chip Deleted";
       state.remoteVersionRequirement = Date.now();
     },

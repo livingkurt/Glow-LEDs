@@ -131,7 +131,6 @@ const tutorialPage = createSlice({
     },
     [API.deleteTutorial.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.tutorial = payload.tutorial;
       state.message = "Tutorial Deleted";
       state.remoteVersionRequirement = Date.now();
     },

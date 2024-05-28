@@ -161,7 +161,6 @@ const contentPage = createSlice({
     },
     [API.deleteContent.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.content = content;
       state.message = "Content Deleted";
       state.remoteVersionRequirement = Date.now();
     },

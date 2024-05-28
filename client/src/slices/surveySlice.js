@@ -123,7 +123,6 @@ const surveyPage = createSlice({
     },
     [API.deleteSurvey.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.survey = survey;
       state.message = "Survey Deleted";
       state.remoteVersionRequirement = Date.now();
     },

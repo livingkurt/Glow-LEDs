@@ -193,7 +193,6 @@ const affiliatePage = createSlice({
     },
     [API.deleteAffiliate.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
       state.message = "Affiliate Deleted";
       state.remoteVersionRequirement = Date.now();
     },

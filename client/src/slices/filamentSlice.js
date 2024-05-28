@@ -105,7 +105,6 @@ const filamentPage = createSlice({
     },
     [API.deleteFilament.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.filament = payload.filament;
       state.message = "Filament Deleted";
       state.remoteVersionRequirement = Date.now();
     },
