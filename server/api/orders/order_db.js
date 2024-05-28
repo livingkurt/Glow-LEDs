@@ -72,24 +72,24 @@ export default {
     }
   },
 
-  // table_orders_db: async (filter, sort, limit, page) => {
-  //   try {
-  //     return await Order.find(filter)
-  //       .sort(sort)
-  //       .populate("user")
-  //       .populate("orderItems.product")
-  //       .populate("orderItems.secondary_product")
-  //       .sort(sort)
-  //       .limit(parseInt(limit))
-  //       .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+  get_user_table_orders_db: async (filter, sort, limit, page) => {
+    try {
+      return await Order.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("orderItems.product")
+        .populate("orderItems.secondary_product")
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
 
-  //       .exec();
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 
   findAll_orders_db: async (filter, sort, limit, page) => {
     try {

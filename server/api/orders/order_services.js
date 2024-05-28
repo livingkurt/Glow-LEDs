@@ -56,7 +56,7 @@ export default {
         // normalizeSearch: normalizeOrderSearch,
       });
       const scopedByUser = params.user_id ? { ...filter, user: params.user_id } : filter;
-      const orders = await order_db.table_orders_db(scopedByUser, sort, limit, page);
+      const orders = await order_db.get_user_table_orders_db(scopedByUser, sort, limit, page);
       const count = await order_db.count_orders_db(scopedByUser);
       return {
         data: orders,
