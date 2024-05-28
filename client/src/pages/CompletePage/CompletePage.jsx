@@ -112,30 +112,7 @@ const CompletePage = () => {
   };
 
   const send_email = async () => {
-    // if (config.NODE_ENV === "development" || config.NODE_ENV === "staging") return;
-
-    if (params.type === "order") {
-      if (order?.shipping?.email) {
-        dispatch(
-          API.sendOrderEmail({
-            order,
-            subject: "Thank you for your Glow LEDs Order",
-            email: order.shipping.email,
-          })
-        );
-        dispatch(
-          API.sendOrderEmail({
-            order,
-            subject: "New Order Created by " + order.shipping.first_name,
-            email: config.REACT_APP_INFO_EMAIL,
-          })
-        );
-      }
-
-      if (order.orderItems.some(item => item.category === "custom")) {
-        // Use your custom thunk for sending custom contact emails
-      }
-    } else if (params.type === "affiliate") {
+    if (params.type === "affiliate") {
       const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(params.id);
       dispatch(
         API.sendAffiliateEmail({
