@@ -139,7 +139,6 @@ const promoPage = createSlice({
     },
     [API.deletePromo.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.promo = payload.promo;
       state.message = "Promo Deleted";
     },
     [API.deletePromo.rejected]: (state, { payload, error }) => {

@@ -87,7 +87,6 @@ const parcelPage = createSlice({
     },
     [API.deleteParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.parcel = payload.parcel;
       state.message = "Parcel Deleted";
     },
     [API.deleteParcel.rejected]: (state, { payload, error }) => {

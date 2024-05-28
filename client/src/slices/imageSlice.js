@@ -144,7 +144,6 @@ const imagePage = createSlice({
     },
     [API.deleteImage.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.image = payload.image;
       state.message = "Image Deleted";
       state.remoteVersionRequirement = Date.now();
     },

@@ -131,7 +131,6 @@ const wholesalerPage = createSlice({
     },
     [API.deleteWholesaler.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.wholesaler = payload.wholesaler;
       state.message = "Wholesaler Deleted";
       state.remoteVersionRequirement = Date.now();
     },

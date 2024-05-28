@@ -107,7 +107,6 @@ const categoryPage = createSlice({
     },
     [API.deleteCategory.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.category = payload.category;
       state.message = "Category Deleted";
       state.remoteVersionRequirement = Date.now();
     },
