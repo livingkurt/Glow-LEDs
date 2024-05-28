@@ -338,7 +338,7 @@ const PaymentStep = () => {
               </li>
             )}
             <li>
-              {cartItems.length > 0 && totalPrice && <StripeCheckout />}
+              {cartItems.length > 0 && totalPrice ? <StripeCheckout /> : <div></div>}
               {(!totalPrice || totalPrice === 0) && (
                 <>
                   <p htmlFor="password">Payment is not necessary at this time</p>
