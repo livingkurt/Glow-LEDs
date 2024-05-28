@@ -132,21 +132,23 @@ export default {
     sendEmail(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
   },
   send_order_emails_c: async (req, res) => {
+    const { order: order_data, subject, email } = req.body;
+    const orderData = await order_db.findById_orders_db(order_data._id);
     const body = {
       email: {
         h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
         h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
       title: "Thank you for your purchase!",
-      order: req.body.order,
+      order: orderData,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: req.body.subject,
+      to: email,
+      subject: subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Order Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", "Order Email Sent to " + email);
   },
   send_refund_emails_c: async (req, res) => {
     const { order: order_data, email } = req.body;
