@@ -343,7 +343,7 @@ const DatabaseMigrationPage = () => {
                 </GLButton>
               </li>
               <li>
-                <GLButton variant="secondary" onClick={() => navigate.goBack()}>
+                <GLButton variant="secondary" onClick={() => navigate(-1)}>
                   Back
                 </GLButton>
               </li>

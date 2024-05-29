@@ -87,7 +87,6 @@ const featurePage = createSlice({
     },
     [API.deleteFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.feature = payload.feature;
       state.message = "Feature Deleted";
     },
     [API.deleteFeature.rejected]: (state, { payload, error }) => {

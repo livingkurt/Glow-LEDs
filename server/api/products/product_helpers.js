@@ -1,6 +1,6 @@
-import { product_db } from "../products";
+import { Product, product_db } from "../products";
 
-export const dimminish_supremes_stock = async (product, item) => {
+export const diminish_single_glove_stock = async (product, item) => {
   const new_product_count = product.count_in_stock - item.qty;
   product.count_in_stock = new_product_count;
   if (new_product_count <= product.quantity) {
@@ -13,39 +13,37 @@ export const dimminish_supremes_stock = async (product, item) => {
   await product_db.update_products_db(option_product._id, option_product);
 };
 
-export const dimminish_refresh_stock = async (product, item) => {
-  // const new_product_count = product.count_in_stock - item.qty;
-  // product.count_in_stock = new_product_count;
-  // if (new_product_count <= product.quantity) {
-  //   product.quantity = new_product_count;
-  // }
-  // await product_db.update_products_db(product._id, product);
-  const option_product = await product_db.findById_products_db(item.option_product);
-  const new_option_product_count = option_product.count_in_stock - item.qty * 6;
-  option_product.count_in_stock = new_option_product_count;
-  if (new_option_product_count <= option_product.quantity) {
-    option_product.quantity = new_option_product_count;
+export const diminish_refresh_pack_stock = async (product, item) => {
+  const new_product_count = product.count_in_stock - item.qty;
+  product.count_in_stock = new_product_count;
+  if (new_product_count <= product.quantity) {
+    product.quantity = new_product_count;
   }
-  await product_db.update_products_db(option_product._id, option_product);
+  await product_db.update_products_db(product._id, product);
 
+  // Update glove stock
+  const glove_option_product = await product_db.findById_products_db(item.option_product);
+  const glove_item = {
+    product: glove_option_product._id,
+    option_product: glove_option_product._id,
+    qty: item.qty * 6,
+  };
+  await diminish_single_glove_stock(glove_option_product, glove_item);
+
+  // Update battery stock
   await Promise.all(
     product.secondary_products.map(async secondary => {
-      const new_secondary_count = secondary.count_in_stock - item.qty * 120;
-      secondary.count_in_stock = new_secondary_count;
-      if (new_secondary_count <= secondary.quantity) {
-        secondary.qiuantty = new_secondary_count;
-      }
-      await product_db.update_products_db(secondary._id, secondary);
-      secondary.option_products.map(async option => {
-        const new_option_product_count = Math.floor(new_secondary_count / option.size);
-        option.count_in_stock = new_option_product_count;
-        await product_db.update_products_db(option._id, option);
-      });
+      const battery_item = {
+        product: secondary._id,
+        qty: item.qty,
+        size: secondary.name === "Bulk CR1225 Batteries" ? 125 : 120,
+      };
+      await diminish_batteries_stock(secondary, battery_item);
     })
   );
 };
 
-export const dimminish_batteries_stock = async (product, item) => {
+export const diminish_batteries_stock = async (product, item) => {
   const new_product_count = product.count_in_stock - item.qty * item.size;
   product.count_in_stock = new_product_count;
   if (new_product_count <= product.quantity) {
@@ -57,6 +55,30 @@ export const dimminish_batteries_stock = async (product, item) => {
       const new_option_product_count = Math.floor(new_product_count / option.size);
       option.count_in_stock = new_option_product_count;
       await product_db.update_products_db(option._id, option);
+    })
+  );
+};
+
+export const diminish_sampler_stock = async (product, item) => {
+  const sizes = item.secondary_product_name.split(" - ")[1].split(" + ");
+  const gloveName = product.name.includes("Ultra") ? "Ultra Gloves" : "Supreme Gloves V2";
+
+  const glove_option_product = await Product.findOne({ name: gloveName });
+  const gloveProduct = await product_db.findById_products_db(glove_option_product._id);
+
+  await Promise.all(
+    sizes.map(async size => {
+      const gloveOption = gloveProduct.option_products.find(option => option.size === size);
+
+      if (gloveOption) {
+        const gloveItem = {
+          product: gloveOption._id,
+          option_product: gloveOption._id,
+          qty: 1,
+        };
+
+        await diminish_single_glove_stock(gloveProduct, gloveItem);
+      }
     })
   );
 };

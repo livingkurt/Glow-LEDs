@@ -122,7 +122,6 @@ const expensePage = createSlice({
     },
     [API.deleteExpense.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.expense = expense;
       state.message = "Expense Deleted";
       state.remoteVersionRequirement = Date.now();
     },

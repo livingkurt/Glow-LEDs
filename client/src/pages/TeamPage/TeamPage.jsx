@@ -50,7 +50,7 @@ const TeamPage = () => {
       {team && (
         <div className="">
           <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => navigate.goBack()}>
+            <GLButton variant="secondary" onClick={() => navigate(-1)}>
               Back
             </GLButton>
             {/* <Link to="/collections/all/teams">
@@ -202,8 +202,8 @@ const TeamPage = () => {
                           affiliate.instagram_handle
                             ? "https://www.instagram.com/" + affiliate.instagram_handle
                             : affiliate.facebook
-                            ? affiliate.facebook
-                            : ""
+                              ? affiliate.facebook
+                              : ""
                         }
                         target="_blank"
                         rel="noopener noreferrer"

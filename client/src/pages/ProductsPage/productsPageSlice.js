@@ -210,7 +210,6 @@ const productsPage = createSlice({
     },
     [API.deleteProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.product = payload.product;
       state.message = "Product Deleted";
       state.remoteVersionRequirement = Date.now();
     },

@@ -49,7 +49,7 @@ const ProfilePage = () => {
       </Helmet>
       <EditUserModal />
       {current_user?.isAdmin && (
-        <GLButton variant="icon" onClick={() => navigate.goBack()}>
+        <GLButton variant="icon" onClick={() => navigate(-1)}>
           <i className="fas fa-chevron-left"></i>
         </GLButton>
       )}
