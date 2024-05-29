@@ -2,20 +2,18 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { getCarts } from "../../api";
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -40,7 +38,7 @@ const CartsPage = () => {
             }}
             title={cart.active ? "deactivate" : "activate"}
           >
-            {cart.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+            <GLBoolean boolean={cart.active} />
           </GLIconButton>
         ),
       },

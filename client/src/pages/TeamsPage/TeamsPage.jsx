@@ -2,25 +2,22 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { getTeams } from "../../api";
 import { determineColor } from "./teamHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
-
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
 import EditTeamModal from "./EditTeamModal";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -49,7 +46,7 @@ const TeamsPage = () => {
             }}
             title={team.active ? "deactivate" : "activate"}
           >
-            {team.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+            <GLBoolean boolean={team.active} />
           </GLIconButton>
         ),
       },

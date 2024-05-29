@@ -7,13 +7,14 @@ import EditChipModal from "./components/EditChipModal";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { open_create_chip_modal, open_edit_chip_modal } from "../../slices/chipSlice";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FileCopy } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ChipsPage = () => {
   const chipPage = useSelector(state => state.chips.chipPage);
@@ -36,9 +37,7 @@ const ChipsPage = () => {
       },
       {
         title: "Programmable",
-        display: chip => {
-          chip.programmable ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />;
-        },
+        display: chip => <GLBoolean boolean={chip.programmable} />,
       },
       {
         title: "Actions",

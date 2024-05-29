@@ -11,7 +11,7 @@ import { open_create_expense_modal, open_edit_expense_modal } from "../../slices
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors } from "./expensesPageHelpers";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
@@ -70,7 +70,7 @@ const ExpensesPage = () => {
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Edit"
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveExpense({

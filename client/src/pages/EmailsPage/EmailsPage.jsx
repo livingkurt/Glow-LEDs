@@ -11,7 +11,7 @@ import { open_create_email_modal, open_edit_email_modal } from "../../slices/ema
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SendIcon from "@mui/icons-material/Send";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BugReport, ContentCopy, Email } from "@mui/icons-material";

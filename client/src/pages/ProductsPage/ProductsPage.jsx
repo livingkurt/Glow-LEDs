@@ -15,9 +15,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
-import IconButton from "@mui/material/IconButton";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import LandscapeIcon from "@mui/icons-material/Landscape";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -26,6 +23,7 @@ import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import axios from "axios";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -53,7 +51,7 @@ const ProductsPage = () => {
             }}
             aria-label={product.active ? "deactivate" : "activate"}
           >
-            {product.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+            <GLBoolean boolean={product.active} />
           </GLIconButton>
         ),
       },

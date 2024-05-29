@@ -5,13 +5,12 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_filament_modal, open_edit_filament_modal } from "../../slices/filamentSlice";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditFilamentModal from "./components/EditFilamentModal";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const FilamentsPage = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
@@ -23,7 +22,7 @@ const FilamentsPage = () => {
     () => [
       {
         title: "Active",
-        display: filament => (filament.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: filament => <GLBoolean boolean={filament.active} />,
       },
       { title: "Color Name", display: "color" },
       { title: "Type", display: "type" },

@@ -2,23 +2,21 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloneIcon from "@mui/icons-material/Layers";
 import MountainIcon from "@mui/icons-material/Landscape";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EmailIcon from "@mui/icons-material/Email";
 import { Loading } from "../../shared/SharedComponents";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -36,15 +34,15 @@ const UsersPage = () => {
       { title: "Email", display: "email" },
       {
         title: "Guest",
-        display: user => (user.guest ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.guest} />,
       },
       {
         title: "Affiliated",
-        display: user => (user.is_affiliated ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.is_affiliated} />,
       },
       {
         title: "Subscribed",
-        display: user => (user.email_subscription ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.email_subscription} />,
       },
       {
         title: "Actions",
@@ -68,7 +66,7 @@ const UsersPage = () => {
               <CloneIcon color="white" />
             </GLIconButton>
             <Link to={"/secure/glow/userprofile/" + user._id}>
-              <GLIconButton tooltip="view">
+              <GLIconButton tooltip="View User Profile">
                 <MountainIcon color="white" />
               </GLIconButton>
             </Link>

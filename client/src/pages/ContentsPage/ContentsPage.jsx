@@ -11,13 +11,14 @@ import { open_create_content_modal, open_edit_content_modal } from "../../slices
 import { determineContentColors } from "./contentsPageHelpers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
@@ -42,7 +43,7 @@ const ContentsPage = () => {
             }}
             title={content.active ? "deactivate" : "activate"}
           >
-            {content.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+            <GLBoolean boolean={content.active} />
           </GLIconButton>
         ),
       },

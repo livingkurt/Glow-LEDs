@@ -85,7 +85,7 @@ const Cart = () => {
                   </div>
 
                   <div>
-                    <GLIconButton title="Close" onClick={closeMenu}>
+                    <GLIconButton tooltip="Close" onClick={closeMenu}>
                       <CloseIcon color="white" />
                     </GLIconButton>
                   </div>

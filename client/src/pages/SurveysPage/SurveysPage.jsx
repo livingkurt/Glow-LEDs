@@ -9,15 +9,14 @@ import { Button, Rating } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_survey_modal, open_edit_survey_modal } from "../../slices/surveySlice";
 import { determineSurveyColors } from "./surveysPageHelpers";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const SurveysPage = () => {
   const surveyPage = useSelector(state => state.surveys.surveyPage);
@@ -34,7 +33,7 @@ const SurveysPage = () => {
       },
       {
         title: "Is Survey?",
-        display: survey => (survey.is_survey ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: survey => <GLBoolean boolean={survey.is_survey} />,
       },
       {
         title: "Questions and Answers",
