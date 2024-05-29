@@ -90,7 +90,7 @@ const AnnouncementEmail = () => {
         <title>View Email | Glow LEDs</title>
       </Helmet>
       <div className="jc-b mb-1rem ai-c">
-        <GLButton variant="primary" onClick={() => navigate.goBack()}>
+        <GLButton variant="primary" onClick={() => navigate(-1)}>
           Back to Emails
         </GLButton>
         {email && (

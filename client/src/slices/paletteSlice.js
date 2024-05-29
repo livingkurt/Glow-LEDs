@@ -87,7 +87,6 @@ const palettePage = createSlice({
     },
     [API.deletePalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.palette = payload.palette;
       state.message = "Palette Deleted";
     },
     [API.deletePalette.rejected]: (state, { payload, error }) => {

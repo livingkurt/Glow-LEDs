@@ -139,7 +139,6 @@ const emailPage = createSlice({
     },
     [API.deleteEmail.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.email = email;
       state.message = "Email Deleted";
       state.remoteVersionRequirement = Date.now();
     },

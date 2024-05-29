@@ -56,7 +56,7 @@ export default {
         // normalizeSearch: normalizeOrderSearch,
       });
       const scopedByUser = params.user_id ? { ...filter, user: params.user_id } : filter;
-      const orders = await order_db.table_orders_db(scopedByUser, sort, limit, page);
+      const orders = await order_db.get_user_table_orders_db(scopedByUser, sort, limit, page);
       const count = await order_db.count_orders_db(scopedByUser);
       return {
         data: orders,
@@ -332,7 +332,7 @@ export default {
       // const filter = {
       //   deleted: false,
       //   promo_code: params.promo_code,
-      //   status: "paid",
+      //   status: { $nin: ["unpaid", "canceled"] },
       //   createdAt: {
       //     $gte: new Date(start_date),
       //     $lte: new Date(end_date)
@@ -344,7 +344,7 @@ export default {
         const end_date = month_dates(query.month, query.year).end_date;
         filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
@@ -356,7 +356,7 @@ export default {
         const end_date = query.year + "-12-31";
         filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
@@ -364,7 +364,7 @@ export default {
           },
         };
       } else {
-        filter = { deleted: false, promo_code: params.promo_code, status: "paid" };
+        filter = { deleted: false, promo_code: params.promo_code, status: { $nin: ["unpaid", "canceled"] } };
       }
 
       const limit = "0";
@@ -434,7 +434,7 @@ export default {
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -445,14 +445,14 @@ export default {
         const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        o_filter = { deleted: false, status: "paid" };
+        o_filter = { deleted: false, status: { $nin: ["unpaid", "canceled"] } };
       }
 
       let a_filter = { deleted: false, active: true };
@@ -599,7 +599,7 @@ export default {
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -610,14 +610,14 @@ export default {
         const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        o_filter = { deleted: false, status: "paid" };
+        o_filter = { deleted: false, status: { $nin: ["unpaid", "canceled"] } };
       }
 
       const p_filter = determine_filter(query, {});
@@ -757,7 +757,7 @@ export default {
     // const { month, year } = params;
     const o_filter = {
       deleted: false,
-      status: "paid",
+      status: { $nin: ["unpaid", "canceled"] },
     };
     const e_filter = {
       deleted: false,
@@ -971,7 +971,7 @@ export default {
   //   // const { month, year } = params;
   //   const o_filter = {
   //     deleted: false,
-  //     status: "paid"
+  //     status: { $nin: ["unpaid", "canceled"] },
   //   };
   //   const e_filter = {
   //     deleted: false
@@ -1621,7 +1621,7 @@ export default {
           totalPrice: 0,
           taxPrice: 0,
           shippingPrice: 0,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           paidAt: Date.now(),
           // Add other necessary fields here
         });

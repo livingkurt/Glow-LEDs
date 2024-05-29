@@ -158,7 +158,7 @@ export default {
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -169,14 +169,14 @@ export default {
         const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
-          status: "paid",
+          status: { $nin: ["unpaid", "canceled"] },
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        o_filter = { deleted: false, status: "paid" };
+        o_filter = { deleted: false, status: { $nin: ["unpaid", "canceled"] } };
       }
       let affiliates = [];
       let teams = [];

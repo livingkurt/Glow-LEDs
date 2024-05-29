@@ -50,9 +50,19 @@ const Cart = () => {
       transitionDuration={{ enter: 700, exit: 700 }}
     >
       <div style={{ backgroundColor: "#333333", height: "100%", color: "white" }}>
-        <div className={`cart_sidebar-list-container w-100per column jc-b `} style={{ minHeight: "100vh" }}>
+        <div
+          className={`column jc-b `}
+          style={{ minHeight: "100vh", padding: 0, listStyleType: "none", marginRight: "10px", margin: 0 }}
+        >
           <div>
-            <li className="w-100per pb-5px">
+            <li
+              style={{
+                display: "flex",
+                paddingBottom: "1rem",
+                marginBottom: "1rem",
+                borderBottom: "0.1rem #c0c0c0 solid",
+              }}
+            >
               <div className="p-1rem w-100per">
                 <div className="jc-b">
                   <div className="logo_text ai-c">

@@ -25,11 +25,13 @@ export const determine_terms_link = affiliate => {
   }
 };
 
-export const getProfileTitle = (current_user, first_name, title) => {
-  if (!current_user || current_user.first_name === first_name || first_name === "") {
-    return `My ${title}`;
+export const getProfileTitle = (current_user, first_name) => {
+  if (first_name === "") {
+    return `Guest Account Profile`;
+  } else if (!current_user || current_user.first_name === first_name) {
+    return `My Profile`;
   } else {
-    return `${first_name}'s ${title}`;
+    return `${first_name}'s Profile`;
   }
 };
 

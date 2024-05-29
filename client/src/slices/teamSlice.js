@@ -193,7 +193,6 @@ const teamPage = createSlice({
     },
     [API.deleteTeam.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.team = payload.team;
       state.message = "Team Deleted";
       state.remoteVersionRequirement = Date.now();
     },
