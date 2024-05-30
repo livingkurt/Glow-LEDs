@@ -55,7 +55,7 @@ const PromosPage = () => {
         display: promo => <GLBoolean boolean={promo.free_shipping} />,
       },
       {
-        title: "Actions",
+        title: "",
         display: promo => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>

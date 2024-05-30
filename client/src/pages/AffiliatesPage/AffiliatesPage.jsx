@@ -78,7 +78,7 @@ const AffiliatesPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: affiliate => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>

@@ -159,7 +159,7 @@ const OrdersPage = () => {
         ),
       },
       {
-        title: "Actions",
+        title: "",
         display: row => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton

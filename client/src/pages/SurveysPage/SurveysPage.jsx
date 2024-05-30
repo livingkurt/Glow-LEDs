@@ -59,7 +59,7 @@ const SurveysPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: survey => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>

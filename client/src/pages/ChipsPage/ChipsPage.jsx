@@ -40,7 +40,7 @@ const ChipsPage = () => {
         display: chip => <GLBoolean boolean={chip.programmable} />,
       },
       {
-        title: "Actions",
+        title: "",
         display: chip => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>

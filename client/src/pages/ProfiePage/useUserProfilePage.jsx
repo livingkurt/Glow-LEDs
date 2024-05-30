@@ -75,7 +75,7 @@ const useUserProfilePage = () => {
 
       { title: "Total", display: row => `$${row.totalPrice?.toFixed(2)}` },
       {
-        title: "Actions",
+        title: "",
         display: row => (
           <Box display="flex" justifyContent={"flex-end"}>
             <Link to={`/secure/account/order/${row._id}`}>

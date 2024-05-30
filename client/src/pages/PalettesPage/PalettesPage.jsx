@@ -26,7 +26,7 @@ const PalettesPage = () => {
         display: palette => palette.colors.join(", "),
       },
       {
-        title: "Actions",
+        title: "",
         display: palette => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_palette_modal(palette))}>

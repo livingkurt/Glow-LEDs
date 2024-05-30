@@ -46,7 +46,7 @@ const CartsPage = () => {
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
-        title: "Actions",
+        title: "",
         display: cart => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>

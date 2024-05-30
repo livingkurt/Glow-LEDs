@@ -11,8 +11,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditFilamentModal from "./components/EditFilamentModal";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import { useLocation } from "react-router-dom";
 
 const FilamentsPage = () => {
+  const location = useLocation();
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { loading, remoteVersionRequirement } = filamentPage;
 
@@ -22,7 +24,25 @@ const FilamentsPage = () => {
     () => [
       {
         title: "Active",
-        display: filament => <GLBoolean boolean={filament.active} />,
+        display: filament => (
+          <GLIconButton
+            color="white"
+            onClick={() => {
+              dispatch(
+                API.saveFilament({
+                  filament: {
+                    ...filament,
+                    active: filament.active ? false : true,
+                  },
+                  profile: location.pathname === "/secure/account/profile",
+                })
+              );
+            }}
+            tooltip={filament.active ? "deactivate" : "activate"}
+          >
+            <GLBoolean boolean={filament.active} />
+          </GLIconButton>
+        ),
       },
       { title: "Color Name", display: "color" },
       { title: "Type", display: "type" },
@@ -42,7 +62,7 @@ const FilamentsPage = () => {
       },
       // { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
-        title: "Actions",
+        title: "",
         display: filament => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>

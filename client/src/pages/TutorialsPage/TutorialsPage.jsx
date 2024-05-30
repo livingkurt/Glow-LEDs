@@ -44,7 +44,7 @@ const TutorialsPage = () => {
       { title: "Order", display: "order" },
       { title: "Categorys", display: "categorys" },
       {
-        title: "Actions",
+        title: "",
         display: tutorial => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton

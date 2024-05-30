@@ -26,7 +26,7 @@ const CategorysPage = () => {
       { title: "Subcategories", display: row => row.subcategorys.map(subcategory => subcategory.name).join(" ,") },
       { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
       {
-        title: "Actions",
+        title: "",
         display: category => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>

@@ -35,7 +35,7 @@ const FeaturesPage = () => {
         display: feature => feature.video,
       },
       {
-        title: "Actions",
+        title: "",
         display: feature => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_feature_modal(feature))}>

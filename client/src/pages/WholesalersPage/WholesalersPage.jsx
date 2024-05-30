@@ -42,7 +42,7 @@ const WholesalersPage = () => {
       { title: "Company", display: "company" },
       { title: "Minimum Order Amount", display: "minimum_order_amount" },
       {
-        title: "Actions",
+        title: "",
         display: wholesaler => (
           <div className="row">
             <GLIconButton

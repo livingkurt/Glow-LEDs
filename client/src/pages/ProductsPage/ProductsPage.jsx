@@ -60,7 +60,7 @@ const ProductsPage = () => {
       { title: "Price", display: row => `$${row.price}` },
       { title: "Count In Stock", display: "count_in_stock" },
       {
-        title: "Actions",
+        title: "",
         display: row => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton

@@ -49,7 +49,7 @@ const ParcelsPage = () => {
         display: parcel => parcel.quantity_state,
       },
       {
-        title: "Actions",
+        title: "",
         display: parcel => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_parcel_modal(parcel))}>

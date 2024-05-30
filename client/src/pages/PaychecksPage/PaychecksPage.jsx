@@ -62,7 +62,7 @@ const PaychecksPage = () => {
         display: paycheck => <GLBoolean boolean={paycheck.team} />,
       },
       {
-        title: "Actions",
+        title: "",
         display: paycheck => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>

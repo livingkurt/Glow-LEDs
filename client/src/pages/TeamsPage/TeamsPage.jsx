@@ -78,7 +78,7 @@ const TeamsPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: team => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>

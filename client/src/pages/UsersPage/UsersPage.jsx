@@ -45,7 +45,7 @@ const UsersPage = () => {
         display: user => <GLBoolean boolean={user.email_subscription} />,
       },
       {
-        title: "Actions",
+        title: "",
         display: user => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
