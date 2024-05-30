@@ -20,7 +20,7 @@ export const isOptionCountDifferent = (product, customizedProduct) => {
   const productOptions = getNonAddOnOptions(product?.options);
   const selectedOptions = getNonAddOnOptions(customizedProduct?.selectedOptions);
 
-  return productOptions.length !== selectedOptions.length;
+  return selectedOptions.length <= productOptions.length;
 };
 
 // Helper function to filter out add-on options and get their IDs
@@ -46,18 +46,34 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   }
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
-    // Create a map of new options by their names for easy lookup
     const newOptionsByName = product.options.reduce((acc, option) => {
       acc[option.name] = option;
       return acc;
     }, {});
 
-    // Map existing options to replace with new ones based on name, or keep existing if no match
-    state.currentOptions = state.currentOptions.map(existingOption => {
-      // Check if a matching new option exists by name
+    // Prepare to update selectedOptions with defaults from new options
+    const newSelectedOptions = [];
+
+    state.customizedProduct.currentOptions = state.customizedProduct.currentOptions.map(existingOption => {
       const replacementOption = newOptionsByName[existingOption.name];
-      return replacementOption || existingOption; // Use the replacement if it exists; otherwise, keep the existing option
+      if (replacementOption) {
+        // Use the replacement option, and update the selectedOptions with the isDefault value
+        const defaultOptionValue = replacementOption.values.find(value => value.isDefault);
+        newSelectedOptions.push(defaultOptionValue || null); // Push null or some default value if no isDefault is found
+        return replacementOption;
+      } else {
+        // Keep the existing option and its selected value
+        const existingSelectedOptionIndex = state.customizedProduct.selectedOptions.findIndex(
+          opt => opt.option === existingOption.name
+        );
+        const existingSelectedOption = state.customizedProduct.selectedOptions[existingSelectedOptionIndex];
+        newSelectedOptions.push(existingSelectedOption);
+        return existingOption;
+      }
     });
+
+    // Update selectedOptions with the new selections
+    state.customizedProduct.selectedOptions = newSelectedOptions;
   }
 
   if (product?.description) {
