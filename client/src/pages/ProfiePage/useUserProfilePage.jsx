@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { GLButton } from "../../shared/GlowLEDsComponents";
+import MountainIcon from "@mui/icons-material/Landscape";
 import "./ProfilePage.scss";
 import { format_date } from "../../utils/helper_functions";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
@@ -9,6 +9,7 @@ import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { Link, useParams } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const useUserProfilePage = () => {
   const dispatch = useDispatch();
@@ -77,9 +78,9 @@ const useUserProfilePage = () => {
         display: row => (
           <div className="jc-b">
             <Link to={`/secure/account/order/${row._id}`}>
-              <GLButton variant="icon" aria-label="view">
-                <i className="fas fa-mountain" />
-              </GLButton>
+              <GLIconButton tooltip="View">
+                <MountainIcon color="white" />
+              </GLIconButton>
             </Link>
           </div>
         ),

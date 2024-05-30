@@ -49,11 +49,11 @@ const CartsPage = () => {
         title: "Actions",
         display: cart => (
           <div className="jc-b">
-            <GLIconButton variant="contained" tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
               <EditIcon color="white" />
             </GLIconButton>
 
-            <GLIconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} tooltip="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteCart(cart._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
           </div>

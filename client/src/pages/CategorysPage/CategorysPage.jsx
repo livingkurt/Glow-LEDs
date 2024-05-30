@@ -29,19 +29,11 @@ const CategorysPage = () => {
         title: "Actions",
         display: category => (
           <div className="jc-b">
-            <GLIconButton
-              variant="contained"
-              tooltip="Edit"
-              onClick={() => dispatch(open_edit_category_modal(category))}
-            >
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>
               <EditIcon color="white" />
             </GLIconButton>
 
-            <GLIconButton
-              variant="contained"
-              onClick={() => dispatch(API.deleteCategory(category._id))}
-              tooltip="Delete"
-            >
+            <GLIconButton onClick={() => dispatch(API.deleteCategory(category._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
           </div>

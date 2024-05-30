@@ -74,9 +74,8 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
           </div>
           <div className="mb-10px">
             <GLIconButton
-              variant="contained"
               onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
-              title="Delete"
+              tooltip="Delete"
             >
               <DeleteIcon color="white" />
             </GLIconButton>

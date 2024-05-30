@@ -45,19 +45,11 @@ const FilamentsPage = () => {
         title: "Actions",
         display: filament => (
           <div className="jc-b">
-            <GLIconButton
-              variant="contained"
-              tooltip="Edit"
-              onClick={() => dispatch(open_edit_filament_modal(filament))}
-            >
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>
               <EditIcon color="white" />
             </GLIconButton>
 
-            <GLIconButton
-              variant="contained"
-              onClick={() => dispatch(API.deleteFilament(filament._id))}
-              tooltip="Delete"
-            >
+            <GLIconButton onClick={() => dispatch(API.deleteFilament(filament._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
           </div>

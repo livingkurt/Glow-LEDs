@@ -49,7 +49,7 @@ const ProductsPage = () => {
                 })
               );
             }}
-            aria-label={product.active ? "deactivate" : "activate"}
+            tooltip={product.active ? "deactivate" : "activate"}
           >
             <GLBoolean boolean={product.active} />
           </GLIconButton>

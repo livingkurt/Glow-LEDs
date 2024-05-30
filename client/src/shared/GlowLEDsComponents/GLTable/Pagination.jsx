@@ -28,7 +28,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
-        <GLIconButton variant="contained" className="w-40px">
+        <GLIconButton className="w-40px">
           <ArrowBack />
         </GLIconButton>
       </li>
@@ -59,7 +59,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         className={`pagination-item ${currentPage === lastPage ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >
-        <GLIconButton variant="contained" className="w-40px">
+        <GLIconButton className="w-40px">
           <ArrowForward />
         </GLIconButton>
       </li>
