@@ -66,7 +66,7 @@ const ProductPage = () => {
       <ProductPageLoading loading={productPageLoading}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={4}>
-            <Box borderRadius={20}>
+            <Box borderRadius={20} display={"flex"}>
               <Swiper
                 spaceBetween={50}
                 modules={[Navigation, Pagination, Scrollbar, A11y, Zoom]}
