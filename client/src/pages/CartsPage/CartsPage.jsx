@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getCarts } from "../../api";
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
@@ -48,7 +48,7 @@ const CartsPage = () => {
       {
         title: "Actions",
         display: cart => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -56,7 +56,7 @@ const CartsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteCart(cart._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

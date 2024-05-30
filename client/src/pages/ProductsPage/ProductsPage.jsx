@@ -12,7 +12,7 @@ import {
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
 import EditIcon from "@mui/icons-material/Edit";
@@ -62,7 +62,7 @@ const ProductsPage = () => {
       {
         title: "Actions",
         display: row => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -104,7 +104,7 @@ const ProductsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

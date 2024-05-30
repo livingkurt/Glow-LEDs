@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -37,14 +37,14 @@ const FeaturesPage = () => {
       {
         title: "Actions",
         display: feature => (
-          <div>
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_feature_modal(feature))}>
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteFeature(feature._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

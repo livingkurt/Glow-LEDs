@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_tutorial_modal, open_edit_tutorial_modal } from "../../slices/tutorialSlice";
 import { EditTutorialModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
@@ -46,7 +46,7 @@ const TutorialsPage = () => {
       {
         title: "Actions",
         display: tutorial => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -58,7 +58,7 @@ const TutorialsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))} tooltip="Delete">
               <Delete color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

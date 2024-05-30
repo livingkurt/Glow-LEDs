@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_category_modal, open_edit_category_modal } from "../../slices/categorySlice";
 import { EditCategoryModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { determineCategoryColors } from "./categoryHelpers";
@@ -28,7 +28,7 @@ const CategorysPage = () => {
       {
         title: "Actions",
         display: category => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -36,7 +36,7 @@ const CategorysPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteCategory(category._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

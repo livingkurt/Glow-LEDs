@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_filament_modal, open_edit_filament_modal } from "../../slices/filamentSlice";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditFilamentModal from "./components/EditFilamentModal";
@@ -44,7 +44,7 @@ const FilamentsPage = () => {
       {
         title: "Actions",
         display: filament => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -52,7 +52,7 @@ const FilamentsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteFilament(filament._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

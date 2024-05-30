@@ -7,7 +7,7 @@ import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../sl
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
@@ -80,7 +80,7 @@ const AffiliatesPage = () => {
       {
         title: "Actions",
         display: affiliate => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -95,7 +95,7 @@ const AffiliatesPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

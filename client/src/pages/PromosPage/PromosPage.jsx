@@ -57,14 +57,14 @@ const PromosPage = () => {
       {
         title: "Actions",
         display: promo => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>
               <Edit color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deletePromo(promo._id))} tooltip="Delete">
               <Delete color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

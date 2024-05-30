@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { open_create_palette_modal, open_edit_palette_modal } from "../../slices/paletteSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,14 +28,14 @@ const PalettesPage = () => {
       {
         title: "Actions",
         display: palette => (
-          <div>
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_palette_modal(palette))}>
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deletePalette(palette._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

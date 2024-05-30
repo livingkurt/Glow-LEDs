@@ -7,7 +7,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slices/paycheckSlice";
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -64,7 +64,7 @@ const PaychecksPage = () => {
       {
         title: "Actions",
         display: paycheck => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
               <Edit color="white" />
             </GLIconButton>
@@ -96,7 +96,7 @@ const PaychecksPage = () => {
             <GLIconButton onClick={() => dispatch(API.deletePaycheck(paycheck._id))} tooltip="Delete">
               <Delete color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

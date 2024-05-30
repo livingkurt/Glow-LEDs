@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditContentModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
 import { determineContentColors } from "./contentsPageHelpers";
@@ -59,7 +59,7 @@ const ContentsPage = () => {
       {
         title: "Actions",
         display: content => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -101,7 +101,7 @@ const ContentsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteContent(content._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

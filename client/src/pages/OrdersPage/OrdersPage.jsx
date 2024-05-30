@@ -13,7 +13,7 @@ import {
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   orderStatusColors,
   determineOrderColors,
@@ -161,7 +161,7 @@ const OrdersPage = () => {
       {
         title: "Actions",
         display: row => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -214,7 +214,7 @@ const OrdersPage = () => {
             >
               <Delete color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

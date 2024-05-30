@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditExpenseModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getExpenses } from "../../api";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
@@ -65,7 +65,7 @@ const ExpensesPage = () => {
       {
         title: "Actions",
         display: expense => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -100,7 +100,7 @@ const ExpensesPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteExpense(expense._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

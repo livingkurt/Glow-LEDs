@@ -11,7 +11,7 @@ import {
 } from "../../slices/imageSlice";
 import { EditImageModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getImages } from "../../api";
 import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
@@ -53,14 +53,14 @@ const ImagesPage = () => {
       {
         title: "Actions",
         display: image => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>
               <Edit color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteImage(image._id))} tooltip="Delete">
               <Delete color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

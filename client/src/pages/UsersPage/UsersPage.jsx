@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -47,7 +47,7 @@ const UsersPage = () => {
       {
         title: "Actions",
         display: user => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -81,7 +81,7 @@ const UsersPage = () => {
             <GLIconButton tooltip="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

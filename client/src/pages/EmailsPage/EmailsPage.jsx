@@ -51,7 +51,7 @@ const EmailsPage = () => {
       {
         title: "Actions",
         display: email => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -110,7 +110,7 @@ const EmailsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteEmail(email._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

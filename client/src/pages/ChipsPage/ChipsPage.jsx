@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditChipModal from "./components/EditChipModal";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { open_create_chip_modal, open_edit_chip_modal } from "../../slices/chipSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -42,7 +42,7 @@ const ChipsPage = () => {
       {
         title: "Actions",
         display: chip => (
-          <div>
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -64,7 +64,7 @@ const ChipsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteChip(chip._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

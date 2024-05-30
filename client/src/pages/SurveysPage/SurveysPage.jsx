@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditSurveyModal } from "./components";
 import * as API from "../../api";
-import { Button, Rating } from "@mui/material";
+import { Box, Button, Rating } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_survey_modal, open_edit_survey_modal } from "../../slices/surveySlice";
 import { determineSurveyColors } from "./surveysPageHelpers";
@@ -61,7 +61,7 @@ const SurveysPage = () => {
       {
         title: "Actions",
         display: survey => (
-          <div>
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -69,7 +69,7 @@ const SurveysPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteSurvey(survey._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],

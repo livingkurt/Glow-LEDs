@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { getTeams } from "../../api";
 import { determineColor } from "./teamHelpers";
 import { useLocation } from "react-router-dom";
@@ -80,7 +80,7 @@ const TeamsPage = () => {
       {
         title: "Actions",
         display: team => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -92,7 +92,7 @@ const TeamsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteTeam(team._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],
