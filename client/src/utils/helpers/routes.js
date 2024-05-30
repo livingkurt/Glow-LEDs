@@ -61,7 +61,6 @@ const adminRoutes = [
   { path: "/secure/glow/palettes", element: "PalettesPage" },
   { path: "/secure/glow/filaments", element: "FilamentsPage" },
   { path: "/secure/glow/userprofile/:id", element: "ProfilePage" },
-  { path: "/secure/glow/editpalette/:id?", element: "EditPalettePage" },
   { path: "/secure/glow/change_password/:id", element: "AdminChangePasswordPage" },
   { path: "/secure/glow/dashboard", element: "DashboardPage" },
   { path: "/secure/glow/expenses", element: "ExpensesPage" },

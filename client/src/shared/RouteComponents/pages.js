@@ -8,7 +8,7 @@ import { PaychecksPage } from "../../pages/PaychecksPage";
 import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { ParcelsPage } from "../../pages/ParcelsPage";
-import { EditPalettePage, PalettesPage } from "../../pages/PalettesPage";
+import { PalettesPage } from "../../pages/PalettesPage";
 import { FilamentsPage } from "../../pages/FilamentsPage";
 import { DashboardPage } from "../../pages/DashboardPage";
 import { ExpensesPage } from "../../pages/ExpensesPage";
@@ -100,7 +100,6 @@ export const AdminComponents = {
   PalettesPage,
   FilamentsPage,
   ProfilePage,
-  EditPalettePage,
   AdminChangePasswordPage,
   DashboardPage,
   ExpensesPage,

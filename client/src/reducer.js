@@ -84,7 +84,10 @@ const reducers = {
       nonTagFilters: ["order_status", "shipping"],
     }),
   }),
-  palettes: paletteSlice,
+  palettes: combineReducers({
+    palettePage: paletteSlice,
+    paletteTable: glTableReducer("paletteTable", {}),
+  }),
   parcels: combineReducers({
     parcelPage: parcelSlice,
     parcelTable: glTableReducer("parcelTable", {}),
