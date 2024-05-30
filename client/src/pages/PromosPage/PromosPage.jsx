@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_promo_modal, open_edit_promo_modal } from "../../slices/promoSlice";
 import { EditPromoModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
