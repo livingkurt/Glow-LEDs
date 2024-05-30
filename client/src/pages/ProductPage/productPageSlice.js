@@ -73,11 +73,11 @@ const productPage = createSlice({
     comment: "",
     product: {},
     productPageLoading: true,
-    currentOptions: [],
     customizedProduct: {
       name: "",
       description: "",
       images_object: [],
+      display_image: [],
       facts: "",
       included_items: "",
       qty: 1,
@@ -102,6 +102,7 @@ const productPage = createSlice({
       rating: 5,
       comment: "",
       selectedOptions: [],
+      currentOptions: [],
     },
   },
   reducers: {
@@ -113,14 +114,19 @@ const productPage = createSlice({
       };
     },
     selectOption: (state, { payload }) => {
-      const { selectedOption, index } = payload;
-
-      if (Object.keys(selectedOption).length === 0) {
+      const { selectedOption, index, option } = payload;
+      if (selectedOption === undefined) {
+        // If the selected option is undefined, remove it from the selectedOptions array
         state.customizedProduct.selectedOptions.splice(index, 1);
         const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
         updatePrice(state, additionalCost);
       } else {
-        state.customizedProduct.selectedOptions[index] = selectedOption;
+        state.customizedProduct.selectedOptions[index] = {
+          ...selectedOption,
+          isAddOn: option.isAddOn,
+          replacePrice: option.replacePrice,
+          additionalCost: selectedOption.additionalCost,
+        };
         updateProductDetailsFromOption(state, selectedOption);
         handlePriceReplacement(state, selectedOption);
       }
@@ -467,12 +473,15 @@ const productPage = createSlice({
     },
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
-      console.log({ options: payload?.options });
+
+      const selectedOptions = data?.options?.map(
+        option => !option.isAddOn && option.values.find(value => value.isDefault)
+      );
+
       return {
         ...state,
         productPageLoading: false,
         product: data,
-        currentOptions: data?.options,
         customizedProduct: {
           name: data.name,
           description: data.description,
@@ -498,10 +507,8 @@ const productPage = createSlice({
           review_modal: data.review_modal,
           rating: data.rating,
           comment: data.comment,
-          selectedOptions: data?.options?.map(option => ({
-            isAddOn: option.isAddOn,
-            ...option.values.find(value => value.isDefault),
-          })),
+          selectedOptions,
+          currentOptions: data?.options,
         },
       };
     },

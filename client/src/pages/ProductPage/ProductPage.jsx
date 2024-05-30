@@ -38,11 +38,12 @@ const ProductPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
-  const { customizedProduct, product, productPageLoading, currentOptions } = productPage;
+  const { customizedProduct, product, productPageLoading } = productPage;
 
-  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images } = customizedProduct;
+  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
+    customizedProduct;
 
-  console.log({ customizedProduct, currentOptions });
+  // console.log({ customizedProduct, currentOptions });
 
   return (
     <Box>
@@ -131,6 +132,7 @@ const ProductPage = () => {
               <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
                 In Stock
               </Typography>
+              {/* {console.log({ selectedOptions: customizedProduct?.selectedOptions, customizedProduct })} */}
               {currentOptions?.map((option, index) => (
                 <CustomizationOption
                   key={index}
