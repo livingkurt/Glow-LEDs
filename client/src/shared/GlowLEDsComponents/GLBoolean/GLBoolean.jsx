@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const GLBoolean = ({ boolean, tooltip }) => {
   return (
-    <Box p={0.5}>
+    <Box>
       {tooltip ? (
         <Tooltip title={boolean ? `Does ${tooltip}` : `Does not ${tooltip}`}>
           {boolean ? <CheckCircle color="white" /> : <Cancel color="white" />}
