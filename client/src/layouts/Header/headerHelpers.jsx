@@ -858,13 +858,6 @@ const admin = {
     },
 
     {
-      name: "Logs",
-      path: "/secure/glow/logs",
-      onClick: x => true,
-      _id: 8124,
-    },
-
-    {
       name: "Parcels",
       path: "/secure/glow/parcels",
       onClick: x => true,

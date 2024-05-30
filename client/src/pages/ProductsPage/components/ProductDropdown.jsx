@@ -7,14 +7,16 @@ import {
   ListItemText,
   Box,
   Chip,
+  Grid,
   Divider,
+  IconButton,
   Button,
 } from "@mui/material";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useDispatch } from "react-redux";
-import { addOption, openEditProductModal } from "../productsPageSlice";
+import { open_edit_product_modal, addOption } from "../productsPageSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";

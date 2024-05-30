@@ -1,6 +1,18 @@
 import { palette_services } from "../palettes";
 
 export default {
+  get_table_palettes_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const palettes = await palette_services.get_table_palettes_s(query);
+      if (palettes) {
+        return res.status(200).send(palettes);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_palettes_c: async (req, res) => {
     const { query } = req;
     try {

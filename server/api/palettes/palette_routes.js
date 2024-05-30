@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.route("/").get(palette_controller.findAll_palettes_c).post(palette_controller.create_palettes_c);
 
+router.route("/table").get(palette_controller.get_table_palettes_c);
+
 router
   .route("/:id")
   .get(palette_controller.findById_palettes_c)

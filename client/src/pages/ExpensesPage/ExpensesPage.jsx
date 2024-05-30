@@ -5,18 +5,19 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditExpenseModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getExpenses } from "../../api";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors } from "./expensesPageHelpers";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import { ContentCopy } from "@mui/icons-material";
 import Papa from "papaparse";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -62,15 +63,15 @@ const ExpensesPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         nonSelectable: true,
         display: expense => (
-          <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveExpense({
@@ -82,10 +83,10 @@ const ExpensesPage = () => {
               }
             >
               <ContentCopy color="white" />
-            </IconButton>
+            </GLIconButton>
             {expense.is_subscription && (
-              <IconButton
-                aria-label="Edit"
+              <GLIconButton
+                tooltip="Edit"
                 onClick={() => {
                   const confirm = window.confirm(`Are you sure you want to backfill ${expense.expense_name}?`);
                   if (confirm) {
@@ -94,13 +95,13 @@ const ExpensesPage = () => {
                 }}
               >
                 <BackupTableIcon color="white" />
-              </IconButton>
+              </GLIconButton>
             )}
 
-            <IconButton onClick={() => dispatch(API.deleteExpense(expense._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteExpense(expense._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

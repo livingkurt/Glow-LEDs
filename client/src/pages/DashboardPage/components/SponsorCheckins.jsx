@@ -1,5 +1,6 @@
 import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
+import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const SponsorCheckins = ({ month, year, sponsorCheckinStatus, questionConcerns }) => {
   return (
@@ -17,8 +18,7 @@ const SponsorCheckins = ({ month, year, sponsorCheckinStatus, questionConcerns }
           { title: "Sponsor", display: "artist_name", sortable: true },
           {
             title: `Has Checked In`,
-            display: row =>
-              row.numberOfContent > 0 ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+            display: row => <GLBoolean boolean={row.numberOfContent > 0} />,
             value: row => (row.numberOfContent > 0 ? true : false),
             conditionalColor: row => (row.numberOfContent === 0 ? "red" : row.numberOfContent >= 3 ? "green" : "black"),
             sortable: true,

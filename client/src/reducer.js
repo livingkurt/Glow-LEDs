@@ -70,7 +70,10 @@ const reducers = {
     expensePage: expenseSlice,
     expenseTable: glTableReducer("expenseTable", {}),
   }),
-  features: featureSlice,
+  features: combineReducers({
+    featurePage: featureSlice,
+    featureTable: glTableReducer("featureTable", {}),
+  }),
   filaments: combineReducers({
     filamentPage: filamentSlice,
     filamentTable: glTableReducer("filamentTable", {}),
@@ -81,8 +84,14 @@ const reducers = {
       nonTagFilters: ["order_status", "shipping"],
     }),
   }),
-  palettes: paletteSlice,
-  parcels: parcelSlice,
+  palettes: combineReducers({
+    palettePage: paletteSlice,
+    paletteTable: glTableReducer("paletteTable", {}),
+  }),
+  parcels: combineReducers({
+    parcelPage: parcelSlice,
+    parcelTable: glTableReducer("parcelTable", {}),
+  }),
   paychecks: combineReducers({
     paycheckPage: paycheckSlice,
     paycheckTable: glTableReducer("paycheckTable", { sorting: [0, "asc"] }),

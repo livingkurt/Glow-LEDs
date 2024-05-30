@@ -5,14 +5,16 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditChipModal from "./components/EditChipModal";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { open_create_chip_modal, open_edit_chip_modal } from "../../slices/chipSlice";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FileCopy } from "@mui/icons-material";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ChipsPage = () => {
   const chipPage = useSelector(state => state.chips.chipPage);
@@ -35,20 +37,18 @@ const ChipsPage = () => {
       },
       {
         title: "Programmable",
-        display: chip => {
-          chip.programmable ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />;
-        },
+        display: chip => <GLBoolean boolean={chip.programmable} />,
       },
       {
-        title: "Actions",
+        title: "",
         nonSelectable: true,
         display: chip => (
-          <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Copy Chip"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveChip({
@@ -61,11 +61,11 @@ const ChipsPage = () => {
               }
             >
               <FileCopy color="white" />
-            </IconButton>
-            <IconButton onClick={() => dispatch(API.deleteChip(chip._id))} aria-label="Delete">
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteChip(chip._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

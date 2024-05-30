@@ -2,26 +2,27 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slices/paycheckSlice";
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor } from "./paychecksHelpers";
-import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Edit from "@mui/icons-material/Edit";
+import FileCopy from "@mui/icons-material/FileCopy";
+import { CheckCircle } from "@mui/icons-material";
+import Delete from "@mui/icons-material/Delete";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
-  const { message, loading, remoteVersionRequirement } = paycheckPage;
+  const { loading, remoteVersionRequirement } = paycheckPage;
 
   const paycheckTable = useSelector(state => state.paychecks.paycheckTable);
   const { selectedRows } = paycheckTable;
-  const date = new Date();
   const dispatch = useDispatch();
-
-  const today = date.toISOString();
 
   const formatDate = dateString => {
     const date = new Date(dateString);
@@ -37,8 +38,7 @@ const PaychecksPage = () => {
       { title: "Date Paid", display: paycheck => paycheck.paid_at && formatDate(paycheck.paid_at) },
       {
         title: "Paid",
-        display: paycheck =>
-          paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: paycheck => <GLBoolean boolean={paycheck.paid} />,
       },
       {
         title: "Affiliate/Team",
@@ -54,19 +54,17 @@ const PaychecksPage = () => {
       { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
       {
         title: "Team",
-        display: paycheck =>
-          paycheck.team ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: paycheck => <GLBoolean boolean={paycheck.team} />,
       },
       {
-        title: "Actions",
+        title: "",
         nonSelectable: true,
         display: paycheck => (
-          <div className="jc-b">
-            <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
               onClick={() =>
                 dispatch(
                   API.savePaycheck({
@@ -75,12 +73,11 @@ const PaychecksPage = () => {
                   })
                 )
               }
-              aria-label="duplicate"
+              tooltip="Duplicate"
             >
-              <i className="fas fa-clone" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <FileCopy color="white" />
+            </GLIconButton>
+            <GLIconButton
               onClick={() =>
                 dispatch(
                   API.savePaycheck({
@@ -88,14 +85,14 @@ const PaychecksPage = () => {
                   })
                 )
               }
-              aria-label="mark paid"
+              tooltip="Mark Paid"
             >
-              <i className="fas fa-check-circle" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deletePaycheck(paycheck._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
-          </div>
+              <CheckCircle color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deletePaycheck(paycheck._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

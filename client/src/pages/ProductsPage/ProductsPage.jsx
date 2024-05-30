@@ -7,11 +7,9 @@ import { openProductOptionsGeneratorModal, open_create_product_modal, set_loadin
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import LandscapeIcon from "@mui/icons-material/Landscape";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -20,6 +18,7 @@ import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import axios from "axios";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -45,9 +44,9 @@ const ProductsPage = () => {
                 })
               );
             }}
-            aria-label={product.active ? "deactivate" : "activate"}
+            tooltip={product.active ? "deactivate" : "activate"}
           >
-            {product.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
+            <GLBoolean boolean={product.active} />
           </GLIconButton>
         ),
       },
@@ -56,10 +55,10 @@ const ProductsPage = () => {
       { title: "Price", display: row => `$${row.price}` },
       { title: "Count In Stock", display: "count_in_stock" },
       {
-        title: "Actions",
+        title: "",
         nonSelectable: true,
         display: row => (
-          <div className="jc-b">
+          <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -100,7 +99,7 @@ const ProductsPage = () => {
             <GLIconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
-          </div>
+          </Box>
         ),
       },
     ],
@@ -136,6 +135,7 @@ const ProductsPage = () => {
         dropdownComponent={row => (
           <ProductDropdown row={row} determineColor={determineColor} colspan={columnDefs.length + 1} />
         )}
+        // dropdownRows={row => row.options.flatMap(option => option.values)}
         loading={loading}
         enableRowSelect
         enableDragDrop

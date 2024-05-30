@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 import { updatePage } from "../actions/actions";
 import { pageItems, selectedPage, totalPages } from "../glTableHelpers";
+import GLIconButton from "../../GLIconButton/GLIconButton";
 
 const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
   const dispatch = useDispatch();
@@ -38,17 +39,17 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
   };
   return (
     <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }} data-test="pagination-component">
-      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
+      <GLIconButton onClick={handleFirstPageButtonClick} disabled={page === 0} tooltip="first page">
         <FirstPageIcon style={{ fontSize: "25px" }} />
-      </IconButton>
-      <IconButton
+      </GLIconButton>
+      <GLIconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
-        aria-label="previous page"
+        tooltip="previous page"
         data-test="previous-button"
       >
         <KeyboardArrowLeft style={{ fontSize: "25px" }} />
-      </IconButton>
+      </GLIconButton>
       <Autocomplete
         value={page + 1}
         onChange={handleSelectedPageChange}
@@ -77,21 +78,21 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
           />
         )}
       />
-      <IconButton
+      <GLIconButton
         onClick={handleNextButtonClick}
         disabled={page >= totalPages(rowsPerPage, count) - 1}
-        aria-label="next page"
+        tooltip="next page"
         data-test="next-button"
       >
         <KeyboardArrowRight style={{ fontSize: "25px" }} />
-      </IconButton>
-      <IconButton
+      </GLIconButton>
+      <GLIconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= totalPages(rowsPerPage, count) - 1}
-        aria-label="last page"
+        tooltip="last page"
       >
         <LastPageIcon style={{ fontSize: "25px" }} />
-      </IconButton>
+      </GLIconButton>
     </Box>
   );
 };
