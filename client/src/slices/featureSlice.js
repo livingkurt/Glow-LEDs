@@ -3,18 +3,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const feature = {
+  id: "",
+  question_1: "",
+  question_2: "",
+  question_3: "",
+  question_4: "",
+  question_5: "",
+  answer_1: "",
+  answer_2: "",
+  answer_3: "",
+  answer_4: "",
+  answer_5: "",
+  question_answer: [{ question: "", answer: "" }],
+  user: "",
+  feature_questions: "",
+  order: "",
+  is_feature: "",
+  active: "",
+  rating: null,
+};
+
 const featurePage = createSlice({
   name: "featurePage",
   initialState: {
     loading: false,
     features: [],
-    feature: {},
+    feature: feature,
+    remoteVersionRequirement: 0,
+    edit_feature_modal: false,
+    upload_feature_modal: false,
+    feature_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_feature: (state, { payload }) => {
@@ -27,17 +48,30 @@ const featurePage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_feature_modal: (state, { payload }) => {
+      state.edit_feature_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_feature_modal: (state, { payload }) => {
+      state.edit_feature_modal = true;
+      state.feature = feature;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_feature_modal: (state, { payload }) => {
+      state.edit_feature_modal = true;
+      state.feature = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_feature_modal: (state, { payload }) => {
+      state.edit_feature_modal = false;
+      state.upload_feature_modal = false;
+      state.feature_modal = false;
+      state.feature = feature;
+    },
+    open_feature_modal: (state, { payload }) => {
+      state.feature_modal = true;
+      state.feature = payload;
+    },
+    feature_uploaded: (state, { payload }) => {
+      state.upload_feature_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -48,7 +82,7 @@ const featurePage = createSlice({
     [API.listFeatures.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.features = payload.features;
-      state.totalPages = payload.totalPages;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Features Found";
     },
@@ -63,6 +97,8 @@ const featurePage = createSlice({
     [API.saveFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Feature Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_feature_modal = false;
     },
     [API.saveFeature.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -88,6 +124,7 @@ const featurePage = createSlice({
     [API.deleteFeature.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Feature Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteFeature.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -97,5 +134,14 @@ const featurePage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_feature } = featurePage.actions;
+export const {
+  set_loading,
+  set_feature,
+  set_edit_feature_modal,
+  open_create_feature_modal,
+  open_feature_modal,
+  close_feature_modal,
+  open_edit_feature_modal,
+  feature_uploaded,
+} = featurePage.actions;
 export default featurePage.reducer;

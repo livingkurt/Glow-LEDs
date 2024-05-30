@@ -1,6 +1,18 @@
 import { feature_services } from "../features";
 
 export default {
+  get_table_features_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const features = await feature_services.get_table_features_s(query);
+      if (features) {
+        return res.status(200).send(features);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_features_c: async (req, res) => {
     const { query } = req;
     try {

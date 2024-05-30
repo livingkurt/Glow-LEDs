@@ -57,67 +57,13 @@ const SurveysPage = () => {
           </div>
         ),
       },
-      // {
-      //   title: "Answer 1",
-      //   display: survey => (survey.is_survey ? survey.question_1 : survey.answer_1),
-      // },
-      // {
-      //   title: "Answer 2",
-      //   display: survey => (survey.is_survey ? survey.question_2 : survey.answer_2),
-      // },
-      // {
-      //   title: "Answer 3",
-      //   display: survey => (survey.is_survey ? survey.question_3 : survey.answer_3),
-      // },
-      // {
-      //   title: "Answer 4",
-      //   display: survey => (survey.is_survey ? survey.question_4 : survey.answer_4),
-      // },
-      // {
-      //   title: "Answer 5",
-      //   display: survey => (survey.is_survey ? survey.question_5 : survey.answer_5),
-      // },
 
       {
         title: "Actions",
         display: survey => (
-          <div className="jc-b">
+          <div>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
               <EditIcon color="white" />
-            </GLIconButton>
-            <GLIconButton
-              tooltip="Duplicate"
-              onClick={() =>
-                dispatch(
-                  API.saveSurvey({
-                    ...survey,
-                    _id: null,
-                    home_page: { ...survey.home_page, h1: `${survey.home_page.h1} Copy` },
-                    createdAt: null,
-                    updatedAt: null,
-                  })
-                )
-              }
-            >
-              <ContentCopy color="white" />
-            </GLIconButton>
-            <GLIconButton
-              tooltip="Create Email"
-              onClick={() => {
-                dispatch(
-                  API.saveEmail({
-                    h1: survey.home_page.h1,
-                    images: survey.home_page.images,
-                    h2: survey.home_page.h2,
-                    p: survey.home_page.p,
-                    button: survey.home_page.button,
-                    link: survey.home_page.link,
-                  })
-                );
-                navigate("/secure/glow/emails");
-              }}
-            >
-              <EmailIcon color="white" />
             </GLIconButton>
 
             <GLIconButton onClick={() => dispatch(API.deleteSurvey(survey._id))} tooltip="Delete">

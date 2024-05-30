@@ -1,6 +1,18 @@
 import { parcel_services } from "../parcels";
 
 export default {
+  get_table_parcels_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const parcels = await parcel_services.get_table_parcels_s(query);
+      if (parcels) {
+        return res.status(200).send(parcels);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_parcels_c: async (req, res) => {
     const { query } = req;
     try {

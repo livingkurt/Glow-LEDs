@@ -7,12 +7,12 @@ import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
 import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
-import { EditParcelPage, ParcelsPage } from "../../pages/ParcelsPage";
+import { ParcelsPage } from "../../pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "../../pages/PalettesPage";
 import { FilamentsPage } from "../../pages/FilamentsPage";
 import { DashboardPage } from "../../pages/DashboardPage";
 import { ExpensesPage } from "../../pages/ExpensesPage";
-import { EditFeaturePage, FeaturesPage } from "../../pages/FeaturesPage";
+import { FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
 import ChipsPage from "../../pages/ChipsPage/ChipsPage";
@@ -100,11 +100,9 @@ export const AdminComponents = {
   PalettesPage,
   FilamentsPage,
   ProfilePage,
-  EditParcelPage,
   EditPalettePage,
   AdminChangePasswordPage,
   DashboardPage,
-  EditFeaturePage,
   ExpensesPage,
   FeaturesPage,
   CartsPage,
