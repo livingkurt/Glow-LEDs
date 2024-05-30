@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -25,8 +26,7 @@ const PromosPage = () => {
       { title: "Date", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       {
         title: "Active",
-        display: promo =>
-          promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: promo => <GLBoolean boolean={promo.active} />,
       },
       { title: "Promo Code", display: promo => promo.promo_code.toUpperCase() },
       { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
@@ -36,8 +36,7 @@ const PromosPage = () => {
       { title: "Minimum Total", display: promo => `$${promo.minimum_total || "0.00"}` },
       {
         title: "Free Shipping",
-        display: promo =>
-          promo.free_shipping ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: promo => <GLBoolean boolean={promo.free_shipping} />,
       },
       {
         title: "Actions",

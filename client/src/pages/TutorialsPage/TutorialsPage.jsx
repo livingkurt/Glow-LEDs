@@ -2,12 +2,13 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_tutorial_modal, open_edit_tutorial_modal } from "../../slices/tutorialSlice";
 import { EditTutorialModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const TutorialsPage = () => {
   const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
@@ -20,8 +21,7 @@ const TutorialsPage = () => {
       {
         title: "Active",
         display: tutorial => (
-          <GLButton
-            variant="icon"
+          <GLIconButton
             onClick={() => {
               dispatch(
                 API.saveTutorial({
@@ -30,10 +30,10 @@ const TutorialsPage = () => {
                 })
               );
             }}
-            aria-label={tutorial.active ? "deactivate" : "activate"}
+            tooltip={tutorial.active ? "deactivate" : "activate"}
           >
-            {tutorial.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-          </GLButton>
+            <GLBoolean boolean={tutorial.active} />
+          </GLIconButton>
         ),
       },
       { title: "Title", display: "title" },
@@ -45,22 +45,17 @@ const TutorialsPage = () => {
         title: "Actions",
         display: tutorial => (
           <div className="jc-b">
-            <GLButton
-              variant="icon"
-              aria-label="Edit"
+            <GLIconButton
+              tooltip="Edit"
               onClick={() => {
                 dispatch(open_edit_tutorial_modal(tutorial));
               }}
             >
               <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
-              onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))}
-              aria-label="Delete"
-            >
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))} tooltip="Delete">
               <i className="fas fa-trash-alt" />
-            </GLButton>
+            </GLIconButton>
           </div>
         ),
       },

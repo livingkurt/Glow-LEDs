@@ -2,14 +2,16 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_wholesaler_modal, open_edit_wholesaler_modal } from "../../slices/wholesalerSlice";
 import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getWholesalers } from "../../api";
 import { determineColor } from "./wholesalerHelper";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import { Delete, Edit } from "@mui/icons-material";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 
 const WholesalersPage = () => {
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
@@ -22,8 +24,7 @@ const WholesalersPage = () => {
       {
         title: "Active",
         display: wholesaler => (
-          <GLButton
-            variant="icon"
+          <GLIconButton
             onClick={() => {
               dispatch(
                 API.saveWholesaler({
@@ -32,10 +33,10 @@ const WholesalersPage = () => {
                 })
               );
             }}
-            aria-label={wholesaler.active ? "deactivate" : "activate"}
+            tooltip={wholesaler.active ? "deactivate" : "activate"}
           >
-            {wholesaler.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-          </GLButton>
+            <GLBoolean boolean={wholesaler.active} />
+          </GLIconButton>
         ),
       },
       { title: "Company", display: "company" },
@@ -43,19 +44,18 @@ const WholesalersPage = () => {
       {
         title: "Actions",
         display: wholesaler => (
-          <div className="jc-b">
-            <GLButton
-              variant="icon"
-              aria-label="Edit"
+          <div className="row">
+            <GLIconButton
+              tooltip="Edit"
               onClick={() => {
                 dispatch(open_edit_wholesaler_modal(wholesaler));
               }}
             >
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteWholesaler(wholesaler._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteWholesaler(wholesaler._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
           </div>
         ),
       },

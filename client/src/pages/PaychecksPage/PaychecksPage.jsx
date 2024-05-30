@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import { determineColor } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -37,8 +38,7 @@ const PaychecksPage = () => {
       { title: "Date Paid", display: paycheck => paycheck.paid_at && formatDate(paycheck.paid_at) },
       {
         title: "Paid",
-        display: paycheck =>
-          paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: paycheck => <GLBoolean boolean={paycheck.paid} />,
       },
       {
         title: "Affiliate/Team",
@@ -54,8 +54,7 @@ const PaychecksPage = () => {
       { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
       {
         title: "Team",
-        display: paycheck =>
-          paycheck.team ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: paycheck => <GLBoolean boolean={paycheck.team} />,
       },
       {
         title: "Actions",

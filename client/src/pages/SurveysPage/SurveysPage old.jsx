@@ -8,6 +8,7 @@ import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const SurveysPage = () => {
   const params = useParams();
@@ -157,18 +158,14 @@ const SurveysPage = () => {
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {survey.createdAt && format_date(survey.createdAt)}
                     </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
+                    <td className="p-10px">{<GLBoolean boolean={survey.is_survey} />}</td>
                     <td className="p-10px">{survey.rating}</td>
                     <td className="p-10px">{survey.is_survey ? survey.question_1 : survey.answer_1}</td>
                     <td className="p-10px">{survey.is_survey ? survey.question_2 : survey.answer_2}</td>
                     <td className="p-10px">{survey.is_survey ? survey.question_3 : survey.answer_3}</td>
                     <td className="p-10px">{survey.is_survey ? survey.question_4 : survey.answer_4}</td>
                     <td className="p-10px">{survey.is_survey ? survey.question_5 : survey.answer_5}</td>
-                    <td className="p-10px">
-                      {survey.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
+                    <td className="p-10px">{<GLBoolean boolean={survey.active} />}</td>
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editsurvey/" + survey._id}>
