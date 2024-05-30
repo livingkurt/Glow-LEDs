@@ -22,6 +22,7 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
 import { detailsProductPage } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
 import { isOptionCountDifferent } from "./productHelpers";
+import * as API from "../../api";
 
 const ProductPage = () => {
   const params = useParams();
@@ -32,6 +33,8 @@ const ProductPage = () => {
     dispatch(detailsProductPage({ pathname: params.pathname }));
   }, [dispatch, params.pathname]);
 
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
@@ -141,6 +144,11 @@ const ProductPage = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  onClick={() => {
+                    console.log("Add To Cart");
+                    console.log({ customizedProduct });
+                    // dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+                  }}
                   tooltip={
                     isOptionCountDifferent(product, customizedProduct) && "You must select all options to Add To Cart"
                   }
