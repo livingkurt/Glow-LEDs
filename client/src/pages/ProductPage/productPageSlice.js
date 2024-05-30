@@ -117,7 +117,7 @@ const productPage = createSlice({
       const { selectedOption, index, option } = payload;
       if (selectedOption === undefined) {
         // If the selected option is undefined, remove it from the selectedOptions array
-        state.customizedProduct.selectedOptions.splice(index, 1);
+        state.customizedProduct.selectedOptions[index] = {};
         const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
         updatePrice(state, additionalCost);
       } else {
@@ -474,8 +474,8 @@ const productPage = createSlice({
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
 
-      const selectedOptions = data?.options?.map(
-        option => !option.isAddOn && option.values.find(value => value.isDefault)
+      const selectedOptions = data?.options?.map(option =>
+        !option.isAddOn ? option.values.find(value => value.isDefault) : {}
       );
 
       return {
