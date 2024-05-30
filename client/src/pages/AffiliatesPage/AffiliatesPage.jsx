@@ -44,7 +44,7 @@ const AffiliatesPage = () => {
                 })
               );
             }}
-            title={affiliate.active ? "deactivate" : "activate"}
+            tooltip={affiliate.active ? "deactivate" : "activate"}
           >
             <GLBoolean boolean={affiliate.active} />
           </GLIconButton>

@@ -12,6 +12,11 @@ import { determineColor } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Edit from "@mui/icons-material/Edit";
+import FileCopy from "@mui/icons-material/FileCopy";
+import { CheckCircle } from "@mui/icons-material";
+import Delete from "@mui/icons-material/Delete";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -60,11 +65,10 @@ const PaychecksPage = () => {
         title: "Actions",
         display: paycheck => (
           <div className="jc-b">
-            <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
               onClick={() =>
                 dispatch(
                   API.savePaycheck({
@@ -73,12 +77,11 @@ const PaychecksPage = () => {
                   })
                 )
               }
-              aria-label="duplicate"
+              tooltip="Duplicate"
             >
-              <i className="fas fa-clone" />
-            </GLButton>
-            <GLButton
-              variant="icon"
+              <FileCopy color="white" />
+            </GLIconButton>
+            <GLIconButton
               onClick={() =>
                 dispatch(
                   API.savePaycheck({
@@ -86,13 +89,13 @@ const PaychecksPage = () => {
                   })
                 )
               }
-              aria-label="mark paid"
+              tooltip="Mark Paid"
             >
-              <i className="fas fa-check-circle" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deletePaycheck(paycheck._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+              <CheckCircle color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deletePaycheck(paycheck._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
           </div>
         ),
       },

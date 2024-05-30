@@ -2,7 +2,6 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_promo_modal, open_edit_promo_modal } from "../../slices/promoSlice";
 import { EditPromoModal } from "./components";
@@ -12,6 +11,9 @@ import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -26,7 +28,21 @@ const PromosPage = () => {
       { title: "Date", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       {
         title: "Active",
-        display: promo => <GLBoolean boolean={promo.active} />,
+        display: promo => (
+          <GLIconButton
+            onClick={() =>
+              dispatch(
+                API.savePromo({
+                  ...promo,
+                  active: !promo.active,
+                })
+              )
+            }
+            tooltip={promo.active ? "Deactivate" : "Activate"}
+          >
+            <GLBoolean boolean={promo.active} />
+          </GLIconButton>
+        ),
       },
       { title: "Promo Code", display: promo => promo.promo_code.toUpperCase() },
       { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
@@ -42,26 +58,12 @@ const PromosPage = () => {
         title: "Actions",
         display: promo => (
           <div className="jc-b">
-            <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton
-              variant="icon"
-              onClick={() =>
-                dispatch(
-                  API.savePromo({
-                    ...promo,
-                    active: !promo.active,
-                  })
-                )
-              }
-              aria-label="mark paid"
-            >
-              <i className="fas fa-check-circle" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deletePromo(promo._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deletePromo(promo._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
           </div>
         ),
       },

@@ -44,7 +44,7 @@ const TeamsPage = () => {
                 })
               );
             }}
-            title={team.active ? "deactivate" : "activate"}
+            tooltip={team.active ? "deactivate" : "activate"}
           >
             <GLBoolean boolean={team.active} />
           </GLIconButton>

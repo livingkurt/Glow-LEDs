@@ -41,7 +41,7 @@ const ContentsPage = () => {
                 })
               );
             }}
-            title={content.active ? "deactivate" : "activate"}
+            tooltip={content.active ? "deactivate" : "activate"}
           >
             <GLBoolean boolean={content.active} />
           </GLIconButton>
@@ -64,7 +64,7 @@ const ContentsPage = () => {
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Edit"
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveContent({
@@ -80,7 +80,7 @@ const ContentsPage = () => {
               <ContentCopy color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Edit"
+              tooltip="Create Email"
               onClick={() => {
                 dispatch(
                   API.saveEmail({

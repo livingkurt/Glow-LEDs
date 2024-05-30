@@ -9,6 +9,8 @@ import * as API from "../../api";
 import { Button } from "@mui/material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 
 const TutorialsPage = () => {
   const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
@@ -51,10 +53,10 @@ const TutorialsPage = () => {
                 dispatch(open_edit_tutorial_modal(tutorial));
               }}
             >
-              <i className="fas fa-edit" />
+              <Edit color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))} tooltip="Delete">
-              <i className="fas fa-trash-alt" />
+              <Delete color="white" />
             </GLIconButton>
           </div>
         ),

@@ -36,7 +36,7 @@ const CartsPage = () => {
                 })
               );
             }}
-            title={cart.active ? "deactivate" : "activate"}
+            tooltip={cart.active ? "deactivate" : "activate"}
           >
             <GLBoolean boolean={cart.active} />
           </GLIconButton>

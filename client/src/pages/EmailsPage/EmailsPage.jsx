@@ -91,7 +91,7 @@ const EmailsPage = () => {
               <Email color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Edit"
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveEmail({

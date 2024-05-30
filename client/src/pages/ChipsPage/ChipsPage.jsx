@@ -42,12 +42,12 @@ const ChipsPage = () => {
       {
         title: "Actions",
         display: chip => (
-          <div className="jc-b">
+          <div>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Copy Chip"
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveChip({
