@@ -6,6 +6,7 @@ import "./ProfilePage.scss";
 import { format_date } from "../../utils/helper_functions";
 
 import { this_month_date_range, this_year_date_range } from "./profileHelpers";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const useAffiliateProfilePage = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -73,8 +74,7 @@ const useAffiliateProfilePage = () => {
       },
       {
         title: "Paid",
-        display: paycheck =>
-          paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+        display: paycheck => <GLBoolean boolean={paycheck.paid} />,
       },
       { title: "Amount", display: paycheck => `$${paycheck.amount?.toFixed(2)}` },
     ],

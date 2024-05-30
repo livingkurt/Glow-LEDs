@@ -2,19 +2,18 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getCarts } from "../../api";
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -27,7 +26,7 @@ const CartsPage = () => {
       {
         title: "Active",
         display: cart => (
-          <IconButton
+          <GLIconButton
             variant="contained"
             onClick={() => {
               dispatch(
@@ -37,27 +36,27 @@ const CartsPage = () => {
                 })
               );
             }}
-            aria-label={cart.active ? "deactivate" : "activate"}
+            tooltip={cart.active ? "deactivate" : "activate"}
           >
-            {cart.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+            <GLBoolean boolean={cart.active} />
+          </GLIconButton>
         ),
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
-        title: "Actions",
+        title: "",
         display: cart => (
-          <div className="jc-b">
-            <IconButton variant="contained" aria-label="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton variant="contained" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteCart(cart._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

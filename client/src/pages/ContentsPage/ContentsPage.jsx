@@ -5,18 +5,20 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditContentModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
 import { determineContentColors } from "./contentsPageHelpers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import IconButton from "@mui/material/IconButton";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
@@ -30,7 +32,7 @@ const ContentsPage = () => {
       {
         title: "Active",
         display: content => (
-          <IconButton
+          <GLIconButton
             onClick={() => {
               dispatch(
                 API.saveContent({
@@ -39,10 +41,10 @@ const ContentsPage = () => {
                 })
               );
             }}
-            aria-label={content.active ? "deactivate" : "activate"}
+            tooltip={content.active ? "deactivate" : "activate"}
           >
-            {content.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+            <GLBoolean boolean={content.active} />
+          </GLIconButton>
         ),
       },
       {
@@ -55,14 +57,14 @@ const ContentsPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: content => (
-          <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() =>
                 dispatch(
                   API.saveContent({
@@ -76,9 +78,9 @@ const ContentsPage = () => {
               }
             >
               <ContentCopy color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Edit"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Create Email"
               onClick={() => {
                 dispatch(
                   API.saveEmail({
@@ -94,12 +96,12 @@ const ContentsPage = () => {
               }}
             >
               <EmailIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteContent(content._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteContent(content._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

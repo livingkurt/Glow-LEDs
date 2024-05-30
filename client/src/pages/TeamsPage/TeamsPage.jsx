@@ -2,24 +2,22 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { getTeams } from "../../api";
 import { determineColor } from "./teamHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
-
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
 import EditTeamModal from "./EditTeamModal";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -33,7 +31,7 @@ const TeamsPage = () => {
       {
         title: "Active",
         display: team => (
-          <IconButton
+          <GLIconButton
             color="white"
             onClick={() => {
               dispatch(
@@ -46,10 +44,10 @@ const TeamsPage = () => {
                 })
               );
             }}
-            aria-label={team.active ? "deactivate" : "activate"}
+            tooltip={team.active ? "deactivate" : "activate"}
           >
-            {team.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+            <GLBoolean boolean={team.active} />
+          </GLIconButton>
         ),
       },
       { title: "Team Name", display: "team_name" },
@@ -80,21 +78,21 @@ const TeamsPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: team => (
-          <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateTeamCodes(team._id))}>
+            <GLIconButton tooltip="Generate Team Codes" onClick={() => dispatch(API.generateTeamCodes(team._id))}>
               <PolylineIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteTeam(team._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteTeam(team._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

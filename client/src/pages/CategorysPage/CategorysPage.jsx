@@ -6,10 +6,11 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_category_modal, open_edit_category_modal } from "../../slices/categorySlice";
 import { EditCategoryModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { determineCategoryColors } from "./categoryHelpers";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const CategorysPage = () => {
   const categoryPage = useSelector(state => state.categorys.categoryPage);
@@ -25,25 +26,17 @@ const CategorysPage = () => {
       { title: "Subcategories", display: row => row.subcategorys.map(subcategory => subcategory.name).join(" ,") },
       { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
       {
-        title: "Actions",
+        title: "",
         display: category => (
-          <div className="jc-b">
-            <IconButton
-              variant="contained"
-              aria-label="Edit"
-              onClick={() => dispatch(open_edit_category_modal(category))}
-            >
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton
-              variant="contained"
-              onClick={() => dispatch(API.deleteCategory(category._id))}
-              aria-label="Delete"
-            >
+            <GLIconButton onClick={() => dispatch(API.deleteCategory(category._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

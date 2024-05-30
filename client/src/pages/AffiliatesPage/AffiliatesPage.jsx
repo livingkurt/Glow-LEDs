@@ -2,24 +2,22 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../slices/affiliateSlice";
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
-
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const AffiliatesPage = () => {
   const location = useLocation();
@@ -33,7 +31,7 @@ const AffiliatesPage = () => {
       {
         title: "Active",
         display: affiliate => (
-          <IconButton
+          <GLIconButton
             color="white"
             onClick={() => {
               dispatch(
@@ -46,10 +44,10 @@ const AffiliatesPage = () => {
                 })
               );
             }}
-            aria-label={affiliate.active ? "deactivate" : "activate"}
+            tooltip={affiliate.active ? "deactivate" : "activate"}
           >
-            {affiliate.active ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />}
-          </IconButton>
+            <GLBoolean boolean={affiliate.active} />
+          </GLIconButton>
         ),
       },
       { title: "Artist Name", display: "artist_name" },
@@ -80,21 +78,24 @@ const AffiliatesPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: affiliate => (
-          <div className="jc-b">
-            <IconButton aria-label="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
               <EditIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton aria-label="Edit" onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}>
+            <GLIconButton
+              tooltip="Generate Sponsor Codes"
+              onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}
+            >
               <PolylineIcon color="white" />
-            </IconButton>
+            </GLIconButton>
 
-            <IconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} tooltip="Delete">
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

@@ -8,6 +8,7 @@ import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
 import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const EmailModal = () => {
   const [email, set_email] = useState("");
@@ -91,9 +92,10 @@ const EmailModal = () => {
         width < 535 && "mh-auto-20px"
       }`}
     >
-      <IconButton
+      <GLIconButton
         className="pos-abs right-15px top-10px close"
         data-testid="close_email_modal"
+        tooltip="Close"
         onClick={() => {
           set_show_modal(false);
           // localStorage.setItem('popup', today);
@@ -101,7 +103,7 @@ const EmailModal = () => {
         }}
       >
         <Close />
-      </IconButton>
+      </GLIconButton>
       {complete ? (
         <ul className="column jc-b ai-c p-20px">
           <li className="mb-2rem">

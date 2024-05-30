@@ -1,23 +1,24 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import {
   close_image_display_modal,
   open_create_image_modal,
   open_edit_image_modal,
   open_image_display_modal,
-  set_selected_image,
 } from "../../slices/imageSlice";
 import { EditImageModal } from "./components";
 import * as API from "../../api";
-import { Button, Dialog, DialogContent } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getImages } from "../../api";
 import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 
 const ImagesPage = () => {
   const imagePage = useSelector(state => state.images.imagePage);
@@ -50,16 +51,16 @@ const ImagesPage = () => {
       },
 
       {
-        title: "Actions",
+        title: "",
         display: image => (
-          <div className="jc-b">
-            <GLButton variant="icon" aria-label="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>
-              <i className="fas fa-edit" />
-            </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteImage(image._id))} aria-label="Delete">
-              <i className="fas fa-trash-alt" />
-            </GLButton>
-          </div>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteImage(image._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

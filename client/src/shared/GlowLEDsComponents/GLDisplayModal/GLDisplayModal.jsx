@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
 const GLDisplayModal = ({ children, onClose, open, title }) => {
   return (
@@ -23,8 +24,8 @@ const GLDisplayModal = ({ children, onClose, open, title }) => {
           color: "#333333",
         }}
       >
-        <IconButton
-          aria-label="close"
+        <GLIconButton
+          tooltip="close"
           onClick={onClose}
           sx={{
             position: "absolute",
@@ -34,7 +35,7 @@ const GLDisplayModal = ({ children, onClose, open, title }) => {
           }}
         >
           <CloseIcon color="white" />
-        </IconButton>
+        </GLIconButton>
         <Typography variant="h4" component="h2" align="center" mb={2} color="inherit">
           {title}
         </Typography>

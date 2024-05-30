@@ -3,6 +3,7 @@ import { AppBar, Tabs, Tab, Paper, Typography, Box, Button, IconButton } from "@
 import { Close, ArrowBack, ArrowForward, FileCopy } from "@mui/icons-material";
 import GLForm from "../GLForm"; // Import GLForm, adjust the path accordingly
 import GLTabPanel from "../../GLTabPanel/GLTabPanel"; // Import GLTabPanel, adjust the path accordingly
+import GLIconButton from "../../GLIconButton/GLIconButton";
 
 const GLArray = ({
   fieldName,
@@ -58,7 +59,8 @@ const GLArray = ({
       {fieldState.length > 0 &&
         fieldState.map((item, index) => (
           <GLTabPanel value={tabIndex} index={index} key={index}>
-            <IconButton
+            <GLIconButton
+              tooltip="Delete"
               color="secondary"
               onClick={() => {
                 const newArray = [...fieldState];
@@ -73,8 +75,9 @@ const GLArray = ({
               }}
             >
               <Close />
-            </IconButton>
-            <IconButton
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Move Left"
               color="primary"
               onClick={() => {
                 if (index > 0) {
@@ -86,8 +89,9 @@ const GLArray = ({
               }}
             >
               <ArrowBack />
-            </IconButton>
-            <IconButton
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Move Right"
               color="primary"
               onClick={() => {
                 if (index < fieldState.length - 1) {
@@ -99,8 +103,9 @@ const GLArray = ({
               }}
             >
               <ArrowForward />
-            </IconButton>
-            <IconButton
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               color="primary"
               onClick={() => {
                 const newArray = [...fieldState];
@@ -118,7 +123,7 @@ const GLArray = ({
               }}
             >
               <FileCopy /> {/* Assuming you import FileCopy from Material-UI */}
-            </IconButton>
+            </GLIconButton>
             <GLForm
               formData={fieldData.itemSchema.fields}
               state={item}

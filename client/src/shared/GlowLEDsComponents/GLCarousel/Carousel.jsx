@@ -12,6 +12,7 @@ import { IconButton } from "@mui/material";
 import ArrowBackCircleIcon from "@mui/icons-material/ArrowBackCircle";
 import ArrowForwardCircleIcon from "@mui/icons-material/ArrowForwardCircle";
 import { ArrowForward } from "@mui/icons-material";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
 const Carousel = ({ title, category, random, add_to_cart, product_pathname }) => {
   const { height, width } = useWindowDimensions();
@@ -96,14 +97,14 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
                 <div className="row p-10px" style={{ overflowX: "scroll" }}>
                   <div className="row jc-b w-100per">
                     <div className="ai-c">
-                      <IconButton
+                      <GLIconButton
                         style={{ borderRadius: "50%" }}
                         className="h-59px"
                         onClick={() => move_left()}
-                        aria-label="Previous"
+                        tooltip="Previous"
                       >
                         <ArrowBackCircleIcon fontSize="large" />
-                      </IconButton>
+                      </GLIconButton>
                     </div>
                     {[...Array(number_of_items).keys()].map(x => (
                       <div className="w-259px" key={product_number + x}>
@@ -122,14 +123,14 @@ const Carousel = ({ title, category, random, add_to_cart, product_pathname }) =>
                       </div>
                     ))}
                     <div className="ai-c">
-                      <IconButton
+                      <GLIconButton
                         style={{ borderRadius: "50%" }}
                         className="h-59px"
                         onClick={() => move_right()}
-                        aria-label="Next"
+                        tooltip="Next"
                       >
                         <ArrowForwardCircleIcon fontSize="large" />
-                      </IconButton>
+                      </GLIconButton>
                     </div>
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { GLButton } from "../GlowLEDsComponents";
 import { IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const Arrows = ({ direction, set_value, update_function, name, value }) => {
   const increment = () => {
@@ -24,13 +25,13 @@ const Arrows = ({ direction, set_value, update_function, name, value }) => {
   };
   return (
     <div className="row">
-      <IconButton onClick={() => decrement()} variant="contained" className="w-4rem" aria-label="Previous">
+      <GLIconButton onClick={() => decrement()} variant="contained" className="w-4rem" tooltip="Previous">
         <ArrowBack fontSize="small" />
-      </IconButton>
+      </GLIconButton>
 
-      <IconButton onClick={() => increment()} variant="contained" className="w-4rem m-l-s" aria-label="Next">
+      <GLIconButton onClick={() => increment()} variant="contained" className="w-4rem m-l-s" tooltip="Next">
         <ArrowForward fontSize="small" />
-      </IconButton>
+      </GLIconButton>
     </div>
   );
 };

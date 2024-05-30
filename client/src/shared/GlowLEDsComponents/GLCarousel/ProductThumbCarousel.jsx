@@ -7,6 +7,7 @@ import { Loading } from "../../SharedComponents";
 import { IconButton } from "@mui/material";
 import ArrowBackCircleIcon from "@mui/icons-material/ArrowBackCircle";
 import ArrowForwardCircleIcon from "@mui/icons-material/ArrowForwardCircle";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
 const ProductThumbCarousel = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -63,14 +64,14 @@ const ProductThumbCarousel = () => {
             <div className="row jc-b w-100per">
               {/* {product_number != 0 && ( */}
               <div className="ai-c">
-                <IconButton
+                <GLIconButton
                   style={{ borderRadius: "50%" }}
                   className="h-59px"
                   onClick={() => move_left()}
-                  aria-label="Previous"
+                  tooltip="Previous"
                 >
                   <ArrowBackCircleIcon fontSize="large" />
-                </IconButton>
+                </GLIconButton>
               </div>
               {/* )} */}
               {[...Array(1).keys()].map(x => (
@@ -89,14 +90,14 @@ const ProductThumbCarousel = () => {
               ))}
               {/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
               <div className="ai-c">
-                <IconButton
+                <GLIconButton
                   style={{ borderRadius: "50%" }}
                   className="h-59px"
                   onClick={() => move_right()}
-                  aria-label="Next"
+                  tooltip="Next"
                 >
                   <ArrowForwardCircleIcon fontSize="large" />
-                </IconButton>
+                </GLIconButton>
               </div>
               {/* )} */}
             </div>

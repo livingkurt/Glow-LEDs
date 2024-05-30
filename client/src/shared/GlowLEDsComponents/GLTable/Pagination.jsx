@@ -3,6 +3,7 @@ import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
 import { IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
 const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
   const { width } = userWindowDimensions();
@@ -27,9 +28,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
-        <IconButton variant="contained" className="w-40px">
+        <GLIconButton className="w-40px">
           <ArrowBack />
-        </IconButton>
+        </GLIconButton>
       </li>
       {width > 430 &&
         paginationRange.map(pageNumber => {
@@ -58,9 +59,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         className={`pagination-item ${currentPage === lastPage ? "disabled" : ""}`}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >
-        <IconButton variant="contained" className="w-40px">
+        <GLIconButton className="w-40px">
           <ArrowForward />
-        </IconButton>
+        </GLIconButton>
       </li>
     </ul>
   );

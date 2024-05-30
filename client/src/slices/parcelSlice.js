@@ -3,18 +3,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const parcel = {
+  id: "",
+  question_1: "",
+  question_2: "",
+  question_3: "",
+  question_4: "",
+  question_5: "",
+  answer_1: "",
+  answer_2: "",
+  answer_3: "",
+  answer_4: "",
+  answer_5: "",
+  question_answer: [{ question: "", answer: "" }],
+  user: "",
+  parcel_questions: "",
+  order: "",
+  is_parcel: "",
+  active: "",
+  rating: null,
+};
+
 const parcelPage = createSlice({
   name: "parcelPage",
   initialState: {
     loading: false,
     parcels: [],
-    parcel: {},
+    parcel: parcel,
+    remoteVersionRequirement: 0,
+    edit_parcel_modal: false,
+    upload_parcel_modal: false,
+    parcel_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_parcel: (state, { payload }) => {
@@ -27,17 +48,30 @@ const parcelPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_parcel_modal: (state, { payload }) => {
+      state.edit_parcel_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_parcel_modal: (state, { payload }) => {
+      state.edit_parcel_modal = true;
+      state.parcel = parcel;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_parcel_modal: (state, { payload }) => {
+      state.edit_parcel_modal = true;
+      state.parcel = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_parcel_modal: (state, { payload }) => {
+      state.edit_parcel_modal = false;
+      state.upload_parcel_modal = false;
+      state.parcel_modal = false;
+      state.parcel = parcel;
+    },
+    open_parcel_modal: (state, { payload }) => {
+      state.parcel_modal = true;
+      state.parcel = payload;
+    },
+    parcel_uploaded: (state, { payload }) => {
+      state.upload_parcel_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -48,7 +82,7 @@ const parcelPage = createSlice({
     [API.listParcels.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.parcels = payload.parcels;
-      state.totalPages = payload.totalPages;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Parcels Found";
     },
@@ -63,6 +97,8 @@ const parcelPage = createSlice({
     [API.saveParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Parcel Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_parcel_modal = false;
     },
     [API.saveParcel.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -88,6 +124,7 @@ const parcelPage = createSlice({
     [API.deleteParcel.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Parcel Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteParcel.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -97,5 +134,14 @@ const parcelPage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_parcel } = parcelPage.actions;
+export const {
+  set_loading,
+  set_parcel,
+  set_edit_parcel_modal,
+  open_create_parcel_modal,
+  open_parcel_modal,
+  close_parcel_modal,
+  open_edit_parcel_modal,
+  parcel_uploaded,
+} = parcelPage.actions;
 export default parcelPage.reducer;

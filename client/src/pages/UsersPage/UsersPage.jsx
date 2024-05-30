@@ -2,22 +2,21 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
-import { Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloneIcon from "@mui/icons-material/Layers";
 import MountainIcon from "@mui/icons-material/Landscape";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import EmailIcon from "@mui/icons-material/Email";
 import { Loading } from "../../shared/SharedComponents";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -35,54 +34,54 @@ const UsersPage = () => {
       { title: "Email", display: "email" },
       {
         title: "Guest",
-        display: user => (user.guest ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.guest} />,
       },
       {
         title: "Affiliated",
-        display: user => (user.is_affiliated ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.is_affiliated} />,
       },
       {
         title: "Subscribed",
-        display: user => (user.email_subscription ? <CheckCircleIcon color="white" /> : <CancelIcon color="white" />),
+        display: user => <GLBoolean boolean={user.email_subscription} />,
       },
       {
-        title: "Actions",
+        title: "",
         display: user => (
-          <div className="jc-b">
-            <IconButton
-              aria-label="Edit"
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton
+              tooltip="Edit"
               onClick={() => {
                 dispatch(open_edit_user_modal(user));
               }}
             >
               <EditIcon color="white" />
-            </IconButton>
-            <IconButton
-              aria-label="Duplicate"
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
               onClick={() => {
                 const newDuplicateUser = duplicateUser(user);
                 dispatch(API.saveUser({ user: newDuplicateUser, profile: false }));
               }}
             >
               <CloneIcon color="white" />
-            </IconButton>
+            </GLIconButton>
             <Link to={"/secure/glow/userprofile/" + user._id}>
-              <IconButton aria-label="view">
+              <GLIconButton tooltip="View User Profile">
                 <MountainIcon color="white" />
-              </IconButton>
+              </GLIconButton>
             </Link>
-            <IconButton
-              aria-label="Email"
+            <GLIconButton
+              tooltip="Send Affiliate Onboard Email"
               onClick={() => {
                 dispatch(API.sendAffiliateOnboardEmail({ userIds: [user._id] }));
               }}
             >
               <EmailIcon color="white" />
-            </IconButton>
-            <IconButton aria-label="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
+            </GLIconButton>
+            <GLIconButton tooltip="Delete" onClick={() => dispatch(API.deleteUser(user._id))}>
               <DeleteIcon color="white" />
-            </IconButton>
-          </div>
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

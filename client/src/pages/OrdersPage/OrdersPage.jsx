@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLAutocomplete, GLButton } from "../../shared/GlowLEDsComponents";
+import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import {
   openRefundModal,
@@ -13,7 +13,7 @@ import {
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   orderStatusColors,
   determineOrderColors,
@@ -39,6 +39,7 @@ import Landscape from "@mui/icons-material/Landscape";
 import Money from "@mui/icons-material/Money";
 import { showSuccess } from "../../slices/snackbarSlice";
 import { ShoppingCart } from "@mui/icons-material";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -158,74 +159,62 @@ const OrdersPage = () => {
         ),
       },
       {
-        title: "Actions",
+        title: "",
         display: row => (
-          <div className="jc-b">
-            <Tooltip title="Edit">
-              <IconButton
-                aria-label="Edit"
-                onClick={() => {
-                  dispatch(API.detailsOrder(row._id));
-                  dispatch(open_edit_order_modal(order));
-                }}
-              >
-                <Edit color="white" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Duplicate">
-              <IconButton
-                aria-label="Duplicate"
-                onClick={() => {
-                  const newDuplicateOrder = duplicateOrder(row);
-                  dispatch(API.saveOrder(newDuplicateOrder));
-                }}
-              >
-                <FileCopy color="white" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="View Order Page">
-              <Link to={`/secure/account/order/${row._id}`}>
-                <IconButton aria-label="View Order Page">
-                  <Landscape color="white" />
-                </IconButton>
-              </Link>
-            </Tooltip>
-            <Tooltip title="Refund">
-              <IconButton
-                onClick={() => {
-                  dispatch(openRefundModal(row));
-                }}
-                aria-label="Refund"
-              >
-                <Money color="white" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Add Order Items To Cart">
-              <IconButton
-                onClick={() => {
-                  row.orderItems.map(item =>
-                    dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" }))
-                  );
-                }}
-                aria-label="Add to Cart"
-              >
-                <ShoppingCart color="white" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton
-                onClick={() => {
-                  const confirm = window.confirm("Are you sure you want DELETE this order?");
-                  if (confirm) {
-                    dispatch(API.deleteOrder(row._id));
-                  }
-                }}
-                aria-label="Delete"
-              >
-                <Delete color="white" />
-              </IconButton>
-            </Tooltip>
-          </div>
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton
+              tooltip="Edit"
+              onClick={() => {
+                dispatch(API.detailsOrder(row._id));
+                dispatch(open_edit_order_modal(order));
+              }}
+            >
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
+              onClick={() => {
+                const newDuplicateOrder = duplicateOrder(row);
+                dispatch(API.saveOrder(newDuplicateOrder));
+              }}
+            >
+              <FileCopy color="white" />
+            </GLIconButton>
+            <Link to={`/secure/account/order/${row._id}`}>
+              <GLIconButton tooltip="View Order Page">
+                <Landscape color="white" />
+              </GLIconButton>
+            </Link>
+            <GLIconButton
+              onClick={() => {
+                dispatch(openRefundModal(row));
+              }}
+              tooltip="Refund"
+            >
+              <Money color="white" />
+            </GLIconButton>
+            <GLIconButton
+              onClick={() => {
+                row.orderItems.map(item =>
+                  dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" }))
+                );
+              }}
+              tooltip="Add to Cart"
+            >
+              <ShoppingCart color="white" />
+            </GLIconButton>
+            <GLIconButton
+              onClick={() => {
+                const confirm = window.confirm("Are you sure you want DELETE this order?");
+                if (confirm) {
+                  dispatch(API.deleteOrder(row._id));
+                }
+              }}
+              tooltip="Delete"
+            >
+              <Delete color="white" />
+            </GLIconButton>
+          </Box>
         ),
       },
     ],

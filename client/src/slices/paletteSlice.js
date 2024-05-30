@@ -3,18 +3,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const palette = {
+  id: "",
+  question_1: "",
+  question_2: "",
+  question_3: "",
+  question_4: "",
+  question_5: "",
+  answer_1: "",
+  answer_2: "",
+  answer_3: "",
+  answer_4: "",
+  answer_5: "",
+  question_answer: [{ question: "", answer: "" }],
+  user: "",
+  palette_questions: "",
+  order: "",
+  is_palette: "",
+  active: "",
+  rating: null,
+};
+
 const palettePage = createSlice({
   name: "palettePage",
   initialState: {
     loading: false,
     palettes: [],
-    palette: {},
+    palette: palette,
+    remoteVersionRequirement: 0,
+    edit_palette_modal: false,
+    upload_palette_modal: false,
+    palette_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
   },
   reducers: {
     set_palette: (state, { payload }) => {
@@ -27,17 +48,30 @@ const palettePage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_palette_modal: (state, { payload }) => {
+      state.edit_palette_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_palette_modal: (state, { payload }) => {
+      state.edit_palette_modal = true;
+      state.palette = palette;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_palette_modal: (state, { payload }) => {
+      state.edit_palette_modal = true;
+      state.palette = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_palette_modal: (state, { payload }) => {
+      state.edit_palette_modal = false;
+      state.upload_palette_modal = false;
+      state.palette_modal = false;
+      state.palette = palette;
+    },
+    open_palette_modal: (state, { payload }) => {
+      state.palette_modal = true;
+      state.palette = payload;
+    },
+    palette_uploaded: (state, { payload }) => {
+      state.upload_palette_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
   },
   extraReducers: {
@@ -48,7 +82,7 @@ const palettePage = createSlice({
     [API.listPalettes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.palettes = payload.palettes;
-      state.totalPages = payload.totalPages;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Palettes Found";
     },
@@ -63,6 +97,8 @@ const palettePage = createSlice({
     [API.savePalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Palette Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_palette_modal = false;
     },
     [API.savePalette.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -88,6 +124,7 @@ const palettePage = createSlice({
     [API.deletePalette.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Palette Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deletePalette.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -97,5 +134,14 @@ const palettePage = createSlice({
   },
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_palette } = palettePage.actions;
+export const {
+  set_loading,
+  set_palette,
+  set_edit_palette_modal,
+  open_create_palette_modal,
+  open_palette_modal,
+  close_palette_modal,
+  open_edit_palette_modal,
+  palette_uploaded,
+} = palettePage.actions;
 export default palettePage.reducer;

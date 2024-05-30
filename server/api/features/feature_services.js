@@ -1,7 +1,30 @@
 import { feature_db } from "../features";
 import { determine_filter } from "../../utils/util";
+import { normalizeFeatureSearch } from "./feature_helpers";
+import { getFilteredData } from "../api_helpers";
 
 export default {
+  get_table_features_s: async query => {
+    try {
+      const sort_options = ["release-date", "category", "artist_name", "instagram_handle", "facebook_name", "video"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeSearch: normalizeFeatureSearch,
+      });
+      const features = await feature_db.findAll_features_db(filter, sort, limit, page);
+      const count = await feature_db.count_features_db(filter);
+      return {
+        data: features,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_features_s: async query => {
     try {
       const page = query.page ? query.page : "1";

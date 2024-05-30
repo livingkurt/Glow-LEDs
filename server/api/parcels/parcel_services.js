@@ -1,7 +1,30 @@
 import { parcel_db } from "../parcels";
 import { determine_filter } from "../../utils/util";
+import { getFilteredData } from "../api_helpers";
+import { normalizeParcelSearch } from "./parcel_helpers";
 
 export default {
+  get_table_parcels_s: async query => {
+    try {
+      const sort_options = ["name", "type", "length", "width", "height", "volume"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeSearch: normalizeParcelSearch,
+      });
+      const parcels = await parcel_db.findAll_parcels_db(filter, sort, limit, page);
+      const count = await parcel_db.count_parcels_db(filter);
+      return {
+        data: parcels,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_parcels_s: async query => {
     try {
       const page = query.page ? query.page : "1";

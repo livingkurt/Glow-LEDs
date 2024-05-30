@@ -1,170 +1,95 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
+import { Box, Button } from "@mui/material";
+import { open_create_parcel_modal, open_edit_parcel_modal } from "../../slices/parcelSlice";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import EditParcelModal from "./components/EditParcelModal";
 
 const ParcelsPage = () => {
-  const params = useParams();
-  const [search, set_search] = useState("");
-  const [sort, setSortOrder] = useState("");
-  const [loading_parcels, set_loading_parcels] = useState(false);
-  const category = params.category ? params.category : "";
-  const parcelPage = useSelector(state => state.parcels);
-  const { loading, parcels, message, error, success } = parcelPage;
-
-  const parcelSave = useSelector(state => state.parcelSave);
-
+  const parcelPage = useSelector(state => state.parcels.parcelPage);
+  const { loading, remoteVersionRequirement } = parcelPage;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listParcels({}));
-    }
-    return () => (clean = false);
-  }, [success, dispatch]);
+  const columnDefs = useMemo(
+    () => [
+      {
+        title: "Name",
+        display: parcel =>
+          parcel.type === "bubble_mailer"
+            ? `${parcel.length} X ${parcel.width}`
+            : `${parcel.length} X ${parcel.width} X ${parcel.height}`,
+      },
+      {
+        title: "Type",
+        display: parcel => parcel.type,
+      },
+      {
+        title: "Length",
+        display: parcel => parcel.length,
+      },
+      {
+        title: "Width",
+        display: parcel => parcel.width,
+      },
+      {
+        title: "Height",
+        display: parcel => parcel.height,
+      },
+      {
+        title: "Volume",
+        display: parcel => parcel.volume,
+      },
+      {
+        title: "Count In Stock",
+        display: parcel => parcel.quantity_state,
+      },
+      {
+        title: "",
+        display: parcel => (
+          <Box display="flex" justifyContent={"flex-end"}>
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_parcel_modal(parcel))}>
+              <EditIcon color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteParcel(parcel._id))} tooltip="Delete">
+              <DeleteIcon color="white" />
+            </GLIconButton>
+          </Box>
+        ),
+      },
+    ],
+    []
+  );
 
-  const submitHandler = e => {
-    e.preventDefault();
-    dispatch(API.listParcels({ category, search, sort }));
-  };
-
-  const sortHandler = e => {
-    setSortOrder(e.target.value);
-    dispatch(API.listParcels({ category, search, sort: e.target.value }));
-  };
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listParcels({ category, search, sort }));
-    }
-    return () => (clean = false);
-  }, [dispatch, category, search, sort]);
-
-  const deleteHandler = parcel => {
-    dispatch(API.deleteParcel(parcel._id));
-  };
-
-  const date = new Date();
-
-  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
-
-  const colors = [
-    { name: "Box", color: "#44648c" },
-    { name: "Bubble Mailer", color: "#448c89" },
-  ];
-
-  const determineColor = parcel => {
-    let result = "";
-    if (parcel.type === "bubble_mailer") {
-      result = colors[0].color;
-    }
-    if (parcel.type === "box") {
-      result = colors[1].color;
-    }
-    return result;
-  };
+  const remoteApi = useCallback(options => API.getParcels(options), []);
 
   return (
     <div className="main_container p-20px">
       <Helmet>
         <title>Admin Parcels | Glow LEDs</title>
       </Helmet>
-
-      <Loading loading={loading_parcels} error={error} />
-      <div className="wrap jc-b">
-        <div className="wrap jc-b">
-          {colors.map((color, index) => {
-            return (
-              <div className="wrap jc-b  m-1rem" key={index}>
-                <label style={{ marginRight: "1rem" }}>{color.name}</label>
-                <div
-                  style={{
-                    backgroundColor: color.color,
-                    height: "20px",
-                    width: "60px",
-                    borderRadius: "5px",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <Link to="/secure/glow/editparcel">
-          <GLButton variant="primary">Create Parcel</GLButton>
-        </Link>
-      </div>
-      <div className="jc-c">
-        <h1 style={{ textAlign: "center" }}>Parcels</h1>
-      </div>
-      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
-      </div>
-      <Loading loading={loading} error={error}>
-        {parcels && (
-          <div className="parcel-list responsive_table">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Length</th>
-                  <th>Width</th>
-                  <th>Height</th>
-                  <th>Volume</th>
-                  <th>Count In Stock</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {parcels.map((parcel, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      backgroundColor: determineColor(parcel),
-                      fontSize: "16px",
-                    }}
-                  >
-                    <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {parcel.type === "bubble_mailer"
-                        ? `${parcel.length} X ${parcel.width}`
-                        : `${parcel.length} X ${parcel.width} X ${parcel.height}`}
-                    </td>
-                    <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {parcel.type}
-                    </td>
-                    <td className="p-10px">{parcel.length}</td>
-                    <td className="p-10px">{parcel.width}</td>
-                    <td className="p-10px">{parcel.height}</td>
-                    <td className="p-10px">{parcel.volume}</td>
-                    <td className="p-10px">{parcel.quantity_state}</td>
-                    <td className="p-10px">
-                      <div className="jc-b">
-                        <Link to={"/secure/glow/editparcel/" + parcel._id}>
-                          <GLButton variant="icon" aria-label="Edit">
-                            <i className="fas fa-edit" />
-                          </GLButton>
-                        </Link>
-                        <GLButton variant="icon" onClick={() => deleteHandler(parcel)} aria-label="Delete">
-                          <i className="fas fa-trash-alt" />
-                        </GLButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Loading>
+      <GLTableV2
+        remoteApi={remoteApi}
+        remoteVersionRequirement={remoteVersionRequirement}
+        tableName={"Parcels"}
+        namespaceScope="parcels"
+        namespace="parcelTable"
+        columnDefs={columnDefs}
+        loading={loading}
+        enableRowSelect={true}
+        titleActions={
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_parcel_modal())}>
+            Create Parcel
+          </Button>
+        }
+      />
+      <EditParcelModal />
     </div>
   );
 };
+
 export default ParcelsPage;

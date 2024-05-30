@@ -1,7 +1,30 @@
 import { palette_db } from "../palettes";
 import { determine_filter } from "../../utils/util";
+import { getFilteredData } from "../api_helpers";
+import { normalizeParcelSearch } from "../parcels/parcel_helpers";
 
 export default {
+  get_table_palettes_s: async query => {
+    try {
+      const sort_options = ["name", "type", "length", "width", "height", "volume"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeSearch: normalizeParcelSearch,
+      });
+      const palettes = await palette_db.findAll_palettes_db(filter, sort, limit, page);
+      const count = await palette_db.count_palettes_db(filter);
+      return {
+        data: palettes,
+        total_count: count,
+        currentPage: page,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAll_palettes_s: async query => {
     try {
       const page = query.page ? query.page : "1";

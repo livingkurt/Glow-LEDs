@@ -4,32 +4,33 @@ import { useRef, useState } from "react";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { makeStyles } from "@mui/styles";
 import GLPopper from "../../GLPopper/GLPopper";
-import { Paper, List, ListItem, ListItemText, IconButton, Typography, Tooltip } from "@mui/material";
+import { Paper, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
+import GLIconButton from "../../GLIconButton/GLIconButton";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     alignItems: "center",
-    padding: 0
+    padding: 0,
   },
   icon: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
   popper: {
-    zIndex: theme.zIndex.tooltip
+    zIndex: theme.zIndex.tooltip,
   },
   paper: {
     padding: 0,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   listItemIcon: {
     minWidth: "auto",
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   list: {
     paddingTop: 0,
-    paddingBottom: 0
-  }
+    paddingBottom: 0,
+  },
 }));
 
 const GLLegend = ({ colors }) => {
@@ -49,20 +50,19 @@ const GLLegend = ({ colors }) => {
       }}
     >
       <div>
-        <Tooltip title="Color Legend">
-          <IconButton
-            id="matrixMenuButton"
-            color="secondary"
-            ref={anchorRef}
-            variant="outlined"
-            className={classes.filterButton}
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            <Info />
-          </IconButton>
-        </Tooltip>
+        <GLIconButton
+          id="matrixMenuButton"
+          color="secondary"
+          tooltip="Color Legend"
+          ref={anchorRef}
+          variant="outlined"
+          className={classes.filterButton}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <Info />
+        </GLIconButton>
 
         <GLPopper
           open={open}
