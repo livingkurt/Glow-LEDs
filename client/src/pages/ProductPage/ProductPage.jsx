@@ -36,7 +36,6 @@ const ProductPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
 
-  console.log({ my_cart });
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
@@ -157,7 +156,6 @@ const ProductPage = () => {
                 >
                   {[...Array(customizedProduct.quantity_count).keys()].map((value, valueIndex) => (
                     <MenuItem key={valueIndex} value={value + 1}>
-                      {console.log({ value })}
                       {value + 1}
                     </MenuItem>
                   ))}

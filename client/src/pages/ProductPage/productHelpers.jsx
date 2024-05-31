@@ -39,7 +39,6 @@ export const calculateAdditionalCost = selectedOptions =>
   selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
 
 export const updateProductDetailsFromOption = (state, selectedOption) => {
-  console.log({ selectedOption });
   const { product } = selectedOption;
   if (selectedOption.product.images_object.length > 0) {
     state.customizedProduct.images = selectedOption.product.images_object;
@@ -71,9 +70,6 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
         return existingOption;
       }
     });
-
-    // Update selectedOptions with the new selections
-    state.customizedProduct.selectedOptions = newSelectedOptions;
   }
 
   if (product?.description) {
@@ -82,11 +78,11 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   if (product?.facts) {
     state.customizedProduct.facts = product.facts;
   }
-  if (product?.qty || product?.quantity) {
-    state.customizedProduct.quantity = product.qty || product.quantity;
+  if (product?.quantity) {
+    state.customizedProduct.quantity_count = product.quantity;
   }
   if (product?.count_in_stock > 0) {
-    state.customizedProduct.quantity = product.count_in_stock;
+    state.customizedProduct.count_in_stock = product.count_in_stock;
   }
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
