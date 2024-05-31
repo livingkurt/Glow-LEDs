@@ -1,4 +1,4 @@
-import { optionSchema } from "../products/product";
+import { optionSchema, optionValueSchema } from "../products/product";
 import mongoose from "mongoose";
 
 const cartItemsSchema = {
@@ -8,9 +8,12 @@ const cartItemsSchema = {
   subcategory: { type: String, required: true },
   product_collection: { type: String },
   display_image: { type: String, required: true },
+  quantity_count: { type: Number },
   quantity: { type: Number },
   count_in_stock: { type: Number },
-  selectedOptions: [optionSchema],
+
+  currentOptions: [optionSchema],
+  selectedOptions: [optionValueSchema],
   color_code: { type: String },
   pathname: { type: String },
   sale_price: { type: Number },

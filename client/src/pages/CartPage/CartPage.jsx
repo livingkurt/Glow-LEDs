@@ -8,6 +8,7 @@ import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCartQuantity } from "../../helpers/sharedHelpers";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const CartPage = () => {
         <div className="cart-action-container jc-c">
           <div className="cart-action">
             <h3 className="fs-17px">
-              Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
+              Subtotal ( {getCartQuantity(cartItems)} items ) : ${" "}
               {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
             </h3>
 

@@ -20,7 +20,7 @@ export const isOptionCountDifferent = (product, customizedProduct) => {
   const productOptions = getNonAddOnOptions(product?.options);
   const selectedOptions = getNonAddOnOptions(customizedProduct?.selectedOptions);
 
-  return selectedOptions.length <= productOptions.length;
+  return selectedOptions.length < productOptions.length;
 };
 
 // Helper function to filter out add-on options and get their IDs

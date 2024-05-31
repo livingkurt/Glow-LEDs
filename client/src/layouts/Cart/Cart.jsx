@@ -9,6 +9,7 @@ import { Drawer, IconButton } from "@mui/material";
 import { setCartDrawer } from "../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { getCartQuantity } from "../../helpers/sharedHelpers";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -121,7 +122,7 @@ const Cart = () => {
             style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}
           >
             <label className="fs-17px title_font mv-1rem">
-              Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
+              Subtotal ( {cartItems && getCartQuantity(cartItems)} items ) : ${" "}
               {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
             </label>
             <Link to="/checkout/cart" className="w-100per">

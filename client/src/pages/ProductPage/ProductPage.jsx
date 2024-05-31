@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Grid, Typography, Divider, Rating, Paper } from "@mui/material";
+import { Box, Grid, Typography, Divider, Rating, Paper, MenuItem, FormControl, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { isBrowser } from "react-device-detect";
@@ -19,7 +19,7 @@ import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import { ProductFacts } from "./components";
 import CustomizationOption from "./components/CustomizationOption";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
-import { detailsProductPage } from "./productPageSlice";
+import { detailsProductPage, setQuantity } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
 import { isOptionCountDifferent } from "./productHelpers";
 import * as API from "../../api";
@@ -35,6 +35,8 @@ const ProductPage = () => {
 
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
+
+  console.log({ my_cart });
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const productPage = useSelector(state => state.products.productPage);
@@ -42,8 +44,6 @@ const ProductPage = () => {
 
   const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
     customizedProduct;
-
-  // console.log({ customizedProduct, currentOptions });
 
   return (
     <Box>
@@ -132,7 +132,6 @@ const ProductPage = () => {
               <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
                 In Stock
               </Typography>
-              {/* {console.log({ selectedOptions: customizedProduct?.selectedOptions, customizedProduct })} */}
               {currentOptions?.map((option, index) => (
                 <CustomizationOption
                   key={index}
@@ -141,15 +140,36 @@ const ProductPage = () => {
                   selectedOption={customizedProduct?.selectedOptions[index]}
                 />
               ))}
+              <Typography variant="subtitle1" gutterBottom>
+                Quantity
+              </Typography>
+              <FormControl fullWidth>
+                <Select
+                  value={customizedProduct?.quantity}
+                  onChange={e => dispatch(setQuantity(e.target.value))}
+                  placeholder={`Select Quantity`}
+                  sx={{
+                    backgroundColor: "#4d5061",
+                    color: "white",
+                    "&:hover": { backgroundColor: "#393e55" },
+                    "&.Mui-focused": { backgroundColor: "#393e55" },
+                  }}
+                >
+                  {[...Array(customizedProduct.quantity_count).keys()].map((value, valueIndex) => (
+                    <MenuItem key={valueIndex} value={value + 1}>
+                      {console.log({ value })}
+                      {value + 1}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <Box mt={2}>
                 <GLButtonV2
                   variant="contained"
                   color="primary"
                   fullWidth
                   onClick={() => {
-                    console.log("Add To Cart");
-                    console.log({ customizedProduct });
-                    // dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+                    dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
                   }}
                   tooltip={
                     isOptionCountDifferent(product, customizedProduct) && "You must select all options to Add To Cart"

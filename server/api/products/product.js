@@ -16,8 +16,8 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const optionValueSchema = new mongoose.Schema({
-  name: { type: String, required: true }, // e.g., "Blue", "Large"
+export const optionValueSchema = new mongoose.Schema({
+  name: { type: String }, // e.g., "Blue", "Large"
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   // images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this optièon value, if necessary
   isDefault: { type: Boolean, default: false },
@@ -25,9 +25,9 @@ const optionValueSchema = new mongoose.Schema({
 });
 
 export const optionSchema = new mongoose.Schema({
-  name: { type: String, required: true }, // e.g., "Color", "Size"
+  name: { type: String }, // e.g., "Color", "Size"
   values: [optionValueSchema],
-  optionType: { type: String, required: true },
+  optionType: { type: String },
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },
 });

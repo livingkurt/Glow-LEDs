@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
-  ToggleButtonGroup,
-  ToggleButton,
-} from "@mui/material";
+import { Box, Typography, FormControl, Select, MenuItem, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { selectOption } from "../productPageSlice";
 import Zoom from "react-medium-image-zoom";
@@ -46,7 +38,6 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
                   "&.Mui-focused": { backgroundColor: "#393e55" },
                 }}
               >
-                {console.log({ option })}
                 <MenuItem disabled={!option.isAddOn} key={0} value={undefined}>
                   Select {option.name} {option.isAddOn && "(Optional +$)"}
                 </MenuItem>

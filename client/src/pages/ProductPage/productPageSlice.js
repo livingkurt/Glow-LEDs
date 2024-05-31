@@ -131,6 +131,9 @@ const productPage = createSlice({
         handlePriceReplacement(state, selectedOption);
       }
     },
+    setQuantity: (state, { payload }) => {
+      state.customizedProduct.quantity = payload;
+    },
     setHasAddOn: (state, { payload }) => {
       const { selectedOption, index } = payload;
       state.customizedProduct.selectedOptions[index] = selectedOption;
@@ -483,30 +486,41 @@ const productPage = createSlice({
         productPageLoading: false,
         product: data,
         customizedProduct: {
+          product: data._id,
           name: data.name,
           description: data.description,
           images: data.images_object,
+          display_image: data.images_object?.[0]?.link,
+          category: data.category,
+          subcategory: data.subcategory,
+          product_collection: data.product_collection,
           facts: data.facts,
           included_items: data.included_items,
-          qty: data.qty,
           price: data.price,
           wholesale_price: data.wholesale_price,
           previous_price: data.previous_price,
           sale_price: data.sale_price,
           size: data.size,
-          quantity: data.quantity,
+          quantity_count: data.quantity,
+          quantity: 1,
           count_in_stock: data.count_in_stock,
-          image: data.image,
-          secondary_image: data.secondary_image,
-          secondary_images: data.secondary_images,
-          dimensions: data.dimensions,
-          show_add_on: data.show_add_on,
-          add_on_price: data.add_on_price,
-          has_add_on: data.has_add_on,
-          tabIndex: data.tabIndex,
-          review_modal: data.review_modal,
+          pathname: data.pathname,
+          sale_start_date: data.sale_start_date,
+          sale_end_date: data.sale_end_date,
+          dimensions: {
+            length: data.product_length,
+            width: data.product_width,
+            height: data.product_height,
+            weight_pounds: data.weight_pounds,
+            weight_ounces: data.weight_ounces,
+            package_length: data.package_length,
+            package_width: data.package_length,
+            package_height: data.package_length,
+            package_volume: data.package_length,
+          },
+          processing_time: data.processing_time,
           rating: data.rating,
-          comment: data.comment,
+          wholesale_product: data.wholesale_product,
           selectedOptions,
           currentOptions: data?.options,
         },
@@ -521,7 +535,7 @@ const productPage = createSlice({
 
 export const {
   set_name,
-
+  setQuantity,
   setQty,
   toggle_show_add_on,
   set_price,
