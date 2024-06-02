@@ -1,26 +1,16 @@
-import { optionSchema } from "../products/product";
+import { optionSchema, optionValueSchema } from "../products/product";
 import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema(
   {
     name: { type: String },
-    selectedOptions: [optionSchema],
+    currentOptions: [optionSchema],
+    selectedOptions: [optionValueSchema],
     qty: { type: Number },
     max_quantity: { type: Number },
     quantity: { type: Number },
     display_image: { type: String },
     secondary_image: { type: String },
-    color: { type: String },
-    secondary_color: { type: String },
-    color_group_name: { type: String },
-    secondary_color_group_name: { type: String },
-    secondary_color_code: { type: String },
-    secondary_group_name: { type: String },
-    option_group_name: { type: String },
-    color_code: { type: String },
-    price: { type: Number },
-    add_on_price: { type: Number },
-    show_add_on: { type: Boolean },
     category: { type: String },
     count_in_stock: { type: Number },
     subcategory: { type: String },
@@ -41,10 +31,18 @@ const orderItemSchema = new mongoose.Schema(
     finite_stock: { type: Boolean },
     wholesale_product: { type: Boolean },
     wholesale_price: { type: Number },
+
+    is_printing: { type: Boolean, default: false },
+    is_crafting: { type: Boolean, default: false },
+    is_crafted: { type: Boolean, default: false },
+    is_packaged: { type: Boolean, default: false },
+    reviewed: { type: Boolean, default: false },
+    review_email_sent: { type: Boolean, default: false },
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
+    // Depreciated
     color_product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
@@ -65,12 +63,18 @@ const orderItemSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
-    is_printing: { type: Boolean, default: false },
-    is_crafting: { type: Boolean, default: false },
-    is_crafted: { type: Boolean, default: false },
-    is_packaged: { type: Boolean, default: false },
-    reviewed: { type: Boolean, default: false },
-    review_email_sent: { type: Boolean, default: false },
+
+    secondary_color: { type: String },
+    color_group_name: { type: String },
+    secondary_color_group_name: { type: String },
+    secondary_color_code: { type: String },
+    secondary_group_name: { type: String },
+    option_group_name: { type: String },
+    color: { type: String },
+    color_code: { type: String },
+    price: { type: Number },
+    add_on_price: { type: Number },
+    show_add_on: { type: Boolean },
   },
   {
     timestamps: true,
