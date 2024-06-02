@@ -2674,4 +2674,119 @@ router.route("/migrate_quantity").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_order_options").put(async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    console.log("Total orders:", orders.length);
+
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      console.log(`Processing order ${i + 1} of ${orders.length}`);
+
+      for (let j = 0; j < order.orderItems.length; j++) {
+        const orderItem = order.orderItems[j];
+        console.log(`Processing order item ${j + 1} of ${order.orderItems.length}`);
+
+        const currentOptions = [];
+        const selectedOptions = [];
+
+        // Migrate Color Option
+        if (orderItem.color) {
+          const colorOption = {
+            name: orderItem.color_group_name || "Color",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.color,
+                product: orderItem.color_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(colorOption);
+          selectedOptions.push(colorOption.values[0]);
+        }
+
+        // Migrate Secondary Color Option
+        if (orderItem.secondary_color) {
+          const secondaryColorOption = {
+            name: orderItem.secondary_color_group_name || "Secondary Color",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: orderItem.show_add_on || false,
+            values: [
+              {
+                name: orderItem.secondary_color,
+                product: orderItem.secondary_color_product,
+                isDefault: false,
+                additionalCost: orderItem.add_on_price || 0,
+              },
+            ],
+          };
+          currentOptions.push(secondaryColorOption);
+          selectedOptions.push(secondaryColorOption.values[0]);
+        }
+
+        // Migrate Size Option
+        if (orderItem.size) {
+          const sizeOption = {
+            name: orderItem.option_group_name || "Size",
+            optionType: "buttons",
+            replacePrice: true,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.size,
+                product: orderItem.option_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(sizeOption);
+          selectedOptions.push(sizeOption.values[0]);
+        }
+
+        // Migrate Secondary Product Option
+        if (orderItem.secondary_product_name) {
+          const secondaryProductOption = {
+            name: orderItem.secondary_group_name || "Included Product",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.secondary_product_name,
+                product: orderItem.secondary_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(secondaryProductOption);
+          selectedOptions.push(secondaryProductOption.values[0]);
+        }
+
+        // Update the order item in the database
+        await Order.updateOne(
+          { _id: order._id, "orderItems._id": orderItem._id },
+          {
+            $set: {
+              "orderItems.$.currentOptions": currentOptions,
+              "orderItems.$.selectedOptions": selectedOptions,
+            },
+          }
+        );
+      }
+    }
+
+    res.status(200).send({ message: "Order Option Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;

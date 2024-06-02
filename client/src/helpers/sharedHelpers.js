@@ -55,3 +55,47 @@ export const getItemsTotal = items => {
 export const getCartQuantity = items => {
   return items.reduce((acc, item) => acc + item.quantity, 0);
 };
+
+export const determineProductLink = item => {
+  let link = `/collections/all/products/${item.pathname}`;
+
+  const params = [];
+
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      params.push(`${encodeURIComponent(option.name)}=${encodeURIComponent(option.value)}`);
+    }
+  });
+
+  if (params.length > 0) {
+    link += `?${params.join("&")}`;
+  }
+
+  return link;
+};
+
+export const determineProductName = (item, show_quantity) => {
+  let name = item.name;
+
+  if (show_quantity && item.quantity > 1) {
+    name = `${item.quantity}x ${name}`;
+  }
+
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.value}`;
+    }
+  });
+
+  return name;
+};
+
+export const determineProductNameString = item => {
+  let name = item.name;
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.name}`;
+    }
+  });
+  return name;
+};

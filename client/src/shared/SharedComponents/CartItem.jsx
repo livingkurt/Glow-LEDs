@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { determine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { sale_price_switch } from "../../utils/react_helper_functions";
+import { determineProductLink } from "../../helpers/sharedHelpers";
 
 const CartItem = ({ index, item }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -13,7 +13,7 @@ const CartItem = ({ index, item }) => {
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        <Link to={determine_link(item)}>
+        <Link to={determineProductLink(item)}>
           <div className="">
             {!item.secondary_image && (
               <LazyImage

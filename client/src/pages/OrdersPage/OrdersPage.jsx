@@ -23,7 +23,6 @@ import {
   socket,
 } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
-import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shippingSlice";
@@ -87,6 +86,18 @@ const OrdersPage = () => {
     };
   }, []);
 
+  const determineProductNameString = (item, show_quantity) => {
+    let name = `${show_quantity && item.quantity > 1 ? item.quantity + "x " : ""}${item.name}`;
+
+    item.selectedOptions.forEach((option, index) => {
+      if (option.name) {
+        name += ` - ${option.name} ${item.currentOptions[index].name}`;
+      }
+    });
+
+    return name;
+  };
+
   const columnDefs = useMemo(
     () => [
       { title: "Order Placed", display: row => format_date(row.createdAt) },
@@ -103,7 +114,7 @@ const OrdersPage = () => {
           <div>
             <div>
               {row.orderItems.map(item => (
-                <div>{determine_product_name_string(item, true, row.createdAt)}</div>
+                <div>{determineProductNameString(item, true, row.createdAt)}</div>
               ))}
             </div>
             <div>

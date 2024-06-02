@@ -499,6 +499,35 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Show Add-On",
             labelProp: "show_add_on",
           },
+          selectedOptions: {
+            type: "array",
+            title: "Selected Options",
+            label: item => item.name,
+            itemSchema: {
+              type: "object",
+              fields: {
+                name: { type: "text", label: "Name" },
+                replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+                isDefault: { type: "checkbox", label: "Default Option" },
+                // product: {
+                //   type: "autocomplete_single",
+                //   label: "Option Product",
+                //   options: productsQuery,
+                //   labelProp: "name",
+                //   onEditButtonClick: selectedProduct => {
+                //     dispatch(saveToEditProductHistory(product));
+                //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+                //   },
+                //   onCreateNewButtonClick: selectedProduct => {
+                //     console.log(selectedProduct);
+                //     dispatch(saveToEditProductHistory(product));
+                //     dispatch(API.saveProduct({ ...selectedProduct }));
+                //   },
+                //   showEditButton: true,
+                // },
+              },
+            },
+          },
           wholesale_product: {
             type: "checkbox",
             label: "Wholesale Product",
@@ -509,51 +538,110 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Wholesale Price",
             labelProp: "wholesale_price",
           },
+          currentOptions: {
+            type: "array",
+            label: item => item.name,
+            title: "Current Product Options",
+            itemSchema: {
+              type: "object",
+              fields: {
+                name: {
+                  type: "text",
+                  label: "Option Name",
+                  labelProp: "name",
+                },
+                optionType: {
+                  type: "autocomplete_single",
+                  label: "Option Type",
+                  getOptionLabel: option => {
+                    if (typeof option === "string") {
+                      return toCapitalize(option);
+                    }
+                  },
+                  options: ["dropdown", "buttons"],
+                },
+                isAddOn: {
+                  type: "checkbox",
+                  label: "Is Add-On",
+                },
+                additionalCost: { type: "number", label: "Additional Cost" },
+                values: {
+                  type: "array",
+                  title: "Option Choices",
+                  label: item => item.name,
+                  itemSchema: {
+                    type: "object",
+                    fields: {
+                      name: { type: "text", label: "Name" },
+                      replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+                      isDefault: { type: "checkbox", label: "Default Option" },
+                      // product: {
+                      //   type: "autocomplete_single",
+                      //   label: "Option Product",
+                      //   options: productsQuery,
+                      //   labelProp: "name",
+                      //   onEditButtonClick: selectedProduct => {
+                      //     dispatch(saveToEditProductHistory(product));
+                      //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+                      //   },
+                      //   onCreateNewButtonClick: selectedProduct => {
+                      //     console.log(selectedProduct);
+                      //     dispatch(saveToEditProductHistory(product));
+                      //     dispatch(API.saveProduct({ ...selectedProduct }));
+                      //   },
+                      //   showEditButton: true,
+                      // },
+                    },
+                  },
+                },
+              },
+            },
+          },
 
-          color_product: {
-            type: "autocomplete_single",
-            label: "Color Product",
-            options: "product.color_products",
-            labelProp: "name",
-          },
-          color_product_name: {
-            type: "text",
-            label: "Color Product Name",
-            labelProp: "color_product_name",
-          },
-          secondary_color_product: {
-            type: "autocomplete_single",
-            label: "Secondary Color Product",
-            options: "product.secondary_color_products",
-            labelProp: "name",
-          },
-          secondary_color_product_name: {
-            type: "text",
-            label: "Secondary Color Product Name",
-            labelProp: "secondary_color_product_name",
-          },
-          option_product_name: {
-            type: "text",
-            label: "Option Product Name",
-            labelProp: "option_product_name",
-          },
-          option_product: {
-            type: "autocomplete_single",
-            label: "Option Product",
-            options: "product.option_products",
-            labelProp: "name",
-          },
-          secondary_product_name: {
-            type: "text",
-            label: "Secondary Product Name",
-            labelProp: "secondary_product_name",
-          },
-          secondary_product: {
-            type: "autocomplete_single",
-            label: "Secondary Product",
-            options: "product.seconday_products",
-            labelProp: "name",
-          },
+          // color_product: {
+          //   type: "autocomplete_single",
+          //   label: "Color Product",
+          //   options: "product.color_products",
+          //   labelProp: "name",
+          // },
+          // color_product_name: {
+          //   type: "text",
+          //   label: "Color Product Name",
+          //   labelProp: "color_product_name",
+          // },
+          // secondary_color_product: {
+          //   type: "autocomplete_single",
+          //   label: "Secondary Color Product",
+          //   options: "product.secondary_color_products",
+          //   labelProp: "name",
+          // },
+          // secondary_color_product_name: {
+          //   type: "text",
+          //   label: "Secondary Color Product Name",
+          //   labelProp: "secondary_color_product_name",
+          // },
+          // option_product_name: {
+          //   type: "text",
+          //   label: "Option Product Name",
+          //   labelProp: "option_product_name",
+          // },
+          // option_product: {
+          //   type: "autocomplete_single",
+          //   label: "Option Product",
+          //   options: "product.option_products",
+          //   labelProp: "name",
+          // },
+          // secondary_product_name: {
+          //   type: "text",
+          //   label: "Secondary Product Name",
+          //   labelProp: "secondary_product_name",
+          // },
+          // secondary_product: {
+          //   type: "autocomplete_single",
+          //   label: "Secondary Product",
+          //   options: "product.seconday_products",
+          //   labelProp: "name",
+          // },
           is_printing: {
             type: "checkbox",
             label: "Is Printing",
@@ -569,14 +657,14 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Is Packaged",
             default: false,
           },
-          secondary_group_name: {
-            type: "text",
-            label: "Secondary Group Name",
-          },
-          option_group_name: {
-            type: "text",
-            label: "Option Group Name",
-          },
+          // secondary_group_name: {
+          //   type: "text",
+          //   label: "Secondary Group Name",
+          // },
+          // option_group_name: {
+          //   type: "text",
+          //   label: "Option Group Name",
+          // },
           reviewed: {
             type: "checkbox",
             label: "Reviewed",
