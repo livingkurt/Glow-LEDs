@@ -89,8 +89,8 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   }
 };
 
-export const handlePriceReplacement = (state, selectedOption) => {
-  if (selectedOption?.replacePrice) {
+export const handlePriceReplacement = (state, option, selectedOption) => {
+  if (option?.replacePrice) {
     state.customizedProduct.price = selectedOption.product.price;
     state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
   } else {
