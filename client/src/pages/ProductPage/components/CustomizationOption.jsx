@@ -51,8 +51,12 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
               <img
                 src={selectedOption?.product?.images_object[0]?.link}
                 alt={selectedOption.name}
-                style={{ maxWidth: "75px", borderRadius: 10, cursor: "pointer" }}
-                onClick={() => window.open(selectedOption?.product?.images_object[0]?.link, "_blank")}
+                style={{
+                  maxWidth: "75px",
+                  borderRadius: 10,
+                  cursor: "pointer",
+                  border: `5px solid ${selectedOption?.product?.color_code}`,
+                }}
               />
             </Zoom>
           </Tooltip>
