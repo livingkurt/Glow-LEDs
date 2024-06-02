@@ -46,8 +46,8 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
       </Box>
       {selectedOption?.product?.images_object[0]?.link && (
         <Box mt={5}>
-          <Tooltip title="Click to Expand" placement="top">
-            <Zoom overlayBgColorEnd="rgba(0, 0, 0, 0.95)">
+          <Zoom overlayBgColorEnd="rgba(0, 0, 0, 0.95)">
+            <Tooltip title="Click to Expand" placement="top">
               <img
                 src={selectedOption?.product?.images_object[0]?.link}
                 alt={selectedOption.name}
@@ -58,8 +58,8 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
                   border: `5px solid ${selectedOption?.product?.color_code}`,
                 }}
               />
-            </Zoom>
-          </Tooltip>
+            </Tooltip>
+          </Zoom>
         </Box>
       )}
     </Box>
