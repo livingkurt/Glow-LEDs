@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Grid, Typography, Divider, Rating, Paper, MenuItem, FormControl, Select } from "@mui/material";
+import { Box, Grid, Typography, Divider, Rating, Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { isBrowser } from "react-device-detect";
@@ -156,6 +156,10 @@ const ProductPage = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  sx={{
+                    fontSize: "1.6rem",
+                  }}
+                  size="large"
                   onClick={() => {
                     dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
                   }}

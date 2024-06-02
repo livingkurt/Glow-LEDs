@@ -79,7 +79,6 @@ const typography = {
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
-    fontSize: "13px",
     lineHeight: 1.69,
     letterSpacing: "0.3px",
     textTransform: "uppercase",
@@ -321,6 +320,20 @@ const theme = {
       },
       "&:active": {
         borderRadius: "30px",
+      },
+      styleOverrides: {
+        sizeLarge: {
+          fontSize: "1.2rem",
+          padding: "12px 24px",
+        },
+        sizeMedium: {
+          fontSize: "1rem",
+          padding: "10px 20px",
+        },
+        sizeSmall: {
+          fontSize: "0.8rem",
+          padding: "8px 16px",
+        },
       },
     },
   },
