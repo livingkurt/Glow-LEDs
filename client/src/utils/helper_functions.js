@@ -1,5 +1,3 @@
-import { determine_secondary_product_name } from "./react_helper_functions";
-
 export const create_query = query => {
   const params = new URLSearchParams(query);
   return params;
@@ -122,44 +120,23 @@ export const sizes_conversion = size => {
       break;
   }
 };
-
-// export const determine_link = (item) => {
-// 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
-// 		? '?secondary_color=' + item.secondary_color
-// 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
-// 		? '?secondary=' + item.size ? item.size : item.option_product_name
-// 		: ''}`;
-// };
 export const determine_link = item => {
-  //
-  const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
-    item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
-  }${item.option_product ? "?option=" + item.size : ""}${
-    item.secondary_product_name
-      ? "?secondary=" + determine_secondary_product_name(item.secondary_product_name, item)
-      : ""
-  }`;
-  //
+  let link = `/collections/all/products/${item.pathname}`;
+
+  const params = [];
+
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      params.push(`${encodeURIComponent(option.name)}=${encodeURIComponent(option.value)}`);
+    }
+  });
+
+  if (params.length > 0) {
+    link += `?${params.join("&")}`;
+  }
+
   return link;
 };
-
-// item.size ? item.size : item.option_product_name
-// export const determine_link = (item) => {
-//
-// 	const link = `/collections/all/products/${item.pathname}${item.color
-// 		? '?color=' + item.color
-// 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
-// 		? item.option_product ? '?option=' + item.option_product.split('-')[1].trim() : ''
-// 		: item.option_product_name
-// 			? '?option=' + item.option_product_name.split('-')[1].trim()
-// 			: ''}${item.secondary_product_name ? '?secondary=' + item.secondary_product_name.split('-')[1].trim() : ''}`;
-//
-// 	return link;
-// };
-
-// export const snake_case = (str) => {
-// 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
-// };
 
 export const determine_tracking_link = tracking_number => {
   if (tracking_number) {

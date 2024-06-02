@@ -482,163 +482,21 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 			</label>`;
   }
 };
-const included_for_option_name = ["diffusers"];
-const determine_option_show_modifier = item => {
-  return included_for_option_name.includes(item.category);
-};
-
-const quantity = (item, show_quantity) => {
-  return show_quantity && item.quantity > 1 ? item.quantity + "x" : "";
-};
-const color = item => {
-  return item.color ? item.color + " " : "";
-};
-
-const size = item => {
-  const option_name = item.option_group_name ? item.option_group_name.split(" ")[0] : "";
-  return `${item.size && item.size !== 0 ? ` ${first_dash(item)} ${item.size}` : ""}
-    ${determine_option_show_modifier(item) && option_name ? option_name : ""}`;
-};
-
-const secondary_color = item => {
-  return `${
-    item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""
-  }`;
-};
-const secondary_color_name = item => {
-  const secondary_color_name = item.secondary_color_group_name
-    ? item.secondary_color_group_name.split(" ")[0] + "s"
-    : "";
-  if (item.category === "gloves") {
-    return secondary_color_name;
-  }
-  if (item.category === "glowskinz") {
-    if (!item.name.includes("Omniskinz")) {
-      return secondary_color_name;
-    }
-  }
-  if (item.category === "exo_diffusers") {
-    return secondary_color_name;
-  }
-  if (item.category === "diffuser_caps") {
-    return secondary_color_name;
-  }
-};
-const secondary_product_name = item => {
-  const secondary_color_name = item.secondary_group_name ? item.secondary_group_name : "";
-  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
-    return secondary_color_name;
-  }
-};
-
-const secondary_product = item => {
-  return item.secondary_product && item.secondary_product_name && item.secondary_product_name.length > 0
-    ? ` ${third_dash(item)} ${determine_secondary_product_name(item.secondary_product_name, item)}`
-    : "";
-};
-
-const first_dash = item => {
-  if (item.category === "gloves") {
-    return "-";
-  }
-  if (item.category === "glowskinz") {
-    return "-";
-  }
-  if (item.category === "diffusers") {
-    return "-";
-  }
-  if (item.category === "exo_diffusers") {
-    return "-";
-  }
-  if (item.category === "diffuser_caps") {
-    return "-";
-  }
-  if (item.category === "glowframez") {
-    return "-";
-  }
-  if (item.category === "batteries") {
-    return "-";
-  }
-  return "";
-};
-
-const second_dash = item => {
-  if (item.name.includes("Refresh")) {
-    return "-";
-  }
-  if (item.category === "glowskinz") {
-    return "-";
-  }
-  if (item.category === "exo_diffusers") {
-    return "-";
-  }
-  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
-    return "-";
-  }
-
-  return "";
-};
-
-const third_dash = item => {
-  if (item.name.includes("Refresh")) {
-    return "-";
-  }
-  if (item.name.includes("Sampler")) {
-    return "-";
-  }
-  if (item.name.includes("Nanoskinz")) {
-    return "-";
-  }
-  if (item.name.includes("Clip")) {
-    return "-";
-  }
-  if (item.category === "exo_diffusers") {
-    return "-";
-  }
-
-  if (item.category === "decals") {
-    return "-";
-  }
-  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
-    return "-";
-  }
-  if (item.category === "glowskinz") {
-    if (!item.name.includes("Omniskinz")) {
-      return "-";
-    }
-  }
-
-  return "";
-};
 
 export const determine_product_name = (item, show_quantity) => {
-  return `<div>
-      ${quantity(item, show_quantity) ? quantity(item, show_quantity) : ""} ${color(item) ? color(item) : ""} ${item.name} ${
-        size(item) ? size(item) : ""
-      }
-      ${secondary_color(item) ? secondary_color(item) : ""} ${
-        secondary_color_name(item) ? secondary_color_name(item) : ""
-      }${secondary_product(item) ? secondary_product(item) : ""} ${
-        secondary_product_name(item) ? secondary_product_name(item) : ""
-      }
-    </div>`;
-};
+  let name = item.name;
 
-export const determine_secondary_product_name = (name, item) => {
-  const { category, subcategory } = item;
-  if (category === "diffuser_caps") {
-    return name.split(" ")[0];
-  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 4] === "Outline") {
-    return name.replace(" Outline + Batman Decals", "");
-  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 2] === "Batman") {
-    return name.replace(" Batman Decals", "");
-  } else if (subcategory === "refresh" && name.includes("Bulk")) {
-    return name.split(" ")[1].trim();
-  } else if (name.includes("Capez")) {
-    return name.replace(" Capez", "");
-  } else {
-    return name.includes("-") ? name.split("-")[1].trim() : name;
+  if (show_quantity && item.quantity > 1) {
+    name = `${item.quantity}x ${name}`;
   }
+
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.name}: ${option.value}`;
+    }
+  });
+
+  return name;
 };
 
 export const order_status_steps = (order, status) => {
