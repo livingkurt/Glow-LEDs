@@ -23,7 +23,6 @@ import {
   socket,
 } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
-import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shippingSlice";
@@ -40,6 +39,7 @@ import Money from "@mui/icons-material/Money";
 import { showSuccess } from "../../slices/snackbarSlice";
 import { ShoppingCart } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { determine_product_name } from "../../helpers/sharedHelpers";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -103,7 +103,7 @@ const OrdersPage = () => {
           <div>
             <div>
               {row.orderItems.map(item => (
-                <div>{determine_product_name_string(item, true, row.createdAt)}</div>
+                <div>{determine_product_name(item)}</div>
               ))}
             </div>
             <div>

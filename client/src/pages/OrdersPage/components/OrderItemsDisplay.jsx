@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { determine_product_name_string } from "../../../utils/react_helper_functions";
 import { determine_link } from "../../../utils/helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Grid from "@mui/material/Grid";
+import { determine_product_name } from "../../../helpers/sharedHelpers";
 
 const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
   return (
@@ -11,7 +11,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
         return (
           <Grid item xs={12} sm={2} key={index}>
             <div className="mt-15px">
-              <div className="ai-c pos-rel" data-tip={determine_product_name_string(item, true, order.createdAt)}>
+              <div className="ai-c pos-rel" data-tip={determine_product_name(item)}>
                 <Link to={determine_link(item)}>
                   <div className="">
                     {!item.secondary_image && (
