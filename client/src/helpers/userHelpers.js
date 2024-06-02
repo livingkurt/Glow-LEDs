@@ -17,7 +17,7 @@ export const loginUpdateCartItems = (userCartItems, anonymousCartItems) => {
 
     if (existingItem) {
       // Update the existing item if needed
-      // existingItem.qty += anonymousItem.qty;
+      // existingItem.quantity += anonymousItem.quantity;
     } else {
       mergedCart.push(anonymousItem);
     }

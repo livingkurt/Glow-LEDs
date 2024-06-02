@@ -54,6 +54,7 @@ const productSchema = new mongoose.Schema(
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     quantity: { type: Number, default: 30, required: true },
+    max_quantity: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
     facts: { type: String },
     included_items: { type: String },

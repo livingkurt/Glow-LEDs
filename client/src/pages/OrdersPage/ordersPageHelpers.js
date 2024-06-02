@@ -242,7 +242,7 @@ export const updateOrderPrices = ({ orderItems, shippingPrice, taxPrice, tip }) 
   // let updatedTaxPrice = 0;
 
   orderItems.forEach(item => {
-    updatedItemsPrice += item.price * item.qty;
+    updatedItemsPrice += item.price * item.quantity;
   });
 
   // Assuming a tax rate of 10% (customize as needed)
@@ -278,7 +278,7 @@ export const updateOrderItem = (index, value, order) => {
     if (i === index) {
       return {
         name: value.name,
-        qty: item.qty || 1,
+        quantity: item.quantity || 1,
         display_image: value?.images_object && value?.images_object[0].link,
         price: value?.price,
         color: value?.color,
@@ -357,7 +357,7 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
   let updatedPrices = {};
   let updatedOrderItems = [...order.orderItems]; // assuming orderItems is an array
 
-  // Assuming value.orderItems contains the updated 'qty'
+  // Assuming value.orderItems contains the updated 'quantity'
   updatedOrderItems = value.orderItems;
 
   if (isUpdatePricesActive) {

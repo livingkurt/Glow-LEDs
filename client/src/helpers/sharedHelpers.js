@@ -49,9 +49,9 @@ export const images_or_images_object = content => {
   }
 };
 
-export const getCartTotal = cartItems => {
-  return cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
+export const getItemsTotal = items => {
+  return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
 };
-export const getCartQuantity = cartItems => {
-  return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+export const getCartQuantity = items => {
+  return items.reduce((acc, item) => acc + item.quantity, 0);
 };

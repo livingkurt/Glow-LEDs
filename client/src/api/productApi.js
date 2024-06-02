@@ -184,7 +184,6 @@ export const productApi = createApi({
             description: response.description,
             facts: response.facts,
             included_items: response.included_items,
-            qty: response.qty,
             images: response.images_object,
             price: response.price,
             wholesale_price: response.wholesale_price,

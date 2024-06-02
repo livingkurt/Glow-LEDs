@@ -3,7 +3,7 @@ export const emptyOrder = {
   orderItems: [
     {
       name: "",
-      qty: 0,
+      quantity: 0,
       display_image: "",
       secondary_image: "",
       color: "",

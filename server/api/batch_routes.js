@@ -2302,16 +2302,16 @@ router.route("/xxl_revenue").get(async (req, res) => {
 
           const discountedPackCost = originalPackCost * (1 - discountRate);
 
-          totalRevenue += item.qty * discountedPackCost;
-          numberOfPairsSold += item.qty * 6;
+          totalRevenue += item.quantity * discountedPackCost;
+          numberOfPairsSold += item.quantity * 6;
           numberOfOrders += 1;
         } else if (item.name === "Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         } else if (item.name === "XXL Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         }
       });
@@ -2599,6 +2599,75 @@ router.route("/migrate_product_options").put(async (req, res) => {
 
     // res.status(200).send(mainProducts);
     res.status(200).send({ message: "Product Option Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_quantity").put(async (req, res) => {
+  try {
+    // Update orderSchema
+    await Order.updateMany({ "orderItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          orderItems: {
+            $map: {
+              input: "$orderItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "orderItems.qty",
+      },
+    ]);
+
+    // Update cartSchema
+    await Cart.updateMany({ "cartItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          cartItems: {
+            $map: {
+              input: "$cartItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "cartItems.qty",
+      },
+    ]);
+
+    await Product.updateMany(
+      {},
+      {
+        $rename: {
+          quantity: "max_quantity",
+        },
+      }
+    );
+
+    res.status(200).send({ message: "Field names migrated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });

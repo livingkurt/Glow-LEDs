@@ -8,7 +8,8 @@ const cartItemsSchema = {
   subcategory: { type: String, required: true },
   product_collection: { type: String },
   display_image: { type: String, required: true },
-  quantity_count: { type: Number },
+  qunatity: { type: Number },
+  max_quantity: { type: Number },
   quantity: { type: Number },
   count_in_stock: { type: Number },
 

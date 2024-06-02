@@ -63,9 +63,9 @@ const CartItem = ({ index, item }) => {
 
         <div className="ai-c h-25px  w-100per jc-b mb-10px">
           <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
-            Qty:
+            Quantity:
           </label>
-          <label>{item.qty}</label>
+          <label>{item.quantity}</label>
           <div className="cart-price fs-16px">
             {sale_price_switch({ product: item, isWholesaler: current_user?.isWholesaler })}
           </div>

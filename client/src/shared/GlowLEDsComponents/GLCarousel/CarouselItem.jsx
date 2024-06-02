@@ -12,7 +12,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
   const location = useLocation();
   const [product, set_product] = useState(startProduct);
   const [loading, set_loading] = useState(true);
-  const [qty, set_qty] = useState(1);
+  const [quantity, set_quantity] = useState(1);
   const [size, set_size] = useState(null);
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
@@ -74,7 +74,7 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
       pathname: product.pathname,
       category: product.category,
       subcategory: product.subcategory,
-      qty,
+      quantity,
       finite_stock: product.category,
       // // determine_default_color(color),
       // diffuser_cap: diffuser_cap,
@@ -155,10 +155,10 @@ const CarouselItem = ({ product: startProduct, size, style, add_to_cart }) => {
                               </label>
                               <div className="custom-select">
                                 <select
-                                  defaultValue={qty}
-                                  className="qty_select_dropdown"
+                                  defaultValue={quantity}
+                                  className="quantity_select_dropdown"
                                   onChange={e => {
-                                    set_qty(e.target.value);
+                                    set_quantity(e.target.value);
                                   }}
                                 >
                                   {[...Array(10).keys()].map((x, index) => (

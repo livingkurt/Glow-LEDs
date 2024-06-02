@@ -84,7 +84,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
             dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
           }}
           size={"small"}
-          options={[...Array(current_user?.isWholesaler ? 500 : item.quantity_count).keys()].map(value => ({
+          options={[...Array(current_user?.isWholesaler ? 500 : item.max_quantity).keys()].map(value => ({
             name: value + 1,
           }))}
           width="100px"

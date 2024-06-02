@@ -52,7 +52,7 @@ export const updateCartItems = (cartItems, cart_item) => {
   const updatedItems = cartItems.map(x => {
     if (areCartItemsEqual(x, cart_item)) {
       found = true;
-      return { ...x, qty: x.qty + cart_item.qty };
+      return { ...x, quantity: x.quantity + cart_item.quantity };
     }
     return x;
   });

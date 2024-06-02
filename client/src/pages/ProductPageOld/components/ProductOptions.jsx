@@ -46,7 +46,7 @@ const ProductOptions = () => {
   const { my_cart } = cartPage;
   const productPage = useSelector(state => state.products.productPage);
   const {
-    qty,
+    quantity,
     price,
     wholesale_price,
     previous_price,
@@ -129,7 +129,7 @@ const ProductOptions = () => {
       category: product.category,
       subcategory: product.subcategory,
       product_collection: product.product_collection,
-      qty: parseInt(qty),
+      quantity: parseInt(quantity),
       finite_stock: product.finite_stock,
       count_in_stock: product.count_in_stock,
       add_on_price,
@@ -195,7 +195,7 @@ const ProductOptions = () => {
             </label>
             <div className="custom-select">
               <select
-                className="qty_select_dropdown w-100per"
+                className="quantity_select_dropdown w-100per"
                 onChange={e => {
                   const secondary = JSON.parse(e.target.value);
                   dispatch(update_secondary({ secondary, product, current_user }));
@@ -243,7 +243,7 @@ const ProductOptions = () => {
                   )}
                   <div className="custom-select">
                     <select
-                      className="qty_select_dropdown w-100per"
+                      className="quantity_select_dropdown w-100per"
                       onChange={e => {
                         const option = JSON.parse(e.target.value);
                         dispatch(update_color(option));
@@ -321,7 +321,7 @@ const ProductOptions = () => {
 
                     <div className="custom-select">
                       <select
-                        className="qty_select_dropdown w-100per"
+                        className="quantity_select_dropdown w-100per"
                         onChange={e => {
                           const option = JSON.parse(e.target.value);
                           dispatch(update_secondary_color({ option, product, has_add_on, show_add_on }));
@@ -430,8 +430,8 @@ const ProductOptions = () => {
               <label className="mv-0px mr-10px title_font">Qty:</label>
               <div className="custom-select">
                 <select
-                  defaultValue={qty}
-                  className="qty_select_dropdown w-100per"
+                  defaultValue={quantity}
+                  className="quantity_select_dropdown w-100per"
                   onChange={e => {
                     dispatch(setQty(e.target.value));
                   }}

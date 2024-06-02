@@ -79,7 +79,7 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
     state.customizedProduct.facts = product.facts;
   }
   if (product?.quantity) {
-    state.customizedProduct.quantity_count = product.quantity;
+    state.customizedProduct.max_quantity = product.quantity;
   }
   if (product?.count_in_stock > 0) {
     state.customizedProduct.count_in_stock = product.count_in_stock;

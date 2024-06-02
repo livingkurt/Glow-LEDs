@@ -27,10 +27,10 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       type: "text_multiline",
       label: "Included Items",
     },
-    quantity: {
+    max_quantity: {
       type: "number",
-      label: "Quantity",
-      labelProp: "quantity",
+      label: "Max Quantity",
+      labelProp: "max_quantity",
     },
     color: {
       type: "text",

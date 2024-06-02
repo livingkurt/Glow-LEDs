@@ -54,7 +54,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                     )}
                   </div>
                 </Link>
-                {item.qty > 1 && (
+                {item.quantity > 1 && (
                   <div
                     className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"
                     style={{
@@ -63,7 +63,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                       border: "1px solid #ccc",
                     }}
                   >
-                    <div className="mt-3px ml-2px">{item.qty}</div>
+                    <div className="mt-3px ml-2px">{item.quantity}</div>
                   </div>
                 )}
               </div>

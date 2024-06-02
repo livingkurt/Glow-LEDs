@@ -47,7 +47,7 @@ const OrderSummaryStep = () => {
             {cartItems.length === 0 ? (
               <div>Cart is empty</div>
             ) : (
-              cartItems.map((item, index) => <CartItem item={item} index={index} show_qty={true} />)
+              cartItems.map((item, index) => <CartItem item={item} index={index} show_quantity={true} />)
             )}
           </ul>
         </li>

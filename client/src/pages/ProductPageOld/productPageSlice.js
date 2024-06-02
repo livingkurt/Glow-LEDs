@@ -9,7 +9,6 @@ const productPage = createSlice({
     description: "",
     facts: "",
     included_items: "",
-    qty: 1,
     images: [],
     price: 0,
     wholesale_price: 0,
@@ -54,7 +53,7 @@ const productPage = createSlice({
       state.name = payload;
     },
     setQty: (state, { payload }) => {
-      state.qty = payload;
+      state.quantity = payload;
     },
     set_price: (state, { payload }) => {
       state.price = payload;
@@ -282,7 +281,7 @@ const productPage = createSlice({
       state.description = "";
       state.facts = "";
       state.included_items = "";
-      state.qty = 1;
+      state.quantity = 1;
       state.images = [];
       state.price = 0;
       state.previous_price = 0;

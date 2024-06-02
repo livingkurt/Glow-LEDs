@@ -214,7 +214,7 @@ export const areCartItemsEqual = (item1, item2) => {
   // List the fields you're interested in
   const fields = [
     "name",
-    "qty",
+    "quantity",
     "display_image",
     "secondary_image",
     "color",

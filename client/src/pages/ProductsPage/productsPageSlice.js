@@ -258,7 +258,6 @@ const productsPage = createSlice({
           description: payload.description,
           facts: payload.facts,
           included_items: payload.included_items,
-          qty: payload.qty,
           images: payload.images,
           price: payload.price,
           wholesale_price: payload.wholesale_price,

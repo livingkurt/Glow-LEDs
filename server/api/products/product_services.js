@@ -251,7 +251,7 @@ export default {
           outOfStockItems.push({ id: item.product, name: "Unknown Product" });
           continue;
         }
-        let isOutOfStock = product.finite_stock && product.count_in_stock < item.qty;
+        let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
         let optionProductOutOfStock = false;
         let optionProductId = null; // Placeholder for the option product ID
 
@@ -259,7 +259,7 @@ export default {
         if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
           // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
           const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
-          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.qty) {
+          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.quantity) {
             isOutOfStock = true;
             optionProductOutOfStock = true;
             optionProductId = optionProduct._id; // Capture the option product's unique ID

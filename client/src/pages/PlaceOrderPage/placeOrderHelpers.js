@@ -157,7 +157,7 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
       today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0
         ? item.sale_price
         : itemPrice;
-    const finalPrice = salePrice * item.qty;
+    const finalPrice = salePrice * item.quantity;
 
     const isIncluded =
       validPromo.included_products.includes(item.product) || validPromo.included_categories.includes(item.category);

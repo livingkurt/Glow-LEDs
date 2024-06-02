@@ -92,9 +92,9 @@ export default {
     const { body } = req;
 
     try {
-      // Check if any orderItem has subcategory "sampler" and qty greater than 1
+      // Check if any orderItem has subcategory "sampler" and quantity greater than 1
       const hasSamplerWithQtyGreaterThanOne = body.orderItems.some(
-        item => item.subcategory === "sampler" && item.qty > 1
+        item => item.subcategory === "sampler" && item.quantity > 1
       );
 
       if (hasSamplerWithQtyGreaterThanOne) {

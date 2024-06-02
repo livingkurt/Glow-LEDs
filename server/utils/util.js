@@ -10,6 +10,10 @@ export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;
 };
 
+export const getItemsTotal = items => {
+  return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
+};
+
 export const isEmail = email => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -458,23 +462,23 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
     return `<label>
 				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
-					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.qty).toFixed(2)}</label>
+					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.quantity).toFixed(2)}</label>
 				</del>${" "}
-				${"-->"} $${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
+				${"-->"} $${item.sale_price && (item.sale_price * item.quantity).toFixed(2)}
 			</label>`;
   } else if (item.quantity === 0) {
     return `<label>
 				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
 					<label style='${`color: ${color}; margin-left: 7px;`}'>
-						${item.price && (item.price * item.qty).toFixed(2)}
+						${item.price && (item.price * item.quantity).toFixed(2)}
 					</label>
 				</del>${" "}
 				${"-->"} <label style='${`color: ${color}; margin-left: 7px;`}'>Sold Out</label>
 			</label>`;
   } else {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""} $${item.price && (item.price * item.qty).toFixed(2)}
+				${determine_preorder(item) ? "Preorder " : ""} $${item.price && (item.price * item.quantity).toFixed(2)}
 			</label>`;
   }
 };
@@ -483,8 +487,8 @@ const determine_option_show_modifier = item => {
   return included_for_option_name.includes(item.category);
 };
 
-const qty = (item, show_qty) => {
-  return show_qty && item.qty > 1 ? item.qty + "x" : "";
+const quantity = (item, show_quantity) => {
+  return show_quantity && item.quantity > 1 ? item.quantity + "x" : "";
 };
 const color = item => {
   return item.color ? item.color + " " : "";
@@ -607,9 +611,9 @@ const third_dash = item => {
   return "";
 };
 
-export const determine_product_name = (item, show_qty) => {
+export const determine_product_name = (item, show_quantity) => {
   return `<div>
-      ${qty(item, show_qty) ? qty(item, show_qty) : ""} ${color(item) ? color(item) : ""} ${item.name} ${
+      ${quantity(item, show_quantity) ? quantity(item, show_quantity) : ""} ${color(item) ? color(item) : ""} ${item.name} ${
         size(item) ? size(item) : ""
       }
       ${secondary_color(item) ? secondary_color(item) : ""} ${

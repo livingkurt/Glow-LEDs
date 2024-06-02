@@ -119,7 +119,7 @@ const EditOrderModal = () => {
 
               if (actualFieldName === "product") {
                 handleProductChange(index, value, dispatch, order, isUpdatePricesActive);
-              } else if (actualFieldName === "qty") {
+              } else if (actualFieldName === "quantity") {
                 handleQtyChange(value, dispatch, order, isUpdatePricesActive);
               }
             } else {
