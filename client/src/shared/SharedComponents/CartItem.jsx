@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { determine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
-import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
+import { sale_price_switch } from "../../utils/react_helper_functions";
 
 const CartItem = ({ index, item }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -59,7 +59,19 @@ const CartItem = ({ index, item }) => {
             <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
           </Link>
         </div>
-        {cart_item_name(item)}
+        <div className="">
+          {item.selectedOptions.map((option, index) => (
+            <div key={index} className="ai-c mb-20px jc-b w-100per">
+              <label className="mv-0px mr-5px">{item.currentOptions[index].name}: </label>
+              <div className="ai-c">
+                <label className="mv-0px">{option.name}</label>
+                {option.colorCode && (
+                  <canvas className="ml-5px w-60px h-20px br-7px" style={{ backgroundColor: option.colorCode }} />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="ai-c h-25px  w-100per jc-b mb-10px">
           <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">

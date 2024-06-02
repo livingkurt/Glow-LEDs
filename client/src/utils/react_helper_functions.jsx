@@ -182,50 +182,6 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   }
 };
 
-export const cart_item_name = item => {
-  return (
-    <div className="">
-      {item.secondary_product && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">
-            {item.secondary_group_name ? item.secondary_group_name : "Cap Design"}:{" "}
-          </label>
-          <label className=" mv-0px">{determine_secondary_product_name(item.secondary_product_name, item)}</label>
-        </div>
-      )}
-      {item.size !== "1 Sled" && item.color && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : "Color"}: </label>
-          <div className="ai-c">
-            <label className=" mv-0px">{item.color}</label>
-            {item.color_code && (
-              <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />
-            )}
-          </div>
-        </div>
-      )}
-      {item.size !== "1 Skin" && item.secondary_color && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">
-            {item.secondary_color_group_name ? item.secondary_color_group_name : "Secondary Color"}:{" "}
-          </label>
-          <div className="ai-c">
-            <label className=" mv-0px">{item.secondary_color}</label>
-            {item.secondary_color_code && (
-              <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.secondary_color_code }} />
-            )}
-          </div>
-        </div>
-      )}
-      {item.size && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.option_group_name ? item.option_group_name : "Size"}: </label>
-          <label className=" mv-0px">{item.size}</label>
-        </div>
-      )}
-    </div>
-  );
-};
 const included_for_option_name = ["diffusers"];
 const determine_option_show_modifier = item => {
   return included_for_option_name.includes(item.category);
