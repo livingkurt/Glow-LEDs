@@ -1,28 +1,48 @@
 import React from "react";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+import { FormControl, Select, MenuItem, Typography, Box } from "@mui/material";
 
-const GLSelect = ({ label, color_code, onChange, width, value, options }) => {
+const GLSelect = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  options,
+  getOptionLabel,
+  valueKey,
+  fullWidth,
+  width,
+  size,
+}) => {
   return (
-    <div className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}>
-      <InputLabel className="mv-0px mr-10px title_font">{label}</InputLabel>
-      <div className="ai-c">
-        {color_code && <canvas className="mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />}
-        <FormControl className="custom-select">
-          <Select className="qty_select_dropdown w-100per" onChange={onChange} value={value}>
-            {options
-              .filter(item => item.filament && item.filament.active)
-              .map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  {option.name}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-      </div>
-    </div>
+    <Box mt={1}>
+      <Typography variant="subtitle1" gutterBottom>
+        {label}
+      </Typography>
+      <FormControl fullWidth={fullWidth} sx={{ width }}>
+        <Select
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          size={size}
+          displayEmpty
+          sx={{
+            backgroundColor: "#4d5061",
+            color: "white",
+            "&:hover": { backgroundColor: "#393e55" },
+            "&.Mui-focused": { backgroundColor: "#393e55" },
+          }}
+        >
+          <MenuItem disabled={options[0].isAddOn} value={undefined}>
+            {placeholder} {options[0].isAddOn && "(Optional +$)"}
+          </MenuItem>
+          {options.map((option, index) => (
+            <MenuItem key={index} value={valueKey ? option[valueKey] : option}>
+              {getOptionLabel(option)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 

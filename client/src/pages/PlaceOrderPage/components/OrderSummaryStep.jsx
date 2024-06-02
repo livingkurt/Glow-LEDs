@@ -1,13 +1,13 @@
 import React from "react";
 import CartItem from "../../../shared/SharedComponents/CartItem";
 import { useSelector } from "react-redux";
-import { determine_total } from "../../../utils/helper_functions";
+import { determineItemsTotal } from "../../../utils/helper_functions";
 const OrderSummaryStep = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
   const { cartItems } = my_cart;
 
-  const items_price = determine_total(cartItems);
+  const items_price = determineItemsTotal(cartItems);
   const placeOrder = useSelector(state => state.placeOrder);
   const {
     activePromoCodeIndicator,

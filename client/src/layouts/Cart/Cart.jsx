@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { determine_total } from "../../utils/helper_functions";
-import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
+import { determineItemsTotal } from "../../utils/helper_functions";
+import { GLTooltip } from "../../shared/GlowLEDsComponents";
 import { CartItem, RecentlyViewed, TopCategories } from "./components";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
-import { Drawer, IconButton } from "@mui/material";
+import { Drawer } from "@mui/material";
 import { setCartDrawer } from "../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -108,7 +109,6 @@ const Cart = () => {
                   overflowY: "scroll",
                 }}
               >
-                {/* <Loading loading={loading} /> */}
                 {cartItems &&
                   cartItems.map((item, index) => (
                     <CartItem key={index} item={item} index={index} dispatch={dispatch} current_user={current_user} />
@@ -123,30 +123,31 @@ const Cart = () => {
           >
             <label className="fs-17px title_font mv-1rem">
               Subtotal ( {cartItems && getCartQuantity(cartItems)} items ) : ${" "}
-              {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
+              {determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
             </label>
             <Link to="/checkout/cart" className="w-100per">
-              <GLButton variant="secondary" className=" w-100per mb-2rem" onClick={closeMenu} aria-label="Delete">
+              <GLButtonV2 color="secondary" className=" w-100per mb-2rem" onClick={closeMenu} aria-label="Delete">
                 View Cart
-              </GLButton>
+              </GLButtonV2>
             </Link>
             {current_user?.isWholesaler ? (
               <GLTooltip
-                tooltip={!wholesaleProceed() && "You must meet your minimum order requirment to continue"}
+                tooltip={!wholesaleProceed() && "You must meet your minimum order requirement to continue"}
                 className="w-100per"
               >
-                <GLButton
+                <GLButtonV2
                   onClick={handleCheckout}
-                  variant={!wholesaleProceed() ? "disabled" : "primary"}
+                  disabled={!wholesaleProceed()}
+                  color={"primary"}
                   className={`w-100per mb-1rem ${wholesaleProceed() ? "bob" : "disabled"}`}
                 >
                   Proceed to Checkout
-                </GLButton>
+                </GLButtonV2>
               </GLTooltip>
             ) : (
-              <GLButton onClick={handleCheckout} variant="primary" className="w-100per bob">
+              <GLButtonV2 onClick={handleCheckout} color="primary" className="w-100per bob">
                 Proceed to Checkout
-              </GLButton>
+              </GLButtonV2>
             )}
           </div>
         </div>

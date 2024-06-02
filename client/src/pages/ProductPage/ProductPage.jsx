@@ -18,11 +18,12 @@ import { EditProductModal } from "../ProductsPage/components";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import { ProductFacts } from "./components";
 import CustomizationOption from "./components/CustomizationOption";
-import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { detailsProductPage, setQuantity } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
 import { isOptionCountDifferent } from "./productHelpers";
 import * as API from "../../api";
+import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 
 const ProductPage = () => {
   const params = useParams();
@@ -139,28 +140,17 @@ const ProductPage = () => {
                   selectedOption={customizedProduct?.selectedOptions[index]}
                 />
               ))}
-              <Typography variant="subtitle1" gutterBottom>
-                Quantity
-              </Typography>
-              <FormControl fullWidth>
-                <Select
-                  value={customizedProduct?.quantity}
-                  onChange={e => dispatch(setQuantity(e.target.value))}
-                  placeholder={`Select Quantity`}
-                  sx={{
-                    backgroundColor: "#4d5061",
-                    color: "white",
-                    "&:hover": { backgroundColor: "#393e55" },
-                    "&.Mui-focused": { backgroundColor: "#393e55" },
-                  }}
-                >
-                  {[...Array(customizedProduct.quantity_count).keys()].map((value, valueIndex) => (
-                    <MenuItem key={valueIndex} value={value + 1}>
-                      {value + 1}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+
+              <GLSelect
+                label="Quantity"
+                value={customizedProduct?.quantity}
+                onChange={e => dispatch(setQuantity(e.target.value))}
+                placeholder="Select Quantity"
+                options={[...Array(customizedProduct.quantity_count).keys()].map(value => ({ name: value + 1 }))}
+                getOptionLabel={option => option.name}
+                valueKey="name"
+                fullWidth
+              />
               <Box mt={2}>
                 <GLButtonV2
                   variant="contained"

@@ -9,7 +9,7 @@ import {
   determine_sampler_pack_pathname,
 } from "../productHelpers";
 import { Box } from "@mui/material";
-import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const ProductFacts = ({ category, subcategory, pathname, name, facts }) => {
   return (

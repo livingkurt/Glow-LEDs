@@ -1,5 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
-import { daysBetween, determine_total } from "../../utils/helper_functions";
+import { daysBetween, determineItemsTotal } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 import config from "../../config";
@@ -379,8 +379,8 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
 };
 
 export const handlePromoCode = (value, order, dispatch) => {
-  // Get the original itemsPrice from the determine_total function
-  const originalItemsPrice = determine_total(order.orderItems, false);
+  // Get the original itemsPrice from the determineItemsTotal function
+  const originalItemsPrice = determineItemsTotal(order.orderItems, false);
   const promoCodeData = value.promo_code;
   let { taxPrice, shippingPrice } = order; // Assuming these are part of your order state
 

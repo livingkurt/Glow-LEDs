@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import { Helmet } from "react-helmet";
-import { decide_warning, determine_total } from "../../utils/helper_functions";
+import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
 
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
@@ -41,7 +41,7 @@ const CartPage = () => {
   const determine_wholesale_proceed = () => {
     return (
       current_user?.isWholesaler &&
-      determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+      determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
     );
   };
 
@@ -79,7 +79,7 @@ const CartPage = () => {
           <div className="cart-action">
             <h3 className="fs-17px">
               Subtotal ( {getCartQuantity(cartItems)} items ) : ${" "}
-              {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
+              {determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
             </h3>
 
             {current_user?.isWholesaler ? (

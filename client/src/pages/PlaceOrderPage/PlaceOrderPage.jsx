@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
-import { determine_total } from "../../utils/helper_functions";
+import { determineItemsTotal } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
@@ -105,7 +105,7 @@ const PlaceOrderPage = () => {
     const determine_wholesale_proceed = () => {
       return (
         current_user?.isWholesaler &&
-        determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+        determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
       );
     };
 
@@ -129,7 +129,7 @@ const PlaceOrderPage = () => {
         dispatch(save_shipping(JSON.parse(shipping_storage)));
       }
 
-      dispatch(setItemsPrice(determine_total(cartItems, current_user?.isWholesaler)));
+      dispatch(setItemsPrice(determineItemsTotal(cartItems, current_user?.isWholesaler)));
     }
     return () => (clean = false);
   }, [cartItems, current_user?.isWholesaler, dispatch]);

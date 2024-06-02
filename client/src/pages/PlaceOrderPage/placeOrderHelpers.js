@@ -1,4 +1,4 @@
-import { determine_total } from "../../utils/helper_functions";
+import { determineItemsTotal } from "../../utils/helper_functions";
 
 export const determine_service = rate => {
   if (rate.est_delivery_days) {

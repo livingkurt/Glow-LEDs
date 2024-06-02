@@ -27,7 +27,7 @@ import {
   setTempShippingRate,
   set_hide_pay_button,
 } from "../placeOrderSlice";
-import { determine_total } from "../../../utils/helper_functions";
+import { determineItemsTotal } from "../../../utils/helper_functions";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 import { Tooltip } from "@mui/material";
 import { Info } from "@mui/icons-material";
@@ -40,7 +40,7 @@ const ShippingChoice = () => {
   const { promos } = promoPage;
   const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
-  const items_price = determine_total(cartItems);
+  const items_price = determineItemsTotal(cartItems);
   const {
     shipping_rates,
     current_shipping_speed,
