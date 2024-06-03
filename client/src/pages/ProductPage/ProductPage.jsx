@@ -156,6 +156,7 @@ const ProductPage = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  className="bob"
                   sx={{
                     fontSize: "1.6rem",
                   }}

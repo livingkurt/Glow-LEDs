@@ -71,7 +71,6 @@ export default {
   },
   add_to_cart_carts_s: async body => {
     const { cart_item, cartItems, current_user } = body;
-    console.log({ cart_item, cartItems, current_user });
 
     try {
       // Get the user's active cart if the user is logged in
