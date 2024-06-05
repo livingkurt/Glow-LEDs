@@ -90,7 +90,7 @@ const reducers = {
   }),
   parcels: combineReducers({
     parcelPage: parcelSlice,
-    parcelTable: glTableReducer("parcelTable", {}),
+    parcelTable: glTableReducer("parcelTable", { sorting: [5, "asc"] }),
   }),
   paychecks: combineReducers({
     paycheckPage: paycheckSlice,
