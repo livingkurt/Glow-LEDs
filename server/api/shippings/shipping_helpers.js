@@ -1,22 +1,54 @@
-const generateOrientations = (length, width, height) => [
-  [length, width, height],
-  [length, height, width],
-  [width, length, height],
-  [width, height, length],
-  [height, length, width],
-  [height, width, length],
-];
+export const determine_parcel = (orderItems, parcels) => {
+  const dimensions = getOrderItemDimensions(orderItems);
 
-const fitsInParcel = (itemDimensions, parcel) => {
-  const orientations = generateOrientations(itemDimensions.length, itemDimensions.width, itemDimensions.height);
+  const suitableParcel = findSuitableParcel(dimensions, parcels);
 
-  return orientations.some(
-    ([length, width, height]) => length <= parcel.length && width <= parcel.width && height <= parcel.height
-  );
+  if (suitableParcel) {
+    return suitableParcel;
+  } else {
+    const binDimensions = calculateCustomParcelDimensions(dimensions);
+
+    const packedItems = packItems(dimensions, binDimensions);
+
+    const customParcel = createCustomParcel(binDimensions.length, binDimensions.width, binDimensions.height);
+
+    return customParcel;
+  }
 };
 
-const filterParcels = (parcels, dimmensions) => {
-  return parcels.filter(parcel => dimmensions.every(itemDimensions => fitsInParcel(itemDimensions, parcel)));
+const findSuitableParcel = (dimensions, parcels) => {
+  const sortedParcels = parcels.sort((a, b) => {
+    // Sort parcels by volume in ascending order
+    const volumeDiff = a.volume - b.volume;
+    if (volumeDiff !== 0) {
+      return volumeDiff;
+    }
+    // If volumes are equal, prioritize bubble mailers over boxes
+    if (a.type === "bubble_mailer" && b.type !== "bubble_mailer") {
+      return -1;
+    }
+    if (a.type !== "bubble_mailer" && b.type === "bubble_mailer") {
+      return 1;
+    }
+    return 0;
+  });
+
+  for (const parcel of sortedParcels) {
+    const { length, width, height } = parcel;
+    const parcelVolume = length * width * height;
+
+    const itemsVolume = dimensions.reduce((sum, item) => sum + item.volume * item.qty, 0);
+
+    if (itemsVolume <= parcelVolume) {
+      const packedItems = packItems(dimensions, parcel);
+
+      if (packedItems.length === dimensions.length) {
+        return parcel;
+      }
+    }
+  }
+
+  return null;
 };
 
 const getOrderItemDimensions = orderItems =>
@@ -28,28 +60,115 @@ const getOrderItemDimensions = orderItems =>
     qty: parseInt(item.qty),
   }));
 
-const selectBestFitParcel = (fit_parcels, all_parcels) => {
-  if (fit_parcels.length === 0) {
-    const sorted_fit_parcels = all_parcels.sort((a, b) => (a.volume > b.volume ? -1 : 1));
-    return sorted_fit_parcels[0];
-  } else {
-    return fit_parcels[0];
+const calculateCustomParcelDimensions = dimensions => {
+  // Sort dimensions by volume in descending order
+  const sortedDimensions = dimensions.sort((a, b) => b.volume - a.volume);
+
+  let customLength = 0;
+  let customWidth = 0;
+  let customHeight = 0;
+
+  for (const item of sortedDimensions) {
+    const orientations = [
+      { length: item.length, width: item.width, height: item.height },
+      { length: item.width, width: item.height, height: item.length },
+      { length: item.height, width: item.length, height: item.width },
+    ];
+
+    let bestOrientation = null;
+    let minVolume = Infinity;
+
+    for (const orientation of orientations) {
+      const newLength = Math.max(customLength, orientation.length);
+      const newWidth = Math.max(customWidth, orientation.width);
+      const newHeight = Math.max(customHeight, orientation.height);
+      const newVolume = newLength * newWidth * newHeight;
+
+      if (newVolume < minVolume) {
+        bestOrientation = orientation;
+        minVolume = newVolume;
+      }
+    }
+
+    customLength = Math.max(customLength, bestOrientation.length);
+    customWidth = Math.max(customWidth, bestOrientation.width);
+    customHeight = Math.max(customHeight, bestOrientation.height);
   }
+
+  // Add padding based on dimensions
+  const lengthPadding = customLength * 0.05;
+  const widthPadding = customWidth * 0.05;
+  const heightPadding = customHeight * 0.1;
+
+  customLength += lengthPadding;
+  customWidth += widthPadding;
+  customHeight += heightPadding;
+
+  // Adjust dimensions to meet minimum requirements
+  customLength = Math.max(customLength, 10);
+  customWidth = Math.max(customWidth, 10);
+  customHeight = Math.max(customHeight, 10);
+
+  return {
+    length: Math.ceil(customLength),
+    width: Math.ceil(customWidth),
+    height: Math.ceil(customHeight),
+  };
 };
 
-// Update the main function
-export const determine_parcel = (orderItems, parcels) => {
-  const dimmensions = getOrderItemDimensions(orderItems);
+const packItems = (items, binDimensions) => {
+  const bin = {
+    length: binDimensions.length,
+    width: binDimensions.width,
+    height: binDimensions.height,
+    items: [],
+  };
 
-  const fitParcels = filterParcels(parcels, dimmensions);
-  const selectedParcel = selectBestFitParcel(fitParcels, parcels);
-  if (selectedParcel) {
-    return selectedParcel;
-  } else {
-    // If no parcel is found in the previous approach, return the biggest box
-    const biggestBox = parcels.sort((a, b) => b.volume - a.volume)[0];
-    return biggestBox;
-  }
+  items.forEach(item => {
+    for (let i = 0; i < item.qty; i++) {
+      const orientations = [
+        { length: item.length, width: item.width, height: item.height },
+        { length: item.width, width: item.height, height: item.length },
+        { length: item.height, width: item.length, height: item.width },
+      ];
+
+      let packedItem = null;
+      let maxVolume = 0;
+
+      orientations.forEach(orientation => {
+        const { length, width, height } = orientation;
+        const volume = length * width;
+
+        if (
+          length <= bin.length &&
+          width <= bin.width &&
+          height <= bin.height - bin.items.reduce((sum, item) => sum + item.height, 0)
+        ) {
+          if (volume > maxVolume) {
+            maxVolume = volume;
+            packedItem = { length, width, height };
+          }
+        }
+      });
+
+      if (packedItem) {
+        bin.items.push(packedItem);
+      } else {
+        console.log(`Item ${JSON.stringify(item)} could not be packed.`);
+      }
+    }
+  });
+
+  return bin.items;
+};
+
+const createCustomParcel = (length, width, height) => {
+  return {
+    length,
+    width,
+    height,
+    volume: length * width * height,
+  };
 };
 
 export const determine_parcel_weight = order => {

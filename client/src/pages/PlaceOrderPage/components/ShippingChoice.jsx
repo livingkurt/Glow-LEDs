@@ -16,15 +16,11 @@ import {
   toTitleCaseSnakeCase,
 } from "../placeOrderHelpers";
 import {
-  activatePromo,
   chooseShippingRateBasic,
-  chooseShippingRateWithPromo,
   finalizeShippingRate,
   openProcessingTimeModal,
   re_choose_shipping_rate,
-  setModalShown,
   setOpen,
-  setTempShippingRate,
   set_hide_pay_button,
 } from "../placeOrderSlice";
 import { determine_total } from "../../../utils/helper_functions";
@@ -36,18 +32,15 @@ const ShippingChoice = () => {
   const dispatch = useDispatch();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { shipping, my_cart } = cartPage;
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
   const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
   const items_price = determine_total(cartItems);
   const {
     shipping_rates,
+    freeShippingMinimum,
     current_shipping_speed,
     hide_pay_button,
     open,
-    tax_rate,
-    activePromoCodeIndicator,
     shipping_rate,
     modalShown,
   } = placeOrder;
@@ -58,7 +51,7 @@ const ShippingChoice = () => {
 
   const choose_shipping_rate = rate => {
     const sortedRates = normalizeDomesticRates(shipping_rates.rates);
-    const freeShipping = isFreeShipping({ shipping, items_price, rate, sortedRates });
+    const freeShipping = isFreeShipping({ shipping, items_price, rate, sortedRates, freeShippingMinimum });
     dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping }));
 
     dispatch(finalizeShippingRate());
@@ -121,7 +114,7 @@ const ShippingChoice = () => {
               {normalizeDomesticRates(shipping_rates.rates)
                 .filter(Boolean)
                 .map((rate, index) => {
-                  let isFreeShipping = items_price > 50 && serviceNames[index] === "USPS: Standard";
+                  let isFreeShipping = items_price > freeShippingMinimum && serviceNames[index] === "USPS: Standard";
                   let displayRate = isFreeShipping
                     ? "Free"
                     : `$${parseFloat(rate?.retail_rate || rate?.rate).toFixed(2)}`;

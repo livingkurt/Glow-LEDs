@@ -71,8 +71,10 @@ export const mapCarrierName = carrier => {
 
 export const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];
 
-export const isFreeShipping = ({ shipping, items_price, rate, sortedRates }) => {
-  return !shipping.international && items_price > 50 && rate.rate === sortedRates[0].rate ? true : false;
+export const isFreeShipping = ({ shipping, items_price, rate, sortedRates, freeShippingMinimum }) => {
+  return !shipping.international && items_price > freeShippingMinimum && rate.rate === sortedRates[0].rate
+    ? true
+    : false;
 };
 
 export const displayRate = ({ current_shipping_speed, shipping }) =>
