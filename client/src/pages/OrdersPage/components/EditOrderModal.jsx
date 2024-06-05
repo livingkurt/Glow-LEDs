@@ -28,9 +28,6 @@ const EditOrderModal = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users, current_user } = userPage;
 
-  // const productsPage = useSelector(state => state.products.productsPage);
-  // const { products } = productsPage;
-
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
 
@@ -61,7 +58,7 @@ const EditOrderModal = () => {
           dispatch(
             showConfirm({
               title: "Update Change Log",
-              inputLabel: "Describe the change you made to order",
+              inputLabel: "Describe the why you made this change to the order",
               onConfirm: inputText =>
                 dispatch(
                   API.saveOrder({
