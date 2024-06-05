@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { chooseShippingRate, reChooseShippingRate } from "../../../slices/shippingSlice";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 const ShippingModal = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,9 @@ const ShippingModal = () => {
   const { shippingModal, order } = orderPage;
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { shippingRates, shippingRate, hideLabelButton, rate, shipment_id, loading } = shippingSlice;
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   useEffect(() => {
     if (shippingModal && order.shipping.first_name.length > 0) {
@@ -39,21 +43,38 @@ const ShippingModal = () => {
         isOpen={shippingModal}
         onConfirm={() => {
           dispatch(
-            API.saveOrder({
-              ...order,
-              shipping: {
-                ...order.shipping,
-                shipping_rate: shippingRate,
-                shipment_id,
-                shipping_label: null,
-                shipment_tracker: null,
+            showConfirm({
+              title: "Are you sure you want to change shipping rate for this Order?",
+              inputLabel: "Describe the why you made this change to the order",
+              onConfirm: inputText => {
+                dispatch(
+                  API.saveOrder({
+                    ...order,
+                    isUpdated: true,
+                    shipping: {
+                      ...order.shipping,
+                      shipping_rate: shippingRate,
+                      shipment_id,
+                      shipping_label: null,
+                      shipment_tracker: null,
+                    },
+                    tracking_number: "",
+                    tracking_url: "",
+                    change_log: [
+                      ...order.change_log,
+                      {
+                        change: inputText,
+                        changedAt: new Date(),
+                        changedBy: current_user,
+                      },
+                    ],
+                  })
+                );
+                dispatch(closeShippingModal());
+                dispatch(reChooseShippingRate());
               },
-              tracking_number: "",
-              tracking_url: "",
             })
           );
-          dispatch(closeShippingModal());
-          dispatch(reChooseShippingRate());
         }}
         onCancel={() => {
           dispatch(closeShippingModal());
