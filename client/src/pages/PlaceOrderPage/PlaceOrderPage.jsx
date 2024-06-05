@@ -5,17 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
-import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
+import { LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
 import { determine_total } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
-import { setItemsPrice, setTotalPrice } from "./placeOrderSlice";
+import { initializePlaceOrderPage, setItemsPrice, setTotalPrice } from "./placeOrderSlice";
 
 import * as API from "../../api";
 import { save_shipping, set_my_cart } from "../../slices/cartSlice";
 import { setLoadingPayment } from "../../slices/orderSlice";
-import { Link } from "react-router-dom";
-import { Box, Button, Fade } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { showConfirm } from "../../slices/snackbarSlice";
 import { constructOutOfStockMessage } from "./placeOrderHelpers";
@@ -43,7 +42,10 @@ const PlaceOrderPage = () => {
       dispatch(API.listPromos({}));
       dispatch(API.listUsers({}));
     }
-    return () => (clean = false);
+    return () => {
+      clean = false;
+      dispatch(initializePlaceOrderPage());
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -202,7 +204,10 @@ const PlaceOrderPage = () => {
                 showConfirm({
                   title: "Confirm Exit",
                   message: "Are you sure you want to exit checkout?",
-                  onConfirm: () => navigate("/checkout/cart"),
+                  onConfirm: () => {
+                    navigate("/checkout/cart");
+                    dispatch(initializePlaceOrderPage());
+                  },
                 })
               );
             }}
