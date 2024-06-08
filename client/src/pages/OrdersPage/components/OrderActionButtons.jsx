@@ -5,7 +5,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
-import { showSuccess } from "../../../slices/snackbarSlice";
+import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
 import { Button, Grid } from "@mui/material";
 
 const OrderActionButtons = ({ order }) => {
@@ -13,6 +13,9 @@ const OrderActionButtons = ({ order }) => {
 
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { loading_label } = shippingSlice;
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   return (
     <div>
@@ -91,28 +94,41 @@ const OrderActionButtons = ({ order }) => {
             variant="contained"
             className="w-100per mv-5px"
             onClick={() => {
-              const confirm = window.confirm(
-                "Are you sure you want CLEAR the LABEL for this order, if you have purchased the label you will need to manually refund it?"
+              dispatch(
+                showConfirm({
+                  title: "Are you sure you want CLEAR the LABEL for this order?",
+                  inputLabel: "Describe the why you made this change to the order",
+                  onConfirm: inputText => {
+                    dispatch(
+                      API.saveOrder({
+                        ...order,
+                        shipping: {
+                          ...order.shipping,
+                          shipment_id: null,
+                          shipping_rate: null,
+                          shipment_tracker: null,
+                          shipping_label: null,
+                          return_shipment_id: null,
+                          return_shipping_rate: null,
+                          return_shipment_tracker: null,
+                          return_shipping_label: null,
+                        },
+                        isUpdated: true,
+                        change_log: [
+                          ...order.change_log,
+                          {
+                            change: inputText,
+                            changedAt: new Date(),
+                            changedBy: current_user,
+                          },
+                        ],
+                      })
+                    );
+
+                    dispatch(showSuccess({ message: `Label and Tracking Cleared for Order` }));
+                  },
+                })
               );
-              if (confirm) {
-                dispatch(
-                  API.saveOrder({
-                    ...order,
-                    shipping: {
-                      ...order.shipping,
-                      shipment_id: null,
-                      shipping_rate: null,
-                      shipment_tracker: null,
-                      shipping_label: null,
-                      return_shipment_id: null,
-                      return_shipping_rate: null,
-                      return_shipment_tracker: null,
-                      return_shipping_label: null,
-                    },
-                  })
-                );
-                dispatch(showSuccess({ message: `Label and Tracking Cleared for Order` }));
-              }
             }}
           >
             Clear Shipping Label
@@ -138,7 +154,31 @@ const OrderActionButtons = ({ order }) => {
               color="secondary"
               variant="contained"
               className="w-100per mv-5px"
-              onClick={() => dispatch(API.createReturnLabel({ orderId: order._id }))}
+              onClick={() =>
+                dispatch(
+                  showConfirm({
+                    title: "Are you sure you want to Buy a RETURN Label for this Order?",
+                    inputLabel: "Describe the why you made this change to the order",
+                    onConfirm: inputText => {
+                      dispatch(API.createReturnLabel({ orderId: order._id }));
+                      dispatch(
+                        API.saveOrder({
+                          ...order,
+                          isUpdated: true,
+                          change_log: [
+                            ...order.change_log,
+                            {
+                              change: inputText,
+                              changedAt: new Date(),
+                              changedBy: current_user,
+                            },
+                          ],
+                        })
+                      );
+                    },
+                  })
+                )
+              }
             >
               Buy Return Label Production
             </Button>

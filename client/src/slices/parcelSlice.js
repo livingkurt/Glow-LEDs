@@ -4,24 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const parcel = {
-  id: "",
-  question_1: "",
-  question_2: "",
-  question_3: "",
-  question_4: "",
-  question_5: "",
-  answer_1: "",
-  answer_2: "",
-  answer_3: "",
-  answer_4: "",
-  answer_5: "",
-  question_answer: [{ question: "", answer: "" }],
-  user: "",
-  parcel_questions: "",
-  order: "",
-  is_parcel: "",
-  active: "",
-  rating: null,
+  type: "bubble_mailer",
+  length: 0,
+  width: 0,
+  height: 0,
+  quantity_state: 0,
 };
 
 const parcelPage = createSlice({

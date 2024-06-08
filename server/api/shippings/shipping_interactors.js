@@ -160,7 +160,6 @@ export const createLabel = async ({ order, shipping_rate }) => {
 
 export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
-    console.log({ order, returnLabel, returnToHeadquarters });
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
     const parcel = determine_parcel(order.orderItems, parcels);
 

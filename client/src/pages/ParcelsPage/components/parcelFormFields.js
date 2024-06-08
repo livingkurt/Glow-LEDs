@@ -1,7 +1,7 @@
 export const parcelFormFields = () => {
   return {
     type: {
-      type: "select",
+      type: "autocomplete_single",
       label: "Type",
       options: ["bubble_mailer", "box", "envelope"],
       getOptionLabel: option => option,

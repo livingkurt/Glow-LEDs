@@ -17,7 +17,7 @@ const EditParcelModal = () => {
       <GLActionModal
         isOpen={edit_parcel_modal}
         onConfirm={() => {
-          dispatch(API.saveParcel(parcel));
+          dispatch(API.saveParcel({ ...parcel, volume: parcel.length * parcel.width * parcel.height }));
         }}
         onCancel={() => {
           dispatch(set_edit_parcel_modal(false));

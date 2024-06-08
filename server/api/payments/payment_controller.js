@@ -44,11 +44,11 @@ export default {
   },
   secure_refund_payments_c: async (req, res) => {
     const { order_id } = req.params;
+    const { refundReason, refundAmount, current_user } = req.body;
     try {
       //
       const order = await Order.findById(order_id);
-      const refundAmount = parseFloat(req.body.refundAmount) * 100;
-      const roundedRefundAmount = Math.round(refundAmount);
+      const roundedRefundAmount = Math.round(parseFloat(refundAmount) * 100);
 
       const refund = await stripe.refunds.create({
         payment_intent: order.payment.charge.id,
@@ -65,9 +65,17 @@ export default {
           paymentMethod: order.payment.paymentMethod,
           charge: order.payment.charge,
           refund: [...order.payment.refund, refund],
-          refund_reason: [...order.payment.refund_reason, req.body.refundReason],
+          refund_reason: [...order.payment.refund_reason, refundReason],
         };
         order.refundTotal = refundTotal;
+        order.change_log = [
+          ...order.change_log,
+          {
+            change: refundReason,
+            changedAt: new Date(),
+            changedBy: current_user,
+          },
+        ];
         const updated = await Order.updateOne({ _id: order_id }, order);
 
         if (updated) {

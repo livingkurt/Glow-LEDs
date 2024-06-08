@@ -242,11 +242,18 @@ export const updateMultipleOrderStatus = createAsyncThunk(
 
 export const refundOrder = createAsyncThunk(
   "orders/refundOrder",
-  async ({ orderId, refundAmount, refundReason }, { dispatch, rejectWithValue }) => {
+  async ({ orderId, refundAmount, refundReason }, { dispatch, rejectWithValue, getState }) => {
     try {
+      const {
+        users: {
+          userPage: { current_user },
+        },
+      } = getState();
+
       const { data } = await axios.put(`/api/payments/${orderId}/refund`, {
         refundAmount,
         refundReason,
+        current_user,
       });
       dispatch(showSuccess({ message: `Order Refunded` }));
       return data;

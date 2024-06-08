@@ -36,7 +36,7 @@ import Edit from "@mui/icons-material/Edit";
 import FileCopy from "@mui/icons-material/FileCopy";
 import Landscape from "@mui/icons-material/Landscape";
 import Money from "@mui/icons-material/Money";
-import { showSuccess } from "../../slices/snackbarSlice";
+import { showConfirm, showSuccess } from "../../slices/snackbarSlice";
 import { ShoppingCart } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
@@ -217,10 +217,29 @@ const OrdersPage = () => {
             </GLIconButton>
             <GLIconButton
               onClick={() => {
-                const confirm = window.confirm("Are you sure you want DELETE this order?");
-                if (confirm) {
-                  dispatch(API.deleteOrder(row._id));
-                }
+                dispatch(
+                  showConfirm({
+                    title: "Are you sure you want to DELETE this Order?",
+                    inputLabel: "Describe the why you made this change to the order",
+                    onConfirm: inputText => {
+                      dispatch(API.deleteOrder(row._id));
+                      dispatch(
+                        API.saveOrder({
+                          ...order,
+                          isUpdated: true,
+                          change_log: [
+                            ...order.change_log,
+                            {
+                              change: inputText,
+                              changedAt: new Date(),
+                              changedBy: current_user,
+                            },
+                          ],
+                        })
+                      );
+                    },
+                  })
+                );
               }}
               tooltip="Delete"
             >
