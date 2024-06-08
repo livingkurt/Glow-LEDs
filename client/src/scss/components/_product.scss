@@ -92,8 +92,8 @@
 .edit_product_textarea {
   resize: none;
   height: 15rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -334,4 +334,12 @@
   ul {
     margin-left: 20px;
   }
+}
+
+[data-rmiz-modal-overlay="visible"] {
+  background-color: #1e1e1ebf !important;
+}
+
+[data-rmiz-modal-img] {
+  border-radius: 20px;
 }

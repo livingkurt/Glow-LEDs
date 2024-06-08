@@ -346,10 +346,10 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             labelProp: "name",
             required: true,
           },
-          qty: {
+          quantity: {
             type: "autocomplete_single",
             label: "Quantity",
-            labelProp: "qty",
+            labelProp: "quantity",
             getOptionLabel: option => `${option}`,
             options: Array.from({ length: 30 }, (_, i) => i + 1),
           },
@@ -483,11 +483,6 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Processing Time",
             labelProp: "processing_time",
             options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"],
-          },
-          quantity: {
-            type: "number",
-            label: "Quantity",
-            labelProp: "quantity",
           },
           finite_stock: {
             type: "number",

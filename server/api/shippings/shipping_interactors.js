@@ -223,7 +223,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         customs_items: order.orderItems.map(item => {
           return {
             description: "3D Printed Accessories",
-            quantity: item.qty,
+            quantity: item.quantity,
             value: item.price,
             weight: covertToOunces(item),
             origin_country: "US",

@@ -17,15 +17,15 @@ export const determineCartTotal = (cartItems, isWholesaler) => {
   if (cartItems) {
     cartItems.forEach(item => {
       if (isWholesaler) {
-        total = total + (item.wholesale_price || item.price) * item.qty;
+        total = total + (item.wholesale_price || item.price) * item.quantity;
       } else if (
         today >= new Date(item.sale_start_date) &&
         today <= new Date(item.sale_end_date) &&
         item.sale_price !== 0
       ) {
-        total = total + item.sale_price * item.qty;
+        total = total + item.sale_price * item.quantity;
       } else {
-        total = total + item.price * item.qty;
+        total = total + item.price * item.quantity;
       }
     });
     return total;

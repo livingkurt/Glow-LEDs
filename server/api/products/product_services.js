@@ -251,7 +251,7 @@ export default {
           outOfStockItems.push({ id: item.product, name: "Unknown Product" });
           continue;
         }
-        let isOutOfStock = product.finite_stock && product.count_in_stock < item.qty;
+        let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
         let optionProductOutOfStock = false;
         let optionProductId = null; // Placeholder for the option product ID
 
@@ -259,7 +259,7 @@ export default {
         if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
           // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
           const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
-          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.qty) {
+          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.quantity) {
             isOutOfStock = true;
             optionProductOutOfStock = true;
             optionProductId = optionProduct._id; // Capture the option product's unique ID
@@ -295,6 +295,43 @@ export default {
   update_products_s: async (params, body) => {
     try {
       return await product_db.update_products_db(params.id, body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_option_products_s: async (params, body) => {
+    const { id, option_product_id } = params;
+    const { newOptionProductData } = body;
+    try {
+      const product = await product_db.findById_products_db(id);
+      let optionProduct;
+      if (option_product_id) {
+        optionProduct = await product_db.findById_products_db(option_product_id);
+        optionProduct = {
+          ...optionProduct,
+          _id: null,
+          name: `${optionProduct.name} Copy`,
+          pathname: `${optionProduct.pathname}_copy`,
+        };
+      } else if (newOptionProductData) {
+        optionProduct = newOptionProductData;
+      }
+      const newOptionProduct = await product_db.create_products_db(optionProduct);
+      if (product && optionProduct) {
+        const optionIndex = product.options.findIndex(option =>
+          option.values.some(value => value.product.toString() === option_product_id)
+        );
+        if (optionIndex !== -1) {
+          product.options[optionIndex].values.push(newOptionProduct);
+          return await product_db.update_products_db(id, product);
+        } else {
+          throw new Error("Option not found for the option product.");
+        }
+      } else {
+        throw new Error("Error in Creating Option Product.");
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

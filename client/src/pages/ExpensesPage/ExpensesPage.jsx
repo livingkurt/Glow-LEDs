@@ -64,6 +64,7 @@ const ExpensesPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: expense => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>

@@ -6,6 +6,7 @@ import { determineDropdown, determineName, rightNav } from "../headerHelpers";
 import { ShoppingCart } from "@mui/icons-material";
 import { set_first_name } from "../../../slices/glowLedsSlice";
 import { setCartDrawer } from "../../../slices/cartSlice";
+import { getCartQuantity } from "../../../helpers/sharedHelpers";
 
 const RightNavButtons = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const RightNavButtons = () => {
   return (
     <div>
       <GLButton variant="mobile nav" className="cart_icon none" onClick={() => dispatch(setCartDrawer(true))}>
-        <ShoppingCart /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+        <ShoppingCart /> {getCartQuantity(cartItems)}{" "}
       </GLButton>
 
       <div className="nav_bar w-233px jc-fe ai-c">
@@ -41,14 +42,14 @@ const RightNavButtons = () => {
           onClick={() => dispatch(setCartDrawer(true))}
         >
           Cart <ShoppingCart className="ml-5px mb-5px" />
-          <div className="ml-5px">{cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
+          <div className="ml-5px">{getCartQuantity(cartItems)} </div>
         </GLButton>
         <GLButton
           variant="mobile nav"
           className={`cart_icon title_font none ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
           onClick={() => dispatch(setCartDrawer(true))}
         >
-          <ShoppingCart /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+          <ShoppingCart /> {getCartQuantity(cartItems)}{" "}
         </GLButton>
         {rightNav(dispatch).map(
           (item, index) =>

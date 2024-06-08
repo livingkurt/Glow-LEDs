@@ -1,3 +1,4 @@
+import axios from "axios";
 import config from "../config";
 
 export const domain = () => {
@@ -46,4 +47,20 @@ export const images_or_images_object = content => {
   } else {
     return content.images;
   }
+};
+
+export const getItemsTotal = items => {
+  return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
+};
+export const getCartQuantity = items => {
+  return items.reduce((acc, item) => acc + item.quantity, 0);
+};
+export const determine_product_name = item => {
+  let name = item.name;
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.name}`;
+    }
+  });
+  return name;
 };

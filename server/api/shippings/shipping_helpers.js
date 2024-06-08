@@ -57,7 +57,7 @@ const getOrderItemDimensions = orderItems =>
     width: item.package_width,
     height: item.package_height,
     volume: item.package_volume,
-    qty: parseInt(item.qty),
+    quantity: parseInt(item.quantity),
   }));
 
 const calculateCustomParcelDimensions = dimensions => {
@@ -179,7 +179,7 @@ export const determine_parcel_weight = order => {
     } else {
       weight += parseInt(item.weight_ounces);
     }
-    weight *= item.qty;
+    weight *= item.quantity;
   });
   return weight;
 };
@@ -189,7 +189,7 @@ export const calculateTotalOunces = cartItems => {
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
     const weightInOunces = (item?.weight_pounds * 16 || 0) + (item?.weight_ounces || 0);
-    totalOunces += weightInOunces * item.qty;
+    totalOunces += weightInOunces * item.quantity;
   }
   return totalOunces;
 };
@@ -204,7 +204,7 @@ export const calculateTotalPounds = cartItems => {
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
     const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
-    totalOunces += weightInOunces * item.qty;
+    totalOunces += weightInOunces * item.quantity;
   }
   const totalPounds = totalOunces / 16;
   return totalPounds;

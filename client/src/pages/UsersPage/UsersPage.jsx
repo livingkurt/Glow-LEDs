@@ -46,6 +46,7 @@ const UsersPage = () => {
       },
       {
         title: "",
+        nonSelectable: true,
         display: user => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton

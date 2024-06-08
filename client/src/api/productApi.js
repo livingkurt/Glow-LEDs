@@ -6,6 +6,8 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setCustomizedProduct } from "../pages/ProductPage/productPageSlice";
 
 export const getProducts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -51,25 +53,57 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
     if (!product._id) {
       const { data } = await axios.post("/api/products", product);
       dispatch(showSuccess({ message: `Product Created` }));
-      return data;
+      return { data, created: true };
     } else {
       const { data } = await axios.put(`/api/products/${product._id}`, product);
       dispatch(showSuccess({ message: `Product Updated` }));
-      return data;
+      return { data, edited: true };
     }
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));
     return rejectWithValue(error.response?.data);
   }
 });
+export const createOptionProduct = createAsyncThunk(
+  "products/createOptionProduct",
+  async ({ productId, seedOptionProductId, newOptionProductData, optionId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `/api/products/${productId}/option/${optionId}/option_product/${seedOptionProductId}`,
+        {
+          newOptionProductData,
+        }
+      );
+      dispatch(showSuccess({ message: `Option Product Created and Linked To Main Product` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 export const detailsProduct = createAsyncThunk(
   "products/detailsProduct",
-  async (pathname, { dispatch, rejectWithValue }) => {
+  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/products/${pathname}`);
       dispatch(showSuccess({ message: `Product Found` }));
-      return data;
+      return { data, openEditModal };
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const detailsProductPage = createAsyncThunk(
+  "products/productPage/detailsProductPage",
+  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/products/${pathname}`);
+      dispatch(showSuccess({ message: `Product Found` }));
+      return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
@@ -135,16 +169,47 @@ export const deleteProductReview = createAsyncThunk(
   }
 );
 
-// export const productApi = createApi({
-//   reducerPath: "productApi",
-//   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-//   endpoints: builder => ({
-//     getProductQuantitiesOrders: builder.query({
-//       query: () => "/orders/get_product_quantities_orders"
-//     }),
-//   })
-// });
+export const productApi = createApi({
+  reducerPath: "productApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  endpoints: builder => ({
+    product: builder.query({
+      query: pathname => ({ url: `/products/${pathname}`, method: "get" }),
+      transformResponse: response => {
+        console.log({ response });
+        // Run actions here
+        store.dispatch(
+          setCustomizedProduct({
+            name: response.name,
+            description: response.description,
+            facts: response.facts,
+            included_items: response.included_items,
+            images: response.images_object,
+            price: response.price,
+            wholesale_price: response.wholesale_price,
+            previous_price: response.previous_price,
+            sale_price: response.sale_price,
+            size: response.size,
+            quantity: response.quantity,
+            count_in_stock: response.count_in_stock,
+            image: response.image,
+            secondary_image: response.secondary_image,
+            secondary_images: response.secondary_images,
+            dimensions: response.dimensions,
+            show_add_on: response.show_add_on,
+            add_on_price: response.add_on_price,
+            has_add_on: response.has_add_on,
+            tabIndex: response.tabIndex,
+            review_modal: response.review_modal,
+            rating: response.rating,
+            comment: response.comment,
+            selectedOptions: response.options.map(option => option.values.find(value => value.isDefault)),
+          })
+        );
+        return response;
+      },
+    }),
+  }),
+});
 
-// export const {
-
-// } = productApi;
+export const { useProductQuery } = productApi;

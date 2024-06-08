@@ -15,6 +15,93 @@ import {
   update_universal_state,
 } from "./productPageSlice";
 
+// Helper function to check if the count of non-addon options is different
+export const isOptionCountDifferent = (product, customizedProduct) => {
+  const productOptions = getNonAddOnOptions(product?.options);
+  const selectedOptions = getNonAddOnOptions(customizedProduct?.selectedOptions);
+
+  return selectedOptions.length < productOptions.length;
+};
+
+// Helper function to filter out add-on options and get their IDs
+export const getNonAddOnOptions = (options = []) => {
+  return options
+    .filter(option => option && !option.isAddOn)
+    .map(option => option._id)
+    .filter(Boolean);
+};
+
+export const updatePrice = (state, additionalCost) => {
+  state.customizedProduct.price = state.product.price + additionalCost;
+};
+
+export const calculateAdditionalCost = selectedOptions =>
+  selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
+
+export const updateProductDetailsFromOption = (state, selectedOption) => {
+  const { product } = selectedOption;
+  if (selectedOption.product.images_object.length > 0) {
+    state.customizedProduct.images = selectedOption.product.images_object;
+  }
+  // When product options are available, update the currentOptions based on option names
+  if (product?.options?.length > 0) {
+    const newOptionsByName = product.options.reduce((acc, option) => {
+      acc[option.name] = option;
+      return acc;
+    }, {});
+
+    // Prepare to update selectedOptions with defaults from new options
+    const newSelectedOptions = [];
+
+    state.customizedProduct.currentOptions = state.customizedProduct.currentOptions.map(existingOption => {
+      const replacementOption = newOptionsByName[existingOption.name];
+      if (replacementOption) {
+        // Use the replacement option, and update the selectedOptions with the isDefault value
+        const defaultOptionValue = replacementOption.values.find(value => value.isDefault);
+        newSelectedOptions.push(defaultOptionValue || null); // Push null or some default value if no isDefault is found
+        return replacementOption;
+      } else {
+        // Keep the existing option and its selected value
+        const existingSelectedOptionIndex = state.customizedProduct.selectedOptions.findIndex(
+          opt => opt.option === existingOption.name
+        );
+        const existingSelectedOption = state.customizedProduct.selectedOptions[existingSelectedOptionIndex];
+        newSelectedOptions.push(existingSelectedOption);
+        return existingOption;
+      }
+    });
+  }
+
+  if (product?.description) {
+    state.customizedProduct.description = product.description;
+  }
+  if (product?.facts) {
+    state.customizedProduct.facts = product.facts;
+  }
+  if (product?.quantity) {
+    state.customizedProduct.max_quantity = product.quantity;
+  }
+  if (product?.count_in_stock > 0) {
+    state.customizedProduct.count_in_stock = product.count_in_stock;
+  }
+  if (product?.previous_price > 0) {
+    state.customizedProduct.previous_price = product.previous_price;
+  }
+};
+
+export const handlePriceReplacement = (state, option, selectedOption) => {
+  if (option?.replacePrice) {
+    state.customizedProduct.price = selectedOption.product.price;
+    state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
+  } else {
+    if (!state.customizedProduct.previousPriceWithAddOn) {
+      state.customizedProduct.previousPriceWithAddOn = state.product.price;
+    }
+    const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
+    updatePrice(state, additionalCost);
+  }
+};
+
 export const determine_alt_skin_pathname = (subcategory, pathname) => {
   if (subcategory === "clozd") {
     const empty_pathname = pathname.substring(5);
@@ -101,175 +188,12 @@ export const names_hide_add_to_cart = [
 ];
 export const categories_hide_add_to_cart = ["exo_diffusers"];
 
-export const determine_option_styles = (option_product_object, option) => {
-  const classes = "packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ";
-  if (option_product_object.hasOwnProperty("size")) {
-    if (option_product_object.size === option.size) {
-      return `${classes} off ft-primary`;
-    } else {
-      return `${classes} on ft-white`;
-    }
-  } else if (option.default_option) {
-    return `${classes} off ft-primary`;
-  } else {
-    return `${classes} on ft-white`;
-  }
-};
-
-export const determine_addon_color = ({ has_add_on, show_add_on, secondary_color }) => {
-  if (has_add_on && show_add_on && secondary_color) {
-    return true;
-  } else if (!has_add_on && secondary_color) {
-    return true;
-  }
-  return false;
-};
-
 export const determineSoldOut = product => {
   if (product.sold_out) {
     return "Sold Out";
   } else {
     return "Restocking Soon";
   }
-};
-
-export const determine_preorder = (option_product_object, count_in_stock, text, product) => {
-  const choice = num => {
-    if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
-      if (option_product_object.count_in_stock > num) {
-        return text;
-      } else {
-        return determineSoldOut(product);
-      }
-    } else if (count_in_stock > 0) {
-      return text;
-    } else {
-      return determineSoldOut(product);
-    }
-  };
-  if (product?.name?.includes("Refresh")) {
-    return choice(6);
-  } else {
-    return choice(0);
-  }
-};
-
-export const determine_add_to_cart = ({
-  product,
-  secondary_product,
-  count_in_stock,
-  option_product_object,
-  cartItems,
-}) => {
-  let variant = "primary";
-  let text = "Add To Cart";
-  const samplerPacks = ["Supreme Gloves V2 Sizing Sampler Pack", "Ultra Gloves Sizing Sampler Pack"];
-
-  if (samplerPacks.includes(product.name)) {
-    const hasSameSamplerPack = cartItems.some(item => item.name === product.name);
-    if (hasSameSamplerPack) {
-      return { variant: "disabled", text: "Not Allowed", tooltip: `Only 1 ${product.name} per order` };
-    }
-  }
-  if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
-    variant = "disabled";
-  }
-  if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
-    variant = "disabled";
-  }
-  if (product?.name?.includes("Refresh")) {
-    if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
-      if (option_product_object.count_in_stock > 6) {
-        text = "Add To Cart";
-      } else {
-        variant = "disabled";
-        text = determineSoldOut(product);
-      }
-    } else if (count_in_stock > 0) {
-      text = "Add To Cart";
-    } else {
-      variant = "disabled";
-      text = determineSoldOut(product);
-    }
-  } else {
-    if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
-      if (option_product_object.count_in_stock > 0) {
-        text = "Add To Cart";
-      } else {
-        variant = "disabled";
-        text = determineSoldOut(product);
-      }
-    } else if (count_in_stock > 0) {
-      text = "Add To Cart";
-    } else {
-      variant = "disabled";
-      text = determineSoldOut(product);
-    }
-  }
-
-  return { variant, text };
-};
-
-export const areCartItemsEqual = (item1, item2) => {
-  // List the fields you're interested in
-  const fields = [
-    "name",
-    "qty",
-    "display_image",
-    "secondary_image",
-    "color",
-    "secondary_color",
-    "color_group_name",
-    "secondary_color_group_name",
-    "color_code",
-    "secondary_color_code",
-    "price",
-    "category",
-    "subcategory",
-    "product_collection",
-    "pathname",
-    "size",
-    "preorder",
-    "sale_price",
-    // "sale_start_date",
-    // "sale_end_date",
-    "package_volume",
-    "weight_pounds",
-    "weight_ounces",
-    "count_in_stock",
-    "length",
-    "width",
-    "height",
-    "package_length",
-    "package_width",
-    "package_height",
-    "processing_time",
-    "quantity",
-    // "finite_stock",
-    "add_on_price",
-    "show_add_on",
-    "wholesale_product",
-    "wholesale_price",
-    "product",
-    "color_product",
-    "color_product_name",
-    "secondary_color_product",
-    "secondary_color_product_name",
-    "option_product_name",
-    "option_product",
-    "secondary_product_name",
-    "secondary_product",
-  ];
-
-  return fields.every(field => {
-    const val1 = item1[field]?.toString();
-    const val2 = item2[field]?.toString();
-    if (val1 === val2) {
-      return true;
-    } else {
-      return false;
-    }
-  });
 };
 
 export const update_url = ({
@@ -417,29 +341,3 @@ export const updateRecentlyViewed = product => {
     sessionStorage.setItem("recently_viewed", JSON.stringify(recentProducts));
   }
 };
-export const determine_secondary_product_name = (name, item) => {
-  const { category, subcategory } = item;
-  if (category === "diffuser_caps") {
-    return name.split(" ")[0];
-  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 4] === "Outline") {
-    return name.replace(" Outline + Batman Decals", "");
-  } else if (category === "decals" && name.split(" ")[name.split(" ").length - 2] === "Batman") {
-    return name.replace(" Batman Decals", "");
-  } else if (subcategory === "refresh" && name.includes("Bulk")) {
-    return name.split(" ")[1].trim();
-  } else if (name.includes("Capez")) {
-    return name.replace(" Capez", "");
-  } else {
-    return name.includes("-") ? name.split("-")[1].trim() : name;
-  }
-};
-
-export const clozdGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple"];
-export const opynGlowskinzColors = ["Clear", "Frosted", "Red", "Emerald", "Blue", "Purple", "Black"];
-export const sledColors = ["Clear", "Red", "Green", "Blue", "Purple", "Black", "White"];
-export const exoDiffusersSkeletonColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
-export const exoDiffusersPlugColors = ["Frosted", "Red", "Green", "Blue", "Purple"];
-export const diffusersColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
-export const diffuserCapsCapColors = ["Black", "White", "Red", "Green", "Blue", "Purple"];
-export const diffuserCapsAdapterColors = ["Frosted", "Clear", "Red", "Green", "Blue", "Purple"];
-export const framezColors = ["Clear", "Red", "Green", "Blue", "Purple"];

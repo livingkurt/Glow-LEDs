@@ -47,6 +47,7 @@ const CartsPage = () => {
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
         title: "",
+        nonSelectable: true,
         display: cart => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>

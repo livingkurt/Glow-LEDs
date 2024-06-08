@@ -50,6 +50,7 @@ const EmailsPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: email => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>

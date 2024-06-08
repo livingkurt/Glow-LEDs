@@ -16,14 +16,26 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+export const optionValueSchema = new mongoose.Schema({
+  name: { type: String }, // e.g., "Blue", "Large"
+  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
+  // images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this optièon value, if necessary
+  isDefault: { type: Boolean, default: false },
+  additionalCost: { type: Number, default: 0 },
+});
+
+export const optionSchema = new mongoose.Schema({
+  name: { type: String }, // e.g., "Color", "Size"
+  values: [optionValueSchema],
+  optionType: { type: String },
+  replacePrice: { type: Boolean, default: false },
+  isAddOn: { type: Boolean, default: false },
+});
+
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    images: { type: Array },
-    color_images: { type: Array },
-    secondary_color_images: { type: Array },
-    option_images: { type: Array },
-    secondary_images: { type: Array },
+
     images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
@@ -41,22 +53,19 @@ const productSchema = new mongoose.Schema(
     categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    count_in_stock: { type: Number, default: 30, required: true },
     quantity: { type: Number, default: 30, required: true },
+    max_quantity: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
     facts: { type: String },
     included_items: { type: String },
-    contributers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: "5f2d7c0e9005a57059801ce8",
-      },
-    ],
+    contributers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
     description: { type: String },
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
     reviews: [reviewSchema],
+    options: [optionSchema], // Embed the options schema here
+    parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
+    isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
     hidden: { type: Boolean, default: false },
     sale_price: { type: Number, default: 0 },
     sale_start_date: { type: Date },
@@ -83,15 +92,27 @@ const productSchema = new mongoose.Schema(
     printing_time: { type: Number },
     assembly_time: { type: Number },
     order: { type: Number },
-    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     has_add_on: { type: Boolean, default: false },
+
+    color: { type: String },
+    color_code: { type: String },
+    size: { type: String },
+    sizing: { type: String },
+    // Depreciated
+    count_in_stock: { type: Number, default: 30, required: true },
+    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    images: { type: Array },
+    color_images: { type: Array },
+    secondary_color_images: { type: Array },
+    option_images: { type: Array },
+    secondary_images: { type: Array },
+
     color_product_group: { type: Boolean, default: false },
     color_group_name: { type: String },
     color_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
-
     secondary_color_product_group: { type: Boolean, default: false },
     secondary_color_group_name: { type: String },
     secondary_color_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
@@ -102,10 +123,6 @@ const productSchema = new mongoose.Schema(
     option_product_group: { type: Boolean, default: false },
     option_group_name: { type: String },
     option_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    color: { type: String },
-    color_code: { type: String },
-    size: { type: String },
-    sizing: { type: String },
     default_option: { type: Boolean, default: false },
     option: { type: Boolean, default: false },
     macro_product: { type: Boolean, default: false },

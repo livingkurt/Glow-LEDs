@@ -36,8 +36,9 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dis
 
 export const addToCart = createAsyncThunk(
   "carts/addToCart",
-  async ({ cart, cart_item, type }, { dispatch, rejectWithValue, getState }) => {
+  async ({ cart, cartItem, type }, { dispatch, rejectWithValue, getState }) => {
     try {
+      console.log({ cart, cartItem, type });
       const {
         users: {
           userPage: { current_user },
@@ -51,12 +52,16 @@ export const addToCart = createAsyncThunk(
       let data;
       if (cart._id) {
         data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
-          cart_item,
+          cart_item: cartItem,
           cartItems: my_cart.cartItems,
           current_user,
         });
       } else {
-        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
+        data = await axios.post(`/api/carts/add_to_cart`, {
+          cart_item: cartItem,
+          cartItems: my_cart.cartItems,
+          current_user,
+        });
       }
       dispatch(showSuccess({ message: `Cart Item Added` }));
 

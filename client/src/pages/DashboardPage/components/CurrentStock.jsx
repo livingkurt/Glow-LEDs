@@ -47,7 +47,7 @@ const CurrentStock = () => {
           if (value.option_products.length > 0) {
             // Fetch option products first
             const optionProductsActions = await Promise.all(
-              value.option_products.map(id => dispatch(API.detailsProduct(id)))
+              value.option_products.map(id => dispatch(API.detailsProduct({ pathname: id })))
             );
 
             // Extract payload from each action

@@ -63,6 +63,7 @@ const FilamentsPage = () => {
       // { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
         title: "",
+        nonSelectable: true,
         display: filament => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>

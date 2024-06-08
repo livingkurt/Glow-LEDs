@@ -2302,16 +2302,16 @@ router.route("/xxl_revenue").get(async (req, res) => {
 
           const discountedPackCost = originalPackCost * (1 - discountRate);
 
-          totalRevenue += item.qty * discountedPackCost;
-          numberOfPairsSold += item.qty * 6;
+          totalRevenue += item.quantity * discountedPackCost;
+          numberOfPairsSold += item.quantity * 6;
           numberOfOrders += 1;
         } else if (item.name === "Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         } else if (item.name === "XXL Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         }
       });
@@ -2515,6 +2515,159 @@ router.route("/migrate_status").put(async (req, res) => {
     }
 
     res.status(200).send({ message: "Status migrated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_product_options").put(async (req, res) => {
+  try {
+    const mainProducts = await Product.find({ macro_product: true, deleted: false });
+    console.log("Total main products:", mainProducts.length);
+
+    for (let i = 0; i < mainProducts.length; i++) {
+      const mainProduct = mainProducts[i];
+      console.log(`Processing main product ${i + 1} of ${mainProducts.length}`);
+
+      const options = []; // Placeholder for new options structure
+
+      // Function to process each type of product option
+      const processOptionType = async (optionProducts, optionName, valueKey) => {
+        if (optionProducts && optionProducts.length > 0) {
+          const variations = await Product.find({ "_id": { $in: optionProducts } });
+
+          const option = {
+            name: optionName,
+            optionType: valueKey === "size" || optionName === "Size" ? "buttons" : "dropdown",
+            replacePrice: valueKey === "size" || optionName === "Size" || !optionName === "Cape Color" ? true : false,
+            isAddOn: optionName === "Cape Color" ? true : false,
+            values: variations.map(variation => {
+              return {
+                name: variation[valueKey],
+                // images: variation.images_object,
+                product: variation._id,
+                isDefault: !!variation.default_option,
+                additionalCost: optionName === "Cape Color" ? 4 : 0,
+              };
+            }),
+          };
+          options.push(option);
+
+          // Update each variation to set the parent and isVariation flag
+          for (let variation of variations) {
+            await Product.findByIdAndUpdate(variation._id, {
+              parent: mainProduct._id,
+              isVariation: true,
+            });
+          }
+        }
+      };
+
+      // Migrate Color Options
+      console.log("Processing Color Options");
+      await processOptionType(mainProduct.color_products, mainProduct.color_group_name || "Color", "color");
+
+      // Migrate Secondary Color Options
+      console.log("Processing Secondary Color Options");
+      await processOptionType(
+        mainProduct.secondary_color_products,
+        mainProduct.secondary_color_group_name || "Secondary Color",
+        "color"
+      );
+
+      // Migrate Option Products (assuming these are sizes for simplification)
+      console.log("Processing Option Products");
+      await processOptionType(mainProduct.option_products, mainProduct.option_group_name || "Size", "size");
+
+      // Migrate Secondary Products (assuming these are included products)
+      console.log("Processing Secondary Products");
+      await processOptionType(
+        mainProduct.secondary_products,
+        mainProduct.secondary_group_name || "Included Product",
+        "name"
+      );
+
+      // Update the main product with the new options structure
+      console.log("Updating main product");
+      await Product.findByIdAndUpdate(mainProduct._id, {
+        options: options,
+        // Consider uncommenting the $unset operation if you wish to clean up old fields
+        // $unset: { color_products: "", secondary_color_products: "", option_products: "", secondary_products: "" },
+      });
+    }
+
+    // res.status(200).send(mainProducts);
+    res.status(200).send({ message: "Product Option Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_quantity").put(async (req, res) => {
+  try {
+    // Update orderSchema
+    await Order.updateMany({ "orderItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          orderItems: {
+            $map: {
+              input: "$orderItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "orderItems.qty",
+      },
+    ]);
+
+    // Update cartSchema
+    await Cart.updateMany({ "cartItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          cartItems: {
+            $map: {
+              input: "$cartItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "cartItems.qty",
+      },
+    ]);
+
+    await Product.updateMany(
+      {},
+      {
+        $rename: {
+          quantity: "max_quantity",
+        },
+      }
+    );
+
+    res.status(200).send({ message: "Field names migrated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });

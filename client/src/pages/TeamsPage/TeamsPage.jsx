@@ -22,7 +22,7 @@ import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 const TeamsPage = () => {
   const location = useLocation();
   const teamPage = useSelector(state => state.teams.teamPage);
-  const { message, loading, remoteVersionRequirement } = teamPage;
+  const { loading, remoteVersionRequirement } = teamPage;
 
   const dispatch = useDispatch();
 
@@ -79,6 +79,7 @@ const TeamsPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: team => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>

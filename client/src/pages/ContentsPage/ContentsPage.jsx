@@ -9,8 +9,6 @@ import { Box, Button } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
 import { determineContentColors } from "./contentsPageHelpers";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -58,6 +56,7 @@ const ContentsPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: content => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>

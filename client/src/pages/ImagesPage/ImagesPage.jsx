@@ -52,6 +52,7 @@ const ImagesPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: image => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>

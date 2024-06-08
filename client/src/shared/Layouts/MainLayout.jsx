@@ -10,7 +10,7 @@ const MainLayout = ({ children }) => {
   return (
     <Container setVisible={setVisible} visible={visible}>
       {isBrowser && width > 1158 && height > 900 ? (
-        <Headroom>
+        <Headroom style={{ zIndex: 1000 }}>
           <Header visible={visible} />
         </Headroom>
       ) : (

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import { Helmet } from "react-helmet";
-import { decide_warning, determine_total } from "../../utils/helper_functions";
+import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
 
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCartQuantity } from "../../helpers/sharedHelpers";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const CartPage = () => {
   const determine_wholesale_proceed = () => {
     return (
       current_user?.isWholesaler &&
-      determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+      determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
     );
   };
 
@@ -67,7 +68,7 @@ const CartPage = () => {
             ) : (
               <div>
                 {cartItems.map((item, index) => (
-                  <CartItem orderItems={cartItems} item={item} index={index} show_qty={true} />
+                  <CartItem orderItems={cartItems} item={item} index={index} show_quantity={true} />
                 ))}
               </div>
             )}
@@ -77,8 +78,8 @@ const CartPage = () => {
         <div className="cart-action-container jc-c">
           <div className="cart-action">
             <h3 className="fs-17px">
-              Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
-              {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
+              Subtotal ( {getCartQuantity(cartItems)} items ) : ${" "}
+              {determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
             </h3>
 
             {current_user?.isWholesaler ? (
