@@ -167,153 +167,15 @@ export const determine_sampler = name => {
   }
 };
 
-export const names_hide_add_to_cart = [
-  "Diffuser Caps + Adapters Starter Kit V4",
-  "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)",
-  "Supreme V1 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)",
-  "Ultra Refresh Pack (6 Pairs Ultra Gloves + 120 Batteries)",
-  "CLOZD Batman Decals",
-  "CLOZD Outline + Slim Batman Decals",
-  "OPYN Batman Decals",
-  "OPYN Outline + Slim Batman Decals",
-  "CLOZD Alt Novaskinz",
-  "CLOZD Novaskinz",
-  "Supreme Gloves V1 Sizing Sampler Pack",
-  "Supreme Gloves V2 Sizing Sampler Pack",
-  "Ultra Gloves Sizing Sampler Pack",
-  "Capez",
-  "CLOZD Omniskinz",
-  "CLOZD Omniskinz Sleds",
-  "Nova Clip",
-];
-export const categories_hide_add_to_cart = ["exo_diffusers"];
-
-export const determineSoldOut = product => {
+export const determineInStock = product => {
+  if (product.count_in_stock > 0) {
+    return "In Stock";
+  }
   if (product.sold_out) {
     return "Sold Out";
   } else {
     return "Restocking Soon";
   }
-};
-
-export const update_url = ({
-  color = "",
-  secondary_color = "",
-  option = "",
-  secondary_product = "",
-  navigate,
-  show_add_on,
-}) => {
-  // navigate({
-  //   search: `${color ? "?color=" + color : ""}${
-  //     show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""
-  //   }${option ? "?option=" + option : ""}${secondary_product ? "?secondary=" + secondary_product : ""}`,
-  // });
-};
-
-export const setColorDefaultOption = ({ product, query, dispatch }) => {
-  if (product.color_products) {
-    dispatch(set_color_products(product.color_products));
-
-    const color = product.color_products.find(color => color.default_option === true);
-    if (color) {
-      dispatch(update_color_product_state({ color }));
-    }
-  }
-};
-export const setSecondaryColorDefaultOption = ({ product, query, dispatch }) => {
-  if (product.secondary_color_products) {
-    dispatch(set_secondary_color_products(product.secondary_color_products));
-
-    const secondary_color = product.secondary_color_products.find(
-      secondary_color => secondary_color.default_option === true
-    );
-    if (secondary_color) {
-      dispatch(update_secondary_color_product_state({ secondary_color }));
-      if (product.has_add_on) {
-        dispatch(set_show_add_on(false));
-      }
-      if (product.name !== "CLOZD Omniskinz Sleds") {
-        dispatch(set_add_on_price(secondary_color.price));
-        dispatch(set_price(secondary_color.price + product.price));
-      }
-    } else {
-      dispatch(set_show_add_on(true));
-    }
-  }
-};
-export const setOptionDefaultOption = ({ product, query, dispatch, current_user }) => {
-  if (product.option_products) {
-    dispatch(set_option_products(product.option_products));
-
-    const option = product.option_products.find(option => option.default_option === true);
-    if (option) {
-      dispatch(update_option_product_state({ option, current_user }));
-    }
-  }
-};
-
-export const setColorUrlOption = ({ product, query, dispatch }) => {
-  // if (product.color_products) {
-  //   const color = product.color_products.find(color => color.color === query.color);
-  //   if (color) {
-  //     dispatch(update_color_product_state({ color }));
-  //   }
-  // }
-};
-export const setSecondaryColorUrlOption = ({ product, query, dispatch }) => {
-  // if (product.secondary_color_products) {
-  //   dispatch(set_secondary_products(product.secondary_products));
-  //   const secondary_color = product.secondary_color_products.find(
-  //     secondary_color => secondary_color.color === query.secondary_color
-  //   );
-  //   if (secondary_color) {
-  //     dispatch(update_secondary_color_product_state({ secondary_color }));
-  //   }
-  // }
-};
-export const setOptionUrlOption = ({ product, query, dispatch, current_user }) => {
-  // if (product.option_products) {
-  //   let query_option = query.option;
-  //   if (query.option && query.option.indexOf("%20") > -1) {
-  //     query_option = query.option.split("%20").join(" ");
-  //   }
-  //   const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
-  //   if (option) {
-  //     dispatch(update_option_product_state({ option, current_user }));
-  //   }
-  // }
-};
-export const setSecondaryProductUrlOption = ({ product, query, dispatch }) => {
-  // if (product.secondary_products && product.secondary_products.length > 0) {
-  //   dispatch(set_secondary_products(product.secondary_products));
-  //   let query_secondary = query.secondary;
-  //   if (query.secondary && query.secondary.indexOf("%20") > -1) {
-  //     query_secondary = query.secondary.split("%20").join(" ");
-  //   }
-  //   const secondary =
-  //     query.secondary &&
-  //     product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
-  //   if (secondary) {
-  //     dispatch(update_secondary_product_state({ secondary }));
-  //   }
-  // }
-};
-
-export const normalizeProductPage = ({ product, dispatch, location, current_user }) => {
-  dispatch(update_universal_state({ item: product, current_user }));
-  // const query = getUrlParameter(location);
-  // const urlParamsLength = location.search.length;
-  // if (urlParamsLength === 0) {
-  setColorDefaultOption({ product, dispatch });
-  setSecondaryColorDefaultOption({ product, dispatch });
-  setOptionDefaultOption({ product, dispatch });
-  // } else if (urlParamsLength > 0) {
-  //   setColorUrlOption({ product, query, dispatch });
-  //   setSecondaryColorUrlOption({ product, query, dispatch });
-  //   setOptionUrlOption({ product, query, dispatch, current_user });
-  //   setSecondaryProductUrlOption({ product, query, dispatch });
-  // }
 };
 
 export const updateRecentlyViewed = product => {

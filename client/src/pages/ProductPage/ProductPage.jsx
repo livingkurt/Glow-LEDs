@@ -21,7 +21,7 @@ import CustomizationOption from "./components/CustomizationOption";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { detailsProductPage, setQuantity } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
-import { isOptionCountDifferent } from "./productHelpers";
+import { determineInStock, isOptionCountDifferent } from "./productHelpers";
 import * as API from "../../api";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 
@@ -130,7 +130,7 @@ const ProductPage = () => {
                 Customize
               </Typography>
               <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
-                In Stock
+                {determineInStock(customizedProduct)}
               </Typography>
               {currentOptions?.map((option, index) => (
                 <CustomizationOption

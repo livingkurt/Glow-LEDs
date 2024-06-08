@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import { Helmet } from "react-helmet";
-import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
+import { determineItemsTotal } from "../../utils/helper_functions";
 
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
-import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 
@@ -109,22 +108,6 @@ const CartPage = () => {
         </div>
       </div>
       <h4 style={{ textAlign: "center" }}>{no_items_in_cart}</h4>
-
-      <RelatedProductsSlideshow
-        className=""
-        product_pathname={params.pathname}
-        title="Accessories You May Need"
-        category="batteries"
-        add_to_cart={true}
-      />
-      <RelatedProductsSlideshow
-        random={true}
-        className=""
-        product_pathname={params.pathname}
-        title="Suggested Products"
-        category="all"
-        add_to_cart={true}
-      />
     </div>
   );
 };

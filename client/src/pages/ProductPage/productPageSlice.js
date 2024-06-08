@@ -134,71 +134,6 @@ const productPage = createSlice({
     setQuantity: (state, { payload }) => {
       state.customizedProduct.quantity = payload;
     },
-    setHasAddOn: (state, { payload }) => {
-      const { selectedOption, index } = payload;
-      state.customizedProduct.selectedOptions[index] = selectedOption;
-      state.setHasAddOn = payload;
-    },
-    set_name: (state, { payload }) => {
-      state.name = payload;
-    },
-    setQty: (state, { payload }) => {
-      state.quantity = payload;
-    },
-    set_price: (state, { payload }) => {
-      state.price = payload;
-    },
-    set_image: (state, { payload }) => {
-      state.image = payload;
-    },
-    set_previous_price: (state, { payload }) => {
-      state.previous_price = payload;
-    },
-    set_sale_price: (state, { payload }) => {
-      state.sale_price = payload;
-    },
-    set_color_products: (state, { payload }) => {
-      state.color_products = payload;
-    },
-    set_secondary_image: (state, { payload }) => {
-      state.secondary_image = payload;
-    },
-    set_secondary_color_products: (state, { payload }) => {
-      state.secondary_color_products = payload;
-    },
-    set_option_products: (state, { payload }) => {
-      state.option_products = payload;
-    },
-    set_secondary_color: (state, { payload }) => {
-      state.secondary_color = payload;
-    },
-    set_secondary_color_code: (state, { payload }) => {
-      state.secondary_color_code = payload;
-    },
-    set_secondary_products: (state, { payload }) => {
-      state.secondary_products = payload;
-    },
-    set_show_add_on: (state, { payload }) => {
-      state.show_add_on = payload;
-    },
-    set_add_on_price: (state, { payload }) => {
-      state.add_on_price = payload;
-    },
-    set_has_add_on: (state, { payload }) => {
-      state.has_add_on = payload;
-    },
-    setTabIndex: (state, { payload }) => {
-      state.tabIndex = payload;
-    },
-    setReviewModal: (state, { payload }) => {
-      state.review_modal = payload;
-    },
-    setRating: (state, { payload }) => {
-      state.rating = payload;
-    },
-    setComment: (state, { payload }) => {
-      state.comment = payload;
-    },
     update_color: (state, { payload }) => {
       const { color, color_code, images_object, _id, quantity, count_in_stock } = payload;
       state.color = color;
@@ -366,46 +301,7 @@ const productPage = createSlice({
         state.image = secondary.images_object?.[0]?.link || "";
       }
     },
-    unset_state: state => {
-      state.name = "";
-      state.description = "";
-      state.facts = "";
-      state.included_items = "";
-      state.quantity = 1;
-      state.images = [];
-      state.price = 0;
-      state.previous_price = 0;
-      state.sale_price = 0;
-      state.size = "";
-      state.quantity = 1;
-      state.count_in_stock = 0;
-      state.image = "";
-      state.secondary_image = "";
-      state.secondary_images = [];
-      state.dimensions = {};
-      state.color = "";
-      state.secondary_color = "";
-      state.color_code = "";
-      state.secondary_color_code = "";
-      state.color_product = null;
-      state.color_products = [];
-      state.secondary_color_product = null;
-      state.secondary_color_products = [];
-      state.option_product = null;
-      state.option_products = [];
-      state.secondary_product = null;
-      state.secondary_products = [];
-      state.preorder = false;
-      state.secondary_product_name = "";
-      state.option_product_name = "";
-      state.color_product_object = {};
-      state.secondary_color_product_object = {};
-      state.option_product_object = {};
-      state.secondary_product_object = {};
-      state.show_add_on = true;
-      state.add_on_price = 0;
-      state.has_add_on = false;
-    },
+
     update_universal_state: (state, { payload }) => {
       const { item, current_user } = payload;
       state.previous_price = 0;
@@ -449,25 +345,6 @@ const productPage = createSlice({
       if (item?.hasOwnProperty("previous_price") && item.previous_price > 0) {
         state.previous_price = item.previous_price;
       }
-    },
-    toggle_show_add_on: (state, { payload }) => {
-      const { show_add_on, product, secondary_color_product_object } = payload;
-      if (show_add_on) {
-        state.secondary_color = "";
-        state.secondary_color_code = "";
-        state.secondary_image = "";
-        state.price = product.price;
-        state.sale_price = product.sale_price;
-      } else {
-        state.price = secondary_color_product_object.price + product.price;
-        state.sale_price = secondary_color_product_object.sale_price + product.sale_price;
-        if (secondary_color_product_object.sale_price > 0) {
-          state.add_on_price = secondary_color_product_object.sale_price;
-        } else {
-          state.add_on_price = secondary_color_product_object.price;
-        }
-      }
-      state.show_add_on = !show_add_on;
     },
   },
   extraReducers: {
@@ -534,27 +411,7 @@ const productPage = createSlice({
 });
 
 export const {
-  set_name,
   setQuantity,
-  setQty,
-  toggle_show_add_on,
-  set_price,
-  set_image,
-  set_previous_price,
-  set_sale_price,
-
-  set_secondary_image,
-  set_color_products,
-  set_secondary_color,
-  set_secondary_color_products,
-  set_option_products,
-  set_secondary_color_code,
-
-  set_secondary_products,
-
-  set_show_add_on,
-  set_add_on_price,
-  set_has_add_on,
   setTabIndex,
   setReviewModal,
   setRating,
