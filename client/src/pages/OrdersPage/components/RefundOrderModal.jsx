@@ -3,6 +3,7 @@ import { Grid, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import { closeRefundModal, setRefundAmount, setRefundReason } from "../../../slices/orderSlice";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 const RefundOrderModal = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -10,10 +11,14 @@ const RefundOrderModal = () => {
   const dispatch = useDispatch();
 
   const refundOrder = amount => {
-    const confirm = window.confirm("Are you sure you want to Refund this Order?");
-    if (confirm) {
-      dispatch(API.refundOrder({ orderId: order._id, refundAmount: parseFloat(amount).toFixed(2), refundReason }));
-    }
+    dispatch(
+      showConfirm({
+        title: "Are you sure you want to REFUND this Order?",
+        onConfirm: () => {
+          dispatch(API.refundOrder({ orderId: order._id, refundAmount: parseFloat(amount).toFixed(2), refundReason }));
+        },
+      })
+    );
   };
   return (
     <GLActionModal

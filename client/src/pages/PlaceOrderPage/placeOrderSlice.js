@@ -78,6 +78,7 @@ const initialState = {
   environment: "production",
   shippingSaved: false,
   modalText: false,
+  freeShippingMinimum: 100,
   shippingValidations: {
     first_name: "",
     last_name: "",
@@ -380,6 +381,9 @@ const placeOrder = createSlice({
       state.parcel = "";
       state.current_shipping_speed = { rate: { retail_rate: "", rate: "", speed: "" }, freeShipping: false };
     },
+    initializePlaceOrderPage: state => {
+      return initialState;
+    },
   },
   extraReducers: {
     [API.shippingRates.pending]: (state, { payload }) => {
@@ -483,6 +487,7 @@ export const {
   setTempShippingRate,
   openProcessingTimeModal,
   clearShippingRates,
+  initializePlaceOrderPage,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

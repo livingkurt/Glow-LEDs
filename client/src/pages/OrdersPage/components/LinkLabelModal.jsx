@@ -9,6 +9,7 @@ import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../../utils/helper_functions";
 import { fullName } from "../../UsersPage/usersHelpers";
 import { applySearch, clearTable, selectAllRows } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 const LinkLabelModal = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const LinkLabelModal = () => {
   const { linkLabelModal, shipments, loadingShipments } = shipping;
   const shippingTable = useSelector(state => state.shipping.shippingTable);
   const { selectedRows } = shippingTable;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const selectedShipment = shipments?.find(shipment => shipment.id === selectedRows[0]);
 
@@ -58,20 +61,37 @@ const LinkLabelModal = () => {
           const selectedShipment = shipments.find(shipment => shipment.id === selectedRows[0]);
           if (selectedShipment) {
             dispatch(
-              API.saveOrder({
-                ...order,
-                shipping: {
-                  ...order.shipping,
-                  shipment_id: selectedShipment.id,
-                  shipping_label: selectedShipment,
-                  shipment_tracker: selectedShipment.tracker.id,
-                  shipping_rate: selectedShipment.selected_rate,
+              showConfirm({
+                title: "Are you sure you want to Link Label to this Order?",
+                inputLabel: "Describe the why you made this change to the order",
+                onConfirm: inputText => {
+                  dispatch(
+                    API.saveOrder({
+                      ...order,
+                      isUpdated: true,
+                      shipping: {
+                        ...order.shipping,
+                        shipment_id: selectedShipment.id,
+                        shipping_label: selectedShipment,
+                        shipment_tracker: selectedShipment.tracker.id,
+                        shipping_rate: selectedShipment.selected_rate,
+                      },
+                      tracking_url: selectedShipment.tracker.public_url,
+                      tracking_number: selectedShipment.tracking_code,
+                      change_log: [
+                        ...order.change_log,
+                        {
+                          change: inputText,
+                          changedAt: new Date(),
+                          changedBy: current_user,
+                        },
+                      ],
+                    })
+                  );
+                  dispatch(closeLinkLabelModal());
                 },
-                tracking_url: selectedShipment.tracker.public_url,
-                tracking_number: selectedShipment.tracking_code,
               })
             );
-            dispatch(closeLinkLabelModal());
           }
         }}
         onCancel={() => {
