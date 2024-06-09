@@ -66,7 +66,7 @@ const ProductPage = () => {
       </Box>
       <ProductPageLoading loading={productPageLoading}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={6} lg={4}>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
             <Box borderRadius={20} display={"flex"}>
               <Swiper
                 spaceBetween={50}
@@ -96,7 +96,7 @@ const ProductPage = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6} lg={4}>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
             <Box>
               <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
                 {name}
@@ -114,17 +114,13 @@ const ProductPage = () => {
               <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
                 Price: ${price}
               </Typography>
-              <ProductFacts
+              {/* <ProductFacts
                 category={category}
                 subcategory={subcategory}
                 pathname={pathname}
                 name={name}
                 facts={facts}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={4}>
-            <Paper sx={{ backgroundColor: "#585858", color: "white", borderRadius: 5, p: 2 }}>
+              /> */}
               <Typography variant="h6" gutterBottom></Typography>
               <Typography variant="h6" gutterBottom>
                 Customize
@@ -172,7 +168,7 @@ const ProductPage = () => {
                   Add To Cart
                 </GLButtonV2>
               </Box>
-            </Paper>
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Divider />

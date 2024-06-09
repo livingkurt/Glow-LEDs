@@ -4,7 +4,7 @@ import { Box, Grid, Skeleton } from "@mui/material";
 const ProductPageLoading = ({ loading, children }) => {
   return loading ? (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} md={6} lg={4}>
+      <Grid item xs={12} sm={12} md={6} lg={6}>
         <Skeleton
           className="br-20px"
           variant="rectangular"
@@ -14,7 +14,7 @@ const ProductPageLoading = ({ loading, children }) => {
         />
       </Grid>
 
-      <Grid item xs={12} sm={12} md={6} lg={4}>
+      <Grid item xs={12} sm={12} md={6} lg={6}>
         <Box maxWidth="100%">
           <Skeleton className="br-20px" variant="text" height={100} sx={{ bgcolor: "#4e5061" }} animation="wave" />
           <Skeleton
@@ -37,10 +37,6 @@ const ProductPageLoading = ({ loading, children }) => {
           <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
           <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
         </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={12} md={12} lg={4}>
-        <Skeleton className="br-20px" variant="rectangular" height={500} sx={{ bgcolor: "#4e5061" }} animation="wave" />
       </Grid>
 
       <Grid item xs={12}>
