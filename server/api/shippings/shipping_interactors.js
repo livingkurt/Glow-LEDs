@@ -203,37 +203,6 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     if (returnToHeadquarters === "true") {
       returnAddress = headquartersReturnAddress;
     }
-    console.log({
-      to_address: returnLabel ? returnAddress : customerAddress,
-      from_address: returnLabel ? customerAddress : returnAddress,
-      parcel: {
-        length: parcel.length,
-        width: parcel.width,
-        height: parcel.height,
-        weight: calculateTotalOunces(order.orderItems),
-      },
-      customs_info: {
-        eel_pfc: "NOEEI 30.37(a)",
-        customs_certify: true,
-        customs_signer: order.shipping.first_name + " " + order.shipping.last_name,
-        contents_type: "merchandise",
-        restriction_type: "none",
-        non_delivery_option: "return",
-        customs_items: order.orderItems.map(item => {
-          return {
-            description: "3D Printed Accessories",
-            quantity: item.quantity,
-            value: item.price,
-            weight: covertToOunces(item),
-            origin_country: "US",
-          };
-        }),
-      },
-      options: {
-        commercial_invoice_letterhead: "IMAGE_1",
-        commercial_invoice_signature: "IMAGE_2",
-      },
-    });
 
     const shipment = await EasyPost.Shipment.create({
       to_address: returnLabel ? returnAddress : customerAddress,
