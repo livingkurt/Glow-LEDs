@@ -14,6 +14,7 @@ import * as API from "../../api";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import ProductImages from "./components/ProductImages";
 import { Link, useLocation, useParams } from "react-router-dom";
+import ProductProtectionDetails from "./components/ProductProtectionDetails";
 
 const ProductPage = () => {
   const params = useParams();
@@ -82,11 +83,13 @@ const ProductPage = () => {
                 name={name}
                 facts={facts}
               /> */}
+              <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
+                Single Fact
+              </Typography>
               <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
                 Price: ${price}
               </Typography>
 
-              <Typography variant="subtitle1">{determineInStock(customizedProduct)}</Typography>
               {currentOptions?.map((option, index) => (
                 <CustomizationOption
                   key={index}
@@ -101,6 +104,7 @@ const ProductPage = () => {
                 value={customizedProduct?.quantity}
                 onChange={e => dispatch(setQuantity(e.target.value))}
                 placeholder="Select Quantity"
+                size="small"
                 options={[...Array(customizedProduct.max_quantity).keys()].map(value => ({ name: value + 1 }))}
                 getOptionLabel={option => option.name}
                 valueKey="name"
@@ -114,6 +118,7 @@ const ProductPage = () => {
                   className="bob"
                   sx={{
                     fontSize: "1.6rem",
+                    padding: 2,
                   }}
                   size="large"
                   onClick={() => {
@@ -124,10 +129,16 @@ const ProductPage = () => {
                   }
                   disabled={isOptionCountDifferent(product, customizedProduct)}
                 >
-                  Add To Cart
+                  {determineInStock(customizedProduct)}
                 </GLButtonV2>
               </Box>
             </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <ProductProtectionDetails />
           </Grid>
           <Grid item xs={12}>
             <Divider />

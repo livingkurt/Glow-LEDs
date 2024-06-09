@@ -154,7 +154,7 @@ export const determine_sampler = name => {
 
 export const determineInStock = product => {
   if (product.count_in_stock > 0) {
-    return "In Stock";
+    return "Add To Cart";
   }
   if (product.sold_out) {
     return "Sold Out";
