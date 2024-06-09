@@ -2789,4 +2789,254 @@ router.route("/migrate_order_options").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+router.route("/migrate_product_fields").put(async (req, res) => {
+  try {
+    // Find all products
+    const products = await Product.find();
+
+    // Iterate over each product and migrate the fields
+    for (const product of products) {
+      // Migrate image fields
+      if (product.images_object) {
+        product.images = product.images_object;
+        product.images_object = undefined;
+      }
+
+      // Migrate wholesale fields
+      if (product.wholesale_price) {
+        product.wholesalePrice = product.wholesale_price;
+        product.wholesale_price = undefined;
+      }
+      if (product.wholesale_product) {
+        product.isWholesale = product.wholesale_product;
+        product.wholesale_product = undefined;
+      }
+
+      // Migrate category fields
+      if (product.categorys) {
+        product.category = product.categorys[0];
+        product.categorys = undefined;
+      }
+      if (product.subcategorys) {
+        product.subcategory = product.subcategorys[0];
+        product.subcategorys = undefined;
+      }
+      if (product.collections) {
+        product.collection = product.collections[0];
+        product.collections = undefined;
+      }
+
+      // Migrate boolean fields
+      if (product.deleted !== undefined) {
+        product.isDeleted = product.deleted;
+        product.deleted = undefined;
+      }
+      if (product.preorder !== undefined) {
+        product.isPreorder = product.preorder;
+        product.preorder = undefined;
+      }
+      if (product.sold_out !== undefined) {
+        product.isSoldOut = product.sold_out;
+        product.sold_out = undefined;
+      }
+      if (product.hidden !== undefined) {
+        product.isHidden = product.hidden;
+        product.hidden = undefined;
+      }
+
+      // Migrate date fields
+      if (product.sale_start_date) {
+        product.saleStartDate = product.sale_start_date;
+        product.sale_start_date = undefined;
+      }
+      if (product.sale_end_date) {
+        product.saleEndDate = product.sale_end_date;
+        product.sale_end_date = undefined;
+      }
+
+      // Migrate dimension fields
+      if (product.dimensions) {
+        const {
+          package_length,
+          package_width,
+          package_height,
+          product_length,
+          product_width,
+          product_height,
+          weight_pounds,
+          weight_ounces,
+        } = product.dimensions;
+
+        product.dimensions = {
+          packageLength: package_length,
+          packageWidth: package_width,
+          packageHeight: package_height,
+          productLength: product_length,
+          productWidth: product_width,
+          productHeight: product_height,
+          weightPounds: weight_pounds,
+          weightOunces: weight_ounces,
+        };
+      }
+
+      // Migrate other fields
+      if (product.previous_price) {
+        product.previousPrice = product.previous_price;
+        product.previous_price = undefined;
+      }
+      if (product.finite_stock !== undefined) {
+        product.isFiniteStock = product.finite_stock;
+        product.finite_stock = undefined;
+      }
+      if (product.included_items) {
+        product.includedItems = product.included_items;
+        product.included_items = undefined;
+      }
+      if (product.sale_price) {
+        product.salePrice = product.sale_price;
+        product.sale_price = undefined;
+      }
+      if (product.meta_title) {
+        product.metaTitle = product.meta_title;
+        product.meta_title = undefined;
+      }
+      if (product.meta_description) {
+        product.metaDescription = product.meta_description;
+        product.meta_description = undefined;
+      }
+      if (product.meta_keywords) {
+        product.metaKeywords = product.meta_keywords;
+        product.meta_keywords = undefined;
+      }
+      if (product.filament_used) {
+        product.filamentUsed = product.filament_used;
+        product.filament_used = undefined;
+      }
+      if (product.has_add_on !== undefined) {
+        product.hasAddOn = product.has_add_on;
+        product.has_add_on = undefined;
+      }
+      if (product.color_code) {
+        product.colorCode = product.color_code;
+        product.color_code = undefined;
+      }
+
+      // Save the updated product
+      await product.save();
+    }
+
+    res.status(200).send({ message: "Product Field Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;
+
+// const mongoose = require("mongoose");
+
+// const reviewSchema = new mongoose.Schema({
+//   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+//   firstName: { type: String, required: true },
+//   lastName: { type: String, required: true },
+//   rating: { type: Number, default: 0, min: 0, max: 5 },
+//   comment: { type: String, required: true },
+//   isDeleted: { type: Boolean, default: false },
+// }, {
+//   timestamps: true,
+// });
+
+// const featureSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   description: { type: String, required: true },
+//   icon: { type: String }, // URL or reference to an icon image
+// });
+
+// const specificationSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   value: { type: String, required: true },
+// });
+
+// const faqSchema = new mongoose.Schema({
+//   question: { type: String, required: true },
+//   answer: { type: String, required: true },
+// });
+
+// const imageGridSchema = new mongoose.Schema({
+//   image: { type: mongoose.Schema.Types.ObjectId, ref: "Image", required: true },
+//   caption: { type: String },
+// });
+
+// const dimensionSchema = new mongoose.Schema({
+//   packageLength: { type: Number },
+//   packageWidth: { type: Number },
+//   packageHeight: { type: Number },
+//   productLength: { type: Number },
+//   productWidth: { type: Number },
+//   productHeight: { type: Number },
+//   weightPounds: { type: Number },
+//   weightOunces: { type: Number },
+// });
+
+// const productSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   price: { type: Number, required: true },
+//   images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+//   features: [featureSchema],
+//   specifications: [specificationSchema],
+//   faqs: [faqSchema],
+//   imageGrid: [imageGridSchema],
+//   video: { type: String },
+//   brand: { type: String, required: true },
+//   wholesalePrice: { type: Number },
+//   isWholesale: { type: Boolean, default: false },
+//   previousPrice: { type: Number },
+//   category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+//   subcategory: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+//   collection: { type: mongoose.Schema.Types.ObjectId, ref: "Collection" },
+//   quantity: { type: Number, default: 30, required: true },
+//   maxQuantity: { type: Number, default: 30, required: true },
+//   isFiniteStock: { type: Boolean, default: false },
+//   facts: { type: String },
+//   includedItems: { type: String },
+//   contributors: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
+//   description: { type: String },
+//   rating: { type: Number, default: 0 },
+//   numReviews: { type: Number, default: 0 },
+//   reviews: [reviewSchema],
+//   options: [optionSchema], // Embed the options schema here
+//   parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
+//   isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
+//   isHidden: { type: Boolean, default: false },
+//   salePrice: { type: Number, default: 0 },
+//   saleStartDate: { type: Date },
+//   saleEndDate: { type: Date },
+//   isDeleted: { type: Boolean, default: false },
+//   isPreorder: { type: Boolean, default: false },
+//   isSoldOut: { type: Boolean, default: false },
+//   pathname: { type: String },
+//   metaTitle: { type: String },
+//   metaDescription: { type: String },
+//   metaKeywords: { type: String },
+//   dimensions: dimensionSchema,
+//   processingTime: { type: Array },
+//   materialCost: { type: Number },
+//   filamentUsed: { type: Number },
+//   printingTime: { type: Number },
+//   assemblyTime: { type: Number },
+//   order: { type: Number },
+//   chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
+//   filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
+//   hasAddOn: { type: Boolean, default: false },
+//   color: { type: String },
+//   colorCode: { type: String },
+//   size: { type: String },
+//   sizing: { type: String },
+// }, {
+//   timestamps: true,
+// });
+
+// const Product = mongoose.model("Product", productSchema);
+
+// export default Product;

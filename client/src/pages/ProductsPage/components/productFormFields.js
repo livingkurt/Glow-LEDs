@@ -277,41 +277,51 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       align: "center",
       variant: "h6",
     },
-    product_length: {
-      type: "number",
-      label: "Product Length",
-    },
-    product_width: {
-      type: "number",
-      label: "Product Width",
-    },
-    product_height: {
-      type: "number",
-      label: "Product Height",
-    },
-    package_length: {
-      type: "number",
-      label: "Package Length",
-    },
-    package_width: {
-      type: "number",
-      label: "Package Width",
-    },
-    package_height: {
-      type: "number",
-      label: "Package Height",
-    },
-    package_volume: {
-      type: "number",
-      label: "Package Volume",
-    },
-    weight_pounds: {
-      type: "number",
-      label: "Weight (lbs)",
-    },
-    weight_ounces: {
-      type: "number",
-      label: "Weight (oz)",
+    dimensions: {
+      type: "object",
+      title: "Dimensions",
+      fields: {
+        product_length: {
+          type: "number",
+          label: "Length",
+          labelProp: "length",
+        },
+        product_width: {
+          type: "number",
+          label: "Width",
+          labelProp: "width",
+        },
+        product_height: {
+          type: "number",
+          label: "Height",
+          labelProp: "height",
+        },
+        package_length: {
+          type: "number",
+          label: "Package Length",
+          labelProp: "package_length",
+        },
+        package_width: {
+          type: "number",
+          label: "Package Width",
+          labelProp: "package_width",
+        },
+        package_height: {
+          type: "number",
+          label: "Package Height",
+          labelProp: "package_height",
+        },
+        weight_pounds: {
+          type: "number",
+          label: "Weight (lbs)",
+          labelProp: "weight_pounds",
+        },
+        weight_ounces: {
+          type: "number",
+          label: "Weight (oz)",
+          labelProp: "weight_ounces",
+        },
+      },
     },
     sale_title: {
       label: "Sale Info",

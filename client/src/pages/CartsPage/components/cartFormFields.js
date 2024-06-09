@@ -20,12 +20,6 @@ export const cartFormFields = ({ products, users }) => {
             labelProp: "name",
             required: true,
           },
-          quantity: {
-            type: "number",
-            label: "Quantity",
-            labelProp: "quantity",
-            required: true,
-          },
           max_quantity: {
             type: "number",
             label: "Max Quantity",
@@ -129,51 +123,59 @@ export const cartFormFields = ({ products, users }) => {
             label: "Package Volume",
             labelProp: "package_volume",
           },
-          weight_pounds: {
-            type: "number",
-            label: "Weight (lbs)",
-            labelProp: "weight_pounds",
-          },
-          weight_ounces: {
-            type: "number",
-            label: "Weight (oz)",
-            labelProp: "weight_ounces",
-          },
+
           count_in_stock: {
             type: "number",
             label: "Count in Stock",
             labelProp: "count_in_stock",
           },
-          length: {
-            type: "number",
-            label: "Length",
-            labelProp: "length",
+          dimensions: {
+            type: "object",
+            title: "Dimensions",
+            fields: {
+              length: {
+                type: "number",
+                label: "Length",
+                labelProp: "length",
+              },
+              width: {
+                type: "number",
+                label: "Width",
+                labelProp: "width",
+              },
+              height: {
+                type: "number",
+                label: "Height",
+                labelProp: "height",
+              },
+              package_length: {
+                type: "number",
+                label: "Package Length",
+                labelProp: "package_length",
+              },
+              package_width: {
+                type: "number",
+                label: "Package Width",
+                labelProp: "package_width",
+              },
+              package_height: {
+                type: "number",
+                label: "Package Height",
+                labelProp: "package_height",
+              },
+              weight_pounds: {
+                type: "number",
+                label: "Weight (lbs)",
+                labelProp: "weight_pounds",
+              },
+              weight_ounces: {
+                type: "number",
+                label: "Weight (oz)",
+                labelProp: "weight_ounces",
+              },
+            },
           },
-          width: {
-            type: "number",
-            label: "Width",
-            labelProp: "width",
-          },
-          height: {
-            type: "number",
-            label: "Height",
-            labelProp: "height",
-          },
-          package_length: {
-            type: "number",
-            label: "Package Length",
-            labelProp: "package_length",
-          },
-          package_width: {
-            type: "number",
-            label: "Package Width",
-            labelProp: "package_width",
-          },
-          package_height: {
-            type: "number",
-            label: "Package Height",
-            labelProp: "package_height",
-          },
+
           processing_time: {
             type: "multi-select",
             label: "Processing Time",

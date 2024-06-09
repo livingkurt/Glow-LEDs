@@ -932,17 +932,6 @@ export const update_products_url = (
   }
 };
 
-export const getUrlParameter = location => {
-  const search = location.search.split("?");
-  const search_object = {};
-  search
-    .filter(item => item !== "")
-    .forEach(item => {
-      search_object[item.split("=")[0]] = item.split("=")[1];
-    });
-  return search_object;
-};
-
 export const sort_options = ["Category", "Newest", "Lowest", "Highest"];
 
 export const mutliDragAwareReorder = args => {
