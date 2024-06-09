@@ -35,21 +35,45 @@ export const optionSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-
+    price: { type: Number },
     images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+
     secondary_images_object: { type: Array },
+    features: [
+      {
+        name: { type: String },
+        description: { type: String },
+        icon: { type: String }, // URL or reference to an icon image
+      },
+    ],
+
+    specifications: [
+      {
+        name: { type: String },
+        value: { type: String },
+      },
+    ],
+
+    faqs: [
+      {
+        question: { type: String },
+        answer: { type: String },
+      },
+    ],
+
+    imageGrid: [
+      {
+        image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+        caption: { type: String },
+      },
+    ],
     video: { type: String },
     brand: { type: String, required: true },
-    price: { type: Number },
+
     wholesale_price: { type: Number },
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
-    category: { type: String, required: true },
-    subcategory: { type: String },
-    product_collection: { type: String },
+
     categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
@@ -77,21 +101,46 @@ const productSchema = new mongoose.Schema(
     meta_title: { type: String },
     meta_description: { type: String },
     meta_keywords: { type: String },
-    package_length: { type: Number },
-    package_width: { type: Number },
-    package_height: { type: Number },
-    package_volume: { type: Number },
-    product_length: { type: Number },
-    product_width: { type: Number },
-    product_height: { type: Number },
-    weight_pounds: { type: Number },
-    weight_ounces: { type: Number },
+    dimensions: {
+      package_length: { type: Number },
+      package_width: { type: Number },
+      package_height: { type: Number },
+      package_volume: { type: Number },
+      product_length: { type: Number },
+      product_width: { type: Number },
+      product_height: { type: Number },
+      weight_pounds: { type: Number },
+      weight_ounces: { type: Number },
+    },
+
     processing_time: { type: Array },
     material_cost: { type: Number },
     filament_used: { type: Number },
     printing_time: { type: Number },
     assembly_time: { type: Number },
     order: { type: Number },
+    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
+    filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
+    has_add_on: { type: Boolean, default: false },
+
+    color: { type: String },
+    color_code: { type: String },
+    size: { type: String },
+    sizing: { type: String },
+
+    // ---------------------------
+    // Depreciated
+    // ---------------------------
+
+    category: { type: String, required: true },
+    subcategory: { type: String },
+    product_collection: { type: String },
+
+    color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    count_in_stock: { type: Number, default: 30, required: true },
+    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     has_add_on: { type: Boolean, default: false },
@@ -127,6 +176,16 @@ const productSchema = new mongoose.Schema(
     option: { type: Boolean, default: false },
     macro_product: { type: Boolean, default: false },
     extra_cost: { type: Number },
+
+    package_length: { type: Number },
+    package_width: { type: Number },
+    package_height: { type: Number },
+    package_volume: { type: Number },
+    product_length: { type: Number },
+    product_width: { type: Number },
+    product_height: { type: Number },
+    weight_pounds: { type: Number },
+    weight_ounces: { type: Number },
   },
   {
     timestamps: true,
