@@ -1,18 +1,6 @@
 import React, { useEffect } from "react";
-import { Box, Grid, Typography, Divider, Rating, Paper } from "@mui/material";
+import { Box, Grid, Typography, Divider, Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { isBrowser } from "react-device-detect";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y, Zoom } from "swiper/modules";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/zoom";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
@@ -24,6 +12,8 @@ import ProductPageLoading from "./components/ProductPageLoading";
 import { determineInStock, isOptionCountDifferent } from "./productHelpers";
 import * as API from "../../api";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
+import ProductImages from "./components/ProductImages";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const ProductPage = () => {
   const params = useParams();
@@ -67,33 +57,7 @@ const ProductPage = () => {
       <ProductPageLoading loading={productPageLoading}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Box borderRadius={20} display={"flex"}>
-              <Swiper
-                spaceBetween={50}
-                modules={[Navigation, Pagination, Scrollbar, A11y, Zoom]}
-                slidesPerView={1}
-                onSlideChange={() => console.log("slide change")}
-                onSwiper={swiper => console.log(swiper)}
-                navigation={isBrowser}
-                pagination={isBrowser ? { clickable: true } : false}
-                scrollbar={{ draggable: true }}
-                style={{
-                  "--swiper-navigation-color": "#ffffff50",
-                  "--swiper-pagination-color": "#ffffff50",
-                  "--swiper-scrollbar-color": "#ffffff50",
-                  position: "relative",
-                  zIndex: 1, // set a lower z-index value
-                }}
-              >
-                {images?.map((image, index) => (
-                  <div key={index}>
-                    <SwiperSlide>
-                      <img src={image?.link} alt={name} style={{ maxWidth: "100%", borderRadius: 20 }} />
-                    </SwiperSlide>
-                  </div>
-                ))}
-              </Swiper>
-            </Box>
+            <ProductImages images={images} />
           </Grid>
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -111,9 +75,6 @@ const ProductPage = () => {
                   </Typography>
                 </Box>
               )}
-              <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                Price: ${price}
-              </Typography>
               {/* <ProductFacts
                 category={category}
                 subcategory={subcategory}
@@ -121,13 +82,11 @@ const ProductPage = () => {
                 name={name}
                 facts={facts}
               /> */}
-              <Typography variant="h6" gutterBottom></Typography>
-              <Typography variant="h6" gutterBottom>
-                Customize
+              <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
+                Price: ${price}
               </Typography>
-              <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
-                {determineInStock(customizedProduct)}
-              </Typography>
+
+              <Typography variant="subtitle1">{determineInStock(customizedProduct)}</Typography>
               {currentOptions?.map((option, index) => (
                 <CustomizationOption
                   key={index}
