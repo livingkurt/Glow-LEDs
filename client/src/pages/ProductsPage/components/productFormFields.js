@@ -194,7 +194,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                 return toCapitalize(option);
               }
             },
-            options: ["dropdown", "buttons"],
+            options: ["colors", "dropdown", "buttons"],
           },
           isAddOn: {
             type: "checkbox",
@@ -210,6 +210,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
               type: "object",
               fields: {
                 name: { type: "text", label: "Name" },
+                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
                 isDefault: { type: "checkbox", label: "Default Option" },
                 product: {
                   type: "autocomplete_single",

@@ -6,6 +6,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
+import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
 
 const CustomizationOption = ({ index, option, selectedOption }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
   return (
     <Box key={index} display={"flex"} justifyContent={"space-between"} gap={2} alignItems={"center"}>
       <Box width={"100%"}>
-        {option.optionType === "dropdown" ? (
+        {option.optionType === "dropdown" && (
           <GLSelect
             label={option.name}
             value={selectedOption?.name}
@@ -34,7 +35,8 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
               </>
             )}
           />
-        ) : option.optionType === "buttons" ? (
+        )}
+        {option.optionType === "buttons" && (
           <GLToggleButtons
             ariaLabel={`${option.name} group`}
             value={selectedOption?.name}
@@ -42,9 +44,18 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
             onChange={e => handleChange(e.target.value)}
             options={option.values}
           />
-        ) : null}
+        )}
+        {option.optionType === "colors" && (
+          <GLColorButtons
+            ariaLabel={`${option.name} group`}
+            label={option.name}
+            value={selectedOption?.name}
+            onChange={e => handleChange(e.target.value)}
+            options={option.values}
+          />
+        )}
       </Box>
-      {selectedOption?.product?.images_object[0]?.link && (
+      {/* {selectedOption?.product?.images_object[0]?.link && (
         <Box mt={5}>
           <Zoom overlayBgColorEnd="rgba(0, 0, 0, 0.95)">
             <Tooltip title="Click to Expand" placement="top">
@@ -61,7 +72,7 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
             </Tooltip>
           </Zoom>
         </Box>
-      )}
+      )} */}
     </Box>
   );
 };

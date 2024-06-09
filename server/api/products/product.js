@@ -18,6 +18,7 @@ const reviewSchema = new mongoose.Schema(
 
 export const optionValueSchema = new mongoose.Schema({
   name: { type: String }, // e.g., "Blue", "Large"
+  colorCode: { type: String },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   // images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this optièon value, if necessary
   isDefault: { type: Boolean, default: false },
