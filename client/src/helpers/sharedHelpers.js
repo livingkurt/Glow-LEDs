@@ -60,7 +60,7 @@ export const determineProductLink = item => {
   let link = `/collections/all/products/${item.pathname}`;
 
   const params = [];
-
+  if (!item?.selectedOptions || !item?.currentOptions) return link;
   item.selectedOptions.forEach(option => {
     if (option.name) {
       params.push(`${encodeURIComponent(option.name)}=${encodeURIComponent(option.value)}`);
@@ -80,8 +80,8 @@ export const determineProductName = (item, show_quantity) => {
   if (show_quantity && item.quantity > 1) {
     name = `${item.quantity}x ${name}`;
   }
-
-  item.selectedOptions.forEach(option => {
+  if (!item?.selectedOptions || !item?.currentOptions) return name;
+  item?.selectedOptions?.forEach(option => {
     if (option.name) {
       name += ` - ${option.value}`;
     }
@@ -92,7 +92,8 @@ export const determineProductName = (item, show_quantity) => {
 
 export const determineProductNameString = item => {
   let name = item.name;
-  item.selectedOptions.forEach(option => {
+  if (!item?.selectedOptions || !item?.currentOptions) return name;
+  item?.selectedOptions?.forEach(option => {
     if (option.name) {
       name += ` - ${option.name}`;
     }

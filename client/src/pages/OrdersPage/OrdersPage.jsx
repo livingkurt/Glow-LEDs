@@ -89,7 +89,8 @@ const OrdersPage = () => {
   const determineProductNameString = (item, show_quantity) => {
     let name = `${show_quantity && item.quantity > 1 ? item.quantity + "x " : ""}${item.name}`;
 
-    item.selectedOptions.forEach((option, index) => {
+    if (!item?.selectedOptions || !item?.currentOptions) return name;
+    item?.selectedOptions?.forEach((option, index) => {
       if (option.name) {
         name += ` - ${option.name} ${item.currentOptions[index].name}`;
       }
