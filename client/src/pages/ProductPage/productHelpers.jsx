@@ -1,19 +1,4 @@
 import config from "../../config";
-import { getUrlParameter } from "../../utils/helper_functions";
-import {
-  set_add_on_price,
-  set_color_products,
-  set_option_products,
-  set_price,
-  set_secondary_color_products,
-  set_secondary_products,
-  set_show_add_on,
-  update_color_product_state,
-  update_option_product_state,
-  update_secondary_color_product_state,
-  update_secondary_product_state,
-  update_universal_state,
-} from "./productPageSlice";
 
 // Helper function to check if the count of non-addon options is different
 export const isOptionCountDifferent = (product, customizedProduct) => {
