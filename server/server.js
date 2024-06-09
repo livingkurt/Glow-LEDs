@@ -13,8 +13,8 @@ import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { google } from "googleapis"; // Import Google's OAuth libraries
 
-const Bugsnag = require("@bugsnag/js");
-const BugsnagPluginExpress = require("@bugsnag/plugin-express");
+// const Bugsnag = require("@bugsnag/js");
+// const BugsnagPluginExpress = require("@bugsnag/plugin-express");
 
 const oauthClients = {};
 
@@ -50,11 +50,11 @@ async function initializeAllOAuthClients() {
   });
 }
 
-Bugsnag.start({
-  apiKey: config.BUGSNAG_KEY,
-  plugins: [BugsnagPluginExpress],
-  releaseStage: process.env.NODE_ENV || "development",
-});
+// Bugsnag.start({
+//   apiKey: config.BUGSNAG_KEY,
+//   plugins: [BugsnagPluginExpress],
+//   releaseStage: process.env.NODE_ENV || "development",
+// });
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
@@ -81,8 +81,8 @@ app.all("*", function (req, res, next) {
   next();
 });
 
-const bugsnagMiddleware = Bugsnag.getPlugin("express");
-app.use(bugsnagMiddleware.requestHandler);
+// const bugsnagMiddleware = Bugsnag.getPlugin("express");
+// app.use(bugsnagMiddleware.requestHandler);
 
 app.use(cors({ origin: ["http://localhost:3000", "https://livingkurt.github.io/"] }));
 app.use(express.json({ limit: "50mb" }));
@@ -115,7 +115,7 @@ if (config.NODE_ENV === "production") {
   });
 }
 
-app.use(bugsnagMiddleware.errorHandler);
+// app.use(bugsnagMiddleware.errorHandler);
 
 initializeAllOAuthClients()
   .then(() => {
@@ -128,9 +128,9 @@ initializeAllOAuthClients()
     process.exit(1);
   });
 
-app.get("/api/bugsnag-test", function (req, res) {
-  Bugsnag.notify(new Error("Test error"));
-  res.send("Test error sent to Bugsnag");
-});
+// app.get("/api/bugsnag-test", function (req, res) {
+//   Bugsnag.notify(new Error("Test error"));
+//   res.send("Test error sent to Bugsnag");
+// });
 
 export { oauthClients }; // Export oauthClients
