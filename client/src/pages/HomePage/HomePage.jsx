@@ -1,10 +1,13 @@
+import { Box, Typography, TextField, Button, Grid, Card, CardContent, CardMedia, Container } from "@mui/material";
+import { styled } from "@mui/system";
+import { Helmet } from "react-helmet";
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { Loading } from "../../shared/SharedComponents";
+import { useSwiper } from "swiper/react";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
@@ -12,20 +15,43 @@ import { setDisplay, set_options, set_show_search_bar, set_search } from "../../
 import { openLoginModal } from "../../slices/userSlice";
 import { useProductsQuery } from "../../api/allRecordsApi";
 import { showSuccess } from "../../slices/snackbarSlice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import * as API from "../../api";
+import HomePageHead from "./components/HomePageHead";
+
+const StyledSwiper = styled(Swiper)({
+  width: "100%",
+  height: "auto",
+});
+
+const SlideImage = styled("img")({
+  width: "100%",
+  height: "auto",
+  aspectRatio: "16/9", // Adjust the aspect ratio as needed
+  objectFit: "cover",
+});
+
+const FeaturedProductCard = styled(Card)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  borderRadius: "20px",
+  padding: "20px",
+  color: "white",
+  backgroundColor: "transparent",
+});
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-
-  const glowLeds = useSelector(state => state.glowLeds);
-  const { options, search, display } = glowLeds;
-
   const wrapperRef = useRef(null);
-
-  const { width } = useWindowDimensions();
 
   const contentPage = useSelector(state => state.contents.contentPage);
   const { contents } = contentPage;
+  const productsPage = useSelector(state => state.products.productsPage);
+  const { ourPickProducts } = productsPage;
 
   useEffect(() => {
     const register = searchParams.get("register");
@@ -54,10 +80,7 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    dispatch(set_show_search_bar(false));
-    return () => {
-      dispatch(set_show_search_bar(true));
-    };
+    dispatch(API.getOurPicksProducts());
   }, []);
 
   const handleClickOutside = event => {
@@ -67,641 +90,114 @@ const HomePage = () => {
     }
   };
 
-  const update_list = product => {
-    dispatch(set_search(product));
-    dispatch(setDisplay(false));
-    navigate("/collections/all/products?search=" + product);
-  };
-
-  const submitHandler = e => {
-    e.preventDefault();
-
-    navigate("/collections/all/products?search=" + search);
-  };
-
-  const featurePage = useSelector(state => state.features);
-  const { features } = featurePage;
-
-  const dispatch = useDispatch();
-
-  const { data: productsData, isLoading, isError } = useProductsQuery({ option: false, hidden: false });
-  useEffect(() => {
-    if (productsData && !isLoading && !isError) {
-      const newOptions = [
-        ...options,
-        ...categories.map(category => ({ name: humanize(category) })),
-        ...subcategories.map(subcategory => ({ name: humanize(subcategory) })),
-        ...productsData,
-      ];
-      dispatch(set_options(newOptions));
-    }
-  }, [productsData, isLoading, isError, dispatch]);
-
-  const determine_welcome_font_size = width => {
-    if (width > 1500) {
-      return "fs-40px";
-    } else if (width < 1500 && width > 1100) {
-      return "fs-35px";
-    } else if (width < 528 && width > 529) {
-      return "fs-25px";
-    } else if (width < 438 && width > 300) {
-      return "fs-20px";
-    }
-  };
-  const determine_innovators_font_size = width => {
-    if (width > 1500) {
-      return "fs-25px";
-    } else if (width < 1500 && width > 1100) {
-      return "fs-25px";
-    } else if (width < 528 && width > 529) {
-      return "fs-20px";
-    } else if (width < 438 && width > 300) {
-      return "fs-16px";
-    }
-  };
-
   return (
-    <div className="main_container">
-      <Helmet>
-        <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
-        <meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
-        <meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
-        <link rel="canonical" href="https://www.glow-leds.com/" />
-        <meta property="og:url" content="https://www.glow-leds.com" />
-        <meta
-          name="description"
-          content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-        />
+    <Box>
+      <HomePageHead />
 
-        <meta
-          property="og:description"
-          content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-        />
-        <meta
-          name="twitter:description"
-          content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-        />
-        <meta
-          property="og:image"
-          content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-        />
-        <meta
-          property="og:image:secure_url"
-          content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-        />
-
-        <meta
-          name="twitter:image"
-          content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-        />
-      </Helmet>
-
-      <Loading loading={contents.length > 0 && contents[0]?.home_page?.slideshow?.length === 0} />
-      {contents &&
-      contents.filter(content => content.active === true)[0] &&
-      contents.filter(content => content.active === true)[0]?.home_page?.banner_image_object?.link ? (
-        <img
-          style={{ borderRadius: "20px", width: "100%" }}
-          src={contents.filter(content => content.active === true)[0]?.home_page?.banner_image_object?.link}
-          className="jc-c mb-20px"
-          alt="Promo"
-          title="Promo Image"
-        />
-      ) : (
-        <div></div>
-      )}
-
-      <div>
-        {width > 1019 && (
-          <div>
-            {contents.length > 0 && contents[0]?.home_page?.slideshow?.length > 0 ? (
-              <div className="carousel-wrapper pos-rel">
-                {<HomeSlideshow slideshow={contents[0]?.home_page?.slideshow} />}
-
-                <div
-                  className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
-                  style={{
-                    backgroundColor: "#6a6c8091",
-                    top: "100px",
-                    left: "50%",
-                    transform: "translate(-50%, 50%)",
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <StyledSwiper
+          spaceBetween={0}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 5000, // Adjust the delay (in milliseconds) between slide changes
+            disableOnInteraction: false, // Allow autoplay to continue after user interaction
+          }}
+        >
+          {contents[0]?.home_page?.slideshow.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <Box sx={{ position: "relative" }}>
+                <SlideImage src={slide.image} alt={`Slide ${index + 1}`} />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    color: "#fff",
+                    padding: "40px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
                   }}
                 >
-                  <div className="jc-c">
-                    <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
-                      Welcome to Glow-LEDs
-                    </h1>
-                  </div>
-                  <div className="jc-c">
-                    <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
-                      Innovators of Gloving and Flow Art Technology
-                    </h2>
-                  </div>
+                  <Typography variant="h3" gutterBottom>
+                    {slide.label}
+                  </Typography>
+                  <Link to={slide.link}>
+                    <Button variant="contained" onClick={() => navigate(slide.link)}>
+                      Shop Now
+                    </Button>
+                  </Link>
+                </Box>
+              </Box>
+            </SwiperSlide>
+          ))}
+        </StyledSwiper>
+        {/* <Box sx={{ marginTop: "20px" }}>
+          <Typography variant="h2" component="h1" gutterBottom>
+            Welcome to Glow-LEDs
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Innovators of Gloving and Flow Art Technology
+          </Typography>
+        </Box> */}
+      </Box>
+      <Container style={{ maxWidth: "1600px", padding: "40px" }}>
+        <Typography variant="h4" component="h2" align="left" gutterBottom>
+          Featured Products
+        </Typography>
+        <Grid container spacing={4} justifyContent="center">
+          {ourPickProducts?.map(product => (
+            <Grid item key={product.id} xs={12} sm={6} md={3}>
+              <FeaturedProductCard elevation={5}>
+                <CardMedia
+                  component="img"
+                  image={product.images_object[0]?.link}
+                  alt={product.name}
+                  sx={{ borderRadius: "20px" }}
+                />
+                <CardContent sx={{ width: "100%", padding: "0px", paddingTop: 5 }}>
+                  <Typography variant="subtitle2" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2">${product.price.toFixed(2)}</Typography>
+                  <Button variant="contained" sx={{ marginTop: "10px" }}>
+                    Add To Cart
+                  </Button>
+                </CardContent>
+              </FeaturedProductCard>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
-                  <div className="jc-c">
-                    <form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
-                      <div className="jc-b ai-c search_container w-100per max-w-600px">
-                        <div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
-                          <input
-                            id="auto"
-                            autoComplete="off"
-                            onClick={() => dispatch(setDisplay(true))}
-                            className="form_input search mv-0px w-100per fs-20px"
-                            placeholder="Find Your Glow Here"
-                            value={search}
-                            onChange={e => dispatch(set_search(e.target.value))}
-                          />
-                          {display && (
-                            <div className="pos-abs bg-primary br-10px">
-                              {options
-                                .filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-                                .slice(0, 20)
-                                .map((value, i) => {
-                                  return (
-                                    <div
-                                      onClick={() => update_list(value.name)}
-                                      className="auto-option ai-c jc-b w-600px p-5px"
-                                      key={i}
-                                      tabIndex="0"
-                                    >
-                                      <span className="fs-20px" style={{ color: "white" }}>
-                                        {value.name}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                            </div>
-                          )}
-                        </div>
-                        <GLButton type="submit" variant="primary" className="w-50px fs-20px mb-0px" aria-label="Search">
-                          <i className="fas fa-search" />
-                        </GLButton>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="carousel-wrapper pos-rel">
-                <div className="skeleton-img skeleton" />
-                <div
-                  className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
-                  style={{
-                    backgroundColor: "#6a6c8091",
-                    top: "100px",
-                    left: "50%",
-                    transform: "translate(-50%, 50%)",
-                  }}
-                >
-                  <div className="jc-c">
-                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>
-                      Welcome to Glow-LEDs
-                    </h1>
-                  </div>
-                  <div className="jc-c">
-                    <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
-                      Innovators of Gloving and Flow Art Technology
-                    </h2>
-                  </div>
+      <Box sx={{ padding: "40px" }}>
+        <Typography variant="body1" align="center" sx={{ marginBottom: "20px" }}>
+          Here at Glow LEDs we aim to be the biggest innovators in the gloving industry.
+        </Typography>
+        <Typography variant="body1" align="center" sx={{ marginBottom: "20px" }}>
+          Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put
+          our own spin on gloves and batteries! Plus we're one of the few places where you can order Custom gloving
+          accessories.
+        </Typography>
+        <Typography variant="body1" align="center">
+          We are ran by a very small team of people who are dedicated to listening to the community and creating what's
+          most wanted. Our products are made by hand to order, so every order is made with love.
+        </Typography>
+      </Box>
 
-                  <div className="jc-c">
-                    <form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
-                      <div className="jc-b ai-c search_container w-100per max-w-600px">
-                        <div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
-                          <input
-                            id="auto"
-                            autoComplete="off"
-                            onClick={() => dispatch(setDisplay(true))}
-                            className="form_input search mv-0px w-100per fs-20px"
-                            placeholder="Find Your Glow Here"
-                            value={search}
-                            onChange={e => dispatch(set_search(e.target.value))}
-                          />
-                          {display && (
-                            <div className="pos-abs bg-primary br-10px">
-                              {options
-                                .filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-                                .slice(0, 20)
-                                .map((value, i) => {
-                                  return (
-                                    <div
-                                      onClick={() => update_list(value.name)}
-                                      className="auto-option ai-c jc-b w-600px p-5px"
-                                      key={i}
-                                      tabIndex="0"
-                                    >
-                                      <span className="fs-20px" style={{ color: "white" }}>
-                                        {value.name}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                            </div>
-                          )}
-                        </div>
-                        <GLButton type="submit" variant="primary" className="w-50px fs-20px mb-0px" aria-label="Search">
-                          <i className="fas fa-search" />
-                        </GLButton>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        {width < 1019 && (
-          <div>
-            {contents[0]?.home_page?.slideshow.length > 0 ? (
-              <div className="carousel-wrapper ">
-                <div
-                  className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
-                  style={
-                    {
-                      // backgroundColor: '#6a6c8091'
-                    }
-                  }
-                >
-                  <div className="jc-c">
-                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>
-                      Welcome to Glow-LEDs
-                    </h1>
-                  </div>
-                  <div className="jc-c">
-                    <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
-                      Innovators of Gloving and Flow Art Technology
-                    </h2>
-                  </div>
-
-                  <div className="jc-c">
-                    <form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
-                      <div className="jc-b ai-c search_container w-100per max-w-600px">
-                        <div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
-                          <input
-                            id="auto"
-                            autoComplete="off"
-                            onClick={() => dispatch(setDisplay(true))}
-                            className="form_input search mv-0px w-100per fs-20px"
-                            placeholder="Find Your Glow Here"
-                            value={search}
-                            onChange={e => dispatch(set_search(e.target.value))}
-                          />
-                          {display && (
-                            <div className="pos-abs bg-primary br-10px z-pos-2">
-                              {options
-                                .filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-                                .slice(0, 20)
-                                .map((value, i) => {
-                                  return (
-                                    <div
-                                      onClick={() => update_list(value.name)}
-                                      className="auto-option ai-c jc-b w-600px p-5px"
-                                      key={i}
-                                      tabIndex="0"
-                                    >
-                                      <span className="fs-20px" style={{ color: "white" }}>
-                                        {value.name}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                            </div>
-                          )}
-                        </div>
-                        <GLButton type="submit" variant="primary" className="w-50px fs-20px mb-0px" aria-label="Search">
-                          <i className="fas fa-search" />
-                        </GLButton>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                {<HomeSlideshow slideshow={contents[0]?.home_page?.slideshow} />}
-              </div>
-            ) : (
-              <div
-                className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
-                style={
-                  {
-                    // backgroundColor: '#6a6c8091'
-                  }
-                }
-              >
-                <div className="jc-c">
-                  <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
-                    Welcome to Glow-LEDs
-                  </h1>
-                </div>
-                <div className="jc-c">
-                  <h2 className={`mb-1rem ta-c lh-30px ${determine_innovators_font_size(width)}`}>
-                    Innovators of Gloving and Flow Art Technology
-                  </h2>
-                </div>
-
-                <div className="jc-c">
-                  <form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
-                    <div className="jc-b ai-c search_container w-100per max-w-600px">
-                      <div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
-                        <input
-                          id="auto"
-                          autoComplete="off"
-                          onClick={() => dispatch(setDisplay(true))}
-                          className="form_input search mv-0px w-100per fs-20px"
-                          placeholder="Find Your Glow Here"
-                          value={search}
-                          onChange={e => dispatch(set_search(e.target.value))}
-                        />
-                        {display && (
-                          <div className="pos-abs bg-primary br-10px z-pos-2">
-                            {options
-                              .filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-                              .slice(0, 20)
-                              .map((value, i) => {
-                                return (
-                                  <div
-                                    onClick={() => update_list(value.name)}
-                                    className="auto-option ai-c jc-b w-600px p-5px"
-                                    key={i}
-                                    tabIndex="0"
-                                  >
-                                    <span className="fs-20px" style={{ color: "white" }}>
-                                      {value.name}
-                                    </span>
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        )}
-                      </div>
-                      <GLButton type="submit" variant="primary" className="w-50px fs-20px mb-0px" aria-label="Search">
-                        <i className="fas fa-search" />
-                      </GLButton>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      <div style={{ marginTop: contents[0]?.home_page?.slideshow.length === 0 ? 0 : "-25%" }} className="pv-2rem">
-        <div className="jc-c">
-          <div>
-            <p
-              style={{
-                fontSize: "16px",
-                width: "100%",
-                lineHeight: "30px",
-                margin: "1rem",
-                color: "white",
-                textAlign: "center",
-              }}
-            >
-              Here at Glow LEDs we aim to be the biggest innovators in the gloving industry.
-            </p>
-
-            <div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-
-            <p
-              style={{
-                fontSize: "16px",
-                width: "100%",
-                lineHeight: "30px",
-                margin: "1rem",
-                color: "white",
-                textAlign: "center",
-              }}
-            >
-              Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even
-              put our own spin on gloves and batteries! Plus we're one of the few places where you can order Custom
-              gloving accessories.
-            </p>
-
-            <div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-
-            <p
-              style={{
-                fontSize: "16px",
-                width: "100%",
-                lineHeight: "30px",
-                margin: "1rem",
-                color: "white",
-                textAlign: "center",
-              }}
-            >
-              We are ran by a very small team of people who are dedicated to listening to the community and creating
-              what's most wanted. Our products are made by hand to order, so every order is made with love.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className={`${width > 1019 ? "jc-b" : "jc-c"} wrap`}>
-        {contents &&
-          contents
-            .filter(content => content.active === true)
-            .slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
-            .map(({ home_page }, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`container ${
-                    width > 1473 ? "max-w-450px" : width > 1019 ? `w-49per ${index === 0 ? "mr-1rem" : ""}` : "w-100per"
-                  } jc-b column bg-secondary`}
-                >
-                  <div>
-                    <h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">{home_page.h1}</h4>
-                    {home_page.show_image && home_page.images_object && (
-                      <div className="m-auto jc-c max-w-300px">
-                        <Link to={home_page?.link}>
-                          <img
-                            style={{ borderRadius: "20px", width: "100%" }}
-                            src={home_page?.images_object[0]?.link}
-                            className="max-w-300px jc-c m-auto"
-                            alt="Promo"
-                            title="Promo Image"
-                          />
-                        </Link>
-                      </div>
-                    )}
-
-                    <div className="m-auto jc-c max-w-300px">
-                      {!home_page.show_image && home_page.images_object && (
-                        <Link to={home_page?.link} className="home_page_pictures">
-                          {home_page?.images_object.map((image, index) => (
-                            <img
-                              key={index}
-                              src={image?.link}
-                              className={"w-100per br-20px m-auto image_" + (index + 1)}
-                              alt="Promo"
-                              title="Promo Image"
-                            />
-                          ))}
-                        </Link>
-                      )}
-                    </div>
-                    {home_page.show_video && (
-                      <div className="jc-c pos-rel">
-                        <div className="iframe-container">
-                          <iframe
-                            width="996"
-                            height="560"
-                            src={`https://www.youtube.com/embed/${home_page.video}`}
-                            title={"Home Page Video"}
-                            frameborder="0"
-                            style={{ borderRadius: "20px" }}
-                            allowFullScreen
-                          ></iframe>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="jc-c">
-                      <h4 className="fs-18px mb-0px ta-c title_font lh-30px">{home_page.h2}</h4>
-                    </div>
-                    <div className="jc-c w-100per m-auto">
-                      <ReadMore width={5000} className="p_descriptions paragraph_font" length={100} pre={true}>
-                        {home_page.p}
-                      </ReadMore>
-                    </div>
-                  </div>
-                  <div className="jc-c">
-                    {home_page?.link[0] === "/" ? (
-                      <Link to={home_page?.link}>
-                        <GLButton variant="primary" className="bob">
-                          {home_page.button}
-                        </GLButton>
-                      </Link>
-                    ) : (
-                      <a href={home_page?.link} target="_blank" rel="noreferrer">
-                        <GLButton variant="primary" className="bob">
-                          {home_page.button}
-                        </GLButton>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-      </div>
-      <h4 className="fs-25px mv-8px ta-c jc-c title_font lh-30px">Featured Artists</h4>
-      <div className={`${width > 1019 ? "jc-b" : "jc-c"} wrap`}>
-        {features &&
-          features
-            .filter(feature => feature.release_date)
-            .slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
-            .map((feature, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`container ${
-                    width > 1473 ? "max-w-450px" : width > 1019 ? `w-49per ${index === 0 ? "mr-1rem" : ""}` : "w-100per"
-                  } w-500px jc-b column bg-secondary `}
-                >
-                  <div>
-                    <h4 className="fs-20px mt-1rem mb-2rem ta-c jc-c title_font lh-30px">{feature.artist_name}</h4>
-                    {feature.show_image && feature.logo && (
-                      <div className="m-auto jc-c max-w-300px">
-                        <Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
-                          <img
-                            style={{ borderRadius: "20px", width: "100%" }}
-                            src={feature.logo}
-                            className="max-w-300px jc-c m-auto"
-                            alt="Promo"
-                            title="Promo Image"
-                          />
-                        </Link>
-                      </div>
-                    )}
-
-                    {feature.video && (
-                      <div className="jc-c pos-rel">
-                        <div className="iframe-container">
-                          <iframe
-                            width="996"
-                            height="560"
-                            src={`https://www.youtube.com/embed/${feature.video}`}
-                            title="Content Video"
-                            frameborder="0"
-                            style={{ borderRadius: "20px" }}
-                            allowFullScreen
-                          ></iframe>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="jc-c">
-                      <h4 className="fs-18px mb-0px ta-c title_font lh-30px mv-1rem">
-                        {feature.product && humanize(feature.product)}
-                      </h4>
-                    </div>
-                    <div className="jc-c w-100per mv-1rem">
-                      <p>{feature.song_id}</p>
-                      {/* <ReadMore
-											width={5000}
-											className="p_descriptions paragraph_font"
-											length={100}
-											pre={true}
-										>
-											{feature.description}
-										</ReadMore> */}
-                    </div>
-                  </div>
-                  <div className="jc-c">
-                    <Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
-                      <GLButton variant="primary" className="bob mv-1rem">
-                        Learn More About {feature.artist_name}
-                      </GLButton>
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-      </div>
-      <h4 className="fs-25px mv-8px ta-c jc-c title_font lh-30px">Check out Our Products in Action</h4>
-      <div className={`small_home_page_cards ${width > 1019 ? "jc-b" : "jc-c"} wrap`}>
-        {homepage_videos.map((card, index) => {
-          return (
-            <div
-              className={`container ${
-                width > 1473 ? "max-w-450px" : width > 1019 ? `w-49per ${index === 0 ? "mr-1rem" : ""}` : "w-100per"
-              } jc-b column`}
-              style={{ backgroundColor: card.color }}
-              key={index}
-            >
-              <div className="">
-                <div className="jc-c">
-                  <h2 className="ta-c fs-20px mt-1rem mb-2rem">{card.name}</h2>
-                </div>
-                <div className="jc-c pos-rel mb-1rem">
-                  <div className="iframe-container">
-                    <iframe
-                      width="996"
-                      height="560"
-                      src={`https://www.youtube.com/embed/${card.video}`}
-                      title={`${card.name} Promo Video`}
-                      frameborder="0"
-                      style={{ borderRadius: "20px" }}
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-                <ReadMore width={3000} className="p_descriptions paragraph_font " length={100}>
-                  {card.description}
-                </ReadMore>
-              </div>
-              <div className="jc-c">
-                <Link className="w-100per" to={`/collections/all/products/category/${card.category}`}>
-                  <GLButton variant="primary" className="w-100per">
-                    Shop {card.name}
-                  </GLButton>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+      {/* Sections for other homepage content */}
+    </Box>
   );
 };
+
 export default HomePage;
