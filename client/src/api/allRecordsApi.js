@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { create_query } from "../utils/helper_functions";
-import { showError, showSuccess } from "../slices/snackbarSlice";
-import store from "../store";
 
 export const allRecordsApi = createApi({
   reducerPath: "allRecordsApi",
@@ -81,7 +79,6 @@ export const {
   useProductsQuery,
   usePromosQuery,
   useUsersQuery,
-  useSettingsQuery,
   useTeamsQuery,
   useSurveysQuery,
 } = allRecordsApi;

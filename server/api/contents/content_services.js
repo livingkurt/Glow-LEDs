@@ -43,11 +43,18 @@ export default {
       // filter.
 
       const contents = await Content.find(filter)
-        .populate("home_page.image_object")
-        .populate("home_page.images_object")
-        .populate("home_page.images_object")
-        .populate("home_page.banner_image_object")
-        .populate("home_page.slideshow.image_object")
+        .populate({
+          path: "home_page.featured_products",
+          populate: {
+            path: "images_object",
+            model: "Image",
+          },
+        })
+        .populate("home_page.learn_more_products.image")
+        .populate("home_page.learn_highlights.images_data.image")
+        .populate("home_page.discover_more.image")
+        .populate("home_page.get_more_out_of.image")
+        .populate("home_page.slideshow.image")
         .sort({ _id: -1 })
         .limit(3);
       const count = await content_db.count_contents_db(filter);
@@ -60,6 +67,32 @@ export default {
       } else {
         throw new Error("Count is undefined");
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  current_contents_s: async query => {
+    try {
+      const sort = { createdAt: -1 }; // Sort by createdAt field in descending order
+      const filter = { deleted: false, active: true }; // Filter for non-deleted and active records
+
+      return await Content.find(filter)
+        .sort(sort)
+        .limit(1)
+        .populate({
+          path: "home_page.featured_products",
+          populate: {
+            path: "images_object",
+            model: "Image",
+          },
+        })
+        .populate("home_page.learn_more_products.image")
+        .populate("home_page.learn_highlights.images_data.image")
+        .populate("home_page.discover_more.image")
+        .populate("home_page.get_more_out_of.image")
+        .populate("home_page.slideshow.image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

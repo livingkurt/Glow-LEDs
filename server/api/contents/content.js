@@ -1,47 +1,70 @@
 import mongoose from "mongoose";
 
-const slideshow_schema = {
-  label: { type: String },
-  image: { type: String },
-  image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-  link: { type: String },
-};
-
-const home_page_schema = {
-  h1: { type: String },
-  image: { type: String },
-  images: { type: Array },
-  image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-  images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-  slideshow: [slideshow_schema],
-  video: { type: String },
-  banner_image: { type: String },
-  banner_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-  show_image: { type: Boolean, default: true },
-  show_video: { type: Boolean, default: false },
-  h2: { type: String },
-  p: { type: String },
-  button: { type: String },
-  link: { type: String },
-};
-
-const banner_schema = {
-  label: { type: String },
-  button: { type: String },
-  link: { type: String },
-};
-
-const links_schema = {
-  label: { type: String },
-  link: { type: String },
-  icon: { type: String },
-};
-
 const contentSchema = new mongoose.Schema(
   {
-    home_page: home_page_schema,
-    banner: banner_schema,
-    links: [links_schema],
+    name: { type: String },
+    home_page: {
+      featured_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+      learn_more_products: [
+        {
+          label: { type: String },
+          fact: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          link: { type: String },
+          button_text: { type: String },
+        },
+      ],
+      learn_highlights: {
+        title: { type: String },
+        description: { type: String },
+        images_data: [
+          {
+            image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+            link: { type: String },
+            label: { type: String },
+          },
+        ],
+        link: { type: String },
+        button_text: { type: String },
+        fact: { type: String },
+      },
+      discover_more: {
+        title: { type: String },
+        subtitle: { type: String },
+        image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+        button_text: { type: String },
+        link: { type: String },
+      },
+      get_more_out_of: {
+        title: { type: String },
+        description: { type: String },
+        image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+        button_text: { type: String },
+        link: { type: String },
+      },
+      slideshow: [
+        {
+          label: { type: String },
+          fact: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          link: { type: String },
+          button_text: { type: String },
+        },
+      ],
+      video: { type: String },
+    },
+    banner: {
+      label: { type: String },
+      button: { type: String },
+      link: { type: String },
+    },
+    links: [
+      {
+        label: { type: String },
+        link: { type: String },
+        icon: { type: String },
+      },
+    ],
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

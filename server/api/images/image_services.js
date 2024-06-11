@@ -50,13 +50,7 @@ export default {
       if (image) {
         return image;
       } else if (!image) {
-        // Create new image
-        const newImage = await image_db.create_images_db({
-          link: convertedLink,
-          album: album,
-        });
-
-        return newImage;
+        throw new Error("Image Record Not Found");
       }
     } catch (error) {
       if (error instanceof Error) {

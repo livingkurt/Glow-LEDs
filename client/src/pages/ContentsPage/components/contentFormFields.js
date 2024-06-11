@@ -1,43 +1,99 @@
-export const contentFormFields = ({ content }) => {
+export const contentFormFields = ({ content, products }) => {
+  console.log({ products });
   return {
+    name: { type: "text", label: "Name" },
     home_page: {
       type: "object",
       title: "Home Page",
       fields: {
-        h1: { type: "text", label: "H1" },
-        // image_object: {
-        //   type: "image_upload",
-        //   label: "Image",
-        //   // options: images,
-        //   labelProp: "link",
-        //   album: `${content?.home_page?.h1} Images`,
-        //   getOptionLabel: (option) => option.link,
-        // },
-
-        h2: { type: "text", label: "H2" },
-        p: { type: "text_multiline", label: "P" },
-
-        images_object: {
-          type: "image_upload",
-          image_type: "object",
-          label: "Images",
-          // options: images,
-          labelProp: "images_object",
-          album: `${content?.home_page?.h1} Images`,
+        featured_products: {
+          type: "autocomplete_multiple",
+          label: "Featured Products",
+          options: products,
+          labelProp: "name",
         },
-        banner_image_object: {
-          type: "image_upload",
-          image_type: "object",
-          label: "Rectangle Image",
-          // options: images,
-          labelProp: "banner_image_object",
-          album: `${content?.home_page?.h1} Images`,
+        learn_more_products: {
+          type: "array",
+          title: "Learn More Products",
+          label: item => item.label,
+          itemSchema: {
+            type: "object",
+            fields: {
+              label: { type: "text", label: "Label" },
+              fact: { type: "text", label: "Fact" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: `${content?.home_page?.learn_more_products?.label} Images`,
+              },
+              link: { type: "text", label: "Link" },
+              button_text: { type: "text", label: "Button Text" },
+            },
+          },
         },
-        video: { type: "text", label: "Video" },
-        show_image: { type: "checkbox", label: "Show Image", default: true },
-        show_video: { type: "checkbox", label: "Show Video", default: false },
-        button: { type: "text", label: "Button" },
-        link: { type: "text", label: "Link" },
+        learn_highlights: {
+          type: "object",
+          title: "Learn Highlights",
+          selectable: false,
+          fields: {
+            title: { type: "text", label: "Title" },
+            description: { type: "text_multiline", label: "Description" },
+            images_data: {
+              type: "array",
+              title: "Images Data",
+              label: item => item.label,
+              itemSchema: {
+                type: "object",
+                fields: {
+                  image: {
+                    type: "image_upload",
+                    label: "Image",
+                    labelProp: "_id",
+                    album: `${content?.home_page?.learn_highlights?.title} Images`,
+                  },
+                  link: { type: "text", label: "Link" },
+                  label: { type: "text", label: "Label" },
+                },
+              },
+            },
+            link: { type: "text", label: "Link" },
+            button_text: { type: "text", label: "Button Text" },
+            fact: { type: "text", label: "Fact" },
+          },
+        },
+        discover_more: {
+          type: "object",
+          title: "Discover More",
+          fields: {
+            title: { type: "text", label: "Title" },
+            subtitle: { type: "text", label: "Subtitle" },
+            image: {
+              type: "image_upload",
+              label: "Image",
+              labelProp: "_id",
+              album: `${content?.home_page?.discover_more?.title} Images`,
+            },
+            button_text: { type: "text", label: "Button Text" },
+            link: { type: "text", label: "Link" },
+          },
+        },
+        get_more_out_of: {
+          type: "object",
+          title: "Get More Out Of",
+          fields: {
+            title: { type: "text", label: "Title" },
+            description: { type: "text_multiline", label: "Description" },
+            image: {
+              type: "image_upload",
+              label: "Image",
+              labelProp: "_id",
+              album: `${content?.home_page?.get_more_out_of?.title} Images`,
+            },
+            button_text: { type: "text", label: "Button Text" },
+            link: { type: "text", label: "Link" },
+          },
+        },
         slideshow: {
           type: "array",
           title: "Slideshow",
@@ -46,17 +102,19 @@ export const contentFormFields = ({ content }) => {
             type: "object",
             fields: {
               label: { type: "text", label: "Label" },
-              image_object: {
+              fact: { type: "text", label: "Fact" },
+              image: {
                 type: "image_upload",
                 label: "Image",
-                // options: images,
-                labelProp: "image_object",
-                album: `${content?.home_page?.h1} Images`,
+                labelProp: "_id",
+                album: `${content?.home_page?.slideshow?.label} Images`,
               },
               link: { type: "text", label: "Link" },
+              button_text: { type: "text", label: "Button Text" },
             },
           },
         },
+        video: { type: "text", label: "Video" },
       },
     },
     banner: {
@@ -84,27 +142,3 @@ export const contentFormFields = ({ content }) => {
     active: { type: "checkbox", label: "Active", default: true },
   };
 };
-
-// const formFields = {
-//   email_type: { type: 'text', label: 'Email Type' },
-//   header_footer_color: { type: 'text', label: 'Header Footer Color' },
-//   background_color: { type: 'text', label: 'Background Color' },
-//   module_color: { type: 'text', label: 'Module Color' },
-//   button_color: { type: 'text', label: 'Button Color' },
-//   text_color: { type: 'text', label: 'Text Color' },
-//   title_color: { type: 'text', label: 'Title Color' },
-//   subject: { type: 'text', label: 'Subject' },
-//   h1: { type: 'text', label: 'H1' },
-//   image: { type: 'text', label: 'Image' },
-//   images: { type: 'array', title: 'Images', itemSchema: { type: 'text' } },
-//   show_image: { type: 'checkbox', label: 'Show Image', default: true },
-//   h2: { type: 'text', label: 'H2' },
-//   p: { type: 'text', label: 'P' },
-//   button: { type: 'text', label: 'Button' },
-//   link: { type: 'text', label: 'Link' },
-//   html: { type: 'text', label: 'HTML' },
-//   scheduled_at: { type: 'text', label: 'Scheduled At' },  // Consider using a date picker
-//   status: { type: 'text', label: 'Status', default: 'draft' },
-//   active: { type: 'checkbox', label: 'Active', default: true },
-//   deleted: { type: 'checkbox', label: 'Deleted', default: false }
-// };

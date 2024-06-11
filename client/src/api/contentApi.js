@@ -7,6 +7,7 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const getContents = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -106,3 +107,15 @@ export const deleteContent = createAsyncThunk(
     }
   }
 );
+
+export const contentApi = createApi({
+  reducerPath: "contentApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  endpoints: builder => ({
+    currentContent: builder.query({
+      query: () => `/contents/current`,
+    }),
+  }),
+});
+
+export const { useCurrentContentQuery } = contentApi;

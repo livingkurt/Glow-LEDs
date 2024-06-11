@@ -20,6 +20,8 @@ import "swiper/css/autoplay";
 
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
+import SupportBanner from "./components/SupportBanner";
 
 const StyledSwiper = styled(Swiper)({
   width: "100%",
@@ -47,13 +49,13 @@ const FeaturedProductCard = styled(Card)({
 const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data: currentContent } = API.useCurrentContentQuery();
+
   const [searchParams] = useSearchParams();
   const wrapperRef = useRef(null);
 
-  const contentPage = useSelector(state => state.contents.contentPage);
-  const { contents } = contentPage;
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { ourPickProducts } = productsPage;
+  // const productsPage = useSelector(state => state.products.productsPage);
+  // const { ourPickProducts } = productsPage;
 
   useEffect(() => {
     const register = searchParams.get("register");
@@ -81,9 +83,9 @@ const HomePage = () => {
     };
   });
 
-  useEffect(() => {
-    dispatch(API.getOurPicksProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(API.getOurPicksProducts());
+  // }, []);
 
   const handleClickOutside = event => {
     const { current: wrap } = wrapperRef;
@@ -117,7 +119,6 @@ const HomePage = () => {
             "--swiper-pagination-color": "#ffffff50",
             "--swiper-scrollbar-color": "#ffffff50",
             position: "relative",
-            zIndex: 1,
           }}
           effect="fade"
           modules={[Navigation, Pagination, A11y, EffectFade, Autoplay]}
@@ -126,10 +127,10 @@ const HomePage = () => {
             crossFade: true,
           }}
         >
-          {contents[0]?.home_page?.slideshow.map((slide, index) => (
+          {currentContent?.home_page?.slideshow?.map((slide, index) => (
             <SwiperSlide key={index}>
               <Box sx={{ position: "relative" }}>
-                <SlideImage src={slide.image} alt={`Slide ${index + 1}`} />
+                <SlideImage src={slide.image?.link} alt={`Slide ${index + 1}`} />
                 <Box
                   sx={{
                     position: "absolute",
@@ -166,13 +167,14 @@ const HomePage = () => {
         <Typography variant="h4" component="h2" align="left" gutterBottom>
           Featured Products
         </Typography>
+        {console.log({ home_page: currentContent?.home_page })}
         <Grid container spacing={4} justifyContent="center">
-          {ourPickProducts?.map(product => (
+          {currentContent?.home_page?.featured_products?.map(product => (
             <Grid item key={product.id} xs={12} sm={6} md={3}>
               <FeaturedProductCard elevation={5}>
                 <CardMedia
                   component="img"
-                  image={product.images_object[0]?.link}
+                  image={product?.images_object[0]?.link}
                   alt={product.name}
                   sx={{ borderRadius: "20px" }}
                 />
@@ -180,7 +182,7 @@ const HomePage = () => {
                   <Typography variant="subtitle2" component="div">
                     {product.name}
                   </Typography>
-                  <Typography variant="body2">${product.price.toFixed(2)}</Typography>
+                  <Typography variant="body2">${product?.price?.toFixed(2)}</Typography>
                   <Button variant="contained" sx={{ marginTop: "10px" }}>
                     Add To Cart
                   </Button>
@@ -188,25 +190,22 @@ const HomePage = () => {
               </FeaturedProductCard>
             </Grid>
           ))}
+          <Grid item xs={12}>
+            <ProductProtectionDetails />
+          </Grid>
         </Grid>
       </Container>
-
-      <Box sx={{ padding: "40px" }}>
-        <Typography variant="body1" align="center" sx={{ marginBottom: "20px" }}>
-          Here at Glow LEDs we aim to be the biggest innovators in the gloving industry.
-        </Typography>
-        <Typography variant="body1" align="center" sx={{ marginBottom: "20px" }}>
-          Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put
-          our own spin on gloves and batteries! Plus we're one of the few places where you can order Custom gloving
-          accessories.
-        </Typography>
-        <Typography variant="body1" align="center">
-          We are ran by a very small team of people who are dedicated to listening to the community and creating what's
-          most wanted. Our products are made by hand to order, so every order is made with love.
-        </Typography>
-      </Box>
-
-      {/* Sections for other homepage content */}
+      <img
+        alt="Kurt"
+        title="Founder Picture"
+        style={{
+          // borderRadius: "15px",
+          width: "100%",
+          height: "auto",
+        }}
+        src="https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
+      />
+      <SupportBanner />
     </Box>
   );
 };

@@ -453,38 +453,40 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
-                  <GLAutocomplete
-                    key={`${fieldName}-${fieldData.type}`}
-                    autoComplete="new-password"
-                    customClasses={classes}
-                    disabled={fieldData.disabled}
-                    // isOptionEqualToValue={(option, value) => {
-                    //   return option.short_name === value.short_name;
-                    // }}
-                    helperText={formErrors && formErrors[fieldName]}
-                    error={formErrors && !!formErrors[fieldName]}
-                    margin="normal"
-                    value={selectedOption || ""}
-                    // value={fieldState || ""}
-                    options={determineOptions(fieldData, localState) || []}
-                    getOptionLabel={option =>
-                      option
-                        ? fieldData.getOptionLabel
-                          ? fieldData.getOptionLabel(option)
-                          : option[fieldData.labelProp]
-                        : ""
-                    }
-                    optionDisplay={option =>
-                      fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
-                    }
-                    isOptionEqualToValue={fieldData.isOptionEqualToValue}
-                    name={fieldName}
-                    label={fieldData.label}
-                    onChange={(event, value) => {
-                      const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
-                      handleInputChange(fieldName, savedValue);
-                    }}
-                  />
+                  {fieldData.selectable && (
+                    <GLAutocomplete
+                      key={`${fieldName}-${fieldData.type}`}
+                      autoComplete="new-password"
+                      customClasses={classes}
+                      disabled={fieldData.disabled}
+                      // isOptionEqualToValue={(option, value) => {
+                      //   return option.short_name === value.short_name;
+                      // }}
+                      helperText={formErrors && formErrors[fieldName]}
+                      error={formErrors && !!formErrors[fieldName]}
+                      margin="normal"
+                      value={selectedOption || ""}
+                      // value={fieldState || ""}
+                      options={determineOptions(fieldData, localState) || []}
+                      getOptionLabel={option =>
+                        option
+                          ? fieldData.getOptionLabel
+                            ? fieldData.getOptionLabel(option)
+                            : option[fieldData.labelProp]
+                          : ""
+                      }
+                      optionDisplay={option =>
+                        fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
+                      }
+                      isOptionEqualToValue={fieldData.isOptionEqualToValue}
+                      name={fieldName}
+                      label={fieldData.label}
+                      onChange={(event, value) => {
+                        const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
+                        handleInputChange(fieldName, savedValue);
+                      }}
+                    />
+                  )}
                   <GLForm
                     formData={fieldData.fields}
                     state={fieldState}
