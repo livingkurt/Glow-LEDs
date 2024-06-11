@@ -1,5 +1,4 @@
 import { Box, Typography, Button, Grid, Card, CardContent, CardMedia, Container } from "@mui/material";
-import { styled } from "@mui/system";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -23,29 +22,6 @@ import "swiper/css/pagination";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
 import SupportBanner from "./components/SupportBanner";
 
-const StyledSwiper = styled(Swiper)({
-  width: "100%",
-  height: "auto",
-  zIndex: 0, // Add this line to set the z-index
-});
-
-const SlideImage = styled("img")({
-  width: "100%",
-  height: "auto",
-  aspectRatio: "16/9", // Adjust the aspect ratio as needed
-  objectFit: "cover",
-});
-
-const FeaturedProductCard = styled(Card)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  borderRadius: "20px",
-  padding: "20px",
-  color: "white",
-  backgroundColor: "transparent",
-});
-
 const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,9 +29,6 @@ const HomePage = () => {
 
   const [searchParams] = useSearchParams();
   const wrapperRef = useRef(null);
-
-  // const productsPage = useSelector(state => state.products.productsPage);
-  // const { ourPickProducts } = productsPage;
 
   useEffect(() => {
     const register = searchParams.get("register");
@@ -83,10 +56,6 @@ const HomePage = () => {
     };
   });
 
-  // useEffect(() => {
-  //   dispatch(API.getOurPicksProducts());
-  // }, []);
-
   const handleClickOutside = event => {
     const { current: wrap } = wrapperRef;
     if (wrap && !wrap.contains(event.target)) {
@@ -107,7 +76,7 @@ const HomePage = () => {
           textAlign: "center",
         }}
       >
-        <StyledSwiper
+        <Swiper
           spaceBetween={0}
           slidesPerView={1}
           pagination={{ clickable: true }}
@@ -119,6 +88,9 @@ const HomePage = () => {
             "--swiper-pagination-color": "#ffffff50",
             "--swiper-scrollbar-color": "#ffffff50",
             position: "relative",
+            width: "100%",
+            height: "auto",
+            zIndex: 0,
           }}
           effect="fade"
           modules={[Navigation, Pagination, A11y, EffectFade, Autoplay]}
@@ -130,7 +102,16 @@ const HomePage = () => {
           {currentContent?.home_page?.slideshow?.map((slide, index) => (
             <SwiperSlide key={index}>
               <Box sx={{ position: "relative" }}>
-                <SlideImage src={slide.image?.link} alt={`Slide ${index + 1}`} />
+                <img
+                  src={slide.image?.link}
+                  alt={`Slide ${index + 1}`}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    aspectRatio: "16/9",
+                    objectFit: "cover",
+                  }}
+                />
                 <Box
                   sx={{
                     position: "absolute",
@@ -147,6 +128,9 @@ const HomePage = () => {
                   <Typography variant="h3" gutterBottom>
                     {slide.label}
                   </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {slide.fact}
+                  </Typography>
                   <Link to={slide.link}>
                     <Button variant="contained" onClick={() => navigate(slide.link)}>
                       Shop Now
@@ -156,29 +140,56 @@ const HomePage = () => {
               </Box>
             </SwiperSlide>
           ))}
-        </StyledSwiper>
-        {/* <Box sx={{ marginTop: "20px" }}>
-          <Typography variant="h5" gutterBottom>
-            Innovators of Gloving and Flow Art Technology
-          </Typography>
-        </Box> */}
+        </Swiper>
       </Box>
       <Container style={{ maxWidth: "1600px", padding: "40px" }}>
         <Typography variant="h4" component="h2" align="left" gutterBottom>
           Featured Products
         </Typography>
-        {console.log({ home_page: currentContent?.home_page })}
-        <Grid container spacing={4} justifyContent="center">
+        <Box
+          sx={{
+            display: "flex",
+            overflowX: "auto",
+            minWidth: "100%", // Add this line to make the section fill the entire space
+            "&::-webkit-scrollbar": {
+              height: "8px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              borderRadius: "4px",
+            },
+          }}
+        >
           {currentContent?.home_page?.featured_products?.map(product => (
-            <Grid item key={product.id} xs={12} sm={6} md={3}>
-              <FeaturedProductCard elevation={5}>
+            <Box
+              key={product.id}
+              sx={{
+                minWidth: "365px",
+                maxWidth: "300px",
+                marginRight: "20px",
+                "&:last-child": {
+                  marginRight: 0,
+                },
+              }}
+            >
+              <Card
+                elevation={0}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  borderRadius: "20px",
+                  color: "white",
+                  backgroundColor: "transparent",
+                }}
+              >
                 <CardMedia
                   component="img"
                   image={product?.images_object[0]?.link}
                   alt={product.name}
                   sx={{ borderRadius: "20px" }}
                 />
-                <CardContent sx={{ width: "100%", padding: "0px", paddingTop: 5 }}>
+                <CardContent sx={{ width: "100%", padding: "10px" }}>
                   <Typography variant="subtitle2" component="div">
                     {product.name}
                   </Typography>
@@ -187,19 +198,18 @@ const HomePage = () => {
                     Add To Cart
                   </Button>
                 </CardContent>
-              </FeaturedProductCard>
-            </Grid>
+              </Card>
+            </Box>
           ))}
-          <Grid item xs={12}>
-            <ProductProtectionDetails />
-          </Grid>
-        </Grid>
+        </Box>
+        <Box my={2}>
+          <ProductProtectionDetails />
+        </Box>
       </Container>
       <img
         alt="Kurt"
         title="Founder Picture"
         style={{
-          // borderRadius: "15px",
           width: "100%",
           height: "auto",
         }}
