@@ -1,28 +1,30 @@
-import { Box, Typography, TextField, Button, Grid, Card, CardContent, CardMedia, Container } from "@mui/material";
+import { Box, Typography, Button, Grid, Card, CardContent, CardMedia, Container } from "@mui/material";
 import { styled } from "@mui/system";
-import { Helmet } from "react-helmet";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
-import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import { Loading } from "../../shared/SharedComponents";
-import { useSwiper } from "swiper/react";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import HomeSlideshow from "./HomeSlideshow";
-import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
-import { setDisplay, set_options, set_show_search_bar, set_search } from "../../slices/glowLedsSlice";
+import { setDisplay } from "../../slices/glowLedsSlice";
 import { openLoginModal } from "../../slices/userSlice";
-import { useProductsQuery } from "../../api/allRecordsApi";
 import { showSuccess } from "../../slices/snackbarSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import * as API from "../../api";
 import HomePageHead from "./components/HomePageHead";
+import "swiper/swiper-bundle.css";
+import "swiper/css/effect-fade";
+import { Navigation, Pagination, A11y, EffectFade, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/autoplay";
+
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const StyledSwiper = styled(Swiper)({
   width: "100%",
   height: "auto",
+  zIndex: 0, // Add this line to set the z-index
 });
 
 const SlideImage = styled("img")({
@@ -108,8 +110,20 @@ const HomePage = () => {
           slidesPerView={1}
           pagination={{ clickable: true }}
           autoplay={{
-            delay: 5000, // Adjust the delay (in milliseconds) between slide changes
-            disableOnInteraction: false, // Allow autoplay to continue after user interaction
+            delay: 5000,
+          }}
+          style={{
+            "--swiper-navigation-color": "#ffffff50",
+            "--swiper-pagination-color": "#ffffff50",
+            "--swiper-scrollbar-color": "#ffffff50",
+            position: "relative",
+            zIndex: 1,
+          }}
+          effect="fade"
+          modules={[Navigation, Pagination, A11y, EffectFade, Autoplay]}
+          allowTouchMove={false}
+          fadeEffect={{
+            crossFade: true,
           }}
         >
           {contents[0]?.home_page?.slideshow.map((slide, index) => (
@@ -143,9 +157,6 @@ const HomePage = () => {
           ))}
         </StyledSwiper>
         {/* <Box sx={{ marginTop: "20px" }}>
-          <Typography variant="h2" component="h1" gutterBottom>
-            Welcome to Glow-LEDs
-          </Typography>
           <Typography variant="h5" gutterBottom>
             Innovators of Gloving and Flow Art Technology
           </Typography>
