@@ -150,7 +150,7 @@ const HomePage = () => {
           sx={{
             display: "flex",
             overflowX: "auto",
-            minWidth: "100%", // Add this line to make the section fill the entire space
+            minWidth: "100%",
             "&::-webkit-scrollbar": {
               height: "8px",
             },
@@ -164,8 +164,8 @@ const HomePage = () => {
             <Box
               key={product.id}
               sx={{
-                minWidth: "365px",
-                maxWidth: "300px",
+                minWidth: "250px", // Change minWidth to 250px
+                width: "100%", // Add width: 100% to make the item fill the available space
                 marginRight: "20px",
                 "&:last-child": {
                   marginRight: 0,
