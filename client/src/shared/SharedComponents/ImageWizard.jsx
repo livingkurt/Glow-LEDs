@@ -1,20 +1,21 @@
 import { Button, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
 import * as API from "../../api";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const dispatch = useDispatch();
-  const imagePage = useSelector(state => state.images.imagePage);
-  const { image } = imagePage;
   const [link, setLink] = useState("");
 
-  function extractThumbs2Links(text) {
-    const regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.(jpeg|png|jpg)/g;
-    return text.match(regex);
-  }
+  const extractThumbs2Links = text => {
+    const thumbs2Regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.(jpeg|png|jpg)/g;
+    const imgurRegex = /https:\/\/i\.imgur\.com\/[a-zA-Z0-9]+\.(jpeg|png|jpg)/g;
+    const thumbs2Links = text.match(thumbs2Regex) || [];
+    const imgurLinks = text.match(imgurRegex) || [];
+    return [...thumbs2Links, ...imgurLinks];
+  };
 
   const handleSaveId = async () => {
     const foundLinks = extractThumbs2Links(link);
@@ -23,6 +24,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
       const fetchedImages = await Promise.all(
         foundLinks.map(singleLink => dispatch(API.getImagesByLink({ album: fieldData.album, link: singleLink })))
       );
+      console.log({ fetchedImages, fieldState, fieldData, fieldName });
 
       if (Array.isArray(fieldState)) {
         onChange([...fieldState, ...fetchedImages.map(({ payload }) => payload)]);

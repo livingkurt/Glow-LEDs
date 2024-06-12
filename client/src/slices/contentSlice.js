@@ -4,43 +4,71 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const content = {
-  "home_page": {
-    "h1": "",
-    "image": "",
-    "images": [],
-    "image_object": null,
-    "images_object": [],
-    "slideshow": [
+  name: "",
+  home_page: {
+    featured_products: [],
+    learn_more_products: [
       {
-        "label": "",
-        "image": "",
-        "image_object": null,
-        "link": "",
+        label: "",
+        fact: "",
+        image: null,
+        link: "",
+        button_text: "",
       },
     ],
-    "video": "",
-    "banner_image": "",
-    "banner_image_object": null,
-    "show_image": true,
-    "show_video": false,
-    "h2": "",
-    "p": "",
-    "button": "",
-    "link": "",
+    learn_highlights: {
+      title: "",
+      description: "",
+      images_data: [
+        {
+          image: null,
+          link: "",
+          label: "",
+        },
+      ],
+      link: "",
+      button_text: "",
+      fact: "",
+    },
+    discover_more: {
+      title: "",
+      subtitle: "",
+      image: null,
+      button_text: "",
+      link: "",
+    },
+    get_more_out_of: {
+      title: "",
+      description: "",
+      image: null,
+      button_text: "",
+      link: "",
+    },
+    slideshow: [
+      {
+        label: "",
+        fact: "",
+        image: null,
+        link: "",
+        button_text: "",
+      },
+    ],
+    video: "",
   },
-  "banner": {
-    "label": "",
-    "button": "",
-    "link": "",
+  banner: {
+    label: "",
+    button: "",
+    link: "",
   },
-  "links": [
+  links: [
     {
-      "label": "",
-      "link": "",
-      "icon": "",
+      label: "",
+      link: "",
+      icon: "",
     },
   ],
-  "active": true,
+  active: true,
+  deleted: false,
 };
 
 const contentPage = createSlice({

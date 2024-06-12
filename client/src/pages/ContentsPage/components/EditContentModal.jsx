@@ -10,9 +10,7 @@ const EditContentModal = () => {
   const dispatch = useDispatch();
   const contentPage = useSelector(state => state.contents.contentPage);
   const { edit_content_modal, content, loading } = contentPage;
-  const { data: products, isLoading, isError } = useProductsQuery({ option: false });
-  // const productPage = useSelector(state => state.products.productPage);
-  // const { products } = productPage;
+  const { data: products } = useProductsQuery({ option: false });
 
   const formFields = contentFormFields({
     content,
@@ -40,6 +38,7 @@ const EditContentModal = () => {
           formData={formFields}
           state={content}
           onChange={value => {
+            console.log({ value });
             dispatch(set_content(value));
           }}
           loading={loading}

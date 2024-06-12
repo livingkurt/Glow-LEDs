@@ -1,5 +1,4 @@
 export const contentFormFields = ({ content, products }) => {
-  console.log({ products });
   return {
     name: { type: "text", label: "Name" },
     home_page: {
