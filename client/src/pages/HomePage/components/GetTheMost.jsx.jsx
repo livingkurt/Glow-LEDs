@@ -16,34 +16,45 @@ const GetTheMost = ({ get_more_out_of }) => {
               backgroundColor: "#6f6f6f",
               borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
               height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: { xs: "center", md: "flex-start" },
+              textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Typography variant="h6" align="left" gutterBottom>
+            <Typography variant="h6" gutterBottom>
               {get_more_out_of.title}
             </Typography>
-            <Typography variant="body2" align="left" mb={2}>
+            <Typography variant="body2" mb={2}>
               {get_more_out_of.description}
             </Typography>
-            <Link to={get_more_out_of.link}>
-              <Button variant="contained" color="primary">
-                {get_more_out_of.button_text}
-              </Button>
-            </Link>
+            <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>
+              <Link to={get_more_out_of.link}>
+                <Button variant="contained" color="primary">
+                  {get_more_out_of.button_text}
+                </Button>
+              </Link>
+            </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <img
-            alt="Kurt"
-            title="Founder Picture"
-            style={{
-              borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
-              width: "100%",
-              objectFit: "cover",
-              aspectRatio: "16/9",
-              height: "auto",
-            }}
-            src={get_more_out_of.image?.link}
-          />
+        <Grid item xs={12} md={6} style={{ height: "100%" }}>
+          <div style={{ position: "relative", paddingTop: "56.25%", height: "100%" }}>
+            <img
+              alt="Kurt"
+              title="Founder Picture"
+              style={{
+                borderRadius: isMobile ? "0px 0px 20px 20px" : "0px 20px 20px 0px",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              src={get_more_out_of.image?.link}
+            />
+          </div>
         </Grid>
       </Grid>
     </Box>

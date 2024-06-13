@@ -9,19 +9,23 @@ const SupportBanner = ({ support_banner }) => {
   return (
     <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Grid container justifyContent="center" mb={2}>
-        <Grid item xs={12} md={6}>
-          <img
-            alt="Kurt"
-            title="Founder Picture"
-            style={{
-              borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-              aspectRatio: "16/9",
-            }}
-            src={support_banner?.image?.link}
-          />
+        <Grid item xs={12} md={6} style={{ height: "100%" }}>
+          <div style={{ position: "relative", paddingTop: "56.25%", height: "100%" }}>
+            <img
+              alt="Kurt"
+              title="Founder Picture"
+              style={{
+                borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              src={support_banner?.image?.link}
+            />
+          </div>
         </Grid>
         <Grid item xs={12} md={6}>
           <Box
@@ -30,19 +34,26 @@ const SupportBanner = ({ support_banner }) => {
               backgroundColor: "#6f6f6f",
               borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
               height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: { xs: "center", md: "flex-start" },
+              textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Typography variant="h6" align="left" gutterBottom>
+            <Typography variant="h6" gutterBottom>
               {support_banner?.title}
             </Typography>
-            <Typography variant="body2" align="left" mb={2}>
+            <Typography variant="body2" mb={2}>
               {support_banner?.subtitle}
             </Typography>
-            <Link to={support_banner?.link}>
-              <Button variant="contained" color="primary">
-                {support_banner.button_text}
-              </Button>
-            </Link>
+            <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>
+              <Link to={support_banner?.link}>
+                <Button variant="contained" color="primary">
+                  {support_banner.button_text}
+                </Button>
+              </Link>
+            </Box>
           </Box>
         </Grid>
       </Grid>

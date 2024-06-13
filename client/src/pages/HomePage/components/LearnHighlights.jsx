@@ -19,12 +19,12 @@ const LearnHighlights = ({ learn_highlights }) => {
           <Box py={{ xs: 2, sm: 4, md: 6 }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
-                <Typography variant="h4" component="h2" align="left" gutterBottom>
+                <Typography variant="h4" component="h2" align={isMobile ? "center" : "left"} gutterBottom>
                   {learn_highlights.title}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" align="right" gutterBottom>
+                <Typography variant="subtitle1" align={isMobile ? "center" : "right"} gutterBottom>
                   {learn_highlights.description}
                 </Typography>
               </Grid>
@@ -71,10 +71,12 @@ const LearnHighlights = ({ learn_highlights }) => {
                   </Box>
                 </Grid>
               ))}
-              <Grid item xs={6}>
-                <Typography variant="body2">{learn_highlights.fact}</Typography>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="body2" align={isMobile ? "center" : "left"}>
+                  {learn_highlights.fact}
+                </Typography>
               </Grid>
-              <Grid item xs={6} display="flex" justifyContent={"flex-end"}>
+              <Grid item xs={12} sm={6} display="flex" justifyContent={isMobile ? "center" : "flex-end"}>
                 <Link to={learn_highlights.link}>
                   <Button variant="contained">{learn_highlights.button_text}</Button>
                 </Link>
