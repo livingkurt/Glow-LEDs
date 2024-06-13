@@ -1,10 +1,19 @@
-import { Box, Typography, Button, Grid } from "@mui/material";
+import { Box, Typography, Button, Grid, useTheme, useMediaQuery } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 
 const LearnMoreProducts = ({ learn_more_products }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const determineAspectRatio = index => {
+    if (isMobile) {
+      return "9/16";
+    }
+    return index % 3 === 2 ? "16/9" : "";
+  };
   return (
     <Box my={2}>
       <Grid container spacing={2}>
@@ -26,7 +35,7 @@ const LearnMoreProducts = ({ learn_more_products }) => {
                   width: "100%",
                   borderRadius: "20px",
                   height: "auto",
-                  aspectRatio: index % 3 === 2 ? "16/9" : "",
+                  aspectRatio: determineAspectRatio(index),
                   objectFit: "cover",
                 }}
               />

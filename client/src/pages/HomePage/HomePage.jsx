@@ -18,13 +18,15 @@ const HomePage = () => {
         <>
           <HomePageHead />
           <HeroHeader slideshow={slideshow} />
-          <Container style={{ maxWidth: "1600px", padding: "40px" }}>
-            <FeaturedProducts featured_products={featured_products} />
-            <LearnMoreProducts learn_more_products={learn_more_products} />
+          <Container maxWidth="lg">
+            <Box py={{ xs: 2, sm: 4, md: 6 }}>
+              <FeaturedProducts featured_products={featured_products} />
+              <LearnMoreProducts learn_more_products={learn_more_products} />
+            </Box>
           </Container>
           <LearnHighlights learn_highlights={learn_highlights} />
-          <Container style={{ maxWidth: "1600px", padding: "20px" }}>
-            <Box my={2}>
+          <Container maxWidth="lg">
+            <Box py={{ xs: 2, sm: 4, md: 6 }}>
               <ProductProtectionDetails />
             </Box>
             <SupportBanner />

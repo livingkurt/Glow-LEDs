@@ -1,22 +1,24 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PropTypes from "prop-types";
-import "swiper/swiper-bundle.css";
-import "swiper/swiper-bundle.css";
-import "swiper/css/effect-fade";
 import { Navigation, Pagination, A11y, EffectFade, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
-
+import "swiper/swiper-bundle.css";
+import "swiper/swiper-bundle.css";
+import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const HeroHeader = ({ slideshow }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
@@ -59,7 +61,7 @@ const HeroHeader = ({ slideshow }) => {
                 style={{
                   width: "100%",
                   height: "auto",
-                  aspectRatio: "16/9",
+                  aspectRatio: isMobile ? "9/16" : "16/9",
                   objectFit: "cover",
                 }}
               />
