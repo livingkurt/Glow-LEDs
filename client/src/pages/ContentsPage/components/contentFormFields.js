@@ -113,6 +113,18 @@ export const contentFormFields = ({ content, products }) => {
             link: { type: "text", label: "Link" },
           },
         },
+        product_protection_details: {
+          type: "array",
+          title: "Product Protection Details",
+          label: item => item.title,
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: { type: "text", label: "Title" },
+              description: { type: "text_multiline", label: "Description" },
+            },
+          },
+        },
         support_banner: {
           type: "object",
           title: "Support Banner",

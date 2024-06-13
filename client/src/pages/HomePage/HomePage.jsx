@@ -21,6 +21,7 @@ const HomePage = () => {
     discover_more,
     get_more_out_of,
     support_banner,
+    product_protection_details,
   } = useHomePage();
   return (
     <Box>
@@ -39,7 +40,7 @@ const HomePage = () => {
           <Container maxWidth="lg">
             <Box my={{ xs: 2, sm: 4 }}>
               <GetTheMost get_more_out_of={get_more_out_of} />
-              <ProductProtectionDetails />
+              <ProductProtectionDetails product_protection_details={product_protection_details} />
               <SupportBanner support_banner={support_banner} />
             </Box>
           </Container>

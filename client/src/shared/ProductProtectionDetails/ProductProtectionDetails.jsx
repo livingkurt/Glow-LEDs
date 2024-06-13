@@ -1,25 +1,10 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import PropTypes from "prop-types";
 
-const ProductProtectionDetails = () => {
+const ProductProtectionDetails = ({ product_protection_details }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const protectionDetails = [
-    {
-      title: "Free Shipping",
-      description: "Free ground shipping on orders of $99 or more in the U.S.",
-    },
-    {
-      title: "Free Returns",
-      description: "We offer a 30-day return policy, allowing you to shop with confidence.",
-    },
-    {
-      title: "Product Protection",
-      description:
-        "Rest easy with our manufacturer warranty, ensuring that your product is protected against any manufacturing defects or issues.",
-    },
-  ];
 
   return (
     <Box sx={{ color: "white", borderRadius: "20px" }} my={{ xs: 2, sm: 4 }}>
@@ -38,7 +23,7 @@ const ProductProtectionDetails = () => {
           },
         }}
       >
-        {protectionDetails.map((detail, index) => (
+        {product_protection_details.map((detail, index) => (
           <Box
             key={index}
             sx={{
@@ -62,6 +47,14 @@ const ProductProtectionDetails = () => {
       </Box>
     </Box>
   );
+};
+
+ProductProtectionDetails.propTypes = {
+  product_protection_details: PropTypes.array,
+};
+
+ProductProtectionDetails.defaultProps = {
+  product_protection_details: [],
 };
 
 export default ProductProtectionDetails;

@@ -58,6 +58,12 @@ const contentSchema = new mongoose.Schema(
         button_text: { type: String },
         link: { type: String },
       },
+      product_protection_details: [
+        {
+          title: { type: String },
+          description: { type: String },
+        },
+      ],
 
       video: { type: String },
     },
