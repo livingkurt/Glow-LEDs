@@ -55,6 +55,7 @@ export default {
         .populate("home_page.discover_more.image")
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
+        .populate("home_page.support_banner.image")
         .sort({ _id: -1 })
         .limit(3);
       const count = await content_db.count_contents_db(filter);
@@ -92,7 +93,8 @@ export default {
         .populate("home_page.learn_highlights.images_data.image")
         .populate("home_page.discover_more.image")
         .populate("home_page.get_more_out_of.image")
-        .populate("home_page.slideshow.image");
+        .populate("home_page.slideshow.image")
+        .populate("home_page.support_banner.image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

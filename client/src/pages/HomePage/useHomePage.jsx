@@ -17,9 +17,6 @@ const useHomePage = () => {
   const get_more_out_of = currentContent?.home_page?.get_more_out_of;
   const support_banner = currentContent?.home_page?.support_banner;
   const product_protection_details = currentContent?.home_page?.product_protection_details;
-  console.log({ support_banner });
-
-  console.log({ home_page: currentContent?.home_page });
 
   const [searchParams] = useSearchParams();
 
@@ -31,7 +28,7 @@ const useHomePage = () => {
     } else if (login === "true") {
       dispatch(openLoginModal());
     }
-  }, [dispatch]);
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
