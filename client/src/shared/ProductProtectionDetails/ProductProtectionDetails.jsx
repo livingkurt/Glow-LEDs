@@ -22,13 +22,13 @@ const ProductProtectionDetails = () => {
   ];
 
   return (
-    <Box sx={{ color: "white", padding: 4, borderRadius: "20px" }}>
+    <Box sx={{ color: "white", borderRadius: "20px" }}>
       <Box
         sx={{
           display: isMobile ? "block" : "flex",
           overflowX: isMobile ? "visible" : "auto",
           minWidth: "100%",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           "&::-webkit-scrollbar": {
             height: "8px",
           },

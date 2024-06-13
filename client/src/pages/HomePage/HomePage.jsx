@@ -8,9 +8,11 @@ import HeroHeader from "./components/HeroHeader";
 import FeaturedProducts from "./components/FeaturedProducts";
 import LearnMoreProducts from "./components/LearnMoreProducts";
 import useHomePage from "./useHomePage";
+import DiscoverMoreHero from "./components/DiscoverMoreHero";
 
 const HomePage = () => {
-  const { slideshow, featured_products, learn_more_products, learn_highlights, isLoading } = useHomePage();
+  const { slideshow, featured_products, learn_more_products, learn_highlights, isLoading, discover_more } =
+    useHomePage();
 
   return (
     <Box>
@@ -25,6 +27,7 @@ const HomePage = () => {
             </Box>
           </Container>
           <LearnHighlights learn_highlights={learn_highlights} />
+          <DiscoverMoreHero discover_more={discover_more} />
           <Container maxWidth="lg">
             <Box my={{ xs: 2, sm: 4 }}>
               <ProductProtectionDetails />
