@@ -27,7 +27,7 @@ const SupportBanner = ({ support_banner }) => {
           <Box
             p={{ xs: 2, md: 4 }}
             sx={{
-              backgroundColor: "#68697e",
+              backgroundColor: "#6f6f6f",
               borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
               height: "100%",
             }}
