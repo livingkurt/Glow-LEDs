@@ -7,7 +7,7 @@ const LearnHighlights = ({ learn_highlights }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Box py={{ xs: 2, sm: 4, md: 6 }}>
+    <Box>
       <Paper
         elevation={5}
         sx={{
@@ -16,7 +16,7 @@ const LearnHighlights = ({ learn_highlights }) => {
         }}
       >
         <Container maxWidth="lg">
-          <Box py={{ xs: 6, sm: 4, md: 6 }}>
+          <Box py={{ xs: 2, sm: 4, md: 6 }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
                 <Typography variant="h4" component="h2" align="left" gutterBottom>

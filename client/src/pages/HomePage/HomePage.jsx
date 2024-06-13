@@ -19,14 +19,14 @@ const HomePage = () => {
           <HomePageHead />
           <HeroHeader slideshow={slideshow} />
           <Container maxWidth="lg">
-            <Box py={{ xs: 2, sm: 4, md: 6 }}>
+            <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
               <FeaturedProducts featured_products={featured_products} />
               <LearnMoreProducts learn_more_products={learn_more_products} />
             </Box>
           </Container>
           <LearnHighlights learn_highlights={learn_highlights} />
           <Container maxWidth="lg">
-            <Box py={{ xs: 2, sm: 4, md: 6 }}>
+            <Box my={{ xs: 2, sm: 4 }}>
               <ProductProtectionDetails />
             </Box>
             <SupportBanner />

@@ -15,7 +15,7 @@ const LearnMoreProducts = ({ learn_more_products }) => {
     return index % 3 === 2 ? "16/9" : "";
   };
   return (
-    <Box my={2}>
+    <Box>
       <Grid container spacing={2}>
         {learn_more_products?.map((product, index) => (
           <Grid

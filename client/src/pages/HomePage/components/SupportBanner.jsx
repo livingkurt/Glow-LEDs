@@ -1,17 +1,19 @@
 import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const SupportBanner = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" py={4}>
+    <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Grid container justifyContent="center" mb={2}>
         <Grid item xs={12} sm={6}>
           <img
             alt="Kurt"
             title="Founder Picture"
             style={{
-              borderRadius: "20px 0px 0px 20px",
+              borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
               width: "100%",
               height: "auto",
             }}
@@ -19,8 +21,15 @@ const SupportBanner = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box p={5} sx={{ backgroundColor: "#68697e", borderRadius: "0px 20px 20px 0px", height: "100%" }}>
-            <Typography variant="h4" align="left" gutterBottom>
+          <Box
+            p={{ xs: 2, sm: 4, md: 6 }}
+            sx={{
+              backgroundColor: "#68697e",
+              borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
+              height: "100%",
+            }}
+          >
+            <Typography variant="h5" align="left" gutterBottom>
               Need support? We're here to assist you every step of the way
             </Typography>
             <Typography variant="body2" align="left" mb={2}>
