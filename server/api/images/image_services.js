@@ -82,6 +82,7 @@ export default {
 
       return images;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
