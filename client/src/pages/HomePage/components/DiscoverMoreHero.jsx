@@ -14,6 +14,7 @@ const DiscoverMoreHero = ({ discover_more }) => {
         position: "relative",
         width: "100%",
       }}
+      mt={{ xs: 2, sm: 4 }}
     >
       <Box
         sx={{

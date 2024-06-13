@@ -14,6 +14,7 @@ const useHomePage = () => {
   const learn_more_products = currentContent?.home_page?.learn_more_products;
   const learn_highlights = currentContent?.home_page?.learn_highlights;
   const discover_more = currentContent?.home_page?.discover_more;
+  const get_more_out_of = currentContent?.home_page?.get_more_out_of;
 
   console.log({ home_page: currentContent?.home_page });
 
@@ -38,7 +39,15 @@ const useHomePage = () => {
     }
   }, [dispatch]);
 
-  return { slideshow, featured_products, learn_more_products, learn_highlights, isLoading, discover_more };
+  return {
+    slideshow,
+    featured_products,
+    learn_more_products,
+    learn_highlights,
+    isLoading,
+    discover_more,
+    get_more_out_of,
+  };
 };
 
 export default useHomePage;

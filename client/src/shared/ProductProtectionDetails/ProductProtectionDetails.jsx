@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, Paper, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 const ProductProtectionDetails = () => {
   const theme = useTheme();
@@ -22,7 +22,7 @@ const ProductProtectionDetails = () => {
   ];
 
   return (
-    <Box sx={{ color: "white", borderRadius: "20px" }}>
+    <Box sx={{ color: "white", borderRadius: "20px" }} my={{ xs: 2, sm: 4 }}>
       <Box
         sx={{
           display: isMobile ? "block" : "flex",

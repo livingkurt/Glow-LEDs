@@ -9,11 +9,18 @@ import FeaturedProducts from "./components/FeaturedProducts";
 import LearnMoreProducts from "./components/LearnMoreProducts";
 import useHomePage from "./useHomePage";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
+import GetTheMost from "./components/GetTheMost.jsx";
 
 const HomePage = () => {
-  const { slideshow, featured_products, learn_more_products, learn_highlights, isLoading, discover_more } =
-    useHomePage();
-
+  const {
+    slideshow,
+    featured_products,
+    learn_more_products,
+    learn_highlights,
+    isLoading,
+    discover_more,
+    get_more_out_of,
+  } = useHomePage();
   return (
     <Box>
       {!isLoading && (
@@ -30,9 +37,10 @@ const HomePage = () => {
           <DiscoverMoreHero discover_more={discover_more} />
           <Container maxWidth="lg">
             <Box my={{ xs: 2, sm: 4 }}>
+              <GetTheMost get_more_out_of={get_more_out_of} />
               <ProductProtectionDetails />
+              <SupportBanner />
             </Box>
-            <SupportBanner />
           </Container>
         </>
       )}
