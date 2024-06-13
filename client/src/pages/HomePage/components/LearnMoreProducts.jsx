@@ -52,7 +52,7 @@ const LearnMoreProducts = ({ learn_more_products }) => {
                   alignItems: "flex-start",
                 }}
               >
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                   {product.label}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>

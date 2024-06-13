@@ -19,12 +19,12 @@ const LearnHighlights = ({ learn_highlights }) => {
           <Box py={{ xs: 2, sm: 4, md: 6 }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
-                <Typography variant="h4" component="h2" align={isMobile ? "center" : "left"} gutterBottom>
+                <Typography variant="h4" component="h2" align={"left"} gutterBottom>
                   {learn_highlights.title}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" align={isMobile ? "center" : "right"} gutterBottom>
+                <Typography variant="subtitle1" align={isMobile ? "left" : "right"} gutterBottom>
                   {learn_highlights.description}
                 </Typography>
               </Grid>
@@ -50,6 +50,7 @@ const LearnHighlights = ({ learn_highlights }) => {
                           aspectRatio: isMobile ? "16/9" : "",
                           objectFit: "cover",
                           height: "auto",
+                          position: "relative",
                         }}
                       />
                       <Typography
@@ -57,10 +58,8 @@ const LearnHighlights = ({ learn_highlights }) => {
                         sx={{
                           position: "absolute",
                           bottom: "10%",
-                          left: "50%",
-                          transform: "translateX(-50%)",
+                          right: "10%",
                           color: "white",
-                          backgroundColor: "rgba(0, 0, 0, 0.6)",
                           padding: "4px 8px",
                           borderRadius: "4px",
                         }}
