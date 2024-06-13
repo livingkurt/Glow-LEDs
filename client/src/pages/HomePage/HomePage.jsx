@@ -20,6 +20,7 @@ const HomePage = () => {
     isLoading,
     discover_more,
     get_more_out_of,
+    support_banner,
   } = useHomePage();
   return (
     <Box>
@@ -39,7 +40,7 @@ const HomePage = () => {
             <Box my={{ xs: 2, sm: 4 }}>
               <GetTheMost get_more_out_of={get_more_out_of} />
               <ProductProtectionDetails />
-              <SupportBanner />
+              <SupportBanner support_banner={support_banner} />
             </Box>
           </Container>
         </>

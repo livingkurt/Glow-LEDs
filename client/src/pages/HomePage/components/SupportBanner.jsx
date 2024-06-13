@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const SupportBanner = () => {
+const SupportBanner = ({ support_banner }) => {
+  console.log({ support_banner });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
@@ -19,7 +21,7 @@ const SupportBanner = () => {
               objectFit: "cover",
               aspectRatio: "16/9",
             }}
-            src="https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
+            src={support_banner?.image?.link}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -32,14 +34,14 @@ const SupportBanner = () => {
             }}
           >
             <Typography variant="h6" align="left" gutterBottom>
-              Need support? We're here to assist you every step of the way
+              {support_banner?.title}
             </Typography>
             <Typography variant="body2" align="left" mb={2}>
-              Access product support and frequently asked questions in our Support Center
+              {support_banner?.subtitle}
             </Typography>
-            <Link to="/pages/contact">
+            <Link to={support_banner?.link}>
               <Button variant="contained" color="primary">
-                Support Center
+                {support_banner.button_text}
               </Button>
             </Link>
           </Box>
@@ -47,6 +49,14 @@ const SupportBanner = () => {
       </Grid>
     </Box>
   );
+};
+
+SupportBanner.propTypes = {
+  support_banner: PropTypes.object,
+};
+
+SupportBanner.defaultProps = {
+  support_banner: {},
 };
 
 export default SupportBanner;

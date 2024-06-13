@@ -5,6 +5,26 @@ export const contentFormFields = ({ content, products }) => {
       type: "object",
       title: "Home Page",
       fields: {
+        slideshow: {
+          type: "array",
+          title: "Slideshow",
+          label: item => item.label,
+          itemSchema: {
+            type: "object",
+            fields: {
+              label: { type: "text", label: "Label" },
+              fact: { type: "text", label: "Fact" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: `${content?.home_page?.slideshow?.label} Images`,
+              },
+              link: { type: "text", label: "Link" },
+              button_text: { type: "text", label: "Button Text" },
+            },
+          },
+        },
         featured_products: {
           type: "autocomplete_multiple",
           label: "Featured Products",
@@ -93,26 +113,23 @@ export const contentFormFields = ({ content, products }) => {
             link: { type: "text", label: "Link" },
           },
         },
-        slideshow: {
-          type: "array",
-          title: "Slideshow",
-          label: item => item.label,
-          itemSchema: {
-            type: "object",
-            fields: {
-              label: { type: "text", label: "Label" },
-              fact: { type: "text", label: "Fact" },
-              image: {
-                type: "image_upload",
-                label: "Image",
-                labelProp: "_id",
-                album: `${content?.home_page?.slideshow?.label} Images`,
-              },
-              link: { type: "text", label: "Link" },
-              button_text: { type: "text", label: "Button Text" },
+        support_banner: {
+          type: "object",
+          title: "Support Banner",
+          fields: {
+            title: { type: "text", label: "Title" },
+            subtitle: { type: "text_multiline", label: "Subtitle" },
+            image: {
+              type: "image_upload",
+              label: "Image",
+              labelProp: "_id",
+              album: `${content?.home_page?.get_more_out_of?.title} Images`,
             },
+            button_text: { type: "text", label: "Button Text" },
+            link: { type: "text", label: "Link" },
           },
         },
+
         video: { type: "text", label: "Video" },
       },
     },

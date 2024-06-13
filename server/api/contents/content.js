@@ -4,6 +4,15 @@ const contentSchema = new mongoose.Schema(
   {
     name: { type: String },
     home_page: {
+      slideshow: [
+        {
+          label: { type: String },
+          fact: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          link: { type: String },
+          button_text: { type: String },
+        },
+      ],
       featured_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
       learn_more_products: [
         {
@@ -42,15 +51,14 @@ const contentSchema = new mongoose.Schema(
         button_text: { type: String },
         link: { type: String },
       },
-      slideshow: [
-        {
-          label: { type: String },
-          fact: { type: String },
-          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-          link: { type: String },
-          button_text: { type: String },
-        },
-      ],
+      support_banner: {
+        title: { type: String },
+        subtitle: { type: String },
+        image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+        button_text: { type: String },
+        link: { type: String },
+      },
+
       video: { type: String },
     },
     banner: {
