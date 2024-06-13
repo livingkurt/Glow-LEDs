@@ -3,7 +3,7 @@ import { Box, Typography, Grid, Paper } from "@mui/material";
 
 const ProductProtectionDetails = () => {
   return (
-    <Paper sx={{ color: "white", backgroundColor: "#00000021", padding: 4, borderRadius: "10px" }}>
+    <Paper sx={{ color: "white", backgroundColor: "#00000021", padding: 4, borderRadius: "20px" }}>
       <Grid container spacing={4}>
         <Grid item xs={12} sm={4}>
           <Box sx={{ textAlign: "center", width: "100%", maxWidth: "300px", margin: "0 auto" }}>
