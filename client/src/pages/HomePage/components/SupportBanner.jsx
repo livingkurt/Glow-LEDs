@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const SupportBanner = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Grid container justifyContent="center" mb={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <img
             alt="Kurt"
             title="Founder Picture"
@@ -20,16 +20,16 @@ const SupportBanner = () => {
             src="https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <Box
-            p={{ xs: 2, sm: 4, md: 6 }}
+            p={{ xs: 2, md: 4 }}
             sx={{
               backgroundColor: "#68697e",
               borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
               height: "100%",
             }}
           >
-            <Typography variant="h5" align="left" gutterBottom>
+            <Typography variant="h6" align="left" gutterBottom>
               Need support? We're here to assist you every step of the way
             </Typography>
             <Typography variant="body2" align="left" mb={2}>
