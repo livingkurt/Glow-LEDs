@@ -3,12 +3,13 @@ import { allRecordsApi } from "./api/allRecordsApi";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
-import { affiliateApi } from "./api";
+import { affiliateApi, contentApi } from "./api";
 
 const apiMiddleware = [
+  allRecordsApi.middleware,
   dashboardApi.middleware,
   placeOrderApi.middleware,
-  allRecordsApi.middleware,
+  contentApi.middleware,
   affiliateApi.middleware,
 ];
 

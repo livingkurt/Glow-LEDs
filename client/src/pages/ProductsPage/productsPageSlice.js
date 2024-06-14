@@ -41,6 +41,7 @@ const productsPage = createSlice({
     limit: 10,
     selectedOptionType: "",
     productOptionsGeneratorModal: "",
+    ourPicksProducts: [],
   },
   reducers: {
     set_product: (state, { payload }) => {
@@ -218,6 +219,21 @@ const productsPage = createSlice({
       state.message = "Product Review Saved";
     },
     [API.saveProductReview.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getOurPicksProducts.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.success = false;
+    },
+    [API.getOurPicksProducts.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.ourPickProducts = payload;
+      state.success = true;
+      state.message = "Product Review Saved";
+    },
+    [API.getOurPicksProducts.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
