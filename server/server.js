@@ -125,8 +125,14 @@ initializeAllOAuthClients()
   })
   .catch(error => {
     console.error("Failed to initialize OAuth clients", error);
-    process.exit(1);
+    console.warn("Starting server without OAuth clients. Some functionality may be limited.");
+
+    server.listen(config.PORT, () => {
+      console.log(`Server listening on port ${config.PORT}`);
+    });
   });
+
+// ... (rest of the code remains the same)
 
 // app.get("/api/bugsnag-test", function (req, res) {
 //   Bugsnag.notify(new Error("Test error"));
