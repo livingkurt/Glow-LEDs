@@ -42,6 +42,7 @@ const productsPage = createSlice({
     selectedOptionType: "",
     productOptionsGeneratorModal: "",
     editProductHistory: [],
+    ourPicksProducts: [],
   },
   reducers: {
     set_product: (state, { payload }) => {
@@ -284,6 +285,21 @@ const productsPage = createSlice({
     [API.detailsProductPage.rejected]: (state, { payload }) => {
       state.productPageLoading = false;
       state.error = payload;
+    },
+    [API.getOurPicksProducts.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.success = false;
+    },
+    [API.getOurPicksProducts.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.ourPickProducts = payload;
+      state.success = true;
+      state.message = "Product Review Saved";
+    },
+    [API.getOurPicksProducts.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
   },
 });

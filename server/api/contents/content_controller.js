@@ -25,6 +25,19 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  current_contents_c: async (req, res) => {
+    try {
+      const contents = await content_services.current_contents_s();
+
+      if (contents.length === 1) {
+        return res.status(200).send(contents[0]);
+      }
+      return res.status(404).send({ message: "Contents Not Found" });
+    } catch (error) {
+      console.log({ error });
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findDisplay_contents_c: async (req, res) => {
     const { query } = req;
     try {

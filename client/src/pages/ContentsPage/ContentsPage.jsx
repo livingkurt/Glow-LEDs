@@ -46,8 +46,8 @@ const ContentsPage = () => {
         ),
       },
       {
-        title: "Home Page",
-        display: content => content?.home_page?.h1,
+        title: "Name",
+        display: content => content?.name,
       },
       {
         title: "Banner",
@@ -69,7 +69,7 @@ const ContentsPage = () => {
                   API.saveContent({
                     ...content,
                     _id: null,
-                    home_page: { ...content.home_page, h1: `${content.home_page.h1} Copy` },
+                    name: content.name + " Copy",
                     createdAt: null,
                     updatedAt: null,
                   })
@@ -78,7 +78,7 @@ const ContentsPage = () => {
             >
               <ContentCopy color="white" />
             </GLIconButton>
-            <GLIconButton
+            {/* <GLIconButton
               tooltip="Create Email"
               onClick={() => {
                 dispatch(
@@ -95,7 +95,7 @@ const ContentsPage = () => {
               }}
             >
               <EmailIcon color="white" />
-            </GLIconButton>
+            </GLIconButton> */}
 
             <GLIconButton onClick={() => dispatch(API.deleteContent(content._id))} tooltip="Delete">
               <DeleteIcon color="white" />

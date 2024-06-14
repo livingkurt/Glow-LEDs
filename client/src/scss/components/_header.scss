@@ -4,6 +4,7 @@ header {
   background-color: $theme_color_header;
   color: $theme_color_phrase_font;
   box-shadow: $bs_deep;
+  z-index: 1000;
 }
 
 .header-main {

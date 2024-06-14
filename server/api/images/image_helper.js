@@ -47,15 +47,34 @@ export const compressImage = async imageBuffer => {
 };
 
 export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
-  const imgResponse = await axios.post("https://api.imgur.com/3/image", imageBuffer, {
+  const FormData = require("form-data");
+  const data = new FormData();
+  data.append("image", imageBuffer, { filename: "image.jpg" });
+  data.append("type", "image");
+  data.append("title", "Simple upload");
+  data.append("description", "This is a simple image upload in Imgur");
+
+  const uploadImageToImgurConfig = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://api.imgur.com/3/image",
     headers: {
       Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
-      "Content-Type": "multipart/form-data",
+      ...data.getHeaders(),
     },
     params: { album: albumDeletehash },
-  });
-  return imgResponse.data.data.link;
+    data: data,
+  };
+
+  try {
+    const imgResponse = await axios(uploadImageToImgurConfig);
+    return imgResponse.data.data.link;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to upload image to Imgur");
+  }
 };
+
 export const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
@@ -71,15 +90,34 @@ export const upload = multer({
   },
 });
 
-export const createImgurAlbum = async albumName => {
-  const albumResponse = await axios.post(
-    "https://api.imgur.com/3/album",
-    { title: albumName, privacy: "hidden" },
-    {
-      headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
-    }
-  );
-  return albumResponse.data.data;
+export const createImgurAlbum = async (albumName, imageHash) => {
+  const FormData = require("form-data");
+  const data = new FormData();
+  data.append("title", albumName);
+  data.append("description", "This album contains images uploaded from the application.");
+
+  if (imageHash) {
+    data.append("cover", imageHash);
+  }
+
+  const createImgurAlbumConfig = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://api.imgur.com/3/album",
+    headers: {
+      Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
+      ...data.getHeaders(),
+    },
+    data: data,
+  };
+
+  try {
+    const albumResponse = await axios(createImgurAlbumConfig);
+    return albumResponse.data.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create Imgur album");
+  }
 };
 
 export const createImageRecords = async (uploadedImageLinks, albumName) => {

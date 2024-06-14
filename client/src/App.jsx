@@ -8,7 +8,6 @@ import { Four04Page } from "./pages/Four04Page";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTokenRefresh } from "./api/axiosInstance";
 import * as API from "./api";
-import { HomePage } from "./pages/HomePage";
 import { adminRoutes, privateRoutes, routes } from "./utils/helpers/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 import { hot } from "react-hot-loader/root";
@@ -21,6 +20,7 @@ import ProtectedRoute from "./shared/RouteComponents/ProtectedRoute";
 import MainLayout from "./shared/Layouts/MainLayout";
 import PlaceOrderLayout from "./shared/Layouts/PlaceOrderLayout";
 import GLConfirmModal from "./shared/GlowLEDsComponents/GLConfirmModal/GLConfirmModal";
+import HomePage from "./pages/HomePage/HomePage";
 
 const App = () => {
   const dispatch = useDispatch();

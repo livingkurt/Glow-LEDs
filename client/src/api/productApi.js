@@ -169,6 +169,20 @@ export const deleteProductReview = createAsyncThunk(
   }
 );
 
+export const getOurPicksProducts = createAsyncThunk(
+  "products/deleteProduct",
+  async (_param, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/api/products/our_picks");
+      console.log({ data });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
@@ -211,5 +225,15 @@ export const productApi = createApi({
     }),
   }),
 });
+
+// export const productApi = createApi({
+//   reducerPath: "productApi",
+//   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+//   endpoints: builder => ({
+//     getProductQuantitiesOrders: builder.query({
+//       query: () => "/orders/get_product_quantities_orders"
+//     }),
+//   })
+// });
 
 export const { useProductQuery } = productApi;
