@@ -18,6 +18,10 @@ const useHomePage = () => {
   const support_banner = currentContent?.home_page?.support_banner;
   const product_protection_details = currentContent?.home_page?.product_protection_details;
   const video = currentContent?.home_page?.video;
+  const featured_products_hidden = currentContent?.home_page?.featured_products_hidden;
+  const slideshow_hidden = currentContent?.home_page?.slideshow_hidden;
+  const video_hidden = currentContent?.home_page?.video_hidden;
+  const learn_more_products_hidden = currentContent?.home_page?.learn_more_products_hidden;
 
   const [searchParams] = useSearchParams();
 
@@ -51,6 +55,10 @@ const useHomePage = () => {
     support_banner,
     product_protection_details,
     video,
+    featured_products_hidden,
+    slideshow_hidden,
+    video_hidden,
+    learn_more_products_hidden,
   };
 };
 

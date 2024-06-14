@@ -7,6 +7,7 @@ const content = {
   name: "",
   home_page: {
     featured_products: [],
+    featured_products_hidden: false,
     learn_more_products: [
       {
         label: "",
@@ -16,6 +17,7 @@ const content = {
         button_text: "",
       },
     ],
+    learn_more_products_hidden: false,
     learn_highlights: {
       title: "",
       description: "",
@@ -28,6 +30,7 @@ const content = {
       ],
       link: "",
       button_text: "",
+      hidden: false,
       fact: "",
     },
     discover_more: {
@@ -35,6 +38,7 @@ const content = {
       subtitle: "",
       image: null,
       button_text: "",
+      hidden: false,
       link: "",
     },
     get_more_out_of: {
@@ -42,8 +46,16 @@ const content = {
       description: "",
       image: null,
       button_text: "",
+      hidden: false,
       link: "",
     },
+    product_protection_details: [
+      {
+        title: "",
+        description: "",
+      },
+    ],
+    product_protection_details_hidden: false,
     slideshow: [
       {
         label: "",
@@ -53,7 +65,9 @@ const content = {
         button_text: "",
       },
     ],
+    slideshow_hidden: false,
     video: "",
+    video_hidden: false,
   },
   banner: {
     label: "",

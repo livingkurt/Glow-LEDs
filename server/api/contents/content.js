@@ -13,6 +13,7 @@ const contentSchema = new mongoose.Schema(
           button_text: { type: String },
         },
       ],
+      slideshow_hidden: { type: Boolean, default: false },
       featured_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
       learn_more_products: [
         {
@@ -23,6 +24,7 @@ const contentSchema = new mongoose.Schema(
           button_text: { type: String },
         },
       ],
+      learn_more_products_hidden: { type: Boolean, default: false },
       learn_highlights: {
         title: { type: String },
         description: { type: String },
@@ -35,6 +37,7 @@ const contentSchema = new mongoose.Schema(
         ],
         link: { type: String },
         button_text: { type: String },
+        hidden: { type: Boolean, default: false },
         fact: { type: String },
       },
       discover_more: {
@@ -42,6 +45,7 @@ const contentSchema = new mongoose.Schema(
         subtitle: { type: String },
         image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
         button_text: { type: String },
+        hidden: { type: Boolean, default: false },
         link: { type: String },
       },
       get_more_out_of: {
@@ -49,6 +53,7 @@ const contentSchema = new mongoose.Schema(
         description: { type: String },
         image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
         button_text: { type: String },
+        hidden: { type: Boolean, default: false },
         link: { type: String },
       },
       support_banner: {
@@ -56,6 +61,7 @@ const contentSchema = new mongoose.Schema(
         subtitle: { type: String },
         image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
         button_text: { type: String },
+        hidden: { type: Boolean, default: false },
         link: { type: String },
       },
       product_protection_details: [
@@ -64,6 +70,7 @@ const contentSchema = new mongoose.Schema(
           description: { type: String },
         },
       ],
+      product_protection_details_hidden: { type: Boolean, default: false },
 
       video: { type: String },
     },
@@ -71,6 +78,7 @@ const contentSchema = new mongoose.Schema(
       label: { type: String },
       button: { type: String },
       link: { type: String },
+      hidden: { type: Boolean, default: false },
     },
     links: [
       {

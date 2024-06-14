@@ -24,23 +24,33 @@ const HomePage = () => {
     support_banner,
     product_protection_details,
     video,
+    featured_products_hidden,
+    slideshow_hidden,
+    video_hidden,
+    learn_more_products_hidden,
   } = useHomePage();
   return (
     <Box>
       {!isLoading && (
         <>
           <HomePageHead />
-          <HeroHeader slideshow={slideshow} />
+          <HeroHeader slideshow={slideshow} slideshow_hidden={slideshow_hidden} />
 
           <Container maxWidth="lg">
             <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
-              <FeaturedProducts featured_products={featured_products} />
+              <FeaturedProducts
+                featured_products={featured_products}
+                featured_products_hidden={featured_products_hidden}
+              />
             </Box>
           </Container>
-          <HeroVideo video={video} />
+          <HeroVideo video={video} video_hidden={video_hidden} />
           <Container maxWidth="lg">
-            <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
-              <LearnMoreProducts learn_more_products={learn_more_products} />
+            <Box pt={{ xs: 2, sm: 2 }} pb={{ xs: 2 }}>
+              <LearnMoreProducts
+                learn_more_products={learn_more_products}
+                learn_more_products_hidden={learn_more_products_hidden}
+              />
             </Box>
           </Container>
           <LearnHighlights learn_highlights={learn_highlights} />

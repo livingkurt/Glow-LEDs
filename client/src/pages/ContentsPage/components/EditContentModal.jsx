@@ -38,7 +38,6 @@ const EditContentModal = () => {
           formData={formFields}
           state={content}
           onChange={value => {
-            console.log({ value });
             dispatch(set_content(value));
           }}
           loading={loading}

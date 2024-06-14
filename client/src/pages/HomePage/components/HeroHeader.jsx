@@ -14,98 +14,100 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const HeroHeader = ({ slideshow }) => {
+const HeroHeader = ({ slideshow, slideshow_hidden }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  return (
-    slideshow.length > 0 && (
-      <Box
-        sx={{
+  return !slideshow_hidden ? (
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 5000,
+        }}
+        style={{
+          "--swiper-navigation-color": "#ffffff50",
+          "--swiper-pagination-color": "#ffffff50",
+          "--swiper-scrollbar-color": "#ffffff50",
           position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
+          width: "100%",
+          height: "auto",
+          zIndex: 0,
+        }}
+        effect="fade"
+        modules={[Navigation, Pagination, A11y, EffectFade, Autoplay]}
+        allowTouchMove={false}
+        fadeEffect={{
+          crossFade: true,
         }}
       >
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          autoplay={{
-            delay: 5000,
-          }}
-          style={{
-            "--swiper-navigation-color": "#ffffff50",
-            "--swiper-pagination-color": "#ffffff50",
-            "--swiper-scrollbar-color": "#ffffff50",
-            position: "relative",
-            width: "100%",
-            height: "auto",
-            zIndex: 0,
-          }}
-          effect="fade"
-          modules={[Navigation, Pagination, A11y, EffectFade, Autoplay]}
-          allowTouchMove={false}
-          fadeEffect={{
-            crossFade: true,
-          }}
-        >
-          {slideshow?.map((slide, index) => (
-            <SwiperSlide key={index}>
-              <Box sx={{ position: "relative" }}>
-                <img
-                  src={slide.image?.link}
-                  alt={`Slide ${index + 1}`}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    aspectRatio: isMobile ? "9/16" : "16/9",
-                    objectFit: "cover",
-                  }}
-                />
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    color: "#fff",
-                    padding: "40px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Typography variant="h3" gutterBottom>
-                    {slide.label}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom mb={1}>
-                    {slide.fact}
-                  </Typography>
-                  <Link to={slide.link}>
-                    <Button variant="contained" onClick={() => navigate(slide.link)}>
-                      Shop Now
-                    </Button>
-                  </Link>
-                </Box>
+        {slideshow?.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <Box sx={{ position: "relative" }}>
+              <img
+                src={slide.image?.link}
+                alt={`Slide ${index + 1}`}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  aspectRatio: isMobile ? "9/16" : "16/9",
+                  objectFit: "cover",
+                }}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  color: "#fff",
+                  padding: "40px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <Typography variant="h3" gutterBottom>
+                  {slide.label}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom mb={1}>
+                  {slide.fact}
+                </Typography>
+                <Link to={slide.link}>
+                  <Button variant="contained" onClick={() => navigate(slide.link)}>
+                    Shop Now
+                  </Button>
+                </Link>
               </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
-    )
+            </Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Box>
+  ) : (
+    <></>
   );
 };
 
 HeroHeader.propTypes = {
   slideshow: PropTypes.array,
+  slideshow_hidden: PropTypes.bool,
 };
 
 HeroHeader.defaultProps = {
   slideshow: [],
+  slideshow_hidden: false,
 };
 
 export default HeroHeader;
