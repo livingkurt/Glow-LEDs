@@ -16,7 +16,6 @@ const useHomePage = () => {
   const discover_more = currentContent?.home_page?.discover_more;
   const get_more_out_of = currentContent?.home_page?.get_more_out_of;
   const support_banner = currentContent?.home_page?.support_banner;
-  const product_protection_details = currentContent?.home_page?.product_protection_details;
   const video = currentContent?.home_page?.video;
   const featured_products_hidden = currentContent?.home_page?.featured_products_hidden;
   const slideshow_hidden = currentContent?.home_page?.slideshow_hidden;
@@ -53,7 +52,6 @@ const useHomePage = () => {
     discover_more,
     get_more_out_of,
     support_banner,
-    product_protection_details,
     video,
     featured_products_hidden,
     slideshow_hidden,
