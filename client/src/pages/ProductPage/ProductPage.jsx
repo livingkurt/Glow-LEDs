@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Box, Grid, Typography, Divider, Rating } from "@mui/material";
+import { Box, Grid, Typography, Divider, Rating, Breadcrumbs } from "@mui/material";
+import MUILink from "@mui/material/Link";
 import { useDispatch, useSelector } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
@@ -15,7 +16,14 @@ import * as API from "../../api";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import ProductImages from "./components/ProductImages";
 import { Link, useLocation, useParams } from "react-router-dom";
-import ProductProtectionDetails from "./components/ProductProtectionDetails";
+import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import ProductDetails from "./components/ProductDetails";
+import HeroVideo from "../HomePage/components/HeroVideo";
+import { toCapitalize } from "../../utils/helper_functions";
+import { NavigateNext } from "@mui/icons-material";
+import ProductNavigation from "./components/ProductNavigation";
+import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 
 const ProductPage = () => {
   const params = useParams();
@@ -34,137 +42,71 @@ const ProductPage = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { customizedProduct, product, productPageLoading } = productPage;
 
-  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
-    customizedProduct;
+  const {
+    name,
+    numReviews,
+    rating,
+    category,
+    subcategory,
+    pathname,
+    product_collection,
+    facts,
+    price,
+    images,
+    currentOptions,
+  } = customizedProduct;
+
+  const breadCrumbInfo = [
+    { name: "All Products", to: "/collections/all/products" },
+    { name: category, to: `/collections/all/products/category/${category}` },
+    {
+      name: subcategory,
+      to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
+    },
+    {
+      name: product_collection,
+      to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
+    },
+    { name: name, to: `/collections/all/products/${pathname}` },
+  ];
 
   return (
     <Box>
       <ProductPageHead />
-      <Box display="flex" justifyContent={"space-between"} p={2}>
-        <Box className="mb-10px">
-          <Link to={location.state?.prevPath || "/collections/all/products"} className="m-auto">
-            <GLButtonV2 variant="contained" color="secondary">
-              Back to Products
-            </GLButtonV2>
-          </Link>
-        </Box>
-        {current_user?.isAdmin && (
-          <Box className="br-10px">
-            <GLButtonV2 variant="contained" color="secondary" onClick={e => dispatch(openEditProductModal(product))}>
-              Edit Product
-            </GLButtonV2>
-          </Box>
-        )}
-      </Box>
       <ProductPageLoading loading={productPageLoading}>
-        <Box maxWidth={"1500px"} margin="0 auto" px={2}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <ProductImages images={images} />
-            </Grid>
-
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Box>
-                <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
-                  {name}
-                </Typography>
-
-                {/* Rating and Reviews */}
-                {numReviews > 0 && (
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <Rating value={rating} precision={0.5} readOnly />
-                    <Typography variant="body2" ml={1}>
-                      ({numReviews} reviews)
-                    </Typography>
-                  </Box>
-                )}
-                {/* <ProductFacts
-                category={category}
-                subcategory={subcategory}
-                pathname={pathname}
-                name={name}
-                facts={facts}
-              /> */}
-                <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
-                  Single Fact
-                </Typography>
-                <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                  Price: ${price}
-                </Typography>
-
-                {currentOptions?.map((option, index) => (
-                  <CustomizationOption
-                    key={index}
-                    index={index}
-                    option={option}
-                    selectedOption={customizedProduct?.selectedOptions[index]}
-                  />
-                ))}
-
-                <GLSelect
-                  label="Quantity"
-                  value={customizedProduct?.quantity}
-                  onChange={e => dispatch(setQuantity(e.target.value))}
-                  placeholder="Select Quantity"
-                  size="small"
-                  options={[...Array(customizedProduct.max_quantity).keys()].map(value => ({ name: value + 1 }))}
-                  getOptionLabel={option => option.name}
-                  valueKey="name"
-                  fullWidth
-                />
-                <Box mt={2}>
-                  <GLButtonV2
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    className="bob"
-                    sx={{
-                      fontSize: "1.6rem",
-                      padding: 2,
-                    }}
-                    size="large"
-                    onClick={() => {
-                      dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
-                    }}
-                    tooltip={
-                      isOptionCountDifferent(product, customizedProduct) && "You must select all options to Add To Cart"
-                    }
-                    disabled={isOptionCountDifferent(product, customizedProduct)}
-                  >
-                    {determineInStock(customizedProduct)}
-                  </GLButtonV2>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
+        <ProductNavigation
+          category={category}
+          subcategory={subcategory}
+          product_collection={product_collection}
+          name={name}
+          product={product}
+        />
+        <ProductDetails
+          images={images}
+          name={name}
+          numReviews={numReviews}
+          rating={rating}
+          category={category}
+          subcategory={subcategory}
+          pathname={pathname}
+          facts={facts}
+          currentOptions={currentOptions}
+          price={price}
+          customizedProduct={customizedProduct}
+          product={product}
+          my_cart={my_cart}
+        />
         <Box mt={2}>
           <Grid container spacing={2}>
+            <Grid item xs={12}></Grid>
             <Grid item xs={12}>
-              <div style={{ position: "relative", paddingTop: "56.25%" }}>
-                <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
-                  <YouTube
-                    videoId={product.video}
-                    opts={{
-                      width: "100%",
-                      height: "100%",
-                      playerVars: {
-                        autoplay: 0,
-                      },
-                    }}
-                    style={{ width: "100%", height: "100%", borderRadius: 10 }}
-                  />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
+              <HeroVideo video={product.video} video_hidden={!!product.video} />
             </Grid>
             <Grid item xs={12}>
               <ProductProtectionDetails />
             </Grid>
             <Grid item xs={12}>
-              <Divider />
+              <SupportBanner />
             </Grid>
           </Grid>
         </Box>
