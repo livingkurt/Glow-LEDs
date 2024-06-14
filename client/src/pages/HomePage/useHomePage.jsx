@@ -17,6 +17,7 @@ const useHomePage = () => {
   const get_more_out_of = currentContent?.home_page?.get_more_out_of;
   const support_banner = currentContent?.home_page?.support_banner;
   const product_protection_details = currentContent?.home_page?.product_protection_details;
+  const video = currentContent?.home_page?.video;
 
   const [searchParams] = useSearchParams();
 
@@ -49,6 +50,7 @@ const useHomePage = () => {
     get_more_out_of,
     support_banner,
     product_protection_details,
+    video,
   };
 };
 

@@ -10,6 +10,7 @@ import LearnMoreProducts from "./components/LearnMoreProducts";
 import useHomePage from "./useHomePage";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
 import GetTheMost from "./components/GetTheMost.jsx";
+import HeroVideo from "./components/HeroVideo.jsx";
 
 const HomePage = () => {
   const {
@@ -22,6 +23,7 @@ const HomePage = () => {
     get_more_out_of,
     support_banner,
     product_protection_details,
+    video,
   } = useHomePage();
   return (
     <Box>
@@ -29,9 +31,11 @@ const HomePage = () => {
         <>
           <HomePageHead />
           <HeroHeader slideshow={slideshow} />
+
           <Container maxWidth="lg">
             <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
               <FeaturedProducts featured_products={featured_products} />
+              <HeroVideo video={video} />
               <LearnMoreProducts learn_more_products={learn_more_products} />
             </Box>
           </Container>

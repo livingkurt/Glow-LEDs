@@ -81,7 +81,7 @@ const HeroHeader = ({ slideshow }) => {
                 <Typography variant="h3" gutterBottom>
                   {slide.label}
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography variant="subtitle1" gutterBottom mb={1}>
                   {slide.fact}
                 </Typography>
                 <Link to={slide.link}>
