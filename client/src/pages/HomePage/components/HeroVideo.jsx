@@ -11,7 +11,7 @@ const HeroVideo = ({ video }) => {
           width: "100%",
           height: "auto",
           aspectRatio: "16/9",
-          borderRadius: "20px",
+          // borderRadius: "20px",
           overflow: "hidden",
         }}
         mb={3}

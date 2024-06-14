@@ -35,7 +35,11 @@ const HomePage = () => {
           <Container maxWidth="lg">
             <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
               <FeaturedProducts featured_products={featured_products} />
-              <HeroVideo video={video} />
+            </Box>
+          </Container>
+          <HeroVideo video={video} />
+          <Container maxWidth="lg">
+            <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
               <LearnMoreProducts learn_more_products={learn_more_products} />
             </Box>
           </Container>
