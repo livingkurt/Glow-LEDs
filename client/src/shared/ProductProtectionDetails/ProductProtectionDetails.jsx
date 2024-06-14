@@ -1,10 +1,13 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import PropTypes from "prop-types";
+import * as API from "../../api";
 
-const ProductProtectionDetails = ({ product_protection_details }) => {
+const ProductProtectionDetails = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { data: currentContent } = API.useCurrentContentQuery();
+  const product_protection_details = currentContent?.home_page?.product_protection_details;
 
   return (
     product_protection_details.length > 0 && (
@@ -49,14 +52,6 @@ const ProductProtectionDetails = ({ product_protection_details }) => {
       </Box>
     )
   );
-};
-
-ProductProtectionDetails.propTypes = {
-  product_protection_details: PropTypes.array,
-};
-
-ProductProtectionDetails.defaultProps = {
-  product_protection_details: [],
 };
 
 export default ProductProtectionDetails;
