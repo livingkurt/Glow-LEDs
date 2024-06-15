@@ -55,43 +55,41 @@ const TutorialsGridPage = () => {
   const advancedTutorials = tutorials?.filter(item => item.level === "advanced");
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{ py: 2 }}>
-        <Typography variant="h4" textAlign={"center"}>
-          Learn Gloving
-        </Typography>
-        <h2 className="ta-c">Your Journey Starts Here</h2>
-        <p>
-          Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
-          to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help
-          you improve your skills and create your own unique light shows. Get ready to leave your audience speechless
-          with your mesmerizing moves!
-        </p>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TutorialSection
-              title="Beginner"
-              defaultOpen
-              tutorials={beginnerTutorials}
-              handleOpen={handleOpen}
-              loading={loading}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TutorialSection
-              title="Intermediate"
-              tutorials={intermediateTutorials}
-              handleOpen={handleOpen}
-              loading={loading}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TutorialSection title="Advanced" tutorials={advancedTutorials} handleOpen={handleOpen} loading={loading} />
-          </Grid>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Typography variant="h4" textAlign={"center"}>
+        Learn Gloving
+      </Typography>
+      <h2 className="ta-c">Your Journey Starts Here</h2>
+      <p>
+        Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
+        to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help you
+        improve your skills and create your own unique light shows. Get ready to leave your audience speechless with
+        your mesmerizing moves!
+      </p>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TutorialSection
+            title="Beginner"
+            defaultOpen
+            tutorials={beginnerTutorials}
+            handleOpen={handleOpen}
+            loading={loading}
+          />
         </Grid>
-      </Container>
+        <Grid item xs={12}>
+          <TutorialSection
+            title="Intermediate"
+            tutorials={intermediateTutorials}
+            handleOpen={handleOpen}
+            loading={loading}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TutorialSection title="Advanced" tutorials={advancedTutorials} handleOpen={handleOpen} loading={loading} />
+        </Grid>
+      </Grid>
       <TutorialModal selectedTutorial={tutorial} handleClose={handleClose} open={tutorial_modal} />
-    </>
+    </Container>
   );
 };
 
