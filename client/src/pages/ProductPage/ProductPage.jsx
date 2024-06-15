@@ -15,6 +15,7 @@ import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBread
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { productPageBreadCrumbs } from "./productHelpers";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
+import NavigationButtons from "./components/NavigationButtons";
 
 const ProductPage = () => {
   const params = useParams();
@@ -67,7 +68,7 @@ const ProductPage = () => {
         <Box mt={2}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              {/* Internal Page Navigation */}
+              <NavigationButtons />
             </Grid>
             <Grid item xs={12}>
               <HeroVideo video={product.video} video_hidden={!!product.video} />

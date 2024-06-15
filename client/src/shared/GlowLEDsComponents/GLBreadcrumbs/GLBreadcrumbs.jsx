@@ -10,14 +10,14 @@ const GLBreadcrumbs = ({ items }) => {
         if (index === items.length - 1) {
           return (
             <Typography key={index} color="white">
-              {item.name.toUpperCase()}
+              {item?.name}
             </Typography>
           );
         }
         return (
           <Link key={index} to={item.to}>
             <MUILink underline="hover" color="white">
-              {item.name.toUpperCase()}
+              {item?.name}
             </MUILink>
           </Link>
         );
