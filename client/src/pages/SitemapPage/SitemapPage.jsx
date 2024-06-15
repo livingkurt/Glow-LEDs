@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { Container } from "@mui/material";
 
 const SitemapPage = () => {
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Sitemap | Glow LEDs</title>
         <meta property="og:title" content="Sitemap" />
@@ -250,7 +251,7 @@ const SitemapPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

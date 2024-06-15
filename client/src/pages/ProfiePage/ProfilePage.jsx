@@ -13,7 +13,7 @@ import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 import useUserProfilePage from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
@@ -43,7 +43,7 @@ const ProfilePage = () => {
   } = useAffiliateProfilePage();
 
   return (
-    <div className="p-20px inner_content">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin User Profile | Glow LEDs</title>
       </Helmet>
@@ -126,7 +126,7 @@ const ProfilePage = () => {
         </Grid>
       </Grid>
       <SponsorMonthlyCheckinModal />
-    </div>
+    </Container>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   unformat_date_and_time,
 } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { Container } from "@mui/material";
 
 const DatabaseMigrationPage = () => {
   const date = new Date();
@@ -105,7 +106,7 @@ const DatabaseMigrationPage = () => {
   const actions = ["$rename", "$set", "$unset"];
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <h1 style={{ textAlign: "center" }}>Edit All Data</h1>
 
       <div className="form">
@@ -370,7 +371,7 @@ const DatabaseMigrationPage = () => {
           id="request"
         />
       </div>
-    </div>
+    </Container>
   );
 };
 export default DatabaseMigrationPage;

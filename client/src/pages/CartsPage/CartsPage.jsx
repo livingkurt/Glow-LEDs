@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { getCarts } from "../../api";
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
@@ -67,7 +67,7 @@ const CartsPage = () => {
   const remoteApi = useCallback(options => getCarts(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Carts | Glow LEDs</title>
       </Helmet>
@@ -88,7 +88,7 @@ const CartsPage = () => {
         }
       />
       <EditCartModal />
-    </div>
+    </Container>
   );
 };
 export default CartsPage;

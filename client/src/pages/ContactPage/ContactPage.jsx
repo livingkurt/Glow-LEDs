@@ -8,6 +8,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { setSuccessContactSend } from "../../slices/emailSlice";
+import { Container } from "@mui/material";
 
 const ContactPage = () => {
   const params = useParams();
@@ -87,7 +88,7 @@ const ContactPage = () => {
     }
   };
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Contact | Glow LEDs</title>
         <meta property="og:title" content="Contact" />
@@ -300,7 +301,7 @@ const ContactPage = () => {
           </div>
         )} */}
       </form>
-    </div>
+    </Container>
   );
 };
 

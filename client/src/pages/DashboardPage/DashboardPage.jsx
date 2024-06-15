@@ -5,7 +5,7 @@ import { determineTabName } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { Loading } from "../../shared/SharedComponents";
-import { AppBar, Button, Paper, Tab, Tabs } from "@mui/material";
+import { AppBar, Button, Container, Paper, Tab, Tabs } from "@mui/material";
 import { openGcodeContinuousModal, setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
@@ -43,7 +43,7 @@ const DashboardPage = () => {
   // const range_gloves = API.useGetRangeGlovesQuery({ start_date, end_date });
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Dashboard | Glow LEDs</title>
       </Helmet>
@@ -123,7 +123,7 @@ const DashboardPage = () => {
         <CurrentStock />
         <GcodeGeneratorModal />
       </div>
-    </div>
+    </Container>
   );
 };
 export default DashboardPage;

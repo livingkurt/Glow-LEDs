@@ -7,7 +7,7 @@ import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../sl
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, Container, Tooltip } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
@@ -106,7 +106,7 @@ const AffiliatesPage = () => {
   const remoteApi = useCallback(options => getAffiliates(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Affiliates | Glow LEDs</title>
       </Helmet>
@@ -129,7 +129,7 @@ const AffiliatesPage = () => {
       />
       <EditAffiliateModal />
       <EditPromoModal />
-    </div>
+    </Container>
   );
 };
 export default AffiliatesPage;

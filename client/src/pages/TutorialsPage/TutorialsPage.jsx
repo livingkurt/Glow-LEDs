@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_tutorial_modal, open_edit_tutorial_modal } from "../../slices/tutorialSlice";
 import { EditTutorialModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
@@ -70,7 +70,7 @@ const TutorialsPage = () => {
   const remoteReorderApi = useCallback(options => API.reorderTutorials(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Tutorials | Glow LEDs</title>
       </Helmet>
@@ -94,7 +94,7 @@ const TutorialsPage = () => {
         }
       />
       <EditTutorialModal />
-    </div>
+    </Container>
   );
 };
 export default TutorialsPage;

@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, Container, Tooltip } from "@mui/material";
 import { getTeams } from "../../api";
 import { determineColor } from "./teamHelpers";
 import { useLocation } from "react-router-dom";
@@ -103,7 +103,7 @@ const TeamsPage = () => {
   const remoteApi = useCallback(options => getTeams(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Teams | Glow LEDs</title>
       </Helmet>
@@ -126,7 +126,7 @@ const TeamsPage = () => {
       />
       <EditTeamModal />
       <EditPromoModal />
-    </div>
+    </Container>
   );
 };
 export default TeamsPage;

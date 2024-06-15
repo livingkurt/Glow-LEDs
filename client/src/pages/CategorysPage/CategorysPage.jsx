@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_category_modal, open_edit_category_modal } from "../../slices/categorySlice";
 import { EditCategoryModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { determineCategoryColors } from "./categoryHelpers";
@@ -47,7 +47,7 @@ const CategorysPage = () => {
   const remoteApi = useCallback(options => API.getCategorys(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Categorys | Glow LEDs</title>
       </Helmet>
@@ -70,7 +70,7 @@ const CategorysPage = () => {
         }
       />
       <EditCategoryModal />
-    </div>
+    </Container>
   );
 };
 export default CategorysPage;

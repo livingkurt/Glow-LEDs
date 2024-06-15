@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditSurveyModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Rating } from "@mui/material";
+import { Box, Button, Container, Rating } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_survey_modal, open_edit_survey_modal } from "../../slices/surveySlice";
 import { determineSurveyColors } from "./surveysPageHelpers";
@@ -78,7 +78,7 @@ const SurveysPage = () => {
   const remoteApi = useCallback(options => API.getSurveys(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Surveys | Glow LEDs</title>
       </Helmet>
@@ -100,7 +100,7 @@ const SurveysPage = () => {
         }
       />
       <EditSurveyModal />
-    </div>
+    </Container>
   );
 };
 export default SurveysPage;

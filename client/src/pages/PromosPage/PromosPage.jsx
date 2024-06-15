@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_promo_modal, open_edit_promo_modal } from "../../slices/promoSlice";
 import { EditPromoModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -76,7 +76,7 @@ const PromosPage = () => {
   const remoteFiltersApi = useCallback(() => API.getPromoFilters(), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Promos | Glow LEDs</title>
       </Helmet>
@@ -127,7 +127,7 @@ const PromosPage = () => {
         }
       />
       <EditPromoModal />
-    </div>
+    </Container>
   );
 };
 export default PromosPage;

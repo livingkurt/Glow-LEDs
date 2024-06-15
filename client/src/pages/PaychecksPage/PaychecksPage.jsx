@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slices/paycheckSlice";
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { determineColor } from "./paychecksHelpers";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
@@ -103,7 +103,7 @@ const PaychecksPage = () => {
   const remoteFiltersApi = useCallback(() => API.getPaycheckFilters(), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Paychecks | Glow LEDs</title>
       </Helmet>
@@ -142,7 +142,7 @@ const PaychecksPage = () => {
         }
       />
       <EditPaycheckModal />
-    </div>
+    </Container>
   );
 };
 export default PaychecksPage;

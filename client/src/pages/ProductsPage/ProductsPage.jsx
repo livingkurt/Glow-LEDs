@@ -7,7 +7,7 @@ import { openProductOptionsGeneratorModal, open_create_product_modal, set_loadin
 import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
 import EditIcon from "@mui/icons-material/Edit";
@@ -112,7 +112,7 @@ const ProductsPage = () => {
   const defaultFilters = { hidden: [], options: [] };
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Products | Glow LEDs</title>
       </Helmet>
@@ -179,7 +179,7 @@ const ProductsPage = () => {
       />
       <EditProductModal />
       <ProductOptionsGeneratorModal />
-    </div>
+    </Container>
   );
 };
 export default ProductsPage;

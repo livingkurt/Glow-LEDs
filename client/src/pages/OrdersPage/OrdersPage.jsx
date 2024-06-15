@@ -13,7 +13,7 @@ import {
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import {
   orderStatusColors,
   determineOrderColors,
@@ -257,7 +257,7 @@ const OrdersPage = () => {
   const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Orders | Glow LEDs</title>
       </Helmet>
@@ -352,7 +352,7 @@ const OrdersPage = () => {
       <RefundOrderModal />
       <CreateLabelModal />
       <LinkLabelModal />
-    </div>
+    </Container>
   );
 };
 export default OrdersPage;

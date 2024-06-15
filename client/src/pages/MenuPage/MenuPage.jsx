@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import * as API from "../../api";
 import { setMenuItems } from "../../slices/contentSlice";
+import { Container } from "@mui/material";
 
 const MenuPage = () => {
   const params = useParams();
@@ -220,7 +221,7 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>{humanize(pathname)} | Glow LEDs</title>
         <meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />
@@ -264,7 +265,7 @@ const MenuPage = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 export default MenuPage;

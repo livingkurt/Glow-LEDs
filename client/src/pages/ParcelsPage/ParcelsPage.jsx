@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { open_create_parcel_modal, open_edit_parcel_modal } from "../../slices/parcelSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -68,7 +68,7 @@ const ParcelsPage = () => {
   const remoteApi = useCallback(options => API.getParcels(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Parcels | Glow LEDs</title>
       </Helmet>
@@ -88,7 +88,7 @@ const ParcelsPage = () => {
         }
       />
       <EditParcelModal />
-    </div>
+    </Container>
   );
 };
 

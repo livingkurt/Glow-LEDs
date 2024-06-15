@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditChipModal from "./components/EditChipModal";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { open_create_chip_modal, open_edit_chip_modal } from "../../slices/chipSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -76,7 +76,7 @@ const ChipsPage = () => {
   // const remoteFiltersApi = useCallback(() => API.getChipFilters(), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Chips | Glow LEDs</title>
       </Helmet>
@@ -99,7 +99,7 @@ const ChipsPage = () => {
         }
       />
       <EditChipModal />
-    </div>
+    </Container>
   );
 };
 export default ChipsPage;
