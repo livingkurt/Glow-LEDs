@@ -17,7 +17,7 @@ import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import ProductImages from "./components/ProductImages";
 import { Link, useLocation, useParams } from "react-router-dom";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs.jsx";
 import ProductDetails from "./components/ProductDetails";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import { toCapitalize } from "../../utils/helper_functions";
@@ -98,7 +98,9 @@ const ProductPage = () => {
         />
         <Box mt={2}>
           <Grid container spacing={2}>
-            <Grid item xs={12}></Grid>
+            <Grid item xs={12}>
+              {/* Internal Page Navigation */}
+            </Grid>
             <Grid item xs={12}>
               <HeroVideo video={product.video} video_hidden={!!product.video} />
             </Grid>
@@ -106,7 +108,44 @@ const ProductPage = () => {
               <ProductProtectionDetails />
             </Grid>
             <Grid item xs={12}>
+              {/* Image Grid 1*/}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Hero Image 1*/}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Hero Fact 1*/}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Image Grid 2*/}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Hero Fact 2*/}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Lifestyle Image Grid */}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Compare Models */}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Tech Specs */}
+            </Grid>
+            <Grid item xs={12}>
+              {/* In The Box */}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Elevate Your Experience */}
+            </Grid>
+            <Grid item xs={12}>
+              {/* Product Support */}
+            </Grid>
+
+            <Grid item xs={12}>
               <SupportBanner />
+            </Grid>
+            <Grid item xs={12}>
+              {/* Recently Viewed */}
             </Grid>
           </Grid>
         </Box>

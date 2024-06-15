@@ -170,7 +170,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("contributers")
+        .populate("contributors")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
@@ -393,7 +393,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("contributers");
+        .populate("contributors");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

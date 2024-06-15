@@ -37,54 +37,101 @@ const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     price: { type: Number },
-    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 
-    secondary_images_object: { type: Array },
-    features: [
+    hero_video: { type: String },
+
+    icon_specs: [
       {
-        name: { type: String },
+        icon: { type: String },
         description: { type: String },
-        icon: { type: String }, // URL or reference to an icon image
       },
     ],
 
-    specifications: [
-      {
-        name: { type: String },
-        value: { type: String },
+    features: {
+      image_grid_1: [
+        {
+          title: { type: String },
+          description: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          button_text: { type: String },
+          link: { type: String },
+        },
+      ],
+      hero_image_1: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+      hero_fact_2: {
+        title: { type: String },
+        description: { type: String },
       },
-    ],
+      image_grid_2: [
+        {
+          title: { type: String },
+          description: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          button_text: { type: String },
+          link: { type: String },
+        },
+      ],
+      hero_image_2: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+      hero_fact_2: {
+        title: { type: String },
+        description: { type: String },
+      },
+      lifestyle_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    },
 
-    faqs: [
-      {
-        question: { type: String },
-        answer: { type: String },
-      },
-    ],
+    tech_specs: {
+      title: { type: String },
+      navigation: [
+        {
+          title: { type: String },
+          values: [
+            {
+              title: { type: String },
+              description: { type: String },
+            },
+          ],
+        },
+      ],
+    },
+    in_the_box: {
+      title: { type: String },
+      navigation: [
+        {
+          icon: { type: String },
+          description: { type: String },
+        },
+      ],
+    },
+    elevate_your_experience: {
+      title: { type: String },
+      description: { type: String },
+      products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+      hidden: { type: Boolean, default: false },
+    },
 
-    imageGrid: [
-      {
-        image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-        caption: { type: String },
-      },
-    ],
-    video: { type: String },
-    brand: { type: String, required: true },
+    product_support: {
+      quick_guide: { type: String },
+      manual: { type: String },
+      support_link: { type: String },
+      tutorial_video: { type: String },
+    },
 
     wholesale_price: { type: Number },
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
 
     categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+
+    category: { type: String, required: true },
+    subcategory: { type: String },
+    product_collection: { type: String },
+
     quantity: { type: Number, default: 30, required: true },
     max_quantity: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
-    facts: { type: String },
-    included_items: { type: String },
-    contributers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
-    description: { type: String },
+
+    contributors: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
     reviews: [reviewSchema],
@@ -92,16 +139,21 @@ const productSchema = new mongoose.Schema(
     parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
     isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
     hidden: { type: Boolean, default: false },
-    sale_price: { type: Number, default: 0 },
-    sale_start_date: { type: Date },
-    sale_end_date: { type: Date },
-    deleted: { type: Boolean, default: false },
+    sale: {
+      sale_price: { type: Number, default: 0 },
+      sale_start_date: { type: Date },
+      sale_end_date: { type: Date },
+    },
+
     preorder: { type: Boolean, default: false },
     sold_out: { type: Boolean, default: false },
     pathname: { type: String },
-    meta_title: { type: String },
-    meta_description: { type: String },
-    meta_keywords: { type: String },
+    seo: {
+      meta_title: { type: String },
+      meta_description: { type: String },
+      meta_keywords: { type: String },
+    },
+
     dimensions: {
       package_length: { type: Number },
       package_width: { type: Number },
@@ -113,29 +165,59 @@ const productSchema = new mongoose.Schema(
       weight_pounds: { type: Number },
       weight_ounces: { type: Number },
     },
+    meta_data: {
+      processing_time: { type: Array },
+      material_cost: { type: Number },
+      filament_used: { type: Number },
+      printing_time: { type: Number },
+      assembly_time: { type: Number },
+    },
+    order: { type: Number },
+    color: {
+      name: { type: String },
+      code: { type: String },
+      is_filament_color: { type: Boolean },
+      filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
+    },
+    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
+
+    size: { type: String },
+
+    deleted: { type: Boolean, default: false },
+
+    // ---------------------------
+    // Depreciated
+    // ---------------------------
+    sizing: { type: String },
+    has_add_on: { type: Boolean, default: false },
+
+    contributers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
+
+    brand: { type: String, required: true },
+
+    sale_price: { type: Number, default: 0 },
+    sale_start_date: { type: Date },
+    sale_end_date: { type: Date },
+
+    facts: { type: String },
+    description: { type: String },
+
+    meta_title: { type: String },
+    meta_description: { type: String },
+    meta_keywords: { type: String },
 
     processing_time: { type: Array },
     material_cost: { type: Number },
     filament_used: { type: Number },
     printing_time: { type: Number },
     assembly_time: { type: Number },
-    order: { type: Number },
-    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
-    filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
-    has_add_on: { type: Boolean, default: false },
 
     color: { type: String },
     color_code: { type: String },
-    size: { type: String },
-    sizing: { type: String },
 
-    // ---------------------------
-    // Depreciated
-    // ---------------------------
+    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 
-    category: { type: String, required: true },
-    subcategory: { type: String },
-    product_collection: { type: String },
+    secondary_images_object: { type: Array },
 
     color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
@@ -187,6 +269,13 @@ const productSchema = new mongoose.Schema(
     product_height: { type: Number },
     weight_pounds: { type: Number },
     weight_ounces: { type: Number },
+
+    included_items: { type: String },
+
+    subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+
+    video: { type: String },
   },
   {
     timestamps: true,

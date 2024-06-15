@@ -70,7 +70,7 @@ export const productInitalState = {
   finite_stock: false,
   facts: "",
   included_items: "",
-  contributers: [],
+  contributors: [],
   description: "",
   rating: 0,
   numReviews: 0,

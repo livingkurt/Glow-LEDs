@@ -247,7 +247,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
       labelProp: "name",
     },
-    contributers: {
+    contributors: {
       type: "autocomplete_multiple",
       label: "Contributers",
       options: users,

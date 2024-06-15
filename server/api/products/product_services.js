@@ -750,7 +750,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("contributers");
+        .populate("contributors");
 
       const transformedProducts = transformProducts(products);
 
