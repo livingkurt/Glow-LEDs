@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -54,7 +54,7 @@ const FeaturesPage = () => {
   const remoteApi = useCallback(options => API.getFeatures(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Features | Glow LEDs</title>
       </Helmet>
@@ -74,7 +74,7 @@ const FeaturesPage = () => {
         }
       />
       <EditFeatureModal />
-    </div>
+    </Container>
   );
 };
 

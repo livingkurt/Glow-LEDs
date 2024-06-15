@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import { Container } from "@mui/material";
 
 const TeamPage = () => {
   const params = useParams();
@@ -26,7 +27,7 @@ const TeamPage = () => {
   }, []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Team | Glow LEDs</title>
         <meta property="og:title" content="Team" />
@@ -260,7 +261,7 @@ const TeamPage = () => {
           )}
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 export default TeamPage;

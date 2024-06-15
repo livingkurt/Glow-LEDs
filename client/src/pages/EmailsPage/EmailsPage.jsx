@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditEmailModal } from "./components";
 import * as API from "../../api";
-import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Container, TextField } from "@mui/material";
 import { format_date, humanize } from "../../utils/helper_functions";
 import { open_create_email_modal, open_edit_email_modal } from "../../slices/emailSlice";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -120,7 +120,7 @@ const EmailsPage = () => {
   const remoteApi = useCallback(options => API.getEmails(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Emails | Glow LEDs</title>
       </Helmet>
@@ -165,7 +165,7 @@ const EmailsPage = () => {
         }
       />
       <EditEmailModal />
-    </div>
+    </Container>
   );
 };
 export default EmailsPage;

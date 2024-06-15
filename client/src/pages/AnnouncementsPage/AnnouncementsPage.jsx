@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import * as API from "../../api";
 import { useParams } from "react-router-dom";
+import { Container } from "@mui/material";
 
 const AnnouncementsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -29,7 +30,7 @@ const AnnouncementsPage = () => {
     return () => (clean = false);
   }, [emails, dispatch]);
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Announcements | Glow LEDs</title>
         <meta property="og:title" content="Featured" />
@@ -157,7 +158,7 @@ const AnnouncementsPage = () => {
             </div>
           );
         })}
-    </div>
+    </Container>
   );
 };
 export default AnnouncementsPage;

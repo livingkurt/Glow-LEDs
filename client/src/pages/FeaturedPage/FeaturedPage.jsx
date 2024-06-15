@@ -6,6 +6,7 @@ import { humanize } from "../../utils/helper_functions";
 import { useNavigate } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import { Container } from "@mui/material";
 
 const FeaturedPage = () => {
   const params = useParams();
@@ -29,7 +30,7 @@ const FeaturedPage = () => {
 
   const today = date.toISOString();
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Featured | Glow LEDs</title>
         <meta property="og:title" content="Featured" />
@@ -143,7 +144,7 @@ const FeaturedPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 export default FeaturedPage;

@@ -1,9 +1,10 @@
+import { Container } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 
 const MusicPage = () => {
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Featured | Glow LEDs</title>
         <meta property="og:title" content="Featured" />
@@ -369,7 +370,7 @@ const MusicPage = () => {
           NTRE - Mmm... (FREE DOWNLOAD)
         </a>
       </div>
-    </div>
+    </Container>
   );
 };
 export default MusicPage;
