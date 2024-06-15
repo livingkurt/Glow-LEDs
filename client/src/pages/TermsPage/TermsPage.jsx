@@ -1,9 +1,10 @@
+import { Container } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 
 const TermsPage = () => {
   return (
-    <div className="main_container p-20px ">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Terms and Conditions | Glow LEDs</title>
         <meta property="og:title" content="Terms and Conditions" />
@@ -81,7 +82,7 @@ const TermsPage = () => {
           terms. If you need to contact us, please use our contact form.
         </p>
       </div>
-    </div>
+    </Container>
   );
 };
 

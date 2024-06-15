@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -25,7 +25,9 @@ const PlaceOrderLayout = ({ children }) => {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          {children}
+          <Container maxWidth="lg" sx={{ py: 2 }}>
+            {children}
+          </Container>
         </Grid>
       </Grid>
     </div>

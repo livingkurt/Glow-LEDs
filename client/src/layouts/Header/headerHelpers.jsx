@@ -384,36 +384,36 @@ const community = {
       path: "/collections/all/teams/category/rave_mob",
       _id: 549,
     },
-    {
-      name: "Featured",
-      path: "/pages/menu/featured",
-      _id: 550,
-      id: "featured_dropdown",
-      sideDrawer: {
-        drawerItems: [
-          {
-            name: "Glovers",
-            path: "/collections/all/sponsors",
-            _id: 551,
-          },
-          {
-            name: "Artists",
-            path: "/collections/all/sponsors",
-            _id: 552,
-          },
-          {
-            name: "Producers",
-            path: "/collections/all/teams",
-            _id: 553,
-          },
-          {
-            name: "VFX",
-            path: "/collections/all/teams/category/rave_mob",
-            _id: 554,
-          },
-        ],
-      },
-    },
+    // {
+    //   name: "Featured",
+    //   path: "/pages/menu/featured",
+    //   _id: 550,
+    //   id: "featured_dropdown",
+    //   sideDrawer: {
+    //     drawerItems: [
+    //       {
+    //         name: "Glovers",
+    //         path: "/collections/all/sponsors",
+    //         _id: 551,
+    //       },
+    //       {
+    //         name: "Artists",
+    //         path: "/collections/all/sponsors",
+    //         _id: 552,
+    //       },
+    //       {
+    //         name: "Producers",
+    //         path: "/collections/all/teams",
+    //         _id: 553,
+    //       },
+    //       {
+    //         name: "VFX",
+    //         path: "/collections/all/teams/category/rave_mob",
+    //         _id: 554,
+    //       },
+    //     ],
+    //   },
+    // },
   ],
 };
 
@@ -692,11 +692,11 @@ const support = {
       path: "/pages/about",
       _id: 6102,
     },
-    {
-      name: "Announcements",
-      path: "/pages/announcements",
-      _id: 6103,
-    },
+    // {
+    //   name: "Announcements",
+    //   path: "/pages/announcements",
+    //   _id: 6103,
+    // },
     {
       name: "Term and Condition",
       path: "/pages/terms",

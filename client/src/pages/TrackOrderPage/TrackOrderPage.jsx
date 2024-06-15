@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { Container } from "@mui/material";
 
 const TrackOrderPage = () => {
   const [order_number, set_order_number] = useState("");
-
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
   return (
-    <div className="form">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Track Order | Glow LEDs</title>
         <meta property="og:title" content="Guest Decision" />
@@ -57,7 +54,7 @@ const TrackOrderPage = () => {
           </li>
         </ul>
       </form>
-    </div>
+    </Container>
   );
 };
 export default TrackOrderPage;
