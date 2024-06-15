@@ -34,14 +34,6 @@ const AllSponsorsPage = () => {
         <meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
         <meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
       </Helmet>
-
-      <div className="jc-fe">
-        <Link to="/collections/all/teams">
-          <GLButton variant="secondary" className="">
-            Sponsored Teams
-          </GLButton>
-        </Link>
-      </div>
       <div className="jc-c">
         <div className="row">
           <h1>Sponsored Glovers</h1>

@@ -19,7 +19,7 @@ import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
 import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { ProductItemD, ProductItemM } from "./components";
 import * as API from "../../api";
-import { Grid, Skeleton } from "@mui/material";
+import { Container, Grid, Skeleton } from "@mui/material";
 
 const AllProductsPage = () => {
   const params = useParams();
@@ -315,7 +315,7 @@ const AllProductsPage = () => {
   };
 
   return (
-    <div>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>
           {" "}
@@ -492,7 +492,7 @@ const AllProductsPage = () => {
       {products.length === 0 && !best_sellers && (
         <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
       )}
-    </div>
+    </Container>
   );
 };
 export default AllProductsPage;
