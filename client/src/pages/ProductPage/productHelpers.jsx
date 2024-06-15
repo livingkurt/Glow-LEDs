@@ -188,3 +188,20 @@ export const updateRecentlyViewed = product => {
     sessionStorage.setItem("recently_viewed", JSON.stringify(recentProducts));
   }
 };
+
+export const productPageBreadCrumbs = product => {
+  const { category, subcategory, product_collection, name } = product;
+  return [
+    { name: "ALL PRODUCTS", to: "/collections/all/products" },
+    { name: category.toUpperCase(), to: `/collections/all/products/category/${category}` },
+    {
+      name: subcategory.toUpperCase(),
+      to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
+    },
+    {
+      name: product_collection,
+      to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
+    },
+    { name: name.toUpperCase() },
+  ];
+};

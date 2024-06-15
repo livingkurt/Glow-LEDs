@@ -1,86 +1,54 @@
 import React, { useEffect } from "react";
-import { Box, Grid, Typography, Divider, Rating, Breadcrumbs } from "@mui/material";
-import MUILink from "@mui/material/Link";
+import { Box, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
-import { openEditProductModal } from "../ProductsPage/productsPageSlice";
-import { ProductFacts } from "./components";
-import CustomizationOption from "./components/CustomizationOption";
-import YouTube from "react-youtube";
-import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { detailsProductPage, setQuantity } from "./productPageSlice";
+
+import { detailsProductPage } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
-import { determineInStock, isOptionCountDifferent } from "./productHelpers";
-import * as API from "../../api";
-import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
-import ProductImages from "./components/ProductImages";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs.jsx";
 import ProductDetails from "./components/ProductDetails";
 import HeroVideo from "../HomePage/components/HeroVideo";
-import { toCapitalize } from "../../utils/helper_functions";
-import { NavigateNext } from "@mui/icons-material";
-import ProductNavigation from "./components/ProductNavigation";
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { productPageBreadCrumbs } from "./productHelpers";
+import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 
 const ProductPage = () => {
   const params = useParams();
-  const location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(detailsProductPage({ pathname: params.pathname }));
   }, [dispatch, params.pathname]);
 
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart } = cartPage;
-
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
   const productPage = useSelector(state => state.products.productPage);
   const { customizedProduct, product, productPageLoading } = productPage;
 
-  const {
-    name,
-    numReviews,
-    rating,
-    category,
-    subcategory,
-    pathname,
-    product_collection,
-    facts,
-    price,
-    images,
-    currentOptions,
-  } = customizedProduct;
-
-  const breadCrumbInfo = [
-    { name: "All Products", to: "/collections/all/products" },
-    { name: category, to: `/collections/all/products/category/${category}` },
-    {
-      name: subcategory,
-      to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
-    },
-    {
-      name: product_collection,
-      to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
-    },
-    { name: name, to: `/collections/all/products/${pathname}` },
-  ];
+  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
+    customizedProduct;
 
   return (
     <Box>
       <ProductPageHead />
       <ProductPageLoading loading={productPageLoading}>
-        <ProductNavigation
-          category={category}
-          subcategory={subcategory}
-          product_collection={product_collection}
-          name={name}
-          product={product}
-        />
+        <Box display="flex" justifyContent={"space-between"} p={2}>
+          <GLBreadcrumbs items={productPageBreadCrumbs(product)} />
+          {current_user?.isAdmin && (
+            <Box className="br-10px">
+              <GLButtonV2 variant="contained" color="secondary" onClick={e => dispatch(openEditProductModal(product))}>
+                Edit Product
+              </GLButtonV2>
+            </Box>
+          )}
+        </Box>
         <ProductDetails
           images={images}
           name={name}
