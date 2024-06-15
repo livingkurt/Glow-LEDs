@@ -3,7 +3,7 @@ import { Box, Grid, Skeleton } from "@mui/material";
 
 const ProductPageLoading = ({ loading, children }) => {
   return loading ? (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} p={2}>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <Skeleton
           className="br-20px"
