@@ -35,16 +35,37 @@ export const optionSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    price: { type: Number },
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    name: { type: String, required: true },
+    fact: { type: String },
 
-    hero_video: { type: String },
+    price: { type: Number },
+    wholesale_price: { type: Number },
+    wholesale_product: { type: Boolean, default: false },
+    previous_price: { type: Number },
+
+    quantity: { type: Number, default: 30, required: true },
+    max_quantity: { type: Number, default: 30, required: true },
+    count_in_stock: { type: Number, default: 30, required: true },
+    finite_stock: { type: Boolean, default: false },
+
+    options: [optionSchema], // Embed the options schema here
+
+    restock_status: { type: String },
+    pathname: { type: String },
+
+    hero_video: {
+      title: { type: String },
+      description: { type: String },
+      video: { type: String },
+      hidden: { type: Boolean, default: false },
+    },
 
     icon_specs: [
       {
         icon: { type: String },
         description: { type: String },
+        hidden: { type: Boolean, default: false },
       },
     ],
 
@@ -62,6 +83,7 @@ const productSchema = new mongoose.Schema(
       hero_fact_2: {
         title: { type: String },
         description: { type: String },
+        hidden: { type: Boolean, default: false },
       },
       image_grid_2: [
         {
@@ -76,6 +98,7 @@ const productSchema = new mongoose.Schema(
       hero_fact_2: {
         title: { type: String },
         description: { type: String },
+        hidden: { type: Boolean, default: false },
       },
       lifestyle_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     },
@@ -93,6 +116,7 @@ const productSchema = new mongoose.Schema(
           ],
         },
       ],
+      hidden: { type: Boolean, default: false },
     },
     in_the_box: {
       title: { type: String },
@@ -102,6 +126,7 @@ const productSchema = new mongoose.Schema(
           description: { type: String },
         },
       ],
+      hidden: { type: Boolean, default: false },
     },
     elevate_your_experience: {
       title: { type: String },
@@ -115,29 +140,20 @@ const productSchema = new mongoose.Schema(
       manual: { type: String },
       support_link: { type: String },
       tutorial_video: { type: String },
+      hidden: { type: Boolean, default: false },
     },
 
-    wholesale_price: { type: Number },
-    wholesale_product: { type: Boolean, default: false },
-    previous_price: { type: Number },
-
-    categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
 
     category: { type: String, required: true },
     subcategory: { type: String },
     product_collection: { type: String },
 
-    quantity: { type: Number, default: 30, required: true },
-    max_quantity: { type: Number, default: 30, required: true },
-    finite_stock: { type: Boolean, default: false },
-
     contributors: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
     reviews: [reviewSchema],
-    options: [optionSchema], // Embed the options schema here
-    parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
-    isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
+
     hidden: { type: Boolean, default: false },
     sale: {
       sale_price: { type: Number, default: 0 },
@@ -145,9 +161,6 @@ const productSchema = new mongoose.Schema(
       sale_end_date: { type: Date },
     },
 
-    preorder: { type: Boolean, default: false },
-    sold_out: { type: Boolean, default: false },
-    pathname: { type: String },
     seo: {
       meta_title: { type: String },
       meta_description: { type: String },
@@ -173,16 +186,19 @@ const productSchema = new mongoose.Schema(
       assembly_time: { type: Number },
     },
     order: { type: Number },
+
+    // Is Variation
+    parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
+    isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
     color: {
       name: { type: String },
       code: { type: String },
       is_filament_color: { type: Boolean },
       filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     },
-    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
-
     size: { type: String },
 
+    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     deleted: { type: Boolean, default: false },
 
     // ---------------------------
@@ -201,6 +217,9 @@ const productSchema = new mongoose.Schema(
 
     facts: { type: String },
     description: { type: String },
+
+    preorder: { type: Boolean, default: false },
+    sold_out: { type: Boolean, default: false },
 
     meta_title: { type: String },
     meta_description: { type: String },
@@ -222,7 +241,6 @@ const productSchema = new mongoose.Schema(
     color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    count_in_stock: { type: Number, default: 30, required: true },
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
@@ -233,7 +251,6 @@ const productSchema = new mongoose.Schema(
     size: { type: String },
     sizing: { type: String },
     // Depreciated
-    count_in_stock: { type: Number, default: 30, required: true },
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     images: { type: Array },
@@ -272,6 +289,7 @@ const productSchema = new mongoose.Schema(
 
     included_items: { type: String },
 
+    categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
 
