@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditExpenseModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { getExpenses } from "../../api";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
@@ -142,7 +142,7 @@ const ExpensesPage = () => {
   };
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Expenses | Glow LEDs</title>
       </Helmet>
@@ -191,7 +191,7 @@ const ExpensesPage = () => {
         selected_image={selected_image}
       />
       <EditExpenseModal />
-    </div>
+    </Container>
   );
 };
 export default ExpensesPage;

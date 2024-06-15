@@ -9,6 +9,7 @@ import { SponsorItemD, SponsorItemM } from "../SponsorsGridPage/components";
 import { TeamItemD, TeamItemM } from "../TeamsGridPage/components";
 import * as API from "../../api";
 import { EmployeeItemD, EmployeeItemM } from "./components";
+import { Container } from "@mui/material";
 
 const AboutPage = () => {
   const { width } = useWindowDimensions();
@@ -35,7 +36,7 @@ const AboutPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>About | Glow LEDs</title>
         <meta property="og:title" content="About" />
@@ -249,7 +250,7 @@ const AboutPage = () => {
               <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
             )}
           </Loading>
-          <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
+          {/* <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
             Sponsored Teams
           </h2>
 
@@ -274,10 +275,10 @@ const AboutPage = () => {
             {teams?.length === 0 && (
               <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
             )}
-          </Loading>
+          </Loading> */}
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

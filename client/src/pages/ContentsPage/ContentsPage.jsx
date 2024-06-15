@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditContentModal } from "./components";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
 import { determineContentColors } from "./contentsPageHelpers";
@@ -109,7 +109,7 @@ const ContentsPage = () => {
   const remoteApi = useCallback(options => API.getContents(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Contents | Glow LEDs</title>
       </Helmet>
@@ -131,7 +131,7 @@ const ContentsPage = () => {
         }
       />
       <EditContentModal />
-    </div>
+    </Container>
   );
 };
 export default ContentsPage;

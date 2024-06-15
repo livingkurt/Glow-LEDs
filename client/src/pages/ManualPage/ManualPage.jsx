@@ -3,13 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { Container } from "@mui/material";
 
 const ManualPage = () => {
   const params = useParams();
   const pathname = params.pathname;
 
   return (
-    <div className="main_container">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Manual | Glow LEDs</title>
         <meta property="og:title" content="Manual" />
@@ -133,7 +134,7 @@ const ManualPage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 };
 

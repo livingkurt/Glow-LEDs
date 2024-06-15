@@ -6,6 +6,7 @@ import { hslToHex } from "./utils/helper_functions";
 import { API_Content } from "./utils";
 import config from "./config";
 import { domain } from "./helpers/sharedHelpers";
+import { Container } from "@mui/material";
 
 const Links = () => {
   const [multiplier, set_multiplier] = useState(0);
@@ -32,7 +33,7 @@ const Links = () => {
 
   let num = -multiplier;
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
         <meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
@@ -164,7 +165,7 @@ const Links = () => {
             })}
         </div>
       </Router>
-    </div>
+    </Container>
   );
 };
 export default Links;

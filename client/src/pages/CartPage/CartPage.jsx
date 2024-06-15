@@ -8,6 +8,7 @@ import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 import { useNavigate, useParams } from "react-router-dom";
+import { Container } from "@mui/material";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Cart | Glow LEDs </title>
         <meta property="og:title" content="Cart" />
@@ -124,7 +125,7 @@ const CartPage = () => {
         category="all"
         add_to_cart={true}
       />
-    </div>
+    </Container>
   );
 };
 

@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { open_create_wholesaler_modal, open_edit_wholesaler_modal } from "../../slices/wholesalerSlice";
 import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { getWholesalers } from "../../api";
 import { determineColor } from "./wholesalerHelper";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -66,7 +66,7 @@ const WholesalersPage = () => {
   const remoteApi = useCallback(options => getWholesalers(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Wholesalers | Glow LEDs</title>
       </Helmet>
@@ -88,7 +88,7 @@ const WholesalersPage = () => {
         }
       />
       <EditWholesalerModal />
-    </div>
+    </Container>
   );
 };
 export default WholesalersPage;

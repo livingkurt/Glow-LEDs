@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { open_create_palette_modal, open_edit_palette_modal } from "../../slices/paletteSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -45,7 +45,7 @@ const PalettesPage = () => {
   const remoteApi = useCallback(options => API.getPalettes(options), []);
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Admin Palettes | Glow LEDs</title>
       </Helmet>
@@ -65,7 +65,7 @@ const PalettesPage = () => {
         }
       />
       <EditPaletteModal />
-    </div>
+    </Container>
   );
 };
 

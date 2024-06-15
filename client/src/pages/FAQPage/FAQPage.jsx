@@ -9,6 +9,7 @@ import QuickButtons from "./QuickButtons";
 import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import config from "../../config";
+import { Container } from "@mui/material";
 
 const FAQPage = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const FAQPage = () => {
   };
 
   return (
-    <div className="main_container p-20px">
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
         <title>Frequently Asked Questions | Glow LEDs</title>
         <meta property="og:title" content="Frequently Asked Questions" />
@@ -64,7 +65,7 @@ const FAQPage = () => {
       </h1>
       <div className="faq-container">
         <QuickButtons />
-        <div className="faq-main">
+        <div>
           <div className="inner_content">
             <div>
               <div className="container" style={{ margin: "10px 0" }}>
@@ -497,7 +498,7 @@ const FAQPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

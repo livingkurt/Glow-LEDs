@@ -1,9 +1,10 @@
+import { Container } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 
 const AffiliateTermsPage = () => {
   return (
-    <div className="main_container p-20px ">
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Terms and Conditions | Glow LEDs</title>
         <meta property="og:title" content="Terms and Conditions" />
@@ -160,7 +161,7 @@ const AffiliateTermsPage = () => {
           <li>With choice of product requires you to make a lightshow/product review video with them</li>
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 

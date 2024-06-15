@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { SponsorItemD, SponsorItemM } from "./components";
 import * as API from "../../api";
+import { Container } from "@mui/material";
 
 const AllSponsorsPage = () => {
   const params = useParams();
@@ -22,7 +23,7 @@ const AllSponsorsPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Sponsors| Glow LEDs</title>
         <meta property="og:title" content="Affiliated" />
@@ -33,14 +34,6 @@ const AllSponsorsPage = () => {
         <meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
         <meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
       </Helmet>
-
-      <div className="jc-fe">
-        <Link to="/collections/all/teams">
-          <GLButton variant="secondary" className="">
-            Sponsored Teams
-          </GLButton>
-        </Link>
-      </div>
       <div className="jc-c">
         <div className="row">
           <h1>Sponsored Glovers</h1>
@@ -81,7 +74,7 @@ const AllSponsorsPage = () => {
           )}
         </Loading>
       )}
-    </div>
+    </Container>
   );
 };
 export default AllSponsorsPage;
