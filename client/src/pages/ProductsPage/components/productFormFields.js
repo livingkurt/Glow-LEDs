@@ -15,34 +15,14 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       label: "Name",
       required: true,
     },
-    description: {
+    fact: {
       type: "text_multiline",
-      label: "Description",
-    },
-    facts: {
-      type: "text_multiline",
-      label: "Facts",
-    },
-    included_items: {
-      type: "text_multiline",
-      label: "Included Items",
+      label: "Fact",
     },
     max_quantity: {
       type: "number",
       label: "Max Quantity",
       labelProp: "max_quantity",
-    },
-    color: {
-      type: "text",
-      label: "Color",
-    },
-    color_code: {
-      type: "text",
-      label: "Color Code",
-    },
-    size: {
-      type: "text",
-      label: "Size",
     },
     count_in_stock: {
       type: "number",
@@ -61,86 +41,329 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       labelProp: "hidden",
       defaultValue: false,
     },
-    sold_out: {
-      type: "checkbox",
-      label: "Sold Out",
-      defaultValue: false,
-    },
-    preorder: {
-      type: "checkbox",
-      label: "Preorder",
-      labelProp: "preorder",
-      defaultValue: false,
-    },
     pathname: {
       type: "text",
       label: "Pathname",
       labelProp: "pathname",
     },
-
-    images_object: {
+    images: {
       type: "image_upload",
       label: "Images",
       labelProp: "link",
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
-    video: {
-      type: "text",
-      label: "Video",
+    hero_video: {
+      type: "object",
+      title: "Hero Video",
+      fields: {
+        title: {
+          type: "text",
+          label: "Title",
+        },
+        description: {
+          type: "text_multiline",
+          label: "Description",
+        },
+        video: {
+          type: "text",
+          label: "Video",
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
     },
-
-    processing_time: {
-      type: "multi-select",
-      label: "Processing Time",
-      options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"],
+    icon_specs: {
+      type: "array",
+      label: item => item.description,
+      title: "Icon Specs",
+      itemSchema: {
+        type: "object",
+        fields: {
+          icon: {
+            type: "text",
+            label: "Icon",
+          },
+          description: {
+            type: "text",
+            label: "Description",
+          },
+          hidden: {
+            type: "checkbox",
+            label: "Hidden",
+            default: false,
+          },
+        },
+      },
     },
-
-    order: {
-      type: "number",
-      label: "Order",
+    features: {
+      type: "object",
+      title: "Features",
+      fields: {
+        image_grid_1: {
+          type: "array",
+          label: item => item.title,
+          title: "Image Grid 1",
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: {
+                type: "text",
+                label: "Title",
+              },
+              description: {
+                type: "text_multiline",
+                label: "Description",
+              },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "link",
+                album: `${product.name} Images`,
+                getOptionLabel: option => option.link,
+              },
+              button_text: {
+                type: "text",
+                label: "Button Text",
+              },
+              link: {
+                type: "text",
+                label: "Link",
+              },
+            },
+          },
+        },
+        hero_image_1: {
+          type: "image_upload",
+          label: "Hero Image 1",
+          labelProp: "link",
+          album: `${product.name} Images`,
+          getOptionLabel: option => option.link,
+        },
+        hero_fact_1: {
+          type: "object",
+          title: "Hero Fact 1",
+          fields: {
+            title: {
+              type: "text",
+              label: "Title",
+            },
+            description: {
+              type: "text_multiline",
+              label: "Description",
+            },
+            hidden: {
+              type: "checkbox",
+              label: "Hidden",
+              default: false,
+            },
+          },
+        },
+        image_grid_2: {
+          type: "array",
+          label: item => item.title,
+          title: "Image Grid 2",
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: {
+                type: "text",
+                label: "Title",
+              },
+              description: {
+                type: "text_multiline",
+                label: "Description",
+              },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "link",
+                album: `${product.name} Images`,
+                getOptionLabel: option => option.link,
+              },
+              button_text: {
+                type: "text",
+                label: "Button Text",
+              },
+              link: {
+                type: "text",
+                label: "Link",
+              },
+            },
+          },
+        },
+        hero_image_2: {
+          type: "image_upload",
+          label: "Hero Image 2",
+          labelProp: "link",
+          album: `${product.name} Images`,
+          getOptionLabel: option => option.link,
+        },
+        hero_fact_2: {
+          type: "object",
+          title: "Hero Fact 2",
+          fields: {
+            title: {
+              type: "text",
+              label: "Title",
+            },
+            description: {
+              type: "text_multiline",
+              label: "Description",
+            },
+            hidden: {
+              type: "checkbox",
+              label: "Hidden",
+              default: false,
+            },
+          },
+        },
+        lifestyle_images: {
+          type: "image_upload",
+          label: "Lifestyle Images",
+          labelProp: "link",
+          album: `${product.name} Images`,
+          getOptionLabel: option => option.link,
+        },
+      },
     },
-    prices_title: {
-      label: "Prices",
-      type: "title",
-      align: "center",
-      variant: "h6",
+    tech_specs: {
+      type: "object",
+      title: "Tech Specs",
+      fields: {
+        title: {
+          type: "text",
+          label: "Title",
+        },
+        navigation: {
+          type: "array",
+          label: item => item.title,
+          title: "Navigation",
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: {
+                type: "text",
+                label: "Title",
+              },
+              values: {
+                type: "array",
+                label: item => item.title,
+                title: "Values",
+                itemSchema: {
+                  type: "object",
+                  fields: {
+                    title: {
+                      type: "text",
+                      label: "Title",
+                    },
+                    description: {
+                      type: "text_multiline",
+                      label: "Description",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
     },
-    price: {
-      type: "number",
-      label: "Price",
+    in_the_box: {
+      type: "object",
+      title: "In the Box",
+      fields: {
+        title: {
+          type: "text",
+          label: "Title",
+        },
+        items: {
+          type: "array",
+          label: item => item.description,
+          title: "Items",
+          itemSchema: {
+            type: "object",
+            fields: {
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "link",
+                album: `${product.name} Images`,
+                getOptionLabel: option => option.link,
+              },
+              description: {
+                type: "text",
+                label: "Description",
+              },
+            },
+          },
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
     },
-    previous_price: {
-      type: "number",
-      label: "Previous Price",
+    elevate_your_experience: {
+      type: "object",
+      title: "Elevate Your Experience",
+      fields: {
+        title: {
+          type: "text",
+          label: "Title",
+        },
+        description: {
+          type: "text_multiline",
+          label: "Description",
+        },
+        products: {
+          type: "autocomplete_multiple",
+          label: "Products",
+          options: products,
+          labelProp: "name",
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
     },
-    wholesale_price: {
-      type: "number",
-      label: "Wholesale Price",
-    },
-    wholesale_product: {
-      type: "checkbox",
-      label: "Wholesale Product",
-    },
-    extra_cost: {
-      type: "number",
-      label: "Extra Cost",
-    },
-    add_on_price: {
-      type: "number",
-      label: "Add-On Price",
-      labelProp: "add_on_price",
-    },
-    has_add_on: {
-      type: "checkbox",
-      label: "Has Add-On",
-      labelProp: "has_add_on",
-    },
-    category_title: {
-      label: "Categories",
-      type: "title",
-      align: "center",
-      variant: "h6",
+    product_support: {
+      type: "object",
+      title: "Product Support",
+      fields: {
+        quick_guide: {
+          type: "text",
+          label: "Quick Guide",
+        },
+        manual: {
+          type: "text",
+          label: "Manual",
+        },
+        support_link: {
+          type: "text",
+          label: "Support Link",
+        },
+        tutorial_video: {
+          type: "text",
+          label: "Tutorial Video",
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
     },
     category: {
       type: "text",
@@ -155,25 +378,12 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       type: "text",
       label: "Product Collection",
     },
-    categorys: {
+    contributors: {
       type: "autocomplete_multiple",
-      label: "Categorys",
-      options: categorys,
-      labelProp: "name",
+      label: "Contributors",
+      options: users,
+      labelProp: "first_name",
     },
-    subcategorys: {
-      type: "autocomplete_multiple",
-      label: "Subcategorys",
-      options: categorys,
-      labelProp: "name",
-    },
-    collections: {
-      type: "autocomplete_multiple",
-      label: "Collections",
-      options: categorys,
-      labelProp: "name",
-    },
-
     options: {
       type: "array",
       label: item => item.name,
@@ -201,7 +411,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             label: "Is Add-On",
           },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-          additionalCost: { type: "number", label: "Additional Cost" },
           values: {
             type: "array",
             title: "Option Choices",
@@ -212,6 +421,7 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
                 name: { type: "text", label: "Name" },
                 colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
                 isDefault: { type: "checkbox", label: "Default Option" },
+                additionalCost: { type: "number", label: "Additional Cost" },
                 product: {
                   type: "autocomplete_single",
                   label: "Option Product",
@@ -240,38 +450,59 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       options: chips,
       labelProp: "name",
     },
-    filament: {
-      type: "autocomplete_single",
-      label: "Filament",
-      options: filaments,
-      getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
-      labelProp: "name",
+    color: {
+      type: "object",
+      title: "Color",
+      fields: {
+        name: {
+          type: "text",
+          label: "Name",
+        },
+        code: {
+          type: "text",
+          label: "Code",
+        },
+        is_filament_color: {
+          type: "checkbox",
+          label: "Is Filament Color",
+        },
+        filament: {
+          type: "autocomplete_single",
+          label: "Filament",
+          options: filaments,
+          getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
+          labelProp: "name",
+        },
+      },
     },
-    contributors: {
-      type: "autocomplete_multiple",
-      label: "Contributers",
-      options: users,
-      labelProp: "first_name",
+    size: {
+      type: "text",
+      label: "Size",
     },
-    meta_data_title: {
-      label: "Meta Data",
+    seo_title: {
+      label: "SEO",
       type: "title",
       align: "center",
       variant: "h6",
     },
-    meta_title: {
-      type: "text",
-      label: "Meta Title",
+    seo: {
+      type: "object",
+      title: "SEO",
+      fields: {
+        meta_title: {
+          type: "text",
+          label: "Meta Title",
+        },
+        meta_description: {
+          type: "text_multiline",
+          label: "Meta Description",
+        },
+        meta_keywords: {
+          type: "text_multiline",
+          label: "Meta Keywords",
+        },
+      },
     },
-    meta_description: {
-      type: "text_multiline",
-      label: "Meta Description",
-    },
-    meta_keywords: {
-      type: "text_multiline",
-      label: "Meta Keywords",
-    },
-
     dimension_title: {
       label: "Dimensions",
       type: "title",
@@ -282,21 +513,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       type: "object",
       title: "Dimensions",
       fields: {
-        product_length: {
-          type: "number",
-          label: "Length",
-          labelProp: "length",
-        },
-        product_width: {
-          type: "number",
-          label: "Width",
-          labelProp: "width",
-        },
-        product_height: {
-          type: "number",
-          label: "Height",
-          labelProp: "height",
-        },
         package_length: {
           type: "number",
           label: "Package Length",
@@ -312,6 +528,26 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
           label: "Package Height",
           labelProp: "package_height",
         },
+        package_volume: {
+          type: "number",
+          label: "Package Volume",
+          labelProp: "package_volume",
+        },
+        product_length: {
+          type: "number",
+          label: "Product Length",
+          labelProp: "length",
+        },
+        product_width: {
+          type: "number",
+          label: "Product Width",
+          labelProp: "width",
+        },
+        product_height: {
+          type: "number",
+          label: "Product Height",
+          labelProp: "height",
+        },
         weight_pounds: {
           type: "number",
           label: "Weight (lbs)",
@@ -324,50 +560,104 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
         },
       },
     },
+    meta_data_title: {
+      label: "Meta Data",
+      type: "title",
+      align: "center",
+      variant: "h6",
+    },
+    meta_data: {
+      type: "object",
+      title: "Meta Data",
+      fields: {
+        processing_time: {
+          type: "multi-select",
+          label: "Processing Time",
+          options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"],
+        },
+        material_cost: {
+          type: "number",
+          label: "Material Cost",
+        },
+        filament_used: {
+          type: "number",
+          label: "Filament Used",
+        },
+        printing_time: {
+          type: "number",
+          label: "Printing Time",
+        },
+        assembly_time: {
+          type: "number",
+          label: "Assembly Time",
+        },
+      },
+    },
+    order: {
+      type: "number",
+      label: "Order",
+    },
+    prices_title: {
+      label: "Prices",
+      type: "title",
+      align: "center",
+      variant: "h6",
+    },
+    price: {
+      type: "number",
+      label: "Price",
+    },
+    wholesale_price: {
+      type: "number",
+      label: "Wholesale Price",
+    },
+    wholesale_product: {
+      type: "checkbox",
+      label: "Wholesale Product",
+    },
+    previous_price: {
+      type: "number",
+      label: "Previous Price",
+    },
     sale_title: {
       label: "Sale Info",
       type: "title",
       align: "center",
       variant: "h6",
     },
-    sale_price: {
-      type: "number",
-      label: "Sale Price",
-      labelProp: "sale_price",
-      defaultValue: 0,
+    sale: {
+      type: "object",
+      title: "Sale",
+      fields: {
+        price: {
+          type: "number",
+          label: "Sale Price",
+          labelProp: "sale_price",
+          defaultValue: 0,
+        },
+        start_date: {
+          type: "date",
+          label: "Sale Start Date",
+          labelProp: "sale_start_date",
+        },
+        end_date: {
+          type: "date",
+          label: "Sale End Date",
+          labelProp: "sale_end_date",
+        },
+      },
     },
-    sale_start_date: {
-      type: "date",
-      label: "Sale Start Date",
-      labelProp: "sale_start_date",
+    isVariation: {
+      type: "checkbox",
+      label: "Is Variation",
+      default: false,
     },
-    sale_end_date: {
-      type: "date",
-      label: "Sale End Date",
-      labelProp: "sale_end_date",
-    },
-
-    manufacturing_info_title: {
-      label: "Manufacturing Info",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    material_cost: {
-      type: "number",
-      label: "Material Cost",
-    },
-    filament_used: {
-      type: "number",
-      label: "Filament Used",
-    },
-    printing_time: {
-      type: "number",
-      label: "Printing Time",
-    },
-    assembly_time: {
-      type: "number",
-      label: "Assembly Time",
+    parent: {
+      type: "autocomplete_single",
+      label: "Parent Product",
+      options: products,
+      labelProp: "name",
+      default: null,
     },
   };
 };

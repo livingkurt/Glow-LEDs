@@ -1,5 +1,3 @@
-// import mongoose from 'mongoose';
-
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
@@ -20,7 +18,6 @@ export const optionValueSchema = new mongoose.Schema({
   name: { type: String }, // e.g., "Blue", "Large"
   colorCode: { type: String },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
-  // images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Specific images for this optièon value, if necessary
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },
 });
@@ -44,7 +41,6 @@ const productSchema = new mongoose.Schema(
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
 
-    quantity: { type: Number, default: 30, required: true },
     max_quantity: { type: Number, default: 30, required: true },
     count_in_stock: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
@@ -80,7 +76,7 @@ const productSchema = new mongoose.Schema(
         },
       ],
       hero_image_1: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-      hero_fact_2: {
+      hero_fact_1: {
         title: { type: String },
         description: { type: String },
         hidden: { type: Boolean, default: false },
@@ -120,9 +116,9 @@ const productSchema = new mongoose.Schema(
     },
     in_the_box: {
       title: { type: String },
-      navigation: [
+      items: [
         {
-          icon: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           description: { type: String },
         },
       ],
@@ -156,9 +152,9 @@ const productSchema = new mongoose.Schema(
 
     hidden: { type: Boolean, default: false },
     sale: {
-      sale_price: { type: Number, default: 0 },
-      sale_start_date: { type: Date },
-      sale_end_date: { type: Date },
+      price: { type: Number, default: 0 },
+      start_date: { type: Date },
+      end_date: { type: Date },
     },
 
     seo: {
@@ -204,6 +200,8 @@ const productSchema = new mongoose.Schema(
     // ---------------------------
     // Depreciated
     // ---------------------------
+
+    quantity: { type: Number, default: 30, required: true },
     sizing: { type: String },
     has_add_on: { type: Boolean, default: false },
 
@@ -234,10 +232,9 @@ const productSchema = new mongoose.Schema(
     color: { type: String },
     color_code: { type: String },
 
-    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-
     secondary_images_object: { type: Array },
 
+    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
@@ -253,7 +250,6 @@ const productSchema = new mongoose.Schema(
     // Depreciated
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    images: { type: Array },
     color_images: { type: Array },
     secondary_color_images: { type: Array },
     option_images: { type: Array },
