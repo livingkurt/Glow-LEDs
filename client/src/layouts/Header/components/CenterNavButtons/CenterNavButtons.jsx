@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { navItems } from "../../headerHelpers";
-import { GLButton } from "../../../../shared/GlowLEDsComponents";
 import HeaderColumn from "./components/HeaderColumn";
 import HeaderDrawer from "./components/HeaderDrawer";
 import HeaderSubDrawer from "./components/HeaderSubDrawer";
 import { useDispatch } from "react-redux";
 import * as API from "../../../../api";
 import GlowLEDsTextLogo from "./components/GlowLEDsTextLogo";
+import HeaderButton from "./components/HeaderButton";
 
 const CenterNavButtons = () => {
   const dispatch = useDispatch();
@@ -26,11 +26,9 @@ const CenterNavButtons = () => {
       <div className="jc-b nav_bar">
         {navItems.map(item => (
           <div key={item.name} className="header-center-dropdown-container">
-            <Link to={item.path} aria-label={item.ariaLabel}>
-              <GLButton variant="nav" className="title_font fs-17px" data-testid={item.dataTestId}>
-                {item.name}
-              </GLButton>
-            </Link>
+            <HeaderButton to={item.path} ariaLabel={item.ariaLabel}>
+              {item.name}
+            </HeaderButton>
             {item.columns && (
               <div className="header-center-dropdown hover_fade_in">
                 <div className="jc-c">
