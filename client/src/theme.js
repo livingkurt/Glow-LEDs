@@ -78,7 +78,7 @@ const typography = {
   },
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
+    fontWeight: 800,
     fontSize: "13px",
     lineHeight: 1.69,
     letterSpacing: "0.3px",

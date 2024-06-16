@@ -83,8 +83,10 @@
   font-size: 18px;
   text-align: center;
   // letter-spacing: 6px;
-  font-family: $special_font;
-  animation: fadeinout 4s linear 1 forwards, animate 4s linear infinite;
+  font-family: $title_font;
+  animation:
+    fadeinout 4s linear 1 forwards,
+    animate 4s linear infinite;
   // animation: animate 4s linear infinite;
 }
 

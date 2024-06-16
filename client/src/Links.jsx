@@ -131,7 +131,7 @@ const Links = () => {
               num += multiplier;
               return link.link && link.link.substring(0, 1) === "/" ? (
                 <a
-                  className="link special_font"
+                  className="link title_font"
                   rel="noreferrer"
                   aria-label={link.label}
                   key={link.label}
@@ -147,7 +147,7 @@ const Links = () => {
                 </a>
               ) : (
                 <a
-                  className="link special_font"
+                  className="link title_font"
                   rel="noreferrer"
                   aria-label={link.label}
                   key={link.label}
