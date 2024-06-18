@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import HeaderDrawerButton from "./HeaderDrawerButton";
 import Filter from "../../../../../shared/GlowLEDsComponents/GLTable/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { set_chip_name } from "../../../../../slices/glowLedsSlice";
 import { update_products_url } from "../../../../../utils/helper_functions";
 import * as API from "../../../../../api";
+import HeaderButton from "./HeaderButton";
 
 const HeaderColumn = ({ columns }) => {
   const dispatch = useDispatch();
@@ -33,9 +33,7 @@ const HeaderColumn = ({ columns }) => {
       {columns?.map(column => (
         <div key={column._id} className="header-column">
           <Link to={column.path}>
-            <GLButton variant="nav" className="ta-l title_font w-100per fs-18px">
-              {column.name}
-            </GLButton>
+            <HeaderButton className="w-100per fs-18px">{column.name}</HeaderButton>
           </Link>
           <hr className="w-95per m-0px" />
           {chips && column.name === "Featured" && (
