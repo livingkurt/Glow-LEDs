@@ -33,7 +33,9 @@ const HeaderColumn = ({ columns }) => {
       {columns?.map(column => (
         <div key={column._id} className="header-column">
           <Link to={column.path}>
-            <HeaderButton className="w-100per fs-18px">{column.name}</HeaderButton>
+            <HeaderButton className="w-100per fs-18px" hasColumnRows={column.rows.length > 0}>
+              {column.name}
+            </HeaderButton>
           </Link>
           <hr className="w-95per m-0px" />
           {chips && column.name === "Featured" && (

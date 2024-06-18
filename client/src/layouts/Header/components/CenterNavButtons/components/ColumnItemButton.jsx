@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography, useTheme } from "@mui/material";
 
-const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
+const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
   return (
     <Link to={to} aria-label={ariaLabel}>
@@ -23,12 +23,11 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
         {...otherProps}
       >
         <Typography
-          variant="button"
+          variant="body1"
           align={align}
           sx={{
             color: theme.palette.common.white,
-            fontWeight: "bold",
-            fontSize: "16px",
+            fontWeight: 600,
           }}
         >
           {children}
@@ -38,4 +37,4 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
   );
 };
 
-export default HeaderButton;
+export default ColumnItemButton;

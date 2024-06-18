@@ -11,24 +11,23 @@
 @font-face {
   font-family: "phrase_font";
   src: url("../fonts/Quicksand-VariableFont_wght.ttf");
-  font-weight: 800;
+  // font-weight: 800;
 }
 
 @font-face {
   font-family: "paragraph_font";
   src: url("../fonts/Quicksand-VariableFont_wght.ttf");
-  font-weight: 200;
 }
 
-@font-face {
-  font-family: "new_font_1";
-  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
-}
+// @font-face {
+//   font-family: "new_font_1";
+//   src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+// }
 
-@font-face {
-  font-family: "new_font_2";
-  src: url("../fonts/Raleway-VariableFont_wght.ttf");
-}
+// @font-face {
+//   font-family: "new_font_2";
+//   src: url("../fonts/Raleway-VariableFont_wght.ttf");
+// }
 
 $phrase_font: phrase_font;
 $paragraph_font: paragraph_font;
