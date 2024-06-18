@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import HeaderDrawerButton from "./HeaderDrawerButton";
 import Filter from "../../../../../shared/GlowLEDsComponents/GLTable/Filter";
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { set_chip_name } from "../../../../../slices/glowLedsSlice";
 import { update_products_url } from "../../../../../utils/helper_functions";
 import * as API from "../../../../../api";
-import HeaderButton from "./HeaderButton";
+import ColumnTitle from "./ColumnTitle";
 
 const HeaderColumn = ({ columns }) => {
   const dispatch = useDispatch();
@@ -32,11 +32,7 @@ const HeaderColumn = ({ columns }) => {
     <>
       {columns?.map(column => (
         <div key={column._id} className="header-column">
-          <Link to={column.path}>
-            <HeaderButton className="w-100per fs-18px" hasColumnRows={column.rows.length > 0}>
-              {column.name}
-            </HeaderButton>
-          </Link>
+          <ColumnTitle>{column.name.toUpperCase()}</ColumnTitle>
           <hr className="w-95per m-0px" />
           {chips && column.name === "Featured" && (
             <Filter

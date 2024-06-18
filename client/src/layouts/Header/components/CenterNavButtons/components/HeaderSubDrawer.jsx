@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import HeaderDrawerButton from "./HeaderDrawerButton";
-import HeaderButton from "./HeaderButton";
+import ColumnTitle from "./ColumnTitle";
 
 const HeaderSubDrawer = ({ columns }) => {
   // Create a normalized array
@@ -31,11 +30,7 @@ const HeaderSubDrawer = ({ columns }) => {
         if (item.type === "subSideDrawer") {
           return (
             <div className="header-subdrawer hover_fade_in" id={item.id} key={item.id}>
-              <Link to={item.path}>
-                <HeaderButton to={item.path} ariaLabel={item.ariaLabel}>
-                  {item.name}
-                </HeaderButton>
-              </Link>
+              <ColumnTitle>{item.name.toUpperCase()}</ColumnTitle>
               <hr className="w-95per m-0px" />
               {item.subHeaderDrawers.map((subHeaderDrawer, index) => (
                 <HeaderDrawerButton
