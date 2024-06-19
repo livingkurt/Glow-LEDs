@@ -1,40 +1,21 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Container, Grid, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
+import React from "react";
+import { Container, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
 
-import { Loading } from "../../shared/SharedComponents";
-import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import { SponsorItemD, SponsorItemM } from "../SponsorsGridPage/components";
-import * as API from "../../api";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import AboutPageHeader from "./components/AboutPageHeader";
 
 const AboutPage = () => {
-  const { width } = useWindowDimensions();
   const theme = useTheme();
   const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
-
-  const dispatch = useDispatch();
-
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates, loading: loading_sponsors, error } = affiliatePage;
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listAffiliates({ active: true, sponsor: true }));
-    }
-    return () => (clean = false);
-  }, [dispatch]);
 
   return (
     <>
       <AboutPageHeader />
       <Box py={2}>
-        <Typography variant="h2" align="center" gutterBottom>
+        <Typography variant="h1" align="center" gutterBottom>
           About Glow-LEDs
         </Typography>
-        <Typography variant="h6" gutterBottom textAlign="center">
+        <Typography variant="subtitle1" gutterBottom textAlign="center">
           Hi, my name is Kurt, I have been gloving since 2014 and I am the founder of Glow LEDs! Check out one of my
           lightshows!
         </Typography>
@@ -45,7 +26,7 @@ const AboutPage = () => {
         <Container maxWidth="lg">
           <Box display="flex" flexDirection={{ xs: "column", lg: "row" }} alignItems="center" mb={2}>
             <Box flexGrow={1} mr={{ md: 2 }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h2" gutterBottom>
                 The Beginning
               </Typography>
               <Typography variant="body1" paragraph>
@@ -95,7 +76,7 @@ const AboutPage = () => {
               </Box>
             )}
             <Box flexGrow={1} ml={{ md: 2 }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h2" gutterBottom>
                 The Problem
               </Typography>
               <Typography variant="body1" paragraph>
@@ -133,7 +114,7 @@ const AboutPage = () => {
 
           <Box display="flex" flexDirection={{ xs: "column", lg: "row" }} alignItems="center" mb={2}>
             <Box flexGrow={1} mr={{ md: 2 }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h2" gutterBottom>
                 The Solution
               </Typography>
               <Typography variant="body1" paragraph>
@@ -165,7 +146,7 @@ const AboutPage = () => {
             </Box>
           </Box>
 
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h2" gutterBottom>
             The Vision
           </Typography>
           <Typography variant="body1" paragraph>
@@ -199,34 +180,6 @@ const AboutPage = () => {
               />
             </Box>
           </Box>
-
-          <Box textAlign="center" my={2}>
-            <Typography variant="h4">Sponsored Artists</Typography>
-          </Box>
-
-          <Grid item xs={12}>
-            <Loading loading={loading_sponsors} error={error}>
-              <Grid container spacing={2}>
-                {affiliates?.map(
-                  (affiliate, index) =>
-                    !affiliate.hidden && (
-                      <Grid item key={index} xs={12} sm={6} md={2}>
-                        {width > 600 ? (
-                          <SponsorItemD size="300px" affiliate={affiliate} />
-                        ) : (
-                          <SponsorItemM size="300px" affiliate={affiliate} />
-                        )}
-                      </Grid>
-                    )
-                )}
-              </Grid>
-              {affiliates?.length === 0 && (
-                <Typography variant="h5" align="center">
-                  Sorry we can't find anything with that name
-                </Typography>
-              )}
-            </Loading>
-          </Grid>
         </Container>
       </Box>
     </>
