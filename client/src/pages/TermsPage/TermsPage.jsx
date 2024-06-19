@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 
@@ -26,8 +26,8 @@ const TermsPage = () => {
       </Helmet>
 
       <h1 style={{ textAlign: "center" }}>Terms & Conditions</h1>
-      <div className="paragraph_font">
-        <p className="paragraph_font">
+      <div>
+        <Typography variant="body1" paragraph>
           Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the seller
           (Glow-LEDs.com hereby referred to as “Glow-LEDs.com” & all affiliates) be liable for any damages or expenses
           by reason of use or sale of Glow-LEDs.com products. I understand that products sold on Glow-LEDs.com contain
@@ -50,27 +50,24 @@ const TermsPage = () => {
           promotions and customer information details may be sent. I may unsubscribe at any time by using the
           unsubscribe link in any email sent, or by contacting Glow-LEDs.com. Under no circumstances will my email
           address be shared with any third party.
-        </p>
-        {/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Custom Products</h2> */}
+        </Typography>
         <ul style={{ padding: "0 18px" }}>
           <li>
             I understand that any Custom ordered products are the intellectual property of Glow-LEDs.com and may be
             used, promoted or distributed at any time.
           </li>
         </ul>
-        {/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Featured Content</h2> */}
         <ul style={{ padding: "0 18px" }}>
           <li>
-            Any media, incuding videos or pictures, submitted to Glow-LEDs.com may be used on Glow-LEDS.com or GLow LEDs
-            social media to either entertain or promote.
+            Any media, including videos or pictures, submitted to Glow-LEDs.com may be used on Glow-LEDS.com or GLow
+            LEDs social media to either entertain or promote.
           </li>
           <li>
             Glow-LEDs.com will not distribute such media to third parties for any reason without prior consent from
             submitter.
           </li>
         </ul>
-        {/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Agreement</h2> */}
-        <p>
+        <Typography variant="body1" paragraph>
           I have carefully read this Agreement and Release of Liability and fully understand its content. I understand
           that it provides a comprehensive release of liability as to me, and all others to whom I may supply the
           equipment. This Agreement and Release of Liability may not be added or altered except by the written agreement
@@ -80,7 +77,7 @@ const TermsPage = () => {
           immediately. We reserve the right to change, modify, add or remove portions of these terms at any time. If you
           continue to use the site after we have posted changes to the terms, you have then inherently accepted those
           terms. If you need to contact us, please use our contact form.
-        </p>
+        </Typography>
       </div>
     </Container>
   );

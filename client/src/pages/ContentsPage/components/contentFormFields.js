@@ -191,6 +191,55 @@ export const contentFormFields = ({ content, products }) => {
         footer_title: { type: "text", label: "Footer Title" },
       },
     },
+    faq_page: {
+      type: "object",
+      title: "FAQ Page",
+      fields: {
+        title: { type: "text", label: "Title" },
+        sections: {
+          type: "array",
+          title: "Sections",
+          label: item => item.title,
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: { type: "text", label: "Title" },
+              subtitle: { type: "text", label: "Subtitle" },
+              description: { type: "text_multiline", label: "Description" },
+              video: { type: "text", label: "Video" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: `${content?.faq_page?.title} Sections Images`,
+              },
+              button_text: { type: "text", label: "Button Text" },
+              button_link: { type: "text", label: "Button Link" },
+              subsections: {
+                type: "array",
+                title: "Subsections",
+                label: item => item.title,
+                itemSchema: {
+                  type: "object",
+                  fields: {
+                    title: { type: "text", label: "Title" },
+                    description: { type: "text_multiline", label: "Description" },
+                    image: {
+                      type: "image_upload",
+                      label: "Image",
+                      labelProp: "_id",
+                      album: `${content?.faq_page?.title} Subsections Images`,
+                    },
+                    button_text: { type: "text", label: "Button Text" },
+                    button_link: { type: "text", label: "Button Link" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
 
     links: {
       type: "array",

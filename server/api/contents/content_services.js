@@ -57,6 +57,8 @@ export default {
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
         .populate("about_page.sections.image")
+        .populate("faq_page.sections.image")
+        .populate("faq_page.sections.subsections.image")
         .sort({ _id: -1 })
         .limit(3);
       const count = await content_db.count_contents_db(filter);
@@ -96,6 +98,8 @@ export default {
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
+        .populate("faq_page.sections.image")
+        .populate("faq_page.sections.subsections.image")
         .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {

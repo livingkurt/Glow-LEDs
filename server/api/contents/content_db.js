@@ -17,6 +17,8 @@ export default {
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
+        .populate("faq_page.sections.image")
+        .populate("faq_page.sections.subsections.image")
         .populate("about_page.sections.image")
         .sort(sort)
         .limit(parseInt(limit))
@@ -44,6 +46,8 @@ export default {
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
+        .populate("faq_page.sections.image")
+        .populate("faq_page.sections.subsections.image")
         .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {

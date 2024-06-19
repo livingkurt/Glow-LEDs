@@ -2520,5 +2520,183 @@ router.route("/migrate_status").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+router.route("/update_faq_page").put(async (req, res) => {
+  try {
+    // // Find the most recent content record
+    // const latestContent = await Content.findOne().sort({ createdAt: -1 });
+    // console.log({ latestContent });
+
+    // if (latestContent) {
+    //   // Update the FAQ page section
+    const data = {
+      title: "Frequently Asked Questions",
+      sections: [
+        {
+          title: "Glowskinz",
+          subtitle: "",
+          description: "",
+          video: "s49fiZPC5G0",
+          subsections: [
+            {
+              title: "Inserting chips into Glowskinz",
+              description: `To use the Glowskinz with your desired microlight, first you need to remove your chip from its current plastic casing if it is in one. Then squeeze the Glowskinz near the end of the side slits causing the opening in the bottom to expand. Next, gently grip your microlight from the sides and gently place it into the opening at the bottom of the Glowskinz. Gently push the microlight all the way in and let your squeezing hand release pressure let the bottom of the Glowskinz close up.`,
+            },
+            {
+              title: "Removing chips from Glowskinz",
+              description: `For Nanoskinz and Coinskinz squeeze the Glowskinz in the same location as you did to put it in. Then pinch and pull the microlight with your other hand to remove it. For Coffinskinz spread the bottom of the Glowskinz, then gently pinch and pull the microlight out.`,
+            },
+            {
+              title: "Chip Compatibility",
+              description: "Select your chip from the dropdown below to see what products are compatible!",
+            },
+            {
+              title: "Chip Categories",
+              description: `Coin: Aethers, Chroma 24, Chroma Ctrls, Ezlite, Element V25, Kebit, Keluce, Mini Kevo, OG Chromas, OG Spectra, OSM2, Oracles, Supernova, Trinity,\nDuo: Duos\nSynergys: Synergy's, Aurora Nano V2s\nApollo: Apollos\nNano: Atoms, Aurora Nanos, Ions, QT 6 Mode, Ubers\nEVO: Chroma Evos, Spectra Evos\nInova: Azotecs, Emissives\nCoffin: EVO X, KEK 5, KAT 5, IMAX\nVortex: Vortex`,
+            },
+          ],
+        },
+        {
+          title: "Diffuser Caps",
+          subtitle: "",
+          description: "",
+          video: "FJbKd0ClkFM",
+          subsections: [
+            {
+              title: "Using Diffuser Caps and Adapters",
+              description: `To begin using Diffuser Caps first take your microlights out of your gloves, then place the Diffuser Adapters gently onto your microlight bulbs. Now take your your chips, with the Diffuser Adapters attached, and place them inside of your glove, pushing it as far you can so the glove is tight over the diffuser adapter. Now it should look like you have flat top domes inside your gloves. Grip the Diffuser Adapter from outside the glove. Do not hold by microlight or you risk causing extra stress to the bulb. Take your cap, and place it over top of your glove and Diffuser Adapter and screw in the cap like you would a jar. You should only need a single turn to become snug. Do not over tighten or push the cap on. Let the threads do the work.`,
+            },
+            {
+              title: "WARNING",
+              description: `WARNING: NEVER force a bulb into the Diffuser Adapter as this could damage your microlight. If your chip is not fitting into the Diffuser Adapter please contact us. Be extra cautious of your bulbs during insertion and removal and this part of the microlight tends to be very delicate.`,
+            },
+            {
+              title: "Orienting Your Diffuser Caps",
+              video: "vG4qgtrotkw",
+              description: `To easily display all of your Diffuser Caps in the same orientation follow the steps above for using Diffuser Caps and Adapters with the following 2 specifications: Put the Diffuser Adapters onto your microlight bulbs with the notch facing the bottom of the microlight. Place the cap on upside down and give one half turn to screw in. To put Diffuser Caps in a different orientation, follow the same steps but change the placement of the notch.`,
+            },
+            {
+              title: "Diffuser too tight or too loose?",
+              description: `Due to the handmade nature of our products, some variations may occur between individual diffusers. We test each diffuser on a 5mm RGB 4 prong LED before packaging as 5mm is considered Standard bulb size and 2 prong bulbs are more varied in size. Be aware that bulb sizes may vary by an imperceivable amount within sets of microlights due to the manufacturing process. Different brands may also have slightly different sized bulbs, although the vast majority are 5mm. If one or more of your diffusers or fit too tight or too loose, please try the diffuser on several different microlights in the set to determine if it is a variant with the diffuser, or the bulb itself. If the problem persists please reach out to us and we can discuss replacement options.`,
+            },
+            {
+              title: "WARNING",
+              description: `NEVER force a chip into Glowskinz as this could damage your microlight. If your chip is not fitting into the Glowskinz please contact us. Be extra cautious of your bulbs during insertion and removal and this part of the microlight tends to be very delicate.`,
+            },
+          ],
+          button_text: "Contact",
+          button_link: "/pages/contact",
+        },
+        {
+          title: "Ordering Custom Products",
+          subtitle: "",
+          description: `At Glow LEDs you have the ability to customize any product we already sell, or create something completely unique! We welcome any requests here. Our custom process is 5 steps: Deposit, Consultation, Drafting, Payment and Processing.`,
+          subsections: [
+            {
+              title: "Deposit",
+              description: `A single 100% refundable deposit of $9.99 is required to hold your place in line and to be seen for a consultation. The deposit will be deducted from the total price.`,
+            },
+            {
+              title: "Consultation",
+              description: `After the deposit is paid we will reach out to you via email within a few days to discuss your ideas. Note: This step is imperative. Please check your email frequently and remember to check your junk folder as well. We cannot move forward without the consultation.`,
+            },
+            {
+              title: "Drafting",
+              description: `After we get a good visualization of your idea, a design will be drafted by us, price will be determined and we will show you our results. If we determine we are unable to produce what you are desiring, or you are unsatisfied with the results, we will refund your $9.99 deposit.`,
+            },
+            {
+              title: "Payment",
+              description: `If you wish to proceed, the final payment will be required and we will begin production. The total price for a single design starts at $50 and varies based on the intricacy of the design and materials used. If multiple designs are desired, you will have to pay a similar price per design.`,
+            },
+            {
+              title: "Processing",
+              description: `We will then process and ship your design! Processing and shipping times are longer than normal products. We will give you an estimated timeline of processing time at this step and then ship out your order when it's complete!`,
+            },
+            {
+              title: "Terms",
+              description: `We respect others art. Any designs that are trademarked or Copyrighted will not be redistributed without permission. Sometimes your custom requests are already on our to-do list. If your request is for a common shape or pattern, you may see your design idea come up for sale on the website later on. If you have an idea but don't want to pay custom pricing feel free to send it as a suggestion and we may have it on the website in the near future!`,
+            },
+          ],
+          button_text: "Contact",
+          button_link: "/pages/contact/custom_orders",
+        },
+        {
+          title: "Processing/Shipping",
+          subtitle: "",
+          description: "",
+          subsections: [
+            {
+              title: "Processing",
+              description: `Order processing is the time it takes from when you place your order on our site to when it gets packed up and shipped out. We always recommend purchasing your product at least 2 WEEKS before your event to ensure your products will arrive on time. If you have passed this window, there is no guarantee you will have your products in time for your event. All of our products are handmade to order and are processed in the order in which they are received. We will get your order in the mail within approximately 3-10 business days after the order is placed, depending on how many orders are in front of you. If a custom order is placed, processing times will be discussed during the custom process.`,
+            },
+            {
+              title: "Shipping",
+              description: `Please note shipping times do not include order processing times. Small packages will be sent via USPS First Class and large packages will be sent via USPS Priority Mail unless otherwise specified. Shipping time is 1-3 business days, but may be delayed due to pandemic. Glow LEDs is not responsible for delays due to the post office.`,
+            },
+            {
+              title: "Tracking",
+              description: `All shipments come with tracking numbers that will be sent to your email when the package is ready for shipment. If the address on your order is incorrect, please contact us immediately at ${config.REACT_APP_CONTACT_EMAIL}. If your shipping information was incorrectly input and your package is returned to us, you will be responsible for paying the secondary shipping fees.`,
+            },
+            {
+              title: "International Shipping",
+              description: `We ship internationally! To anywhere US packages are allowed! If you live outside of the United States please check the international checkbox when filling out shipping information. Shipping times will vary and depend on the destination country. All shipments come with tracking numbers. Please contact us if you have questions.`,
+            },
+            {
+              title: "Rush Delivery",
+              description: `We currently do not offer rush delivery options. We always recommend purchasing your product at least 2 WEEKS before your event to ensure your products will arrive on time. If you have passed this window, there is no guarantee you will have your products in time for your event.`,
+            },
+          ],
+          button_text: "Contact",
+          button_link: "/pages/contact",
+        },
+        {
+          title: "Order Issues",
+          subtitle: "",
+          description: "",
+          subsections: [
+            {
+              title: "Delayed Orders",
+              description: `We know you're excited to get your package, but unfortunately delays in transit times may occur with the carrier. In the current pandemic delays are quite common. Please keep this in mind when ordering and avoid ordering last minute if possible. Shipping delays are something we have no control over, please reach out to USPS with any questions.`,
+            },
+            {
+              title: "Missing Orders",
+              description: `If your package has been marked delivered yet you can't locate it, the USPS requires we allow 7 days from the delivered date to open an investigation. Please see the artice below for more information.`,
+              button_text: "Find Missing Mail",
+              button_link: "https://www.usps.com/help/missing-mail.htm",
+            },
+            {
+              title: "Damaged Items",
+              description: `We take full responsibility for damaged products due to manufacturing defects. Please send us a photo at ${config.REACT_APP_CONTACT_EMAIL}., and we'll be happy to figure out a solution.`,
+            },
+            {
+              title: "Cancellations and Modifications",
+              description: `Once your order is placed, we have a very limited window to make any changes or cancellations. If you require an order change or cancellation, please let us know as soon as possible by sending us an email to ${config.REACT_APP_CONTACT_EMAIL}. We can't guarantee that we'll be able to catch your order before it gets produced, but we'll try our absolute best!`,
+            },
+            {
+              title: "Returns",
+              description: `We offer a 100% satisfaction guarantee. Returns are accepted within 30 days of delivery. To initiate a return please contact ${config.REACT_APP_CONTACT_EMAIL} and you will be supplied with a prepaid shipping label to send back your product. Please include your full name and order number in the return shipment and you will be refunded the full amount minus original shipping costs. Certian items are non-refundable. Refunds are returned to the original form of payment.`,
+              button_text: "Contact",
+              button_link: "/pages/contact/returns",
+            },
+          ],
+        },
+      ],
+    };
+
+    // }
+
+    const latestContent = await Content.findOneAndUpdate(
+      { _id: "657355e106cccc0f7a160afa" },
+      { faq_page: data }
+      // { sort: { createdAt: -1 }, new: true }
+    );
+
+    console.log({ latestContent });
+
+    res.status(200).send({ message: "Status migrated successfully", data: latestContent });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 
 export default router;

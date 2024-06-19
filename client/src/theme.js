@@ -51,7 +51,7 @@ const typography = {
   subtitle1: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 600,
-    fontSize: "16px",
+    fontSize: "18px",
     lineHeight: 1.75,
     letterSpacing: "0.09px",
   },
