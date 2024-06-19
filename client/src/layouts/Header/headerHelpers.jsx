@@ -641,41 +641,41 @@ const support = {
       name: "FAQ",
       path: "/pages/faq",
       _id: 593,
-      id: "faq_dropdown",
-      sideDrawer: {
-        drawerItems: [
-          {
-            name: "Glowskinz",
-            path: "/pages/faq#glowskinz",
-            _id: 594,
-          },
-          {
-            name: "Diffuser Caps",
-            path: "/pages/faq#diffuser_caps",
-            _id: 595,
-          },
-          {
-            name: "Ordering Custom Products",
-            path: "/pages/faq#ordering_custom_products",
-            _id: 696,
-          },
-          {
-            name: "Featured Content",
-            path: "/pages/faq#featured_content",
-            _id: 697,
-          },
-          {
-            name: "Processing/Shipping",
-            path: "/pages/faq#processing_shipping",
-            _id: 698,
-          },
-          {
-            name: "Order Issues",
-            path: "/pages/faq#order_issues",
-            _id: 699,
-          },
-        ],
-      },
+      // id: "faq_dropdown",
+      // sideDrawer: {
+      //   drawerItems: [
+      //     {
+      //       name: "Glowskinz",
+      //       path: "/pages/faq#glowskinz",
+      //       _id: 594,
+      //     },
+      //     {
+      //       name: "Diffuser Caps",
+      //       path: "/pages/faq#diffuser_caps",
+      //       _id: 595,
+      //     },
+      //     {
+      //       name: "Ordering Custom Products",
+      //       path: "/pages/faq#ordering_custom_products",
+      //       _id: 696,
+      //     },
+      //     {
+      //       name: "Featured Content",
+      //       path: "/pages/faq#featured_content",
+      //       _id: 697,
+      //     },
+      //     {
+      //       name: "Processing/Shipping",
+      //       path: "/pages/faq#processing_shipping",
+      //       _id: 698,
+      //     },
+      //     {
+      //       name: "Order Issues",
+      //       path: "/pages/faq#order_issues",
+      //       _id: 699,
+      //     },
+      //   ],
+      // },
     },
     {
       name: "Track Your Order",
