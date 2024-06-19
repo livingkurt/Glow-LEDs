@@ -7,6 +7,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import { set_first_name } from "../../../slices/glowLedsSlice";
 import { setCartDrawer } from "../../../slices/cartSlice";
 import HeaderButton from "./CenterNavButtons/components/HeaderButton";
+import ColumnItemButton from "./CenterNavButtons/components/ColumnItemButton";
 
 const RightNavButtons = () => {
   const dispatch = useDispatch();
@@ -61,15 +62,16 @@ const RightNavButtons = () => {
                     {item.columns.map((column, colIndex) => (
                       <div key={colIndex}>
                         {column.rows.map((row, rowIndex) => (
-                          <HeaderButton
+                          <ColumnItemButton
                             key={rowIndex}
                             ariaLabel={row.ariaLabel}
                             fullWidth
+                            to={row.path}
                             align={"left"}
                             onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
                           >
                             {determineName(row, current_user)}
-                          </HeaderButton>
+                          </ColumnItemButton>
                         ))}
                       </div>
                     ))}

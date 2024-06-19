@@ -5,7 +5,7 @@ import { HashLink } from "react-router-hash-link";
 
 const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
-  return to.includes("#") ? (
+  return to?.includes("#") ? (
     <HashLink to={to} className="w-100per">
       <Box
         sx={{
