@@ -66,7 +66,7 @@ const typography = {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
-    lineHeight: 1.5,
+    lineHeight: "3.4rem",
     letterSpacing: "0.09px",
   },
   body2: {
