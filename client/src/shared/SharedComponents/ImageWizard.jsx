@@ -9,22 +9,25 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
 
-  const extractThumbs2Links = text => {
+  const extractImageLinks = text => {
     const thumbs2Regex = /https:\/\/thumbs2\.imgbox\.com\/[a-zA-Z0-9\/]+_t\.(jpeg|png|jpg)/g;
     const imgurRegex = /https:\/\/i\.imgur\.com\/[a-zA-Z0-9]+\.(jpeg|png|jpg)/g;
+    const images2Regex = /https:\/\/images2\.imgbox\.com\/[a-zA-Z0-9\/]+_o\.(jpeg|png|jpg)/g;
+
     const thumbs2Links = text.match(thumbs2Regex) || [];
     const imgurLinks = text.match(imgurRegex) || [];
-    return [...thumbs2Links, ...imgurLinks];
+    const images2Links = text.match(images2Regex) || [];
+
+    return [...thumbs2Links, ...imgurLinks, ...images2Links];
   };
 
   const handleSaveId = async () => {
-    const foundLinks = extractThumbs2Links(link);
+    const foundLinks = extractImageLinks(link);
 
     if (foundLinks) {
       const fetchedImages = await Promise.all(
         foundLinks.map(singleLink => dispatch(API.getImagesByLink({ album: fieldData.album, link: singleLink })))
       );
-      console.log({ fetchedImages, fieldState, fieldData, fieldName });
 
       if (Array.isArray(fieldState)) {
         onChange([...fieldState, ...fetchedImages.map(({ payload }) => payload)]);

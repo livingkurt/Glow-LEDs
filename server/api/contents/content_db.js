@@ -4,12 +4,20 @@ export default {
   findAll_contents_db: async (filter, sort, limit, page) => {
     try {
       return await Content.find(filter)
-        .populate("home_page.featured_products")
+        .populate({
+          path: "home_page.featured_products",
+          populate: {
+            path: "images_object",
+            model: "Image",
+          },
+        })
         .populate("home_page.learn_more_products.image")
         .populate("home_page.learn_highlights.images_data.image")
         .populate("home_page.discover_more.image")
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
+        .populate("home_page.support_banner.image")
+        .populate("about_page.sections.image")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -23,12 +31,20 @@ export default {
   findById_contents_db: async id => {
     try {
       return await Content.findOne({ _id: id, deleted: false })
-        .populate("home_page.featured_products")
+        .populate({
+          path: "home_page.featured_products",
+          populate: {
+            path: "images_object",
+            model: "Image",
+          },
+        })
         .populate("home_page.learn_more_products.image")
         .populate("home_page.learn_highlights.images_data.image")
         .populate("home_page.discover_more.image")
         .populate("home_page.get_more_out_of.image")
-        .populate("home_page.slideshow.image");
+        .populate("home_page.slideshow.image")
+        .populate("home_page.support_banner.image")
+        .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

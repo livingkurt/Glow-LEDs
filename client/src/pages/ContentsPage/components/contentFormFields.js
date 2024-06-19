@@ -163,6 +163,35 @@ export const contentFormFields = ({ content, products }) => {
         hidden: { type: "checkbox", label: "Hidden" },
       },
     },
+    about_page: {
+      type: "object",
+      title: "About Page",
+      fields: {
+        title: { type: "text", label: "Title" },
+        subtitle: { type: "text", label: "Subtitle" },
+        video: { type: "text", label: "Video" },
+        sections: {
+          type: "array",
+          title: "Sections",
+          label: item => item.title,
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: { type: "text", label: "Title" },
+              description: { type: "text_multiline", label: "Description" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: `${content?.about_page?.title} Sections Images`,
+              },
+            },
+          },
+        },
+        footer_title: { type: "text", label: "Footer Title" },
+      },
+    },
+
     links: {
       type: "array",
       title: "Links",

@@ -74,6 +74,19 @@ const content = {
     button: "",
     link: "",
   },
+  about_page: {
+    title: "",
+    subtitle: "",
+    video: "",
+    sections: [
+      {
+        title: "",
+        description: "",
+        image: null,
+      },
+    ],
+    footer_title: "",
+  },
   links: [
     {
       label: "",

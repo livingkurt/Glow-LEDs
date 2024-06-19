@@ -80,6 +80,19 @@ const contentSchema = new mongoose.Schema(
       link: { type: String },
       hidden: { type: Boolean, default: false },
     },
+    about_page: {
+      title: { type: String },
+      subtitle: { type: String },
+      video: { type: String },
+      sections: [
+        {
+          title: { type: String },
+          description: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+        },
+      ],
+      footer_title: { type: String },
+    },
     links: [
       {
         label: { type: String },
