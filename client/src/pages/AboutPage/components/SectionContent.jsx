@@ -6,7 +6,7 @@ const SectionContent = ({ section }) => (
     <Typography variant="h2" gutterBottom>
       {section.title}
     </Typography>
-    <Typography variant="body1" paragraph>
+    <Typography variant="body3" paragraph>
       {section.description}
     </Typography>
   </Box>

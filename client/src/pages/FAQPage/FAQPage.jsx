@@ -59,7 +59,7 @@ const FAQPage = () => {
                     <Typography gutterBottom variant="h5">
                       {subsection.title}
                     </Typography>
-                    <Typography gutterBottom variant="body1" paragraph>
+                    <Typography gutterBottom variant="body3" paragraph>
                       {subsection.description}
                     </Typography>
                     {subsection.video && <HeroVideo video={subsection.video} />}
@@ -84,7 +84,7 @@ const FAQPage = () => {
         <Typography gutterBottom variant="h4" align="center">
           Chip Compatibility
         </Typography>
-        <Typography gutterBottom variant="body1" paragraph>
+        <Typography gutterBottom variant="body3" paragraph>
           Select your chip from the dropdown below to see what products are compatible!
         </Typography>
         <Box sx={{ marginLeft: "-5px" }}>

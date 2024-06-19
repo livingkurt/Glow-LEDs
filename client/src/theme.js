@@ -66,7 +66,7 @@ const typography = {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
-    lineHeight: "3.4rem",
+    lineHeight: 1.5,
     letterSpacing: "0.09px",
   },
   body2: {
@@ -74,6 +74,13 @@ const typography = {
     fontWeight: 400,
     fontSize: "14px",
     lineHeight: 1.43,
+    letterSpacing: "0.1px",
+  },
+  body3: {
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400,
+    fontSize: "146x",
+    lineHeight: "3.4rem",
     letterSpacing: "0.1px",
   },
   button: {
