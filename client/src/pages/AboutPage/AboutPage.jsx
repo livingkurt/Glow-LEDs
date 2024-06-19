@@ -1,13 +1,17 @@
 import React from "react";
 import { Container, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
+import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "./aboutPageHelpers";
 
 import HeroVideo from "../HomePage/components/HeroVideo";
 import AboutPageHeader from "./components/AboutPageHeader";
 import * as API from "../../api";
+import SectionContent from "./components/SectionContent";
+import SectionImage from "./components/SectionImage";
 
 const AboutPage = () => {
   const theme = useTheme();
-  const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  console.log({ isMobile });
 
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();
 
@@ -33,99 +37,28 @@ const AboutPage = () => {
             <Box
               key={section._id}
               display="flex"
-              flexDirection={index % 4 === 3 ? "column" : { xs: "column", lg: "row" }}
+              flexDirection={isFourthSection(index) ? "column" : { xs: "column", lg: "row" }}
               alignItems="center"
               mb={2}
             >
-              {(index % 2 === 0 && index % 4 !== 3) || (index % 4 === 3 && isLarge) ? (
+              {(isEvenIndex(index) && isNotFourthSection(index)) || (isFourthSection(index) && isMobile) ? (
                 <>
-                  {(index % 2 !== 0 || isLarge) && section.image && (
-                    <Box flexShrink={0} ml={{ md: 2 }} mb={{ xs: 2, md: 0 }}>
-                      {section.image && (
-                        <img
-                          alt={section.title}
-                          style={{
-                            borderRadius: "15px",
-                            width: "100%",
-                            height: "auto",
-                            aspectRatio: index % 4 === 3 ? "16/9" : isLarge ? "16/9" : "9/16",
-                            objectFit: "cover",
-                            maxWidth: index % 4 === 3 ? "none" : "600px",
-                          }}
-                          src={section.image.link}
-                        />
-                      )}
-                    </Box>
+                  {(isOddIndex(index) || isMobile) && (
+                    <SectionImage section={section} index={index} isMobile={isMobile} />
                   )}
-
-                  <Box flexGrow={1} mr={{ md: 2 }}>
-                    <Typography variant="h2" gutterBottom>
-                      {section.title}
-                    </Typography>
-                    <Typography variant="body1" paragraph>
-                      {section.description}
-                    </Typography>
-                  </Box>
-                  {index % 2 === 0 && !isLarge && section.image && (
-                    <Box flexShrink={0} ml={{ md: 2 }} mb={{ xs: 2, md: 0 }}>
-                      {section.image && (
-                        <img
-                          alt={section.title}
-                          style={{
-                            borderRadius: "15px",
-                            width: "100%",
-                            height: "auto",
-                            aspectRatio: index % 4 === 3 ? "16/9" : isLarge ? "16/9" : "9/16",
-                            objectFit: "cover",
-                            maxWidth: index % 4 === 3 ? "none" : "600px",
-                          }}
-                          src={section.image.link}
-                        />
-                      )}
-                    </Box>
+                  <SectionContent section={section} />
+                  {isEvenIndex(index) && !isMobile && (
+                    <SectionImage section={section} index={index} isMobile={isMobile} />
                   )}
                 </>
               ) : (
                 <>
-                  {(index % 4 !== 3 || isLarge) && section.image && (
-                    <Box flexShrink={0} mr={{ md: 2 }} mb={{ xs: 2, md: 0 }}>
-                      <img
-                        alt={section.title}
-                        style={{
-                          borderRadius: "15px",
-                          width: "100%",
-                          height: "auto",
-                          aspectRatio: index % 4 === 3 ? "16/9" : isLarge ? "16/9" : "9/16",
-                          objectFit: "cover",
-                          maxWidth: index % 4 === 3 ? "none" : "600px",
-                        }}
-                        src={section.image.link}
-                      />
-                    </Box>
+                  {(isNotFourthSection(index) || isMobile) && (
+                    <SectionImage section={section} index={index} isMobile={isMobile} />
                   )}
-                  <Box flexGrow={1} ml={{ md: 2 }}>
-                    <Typography variant="h2" gutterBottom>
-                      {section.title}
-                    </Typography>
-                    <Typography variant="body1" paragraph>
-                      {section.description}
-                    </Typography>
-                  </Box>
-                  {index % 4 === 3 && !isLarge && section.image && (
-                    <Box flexShrink={0} mr={{ md: 2 }} mb={{ xs: 2, md: 0 }}>
-                      <img
-                        alt={section.title}
-                        style={{
-                          borderRadius: "15px",
-                          width: "100%",
-                          height: "auto",
-                          aspectRatio: index % 4 === 3 ? "16/9" : isLarge ? "16/9" : "9/16",
-                          objectFit: "cover",
-                          maxWidth: index % 4 === 3 ? "none" : "600px",
-                        }}
-                        src={section.image.link}
-                      />
-                    </Box>
+                  <SectionContent section={section} />
+                  {isFourthSection(index) && !isMobile && (
+                    <SectionImage section={section} index={index} isMobile={isMobile} />
                   )}
                 </>
               )}
