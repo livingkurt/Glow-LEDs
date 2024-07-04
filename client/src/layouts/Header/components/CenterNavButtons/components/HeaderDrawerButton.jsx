@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 import { GLButton } from "../../../../../shared/GlowLEDsComponents";
-import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { toggleDropdown } from "../../../headerHelpers";
+import ColumnItemButton from "./ColumnItemButton";
 
 const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from }) => {
   const users = useSelector(state => state.users.userPage);
@@ -14,19 +13,9 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from })
   }
   return (
     <div className="header-drawer-button-container">
-      {path.includes("#") ? (
-        <HashLink to={path} className="w-100per">
-          <GLButton variant="nav" className="ta-l" fullWidth>
-            {name} {extraContent}
-          </GLButton>
-        </HashLink>
-      ) : (
-        <Link to={path} className="w-100per">
-          <GLButton variant="nav" className="ta-l" fullWidth>
-            {name} {extraContent}
-          </GLButton>
-        </Link>
-      )}
+      <ColumnItemButton to={path} hasColumnRows={id}>
+        {name} {extraContent}
+      </ColumnItemButton>
       {id && (
         <GLButton
           className="header-drawer-button"

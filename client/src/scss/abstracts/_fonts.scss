@@ -1,43 +1,36 @@
 @font-face {
-	font-family: "phrase_font";
-	src: url("../fonts/Comfortaa-Regular.ttf");
+  font-family: "heading_font";
+  src: url("../fonts/beyond_the_mountains.otf");
 }
+
+@font-face {
+  font-family: "title_font";
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "phrase_font";
+  src: url("../fonts/Quicksand-VariableFont_wght.ttf");
+  // font-weight: 800;
+}
+
+@font-face {
+  font-family: "paragraph_font";
+  src: url("../fonts/Quicksand-VariableFont_wght.ttf");
+}
+
 // @font-face {
-// 	font-family: "phrase_font";
-// 	src: url("../fonts/Quicksand_Book.otf");
+//   font-family: "new_font_1";
+//   src: url("../fonts/Montserrat-VariableFont_wght.ttf");
 // }
+
 // @font-face {
-// 	font-family: "phrase_font";
-// 	src: url("../fonts/Neou-Bold.otf");
+//   font-family: "new_font_2";
+//   src: url("../fonts/Raleway-VariableFont_wght.ttf");
 // }
-
-@font-face {
-	font-family: "paragraph_font";
-	src: url("../fonts/Comfortaa-Light.ttf");
-}
-
-@font-face {
-	font-family: "title_font";
-	src: url("../fonts/Geometos-Rounded.ttf");
-}
-// @font-face {
-// 	font-family: "paragraph_font";
-// 	src: url("../fonts/UniNeue-Light.otf");
-// }
-
-@font-face {
-	font-family: "heading_font";
-	src: url("../fonts/beyond_the_mountains.otf");
-}
-
-@font-face {
-	font-family: "special_font";
-	src: url("../fonts/A_Love_of_Thunder.ttf");
-}
 
 $phrase_font: phrase_font;
 $paragraph_font: paragraph_font;
 $heading_font: heading_font;
-$special_font: special_font;
 $title_font: title_font;
 $font_size: 1.6rem;

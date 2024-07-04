@@ -8,56 +8,56 @@ const typography = {
   fontWeightBold: 700,
   h1: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 300,
+    fontWeight: 600,
     fontSize: "96px",
     lineHeight: 1,
     letterSpacing: "-0.66px",
   },
   h2: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 300,
+    fontWeight: 600,
     fontSize: "60px",
     lineHeight: 1,
     letterSpacing: "-0.5px",
   },
   h3: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: "48px",
     lineHeight: 1.02,
     letterSpacing: "0px",
   },
   h4: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: "34px",
     lineHeight: 1.15,
     letterSpacing: "0.07px",
   },
   h5: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: "24px",
     lineHeight: 1.33,
     letterSpacing: "0px",
   },
   h6: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: "20px",
     lineHeight: 1.6,
     letterSpacing: "0.07px",
   },
   subtitle1: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
-    fontSize: "16px",
+    fontWeight: 600,
+    fontSize: "18px",
     lineHeight: 1.75,
     letterSpacing: "0.09px",
   },
   subtitle2: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: "14px",
     lineHeight: 1.57,
     letterSpacing: "0.07px",
@@ -76,9 +76,16 @@ const typography = {
     lineHeight: 1.43,
     letterSpacing: "0.1px",
   },
+  body3: {
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400,
+    fontSize: "146x",
+    lineHeight: "3.4rem",
+    letterSpacing: "0.1px",
+  },
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
+    fontWeight: 800,
     fontSize: "13px",
     lineHeight: 1.69,
     letterSpacing: "0.3px",
@@ -86,7 +93,7 @@ const typography = {
   },
   caption: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: "12px",
     lineHeight: 1.58,
     letterSpacing: "0.3px",
@@ -354,6 +361,39 @@ const theme = {
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "10px",
+          },
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          "& .MuiFilledInput-root": {
+            borderRadius: "10px",
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "10px",
+            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);",
+          },
+          "& .MuiFilledInput-root": {
+            borderRadius: "10px",
+            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);",
+          },
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {

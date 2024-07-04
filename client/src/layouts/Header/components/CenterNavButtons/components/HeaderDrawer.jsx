@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { GLButton } from "../../../../../shared/GlowLEDsComponents";
 import HeaderDrawerButton from "./HeaderDrawerButton";
+import ColumnTitle from "./ColumnTitle";
 
 const HeaderDrawer = ({ columns }) => {
   // Create a normalized array
@@ -27,11 +26,7 @@ const HeaderDrawer = ({ columns }) => {
         if (item.type === "sideDrawer") {
           return (
             <div className="header-drawer hover_fade_in" id={item.id} key={item.id}>
-              <Link to={item.path}>
-                <GLButton variant="nav" className="ta-l">
-                  {item.name}
-                </GLButton>
-              </Link>
+              <ColumnTitle>{item.name.toUpperCase()}</ColumnTitle>
               <hr className="w-95per m-0px" />
               {item.drawerItems.map((drawerItem, index) => (
                 <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="headerDrawer" />

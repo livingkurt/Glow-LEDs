@@ -4,11 +4,20 @@ import { validate_contact } from "../../utils/validations";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { setSuccessContactSend } from "../../slices/emailSlice";
-import { Container } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Box,
+} from "@mui/material";
 
 const ContactPage = () => {
   const params = useParams();
@@ -19,76 +28,58 @@ const ContactPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
   const { loadingContactSend, successContactSend, message: completed_message, error } = emailPage;
 
-  const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");
-  const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
-  const [email, set_email] = useState(current_user ? current_user.email : "");
-  const [order_number, set_order_number] = useState("");
-  const [reason_for_contact, set_reason_for_contact] = useState(params.reason ? params.reason : "");
-  const [message, set_message] = useState("");
+  const [formData, setFormData] = useState({
+    first_name: current_user ? current_user.first_name : "",
+    last_name: current_user ? current_user.last_name : "",
+    email: current_user ? current_user.email : "",
+    order_number: "",
+    reason_for_contact: params.reason || "",
+    message: "",
+  });
 
-  const [first_name_validations, set_first_name_Validations] = useState("");
-  const [last_name_validations, set_last_name_Validations] = useState("");
-  const [email_validations, set_email_validations] = useState("");
-  const [order_number_validations, set_order_number_validations] = useState("");
-  const [reason_for_contact_validations, set_reason_for_contact_validations] = useState("");
+  const [validations, setValidations] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    order_number: "",
+    reason_for_contact: "",
+  });
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      set_reason_for_contact(params.reason);
-    }
-    return () => (clean = false);
+    setFormData(prev => ({ ...prev, reason_for_contact: params.reason }));
   }, [params.reason]);
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (successContactSend) {
-        navigate("/pages/complete/email");
-        dispatch(setSuccessContactSend(false));
-      }
+    if (successContactSend) {
+      navigate("/pages/complete/email");
+      dispatch(setSuccessContactSend(false));
     }
-    return () => (clean = false);
-  }, [navigate, successContactSend]);
+  }, [navigate, successContactSend, dispatch]);
 
-  let request;
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const sendEmail = e => {
     e.preventDefault();
 
-    if (["order_issues", "returns", "technical_support"].includes(reason_for_contact)) {
-      set_order_number_validations("55555555");
+    if (["order_issues", "returns", "technical_support"].includes(formData.reason_for_contact)) {
+      setValidations(prev => ({ ...prev, order_number: "55555555" }));
     }
-    const data = {
-      first_name,
-      last_name,
-      email,
-      reason_for_contact,
-      message,
-    };
-    request = validate_contact(data);
 
-    set_first_name_Validations(request.errors.first_name);
-    set_last_name_Validations(request.errors.last_name);
-    set_email_validations(request.errors.email);
-    set_order_number_validations(request.errors.order_number);
-    set_reason_for_contact_validations(request.errors.reason_for_contact);
+    const request = validate_contact(formData);
+
+    setValidations(request.errors);
 
     if (request.isValid) {
-      const reason = humanize(reason_for_contact);
-      dispatch(
-        API.sendContactEmail({
-          first_name,
-          last_name,
-          email,
-          order_number,
-          reason_for_contact: reason,
-          message,
-        })
-      );
+      const reason = humanize(formData.reason_for_contact);
+      dispatch(API.sendContactEmail({ ...formData, reason_for_contact: reason }));
     }
   };
+
   return (
-    <Container maxWidth="lg" sx={{ py: 2 }}>
+    <Container maxWidth="md" sx={{ py: 2 }}>
       <Helmet>
         <title>Contact | Glow LEDs</title>
         <meta property="og:title" content="Contact" />
@@ -108,199 +99,171 @@ const ContactPage = () => {
           content="If you have any questions, do not hesitate to use our contact page for support."
         />
       </Helmet>
-      <div className="jc-c">
-        <h1>Contact</h1>
-      </div>
-      <div className="column jc-c">
-        {/* <div className="ta-c">
-          We are avaiable from 11 AM to 7 PM on Weekdays
-        </div> */}
-        {/* <div className="ta-c mt-1rem">
-          Need a quicker reply? 💬 Use the Facebook Chat{" "}
-          <i className="fab fa-facebook zoom" /> at the Bottom right of your
-          screen to chat with us instantly! 💨
-        </div> */}
-      </div>
-      <div className="jc-c">
-        <Loading
-          loading={loadingContactSend}
-          error={error}
-          message={
-            <div className="payment_message">
-              <h2 className="ta-c">Sending Message</h2>
-              <p className="ta-c">Please do not refresh page</p>
-            </div>
-          }
-        />
-      </div>
-      <form style={{ display: "flex", flexDirection: "column" }} className="contact-form">
-        <label>First Name</label>
-        <input
-          onChange={e => set_first_name(e.target.value)}
-          defaultValue={first_name}
-          value={first_name}
-          className="zoom_f form_input"
-          type="text"
+
+      <Typography variant="h4" align="center" gutterBottom>
+        Contact
+      </Typography>
+
+      <Loading
+        loading={loadingContactSend}
+        error={error}
+        message={
+          <Box textAlign="center">
+            <Typography variant="h5">Sending Message</Typography>
+            <Typography>Please do not refresh page</Typography>
+          </Box>
+        }
+      />
+
+      <Box component="form" onSubmit={sendEmail} sx={{ mt: 3 }}>
+        <TextField
+          fullWidth
+          label="First Name"
           name="first_name"
-          placeholder="First Name"
+          value={formData.first_name}
+          onChange={handleInputChange}
+          variant="filled"
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white !important",
+              "&:hover": {
+                backgroundColor: "white !important",
+              },
+              "&:focus": {
+                backgroundColor: "white !important",
+              },
+            },
+          }}
+          error={!!validations.first_name}
+          helperText={validations.first_name}
+          margin="normal"
         />
-        <label className="validation_text">{first_name_validations}</label>
-        <label>Last Name</label>
-        <input
-          onChange={e => set_last_name(e.target.value)}
-          defaultValue={last_name}
-          value={last_name}
-          className="zoom_f form_input"
-          type="text"
+        <TextField
+          fullWidth
+          label="Last Name"
           name="last_name"
-          placeholder="Last Name"
+          value={formData.last_name}
+          onChange={handleInputChange}
+          variant="filled"
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white !important",
+              "&:hover": {
+                backgroundColor: "white !important",
+              },
+              "&:focus": {
+                backgroundColor: "white !important",
+              },
+            },
+          }}
+          error={!!validations.last_name}
+          helperText={validations.last_name}
+          margin="normal"
         />
-        <label className="validation_text">{last_name_validations}</label>
-        <label>Email</label>
-        <input
-          onChange={e => set_email(e.target.value)}
-          defaultValue={email}
-          value={email}
-          className="zoom_f form_input"
-          type="text"
+        <TextField
+          fullWidth
+          label="Email"
           name="email"
-          placeholder="Email"
+          type="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          variant="filled"
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white !important",
+              "&:hover": {
+                backgroundColor: "white !important",
+              },
+              "&:focus": {
+                backgroundColor: "white !important",
+              },
+            },
+          }}
+          error={!!validations.email}
+          helperText={validations.email}
+          margin="normal"
         />
-        <label className="validation_text">{email_validations}</label>
-
-        <label className="validation_text">{reason_for_contact_validations}</label>
-        <label>Order Number</label>
-        <input
-          onChange={e => set_order_number(e.target.value)}
-          defaultValue={order_number}
-          className="zoom_f form_input w-100per"
-          type="text"
+        <TextField
+          fullWidth
+          label="Order Number"
           name="order_number"
-          placeholder="Order Number"
+          value={formData.order_number}
+          onChange={handleInputChange}
+          variant="filled"
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white !important",
+              "&:hover": {
+                backgroundColor: "white !important",
+              },
+              "&:focus": {
+                backgroundColor: "white !important",
+              },
+            },
+          }}
+          error={!!validations.order_number}
+          helperText={validations.order_number}
+          margin="normal"
         />
-
-        <label className="validation_text">{order_number_validations}</label>
-        <label>Reason for Contact</label>
-
-        <div className="custom-select mt-8px mb-15px">
-          <select
-            onChange={e => set_reason_for_contact(e.target.value)}
-            defaultValue={reason_for_contact}
-            value={reason_for_contact}
-            className=" contact_dropdown w-100per"
+        <FormControl fullWidth margin="normal" variant="filled">
+          <InputLabel>Reason for Contact</InputLabel>
+          <Select
             name="reason_for_contact"
-            placeholder="----Click Here to Choose Reason----"
+            value={formData.reason_for_contact}
+            onChange={handleInputChange}
+            sx={{
+              backgroundColor: "white",
+              "& .MuiFilledInput-root": {
+                backgroundColor: "white !important",
+                "&:hover": {
+                  backgroundColor: "white !important",
+                },
+                "&.Mui-focused": {
+                  backgroundColor: "white !important",
+                },
+              },
+              "& .MuiSelect-select": {
+                backgroundColor: "white !important",
+              },
+            }}
+            error={!!validations.reason_for_contact}
           >
-            <option className="contact_grey_option" disabled="disabled" selected="selected" value="">
-              ----Click Here to Choose Reason----
-            </option>
-
-            <option className="contact_options" value="order_issues">
-              Order Issues
-            </option>
-            <option className="contact_options" value="infinite_loading">
-              Infinite loading during order process
-            </option>
-            <option className="contact_options" value="returns">
-              Returns
-            </option>
-            <option className="contact_options" value="technical_support">
-              Technical Support
-            </option>
-            <option className="contact_options" value="website_bugs">
-              Website Bugs
-            </option>
-            {/* <option className="contact_options" value="custom_orders">
-              Custom Orders
-            </option> */}
-            <option className="contact_options" value="product_suggestions">
-              Product Suggestions
-            </option>
-            {/* <option className="contact_options" value="submit_content_to_be_featured">
-              Submit Content to be Featured
-            </option> */}
-            <option className="contact_options" value="other">
-              Other
-            </option>
-          </select>
-          <span className="custom-arrow" />
-        </div>
-        <label>Message</label>
-        <textarea
-          onChange={e => set_message(e.target.value)}
-          defaultValue={message}
-          className="zoom_f form_input"
+            <MenuItem value="">----Choose Reason----</MenuItem>
+            <MenuItem value="order_issues">Order Issues</MenuItem>
+            <MenuItem value="infinite_loading">Infinite loading during order process</MenuItem>
+            <MenuItem value="returns">Returns</MenuItem>
+            <MenuItem value="technical_support">Technical Support</MenuItem>
+            <MenuItem value="website_bugs">Website Bugs</MenuItem>
+            <MenuItem value="product_suggestions">Product Suggestions</MenuItem>
+            <MenuItem value="other">Other</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          label="Message"
           name="message"
-          style={{ fontFamily: "Helvetica" }}
-          placeholder="Enter Message Here"
+          multiline
+          rows={4}
+          value={formData.message}
+          onChange={handleInputChange}
+          variant="filled"
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white !important",
+              "&:hover": {
+                backgroundColor: "white !important",
+              },
+              "&:focus": {
+                backgroundColor: "white !important",
+              },
+            },
+          }}
+          margin="normal"
         />
-        <GLButton variant="primary" className="zoom_b mt-10px w-100per" id="button" onClick={e => sendEmail(e)}>
+        <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
           Send
-        </GLButton>
-        {/* {
-        {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
-          <div className="100per">
-            <label>Order Number</label>
-            <input
-              onChange={e => set_order_number(e.target.value)}
-              defaultValue={order_number}
-              className="zoom_f form_input w-100per"
-              type="text"
-              name="order_number"
-              placeholder="Order Number"
-            />
-            <label className="validation_text">{order_number_validations}</label>
-          </div>
-        )}
-
-        {/* {[ "submit_content_to_be_featured" ].includes(reason_for_contact) && (
-          <div>
-            <div>
-              <h2>Content includes: </h2>
-              <ul className="paragraph_font" style={{ paddingLeft: "20px" }}>
-                <li>
-                  Pictures or Video of your Lightshow with Glow LEDs Diffusers
-                  or Diffuser Caps.{" "}
-                </li>
-                <li>Pictures or Video of art or music.</li>
-                <li>Pictures or Video of your Glow LEDs Glowstringz.</li>
-              </ul>
-            </div>
-            <Link to="/collections/all/features/category/submit_feature">
-              <GLButton
-                className="zoom_b btn primary mt-10px w-100per"
-                id="button"
-              >
-                Submit Feature
-              </GLButton>
-            </Link>
-          </div>
-        )} */}
-        {/* {!["submit_content_to_be_featured"].includes(reason_for_contact) && (
-          <div>
-            <label>Message</label>
-            <textarea
-              onChange={e => set_message(e.target.value)}
-              defaultValue={message}
-              className="zoom_f form_input"
-              name="message"
-              style={{ fontFamily: "Helvetica" }}
-              placeholder="Enter Message Here"
-            />
-            <label className="validation_text">{message_validations}</label>
-
-            {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
-              <p className="paragraph_font">
-                Your Order Number is located on your Order confirmation email, You can also find your order number by logging in and
-                navigating to your orders.
-              </p>
-            )}
-            <GLButton variant="primary" className="zoom_b mt-10px w-100per" id="button" onClick={e => sendEmail(e)}>
-              Send
-            </GLButton>
-          </div>
-        )} */}
-      </form>
+        </Button>
+      </Box>
     </Container>
   );
 };
