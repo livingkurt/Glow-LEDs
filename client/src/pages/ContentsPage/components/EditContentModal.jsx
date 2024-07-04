@@ -16,6 +16,7 @@ const EditContentModal = () => {
     content,
     products,
   });
+  console.log({ content });
 
   return (
     <div>

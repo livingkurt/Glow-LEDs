@@ -56,16 +56,18 @@ const TutorialsGridPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
-      <Typography variant="h4" textAlign={"center"}>
+      <Typography variant="h2" textAlign={"center"} gutterBottom>
         Learn Gloving
       </Typography>
-      <h2 className="ta-c">Your Journey Starts Here</h2>
-      <p>
+      <Typography variant="h4" textAlign={"center"} gutterBottom>
+        Your Journey Starts Here
+      </Typography>
+      <Typography variant="body3" gutterBottom>
         Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
         to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help you
         improve your skills and create your own unique light shows. Get ready to leave your audience speechless with
         your mesmerizing moves!
-      </p>
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TutorialSection

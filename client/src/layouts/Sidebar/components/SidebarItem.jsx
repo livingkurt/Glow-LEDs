@@ -45,7 +45,7 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
                 item.onClick(dispatch, navigate, location);
               }
             }}
-            sx={{ my: 0, cursor: "pointer", flexGrow: 1 }}
+            sx={{ my: 0, cursor: "pointer", flexGrow: 1, fontSize: "16px", fontWeight: 800 }}
           >
             {determineName(item, current_user)}
           </Typography>

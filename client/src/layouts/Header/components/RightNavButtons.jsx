@@ -7,6 +7,8 @@ import { ShoppingCart } from "@mui/icons-material";
 import { set_first_name } from "../../../slices/glowLedsSlice";
 import { setCartDrawer } from "../../../slices/cartSlice";
 import { getCartQuantity } from "../../../helpers/sharedHelpers";
+import HeaderButton from "./CenterNavButtons/components/HeaderButton";
+import ColumnItemButton from "./CenterNavButtons/components/ColumnItemButton";
 
 const RightNavButtons = () => {
   const dispatch = useDispatch();
@@ -31,52 +33,46 @@ const RightNavButtons = () => {
 
   return (
     <div>
-      <GLButton variant="mobile nav" className="cart_icon none" onClick={() => dispatch(setCartDrawer(true))}>
+      <HeaderButton onClick={() => dispatch(setCartDrawer(true))} className="cart_icon none">
         <ShoppingCart /> {getCartQuantity(cartItems)}{" "}
-      </GLButton>
+      </HeaderButton>
 
       <div className="nav_bar w-233px jc-fe ai-c">
-        <GLButton
-          variant="nav"
-          className={`cart_text w-110px title_font ai-c ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
+        <HeaderButton
           onClick={() => dispatch(setCartDrawer(true))}
+          className={`cart_text w-110px title_font ai-c ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
         >
           Cart <ShoppingCart className="ml-5px mb-5px" />
-          <div className="ml-5px">{getCartQuantity(cartItems)} </div>
-        </GLButton>
-        <GLButton
-          variant="mobile nav"
+          <div className="ml-5px">{cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
+        </HeaderButton>
+        <HeaderButton
           className={`cart_icon title_font none ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
           onClick={() => dispatch(setCartDrawer(true))}
         >
           <ShoppingCart /> {getCartQuantity(cartItems)}{" "}
-        </GLButton>
+        </HeaderButton>
         {rightNav(dispatch).map(
           (item, index) =>
             item.permissions(current_user) && (
               <div key={index} className="dropdown">
-                <GLButton
-                  variant="nav"
-                  className="title_font"
-                  aria-label={item.ariaLabel}
-                  onClick={() => item.onClick && item.onClick(current_user)}
-                >
+                <HeaderButton ariaLabel={item.ariaLabel} onClick={() => item.onClick && item.onClick(current_user)}>
                   {determineName(item, current_user)}
-                </GLButton>
+                </HeaderButton>
                 {determineDropdown(item, current_user) && (
                   <ul className="dropdown-content hover_fade_in w-175px">
                     {item.columns.map((column, colIndex) => (
                       <div key={colIndex}>
                         {column.rows.map((row, rowIndex) => (
-                          <Link key={rowIndex} to={row.path}>
-                            <GLButton
-                              variant="nav"
-                              className="w-100per ta-l"
-                              onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
-                            >
-                              {determineName(row, current_user)}
-                            </GLButton>
-                          </Link>
+                          <ColumnItemButton
+                            key={rowIndex}
+                            ariaLabel={row.ariaLabel}
+                            fullWidth
+                            to={row.path}
+                            align={"left"}
+                            onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
+                          >
+                            {determineName(row, current_user)}
+                          </ColumnItemButton>
                         ))}
                       </div>
                     ))}

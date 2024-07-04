@@ -43,12 +43,12 @@
 }
 .paragraph_font {
   font-family: $paragraph_font;
-  // -webkit-text-stroke: 1px white;
-  font-size: 1.6rem;
-  line-height: 3.4rem;
-  li {
-    line-height: 3.4rem;
-  }
+  // // -webkit-text-stroke: 1px white;
+  // font-size: 1.6rem;
+  // line-height: 3.4rem;
+  // li {
+  //   line-height: 3.4rem;
+  // }
 }
 
 .title_font {
@@ -60,8 +60,8 @@
 .heading_font {
   font-family: $heading_font;
 }
-.special_font {
-  font-family: $special_font;
+.title_font {
+  font-family: $title_font;
 }
 
 .p_descriptions {

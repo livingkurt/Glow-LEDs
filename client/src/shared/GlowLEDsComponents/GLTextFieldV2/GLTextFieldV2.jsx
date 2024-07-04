@@ -92,6 +92,17 @@ const GLTextFieldV2 = ({
         minRows={minRows}
         helperText={helperText}
         maxRows={maxRows}
+        sx={{
+          "& .MuiFilledInput-root": {
+            backgroundColor: "white !important",
+            "&:hover": {
+              backgroundColor: "white !important",
+            },
+            "&:focus": {
+              backgroundColor: "white !important",
+            },
+          },
+        }}
         {...otherProps}
         inputProps={{
           name,
@@ -102,6 +113,7 @@ const GLTextFieldV2 = ({
         InputProps={{
           startAdornment: shouldRenderIcon && iconPosition === "start" ? setInputAdornment() : null,
           endAdornment: shouldRenderIcon && iconPosition === "end" ? setInputAdornment() : null,
+          style: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" },
           ...InputProps,
         }}
       />

@@ -147,7 +147,7 @@ button {
 .btn.nav:hover,
 .btn.mobile.nav:hover {
   box-shadow: $bs_deep;
-  background-color: gray;
+  background-color: #808080;
 }
 .side-bar-open {
   font-size: 30px !important;
@@ -292,8 +292,8 @@ button {
   font-size: 18px;
   text-align: center;
   // letter-spacing: 6px;
-  font-family: $paragraph_font;
-  // font-family: "special_font";
+  // font-family: $paragraph_font;
+  // font-family: "title_font";
   // transition: all 2s ease;
 }
 

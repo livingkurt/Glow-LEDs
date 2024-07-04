@@ -641,41 +641,41 @@ const support = {
       name: "FAQ",
       path: "/pages/faq",
       _id: 593,
-      id: "faq_dropdown",
-      sideDrawer: {
-        drawerItems: [
-          {
-            name: "Glowskinz",
-            path: "/pages/faq#glowskinz",
-            _id: 594,
-          },
-          {
-            name: "Diffuser Caps",
-            path: "/pages/faq#diffuser_caps",
-            _id: 595,
-          },
-          {
-            name: "Ordering Custom Products",
-            path: "/pages/faq#ordering_custom_products",
-            _id: 696,
-          },
-          {
-            name: "Featured Content",
-            path: "/pages/faq#featured_content",
-            _id: 697,
-          },
-          {
-            name: "Processing/Shipping",
-            path: "/pages/faq#processing_shipping",
-            _id: 698,
-          },
-          {
-            name: "Order Issues",
-            path: "/pages/faq#order_issues",
-            _id: 699,
-          },
-        ],
-      },
+      // id: "faq_dropdown",
+      // sideDrawer: {
+      //   drawerItems: [
+      //     {
+      //       name: "Glowskinz",
+      //       path: "/pages/faq#glowskinz",
+      //       _id: 594,
+      //     },
+      //     {
+      //       name: "Diffuser Caps",
+      //       path: "/pages/faq#diffuser_caps",
+      //       _id: 595,
+      //     },
+      //     {
+      //       name: "Ordering Custom Products",
+      //       path: "/pages/faq#ordering_custom_products",
+      //       _id: 696,
+      //     },
+      //     {
+      //       name: "Featured Content",
+      //       path: "/pages/faq#featured_content",
+      //       _id: 697,
+      //     },
+      //     {
+      //       name: "Processing/Shipping",
+      //       path: "/pages/faq#processing_shipping",
+      //       _id: 698,
+      //     },
+      //     {
+      //       name: "Order Issues",
+      //       path: "/pages/faq#order_issues",
+      //       _id: 699,
+      //     },
+      //   ],
+      // },
     },
     {
       name: "Track Your Order",
@@ -901,14 +901,14 @@ const admin = {
 };
 export const navItems = [
   {
-    name: "Home",
+    name: "HOME",
     path: "/",
     _id: 9133,
     ariaLabel: "Home Page",
     headerLocation: "center",
   },
   {
-    name: "Shop",
+    name: "SHOP",
     path: "/pages/menu/gloving",
     id: "shop_dropdown",
     _id: 9134,
@@ -918,7 +918,7 @@ export const navItems = [
     headerLocation: "center",
   },
   {
-    name: "Learn",
+    name: "LEARN",
     path: "/collections/all/tutorials",
     id: "learn_dropdown",
     // path: "/pages/learn",
@@ -929,7 +929,7 @@ export const navItems = [
     headerLocation: "center",
   },
   {
-    name: "Community",
+    name: "COMMUNITY",
     id: "community_dropdown",
     // path: "/pages/menu/community",
     _id: 10136,
@@ -939,7 +939,7 @@ export const navItems = [
     headerLocation: "center",
   },
   {
-    name: "Support",
+    name: "SUPPORT",
     id: "support_dropdown",
     path: "/pages/menu/support",
     _id: 10137,
@@ -954,7 +954,7 @@ export const rightNav = dispatch => {
   return [
     {
       name: current_user =>
-        (current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) || "Login",
+        (current_user && current_user.hasOwnProperty("first_name") && current_user.first_name.toUpperCase()) || "LOGIN",
       path: "/secure/account/profile",
       _id: 10138,
       onClick: current_user =>
@@ -968,7 +968,7 @@ export const rightNav = dispatch => {
       permissions: x => true,
     },
     {
-      name: "Admin",
+      name: "ADMIN",
       id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
