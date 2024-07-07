@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Grid } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
-
-import { detailsProductPage } from "./productPageSlice";
 import ProductPageLoading from "./components/ProductPageLoading";
-import { useParams } from "react-router-dom";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
 import ProductDetails from "./components/ProductDetails";
 import HeroVideo from "../HomePage/components/HeroVideo";
@@ -16,22 +13,13 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { productPageBreadCrumbs } from "./productHelpers";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import NavigationButtons from "./components/NavigationButtons";
+import ImageGrid from "./components/ImageGrid";
+import useProductPage from "./useProductPage";
 
 const ProductPage = () => {
-  const params = useParams();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(detailsProductPage({ pathname: params.pathname }));
-  }, [dispatch, params.pathname]);
-
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
-
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart } = cartPage;
-  const productPage = useSelector(state => state.products.productPage);
-  const { customizedProduct, product, productPageLoading } = productPage;
+  const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
   const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
     customizedProduct;
@@ -77,7 +65,7 @@ const ProductPage = () => {
               <ProductProtectionDetails />
             </Grid>
             <Grid item xs={12}>
-              {/* Image Grid 1*/}
+              <ImageGrid image_grid={product?.features?.image_grid_1} />
             </Grid>
             <Grid item xs={12}>
               {/* Hero Image 1*/}

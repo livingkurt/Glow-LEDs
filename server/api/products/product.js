@@ -61,9 +61,9 @@ const productSchema = new mongoose.Schema(
       {
         icon: { type: String },
         description: { type: String },
-        hidden: { type: Boolean, default: false },
       },
     ],
+    icon_specs_hidden: { type: Boolean, default: false },
 
     features: {
       image_grid_1: [
@@ -75,6 +75,7 @@ const productSchema = new mongoose.Schema(
           link: { type: String },
         },
       ],
+      image_grid_1_hidden: { type: Boolean, default: false },
       hero_image_1: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
       hero_fact_1: {
         title: { type: String },
@@ -90,6 +91,7 @@ const productSchema = new mongoose.Schema(
           link: { type: String },
         },
       ],
+      image_grid_2_hidden: { type: Boolean, default: false },
       hero_image_2: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
       hero_fact_2: {
         title: { type: String },
@@ -97,6 +99,7 @@ const productSchema = new mongoose.Schema(
         hidden: { type: Boolean, default: false },
       },
       lifestyle_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+      lifestyle_images_hidden: { type: Boolean, default: false },
     },
 
     tech_specs: {

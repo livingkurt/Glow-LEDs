@@ -53,6 +53,17 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
+    restock_status: {
+      type: "autocomplete_single",
+      label: "Restock Status",
+      options: ["sold_out", "preorder", "restocking"],
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+    },
+
     hero_video: {
       type: "object",
       title: "Hero Video",
@@ -91,13 +102,13 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             type: "text",
             label: "Description",
           },
-          hidden: {
-            type: "checkbox",
-            label: "Hidden",
-            default: false,
-          },
         },
       },
+    },
+    icon_specs_hidden: {
+      type: "checkbox",
+      label: "Hide Icon Specs",
+      default: false,
     },
     features: {
       type: "object",
@@ -135,6 +146,11 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
               },
             },
           },
+        },
+        image_grid_1_hidden: {
+          type: "checkbox",
+          label: "Hide Image Grid 1",
+          default: false,
         },
         hero_image_1: {
           type: "image_upload",
@@ -195,6 +211,11 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
             },
           },
         },
+        image_grid_2_hidden: {
+          type: "checkbox",
+          label: "Hide Image Grid 2",
+          default: false,
+        },
         hero_image_2: {
           type: "image_upload",
           label: "Hero Image 2",
@@ -227,6 +248,11 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
           labelProp: "link",
           album: `${product.name} Images`,
           getOptionLabel: option => option.link,
+        },
+        lifestyle_images_hidden: {
+          type: "checkbox",
+          label: "Hide Lifestyle Images",
+          default: false,
         },
       },
     },
@@ -479,12 +505,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       type: "text",
       label: "Size",
     },
-    seo_title: {
-      label: "SEO",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
     seo: {
       type: "object",
       title: "SEO",
@@ -502,12 +522,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
           label: "Meta Keywords",
         },
       },
-    },
-    dimension_title: {
-      label: "Dimensions",
-      type: "title",
-      align: "center",
-      variant: "h6",
     },
     dimensions: {
       type: "object",
@@ -559,12 +573,6 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
           labelProp: "weight_ounces",
         },
       },
-    },
-    meta_data_title: {
-      label: "Meta Data",
-      type: "title",
-      align: "center",
-      variant: "h6",
     },
     meta_data: {
       type: "object",
@@ -619,15 +627,9 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
       type: "number",
       label: "Previous Price",
     },
-    sale_title: {
-      label: "Sale Info",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
     sale: {
       type: "object",
-      title: "Sale",
+      title: "Sale Info",
       fields: {
         price: {
           type: "number",
