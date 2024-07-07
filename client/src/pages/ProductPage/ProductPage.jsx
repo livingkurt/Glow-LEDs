@@ -15,6 +15,9 @@ import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import NavigationButtons from "./components/NavigationButtons";
 import ImageGrid from "./components/ImageGrid";
 import useProductPage from "./useProductPage";
+import HeroImage from "./components/HeroImage";
+import HeroFact from "./components/HeroFact";
+import LifestyleImageGrid from "./components/LifestyleImages";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -68,19 +71,19 @@ const ProductPage = () => {
               <ImageGrid image_grid={product?.features?.image_grid_1} />
             </Grid>
             <Grid item xs={12}>
-              {/* Hero Image 1*/}
+              <HeroImage image={product?.features?.hero_image_1} />
             </Grid>
             <Grid item xs={12}>
-              {/* Hero Fact 1*/}
+              <HeroFact heroFact={product?.features?.hero_fact_1} />
             </Grid>
             <Grid item xs={12}>
-              {/* Image Grid 2*/}
+              <ImageGrid image_grid={product?.features?.image_grid_2} />
             </Grid>
             <Grid item xs={12}>
-              {/* Hero Fact 2*/}
+              <HeroFact heroFact={product?.features?.hero_fact_2} />
             </Grid>
             <Grid item xs={12}>
-              {/* Lifestyle Image Grid */}
+              <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
             </Grid>
             <Grid item xs={12}>
               {/* Compare Models */}

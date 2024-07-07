@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Rating } from "@mui/material";
+import { Box, Grid, Typography, Rating, Container } from "@mui/material";
 import { useDispatch } from "react-redux";
 import CustomizationOption from "../components/CustomizationOption";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
@@ -26,7 +26,7 @@ const ProductDetails = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <Box maxWidth={"1500px"} margin="0 auto" px={2}>
+    <Container maxWidth="xl">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <ProductImages images={images} />
@@ -106,7 +106,7 @@ const ProductDetails = ({
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 
