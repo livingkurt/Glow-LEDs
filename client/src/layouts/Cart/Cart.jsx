@@ -5,7 +5,7 @@ import { determineItemsTotal } from "../../utils/helper_functions";
 import { GLTooltip } from "../../shared/GlowLEDsComponents";
 import { CartItem, RecentlyViewed, TopCategories } from "./components";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
-import { Drawer } from "@mui/material";
+import { Drawer, Typography } from "@mui/material";
 import { setCartDrawer } from "../../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -80,9 +80,7 @@ const Cart = () => {
                       </div>
                     </Link>
                     <Link to="/" aria-label="Home Page">
-                      <div className="row">
-                        <label className="ml-5px fs-25px mv-0px title_font">Shopping Cart</label>
-                      </div>
+                      <Typography variant="h5">Shopping Cart</Typography>
                     </Link>
                   </div>
 

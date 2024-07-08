@@ -32,7 +32,7 @@ const RecentlyViewed = ({ closeMenu }) => {
                     >
                       <div className="ai-c">
                         <img
-                          src={item.image}
+                          src={item.image.link}
                           height="60px"
                           width="60px"
                           className="br-10px mr-10px"
