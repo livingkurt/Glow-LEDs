@@ -277,7 +277,7 @@ export default {
         })
         .populate({
           path: "elevate_your_experience.products",
-          populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+          populate: [{ path: "images_object" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
         })
         .populate("tags")
         .populate("contributors")

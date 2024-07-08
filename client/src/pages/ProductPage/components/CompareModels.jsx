@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { toTitleCase } from "../../../utils/helper_functions";
+import { Link } from "react-router-dom";
 
-const CompareModels = ({ category }) => {
+const CompareModels = ({ notSure }) => {
+  if (notSure?.hidden || !notSure) {
+    return null;
+  }
+
   return (
     <Container maxWidth="xl">
       <Box
@@ -14,11 +18,13 @@ const CompareModels = ({ category }) => {
         }}
       >
         <Typography variant="h5" component="h2" gutterBottom>
-          Not sure which {toTitleCase(category)} are right for you?
+          {notSure.title}
         </Typography>
-        <Button variant="contained" color="primary">
-          Compare All Products
-        </Button>
+        <Link to={notSure.link}>
+          <Button variant="contained" color="primary">
+            {notSure.button_text}
+          </Button>
+        </Link>
       </Box>
     </Container>
   );

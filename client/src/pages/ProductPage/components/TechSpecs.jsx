@@ -9,7 +9,7 @@ const TechSpecs = ({ tech_specs }) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  if (tech_specs.hidden) return null;
+  if (tech_specs?.hidden) return null;
 
   return (
     <Container maxWidth="xl">
@@ -17,12 +17,12 @@ const TechSpecs = ({ tech_specs }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <Typography variant="h5" component="h2" gutterBottom>
-              {tech_specs.title}
+              {tech_specs?.title}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8}>
             <Box width="100%">
-              {tech_specs.navigation.map((section, index) => (
+              {tech_specs?.navigation.map((section, index) => (
                 <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}

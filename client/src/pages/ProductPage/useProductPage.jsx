@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { detailsProductPage } from "./productPageSlice";
+import { updateRecentlyViewed } from "./productHelpers";
 
 const useProductPage = () => {
   const params = useParams();
@@ -18,6 +19,10 @@ const useProductPage = () => {
   const { my_cart } = cartPage;
   const productPage = useSelector(state => state.products.productPage);
   const { customizedProduct, productPageLoading, product } = productPage;
+
+  useEffect(() => {
+    updateRecentlyViewed(product);
+  }, [dispatch, product]);
 
   return { customizedProduct, current_user, my_cart, productPageLoading, product };
 };

@@ -9,22 +9,7 @@ import * as API from "../../../api";
 import ProductImages from "../components/ProductImages";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 
-const ProductDetails = ({
-  images,
-  name,
-  numReviews,
-  rating,
-  category,
-  subcategory,
-  pathname,
-  fact,
-  currentOptions,
-  price,
-  customizedProduct,
-  product,
-  my_cart,
-}) => {
-  console.log({ fact });
+const ProductDetails = ({ images, numReviews, currentOptions, customizedProduct, product, my_cart }) => {
   const dispatch = useDispatch();
   return (
     <Container maxWidth="xl">
@@ -36,13 +21,13 @@ const ProductDetails = ({
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Box>
             <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
-              {name}
+              {product.name}
             </Typography>
 
             {/* Rating and Reviews */}
-            {numReviews > 0 && (
+            {product.numReviews > 0 && (
               <Box display="flex" alignItems="center" mb={2}>
-                <Rating value={rating} precision={0.5} readOnly />
+                <Rating value={product.rating} precision={0.5} readOnly />
                 <Typography variant="body2" ml={1}>
                   ({numReviews} reviews)
                 </Typography>
@@ -52,7 +37,7 @@ const ProductDetails = ({
               {product.fact}
             </Typography>
             <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-              Price: ${price}
+              Price: ${product.price}
             </Typography>
 
             {currentOptions?.map((option, index) => (

@@ -2,7 +2,16 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
 
-export const productFormFields = ({ products, users, categorys, product, chips, filaments, dispatch }) => {
+export const productFormFields = ({
+  products,
+  users,
+  categorys,
+  product,
+  chips,
+  filaments,
+  dispatch,
+  productsQuery,
+}) => {
   return {
     product_info_title: {
       label: "Product Info",
@@ -256,6 +265,29 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
         },
       },
     },
+    not_sure: {
+      type: "object",
+      title: "Not Sure",
+      fields: {
+        title: {
+          type: "text",
+          label: "Title",
+        },
+        button_text: {
+          type: "text",
+          label: "Button Text",
+        },
+        link: {
+          type: "text",
+          label: "Link",
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hidden",
+          default: false,
+        },
+      },
+    },
     tech_specs: {
       type: "object",
       title: "Tech Specs",
@@ -354,7 +386,8 @@ export const productFormFields = ({ products, users, categorys, product, chips, 
         products: {
           type: "autocomplete_multiple",
           label: "Products",
-          options: products,
+          options: !productsQuery?.isLoading ? productsQuery?.data : [],
+          loading: productsQuery?.isLoading,
           labelProp: "name",
         },
         hidden: {

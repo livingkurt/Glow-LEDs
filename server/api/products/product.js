@@ -102,6 +102,12 @@ const productSchema = new mongoose.Schema(
       lifestyle_images_hidden: { type: Boolean, default: false },
     },
 
+    not_sure: {
+      title: { type: String },
+      button_text: { type: String },
+      link: { type: String },
+      hidden: { type: Boolean, default: false },
+    },
     tech_specs: {
       title: { type: String },
       navigation: [

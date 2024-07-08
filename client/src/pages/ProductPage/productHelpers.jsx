@@ -164,27 +164,23 @@ export const determineInStock = product => {
 };
 
 export const updateRecentlyViewed = product => {
-  if (config.NODE_ENV === "production") {
+  if (product.name) {
     const recently_viewed = sessionStorage.getItem("recently_viewed");
     const products = JSON.parse(recently_viewed) || [];
 
-    // Remove the product if it already exists in the array
     const updatedProducts = products.filter(p => p.pathname !== product.pathname);
 
-    // Create a new object with only the necessary data
     const recentProduct = {
       pathname: product.pathname,
       name: product.name,
-      image: product.images && product.images[0],
+      image: product.images_object && product.images_object[0],
+      price: product.price,
     };
 
-    // Add the new product to the beginning of the array
     updatedProducts.unshift(recentProduct);
 
-    // Keep only the last two products
-    const recentProducts = updatedProducts.slice(0, 2);
+    const recentProducts = updatedProducts.slice(0, 4);
 
-    // Store the updated array in sessionStorage
     sessionStorage.setItem("recently_viewed", JSON.stringify(recentProducts));
   }
 };

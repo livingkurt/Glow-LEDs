@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Grid, Container } from "@mui/material";
 
 const InTheBox = ({ in_the_box }) => {
-  if (in_the_box.hidden) return null;
+  if (in_the_box?.hidden) return null;
 
   return (
     <Container maxWidth="xl">
@@ -10,12 +10,12 @@ const InTheBox = ({ in_the_box }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <Typography variant="h5" component="h2" gutterBottom>
-              {in_the_box.title}
+              {in_the_box?.title}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8}>
             <Grid container spacing={4}>
-              {in_the_box.items.map((item, index) => (
+              {in_the_box?.items.map((item, index) => (
                 <Grid item xs={6} sm={4} md={3} key={index}>
                   <Box sx={{ textAlign: "center" }}>
                     <Box
