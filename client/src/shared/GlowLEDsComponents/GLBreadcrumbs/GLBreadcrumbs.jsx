@@ -9,7 +9,7 @@ const GLBreadcrumbs = ({ items }) => {
       {items.map((item, index) => {
         if (index === items.length - 1) {
           return (
-            <Typography key={index} color="white">
+            <Typography key={index} color="white" variant="subtitle2">
               {item?.name}
             </Typography>
           );
@@ -17,7 +17,9 @@ const GLBreadcrumbs = ({ items }) => {
         return (
           <Link key={index} to={item.to}>
             <MUILink underline="hover" color="white">
-              {item?.name}
+              <Typography key={index} color="white" variant="subtitle2">
+                {item?.name}
+              </Typography>
             </MUILink>
           </Link>
         );

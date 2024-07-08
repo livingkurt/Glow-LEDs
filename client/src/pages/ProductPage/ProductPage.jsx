@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Rating, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
@@ -9,7 +9,7 @@ import HeroVideo from "../HomePage/components/HeroVideo";
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { productPageBreadCrumbs } from "./productHelpers";
+import { determineInStock, isOptionCountDifferent, productPageBreadCrumbs } from "./productHelpers";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import NavigationButtons from "./components/NavigationButtons";
 import ImageGrid from "./components/ImageGrid";
@@ -23,8 +23,11 @@ import InTheBox from "./components/InTheBox";
 import ElevateYourExperience from "./components/ElevateYourExperience";
 import ProductSupport from "./components/ProductSupport";
 import RecentlyViewed from "./components/RecentlyViewed";
-import ProductOptions from "./components/ProductOptions";
+import * as API from "../../api";
 import ProductImages from "./components/ProductImages";
+import CustomizationOption from "./components/CustomizationOption";
+import { setQuantity } from "./productPageSlice";
+import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -60,14 +63,68 @@ const ProductPage = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <ProductOptions
-                    images={images}
-                    numReviews={product.numReviews}
-                    currentOptions={currentOptions}
-                    customizedProduct={customizedProduct}
-                    product={product}
-                    my_cart={my_cart}
+                  <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
+                    {product.name}
+                  </Typography>
+
+                  {/* Rating and Reviews */}
+                  {product.numReviews > 0 && (
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Rating value={product.rating} precision={0.5} readOnly />
+                      <Typography variant="body2" ml={1}>
+                        ({product.numReviews} reviews)
+                      </Typography>
+                    </Box>
+                  )}
+                  <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
+                    {product.fact}
+                  </Typography>
+                  <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
+                    Price: ${product.price}
+                  </Typography>
+                  {currentOptions?.map((option, index) => (
+                    <CustomizationOption
+                      key={index}
+                      index={index}
+                      option={option}
+                      selectedOption={customizedProduct?.selectedOptions[index]}
+                    />
+                  ))}
+
+                  <GLSelect
+                    label="Quantity"
+                    value={customizedProduct?.quantity}
+                    onChange={e => dispatch(setQuantity(e.target.value))}
+                    placeholder="Select Quantity"
+                    size="small"
+                    options={[...Array(customizedProduct.max_quantity).keys()].map(value => ({ name: value + 1 }))}
+                    getOptionLabel={option => option.name}
+                    valueKey="name"
+                    fullWidth
                   />
+                  <Box mt={2}>
+                    <GLButtonV2
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      className="bob"
+                      sx={{
+                        fontSize: "1.6rem",
+                        padding: 2,
+                      }}
+                      size="large"
+                      onClick={() => {
+                        dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+                      }}
+                      tooltip={
+                        isOptionCountDifferent(product, customizedProduct) &&
+                        "You must select all options to Add To Cart"
+                      }
+                      disabled={isOptionCountDifferent(product, customizedProduct)}
+                    >
+                      {determineInStock(customizedProduct)}
+                    </GLButtonV2>
+                  </Box>
                 </Grid>
               </Grid>
             </Container>

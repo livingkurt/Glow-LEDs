@@ -1,5 +1,3 @@
-import config from "../../config";
-
 // Helper function to check if the count of non-addon options is different
 export const isOptionCountDifferent = (product, customizedProduct) => {
   const productOptions = getNonAddOnOptions(product?.options);
@@ -87,71 +85,6 @@ export const handlePriceReplacement = (state, option, selectedOption) => {
   }
 };
 
-export const determine_alt_skin_pathname = (subcategory, pathname) => {
-  if (subcategory === "clozd") {
-    const empty_pathname = pathname.substring(5);
-    return "opyn" + empty_pathname;
-  }
-  if (subcategory === "opyn") {
-    const empty_pathname = pathname.substring(4);
-    return "clozd" + empty_pathname;
-  }
-};
-export const determine_alt_skin_name = (subcategory, name) => {
-  if (subcategory === "clozd") {
-    const empty_name = name.substring(5);
-    return "OPYN " + empty_name;
-  }
-  if (subcategory === "opyn") {
-    const empty_name = name.substring(4);
-    return "CLOZD " + empty_name;
-  }
-};
-export const determine_sampler_pack_name = name => {
-  if (name.includes("Supreme Gloves V1")) {
-    return "Supreme Gloves Sizing Sampler Pack V1";
-  }
-  if (name.includes("Supreme Gloves V2")) {
-    return "Supreme Gloves Sizing Sampler Pack V2";
-  }
-  if (name.includes("Ultra Gloves")) {
-    return "Ultra Gloves Sizing Sampler Pack";
-  }
-};
-export const determine_sampler_pack_pathname = name => {
-  if (name.includes("Supreme Gloves V1")) {
-    return "supreme_gloves_v1_sizing_sampler_pack";
-  }
-  if (name.includes("Supreme Gloves V2")) {
-    return "supreme_gloves_v2_sizing_sampler_pack";
-  }
-  if (name.includes("Ultra Gloves")) {
-    return "ultra_gloves_sizing_sampler_pack";
-  }
-};
-
-export const determine_sizing_quick_look = name => {
-  if (
-    name === "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
-    name === "Supreme V1 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
-    name === "Ultra Refresh Pack (6 Pairs Ultra Gloves + 120 Batteries)" ||
-    name === "Ultra Gloves" ||
-    name === "Supreme Gloves V2" ||
-    name === "Supreme Gloves V1"
-  ) {
-    return true;
-  }
-};
-export const determine_sampler = name => {
-  if (
-    name === "Supreme V2 Refresh Pack (6 Pairs Supreme Gloves V2 + 120 Batteries)" ||
-    name === "Supreme Gloves V2" ||
-    name === "Ultra Gloves"
-  ) {
-    return true;
-  }
-};
-
 export const determineInStock = product => {
   if (product.count_in_stock > 0) {
     return "Add To Cart";
@@ -195,7 +128,7 @@ export const productPageBreadCrumbs = product => {
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
     },
     {
-      name: product_collection,
+      name: product_collection?.toUpperCase(),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
     },
     { name: name?.toUpperCase() },
