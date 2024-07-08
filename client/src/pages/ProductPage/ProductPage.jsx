@@ -70,7 +70,7 @@ const ProductPage = () => {
                 <Grid item xs={12}>
                   <ProductProtectionDetails />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} id="features">
                   <ImageGrid image_grid={product?.features?.image_grid_1} />
                 </Grid>
                 <Grid item xs={12}>
@@ -91,7 +91,7 @@ const ProductPage = () => {
                 <Grid item xs={12}>
                   <CompareModels notSure={product?.not_sure} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} id="tech-specs">
                   <TechSpecs tech_specs={product?.tech_specs} />
                 </Grid>
                 <Grid item xs={12}>
@@ -100,7 +100,7 @@ const ProductPage = () => {
                 <Grid item xs={12}>
                   <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} id="support">
                   <ProductSupport productSupport={product.product_support} />
                 </Grid>
                 <Grid item xs={12}>
