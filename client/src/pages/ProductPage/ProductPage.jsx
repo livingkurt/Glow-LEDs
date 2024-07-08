@@ -18,13 +18,16 @@ import useProductPage from "./useProductPage";
 import HeroImage from "./components/HeroImage";
 import HeroFact from "./components/HeroFact";
 import LifestyleImageGrid from "./components/LifestyleImages";
+import CompareModels from "./components/CompareModels";
+import TechSpecs from "./components/TechSpecs";
+import InTheBox from "./components/InTheBox";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
 
   const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
-  const { name, numReviews, rating, category, subcategory, pathname, facts, price, images, currentOptions } =
+  const { name, numReviews, rating, category, subcategory, pathname, fact, price, images, currentOptions } =
     customizedProduct;
 
   return (
@@ -49,7 +52,6 @@ const ProductPage = () => {
           category={category}
           subcategory={subcategory}
           pathname={pathname}
-          facts={facts}
           currentOptions={currentOptions}
           price={price}
           customizedProduct={customizedProduct}
@@ -86,13 +88,13 @@ const ProductPage = () => {
               <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
             </Grid>
             <Grid item xs={12}>
-              {/* Compare Models */}
+              <CompareModels category={product.category} />
             </Grid>
             <Grid item xs={12}>
-              {/* Tech Specs */}
+              <TechSpecs tech_specs={product?.tech_specs} />
             </Grid>
             <Grid item xs={12}>
-              {/* In The Box */}
+              <InTheBox in_the_box={product?.in_the_box} />
             </Grid>
             <Grid item xs={12}>
               {/* Elevate Your Experience */}
@@ -100,7 +102,6 @@ const ProductPage = () => {
             <Grid item xs={12}>
               {/* Product Support */}
             </Grid>
-
             <Grid item xs={12}>
               <SupportBanner />
             </Grid>

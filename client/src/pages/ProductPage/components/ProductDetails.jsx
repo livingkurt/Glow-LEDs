@@ -17,13 +17,14 @@ const ProductDetails = ({
   category,
   subcategory,
   pathname,
-  facts,
+  fact,
   currentOptions,
   price,
   customizedProduct,
   product,
   my_cart,
 }) => {
+  console.log({ fact });
   const dispatch = useDispatch();
   return (
     <Container maxWidth="xl">
@@ -47,15 +48,8 @@ const ProductDetails = ({
                 </Typography>
               </Box>
             )}
-            {/* <ProductFacts
-                category={category}
-                subcategory={subcategory}
-                pathname={pathname}
-                name={name}
-                facts={facts}
-              /> */}
             <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
-              Single Fact
+              {product.fact}
             </Typography>
             <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
               Price: ${price}
