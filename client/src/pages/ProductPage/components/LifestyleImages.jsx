@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageList, ImageListItem, Container } from "@mui/material";
+import { ImageList, ImageListItem } from "@mui/material";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -20,20 +20,18 @@ const LifestyleImageGrid = ({ lifestyleImages }) => {
   ];
 
   return (
-    <Container maxWidth="xl">
-      <ImageList variant="quilted" cols={4} rowHeight={200} gap={16}>
-        {lifestyleImages.slice(0, 5).map((image, index) => (
-          <ImageListItem key={index} cols={itemData[index].cols || 1} rows={itemData[index].rows || 1}>
-            <img
-              {...srcset(image.link, 200, itemData[index].rows, itemData[index].cols)}
-              alt={`Lifestyle ${index + 1}`}
-              loading="lazy"
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </Container>
+    <ImageList variant="quilted" cols={4} rowHeight={200} gap={16}>
+      {lifestyleImages.slice(0, 5).map((image, index) => (
+        <ImageListItem key={index} cols={itemData[index].cols || 1} rows={itemData[index].rows || 1}>
+          <img
+            {...srcset(image.link, 200, itemData[index].rows, itemData[index].cols)}
+            alt={`Lifestyle ${index + 1}`}
+            loading="lazy"
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
   );
 };
 

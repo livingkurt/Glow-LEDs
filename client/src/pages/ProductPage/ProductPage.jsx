@@ -1,11 +1,10 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
 import ProductPageLoading from "./components/ProductPageLoading";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import ProductDetails from "./components/ProductDetails";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
@@ -24,6 +23,8 @@ import InTheBox from "./components/InTheBox";
 import ElevateYourExperience from "./components/ElevateYourExperience";
 import ProductSupport from "./components/ProductSupport";
 import RecentlyViewed from "./components/RecentlyViewed";
+import ProductOptions from "./components/ProductOptions";
+import ProductImages from "./components/ProductImages";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -52,13 +53,24 @@ const ProductPage = () => {
                 </Box>
               )}
             </Box>
-            <ProductDetails
-              images={images}
-              currentOptions={currentOptions}
-              customizedProduct={customizedProduct}
-              product={product}
-              my_cart={my_cart}
-            />
+            <Container maxWidth="xl">
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <ProductImages images={images} />
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <ProductOptions
+                    images={images}
+                    numReviews={product.numReviews}
+                    currentOptions={currentOptions}
+                    customizedProduct={customizedProduct}
+                    product={product}
+                    my_cart={my_cart}
+                  />
+                </Grid>
+              </Grid>
+            </Container>
             <Box mt={2}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -71,45 +83,55 @@ const ProductPage = () => {
                   <ProductProtectionDetails />
                 </Grid>
                 <Grid item xs={12} id="features">
-                  <ImageGrid image_grid={product?.features?.image_grid_1} />
+                  <Container maxWidth="xl">
+                    <ImageGrid image_grid={product?.features?.image_grid_1} />
+                  </Container>
                 </Grid>
                 <Grid item xs={12}>
                   <HeroImage image={product?.features?.hero_image_1} />
                 </Grid>
-                <Grid item xs={12}>
-                  <HeroFact heroFact={product?.features?.hero_fact_1} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ImageGrid image_grid={product?.features?.image_grid_2} />
-                </Grid>
-                <Grid item xs={12}>
-                  <HeroFact heroFact={product?.features?.hero_fact_2} />
-                </Grid>
-                <Grid item xs={12}>
-                  <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
-                </Grid>
-                <Grid item xs={12}>
-                  <CompareModels notSure={product?.not_sure} />
-                </Grid>
-                <Grid item xs={12} id="tech-specs">
-                  <TechSpecs tech_specs={product?.tech_specs} />
-                </Grid>
-                <Grid item xs={12}>
-                  <InTheBox in_the_box={product?.in_the_box} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
-                </Grid>
-                <Grid item xs={12} id="support">
-                  <ProductSupport productSupport={product.product_support} />
-                </Grid>
-                <Grid item xs={12}>
-                  <SupportBanner />
-                </Grid>
-                <Grid item xs={12}>
-                  <RecentlyViewed />
-                </Grid>
               </Grid>
+              <Container maxWidth="xl">
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <HeroFact heroFact={product?.features?.hero_fact_1} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ImageGrid image_grid={product?.features?.image_grid_2} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <HeroFact heroFact={product?.features?.hero_fact_2} />
+                  </Grid>
+                </Grid>
+              </Container>
+              <Container maxWidth="xl">
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CompareModels notSure={product?.not_sure} />
+                  </Grid>
+                  <Grid item xs={12} id="tech-specs">
+                    <TechSpecs tech_specs={product?.tech_specs} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <InTheBox in_the_box={product?.in_the_box} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
+                  </Grid>
+                  <Grid item xs={12} id="support">
+                    <ProductSupport productSupport={product.product_support} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SupportBanner />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <RecentlyViewed />
+                  </Grid>
+                </Grid>
+              </Container>
             </Box>
           </>
         )}
