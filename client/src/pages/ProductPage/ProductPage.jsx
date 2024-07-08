@@ -67,7 +67,6 @@ const ProductPage = () => {
                     {product.name}
                   </Typography>
 
-                  {/* Rating and Reviews */}
                   {product.numReviews > 0 && (
                     <Box display="flex" alignItems="center" mb={2}>
                       <Rating value={product.rating} precision={0.5} readOnly />

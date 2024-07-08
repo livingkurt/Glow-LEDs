@@ -13,11 +13,12 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
           padding: theme.spacing(1),
           cursor: "pointer",
           borderRadius: hasColumnRows ? "10px 0px 0px 10px" : "10px",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
+
           transition: "box-shadow 0.3s, transform 0.3s",
           "&:hover": {
             backgroundColor: theme.palette.grey[600],
             transform: "translateY(-2px)",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
           },
           ...sx,
         }}
