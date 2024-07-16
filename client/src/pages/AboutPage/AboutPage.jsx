@@ -11,9 +11,8 @@ import SectionImage from "./components/SectionImage";
 const AboutPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  console.log({ isMobile });
 
-  const { data: currentContent, isLoading } = API.useCurrentContentQuery();
+  const { data: currentContent } = API.useCurrentContentQuery();
 
   const about_page = currentContent?.about_page;
   console.log({ about_page });
