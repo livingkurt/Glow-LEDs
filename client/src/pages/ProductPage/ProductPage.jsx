@@ -106,7 +106,7 @@ const ProductPage = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
-                      className="bob"
+                      className={isOptionCountDifferent(product, customizedProduct) ? "" : "bob"}
                       sx={{
                         fontSize: "1.6rem",
                         padding: 2,
