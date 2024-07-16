@@ -62,7 +62,6 @@ const PlaceOrderPage = () => {
           )
       );
 
-      console.log({ my_cart, updatedCartItems });
       // Construct the updated cart object
       const updatedCart = {
         ...my_cart, // Assuming `cart` is the current state of the cart including `_id` and other properties

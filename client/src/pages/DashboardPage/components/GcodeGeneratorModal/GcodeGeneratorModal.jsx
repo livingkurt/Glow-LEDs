@@ -58,7 +58,6 @@ const GcodeGeneratorModal = () => {
     dispatch(set_loading(true));
     const gcode = combineGcode({ gcodeParts, numberOfCopies, numberOfCycles, changeColorOnPrintRemoval, holdDuration });
     if (numberOfCopies !== 0) {
-      console.log({ customFilename });
       saveContinuousGcode({ filename, gcode, numberOfCopies, depreciatedFilename, customFilename });
     }
     dispatch(set_loading(false));

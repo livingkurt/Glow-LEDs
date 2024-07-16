@@ -519,7 +519,6 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
                 //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
                 //   },
                 //   onCreateNewButtonClick: selectedProduct => {
-                //     console.log(selectedProduct);
                 //     dispatch(saveToEditProductHistory(product));
                 //     dispatch(API.saveProduct({ ...selectedProduct }));
                 //   },
@@ -585,7 +584,6 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
                       //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
                       //   },
                       //   onCreateNewButtonClick: selectedProduct => {
-                      //     console.log(selectedProduct);
                       //     dispatch(saveToEditProductHistory(product));
                       //     dispatch(API.saveProduct({ ...selectedProduct }));
                       //   },

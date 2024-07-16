@@ -2,7 +2,6 @@ import React from "react";
 import { Box } from "@mui/material";
 
 const HeroImage = ({ image }) => {
-  console.log({ image });
   if (!image) return null;
 
   return (

@@ -174,7 +174,6 @@ export const getOurPicksProducts = createAsyncThunk(
   async (_param, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get("/api/products/our_picks");
-      console.log({ data });
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
@@ -190,7 +189,6 @@ export const productApi = createApi({
     product: builder.query({
       query: pathname => ({ url: `/products/${pathname}`, method: "get" }),
       transformResponse: response => {
-        console.log({ response });
         // Run actions here
         store.dispatch(
           setCustomizedProduct({

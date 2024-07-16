@@ -15,7 +15,6 @@ const AboutPage = () => {
   const { data: currentContent } = API.useCurrentContentQuery();
 
   const about_page = currentContent?.about_page;
-  console.log({ about_page });
 
   return (
     <>
