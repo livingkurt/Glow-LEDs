@@ -8,7 +8,7 @@ import { setCartDrawer } from "../../../slices/cartSlice";
 import { getCartQuantity } from "../../../helpers/sharedHelpers";
 import HeaderButton from "./CenterNavButtons/components/HeaderButton";
 import ColumnItemButton from "./CenterNavButtons/components/ColumnItemButton";
-import { useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
 const RightNavButtons = () => {
@@ -40,11 +40,23 @@ const RightNavButtons = () => {
       <div className={`${isMobile ? "w-233px" : ""} jc-fe ai-c`}>
         <HeaderButton
           onClick={() => dispatch(setCartDrawer(true))}
-          className={`${cartItems.length > 0 ? isMobile && "bob box-s-d bg-primary" : ""}`}
-          style={{ display: "flex", alignItems: "center" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            ...(cartItems.length > 0 && isMobile
+              ? {
+                  animation: "bob 2s infinite",
+                  boxShadow: theme.shadows[4],
+                  backgroundColor: theme.palette.primary.main,
+                }
+              : {}),
+          }}
         >
-          {isMobile && "Cart"} <ShoppingCart style={{ marginTop: "-4px" }} />
-          <span className="ml-5px">{getCartQuantity(cartItems)}</span>
+          {isMobile && "Cart"}
+          <ShoppingCart sx={{ marginTop: "-4px", marginLeft: isMobile ? "1px" : 0 }} />
+          <Box component="span" sx={{ marginLeft: "1px" }}>
+            {getCartQuantity(cartItems)}
+          </Box>
         </HeaderButton>
 
         {isMobile &&
