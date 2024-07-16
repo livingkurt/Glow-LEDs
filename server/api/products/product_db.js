@@ -248,7 +248,7 @@ export default {
           populate: {
             path: "values.product",
             populate: [
-              { path: "images" },
+              { path: "images_object" },
               { path: "color.filament" },
               { path: "tags" },
               { path: "chips" },
@@ -256,7 +256,12 @@ export default {
                 path: "options",
                 populate: {
                   path: "values.product",
-                  populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+                  populate: [
+                    { path: "images_object" },
+                    { path: "color.filament" },
+                    { path: "tags" },
+                    { path: "chips" },
+                  ],
                 },
               },
             ],

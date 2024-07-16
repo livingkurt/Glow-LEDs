@@ -51,11 +51,17 @@ const ProductImages = ({ images }) => {
               ))}
             </Swiper>
           </Box>
-          <Box sx={{ width: "100%", maxWidth: images.length < 6 ? "100%" : 400, margin: "0 auto" }}>
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: images.length < 6 ? images.length * 65 : 400, // 60px width + 5px gap
+              margin: "0 auto",
+            }}
+          >
             <Swiper
               onSwiper={setThumbsSwiper}
               spaceBetween={5}
-              slidesPerView={images.length > 6 ? 6.5 : images.length}
+              slidesPerView="auto"
               watchSlidesProgress={true}
               modules={[Navigation, Thumbs]}
               style={{ width: "100%" }}
