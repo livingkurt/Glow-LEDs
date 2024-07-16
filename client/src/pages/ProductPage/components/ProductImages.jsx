@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Zoom, Thumbs } from "swiper/modules";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
@@ -11,72 +8,78 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/zoom";
 import { isBrowser } from "react-device-detect";
+import { Box } from "@mui/material";
 
 const ProductImages = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
-    <div>
+    <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
       {images && (
         <>
-          <div id="main-swiper">
+          <Box sx={{ flex: 1, width: "100%", mb: 2 }}>
             <Swiper
-              spaceBetween={50}
-              containerModifierClass="main-swiper"
+              spaceBetween={0}
               modules={[Navigation, Pagination, Scrollbar, A11y, Zoom, Thumbs]}
               slidesPerView={1}
               thumbs={{ swiper: thumbsSwiper }}
-              onSlideChange={() => console.log("slide change")}
               pagination={isBrowser ? { clickable: true } : false}
               scrollbar={{ draggable: true }}
               style={{
                 "--swiper-navigation-color": "#ffffff50",
                 "--swiper-pagination-color": "#ffffff50",
                 "--swiper-scrollbar-color": "#ffffff50",
-                position: "relative",
-                zIndex: 1,
+                height: "100%",
+                width: "100%",
               }}
             >
               {images?.map((image, index) => (
-                <div key={index}>
-                  <SwiperSlide>
-                    <img src={image?.link} alt={`Thumbnail ${index}`} style={{ maxWidth: "100%", borderRadius: 20 }} />
-                  </SwiperSlide>
-                </div>
-              ))}
-            </Swiper>
-          </div>
-          <div id="thumbs-swiper" style={{ maxWidth: images.length < 6 ? "100%" : "400px", margin: "0 auto" }}>
-            <Swiper
-              containerModifierClass="thumbs-swiper"
-              onSwiper={setThumbsSwiper}
-              spaceBetween={5}
-              slidesPerView={images.length > 6 ? 6.5 : images.length - 1.5}
-              watchSlidesProgress={true}
-              modules={[Navigation, Thumbs]}
-              className="mySwiper"
-            >
-              {images?.map((image, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <img
                     src={image?.link}
-                    alt={`Thumbnail ${index}`}
+                    alt={`Product ${index}`}
                     style={{
                       maxWidth: "100%",
-                      borderRadius: 5,
-                      cursor: "pointer",
-                      width: "60px",
-                      height: "60px",
-                      objectFit: "cover",
+                      maxHeight: "100%",
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "contain",
+                      borderRadius: 20,
                     }}
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div>
+          </Box>
+          <Box sx={{ width: "100%", maxWidth: images.length < 6 ? "100%" : 400, margin: "0 auto" }}>
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              spaceBetween={5}
+              slidesPerView={images.length > 6 ? 6.5 : images.length}
+              watchSlidesProgress={true}
+              modules={[Navigation, Thumbs]}
+              style={{ width: "100%" }}
+            >
+              {images?.map((image, index) => (
+                <SwiperSlide key={index} style={{ width: 60, height: 60 }}>
+                  <img
+                    src={image?.link}
+                    alt={`Thumbnail ${index}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: 5,
+                      cursor: "pointer",
+                    }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Box>
         </>
       )}
-    </div>
+    </Box>
   );
 };
 
