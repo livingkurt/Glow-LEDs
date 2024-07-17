@@ -119,6 +119,11 @@ export const productFormFields = ({
       label: "Hide Icon Specs",
       default: false,
     },
+    navigation_buttons_hidden: {
+      type: "checkbox",
+      label: "Hide Navigation Buttons",
+      default: false,
+    },
     features: {
       type: "object",
       title: "Features",
