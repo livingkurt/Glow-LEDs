@@ -3,7 +3,7 @@ import { Box, Typography, Grid } from "@mui/material";
 
 const InTheBox = ({ in_the_box }) => {
   if (in_the_box?.hidden) return null;
-  console.log({ in_the_box });
+
   return (
     <Box sx={{ marginTop: 4, marginBottom: 4 }}>
       <Grid container spacing={2}>
