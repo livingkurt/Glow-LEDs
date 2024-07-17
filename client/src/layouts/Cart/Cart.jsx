@@ -146,6 +146,7 @@ const Cart = () => {
   return (
     <Drawer
       anchor="right"
+      transitionDuration={700}
       open={cartDrawer}
       onClose={event => {
         if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
