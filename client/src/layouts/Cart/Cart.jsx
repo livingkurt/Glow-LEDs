@@ -65,6 +65,7 @@ const Cart = () => {
           <Grid item>
             <Link to={`/collections/all/products/${item.pathname}`}>
               <Box
+                onClick={closeMenu}
                 component="img"
                 src={item?.display_image}
                 alt={item.name}
@@ -159,9 +160,23 @@ const Cart = () => {
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <Box sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box
+          sx={{
+            p: 2,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ShoppingCartIcon sx={{ mr: 1 }} />
+            <Box height="50px" width="50px" mr={1}>
+              <img
+                className="zoom logo_s"
+                src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+                alt="Glow LEDs Logo"
+                title="Small Logo"
+              />
+            </Box>
             <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
           </Box>
           <IconButton onClick={closeMenu} color="inherit">
@@ -188,7 +203,7 @@ const Cart = () => {
           )}
         </Box>
         <Divider color="white" />
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, background: "linear-gradient(180deg, #333333 0%, #4d5061 100%)" }}>
           <Box display={"flex"} justifyContent={"space-between"} sx={{ mb: 1 }}>
             <Typography variant="subtitle1">Total</Typography>
             <Typography variant="subtitle1">
