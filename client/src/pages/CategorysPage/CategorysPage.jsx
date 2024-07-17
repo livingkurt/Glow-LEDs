@@ -27,6 +27,7 @@ const CategorysPage = () => {
       { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
       {
         title: "",
+        nonSelectable: true,
         display: category => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>

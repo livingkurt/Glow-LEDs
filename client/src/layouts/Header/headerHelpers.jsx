@@ -4,7 +4,7 @@ import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
 
 export const determineDropdown = (item, current_user) => {
-  if (typeof item.name === "function" && item.name(current_user) === "Login") {
+  if (typeof item.name === "function" && item.name(current_user) === "LOGIN") {
     return false;
   }
   return true;

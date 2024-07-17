@@ -1,3 +1,4 @@
+import axios from "axios";
 import config from "../config";
 
 export const domain = () => {
@@ -46,4 +47,56 @@ export const images_or_images_object = content => {
   } else {
     return content.images;
   }
+};
+
+export const getItemsTotal = items => {
+  return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
+};
+export const getCartQuantity = items => {
+  return items.reduce((acc, item) => acc + item.quantity, 0);
+};
+
+export const determineProductLink = item => {
+  let link = `/collections/all/products/${item.pathname}`;
+
+  const params = [];
+  if (!item?.selectedOptions || !item?.currentOptions) return link;
+  item.selectedOptions.forEach(option => {
+    if (option.name) {
+      params.push(`${encodeURIComponent(option.name)}=${encodeURIComponent(option.value)}`);
+    }
+  });
+
+  if (params.length > 0) {
+    link += `?${params.join("&")}`;
+  }
+
+  return link;
+};
+
+export const determineProductName = (item, show_quantity) => {
+  let name = item.name;
+
+  if (show_quantity && item.quantity > 1) {
+    name = `${item.quantity}x ${name}`;
+  }
+  if (!item?.selectedOptions || !item?.currentOptions) return name;
+  item?.selectedOptions?.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.value}`;
+    }
+  });
+
+  return name;
+};
+
+export const determineProductNameString = item => {
+  let name = item.name;
+  if (!item?.selectedOptions || !item?.currentOptions) return name;
+  item?.selectedOptions?.forEach(option => {
+    if (option.name) {
+      name += ` - ${option.name}`;
+    }
+  });
+  return name;
 };

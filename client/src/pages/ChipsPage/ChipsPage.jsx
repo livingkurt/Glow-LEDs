@@ -41,6 +41,7 @@ const ChipsPage = () => {
       },
       {
         title: "",
+        nonSelectable: true,
         display: chip => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>

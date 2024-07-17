@@ -45,6 +45,7 @@ const TutorialsPage = () => {
       { title: "Categorys", display: "categorys" },
       {
         title: "",
+        nonSelectable: true,
         display: tutorial => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton

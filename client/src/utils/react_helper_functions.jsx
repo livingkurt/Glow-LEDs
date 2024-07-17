@@ -156,9 +156,9 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
         {item.preorder ? "Preorder " : ""}
         {/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
         <del style={{ color: "#a03131" }}>
-          <label style={{ color: color }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
+          <label style={{ color: color }}>${item.price && (item.price * item.quantity).toFixed(2)}</label>
         </del>{" "}
-        {"-->"} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
+        {"-->"} ${item.sale_price && (item.sale_price * item.quantity).toFixed(2)}
       </label>
     );
   } else if (item.quantity === 0) {
@@ -166,7 +166,9 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
       <label>
         {item.preorder ? "Preorder " : ""}
         <del style={{ color: "#a03131" }}>
-          <label style={{ color: color, marginLeft: "7px" }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
+          <label style={{ color: color, marginLeft: "7px" }}>
+            ${item.price && (item.price * item.quantity).toFixed(2)}
+          </label>
         </del>{" "}
         {"-->"} <label style={{ color: color, marginLeft: "7px" }}>Sold Out</label>
       </label>
@@ -174,63 +176,19 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   } else {
     return (
       <label>
-        {item.preorder ? "Preorder " : ""} ${item.price && (item.price * item.qty).toFixed(2)}
+        {item.preorder ? "Preorder " : ""} ${item.price && (item.price * item.quantity).toFixed(2)}
       </label>
     );
   }
 };
 
-export const cart_item_name = item => {
-  return (
-    <div className="">
-      {item.secondary_product && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">
-            {item.secondary_group_name ? item.secondary_group_name : "Cap Design"}:{" "}
-          </label>
-          <label className=" mv-0px">{determine_secondary_product_name(item.secondary_product_name, item)}</label>
-        </div>
-      )}
-      {item.size !== "1 Sled" && item.color && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : "Color"}: </label>
-          <div className="ai-c">
-            <label className=" mv-0px">{item.color}</label>
-            {item.color_code && (
-              <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />
-            )}
-          </div>
-        </div>
-      )}
-      {item.size !== "1 Skin" && item.secondary_color && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">
-            {item.secondary_color_group_name ? item.secondary_color_group_name : "Secondary Color"}:{" "}
-          </label>
-          <div className="ai-c">
-            <label className=" mv-0px">{item.secondary_color}</label>
-            {item.secondary_color_code && (
-              <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.secondary_color_code }} />
-            )}
-          </div>
-        </div>
-      )}
-      {item.size && (
-        <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.option_group_name ? item.option_group_name : "Size"}: </label>
-          <label className=" mv-0px">{item.size}</label>
-        </div>
-      )}
-    </div>
-  );
-};
 const included_for_option_name = ["diffusers"];
 const determine_option_show_modifier = item => {
   return included_for_option_name.includes(item.category);
 };
 
-const qty = (item, show_qty) => {
-  return show_qty && item.qty > 1 ? item.qty + "x" : "";
+const quantity = (item, show_quantity) => {
+  return show_quantity && item.quantity > 1 ? item.quantity + "x" : "";
 };
 const color = item => {
   return item.color ? item.color + " " : "";
@@ -359,10 +317,10 @@ const third_dash = item => {
 
 const today = new Date();
 
-export const determine_product_name = (item, show_qty) => {
+export const determine_product_name = (item, show_quantity) => {
   return (
     <div>
-      {qty(item, show_qty)} {color(item)} {item.name}
+      {quantity(item, show_quantity)} {color(item)} {item.name}
       {size(item)}
       {secondary_color(item)} {secondary_color_name(item)}
       {secondary_product(item)} {secondary_product_name(item)}
@@ -370,8 +328,8 @@ export const determine_product_name = (item, show_qty) => {
   );
 };
 
-export const determine_product_name_string = (item, show_qty) => {
-  return `${qty(item, show_qty) || ""} ${color(item) || ""} ${item.name}
+export const determine_product_name_string = (item, show_quantity) => {
+  return `${quantity(item, show_quantity) || ""} ${color(item) || ""} ${item.name}
       ${size(item) || ""}
       ${secondary_color(item) || ""} ${secondary_color_name(item) || ""}
       ${secondary_product(item) || ""} ${secondary_product_name(item) || ""}`;
@@ -411,14 +369,14 @@ export const determine_option_product_name = (name, category, subcategory) => {
   }
 };
 
-export const determine_product_name_title = (item, show_qty) => {
+export const determine_product_name_title = (item, show_quantity) => {
   //
   //
   return (
     <div>
       {!item.secondary_product_name && item.color && item.color + " "} {item.name} {size(item)}
       {item.secondary_product_name && " - " + item.color + " " + item.secondary_product_name.slice(0, -14)}
-      {show_qty && item.qty > 1 && item.qty + "x"}
+      {show_quantity && item.quantity > 1 && item.quantity + "x"}
     </div>
   );
 };
@@ -482,7 +440,7 @@ export const option_list = (item_list, list_items, set_items, list_name) => {
         <label htmlFor={list_name.toLowerCase()}>{list_name}</label>
         <div className="ai-c h-25px mv-15px jc-c">
           <div className="custom-select">
-            <select className="qty_select_dropdown" onChange={e => add_item(e, set_items, list_items)}>
+            <select className="quantity_select_dropdown" onChange={e => add_item(e, set_items, list_items)}>
               <option key={1} defaultValue="">
                 ---Choose {list_name}---
               </option>

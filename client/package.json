@@ -49,6 +49,7 @@
     "react-hook-clipboard": "^1.0.0",
     "react-hot-loader": "^4.13.1",
     "react-icons": "^4.2.0",
+    "react-medium-image-zoom": "^5.2.4",
     "react-multi-carousel": "^2.8.5",
     "react-overflow-indicator": "^0.2.1",
     "react-redux": "^8.1.2",

@@ -56,6 +56,7 @@ const ContentsPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: content => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>

@@ -94,6 +94,7 @@ export default {
           return { cartItems: [cart_item] };
         }
       }
+      return "Success";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

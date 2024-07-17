@@ -114,7 +114,7 @@ const palette = {
   primary: {
     light: "#4c6ebf",
     main: "#4d5061",
-    dark: "#363947",
+    dark: "#474a59",
     contrastText: "#fff",
   },
   secondary: {
@@ -298,7 +298,7 @@ const shadows = [
 const theme = {
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
-    values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 },
+    values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1500 },
   },
   direction: "ltr",
   mixins: {},

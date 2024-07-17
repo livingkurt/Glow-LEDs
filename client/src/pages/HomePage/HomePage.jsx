@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import HomePageHead from "./components/HomePageHead";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import SupportBanner from "./components/SupportBanner";
+import SupportBanner from "../../shared/SupportBanner/SupportBanner.jsx";
 import LearnHighlights from "./components/LearnHighlights";
 import HeroHeader from "./components/HeroHeader";
 import FeaturedProducts from "./components/FeaturedProducts";
@@ -22,7 +22,6 @@ const HomePage = () => {
     discover_more,
     get_more_out_of,
     support_banner,
-    product_protection_details,
     video,
     featured_products_hidden,
     slideshow_hidden,
@@ -58,8 +57,8 @@ const HomePage = () => {
           <Container maxWidth="lg">
             <Box my={{ xs: 2, sm: 4 }}>
               <GetTheMost get_more_out_of={get_more_out_of} />
-              <ProductProtectionDetails product_protection_details={product_protection_details} />
-              <SupportBanner support_banner={support_banner} />
+              <ProductProtectionDetails />
+              <SupportBanner />
             </Box>
           </Container>
         </>

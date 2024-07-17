@@ -1,239 +1,201 @@
-import React, { useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { Loading } from "../../shared/SharedComponents";
-import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
-import PictureChooser from "./components/PictureChooser";
-import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
-import { open_edit_product_modal } from "../ProductsPage/productsPageSlice";
-import * as API from "../../api";
-import { set_image, unset_state } from "./productPageSlice";
+import React from "react";
+import { Box, Container, Grid, Rating, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
-import { normalizeProductPage, updateRecentlyViewed } from "./productHelpers";
-import ProductPageSkeleton from "./components/ProductPageSkeleton";
 import { EditProductModal } from "../ProductsPage/components";
+import ProductPageLoading from "./components/ProductPageLoading";
+import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
+import HeroVideo from "../HomePage/components/HeroVideo";
+import SupportBanner from "../../shared/SupportBanner/SupportBanner";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { determineInStock, isOptionCountDifferent, productPageBreadCrumbs } from "./productHelpers";
+import { openEditProductModal } from "../ProductsPage/productsPageSlice";
+import NavigationButtons from "./components/NavigationButtons";
+import ImageGrid from "./components/ImageGrid";
+import useProductPage from "./useProductPage";
+import HeroImage from "./components/HeroImage";
+import HeroFact from "./components/HeroFact";
+import LifestyleImageGrid from "./components/LifestyleImages";
+import CompareModels from "./components/CompareModels";
+import TechSpecs from "./components/TechSpecs";
+import InTheBox from "./components/InTheBox";
+import ElevateYourExperience from "./components/ElevateYourExperience";
+import ProductSupport from "./components/ProductSupport";
+import RecentlyViewed from "./components/RecentlyViewed";
+import * as API from "../../api";
+import ProductImages from "./components/ProductImages";
+import CustomizationOption from "./components/CustomizationOption";
+import { setQuantity } from "./productPageSlice";
+import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 
 const ProductPage = () => {
-  const params = useParams();
-  const location = useLocation();
   const dispatch = useDispatch();
-  const productPage = useSelector(state => state.products.productPage);
-  const { name, images, image, secondary_image, secondary_images } = productPage;
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
 
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { loadingAddToCart } = cartPage;
+  const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { product, loading, error } = productsPage;
-
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.detailsProduct(params.pathname));
-    }
-    return () => {
-      dispatch(unset_state());
-      clean = false;
-    };
-  }, [dispatch, params.pathname]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (product) {
-        normalizeProductPage({ product, dispatch, current_user });
-      }
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch, product]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      updateRecentlyViewed(product);
-    }
-    return () => (clean = false);
-  }, [product]);
+  const { images, currentOptions } = customizedProduct;
 
   return (
-    product?.hasOwnProperty("name") && (
-      <div className="">
-        <div className="p-1rem">
-          <div className="jc-b">
-            <div className="mb-10px">
-              <Link to={location.state?.prevPath || "/collections/all/products"} className="m-auto">
-                <GLButton variant="secondary">Back to Products</GLButton>
-              </Link>
-            </div>
-            {current_user?.isAdmin && (
-              <div className="br-10px">
-                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal())}>
-                  Edit Product
-                </GLButton>
-              </div>
-            )}
-          </div>
-        </div>
+    <Box>
+      <ProductPageHead />
+      <ProductPageLoading loading={productPageLoading}>
+        {product && (
+          <>
+            <Box display="flex" justifyContent={"space-between"} p={2}>
+              <GLBreadcrumbs items={productPageBreadCrumbs(product)} />
+              {current_user?.isAdmin && (
+                <Box className="br-10px">
+                  <GLButtonV2
+                    variant="contained"
+                    color="secondary"
+                    onClick={e => dispatch(openEditProductModal(product))}
+                  >
+                    Edit Product
+                  </GLButtonV2>
+                </Box>
+              )}
+            </Box>
+            <Container maxWidth="xl">
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <ProductImages images={images} />
+                </Grid>
 
-        <Loading loading={loading} error={error} />
-        <Loading loading={loadingAddToCart} />
-        <EditProductModal />
-        {loading && <ProductPageSkeleton />}
-        {!loading && product && (
-          <div className="">
-            <ProductPageHead />
-            {!secondary_image && width <= 819 && (
-              <div>
-                <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
-                <div className=" w-100per h-auto m-auto br-20px pos-rel" style={{ overflowX: "hidden" }}>
-                  {images && (
-                    <ProductSlideshow
-                      product={product}
-                      images={images}
-                      secondary_images={secondary_images}
-                      className=""
-                      set_image={set_image}
-                      interval={6000}
-                      transitionTime={200}
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
+                    {product.name}
+                  </Typography>
+
+                  {product.numReviews > 0 && (
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Rating value={product.rating} precision={0.5} readOnly />
+                      <Typography variant="body2" ml={1}>
+                        ({product.numReviews} reviews)
+                      </Typography>
+                    </Box>
                   )}
-                </div>
-              </div>
-            )}
-            <div className="details">
-              <div className="">
-                {(secondary_image || width > 819) && (
-                  <div>
-                    <label
-                      className="product_title_top fs-25px title_font mb-2rem ta-c lh-50px"
-                      style={{ display: width < 819 ? "block" : "none" }}
-                    >
-                      {name}
-                    </label>
-                    <div className="details-image">
-                      <ProductImages secondary_image={secondary_image} name={name} image={image} />
-                      {!secondary_image && width > 819 && (
-                        <div>
-                          <PictureChooser
-                            product={product}
-                            images={images}
-                            secondary_images={secondary_images}
-                            className="w-100per jc-c max-w-400px m-auto"
-                            set_image={set_image}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {width < 500 &&
-                product &&
-                (product.category === "diffusers" ||
-                  product.category === "diffuser_caps" ||
-                  product.category === "exo_diffusers") && (
-                  <div className=" w-100per m-auto">
-                    <RelatedProductsSlideshow
-                      product_category={"glowskinz"}
-                      product_subcategory={"opyn"}
-                      product={product}
-                      random={false}
-                      className=""
-                      product_pathname={product.pathname}
-                      title="Pairs great with OPYN Glowskinz"
-                      category="opyn"
+                  <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
+                    {product.fact}
+                  </Typography>
+                  <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
+                    Price: ${product.price}
+                  </Typography>
+                  {currentOptions?.map((option, index) => (
+                    <CustomizationOption
+                      key={index}
+                      index={index}
+                      option={option}
+                      selectedOption={customizedProduct?.selectedOptions[index]}
                     />
-                  </div>
-                )}
-              <div className="details-info desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
-                <ProductSelection />
-              </div>
-              <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
-                <ProductOptions />
-              </div>
+                  ))}
 
-              <div className="w-100per">
-                <div
-                  className="details-action mobile_product_view"
-                  style={{ display: width <= 819 ? "block" : "none" }}
-                >
-                  <ProductOptions />
-                </div>
-                <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
-                  <ProductFacts />
-                </div>
-              </div>
-            </div>
+                  <GLSelect
+                    label="Quantity"
+                    value={customizedProduct?.quantity}
+                    onChange={e => dispatch(setQuantity(e.target.value))}
+                    placeholder="Select Quantity"
+                    size="small"
+                    options={[...Array(customizedProduct.max_quantity).keys()].map(value => ({ name: value + 1 }))}
+                    getOptionLabel={option => option.name}
+                    valueKey="name"
+                    fullWidth
+                  />
+                  <Box mt={2}>
+                    <GLButtonV2
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      className={isOptionCountDifferent(product, customizedProduct) ? "" : "bob"}
+                      sx={{
+                        fontSize: "1.6rem",
+                        padding: 2,
+                      }}
+                      size="large"
+                      onClick={() => {
+                        dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+                      }}
+                      tooltip={
+                        isOptionCountDifferent(product, customizedProduct) &&
+                        "You must select all options to Add To Cart"
+                      }
+                      disabled={isOptionCountDifferent(product, customizedProduct)}
+                    >
+                      {determineInStock(customizedProduct)}
+                    </GLButtonV2>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Container>
+            <Box mt={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <NavigationButtons />
+                </Grid>
+                <Grid item xs={12}>
+                  <HeroVideo video={product.video} video_hidden={!!product.video} />
+                </Grid>
+                <Grid item xs={12}>
+                  <ProductProtectionDetails />
+                </Grid>
+                <Grid item xs={12} id="features">
+                  <Container maxWidth="xl">
+                    <ImageGrid image_grid={product?.features?.image_grid_1} />
+                  </Container>
+                </Grid>
+                <Grid item xs={12}>
+                  <HeroImage image={product?.features?.hero_image_1} />
+                </Grid>
+              </Grid>
+              <Container maxWidth="xl">
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <HeroFact heroFact={product?.features?.hero_fact_1} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ImageGrid image_grid={product?.features?.image_grid_2} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <HeroFact heroFact={product?.features?.hero_fact_2} />
+                  </Grid>
+                </Grid>
+              </Container>
+              <Container maxWidth="xl">
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CompareModels notSure={product?.not_sure} />
+                  </Grid>
+                  <Grid item xs={12} id="tech-specs">
+                    <TechSpecs tech_specs={product?.tech_specs} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <InTheBox in_the_box={product?.in_the_box} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
+                  </Grid>
+                  <Grid item xs={12} id="support">
+                    <ProductSupport productSupport={product.product_support} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SupportBanner />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <RecentlyViewed />
+                  </Grid>
+                </Grid>
+              </Container>
+            </Box>
+          </>
+        )}
+      </ProductPageLoading>
 
-            <ProductDetails />
-          </div>
-        )}
-        {/* {!loading && product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              product={product}
-              random={false}
-              className=""
-              product_pathname={params.pathname}
-              title="Fits the Same Microlight"
-              category="chips"
-            />
-          </div>
-        )}
-        {!loading && product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              random={false}
-              className=""
-              product_pathname={params.pathname}
-              title="Related Products"
-              category="related"
-            />
-          </div>
-        )}
-        {!loading &&
-          product &&
-          product.category !== "batteries" &&
-          product.name !== "Glowstringz V2" &&
-          product.name !== "Nova Clip" && (
-            <div className=" w-100per m-auto">
-              <RelatedProductsSlideshow
-                product_category={product.category}
-                random={false}
-                className=""
-                product_pathname={params.pathname}
-                title="Accessories You May Need"
-                category="batteries"
-              />
-            </div>
-          )}
-
-        {!loading && product && (
-          <div className=" w-100per m-auto">
-            <RelatedProductsSlideshow
-              product_category={product.category}
-              random={true}
-              className=""
-              product_pathname={params.pathname}
-              title="Suggested Products"
-              category="all"
-            />
-          </div>
-        )} */}
-      </div>
-    )
+      <EditProductModal />
+    </Box>
   );
 };
+
 export default ProductPage;

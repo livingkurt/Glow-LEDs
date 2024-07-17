@@ -156,9 +156,9 @@ export default ({ order, isSponsor }) => {
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
                                   align="right">$${
-                                    order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-                                      ? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-                                      : order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+                                    order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                      ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
+                                      : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0).toFixed(2)
                                   }
                                 </div>
                               </td>
@@ -179,9 +179,9 @@ export default ({ order, isSponsor }) => {
                                 <del style="color:red">
                                   <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
                                     align="right">$${
-                                      order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-                                        ? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-                                        : order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+                                      order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                        ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
+                                        : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0).toFixed(2)
                                     }
                                   </div>
                                 </del>
@@ -201,7 +201,7 @@ export default ({ order, isSponsor }) => {
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
                                   <div>-$${(
-                                    order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice
+                                    order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0) - order.itemsPrice
                                   ).toFixed(2)}</div>
                                 </div>
                               </td>
@@ -222,9 +222,9 @@ export default ({ order, isSponsor }) => {
                                     order.promo_code
                                       ? order.itemsPrice.toFixed(2)
                                       : (order.orderItems &&
-                                        order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-                                          ? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)
-                                          : order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
+                                        order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                          ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0)
+                                          : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0)
                                         ).toFixed(2)
                                   }</div>
                                 </div>

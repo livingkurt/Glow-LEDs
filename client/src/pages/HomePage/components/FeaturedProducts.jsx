@@ -1,6 +1,7 @@
 import { Box, Typography, Button, Card, CardContent, CardMedia } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
   return !featured_products_hidden ? (
@@ -34,33 +35,35 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
               },
             }}
           >
-            <Card
-              elevation={0}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                borderRadius: "20px",
-                color: "white",
-                backgroundColor: "transparent",
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={product?.images_object[0]?.link}
-                alt={product.name}
-                sx={{ borderRadius: "20px" }}
-              />
-              <CardContent sx={{ width: "100%", padding: "10px" }}>
-                <Typography variant="subtitle2" component="div">
-                  {product.name}
-                </Typography>
-                <Typography variant="body2">${product?.price?.toFixed(2)}</Typography>
-                <Button variant="contained" sx={{ marginTop: "10px" }}>
-                  Add To Cart
-                </Button>
-              </CardContent>
-            </Card>
+            <Link to={`/collections/all/products/${product.pathname}`} key={product.pathname}>
+              <Card
+                elevation={0}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  borderRadius: "20px",
+                  color: "white",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={product?.images_object[0]?.link}
+                  alt={product.name}
+                  sx={{ borderRadius: "20px" }}
+                />
+                <CardContent sx={{ width: "100%", padding: "10px" }}>
+                  <Typography variant="subtitle2" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2">${product?.price?.toFixed(2)}</Typography>
+                  <Button variant="contained" sx={{ marginTop: "10px" }}>
+                    Add To Cart
+                  </Button>
+                </CardContent>
+              </Card>
+            </Link>
           </Box>
         ))}
       </Box>

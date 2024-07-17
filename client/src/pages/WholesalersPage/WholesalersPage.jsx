@@ -43,6 +43,7 @@ const WholesalersPage = () => {
       { title: "Minimum Order Amount", display: "minimum_order_amount" },
       {
         title: "",
+        nonSelectable: true,
         display: wholesaler => (
           <div className="row">
             <GLIconButton

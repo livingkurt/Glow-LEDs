@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema(
   {
-    name: String,
+    name: { type: String },
     subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    type: String,
-    pathname: String,
+    type: { type: String },
+    pathname: { type: String },
     deleted: { type: Boolean, default: false },
   },
   {

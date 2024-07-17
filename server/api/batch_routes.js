@@ -2302,16 +2302,16 @@ router.route("/xxl_revenue").get(async (req, res) => {
 
           const discountedPackCost = originalPackCost * (1 - discountRate);
 
-          totalRevenue += item.qty * discountedPackCost;
-          numberOfPairsSold += item.qty * 6;
+          totalRevenue += item.quantity * discountedPackCost;
+          numberOfPairsSold += item.quantity * 6;
           numberOfOrders += 1;
         } else if (item.name === "Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         } else if (item.name === "XXL Supreme Gloves V1" && item.size === "XXL") {
-          totalRevenue += item.qty * item.price;
-          numberOfPairsSold += item.qty;
+          totalRevenue += item.quantity * item.price;
+          numberOfPairsSold += item.quantity;
           numberOfOrders += 1;
         }
       });
@@ -2699,4 +2699,689 @@ router.route("/update_faq_page").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_product_options").put(async (req, res) => {
+  try {
+    const mainProducts = await Product.find({ macro_product: true, deleted: false });
+    console.log("Total main products:", mainProducts.length);
+
+    for (let i = 0; i < mainProducts.length; i++) {
+      const mainProduct = mainProducts[i];
+      console.log(`Processing main product ${i + 1} of ${mainProducts.length}`);
+
+      const options = []; // Placeholder for new options structure
+
+      // Function to process each type of product option
+      const processOptionType = async (optionProducts, optionName, valueKey) => {
+        if (optionProducts && optionProducts.length > 0) {
+          const variations = await Product.find({ "_id": { $in: optionProducts } });
+          const option = {
+            name: optionName,
+            optionType:
+              valueKey === "color" ? "colors" : valueKey === "size" || optionName === "Size" ? "buttons" : "dropdown",
+            replacePrice: valueKey === "size" || optionName === "Size" || !optionName === "Cape Color" ? true : false,
+            isAddOn: optionName === "Cape Color" ? true : false,
+            values: variations.map(variation => {
+              return {
+                name: variation[valueKey],
+                colorCode: variation.color_code,
+                // images: variation.images_object,
+                product: variation._id,
+                isDefault: !!variation.default_option,
+                additionalCost: optionName === "Cape Color" ? 4 : 0,
+              };
+            }),
+          };
+          options.push(option);
+
+          // Update each variation to set the parent and isVariation flag
+          for (let variation of variations) {
+            await Product.findByIdAndUpdate(variation._id, {
+              parent: mainProduct._id,
+              isVariation: true,
+            });
+          }
+        }
+      };
+
+      // Migrate Color Options
+      console.log("Processing Color Options");
+      await processOptionType(mainProduct.color_products, mainProduct.color_group_name || "Color", "color");
+
+      // Migrate Secondary Color Options
+      console.log("Processing Secondary Color Options");
+      await processOptionType(
+        mainProduct.secondary_color_products,
+        mainProduct.secondary_color_group_name || "Secondary Color",
+        "color"
+      );
+
+      // Migrate Option Products (assuming these are sizes for simplification)
+      console.log("Processing Option Products");
+      await processOptionType(mainProduct.option_products, mainProduct.option_group_name || "Size", "size");
+
+      // Migrate Secondary Products (assuming these are included products)
+      console.log("Processing Secondary Products");
+      await processOptionType(
+        mainProduct.secondary_products,
+        mainProduct.secondary_group_name || "Included Product",
+        "name"
+      );
+
+      // Update the main product with the new options structure
+      console.log("Updating main product");
+      await Product.findByIdAndUpdate(mainProduct._id, {
+        options: options,
+        // Consider uncommenting the $unset operation if you wish to clean up old fields
+        // $unset: { color_products: "", secondary_color_products: "", option_products: "", secondary_products: "" },
+      });
+    }
+
+    // res.status(200).send(mainProducts);
+    res.status(200).send({ message: "Product Option Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_quantity").put(async (req, res) => {
+  try {
+    // Update orderSchema
+    await Order.updateMany({ "orderItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          orderItems: {
+            $map: {
+              input: "$orderItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "orderItems.qty",
+      },
+    ]);
+
+    // Update cartSchema
+    await Cart.updateMany({ "cartItems.qty": { $exists: true } }, [
+      {
+        $set: {
+          cartItems: {
+            $map: {
+              input: "$cartItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    max_quantity: "$$item.quantity",
+                    quantity: "$$item.qty",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unset: "cartItems.qty",
+      },
+    ]);
+
+    await Product.updateMany(
+      {},
+      {
+        $rename: {
+          quantity: "max_quantity",
+        },
+      }
+    );
+
+    res.status(200).send({ message: "Field names migrated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_order_options").put(async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    console.log("Total orders:", orders.length);
+
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      console.log(`Processing order ${i + 1} of ${orders.length}`);
+
+      for (let j = 0; j < order.orderItems.length; j++) {
+        const orderItem = order.orderItems[j];
+        console.log(`Processing order item ${j + 1} of ${order.orderItems.length}`);
+
+        const currentOptions = [];
+        const selectedOptions = [];
+
+        // Migrate Color Option
+        if (orderItem.color) {
+          const colorOption = {
+            name: orderItem.color_group_name || "Color",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.color,
+                product: orderItem.color_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(colorOption);
+          selectedOptions.push(colorOption.values[0]);
+        }
+
+        // Migrate Secondary Color Option
+        if (orderItem.secondary_color) {
+          const secondaryColorOption = {
+            name: orderItem.secondary_color_group_name || "Secondary Color",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: orderItem.show_add_on || false,
+            values: [
+              {
+                name: orderItem.secondary_color,
+                product: orderItem.secondary_color_product,
+                isDefault: false,
+                additionalCost: orderItem.add_on_price || 0,
+              },
+            ],
+          };
+          currentOptions.push(secondaryColorOption);
+          selectedOptions.push(secondaryColorOption.values[0]);
+        }
+
+        // Migrate Size Option
+        if (orderItem.size) {
+          const sizeOption = {
+            name: orderItem.option_group_name || "Size",
+            optionType: "buttons",
+            replacePrice: true,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.size,
+                product: orderItem.option_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(sizeOption);
+          selectedOptions.push(sizeOption.values[0]);
+        }
+
+        // Migrate Secondary Product Option
+        if (orderItem.secondary_product_name) {
+          const secondaryProductOption = {
+            name: orderItem.secondary_group_name || "Included Product",
+            optionType: "dropdown",
+            replacePrice: false,
+            isAddOn: false,
+            values: [
+              {
+                name: orderItem.secondary_product_name,
+                product: orderItem.secondary_product,
+                isDefault: false,
+                additionalCost: 0,
+              },
+            ],
+          };
+          currentOptions.push(secondaryProductOption);
+          selectedOptions.push(secondaryProductOption.values[0]);
+        }
+
+        // Update the order item in the database
+        await Order.updateOne(
+          { _id: order._id, "orderItems._id": orderItem._id },
+          {
+            $set: {
+              "orderItems.$.currentOptions": currentOptions,
+              "orderItems.$.selectedOptions": selectedOptions,
+            },
+          }
+        );
+      }
+    }
+
+    res.status(200).send({ message: "Order Option Migration successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_remaining_fields").put(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    // Migrate facts field
+    await Product.updateMany(
+      { facts: { $exists: true } },
+      [
+        {
+          $set: {
+            fact: { $arrayElemAt: [{ $split: ["$facts", "\n"] }, 0] },
+            "features.image_grid_1": {
+              $map: {
+                input: { $slice: [{ $split: ["$facts", "\n"] }, 0, 3] },
+                as: "fact",
+                in: {
+                  title: "$$fact",
+                },
+              },
+            },
+            "features.image_grid_2": {
+              $map: {
+                input: { $slice: [{ $split: ["$facts", "\n"] }, 3, { $size: { $split: ["$facts", "\n"] } }] },
+                as: "fact",
+                in: {
+                  title: "$$fact",
+                },
+              },
+            },
+          },
+        },
+      ],
+      { session }
+    );
+
+    // Remove the old images field
+    await Product.updateMany(
+      {},
+      {
+        $unset: {
+          images: "",
+        },
+      },
+      { session }
+    );
+
+    // Migrate images_object field to the new images field
+    await Product.updateMany(
+      { images_object: { $exists: true } },
+      {
+        $set: {
+          images: "$images_object",
+        },
+      },
+      { session }
+    );
+
+    // Create a new contributors field with the value of contributers
+    await Product.updateMany(
+      { contributers: { $exists: true } },
+      {
+        $set: {
+          contributors: "$contributers",
+        },
+      },
+      { session }
+    );
+
+    // Migrate sale fields
+    await Product.updateMany(
+      {
+        $or: [
+          { sale_price: { $exists: true } },
+          { sale_start_date: { $exists: true } },
+          { sale_end_date: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          sale: {
+            price: "$sale_price",
+            start_date: "$sale_start_date",
+            end_date: "$sale_end_date",
+          },
+        },
+        // $unset: {
+        //   sale_price: "",
+        //   sale_start_date: "",
+        //   sale_end_date: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate meta fields
+    await Product.updateMany(
+      {
+        $or: [
+          { meta_title: { $exists: true } },
+          { meta_description: { $exists: true } },
+          { meta_keywords: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          seo: {
+            meta_title: "$meta_title",
+            meta_description: "$meta_description",
+            meta_keywords: "$meta_keywords",
+          },
+        },
+        // $unset: {
+        //   meta_title: "",
+        //   meta_description: "",
+        //   meta_keywords: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate dimension fields
+    await Product.updateMany(
+      {
+        $or: [
+          { package_length: { $exists: true } },
+          { package_width: { $exists: true } },
+          { package_height: { $exists: true } },
+          { package_volume: { $exists: true } },
+          { product_length: { $exists: true } },
+          { product_width: { $exists: true } },
+          { product_height: { $exists: true } },
+          { weight_pounds: { $exists: true } },
+          { weight_ounces: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          dimensions: {
+            package_length: "$package_length",
+            package_width: "$package_width",
+            package_height: "$package_height",
+            package_volume: "$package_volume",
+            product_length: "$product_length",
+            product_width: "$product_width",
+            product_height: "$product_height",
+            weight_pounds: "$weight_pounds",
+            weight_ounces: "$weight_ounces",
+          },
+        },
+        // $unset: {
+        //   package_length: "",
+        //   package_width: "",
+        //   package_height: "",
+        //   package_volume: "",
+        //   product_length: "",
+        //   product_width: "",
+        //   product_height: "",
+        //   weight_pounds: "",
+        //   weight_ounces: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate meta_data fields
+    await Product.updateMany(
+      {
+        $or: [
+          { processing_time: { $exists: true } },
+          { material_cost: { $exists: true } },
+          { filament_used: { $exists: true } },
+          { printing_time: { $exists: true } },
+          { assembly_time: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          meta_data: {
+            processing_time: "$processing_time",
+            material_cost: "$material_cost",
+            filament_used: "$filament_used",
+            printing_time: "$printing_time",
+            assembly_time: "$assembly_time",
+          },
+        },
+        // $unset: {
+        //   processing_time: "",
+        //   material_cost: "",
+        //   filament_used: "",
+        //   printing_time: "",
+        //   assembly_time: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate sold_out and preorder to restock_status
+    await Product.updateMany(
+      {
+        $or: [{ sold_out: { $exists: true } }, { preorder: { $exists: true } }],
+      },
+      [
+        {
+          $set: {
+            restock_status: {
+              $cond: [
+                { $eq: ["$sold_out", true] },
+                "Sold Out",
+                {
+                  $cond: [{ $eq: ["$preorder", true] }, "Preorder", "In Stock"],
+                },
+              ],
+            },
+          },
+        },
+      ],
+      { session }
+    );
+
+    // Migrate video to hero_video.video
+    await Product.updateMany(
+      { video: { $exists: true } },
+      {
+        $set: {
+          "hero_video.video": "$video",
+        },
+        // $unset: {
+        //   video: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate categorys, subcategorys, and collections to tags
+    await Product.updateMany(
+      {
+        $or: [
+          { categorys: { $exists: true } },
+          { subcategorys: { $exists: true } },
+          { collections: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          tags: {
+            $reduce: {
+              input: ["$categorys", "$subcategorys", "$collections"],
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] },
+            },
+          },
+        },
+        // $unset: {
+        //   categorys: "",
+        //   subcategorys: "",
+        //   collections: "",
+        // },
+      },
+      { session }
+    );
+
+    // Migrate images_object, color_images_object, secondary_color_images_object, and option_images_object to features.lifestyle_images
+    await Product.updateMany(
+      {
+        $or: [
+          { images_object: { $exists: true } },
+          { color_images_object: { $exists: true } },
+          { secondary_color_images_object: { $exists: true } },
+          { option_images_object: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          "features.lifestyle_images": {
+            $reduce: {
+              input: [
+                "$images_object",
+                "$color_images_object",
+                "$secondary_color_images_object",
+                "$option_images_object",
+              ],
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] },
+            },
+          },
+        },
+        // $unset: {
+        //   images_object: "",
+        //   color_images_object: "",
+        //   secondary_color_images_object: "",
+        //   option_images_object: "",
+        // },
+      },
+      { session }
+    );
+
+    await Product.updateMany(
+      { included_items: { $exists: true } },
+      [
+        {
+          $set: {
+            "in_the_box.title": "What you get",
+            "in_the_box.items": {
+              $map: {
+                input: { $split: ["$included_items", "\n"] },
+                as: "item",
+                in: {
+                  description: "$$item",
+                },
+              },
+            },
+          },
+        },
+        // {
+        //   $unset: "included_items",
+        // },
+      ],
+      { session }
+    );
+
+    await session.commitTransaction();
+    res.status(200).send({ message: "Data migrations completed successfully" });
+  } catch (error) {
+    await session.abortTransaction();
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  } finally {
+    session.endSession();
+  }
+});
+
+const colorNameToHex = {
+  "black": "#000000",
+  "white": "#FFFFFF",
+  "red": "#FF0000",
+  "green": "#008000",
+  "blue": "#0000FF",
+  "yellow": "#FFFF00",
+  "purple": "#800080",
+  "orange": "#FFA500",
+  "pink": "#FFC0CB",
+  "brown": "#A52A2A",
+  "gray": "#808080",
+  "cyan": "#00FFFF",
+  "magenta": "#FF00FF",
+  "silver": "#C0C0C0",
+  "gold": "#FFD700",
+  "navy": "#000080",
+  "aqua": "#00FFFF",
+  "teal": "#008080",
+  "olive": "#808000",
+  "maroon": "#800000",
+};
+
+const convertToHex = color => {
+  if (!color) return null;
+  if (color.startsWith("#")) return color;
+  const lowerColor = color.toLowerCase();
+  return colorNameToHex[lowerColor] || color;
+};
+
+router.route("/migrate_color_codes").put(async (req, res) => {
+  try {
+    const products = await Product.find({});
+    const failedProducts = [];
+
+    for (let product of products) {
+      try {
+        let updated = false;
+
+        if (product.color && typeof product.color === "object" && product.color.code) {
+          product.color.code = convertToHex(product.color.code);
+          updated = true;
+        }
+
+        if (Array.isArray(product.options)) {
+          product.options.forEach(option => {
+            if (Array.isArray(option.values)) {
+              option.values.forEach(value => {
+                if (value.colorCode) {
+                  value.colorCode = convertToHex(value.colorCode);
+                  updated = true;
+                }
+              });
+            }
+          });
+        }
+
+        if (updated) {
+          await Product.updateOne(
+            { _id: product._id },
+            {
+              $set: {
+                color: product.color,
+                options: product.options,
+              },
+            }
+          );
+        }
+      } catch (productError) {
+        console.error(`Error updating product ${product._id}:`, productError);
+        failedProducts.push(product._id);
+      }
+    }
+
+    res.status(200).send({
+      message: "Color code migration completed",
+      failedProducts: failedProducts,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;

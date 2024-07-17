@@ -2,9 +2,8 @@ import TextField from "@mui/material/TextField";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import { Icon, List } from "@mui/material";
+import { Icon, List, Paper, Typography } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
@@ -33,7 +32,10 @@ const DropdownDisplayV2 = ({
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Paper sx={{ width: "100%" }} elevation={5} className="p-20px mv-10px">
+      <Typography variant={"h6"} align={"left"} fontSize={16}>
+        {label}
+      </Typography>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -119,7 +121,7 @@ const DropdownDisplayV2 = ({
           )}
         </Droppable>
       </DragDropContext>
-    </Box>
+    </Paper>
   );
 };
 

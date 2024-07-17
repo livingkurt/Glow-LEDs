@@ -6,11 +6,11 @@ import "./ProfilePage.scss";
 import { format_date } from "../../utils/helper_functions";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
-import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { Link, useParams } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { Box } from "@mui/material";
+import { determineProductName } from "../../helpers/sharedHelpers";
 
 const useUserProfilePage = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const useUserProfilePage = () => {
           <div>
             <div>
               {row.orderItems.map(item => (
-                <div>{determine_product_name_string(item, true, row.createdAt)}</div>
+                <div>{determineProductName(item, true)}</div>
               ))}
             </div>
             <div>
@@ -76,6 +76,7 @@ const useUserProfilePage = () => {
       { title: "Total", display: row => `$${row.totalPrice?.toFixed(2)}` },
       {
         title: "",
+        nonSelectable: true,
         display: row => (
           <Box display="flex" justifyContent={"flex-end"}>
             <Link to={`/secure/account/order/${row._id}`}>

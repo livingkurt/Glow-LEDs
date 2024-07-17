@@ -11,6 +11,16 @@ export default {
         .populate("option_products")
         .populate("secondary_products")
         .populate("categorys")
+        .populate({
+          path: "options.values.product", // Adjusted to populate products within options.values
+          populate: [
+            { path: "filament" },
+            { path: "images_object" },
+            { path: "categorys" },
+            { path: "subcategorys" },
+            { path: "collections" },
+          ],
+        })
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -24,6 +34,26 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
+        .populate({
+          path: "options.values.product", // Adjusted to populate products within options.values
+          populate: [
+            { path: "filament" },
+            { path: "images_object" },
+            { path: "categorys" },
+            { path: "subcategorys" },
+            { path: "collections" },
+            {
+              path: "options.values.product", // Add another nesting of options.values.product
+              populate: [
+                { path: "filament" },
+                { path: "images_object" },
+                { path: "categorys" },
+                { path: "subcategorys" },
+                { path: "collections" },
+              ],
+            },
+          ],
+        })
         .populate("images_object")
         .populate("color_images_object")
         .populate("secondary_color_images_object")
@@ -140,7 +170,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("contributers")
+        .populate("contributors")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
@@ -207,143 +237,61 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
-        .populate("images_object")
-        .populate("color_images_object")
-        .populate("secondary_color_images_object")
-        .populate("option_images_object")
-        .populate("secondary_images_object")
-        .populate("chips")
-        .populate("products")
-        .populate({
-          path: "color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
-        .populate({
-          path: "secondary_color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
-        .populate({
-          path: "option_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
-          ],
-        })
-        .populate("filament")
-        .populate({
-          path: "secondary_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images_object",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            {
-              path: "collections",
-            },
 
-            {
-              path: "color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "secondary_color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "option_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-            {
-              path: "secondary_color_products",
-              populate: [
-                {
-                  path: "filament",
-                },
-                {
-                  path: "images_object",
-                },
-              ],
-            },
-          ],
-        })
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("contributers");
+        .populate("images_object")
+        .populate("images")
+        .populate({
+          path: "options",
+          populate: {
+            path: "values.product",
+            populate: [
+              { path: "images_object" },
+              { path: "color.filament" },
+              { path: "tags" },
+              { path: "chips" },
+              {
+                path: "options",
+                populate: {
+                  path: "values.product",
+                  populate: [
+                    { path: "images_object" },
+                    { path: "color.filament" },
+                    { path: "tags" },
+                    { path: "chips" },
+                  ],
+                },
+              },
+            ],
+          },
+        })
+        .populate({
+          path: "features",
+          populate: [
+            { path: "image_grid_1.image" },
+            { path: "hero_image_1" },
+            { path: "image_grid_2.image" },
+            { path: "hero_image_2" },
+            { path: "lifestyle_images" },
+          ],
+        })
+        .populate({
+          path: "in_the_box.items.image",
+        })
+        .populate({
+          path: "elevate_your_experience.products",
+          populate: [{ path: "images_object" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+        })
+        .populate("tags")
+        .populate("contributors")
+        .populate({
+          path: "reviews.user",
+          select: "first_name last_name",
+        })
+        .populate("color.filament")
+        .populate("chips");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -369,11 +317,7 @@ export default {
       } else {
         query = { pathname: id };
       }
-      const product = await Product.findOne(query);
-      if (product) {
-        const updated = await Product.updateOne(query, body);
-        return updated;
-      }
+      return await Product.findOneAndUpdate(query, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -4,6 +4,7 @@ import {
   determine_product_name,
   determin_card_logo_images_white,
   order_status_steps,
+  getItemsTotal,
 } from "../../utils/util";
 
 export default ({ email, order }) => {
@@ -278,10 +279,10 @@ export default ({ email, order }) => {
                                           .map(item => {
                                             return {
                                               price: item.sale_price ? item.sale_price : item.price,
-                                              qty: item.qty,
+                                              quantity: item.quantity,
                                             };
                                           })
-                                          .reduce((a, c) => a + c.price * c.qty, 0)
+                                          .reduce((a, c) => a + c.price * c.quantity, 0)
                                           ?.toFixed(2)}</strong>
 																			</td>
 																		</tr>`
@@ -301,10 +302,10 @@ export default ({ email, order }) => {
                                           .map(item => {
                                             return {
                                               price: item.sale_price ? item.sale_price : item.price,
-                                              qty: item.qty,
+                                              quantity: item.quantity,
                                             };
                                           })
-                                          .reduce((a, c) => a + c.price * c.qty, 0)
+                                          .reduce((a, c) => a + c.price * c.quantity, 0)
                                           ?.toFixed(2)}</strong></del>
 																		</td>
 														</tr>`
@@ -326,7 +327,7 @@ export default ({ email, order }) => {
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
 															<strong style="font-size:16px;color:white">&minus;&nbsp;$${(
-                                order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice
+                                getItemsTotal(order.orderItems) - order.itemsPrice
                               )?.toFixed(2)}</strong>
 
 															</td>

@@ -12,8 +12,6 @@ import { determineSurveyColors } from "./surveysPageHelpers";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContentCopy } from "@mui/icons-material";
-import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
@@ -60,6 +58,7 @@ const SurveysPage = () => {
 
       {
         title: "",
+        nonSelectable: true,
         display: survey => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>

@@ -223,7 +223,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         customs_items: order.orderItems.map(item => {
           return {
             description: "3D Printed Accessories",
-            quantity: item.qty,
+            quantity: item.quantity,
             value: item.price,
             weight: covertToOunces(item),
             origin_country: "US",
@@ -235,8 +235,10 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         commercial_invoice_signature: "IMAGE_2",
       },
     });
+    console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
+    console.log({ error });
     if (error instanceof Error) {
       throw new Error(error.message);
     }

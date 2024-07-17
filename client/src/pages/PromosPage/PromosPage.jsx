@@ -17,7 +17,7 @@ import Delete from "@mui/icons-material/Delete";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
-  const { message, loading, remoteVersionRequirement } = promoPage;
+  const { loading, remoteVersionRequirement } = promoPage;
 
   const promoTable = useSelector(state => state.promos.promoTable);
   const { selectedRows } = promoTable;
@@ -56,6 +56,7 @@ const PromosPage = () => {
       },
       {
         title: "",
+        nonSelectable: true,
         display: promo => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>

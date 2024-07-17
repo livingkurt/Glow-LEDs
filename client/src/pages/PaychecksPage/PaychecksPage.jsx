@@ -2,14 +2,12 @@ import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slices/paycheckSlice";
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
 import { Box, Button, Container } from "@mui/material";
 import { determineColor } from "./paychecksHelpers";
-import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -20,14 +18,11 @@ import Delete from "@mui/icons-material/Delete";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
-  const { message, loading, remoteVersionRequirement } = paycheckPage;
+  const { loading, remoteVersionRequirement } = paycheckPage;
 
   const paycheckTable = useSelector(state => state.paychecks.paycheckTable);
   const { selectedRows } = paycheckTable;
-  const date = new Date();
   const dispatch = useDispatch();
-
-  const today = date.toISOString();
 
   const formatDate = dateString => {
     const date = new Date(dateString);
@@ -63,6 +58,7 @@ const PaychecksPage = () => {
       },
       {
         title: "",
+        nonSelectable: true,
         display: paycheck => (
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>

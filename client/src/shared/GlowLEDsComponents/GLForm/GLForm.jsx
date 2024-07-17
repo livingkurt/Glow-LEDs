@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Paper, Skeleton, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Grid, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -116,51 +116,83 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 : fieldState;
 
               return (
-                <GLAutocomplete
-                  key={`${fieldName}-${fieldData.type}`}
-                  autoComplete="new-password"
-                  freeSolo
-                  customClasses={classes}
-                  helperText={formErrors && formErrors[fieldName]}
-                  error={formErrors && !!formErrors[fieldName]}
-                  margin="normal"
-                  loading={!fieldData.loading}
-                  value={selected || ""}
-                  disabled={fieldData.disabled}
-                  options={(!fieldData.loading && determineOptions(fieldData, localState)) || []}
-                  getOptionLabel={option =>
-                    option
-                      ? fieldData.getOptionLabel
-                        ? fieldData.getOptionLabel(option)
-                        : option[fieldData.labelProp]
-                      : ""
-                  }
-                  optionDisplay={option =>
-                    fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
-                  }
-                  isOptionEqualToValue={fieldData.isOptionEqualToValue}
-                  name={fieldName}
-                  label={fieldData.label}
-                  onChange={(event, value) => {
-                    const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
-                    handleInputChange(fieldName, savedValue);
-                  }}
-                  inputValue={inputValue}
-                  onHighlightChange={(event, option, reason) => {
-                    if (reason === "keyboard" || reason === "auto") {
-                      setHighlightedOption(option);
+                <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"space-between"}>
+                  <GLAutocomplete
+                    key={`${fieldName}-${fieldData.type}`}
+                    autoComplete="new-password"
+                    freeSolo
+                    customClasses={classes}
+                    helperText={formErrors && formErrors[fieldName]}
+                    error={formErrors && !!formErrors[fieldName]}
+                    margin="normal"
+                    loading={!fieldData.loading}
+                    value={selected || ""}
+                    disabled={fieldData.disabled}
+                    options={(!fieldData.loading && determineOptions(fieldData, localState)) || []}
+                    getOptionLabel={option =>
+                      option
+                        ? fieldData.getOptionLabel
+                          ? fieldData.getOptionLabel(option)
+                          : option[fieldData.labelProp]
+                        : ""
                     }
-                  }}
-                  onInputChange={(event, newInputValue, reason) => {
-                    if (reason === "input") {
-                      setInputValue(newInputValue);
-                      setHighlightedOption(null); // Clear highlighted option when user types
+                    optionDisplay={option =>
+                      fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]
                     }
-                  }}
-                  onKeyDown={event => {
-                    handleEnterKeyPress(event, fieldData, fieldName);
-                  }}
-                />
+                    isOptionEqualToValue={fieldData.isOptionEqualToValue}
+                    name={fieldName}
+                    label={fieldData.label}
+                    onChange={(event, value) => {
+                      const savedValue = fieldData.getOptionValue ? fieldData.getOptionValue(value) : value;
+                      handleInputChange(fieldName, savedValue);
+                    }}
+                    inputValue={inputValue}
+                    onHighlightChange={(event, option, reason) => {
+                      if (reason === "keyboard" || reason === "auto") {
+                        setHighlightedOption(option);
+                      }
+                    }}
+                    onInputChange={(event, newInputValue, reason) => {
+                      if (reason === "input") {
+                        setInputValue(newInputValue);
+                        setHighlightedOption(null); // Clear highlighted option when user types
+                      }
+                    }}
+                    onKeyDown={event => {
+                      handleEnterKeyPress(event, fieldData, fieldName);
+                    }}
+                  />
+                  {fieldData.showEditButton && (
+                    <>
+                      {selected?.name && (
+                        <Button
+                          variant={"contained"}
+                          fullWidth
+                          onClick={() => {
+                            fieldData.onEditButtonClick(selected);
+                          }}
+                        >
+                          Edit {selected?.name}
+                        </Button>
+                      )}
+                      <Button
+                        variant={"contained"}
+                        color={"secondary"}
+                        fullWidth
+                        onClick={() => {
+                          fieldData.onCreateNewButtonClick({
+                            _id: null,
+                            name: `${selected.name} Copy`,
+                            pathname: `${selected.pathname}_copy`,
+                            ...selected,
+                          });
+                        }}
+                      >
+                        New Based On {selected?.name}
+                      </Button>
+                    </>
+                  )}
+                </Box>
               );
             case "image_upload":
               return (
@@ -449,7 +481,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                 : fieldState;
               return (
-                <Paper className="p-10px mv-10px" key={`${fieldName}-${fieldData.type}`}>
+                <Paper className="p-10px mv-10px" key={`${fieldName}-${fieldData.type}`} elevation={5}>
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>

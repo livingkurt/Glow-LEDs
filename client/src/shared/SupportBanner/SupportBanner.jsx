@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import * as API from "../../api";
 
-const SupportBanner = ({ support_banner }) => {
+const SupportBanner = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const { data: currentContent } = API.useCurrentContentQuery();
+  const support_banner = currentContent?.home_page?.support_banner;
   return !support_banner?.hidden ? (
     <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Grid container justifyContent="center" mb={2}>
@@ -61,14 +64,6 @@ const SupportBanner = ({ support_banner }) => {
   ) : (
     <></>
   );
-};
-
-SupportBanner.propTypes = {
-  support_banner: PropTypes.object,
-};
-
-SupportBanner.defaultProps = {
-  support_banner: {},
 };
 
 export default SupportBanner;

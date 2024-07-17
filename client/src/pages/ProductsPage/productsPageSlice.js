@@ -41,6 +41,7 @@ const productsPage = createSlice({
     limit: 10,
     selectedOptionType: "",
     productOptionsGeneratorModal: "",
+    editProductHistory: [],
     ourPicksProducts: [],
   },
   reducers: {
@@ -50,6 +51,13 @@ const productsPage = createSlice({
         ...state,
         product: { ...state.product, ...updated_product },
       };
+    },
+    saveToEditProductHistory: (state, { payload }) => {
+      state.editProductHistory.push(payload);
+    },
+    goBackInEditProductHistory: (state, { payload }) => {
+      state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      state.editProductHistory.pop();
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
@@ -64,9 +72,9 @@ const productsPage = createSlice({
       state.edit_product_modal = true;
       state.product = productInitalState;
     },
-    open_edit_product_modal: (state, { payload }) => {
+    openEditProductModal: (state, { payload }) => {
       state.edit_product_modal = true;
-      // state.product = payload;
+      state.product = payload;
     },
     close_edit_product_modal: (state, { payload }) => {
       state.edit_product_modal = false;
@@ -129,6 +137,9 @@ const productsPage = createSlice({
     previewProductOptions: (state, { payload }) => {
       state.productOptionsGeneratorModal = false;
     },
+    addOption: (state, { payload }) => {
+      state.productOptionsGeneratorModal = false;
+    },
   },
   extraReducers: {
     [API.listProducts.pending]: (state, { payload }) => {
@@ -151,7 +162,15 @@ const productsPage = createSlice({
     [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
-      state.edit_product_modal = false;
+      console.log({ payload });
+      if (payload.created) {
+        state.product = payload.data;
+      }
+      if (state.editProductHistory.length > 0) {
+        state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      } else if (state.editProductHistory.length === 0) {
+        state.edit_product_modal = false;
+      }
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveProduct.rejected]: (state, { payload, error }) => {
@@ -163,19 +182,23 @@ const productsPage = createSlice({
       state.loading = true;
     },
     [API.detailsProduct.fulfilled]: (state, { payload }) => {
-      const start_date = new Date(payload.sale_start_date);
-      const end_date = new Date(payload.sale_end_date);
-      if (payload.sale_start_date) {
+      const { data, openEditModal } = payload;
+      const start_date = new Date(data.sale_start_date);
+      const end_date = new Date(data.sale_end_date);
+      if (data.sale_start_date) {
         state.sale_start_date = format_date(accurate_date(start_date));
         state.sale_start_time = format_time(accurate_date(start_date));
       }
-      if (payload.sale_end_date) {
+      if (data.sale_end_date) {
         state.sale_end_date = format_date(accurate_date(end_date));
         state.sale_end_time = format_time(accurate_date(end_date));
       }
       state.loading = false;
-      state.product = payload;
+      state.product = data;
       state.message = "Product Found";
+      if (openEditModal) {
+        state.edit_product_modal = true;
+      }
     },
     [API.detailsProduct.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -223,6 +246,46 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.detailsProductPage.pending]: (state, { payload }) => {
+      state.productPageLoading = true;
+    },
+    [API.detailsProductPage.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        productPageLoading: false,
+        product: payload,
+        customizedProduct: {
+          name: payload.name,
+          description: payload.description,
+          facts: payload.facts,
+          included_items: payload.included_items,
+          images: payload.images,
+          price: payload.price,
+          wholesale_price: payload.wholesale_price,
+          previous_price: payload.previous_price,
+          sale_price: payload.sale_price,
+          size: payload.size,
+          quantity: payload.quantity,
+          count_in_stock: payload.count_in_stock,
+          image: payload.image,
+          secondary_image: payload.secondary_image,
+          secondary_images: payload.secondary_images,
+          dimensions: payload.dimensions,
+          show_add_on: payload.show_add_on,
+          add_on_price: payload.add_on_price,
+          has_add_on: payload.has_add_on,
+          tabIndex: payload.tabIndex,
+          review_modal: payload.review_modal,
+          rating: payload.rating,
+          comment: payload.comment,
+          // selectedOptions: payload.options.map(option => option.values.find(value => value.isDefault)),
+        },
+      };
+    },
+    [API.detailsProductPage.rejected]: (state, { payload }) => {
+      state.productPageLoading = false;
+      state.error = payload;
+    },
     [API.getOurPicksProducts.pending]: (state, { payload }) => {
       state.loading = true;
       state.success = false;
@@ -261,11 +324,14 @@ export const {
   open_create_product_modal,
   open_product_modal,
   close_edit_product_modal,
-  open_edit_product_modal,
+  openEditProductModal,
   setRemoteVersionRequirement,
   setSelectedOptionType,
   openProductOptionsGeneratorModal,
   closeProductOptionsGeneratorModal,
   previewProductOptions,
+  saveToEditProductHistory,
+  goBackInEditProductHistory,
+  addOption,
 } = productsPage.actions;
 export default productsPage.reducer;

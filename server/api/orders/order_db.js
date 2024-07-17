@@ -208,7 +208,7 @@ export default {
         {
           $group: {
             _id: "$orderItems.product",
-            quantity: { $sum: "$orderItems.qty" },
+            quantity: { $sum: "$orderItems.quantity" },
           },
         },
       ]);
@@ -444,11 +444,11 @@ export default {
             _id: { month: { $month: "$createdAt" }, day: { $dayOfMonth: "$createdAt" } },
             dailyTotal: {
               $sum: {
-                $multiply: ["$orderItems.price", "$orderItems.qty"],
+                $multiply: ["$orderItems.price", "$orderItems.quantity"],
               },
             },
             monthlyQuantity: {
-              $sum: "$orderItems.qty",
+              $sum: "$orderItems.quantity",
             },
           },
         },
@@ -511,11 +511,11 @@ export default {
             },
             monthlyTotal: {
               $sum: {
-                $multiply: ["$orderItems.price", "$orderItems.qty"],
+                $multiply: ["$orderItems.price", "$orderItems.quantity"],
               },
             },
             yearlyQuantity: {
-              $sum: "$orderItems.qty",
+              $sum: "$orderItems.quantity",
             },
           },
         },
@@ -745,8 +745,8 @@ export default {
           $group: {
             _id: "$orderItems.product",
             name: { $first: "$orderItems.name" },
-            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
-            totalQuantity: { $sum: "$orderItems.qty" },
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+            totalQuantity: { $sum: "$orderItems.quantity" },
           },
         },
         {
@@ -785,8 +785,8 @@ export default {
           $group: {
             _id: "$orderItems.product",
             name: { $first: "$orderItems.name" },
-            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
-            totalQuantity: { $sum: "$orderItems.qty" },
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+            totalQuantity: { $sum: "$orderItems.quantity" },
           },
         },
         {
@@ -891,8 +891,8 @@ export default {
         {
           $group: {
             _id: "$product.category",
-            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
-            quantity: { $sum: "$orderItems.qty" },
+            revenue: { $sum: { $multiply: ["$orderItems.quantity", "$product.price"] } },
+            quantity: { $sum: "$orderItems.quantity" },
           },
         },
       ]);
@@ -929,8 +929,8 @@ export default {
         {
           $group: {
             _id: "$product.category",
-            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
-            quantity: { $sum: "$orderItems.qty" },
+            revenue: { $sum: { $multiply: ["$orderItems.quantity", "$product.price"] } },
+            quantity: { $sum: "$orderItems.quantity" },
           },
         },
       ]);

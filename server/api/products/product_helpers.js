@@ -1,20 +1,20 @@
 import { Product, product_db } from "../products";
 
 export const diminish_single_glove_stock = async (product, item) => {
-  const new_product_count = product.count_in_stock - item.qty;
+  const new_product_count = product.count_in_stock - item.quantity;
   product.count_in_stock = new_product_count;
   if (new_product_count <= product.quantity) {
     product.quantity = new_product_count;
   }
   await product_db.update_products_db(product._id, product);
   const option_product = await product_db.findById_products_db(item.option_product);
-  const new_option_product_count = option_product.count_in_stock - item.qty;
+  const new_option_product_count = option_product.count_in_stock - item.quantity;
   option_product.count_in_stock = new_option_product_count;
   await product_db.update_products_db(option_product._id, option_product);
 };
 
 export const diminish_refresh_pack_stock = async (product, item) => {
-  const new_product_count = product.count_in_stock - item.qty;
+  const new_product_count = product.count_in_stock - item.quantity;
   product.count_in_stock = new_product_count;
   if (new_product_count <= product.quantity) {
     product.quantity = new_product_count;
@@ -26,7 +26,7 @@ export const diminish_refresh_pack_stock = async (product, item) => {
   const glove_item = {
     product: glove_option_product._id,
     option_product: glove_option_product._id,
-    qty: item.qty * 6,
+    quantity: item.quantity * 6,
   };
   await diminish_single_glove_stock(glove_option_product, glove_item);
 
@@ -35,7 +35,7 @@ export const diminish_refresh_pack_stock = async (product, item) => {
     product.secondary_products.map(async secondary => {
       const battery_item = {
         product: secondary._id,
-        qty: item.qty,
+        quantity: item.quantity,
         size: secondary.name === "Bulk CR1225 Batteries" ? 125 : 120,
       };
       await diminish_batteries_stock(secondary, battery_item);
@@ -44,7 +44,7 @@ export const diminish_refresh_pack_stock = async (product, item) => {
 };
 
 export const diminish_batteries_stock = async (product, item) => {
-  const new_product_count = product.count_in_stock - item.qty * item.size;
+  const new_product_count = product.count_in_stock - item.quantity * item.size;
   product.count_in_stock = new_product_count;
   if (new_product_count <= product.quantity) {
     product.quantity = new_product_count;
@@ -74,7 +74,7 @@ export const diminish_sampler_stock = async (product, item) => {
         const gloveItem = {
           product: gloveOption._id,
           option_product: gloveOption._id,
-          qty: 1,
+          quantity: 1,
         };
 
         await diminish_single_glove_stock(gloveProduct, gloveItem);

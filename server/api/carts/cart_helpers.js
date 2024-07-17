@@ -2,62 +2,68 @@ export const areCartItemsEqual = (item1, item2) => {
   // List the fields you're interested in
   const fields = [
     "name",
-    // "qty",
-    "display_image",
-    "secondary_image",
-    "color",
-    "secondary_color",
-    "color_group_name",
-    "secondary_color_group_name",
-    "color_code",
-    "secondary_color_code",
     "price",
     "category",
     "subcategory",
     "product_collection",
+    "display_image",
+    "color_code",
     "pathname",
-    "size",
-    "preorder",
     "sale_price",
-    // "sale_start_date",
-    // "sale_end_date",
-    "package_volume",
-    "weight_pounds",
-    "weight_ounces",
-    "count_in_stock",
-    "length",
-    "width",
-    "height",
-    "package_length",
-    "package_width",
-    "package_height",
+    "sale_start_date",
+    "sale_end_date",
+    "dimensions.weight_pounds",
+    "dimensions.weight_ounces",
+    "dimensions.length",
+    "dimensions.width",
+    "dimensions.height",
+    "dimensions.package_length",
+    "dimensions.package_width",
+    "dimensions.package_height",
+    "dimensions.package_volume",
     "processing_time",
-    "quantity",
-    // "finite_stock",
-    "add_on_price",
-    "show_add_on",
+    "finite_stock",
     "wholesale_product",
     "wholesale_price",
     "product",
-    "color_product",
-    "color_product_name",
-    "secondary_color_product",
-    "secondary_color_product_name",
-    "option_product_name",
-    "option_product",
-    "secondary_product_name",
-    "secondary_product",
   ];
 
-  return fields.every(field => {
-    const val1 = item1[field]?.toString();
-    const val2 = item2[field]?.toString();
-    if (val1 === val2) {
-      return true;
-    } else {
+  const compareSelectedOptions = (options1, options2) => {
+    if (options1.length !== options2.length) {
       return false;
     }
+
+    return options1.every((option1, index) => {
+      const option2 = options2[index];
+      return option1._id.toString() === option2._id.toString();
+    });
+  };
+
+  const fieldsEqual = fields.every(field => {
+    const nestedFields = field.split(".");
+    let val1 = item1;
+    let val2 = item2;
+
+    for (const nestedField of nestedFields) {
+      if (val1 && val1.hasOwnProperty(nestedField)) {
+        val1 = val1[nestedField];
+      } else {
+        return true; // Skip comparison if the field is missing in item1
+      }
+
+      if (val2 && val2.hasOwnProperty(nestedField)) {
+        val2 = val2[nestedField];
+      } else {
+        return true; // Skip comparison if the field is missing in item2
+      }
+    }
+
+    return val1 === val2;
   });
+
+  const selectedOptionsEqual = compareSelectedOptions(item1.selectedOptions, item2.selectedOptions);
+
+  return fieldsEqual && selectedOptionsEqual;
 };
 
 export const updateCartItems = (cartItems, cart_item) => {
@@ -66,7 +72,7 @@ export const updateCartItems = (cartItems, cart_item) => {
   const updatedItems = cartItems.map(x => {
     if (areCartItemsEqual(x, cart_item)) {
       found = true;
-      return { ...x, qty: x.qty + cart_item.qty };
+      return { ...x, quantity: x.quantity + cart_item.quantity };
     }
     return x;
   });

@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { determine_product_name_string } from "../../../utils/react_helper_functions";
-import { determine_link } from "../../../utils/helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Grid from "@mui/material/Grid";
+import { determineProductLink, determineProductName } from "../../../helpers/sharedHelpers";
 
 const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
   return (
@@ -11,8 +10,8 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
         return (
           <Grid item xs={12} sm={2} key={index}>
             <div className="mt-15px">
-              <div className="ai-c pos-rel" data-tip={determine_product_name_string(item, true, order.createdAt)}>
-                <Link to={determine_link(item)}>
+              <div className="ai-c pos-rel" data-tip={determineProductName(item, true)}>
+                <Link to={determineProductLink(item)}>
                   <div className="">
                     {!item.secondary_image && (
                       <LazyImage
@@ -54,7 +53,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                     )}
                   </div>
                 </Link>
-                {item.qty > 1 && (
+                {item.quantity > 1 && (
                   <div
                     className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"
                     style={{
@@ -63,7 +62,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                       border: "1px solid #ccc",
                     }}
                   >
-                    <div className="mt-3px ml-2px">{item.qty}</div>
+                    <div className="mt-3px ml-2px">{item.quantity}</div>
                   </div>
                 )}
               </div>

@@ -11,6 +11,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 import { Box } from "@mui/material";
+import { getItemsTotal } from "../../helpers/sharedHelpers";
 
 const OrderPage = () => {
   const params = useParams();
@@ -234,7 +235,9 @@ const OrderPage = () => {
                     {order.orderItems.length === 0 ? (
                       <div>Cart is empty</div>
                     ) : (
-                      order.orderItems.map((item, index) => <CartItem item={item} index={index} show_qty={false} />)
+                      order.orderItems.map((item, index) => (
+                        <CartItem item={item} index={index} show_quantity={false} />
+                      ))
                     )}
                   </ul>
                 </div>
@@ -253,7 +256,7 @@ const OrderPage = () => {
                     <div>
                       <del style={{ color: "red" }}>
                         <label style={{ color: "white" }}>
-                          ${order.orderItems && order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+                          ${order.orderItems && getItemsTotal(order.orderItems).toFixed(2)}
                         </label>
                       </del>
                     </div>
@@ -262,9 +265,7 @@ const OrderPage = () => {
                 {order.promo_code && (
                   <li>
                     <div>Discount</div>
-                    <div>
-                      -${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}
-                    </div>
+                    <div>-${(getItemsTotal(order.orderItems) - order.itemsPrice).toFixed(2)}</div>
                   </li>
                 )}
                 {order.promo_code && (

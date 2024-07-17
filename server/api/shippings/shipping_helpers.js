@@ -53,11 +53,11 @@ const findSuitableParcel = (dimensions, parcels) => {
 
 const getOrderItemDimensions = orderItems =>
   orderItems.map(item => ({
-    length: item.package_length,
-    width: item.package_width,
-    height: item.package_height,
-    volume: item.package_volume,
-    qty: parseInt(item.qty),
+    length: item.dimensions.package_length,
+    width: item.dimensions.package_width,
+    height: item.dimensions.package_height,
+    volume: item.dimensions.package_volume,
+    quantity: parseInt(item.quantity),
   }));
 
 const calculateCustomParcelDimensions = dimensions => {
@@ -174,12 +174,12 @@ const createCustomParcel = (length, width, height) => {
 export const determine_parcel_weight = order => {
   let weight = 0;
   order.orderItems.forEach((item, index) => {
-    if (item.weight_pounds) {
-      weight += parseInt(item.weight_pounds) * 16 + parseInt(item.weight_ounces);
+    if (item.dimensions.weight_pounds) {
+      weight += parseInt(item.dimensions.weight_pounds) * 16 + parseInt(item.dimensions.weight_ounces);
     } else {
-      weight += parseInt(item.weight_ounces);
+      weight += parseInt(item.dimensions.weight_ounces);
     }
-    weight *= item.qty;
+    weight *= item.quantity;
   });
   return weight;
 };
@@ -188,8 +188,8 @@ export const calculateTotalOunces = cartItems => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
-    const weightInOunces = (item?.weight_pounds * 16 || 0) + (item?.weight_ounces || 0);
-    totalOunces += weightInOunces * item.qty;
+    const weightInOunces = (item.dimensions?.weight_pounds * 16 || 0) + (item.dimensions?.weight_ounces || 0);
+    totalOunces += weightInOunces * item.quantity;
   }
   return totalOunces;
 };
@@ -203,8 +203,8 @@ export const calculateTotalPounds = cartItems => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
-    const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
-    totalOunces += weightInOunces * item.qty;
+    const weightInOunces = item.dimensions.weight_pounds * 16 + item.dimensions.weight_ounces;
+    totalOunces += weightInOunces * item.quantity;
   }
   const totalPounds = totalOunces / 16;
   return totalPounds;
