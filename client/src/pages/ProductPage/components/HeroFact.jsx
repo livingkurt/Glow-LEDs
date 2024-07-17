@@ -17,7 +17,8 @@ const HeroFact = ({ heroFact }) => {
             justifyContent: "center",
             textAlign: "center",
             padding: "4rem 2rem",
-            backgroundColor: "#00000021",
+            borderRadius: "20px",
+            backgroundColor: "#4d5061",
           }}
         >
           <Typography

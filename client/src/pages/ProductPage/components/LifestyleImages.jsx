@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageList, ImageListItem } from "@mui/material";
+import { ImageList, ImageListItem, useMediaQuery, useTheme } from "@mui/material";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -9,6 +9,9 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 const LifestyleImageGrid = ({ lifestyleImages }) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (!lifestyleImages || lifestyleImages.length === 0) return null;
 
   const itemData = [
@@ -20,14 +23,38 @@ const LifestyleImageGrid = ({ lifestyleImages }) => {
   ];
 
   return (
-    <ImageList variant="quilted" cols={4} rowHeight={200} gap={16}>
+    <ImageList
+      variant={isSmallScreen ? "standard" : "quilted"}
+      cols={isSmallScreen ? 1 : 4}
+      rowHeight={isSmallScreen ? "auto" : 200}
+      gap={16}
+      sx={{
+        m: 0,
+        p: 0,
+      }}
+    >
       {lifestyleImages.slice(0, 5).map((image, index) => (
-        <ImageListItem key={index} cols={itemData[index].cols || 1} rows={itemData[index].rows || 1}>
+        <ImageListItem
+          key={index}
+          cols={isSmallScreen ? 1 : itemData[index].cols || 1}
+          rows={isSmallScreen ? 1 : itemData[index].rows || 1}
+        >
           <img
-            {...srcset(image.link, 200, itemData[index].rows, itemData[index].cols)}
+            {...srcset(
+              image.link,
+              isSmallScreen ? 350 : 200,
+              isSmallScreen ? 1 : itemData[index].rows,
+              isSmallScreen ? 1 : itemData[index].cols
+            )}
             alt={`Lifestyle ${index + 1}`}
             loading="lazy"
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            style={{
+              objectFit: "cover",
+              width: "100%",
+              height: isSmallScreen ? "auto" : "100%",
+              borderRadius: "20px",
+              aspectRatio: isSmallScreen ? `${itemData[index].cols}/${itemData[index].rows}` : "auto",
+            }}
           />
         </ImageListItem>
       ))}

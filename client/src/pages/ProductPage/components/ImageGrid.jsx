@@ -6,6 +6,7 @@ const StyledImage = styled("img")({
   width: "100%",
   height: "auto",
   objectFit: "cover",
+  borderRadius: "20px",
 });
 
 const ImageGrid = ({ image_grid, image_grid_hidden }) => {

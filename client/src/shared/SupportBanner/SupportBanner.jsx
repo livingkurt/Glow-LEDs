@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as API from "../../api";
 
@@ -34,7 +34,7 @@ const SupportBanner = () => {
           <Box
             p={{ xs: 2, md: 4 }}
             sx={{
-              backgroundColor: "#6f6f6f",
+              backgroundColor: "#4d5061",
               borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
               height: "100%",
               display: "flex",
@@ -52,7 +52,7 @@ const SupportBanner = () => {
             </Typography>
             <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>
               <Link to={support_banner?.link}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="secondary">
                   {support_banner.button_text}
                 </Button>
               </Link>

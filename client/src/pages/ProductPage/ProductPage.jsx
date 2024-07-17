@@ -134,12 +134,12 @@ const ProductPage = () => {
                     <NavigationButtons />
                   </Grid>
                 )}
-                {!product?.hero_video?.hidden && (
+                {!product?.hero_video?.hidden && product?.hero_video?.video && (
                   <Grid item xs={12} mt={-2}>
                     <HeroVideo video={product?.hero_video?.video} video_hidden={product?.hero_video?.hidden} />
                   </Grid>
                 )}
-                <Grid item xs={12}>
+                <Grid item xs={12} mt={!product?.hero_video?.hidden && product?.hero_video?.video ? -4 : 0}>
                   <ProductProtectionDetails />
                 </Grid>
                 {!product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
@@ -161,7 +161,7 @@ const ProductPage = () => {
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
                   {product?.features?.hero_fact_1 && (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} mt={2}>
                       <HeroFact heroFact={product?.features?.hero_fact_1} />
                     </Grid>
                   )}
@@ -182,32 +182,32 @@ const ProductPage = () => {
               </Container>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                  {product?.features?.lifestyle_images.length > 0 && (
-                    <Grid item xs={12}>
+                  {product?.features?.lifestyle_images.length > 0 && !product?.features?.lifestyle_images_hidden && (
+                    <Grid item xs={12} mt={2}>
                       <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
                     </Grid>
                   )}
-                  {product?.not_sure && product?.not_sure.hidden && (
+                  {product?.not_sure && !product?.not_sure.hidden && (
                     <Grid item xs={12}>
                       <CompareModels notSure={product?.not_sure} />
                     </Grid>
                   )}
-                  {product?.tech_specs && product?.tech_specs.hidden && (
+                  {product?.tech_specs && !product?.tech_specs.hidden && (
                     <Grid item xs={12} id="tech-specs">
                       <TechSpecs tech_specs={product?.tech_specs} />
                     </Grid>
                   )}
-                  {product?.in_the_box && product?.in_the_box.hidden && (
+                  {product?.in_the_box && !product?.in_the_box.hidden && (
                     <Grid item xs={12}>
                       <InTheBox in_the_box={product?.in_the_box} />
                     </Grid>
                   )}
-                  {product?.elevate_your_experience && product?.elevate_your_experience.hidden && (
+                  {product?.elevate_your_experience && !product?.elevate_your_experience.hidden && (
                     <Grid item xs={12}>
                       <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
                     </Grid>
                   )}
-                  {product?.product_support && product?.product_support.hidden && (
+                  {product?.product_support && !product?.product_support.hidden && (
                     <Grid item xs={12} id="support">
                       <ProductSupport productSupport={product.product_support} />
                     </Grid>

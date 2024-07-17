@@ -12,7 +12,7 @@ const CompareModels = ({ notSure }) => {
       {notSure.title && (
         <Box
           sx={{
-            backgroundColor: "#00000021",
+            backgroundColor: "#4d5061",
             padding: "40px",
             textAlign: "center",
             borderRadius: "8px",
@@ -22,7 +22,7 @@ const CompareModels = ({ notSure }) => {
             {notSure.title}
           </Typography>
           <Link to={notSure.link}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="secondary">
               {notSure.button_text}
             </Button>
           </Link>
