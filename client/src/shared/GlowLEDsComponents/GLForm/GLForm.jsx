@@ -202,7 +202,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   fieldName={fieldName}
                   onChange={value => {
                     if (Array.isArray(fieldState)) {
-                      handleInputChange(fieldName, [...fieldState, ...value]);
+                      handleInputChange(fieldName, value);
                     } else if (typeof fieldState === "object") {
                       handleInputChange(fieldName, value);
                     }
