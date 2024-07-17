@@ -17,18 +17,20 @@ const InTheBox = ({ in_the_box }) => {
             {in_the_box?.items.map((item, index) => (
               <Grid item xs={6} sm={4} md={3} key={index}>
                 <Box sx={{ textAlign: "center" }}>
-                  <Box
-                    component="img"
-                    src={item?.image?.link}
-                    alt={item.description}
-                    sx={{
-                      borderRadius: "10px",
-                      width: "100%",
-                      height: "auto",
-                      maxWidth: "200px",
-                      marginBottom: 2,
-                    }}
-                  />
+                  {item?.image && (
+                    <Box
+                      component="img"
+                      src={item?.image?.link}
+                      alt={item.description}
+                      sx={{
+                        borderRadius: "10px",
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: "200px",
+                        marginBottom: 2,
+                      }}
+                    />
+                  )}
                   <Typography variant="body2">{item.description}</Typography>
                 </Box>
               </Grid>

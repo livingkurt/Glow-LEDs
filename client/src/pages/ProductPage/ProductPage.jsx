@@ -132,54 +132,84 @@ const ProductPage = () => {
                 <Grid item xs={12}>
                   <NavigationButtons />
                 </Grid>
-                <Grid item xs={12}>
-                  <HeroVideo video={product.video} video_hidden={!!product.video} />
-                </Grid>
+                {product.video && (
+                  <Grid item xs={12}>
+                    <HeroVideo video={product.video} video_hidden={!product.video} />
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <ProductProtectionDetails />
                 </Grid>
-                <Grid item xs={12} id="features">
-                  <Container maxWidth="xl">
-                    <ImageGrid image_grid={product?.features?.image_grid_1} />
-                  </Container>
-                </Grid>
-                <Grid item xs={12}>
-                  <HeroImage image={product?.features?.hero_image_1} />
-                </Grid>
+                {product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
+                  <Grid item xs={12} id="features">
+                    <Container maxWidth="xl">
+                      <ImageGrid
+                        image_grid={product?.features?.image_grid_1}
+                        image_grid_hidden={product?.features?.image_grid_1_hidden}
+                      />
+                    </Container>
+                  </Grid>
+                )}
+                {product?.features?.hero_image_1 && (
+                  <Grid item xs={12}>
+                    <HeroImage image={product?.features?.hero_image_1} />
+                  </Grid>
+                )}
               </Grid>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <HeroFact heroFact={product?.features?.hero_fact_1} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <ImageGrid image_grid={product?.features?.image_grid_2} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <HeroFact heroFact={product?.features?.hero_fact_2} />
-                  </Grid>
+                  {product?.features?.hero_fact_1 && (
+                    <Grid item xs={12}>
+                      <HeroFact heroFact={product?.features?.hero_fact_1} />
+                    </Grid>
+                  )}
+                  {product?.features?.image_grid_2_hidden && product?.features?.image_grid_2.length > 0 && (
+                    <Grid item xs={12}>
+                      <ImageGrid
+                        image_grid={product?.features?.image_grid_2}
+                        image_grid_hidden={product?.features?.image_grid_2_hidden}
+                      />
+                    </Grid>
+                  )}
+                  {product?.features?.hero_image_2 && (
+                    <Grid item xs={12}>
+                      <HeroFact heroFact={product?.features?.hero_fact_2} />
+                    </Grid>
+                  )}
                 </Grid>
               </Container>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <CompareModels notSure={product?.not_sure} />
-                  </Grid>
-                  <Grid item xs={12} id="tech-specs">
-                    <TechSpecs tech_specs={product?.tech_specs} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <InTheBox in_the_box={product?.in_the_box} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
-                  </Grid>
-                  <Grid item xs={12} id="support">
-                    <ProductSupport productSupport={product.product_support} />
-                  </Grid>
+                  {product?.features?.lifestyle_images.length && (
+                    <Grid item xs={12}>
+                      <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
+                    </Grid>
+                  )}
+                  {product?.not_sure && product?.not_sure.hidden && (
+                    <Grid item xs={12}>
+                      <CompareModels notSure={product?.not_sure} />
+                    </Grid>
+                  )}
+                  {product?.tech_specs && product?.tech_specs.hidden && (
+                    <Grid item xs={12} id="tech-specs">
+                      <TechSpecs tech_specs={product?.tech_specs} />
+                    </Grid>
+                  )}
+                  {product?.in_the_box && product?.in_the_box.hidden && (
+                    <Grid item xs={12}>
+                      <InTheBox in_the_box={product?.in_the_box} />
+                    </Grid>
+                  )}
+                  {product?.elevate_your_experience && product?.elevate_your_experience.hidden && (
+                    <Grid item xs={12}>
+                      <ElevateYourExperience elevateYourExperience={product.elevate_your_experience} />
+                    </Grid>
+                  )}
+                  {product?.product_support && product?.product_support.hidden && (
+                    <Grid item xs={12} id="support">
+                      <ProductSupport productSupport={product.product_support} />
+                    </Grid>
+                  )}
                   <Grid item xs={12}>
                     <SupportBanner />
                   </Grid>
