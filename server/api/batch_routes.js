@@ -2969,338 +2969,6 @@ router.route("/migrate_order_options").put(async (req, res) => {
   }
 });
 
-router.route("/migrate_remaining_fields").put(async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
-  try {
-    // Migrate facts field
-    await Product.updateMany(
-      { facts: { $exists: true } },
-      [
-        {
-          $set: {
-            fact: { $arrayElemAt: [{ $split: ["$facts", "\n"] }, 0] },
-            "features.image_grid_1": {
-              $map: {
-                input: { $slice: [{ $split: ["$facts", "\n"] }, 0, 3] },
-                as: "fact",
-                in: {
-                  title: "$$fact",
-                },
-              },
-            },
-            "features.image_grid_2": {
-              $map: {
-                input: { $slice: [{ $split: ["$facts", "\n"] }, 3, { $size: { $split: ["$facts", "\n"] } }] },
-                as: "fact",
-                in: {
-                  title: "$$fact",
-                },
-              },
-            },
-          },
-        },
-      ],
-      { session }
-    );
-
-    // Remove the old images field
-    await Product.updateMany(
-      {},
-      {
-        $unset: {
-          images: "",
-        },
-      },
-      { session }
-    );
-
-    // Migrate images_object field to the new images field
-    await Product.updateMany(
-      { images_object: { $exists: true } },
-      {
-        $set: {
-          images: "$images_object",
-        },
-      },
-      { session }
-    );
-
-    // Create a new contributors field with the value of contributers
-    await Product.updateMany(
-      { contributers: { $exists: true } },
-      {
-        $set: {
-          contributors: "$contributers",
-        },
-      },
-      { session }
-    );
-
-    // Migrate sale fields
-    await Product.updateMany(
-      {
-        $or: [
-          { sale_price: { $exists: true } },
-          { sale_start_date: { $exists: true } },
-          { sale_end_date: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          sale: {
-            price: "$sale_price",
-            start_date: "$sale_start_date",
-            end_date: "$sale_end_date",
-          },
-        },
-        // $unset: {
-        //   sale_price: "",
-        //   sale_start_date: "",
-        //   sale_end_date: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate meta fields
-    await Product.updateMany(
-      {
-        $or: [
-          { meta_title: { $exists: true } },
-          { meta_description: { $exists: true } },
-          { meta_keywords: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          seo: {
-            meta_title: "$meta_title",
-            meta_description: "$meta_description",
-            meta_keywords: "$meta_keywords",
-          },
-        },
-        // $unset: {
-        //   meta_title: "",
-        //   meta_description: "",
-        //   meta_keywords: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate dimension fields
-    await Product.updateMany(
-      {
-        $or: [
-          { package_length: { $exists: true } },
-          { package_width: { $exists: true } },
-          { package_height: { $exists: true } },
-          { package_volume: { $exists: true } },
-          { product_length: { $exists: true } },
-          { product_width: { $exists: true } },
-          { product_height: { $exists: true } },
-          { weight_pounds: { $exists: true } },
-          { weight_ounces: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          dimensions: {
-            package_length: "$package_length",
-            package_width: "$package_width",
-            package_height: "$package_height",
-            package_volume: "$package_volume",
-            product_length: "$product_length",
-            product_width: "$product_width",
-            product_height: "$product_height",
-            weight_pounds: "$weight_pounds",
-            weight_ounces: "$weight_ounces",
-          },
-        },
-        // $unset: {
-        //   package_length: "",
-        //   package_width: "",
-        //   package_height: "",
-        //   package_volume: "",
-        //   product_length: "",
-        //   product_width: "",
-        //   product_height: "",
-        //   weight_pounds: "",
-        //   weight_ounces: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate meta_data fields
-    await Product.updateMany(
-      {
-        $or: [
-          { processing_time: { $exists: true } },
-          { material_cost: { $exists: true } },
-          { filament_used: { $exists: true } },
-          { printing_time: { $exists: true } },
-          { assembly_time: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          meta_data: {
-            processing_time: "$processing_time",
-            material_cost: "$material_cost",
-            filament_used: "$filament_used",
-            printing_time: "$printing_time",
-            assembly_time: "$assembly_time",
-          },
-        },
-        // $unset: {
-        //   processing_time: "",
-        //   material_cost: "",
-        //   filament_used: "",
-        //   printing_time: "",
-        //   assembly_time: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate sold_out and preorder to restock_status
-    await Product.updateMany(
-      {
-        $or: [{ sold_out: { $exists: true } }, { preorder: { $exists: true } }],
-      },
-      [
-        {
-          $set: {
-            restock_status: {
-              $cond: [
-                { $eq: ["$sold_out", true] },
-                "Sold Out",
-                {
-                  $cond: [{ $eq: ["$preorder", true] }, "Preorder", "In Stock"],
-                },
-              ],
-            },
-          },
-        },
-      ],
-      { session }
-    );
-
-    // Migrate video to hero_video.video
-    await Product.updateMany(
-      { video: { $exists: true } },
-      {
-        $set: {
-          "hero_video.video": "$video",
-        },
-        // $unset: {
-        //   video: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate categorys, subcategorys, and collections to tags
-    await Product.updateMany(
-      {
-        $or: [
-          { categorys: { $exists: true } },
-          { subcategorys: { $exists: true } },
-          { collections: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          tags: {
-            $reduce: {
-              input: ["$categorys", "$subcategorys", "$collections"],
-              initialValue: [],
-              in: { $concatArrays: ["$$value", "$$this"] },
-            },
-          },
-        },
-        // $unset: {
-        //   categorys: "",
-        //   subcategorys: "",
-        //   collections: "",
-        // },
-      },
-      { session }
-    );
-
-    // Migrate images_object, color_images_object, secondary_color_images_object, and option_images_object to features.lifestyle_images
-    await Product.updateMany(
-      {
-        $or: [
-          { images_object: { $exists: true } },
-          { color_images_object: { $exists: true } },
-          { secondary_color_images_object: { $exists: true } },
-          { option_images_object: { $exists: true } },
-        ],
-      },
-      {
-        $set: {
-          "features.lifestyle_images": {
-            $reduce: {
-              input: [
-                "$images_object",
-                "$color_images_object",
-                "$secondary_color_images_object",
-                "$option_images_object",
-              ],
-              initialValue: [],
-              in: { $concatArrays: ["$$value", "$$this"] },
-            },
-          },
-        },
-        // $unset: {
-        //   images_object: "",
-        //   color_images_object: "",
-        //   secondary_color_images_object: "",
-        //   option_images_object: "",
-        // },
-      },
-      { session }
-    );
-
-    await Product.updateMany(
-      { included_items: { $exists: true } },
-      [
-        {
-          $set: {
-            "in_the_box.title": "What you get",
-            "in_the_box.items": {
-              $map: {
-                input: { $split: ["$included_items", "\n"] },
-                as: "item",
-                in: {
-                  description: "$$item",
-                },
-              },
-            },
-          },
-        },
-        // {
-        //   $unset: "included_items",
-        // },
-      ],
-      { session }
-    );
-
-    await session.commitTransaction();
-    res.status(200).send({ message: "Data migrations completed successfully" });
-  } catch (error) {
-    await session.abortTransaction();
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  } finally {
-    session.endSession();
-  }
-});
-
 const colorNameToHex = {
   "black": "#000000",
   "white": "#FFFFFF",
@@ -3384,4 +3052,429 @@ router.route("/migrate_color_codes").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate hero_video
+router.route("/migrate_hero_video").put(async (req, res) => {
+  try {
+    await Product.updateMany(
+      { video: { $exists: true } },
+      {
+        $set: {
+          "hero_video.video": "$video",
+        },
+      }
+    );
+    res.status(200).send({ message: "Hero video migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate tags
+router.route("/migrate_tags").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { categorys: { $exists: true } },
+            { subcategorys: { $exists: true } },
+            { collections: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          combinedTags: {
+            $concatArrays: [
+              { $ifNull: ["$categorys", []] },
+              { $ifNull: ["$subcategorys", []] },
+              { $ifNull: ["$collections", []] },
+            ],
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      await Product.updateOne({ _id: product._id }, { $set: { tags: product.combinedTags } });
+    }
+
+    res.status(200).send({ message: "Tags migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+// Migrate lifestyle images
+router.route("/migrate_lifestyle_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, [
+      {
+        $set: {
+          "features.lifestyle_images": {
+            $reduce: {
+              input: [
+                { $ifNull: ["$images_object", []] },
+                { $ifNull: ["$color_images_object", []] },
+                { $ifNull: ["$secondary_color_images_object", []] },
+                { $ifNull: ["$option_images_object", []] },
+              ],
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Lifestyle images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate in_the_box
+router.route("/migrate_in_the_box").put(async (req, res) => {
+  try {
+    await Product.updateMany({ included_items: { $exists: true } }, [
+      {
+        $set: {
+          "in_the_box.title": "What you get",
+          "in_the_box.items": {
+            $map: {
+              input: { $split: ["$included_items", "\n"] },
+              as: "item",
+              in: {
+                description: "$$item",
+              },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "In the box migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate facts field
+router.route("/migrate_facts").put(async (req, res) => {
+  let successCount = 0;
+  let failureCount = 0;
+  let failedIds = [];
+
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: { facts: { $exists: true } },
+      },
+      {
+        $project: {
+          _id: 1,
+          facts: 1,
+          color_images_object: 1,
+          secondary_color_images_object: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      try {
+        const facts = product.facts.split("\n").filter(fact => fact.trim() !== "");
+        const images = [...(product.color_images_object || []), ...(product.secondary_color_images_object || [])];
+
+        const fact = facts[0] || "";
+        const image_grid_1 = facts.slice(0, 3).map((fact, index) => ({
+          title: fact,
+          image: images[index] || null,
+        }));
+        const image_grid_2 = facts.slice(3).map((fact, index) => ({
+          title: fact,
+          image: images[index + 3] || null,
+        }));
+
+        const updateObj = {
+          $set: {
+            fact: fact,
+          },
+        };
+
+        if (image_grid_1.length > 0) {
+          updateObj.$set["features.image_grid_1"] = image_grid_1;
+        }
+        if (image_grid_2.length > 0) {
+          updateObj.$set["features.image_grid_2"] = image_grid_2;
+        }
+
+        await Product.updateOne({ _id: product._id }, updateObj);
+        successCount++;
+      } catch (error) {
+        console.error(`Failed to update product ${product._id}: ${error.message}`);
+        failureCount++;
+        failedIds.push(product._id);
+      }
+    }
+
+    res.status(200).send({
+      message: "Facts and images migration completed",
+      successCount,
+      failureCount,
+      failedIds,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate contributors field
+router.route("/migrate_contributors").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          contributers: { $exists: true },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          contributers: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      await Product.updateOne({ _id: product._id }, { $set: { contributors: product.contributers } });
+    }
+
+    res.status(200).send({ message: "Contributors migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate images field
+router.route("/migrate_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, { $unset: { images: "" } });
+    await Product.updateMany({}, [
+      {
+        $set: {
+          images: { $ifNull: ["$images_object", []] },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_sale").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { sale_price: { $exists: true } },
+            { sale_start_date: { $exists: true } },
+            { sale_end_date: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          sale: {
+            price: "$sale_price",
+            start_date: "$sale_start_date",
+            end_date: "$sale_end_date",
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      const updateObj = { sale: {} };
+      if (product.sale.price !== undefined) updateObj.sale.price = product.sale.price;
+      if (product.sale.start_date) updateObj.sale.start_date = new Date(product.sale.start_date);
+      if (product.sale.end_date) updateObj.sale.end_date = new Date(product.sale.end_date);
+
+      await Product.updateOne({ _id: product._id }, { $set: updateObj });
+    }
+
+    res.status(200).send({ message: "Sale fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate meta fields
+router.route("/migrate_meta").put(async (req, res) => {
+  try {
+    await Product.updateMany(
+      {
+        $or: [
+          { meta_title: { $exists: true } },
+          { meta_description: { $exists: true } },
+          { meta_keywords: { $exists: true } },
+        ],
+      },
+      {
+        $set: {
+          seo: {
+            meta_title: "$meta_title",
+            meta_description: "$meta_description",
+            meta_keywords: "$meta_keywords",
+          },
+        },
+      }
+    );
+    res.status(200).send({ message: "Meta fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate dimension fields
+router.route("/migrate_dimensions").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { package_length: { $exists: true } },
+            { package_width: { $exists: true } },
+            { package_height: { $exists: true } },
+            { package_volume: { $exists: true } },
+            { product_length: { $exists: true } },
+            { product_width: { $exists: true } },
+            { product_height: { $exists: true } },
+            { weight_pounds: { $exists: true } },
+            { weight_ounces: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          dimensions: {
+            package_length: "$package_length",
+            package_width: "$package_width",
+            package_height: "$package_height",
+            package_volume: "$package_volume",
+            product_length: "$product_length",
+            product_width: "$product_width",
+            product_height: "$product_height",
+            weight_pounds: "$weight_pounds",
+            weight_ounces: "$weight_ounces",
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      const updateObj = { dimensions: {} };
+      for (const [key, value] of Object.entries(product.dimensions)) {
+        if (value !== undefined) {
+          updateObj.dimensions[key] = value;
+        }
+      }
+
+      await Product.updateOne({ _id: product._id }, { $set: updateObj });
+    }
+
+    res.status(200).send({ message: "Dimension fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_meta_data").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { processing_time: { $exists: true } },
+            { material_cost: { $exists: true } },
+            { filament_used: { $exists: true } },
+            { printing_time: { $exists: true } },
+            { assembly_time: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          meta_data: {
+            processing_time: "$processing_time",
+            material_cost: "$material_cost",
+            filament_used: "$filament_used",
+            printing_time: "$printing_time",
+            assembly_time: "$assembly_time",
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      const updateObj = { meta_data: {} };
+      for (const [key, value] of Object.entries(product.meta_data)) {
+        if (value !== undefined) {
+          updateObj.meta_data[key] = value;
+        }
+      }
+
+      await Product.updateOne({ _id: product._id }, { $set: updateObj });
+    }
+
+    res.status(200).send({ message: "Meta data fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate restock_status
+router.route("/migrate_restock_status").put(async (req, res) => {
+  try {
+    await Product.updateMany(
+      {
+        $or: [{ sold_out: { $exists: true } }, { preorder: { $exists: true } }],
+      },
+      [
+        {
+          $set: {
+            restock_status: {
+              $cond: [
+                { $eq: ["$sold_out", true] },
+                "Sold Out",
+                {
+                  $cond: [{ $eq: ["$preorder", true] }, "Preorder", "In Stock"],
+                },
+              ],
+            },
+          },
+        },
+      ]
+    );
+    res.status(200).send({ message: "Restock status migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;

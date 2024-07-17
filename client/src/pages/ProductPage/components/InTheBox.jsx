@@ -19,7 +19,7 @@ const InTheBox = ({ in_the_box }) => {
                 <Box sx={{ textAlign: "center" }}>
                   <Box
                     component="img"
-                    src={item.image.link}
+                    src={item?.image?.link}
                     alt={item.description}
                     sx={{
                       borderRadius: "10px",
