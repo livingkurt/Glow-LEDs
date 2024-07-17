@@ -129,12 +129,14 @@ const ProductPage = () => {
             </Container>
             <Box mt={2}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <NavigationButtons />
-                </Grid>
-                {product.video && (
+                {!product.navigation_buttons_hidden && (
                   <Grid item xs={12}>
-                    <HeroVideo video={product.video} video_hidden={!product.video} />
+                    <NavigationButtons />
+                  </Grid>
+                )}
+                {product?.hero_video?.video && !product?.hero_video?.hidden && (
+                  <Grid item xs={12}>
+                    <HeroVideo video={product?.hero_video?.video} video_hidden={!product?.hero_video?.hidden} />
                   </Grid>
                 )}
                 <Grid item xs={12}>
