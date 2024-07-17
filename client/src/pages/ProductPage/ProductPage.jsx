@@ -134,9 +134,9 @@ const ProductPage = () => {
                     <NavigationButtons />
                   </Grid>
                 )}
-                {product?.hero_video?.video && !product?.hero_video?.hidden && (
-                  <Grid item xs={12}>
-                    <HeroVideo video={product?.hero_video?.video} video_hidden={!product?.hero_video?.hidden} />
+                {!product?.hero_video?.hidden && (
+                  <Grid item xs={12} mt={-2}>
+                    <HeroVideo video={product?.hero_video?.video} video_hidden={product?.hero_video?.hidden} />
                   </Grid>
                 )}
                 <Grid item xs={12}>
@@ -173,7 +173,7 @@ const ProductPage = () => {
                       />
                     </Grid>
                   )}
-                  {product?.features?.hero_image_2 && (
+                  {product?.features?.hero_fact_2 && (
                     <Grid item xs={12}>
                       <HeroFact heroFact={product?.features?.hero_fact_2} />
                     </Grid>
