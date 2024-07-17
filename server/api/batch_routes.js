@@ -3301,4 +3301,87 @@ router.route("/migrate_remaining_fields").put(async (req, res) => {
   }
 });
 
+const colorNameToHex = {
+  "black": "#000000",
+  "white": "#FFFFFF",
+  "red": "#FF0000",
+  "green": "#008000",
+  "blue": "#0000FF",
+  "yellow": "#FFFF00",
+  "purple": "#800080",
+  "orange": "#FFA500",
+  "pink": "#FFC0CB",
+  "brown": "#A52A2A",
+  "gray": "#808080",
+  "cyan": "#00FFFF",
+  "magenta": "#FF00FF",
+  "silver": "#C0C0C0",
+  "gold": "#FFD700",
+  "navy": "#000080",
+  "aqua": "#00FFFF",
+  "teal": "#008080",
+  "olive": "#808000",
+  "maroon": "#800000",
+};
+
+const convertToHex = color => {
+  if (!color) return null;
+  if (color.startsWith("#")) return color;
+  const lowerColor = color.toLowerCase();
+  return colorNameToHex[lowerColor] || color;
+};
+
+router.route("/migrate_color_codes").put(async (req, res) => {
+  try {
+    const products = await Product.find({});
+    const failedProducts = [];
+
+    for (let product of products) {
+      try {
+        let updated = false;
+
+        if (product.color && typeof product.color === "object" && product.color.code) {
+          product.color.code = convertToHex(product.color.code);
+          updated = true;
+        }
+
+        if (Array.isArray(product.options)) {
+          product.options.forEach(option => {
+            if (Array.isArray(option.values)) {
+              option.values.forEach(value => {
+                if (value.colorCode) {
+                  value.colorCode = convertToHex(value.colorCode);
+                  updated = true;
+                }
+              });
+            }
+          });
+        }
+
+        if (updated) {
+          await Product.updateOne(
+            { _id: product._id },
+            {
+              $set: {
+                color: product.color,
+                options: product.options,
+              },
+            }
+          );
+        }
+      } catch (productError) {
+        console.error(`Error updating product ${product._id}:`, productError);
+        failedProducts.push(product._id);
+      }
+    }
+
+    res.status(200).send({
+      message: "Color code migration completed",
+      failedProducts: failedProducts,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;
