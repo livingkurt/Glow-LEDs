@@ -140,7 +140,7 @@ const ProductPage = () => {
                 <Grid item xs={12}>
                   <ProductProtectionDetails />
                 </Grid>
-                {product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
+                {!product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
                   <Grid item xs={12} id="features">
                     <Container maxWidth="xl">
                       <ImageGrid
@@ -163,7 +163,7 @@ const ProductPage = () => {
                       <HeroFact heroFact={product?.features?.hero_fact_1} />
                     </Grid>
                   )}
-                  {product?.features?.image_grid_2_hidden && product?.features?.image_grid_2.length > 0 && (
+                  {!product?.features?.image_grid_2_hidden && product?.features?.image_grid_2.length > 0 && (
                     <Grid item xs={12}>
                       <ImageGrid
                         image_grid={product?.features?.image_grid_2}
@@ -180,7 +180,7 @@ const ProductPage = () => {
               </Container>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                  {product?.features?.lifestyle_images.length && (
+                  {product?.features?.lifestyle_images.length > 0 && (
                     <Grid item xs={12}>
                       <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
                     </Grid>
