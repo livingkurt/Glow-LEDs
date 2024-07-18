@@ -3476,5 +3476,81 @@ router.route("/migrate_restock_status").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+// Migrate restock_status
 
+router.route("/migrate_image_object").put(async (req, res) => {
+  const skippedDocuments = [];
+
+  const safelyMigrateAndSave = async (doc, modelName) => {
+    try {
+      await doc.save();
+    } catch (error) {
+      console.error(`Error saving ${modelName} document ${doc._id}:`, error.message);
+      skippedDocuments.push({ modelName, id: doc._id, error: error.message });
+    }
+  };
+
+  try {
+    // Migrate Team schema
+    const teams = await Team.find({});
+    for (const team of teams) {
+      team.map = undefined;
+      team.picture = undefined;
+      team.images = undefined;
+
+      if (team.map_image_object) team.map = team.map_image_object;
+      if (team.profile_image_object) team.profile_image = team.profile_image_object;
+      if (team.images_object) team.images = team.images_object;
+
+      await safelyMigrateAndSave(team, "Team");
+    }
+
+    // Migrate Chip schema
+    const chips = await Chip.find({});
+    for (const chip of chips) {
+      chip.image = undefined;
+      if (chip.image_object) chip.images = [chip.image_object];
+      await safelyMigrateAndSave(chip, "Chip");
+    }
+
+    // Migrate Email schema
+    const emails = await Email.find({});
+    for (const email of emails) {
+      email.image = undefined;
+      email.images = undefined;
+
+      if (email.image_object) email.image = email.image_object;
+      if (email.images_object) email.images = email.images_object;
+
+      await safelyMigrateAndSave(email, "Email");
+    }
+
+    // Migrate Product schema
+    const products = await Product.find({});
+    for (const product of products) {
+      product.images = undefined;
+      product.color_images = undefined;
+      product.secondary_color_images = undefined;
+      product.option_images = undefined;
+
+      if (product.images_object) product.images = product.images_object;
+      if (product.color_images_object) product.color_images = product.color_images_object;
+      if (product.secondary_color_images_object) product.secondary_color_images = product.secondary_color_images_object;
+      if (product.option_images_object) product.option_images = product.option_images_object;
+
+      await safelyMigrateAndSave(product, "Product");
+    }
+
+    res.status(200).json({
+      message: "Image migration completed",
+      skippedDocuments: skippedDocuments,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      skippedDocuments: skippedDocuments,
+    });
+  }
+});
 export default router;
