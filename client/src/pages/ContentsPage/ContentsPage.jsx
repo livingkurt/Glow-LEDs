@@ -12,7 +12,7 @@ import { determineContentColors } from "./contentsPageHelpers";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContentCopy } from "@mui/icons-material";
+import { ContentCopy, Edit, Flag, Help, Home, Info } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -59,8 +59,35 @@ const ContentsPage = () => {
         nonSelectable: true,
         display: content => (
           <Box display="flex" justifyContent={"flex-end"}>
-            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_content_modal(content))}>
-              <EditIcon color="white" />
+            <GLIconButton
+              tooltip="Edit"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "" }))}
+            >
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit Home Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "home_page" }))}
+            >
+              <Home color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit Banner"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "banner" }))}
+            >
+              <Flag color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit About Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "about_page" }))}
+            >
+              <Info color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit FAQ Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "faq_page" }))}
+            >
+              <Help color="white" />
             </GLIconButton>
             <GLIconButton
               tooltip="Duplicate"

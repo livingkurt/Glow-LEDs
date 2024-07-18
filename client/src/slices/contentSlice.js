@@ -112,6 +112,7 @@ const contentPage = createSlice({
     error: {},
     menuItems: [],
     loadingSlideshowImages: false,
+    contentType: "",
   },
   reducers: {
     set_content: (state, { payload }) => {
@@ -132,8 +133,10 @@ const contentPage = createSlice({
       state.content = content;
     },
     open_edit_content_modal: (state, { payload }) => {
+      const { content, contentType } = payload;
       state.edit_content_modal = true;
-      state.content = payload;
+      state.content = content;
+      state.contentType = contentType;
     },
     close_content_modal: (state, { payload }) => {
       state.edit_content_modal = false;
