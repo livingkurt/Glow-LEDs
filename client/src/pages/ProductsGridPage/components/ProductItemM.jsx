@@ -27,7 +27,7 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
                   title="Product Image"
                   size={{ height: size, width: size }}
                   effect="blur"
-                  src={product?.images_object && product?.images_object[0].link}
+                  src={product?.images && product?.images[0].link}
                 />
 
                 {Array.from({ length: 60 }).map((_, index) => {

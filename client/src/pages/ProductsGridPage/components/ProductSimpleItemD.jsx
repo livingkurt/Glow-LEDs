@@ -30,7 +30,7 @@ const ProductSimpleItemD = ({ product, size, style }) => {
                     title="Product Image"
                     size={{ height: size, width: size }}
                     effect="blur"
-                    src={product?.images_object[0].link}
+                    src={product?.images[0].link}
                   />
                 </div>
               </div>

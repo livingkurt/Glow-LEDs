@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 const ProductPageHead = () => {
   const productsPage = useSelector(state => state.products.productsPage);
   const { product } = productsPage;
-  const { pathname, images_object, meta_description, meta_title } = product;
+  const { pathname, images, meta_description, meta_title } = product;
+
+  console.log({ images });
 
   return (
     <Helmet>
@@ -15,12 +17,10 @@ const ProductPageHead = () => {
       <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
       <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
 
-      {images_object && <meta property="og:image" content={"https://www.glow-leds.com/" + images_object[0].link} />}
+      {images && <meta property="og:image" content={"https://www.glow-leds.com/" + images[0]?.link} />}
 
-      {images_object && (
-        <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + images_object[0].link} />
-      )}
-      {images_object && <meta name="twitter:image" content={"https://www.glow-leds.com/" + images_object[0].link} />}
+      {images && <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + images[0]?.link} />}
+      {images && <meta name="twitter:image" content={"https://www.glow-leds.com/" + images[0]?.link} />}
 
       <meta
         name="description"

@@ -23,8 +23,8 @@ export const calculateAdditionalCost = selectedOptions =>
 
 export const updateProductDetailsFromOption = (state, selectedOption) => {
   const { product } = selectedOption;
-  if (selectedOption.product.images_object.length > 0) {
-    state.customizedProduct.images = selectedOption.product.images_object;
+  if (selectedOption.product.images.length > 0) {
+    state.customizedProduct.images = selectedOption.product.images;
   }
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
@@ -106,7 +106,7 @@ export const updateRecentlyViewed = product => {
     const recentProduct = {
       pathname: product.pathname,
       name: product.name,
-      image: product.images_object && product.images_object[0],
+      image: product.images && product.images[0],
       price: product.price,
     };
 

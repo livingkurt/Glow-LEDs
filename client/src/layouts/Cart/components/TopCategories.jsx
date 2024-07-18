@@ -18,7 +18,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
                   {item.label && (
                     <Link to={item.link} onClick={closeMenu} className="column jc-c ta-c">
                       <label className="mt-0px fs-14px title_font mb-10px"> {humanize(item.label)}</label>
-                      {item && item.image_object && (
+                      {item && item.image && (
                         <LazyImage
                           className="br-20px"
                           alt={item.label}
@@ -29,7 +29,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
                             objectFit: "cover",
                           }}
                           effect="blur"
-                          src={item.image_object.link}
+                          src={item.image.link}
                         />
                       )}
                     </Link>

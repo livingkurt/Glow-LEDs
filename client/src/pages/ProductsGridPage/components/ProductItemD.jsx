@@ -23,12 +23,12 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
         return image_number - 1;
       });
     } else {
-      set_image_number(product?.images_object?.length - 1);
+      set_image_number(product?.images?.length - 1);
     }
   };
   const move_right = e => {
     e.preventDefault();
-    if (image_number !== product?.images_object?.length - 1) {
+    if (image_number !== product?.images?.length - 1) {
       set_image_number(image_number => {
         return image_number + 1;
       });
@@ -50,21 +50,21 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
               <div className="row mt-15px" data-testid={product?.pathname}>
                 <div className="column ai-c pos-rel">
                   {/* <Link to={'/collections/all/products/' + item.pathname}> */}
-                  {product?.images_object?.length === 1 && (
+                  {product?.images?.length === 1 && (
                     <LazyImage
                       className="product-image"
                       alt={product?.name}
                       title="Product Image"
                       size={{ height: size, width: size }}
                       effect="blur"
-                      src={product?.images_object && product?.images_object[0].link}
+                      src={product?.images && product?.images[0].link}
                     />
                   )}
-                  {product?.images_object?.length > 1 && (
+                  {product?.images?.length > 1 && (
                     // <div className="image-btn-container">
                     <div>
                       <div className="jc-b w-100per pos-rel ">
-                        {product?.images_object?.length > 1 && (
+                        {product?.images?.length > 1 && (
                           <div className="ai-c pos-abs left-0px top-125px image-btn">
                             <GLButton
                               style={{ backgroundColor: "transparent" }}
@@ -80,14 +80,14 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
                           <LazyImage
                             key={image_number + x}
                             className="product-image"
-                            // alt={product?.images_object}
+                            // alt={product?.images}
                             title="Product Image"
                             size={{ height: size, width: size }}
                             effect="blur"
-                            src={product?.images_object[image_number + x].link}
+                            src={product?.images[image_number + x].link}
                           />
                         ))}
-                        {product?.images_object?.length > 1 && (
+                        {product?.images?.length > 1 && (
                           <div className="ai-c pos-abs right-0px top-125px image-btn">
                             <GLButton
                               style={{ backgroundColor: "transparent" }}

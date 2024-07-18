@@ -135,11 +135,11 @@ export const normalizeProductSearch = query => {
 };
 
 export const determineImage = (product, imageNum) => {
-  if (product.images_object && product.images_object[imageNum]) {
-    if (typeof product.images_object[imageNum].link === "function") {
+  if (product.images && product.images[imageNum]) {
+    if (typeof product.images[imageNum].link === "function") {
       return product.images[imageNum];
     }
-    return product.images_object[imageNum].link;
+    return product.images[imageNum].link;
   } else {
     return "";
   }

@@ -15,7 +15,7 @@ export default {
           path: "options.values.product", // Adjusted to populate products within options.values
           populate: [
             { path: "filament" },
-            { path: "images_object" },
+            { path: "images" },
             { path: "categorys" },
             { path: "subcategorys" },
             { path: "collections" },
@@ -38,7 +38,7 @@ export default {
           path: "options.values.product", // Adjusted to populate products within options.values
           populate: [
             { path: "filament" },
-            { path: "images_object" },
+            { path: "images" },
             { path: "categorys" },
             { path: "subcategorys" },
             { path: "collections" },
@@ -46,7 +46,7 @@ export default {
               path: "options.values.product", // Add another nesting of options.values.product
               populate: [
                 { path: "filament" },
-                { path: "images_object" },
+                { path: "images" },
                 { path: "categorys" },
                 { path: "subcategorys" },
                 { path: "collections" },
@@ -54,11 +54,11 @@ export default {
             },
           ],
         })
-        .populate("images_object")
-        .populate("color_images_object")
-        .populate("secondary_color_images_object")
-        .populate("option_images_object")
-        .populate("secondary_images_object")
+        .populate("images")
+        .populate("color_images")
+        .populate("secondary_color_images")
+        .populate("option_images")
+        .populate("secondary_images")
         .populate("chips")
         .populate("products")
         .populate({
@@ -68,7 +68,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -88,7 +88,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -108,7 +108,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -129,7 +129,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -190,9 +190,9 @@ export default {
         {
           $lookup: {
             from: "images", // replace with your collection name where Image data is stored
-            localField: "images_object", // this is your field in the product collection which corresponds to _id in Image collection
+            localField: "images", // this is your field in the product collection which corresponds to _id in Image collection
             foreignField: "_id", // this is usually _id in the related collection
-            as: "images_object", // output alias
+            as: "images", // output alias
           },
         },
         {
@@ -241,14 +241,14 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("collections")
-        .populate("images_object")
+        .populate("images")
         .populate("images")
         .populate({
           path: "options",
           populate: {
             path: "values.product",
             populate: [
-              { path: "images_object" },
+              { path: "images" },
               { path: "color.filament" },
               { path: "tags" },
               { path: "chips" },
@@ -256,12 +256,7 @@ export default {
                 path: "options",
                 populate: {
                   path: "values.product",
-                  populate: [
-                    { path: "images_object" },
-                    { path: "color.filament" },
-                    { path: "tags" },
-                    { path: "chips" },
-                  ],
+                  populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
                 },
               },
             ],
@@ -282,7 +277,7 @@ export default {
         })
         .populate({
           path: "elevate_your_experience.products",
-          populate: [{ path: "images_object" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+          populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
         })
         .populate("tags")
         .populate("contributors")

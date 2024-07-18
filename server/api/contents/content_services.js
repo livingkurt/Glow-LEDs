@@ -46,7 +46,7 @@ export default {
         .populate({
           path: "home_page.featured_products",
           populate: {
-            path: "images_object",
+            path: "images",
             model: "Image",
           },
         })
@@ -88,7 +88,7 @@ export default {
         .populate({
           path: "home_page.featured_products",
           populate: {
-            path: "images_object",
+            path: "images",
             model: "Image",
           },
         })

@@ -49,7 +49,7 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
               >
                 <CardMedia
                   component="img"
-                  image={product?.images_object[0]?.link}
+                  image={product?.images[0]?.link}
                   alt={product.name}
                   sx={{ borderRadius: "20px" }}
                 />

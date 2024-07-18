@@ -266,7 +266,7 @@ const productSchema = new mongoose.Schema(
     // color_images: { type: Array },
     // secondary_color_images: { type: Array },
     // option_images: { type: Array },
-    // secondary_images: { type: Array },
+    secondary_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 
     color_product_group: { type: Boolean, default: false },
     color_group_name: { type: String },

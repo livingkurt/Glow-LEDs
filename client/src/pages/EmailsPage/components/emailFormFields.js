@@ -3,10 +3,10 @@ export const emailFormFields = ({ email }) => {
     subject: { type: "text", label: "Subject" },
     h1: { type: "text", label: "Heading" },
     h2: { type: "text_multiline", label: "Summary" },
-    images_object: {
+    images: {
       type: "image_upload",
       label: "Images",
-      labelProp: "images_object",
+      labelProp: "images",
       album: `${email?.h1} Images`,
     },
     p: { type: "text_multiline", label: "Body" },

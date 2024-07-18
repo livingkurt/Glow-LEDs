@@ -279,7 +279,7 @@ export const updateOrderItem = (index, value, order) => {
       return {
         name: value.name,
         quantity: item.quantity || 1,
-        display_image: value?.images_object && value?.images_object[0].link,
+        display_image: value?.images && value?.images[0].link,
         price: value?.price,
         color: value?.color,
         color_code: value?.color_code,

@@ -1,4 +1,4 @@
-export default ({ h1, h2, images_object, p, button, link, module_color, button_color, text_color, title_color }) => {
+export default ({ h1, h2, images, p, button, link, module_color, button_color, text_color, title_color }) => {
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
@@ -46,11 +46,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                     <tbody>
                       <tr>
                         ${
-                          images_object[0]?.link
+                          images[0]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images_object[0]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[0]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -59,11 +59,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                             : ""
                         }
                         ${
-                          images_object[1]?.link
+                          images[1]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images_object[1]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[1]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -78,11 +78,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                     <tbody>
                       <tr>
                         ${
-                          images_object[2]?.link
+                          images[2]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images_object[2]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[2]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -91,11 +91,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                             : ""
                         }
                         ${
-                          images_object[3]?.link
+                          images[3]?.link
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images_object[3]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[3]?.link} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -110,11 +110,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                       <tbody>
                         <tr>
                           ${
-                            images_object[4]?.link
+                            images[4]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images_object[4]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[4]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -123,11 +123,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                               : ""
                           }
                           ${
-                            images_object[5]?.link
+                            images[5]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images_object[5]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[5]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -143,11 +143,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                       <tbody>
                         <tr>
                           ${
-                            images_object[6]?.link
+                            images[6]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images_object[6]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[6]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -156,11 +156,11 @@ export default ({ h1, h2, images_object, p, button, link, module_color, button_c
                               : ""
                           }
                           ${
-                            images_object[7]?.link
+                            images[7]?.link
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images_object[7]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[7]?.link} alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
