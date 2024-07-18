@@ -1,110 +1,219 @@
 import React from "react";
-import { Box, Container, Grid, Skeleton } from "@mui/material";
+import { Box, Container, Grid, Skeleton, useMediaQuery, useTheme } from "@mui/material";
 
 const ProductPageLoading = ({ loading, children }) => {
-  return loading ? (
-    <Container maxWidth="xl">
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Skeleton
-            className="br-20px"
-            variant="rectangular"
-            height="100%"
-            sx={{ bgcolor: "#4e5061" }}
-            animation="wave"
-          />
-        </Grid>
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Box maxWidth="100%">
-            <Skeleton className="br-20px" variant="text" height={100} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton
-              className="br-20px"
-              variant="text"
-              width={150}
-              height={40}
-              sx={{ bgcolor: "#4e5061" }}
-              animation="wave"
-            />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-            <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
+  if (!loading) {
+    return children;
+  }
+
+  return (
+    <Container maxWidth="xl">
+      <Box mt={2} mb={2}>
+        <Skeleton
+          sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
+          animation="wave"
+          variant="text"
+          width={300}
+          height={30}
+        />
+      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Skeleton
+            sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
+            animation="wave"
+            variant="rectangular"
+            width="100%"
+            height={isMobile ? 500 : 700}
+          />
+          <Box mt={2} display="flex" justifyContent="center">
+            {[...Array(6)].map((_, index) => (
+              <Skeleton
+                sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+                animation="wave"
+                key={index}
+                variant="rectangular"
+                width={50}
+                height={50}
+                style={{ margin: "0 5px" }}
+              />
+            ))}
           </Box>
         </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <Skeleton
-            className="br-20px"
-            variant="rectangular"
-            height={100}
-            sx={{ bgcolor: "#4e5061" }}
+            sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
             animation="wave"
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Skeleton
-            className="br-20px"
             variant="text"
-            width={300}
-            height={50}
-            sx={{ bgcolor: "#4e5061" }}
-            animation="wave"
+            width="80%"
+            height={40}
           />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-          <Skeleton className="br-20px" variant="text" height={30} sx={{ bgcolor: "#4e5061" }} animation="wave" />
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            {[1, 2, 3, 4].map(item => (
-              <Grid item xs={3} key={item} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {/* Square Skeleton for Picture */}
+          <Skeleton
+            sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
+            animation="wave"
+            variant="text"
+            width="60%"
+            height={30}
+          />
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
+              animation="wave"
+              variant="text"
+              width="40%"
+              height={30}
+            />
+          </Box>
+          <Skeleton
+            sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
+            animation="wave"
+            variant="text"
+            width="30%"
+            height={30}
+          />
+
+          {/* Color options */}
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
+              animation="wave"
+              variant="text"
+              width="40%"
+              height={24}
+            />
+            <Box display="flex" mt={1}>
+              {[...Array(8)].map((_, index) => (
                 <Skeleton
-                  className="br-20px"
-                  variant="rectangular"
-                  sx={{ width: "100%", height: "auto", maxWidth: "400px", maxHeight: "400px", bgcolor: "#4e5061" }}
+                  sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
                   animation="wave"
-                  height={200}
+                  key={index}
+                  variant="circular"
+                  width={50}
+                  height={40}
+                  style={{ margin: "0 5px" }}
                 />
-                {/* Rectangle Skeleton for Name */}
+              ))}
+            </Box>
+          </Box>
+
+          {/* Sled Color options */}
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
+              animation="wave"
+              variant="text"
+              width="40%"
+              height={24}
+            />
+            <Box display="flex" mt={1}>
+              {[...Array(8)].map((_, index) => (
                 <Skeleton
-                  className="br-20px"
-                  variant="text"
-                  sx={{ width: "100%", maxWidth: "400px", height: "30px", bgcolor: "#4e5061" }}
+                  sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
                   animation="wave"
+                  key={index}
+                  variant="circular"
+                  width={50}
+                  height={40}
+                  style={{ margin: "0 5px" }}
                 />
-                {/* Rectangle Skeleton for Price */}
-                <Skeleton
-                  className="br-20px"
-                  variant="text"
-                  sx={{ width: "50px", height: "30px", bgcolor: "#4e5061" }}
-                  animation="wave"
-                />
-              </Grid>
-            ))}
-          </Grid>
+              ))}
+            </Box>
+          </Box>
+
+          {/* Set of */}
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="text"
+              width="20%"
+              height={24}
+            />
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="rectangular"
+              width="100%"
+              height={40}
+            />
+          </Box>
+
+          {/* Included Product */}
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="text"
+              width="40%"
+              height={24}
+            />
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="rectangular"
+              width="100%"
+              height={40}
+            />
+          </Box>
+
+          {/* Quantity */}
+          <Box mt={2} mb={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="text"
+              width="30%"
+              height={24}
+            />
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="rectangular"
+              width="100%"
+              height={40}
+            />
+          </Box>
+
+          {/* Add to Cart button */}
+          <Box mt={2}>
+            <Skeleton
+              sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+              animation="wave"
+              variant="rectangular"
+              width="100%"
+              height={50}
+            />
+          </Box>
         </Grid>
       </Grid>
+
+      {/* Features, Tech Specs, Support sections */}
+      <Box mt={4}>
+        <Grid container spacing={2}>
+          {["Features", "Tech Specs", "Support"].map((section, index) => (
+            <Grid item xs={12} key={index}>
+              <Skeleton
+                sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+                animation="wave"
+                variant="text"
+                width="30%"
+                height={30}
+              />
+              <Skeleton
+                sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
+                animation="wave"
+                variant="rectangular"
+                width="100%"
+                height={100}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Container>
-  ) : (
-    children
   );
 };
 
