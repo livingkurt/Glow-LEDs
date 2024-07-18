@@ -67,7 +67,7 @@ const Cart = () => {
               <Box
                 onClick={closeMenu}
                 component="img"
-                src={item?.display_image}
+                src={item?.display_image?.link}
                 alt={item.name}
                 sx={{ width: 80, height: 80, borderRadius: 2 }}
               />

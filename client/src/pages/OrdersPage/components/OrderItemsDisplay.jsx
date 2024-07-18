@@ -20,7 +20,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                         title="Product Image"
                         effect="blur"
                         border={item.color_code}
-                        src={item.display_image && item.display_image}
+                        src={item.display_image?.link}
                       />
                     )}
                     {item.secondary_image && (
@@ -37,7 +37,7 @@ const OrderItemsDisplay = ({ order, determineColor, colspan }) => {
                           className={`details-image-cart-${
                             item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
                           } m-0px`}
-                          src={item.display_image}
+                          src={item.display_image?.link}
                         />
                         <LazyImage
                           id="expandedSecondaryImg"

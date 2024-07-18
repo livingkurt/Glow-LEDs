@@ -3553,4 +3553,130 @@ router.route("/migrate_image_object").put(async (req, res) => {
     });
   }
 });
+
+router.route("/migrate_display_image").put(async (req, res) => {
+  const createdImages = [];
+  const errors = [];
+
+  const migrateDisplayImage = async (item, modelName, parentId) => {
+    if (item.display_image && typeof item.display_image === "string" && !item.display_image_object) {
+      try {
+        let image = await Image.findOne({ link: item.display_image });
+        if (!image) {
+          // Create new Image record
+          image = new Image({
+            link: item.display_image,
+            album: `${item.name} Images`,
+          });
+          await image.save();
+          createdImages.push({ modelName, parentId, itemName: item.name, imageId: image._id });
+        }
+        item.display_image_object = image._id;
+        return true;
+      } catch (error) {
+        console.error(`Error processing item in ${modelName} ${parentId}:`, error);
+        errors.push({ modelName, parentId, itemName: item.name, reason: error.message });
+      }
+    }
+    return false;
+  };
+
+  try {
+    // Migrate Cart schema
+    const carts = await Cart.find({});
+    for (const cart of carts) {
+      let modified = false;
+      for (const item of cart.cartItems) {
+        if (await migrateDisplayImage(item, "Cart", cart._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await cart.save();
+      }
+    }
+
+    // Migrate Order schema
+    const orders = await Order.find({});
+    for (const order of orders) {
+      let modified = false;
+      for (const item of order.orderItems) {
+        if (await migrateDisplayImage(item, "Order", order._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await order.save();
+      }
+    }
+
+    res.status(200).json({
+      message: "display_image_object population completed for Cart and Order",
+      createdImages: createdImages,
+      errors: errors,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      createdImages: createdImages,
+      errors: errors,
+    });
+  }
+});
+// Step 2: Update display_image to use display_image_object
+router.route("/finalize_display_image").put(async (req, res) => {
+  const skippedItems = [];
+
+  const finalizeDisplayImage = (item, modelName, parentId) => {
+    if (item.display_image_object) {
+      item.display_image = item.display_image_object;
+      return true;
+    } else if (typeof item.display_image === "string") {
+      skippedItems.push({ modelName, parentId, itemName: item.name, reason: "Missing display_image_object" });
+    }
+    return false;
+  };
+
+  try {
+    // Finalize Cart schema
+    const carts = await Cart.find({});
+    for (const cart of carts) {
+      let modified = false;
+      for (const item of cart.cartItems) {
+        if (finalizeDisplayImage(item, "Cart", cart._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await cart.save();
+      }
+    }
+
+    // Finalize Order schema
+    const orders = await Order.find({});
+    for (const order of orders) {
+      let modified = false;
+      for (const item of order.orderItems) {
+        if (finalizeDisplayImage(item, "Order", order._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await order.save();
+      }
+    }
+
+    res.status(200).json({
+      message: "display_image finalization completed for Cart and Order",
+      skippedItems: skippedItems,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      skippedItems: skippedItems,
+    });
+  }
+});
 export default router;

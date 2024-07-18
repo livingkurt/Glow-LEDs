@@ -1,6 +1,6 @@
 import { humanize, toCapitalize } from "../../../utils/helper_functions";
 
-export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels }) => {
+export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels, order }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -354,10 +354,11 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             options: Array.from({ length: 30 }, (_, i) => i + 1),
           },
           display_image: {
-            type: "text",
-            label: "Display Image",
-            labelProp: "display_image",
-            required: true,
+            type: "image_upload",
+            label: "Images",
+            labelProp: "link",
+            album: `${order?.user?.first_name} ${order?.user?.last_name} Images`,
+            getOptionLabel: option => option.link,
           },
           secondary_image: {
             type: "text",

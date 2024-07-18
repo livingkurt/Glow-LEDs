@@ -34,6 +34,7 @@ const EditCartModal = () => {
 
   const formFields = cartFormFields({
     users,
+    cart,
     products,
   });
 
