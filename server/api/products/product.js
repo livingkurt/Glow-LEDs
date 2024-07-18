@@ -64,6 +64,7 @@ const productSchema = new mongoose.Schema(
       },
     ],
     icon_specs_hidden: { type: Boolean, default: false },
+    navigation_buttons_hidden: { type: Boolean, default: false },
 
     features: {
       image_grid_1: [

@@ -9,7 +9,7 @@ import { useProductsQuery } from "../../../api/allRecordsApi";
 const EditContentModal = () => {
   const dispatch = useDispatch();
   const contentPage = useSelector(state => state.contents.contentPage);
-  const { edit_content_modal, content, loading } = contentPage;
+  const { edit_content_modal, content, loading, contentType } = contentPage;
   const { data: products } = useProductsQuery({ option: false });
 
   const formFields = contentFormFields({
@@ -35,10 +35,15 @@ const EditContentModal = () => {
         disableEscapeKeyDown
       >
         <GLForm
-          formData={formFields}
-          state={content}
+          formData={contentType !== "" ? formFields[contentType]?.fields : formFields}
+          state={contentType !== "" ? content[contentType] : content}
           onChange={value => {
-            dispatch(set_content(value));
+            if (contentType === "") {
+              dispatch(set_content(value));
+              return;
+            } else {
+              dispatch(set_content({ [contentType]: { ...content[contentType], ...value } }));
+            }
           }}
           loading={loading}
         />

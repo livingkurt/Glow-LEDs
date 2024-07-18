@@ -1,5 +1,5 @@
-import { Box, Stack, IconButton, Typography } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Box, Stack, Typography } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 import { FileCopy } from "@mui/icons-material";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";

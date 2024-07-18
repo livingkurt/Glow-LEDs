@@ -8,7 +8,7 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label }) => {
   return (
     <Box mt={1}>
       <Typography variant="subtitle1" gutterBottom>
-        {label} ({value})
+        {label} ({!value ? "Select Color" : value})
       </Typography>
       <ToggleButtonGroup
         value={value}

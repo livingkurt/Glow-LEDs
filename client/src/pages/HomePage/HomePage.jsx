@@ -21,7 +21,6 @@ const HomePage = () => {
     isLoading,
     discover_more,
     get_more_out_of,
-    support_banner,
     video,
     featured_products_hidden,
     slideshow_hidden,

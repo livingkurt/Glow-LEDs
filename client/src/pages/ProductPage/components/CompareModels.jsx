@@ -8,23 +8,27 @@ const CompareModels = ({ notSure }) => {
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#00000021",
-        padding: "40px",
-        textAlign: "center",
-        borderRadius: "8px",
-      }}
-    >
-      <Typography variant="h5" component="h2" gutterBottom>
-        {notSure.title}
-      </Typography>
-      <Link to={notSure.link}>
-        <Button variant="contained" color="primary">
-          {notSure.button_text}
-        </Button>
-      </Link>
-    </Box>
+    <>
+      {notSure.title && (
+        <Box
+          sx={{
+            backgroundColor: "#4d5061",
+            padding: "40px",
+            textAlign: "center",
+            borderRadius: "8px",
+          }}
+        >
+          <Typography variant="h5" component="h2" gutterBottom>
+            {notSure.title}
+          </Typography>
+          <Link to={notSure.link}>
+            <Button variant="contained" color="secondary">
+              {notSure.button_text}
+            </Button>
+          </Link>
+        </Box>
+      )}
+    </>
   );
 };
 

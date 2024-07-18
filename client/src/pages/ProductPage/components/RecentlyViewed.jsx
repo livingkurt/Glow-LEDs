@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const RecentlyViewed = () => {
@@ -24,50 +24,46 @@ const RecentlyViewed = () => {
           },
         }}
       >
-        <Grid container spacing={2}>
-          {recently_viewed_products.map(product => (
-            <Grid
-              item
-              xs={3}
-              key={product.pathname}
-              sx={{
-                minWidth: "250px",
-                width: "100%",
-                marginRight: "20px",
-                "&:last-child": {
-                  marginRight: 0,
-                },
-              }}
-            >
-              <Link to={`/collections/all/products/${product.pathname}`}>
-                <Card
-                  elevation={0}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    borderRadius: "20px",
-                    color: "white",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    image={product.image?.link}
-                    alt={product.name}
-                    sx={{ borderRadius: "20px" }}
-                  />
-                  <CardContent sx={{ width: "100%", padding: "10px" }}>
-                    <Typography variant="subtitle2" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2">${product.price?.toFixed(2) || "N/A"}</Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-          ))}
-        </Grid>
+        {recently_viewed_products.map(product => (
+          <Box
+            key={product.id}
+            sx={{
+              minWidth: "250px", // Change minWidth to 250px
+              width: "100%", // Add width: 100% to make the item fill the available space
+              marginRight: "20px",
+              "&:last-child": {
+                marginRight: 0,
+              },
+            }}
+          >
+            <Link to={`/collections/all/products/${product.pathname}`}>
+              <Card
+                elevation={0}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  borderRadius: "20px",
+                  color: "white",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={product.image?.link}
+                  alt={product.name}
+                  sx={{ borderRadius: "20px", objectFit: "cover" }}
+                />
+                <CardContent sx={{ width: "100%", padding: "10px" }}>
+                  <Typography variant="subtitle2" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2">${product.price?.toFixed(2) || "N/A"}</Typography>
+                </CardContent>
+              </Card>
+            </Link>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

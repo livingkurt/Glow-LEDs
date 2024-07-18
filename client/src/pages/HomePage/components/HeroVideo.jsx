@@ -4,7 +4,7 @@ import React from "react";
 import YouTube from "react-youtube";
 
 const HeroVideo = ({ video, video_hidden }) => {
-  return !video_hidden ? (
+  return video && !video_hidden ? (
     <Box
       sx={{
         width: "100%",
