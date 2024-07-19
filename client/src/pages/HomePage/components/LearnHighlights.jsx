@@ -19,12 +19,12 @@ const LearnHighlights = ({ learn_highlights }) => {
           <Box py={{ xs: 2, sm: 4, md: 6 }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
-                <Typography variant="h4" component="h2" align={"left"} gutterBottom>
+                <Typography variant="h5" component="h2" align={"left"} gutterBottom>
                   {learn_highlights.title}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" align={isMobile ? "left" : "right"} gutterBottom>
+                <Typography variant="body2" align={isMobile ? "left" : "right"} gutterBottom>
                   {learn_highlights.description}
                 </Typography>
               </Grid>
@@ -54,7 +54,7 @@ const LearnHighlights = ({ learn_highlights }) => {
                         }}
                       />
                       <Typography
-                        variant="h6"
+                        variant="h4"
                         sx={{
                           position: "absolute",
                           bottom: "10%",
@@ -64,7 +64,7 @@ const LearnHighlights = ({ learn_highlights }) => {
                           borderRadius: "4px",
                         }}
                       >
-                        {item.label}
+                        {item.label.toUpperCase()}
                       </Typography>
                     </Link>
                   </Box>

@@ -656,9 +656,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -676,9 +676,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -696,9 +696,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate("filament")
@@ -717,9 +717,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
 
             {
               path: "color_products",
@@ -749,7 +749,7 @@ export default {
         })
         .populate("categorys")
         .populate("subcategorys")
-        .populate("collections")
+        // .populate("collections")
         .populate("contributors");
 
       const transformedProducts = transformProducts(products);

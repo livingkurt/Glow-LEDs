@@ -21,10 +21,10 @@ const HomePage = () => {
     isLoading,
     discover_more,
     get_more_out_of,
-    video,
+    hero_video,
     featured_products_hidden,
     slideshow_hidden,
-    video_hidden,
+    hero_video_hidden,
     learn_more_products_hidden,
   } = useHomePage();
   return (
@@ -32,32 +32,39 @@ const HomePage = () => {
       {!isLoading && (
         <>
           <HomePageHead />
-          <HeroHeader slideshow={slideshow} slideshow_hidden={slideshow_hidden} />
-
-          <Container maxWidth="lg">
-            <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
-              <FeaturedProducts
-                featured_products={featured_products}
-                featured_products_hidden={featured_products_hidden}
-              />
-            </Box>
-          </Container>
-          <HeroVideo video={video} video_hidden={video_hidden} />
-          <Container maxWidth="lg">
-            <Box pt={{ xs: 2, sm: 2 }} pb={{ xs: 2 }}>
-              <LearnMoreProducts
-                learn_more_products={learn_more_products}
-                learn_more_products_hidden={learn_more_products_hidden}
-              />
-            </Box>
-          </Container>
-          <LearnHighlights learn_highlights={learn_highlights} />
-          <DiscoverMoreHero discover_more={discover_more} />
+          {!slideshow_hidden && slideshow?.length > 0 && (
+            <HeroHeader slideshow={slideshow} slideshow_hidden={slideshow_hidden} />
+          )}
+          {!featured_products_hidden && featured_products && (
+            <Container maxWidth="lg">
+              <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
+                <FeaturedProducts
+                  featured_products={featured_products}
+                  featured_products_hidden={featured_products_hidden}
+                />
+              </Box>
+            </Container>
+          )}
+          {!hero_video_hidden && hero_video && <HeroVideo video={hero_video} video_hidden={hero_video_hidden} />}
+          {!learn_more_products_hidden && !slideshow_hidden && (
+            <Container maxWidth="lg">
+              <Box pt={{ xs: 2, sm: 2 }} pb={{ xs: 2 }}>
+                <LearnMoreProducts
+                  learn_more_products={learn_more_products}
+                  learn_more_products_hidden={learn_more_products_hidden}
+                />
+              </Box>
+            </Container>
+          )}
+          {learn_highlights && <LearnHighlights learn_highlights={learn_highlights} />}
+          {!discover_more?.hidden && discover_more?.title && <DiscoverMoreHero discover_more={discover_more} />}
           <Container maxWidth="lg">
             <Box my={{ xs: 2, sm: 4 }}>
-              <GetTheMost get_more_out_of={get_more_out_of} />
-              <ProductProtectionDetails />
-              <SupportBanner />
+              {get_more_out_of && <GetTheMost get_more_out_of={get_more_out_of} />}
+              <ProductProtectionDetails transparent />
+              <Box my={2}>
+                <SupportBanner />
+              </Box>
             </Box>
           </Container>
         </>

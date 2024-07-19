@@ -33,6 +33,7 @@ export const contentFormFields = ({ content, products }) => {
           labelProp: "name",
         },
         featured_products_hidden: { type: "checkbox", label: "Learn More Products Hidden" },
+        hero_video: { type: "text", label: "Video" },
         learn_more_products: {
           type: "array",
           title: "Learn More Products",
@@ -149,8 +150,6 @@ export const contentFormFields = ({ content, products }) => {
             link: { type: "text", label: "Link" },
           },
         },
-
-        video: { type: "text", label: "Video" },
       },
     },
     banner: {

@@ -128,7 +128,7 @@ const MenuPage = () => {
         },
         {
           label: "Contact",
-          link: "/pages/contact",
+          link: "/pages/support_center",
           image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png",
         },
         {

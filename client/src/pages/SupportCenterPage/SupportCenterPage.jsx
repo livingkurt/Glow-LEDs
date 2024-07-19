@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { validate_contact } from "../../utils/validations";
-import { Loading, Notification } from "../../shared/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { humanize } from "../../utils/helper_functions";
+import { humanize, update_products_url } from "../../utils/helper_functions";
 import * as API from "../../api";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { setSuccessContactSend } from "../../slices/emailSlice";
 import {
   Container,
@@ -17,12 +17,46 @@ import {
   FormControl,
   InputLabel,
   Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Autocomplete,
 } from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
+import HeroVideo from "../HomePage/components/HeroVideo";
+import { scrollToId } from "../../utils/helpers/universal_helpers";
 
-const ContactPage = () => {
+const SupportCenterPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data: currentContent } = API.useCurrentContentQuery();
+  const [chip_name, set_chip_name] = useState();
+
+  const faqPage = currentContent?.faq_page;
+
+  const chipPage = useSelector(state => state.chips.chipPage);
+  const { chips: chips_list } = chipPage;
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(API.listChips({}));
+    }
+    return () => (clean = false);
+  }, []);
+
+  const filterHandler = chip_selected => {
+    update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
+    dispatch(
+      API.listProducts({
+        chip: chip_selected._id,
+        hidden: false,
+      })
+    );
+    set_chip_name({});
+  };
+
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -36,6 +70,8 @@ const ContactPage = () => {
     reason_for_contact: params.reason || "",
     message: "",
   });
+
+  const [orderNumber, setOrderNumber] = useState("");
 
   const [validations, setValidations] = useState({
     first_name: "",
@@ -84,8 +120,8 @@ const ContactPage = () => {
         <title>Contact | Glow LEDs</title>
         <meta property="og:title" content="Contact" />
         <meta name="twitter:title" content="Contact" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
+        <link rel="canonical" href="https://www.glow-leds.com/pages/support_center" />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/support_center" />
         <meta
           name="description"
           content="If you have any questions, do not hesitate to use our contact page for support."
@@ -100,9 +136,108 @@ const ContactPage = () => {
         />
       </Helmet>
 
-      <Typography variant="h4" align="center" gutterBottom>
-        Contact
+      <Typography variant="h3" align="center" gutterBottom>
+        Support Center
       </Typography>
+      <Typography variant="body1" align="center" gutterBottom>
+        Learn how to get the most out of your Glow LEDs. Please feel free to reach out to us anytime.
+      </Typography>
+
+      <Typography gutterBottom variant="h6" align="center">
+        {faqPage?.title}
+      </Typography>
+      <Box mb={2}>
+        {faqPage?.sections.map((section, index) => (
+          <Accordion key={index}>
+            <AccordionSummary expandIcon={<ExpandMore />}>
+              <Typography variant="h4">{section.title}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {section.video && <HeroVideo video={section.video} />}
+              {section.subsections.map((subsection, subIndex) => (
+                <Box key={subIndex}>
+                  <Typography gutterBottom variant="h5">
+                    {subsection.title}
+                  </Typography>
+                  <Typography gutterBottom variant="body1" paragraph>
+                    {subsection.description}
+                  </Typography>
+                  {subsection.video && <HeroVideo video={subsection.video} />}
+                </Box>
+              ))}
+              {section.button_text && section.button_link && (
+                <Box textAlign="center" mt={2}>
+                  <Button variant="contained" color="secondary" onClick={() => scrollToId(section.button_link)}>
+                    {section.button_text}
+                  </Button>
+                </Box>
+              )}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography variant="h4">Track Your Order</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <Typography variant="h5" align="center" gutterBottom>
+                Track Your Order
+              </Typography>
+              <TextField
+                fullWidth
+                label="Order Number"
+                variant="filled"
+                value={orderNumber}
+                onChange={e => setOrderNumber(e.target.value.trim())}
+                sx={{
+                  "& .MuiFilledInput-root": {
+                    backgroundColor: "white !important",
+                    "&:hover": {
+                      backgroundColor: "white !important",
+                    },
+                    "&:focus": {
+                      backgroundColor: "white !important",
+                    },
+                  },
+                }}
+              />
+              <Link to={`/checkout/order/${orderNumber}`}>
+                <Button variant="contained" color="primary" fullWidth>
+                  View Order
+                </Button>
+              </Link>
+              <Typography variant="body2" align="center">
+                If you do not know your order number please contact support for assistance
+              </Typography>
+              <Button variant="contained" color="secondary" onClick={() => scrollToId("contact")} fullWidth>
+                Contact
+              </Button>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography variant="h4">Chip Compatibility</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography gutterBottom variant="body1" paragraph>
+              Select your chip from the dropdown below to see what products are compatible!
+            </Typography>
+            <Autocomplete
+              options={chips_list || []}
+              getOptionLabel={option => option.name}
+              value={chip_name}
+              onChange={(event, newValue) => {
+                filterHandler(newValue);
+              }}
+              renderInput={params => <TextField {...params} label={"Filter By Chip"} variant="outlined" />}
+              sx={{ width: 221 }}
+            />
+          </AccordionDetails>
+        </Accordion>
+      </Box>
 
       <Loading
         loading={loadingContactSend}
@@ -114,8 +249,11 @@ const ContactPage = () => {
           </Box>
         }
       />
+      <Typography variant="h5" align="center">
+        Contact
+      </Typography>
 
-      <Box component="form" onSubmit={sendEmail} sx={{ mt: 3 }}>
+      <Box component="form" onSubmit={sendEmail} id="contact">
         <TextField
           fullWidth
           label="First Name"
@@ -268,4 +406,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default SupportCenterPage;

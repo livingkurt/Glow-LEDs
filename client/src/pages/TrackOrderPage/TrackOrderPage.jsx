@@ -46,7 +46,7 @@ const TrackOrderPage = () => {
             <p>If you do not know your order number please contact support for assistance</p>
           </li>
           <li>
-            <Link to="/pages/contact">
+            <Link to="/pages/support_center">
               <GLButton variant="primary" className="w-100per" style={{ margin: "auto" }}>
                 Contact
               </GLButton>

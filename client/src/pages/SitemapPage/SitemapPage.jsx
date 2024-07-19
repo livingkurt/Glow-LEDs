@@ -55,7 +55,7 @@ const SitemapPage = () => {
             <h2 style={{ textAlign: "left" }}>Pages</h2>
             <ul>
               <li>
-                <Link to="/pages/contact  ">Contact</Link>
+                <Link to="/pages/support_center  ">Support Center</Link>
               </li>
               <li>
                 <Link to="/pages/terms  ">Terms and Conditions</Link>

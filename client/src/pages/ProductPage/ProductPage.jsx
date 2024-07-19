@@ -140,7 +140,7 @@ const ProductPage = () => {
                   </Grid>
                 )}
                 <Grid item xs={12} mt={!product?.hero_video?.hidden && product?.hero_video?.video ? -4 : 0}>
-                  <ProductProtectionDetails />
+                  <ProductProtectionDetails transparent={false} />
                 </Grid>
                 {!product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
                   <Grid item xs={12} id="features">

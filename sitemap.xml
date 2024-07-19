@@ -58,7 +58,7 @@
 <url> <loc>https://www.glow-leds.com/pages/faq#processing_shipping</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/faq#order_issues</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/track_your_order</loc> </url>
-<url> <loc>https://www.glow-leds.com/pages/contact</loc> </url>
+<url> <loc>https://www.glow-leds.com/pages/support_center</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/about</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/announcements</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/terms</loc> </url>
@@ -207,7 +207,7 @@
 <url> <loc>https://www.glow-leds.com/pages/affiliate_terms</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/color_palettes</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/events</loc> </url>
-<url> <loc>https://www.glow-leds.com/pages/contact/:reason?</loc> </url>
+<url> <loc>https://www.glow-leds.com/pages/support_center/:reason?</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/glowcontrol</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/menu/gloving</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/menu/featured</loc> </url>

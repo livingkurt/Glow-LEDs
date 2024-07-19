@@ -18,7 +18,7 @@ export default {
             { path: "images" },
             { path: "categorys" },
             { path: "subcategorys" },
-            { path: "collections" },
+            // { path: "collections" },
           ],
         })
         .limit(parseInt(limit))
@@ -41,7 +41,7 @@ export default {
             { path: "images" },
             { path: "categorys" },
             { path: "subcategorys" },
-            { path: "collections" },
+            // { path: "collections" },
             {
               path: "options.values.product", // Add another nesting of options.values.product
               populate: [
@@ -49,7 +49,7 @@ export default {
                 { path: "images" },
                 { path: "categorys" },
                 { path: "subcategorys" },
-                { path: "collections" },
+                // { path: "collections" },
               ],
             },
           ],
@@ -76,9 +76,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -96,9 +96,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -116,9 +116,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate("filament")
@@ -137,9 +137,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
 
             {
               path: "color_products",
@@ -169,7 +169,7 @@ export default {
         })
         .populate("categorys")
         .populate("subcategorys")
-        .populate("collections")
+        // .populate("collections")
         .populate("contributors")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
@@ -240,7 +240,7 @@ export default {
 
         .populate("categorys")
         .populate("subcategorys")
-        .populate("collections")
+        // .populate("collections")
         .populate("images")
         .populate("images")
         .populate({
