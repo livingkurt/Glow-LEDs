@@ -46,7 +46,6 @@ const routes = [
   { path: "/pages/about", component: "AboutPage", exact: true },
   { path: "/pages/sitemap", component: "SitemapPage", exact: true },
   { path: "/pages/music", component: "MusicPage", exact: true },
-  { path: "/pages/track_your_order", component: "TrackOrderPage", exact: true },
   { path: "/pages/complete/:type/:id?", component: "CompletePage", exact: true },
 ];
 

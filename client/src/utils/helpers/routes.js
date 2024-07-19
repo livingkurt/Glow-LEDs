@@ -45,7 +45,6 @@ const routes = [
   { path: "/pages/about", element: "AboutPage", exact: true },
   { path: "/pages/sitemap", element: "SitemapPage", exact: true },
   { path: "/pages/music", element: "MusicPage", exact: true },
-  { path: "/pages/track_your_order", element: "TrackOrderPage", exact: true },
   { path: "/pages/complete/:type/:id?", element: "CompletePage", exact: true },
 ];
 const adminRoutes = [

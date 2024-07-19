@@ -52,7 +52,6 @@ import { MusicPage } from "../../pages/MusicPage";
 import { CompletePage } from "../../pages/CompletePage";
 import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
-import TrackOrderPage from "../../pages/TrackOrderPage/TrackOrderPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -84,7 +83,6 @@ export const Components = {
   CompletePage,
   AffiliateTermsPage,
   TutorialsGridPage,
-  TrackOrderPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

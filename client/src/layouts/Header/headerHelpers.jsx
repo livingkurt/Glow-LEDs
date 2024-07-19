@@ -638,11 +638,6 @@ const support = {
   _id: 592,
   rows: [
     {
-      name: "Track Your Order",
-      path: "/pages/track_your_order",
-      _id: 6100,
-    },
-    {
       name: "Support Center",
       path: "/pages/support_center",
       _id: 6101,

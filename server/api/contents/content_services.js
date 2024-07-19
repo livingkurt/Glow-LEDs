@@ -80,7 +80,7 @@ export default {
   current_contents_s: async query => {
     try {
       const sort = { createdAt: -1 }; // Sort by createdAt field in descending order
-      const filter = { deleted: false, active: true }; // Filter for non-deleted and active records
+      const filter = { deleted: false }; // Filter for non-deleted and active records
 
       return await Content.find(filter)
         .sort(sort)

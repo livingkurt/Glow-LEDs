@@ -2685,7 +2685,7 @@ router.route("/update_faq_page").put(async (req, res) => {
     // }
 
     const latestContent = await Content.findOneAndUpdate(
-      { _id: "657355e106cccc0f7a160afa" },
+      { _id: "669ad511e719de2de3c344b4" },
       { faq_page: data }
       // { sort: { createdAt: -1 }, new: true }
     );
