@@ -38,7 +38,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
         <Link to={"/collections/all/products/" + item.pathname}>
           <div className="mb-10px">
             <LazyImage
-              src={item?.display_image?.link}
+              src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
               alt={item.name}
               className="br-10px w-70px h-70px"
               title="Product Image"

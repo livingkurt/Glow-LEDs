@@ -61,13 +61,14 @@ const Cart = () => {
           },
         }}
       >
+        {console.log({ display_image: item?.display_image })}
         <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
           <Grid item>
             <Link to={`/collections/all/products/${item.pathname}`}>
               <Box
                 onClick={closeMenu}
                 component="img"
-                src={item?.display_image?.link}
+                src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
                 alt={item.name}
                 sx={{ width: 80, height: 80, borderRadius: 2 }}
               />
@@ -240,7 +241,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Proceed to Checkout
+                Checkout
               </Button>
             ) : (
               <Button
@@ -253,7 +254,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Proceed to Checkout
+                Checkout
               </Button>
             )}
           </Box>
