@@ -86,7 +86,7 @@ const OrdersPage = () => {
     };
   }, []);
 
-  const CartItem = ({ item }) => {
+  const OrderItem = ({ item }) => {
     const theme = useTheme();
 
     return (
@@ -95,11 +95,41 @@ const OrdersPage = () => {
           <Grid item>
             <Link to={`/collections/all/products/${item.pathname}`}>
               <Box
-                component="img"
-                src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
-                alt={item.name}
-                sx={{ width: 60, height: 60, borderRadius: 2 }}
-              />
+                position="relative"
+                sx={{
+                  width: 60,
+                  height: 60,
+                }}
+              >
+                <Box
+                  component="img"
+                  src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
+                  alt={item.name}
+                  sx={{ width: "100%", height: "100%", borderRadius: 2 }}
+                />
+                {item.quantity > 1 && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      right: 0,
+                      backgroundColor: "white",
+                      color: "black",
+                      border: "1px solid #ccc",
+                      borderRadius: "50%",
+                      width: "24px",
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.5rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.quantity}
+                  </Box>
+                )}
+              </Box>
             </Link>
           </Grid>
           <Grid item xs container direction="column" spacing={1}>
@@ -151,7 +181,7 @@ const OrdersPage = () => {
             <div>
               <List>
                 {row.orderItems?.map((item, index) => (
-                  <CartItem key={index} item={item} index={index} />
+                  <OrderItem key={index} item={item} index={index} />
                 ))}
               </List>
               {/* <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} /> */}

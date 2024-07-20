@@ -139,7 +139,7 @@ const productPage = createSlice({
           previous_price: data.previous_price,
           sale_price: data.sale_price,
           size: data.size,
-          max_quantity: data.quantity,
+          max_quantity: data.max_quantity,
           quantity: 1,
           count_in_stock: data.count_in_stock,
           pathname: data.pathname,

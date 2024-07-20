@@ -2806,9 +2806,9 @@ router.route("/migrate_quantity").put(async (req, res) => {
           },
         },
       },
-      {
-        $unset: "orderItems.qty",
-      },
+      // {
+      //   $unset: "orderItems.qty",
+      // },
     ]);
 
     // Update cartSchema
@@ -2832,19 +2832,19 @@ router.route("/migrate_quantity").put(async (req, res) => {
           },
         },
       },
-      {
-        $unset: "cartItems.qty",
-      },
+      // {
+      //   $unset: "cartItems.qty",
+      // },
     ]);
 
-    await Product.updateMany(
-      {},
-      {
-        $rename: {
-          quantity: "max_quantity",
-        },
-      }
-    );
+    // await Product.updateMany(
+    //   {},
+    //   {
+    //     $rename: {
+    //       quantity: "max_quantity",
+    //     },
+    //   }
+    // );
 
     res.status(200).send({ message: "Field names migrated successfully" });
   } catch (error) {
@@ -2853,18 +2853,66 @@ router.route("/migrate_quantity").put(async (req, res) => {
   }
 });
 
+const colorNameToHex = {
+  "black": "#000000",
+  "white": "#FFFFFF",
+  "frosted": "#abaeb5",
+  "clear": "#4b4b4b",
+  "red": "#FF0000",
+  "green": "#008000",
+  "blue": "#0000FF",
+  "yellow": "#FFFF00",
+  "purple": "#800080",
+  "orange": "#FFA500",
+  "pink": "#FFC0CB",
+  "brown": "#A52A2A",
+  "gray": "#808080",
+  "cyan": "#00FFFF",
+  "magenta": "#FF00FF",
+  "silver": "#C0C0C0",
+  "gold": "#FFD700",
+  "navy": "#000080",
+  "aqua": "#00FFFF",
+  "teal": "#008080",
+  "olive": "#808000",
+  "maroon": "#800000",
+};
+
+const convertToHex = color => {
+  if (!color) return null;
+  if (color.startsWith("#")) return color;
+  const lowerColor = color.toLowerCase();
+  return colorNameToHex[lowerColor] || color;
+};
+
 router.route("/migrate_order_options").put(async (req, res) => {
   try {
     const orders = await Order.find({});
     console.log("Total orders:", orders.length);
 
+    let migratedCount = 0;
+    let skippedCount = 0;
+
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i];
       console.log(`Processing order ${i + 1} of ${orders.length}`);
 
+      let orderUpdated = false;
+
       for (let j = 0; j < order.orderItems.length; j++) {
         const orderItem = order.orderItems[j];
         console.log(`Processing order item ${j + 1} of ${order.orderItems.length}`);
+
+        // Check if the order item has already been migrated
+        if (
+          orderItem.currentOptions &&
+          orderItem.currentOptions.length > 0 &&
+          orderItem.selectedOptions &&
+          orderItem.selectedOptions.length > 0
+        ) {
+          console.log(`Order item ${orderItem._id} already migrated, skipping...`);
+          continue;
+        }
 
         const currentOptions = [];
         const selectedOptions = [];
@@ -2880,6 +2928,7 @@ router.route("/migrate_order_options").put(async (req, res) => {
               {
                 name: orderItem.color,
                 product: orderItem.color_product,
+                colorCode: convertToHex(orderItem.color_code || orderItem.color),
                 isDefault: false,
                 additionalCost: 0,
               },
@@ -2900,6 +2949,7 @@ router.route("/migrate_order_options").put(async (req, res) => {
               {
                 name: orderItem.secondary_color,
                 product: orderItem.secondary_color_product,
+                colorCode: convertToHex(orderItem.secondary_color),
                 isDefault: false,
                 additionalCost: orderItem.add_on_price || 0,
               },
@@ -2950,54 +3000,37 @@ router.route("/migrate_order_options").put(async (req, res) => {
         }
 
         // Update the order item in the database
-        await Order.updateOne(
-          { _id: order._id, "orderItems._id": orderItem._id },
-          {
-            $set: {
-              "orderItems.$.currentOptions": currentOptions,
-              "orderItems.$.selectedOptions": selectedOptions,
-            },
-          }
-        );
+        if (currentOptions.length > 0 || selectedOptions.length > 0) {
+          await Order.updateOne(
+            { _id: order._id, "orderItems._id": orderItem._id },
+            {
+              $set: {
+                "orderItems.$.currentOptions": currentOptions,
+                "orderItems.$.selectedOptions": selectedOptions,
+              },
+            }
+          );
+          orderUpdated = true;
+        }
+      }
+
+      if (orderUpdated) {
+        migratedCount++;
+      } else {
+        skippedCount++;
       }
     }
 
-    res.status(200).send({ message: "Order Option Migration successful" });
+    res.status(200).send({
+      message: "Order Option Migration completed",
+      migratedOrders: migratedCount,
+      skippedOrders: skippedCount,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });
   }
 });
-
-const colorNameToHex = {
-  "black": "#000000",
-  "white": "#FFFFFF",
-  "red": "#FF0000",
-  "green": "#008000",
-  "blue": "#0000FF",
-  "yellow": "#FFFF00",
-  "purple": "#800080",
-  "orange": "#FFA500",
-  "pink": "#FFC0CB",
-  "brown": "#A52A2A",
-  "gray": "#808080",
-  "cyan": "#00FFFF",
-  "magenta": "#FF00FF",
-  "silver": "#C0C0C0",
-  "gold": "#FFD700",
-  "navy": "#000080",
-  "aqua": "#00FFFF",
-  "teal": "#008080",
-  "olive": "#808000",
-  "maroon": "#800000",
-};
-
-const convertToHex = color => {
-  if (!color) return null;
-  if (color.startsWith("#")) return color;
-  const lowerColor = color.toLowerCase();
-  return colorNameToHex[lowerColor] || color;
-};
 
 router.route("/migrate_color_codes").put(async (req, res) => {
   try {

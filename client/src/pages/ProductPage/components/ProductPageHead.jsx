@@ -7,8 +7,6 @@ const ProductPageHead = () => {
   const { product } = productsPage;
   const { pathname, images, meta_description, meta_title } = product;
 
-  console.log({ images });
-
   return (
     <Helmet>
       <title>{meta_title + " | Glow LEDs"}</title>
