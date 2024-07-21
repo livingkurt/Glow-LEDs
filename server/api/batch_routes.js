@@ -3259,6 +3259,13 @@ const productFactsAndDescriptions = [
     short_description:
       "High-quality black vinyl decals to personalize your OPYN or CLOZD Glowskinz. Easy to apply and provides a unique look for your gloving setup.",
   },
+  {
+    category: "decals",
+    subcategory: "outline",
+    fact: "Full-face Batman style decals for dramatic light sculpting.",
+    short_description:
+      "Precision-cut Batman decals cover the entire front of Glowskinz, blocking top light and creating a unique side and bottom glow effect for striking lightshows.",
+  },
   // {
   //   category: "glowskinz",
   //   subcategory: "clozd",
@@ -3266,6 +3273,21 @@ const productFactsAndDescriptions = [
   //   fact: "Universal Glowskins compatible with various chips.",
   //   short_description:
   //     "Versatile Omniskins work with any chip using interchangeable sleds. Combines casing and diffuser for a full-body glow, with comfortable semi-flexible design.",
+  // },
+  // {
+  //   name: "CLOZD Omniskinz",
+  //   category: "glowskinz",
+  //   subcategory: "clozd",
+  //   fact: "Universal Glowskinz, compatible with a multitude of microlights",
+  //   short_description:
+  //     "Versatile Omniskins work with any chip using interchangeable sleds. Combines casing and diffuser for a full-body glow, with comfortable semi-flexible design.",
+  // },
+  // {
+  //   name: "Omniskinz Sleds",
+  //   category: "glowskinz",
+  //   subcategory: "accessories",
+  //   fact: "Interchangeable sleds for ultimate Omniskinz versatility.",
+  //   short_description: "Custom-designed sleds enable CLOZD Omniskinz to accommodate various microlight chips. Easily switch between different light sources while maintaining the unique full-body glow and comfort of Omniskinz."
   // },
   {
     category: "glowframez",

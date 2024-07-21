@@ -48,6 +48,66 @@ export const productFormFields = ({
       label: "Finite Stock",
       default: false,
     },
+    options: {
+      type: "array",
+      label: item => item.name,
+      title: "Product Options",
+      itemSchema: {
+        type: "object",
+        fields: {
+          name: {
+            type: "text",
+            label: "Option Name",
+            labelProp: "name",
+          },
+          optionType: {
+            type: "autocomplete_single",
+            label: "Option Type",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return toCapitalize(option);
+              }
+            },
+            options: ["colors", "dropdown", "buttons"],
+          },
+          isAddOn: {
+            type: "checkbox",
+            label: "Is Add-On",
+          },
+          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+          values: {
+            type: "array",
+            title: "Option Choices",
+            label: item => item.name,
+            itemSchema: {
+              type: "object",
+              fields: {
+                name: { type: "text", label: "Name" },
+                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
+                isDefault: { type: "checkbox", label: "Default Option" },
+                additionalCost: { type: "number", label: "Additional Cost" },
+                product: {
+                  type: "autocomplete_single",
+                  label: "Option Product",
+                  options: products,
+                  labelProp: "name",
+                  onEditButtonClick: selectedProduct => {
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+                  },
+                  onCreateNewButtonClick: selectedProduct => {
+                    console.log(selectedProduct);
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.saveProduct({ ...selectedProduct }));
+                  },
+                  showEditButton: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     hidden: {
       type: "checkbox",
       label: "Hidden",
@@ -452,66 +512,7 @@ export const productFormFields = ({
       options: users,
       labelProp: "first_name",
     },
-    options: {
-      type: "array",
-      label: item => item.name,
-      title: "Product Options",
-      itemSchema: {
-        type: "object",
-        fields: {
-          name: {
-            type: "text",
-            label: "Option Name",
-            labelProp: "name",
-          },
-          optionType: {
-            type: "autocomplete_single",
-            label: "Option Type",
-            getOptionLabel: option => {
-              if (typeof option === "string") {
-                return toCapitalize(option);
-              }
-            },
-            options: ["colors", "dropdown", "buttons"],
-          },
-          isAddOn: {
-            type: "checkbox",
-            label: "Is Add-On",
-          },
-          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-          values: {
-            type: "array",
-            title: "Option Choices",
-            label: item => item.name,
-            itemSchema: {
-              type: "object",
-              fields: {
-                name: { type: "text", label: "Name" },
-                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
-                isDefault: { type: "checkbox", label: "Default Option" },
-                additionalCost: { type: "number", label: "Additional Cost" },
-                product: {
-                  type: "autocomplete_single",
-                  label: "Option Product",
-                  options: products,
-                  labelProp: "name",
-                  onEditButtonClick: selectedProduct => {
-                    dispatch(saveToEditProductHistory(product));
-                    dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-                  },
-                  onCreateNewButtonClick: selectedProduct => {
-                    console.log(selectedProduct);
-                    dispatch(saveToEditProductHistory(product));
-                    dispatch(API.saveProduct({ ...selectedProduct }));
-                  },
-                  showEditButton: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+
     chips: {
       type: "autocomplete_multiple",
       label: "Chips",

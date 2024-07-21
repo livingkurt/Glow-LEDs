@@ -25,7 +25,7 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label }) => {
         }}
       >
         {options
-          .filter(option => option.product.filament.active)
+          .filter(option => option?.product?.filament?.active)
           .map(option => (
             <Tooltip key={option.name} title={option.name} placement="top">
               <ToggleButton

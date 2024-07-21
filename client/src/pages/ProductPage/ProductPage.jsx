@@ -46,7 +46,13 @@ const ProductPage = () => {
         {product && (
           <>
             <Box display="flex" justifyContent={"space-between"} p={2}>
-              <GLBreadcrumbs items={productPageBreadCrumbs(product)} />
+              <GLBreadcrumbs
+                items={
+                  current_user.isWholesaler
+                    ? productPageBreadCrumbs(product)
+                    : productPageBreadCrumbs(product).filter(item => item.name !== "WHOLESALE")
+                }
+              />
               {current_user?.isAdmin && (
                 <Box className="br-10px">
                   <GLButtonV2

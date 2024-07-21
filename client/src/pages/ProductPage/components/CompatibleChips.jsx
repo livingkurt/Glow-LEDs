@@ -9,7 +9,7 @@ const CompatibleChips = ({ chips }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (!chips || chips.length === 0) return null;
+  if (!chips || chips.length === 0 || chips[0]?.name === "All Chips") return null;
 
   return (
     <Box mt={2}>
