@@ -506,8 +506,9 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
     contributors: {
       type: "autocomplete_multiple",
       label: "Contributors",
-      options: users,
       labelProp: "first_name",
+      options: users.filter(user => user.first_name && user.last_name),
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
 
     chips: {

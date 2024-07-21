@@ -29,6 +29,7 @@ import CustomizationOption from "./components/CustomizationOption";
 import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleChips from "./components/CompatibleChips";
+import ContributorsDisplay from "./components/ContributorsDisplay";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -223,6 +224,11 @@ const ProductPage = () => {
                   {product?.product_support && !product?.product_support.hidden && (
                     <Grid item xs={12} id="support">
                       <ProductSupport productSupport={product.product_support} />
+                    </Grid>
+                  )}
+                  {product?.contributors?.length > 0 && (
+                    <Grid item xs={12}>
+                      <ContributorsDisplay contributors={product.contributors} />
                     </Grid>
                   )}
                   <Grid item xs={12}>

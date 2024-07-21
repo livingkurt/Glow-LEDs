@@ -3479,215 +3479,6 @@ router.route("/migrate_tags").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
-// Migrate lifestyle images
-router.route("/migrate_lifestyle_images").put(async (req, res) => {
-  try {
-    await Product.updateMany({}, [
-      {
-        $set: {
-          "features.lifestyle_images": {
-            $reduce: {
-              input: [
-                { $ifNull: ["$images_object", []] },
-                { $ifNull: ["$color_images_object", []] },
-                { $ifNull: ["$secondary_color_images_object", []] },
-                { $ifNull: ["$option_images_object", []] },
-              ],
-              initialValue: [],
-              in: { $concatArrays: ["$$value", "$$this"] },
-            },
-          },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "Lifestyle images migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate in_the_box
-router.route("/migrate_in_the_box").put(async (req, res) => {
-  try {
-    await Product.updateMany({ included_items: { $exists: true } }, [
-      {
-        $set: {
-          "in_the_box.title": "What you get",
-          "in_the_box.items": {
-            $map: {
-              input: { $split: ["$included_items", "\n"] },
-              as: "item",
-              in: {
-                description: "$$item",
-              },
-            },
-          },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "In the box migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate facts field
-router.route("/migrate_facts").put(async (req, res) => {
-  let successCount = 0;
-  let failureCount = 0;
-  let failedIds = [];
-
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: { facts: { $exists: true } },
-      },
-      {
-        $project: {
-          _id: 1,
-          facts: 1,
-          color_images_object: 1,
-          secondary_color_images_object: 1,
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      try {
-        const facts = product.facts.split("\n").filter(fact => fact.trim() !== "");
-        const images = [...(product.color_images_object || []), ...(product.secondary_color_images_object || [])];
-
-        const fact = facts[0] || "";
-        const image_grid_1 = facts.slice(0, 3).map((fact, index) => ({
-          title: fact,
-          image: images[index] || null,
-        }));
-        const image_grid_2 = facts.slice(3).map((fact, index) => ({
-          title: fact,
-          image: images[index + 3] || null,
-        }));
-
-        const updateObj = {
-          $set: {
-            fact: fact,
-          },
-        };
-
-        if (image_grid_1.length > 0) {
-          updateObj.$set["features.image_grid_1"] = image_grid_1;
-        }
-        if (image_grid_2.length > 0) {
-          updateObj.$set["features.image_grid_2"] = image_grid_2;
-        }
-
-        await Product.updateOne({ _id: product._id }, updateObj);
-        successCount++;
-      } catch (error) {
-        console.error(`Failed to update product ${product._id}: ${error.message}`);
-        failureCount++;
-        failedIds.push(product._id);
-      }
-    }
-
-    res.status(200).send({
-      message: "Facts and images migration completed",
-      successCount,
-      failureCount,
-      failedIds,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate contributors field
-router.route("/migrate_contributors").put(async (req, res) => {
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: {
-          contributers: { $exists: true },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          contributers: 1,
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      await Product.updateOne({ _id: product._id }, { $set: { contributors: product.contributers } });
-    }
-
-    res.status(200).send({ message: "Contributors migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate images field
-router.route("/migrate_images").put(async (req, res) => {
-  try {
-    await Product.updateMany({}, { $unset: { images: "" } });
-    await Product.updateMany({}, [
-      {
-        $set: {
-          images: { $ifNull: ["$images_object", []] },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "Images migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-router.route("/migrate_sale").put(async (req, res) => {
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: {
-          $or: [
-            { sale_price: { $exists: true } },
-            { sale_start_date: { $exists: true } },
-            { sale_end_date: { $exists: true } },
-          ],
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          sale: {
-            price: "$sale_price",
-            start_date: "$sale_start_date",
-            end_date: "$sale_end_date",
-          },
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      const updateObj = { sale: {} };
-      if (product.sale.price !== undefined) updateObj.sale.price = product.sale.price;
-      if (product.sale.start_date) updateObj.sale.start_date = new Date(product.sale.start_date);
-      if (product.sale.end_date) updateObj.sale.end_date = new Date(product.sale.end_date);
-
-      await Product.updateOne({ _id: product._id }, { $set: updateObj });
-    }
-
-    res.status(200).send({ message: "Sale fields migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
 
 // Migrate meta fields
 router.route("/migrate_meta").put(async (req, res) => {
@@ -3899,6 +3690,217 @@ router.route("/migrate_restock_status").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate contributors field
+router.route("/migrate_contributors").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          contributers: { $exists: true },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          contributers: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      await Product.updateOne({ _id: product._id }, { $set: { contributors: product.contributers } });
+    }
+
+    res.status(200).send({ message: "Contributors migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate lifestyle images
+router.route("/migrate_lifestyle_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, [
+      {
+        $set: {
+          "features.lifestyle_images": {
+            $reduce: {
+              input: [
+                { $ifNull: ["$images_object", []] },
+                { $ifNull: ["$color_images_object", []] },
+                { $ifNull: ["$secondary_color_images_object", []] },
+                { $ifNull: ["$option_images_object", []] },
+              ],
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Lifestyle images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate in_the_box
+router.route("/migrate_in_the_box").put(async (req, res) => {
+  try {
+    await Product.updateMany({ included_items: { $exists: true } }, [
+      {
+        $set: {
+          "in_the_box.title": "What you get",
+          "in_the_box.items": {
+            $map: {
+              input: { $split: ["$included_items", "\n"] },
+              as: "item",
+              in: {
+                description: "$$item",
+              },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "In the box migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate facts field
+router.route("/migrate_facts").put(async (req, res) => {
+  let successCount = 0;
+  let failureCount = 0;
+  let failedIds = [];
+
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: { facts: { $exists: true } },
+      },
+      {
+        $project: {
+          _id: 1,
+          facts: 1,
+          color_images_object: 1,
+          secondary_color_images_object: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      try {
+        const facts = product.facts.split("\n").filter(fact => fact.trim() !== "");
+        const images = [...(product.color_images_object || []), ...(product.secondary_color_images_object || [])];
+
+        const fact = facts[0] || "";
+        const image_grid_1 = facts.slice(0, 3).map((fact, index) => ({
+          title: fact,
+          image: images[index] || null,
+        }));
+        const image_grid_2 = facts.slice(3).map((fact, index) => ({
+          title: fact,
+          image: images[index + 3] || null,
+        }));
+
+        const updateObj = {
+          $set: {
+            fact: fact,
+          },
+        };
+
+        if (image_grid_1.length > 0) {
+          updateObj.$set["features.image_grid_1"] = image_grid_1;
+        }
+        if (image_grid_2.length > 0) {
+          updateObj.$set["features.image_grid_2"] = image_grid_2;
+        }
+
+        await Product.updateOne({ _id: product._id }, updateObj);
+        successCount++;
+      } catch (error) {
+        console.error(`Failed to update product ${product._id}: ${error.message}`);
+        failureCount++;
+        failedIds.push(product._id);
+      }
+    }
+
+    res.status(200).send({
+      message: "Facts and images migration completed",
+      successCount,
+      failureCount,
+      failedIds,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate images field
+router.route("/migrate_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, { $unset: { images: "" } });
+    await Product.updateMany({}, [
+      {
+        $set: {
+          images: { $ifNull: ["$images_object", []] },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_sale").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { sale_price: { $exists: true } },
+            { sale_start_date: { $exists: true } },
+            { sale_end_date: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          sale: {
+            price: "$sale_price",
+            start_date: "$sale_start_date",
+            end_date: "$sale_end_date",
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      const updateObj = { sale: {} };
+      if (product.sale.price !== undefined) updateObj.sale.price = product.sale.price;
+      if (product.sale.start_date) updateObj.sale.start_date = new Date(product.sale.start_date);
+      if (product.sale.end_date) updateObj.sale.end_date = new Date(product.sale.end_date);
+
+      await Product.updateOne({ _id: product._id }, { $set: updateObj });
+    }
+
+    res.status(200).send({ message: "Sale fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 // Migrate restock_status
 
 router.route("/migrate_image_object").put(async (req, res) => {
