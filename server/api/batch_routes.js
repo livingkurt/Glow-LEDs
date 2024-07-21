@@ -3106,8 +3106,6 @@ router.route("/migrate_hero_video").put(async (req, res) => {
 router.route("/set_all_hidden_fields").put(async (req, res) => {
   try {
     const updateObject = {
-      hidden: true,
-      // "hero_video.hidden": true,
       "icon_specs_hidden": true,
       "navigation_buttons_hidden": true,
       "features.image_grid_1_hidden": true,
@@ -3128,6 +3126,291 @@ router.route("/set_all_hidden_fields").put(async (req, res) => {
       message: "All 'hidden' fields set to true",
       modifiedCount: result.modifiedCount,
       matchedCount: result.matchedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/products_to_json").put(async (req, res) => {
+  try {
+    // Fetch all products from the database
+    const products = await Product.find({ option: false });
+
+    // Filter the products and create a map to deduplicate by description
+    const uniqueProductsMap = new Map();
+
+    products.forEach(product => {
+      if (product.description && !uniqueProductsMap.has(product.description)) {
+        uniqueProductsMap.set(product.description, {
+          category: product.category,
+          subcategory: product.subcategory,
+          product_collection: product.product_collection,
+          fact: product.fact,
+          description: product.description,
+        });
+      }
+    });
+
+    // Convert the map values to an array
+    const filteredProducts = Array.from(uniqueProductsMap.values());
+
+    // Convert filtered products to JSON string
+    const jsonProducts = JSON.stringify(filteredProducts, null, 2);
+
+    // Define the file path
+    const filePath = path.join(__dirname, "unique_products.json");
+
+    // Write the JSON to a file using callback
+    fs.writeFile(filePath, jsonProducts, err => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send({ error: err.message });
+      }
+      res.status(200).send({
+        message: "Unique products exported to JSON successfully",
+        filePath,
+        totalProducts: products.length,
+        uniqueProducts: filteredProducts.length,
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+const productFactsAndDescriptions = [
+  {
+    category: "glowskinz",
+    subcategory: "clozd",
+    product_collection: "classics",
+    fact: "Innovative 2-in-1 casing and diffuser with full-body glow.",
+    short_description:
+      "Comfortable semi-flexible design combines casing and diffuser, creating a unique full-body glow. Perfect click and easy removal from gloves for seamless performances.",
+  },
+  {
+    category: "glowskinz",
+    subcategory: "opyn",
+    fact: "Versatile glow accessory compatible with various diffusers.",
+    short_description:
+      "Semi-flexible, comfortable design allows for use with favorite accessories like Diffusers, EXO Diffusers or Diffuser Caps. Provides beautiful fingertip glow while protecting microlights.",
+  },
+  {
+    category: "exo_diffusers",
+    fact: "Two-material technology for factal light diffusion.",
+    short_description:
+      "Innovative design with frosted inner plug and geometric outer exoskeleton. Creates beautiful glow and defined trails for stunning lightshows through gloves.",
+  },
+  {
+    category: "diffusers",
+    fact: "Enhanced light diffusion for smooth, angelic glow.",
+    short_description:
+      "Versatile diffusers in various colors and sizes. Create unique effects without altering light color. Compatible with all microlights.",
+  },
+  {
+    category: "diffuser_caps",
+    fact: "Unique screw-top technology for external light patterns.",
+    short_description:
+      "External patterns for one-of-a-kind lightshow effects. Easy to use with Diffuser Adapters. Available in Classic and Mega sizes.",
+  },
+  {
+    category: "gloves",
+    subcategory: "sampler",
+    fact: "Sizing sampler pack for perfect fit selection.",
+    short_description:
+      "Three pairs of Supreme Gloves in different sizes. Stretchy design with plushy interior. Find your ideal fit for comfortable performances.",
+  },
+  {
+    category: "glowstringz",
+    subcategory: "leds",
+    product_collection: "glowstringz",
+    fact: "Customizable string lights with 48 festival-ready patterns.",
+    short_description:
+      "Highly customizable LED string lights with 22 wild festival modes and 26 everyday modes. Infinite color options and autoplay features for the ultimate home light show.",
+  },
+  {
+    category: "batteries",
+    subcategory: "coin",
+    product_collection: "wholesale",
+    fact: "Bulk battery packs for uninterrupted performances.",
+    short_description:
+      "Convenient bulk battery options in secure plastic trays. Easy access design keeps batteries fresh and ready for use, perfect for extended gloving sessions.",
+  },
+  {
+    category: "merch",
+    subcategory: "stickers",
+    fact: "Unique wood stickers to represent Glow LEDs.",
+    short_description:
+      "Laser-cut wood stickers featuring Glow LEDs designs. Show your support for the gloving community with these cool, durable decals.",
+  },
+  {
+    category: "batteries",
+    subcategory: "storage",
+    fact: "Convenient battery dispensers for quick access.",
+    short_description:
+      "Compact battery dispensers designed for easy access during performances. Secure locking mechanism prevents accidental spills, perfect for on-the-go glovers.",
+  },
+  {
+    category: "decals",
+    subcategory: "universal",
+    fact: "Customizable vinyl decals for Glowskinz.",
+    short_description:
+      "High-quality black vinyl decals to personalize your OPYN or CLOZD Glowskinz. Easy to apply and provides a unique look for your gloving setup.",
+  },
+  // {
+  //   category: "glowskinz",
+  //   subcategory: "clozd",
+  //   product_collection: "classics",
+  //   fact: "Universal Glowskins compatible with various chips.",
+  //   short_description:
+  //     "Versatile Omniskins work with any chip using interchangeable sleds. Combines casing and diffuser for a full-body glow, with comfortable semi-flexible design.",
+  // },
+  {
+    category: "glowframez",
+    subcategory: "clip",
+    product_collection: "nova",
+    fact: "Secure clips for palm or hand-mounted gloving.",
+    short_description:
+      "Nova Clips securely attach to compatible casings for stable palm or hand mounting. Enables mind-blowing effects for your audience during performances.",
+  },
+  {
+    category: "glowframez",
+    subcategory: "clozd",
+    product_collection: "novaframez",
+    fact: "A new take on a impacting classic.",
+    short_description:
+      "Rigid shell with soft semi-flexible button. Compatible with OG Inova casings and button mods for versatile impacting performances.",
+  },
+  // {
+  //   name: "Supreme Gloves V1",
+  //   category: "gloves",
+  //   subcategory: "singles",
+  //   fact: "Premium stretchy gloves for all hand sizes.",
+  //   short_description:
+  //     "Supreme Gloves feature super plushy interior and extra white, crisp exterior. Stretchy design fits all hand sizes comfortably, perfect for showcasing your lights.",
+  // },
+  {
+    name: "Ultra Gloves",
+    category: "gloves",
+    subcategory: "singles",
+    fact: "Slim-tech gloves for high-fidelity gloving performance.",
+    short_description:
+      "Precision-engineered slim gloves with tight-thread design. Enhances visibility of accessories, maintains shape, and allows for more complex moves.",
+  },
+  {
+    category: "gloves",
+    subcategory: "refresh",
+    fact: "Essential gloving refresh pack with gloves and batteries.",
+    short_description:
+      "Convenient pack includes 6 pairs of Supreme Gloves and 120 coin batteries. Ensures you're always prepared with fresh gloves and powered microlights for performances.",
+  },
+  // {
+  //   category: "custom",
+  //   fact: "Personalized gloving accessories made to order.",
+  //   short_description:
+  //     "Create one-of-a-kind gloving accessories through our custom design process. From concept to production, we work with you to bring your unique ideas to life.",
+  // },
+  {
+    category: "glowskinz",
+    subcategory: "clozd",
+    product_collection: "capez",
+    fact: "Precision-enhancing caps for CLOZD Glowskinz.",
+    short_description:
+      "Capez securely hold bulbs in place within CLOZD Glowskinz. Available in 9 colors, they prevent shifting during performances for extreme precision in lightshows.",
+  },
+  // {
+  //   category: "gloves",
+  //   subcategory: "singles",
+  //   product_collection: "wholesale",
+  //   fact: "Upgraded stretchy gloves for enhanced comfort.",
+  //   short_description:
+  //     "New Supreme Gloves V2: Red Tag Edition features stretchier, softer material for improved fit. Plushy interior ensures comfort during long gloving sessions.",
+  // },
+  {
+    category: "microlight",
+    subcategory: "glove_set",
+    product_collection: "classics",
+    fact: "Advanced microlight with 260 color options.",
+    short_description:
+      "Helios Microlight offers unmatched features including 260 color options, 12 flashing patterns, and Conjure Mode. Powered by 2x CR1620 batteries for reliable performance.",
+  },
+];
+
+router.route("/update_fact").put(async (req, res) => {
+  try {
+    for (const item of productFactsAndDescriptions) {
+      const filter = { category: item.category };
+      if (item.subcategory) filter.subcategory = item.subcategory;
+      if (item.product_collection) filter.product_collection = item.product_collection;
+
+      await Product.updateMany(filter, {
+        $set: {
+          fact: item.fact,
+          short_description: item.short_description,
+        },
+      });
+    }
+
+    res.status(200).send({
+      message: "All facts and short descriptions updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_value_names").put(async (req, res) => {
+  try {
+    const result = await Product.updateMany({ "options.values.name": { $regex: /-/ } }, [
+      {
+        $set: {
+          options: {
+            $map: {
+              input: "$options",
+              as: "option",
+              in: {
+                $mergeObjects: [
+                  "$$option",
+                  {
+                    values: {
+                      $map: {
+                        input: "$$option.values",
+                        as: "value",
+                        in: {
+                          $mergeObjects: [
+                            "$$value",
+                            {
+                              name: {
+                                $cond: {
+                                  if: { $regexMatch: { input: "$$value.name", regex: /-/ } },
+                                  then: {
+                                    $trim: {
+                                      input: { $arrayElemAt: [{ $split: ["$$value.name", "-"] }, 1] },
+                                    },
+                                  },
+                                  else: "$$value.name",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      message: "Product option names updated successfully",
+      modifiedCount: result.modifiedCount,
     });
   } catch (error) {
     console.error(error);

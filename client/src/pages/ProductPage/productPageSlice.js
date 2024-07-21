@@ -135,6 +135,7 @@ const productPage = createSlice({
           facts: data.facts,
           included_items: data.included_items,
           price: data.price,
+          chips: data.chips,
           wholesale_price: data.wholesale_price,
           previous_price: data.previous_price,
           sale_price: data.sale_price,

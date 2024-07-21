@@ -33,6 +33,10 @@ export const productFormFields = ({
       label: "Max Quantity",
       labelProp: "max_quantity",
     },
+    short_description: {
+      type: "text_multiline",
+      label: "Short Description",
+    },
     count_in_stock: {
       type: "number",
       label: "Count in Stock",

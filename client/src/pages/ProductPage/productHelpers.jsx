@@ -26,6 +26,9 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   if (selectedOption.product.images.length > 0) {
     state.customizedProduct.images = selectedOption.product.images;
   }
+  if (selectedOption.product.chips.length > 0) {
+    state.customizedProduct.chips = selectedOption.product.chips;
+  }
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
     const newOptionsByName = product.options.reduce((acc, option) => {
@@ -55,14 +58,14 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
     });
   }
 
-  if (product?.description) {
-    state.customizedProduct.description = product.description;
+  if (product?.short_description) {
+    state.customizedProduct.short_description = product.short_description;
   }
-  if (product?.facts) {
-    state.customizedProduct.facts = product.facts;
+  if (product?.fact) {
+    state.customizedProduct.fact = product.fact;
   }
-  if (product?.quantity) {
-    state.customizedProduct.max_quantity = product.quantity;
+  if (product?.max_quantity) {
+    state.customizedProduct.max_quantity = product.max_quantity;
   }
   if (product?.count_in_stock > 0) {
     state.customizedProduct.count_in_stock = product.count_in_stock;

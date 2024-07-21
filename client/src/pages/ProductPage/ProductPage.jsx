@@ -28,6 +28,7 @@ import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
 import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
+import CompatibleChips from "./components/CompatibleChips";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,8 @@ const ProductPage = () => {
   const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
   const { images, currentOptions } = customizedProduct;
+
+  // console.log({ product });
 
   return (
     <Box>
@@ -75,12 +78,16 @@ const ProductPage = () => {
                       </Typography>
                     </Box>
                   )}
-                  <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
+                  <Typography variant="body1" gutterBottom mt={2} mb={2}>
                     {product.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
                     Price: ${product.price}
                   </Typography>
+                  <Typography variant="body1" gutterBottom mt={2} mb={2}>
+                    {product.short_description}
+                  </Typography>
+                  <CompatibleChips chips={customizedProduct.chips} />
                   {currentOptions?.map((option, index) => (
                     <CustomizationOption
                       key={index}
@@ -127,7 +134,7 @@ const ProductPage = () => {
                 </Grid>
               </Grid>
             </Container>
-            <Box mt={2}>
+            <Box mt={4}>
               <Grid container spacing={2}>
                 {!product.navigation_buttons_hidden && (
                   <Grid item xs={12}>
