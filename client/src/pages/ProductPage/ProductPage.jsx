@@ -41,7 +41,7 @@ const ProductPage = () => {
 
   return (
     <Box>
-      <ProductPageHead />
+      <ProductPageHead product={product} />
       <ProductPageLoading loading={productPageLoading}>
         {product && (
           <>

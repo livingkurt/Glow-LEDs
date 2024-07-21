@@ -1,17 +1,14 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useSelector } from "react-redux";
 
-const ProductPageHead = () => {
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { product } = productsPage;
-  const { pathname, images, meta_description, meta_title } = product;
+const ProductPageHead = ({ product }) => {
+  const { pathname, images, seo } = product;
 
   return (
     <Helmet>
-      <title>{meta_title + " | Glow LEDs"}</title>
-      <meta property="og:title" content={meta_title} />
-      <meta name="twitter:title" content={meta_title} />
+      <title>{seo?.meta_title + " | Glow LEDs"}</title>
+      <meta property="og:title" content={seo?.meta_title} />
+      <meta name="twitter:title" content={seo?.meta_title} />
       <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
       <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
 
@@ -23,8 +20,8 @@ const ProductPageHead = () => {
       <meta
         name="description"
         content={
-          meta_description
-            ? meta_description
+          seo?.meta_description
+            ? seo?.meta_description
             : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
         }
       />
@@ -32,8 +29,8 @@ const ProductPageHead = () => {
       <meta
         property="og:description"
         content={
-          meta_description
-            ? meta_description
+          seo?.meta_description
+            ? seo?.meta_description
             : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
         }
       />
@@ -41,11 +38,12 @@ const ProductPageHead = () => {
       <meta
         name="twitter:description"
         content={
-          meta_description
-            ? meta_description
+          seo?.meta_description
+            ? seo?.meta_description
             : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
         }
       />
+      <meta name="keywords" content={seo?.meta_keywords}></meta>
     </Helmet>
   );
 };

@@ -38,7 +38,7 @@ const EditProductModal = () => {
   const formFields = productFormFields({
     products,
     users,
-    categorys,
+    tags: categorys,
     chips,
     product,
     filaments,

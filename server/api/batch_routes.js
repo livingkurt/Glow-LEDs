@@ -3148,6 +3148,8 @@ router.route("/products_to_json").put(async (req, res) => {
           subcategory: product.subcategory,
           product_collection: product.product_collection,
           fact: product.fact,
+          facts: product.facts,
+          short_description: product.short_description,
           description: product.description,
         });
       }
@@ -3690,6 +3692,29 @@ router.route("/migrate_sale").put(async (req, res) => {
 // Migrate meta fields
 router.route("/migrate_meta").put(async (req, res) => {
   try {
+    const categoryKeywords = {
+      mega_diffuser_caps: "oversized, diffuser, caps, gloving, lightshow, accessory, geometric, patterns, trails",
+      glow_strings: "LED, string lights, customizable, modes, festival, decoration, ambient lighting",
+      diffuser_caps: "gloving, accessory, lightshow, patterns, designs, screw-top, technology",
+      diffusers: "light diffusion, gloving, accessory, frosted, geometric, lightshow enhancement",
+      accessories: "gloving, battery storage, convenience, performance, lightshow",
+      infinity_mirrors: "LED, addressable, custom design, light art, room decoration",
+      decals: "customization, personalization, vinyl, glowskinz, accessory, gloving",
+      glowskinz: "casing, diffuser, gloving, accessory, full-body glow, comfortable",
+      glowskins: "casing, diffuser, gloving, accessory, full-body glow, comfortable",
+      Caps: "custom, diffuser caps, gloving, accessory, personalized",
+      gloves: "gloving, performance, comfortable, stretchy, crisp white",
+      exo_diffusers: "gloving, accessory, geometric trails, two-material technology, lightshow enhancement",
+      glowstringz: "LED, string lights, customizable, modes, festival, decoration, ambient lighting",
+      batteries: "coin cell, CR1620, CR1225, gloving, power source, bulk, gloving",
+      merch: "brand, stickers, merchandise, gloving community, support",
+      glowframez: "impacting, gloving, accessory, palm lights, clip functionality",
+      casings: "microlight, casing, gloving, accessory, protection",
+      gift_card: "gift, present, gloving, accessories, customizable",
+      custom: "personalized, gloving, accessories, unique, custom-made",
+      microlight: "LED, gloving, customizable, patterns, colors, performance",
+    };
+
     await Product.updateMany(
       {
         $or: [
@@ -3698,15 +3723,44 @@ router.route("/migrate_meta").put(async (req, res) => {
           { meta_keywords: { $exists: true } },
         ],
       },
-      {
-        $set: {
-          seo: {
-            meta_title: "$meta_title",
-            meta_description: "$meta_description",
-            meta_keywords: "$meta_keywords",
+      [
+        {
+          $set: {
+            seo: {
+              meta_title: { $ifNull: ["$meta_title", ""] },
+              meta_description: { $ifNull: ["$meta_description", ""] },
+              meta_keywords: {
+                $cond: {
+                  if: { $eq: [{ $type: "$meta_keywords" }, "string"] },
+                  then: "$meta_keywords",
+                  else: {
+                    $ifNull: [
+                      {
+                        $arrayElemAt: [
+                          { $objectToArray: categoryKeywords },
+                          { $indexOfArray: [{ $objectToArray: categoryKeywords }, "$category"] },
+                        ],
+                      },
+                      "",
+                    ],
+                  },
+                },
+              },
+            },
           },
         },
-      }
+        {
+          $set: {
+            "seo.meta_keywords": {
+              $cond: {
+                if: { $eq: [{ $type: "$seo.meta_keywords" }, "object"] },
+                then: "$seo.meta_keywords.v",
+                else: "$seo.meta_keywords",
+              },
+            },
+          },
+        },
+      ]
     );
     res.status(200).send({ message: "Meta fields migration completed successfully" });
   } catch (error) {
