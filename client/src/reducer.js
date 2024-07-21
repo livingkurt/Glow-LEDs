@@ -33,7 +33,7 @@ import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
 import productPageSlice from "./pages/ProductPage/productPageSlice";
 import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
-import { affiliateApi, productApi, contentApi } from "./api";
+import { affiliateApi, contentApi } from "./api";
 
 const reducers = {
   affiliates: combineReducers({
@@ -143,7 +143,6 @@ const reducers = {
   [affiliateApi.reducerPath]: affiliateApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
-  [productApi.reducerPath]: productApi.reducer,
   [contentApi.reducerPath]: contentApi.reducer,
   snackbar: snackbarSlice,
   dashboards: dashboardSlice,

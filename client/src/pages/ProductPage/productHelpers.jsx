@@ -73,6 +73,10 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
+  console.log({ dimensions: product?.dimensions });
+  if (product?.dimensions) {
+    state.customizedProduct.dimensions = product.dimensions;
+  }
 };
 
 export const handlePriceReplacement = (state, option, selectedOption) => {
@@ -125,15 +129,15 @@ export const productPageBreadCrumbs = product => {
   const { category, subcategory, product_collection, name } = product;
   return [
     { name: "ALL PRODUCTS", to: "/collections/all/products" },
-    { name: category?.toUpperCase(), to: `/collections/all/products/category/${category}` },
+    { name: category?.toUpperCase().split("_"), to: `/collections/all/products/category/${category}` },
     {
-      name: subcategory?.toUpperCase(),
+      name: subcategory?.toUpperCase().split("_").join(" "),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
     },
     {
-      name: product_collection?.toUpperCase(),
+      name: product_collection?.toUpperCase().split("_").join(" "),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
     },
-    { name: name?.toUpperCase() },
+    { name: name?.toUpperCase().split("_").join(" ") },
   ];
 };

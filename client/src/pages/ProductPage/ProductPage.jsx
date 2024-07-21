@@ -37,7 +37,7 @@ const ProductPage = () => {
 
   const { images, currentOptions } = customizedProduct;
 
-  // console.log({ product });
+  console.log({ product });
 
   return (
     <Box>
