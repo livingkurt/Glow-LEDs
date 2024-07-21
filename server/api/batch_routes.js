@@ -3089,15 +3089,46 @@ router.route("/migrate_color_codes").put(async (req, res) => {
 // Migrate hero_video
 router.route("/migrate_hero_video").put(async (req, res) => {
   try {
-    await Product.updateMany(
-      { video: { $exists: true } },
+    await Product.updateMany({ video: { $exists: true } }, [
       {
         $set: {
-          "hero_video.video": "$video",
+          "hero_video.video": { $ifNull: ["$video", null] },
         },
-      }
-    );
+      },
+    ]);
     res.status(200).send({ message: "Hero video migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/set_all_hidden_fields").put(async (req, res) => {
+  try {
+    const updateObject = {
+      hidden: true,
+      // "hero_video.hidden": true,
+      "icon_specs_hidden": true,
+      "navigation_buttons_hidden": true,
+      "features.image_grid_1_hidden": true,
+      "features.hero_fact_1.hidden": true,
+      "features.image_grid_2_hidden": true,
+      "features.hero_fact_2.hidden": true,
+      "features.lifestyle_images_hidden": true,
+      "not_sure.hidden": true,
+      "tech_specs.hidden": true,
+      "in_the_box.hidden": true,
+      "elevate_your_experience.hidden": true,
+      "product_support.hidden": true,
+    };
+
+    const result = await Product.updateMany({}, { $set: updateObject });
+
+    res.status(200).send({
+      message: "All 'hidden' fields set to true",
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });

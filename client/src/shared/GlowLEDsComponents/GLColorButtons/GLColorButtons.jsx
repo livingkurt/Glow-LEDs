@@ -24,36 +24,38 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label }) => {
           },
         }}
       >
-        {options.map(option => (
-          <Tooltip key={option.name} title={option.name} placement="top">
-            <ToggleButton
-              value={option.name}
-              sx={{
-                backgroundColor: option.colorCode,
-                borderRadius: "10px !important",
-                width: isMobile ? 40 : 50,
-                height: isMobile ? 30 : 40,
-                padding: 0,
-                minWidth: "auto",
-                boxShadow:
-                  value === option.name
-                    ? "inset 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2)"
-                    : "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
-                transition: "box-shadow 0.3s, transform 0.3s",
-                transform: value === option.name ? "translateY(2px)" : "translateY(0)",
-                "&:hover": {
+        {options
+          .filter(option => option.product.filament.active)
+          .map(option => (
+            <Tooltip key={option.name} title={option.name} placement="top">
+              <ToggleButton
+                value={option.name}
+                sx={{
                   backgroundColor: option.colorCode,
-                },
-                "&.Mui-selected": {
-                  backgroundColor: option.colorCode,
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor: option.colorCode,
-                },
-              }}
-            />
-          </Tooltip>
-        ))}
+                  borderRadius: "10px !important",
+                  width: isMobile ? 40 : 50,
+                  height: isMobile ? 30 : 40,
+                  padding: 0,
+                  minWidth: "auto",
+                  boxShadow:
+                    value === option.name
+                      ? "inset 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2)"
+                      : "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                  transition: "box-shadow 0.3s, transform 0.3s",
+                  transform: value === option.name ? "translateY(2px)" : "translateY(0)",
+                  "&:hover": {
+                    backgroundColor: option.colorCode,
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: option.colorCode,
+                  },
+                  "&.Mui-selected:hover": {
+                    backgroundColor: option.colorCode,
+                  },
+                }}
+              />
+            </Tooltip>
+          ))}
       </ToggleButtonGroup>
     </Box>
   );

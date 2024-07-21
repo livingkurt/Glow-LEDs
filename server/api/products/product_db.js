@@ -250,13 +250,20 @@ export default {
             populate: [
               { path: "images" },
               { path: "color.filament" },
+              { path: "filament" },
               { path: "tags" },
               { path: "chips" },
               {
                 path: "options",
                 populate: {
                   path: "values.product",
-                  populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+                  populate: [
+                    { path: "images" },
+                    { path: "color.filament" },
+                    { path: "filament" },
+                    { path: "tags" },
+                    { path: "chips" },
+                  ],
                 },
               },
             ],
@@ -277,7 +284,13 @@ export default {
         })
         .populate({
           path: "elevate_your_experience.products",
-          populate: [{ path: "images" }, { path: "color.filament" }, { path: "tags" }, { path: "chips" }],
+          populate: [
+            { path: "images" },
+            { path: "color.filament" },
+            { path: "filament" },
+            { path: "tags" },
+            { path: "chips" },
+          ],
         })
         .populate("tags")
         .populate("contributors")
