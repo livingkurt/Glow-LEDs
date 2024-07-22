@@ -262,12 +262,12 @@ const productSchema = new mongoose.Schema(
     // Depreciated
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    secondary_color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    option_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    // color_images: { type: Array },
-    // secondary_color_images: { type: Array },
-    // option_images: { type: Array },
+    // color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    // secondary_color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    // option_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    color_images: { type: Array },
+    secondary_color_images: { type: Array },
+    option_images: { type: Array },
     secondary_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 
     color_product_group: { type: Boolean, default: false },

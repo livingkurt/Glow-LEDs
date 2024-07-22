@@ -3864,6 +3864,56 @@ router.route("/migrate_display_image").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_order_numeric_options").put(async (req, res) => {
+  try {
+    // Fetch all products
+    const products = await Product.find({});
+
+    let updatedCount = 0;
+
+    for (let product of products) {
+      let updated = false;
+
+      if (product.options && product.options.length > 0) {
+        for (let option of product.options) {
+          if (option.values && option.values.length > 0) {
+            // Separate numeric and non-numeric values
+            const numericValues = [];
+            const nonNumericValues = [];
+
+            for (let value of option.values) {
+              if (/^\d+$/.test(value.name)) {
+                numericValues.push(value);
+              } else {
+                nonNumericValues.push(value);
+              }
+            }
+
+            // Sort numeric values
+            numericValues.sort((a, b) => parseInt(a.name) - parseInt(b.name));
+
+            // Combine sorted numeric values with non-numeric values
+            option.values = [...numericValues, ...nonNumericValues];
+            updated = true;
+          }
+        }
+      }
+
+      if (updated) {
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: "Product options ordered successfully",
+      modifiedCount: updatedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 // --------------------------------------------------
 
 // Migrate lifestyle images
