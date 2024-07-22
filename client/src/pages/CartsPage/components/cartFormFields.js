@@ -25,7 +25,7 @@ export const cartFormFields = ({ products, users, cart }) => {
             label: "Max Quantity",
             labelProp: "max_quantity",
           },
-          display_image: {
+          display_image_object: {
             type: "image_upload",
             label: "Images",
             labelProp: "link",

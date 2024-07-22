@@ -353,7 +353,7 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             getOptionLabel: option => `${option}`,
             options: Array.from({ length: 30 }, (_, i) => i + 1),
           },
-          display_image: {
+          display_image_object: {
             type: "image_upload",
             label: "Images",
             labelProp: "link",

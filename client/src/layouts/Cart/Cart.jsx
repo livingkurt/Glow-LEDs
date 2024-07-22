@@ -61,14 +61,14 @@ const Cart = () => {
           },
         }}
       >
-        {console.log({ display_image: item?.display_image })}
+        {console.log({ item })}
         <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
           <Grid item>
             <Link to={`/collections/all/products/${item.pathname}`}>
               <Box
                 onClick={closeMenu}
                 component="img"
-                src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
+                src={item?.display_image_object?.link}
                 alt={item.name}
                 sx={{ width: 80, height: 80, borderRadius: 2 }}
               />

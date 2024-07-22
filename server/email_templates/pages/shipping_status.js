@@ -230,7 +230,7 @@ export default ({ order, status, title, tracker }) => {
                                         <div style='margin-bottom: 10px; margin-right: 10px;'>
                                           ${
                                             !item.secondary_image
-                                              ? `<img src=${typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link} alt=${item.name} width="60" height="60"
+                                              ? `<img src=${item?.display_image_object?.link} alt=${item.name} width="60" height="60"
                                             style='border-radius:8px;' title="Product Image" />`
                                               : `
                                           <div />`
@@ -264,7 +264,7 @@ export default ({ order, status, title, tracker }) => {
                                                   ? "height: 35px;"
                                                   : "height: 70px;"
                                                 : ""
-                                            }' src=${typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link} />
+                                            }' src=${item?.display_image_object?.link} />
                                             <img id="expandedSecondaryImg" alt=${item.name} title=${
                                               item.name
                                             } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${

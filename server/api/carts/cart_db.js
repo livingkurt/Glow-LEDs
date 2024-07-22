@@ -6,7 +6,7 @@ export default {
       return await Cart.find(filter)
         .sort(sort)
         .populate("user")
-        .populate("cartItems.display_image")
+        .populate("cartItems.display_image_object")
         .populate("cartItems.product")
         .populate("cartItems.color_product")
         .populate("cartItems.secondary_color_product")
@@ -25,7 +25,7 @@ export default {
     try {
       return await Cart.findOne({ _id: id, active: true, deleted: false })
         .populate("user")
-        .populate("cartItems.display_image");
+        .populate("cartItems.display_image_object");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -36,7 +36,7 @@ export default {
     try {
       return await Cart.findOne({ user: user_id, active: true, deleted: false })
         .populate("user")
-        .populate("cartItems.display_image");
+        .populate("cartItems.display_image_object");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -103,7 +103,7 @@ const OrdersPage = () => {
               >
                 <Box
                   component="img"
-                  src={typeof item?.display_image === "string" ? item?.display_image : item?.display_image?.link}
+                  src={item?.display_image_object?.link}
                   alt={item.name}
                   sx={{ width: "100%", height: "100%", borderRadius: 2 }}
                 />

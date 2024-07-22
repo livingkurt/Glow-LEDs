@@ -4,7 +4,7 @@ export const emptyOrder = {
     {
       name: "",
       quantity: 0,
-      display_image: "",
+      display_image_object: {},
       secondary_image: "",
       color: "",
       secondary_color: "",

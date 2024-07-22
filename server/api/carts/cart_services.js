@@ -1,4 +1,4 @@
-import { cart_db } from "../carts";
+import { Cart, cart_db } from "../carts";
 import { deepEqual } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { updateCartItems } from "./cart_helpers";
@@ -83,6 +83,7 @@ export default {
           return data;
         } else {
           data = await cart_db.create_carts_db({ user: current_user._id, cartItems: [cart_item] });
+          data = await Cart.populate(data, { path: "cartItems.display_image_object" });
           return data;
         }
       } else {
@@ -94,7 +95,6 @@ export default {
           return { cartItems: [cart_item] };
         }
       }
-      return "Success";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
