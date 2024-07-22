@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import { daysBetween, format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { useTheme } from "@mui/material";
 
 const EventsPage = () => {
+  const theme = useTheme();
   const [events, set_events] = useState([]);
   const [loading, set_loading] = useState(false);
   const [going, set_going] = useState(false);
@@ -146,8 +148,8 @@ const EventsPage = () => {
                 backgroundColor: current_user?.isAdmin
                   ? determineColor(event)
                   : festivals_going.includes(event.title)
-                  ? "#4d5061"
-                  : "#6a6c80",
+                    ? theme.palette.primary.main
+                    : "#6a6c80",
               }}
             >
               <div className="jc-b">
@@ -204,7 +206,7 @@ const EventsPage = () => {
               <li
                 className={`container`}
                 style={{
-                  backgroundColor: festivals_going.includes(event.title) ? "#4d5061" : "#6a6c80",
+                  backgroundColor: festivals_going.includes(event.title) ? theme.palette.primary.main : "#6a6c80",
                 }}
               >
                 <a href={event.link} target="_blank" rel="noopener noreferrer" aria-label="Event Title">

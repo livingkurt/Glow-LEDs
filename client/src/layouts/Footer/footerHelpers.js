@@ -57,14 +57,14 @@ export const footerLinks = [
 ];
 
 export const socialMediaLinks = [
-  { name: "Facebook", url: "https://www.facebook.com/Glow-LEDscom-100365571740684", icon: "fab fa-facebook" },
-  { name: "Instagram", url: "https://www.instagram.com/glow_leds/", icon: "fab fa-instagram" },
-  { name: "TikTok", url: "https://www.tiktok.com/@glow_leds?lang=en", icon: "fab fa-tiktok" },
+  { name: "Instagram", url: "https://www.instagram.com/glow_leds/", icon: "InstagramIcon" },
+  { name: "TikTok", url: "https://www.tiktok.com/@glow_leds?lang=en", icon: "TikTokIcon" },
+  { name: "Facebook", url: "https://www.facebook.com/Glow-LEDscom-100365571740684", icon: "FacebookIcon" },
   {
     name: "YouTube",
     url: "https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1?sub_confirmation=1",
-    icon: "fab fa-youtube",
+    icon: "YouTubeIcon",
   },
-  { name: "Twitter", url: "https://twitter.com/glow_leds", icon: "fab fa-twitter" },
-  { name: "Soundcloud", url: "https://soundcloud.com/ntre/tracks", icon: "fab fa-soundcloud" },
+  // { name: "X", url: "https://twitter.com/glow_leds", icon: "XIcon" },
+  { name: "SoundCloud", url: "https://soundcloud.com/ntre/tracks", icon: "CloudQueueIcon" },
 ];

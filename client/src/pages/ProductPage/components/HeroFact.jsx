@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const HeroFact = ({ heroFact }) => {
+  const theme = useTheme();
   if (!heroFact || heroFact.hidden) return null;
 
   const { title, description } = heroFact;
@@ -18,7 +19,7 @@ const HeroFact = ({ heroFact }) => {
             textAlign: "center",
             padding: "4rem 2rem",
             borderRadius: "20px",
-            backgroundColor: "#4d5061",
+            backgroundColor: theme.palette.primary.main,
           }}
         >
           <Typography
