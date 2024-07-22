@@ -18,29 +18,29 @@ const CompatibleChips = ({ chips }) => {
       </Typography>
       <Box display="flex" flexWrap="wrap" gap={1}>
         {chips.map(chip => (
-          <Tooltip key={chip._id} title={`Find more products compatible with ${chip.name}`} arrow>
-            <Chip
-              label={chip.name}
-              onClick={() => {
-                update_products_url(navigate, "", "", chip.name, "", "0", "/collections/all/products");
-                dispatch(
-                  API.listProducts({
-                    chip: chip._id,
-                    hidden: false,
-                  })
-                );
-              }}
-              sx={{
-                backgroundColor: "white",
-                color: "black",
-                fontSize: "1rem",
-                fontWeight: "500",
-              }}
-              size="small"
-              variant="outlined"
-              clickable
-            />
-          </Tooltip>
+          // <Tooltip key={chip._id} title={`Find more products compatible with ${chip.name}`} arrow>
+          <Chip
+            label={chip.name}
+            // onClick={() => {
+            //   update_products_url(navigate, "", "", chip.name, "", "0", "/collections/all/products");
+            //   dispatch(
+            //     API.listProducts({
+            //       chip: chip._id,
+            //       hidden: false,
+            //     })
+            //   );
+            // }}
+            sx={{
+              backgroundColor: "white",
+              color: "black",
+              fontSize: "1rem",
+              fontWeight: "500",
+            }}
+            size="small"
+            variant="outlined"
+            // clickable
+          />
+          // </Tooltip>
         ))}
       </Box>
     </Box>
