@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 const useHomePage = () => {
   const dispatch = useDispatch();
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();
-  console.log({ currentContent });
 
   const slideshow = currentContent?.home_page?.slideshow;
   const featured_products = currentContent?.home_page?.featured_products;

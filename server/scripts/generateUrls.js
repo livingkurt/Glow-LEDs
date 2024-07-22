@@ -40,7 +40,6 @@ const routes = [
   { path: "/pages/color_palettes", component: "ColorPalettePage", exact: true },
   { path: "/pages/events", component: "EventsPage", exact: true },
   { path: "/pages/support_center/:reason?", component: "SupportCenterPage", exact: true },
-  { path: "/pages/glowcontrol", component: "SupportCenterPage" },
   { path: "/pages/terms", component: "TermsPage", exact: true },
   { path: "/pages/menu/:pathname", component: "MenuPage", exact: true },
   { path: "/pages/about", component: "AboutPage", exact: true },

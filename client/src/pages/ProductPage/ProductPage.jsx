@@ -36,8 +36,6 @@ const ProductPage = () => {
 
   const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
-  console.log({ product });
-
   return (
     <Box>
       <ProductPageHead product={product} />

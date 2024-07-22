@@ -39,7 +39,6 @@ const routes = [
   { path: "/pages/color_palettes", element: "ColorPalettePage", exact: true },
   { path: "/pages/events", element: "EventsPage", exact: true },
   { path: "/pages/support_center/:reason?", element: "SupportCenterPage", exact: true },
-  { path: "/pages/glowcontrol", element: "SupportCenterPage" },
   { path: "/pages/terms", element: "TermsPage", exact: true },
   { path: "/pages/menu/:pathname", element: "MenuPage", exact: true },
   { path: "/pages/about", element: "AboutPage", exact: true },

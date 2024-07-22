@@ -31,24 +31,6 @@ export const debounce = (thisParams, func, wait, immediate) => {
   };
 };
 
-// Helper to choose between image and image string for a single image
-export const image_or_image_object = content => {
-  if (content && content.image) {
-    return content.image.link;
-  } else {
-    return content.image;
-  }
-};
-
-// Helper to choose between images array and images string array
-export const images_or_images_object = content => {
-  if (content && content.images && content.images.length > 0) {
-    return content.images;
-  } else {
-    return content.images;
-  }
-};
-
 export const getItemsTotal = items => {
   return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
 };

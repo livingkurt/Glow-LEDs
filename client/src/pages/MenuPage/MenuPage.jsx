@@ -102,32 +102,12 @@ const MenuPage = () => {
     } else if (pathname === "support") {
       return [
         {
-          label: "Track Your Order",
-          link: "/pages/track_your_order",
-          image: "https://images2.imgbox.com/6d/ca/gy6td2iV_o.png",
-        },
-        {
           label: "About",
           link: "/pages/about",
           image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg",
         },
         {
-          label: "FAQ",
-          link: "/pages/faq",
-          image: "https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png",
-        },
-        {
-          label: "Manuals",
-          link: "/pages/manuals",
-          image: "https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png",
-        },
-        {
-          label: "Announcements",
-          link: "/pages/announcements",
-          image: "https://images2.imgbox.com/8b/52/SfnnCLNz_o.png",
-        },
-        {
-          label: "Contact",
+          label: "Support Center",
           link: "/pages/support_center",
           image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png",
         },

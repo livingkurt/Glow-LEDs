@@ -184,7 +184,6 @@ const OrdersPage = () => {
                   <OrderItem key={index} item={item} index={index} />
                 ))}
               </List>
-              {/* <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} /> */}
             </div>
             <div className="mt-10px">
               {row.order_note && (

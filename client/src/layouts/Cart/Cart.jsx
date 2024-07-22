@@ -61,7 +61,6 @@ const Cart = () => {
           },
         }}
       >
-        {console.log({ item })}
         <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
           <Grid item>
             <Link to={`/collections/all/products/${item.pathname}`}>

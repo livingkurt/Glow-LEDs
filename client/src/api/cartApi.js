@@ -37,7 +37,6 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dis
 export const addToCart = createAsyncThunk(
   "carts/addToCart",
   async ({ cart, cartItem, type }, { dispatch, rejectWithValue, getState }) => {
-    console.log({ cart, cartItem, type });
     try {
       const {
         users: {
