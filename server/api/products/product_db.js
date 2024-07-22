@@ -249,7 +249,7 @@ export default {
             path: "values.product",
             populate: [
               { path: "images" },
-              { path: "color.filament" },
+              { path: "color_object.filament" },
               { path: "filament" },
               { path: "tags" },
               { path: "chips" },
@@ -259,7 +259,7 @@ export default {
                   path: "values.product",
                   populate: [
                     { path: "images" },
-                    { path: "color.filament" },
+                    { path: "color_object.filament" },
                     { path: "filament" },
                     { path: "tags" },
                     { path: "chips" },
@@ -286,7 +286,7 @@ export default {
           path: "elevate_your_experience.products",
           populate: [
             { path: "images" },
-            { path: "color.filament" },
+            { path: "color_object.filament" },
             { path: "filament" },
             { path: "tags" },
             { path: "chips" },
@@ -298,7 +298,7 @@ export default {
           path: "reviews.user",
           select: "first_name last_name",
         })
-        .populate("color.filament")
+        .populate("color_object.filament")
         .populate("chips");
     } catch (error) {
       if (error instanceof Error) {

@@ -197,7 +197,7 @@ const productSchema = new mongoose.Schema(
     // Is Variation
     parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
     isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
-    color: {
+    color_object: {
       name: { type: String },
       code: { type: String },
       is_filament_color: { type: Boolean },

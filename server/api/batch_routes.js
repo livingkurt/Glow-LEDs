@@ -3362,6 +3362,24 @@ const productFactsAndDescriptions = [
   },
 ];
 
+// Migrate images field
+router.route("/migrate_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, { $unset: { images: "" } });
+    await Product.updateMany({}, [
+      {
+        $set: {
+          images: { $ifNull: ["$images_object", []] },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 router.route("/update_fact").put(async (req, res) => {
   try {
     for (const item of productFactsAndDescriptions) {
@@ -3719,6 +3737,135 @@ router.route("/migrate_contributors").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_color_object").put(async (req, res) => {
+  try {
+    const result = await Product.updateMany(
+      {}, // This will target all products
+      [
+        {
+          $set: {
+            color_object: {
+              name: {
+                $cond: {
+                  if: { $ifNull: ["$color", false] },
+                  then: "$color",
+                  else: null,
+                },
+              },
+              code: {
+                $cond: {
+                  if: { $ifNull: ["$color_code", false] },
+                  then: "$color_code",
+                  else: null,
+                },
+              },
+              is_filament_color: {
+                $cond: {
+                  if: { $ifNull: ["$filament", false] },
+                  then: true,
+                  else: false,
+                },
+              },
+              filament: {
+                $cond: {
+                  if: { $ifNull: ["$filament", false] },
+                  then: "$filament",
+                  else: null,
+                },
+              },
+            },
+          },
+        },
+        // {
+        //   $unset: ["color", "color_code"],
+        // },
+      ]
+    );
+
+    res.status(200).send({
+      message: "Color object migration completed successfully",
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_display_image").put(async (req, res) => {
+  const createdImages = [];
+  const errors = [];
+
+  const migrateDisplayImage = async (item, modelName, parentId) => {
+    if (item.display_image && typeof item.display_image === "string" && !item.display_image_object) {
+      try {
+        let image = await Image.findOne({ link: item.display_image });
+        if (!image) {
+          // Create new Image record
+          image = new Image({
+            link: item.display_image,
+            album: `${item.name} Images`,
+          });
+          await image.save();
+          createdImages.push({ modelName, parentId, itemName: item.name, imageId: image._id });
+        }
+        item.display_image_object = image._id;
+        return true;
+      } catch (error) {
+        console.error(`Error processing item in ${modelName} ${parentId}:`, error);
+        errors.push({ modelName, parentId, itemName: item.name, reason: error.message });
+      }
+    }
+    return false;
+  };
+
+  try {
+    // Migrate Cart schema
+    const carts = await Cart.find({});
+    for (const cart of carts) {
+      let modified = false;
+      for (const item of cart.cartItems) {
+        if (await migrateDisplayImage(item, "Cart", cart._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await cart.save();
+      }
+    }
+
+    // Migrate Order schema
+    const orders = await Order.find({});
+    for (const order of orders) {
+      let modified = false;
+      for (const item of order.orderItems) {
+        if (await migrateDisplayImage(item, "Order", order._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await order.save();
+      }
+    }
+
+    res.status(200).json({
+      message: "display_image_object population completed for Cart and Order",
+      createdImages: createdImages,
+      errors: errors,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      createdImages: createdImages,
+      errors: errors,
+    });
+  }
+});
+
+// --------------------------------------------------
+
 // Migrate lifestyle images
 router.route("/migrate_lifestyle_images").put(async (req, res) => {
   try {
@@ -3843,24 +3990,6 @@ router.route("/migrate_facts").put(async (req, res) => {
   }
 });
 
-// Migrate images field
-router.route("/migrate_images").put(async (req, res) => {
-  try {
-    await Product.updateMany({}, { $unset: { images: "" } });
-    await Product.updateMany({}, [
-      {
-        $set: {
-          images: { $ifNull: ["$images_object", []] },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "Images migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
 router.route("/migrate_sale").put(async (req, res) => {
   try {
     const productsToUpdate = await Product.aggregate([
@@ -3979,76 +4108,6 @@ router.route("/migrate_image_object").put(async (req, res) => {
   }
 });
 
-router.route("/migrate_display_image").put(async (req, res) => {
-  const createdImages = [];
-  const errors = [];
-
-  const migrateDisplayImage = async (item, modelName, parentId) => {
-    if (item.display_image && typeof item.display_image === "string" && !item.display_image_object) {
-      try {
-        let image = await Image.findOne({ link: item.display_image });
-        if (!image) {
-          // Create new Image record
-          image = new Image({
-            link: item.display_image,
-            album: `${item.name} Images`,
-          });
-          await image.save();
-          createdImages.push({ modelName, parentId, itemName: item.name, imageId: image._id });
-        }
-        item.display_image_object = image._id;
-        return true;
-      } catch (error) {
-        console.error(`Error processing item in ${modelName} ${parentId}:`, error);
-        errors.push({ modelName, parentId, itemName: item.name, reason: error.message });
-      }
-    }
-    return false;
-  };
-
-  try {
-    // Migrate Cart schema
-    const carts = await Cart.find({});
-    for (const cart of carts) {
-      let modified = false;
-      for (const item of cart.cartItems) {
-        if (await migrateDisplayImage(item, "Cart", cart._id)) {
-          modified = true;
-        }
-      }
-      if (modified) {
-        await cart.save();
-      }
-    }
-
-    // Migrate Order schema
-    const orders = await Order.find({});
-    for (const order of orders) {
-      let modified = false;
-      for (const item of order.orderItems) {
-        if (await migrateDisplayImage(item, "Order", order._id)) {
-          modified = true;
-        }
-      }
-      if (modified) {
-        await order.save();
-      }
-    }
-
-    res.status(200).json({
-      message: "display_image_object population completed for Cart and Order",
-      createdImages: createdImages,
-      errors: errors,
-    });
-  } catch (error) {
-    console.error("Migration error:", error);
-    res.status(500).json({
-      error: error.message,
-      createdImages: createdImages,
-      errors: errors,
-    });
-  }
-});
 // Step 2: Update display_image to use display_image_object
 router.route("/finalize_display_image").put(async (req, res) => {
   const skippedItems = [];
