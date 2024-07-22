@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -12,7 +12,11 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -21,13 +25,33 @@ import TikTokIcon from "./TikTokIcon";
 
 const Footer = () => {
   const theme = useTheme();
+  const [expanded, setExpanded] = useState(false);
+
+  const handleChange = panel => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   const socialIcons = [
     { Icon: InstagramIcon, url: "#" },
-    { Icon: TikTokIcon, url: "#" },
     { Icon: FacebookIcon, url: "#" },
     { Icon: YouTubeIcon, url: "#" },
     { Icon: CloudQueueIcon, url: "#" },
+    { Icon: TikTokIcon, url: "#" },
+  ];
+
+  const footerSections = [
+    {
+      title: "HELP & INFO",
+      links: ["Product Comparisons", "Product Support", "Shopping Info"],
+    },
+    {
+      title: "ABOUT",
+      links: ["About Us", "News", "Contact Us"],
+    },
+    {
+      title: "GIFTING",
+      links: ["Corporate Gifting", "Digital Gift Card"],
+    },
   ];
 
   return (
@@ -61,7 +85,7 @@ const Footer = () => {
             />
             <FormControlLabel
               control={<Checkbox sx={{ color: "white", "&.Mui-checked": { color: "white" } }} />}
-              label="By checking this box you are agreeing to receive brand updates, promotions and content from Master & Dynamic."
+              label="By checking this box you are agreeing to receive brand updates, promotions and content from Glow LEDs."
               sx={{ mb: 2 }}
             />
             <Button
@@ -77,118 +101,92 @@ const Footer = () => {
             </Button>
           </Grid>
           <Grid item xs={12} md={7}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="h6" gutterBottom>
-                  Help & Info
-                </Typography>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
+            <Box sx={{ display: { xs: "block", md: "none" } }}>
+              {footerSections.map((section, index) => (
+                <Accordion
+                  key={index}
+                  expanded={expanded === `panel${index}`}
+                  onChange={handleChange(`panel${index}`)}
+                  sx={{
+                    background: "transparent",
+                    color: "white",
+                    "&:before": { display: "none" },
+                    boxShadow: "none",
+                  }}
                 >
-                  Product Comparisons
-                </Link>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  Product Support
-                </Link>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  Shopping Info
-                </Link>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="h6" gutterBottom>
-                  About
-                </Typography>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  About Us
-                </Link>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  News
-                </Link>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  Contact Us
-                </Link>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="h6" gutterBottom>
-                  Gifting
-                </Typography>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  Corporate Gifting
-                </Link>
-                <Link
-                  component="button"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
-                >
-                  Digital Gift Card
-                </Link>
-              </Grid>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+                    aria-controls={`panel${index}bh-content`}
+                    id={`panel${index}bh-header`}
+                  >
+                    <Typography>{section.title}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {section.links.map((link, linkIndex) => (
+                      <Typography key={linkIndex} sx={{ mb: 1 }}>
+                        <Link href="#" color="inherit" underline="none">
+                          {link}
+                        </Link>
+                      </Typography>
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </Box>
+            <Grid container spacing={2} sx={{ display: { xs: "none", md: "flex" } }}>
+              {footerSections.map((section, index) => (
+                <Grid item xs={12} sm={4} key={index}>
+                  <Typography variant="h6" gutterBottom>
+                    {section.title}
+                  </Typography>
+                  {section.links.map((link, linkIndex) => (
+                    <Link
+                      key={linkIndex}
+                      component="button"
+                      variant="body2"
+                      sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
+                    >
+                      {link}
+                    </Link>
+                  ))}
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>
         <Box sx={{ mt: 4, borderTop: "1px solid white", pt: 2 }}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Link component="button" variant="body2" sx={{ mr: 2, color: "white", textDecoration: "none" }}>
-                Do Not Sell / Share
-              </Link>
-              <Link component="button" variant="body2" sx={{ mr: 2, color: "white", textDecoration: "none" }}>
-                Notice At Collection
-              </Link>
-              <Link component="button" variant="body2" sx={{ mr: 2, color: "white", textDecoration: "none" }}>
-                Web Accessibility
-              </Link>
-              <Link component="button" variant="body2" sx={{ mr: 2, color: "white", textDecoration: "none" }}>
-                Personal Data Requests
-              </Link>
-              <Link component="button" variant="body2" sx={{ mr: 2, color: "white", textDecoration: "none" }}>
-                Privacy
-              </Link>
-              <Link
-                to={"/pages/terms"}
-                component="button"
-                variant="body2"
-                sx={{ color: "white", textDecoration: "none" }}
-              >
-                Terms
-              </Link>
-            </Grid>
-            <Grid item>
+          <Grid container justifyContent="center" alignItems="center" direction="column">
+            <Grid item sx={{ mb: 2 }}>
               {socialIcons.map(({ Icon, url }, index) => (
                 <IconButton key={index} href={url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
                   <Icon />
                 </IconButton>
               ))}
             </Grid>
+            <Grid item sx={{ mb: 2 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+                {[
+                  "Do Not Sell / Share",
+                  "Notice At Collection",
+                  "Web Accessibility",
+                  "Personal Data Requests",
+                  "Privacy",
+                  "Terms",
+                ].map((text, index) => (
+                  <Link
+                    key={index}
+                    component="button"
+                    variant="body2"
+                    sx={{ mx: 1, my: 0.5, color: "white", textDecoration: "none" }}
+                  >
+                    {text}
+                  </Link>
+                ))}
+              </Box>
+            </Grid>
           </Grid>
-          <Typography variant="body2" sx={{ mt: 2, fontSize: "0.8rem" }}>
-            <br />© 2024. All Rights Reserved.
+          <Typography variant="body2" sx={{ mt: 2, fontSize: "0.8rem", textAlign: "center" }}>
+            © 2024. All Rights Reserved.
           </Typography>
         </Box>
       </Container>
@@ -197,121 +195,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-// import React from "react";
-// import { Link as RouterLink } from "react-router-dom";
-// import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-// import { footerLinks, socialMediaLinks } from "./footerHelpers";
-// import { useTheme } from "@mui/material/styles";
-// import { Box, Typography, Container, Grid, Link, IconButton, Tooltip } from "@mui/material";
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import InstagramIcon from "@mui/icons-material/Instagram";
-// import YouTubeIcon from "@mui/icons-material/YouTube";
-// import XIcon from "@mui/icons-material/X";
-// import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-// import TikTokIcon from "./TikTokIcon";
-
-// const iconMap = {
-//   FacebookIcon,
-//   InstagramIcon,
-//   YouTubeIcon,
-//   XIcon,
-//   CloudQueueIcon,
-//   TikTokIcon,
-// };
-
-// const Footer = () => {
-//   const theme = useTheme();
-//   const { width } = useWindowDimensions();
-
-//   return (
-//     <Box
-//       component="footer"
-//       sx={{
-//         mt: 5,
-//         height: 450,
-//         background: `linear-gradient(0deg, ${theme.palette.primary.main} 0%, rgba(0,0,0,0) 100%)`,
-//         position: "relative",
-//         textAlign: "center",
-//       }}
-//     >
-//       <Container maxWidth="lg">
-//         <Box
-//           component={RouterLink}
-//           to="/"
-//           aria-label="Home Page"
-//           sx={{
-//             display: "block",
-//             position: "relative",
-//             textDecoration: "none",
-//           }}
-//         >
-//           <img
-//             src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-//             alt="Glow LEDs Logo"
-//             title="Big Logo"
-//             style={{
-//               width: 350,
-//               position: "absolute",
-//               top: "50%",
-//               left: "50%",
-//               transform: "translate(-50%, 30%)",
-//               opacity: 0.2,
-//             }}
-//           />
-//         </Box>
-
-//         <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
-//           <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: 500 }}>
-//             {socialMediaLinks.map((link, idx) => {
-//               const IconComponent = iconMap[link.icon];
-//               return (
-//                 <Grid item key={idx}>
-//                   <Tooltip title={link.name} arrow>
-//                     <IconButton
-//                       component="a"
-//                       href={link.url}
-//                       target="_blank"
-//                       rel="noopener noreferrer"
-//                       aria-label={link.name}
-//                       sx={{
-//                         "&:hover": { transform: "scale(1.1)" },
-//                         transition: "transform 0.3s",
-//                         textDecoration: "none",
-//                       }}
-//                     >
-//                       <IconComponent sx={{ fontSize: 40 }} color="white" />
-//                     </IconButton>
-//                   </Tooltip>
-//                 </Grid>
-//               );
-//             })}
-//           </Grid>
-//         </Box>
-
-//         <Grid container spacing={4} sx={{ mt: 2, justifyContent: "space-around" }}>
-//           {footerLinks.map((section, idx) => (
-//             <Grid item key={idx} sx={{ display: width < section.minWidth ? "none" : "block" }}>
-//               <Typography variant="h6" component="h2" sx={{ textAlign: "left" }}>
-//                 <Link component={RouterLink} to={section.titleUrl} color="inherit" sx={{ textDecoration: "none" }}>
-//                   {section.title}
-//                 </Link>
-//               </Typography>
-//               <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-//                 {section.links.map((link, linkIdx) => (
-//                   <Box component="li" key={linkIdx} sx={{ textAlign: "left", my: 2 }}>
-//                     <Link component={RouterLink} to={link.url} color="inherit" sx={{ textDecoration: "none" }}>
-//                       {link.text}
-//                     </Link>
-//                   </Box>
-//                 ))}
-//               </Box>
-//             </Grid>
-//           ))}
-//         </Grid>
-//       </Container>
-//     </Box>
-//   );
-// };
-
-// export default Footer;
