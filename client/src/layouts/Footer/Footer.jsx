@@ -15,45 +15,94 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  FormHelperText,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import TikTokIcon from "./TikTokIcon";
+import { footerSections, socialIcons } from "./footerHelpers";
+import { useDispatch } from "react-redux";
+import * as API from "../../api";
+import { API_Emails } from "../../utils";
 
 const Footer = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [checkboxError, setCheckboxError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const socialIcons = [
-    { Icon: InstagramIcon, url: "#" },
-    { Icon: FacebookIcon, url: "#" },
-    { Icon: YouTubeIcon, url: "#" },
-    { Icon: CloudQueueIcon, url: "#" },
-    { Icon: TikTokIcon, url: "#" },
-  ];
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
+    setEmailError("");
+  };
 
-  const footerSections = [
-    {
-      title: "HELP & INFO",
-      links: ["Product Comparisons", "Product Support", "Shopping Info"],
-    },
-    {
-      title: "ABOUT",
-      links: ["About Us", "News", "Contact Us"],
-    },
-    {
-      title: "GIFTING",
-      links: ["Corporate Gifting", "Digital Gift Card"],
-    },
-  ];
+  const handleSubscribeChange = e => {
+    setIsSubscribed(e.target.checked);
+    setCheckboxError("");
+  };
 
+  const validateEmail = email => {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const submitHandler = async e => {
+    e.preventDefault();
+    let isValid = true;
+
+    // Email validation
+    if (!email) {
+      setEmailError("Email is required");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      isValid = false;
+    }
+
+    // Checkbox validation
+    if (!isSubscribed) {
+      setCheckboxError("You must agree to receive updates");
+      isValid = false;
+    }
+
+    if (isValid) {
+      try {
+        dispatch(
+          API.saveUser({
+            user: {
+              _id: null,
+              first_name: "",
+              last_name: "",
+              email,
+              affiliate: null,
+              is_affiliated: false,
+              isVerified: true,
+              isAdmin: false,
+              email_subscription: isSubscribed,
+              shipping: {},
+            },
+            profile: false,
+          })
+        );
+        await API_Emails.send_email_subscription(email);
+        setIsSubmitted(true);
+        setEmail("");
+        setIsSubscribed(false);
+      } catch (error) {
+        setEmailError("An error occurred. Please try again.");
+      }
+    }
+  };
   return (
     <Box
       component="footer"
@@ -67,38 +116,57 @@ const Footer = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={5}>
             <Typography variant="h6" gutterBottom>
-              Sign up for early access, news and exclusive offers
+              Sign up to be the first to learn about whats new!
             </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Your email"
-              sx={{
-                mb: 2,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "white" },
-                  "&:hover fieldset": { borderColor: "white" },
-                  "&.Mui-focused fieldset": { borderColor: "white" },
-                },
-                "& .MuiInputBase-input": { color: "white" },
-              }}
-            />
-            <FormControlLabel
-              control={<Checkbox sx={{ color: "white", "&.Mui-checked": { color: "white" } }} />}
-              label="By checking this box you are agreeing to receive brand updates, promotions and content from Glow LEDs."
-              sx={{ mb: 2 }}
-            />
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                bgcolor: "white",
-                color: "black",
-                "&:hover": { bgcolor: "grey.300" },
-              }}
-            >
-              SUBMIT
-            </Button>
+            <form onSubmit={submitHandler}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Your email"
+                value={email}
+                onChange={handleEmailChange}
+                helperText={emailError}
+                sx={{
+                  mb: 2,
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "white" },
+                    "&:hover fieldset": { borderColor: "white" },
+                    "&.Mui-focused fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiInputBase-input": { color: "white" },
+                }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isSubscribed}
+                    onChange={handleSubscribeChange}
+                    sx={{ color: "white", "&.Mui-checked": { color: "white" } }}
+                  />
+                }
+                label="By checking this box you are agreeing to receive brand updates, promotions and content from Glow LEDs."
+                sx={{ mb: 1 }}
+              />
+              {checkboxError && <FormHelperText>{checkboxError}</FormHelperText>}
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                  mt: 2,
+                  bgcolor: "white",
+                  color: "black",
+                  "&:hover": { bgcolor: "grey.300" },
+                }}
+              >
+                SUBMIT
+              </Button>
+            </form>
+            {isSubmitted && (
+              <Typography variant="body2" sx={{ mt: 2, color: "green" }}>
+                Thank you for signing up!
+              </Typography>
+            )}
           </Grid>
           <Grid item xs={12} md={7}>
             <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -124,8 +192,8 @@ const Footer = () => {
                   <AccordionDetails>
                     {section.links.map((link, linkIndex) => (
                       <Typography key={linkIndex} sx={{ mb: 1 }}>
-                        <Link href="#" color="inherit" underline="none">
-                          {link}
+                        <Link component={RouterLink} to={link.url} color="inherit" underline="none">
+                          {link.text}
                         </Link>
                       </Typography>
                     ))}
@@ -142,11 +210,12 @@ const Footer = () => {
                   {section.links.map((link, linkIndex) => (
                     <Link
                       key={linkIndex}
-                      component="button"
+                      component={RouterLink}
+                      to={link.url}
                       variant="body2"
                       sx={{ display: "block", mb: 1, color: "white", textDecoration: "none" }}
                     >
-                      {link}
+                      {link.text}
                     </Link>
                   ))}
                 </Grid>
@@ -155,39 +224,55 @@ const Footer = () => {
           </Grid>
         </Grid>
         <Box sx={{ mt: 4, borderTop: "1px solid white", pt: 2 }}>
-          <Grid container justifyContent="center" alignItems="center" direction="column">
-            <Grid item sx={{ mb: 2 }}>
-              {socialIcons.map(({ Icon, url }, index) => (
-                <IconButton key={index} href={url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
-                  <Icon />
-                </IconButton>
-              ))}
-            </Grid>
-            <Grid item sx={{ mb: 2 }}>
-              <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+          <Grid
+            container
+            justifyContent={isLargeScreen ? "space-between" : "center"}
+            alignItems="center"
+            direction={isLargeScreen ? "row" : "column"}
+          >
+            <Grid item sx={{ mb: isLargeScreen ? 0 : 2, order: isLargeScreen ? 1 : 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: isLargeScreen ? "flex-start" : "center",
+                  gap: 2,
+                }}
+              >
                 {[
-                  "Do Not Sell / Share",
-                  "Notice At Collection",
-                  "Web Accessibility",
-                  "Personal Data Requests",
-                  "Privacy",
-                  "Terms",
-                ].map((text, index) => (
+                  { text: "Terms", url: "/pages/terms" },
+                  { text: "Sitemap", url: "/pages/sitemap" },
+                ].map((link, index) => (
                   <Link
                     key={index}
-                    component="button"
+                    component={RouterLink}
+                    to={link.url}
                     variant="body2"
-                    sx={{ mx: 1, my: 0.5, color: "white", textDecoration: "none" }}
+                    sx={{ my: 0.5, color: "white", textDecoration: "none" }}
                   >
-                    {text}
+                    {link.text}
                   </Link>
                 ))}
               </Box>
+              <Box>
+                <Typography variant="body2" color="white">
+                  Designed and developed by a glover who wants to see the community grow
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="body2" color="white">
+                  © {new Date().getFullYear()} Glow LEDs. All rights reserved.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item sx={{ mb: isLargeScreen ? 0 : 2, order: isLargeScreen ? 2 : 1 }}>
+              {socialIcons.map(({ Icon, url }, index) => (
+                <IconButton key={index} href={url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
+                  <Icon style={{ fontSize: "4rem" }} />
+                </IconButton>
+              ))}
             </Grid>
           </Grid>
-          <Typography variant="body2" sx={{ mt: 2, fontSize: "0.8rem", textAlign: "center" }}>
-            © 2024. All Rights Reserved.
-          </Typography>
         </Box>
       </Container>
     </Box>

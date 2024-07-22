@@ -389,6 +389,9 @@ export default ({ categories, promo_code }) => {
       </tr>
     </tbody>
   </table>
+  ${
+    promo_code
+      ? `
   <table style="border-spacing:0;width:100%;padding:10px">
     <tbody>
       <tr style="font-size:16px">
@@ -418,6 +421,8 @@ export default ({ categories, promo_code }) => {
           <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Explore Today</h4>
         </a></div>
     </tr>
-  </table>
+  </table>`
+      : ""
+  }
 </div>`;
 };
