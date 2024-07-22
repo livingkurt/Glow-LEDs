@@ -133,7 +133,8 @@ const productPage = createSlice({
         customizedProduct: {
           product: data._id,
           name: data.name,
-          description: data.description,
+          short_description: data.short_description,
+          fact: data.fact,
           images: data.images,
           display_image_object: data.images[0],
           category: data.category,

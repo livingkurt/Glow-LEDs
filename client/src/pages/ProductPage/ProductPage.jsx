@@ -36,8 +36,6 @@ const ProductPage = () => {
 
   const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
-  const { images, currentOptions } = customizedProduct;
-
   console.log({ product });
 
   return (
@@ -69,7 +67,7 @@ const ProductPage = () => {
             <Container maxWidth="xl">
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <ProductImages images={images} />
+                  <ProductImages images={customizedProduct.images} />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -86,16 +84,16 @@ const ProductPage = () => {
                     </Box>
                   )}
                   <Typography variant="body1" gutterBottom mt={2} mb={2}>
-                    {product.fact}
+                    {customizedProduct.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                    Price: ${product.price}
+                    Price: ${customizedProduct.price}
                   </Typography>
                   <Typography variant="body1" gutterBottom mt={2} mb={2}>
-                    {product.short_description}
+                    {customizedProduct.short_description}
                   </Typography>
                   <CompatibleChips chips={customizedProduct.chips} />
-                  {currentOptions?.map((option, index) => (
+                  {customizedProduct.currentOptions?.map((option, index) => (
                     <CustomizationOption
                       key={index}
                       index={index}
