@@ -634,11 +634,11 @@ export default {
     try {
       const products = await Product.find({ hidden: false, deleted: false, option: false })
         .sort({ order: 1 })
-        .populate("images_object")
-        .populate("color_images_object")
-        .populate("secondary_color_images_object")
-        .populate("option_images_object")
-        .populate("secondary_images_object")
+        .populate("images")
+        .populate("color_images")
+        .populate("secondary_color_images")
+        .populate("option_images")
+        .populate("secondary_images")
         .populate("chips")
         .populate("products")
         .populate({
@@ -648,7 +648,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -656,9 +656,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -668,7 +668,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -676,9 +676,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate({
@@ -688,7 +688,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -696,9 +696,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
           ],
         })
         .populate("filament")
@@ -709,7 +709,7 @@ export default {
               path: "filament",
             },
             {
-              path: "images_object",
+              path: "images",
             },
             {
               path: "categorys",
@@ -717,9 +717,9 @@ export default {
             {
               path: "subcategorys",
             },
-            {
-              path: "collections",
-            },
+            // {
+            //   path: "collections",
+            // },
 
             {
               path: "color_products",
@@ -749,7 +749,7 @@ export default {
         })
         .populate("categorys")
         .populate("subcategorys")
-        .populate("collections")
+        // .populate("collections")
         .populate("contributors");
 
       const transformedProducts = transformProducts(products);

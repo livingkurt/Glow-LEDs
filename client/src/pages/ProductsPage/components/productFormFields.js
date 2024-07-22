@@ -2,16 +2,7 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
 
-export const productFormFields = ({
-  products,
-  users,
-  categorys,
-  product,
-  chips,
-  filaments,
-  dispatch,
-  productsQuery,
-}) => {
+export const productFormFields = ({ products, users, tags, product, chips, filaments, dispatch, productsQuery }) => {
   return {
     product_info_title: {
       label: "Product Info",
@@ -33,6 +24,10 @@ export const productFormFields = ({
       label: "Max Quantity",
       labelProp: "max_quantity",
     },
+    short_description: {
+      type: "text_multiline",
+      label: "Short Description",
+    },
     count_in_stock: {
       type: "number",
       label: "Count in Stock",
@@ -43,6 +38,72 @@ export const productFormFields = ({
       type: "checkbox",
       label: "Finite Stock",
       default: false,
+    },
+    options: {
+      type: "array",
+      label: item => item.name,
+      title: "Product Options",
+      itemSchema: {
+        type: "object",
+        fields: {
+          name: {
+            type: "text",
+            label: "Option Name",
+            labelProp: "name",
+          },
+          optionType: {
+            type: "autocomplete_single",
+            label: "Option Type",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return toCapitalize(option);
+              }
+            },
+            options: ["colors", "dropdown", "buttons"],
+          },
+          isAddOn: {
+            type: "checkbox",
+            label: "Is Add-On",
+          },
+          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+          values: {
+            type: "array",
+            title: "Option Choices",
+            label: item => item.name,
+            itemSchema: {
+              type: "object",
+              fields: {
+                name: { type: "text", label: "Name" },
+                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
+                isDefault: { type: "checkbox", label: "Default Option" },
+                additionalCost: { type: "number", label: "Additional Cost" },
+                product: {
+                  type: "autocomplete_single",
+                  label: "Option Product",
+                  options: products,
+                  labelProp: "name",
+                  onEditButtonClick: selectedProduct => {
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+                  },
+                  onCreateNewButtonClick: selectedProduct => {
+                    console.log(selectedProduct);
+                    dispatch(saveToEditProductHistory(product));
+                    dispatch(API.saveProduct({ ...selectedProduct }));
+                  },
+                  showEditButton: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    tags: {
+      type: "autocomplete_multiple",
+      label: "Tags",
+      options: tags,
+      labelProp: "name",
     },
     hidden: {
       type: "checkbox",
@@ -445,69 +506,11 @@ export const productFormFields = ({
     contributors: {
       type: "autocomplete_multiple",
       label: "Contributors",
-      options: users,
       labelProp: "first_name",
+      options: users.filter(user => user.first_name && user.last_name),
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
-    options: {
-      type: "array",
-      label: item => item.name,
-      title: "Product Options",
-      itemSchema: {
-        type: "object",
-        fields: {
-          name: {
-            type: "text",
-            label: "Option Name",
-            labelProp: "name",
-          },
-          optionType: {
-            type: "autocomplete_single",
-            label: "Option Type",
-            getOptionLabel: option => {
-              if (typeof option === "string") {
-                return toCapitalize(option);
-              }
-            },
-            options: ["colors", "dropdown", "buttons"],
-          },
-          isAddOn: {
-            type: "checkbox",
-            label: "Is Add-On",
-          },
-          replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-          values: {
-            type: "array",
-            title: "Option Choices",
-            label: item => item.name,
-            itemSchema: {
-              type: "object",
-              fields: {
-                name: { type: "text", label: "Name" },
-                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
-                isDefault: { type: "checkbox", label: "Default Option" },
-                additionalCost: { type: "number", label: "Additional Cost" },
-                product: {
-                  type: "autocomplete_single",
-                  label: "Option Product",
-                  options: products,
-                  labelProp: "name",
-                  onEditButtonClick: selectedProduct => {
-                    dispatch(saveToEditProductHistory(product));
-                    dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-                  },
-                  onCreateNewButtonClick: selectedProduct => {
-                    console.log(selectedProduct);
-                    dispatch(saveToEditProductHistory(product));
-                    dispatch(API.saveProduct({ ...selectedProduct }));
-                  },
-                  showEditButton: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+
     chips: {
       type: "autocomplete_multiple",
       label: "Chips",

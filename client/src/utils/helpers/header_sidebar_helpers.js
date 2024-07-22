@@ -325,7 +325,7 @@ export const navigation = [
           },
           {
             title: "Contact",
-            link: "/pages/contact",
+            link: "/pages/support_center",
           },
           {
             title: "Term and Conditions",

@@ -14,8 +14,7 @@ const chip = {
   characteristics: "",
   colors_per_mode: 0,
   pathname: "",
-  image: "",
-  image_object: {},
+  images: [],
   colors: [],
   dimensions: {
     height: 0,

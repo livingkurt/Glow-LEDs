@@ -28,22 +28,28 @@ import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
 import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
+import CompatibleChips from "./components/CompatibleChips";
+import ContributorsDisplay from "./components/ContributorsDisplay";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
 
   const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
 
-  const { images, currentOptions } = customizedProduct;
-
   return (
     <Box>
-      <ProductPageHead />
+      <ProductPageHead product={product} />
       <ProductPageLoading loading={productPageLoading}>
         {product && (
           <>
             <Box display="flex" justifyContent={"space-between"} p={2}>
-              <GLBreadcrumbs items={productPageBreadCrumbs(product)} />
+              <GLBreadcrumbs
+                items={
+                  current_user.isWholesaler
+                    ? productPageBreadCrumbs(product)
+                    : productPageBreadCrumbs(product).filter(item => item.name !== "WHOLESALE")
+                }
+              />
               {current_user?.isAdmin && (
                 <Box className="br-10px">
                   <GLButtonV2
@@ -59,7 +65,7 @@ const ProductPage = () => {
             <Container maxWidth="xl">
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <ProductImages images={images} />
+                  <ProductImages images={customizedProduct.images} />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -75,13 +81,17 @@ const ProductPage = () => {
                       </Typography>
                     </Box>
                   )}
-                  <Typography variant="subtitle1" gutterBottom mt={2} mb={2}>
-                    {product.fact}
+                  <Typography variant="body1" gutterBottom mt={2} mb={2}>
+                    {customizedProduct.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                    Price: ${product.price}
+                    Price: ${customizedProduct.price}
                   </Typography>
-                  {currentOptions?.map((option, index) => (
+                  <Typography variant="body1" gutterBottom mt={2} mb={2}>
+                    {customizedProduct.short_description}
+                  </Typography>
+                  <CompatibleChips chips={customizedProduct.chips} />
+                  {customizedProduct.currentOptions?.map((option, index) => (
                     <CustomizationOption
                       key={index}
                       index={index}
@@ -127,7 +137,7 @@ const ProductPage = () => {
                 </Grid>
               </Grid>
             </Container>
-            <Box mt={2}>
+            <Box mt={4}>
               <Grid container spacing={2}>
                 {!product.navigation_buttons_hidden && (
                   <Grid item xs={12}>
@@ -140,7 +150,7 @@ const ProductPage = () => {
                   </Grid>
                 )}
                 <Grid item xs={12} mt={!product?.hero_video?.hidden && product?.hero_video?.video ? -4 : 0}>
-                  <ProductProtectionDetails />
+                  <ProductProtectionDetails transparent={false} />
                 </Grid>
                 {!product?.features?.image_grid_1_hidden && product?.features?.image_grid_1.length > 0 && (
                   <Grid item xs={12} id="features">
@@ -210,6 +220,11 @@ const ProductPage = () => {
                   {product?.product_support && !product?.product_support.hidden && (
                     <Grid item xs={12} id="support">
                       <ProductSupport productSupport={product.product_support} />
+                    </Grid>
+                  )}
+                  {product?.contributors?.length > 0 && (
+                    <Grid item xs={12}>
+                      <ContributorsDisplay contributors={product.contributors} />
                     </Grid>
                   )}
                   <Grid item xs={12}>

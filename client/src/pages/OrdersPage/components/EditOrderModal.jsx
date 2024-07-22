@@ -48,6 +48,7 @@ const EditOrderModal = () => {
     productsQuery,
     promos,
     all_shipping,
+    order,
   });
 
   return (

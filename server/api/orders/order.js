@@ -9,7 +9,9 @@ const orderItemSchema = new mongoose.Schema(
     qty: { type: Number },
     max_quantity: { type: Number },
     quantity: { type: Number },
-    display_image: { type: String },
+    display_image: { type: String }, // Uncomment on first migration
+    // display_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" }, // Uncomment on first migration uncomment on second migration
+    display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     secondary_image: { type: String },
     category: { type: String },
     count_in_stock: { type: Number },

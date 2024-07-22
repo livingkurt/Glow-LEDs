@@ -173,7 +173,7 @@ export default ({ email, order }) => {
 																								<div style='margin-bottom: 10px; margin-right: 10px;'>
 																									${
                                                     !item.secondary_image
-                                                      ? `<img src=${item.display_image} alt=${item.name} width="60"
+                                                      ? `<img src=${item?.display_image_object?.link} alt=${item.name} width="60"
 																										height="60" style='border-radius:8px;' title="Product Image" />`
                                                       : `
 																									<div />`
@@ -207,7 +207,7 @@ export default ({ email, order }) => {
                                                           ? "height: 35px;"
                                                           : "height: 70px;"
                                                         : ""
-                                                    }' src=${item.display_image} />
+                                                    }' src=${item?.display_image_object?.link} />
 																										<img id="expandedSecondaryImg" alt=${item.name} title=${item.name}
 																											style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
                                                         item.name

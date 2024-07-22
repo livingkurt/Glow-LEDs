@@ -72,7 +72,8 @@ const contentSchema = new mongoose.Schema(
       ],
       product_protection_details_hidden: { type: Boolean, default: false },
 
-      video: { type: String },
+      hero_video: { type: String },
+      hero_video_hidden: { type: Boolean },
     },
     banner: {
       label: { type: String },

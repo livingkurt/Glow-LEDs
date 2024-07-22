@@ -55,12 +55,12 @@ const CustomizationOption = ({ index, option, selectedOption }) => {
           />
         )}
       </Box>
-      {/* {selectedOption?.product?.images_object[0]?.link && (
+      {/* {selectedOption?.product?.images[0]?.link && (
         <Box mt={5}>
           <Zoom overlayBgColorEnd="rgba(0, 0, 0, 0.95)">
             <Tooltip title="Click to Expand" placement="top">
               <img
-                src={selectedOption?.product?.images_object[0]?.link}
+                src={selectedOption?.product?.images[0]?.link}
                 alt={selectedOption.name}
                 style={{
                   maxWidth: "75px",

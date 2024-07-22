@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
+  console.log({ featured_products });
   return !featured_products_hidden ? (
     <Box>
       <Typography variant="h4" component="h2" align="left" gutterBottom>
@@ -49,7 +50,7 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
               >
                 <CardMedia
                   component="img"
-                  image={product?.images_object[0]?.link}
+                  image={product?.images[0]?.link}
                   alt={product.name}
                   sx={{ borderRadius: "20px" }}
                 />
@@ -58,9 +59,9 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
                     {product.name}
                   </Typography>
                   <Typography variant="body2">${product?.price?.toFixed(2)}</Typography>
-                  <Button variant="contained" sx={{ marginTop: "10px" }}>
+                  {/* <Button variant="contained" sx={{ marginTop: "10px" }}>
                     Add To Cart
-                  </Button>
+                  </Button> */}
                 </CardContent>
               </Card>
             </Link>

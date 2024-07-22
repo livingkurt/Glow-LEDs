@@ -57,7 +57,7 @@ const ElevateYourExperience = ({ elevateYourExperience }) => {
               >
                 <CardMedia
                   component="img"
-                  image={product?.images_object[0]?.link}
+                  image={product?.images[0]?.link}
                   alt={product.name}
                   sx={{ borderRadius: "20px" }}
                 />

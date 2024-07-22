@@ -13,7 +13,7 @@ const GetTheMost = ({ get_more_out_of }) => {
           <Box
             p={{ xs: 2, md: 4 }}
             sx={{
-              backgroundColor: "#6f6f6f",
+              backgroundColor: "#4d5061",
               borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
               height: "100%",
               display: "flex",
@@ -31,7 +31,7 @@ const GetTheMost = ({ get_more_out_of }) => {
             </Typography>
             <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>
               <Link to={get_more_out_of.link}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="secondary">
                   {get_more_out_of.button_text}
                 </Button>
               </Link>

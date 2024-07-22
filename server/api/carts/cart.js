@@ -7,7 +7,9 @@ const cartItemsSchema = {
   category: { type: String, required: true },
   subcategory: { type: String, required: true },
   product_collection: { type: String },
-  display_image: { type: String, required: true },
+  display_image: { type: String }, // Uncomment on first migration
+  // display_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" }, // Uncomment on first migration uncomment on second migration
+  display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   quantity: { type: Number },
   max_quantity: { type: Number },
   quantity: { type: Number },

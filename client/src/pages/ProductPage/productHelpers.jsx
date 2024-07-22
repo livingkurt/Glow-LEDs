@@ -23,8 +23,11 @@ export const calculateAdditionalCost = selectedOptions =>
 
 export const updateProductDetailsFromOption = (state, selectedOption) => {
   const { product } = selectedOption;
-  if (selectedOption.product.images_object.length > 0) {
-    state.customizedProduct.images = selectedOption.product.images_object;
+  if (selectedOption.product.images.length > 0) {
+    state.customizedProduct.images = selectedOption.product.images;
+  }
+  if (selectedOption.product.chips.length > 0) {
+    state.customizedProduct.chips = selectedOption.product.chips;
   }
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
@@ -55,20 +58,24 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
     });
   }
 
-  if (product?.description) {
-    state.customizedProduct.description = product.description;
+  if (product?.short_description) {
+    state.customizedProduct.short_description = product.short_description;
   }
-  if (product?.facts) {
-    state.customizedProduct.facts = product.facts;
+  if (product?.fact) {
+    state.customizedProduct.fact = product.fact;
   }
-  if (product?.quantity) {
-    state.customizedProduct.max_quantity = product.quantity;
+  if (product?.max_quantity) {
+    state.customizedProduct.max_quantity = product.max_quantity;
   }
   if (product?.count_in_stock > 0) {
     state.customizedProduct.count_in_stock = product.count_in_stock;
   }
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
+  }
+  console.log({ dimensions: product?.dimensions });
+  if (product?.dimensions) {
+    state.customizedProduct.dimensions = product.dimensions;
   }
 };
 
@@ -106,7 +113,7 @@ export const updateRecentlyViewed = product => {
     const recentProduct = {
       pathname: product.pathname,
       name: product.name,
-      image: product.images_object && product.images_object[0],
+      image: product.images && product.images[0],
       price: product.price,
     };
 
@@ -122,15 +129,15 @@ export const productPageBreadCrumbs = product => {
   const { category, subcategory, product_collection, name } = product;
   return [
     { name: "ALL PRODUCTS", to: "/collections/all/products" },
-    { name: category?.toUpperCase(), to: `/collections/all/products/category/${category}` },
+    { name: category?.toUpperCase().split("_").join(" "), to: `/collections/all/products/category/${category}` },
     {
-      name: subcategory?.toUpperCase(),
+      name: subcategory?.toUpperCase().split("_").join(" "),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
     },
     {
-      name: product_collection?.toUpperCase(),
+      name: product_collection?.toUpperCase().split("_").join(" "),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
     },
-    { name: name?.toUpperCase() },
+    { name: name?.toUpperCase().split("_").join(" ") },
   ];
 };

@@ -197,6 +197,7 @@ const cartPage = createSlice({
     },
     [API.addToCart.fulfilled]: (state, { payload }) => {
       const { data, type, current_user } = payload;
+      console.log({ data, type, current_user });
       if (type === "add_to_cart") {
         state.my_cart = data;
         // Only update local storage if the user is not logged in

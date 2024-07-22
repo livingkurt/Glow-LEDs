@@ -43,17 +43,15 @@ import { AnnouncementsPage } from "../../pages/AnnouncementsPage";
 import { ManualPage } from "../../pages/ManualPage";
 import { ColorPalettePage } from "../../pages/ColorPalettesPage";
 import { EventsPage } from "../../pages/EventsPage";
-import { ContactPage } from "../../pages/ContactPage";
+import SupportCenterPage from "../../pages/SupportCenterPage/SupportCenterPage";
 import { TermsPage } from "../../pages/TermsPage";
 import { MenuPage } from "../../pages/MenuPage";
 import { AboutPage } from "../../pages/AboutPage";
-import { FAQPage } from "../../pages/FAQPage";
 import { SitemapPage } from "../../pages/SitemapPage";
 import { MusicPage } from "../../pages/MusicPage";
 import { CompletePage } from "../../pages/CompletePage";
 import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
-import TrackOrderPage from "../../pages/TrackOrderPage/TrackOrderPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -76,17 +74,15 @@ export const Components = {
   ManualPage,
   ColorPalettePage,
   EventsPage,
-  ContactPage,
+  SupportCenterPage,
   TermsPage,
   MenuPage,
   AboutPage,
-  FAQPage,
   SitemapPage,
   MusicPage,
   CompletePage,
   AffiliateTermsPage,
   TutorialsGridPage,
-  TrackOrderPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

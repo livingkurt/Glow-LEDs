@@ -24,6 +24,7 @@ const chip_schema = new mongoose.Schema(
     pathname: { type: String },
     image: { type: String },
     image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     dimensions: chip_dimensions_schema,
     deleted: { type: Boolean, default: false },
   },

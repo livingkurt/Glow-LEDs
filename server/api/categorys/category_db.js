@@ -6,7 +6,7 @@ export default {
       return await Category.find(filter)
         .sort(sort)
         .populate("subcategorys")
-        .populate("collections")
+        // .populate("collections")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -18,7 +18,7 @@ export default {
   },
   findById_categorys_db: async id => {
     try {
-      return await Category.findOne({ _id: id, deleted: false }).populate("subcategorys").populate("collections");
+      // return await Category.findOne({ _id: id, deleted: false }).populate("subcategorys").populate("collections");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -27,9 +27,8 @@ export default {
   },
   findByPathname_categorys_db: async pathname => {
     try {
-      return await Category.findOne({ pathname: pathname, deleted: false })
-        .populate("subcategorys")
-        .populate("collections");
+      return await Category.findOne({ pathname: pathname, deleted: false }).populate("subcategorys");
+      // .populate("collections");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

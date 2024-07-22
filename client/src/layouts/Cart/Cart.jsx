@@ -67,7 +67,7 @@ const Cart = () => {
               <Box
                 onClick={closeMenu}
                 component="img"
-                src={item?.display_image}
+                src={item?.display_image_object?.link}
                 alt={item.name}
                 sx={{ width: 80, height: 80, borderRadius: 2 }}
               />
@@ -240,7 +240,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Proceed to Checkout
+                Checkout
               </Button>
             ) : (
               <Button
@@ -253,7 +253,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Proceed to Checkout
+                Checkout
               </Button>
             )}
           </Box>

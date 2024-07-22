@@ -95,7 +95,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[0].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[0].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[0].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -115,7 +115,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[1].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[1].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[1].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -142,7 +142,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[2].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[2].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[2].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -162,7 +162,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[3].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[3].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[3].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -189,7 +189,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[4].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[4].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[4].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -209,7 +209,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[5].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[5].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[5].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -236,7 +236,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[6].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[6].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[6].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -256,7 +256,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[7].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[7].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[7].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -283,7 +283,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[8].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[8].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[8].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -303,7 +303,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[9].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[9].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[9].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -330,7 +330,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[10].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[10].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[10].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -350,7 +350,7 @@ export default ({ user, categories }) => {
                                 <td style="position: relative;">
 
                                   <a href=${categories[11].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[11].image_object?.link} alt="Glow LEDs" title="Email Image"
+                                      src=${categories[11].image?.link} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">

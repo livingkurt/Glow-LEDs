@@ -6,7 +6,6 @@ export const areCartItemsEqual = (item1, item2) => {
     "category",
     "subcategory",
     "product_collection",
-    "display_image",
     "color_code",
     "pathname",
     "sale_price",

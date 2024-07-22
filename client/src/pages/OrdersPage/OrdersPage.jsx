@@ -13,7 +13,7 @@ import {
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Chip, Container, Grid, List, ListItem, Typography } from "@mui/material";
 import {
   orderStatusColors,
   determineOrderColors,
@@ -22,7 +22,6 @@ import {
   orderExceptionStatusColors,
   socket,
 } from "./ordersPageHelpers";
-import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shippingSlice";
@@ -39,6 +38,7 @@ import Money from "@mui/icons-material/Money";
 import { showConfirm, showSuccess } from "../../slices/snackbarSlice";
 import { ShoppingCart } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { useTheme } from "@emotion/react";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -86,17 +86,82 @@ const OrdersPage = () => {
     };
   }, []);
 
-  const determineProductNameString = (item, show_quantity) => {
-    let name = `${show_quantity && item.quantity > 1 ? item.quantity + "x " : ""}${item.name}`;
+  const OrderItem = ({ item }) => {
+    const theme = useTheme();
 
-    if (!item?.selectedOptions || !item?.currentOptions) return name;
-    item?.selectedOptions?.forEach((option, index) => {
-      if (option.name) {
-        name += ` - ${option.name} ${item.currentOptions[index].name}`;
-      }
-    });
-
-    return name;
+    return (
+      <ListItem divider>
+        <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
+          <Grid item>
+            <Link to={`/collections/all/products/${item.pathname}`}>
+              <Box
+                position="relative"
+                sx={{
+                  width: 60,
+                  height: 60,
+                }}
+              >
+                <Box
+                  component="img"
+                  src={item?.display_image_object?.link}
+                  alt={item.name}
+                  sx={{ width: "100%", height: "100%", borderRadius: 2 }}
+                />
+                {item.quantity > 1 && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      right: 0,
+                      backgroundColor: "white",
+                      color: "black",
+                      border: "1px solid #ccc",
+                      borderRadius: "50%",
+                      width: "24px",
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.5rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.quantity}
+                  </Box>
+                )}
+              </Box>
+            </Link>
+          </Grid>
+          <Grid item xs container direction="column" spacing={1}>
+            <Grid item>
+              <Typography variant="body1" component={Link} to={`/collections/all/products/${item.pathname}`}>
+                {item.name}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {item.selectedOptions?.map((option, optionIndex) => {
+                  const bgColor = option.colorCode || theme.palette.background.default;
+                  return (
+                    <Chip
+                      key={optionIndex}
+                      label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
+                      size="small"
+                      sx={{
+                        backgroundColor: bgColor,
+                        color: theme.palette.getContrastText(bgColor),
+                        fontSize: "1rem",
+                        fontWeight: "500",
+                      }}
+                    />
+                  );
+                })}
+              </Box>
+            </Grid>
+          </Grid>
+        </Grid>
+      </ListItem>
+    );
   };
 
   const columnDefs = useMemo(
@@ -114,12 +179,11 @@ const OrdersPage = () => {
         display: row => (
           <div>
             <div>
-              {row.orderItems.map(item => (
-                <div>{determineProductNameString(item, true, row.createdAt)}</div>
-              ))}
-            </div>
-            <div>
-              <OrderItemsDisplay order={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} />
+              <List>
+                {row.orderItems?.map((item, index) => (
+                  <OrderItem key={index} item={item} index={index} />
+                ))}
+              </List>
             </div>
             <div className="mt-10px">
               {row.order_note && (

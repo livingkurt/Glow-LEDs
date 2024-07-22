@@ -53,7 +53,7 @@ const SupportBanner = () => {
             <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>
               <Link to={support_banner?.link}>
                 <Button variant="contained" color="secondary">
-                  {support_banner.button_text}
+                  {support_banner?.button_text}
                 </Button>
               </Link>
             </Box>

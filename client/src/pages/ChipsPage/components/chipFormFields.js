@@ -56,13 +56,9 @@ export const chipFormFields = ({ chip, categorys }) => {
       type: "text",
       label: "Pathname",
     },
-    image: {
-      type: "text",
-      label: "Image",
-    },
-    image_object: {
+    images: {
       type: "image_upload",
-      label: "Image",
+      label: "Images",
       labelProp: "link",
       album: `${chip.name} Images`,
       getOptionLabel: option => option.link,

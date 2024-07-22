@@ -1,4 +1,4 @@
-export const cartFormFields = ({ products, users }) => {
+export const cartFormFields = ({ products, users, cart }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -25,11 +25,12 @@ export const cartFormFields = ({ products, users }) => {
             label: "Max Quantity",
             labelProp: "max_quantity",
           },
-          display_image: {
-            type: "text",
-            label: "Display Image",
-            labelProp: "display_image",
-            required: true,
+          display_image_object: {
+            type: "image_upload",
+            label: "Images",
+            labelProp: "link",
+            album: `${cart?.user?.first_name} ${cart?.user?.last_name} Images`,
+            getOptionLabel: option => option.link,
           },
           secondary_image: {
             type: "text",

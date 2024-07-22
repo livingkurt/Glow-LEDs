@@ -20,12 +20,14 @@ const AboutPage = () => {
     <>
       <AboutPageHeader />
       <Box py={2}>
-        <Typography variant="h1" align="center" gutterBottom>
-          {about_page?.title}
-        </Typography>
-        <Typography variant="subtitle1" gutterBottom textAlign="center">
-          {about_page?.subtitle}
-        </Typography>
+        <Container maxWidth="lg">
+          <Typography variant="h1" align="center" gutterBottom>
+            {about_page?.title}
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom textAlign="center">
+            {about_page?.subtitle}
+          </Typography>
+        </Container>
 
         <Box mb={2}>
           <HeroVideo video={about_page?.video} video_hidden={false} />

@@ -60,8 +60,58 @@ export default {
       const limitStage = { $limit: limitAmount };
       const skipStage = { $skip: skipAmount };
 
+      // Add a lookup stage to populate the display_image field
+      const lookupStage = {
+        $lookup: {
+          from: "images",
+          localField: "orderItems.display_image_object",
+          foreignField: "_id",
+          as: "populatedDisplayImages",
+        },
+      };
+
+      // Add a stage to replace the display_image_object ObjectId with the populated image data
+      const replaceDisplayImageStage = {
+        $addFields: {
+          "orderItems": {
+            $map: {
+              input: "$orderItems",
+              as: "item",
+              in: {
+                $mergeObjects: [
+                  "$$item",
+                  {
+                    display_image_object: {
+                      $arrayElemAt: [
+                        {
+                          $filter: {
+                            input: "$populatedDisplayImages",
+                            as: "img",
+                            cond: { $eq: ["$$img._id", "$$item.display_image_object"] },
+                          },
+                        },
+                        0,
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      };
+
       // Construct the aggregation pipeline
-      const pipeline = [{ $match: filter }, customSortStage, existingSortStage, skipStage, limitStage];
+      const pipeline = [
+        { $match: filter },
+        customSortStage,
+        existingSortStage,
+        skipStage,
+        limitStage,
+        lookupStage,
+        replaceDisplayImageStage,
+        { $project: { populatedDisplayImages: 0 } }, // Remove the temporary field
+      ];
 
       // Execute the aggregation pipeline
       return await Order.aggregate(pipeline).exec();
@@ -78,6 +128,7 @@ export default {
         .sort(sort)
         .populate("user")
         .populate("orderItems.product")
+        .populate("orderItems.display_image_object")
         .populate("orderItems.secondary_product")
         .sort(sort)
         .limit(parseInt(limit))
@@ -96,6 +147,7 @@ export default {
       return await Order.find(filter)
         .sort(sort)
         .populate("user")
+        .populate("orderItems.display_image_object")
         .populate("orderItems.product")
         .populate("orderItems.secondary_product")
         .sort(sort)
@@ -114,6 +166,7 @@ export default {
     try {
       return await Order.findOne({ _id: id, deleted: false })
         .populate("user")
+        .populate("orderItems.display_image_object")
         .populate("orderItems.color_product")
         .populate("orderItems.secondary_color_product")
         .populate("orderItems.option_product")
@@ -146,6 +199,7 @@ export default {
     try {
       return await Order.findOne(params)
         .populate("user")
+        .populate("orderItems.display_image_object")
         .populate("orderItems.product")
         .populate("orderItems.secondary_product");
     } catch (error) {

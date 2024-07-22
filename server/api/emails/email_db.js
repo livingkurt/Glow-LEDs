@@ -4,8 +4,8 @@ export default {
   findAll_emails_db: async (filter, sort, limit, page) => {
     try {
       return await Email.find(filter)
-        .populate("image_object")
-        .populate("images_object")
+        .populate("image")
+        .populate("images")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -18,7 +18,7 @@ export default {
   },
   findById_emails_db: async id => {
     try {
-      return await Email.findOne({ _id: id, deleted: false }).populate("image_object").populate("images_object");
+      return await Email.findOne({ _id: id, deleted: false }).populate("image").populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

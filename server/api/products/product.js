@@ -37,10 +37,11 @@ const productSchema = new mongoose.Schema(
     fact: { type: String },
 
     price: { type: Number },
+
     wholesale_price: { type: Number },
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
-
+    short_description: { type: String },
     max_quantity: { type: Number, default: 30, required: true },
     count_in_stock: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
@@ -196,7 +197,7 @@ const productSchema = new mongoose.Schema(
     // Is Variation
     parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
     isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
-    color: {
+    color_object: {
       name: { type: String },
       code: { type: String },
       is_filament_color: { type: Boolean },
@@ -224,6 +225,7 @@ const productSchema = new mongoose.Schema(
     sale_end_date: { type: Date },
 
     facts: { type: String },
+
     description: { type: String },
 
     preorder: { type: Boolean, default: false },
@@ -260,10 +262,13 @@ const productSchema = new mongoose.Schema(
     // Depreciated
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    // color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    // secondary_color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    // option_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     color_images: { type: Array },
     secondary_color_images: { type: Array },
     option_images: { type: Array },
-    secondary_images: { type: Array },
+    secondary_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
 
     color_product_group: { type: Boolean, default: false },
     color_group_name: { type: String },

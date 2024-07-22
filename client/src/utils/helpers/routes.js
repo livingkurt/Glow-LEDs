@@ -38,15 +38,12 @@ const routes = [
   { path: "/pages/affiliate_terms", element: "AffiliateTermsPage", exact: true },
   { path: "/pages/color_palettes", element: "ColorPalettePage", exact: true },
   { path: "/pages/events", element: "EventsPage", exact: true },
-  { path: "/pages/contact/:reason?", element: "ContactPage", exact: true },
-  { path: "/pages/glowcontrol", element: "ContactPage" },
+  { path: "/pages/support_center/:reason?", element: "SupportCenterPage", exact: true },
   { path: "/pages/terms", element: "TermsPage", exact: true },
   { path: "/pages/menu/:pathname", element: "MenuPage", exact: true },
   { path: "/pages/about", element: "AboutPage", exact: true },
-  { path: "/pages/faq", element: "FAQPage", exact: true },
   { path: "/pages/sitemap", element: "SitemapPage", exact: true },
   { path: "/pages/music", element: "MusicPage", exact: true },
-  { path: "/pages/track_your_order", element: "TrackOrderPage", exact: true },
   { path: "/pages/complete/:type/:id?", element: "CompletePage", exact: true },
 ];
 const adminRoutes = [

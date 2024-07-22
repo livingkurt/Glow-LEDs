@@ -20,6 +20,8 @@ import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { ProductItemD, ProductItemM } from "./components";
 import * as API from "../../api";
 import { Container, Grid, Skeleton } from "@mui/material";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import { productGridPageBreadCrumbs } from "./productGridPageHelpers";
 
 const AllProductsPage = () => {
   const params = useParams();
@@ -332,6 +334,13 @@ const AllProductsPage = () => {
         <meta property="og:description" content={description_determination(category)} />
         <meta name="twitter:description" content={description_determination(category)} />
       </Helmet>
+      <GLBreadcrumbs
+        items={productGridPageBreadCrumbs({
+          category: params.category,
+          subcategory: params.subcategory,
+          collection: params.collection,
+        })}
+      />
 
       {page_title}
 

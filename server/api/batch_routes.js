@@ -2685,7 +2685,7 @@ router.route("/update_faq_page").put(async (req, res) => {
     // }
 
     const latestContent = await Content.findOneAndUpdate(
-      { _id: "657355e106cccc0f7a160afa" },
+      { _id: "669ad511e719de2de3c344b4" },
       { faq_page: data }
       // { sort: { createdAt: -1 }, new: true }
     );
@@ -2806,9 +2806,9 @@ router.route("/migrate_quantity").put(async (req, res) => {
           },
         },
       },
-      {
-        $unset: "orderItems.qty",
-      },
+      // {
+      //   $unset: "orderItems.qty",
+      // },
     ]);
 
     // Update cartSchema
@@ -2832,19 +2832,19 @@ router.route("/migrate_quantity").put(async (req, res) => {
           },
         },
       },
-      {
-        $unset: "cartItems.qty",
-      },
+      // {
+      //   $unset: "cartItems.qty",
+      // },
     ]);
 
-    await Product.updateMany(
-      {},
-      {
-        $rename: {
-          quantity: "max_quantity",
-        },
-      }
-    );
+    // await Product.updateMany(
+    //   {},
+    //   {
+    //     $rename: {
+    //       quantity: "max_quantity",
+    //     },
+    //   }
+    // );
 
     res.status(200).send({ message: "Field names migrated successfully" });
   } catch (error) {
@@ -2853,18 +2853,66 @@ router.route("/migrate_quantity").put(async (req, res) => {
   }
 });
 
+const colorNameToHex = {
+  "black": "#000000",
+  "white": "#FFFFFF",
+  "frosted": "#abaeb5",
+  "clear": "#4b4b4b",
+  "red": "#FF0000",
+  "green": "#008000",
+  "blue": "#0000FF",
+  "yellow": "#FFFF00",
+  "purple": "#800080",
+  "orange": "#FFA500",
+  "pink": "#FFC0CB",
+  "brown": "#A52A2A",
+  "gray": "#808080",
+  "cyan": "#00FFFF",
+  "magenta": "#FF00FF",
+  "silver": "#C0C0C0",
+  "gold": "#FFD700",
+  "navy": "#000080",
+  "aqua": "#00FFFF",
+  "teal": "#008080",
+  "olive": "#808000",
+  "maroon": "#800000",
+};
+
+const convertToHex = color => {
+  if (!color) return null;
+  if (color.startsWith("#")) return color;
+  const lowerColor = color.toLowerCase();
+  return colorNameToHex[lowerColor] || color;
+};
+
 router.route("/migrate_order_options").put(async (req, res) => {
   try {
     const orders = await Order.find({});
     console.log("Total orders:", orders.length);
 
+    let migratedCount = 0;
+    let skippedCount = 0;
+
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i];
       console.log(`Processing order ${i + 1} of ${orders.length}`);
 
+      let orderUpdated = false;
+
       for (let j = 0; j < order.orderItems.length; j++) {
         const orderItem = order.orderItems[j];
         console.log(`Processing order item ${j + 1} of ${order.orderItems.length}`);
+
+        // Check if the order item has already been migrated
+        if (
+          orderItem.currentOptions &&
+          orderItem.currentOptions.length > 0 &&
+          orderItem.selectedOptions &&
+          orderItem.selectedOptions.length > 0
+        ) {
+          console.log(`Order item ${orderItem._id} already migrated, skipping...`);
+          continue;
+        }
 
         const currentOptions = [];
         const selectedOptions = [];
@@ -2880,6 +2928,7 @@ router.route("/migrate_order_options").put(async (req, res) => {
               {
                 name: orderItem.color,
                 product: orderItem.color_product,
+                colorCode: convertToHex(orderItem.color_code || orderItem.color),
                 isDefault: false,
                 additionalCost: 0,
               },
@@ -2900,6 +2949,7 @@ router.route("/migrate_order_options").put(async (req, res) => {
               {
                 name: orderItem.secondary_color,
                 product: orderItem.secondary_color_product,
+                colorCode: convertToHex(orderItem.secondary_color),
                 isDefault: false,
                 additionalCost: orderItem.add_on_price || 0,
               },
@@ -2950,54 +3000,37 @@ router.route("/migrate_order_options").put(async (req, res) => {
         }
 
         // Update the order item in the database
-        await Order.updateOne(
-          { _id: order._id, "orderItems._id": orderItem._id },
-          {
-            $set: {
-              "orderItems.$.currentOptions": currentOptions,
-              "orderItems.$.selectedOptions": selectedOptions,
-            },
-          }
-        );
+        if (currentOptions.length > 0 || selectedOptions.length > 0) {
+          await Order.updateOne(
+            { _id: order._id, "orderItems._id": orderItem._id },
+            {
+              $set: {
+                "orderItems.$.currentOptions": currentOptions,
+                "orderItems.$.selectedOptions": selectedOptions,
+              },
+            }
+          );
+          orderUpdated = true;
+        }
+      }
+
+      if (orderUpdated) {
+        migratedCount++;
+      } else {
+        skippedCount++;
       }
     }
 
-    res.status(200).send({ message: "Order Option Migration successful" });
+    res.status(200).send({
+      message: "Order Option Migration completed",
+      migratedOrders: migratedCount,
+      skippedOrders: skippedCount,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });
   }
 });
-
-const colorNameToHex = {
-  "black": "#000000",
-  "white": "#FFFFFF",
-  "red": "#FF0000",
-  "green": "#008000",
-  "blue": "#0000FF",
-  "yellow": "#FFFF00",
-  "purple": "#800080",
-  "orange": "#FFA500",
-  "pink": "#FFC0CB",
-  "brown": "#A52A2A",
-  "gray": "#808080",
-  "cyan": "#00FFFF",
-  "magenta": "#FF00FF",
-  "silver": "#C0C0C0",
-  "gold": "#FFD700",
-  "navy": "#000080",
-  "aqua": "#00FFFF",
-  "teal": "#008080",
-  "olive": "#808000",
-  "maroon": "#800000",
-};
-
-const convertToHex = color => {
-  if (!color) return null;
-  if (color.startsWith("#")) return color;
-  const lowerColor = color.toLowerCase();
-  return colorNameToHex[lowerColor] || color;
-};
 
 router.route("/migrate_color_codes").put(async (req, res) => {
   try {
@@ -3056,15 +3089,371 @@ router.route("/migrate_color_codes").put(async (req, res) => {
 // Migrate hero_video
 router.route("/migrate_hero_video").put(async (req, res) => {
   try {
-    await Product.updateMany(
-      { video: { $exists: true } },
+    await Product.updateMany({ video: { $exists: true } }, [
       {
         $set: {
-          "hero_video.video": "$video",
+          "hero_video.video": { $ifNull: ["$video", null] },
         },
-      }
-    );
+      },
+    ]);
     res.status(200).send({ message: "Hero video migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/set_all_hidden_fields").put(async (req, res) => {
+  try {
+    const updateObject = {
+      "icon_specs_hidden": true,
+      "navigation_buttons_hidden": true,
+      "features.image_grid_1_hidden": true,
+      "features.hero_fact_1.hidden": true,
+      "features.image_grid_2_hidden": true,
+      "features.hero_fact_2.hidden": true,
+      "features.lifestyle_images_hidden": true,
+      "not_sure.hidden": true,
+      "tech_specs.hidden": true,
+      "in_the_box.hidden": true,
+      "elevate_your_experience.hidden": true,
+      "product_support.hidden": true,
+    };
+
+    const result = await Product.updateMany({}, { $set: updateObject });
+
+    res.status(200).send({
+      message: "All 'hidden' fields set to true",
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/products_to_json").put(async (req, res) => {
+  try {
+    // Fetch all products from the database
+    const products = await Product.find({ option: false });
+
+    // Filter the products and create a map to deduplicate by description
+    const uniqueProductsMap = new Map();
+
+    products.forEach(product => {
+      if (product.description && !uniqueProductsMap.has(product.description)) {
+        uniqueProductsMap.set(product.description, {
+          category: product.category,
+          subcategory: product.subcategory,
+          product_collection: product.product_collection,
+          fact: product.fact,
+          facts: product.facts,
+          short_description: product.short_description,
+          description: product.description,
+        });
+      }
+    });
+
+    // Convert the map values to an array
+    const filteredProducts = Array.from(uniqueProductsMap.values());
+
+    // Convert filtered products to JSON string
+    const jsonProducts = JSON.stringify(filteredProducts, null, 2);
+
+    // Define the file path
+    const filePath = path.join(__dirname, "unique_products.json");
+
+    // Write the JSON to a file using callback
+    fs.writeFile(filePath, jsonProducts, err => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send({ error: err.message });
+      }
+      res.status(200).send({
+        message: "Unique products exported to JSON successfully",
+        filePath,
+        totalProducts: products.length,
+        uniqueProducts: filteredProducts.length,
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+const productFactsAndDescriptions = [
+  {
+    category: "glowskinz",
+    subcategory: "clozd",
+    product_collection: "classics",
+    fact: "Innovative 2-in-1 casing and diffuser with full-body glow.",
+    short_description:
+      "Comfortable semi-flexible design combines casing and diffuser, creating a unique full-body glow. Perfect click and easy removal from gloves for seamless performances.",
+  },
+  {
+    category: "glowskinz",
+    subcategory: "opyn",
+    fact: "Versatile glow accessory compatible with various diffusers.",
+    short_description:
+      "Semi-flexible, comfortable design allows for use with favorite accessories like Diffusers, EXO Diffusers or Diffuser Caps. Provides beautiful fingertip glow while protecting microlights.",
+  },
+  {
+    category: "exo_diffusers",
+    fact: "Two-material technology for factal light diffusion.",
+    short_description:
+      "Innovative design with frosted inner plug and geometric outer exoskeleton. Creates beautiful glow and defined trails for stunning lightshows through gloves.",
+  },
+  {
+    category: "diffusers",
+    fact: "Enhanced light diffusion for smooth, angelic glow.",
+    short_description:
+      "Versatile diffusers in various colors and sizes. Create unique effects without altering light color. Compatible with all microlights.",
+  },
+  {
+    category: "diffuser_caps",
+    fact: "Unique screw-top technology for external light patterns.",
+    short_description:
+      "External patterns for one-of-a-kind lightshow effects. Easy to use with Diffuser Adapters. Available in Classic and Mega sizes.",
+  },
+  {
+    category: "gloves",
+    subcategory: "sampler",
+    fact: "Sizing sampler pack for perfect fit selection.",
+    short_description:
+      "Three pairs of Supreme Gloves in different sizes. Stretchy design with plushy interior. Find your ideal fit for comfortable performances.",
+  },
+  {
+    category: "glowstringz",
+    subcategory: "leds",
+    product_collection: "glowstringz",
+    fact: "Customizable string lights with 48 festival-ready patterns.",
+    short_description:
+      "Highly customizable LED string lights with 22 wild festival modes and 26 everyday modes. Infinite color options and autoplay features for the ultimate home light show.",
+  },
+  {
+    category: "batteries",
+    subcategory: "coin",
+    product_collection: "wholesale",
+    fact: "Bulk battery packs for uninterrupted performances.",
+    short_description:
+      "Convenient bulk battery options in secure plastic trays. Easy access design keeps batteries fresh and ready for use, perfect for extended gloving sessions.",
+  },
+  {
+    category: "merch",
+    subcategory: "stickers",
+    fact: "Unique wood stickers to represent Glow LEDs.",
+    short_description:
+      "Laser-cut wood stickers featuring Glow LEDs designs. Show your support for the gloving community with these cool, durable decals.",
+  },
+  {
+    category: "batteries",
+    subcategory: "storage",
+    fact: "Convenient battery dispensers for quick access.",
+    short_description:
+      "Compact battery dispensers designed for easy access during performances. Secure locking mechanism prevents accidental spills, perfect for on-the-go glovers.",
+  },
+  {
+    category: "decals",
+    subcategory: "universal",
+    fact: "Customizable vinyl decals for Glowskinz.",
+    short_description:
+      "High-quality black vinyl decals to personalize your OPYN or CLOZD Glowskinz. Easy to apply and provides a unique look for your gloving setup.",
+  },
+  {
+    category: "decals",
+    subcategory: "outline",
+    fact: "Full-face Batman style decals for dramatic light sculpting.",
+    short_description:
+      "Precision-cut Batman decals cover the entire front of Glowskinz, blocking top light and creating a unique side and bottom glow effect for striking lightshows.",
+  },
+  // {
+  //   category: "glowskinz",
+  //   subcategory: "clozd",
+  //   product_collection: "classics",
+  //   fact: "Universal Glowskins compatible with various chips.",
+  //   short_description:
+  //     "Versatile Omniskins work with any chip using interchangeable sleds. Combines casing and diffuser for a full-body glow, with comfortable semi-flexible design.",
+  // },
+  // {
+  //   name: "CLOZD Omniskinz",
+  //   category: "glowskinz",
+  //   subcategory: "clozd",
+  //   fact: "Universal Glowskinz, compatible with a multitude of microlights",
+  //   short_description:
+  //     "Versatile Omniskins work with any chip using interchangeable sleds. Combines casing and diffuser for a full-body glow, with comfortable semi-flexible design.",
+  // },
+  // {
+  //   name: "Omniskinz Sleds",
+  //   category: "glowskinz",
+  //   subcategory: "accessories",
+  //   fact: "Interchangeable sleds for ultimate Omniskinz versatility.",
+  //   short_description: "Custom-designed sleds enable CLOZD Omniskinz to accommodate various microlight chips. Easily switch between different light sources while maintaining the unique full-body glow and comfort of Omniskinz."
+  // },
+  {
+    category: "glowframez",
+    subcategory: "clip",
+    product_collection: "nova",
+    fact: "Secure clips for palm or hand-mounted gloving.",
+    short_description:
+      "Nova Clips securely attach to compatible casings for stable palm or hand mounting. Enables mind-blowing effects for your audience during performances.",
+  },
+  {
+    category: "glowframez",
+    subcategory: "clozd",
+    product_collection: "novaframez",
+    fact: "A new take on a impacting classic.",
+    short_description:
+      "Rigid shell with soft semi-flexible button. Compatible with OG Inova casings and button mods for versatile impacting performances.",
+  },
+  // {
+  //   name: "Supreme Gloves V1",
+  //   category: "gloves",
+  //   subcategory: "singles",
+  //   fact: "Premium stretchy gloves for all hand sizes.",
+  //   short_description:
+  //     "Supreme Gloves feature super plushy interior and extra white, crisp exterior. Stretchy design fits all hand sizes comfortably, perfect for showcasing your lights.",
+  // },
+  {
+    name: "Ultra Gloves",
+    category: "gloves",
+    subcategory: "singles",
+    fact: "Slim-tech gloves for high-fidelity gloving performance.",
+    short_description:
+      "Precision-engineered slim gloves with tight-thread design. Enhances visibility of accessories, maintains shape, and allows for more complex moves.",
+  },
+  {
+    category: "gloves",
+    subcategory: "refresh",
+    fact: "Essential gloving refresh pack with gloves and batteries.",
+    short_description:
+      "Convenient pack includes 6 pairs of Supreme Gloves and 120 coin batteries. Ensures you're always prepared with fresh gloves and powered microlights for performances.",
+  },
+  // {
+  //   category: "custom",
+  //   fact: "Personalized gloving accessories made to order.",
+  //   short_description:
+  //     "Create one-of-a-kind gloving accessories through our custom design process. From concept to production, we work with you to bring your unique ideas to life.",
+  // },
+  {
+    category: "glowskinz",
+    subcategory: "clozd",
+    product_collection: "capez",
+    fact: "Precision-enhancing caps for CLOZD Glowskinz.",
+    short_description:
+      "Capez securely hold bulbs in place within CLOZD Glowskinz. Available in 9 colors, they prevent shifting during performances for extreme precision in lightshows.",
+  },
+  // {
+  //   category: "gloves",
+  //   subcategory: "singles",
+  //   product_collection: "wholesale",
+  //   fact: "Upgraded stretchy gloves for enhanced comfort.",
+  //   short_description:
+  //     "New Supreme Gloves V2: Red Tag Edition features stretchier, softer material for improved fit. Plushy interior ensures comfort during long gloving sessions.",
+  // },
+  {
+    category: "microlight",
+    subcategory: "glove_set",
+    product_collection: "classics",
+    fact: "Advanced microlight with 260 color options.",
+    short_description:
+      "Helios Microlight offers unmatched features including 260 color options, 12 flashing patterns, and Conjure Mode. Powered by 2x CR1620 batteries for reliable performance.",
+  },
+];
+
+// Migrate images field
+router.route("/migrate_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, { $unset: { images: "" } });
+    await Product.updateMany({}, [
+      {
+        $set: {
+          images: { $ifNull: ["$images_object", []] },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/update_fact").put(async (req, res) => {
+  try {
+    for (const item of productFactsAndDescriptions) {
+      const filter = { category: item.category };
+      if (item.subcategory) filter.subcategory = item.subcategory;
+      if (item.product_collection) filter.product_collection = item.product_collection;
+
+      await Product.updateMany(filter, {
+        $set: {
+          fact: item.fact,
+          short_description: item.short_description,
+        },
+      });
+    }
+
+    res.status(200).send({
+      message: "All facts and short descriptions updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_value_names").put(async (req, res) => {
+  try {
+    const result = await Product.updateMany({ "options.values.name": { $regex: /-/ } }, [
+      {
+        $set: {
+          options: {
+            $map: {
+              input: "$options",
+              as: "option",
+              in: {
+                $mergeObjects: [
+                  "$$option",
+                  {
+                    values: {
+                      $map: {
+                        input: "$$option.values",
+                        as: "value",
+                        in: {
+                          $mergeObjects: [
+                            "$$value",
+                            {
+                              name: {
+                                $cond: {
+                                  if: { $regexMatch: { input: "$$value.name", regex: /-/ } },
+                                  then: {
+                                    $trim: {
+                                      input: { $arrayElemAt: [{ $split: ["$$value.name", "-"] }, 1] },
+                                    },
+                                  },
+                                  else: "$$value.name",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      message: "Product option names updated successfully",
+      modifiedCount: result.modifiedCount,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -3108,219 +3497,33 @@ router.route("/migrate_tags").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
-// Migrate lifestyle images
-router.route("/migrate_lifestyle_images").put(async (req, res) => {
-  try {
-    await Product.updateMany({}, [
-      {
-        $set: {
-          "features.lifestyle_images": {
-            $reduce: {
-              input: [
-                { $ifNull: ["$images_object", []] },
-                { $ifNull: ["$color_images_object", []] },
-                { $ifNull: ["$secondary_color_images_object", []] },
-                { $ifNull: ["$option_images_object", []] },
-              ],
-              initialValue: [],
-              in: { $concatArrays: ["$$value", "$$this"] },
-            },
-          },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "Lifestyle images migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate in_the_box
-router.route("/migrate_in_the_box").put(async (req, res) => {
-  try {
-    await Product.updateMany({ included_items: { $exists: true } }, [
-      {
-        $set: {
-          "in_the_box.title": "What you get",
-          "in_the_box.items": {
-            $map: {
-              input: { $split: ["$included_items", "\n"] },
-              as: "item",
-              in: {
-                description: "$$item",
-              },
-            },
-          },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "In the box migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate facts field
-router.route("/migrate_facts").put(async (req, res) => {
-  let successCount = 0;
-  let failureCount = 0;
-  let failedIds = [];
-
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: { facts: { $exists: true } },
-      },
-      {
-        $project: {
-          _id: 1,
-          facts: 1,
-          color_images_object: 1,
-          secondary_color_images_object: 1,
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      try {
-        const facts = product.facts.split("\n").filter(fact => fact.trim() !== "");
-        const images = [...(product.color_images_object || []), ...(product.secondary_color_images_object || [])];
-
-        const fact = facts[0] || "";
-        const image_grid_1 = facts.slice(0, 3).map((fact, index) => ({
-          title: fact,
-          image: images[index] || null,
-        }));
-        const image_grid_2 = facts.slice(3).map((fact, index) => ({
-          title: fact,
-          image: images[index + 3] || null,
-        }));
-
-        const updateObj = {
-          $set: {
-            fact: fact,
-          },
-        };
-
-        if (image_grid_1.length > 0) {
-          updateObj.$set["features.image_grid_1"] = image_grid_1;
-        }
-        if (image_grid_2.length > 0) {
-          updateObj.$set["features.image_grid_2"] = image_grid_2;
-        }
-
-        await Product.updateOne({ _id: product._id }, updateObj);
-        successCount++;
-      } catch (error) {
-        console.error(`Failed to update product ${product._id}: ${error.message}`);
-        failureCount++;
-        failedIds.push(product._id);
-      }
-    }
-
-    res.status(200).send({
-      message: "Facts and images migration completed",
-      successCount,
-      failureCount,
-      failedIds,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate contributors field
-router.route("/migrate_contributors").put(async (req, res) => {
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: {
-          contributers: { $exists: true },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          contributers: 1,
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      await Product.updateOne({ _id: product._id }, { $set: { contributors: product.contributers } });
-    }
-
-    res.status(200).send({ message: "Contributors migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Migrate images field
-router.route("/migrate_images").put(async (req, res) => {
-  try {
-    await Product.updateMany({}, { $unset: { images: "" } });
-    await Product.updateMany({}, [
-      {
-        $set: {
-          images: { $ifNull: ["$images_object", []] },
-        },
-      },
-    ]);
-    res.status(200).send({ message: "Images migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
-router.route("/migrate_sale").put(async (req, res) => {
-  try {
-    const productsToUpdate = await Product.aggregate([
-      {
-        $match: {
-          $or: [
-            { sale_price: { $exists: true } },
-            { sale_start_date: { $exists: true } },
-            { sale_end_date: { $exists: true } },
-          ],
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          sale: {
-            price: "$sale_price",
-            start_date: "$sale_start_date",
-            end_date: "$sale_end_date",
-          },
-        },
-      },
-    ]);
-
-    for (const product of productsToUpdate) {
-      const updateObj = { sale: {} };
-      if (product.sale.price !== undefined) updateObj.sale.price = product.sale.price;
-      if (product.sale.start_date) updateObj.sale.start_date = new Date(product.sale.start_date);
-      if (product.sale.end_date) updateObj.sale.end_date = new Date(product.sale.end_date);
-
-      await Product.updateOne({ _id: product._id }, { $set: updateObj });
-    }
-
-    res.status(200).send({ message: "Sale fields migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
 
 // Migrate meta fields
 router.route("/migrate_meta").put(async (req, res) => {
   try {
+    const categoryKeywords = {
+      mega_diffuser_caps: "oversized, diffuser, caps, gloving, lightshow, accessory, geometric, patterns, trails",
+      glow_strings: "LED, string lights, customizable, modes, festival, decoration, ambient lighting",
+      diffuser_caps: "gloving, accessory, lightshow, patterns, designs, screw-top, technology",
+      diffusers: "light diffusion, gloving, accessory, frosted, geometric, lightshow enhancement",
+      accessories: "gloving, battery storage, convenience, performance, lightshow",
+      infinity_mirrors: "LED, addressable, custom design, light art, room decoration",
+      decals: "customization, personalization, vinyl, glowskinz, accessory, gloving",
+      glowskinz: "casing, diffuser, gloving, accessory, full-body glow, comfortable",
+      glowskins: "casing, diffuser, gloving, accessory, full-body glow, comfortable",
+      Caps: "custom, diffuser caps, gloving, accessory, personalized",
+      gloves: "gloving, performance, comfortable, stretchy, crisp white",
+      exo_diffusers: "gloving, accessory, geometric trails, two-material technology, lightshow enhancement",
+      glowstringz: "LED, string lights, customizable, modes, festival, decoration, ambient lighting",
+      batteries: "coin cell, CR1620, CR1225, gloving, power source, bulk, gloving",
+      merch: "brand, stickers, merchandise, gloving community, support",
+      glowframez: "impacting, gloving, accessory, palm lights, clip functionality",
+      casings: "microlight, casing, gloving, accessory, protection",
+      gift_card: "gift, present, gloving, accessories, customizable",
+      custom: "personalized, gloving, accessories, unique, custom-made",
+      microlight: "LED, gloving, customizable, patterns, colors, performance",
+    };
+
     await Product.updateMany(
       {
         $or: [
@@ -3329,15 +3532,44 @@ router.route("/migrate_meta").put(async (req, res) => {
           { meta_keywords: { $exists: true } },
         ],
       },
-      {
-        $set: {
-          seo: {
-            meta_title: "$meta_title",
-            meta_description: "$meta_description",
-            meta_keywords: "$meta_keywords",
+      [
+        {
+          $set: {
+            seo: {
+              meta_title: { $ifNull: ["$meta_title", ""] },
+              meta_description: { $ifNull: ["$meta_description", ""] },
+              meta_keywords: {
+                $cond: {
+                  if: { $eq: [{ $type: "$meta_keywords" }, "string"] },
+                  then: "$meta_keywords",
+                  else: {
+                    $ifNull: [
+                      {
+                        $arrayElemAt: [
+                          { $objectToArray: categoryKeywords },
+                          { $indexOfArray: [{ $objectToArray: categoryKeywords }, "$category"] },
+                        ],
+                      },
+                      "",
+                    ],
+                  },
+                },
+              },
+            },
           },
         },
-      }
+        {
+          $set: {
+            "seo.meta_keywords": {
+              $cond: {
+                if: { $eq: [{ $type: "$seo.meta_keywords" }, "object"] },
+                then: "$seo.meta_keywords.v",
+                else: "$seo.meta_keywords",
+              },
+            },
+          },
+        },
+      ]
     );
     res.status(200).send({ message: "Meta fields migration completed successfully" });
   } catch (error) {
@@ -3477,4 +3709,508 @@ router.route("/migrate_restock_status").put(async (req, res) => {
   }
 });
 
+// Migrate contributors field
+router.route("/migrate_contributors").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          contributers: { $exists: true },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          contributers: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      await Product.updateOne({ _id: product._id }, { $set: { contributors: product.contributers } });
+    }
+
+    res.status(200).send({ message: "Contributors migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_color_object").put(async (req, res) => {
+  try {
+    const result = await Product.updateMany(
+      {}, // This will target all products
+      [
+        {
+          $set: {
+            color_object: {
+              name: {
+                $cond: {
+                  if: { $ifNull: ["$color", false] },
+                  then: "$color",
+                  else: null,
+                },
+              },
+              code: {
+                $cond: {
+                  if: { $ifNull: ["$color_code", false] },
+                  then: "$color_code",
+                  else: null,
+                },
+              },
+              is_filament_color: {
+                $cond: {
+                  if: { $ifNull: ["$filament", false] },
+                  then: true,
+                  else: false,
+                },
+              },
+              filament: {
+                $cond: {
+                  if: { $ifNull: ["$filament", false] },
+                  then: "$filament",
+                  else: null,
+                },
+              },
+            },
+          },
+        },
+        // {
+        //   $unset: ["color", "color_code"],
+        // },
+      ]
+    );
+
+    res.status(200).send({
+      message: "Color object migration completed successfully",
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_display_image").put(async (req, res) => {
+  const createdImages = [];
+  const errors = [];
+
+  const migrateDisplayImage = async (item, modelName, parentId) => {
+    if (item.display_image && typeof item.display_image === "string" && !item.display_image_object) {
+      try {
+        let image = await Image.findOne({ link: item.display_image });
+        if (!image) {
+          // Create new Image record
+          image = new Image({
+            link: item.display_image,
+            album: `${item.name} Images`,
+          });
+          await image.save();
+          createdImages.push({ modelName, parentId, itemName: item.name, imageId: image._id });
+        }
+        item.display_image_object = image._id;
+        return true;
+      } catch (error) {
+        console.error(`Error processing item in ${modelName} ${parentId}:`, error);
+        errors.push({ modelName, parentId, itemName: item.name, reason: error.message });
+      }
+    }
+    return false;
+  };
+
+  try {
+    // Migrate Cart schema
+    const carts = await Cart.find({});
+    for (const cart of carts) {
+      let modified = false;
+      for (const item of cart.cartItems) {
+        if (await migrateDisplayImage(item, "Cart", cart._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await cart.save();
+      }
+    }
+
+    // Migrate Order schema
+    const orders = await Order.find({});
+    for (const order of orders) {
+      let modified = false;
+      for (const item of order.orderItems) {
+        if (await migrateDisplayImage(item, "Order", order._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await order.save();
+      }
+    }
+
+    res.status(200).json({
+      message: "display_image_object population completed for Cart and Order",
+      createdImages: createdImages,
+      errors: errors,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      createdImages: createdImages,
+      errors: errors,
+    });
+  }
+});
+
+router.route("/migrate_order_numeric_options").put(async (req, res) => {
+  try {
+    // Fetch all products
+    const products = await Product.find({});
+
+    let updatedCount = 0;
+
+    for (let product of products) {
+      let updated = false;
+
+      if (product.options && product.options.length > 0) {
+        for (let option of product.options) {
+          if (option.values && option.values.length > 0) {
+            // Separate numeric and non-numeric values
+            const numericValues = [];
+            const nonNumericValues = [];
+
+            for (let value of option.values) {
+              if (/^\d+$/.test(value.name)) {
+                numericValues.push(value);
+              } else {
+                nonNumericValues.push(value);
+              }
+            }
+
+            // Sort numeric values
+            numericValues.sort((a, b) => parseInt(a.name) - parseInt(b.name));
+
+            // Combine sorted numeric values with non-numeric values
+            option.values = [...numericValues, ...nonNumericValues];
+            updated = true;
+          }
+        }
+      }
+
+      if (updated) {
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: "Product options ordered successfully",
+      modifiedCount: updatedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+// --------------------------------------------------
+
+// Migrate lifestyle images
+router.route("/migrate_lifestyle_images").put(async (req, res) => {
+  try {
+    await Product.updateMany({}, [
+      {
+        $set: {
+          "features.lifestyle_images": {
+            $reduce: {
+              input: [
+                { $ifNull: ["$images_object", []] },
+                { $ifNull: ["$color_images_object", []] },
+                { $ifNull: ["$secondary_color_images_object", []] },
+                { $ifNull: ["$option_images_object", []] },
+              ],
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "Lifestyle images migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate in_the_box
+router.route("/migrate_in_the_box").put(async (req, res) => {
+  try {
+    await Product.updateMany({ included_items: { $exists: true } }, [
+      {
+        $set: {
+          "in_the_box.title": "What you get",
+          "in_the_box.items": {
+            $map: {
+              input: { $split: ["$included_items", "\n"] },
+              as: "item",
+              in: {
+                description: "$$item",
+              },
+            },
+          },
+        },
+      },
+    ]);
+    res.status(200).send({ message: "In the box migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate facts field
+router.route("/migrate_facts").put(async (req, res) => {
+  let successCount = 0;
+  let failureCount = 0;
+  let failedIds = [];
+
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: { facts: { $exists: true } },
+      },
+      {
+        $project: {
+          _id: 1,
+          facts: 1,
+          color_images_object: 1,
+          secondary_color_images_object: 1,
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      try {
+        const facts = product.facts.split("\n").filter(fact => fact.trim() !== "");
+        const images = [...(product.color_images_object || []), ...(product.secondary_color_images_object || [])];
+
+        const fact = facts[0] || "";
+        const image_grid_1 = facts.slice(0, 3).map((fact, index) => ({
+          title: fact,
+          image: images[index] || null,
+        }));
+        const image_grid_2 = facts.slice(3).map((fact, index) => ({
+          title: fact,
+          image: images[index + 3] || null,
+        }));
+
+        const updateObj = {
+          $set: {
+            fact: fact,
+          },
+        };
+
+        if (image_grid_1.length > 0) {
+          updateObj.$set["features.image_grid_1"] = image_grid_1;
+        }
+        if (image_grid_2.length > 0) {
+          updateObj.$set["features.image_grid_2"] = image_grid_2;
+        }
+
+        await Product.updateOne({ _id: product._id }, updateObj);
+        successCount++;
+      } catch (error) {
+        console.error(`Failed to update product ${product._id}: ${error.message}`);
+        failureCount++;
+        failedIds.push(product._id);
+      }
+    }
+
+    res.status(200).send({
+      message: "Facts and images migration completed",
+      successCount,
+      failureCount,
+      failedIds,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_sale").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { sale_price: { $exists: true } },
+            { sale_start_date: { $exists: true } },
+            { sale_end_date: { $exists: true } },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          sale: {
+            price: "$sale_price",
+            start_date: "$sale_start_date",
+            end_date: "$sale_end_date",
+          },
+        },
+      },
+    ]);
+
+    for (const product of productsToUpdate) {
+      const updateObj = { sale: {} };
+      if (product.sale.price !== undefined) updateObj.sale.price = product.sale.price;
+      if (product.sale.start_date) updateObj.sale.start_date = new Date(product.sale.start_date);
+      if (product.sale.end_date) updateObj.sale.end_date = new Date(product.sale.end_date);
+
+      await Product.updateOne({ _id: product._id }, { $set: updateObj });
+    }
+
+    res.status(200).send({ message: "Sale fields migration completed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Migrate restock_status
+
+router.route("/migrate_image_object").put(async (req, res) => {
+  const skippedDocuments = [];
+
+  const safelyMigrateAndSave = async (doc, modelName) => {
+    try {
+      await doc.save();
+    } catch (error) {
+      console.error(`Error saving ${modelName} document ${doc._id}:`, error.message);
+      skippedDocuments.push({ modelName, id: doc._id, error: error.message });
+    }
+  };
+
+  try {
+    // Migrate Team schema
+    const teams = await Team.find({});
+    for (const team of teams) {
+      team.map = undefined;
+      team.picture = undefined;
+      team.images = undefined;
+
+      if (team.map_image_object) team.map = team.map_image_object;
+      if (team.profile_image_object) team.profile_image = team.profile_image_object;
+      if (team.images_object) team.images = team.images_object;
+
+      await safelyMigrateAndSave(team, "Team");
+    }
+
+    // Migrate Chip schema
+    const chips = await Chip.find({});
+    for (const chip of chips) {
+      chip.image = undefined;
+      if (chip.image_object) chip.images = [chip.image_object];
+      await safelyMigrateAndSave(chip, "Chip");
+    }
+
+    // Migrate Email schema
+    const emails = await Email.find({});
+    for (const email of emails) {
+      email.image = undefined;
+      email.images = undefined;
+
+      if (email.image_object) email.image = email.image_object;
+      if (email.images_object) email.images = email.images_object;
+
+      await safelyMigrateAndSave(email, "Email");
+    }
+
+    // Migrate Product schema
+    const products = await Product.find({});
+    for (const product of products) {
+      product.images = undefined;
+      product.color_images = undefined;
+      product.secondary_color_images = undefined;
+      product.option_images = undefined;
+
+      if (product.images_object) product.images = product.images_object;
+      if (product.color_images_object) product.color_images = product.color_images_object;
+      if (product.secondary_color_images_object) product.secondary_color_images = product.secondary_color_images_object;
+      if (product.option_images_object) product.option_images = product.option_images_object;
+
+      await safelyMigrateAndSave(product, "Product");
+    }
+
+    res.status(200).json({
+      message: "Image migration completed",
+      skippedDocuments: skippedDocuments,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      skippedDocuments: skippedDocuments,
+    });
+  }
+});
+
+// Step 2: Update display_image to use display_image_object
+router.route("/finalize_display_image").put(async (req, res) => {
+  const skippedItems = [];
+
+  const finalizeDisplayImage = (item, modelName, parentId) => {
+    if (item.display_image_object) {
+      item.display_image = item.display_image_object;
+      return true;
+    } else if (typeof item.display_image === "string") {
+      skippedItems.push({ modelName, parentId, itemName: item.name, reason: "Missing display_image_object" });
+    }
+    return false;
+  };
+
+  try {
+    // Finalize Cart schema
+    const carts = await Cart.find({});
+    for (const cart of carts) {
+      let modified = false;
+      for (const item of cart.cartItems) {
+        if (finalizeDisplayImage(item, "Cart", cart._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await cart.save();
+      }
+    }
+
+    // Finalize Order schema
+    const orders = await Order.find({});
+    for (const order of orders) {
+      let modified = false;
+      for (const item of order.orderItems) {
+        if (finalizeDisplayImage(item, "Order", order._id)) {
+          modified = true;
+        }
+      }
+      if (modified) {
+        await order.save();
+      }
+    }
+
+    res.status(200).json({
+      message: "display_image finalization completed for Cart and Order",
+      skippedItems: skippedItems,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({
+      error: error.message,
+      skippedItems: skippedItems,
+    });
+  }
+});
 export default router;
