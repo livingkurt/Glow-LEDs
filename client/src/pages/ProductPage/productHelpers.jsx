@@ -129,7 +129,7 @@ export const productPageBreadCrumbs = product => {
   const { category, subcategory, product_collection, name } = product;
   return [
     { name: "ALL PRODUCTS", to: "/collections/all/products" },
-    { name: category?.toUpperCase().split("_"), to: `/collections/all/products/category/${category}` },
+    { name: category?.toUpperCase().split("_").join(" "), to: `/collections/all/products/category/${category}` },
     {
       name: subcategory?.toUpperCase().split("_").join(" "),
       to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
