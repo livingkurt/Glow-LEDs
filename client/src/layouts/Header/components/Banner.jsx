@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as API from "../../../api";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const Banner = () => {
+  const theme = useTheme();
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();
 
   const link = currentContent?.banner?.link;
@@ -13,7 +14,7 @@ const Banner = () => {
       {label && !isLoading && (
         <Box
           sx={{
-            backgroundColor: "#4d5061",
+            backgroundColor: theme.palette.primary.main,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

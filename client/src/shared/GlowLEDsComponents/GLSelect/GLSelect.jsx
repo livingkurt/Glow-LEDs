@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, Select, MenuItem, Typography, Box } from "@mui/material";
+import { FormControl, Select, MenuItem, Typography, Box, useTheme } from "@mui/material";
 
 const GLSelect = ({
   label,
@@ -13,6 +13,7 @@ const GLSelect = ({
   width,
   size,
 }) => {
+  const theme = useTheme();
   return (
     <Box mt={1}>
       <Typography variant="subtitle1" gutterBottom>
@@ -26,7 +27,7 @@ const GLSelect = ({
           size={size}
           displayEmpty
           sx={{
-            backgroundColor: "#4d5061",
+            backgroundColor: theme.palette.primary.main,
             color: "white",
             "&:hover": { backgroundColor: "#393e55" },
             "&.Mui-focused": { backgroundColor: "#393e55" },
