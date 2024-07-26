@@ -3914,6 +3914,418 @@ router.route("/migrate_order_numeric_options").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate contributors field
+router.route("/fetch_color_options").get(async (req, res) => {
+  try {
+    const result = await Product.aggregate([
+      {
+        $match: {
+          options: { $exists: true, $ne: [] },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": { $regex: /color/i },
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $group: {
+          _id: {
+            category: { $toLower: "$category" },
+            subcategory: { $toLower: "$subcategory" },
+            optionName: { $toLower: "$options.name" },
+          },
+          colorValues: { $addToSet: { $toLower: "$options.values.name" } },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            category: "$_id.category",
+            subcategory: "$_id.subcategory",
+          },
+          options: {
+            $push: {
+              k: {
+                $reduce: {
+                  input: { $split: ["$_id.optionName", " "] },
+                  initialValue: "",
+                  in: { $concat: ["$$value", { $cond: [{ $eq: ["$$value", ""] }, "", "_"] }, "$$this"] },
+                },
+              },
+              v: "$colorValues",
+            },
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id.category",
+          subcategories: {
+            $push: {
+              k: "$_id.subcategory",
+              v: { $arrayToObject: "$options" },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          k: "$_id",
+          v: { $arrayToObject: "$subcategories" },
+        },
+      },
+    ]);
+
+    // Convert the result to the desired JSON structure
+    const colorOptions = Object.fromEntries(result.map(item => [item.k, item.v]));
+
+    res.json(colorOptions);
+  } catch (error) {
+    console.error("Error fetching category color options:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+router.route("/add_color_options").put(async (req, res) => {
+  try {
+    const colors = {
+      "diffuser_caps": {
+        "shapes": {
+          "adapter_color": ["green", "frosted", "red", "blue", "violet", "purple"],
+          "cap_color": ["green", "blue", "black", "red", "white", "purple", "violet"],
+        },
+        "patterns": {
+          "adapter_color": ["purple", "frosted", "red", "green", "blue", "violet"],
+          "cap_color": ["black", "red", "green", "blue", "purple", "violet", "white"],
+        },
+        "geometric": {
+          "cap_color": ["violet", "green", "red", "black", "blue", "white", "purple"],
+          "adapter_color": ["green", "red", "frosted", "blue", "violet", "purple"],
+        },
+        "starter_kit": {
+          "adapter_color": ["green", "blue", "purple", "frosted", "red"],
+          "cap_color": ["black", "red", "green", "blue", "purple", "violet", "white"],
+        },
+        "abstract": {
+          "cap_color": ["violet", "green", "red", "black", "blue", "white", "purple"],
+          "adapter_color": ["frosted", "red", "violet", "green", "blue", "purple"],
+        },
+        "diffuser_adapters": {
+          "adapter_color": ["frosted", "red", "purple", "green", "blue", "violet"],
+        },
+      },
+      "options": {
+        "colors": {
+          "skin_color": ["clear", "frosted"],
+        },
+      },
+      "glowskins": {
+        "novaskins_inovas_micromaxs": {
+          "sled_color": ["violet", "frosted", "black", "blue", "green", "red", "purple", "clear"],
+          "skin_color": ["teal", "red", "blue", "violet", "emerald", "clear", "purple"],
+        },
+      },
+      "accessories": {
+        "battery_storage": {
+          "cap/slide_color": ["purple", "red", "green", "blue", "violet", "black", "white"],
+          "body_color": ["purple", "red", "green", "blue", "violet", "black", "white"],
+        },
+      },
+      "glowframez": {
+        "clozd": {
+          "color": ["green", "red", "blue", "purple", "clear"],
+        },
+        "clip": {
+          "color": ["violet", "white", "black", "green", "blue", "red", "purple", "clear"],
+        },
+      },
+      "exo_diffusers": {
+        "polyhedrons": {
+          "skeleton_color": ["white", "red", "black", "green", "blue", "purple", "violet"],
+          "plug_color": ["purple", "red", "green", "frosted", "blue", "violet"],
+        },
+        "domes": {
+          "skeleton_color": ["violet", "green", "red", "black", "blue", "white", "purple"],
+          "plug_color": ["green", "frosted", "red", "blue", "purple", "violet"],
+        },
+      },
+      "batteries": {
+        "storage": {
+          "color": ["green", "blue", "black", "violet", "clear", "purple", "red", "white"],
+        },
+      },
+      "glowskinz": {
+        "opyn": {
+          "skin_color": ["frosted", "violet", "black", "blue", "emerald", "teal", "red", "purple", "clear"],
+          "sled_color": ["clear", "blue", "green", "frosted", "violet", "black", "purple", "red", "white"],
+        },
+        "clozd": {
+          "top_color": ["teal", "red", "blue", "violet", "emerald", "clear", "frosted"],
+          "secondary_color": ["clear", "blue", "green", "frosted", "violet", "black", "purple", "red", "white"],
+          "sled_color": ["violet", "black", "frosted", "blue", "green", "white", "red", "purple", "clear"],
+          "cape_color": ["frosted", "violet", "black", "blue", "green", "white", "red", "purple", "clear"],
+          "bottom_color": ["red", "violet", "frosted", "blue", "clear", "emerald", "teal"],
+          "skin_color": [
+            "frosted",
+            "violet",
+            "black",
+            "blue",
+            "green",
+            "emerald",
+            "teal",
+            "white",
+            "red",
+            "purple",
+            "clear",
+          ],
+        },
+      },
+      "diffusers": {
+        "domes": {
+          "diffuser_color": ["purple", "frosted", "red", "green", "blue", "violet"],
+        },
+        "polygons": {
+          "diffuser_color": ["purple", "frosted", "red", "green", "blue", "violet"],
+        },
+        "open_hole": {
+          "diffuser_color": ["green", "blue", "purple", "frosted", "red", "violet"],
+        },
+        "fisheye": {
+          "diffuser_color": ["red", "frosted", "purple", "green", "blue", "violet"],
+        },
+        "cylinders": {
+          "diffuser_color": ["frosted", "red", "purple", "green", "blue", "violet", "black"],
+        },
+        "closed_hole": {
+          "diffuser_color": ["frosted", "red", "purple", "green", "blue", "violet"],
+        },
+        "abstract": {
+          "diffuser_color": ["green", "red", "frosted", "blue", "purple", "violet"],
+        },
+      },
+    };
+    const reordered_colors = {
+      "diffuser_caps": {
+        "shapes": {
+          "adapter_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+          "cap_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+        },
+        "patterns": {
+          "adapter_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+          "cap_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+        },
+        "geometric": {
+          "cap_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+          "adapter_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+        },
+        "starter_kit": {
+          "adapter_color": ["red", "green", "blue", "purple", "frosted"],
+          "cap_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+        },
+        "abstract": {
+          "cap_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+          "adapter_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+        },
+        "diffuser_adapters": {
+          "adapter_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+        },
+      },
+      "options": {
+        "colors": {
+          "skin_color": ["clear", "frosted"],
+        },
+      },
+      "glowskins": {
+        "novaskins_inovas_micromaxs": {
+          "sled_color": ["red", "green", "blue", "purple", "violet", "clear", "frosted", "black"],
+          "skin_color": ["red", "blue", "purple", "violet", "clear", "teal", "emerald"],
+        },
+      },
+      "accessories": {
+        "battery_storage": {
+          "cap/slide_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+          "body_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+        },
+      },
+      "glowframez": {
+        "clozd": {
+          "color": ["red", "green", "blue", "purple", "clear"],
+        },
+        "clip": {
+          "color": ["red", "green", "blue", "purple", "violet", "white", "black", "clear"],
+        },
+      },
+      "exo_diffusers": {
+        "polyhedrons": {
+          "skeleton_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+          "plug_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+        },
+        "domes": {
+          "skeleton_color": ["red", "green", "blue", "purple", "violet", "white", "black"],
+          "plug_color": ["red", "green", "blue", "purple", "violet", "frosted"],
+        },
+      },
+      "batteries": {
+        "storage": {
+          "color": ["red", "green", "blue", "purple", "violet", "white", "black", "clear"],
+        },
+      },
+      "glowskinz": {
+        "opyn": {
+          "skin_color": [
+            "clear",
+            "frosted",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "emerald",
+            "blue",
+            "violet",
+            "purple",
+            "pink",
+            "black",
+          ],
+          "sled_color": ["clear", "red", "orange", "yellow", "green", "blue", "purple", "violet", "white", "black"],
+        },
+        "clozd": {
+          "sled_color": ["clear", "red", "orange", "yellow", "green", "blue", "purple", "violet", "white", "black"],
+          "cape_color": ["clear", "red", "orange", "yellow", "green", "blue", "purple", "violet", "white", "black"],
+          "skin_color": [
+            "clear",
+            "frosted",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "emerald",
+            "blue",
+            "violet",
+            "purple",
+            "pink",
+          ],
+        },
+      },
+      "diffusers": {
+        "fisheye": {
+          "diffuser_color": [
+            "clear",
+            "frosted",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "emerald",
+            "blue",
+            "violet",
+            "purple",
+            "pink",
+          ],
+        },
+        "no_fisheye": {
+          "diffuser_color": [
+            "clear",
+            "frosted",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "emerald",
+            "blue",
+            "violet",
+            "purple",
+            "pink",
+            "black",
+          ],
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching category color options:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.route("/migrate_filament").put(async (req, res) => {
+  try {
+    const products = await Product.find({
+      "options.values.product": { $exists: true },
+    });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      let updated = false;
+
+      for (const option of product.options) {
+        for (const value of option.values) {
+          if (value.product) {
+            const linkedProduct = await Product.findById(value.product);
+            if (linkedProduct && linkedProduct.filament) {
+              value.filament = linkedProduct.filament;
+              updated = true;
+            }
+          }
+        }
+      }
+
+      if (updated) {
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} products.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/establish_filament_tags").put(async (req, res) => {
+  try {
+    // Make all TPU Filament have a tag  of "exo_diffusers", "clozd", and "opyn", "diffusers", "diffuser_adapter"
+    // Make all PETG Filament have a tag of "glowskinz", "clozd", and "opyn", "diffuser", "diffuser_adapter"
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/get_filaments").put(async (req, res) => {
+  try {
+    const filaments = await Filament.find({ deleted: false }).populate("tags");
+    res.status(200).json(filaments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/get_products").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false, category: "glowskinz" });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/generate_color_options").put(async (req, res) => {
+  try {
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 // --------------------------------------------------
 
 // Migrate lifestyle images

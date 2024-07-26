@@ -76,7 +76,7 @@ const reducers = {
   }),
   filaments: combineReducers({
     filamentPage: filamentSlice,
-    filamentTable: glTableReducer("filamentTable", {}),
+    filamentTable: glTableReducer("filamentTable", { sorting: [0, "desc"] }),
   }),
   orders: combineReducers({
     orderPage: orderSlice,

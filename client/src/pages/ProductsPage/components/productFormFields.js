@@ -75,6 +75,13 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
               fields: {
                 name: { type: "text", label: "Name" },
                 colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
+                filament: {
+                  type: "autocomplete_single",
+                  label: "Filament",
+                  options: filaments,
+                  getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
+                  labelProp: "name",
+                },
                 isDefault: { type: "checkbox", label: "Default Option" },
                 additionalCost: { type: "number", label: "Additional Cost" },
                 product: {

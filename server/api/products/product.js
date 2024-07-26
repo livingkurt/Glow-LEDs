@@ -17,6 +17,7 @@ const reviewSchema = new mongoose.Schema(
 export const optionValueSchema = new mongoose.Schema({
   name: { type: String }, // e.g., "Blue", "Large"
   colorCode: { type: String },
+  filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },

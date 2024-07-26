@@ -12,6 +12,8 @@ import EditFilamentModal from "./components/EditFilamentModal";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { useLocation } from "react-router-dom";
+import { ContentCopy } from "@mui/icons-material";
+import { determineFilamentColors } from "./filamentHelpers";
 
 const FilamentsPage = () => {
   const location = useLocation();
@@ -60,7 +62,7 @@ const FilamentsPage = () => {
           ></div>
         ),
       },
-      // { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
+      { title: "Tags", display: row => row.tags.map(tag => tag.name).join(" ,") },
       {
         title: "",
         nonSelectable: true,
@@ -68,6 +70,20 @@ const FilamentsPage = () => {
           <Box display="flex" justifyContent={"flex-end"}>
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>
               <EditIcon color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
+              onClick={() => {
+                dispatch(
+                  API.saveFilament({
+                    ...filament,
+                    _id: null,
+                    color: filament.color + " Copy",
+                  })
+                );
+              }}
+            >
+              <ContentCopy color="white" />
             </GLIconButton>
 
             <GLIconButton onClick={() => dispatch(API.deleteFilament(filament._id))} tooltip="Delete">
@@ -77,7 +93,7 @@ const FilamentsPage = () => {
         ),
       },
     ],
-    [dispatch]
+    [dispatch, location.pathname]
   );
 
   const remoteApi = useCallback(options => API.getFilaments(options), []);
@@ -95,6 +111,7 @@ const FilamentsPage = () => {
         tableName={"Filaments"}
         namespaceScope="filaments"
         namespace="filamentTable"
+        determineColor={determineFilamentColors}
         columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}

@@ -12,10 +12,7 @@ export const filamentFormFields = ({ categorys }) => {
       type: "text",
       label: "Color",
     },
-    color_code: {
-      type: "text",
-      label: "Color Code",
-    },
+    color_code: { type: "color_picker", label: "Color Code" },
     tags: {
       type: "autocomplete_multiple",
       label: "Tags",
@@ -32,10 +29,10 @@ export const filamentFormFields = ({ categorys }) => {
 export const determineFilamentColors = filament => {
   let result = "";
 
-  if (filament.type === "petg") {
+  if (filament.type === "PETG") {
     result = tableColors.active;
   }
-  if (filament.type === "tpu") {
+  if (filament.type === "TPU") {
     result = tableColors.alt_color_2;
   }
   return result;

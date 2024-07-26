@@ -301,6 +301,16 @@ export default {
       }
     }
   },
+  generate_product_options_products_s: async (params, body) => {
+    try {
+      console.log({ params, body });
+      return "Success";
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   create_option_products_s: async (params, body) => {
     const { id, option_product_id } = params;
     const { newOptionProductData } = body;

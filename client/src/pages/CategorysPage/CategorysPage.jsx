@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { determineCategoryColors } from "./categoryHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { ContentCopy } from "@mui/icons-material";
 
 const CategorysPage = () => {
   const categoryPage = useSelector(state => state.categorys.categoryPage);
@@ -23,8 +24,8 @@ const CategorysPage = () => {
       { title: "Name", display: "name" },
       { title: "Type", display: "type" },
       { title: "Pathname", display: "pathname" },
-      { title: "Subcategories", display: row => row.subcategorys.map(subcategory => subcategory.name).join(" ,") },
-      { title: "Collections", display: row => row.collections.map(collection => collection.name).join(" ,") },
+      { title: "Subcategories", display: row => row?.subcategorys?.map(subcategory => subcategory.name).join(" ,") },
+      { title: "Collections", display: row => row?.collections?.map(collection => collection.name).join(" ,") },
       {
         title: "",
         nonSelectable: true,
@@ -33,7 +34,20 @@ const CategorysPage = () => {
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>
               <EditIcon color="white" />
             </GLIconButton>
-
+            <GLIconButton
+              tooltip="Duplicate"
+              onClick={() => {
+                dispatch(
+                  API.saveCategory({
+                    ...category,
+                    _id: null,
+                    name: category.name + " Copy",
+                  })
+                );
+              }}
+            >
+              <ContentCopy color="white" />
+            </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteCategory(category._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
