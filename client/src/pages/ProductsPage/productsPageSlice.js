@@ -40,7 +40,11 @@ const productsPage = createSlice({
     product_modal: false,
     limit: 10,
     selectedOptionType: "",
-    productOptionsGeneratorModal: "",
+    productOptionsGeneratorModal: {
+      isOpen: false,
+      selectedProducts: [],
+      templateProduct: null,
+    },
     editProductHistory: [],
     ourPicksProducts: [],
   },
@@ -129,16 +133,15 @@ const productsPage = createSlice({
       state.selectedOptionType = payload;
     },
     openProductOptionsGeneratorModal: (state, { payload }) => {
-      state.productOptionsGeneratorModal = true;
+      state.productOptionsGeneratorModal.isOpen = true;
+      state.productOptionsGeneratorModal.selectedProducts = payload;
     },
     closeProductOptionsGeneratorModal: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
+      state.productOptionsGeneratorModal.isOpen = false;
+      state.productOptionsGeneratorModal.selectedProducts = payload;
     },
-    previewProductOptions: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
-    },
-    addOption: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
+    setTemplateProduct: (state, { payload }) => {
+      state.productOptionsGeneratorModal.templateProduct = payload;
     },
   },
   extraReducers: {
@@ -329,9 +332,9 @@ export const {
   setSelectedOptionType,
   openProductOptionsGeneratorModal,
   closeProductOptionsGeneratorModal,
-  previewProductOptions,
   saveToEditProductHistory,
   goBackInEditProductHistory,
   addOption,
+  setTemplateProduct,
 } = productsPage.actions;
 export default productsPage.reducer;

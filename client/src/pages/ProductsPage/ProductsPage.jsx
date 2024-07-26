@@ -25,7 +25,7 @@ const ProductsPage = () => {
   const { loading, remoteVersionRequirement } = productsPage;
 
   const productTable = useSelector(state => state.products.productTable);
-  const { selectedRows } = productTable;
+  const { selectedRows, selectedRowObjects } = productTable;
 
   const dispatch = useDispatch();
 
@@ -90,8 +90,7 @@ const ProductsPage = () => {
             <GLIconButton
               tooltip="Product Options Generator"
               onClick={() => {
-                dispatch(API.detailsProduct({ pathname: row._id }));
-                dispatch(openProductOptionsGeneratorModal());
+                dispatch(openProductOptionsGeneratorModal([row._id]));
               }}
             >
               <CreateNewFolderIcon color="white" />
@@ -153,6 +152,17 @@ const ProductsPage = () => {
                 }}
               >
                 Delete Products
+              </Button>
+            )}
+            {selectedRows.length > 0 && (
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  dispatch(openProductOptionsGeneratorModal(selectedRowObjects));
+                }}
+              >
+                Replicate Product Options
               </Button>
             )}
 

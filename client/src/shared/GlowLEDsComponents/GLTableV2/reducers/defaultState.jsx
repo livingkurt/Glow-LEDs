@@ -3,6 +3,7 @@ const defaultState = {
   namespace: "",
   rows: [],
   selectedRows: [],
+  selectedRowObjects: [],
   nonTagFilters: ["departments", "locations"],
   searchBy: (row, search) => {
     const searchableText = row.name;

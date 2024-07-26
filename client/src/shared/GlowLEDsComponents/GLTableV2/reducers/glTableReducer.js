@@ -125,6 +125,7 @@ const reducer =
             rows: data,
             filteredRows: data,
             selectedRows: [],
+            selectedRowObjects: [],
             visibleRows: data,
             remote: {
               ...state.remote,
@@ -165,6 +166,7 @@ const reducer =
           filteredRows: [],
           visibleRows: [],
           selectedRows: [],
+          selectedRowObjects: [],
           filters: {},
         };
       }
@@ -309,13 +311,17 @@ const reducer =
       }
       case `${namespace}/${SELECT_ROW}`: {
         const { rowId } = action.payload;
-        const { selectedRows } = state;
+        const { selectedRows, selectedRowObjects } = state;
         const updatedSelections = selectedRows.includes(rowId)
           ? selectedRows.filter(id => id !== rowId)
           : [...selectedRows, rowId];
+        const updatedObjectSelections = selectedRowObjects.includes(rowId)
+          ? selectedRowObjects.filter(row => row._id !== rowId)
+          : [...selectedRowObjects, rowId];
         return {
           ...state,
           selectedRows: [...updatedSelections],
+          selectedRowObjects: [...updatedObjectSelections],
         };
       }
       case `${namespace}/${DESELECT_ROWS}`: {
@@ -330,9 +336,11 @@ const reducer =
         const visibleRowsCount = visibleRows.length;
         const updatedSelections =
           selectedRowsCount === visibleRowsCount ? [] : visibleRows.map(row => row._id || row.id);
+        const updatedObjectSelections = selectedRowsCount === visibleRowsCount ? [] : visibleRows;
         return {
           ...state,
           selectedRows: [...updatedSelections],
+          selectedRowObjects: [...updatedObjectSelections],
         };
       }
       case `${namespace}/${APPLY_FILTER_SEARCH}`: {
