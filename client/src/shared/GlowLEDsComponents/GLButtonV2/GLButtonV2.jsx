@@ -1,8 +1,9 @@
-import { Button, Tooltip } from "@mui/material";
+import { Button, Tooltip, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 
 const GLButtonV2 = ({ children, tooltip, color, margin, variant, disabled, size, sx, ...otherProps }) => {
+  const theme = useTheme();
   return (
     <Tooltip title={tooltip}>
       <span>
@@ -16,9 +17,9 @@ const GLButtonV2 = ({ children, tooltip, color, margin, variant, disabled, size,
             color === "primary" && !disabled
               ? {
                   ...sx,
-                  background: "linear-gradient(180deg, #4d5061 50%, #6a6c80 100%)",
+                  background: `linear-gradient(180deg, ${theme.palette.primary.main} 50%, #6a6c80 100%)`,
                   ":hover": {
-                    background: "linear-gradient(180deg, #4d5061 50%, #6a6c80 100%)",
+                    background: `linear-gradient(180deg, ${theme.palette.primary.main} 50%, #6a6c80 100%)`,
                   },
                   color: "white",
                 }

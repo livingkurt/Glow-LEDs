@@ -433,32 +433,6 @@ export const list_display = (list_items, set_items) => {
   );
 };
 
-export const option_list = (item_list, list_items, set_items, list_name) => {
-  return (
-    <div className="jc-b">
-      <li>
-        <label htmlFor={list_name.toLowerCase()}>{list_name}</label>
-        <div className="ai-c h-25px mv-15px jc-c">
-          <div className="custom-select">
-            <select className="quantity_select_dropdown" onChange={e => add_item(e, set_items, list_items)}>
-              <option key={1} defaultValue="">
-                ---Choose {list_name}---
-              </option>
-              {item_list.map((item, index) => (
-                <option key={index} value={JSON.stringify(item)}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            <span className="custom-arrow" />
-          </div>
-        </div>
-        {list_display(list_items, set_items)}
-      </li>
-    </div>
-  );
-};
-
 export const remove_list_item = (item_index, e, set_items) => {
   e.preventDefault();
   set_items(items =>

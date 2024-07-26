@@ -30,6 +30,7 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
@@ -49,8 +50,6 @@ const Cart = () => {
   );
 
   const CartItem = ({ item, index }) => {
-    const theme = useTheme();
-
     return (
       <ListItem
         divider
@@ -203,7 +202,12 @@ const Cart = () => {
           )}
         </Box>
         <Divider color="white" />
-        <Box sx={{ p: 2, background: "linear-gradient(180deg, #333333 0%, #4d5061 100%)" }}>
+        <Box
+          sx={{
+            p: 2,
+            background: `linear-gradient(180deg, ${theme.palette.background.dark} 0%, ${theme.palette.primary.main} 100%)`,
+          }}
+        >
           <Box display={"flex"} justifyContent={"space-between"} sx={{ mb: 1 }}>
             <Typography variant="subtitle1">Total</Typography>
             <Typography variant="subtitle1">
