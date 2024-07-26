@@ -67,13 +67,13 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 
 export const generateProductOptions = createAsyncThunk(
   "products/generateProductOptions",
-  async ({ productId, optionName, optionType, filamentTag }, { dispatch, rejectWithValue }) => {
+  async ({ selectedProductIds, templateProductId }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/products/${productId}/generate_product_options`, {
-        optionName,
-        filamentTag,
+      const { data } = await axios.put(`/api/products/generate_product_options`, {
+        selectedProductIds,
+        templateProductId,
       });
-      dispatch(showSuccess({ message: `Option Product Created and Linked To Main Product` }));
+      dispatch(showSuccess({ message: `Options Generated for ${selectedProductIds.length} Products` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

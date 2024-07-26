@@ -301,11 +301,58 @@ export default {
       }
     }
   },
-  generate_product_options_products_s: async (params, body) => {
+  generate_product_options_products_s: async body => {
     try {
-      console.log({ params, body });
+      const { selectedProductIds, templateProductId } = body;
+
+      // Fetch the template product
+      const templateProduct = await Product.findById(templateProductId).lean();
+      if (!templateProduct) {
+        throw new Error("Template product not found");
+      }
+
+      // Fetch all selected products
+      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } }).lean();
+
+      // Process each selected product
+      for (const product of selectedProducts) {
+        // Copy options from template product
+        const newOptions = JSON.parse(JSON.stringify(templateProduct.options));
+
+        // Process each option
+        for (const option of newOptions) {
+          // Process each value in the option
+          for (const value of option.values) {
+            // Create a new product for this option value
+            const newProductName = `${product.name} - ${option.name} - ${value.name}`;
+            const newPathname = `${product.pathname}_${option.name.toLowerCase().replace(/\s+/g, "_")}_${value.name.toLowerCase().replace(/\s+/g, "_")}`;
+
+            const newProduct = new Product({
+              ...product,
+              name: newProductName,
+              pathname: newPathname,
+              parent: product._id,
+              isVariation: true,
+              options: [], // Clear options for the variation product
+            });
+
+            // Save the new product
+            const savedNewProduct = await newProduct.save();
+
+            // Update the value's product reference
+            value.product = savedNewProduct._id;
+          }
+        }
+
+        // Update the original product with new options
+        await Product.findByIdAndUpdate(product._id, {
+          $set: { options: newOptions },
+        });
+      }
+
       return "Success";
     } catch (error) {
+      console.error("Error in generate_product_options_products_s:", error);
       if (error instanceof Error) {
         throw new Error(error.message);
       }

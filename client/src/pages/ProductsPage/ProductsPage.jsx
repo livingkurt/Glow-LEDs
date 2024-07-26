@@ -90,7 +90,7 @@ const ProductsPage = () => {
             <GLIconButton
               tooltip="Product Options Generator"
               onClick={() => {
-                dispatch(openProductOptionsGeneratorModal([row._id]));
+                dispatch(openProductOptionsGeneratorModal([row]));
               }}
             >
               <CreateNewFolderIcon color="white" />

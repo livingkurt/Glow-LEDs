@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, List, ListItem, ListItemText, Paper, Typography, Divider, Box, Tooltip } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Paper, Typography, Divider, Box, Tooltip, useTheme } from "@mui/material";
 import { closeProductOptionsGeneratorModal, setTemplateProduct } from "../productsPageSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useProductsQuery } from "../../../api/allRecordsApi";
@@ -12,18 +12,26 @@ const ProductOptionsGeneratorModal = () => {
   const productsPage = useSelector(state => state.products.productsPage);
   const { productOptionsGeneratorModal } = productsPage;
   const productsQuery = useProductsQuery({ option: false, hidden: false });
+  const theme = useTheme();
 
   const { isOpen, templateProduct, selectedProducts } = productOptionsGeneratorModal;
 
   const renderOptionValues = values => {
     return values.map((value, index) => (
-      <ListItem key={index}>
-        <Grid container spacing={1}>
-          <Grid item xs={4}>
+      <ListItem
+        key={index}
+        sx={{
+          backgroundColor: value.isDefault ? theme.palette.primary.main : "white",
+          borderRadius: 10,
+          color: value.isDefault ? "white" : "black",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
             <Typography variant="subtitle2">{value.name}</Typography>
           </Grid>
           {value.colorCode && (
-            <Grid item xs={4}>
+            <Grid item xs={3} display="flex" gap={2}>
               <Tooltip title={value?.colorCode}>
                 <Box
                   sx={{
@@ -35,12 +43,18 @@ const ProductOptionsGeneratorModal = () => {
                   }}
                 />
               </Tooltip>
+              <Typography variant="subtitle2">
+                {value?.filament.color ? value?.filament.color_code : value?.colorCode}
+              </Typography>
+              <Typography variant="subtitle2">{value?.filament?.active ? "Active" : ""}</Typography>
             </Grid>
           )}
-          <Grid item xs={4}>
+          <Grid item xs={3}>
+            <Typography variant="subtitle2">{value.isDefault && " (Default)"}</Typography>
+          </Grid>
+          <Grid item xs={3}>
             <Typography variant="subtitle2">
-              {value.additionalCost > 0 && ` | Additional Cost: $${value.additionalCost}`}
-              {value.isDefault && " (Default)"}
+              {value.additionalCost > 0 && `Additional Cost: $${value.additionalCost}`}
             </Typography>
           </Grid>
         </Grid>
@@ -52,7 +66,7 @@ const ProductOptionsGeneratorModal = () => {
     if (!templateProduct || !templateProduct.options) return null;
 
     return templateProduct.options.map((option, index) => (
-      <Grid item xs={6}>
+      <Grid item xs={12}>
         <Paper key={index} style={{ margin: "10px 0", padding: "10px" }}>
           <Typography variant="h6">{option.name}</Typography>
           <Typography variant="subtitle2">Type: {option.optionType}</Typography>
@@ -112,9 +126,7 @@ const ProductOptionsGeneratorModal = () => {
           {templateProduct && (
             <>
               <Typography variant="h6">Template Product Options</Typography>
-              <Grid container spacing={2}>
-                {renderTemplateOptions()}
-              </Grid>
+              {renderTemplateOptions()}
             </>
           )}
         </Grid>

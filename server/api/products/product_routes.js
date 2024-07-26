@@ -24,7 +24,7 @@ router.route("/facebook_catelog").get(product_controller.facebook_catelog_produc
 router.route("/table").get(product_controller.table_products_c);
 router.route("/check_stock").post(product_controller.check_stock_products_c);
 router.route("/:id/option_product/:option_product_id?").put(product_controller.create_option_products_c);
-router.route("/:id/generate_product_options").put(product_controller.generate_product_options_products_c);
+router.route("/generate_product_options").put(product_controller.generate_product_options_products_c);
 // router
 //   .route("/compress_images")
 //   .post(product_controller.compress_images_products_c);

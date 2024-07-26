@@ -102,9 +102,9 @@ export default {
     }
   },
   generate_product_options_products_c: async (req, res) => {
-    const { params, body } = req;
+    const { body } = req;
     try {
-      const product = await product_services.generate_product_options_products_s(params, body);
+      const product = await product_services.generate_product_options_products_s(body);
       if (product) {
         return res.status(200).send(product);
       }
