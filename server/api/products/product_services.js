@@ -505,7 +505,7 @@ export default {
     const { cartItems } = body;
     try {
       cartItems.forEach(async item => {
-        const product = await product_db.findById_products_db(item.product);
+        const product = await Product.findOne({ _id: item.product });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
             diminish_single_glove_stock(product, item);
