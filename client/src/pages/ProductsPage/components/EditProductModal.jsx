@@ -1,16 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   Accordion,
-//   AccordionSummary,
-//   AccordionDetails,
-//   TextField,
-//   Button,
-//   Autocomplete,
-//   Typography,
-//   Grid,
-// } from "@mui/material";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { goBackInEditProductHistory, set_edit_product_modal, set_product } from "../productsPageSlice";
 import * as API from "../../../api";
@@ -18,7 +8,6 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
 import { useProductsQuery } from "../../../api/allRecordsApi";
-// import { toCapitalize } from "../../../utils/helper_functions";
 
 const EditProductModal = () => {
   const dispatch = useDispatch();
@@ -32,11 +21,7 @@ const EditProductModal = () => {
   const { chips } = chipPage;
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
-  const productsQuery = useProductsQuery({ option: false, hidden: false });
-
-  // const [optionName, setOptionName] = useState("");
-  // const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [optionType, setOptionType] = useState(null);
+  const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
 
   useEffect(() => {
     let clean = true;
@@ -101,77 +86,6 @@ const EditProductModal = () => {
         actionColor="secondary"
         disableEscapeKeyDown
       >
-        {/* <Accordion defaultExpanded={false}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6">Generate Product Options</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Option Name"
-                  value={optionName}
-                  onChange={e => setOptionName(e.target.value)}
-                  fullWidth
-                  size="small"
-                  margin="normal"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Autocomplete
-                  options={["colors", "dropdown", "buttons"]}
-                  getOptionLabel={option => {
-                    if (typeof option === "string") {
-                      return toCapitalize(option);
-                    }
-                  }}
-                  value={optionType}
-                  onChange={(event, newValue) => {
-                    setOptionType(newValue);
-                  }}
-                  renderInput={params => (
-                    <TextField {...params} label="Option Type" fullWidth margin="normal" size="small" />
-                  )}
-                />
-              </Grid>
-              {optionType === "colors" && (
-                <Grid item xs={12}>
-                  <Autocomplete
-                    options={categorys.filter(category => category.type === "filament_tags")}
-                    getOptionLabel={option => option.name}
-                    value={selectedCategory}
-                    onChange={(event, newValue) => {
-                      setSelectedCategory(newValue);
-                    }}
-                    renderInput={params => (
-                      <TextField {...params} label="Category" fullWidth margin="normal" size="small" />
-                    )}
-                  />
-                </Grid>
-              )}
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() =>
-                    dispatch(
-                      API.generateProductOptions({
-                        productId: product._id,
-                        optionName,
-                        optionType,
-                        filamentTag: selectedCategory._id,
-                      })
-                    )
-                  }
-                  fullWidth
-                >
-                  Generate
-                </Button>
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion> */}
-
         <GLForm
           formData={formFields}
           state={product}

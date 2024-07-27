@@ -40,13 +40,13 @@ const ProductsPage = () => {
               dispatch(
                 API.saveProduct({
                   ...product,
-                  hidden: product.active ? false : true,
+                  hidden: product.hidden ? false : true,
                 })
               );
             }}
-            tooltip={product.active ? "deactivate" : "activate"}
+            tooltip={product.hidden ? "deactivate" : "activate"}
           >
-            <GLBoolean boolean={product.active} />
+            <GLBoolean boolean={product.hidden} />
           </GLIconButton>
         ),
       },
@@ -95,7 +95,7 @@ const ProductsPage = () => {
             >
               <CreateNewFolderIcon color="white" />
             </GLIconButton>
-            <GLIconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} tooltip="Delete">
+            <GLIconButton onClick={() => dispatch(API.deleteProduct(row._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
           </Box>
@@ -156,7 +156,7 @@ const ProductsPage = () => {
             )}
             {selectedRows.length > 0 && (
               <Button
-                color="secondary"
+                color="primary"
                 variant="contained"
                 onClick={() => {
                   dispatch(openProductOptionsGeneratorModal(selectedRowObjects));

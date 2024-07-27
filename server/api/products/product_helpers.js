@@ -170,3 +170,24 @@ export const transformProducts = products => {
       size: product.size,
     }));
 };
+
+// To find parents via a Mongoose query:
+export const findParentsForProduct = async productId => {
+  const product = await Product.findById(productId);
+  if (product && product.parents && product.parents.length > 0) {
+    return await Product.find({ _id: { $in: product.parents } });
+  }
+  return [];
+};
+
+// To find all variations for a parent product:
+export const findVariationsForParent = async parentId => {
+  return await Product.find({ parents: parentId, isVariation: true });
+};
+
+// To add another parent to an existing option product:
+export const addParentToOptionProduct = async (optionProductId, newParentId) => {
+  await Product.findByIdAndUpdate(optionProductId, {
+    $addToSet: { parents: newParentId }, // $addToSet ensures no duplicates
+  });
+};

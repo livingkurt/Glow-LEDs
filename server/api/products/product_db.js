@@ -239,6 +239,7 @@ export default {
       return await Product.findOne(query)
         .populate("categorys")
         .populate("subcategorys")
+        .populate("parents")
         .populate("images")
         .populate({
           path: "options",

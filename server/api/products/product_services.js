@@ -304,6 +304,7 @@ export default {
   generate_product_options_products_s: async body => {
     try {
       const { selectedProductIds, templateProductId } = body;
+      console.log({ selectedProductIds, templateProductId });
 
       // Fetch the template product
       const templateProduct = await Product.findById(templateProductId).lean();
@@ -323,26 +324,50 @@ export default {
         for (const option of newOptions) {
           // Process each value in the option
           for (const value of option.values) {
-            // Create a new product for this option value
+            // Create a new product name and pathname for this option value
             const newProductName = `${product.name} - ${option.name} - ${value.name}`;
             const newPathname = `${product.pathname}_${option.name.toLowerCase().replace(/\s+/g, "_")}_${value.name.toLowerCase().replace(/\s+/g, "_")}`;
 
-            const newProduct = new Product({
-              ...product,
-              name: newProductName,
-              pathname: newPathname,
-              parent: product._id,
-              isVariation: true,
-              options: [], // Clear options for the variation product
-            });
+            console.log({ newProductName, newPathname });
 
-            // Save the new product
-            const savedNewProduct = await newProduct.save();
+            // Check if a product with this pathname already exists
+            let optionProduct = await Product.findOne({ pathname: newPathname });
+
+            if (optionProduct) {
+              // If the product exists, update it
+              optionProduct = await Product.findOneAndUpdate(
+                { pathname: newPathname },
+                {
+                  $set: {
+                    name: newProductName,
+                    isVariation: true,
+                    hidden: true,
+                  },
+                  $addToSet: { parents: product._id }, // Add the current product as a parent if not already present
+                },
+                { new: true, upsert: true } // Return the updated document and create if it doesn't exist
+              );
+            } else {
+              // If the product doesn't exist, create a new one
+              optionProduct = new Product({
+                ...product,
+                _id: undefined, // Let MongoDB generate a new _id
+                name: newProductName,
+                pathname: newPathname,
+                parents: [product._id],
+                isVariation: true,
+                hidden: true,
+                options: [], // Clear options for the variation product
+              });
+              optionProduct = await optionProduct.save();
+            }
 
             // Update the value's product reference
-            value.product = savedNewProduct._id;
+            value.product = optionProduct._id;
           }
         }
+
+        console.log({ newOptions });
 
         // Update the original product with new options
         await Product.findByIdAndUpdate(product._id, {

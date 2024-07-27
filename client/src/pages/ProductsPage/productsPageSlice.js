@@ -304,6 +304,20 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.generateProductOptions.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.success = false;
+    },
+    [API.generateProductOptions.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.productOptionsGeneratorModal.isOpen = false;
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.generateProductOptions.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 

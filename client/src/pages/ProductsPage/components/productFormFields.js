@@ -702,8 +702,8 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
       label: "Is Variation",
       default: false,
     },
-    parent: {
-      type: "autocomplete_single",
+    parents: {
+      type: "autocomplete_multiple",
       label: "Parent Product",
       options: products,
       labelProp: "name",
