@@ -19,6 +19,7 @@ export const optionValueSchema = new mongoose.Schema({
   colorCode: { type: String },
   filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
+  // products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }], // Link to product variations
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },
 });

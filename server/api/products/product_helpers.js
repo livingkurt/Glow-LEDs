@@ -95,77 +95,43 @@ export const diminish_refresh_pack_stock = async (product, item) => {
   }
 };
 export const diminish_sampler_stock = async (product, item) => {
-  console.log("Entering diminish_sampler_stock");
-  console.log("Product:", { id: product._id, name: product.name });
-  console.log("Item:", JSON.stringify(item, null, 2));
-  console.log("Product options:", JSON.stringify(product.options, null, 2));
-
-  // Look for the size option, considering different possible names
   const sizeOption = product.options.find(
     option => option.name.toLowerCase().includes("size") || option.name.toLowerCase().includes("pack")
   );
 
   if (!sizeOption) {
-    console.log("No size or pack option found for sampler product");
     return;
   }
-  console.log("Size/Pack option found:", JSON.stringify(sizeOption, null, 2));
 
-  // Find the selected size based on the item's selectedOptions
   const selectedSize = item.selectedOptions.find(opt =>
     sizeOption.values.some(value => value._id.toString() === opt._id.toString())
   );
 
   if (!selectedSize) {
-    console.log("No matching selected size found");
     return;
   }
-  console.log("Selected size:", JSON.stringify(selectedSize, null, 2));
 
   const sizes = selectedSize.name.split(" + ");
-  console.log("Sizes to process:", sizes);
-
   const gloveName = product.name.includes("Ultra") ? "Ultra Gloves" : "Supreme Gloves V2";
-  console.log("Glove product name to search:", gloveName);
 
-  const gloveProduct = await Product.findOne({ name: { $regex: new RegExp(gloveName, "i") } });
-  if (!gloveProduct) {
-    console.log("Glove product not found");
-    return;
+  for (const size of sizes) {
+    const gloveProduct = await Product.findOne({
+      name: { $regex: new RegExp(`${gloveName} - ${size}`, "i") },
+    });
+
+    if (!gloveProduct) {
+      continue;
+    }
+
+    const newStockCount = Math.max(0, gloveProduct.count_in_stock - item.quantity);
+    gloveProduct.count_in_stock = newStockCount;
+    gloveProduct.quantity = Math.min(gloveProduct.quantity, newStockCount);
+
+    await product_db.update_products_db(gloveProduct._id, {
+      count_in_stock: gloveProduct.count_in_stock,
+      quantity: gloveProduct.quantity,
+    });
   }
-  console.log("Glove product found:", { id: gloveProduct._id, name: gloveProduct.name });
-
-  await Promise.all(
-    sizes.map(async size => {
-      console.log("Processing size:", size);
-
-      const gloveOption = gloveProduct.options.find(option => option.name.toLowerCase().includes("size"));
-      if (!gloveOption) {
-        console.log("No size option found for glove product");
-        return;
-      }
-      console.log("Glove size option:", JSON.stringify(gloveOption, null, 2));
-
-      const gloveSize = gloveOption.values.find(value => value.name === size);
-      if (!gloveSize) {
-        console.log("No matching glove size found");
-        return;
-      }
-      console.log("Matching glove size:", JSON.stringify(gloveSize, null, 2));
-
-      const gloveItem = {
-        product: gloveProduct._id,
-        selectedOptions: [{ _id: gloveSize.product }],
-        quantity: item.quantity,
-      };
-      console.log("Glove item to diminish:", JSON.stringify(gloveItem, null, 2));
-
-      await diminish_single_glove_stock(gloveProduct, gloveItem);
-      console.log("Glove stock diminished for size:", size);
-    })
-  );
-
-  console.log("Exiting diminish_sampler_stock");
 };
 export const normalizeProductFilters = input => {
   const output = {};

@@ -22,7 +22,6 @@ const EditProductModal = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
   const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
-  console.log({ editProductHistory });
 
   useEffect(() => {
     let clean = true;
