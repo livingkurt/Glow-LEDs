@@ -7,6 +7,7 @@ import {
   normalizeProductFilters,
   normalizeProductSearch,
   transformProducts,
+  createOrUpdateOptionProduct,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
@@ -306,76 +307,81 @@ export default {
       const { selectedProductIds, templateProductId } = body;
       console.log({ selectedProductIds, templateProductId });
 
-      // Fetch the template product
       const templateProduct = await Product.findById(templateProductId).lean();
       if (!templateProduct) {
         throw new Error("Template product not found");
       }
 
-      // Fetch all selected products
-      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } }).lean();
+      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
 
-      // Process each selected product
       for (const product of selectedProducts) {
-        // Copy options from template product
         const newOptions = JSON.parse(JSON.stringify(templateProduct.options));
 
-        // Process each option
         for (const option of newOptions) {
-          // Process each value in the option
           for (const value of option.values) {
-            // Create a new product name and pathname for this option value
-            const newProductName = `${product.name} - ${option.name} - ${value.name}`;
-            const newPathname = `${product.pathname}_${option.name.toLowerCase().replace(/\s+/g, "_")}_${value.name.toLowerCase().replace(/\s+/g, "_")}`;
-
-            console.log({ newProductName, newPathname });
-
-            // Check if a product with this pathname already exists
-            let optionProduct = await Product.findOne({ pathname: newPathname });
-
-            if (optionProduct) {
-              // If the product exists, update it
-              optionProduct = await Product.findOneAndUpdate(
-                { pathname: newPathname },
-                {
-                  $set: {
-                    name: newProductName,
-                    isVariation: true,
-                    hidden: true,
-                  },
-                  $addToSet: { parents: product._id }, // Add the current product as a parent if not already present
-                },
-                { new: true, upsert: true } // Return the updated document and create if it doesn't exist
-              );
-            } else {
-              // If the product doesn't exist, create a new one
-              optionProduct = new Product({
-                ...product,
-                _id: undefined, // Let MongoDB generate a new _id
-                name: newProductName,
-                pathname: newPathname,
-                parents: [product._id],
-                isVariation: true,
-                hidden: true,
-                options: [], // Clear options for the variation product
-              });
-              optionProduct = await optionProduct.save();
-            }
-
-            // Update the value's product reference
+            const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
             value.product = optionProduct._id;
           }
         }
 
-        console.log({ newOptions });
-
-        // Update the original product with new options
         await Product.findByIdAndUpdate(product._id, {
           $set: { options: newOptions },
         });
       }
 
       return "Success";
+    } catch (error) {
+      console.error("Error in generate_product_options_products_s:", error);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  generate_product_option_products_products_s: async body => {
+    try {
+      const { selectedProductIds } = body;
+      console.log({ selectedProductIds });
+
+      if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
+        throw new Error("Invalid or empty product IDs array");
+      }
+
+      const parentProducts = await Product.find({ _id: { $in: selectedProductIds } });
+      if (parentProducts.length !== selectedProductIds.length) {
+        throw new Error("One or more products not found");
+      }
+
+      const results = await Promise.all(
+        parentProducts.map(async parentProduct => {
+          const updatedOptions = [];
+
+          for (const option of parentProduct.options) {
+            const updatedValues = [];
+            for (const value of option.values) {
+              const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
+              updatedValues.push({
+                ...value.toObject(),
+                product: optionProduct._id,
+              });
+            }
+            updatedOptions.push({
+              ...option.toObject(),
+              values: updatedValues,
+            });
+          }
+
+          await Product.findByIdAndUpdate(parentProduct._id, {
+            $set: { options: updatedOptions },
+          });
+
+          return {
+            productId: parentProduct._id,
+            status: "Success",
+          };
+        })
+      );
+
+      return results;
     } catch (error) {
       console.error("Error in generate_product_options_products_s:", error);
       if (error instanceof Error) {

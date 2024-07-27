@@ -44,6 +44,7 @@ const productsPage = createSlice({
       isOpen: false,
       selectedProducts: [],
       templateProduct: null,
+      useTemplate: false,
     },
     editProductHistory: [],
     ourPicksProducts: [],
@@ -133,15 +134,21 @@ const productsPage = createSlice({
       state.selectedOptionType = payload;
     },
     openProductOptionsGeneratorModal: (state, { payload }) => {
+      const { selectedProducts, useTemplate } = payload;
       state.productOptionsGeneratorModal.isOpen = true;
-      state.productOptionsGeneratorModal.selectedProducts = payload;
+      state.productOptionsGeneratorModal.selectedProducts = selectedProducts;
+      state.productOptionsGeneratorModal.useTemplate = useTemplate;
     },
     closeProductOptionsGeneratorModal: (state, { payload }) => {
       state.productOptionsGeneratorModal.isOpen = false;
-      state.productOptionsGeneratorModal.selectedProducts = payload;
+      state.productOptionsGeneratorModal.selectedProducts = [];
+      state.productOptionsGeneratorModal.useTemplate = false;
     },
     setTemplateProduct: (state, { payload }) => {
       state.productOptionsGeneratorModal.templateProduct = payload;
+    },
+    setUseTemplate: (state, { payload }) => {
+      state.productOptionsGeneratorModal.useTemplate = payload;
     },
   },
   extraReducers: {
@@ -311,6 +318,8 @@ const productsPage = createSlice({
     [API.generateProductOptions.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.productOptionsGeneratorModal.isOpen = false;
+      state.productOptionsGeneratorModal.selectedProducts = [];
+      state.productOptionsGeneratorModal.useTemplate = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.generateProductOptions.rejected]: (state, { payload, error }) => {
@@ -350,5 +359,6 @@ export const {
   goBackInEditProductHistory,
   addOption,
   setTemplateProduct,
+  setUseTemplate,
 } = productsPage.actions;
 export default productsPage.reducer;

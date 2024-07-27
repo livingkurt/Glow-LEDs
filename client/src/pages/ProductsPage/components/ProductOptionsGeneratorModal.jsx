@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, List, ListItem, ListItemText, Paper, Typography, Divider, Box, Tooltip, useTheme } from "@mui/material";
-import { closeProductOptionsGeneratorModal, setTemplateProduct } from "../productsPageSlice";
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+  Divider,
+  Box,
+  Tooltip,
+  useTheme,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import { closeProductOptionsGeneratorModal, setTemplateProduct, setUseTemplate } from "../productsPageSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useProductsQuery } from "../../../api/allRecordsApi";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
@@ -14,7 +27,7 @@ const ProductOptionsGeneratorModal = () => {
   const productsQuery = useProductsQuery({ option: false, hidden: false });
   const theme = useTheme();
 
-  const { isOpen, templateProduct, selectedProducts } = productOptionsGeneratorModal;
+  const { isOpen, templateProduct, selectedProducts, useTemplate } = productOptionsGeneratorModal;
 
   const renderOptionValues = values => {
     return values.map((value, index) => (
@@ -78,22 +91,33 @@ const ProductOptionsGeneratorModal = () => {
     ));
   };
 
+  const handleConfirm = () => {
+    if (useTemplate) {
+      dispatch(
+        API.generateProductOptions({
+          selectedProductIds: selectedProducts.map(product => product._id),
+          templateProductId: templateProduct._id,
+        })
+      );
+    } else {
+      dispatch(
+        API.generateProductOptionProducts({
+          selectedProductIds: selectedProducts.map(product => product._id),
+        })
+      );
+    }
+  };
+
   return (
     <GLActionModal
       isOpen={isOpen}
-      onConfirm={() => {
-        dispatch(
-          API.generateProductOptions({
-            selectedProductIds: selectedProducts.map(product => product._id),
-            templateProductId: templateProduct._id,
-          })
-        );
-      }}
+      onConfirm={handleConfirm}
       onCancel={() => {
         dispatch(closeProductOptionsGeneratorModal());
       }}
       title={"Product Options Generator"}
       confirmLabel={"Generate"}
+      confirmDisabled={useTemplate && !templateProduct}
       confirmColor="primary"
       cancelLabel={"Cancel"}
       cancelColor="secondary"
@@ -111,25 +135,38 @@ const ProductOptionsGeneratorModal = () => {
           </List>
         </Grid>
         <Grid item xs={12}>
-          <GLAutocomplete
-            options={!productsQuery?.isLoading ? productsQuery?.data : []}
-            getOptionLabel={option => option.name}
-            value={templateProduct}
-            onChange={(event, newValue) => {
-              dispatch(setTemplateProduct(newValue));
-            }}
-            label="Template Product"
-            fullWidth
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={useTemplate}
+                onChange={e => dispatch(setUseTemplate(e.target.checked))}
+                name="useTemplate"
+                color="primary"
+              />
+            }
+            label="Use Template Product"
           />
         </Grid>
-        <Grid item xs={12}>
-          {templateProduct && (
-            <>
-              <Typography variant="h6">Template Product Options</Typography>
-              {renderTemplateOptions()}
-            </>
-          )}
-        </Grid>
+        {useTemplate && (
+          <Grid item xs={12}>
+            <GLAutocomplete
+              options={!productsQuery?.isLoading ? productsQuery?.data : []}
+              getOptionLabel={option => option.name}
+              value={templateProduct}
+              onChange={(event, newValue) => {
+                dispatch(setTemplateProduct(newValue));
+              }}
+              label="Template Product"
+              fullWidth
+            />
+          </Grid>
+        )}
+        {useTemplate && templateProduct && (
+          <Grid item xs={12}>
+            <Typography variant="h6">Template Product Options</Typography>
+            {renderTemplateOptions()}
+          </Grid>
+        )}
       </Grid>
     </GLActionModal>
   );

@@ -191,3 +191,39 @@ export const addParentToOptionProduct = async (optionProductId, newParentId) => 
     $addToSet: { parents: newParentId }, // $addToSet ensures no duplicates
   });
 };
+
+export const createOrUpdateOptionProduct = async (parentProduct, optionName, valueName) => {
+  const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
+  const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
+
+  console.log({ newProductName, newPathname });
+
+  let optionProduct = await Product.findOneAndUpdate(
+    { pathname: newPathname },
+    {
+      $set: {
+        name: newProductName,
+        isVariation: true,
+        hidden: true,
+      },
+      $addToSet: { parents: parentProduct._id },
+    },
+    { new: true, upsert: true }
+  );
+
+  if (!optionProduct) {
+    optionProduct = new Product({
+      ...parentProduct.toObject(),
+      _id: undefined,
+      name: newProductName,
+      pathname: newPathname,
+      parents: [parentProduct._id],
+      isVariation: true,
+      hidden: true,
+      options: [],
+    });
+    optionProduct = await optionProduct.save();
+  }
+
+  return optionProduct;
+};

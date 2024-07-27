@@ -19,6 +19,7 @@ import axios from "axios";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -88,13 +89,22 @@ const ProductsPage = () => {
               <FileCopyIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Product Options Generator"
+              tooltip="Option Products Generator"
               onClick={() => {
-                dispatch(openProductOptionsGeneratorModal([row]));
+                dispatch(openProductOptionsGeneratorModal({ selectedProducts: [row], useTemplate: false }));
+              }}
+            >
+              <AssignmentTurnedInIcon color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Complete Options Generator"
+              onClick={() => {
+                dispatch(openProductOptionsGeneratorModal({ selectedProducts: [row], useTemplate: true }));
               }}
             >
               <CreateNewFolderIcon color="white" />
             </GLIconButton>
+
             <GLIconButton onClick={() => dispatch(API.deleteProduct(row._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
