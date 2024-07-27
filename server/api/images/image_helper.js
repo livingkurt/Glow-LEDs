@@ -70,7 +70,6 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
     const imgResponse = await axios(uploadImageToImgurConfig);
     return imgResponse.data.data.link;
   } catch (error) {
-    console.log(error);
     throw new Error("Failed to upload image to Imgur");
   }
 };
@@ -115,7 +114,6 @@ export const createImgurAlbum = async (albumName, imageHash) => {
     const albumResponse = await axios(createImgurAlbumConfig);
     return albumResponse.data.data;
   } catch (error) {
-    console.log(error);
     throw new Error("Failed to create Imgur album");
   }
 };

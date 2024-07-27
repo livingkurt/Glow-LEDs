@@ -76,7 +76,6 @@ const PlaceOrderPage = () => {
     const fetchData = async () => {
       if (clean && cartItems.length !== 0) {
         const response = await dispatch(API.checkStock(cartItems));
-        console.log({ response: response.payload }); // For debugging
         if (response.payload && response.payload.length !== 0) {
           // Use the new function to construct the message with option details
           const message = constructOutOfStockMessage(response.payload);

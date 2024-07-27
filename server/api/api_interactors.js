@@ -19,8 +19,6 @@ export const mongodbFindAllNoPopulate = async (collectionName, options) => {
 
   const result = await cursor.toArray();
 
-  console.log({ result });
-
   client.close(); // Close the connection
   return result;
 };

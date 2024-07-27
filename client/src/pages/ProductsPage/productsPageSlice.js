@@ -173,7 +173,6 @@ const productsPage = createSlice({
     [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
-      console.log({ payload });
       if (payload.created) {
         state.product = payload.data;
       }

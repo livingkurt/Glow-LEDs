@@ -94,7 +94,6 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
                     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
                   },
                   onCreateNewButtonClick: selectedProduct => {
-                    console.log(selectedProduct);
                     dispatch(saveToEditProductHistory(product));
                     dispatch(API.saveProduct({ ...selectedProduct }));
                   },

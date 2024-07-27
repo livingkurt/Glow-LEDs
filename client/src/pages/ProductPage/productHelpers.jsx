@@ -73,7 +73,6 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
-  console.log({ dimensions: product?.dimensions });
   if (product?.dimensions) {
     state.customizedProduct.dimensions = product.dimensions;
   }

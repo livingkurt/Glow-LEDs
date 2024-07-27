@@ -235,10 +235,8 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         commercial_invoice_signature: "IMAGE_2",
       },
     });
-    console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
-    console.log({ error });
     if (error instanceof Error) {
       throw new Error(error.message);
     }

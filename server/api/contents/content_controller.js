@@ -34,7 +34,6 @@ export default {
       }
       return res.status(404).send({ message: "Contents Not Found" });
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: error.message });
     }
   },

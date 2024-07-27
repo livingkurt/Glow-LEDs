@@ -305,7 +305,6 @@ export default {
   generate_product_options_products_s: async body => {
     try {
       const { selectedProductIds, templateProductId } = body;
-      console.log({ selectedProductIds, templateProductId });
 
       if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
         throw new Error("Invalid or empty product IDs array");

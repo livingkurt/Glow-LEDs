@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
-  console.log({ featured_products });
   return !featured_products_hidden ? (
     <Box>
       <Typography variant="h4" component="h2" align="left" gutterBottom>

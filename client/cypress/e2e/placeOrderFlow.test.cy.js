@@ -54,8 +54,6 @@ describe("Place Order Flow", () => {
 
       const orderId = segments[segments.length - 1];
 
-      console.log({ orderId });
-
       // Delete the order
       cy.request({
         method: "DELETE",
