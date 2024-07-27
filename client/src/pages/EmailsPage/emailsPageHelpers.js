@@ -21,6 +21,8 @@ export const templates = [
   "reset_password",
   "email_subscription",
   "order",
+  "order_status",
+  "shipping_status",
   "review",
   "affiliate",
   "feature",
