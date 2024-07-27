@@ -68,7 +68,7 @@ const CartPage = () => {
             ) : (
               <div>
                 {cartItems.map((item, index) => (
-                  <CartItem orderItems={cartItems} item={item} index={index} show_quantity={true} />
+                  <CartItem orderItems={cartItems} item={item} index={index} showQuantity />
                 ))}
               </div>
             )}
