@@ -307,75 +307,48 @@ export default {
       const { selectedProductIds, templateProductId } = body;
       console.log({ selectedProductIds, templateProductId });
 
-      const templateProduct = await Product.findById(templateProductId).lean();
-      if (!templateProduct) {
-        throw new Error("Template product not found");
-      }
-
-      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
-
-      for (const product of selectedProducts) {
-        const newOptions = JSON.parse(JSON.stringify(templateProduct.options));
-
-        for (const option of newOptions) {
-          for (const value of option.values) {
-            const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
-            value.product = optionProduct._id;
-          }
-        }
-
-        await Product.findByIdAndUpdate(product._id, {
-          $set: { options: newOptions },
-        });
-      }
-
-      return "Success";
-    } catch (error) {
-      console.error("Error in generate_product_options_products_s:", error);
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  generate_product_option_products_products_s: async body => {
-    try {
-      const { selectedProductIds } = body;
-      console.log({ selectedProductIds });
-
       if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
         throw new Error("Invalid or empty product IDs array");
       }
 
-      const parentProducts = await Product.find({ _id: { $in: selectedProductIds } });
-      if (parentProducts.length !== selectedProductIds.length) {
+      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
+      if (selectedProducts.length !== selectedProductIds.length) {
         throw new Error("One or more products not found");
       }
 
-      const results = await Promise.all(
-        parentProducts.map(async parentProduct => {
-          const updatedOptions = [];
+      let templateProduct = null;
+      if (templateProductId) {
+        templateProduct = await Product.findById(templateProductId).lean();
+        if (!templateProduct) {
+          throw new Error("Template product not found");
+        }
+      }
 
-          for (const option of parentProduct.options) {
-            const updatedValues = [];
-            for (const value of option.values) {
-              const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
-              updatedValues.push({
-                ...value.toObject(),
-                product: optionProduct._id,
-              });
-            }
-            updatedOptions.push({
-              ...option.toObject(),
-              values: updatedValues,
-            });
+      const results = await Promise.all(
+        selectedProducts.map(async product => {
+          let updatedOptions;
+
+          if (templateProduct) {
+            // Use template product's options
+            updatedOptions = JSON.parse(JSON.stringify(templateProduct.options));
+          } else {
+            // Use product's existing options
+            updatedOptions = JSON.parse(JSON.stringify(product.options));
           }
 
-          await Product.findByIdAndUpdate(parentProduct._id, {
+          for (const option of updatedOptions) {
+            for (const value of option.values) {
+              const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
+              value.product = optionProduct._id;
+            }
+          }
+
+          await Product.findByIdAndUpdate(product._id, {
             $set: { options: updatedOptions },
           });
 
           return {
-            productId: parentProduct._id,
+            productId: product._id,
             status: "Success",
           };
         })

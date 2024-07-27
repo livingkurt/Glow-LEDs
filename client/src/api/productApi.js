@@ -81,22 +81,6 @@ export const generateProductOptions = createAsyncThunk(
     }
   }
 );
-
-export const generateProductOptionProducts = createAsyncThunk(
-  "products/generateProductOptionProducts",
-  async ({ selectedProductIds }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.put(`/api/products/generate_product_option_products`, {
-        selectedProductIds,
-      });
-      dispatch(showSuccess({ message: `Option Products Generated for ${selectedProductIds.length} Products` }));
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
 export const createOptionProduct = createAsyncThunk(
   "products/createOptionProduct",
   async ({ productId, seedOptionProductId, newOptionProductData, optionId }, { dispatch, rejectWithValue }) => {

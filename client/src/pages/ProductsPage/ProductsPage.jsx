@@ -169,7 +169,9 @@ const ProductsPage = () => {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                  dispatch(openProductOptionsGeneratorModal(selectedRowObjects));
+                  dispatch(
+                    openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
+                  );
                 }}
               >
                 Replicate Product Options

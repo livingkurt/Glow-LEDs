@@ -91,27 +91,17 @@ const ProductOptionsGeneratorModal = () => {
     ));
   };
 
-  const handleConfirm = () => {
-    if (useTemplate) {
-      dispatch(
-        API.generateProductOptions({
-          selectedProductIds: selectedProducts.map(product => product._id),
-          templateProductId: templateProduct._id,
-        })
-      );
-    } else {
-      dispatch(
-        API.generateProductOptionProducts({
-          selectedProductIds: selectedProducts.map(product => product._id),
-        })
-      );
-    }
-  };
-
   return (
     <GLActionModal
       isOpen={isOpen}
-      onConfirm={handleConfirm}
+      onConfirm={() =>
+        dispatch(
+          API.generateProductOptions({
+            selectedProductIds: selectedProducts.map(product => product._id),
+            templateProductId: templateProduct ? templateProduct._id : null,
+          })
+        )
+      }
       onCancel={() => {
         dispatch(closeProductOptionsGeneratorModal());
       }}
