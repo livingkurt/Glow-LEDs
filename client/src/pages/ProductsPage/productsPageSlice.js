@@ -60,10 +60,7 @@ const productsPage = createSlice({
     saveToEditProductHistory: (state, { payload }) => {
       state.editProductHistory.push(payload);
     },
-    goBackInEditProductHistory: (state, { payload }) => {
-      state.product = state.editProductHistory[state.editProductHistory.length - 1];
-      state.editProductHistory.pop();
-    },
+
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
@@ -150,6 +147,10 @@ const productsPage = createSlice({
     setUseTemplate: (state, { payload }) => {
       state.productOptionsGeneratorModal.useTemplate = payload;
     },
+    goBackInEditProductHistory: (state, { payload }) => {
+      state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      state.editProductHistory.pop();
+    },
   },
   extraReducers: {
     [API.listProducts.pending]: (state, { payload }) => {
@@ -176,8 +177,10 @@ const productsPage = createSlice({
       if (payload.created) {
         state.product = payload.data;
       }
+
       if (state.editProductHistory.length > 0) {
         state.product = state.editProductHistory[state.editProductHistory.length - 1];
+        state.editProductHistory.pop();
       } else if (state.editProductHistory.length === 0) {
         state.edit_product_modal = false;
       }

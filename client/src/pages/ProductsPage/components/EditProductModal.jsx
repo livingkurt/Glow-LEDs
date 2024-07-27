@@ -22,6 +22,7 @@ const EditProductModal = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
   const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
+  console.log({ editProductHistory });
 
   useEffect(() => {
     let clean = true;
@@ -55,35 +56,30 @@ const EditProductModal = () => {
           dispatch(API.saveProduct({ ...product }));
         }}
         onCancel={() => {
-          if (editProductHistory.length > 0) {
-            dispatch(goBackInEditProductHistory());
-          } else if (editProductHistory.length === 0) {
+          if (editProductHistory.length === 0) {
             dispatch(set_edit_product_modal(false));
+          } else {
+            dispatch(
+              showConfirm({
+                title: "Do you want to save before going back?",
+                message: "Click Yes to save changes before going back. Click No to go back without saving.",
+                onConfirm: () => {
+                  dispatch(API.saveProduct({ ...product }));
+                },
+                onClose: () => {
+                  dispatch(goBackInEditProductHistory());
+                },
+              })
+            );
           }
-        }}
-        onAction={() => {
-          dispatch(
-            showConfirm({
-              title: "Do you want to save before going back?",
-              message: "Click Yes to save changes before going back. Click No to go back without saving.",
-              onConfirm: () => {
-                dispatch(API.saveProduct({ ...product }));
-              },
-              onClose: () => {
-                dispatch(goBackInEditProductHistory());
-              },
-            })
-          );
         }}
         title={"Edit Product"}
         confirmLabel={"Save"}
         confirmColor="primary"
-        cancelLabel={"Cancel"}
-        cancelColor="secondary"
-        actionLabel={
-          editProductHistory.length > 0 ? `Back to ${editProductHistory[editProductHistory.length - 1].name}` : null
+        cancelLabel={
+          editProductHistory.length > 0 ? `Back to ${editProductHistory[editProductHistory.length - 1].name}` : "Cancel"
         }
-        actionColor="secondary"
+        cancelColor="secondary"
         disableEscapeKeyDown
       >
         <GLForm
