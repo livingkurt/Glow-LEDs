@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -7,7 +7,6 @@ import {
   ListItemText,
   Paper,
   Typography,
-  Divider,
   Box,
   Tooltip,
   useTheme,

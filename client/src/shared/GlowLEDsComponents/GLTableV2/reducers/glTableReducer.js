@@ -315,9 +315,11 @@ const reducer =
         const updatedSelections = selectedRows.includes(rowId)
           ? selectedRows.filter(id => id !== rowId)
           : [...selectedRows, rowId];
-        const updatedObjectSelections = selectedRowObjects.includes(rowId)
-          ? selectedRowObjects.filter(row => row._id !== rowId)
-          : [...selectedRowObjects, rowId];
+        const rowObject = state.visibleRows.find(row => row._id === rowId || row.id === rowId);
+        const updatedObjectSelections = selectedRowObjects.some(row => row._id === rowId || row.id === rowId)
+          ? selectedRowObjects.filter(row => row._id !== rowId && row.id !== rowId)
+          : [...selectedRowObjects, rowObject];
+        console.log({ selectedRows, selectedRowObjects, updatedObjectSelections });
         return {
           ...state,
           selectedRows: [...updatedSelections],
@@ -328,6 +330,7 @@ const reducer =
         return {
           ...state,
           selectedRows: [],
+          selectedRowObjects: [],
         };
       }
       case `${namespace}/${SELECT_ALL_ROWS}`: {
