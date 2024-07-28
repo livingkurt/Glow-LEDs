@@ -8,6 +8,7 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.color_product")
         .populate("cartItems.secondary_color_product")
         .populate("cartItems.option_product")
@@ -25,6 +26,7 @@ export default {
     try {
       return await Cart.findOne({ _id: id, active: true, deleted: false })
         .populate("user")
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.display_image_object");
     } catch (error) {
       if (error instanceof Error) {
@@ -36,6 +38,7 @@ export default {
     try {
       return await Cart.findOne({ user: user_id, active: true, deleted: false })
         .populate("user")
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.display_image_object");
     } catch (error) {
       if (error instanceof Error) {

@@ -8,12 +8,18 @@ import { sale_price_switch } from "../../utils/react_helper_functions";
 import GLSelect from "../GlowLEDsComponents/GLSelect/GLSelect";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 import * as API from "../../api";
+
 const CartItem = ({ item, index, showQuantity }) => {
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const dispatch = useDispatch();
   const theme = useTheme();
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
+
+  const processedOptions = item.selectedOptions.map(option => ({
+    ...option,
+    normalizedColorCode: option.filament?.color_code || option.colorCode,
+  }));
   return (
     <ListItem
       divider
@@ -44,8 +50,9 @@ const CartItem = ({ item, index, showQuantity }) => {
           </Grid>
           <Grid item>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-              {item.selectedOptions?.map((option, optionIndex) => {
-                const bgColor = option.colorCode || theme.palette.background.default;
+              {processedOptions?.map((option, optionIndex) => {
+                const bgColor = option.normalizedColorCode || theme.palette.background.default;
+                if (!option.name) return null;
                 return (
                   <Chip
                     key={optionIndex}
