@@ -1,33 +1,41 @@
 // Helper function to check if the count of non-addon options is different
-export const isOptionCountDifferent = (product, customizedProduct) => {
-  const productOptions = getNonAddOnOptions(product?.options);
-  const selectedOptions = getNonAddOnOptions(customizedProduct?.selectedOptions);
+export const isOptionCountDifferent = (product, customizedProduct, isAddonChecked) => {
+  console.log({ product, customizedProduct, isAddonChecked });
+  const productOptions = getRelevantOptions(product?.options, isAddonChecked);
+  const selectedOptions = getRelevantOptions(customizedProduct?.selectedOptions, isAddonChecked);
 
   return selectedOptions.length < productOptions.length;
 };
 
-// Helper function to filter out add-on options and get their IDs
-export const getNonAddOnOptions = (options = []) => {
-  return options
-    .filter(option => option && !option.isAddOn)
-    .map(option => option._id)
-    .filter(Boolean);
+// Helper function to get relevant options based on isAddonChecked
+export const getRelevantOptions = (options = [], isAddonChecked) => {
+  if (isAddonChecked) {
+    return options.map(option => option._id).filter(Boolean);
+  } else {
+    return options
+      .filter(option => !option.isAddOn)
+      .map(option => option._id)
+      .filter(Boolean);
+  }
 };
 
 export const updatePrice = (state, additionalCost) => {
-  state.customizedProduct.price = state.product.price + additionalCost;
+  const newPrice = Number(state.product.price + additionalCost).toFixed(2);
+  state.customizedProduct.price = newPrice;
 };
 
-export const calculateAdditionalCost = selectedOptions =>
-  selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
+export const calculateAdditionalCost = selectedOptions => {
+  const total = selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
+  return Number(total.toFixed(2));
+};
 
 export const updateProductDetailsFromOption = (state, selectedOption) => {
   const { product } = selectedOption;
-  if (selectedOption.product.images.length > 0) {
+  if (selectedOption?.product?.images?.length > 0) {
     state.customizedProduct.images = selectedOption.product.images;
   }
-  if (selectedOption.product.chips.length > 0) {
-    state.customizedProduct.chips = selectedOption.product.chips;
+  if (selectedOption?.product?.chips?.length > 0) {
+    state.customizedProduct.chips = selectedOption?.product?.chips;
   }
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
@@ -80,8 +88,8 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
 
 export const handlePriceReplacement = (state, option, selectedOption) => {
   if (option?.replacePrice) {
-    state.customizedProduct.price = selectedOption.product.price;
-    state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
+    state.customizedProduct.price = selectedOption?.product?.price;
+    state.customizedProduct.previousPriceWithAddOn = state?.customizedProduct?.price;
   } else {
     if (!state.customizedProduct.previousPriceWithAddOn) {
       state.customizedProduct.previousPriceWithAddOn = state.product.price;

@@ -65,6 +65,10 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
             type: "checkbox",
             label: "Is Add-On",
           },
+          details: {
+            type: "text_multiline",
+            label: "Details",
+          },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
           values: {
             type: "array",

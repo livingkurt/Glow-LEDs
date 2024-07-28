@@ -1,13 +1,21 @@
 import React from "react";
-import { ToggleButtonGroup, ToggleButton, Typography, Box, useTheme } from "@mui/material";
+import { ToggleButtonGroup, ToggleButton, Typography, Box, useTheme, Tooltip } from "@mui/material";
+import { Info } from "@mui/icons-material";
 
-const GLToggleButtons = ({ label, ariaLabel, value, onChange, options, additionalCostLabel, sx }) => {
+const GLToggleButtons = ({ label, ariaLabel, value, onChange, options, additionalCostLabel, details }) => {
   const theme = useTheme();
   return (
     <Box mt={1}>
-      <Typography variant="subtitle1" gutterBottom>
-        {label}
-      </Typography>
+      <Box display="flex" alignItems={"center"} gap={1}>
+        <Typography variant="subtitle1" gutterBottom>
+          {label}
+        </Typography>
+        {details && (
+          <Tooltip title={details}>
+            <Info color="white" size="large" />
+          </Tooltip>
+        )}
+      </Box>
       <ToggleButtonGroup
         aria-label={ariaLabel}
         value={value}

@@ -1,5 +1,6 @@
 import React from "react";
-import { FormControl, Select, MenuItem, Typography, Box, useTheme } from "@mui/material";
+import { FormControl, Select, MenuItem, Typography, Box, useTheme, Tooltip } from "@mui/material";
+import { Info } from "@mui/icons-material";
 
 const GLSelect = ({
   label,
@@ -12,13 +13,21 @@ const GLSelect = ({
   fullWidth,
   width,
   size,
+  details,
 }) => {
   const theme = useTheme();
   return (
     <Box mt={1}>
-      <Typography variant="subtitle1" gutterBottom>
-        {label}
-      </Typography>
+      <Box display="flex" alignItems={"center"} gap={1}>
+        <Typography variant="subtitle1" gutterBottom>
+          {label}
+        </Typography>
+        {details && (
+          <Tooltip title={details}>
+            <Info color="white" size="large" />
+          </Tooltip>
+        )}
+      </Box>
       <FormControl fullWidth={fullWidth} sx={{ width }}>
         <Select
           value={value}

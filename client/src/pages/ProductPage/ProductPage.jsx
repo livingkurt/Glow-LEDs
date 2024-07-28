@@ -34,7 +34,7 @@ import ContributorsDisplay from "./components/ContributorsDisplay";
 const ProductPage = () => {
   const dispatch = useDispatch();
 
-  const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
+  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked } = useProductPage();
 
   return (
     <Box>
@@ -116,7 +116,7 @@ const ProductPage = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
-                      className={isOptionCountDifferent(product, customizedProduct) ? "" : "bob"}
+                      className={isOptionCountDifferent(product, customizedProduct, isAddonChecked) ? "" : "bob"}
                       sx={{
                         fontSize: "1.6rem",
                         padding: 2,
@@ -126,10 +126,10 @@ const ProductPage = () => {
                         dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
                       }}
                       tooltip={
-                        isOptionCountDifferent(product, customizedProduct) &&
+                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) &&
                         "You must select all options to Add To Cart"
                       }
-                      disabled={isOptionCountDifferent(product, customizedProduct)}
+                      disabled={isOptionCountDifferent(product, customizedProduct, isAddonChecked)}
                     >
                       {determineInStock(customizedProduct)}
                     </GLButtonV2>

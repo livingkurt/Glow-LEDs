@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Tooltip, ToggleButton, ToggleButtonGroup, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Clear, Info } from "@mui/icons-material";
+import GLIconButton from "../GLIconButton/GLIconButton";
 
-const GLColorButtons = ({ ariaLabel, value, onChange, options, label }) => {
+const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, details }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -13,18 +15,54 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label }) => {
     .filter(option => !hasFilamentOptions || option?.filament?.active)
     .map(option => ({
       ...option,
-      normalizedColorCode: option.filament?.colorCode || option.colorCode,
+      normalizedColorCode: option.filament?.color_code || option.colorCode,
     }));
+
+  const handleClear = () => {
+    // Create a synthetic event object
+    const syntheticEvent = {
+      target: {
+        value: "", // or any other value that represents "no selection"
+      },
+    };
+    onChange(syntheticEvent);
+  };
+
+  const handleColorChange = (event, newValue) => {
+    // Create a synthetic event object
+    const syntheticEvent = {
+      target: {
+        value: newValue,
+      },
+    };
+    onChange(syntheticEvent);
+  };
 
   return (
     <Box mt={1}>
-      <Typography variant="subtitle1" gutterBottom>
-        {label} ({!value ? "Select Color" : value})
-      </Typography>
+      <Box display="flex" alignItems="center" mb={1} gap={1}>
+        <Box display="flex" alignItems={"center"} gap={1}>
+          <Typography variant="subtitle1">
+            {isAddOn ? "OPTIONAL: " : ""}
+            {label}
+          </Typography>
+          {details && (
+            <Tooltip title={details}>
+              <Info color="white" size="large" />
+            </Tooltip>
+          )}
+          <Typography variant="body1">{!value ? "" : `(${value})`}</Typography>
+        </Box>
+        {value && isAddOn && (
+          <GLIconButton ml={2} onClick={handleClear} tooltip={`Clear Optional: ${label}`}>
+            <Clear color="white" />
+          </GLIconButton>
+        )}
+      </Box>
       <ToggleButtonGroup
         value={value}
         exclusive
-        onChange={onChange}
+        onChange={handleColorChange}
         aria-label={ariaLabel}
         sx={{
           flexWrap: "wrap",

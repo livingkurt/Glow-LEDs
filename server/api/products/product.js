@@ -30,6 +30,7 @@ export const optionSchema = new mongoose.Schema({
   optionType: { type: String },
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },
+  details: { type: String },
 });
 
 const productSchema = new mongoose.Schema(
