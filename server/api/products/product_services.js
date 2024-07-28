@@ -304,7 +304,7 @@ export default {
   },
   generate_product_options_products_s: async body => {
     try {
-      const { selectedProductIds, templateProductId } = body;
+      const { selectedProductIds, templateProductId, selectedOptions } = body;
 
       if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
         throw new Error("Invalid or empty product IDs array");
@@ -325,16 +325,28 @@ export default {
 
       const results = await Promise.all(
         selectedProducts.map(async product => {
-          let updatedOptions;
+          let updatedOptions = [...product.options]; // Start with existing options
 
-          if (templateProduct) {
-            // Use template product's options
+          if (templateProduct && selectedOptions) {
+            selectedOptions.forEach(selectedOption => {
+              const templateOption = templateProduct.options.find(o => o.name === selectedOption.name);
+              if (templateOption) {
+                const index = selectedOption.order - 1; // Convert to 0-based index
+                if (index < updatedOptions.length) {
+                  // Replace existing option at this index
+                  updatedOptions[index] = { ...templateOption };
+                } else {
+                  // Add new option at the end if index is out of range
+                  updatedOptions.push({ ...templateOption });
+                }
+              }
+            });
+          } else if (templateProduct) {
+            // Use all template product's options if no specific options were selected
             updatedOptions = JSON.parse(JSON.stringify(templateProduct.options));
-          } else {
-            // Use product's existing options
-            updatedOptions = JSON.parse(JSON.stringify(product.options));
           }
 
+          // Process option values
           for (const option of updatedOptions) {
             for (const value of option.values) {
               const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -12,13 +12,13 @@ import {
   useTheme,
   Checkbox,
   FormControlLabel,
+  TextField,
 } from "@mui/material";
 import { closeProductOptionsGeneratorModal, setTemplateProduct, setUseTemplate } from "../productsPageSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useProductsQuery } from "../../../api/allRecordsApi";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-
 const ProductOptionsGeneratorModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
@@ -28,6 +28,25 @@ const ProductOptionsGeneratorModal = () => {
 
   const { isOpen, templateProduct, selectedProducts, useTemplate } = productOptionsGeneratorModal;
 
+  const [localSelectedOptions, setLocalSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    if (templateProduct && templateProduct.options) {
+      setLocalSelectedOptions(
+        templateProduct.options.map((option, index) => ({
+          ...option,
+          isSelected: true,
+          order: index + 1,
+        }))
+      );
+    }
+  }, [templateProduct]);
+
+  const handleOptionChange = (index, field, value) => {
+    setLocalSelectedOptions(prevOptions =>
+      prevOptions.map((option, i) => (i === index ? { ...option, [field]: value } : option))
+    );
+  };
   const renderOptionValues = values => {
     return values.map((value, index) => (
       <ListItem
@@ -42,7 +61,7 @@ const ProductOptionsGeneratorModal = () => {
           <Grid item xs={3}>
             <Typography variant="subtitle2">{value.name}</Typography>
           </Grid>
-          {value.colorCode && (
+          {value?.colorCode && (
             <Grid item xs={3} display="flex" gap={2}>
               <Tooltip title={value?.colorCode}>
                 <Box
@@ -56,7 +75,7 @@ const ProductOptionsGeneratorModal = () => {
                 />
               </Tooltip>
               <Typography variant="subtitle2">
-                {value?.filament.color ? value?.filament.color_code : value?.colorCode}
+                {value?.filament ? value?.filament.color_code : value?.colorCode}
               </Typography>
               <Typography variant="subtitle2">{value?.filament?.active ? "Active" : ""}</Typography>
             </Grid>
@@ -77,30 +96,56 @@ const ProductOptionsGeneratorModal = () => {
   const renderTemplateOptions = () => {
     if (!templateProduct || !templateProduct.options) return null;
 
-    return templateProduct.options.map((option, index) => (
-      <Grid item xs={12}>
-        <Paper key={index} style={{ margin: "10px 0", padding: "10px" }}>
-          <Typography variant="h6">{option.name}</Typography>
-          <Typography variant="subtitle2">Type: {option.optionType}</Typography>
-          {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
-          {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
-          <List dense>{renderOptionValues(option.values)}</List>
+    return localSelectedOptions.map((option, index) => (
+      <Grid item xs={12} key={index}>
+        <Paper style={{ margin: "10px 0", padding: "10px" }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={1}>
+              <Checkbox
+                checked={option.isSelected}
+                onChange={e => handleOptionChange(index, "isSelected", e.target.checked)}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                type="number"
+                value={option.order}
+                onChange={e => handleOptionChange(index, "order", parseInt(e.target.value) || 0)}
+                disabled={!option.isSelected}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={9}>
+              <Typography variant="h6">{option.name}</Typography>
+              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
+              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <List dense>{renderOptionValues(option.values)}</List>
+            </Grid>
+          </Grid>
         </Paper>
       </Grid>
     ));
   };
 
+  const handleConfirm = () => {
+    const sortedSelectedOptions = localSelectedOptions
+      .filter(option => option.isSelected)
+      .sort((a, b) => a.order - b.order);
+
+    dispatch(
+      API.generateProductOptions({
+        selectedProductIds: selectedProducts.map(product => product._id),
+        templateProductId: templateProduct ? templateProduct._id : null,
+        selectedOptions: sortedSelectedOptions,
+      })
+    );
+  };
+
   return (
     <GLActionModal
       isOpen={isOpen}
-      onConfirm={() =>
-        dispatch(
-          API.generateProductOptions({
-            selectedProductIds: selectedProducts.map(product => product._id),
-            templateProductId: templateProduct ? templateProduct._id : null,
-          })
-        )
-      }
+      onConfirm={handleConfirm}
       onCancel={() => {
         dispatch(closeProductOptionsGeneratorModal());
       }}

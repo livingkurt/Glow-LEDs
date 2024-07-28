@@ -44,17 +44,15 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                         primary={
                           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              {value.colorCode && (
+                              {(value?.filament || value?.colorCode?.length > 0) && (
                                 <Box display="flex" gap={1}>
-                                  <Tooltip
-                                    title={value?.filament.color ? value?.filament.color_code : value?.colorCode}
-                                  >
+                                  <Tooltip title={value?.filament ? value?.filament.color_code : value?.colorCode}>
                                     <Box
                                       sx={{
                                         width: "36px",
                                         height: "14px",
                                         borderRadius: "4px",
-                                        bgcolor: value?.filament.color ? value?.filament.color_code : value?.colorCode,
+                                        bgcolor: value?.filament ? value?.filament.color_code : value?.colorCode,
                                         boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
                                       }}
                                     />

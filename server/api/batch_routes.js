@@ -4326,6 +4326,246 @@ router.route("/generate_color_options").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+router.route("/migrate_replace_price_size").put(async (req, res) => {
+  try {
+    // Find all products with size options where replacePrice is true
+    const productsToUpdate = await Product.find({
+      "options": {
+        $elemMatch: {
+          "name": "Size",
+          "replacePrice": true,
+        },
+      },
+    });
+
+    console.log(`Found ${productsToUpdate.length} products to update.`);
+
+    let updatedCount = 0;
+    let errorCount = 0;
+    let noChangeCount = 0;
+
+    for (const product of productsToUpdate) {
+      try {
+        let updated = false;
+        product.options = product.options.map(option => {
+          if (option.name === "Size" && option.replacePrice === true) {
+            option.replacePrice = false;
+            updated = true;
+          }
+          return option;
+        });
+
+        if (updated) {
+          await product.save();
+          updatedCount++;
+          console.log(`Updated product: ${product._id} - ${product.name}`);
+        } else {
+          noChangeCount++;
+          console.log(`No change needed for product: ${product._id} - ${product.name}`);
+        }
+      } catch (error) {
+        errorCount++;
+        console.error(`Error updating product ${product._id} - ${product.name}:`, error);
+      }
+    }
+
+    console.log(`
+      Migration completed:
+      - Total products processed: ${productsToUpdate.length}
+      - Products updated: ${updatedCount}
+      - Products with no changes: ${noChangeCount}
+      - Errors encountered: ${errorCount}
+    `);
+
+    res.status(200).json({
+      message: "Migration completed",
+      totalProcessed: productsToUpdate.length,
+      updatedCount,
+      noChangeCount,
+      errorCount,
+    });
+  } catch (error) {
+    console.error("Error in migrate_replace_price_size:", error);
+    res.status(500).json({ message: "Error during migration", error: error.message });
+  }
+});
+router.route("/migrate_replace_price_style").put(async (req, res) => {
+  try {
+    // Find all products with size options where replacePrice is true
+    const productsToUpdate = await Product.find({
+      "options": {
+        $elemMatch: {
+          "name": "Style",
+          "replacePrice": true,
+        },
+      },
+    });
+
+    console.log(`Found ${productsToUpdate.length} products to update.`);
+
+    let updatedCount = 0;
+    let errorCount = 0;
+    let noChangeCount = 0;
+
+    for (const product of productsToUpdate) {
+      try {
+        let updated = false;
+        product.options = product.options.map(option => {
+          if (option.name === "Size" && option.replacePrice === true) {
+            option.replacePrice = false;
+            updated = true;
+          }
+          return option;
+        });
+
+        if (updated) {
+          await product.save();
+          updatedCount++;
+          console.log(`Updated product: ${product._id} - ${product.name}`);
+        } else {
+          noChangeCount++;
+          console.log(`No change needed for product: ${product._id} - ${product.name}`);
+        }
+      } catch (error) {
+        errorCount++;
+        console.error(`Error updating product ${product._id} - ${product.name}:`, error);
+      }
+    }
+
+    console.log(`
+      Migration completed:
+      - Total products processed: ${productsToUpdate.length}
+      - Products updated: ${updatedCount}
+      - Products with no changes: ${noChangeCount}
+      - Errors encountered: ${errorCount}
+    `);
+
+    res.status(200).json({
+      message: "Migration completed",
+      totalProcessed: productsToUpdate.length,
+      updatedCount,
+      noChangeCount,
+      errorCount,
+    });
+  } catch (error) {
+    console.error("Error in migrate_replace_price_size:", error);
+    res.status(500).json({ message: "Error during migration", error: error.message });
+  }
+});
+
+router.route("/check_size_option_structure").put(async (req, res) => {
+  try {
+    const productsWithSizeOption = await Product.find({
+      "options": {
+        $elemMatch: {
+          "name": "Size",
+        },
+      },
+    }).limit(5);
+
+    const structureSamples = productsWithSizeOption.map(product => ({
+      _id: product._id,
+      name: product.name,
+      sizeOption: product.options.find(opt => opt.name === "Size"),
+    }));
+
+    res.status(200).json({
+      message: "Sample structures of products with Size option",
+      samples: structureSamples,
+    });
+  } catch (error) {
+    console.error("Error in check_size_option_structure:", error);
+    res.status(500).json({ message: "Error during check", error: error.message });
+  }
+});
+
+router.route("/check_prod_size_option_structure").put(async (req, res) => {
+  try {
+    const productsWithSizeOption = await Product.find({
+      "options": {
+        $elemMatch: {
+          "name": "Size",
+        },
+      },
+    }).limit(10);
+
+    const structureSamples = productsWithSizeOption.map(product => ({
+      _id: product._id,
+      name: product.name,
+      sizeOption: product.options.find(opt => opt.name === "Size"),
+    }));
+
+    const productsWithReplacePrice = productsWithSizeOption.filter(product =>
+      product.options.find(opt => opt.name === "Size" && opt.replacePrice === true)
+    );
+
+    res.status(200).json({
+      message: "Sample structures of products with Size option in production",
+      totalSamples: productsWithSizeOption.length,
+      samplesWithReplacePrice: productsWithReplacePrice.length,
+      samples: structureSamples,
+    });
+  } catch (error) {
+    console.error("Error in check_prod_size_option_structure:", error);
+    res.status(500).json({ message: "Error during check", error: error.message });
+  }
+});
+
+router.route("/migrate_style_order").put(async (req, res) => {
+  try {
+    // Find all products with a "Style" option
+    const products = await Product.find({
+      "options": {
+        $elemMatch: {
+          "name": "Style",
+        },
+      },
+    });
+
+    console.log(`Found ${products.length} products with Style options to update.`);
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      const styleOptionIndex = product.options.findIndex(option => option.name === "Style");
+      if (styleOptionIndex !== -1) {
+        const styleOption = product.options[styleOptionIndex];
+
+        // Sort the values array so that "Classic" comes first
+        styleOption.values.sort((a, b) => {
+          if (a.name === "Classic") return -1;
+          if (b.name === "Classic") return 1;
+          if (a.name === "Vortex") return -1;
+          if (b.name === "Vortex") return 1;
+          return 0;
+        });
+
+        // Update the product
+        const updateResult = await Product.updateOne(
+          { _id: product._id },
+          { $set: { [`options.${styleOptionIndex}`]: styleOption } }
+        );
+
+        if (updateResult.modifiedCount > 0) {
+          updatedCount++;
+        }
+      }
+    }
+
+    console.log(`Updated ${updatedCount} products.`);
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} products.`,
+      totalProductsFound: products.length,
+      productsUpdated: updatedCount,
+    });
+  } catch (error) {
+    console.error("Error in migrate_style_order:", error);
+    res.status(500).json({ message: "Error during migration", error: error.message });
+  }
+});
+
 // --------------------------------------------------
 
 // Migrate lifestyle images
