@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid, Chip, ListItem, useTheme } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";

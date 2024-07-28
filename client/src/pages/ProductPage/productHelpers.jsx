@@ -1,6 +1,5 @@
 // Helper function to check if the count of non-addon options is different
 export const isOptionCountDifferent = (product, customizedProduct, isAddonChecked) => {
-  console.log({ product, customizedProduct, isAddonChecked });
   const productOptions = getRelevantOptions(product?.options, isAddonChecked);
   const selectedOptions = getRelevantOptions(customizedProduct?.selectedOptions, isAddonChecked);
 
@@ -13,8 +12,8 @@ export const getRelevantOptions = (options = [], isAddonChecked) => {
     return options.map(option => option._id).filter(Boolean);
   } else {
     return options
-      .filter(option => !option.isAddOn)
-      .map(option => option._id)
+      .filter(option => !option?.isAddOn)
+      .map(option => option?._id)
       .filter(Boolean);
   }
 };
