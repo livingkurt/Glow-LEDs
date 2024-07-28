@@ -1,5 +1,14 @@
 import React from "react";
-import { Box, Tooltip, ToggleButton, ToggleButtonGroup, Typography, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Tooltip,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  lighten,
+} from "@mui/material";
 import { Clear, Info } from "@mui/icons-material";
 import GLIconButton from "../GLIconButton/GLIconButton";
 
@@ -7,10 +16,8 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, d
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Check if any option has a filament property
   const hasFilamentOptions = options.some(option => "filament" in option);
 
-  // Filter and normalize options
   const processedOptions = options
     .filter(option => !hasFilamentOptions || option?.filament?.active)
     .map(option => ({
@@ -19,17 +26,15 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, d
     }));
 
   const handleClear = () => {
-    // Create a synthetic event object
     const syntheticEvent = {
       target: {
-        value: "", // or any other value that represents "no selection"
+        value: "",
       },
     };
     onChange(syntheticEvent);
   };
 
   const handleColorChange = (event, newValue) => {
-    // Create a synthetic event object
     const syntheticEvent = {
       target: {
         value: newValue,
@@ -69,7 +74,9 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, d
           justifyContent: "flex-start",
           "& .MuiToggleButtonGroup-grouped": {
             margin: "5px !important",
-            border: 0,
+            "&:not(:first-of-type)": {
+              marginLeft: "5px !important",
+            },
           },
         }}
       >
@@ -78,7 +85,7 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, d
             <ToggleButton
               value={option.name}
               sx={{
-                backgroundColor: option.normalizedColorCode,
+                backgroundColor: option.name === "Clear" ? "transparent" : option.normalizedColorCode,
                 borderRadius: "10px !important",
                 width: isMobile ? 40 : 50,
                 height: isMobile ? 30 : 40,
@@ -90,14 +97,21 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options, label, isAddOn, d
                     : "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
                 transition: "box-shadow 0.3s, transform 0.3s",
                 transform: value === option.name ? "translateY(2px)" : "translateY(0)",
+                border: option.name === "Clear" ? "1px solid white" : "none",
+                "&.MuiToggleButton-root": {
+                  border: option.name === "Clear" ? "1px solid white !important" : "none !important",
+                },
                 "&:hover": {
-                  backgroundColor: option.normalizedColorCode,
+                  backgroundColor:
+                    option.name === "Clear" ? "rgba(255, 255, 255, 0.1)" : lighten(option.normalizedColorCode, 0.1),
                 },
                 "&.Mui-selected": {
-                  backgroundColor: option.normalizedColorCode,
+                  backgroundColor:
+                    option.name === "Clear" ? "rgba(255, 255, 255, 0.2)" : lighten(option.normalizedColorCode, 0.1),
                 },
                 "&.Mui-selected:hover": {
-                  backgroundColor: option.normalizedColorCode,
+                  backgroundColor:
+                    option.name === "Clear" ? "rgba(255, 255, 255, 0.3)" : lighten(option.normalizedColorCode, 0.1),
                 },
               }}
             />

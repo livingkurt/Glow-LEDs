@@ -140,12 +140,17 @@ const productsPage = createSlice({
       state.productOptionsGeneratorModal.isOpen = false;
       state.productOptionsGeneratorModal.selectedProducts = [];
       state.productOptionsGeneratorModal.useTemplate = false;
+      state.productOptionsGeneratorModal.selectedOptions = [];
+      state.productOptionsGeneratorModal.templateProduct = null;
     },
     setTemplateProduct: (state, { payload }) => {
       state.productOptionsGeneratorModal.templateProduct = payload;
     },
     setUseTemplate: (state, { payload }) => {
       state.productOptionsGeneratorModal.useTemplate = payload;
+    },
+    setSelectedOptions: (state, { payload }) => {
+      state.productOptionsGeneratorModal.selectedOptions = payload;
     },
     goBackInEditProductHistory: (state, { payload }) => {
       state.product = state.editProductHistory[state.editProductHistory.length - 1];
@@ -322,6 +327,8 @@ const productsPage = createSlice({
       state.productOptionsGeneratorModal.isOpen = false;
       state.productOptionsGeneratorModal.selectedProducts = [];
       state.productOptionsGeneratorModal.useTemplate = false;
+      state.productOptionsGeneratorModal.selectedOptions = [];
+      state.productOptionsGeneratorModal.templateProduct = null;
       state.remoteVersionRequirement = Date.now();
     },
     [API.generateProductOptions.rejected]: (state, { payload, error }) => {
@@ -362,5 +369,6 @@ export const {
   addOption,
   setTemplateProduct,
   setUseTemplate,
+  setSelectedOptions,
 } = productsPage.actions;
 export default productsPage.reducer;

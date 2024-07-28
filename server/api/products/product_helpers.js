@@ -242,6 +242,28 @@ export const addParentToOptionProduct = async (optionProductId, newParentId) => 
   });
 };
 
+export const updateExistingOptionProduct = async (parentProduct, optionName, valueName, existingProductId) => {
+  const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
+  const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
+
+  const updatedProduct = await Product.findByIdAndUpdate(
+    existingProductId,
+    {
+      $set: {
+        name: newProductName,
+        pathname: newPathname,
+        isVariation: true,
+        hidden: true,
+        parent: parentProduct._id,
+      },
+    },
+    { new: true }
+  );
+
+  return updatedProduct;
+};
+
+// Existing createOrUpdateOptionProduct function
 export const createOrUpdateOptionProduct = async (parentProduct, optionName, valueName) => {
   const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
   const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
@@ -253,8 +275,8 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
         name: newProductName,
         isVariation: true,
         hidden: true,
+        parent: parentProduct._id,
       },
-      $addToSet: { parents: parentProduct._id },
     },
     { new: true, upsert: true }
   );
@@ -265,7 +287,7 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
       _id: undefined,
       name: newProductName,
       pathname: newPathname,
-      parents: [parentProduct._id],
+      parent: parentProduct._id,
       isVariation: true,
       hidden: true,
       options: [],
