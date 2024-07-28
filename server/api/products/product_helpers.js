@@ -254,7 +254,7 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
         isVariation: true,
         hidden: true,
       },
-      $addToSet: { parents: parentProduct._id },
+      $addToSet: { parent: parentProduct._id },
     },
     { new: true, upsert: true }
   );
@@ -265,7 +265,7 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
       _id: undefined,
       name: newProductName,
       pathname: newPathname,
-      parents: [parentProduct._id],
+      parent: parentProduct._id,
       isVariation: true,
       hidden: true,
       options: [],

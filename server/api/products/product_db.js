@@ -12,14 +12,42 @@ export default {
         .populate("secondary_products")
         .populate("categorys")
         .populate({
-          path: "options.values.product", // Adjusted to populate products within options.values
-          populate: [
-            { path: "filament" },
-            { path: "images" },
-            { path: "categorys" },
-            { path: "subcategorys" },
-            // { path: "collections" },
-          ],
+          path: "options",
+          populate: {
+            path: "values",
+            populate: [
+              {
+                path: "product",
+                populate: [
+                  { path: "images" },
+                  { path: "color_object.filament" },
+                  { path: "filament" },
+                  { path: "tags" },
+                  { path: "chips" },
+                  {
+                    path: "options",
+                    populate: {
+                      path: "values",
+                      populate: [
+                        {
+                          path: "product",
+                          populate: [
+                            { path: "images" },
+                            { path: "color_object.filament" },
+                            { path: "filament" },
+                            { path: "tags" },
+                            { path: "chips" },
+                          ],
+                        },
+                        { path: "filament" }, // Added filament population for nested options
+                      ],
+                    },
+                  },
+                ],
+              },
+              { path: "filament" }, // Added filament population for top-level options
+            ],
+          },
         })
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -35,24 +63,42 @@ export default {
       return await Product.find(filter)
         .sort(sort)
         .populate({
-          path: "options.values.product", // Adjusted to populate products within options.values
-          populate: [
-            { path: "filament" },
-            { path: "images" },
-            { path: "categorys" },
-            { path: "subcategorys" },
-            // { path: "collections" },
-            {
-              path: "options.values.product", // Add another nesting of options.values.product
-              populate: [
-                { path: "filament" },
-                { path: "images" },
-                { path: "categorys" },
-                { path: "subcategorys" },
-                // { path: "collections" },
-              ],
-            },
-          ],
+          path: "options",
+          populate: {
+            path: "values",
+            populate: [
+              {
+                path: "product",
+                populate: [
+                  { path: "images" },
+                  { path: "color_object.filament" },
+                  { path: "filament" },
+                  { path: "tags" },
+                  { path: "chips" },
+                  {
+                    path: "options",
+                    populate: {
+                      path: "values",
+                      populate: [
+                        {
+                          path: "product",
+                          populate: [
+                            { path: "images" },
+                            { path: "color_object.filament" },
+                            { path: "filament" },
+                            { path: "tags" },
+                            { path: "chips" },
+                          ],
+                        },
+                        { path: "filament" }, // Added filament population for nested options
+                      ],
+                    },
+                  },
+                ],
+              },
+              { path: "filament" }, // Added filament population for top-level options
+            ],
+          },
         })
         .populate("images")
         .populate("color_images")
