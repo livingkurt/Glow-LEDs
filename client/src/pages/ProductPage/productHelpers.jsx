@@ -9,7 +9,7 @@ export const isOptionCountDifferent = (product, customizedProduct, isAddonChecke
 // Helper function to get relevant options based on isAddonChecked
 export const getRelevantOptions = (options = [], isAddonChecked) => {
   if (isAddonChecked) {
-    return options.map(option => option._id).filter(Boolean);
+    return options.map(option => option?._id).filter(Boolean);
   } else {
     return options
       .filter(option => !option?.isAddOn)
