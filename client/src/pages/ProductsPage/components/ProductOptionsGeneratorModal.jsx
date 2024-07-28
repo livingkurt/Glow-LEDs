@@ -104,47 +104,6 @@ const ProductOptionsGeneratorModal = () => {
           }
         />
       </ListItem>
-      // <ListItem
-      //   key={index}
-      //   sx={{
-      //     backgroundColor: value.isDefault ? theme.palette.primary.main : "white",
-      //     borderRadius: 10,
-      //     color: value.isDefault ? "white" : "black",
-      //   }}
-      // >
-      //   <Grid container spacing={2}>
-      //     <Grid item xs={3}>
-      //       <Typography variant="subtitle2">{value.name}</Typography>
-      //     </Grid>
-      //     {(value?.filament || value?.colorCode?.length > 0) && (
-      //       <Grid item xs={3} display="flex" gap={2}>
-      //         <Tooltip title={value?.filament ? value?.filament.color_code : value?.colorCode}>
-      //           <Box
-      //             sx={{
-      //               width: "36px",
-      //               height: "14px",
-      //               borderRadius: "4px",
-      //               bgcolor: value?.filament ? value?.filament.color_code : value?.colorCode,
-      //               boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
-      //             }}
-      //           />
-      //         </Tooltip>
-      //         <Typography variant="subtitle2">
-      //           {value?.filament ? value?.filament.color_code : value?.colorCode}
-      //         </Typography>
-      //         {value?.filament && !value?.filament?.active ? <Chip label="Inactive" size="small" color="error" /> : ""}
-      //       </Grid>
-      //     )}
-      //     <Grid item xs={3}>
-      //       <Typography variant="subtitle2">{value.isDefault && " (Default)"}</Typography>
-      //     </Grid>
-      //     <Grid item xs={3}>
-      //       <Typography variant="subtitle2">
-      //         {value.additionalCost > 0 && `Additional Cost: $${value.additionalCost}`}
-      //       </Typography>
-      //     </Grid>
-      //   </Grid>
-      // </ListItem>
     ));
   };
 
