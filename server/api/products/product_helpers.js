@@ -242,6 +242,121 @@ export const addParentToOptionProduct = async (optionProductId, newParentId) => 
   });
 };
 
+// Main function
+export const generateProductOptionsProducts = async body => {
+  try {
+    validateInput(body);
+    const { selectedProductIds, templateProductId, selectedOptions } = body;
+
+    const selectedProducts = await fetchSelectedProducts(selectedProductIds);
+    const templateProduct = await fetchTemplateProduct(templateProductId);
+
+    const results = await Promise.all(
+      selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
+    );
+
+    return results;
+  } catch (error) {
+    handleError(error, "generateProductOptionsProducts");
+  }
+};
+
+// Input validation
+const validateInput = ({ selectedProductIds }) => {
+  if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
+    throw new Error("Invalid or empty product IDs array");
+  }
+};
+
+// Fetch selected products
+const fetchSelectedProducts = async selectedProductIds => {
+  const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
+  if (selectedProducts.length !== selectedProductIds.length) {
+    throw new Error("One or more products not found");
+  }
+  return selectedProducts;
+};
+
+// Fetch template product
+const fetchTemplateProduct = async templateProductId => {
+  if (!templateProductId) return null;
+  const templateProduct = await Product.findById(templateProductId).lean();
+  if (!templateProduct) {
+    throw new Error("Template product not found");
+  }
+  return templateProduct;
+};
+
+// Update product options
+const updateProductOptions = (existingOptions, templateProduct, selectedOptions) => {
+  if (!templateProduct) return existingOptions;
+
+  if (selectedOptions) {
+    return updateSelectedOptions(existingOptions, templateProduct, selectedOptions);
+  }
+
+  // If no specific options are selected, keep the existing behavior
+  return JSON.parse(JSON.stringify(templateProduct.options));
+};
+
+// Update selected options
+const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions) => {
+  return selectedOptions.reduce(
+    (updatedOptions, selectedOption) => {
+      const templateOption = templateProduct.options.find(o => o.name === selectedOption.name);
+      if (templateOption) {
+        const index = selectedOption.order - 1;
+        if (index < updatedOptions.length) {
+          // Replace the entire option, including values, without preserving product references
+          updatedOptions[index] = JSON.parse(JSON.stringify(templateOption));
+        } else {
+          updatedOptions.push(JSON.parse(JSON.stringify(templateOption)));
+        }
+      }
+      return updatedOptions;
+    },
+    [...existingOptions]
+  );
+};
+
+// Process option values
+const processOptionValues = async (options, parentProduct, originalOptions, selectedOptions) => {
+  for (const [index, option] of options.entries()) {
+    const isReplacedOption = selectedOptions?.some(so => so.name === option.name);
+    for (const value of option.values) {
+      if (isReplacedOption || !value.product) {
+        const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
+        value.product = optionProduct._id;
+      }
+    }
+  }
+};
+
+// Main processing function
+const processProduct = async (product, templateProduct, selectedOptions) => {
+  const originalOptions = [...product.options];
+  const updatedOptions = updateProductOptions(originalOptions, templateProduct, selectedOptions);
+  await processOptionValues(updatedOptions, product, originalOptions, selectedOptions);
+  await updateProductInDatabase(product._id, updatedOptions);
+  return { productId: product._id, status: "Success" };
+};
+
+// Update product in database
+const updateProductInDatabase = async (productId, updatedOptions) => {
+  await Product.findByIdAndUpdate(productId, {
+    $set: { options: updatedOptions },
+  });
+};
+
+// Error handling
+const handleError = (error, functionName) => {
+  console.error(`Error in ${functionName}:`, error);
+  if (error instanceof Error) {
+    throw new Error(error.message);
+  }
+};
+
+// Keep the createOrUpdateOptionProduct function as is
 export const createOrUpdateOptionProduct = async (parentProduct, optionName, valueName) => {
   const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
   const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
