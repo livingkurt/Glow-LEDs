@@ -415,11 +415,9 @@ export default {
 
         return result;
       } else {
-        console.log(`No tax rate information available for ${state}, ${country}.`);
         return { error: "Tax rate information not available" };
       }
     } catch (error) {
-      console.error(`Failed to get sales tax for ${state}, ${country}:`, error);
       throw new Error(error.message);
     }
   },

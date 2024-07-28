@@ -1,4 +1,11 @@
-import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../utils/util";
+import {
+  format_date,
+  determine_product_name,
+  order_status_steps,
+  determine_tracking_link,
+  email_sale_price_switch,
+} from "../../utils/util";
+import { isColorLight } from "../email_template_helpers";
 
 const determineColor = status => {
   switch (status) {
@@ -213,98 +220,61 @@ export default ({ email, order, status, message_to_user }) => {
                       .map(
                         (item, index) =>
                           `<tr>
-                      <td style='font-family: helvetica;'>
-                        <table style='
-                                width: 100%;
-                                border-spacing: 0;
-                                "border-bottom:  ${order.orderItems.length === 1 ? "0px" : "1px"} white solid;'>
-                          <tbody>
-                            <tr style='width: 100%'>
-                              <td style='font-family: helvetica'>
-                                <table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
-                                  <tbody>
-                                    <tr>
-                                      <td style='font-family: helvetica;'>
-                                        <div style='margin-bottom: 10px; margin-right: 10px;'>
-                                          ${
-                                            !item.secondary_image
-                                              ? `<img src=${item?.display_image_object?.link} alt=${item.name} width="60" height="60"
-                                            style='border-radius:8px;' title="Product Image" />`
-                                              : `
-                                          <div />`
-                                          }
-                                          ${
-                                            item.secondary_image
-                                              ? `<div style='${"width:100%; display:flex;"} ${
-                                                  item.name
-                                                    ? item.name.split("-")[1]
-                                                      ? "flex-direction: column;"
-                                                      : "flex-direction: row;"
-                                                    : ""
-                                                }'>
-                                            <img id="expandedImg" alt=${item.name} title=${
-                                              item.name
-                                            } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                : ""
-                                            } ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "width: 70px;"
-                                                  : "width: 35px;"
-                                                : ""
-                                            } ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "height: 35px;"
-                                                  : "height: 70px;"
-                                                : ""
-                                            }' src=${item?.display_image_object?.link} />
-                                            <img id="expandedSecondaryImg" alt=${item.name} title=${
-                                              item.name
-                                            } style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                : ""
-                                            } ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "width: 70px;"
-                                                  : "width: 35px;"
-                                                : ""
-                                            } ${
-                                              item.name
-                                                ? item.name.split("-")[1]
-                                                  ? "height: 35px;"
-                                                  : "height: 70px;"
-                                                : ""
-                                            }' src=${item.secondary_image} />
-                                          </div>`
-                                              : `
-                                          <div />`
-                                          }
-                                        </div>
-                                      </td>
-                                      <td style='font-family:helvetica;width:100%;'>
-                                        <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
-                                          ${determine_product_name(item, true)}
-                                        </span>
-                                        <br />
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>`
+                        <td style='font-family: helvetica;'>
+                          <table style='width: 100%; border-spacing: 0; border-bottom: 1px white solid;'>
+                            <tbody>
+                              <tr style='width: 100%'>
+                                <td style='font-family: helvetica'>
+                                  <table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
+                                    <tbody>
+                                      <tr>
+                                        <td style='font-family: helvetica;'>
+                                          <div style='margin-bottom: 10px; margin-right: 10px;'>
+                                            <img src=${item?.display_image_object?.link} alt=${item.name} width="70"
+                                              height="70" style='border-radius: 8px; object-fit: cover;' title="Product Image" />
+                                          </div>
+                                        </td>
+                                        <td style='font-family:helvetica;width:100%;'>
+                                          <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
+                                            ${item.name}
+                                          </span>
+                                          <br />
+                                          <div style='margin-top: 5px;'>
+                                            ${item.selectedOptions
+                                              ?.map(
+                                                (option, optionIndex) => `
+                                              <span style='
+                                                display: inline-block;
+                                                padding: 4px 8px;
+                                                margin: 2px;
+                                                border-radius: 16px;
+                                                font-size: 12px;
+                                                font-weight: 500;
+                                                background-color: ${option.colorCode || "#FFF"};
+                                                color: ${option.colorCode ? (isColorLight(option.colorCode) ? "black" : "white") : "black"};
+                                              '>
+                                                ${item.currentOptions[optionIndex].name}: ${option.name}
+                                              </span>
+                                            `
+                                              )
+                                              .join("")}
+                                          </div>
+                                        </td>
+                                        <td style='font-family:helvetica;width:100%;white-space:nowrap;'>
+                                          <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
+                                            align="right">
+                                            ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
+                                          </p>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>`
                       )
                       .join("")}
                     ${

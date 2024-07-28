@@ -14,7 +14,7 @@ const ProductProtectionDetails = ({ transparent }) => {
       <Box
         sx={{
           color: "white",
-          backgroundColor: transparent ? "transparent" : "#4d5061",
+          backgroundColor: transparent ? "transparent" : theme.palette.primary.main,
           overflow: "hidden", // This ensures the inner content doesn't overflow the rounded corners
         }}
       >

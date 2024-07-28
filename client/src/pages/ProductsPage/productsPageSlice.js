@@ -40,7 +40,12 @@ const productsPage = createSlice({
     product_modal: false,
     limit: 10,
     selectedOptionType: "",
-    productOptionsGeneratorModal: "",
+    productOptionsGeneratorModal: {
+      isOpen: false,
+      selectedProducts: [],
+      templateProduct: null,
+      useTemplate: false,
+    },
     editProductHistory: [],
     ourPicksProducts: [],
   },
@@ -55,10 +60,7 @@ const productsPage = createSlice({
     saveToEditProductHistory: (state, { payload }) => {
       state.editProductHistory.push(payload);
     },
-    goBackInEditProductHistory: (state, { payload }) => {
-      state.product = state.editProductHistory[state.editProductHistory.length - 1];
-      state.editProductHistory.pop();
-    },
+
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
@@ -129,16 +131,25 @@ const productsPage = createSlice({
       state.selectedOptionType = payload;
     },
     openProductOptionsGeneratorModal: (state, { payload }) => {
-      state.productOptionsGeneratorModal = true;
+      const { selectedProducts, useTemplate } = payload;
+      state.productOptionsGeneratorModal.isOpen = true;
+      state.productOptionsGeneratorModal.selectedProducts = selectedProducts;
+      state.productOptionsGeneratorModal.useTemplate = useTemplate;
     },
     closeProductOptionsGeneratorModal: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
+      state.productOptionsGeneratorModal.isOpen = false;
+      state.productOptionsGeneratorModal.selectedProducts = [];
+      state.productOptionsGeneratorModal.useTemplate = false;
     },
-    previewProductOptions: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
+    setTemplateProduct: (state, { payload }) => {
+      state.productOptionsGeneratorModal.templateProduct = payload;
     },
-    addOption: (state, { payload }) => {
-      state.productOptionsGeneratorModal = false;
+    setUseTemplate: (state, { payload }) => {
+      state.productOptionsGeneratorModal.useTemplate = payload;
+    },
+    goBackInEditProductHistory: (state, { payload }) => {
+      state.product = state.editProductHistory[state.editProductHistory.length - 1];
+      state.editProductHistory.pop();
     },
   },
   extraReducers: {
@@ -162,12 +173,13 @@ const productsPage = createSlice({
     [API.saveProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "Product Saved";
-      console.log({ payload });
       if (payload.created) {
         state.product = payload.data;
       }
+
       if (state.editProductHistory.length > 0) {
         state.product = state.editProductHistory[state.editProductHistory.length - 1];
+        state.editProductHistory.pop();
       } else if (state.editProductHistory.length === 0) {
         state.edit_product_modal = false;
       }
@@ -301,6 +313,22 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.generateProductOptions.pending]: (state, { payload }) => {
+      state.loading = true;
+      state.success = false;
+    },
+    [API.generateProductOptions.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.productOptionsGeneratorModal.isOpen = false;
+      state.productOptionsGeneratorModal.selectedProducts = [];
+      state.productOptionsGeneratorModal.useTemplate = false;
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.generateProductOptions.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -329,9 +357,10 @@ export const {
   setSelectedOptionType,
   openProductOptionsGeneratorModal,
   closeProductOptionsGeneratorModal,
-  previewProductOptions,
   saveToEditProductHistory,
   goBackInEditProductHistory,
   addOption,
+  setTemplateProduct,
+  setUseTemplate,
 } = productsPage.actions;
 export default productsPage.reducer;

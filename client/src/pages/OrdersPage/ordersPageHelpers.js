@@ -423,7 +423,6 @@ export const handlePromoCode = (value, order, dispatch) => {
 };
 
 export const nextStatus = (currentStatus, orderItems) => {
-  console.log({ orderItems });
   const hasFiniteStock = orderItems.some(item => item.finite_stock === true);
   const hasInfiniteStock = orderItems.some(item => item.finite_stock === false);
 
@@ -456,13 +455,10 @@ export const nextStatus = (currentStatus, orderItems) => {
 const URL = () => {
   switch (config.REACT_APP_ENVIRONMENT) {
     case "production":
-      console.log({ URL: "https://www.glow-leds.com", env: config.REACT_APP_ENVIRONMENT });
       return "https://www.glow-leds.com";
     case "staging":
-      console.log({ URL: "https://glow-leds-dev.herokuapp.com", env: config.REACT_APP_ENVIRONMENT });
       return "https://glow-leds-dev.herokuapp.com";
     default:
-      console.log({ URL: "http://localhost:8080", env: config.REACT_APP_ENVIRONMENT });
       return "http://localhost:8080";
   }
 };

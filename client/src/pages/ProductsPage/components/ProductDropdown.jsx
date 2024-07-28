@@ -7,25 +7,21 @@ import {
   ListItemText,
   Box,
   Chip,
-  Grid,
   Divider,
-  IconButton,
-  Button,
+  Tooltip,
 } from "@mui/material";
-import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useDispatch } from "react-redux";
-import { open_edit_product_modal, addOption } from "../productsPageSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLFlexGrid from "../../../shared/GlowLEDsComponents/GLFlexGrid/GLFlexGrid";
+import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ProductDropdown = ({ row, determineColor, colspan }) => {
   const dispatch = useDispatch();
-  console.log({ row });
   return (
     <TableRow sx={{ backgroundColor: determineColor(row), p: 0 }}>
       <TableCell colSpan={colspan}>
@@ -34,16 +30,12 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
             {row?.options?.map((option, i) => (
               <Box key={i} sx={{ bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 5, p: 2 }} flexGrow={1}>
                 <Typography variant="h6" gutterBottom>
-                  {option.name}
+                  {option.name} {option.isAddOn && "Is Add-On"}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="subtitle2" gutterBottom>
                   {toCapitalize(option.optionType)}
                 </Typography>
-                {option.isAddOn && (
-                  <Typography variant="body2" gutterBottom>
-                    Is Add-On
-                  </Typography>
-                )}
+
                 <Divider />
                 <List dense>
                   {option.values?.map(value => (
@@ -52,18 +44,37 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                         primary={
                           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <Typography variant="body2">{value.value}</Typography>
+                              {value.colorCode && (
+                                <Box display="flex" gap={1}>
+                                  <Tooltip
+                                    title={value?.filament.color ? value?.filament.color_code : value?.colorCode}
+                                  >
+                                    <Box
+                                      sx={{
+                                        width: "36px",
+                                        height: "14px",
+                                        borderRadius: "4px",
+                                        bgcolor: value?.filament.color ? value?.filament.color_code : value?.colorCode,
+                                        boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
+                                      }}
+                                    />
+                                  </Tooltip>
+                                  <Typography variant="subtitle2">{value?.filament?.active ? "Active" : ""}</Typography>
+                                </Box>
+                              )}
+                              <Typography variant="body2">{value.name}</Typography>
                               {value.isDefault && <Chip label="Default" size="small" color="primary" />}
                             </Box>
+
                             <Box display={"flex"} justifyContent={"flex-end"}>
                               {value.additionalCost > 0 && (
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
                                   <Typography variant="body2">${value.additionalCost.toFixed(2)}</Typography>
-                                  {/* <GLBoolean tooltip={"Replace Price"} boolean={value.replacePrice} /> */}
                                 </Box>
                               )}
                               {value.replacePrice && (
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+                                  <GLBoolean tooltip={"Replace Price"} boolean={!!value.replacePrice} />
                                   <Typography variant="body2">${value.product.price}</Typography>
                                 </Box>
                               )}
@@ -101,7 +112,7 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                       />
                     </ListItem>
                   ))}
-                  <ListItem sx={{ p: 0 }}>
+                  {/* <ListItem sx={{ p: 0 }}>
                     <ListItemText
                       primary={
                         <Button
@@ -120,7 +131,7 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                         </Button>
                       }
                     />
-                  </ListItem>
+                  </ListItem> */}
                 </List>
               </Box>
             ))}

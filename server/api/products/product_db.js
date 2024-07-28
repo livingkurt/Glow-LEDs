@@ -237,35 +237,45 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
-
         .populate("categorys")
         .populate("subcategorys")
-        // .populate("collections")
-        .populate("images")
+        .populate("parents")
         .populate("images")
         .populate({
           path: "options",
           populate: {
-            path: "values.product",
+            path: "values",
             populate: [
-              { path: "images" },
-              { path: "color_object.filament" },
-              { path: "filament" },
-              { path: "tags" },
-              { path: "chips" },
               {
-                path: "options",
-                populate: {
-                  path: "values.product",
-                  populate: [
-                    { path: "images" },
-                    { path: "color_object.filament" },
-                    { path: "filament" },
-                    { path: "tags" },
-                    { path: "chips" },
-                  ],
-                },
+                path: "product",
+                populate: [
+                  { path: "images" },
+                  { path: "color_object.filament" },
+                  { path: "filament" },
+                  { path: "tags" },
+                  { path: "chips" },
+                  {
+                    path: "options",
+                    populate: {
+                      path: "values",
+                      populate: [
+                        {
+                          path: "product",
+                          populate: [
+                            { path: "images" },
+                            { path: "color_object.filament" },
+                            { path: "filament" },
+                            { path: "tags" },
+                            { path: "chips" },
+                          ],
+                        },
+                        { path: "filament" }, // Added filament population for nested options
+                      ],
+                    },
+                  },
+                ],
               },
+              { path: "filament" }, // Added filament population for top-level options
             ],
           },
         })

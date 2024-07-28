@@ -7,6 +7,7 @@ import {
   normalizeProductFilters,
   normalizeProductSearch,
   transformProducts,
+  createOrUpdateOptionProduct,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
@@ -301,6 +302,65 @@ export default {
       }
     }
   },
+  generate_product_options_products_s: async body => {
+    try {
+      const { selectedProductIds, templateProductId } = body;
+
+      if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
+        throw new Error("Invalid or empty product IDs array");
+      }
+
+      const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
+      if (selectedProducts.length !== selectedProductIds.length) {
+        throw new Error("One or more products not found");
+      }
+
+      let templateProduct = null;
+      if (templateProductId) {
+        templateProduct = await Product.findById(templateProductId).lean();
+        if (!templateProduct) {
+          throw new Error("Template product not found");
+        }
+      }
+
+      const results = await Promise.all(
+        selectedProducts.map(async product => {
+          let updatedOptions;
+
+          if (templateProduct) {
+            // Use template product's options
+            updatedOptions = JSON.parse(JSON.stringify(templateProduct.options));
+          } else {
+            // Use product's existing options
+            updatedOptions = JSON.parse(JSON.stringify(product.options));
+          }
+
+          for (const option of updatedOptions) {
+            for (const value of option.values) {
+              const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
+              value.product = optionProduct._id;
+            }
+          }
+
+          await Product.findByIdAndUpdate(product._id, {
+            $set: { options: updatedOptions },
+          });
+
+          return {
+            productId: product._id,
+            status: "Success",
+          };
+        })
+      );
+
+      return results;
+    } catch (error) {
+      console.error("Error in generate_product_options_products_s:", error);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   create_option_products_s: async (params, body) => {
     const { id, option_product_id } = params;
     const { newOptionProductData } = body;
@@ -444,7 +504,7 @@ export default {
     const { cartItems } = body;
     try {
       cartItems.forEach(async item => {
-        const product = await product_db.findById_products_db(item.product);
+        const product = await Product.findOne({ _id: item.product });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
             diminish_single_glove_stock(product, item);

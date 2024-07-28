@@ -45,6 +45,7 @@ const productPage = createSlice({
     rating: 5,
     comment: "",
     product: {},
+    isAddonChecked: false,
     productPageLoading: true,
     customizedProduct: {
       name: "",
@@ -114,6 +115,9 @@ const productPage = createSlice({
     setQuantity: (state, { payload }) => {
       state.customizedProduct.quantity = payload;
     },
+    setIsAddonChecked: (state, { payload }) => {
+      state.isAddonChecked = payload;
+    },
   },
   extraReducers: {
     [detailsProductPage.pending]: (state, { payload }) => {
@@ -170,5 +174,6 @@ const productPage = createSlice({
   },
 });
 
-export const { setQuantity, setReviewModal, setCustomizedProduct, selectOption } = productPage.actions;
+export const { setQuantity, setReviewModal, setCustomizedProduct, selectOption, setIsAddonChecked } =
+  productPage.actions;
 export default productPage.reducer;

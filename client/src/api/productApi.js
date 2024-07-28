@@ -64,6 +64,23 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
     return rejectWithValue(error.response?.data);
   }
 });
+
+export const generateProductOptions = createAsyncThunk(
+  "products/generateProductOptions",
+  async ({ selectedProductIds, templateProductId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/products/generate_product_options`, {
+        selectedProductIds,
+        templateProductId,
+      });
+      dispatch(showSuccess({ message: `Options Generated for ${selectedProductIds.length} Products` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 export const createOptionProduct = createAsyncThunk(
   "products/createOptionProduct",
   async ({ productId, seedOptionProductId, newOptionProductData, optionId }, { dispatch, rejectWithValue }) => {

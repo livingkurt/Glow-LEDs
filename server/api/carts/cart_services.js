@@ -83,7 +83,7 @@ export default {
           return data;
         } else {
           data = await cart_db.create_carts_db({ user: current_user._id, cartItems: [cart_item] });
-          data = await Cart.populate(data, { path: "cartItems.display_image_object" });
+          data = await cart_db.findById_carts_db(data._id);
           return data;
         }
       } else {

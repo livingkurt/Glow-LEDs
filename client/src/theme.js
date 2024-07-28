@@ -187,6 +187,7 @@ const palette = {
     default: "#fff",
     level2: "#f5f5f5",
     level1: "#eeeeee",
+    dark: "#333333",
   },
   action: {
     active: "rgba(0, 0, 0, 0.54)",

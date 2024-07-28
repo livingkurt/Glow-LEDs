@@ -13,6 +13,7 @@ import RegisterComplete from "./components/RegisterComplete";
 import * as API from "../../api";
 import { useDispatch } from "react-redux";
 import AccountCreatedComplete from "./components/AccountCreatedComplete";
+import { Container } from "@mui/material";
 
 const CompletePage = () => {
   const params = useParams();
@@ -156,7 +157,7 @@ const CompletePage = () => {
   // const [show_modal, set_show_modal] = useState(false);
 
   return (
-    <div>
+    <Container maxWidth="xl">
       {data && (
         <div>
           <Helmet>
@@ -192,7 +193,7 @@ const CompletePage = () => {
           {params.type === "account_created" && <AccountCreatedComplete current_user={current_user} />}
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 export default CompletePage;

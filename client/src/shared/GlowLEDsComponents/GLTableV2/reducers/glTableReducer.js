@@ -125,6 +125,7 @@ const reducer =
             rows: data,
             filteredRows: data,
             selectedRows: [],
+            selectedRowObjects: [],
             visibleRows: data,
             remote: {
               ...state.remote,
@@ -165,6 +166,7 @@ const reducer =
           filteredRows: [],
           visibleRows: [],
           selectedRows: [],
+          selectedRowObjects: [],
           filters: {},
         };
       }
@@ -309,19 +311,26 @@ const reducer =
       }
       case `${namespace}/${SELECT_ROW}`: {
         const { rowId } = action.payload;
-        const { selectedRows } = state;
+        const { selectedRows, selectedRowObjects } = state;
         const updatedSelections = selectedRows.includes(rowId)
           ? selectedRows.filter(id => id !== rowId)
           : [...selectedRows, rowId];
+        const rowObject = state.visibleRows.find(row => row._id === rowId || row.id === rowId);
+        const updatedObjectSelections = selectedRowObjects.some(row => row._id === rowId || row.id === rowId)
+          ? selectedRowObjects.filter(row => row._id !== rowId && row.id !== rowId)
+          : [...selectedRowObjects, rowObject];
+        console.log({ selectedRows, selectedRowObjects, updatedObjectSelections });
         return {
           ...state,
           selectedRows: [...updatedSelections],
+          selectedRowObjects: [...updatedObjectSelections],
         };
       }
       case `${namespace}/${DESELECT_ROWS}`: {
         return {
           ...state,
           selectedRows: [],
+          selectedRowObjects: [],
         };
       }
       case `${namespace}/${SELECT_ALL_ROWS}`: {
@@ -330,9 +339,11 @@ const reducer =
         const visibleRowsCount = visibleRows.length;
         const updatedSelections =
           selectedRowsCount === visibleRowsCount ? [] : visibleRows.map(row => row._id || row.id);
+        const updatedObjectSelections = selectedRowsCount === visibleRowsCount ? [] : visibleRows;
         return {
           ...state,
           selectedRows: [...updatedSelections],
+          selectedRowObjects: [...updatedObjectSelections],
         };
       }
       case `${namespace}/${APPLY_FILTER_SEARCH}`: {

@@ -17,7 +17,9 @@ const reviewSchema = new mongoose.Schema(
 export const optionValueSchema = new mongoose.Schema({
   name: { type: String }, // e.g., "Blue", "Large"
   colorCode: { type: String },
+  filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
+  // products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }], // Link to product variations
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },
 });
@@ -28,6 +30,7 @@ export const optionSchema = new mongoose.Schema({
   optionType: { type: String },
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },
+  details: { type: String },
 });
 
 const productSchema = new mongoose.Schema(
@@ -196,6 +199,7 @@ const productSchema = new mongoose.Schema(
 
     // Is Variation
     parent: { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: null }, // Reference to parent product, if this is a variation
+    parents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     isVariation: { type: Boolean, default: false }, // Flag to indicate if this is a variation
     color_object: {
       name: { type: String },

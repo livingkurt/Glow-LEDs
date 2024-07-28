@@ -6,14 +6,16 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Loading } from "../../../shared/SharedComponents";
+import { useTheme } from "@mui/material";
 
 const TutorialSection = ({ title, tutorials, handleOpen, loading, defaultOpen }) => {
+  const theme = useTheme();
   const [expanded, setExpanded] = useState(defaultOpen ?? false);
   return (
     <Accordion
       expanded={expanded}
       onChange={() => setExpanded(expand => !expand)}
-      sx={{ backgroundColor: "#4d5061" }} // Set background color
+      sx={{ backgroundColor: theme.palette.primary.main }} // Set background color
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />} // Set icon color

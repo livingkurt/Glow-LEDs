@@ -2,22 +2,16 @@ export const normalizeFilamentFilters = input => {
   const output = {};
   Object.keys(input).forEach(key => {
     switch (key) {
-      case "category":
-        for (const category of input.category) {
-          output["category"] = category;
+      case "type":
+        for (const type of input.type) {
+          output["type"] = type;
         }
         break;
-      case "card":
-        for (const card of input.card) {
-          output["card"] = card;
+      case "tags":
+        for (const tags of input.tags) {
+          output["tags"] = tags;
         }
         break;
-      case "place_of_purchase":
-        for (const place_of_purchase of input.place_of_purchase) {
-          output["place_of_purchase"] = place_of_purchase;
-        }
-        break;
-
       default:
         break;
     }
@@ -28,7 +22,7 @@ export const normalizeFilamentFilters = input => {
 export const normalizeFilamentSearch = query => {
   const search = query.search
     ? {
-        content_name: {
+        name: {
           $regex: query.search.toLowerCase(),
           $options: "i",
         },

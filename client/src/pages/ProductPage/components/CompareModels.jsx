@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const CompareModels = ({ notSure }) => {
+  const theme = useTheme();
   if (notSure?.hidden || !notSure) {
     return null;
   }
@@ -12,7 +13,7 @@ const CompareModels = ({ notSure }) => {
       {notSure.title && (
         <Box
           sx={{
-            backgroundColor: "#4d5061",
+            backgroundColor: theme.palette.primary.main,
             padding: "40px",
             textAlign: "center",
             borderRadius: "8px",

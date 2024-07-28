@@ -101,6 +101,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  generate_product_options_products_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const product = await product_services.generate_product_options_products_s(body);
+      if (product) {
+        return res.status(200).send(product);
+      }
+      return res.status(500).send({ message: "Error Updating Product" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   create_option_products_c: async (req, res) => {
     const { params, body } = req;
     try {

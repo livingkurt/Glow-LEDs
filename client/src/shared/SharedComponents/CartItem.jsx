@@ -1,89 +1,120 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-import { LazyImage } from ".";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Typography, Grid, Chip, ListItem, useTheme } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { setCartDrawer } from "../../slices/cartSlice";
 import { sale_price_switch } from "../../utils/react_helper_functions";
-import { determineProductLink } from "../../helpers/sharedHelpers";
+import GLSelect from "../GlowLEDsComponents/GLSelect/GLSelect";
+import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
+import * as API from "../../api";
 
-const CartItem = ({ index, item }) => {
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
+const CartItem = ({ item, index, showQuantity }) => {
+  const { current_user } = useSelector(state => state.users.userPage);
+  const { my_cart } = useSelector(state => state.carts.cartPage);
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
 
+  const processedOptions = item.selectedOptions.map(option => ({
+    ...option,
+    normalizedColorCode: option.filament?.color_code || option.colorCode,
+  }));
   return (
-    <li key={index} className="">
-      <div className="cart-image m-auto ai-c">
-        <Link to={determineProductLink(item)}>
-          <div className="">
-            {!item.secondary_image && (
-              <LazyImage
-                className="order-image br-10px mr-15px w-100px h-100px"
-                alt={item.name}
-                title="Product Image"
-                effect="blur"
-                src={item?.display_image_object?.link}
-              />
-            )}
-            {item.secondary_image && (
-              <div
-                className={` double-image-cart${
-                  item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"
-                }`}
-              >
-                <LazyImage
-                  id="expandedImg"
-                  alt={item.name}
-                  title={item.name}
-                  className={`details-image-cart-page-${
-                    item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"
-                  } m-0px`}
-                  src={item?.display_image_object?.link}
-                />
-                <LazyImage
-                  id="expandedSecondaryImg"
-                  alt={item.name}
-                  title={item.name}
-                  className={`details-image-cart-page-${
-                    item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
-                  } `}
-                  src={item.secondary_image}
-                />
-              </div>
-            )}
-          </div>
-        </Link>
-      </div>
-      <div className="cart-name">
-        <div className="jc-b ai-c mb-20px">
-          <Link to={"/collections/all/products/" + item.pathname} className="m-0px">
-            <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
+    <ListItem
+      divider
+      sx={{
+        py: 2,
+        "&.MuiListItem-divider": {
+          borderColor: "white", // This sets the divider color to white
+        },
+      }}
+    >
+      <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
+        <Grid item>
+          <Link to={`/collections/all/products/${item.pathname}`}>
+            <Box
+              onClick={closeMenu}
+              component="img"
+              src={item?.display_image_object?.link}
+              alt={item.name}
+              sx={{ width: 80, height: 80, borderRadius: 2 }}
+            />
           </Link>
-        </div>
-        <div className="">
-          {item.selectedOptions.map((option, index) => (
-            <div key={index} className="ai-c mb-20px jc-b w-100per">
-              <label className="mv-0px mr-5px">{item.currentOptions[index].name}: </label>
-              <div className="ai-c">
-                <label className="mv-0px">{option.name}</label>
-                {option.colorCode && (
-                  <canvas className="ml-5px w-60px h-20px br-7px" style={{ backgroundColor: option.colorCode }} />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="ai-c h-25px  w-100per jc-b mb-10px">
-          <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
-            Quantity:
-          </label>
-          <label>{item.quantity}</label>
-          <div className="cart-price fs-16px">
-            {sale_price_switch({ product: item, isWholesaler: current_user?.isWholesaler })}
-          </div>
-        </div>
-      </div>
-    </li>
+        </Grid>
+        <Grid item xs container direction="column" spacing={1}>
+          <Grid item>
+            <Typography variant="subtitle1" component={Link} to={`/collections/all/products/${item.pathname}`}>
+              {item.name}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              {processedOptions?.map((option, optionIndex) => {
+                const bgColor = option.normalizedColorCode || theme.palette.background.default;
+                if (!option.name) return null;
+                return (
+                  <Chip
+                    key={optionIndex}
+                    label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
+                    size="small"
+                    sx={{
+                      backgroundColor: bgColor,
+                      color: theme.palette.getContrastText(bgColor),
+                      fontSize: "1rem",
+                      fontWeight: "500",
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          </Grid>
+          <Grid item>
+            <Typography variant="body2">
+              {sale_price_switch({
+                product: item,
+                cartItem: true,
+                background: "light",
+                isWholesaler: current_user?.isWholesaler,
+              })}
+            </Typography>
+          </Grid>
+        </Grid>
+        {showQuantity ? (
+          <Grid item sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <GLSelect
+              value={item.quantity}
+              onChange={e => {
+                const updatedCartItems = [...my_cart.cartItems];
+                const itemIndex = updatedCartItems.findIndex(cartItem => cartItem._id === item._id);
+                updatedCartItems[itemIndex] = {
+                  ...updatedCartItems[itemIndex],
+                  quantity: parseInt(e.target.value),
+                };
+                dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
+              }}
+              size="small"
+              options={[...Array(current_user?.isWholesaler ? 500 : item.max_quantity).keys()].map(value => ({
+                name: value + 1,
+              }))}
+              width="70px"
+              getOptionLabel={option => option.name}
+              valueKey="name"
+            />
+            <GLIconButton
+              onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
+              size="small"
+              sx={{ mt: 2 }}
+              tooltip="Remove"
+            >
+              <DeleteIcon color="white" />
+            </GLIconButton>
+          </Grid>
+        ) : item.quantity ? (
+          <Typography variant="body2">Quantity: {item.quantity}</Typography>
+        ) : null}
+      </Grid>
+    </ListItem>
   );
 };
 

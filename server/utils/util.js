@@ -642,7 +642,7 @@ export const determine_secondary_product_name = (name, item) => {
 };
 
 export const order_status_steps = (order, status) => {
-  status = status.toLowerCase();
+  status = status?.toLowerCase();
   return `<div
 			style='display: flex;justify-content: space-between;max-width: 58rem;width: 100%;margin: 1rem auto;'
 		>
@@ -687,7 +687,7 @@ export const order_status_steps = (order, status) => {
 };
 
 export const shipping_status_steps = (order, status) => {
-  status = status.toLowerCase();
+  status = status?.toLowerCase();
   return `<div
 			style='display: flex;justify-content: space-between;max-width: 58rem;width: 100%;margin: 1rem auto;'
 		>

@@ -64,7 +64,7 @@ export const getEmptyObjectFromSchema = schema => {
       emptyObject[key] = "";
     }
     if (field.type === "autocomplete_single") {
-      emptyObject[key] = {};
+      emptyObject[key] = null;
     }
     if (field.type === "image_upload") {
       emptyObject[key] = null;

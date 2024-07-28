@@ -19,13 +19,14 @@ import axios from "axios";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
   const { loading, remoteVersionRequirement } = productsPage;
 
   const productTable = useSelector(state => state.products.productTable);
-  const { selectedRows } = productTable;
+  const { selectedRows, selectedRowObjects } = productTable;
 
   const dispatch = useDispatch();
 
@@ -40,13 +41,13 @@ const ProductsPage = () => {
               dispatch(
                 API.saveProduct({
                   ...product,
-                  hidden: product.active ? false : true,
+                  hidden: product.hidden ? false : true,
                 })
               );
             }}
-            tooltip={product.active ? "deactivate" : "activate"}
+            tooltip={product.hidden ? "deactivate" : "activate"}
           >
-            <GLBoolean boolean={product.active} />
+            <GLBoolean boolean={product.hidden} />
           </GLIconButton>
         ),
       },
@@ -88,15 +89,23 @@ const ProductsPage = () => {
               <FileCopyIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Product Options Generator"
+              tooltip="Option Products Generator"
               onClick={() => {
-                dispatch(API.detailsProduct({ pathname: row._id }));
-                dispatch(openProductOptionsGeneratorModal());
+                dispatch(openProductOptionsGeneratorModal({ selectedProducts: [row], useTemplate: false }));
+              }}
+            >
+              <AssignmentTurnedInIcon color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Complete Options Generator"
+              onClick={() => {
+                dispatch(openProductOptionsGeneratorModal({ selectedProducts: [row], useTemplate: true }));
               }}
             >
               <CreateNewFolderIcon color="white" />
             </GLIconButton>
-            <GLIconButton onClick={() => dispatch(API.deleteProduct(row.pathname))} tooltip="Delete">
+
+            <GLIconButton onClick={() => dispatch(API.deleteProduct(row._id))} tooltip="Delete">
               <DeleteIcon color="white" />
             </GLIconButton>
           </Box>
@@ -153,6 +162,19 @@ const ProductsPage = () => {
                 }}
               >
                 Delete Products
+              </Button>
+            )}
+            {selectedRows.length > 0 && (
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  dispatch(
+                    openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
+                  );
+                }}
+              >
+                Replicate Product Options
               </Button>
             )}
 

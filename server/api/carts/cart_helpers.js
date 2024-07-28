@@ -34,7 +34,7 @@ export const areCartItemsEqual = (item1, item2) => {
 
     return options1.every((option1, index) => {
       const option2 = options2[index];
-      return option1._id.toString() === option2._id.toString();
+      return option1?._id?.toString() === option2?._id?.toString();
     });
   };
 

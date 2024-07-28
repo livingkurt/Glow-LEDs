@@ -152,7 +152,6 @@ export default {
     try {
       return await content_db.update_contents_db(params.id, body);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

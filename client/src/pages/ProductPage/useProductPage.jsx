@@ -18,13 +18,13 @@ const useProductPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const productPage = useSelector(state => state.products.productPage);
-  const { customizedProduct, productPageLoading, product } = productPage;
+  const { customizedProduct, productPageLoading, product, isAddonChecked } = productPage;
 
   useEffect(() => {
     updateRecentlyViewed(product);
   }, [dispatch, product]);
 
-  return { customizedProduct, current_user, my_cart, productPageLoading, product };
+  return { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked };
 };
 
 export default useProductPage;

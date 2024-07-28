@@ -65,6 +65,10 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
             type: "checkbox",
             label: "Is Add-On",
           },
+          details: {
+            type: "text_multiline",
+            label: "Details",
+          },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
           values: {
             type: "array",
@@ -75,6 +79,13 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
               fields: {
                 name: { type: "text", label: "Name" },
                 colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
+                filament: {
+                  type: "autocomplete_single",
+                  label: "Filament",
+                  options: filaments,
+                  getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
+                  labelProp: "name",
+                },
                 isDefault: { type: "checkbox", label: "Default Option" },
                 additionalCost: { type: "number", label: "Additional Cost" },
                 product: {
@@ -87,7 +98,6 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
                     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
                   },
                   onCreateNewButtonClick: selectedProduct => {
-                    console.log(selectedProduct);
                     dispatch(saveToEditProductHistory(product));
                     dispatch(API.saveProduct({ ...selectedProduct }));
                   },
@@ -695,8 +705,8 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
       label: "Is Variation",
       default: false,
     },
-    parent: {
-      type: "autocomplete_single",
+    parents: {
+      type: "autocomplete_multiple",
       label: "Parent Product",
       options: products,
       labelProp: "name",

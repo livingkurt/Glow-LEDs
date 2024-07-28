@@ -13,7 +13,7 @@ const GetTheMost = ({ get_more_out_of }) => {
           <Box
             p={{ xs: 2, md: 4 }}
             sx={{
-              backgroundColor: "#4d5061",
+              backgroundColor: theme.palette.primary.main,
               borderRadius: isMobile ? "20px 20px 0px 0px" : "20px 0px 0px 20px",
               height: "100%",
               display: "flex",
