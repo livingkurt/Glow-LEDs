@@ -286,7 +286,6 @@ const fetchTemplateProduct = async templateProductId => {
   }
   return templateProduct;
 };
-
 // Update product options
 const updateProductOptions = (existingOptions, templateProduct, selectedOptions) => {
   if (!templateProduct) return existingOptions;
@@ -295,7 +294,7 @@ const updateProductOptions = (existingOptions, templateProduct, selectedOptions)
     return updateSelectedOptions(existingOptions, templateProduct, selectedOptions);
   }
 
-  // If no specific options are selected, keep the existing behavior
+  // If no specific options are selected, replace all options with template options
   return JSON.parse(JSON.stringify(templateProduct.options));
 };
 
@@ -320,23 +319,19 @@ const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions
 };
 
 // Process option values
-const processOptionValues = async (options, parentProduct, originalOptions, selectedOptions) => {
-  for (const [index, option] of options.entries()) {
-    const isReplacedOption = selectedOptions?.some(so => so.name === option.name);
+const processOptionValues = async (options, parentProduct) => {
+  for (const option of options) {
     for (const value of option.values) {
-      if (isReplacedOption || !value.product) {
-        const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
-        value.product = optionProduct._id;
-      }
+      const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
+      value.product = optionProduct._id;
     }
   }
 };
 
 // Main processing function
 const processProduct = async (product, templateProduct, selectedOptions) => {
-  const originalOptions = [...product.options];
-  const updatedOptions = updateProductOptions(originalOptions, templateProduct, selectedOptions);
-  await processOptionValues(updatedOptions, product, originalOptions, selectedOptions);
+  const updatedOptions = updateProductOptions(product.options, templateProduct, selectedOptions);
+  await processOptionValues(updatedOptions, product);
   await updateProductInDatabase(product._id, updatedOptions);
   return { productId: product._id, status: "Success" };
 };
