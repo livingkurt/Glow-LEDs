@@ -8,6 +8,7 @@ import {
   normalizeProductSearch,
   transformProducts,
   createOrUpdateOptionProduct,
+  updateExistingOptionProduct,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
@@ -328,30 +329,81 @@ export default {
           let updatedOptions = [...product.options]; // Start with existing options
 
           if (templateProduct && selectedOptions) {
-            selectedOptions.forEach(selectedOption => {
+            for (const selectedOption of selectedOptions) {
               const templateOption = templateProduct.options.find(o => o.name === selectedOption.name);
               if (templateOption) {
                 const index = selectedOption.order - 1; // Convert to 0-based index
-                if (index < updatedOptions.length) {
-                  // Replace existing option at this index
-                  updatedOptions[index] = { ...templateOption };
+                const existingOptionIndex = updatedOptions.findIndex(o => o.name === selectedOption.name);
+
+                if (existingOptionIndex !== -1) {
+                  // Update existing option
+                  updatedOptions[existingOptionIndex] = {
+                    ...templateOption,
+                    values: await Promise.all(
+                      templateOption.values.map(async value => {
+                        const existingValue = updatedOptions[existingOptionIndex].values.find(
+                          v => v.name === value.name
+                        );
+                        if (existingValue && existingValue.product) {
+                          // Update existing option product
+                          const updatedProduct = await updateExistingOptionProduct(
+                            product,
+                            selectedOption.name,
+                            value.name,
+                            existingValue.product
+                          );
+                          return { ...value, product: updatedProduct._id };
+                        } else {
+                          // Create new option product
+                          const newProduct = await createOrUpdateOptionProduct(
+                            product,
+                            selectedOption.name,
+                            value.name
+                          );
+                          return { ...value, product: newProduct._id };
+                        }
+                      })
+                    ),
+                  };
+
+                  // Move the updated option to the correct index if necessary
+                  if (existingOptionIndex !== index) {
+                    updatedOptions.splice(existingOptionIndex, 1);
+                    updatedOptions.splice(index, 0, updatedOptions[existingOptionIndex]);
+                  }
                 } else {
-                  // Add new option at the end if index is out of range
-                  updatedOptions.push({ ...templateOption });
+                  // Add new option
+                  const newOption = {
+                    ...templateOption,
+                    values: await Promise.all(
+                      templateOption.values.map(async value => {
+                        const newProduct = await createOrUpdateOptionProduct(product, selectedOption.name, value.name);
+                        return { ...value, product: newProduct._id };
+                      })
+                    ),
+                  };
+
+                  if (index < updatedOptions.length) {
+                    updatedOptions.splice(index, 0, newOption);
+                  } else {
+                    updatedOptions.push(newOption);
+                  }
                 }
               }
-            });
+            }
           } else if (templateProduct) {
             // Use all template product's options if no specific options were selected
-            updatedOptions = JSON.parse(JSON.stringify(templateProduct.options));
-          }
-
-          // Process option values
-          for (const option of updatedOptions) {
-            for (const value of option.values) {
-              const optionProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
-              value.product = optionProduct._id;
-            }
+            updatedOptions = await Promise.all(
+              templateProduct.options.map(async option => ({
+                ...option,
+                values: await Promise.all(
+                  option.values.map(async value => {
+                    const newProduct = await createOrUpdateOptionProduct(product, option.name, value.name);
+                    return { ...value, product: newProduct._id };
+                  })
+                ),
+              }))
+            );
           }
 
           await Product.findByIdAndUpdate(product._id, {
