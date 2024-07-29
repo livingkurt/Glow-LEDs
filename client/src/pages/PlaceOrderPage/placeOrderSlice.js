@@ -78,7 +78,6 @@ const initialState = {
   environment: "production",
   shippingSaved: false,
   modalText: false,
-  freeShippingMinimum: 100,
   shippingValidations: {
     first_name: "",
     last_name: "",

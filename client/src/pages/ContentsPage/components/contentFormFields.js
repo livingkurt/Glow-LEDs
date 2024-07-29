@@ -253,6 +253,7 @@ export const contentFormFields = ({ content, products }) => {
         },
       },
     },
-    active: { type: "checkbox", label: "Active", default: true },
+    free_shipping_minimum_amount: { type: "number", label: "Minimum Subtotal for Free Shipping" },
+    active: { type: "checkbox", label: "Active" },
   };
 };
