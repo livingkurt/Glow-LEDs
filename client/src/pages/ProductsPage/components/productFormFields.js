@@ -78,7 +78,7 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
               type: "object",
               fields: {
                 name: { type: "text", label: "Name" },
-                colorCode: { type: "color_picker", label: "Color Code", defaultColor: "#7d7c7c" },
+                colorCode: { type: "color_picker", label: "Color Code" },
                 filament: {
                   type: "autocomplete_single",
                   label: "Filament",

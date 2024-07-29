@@ -17,7 +17,7 @@ export const determineColor = product => {
   if (product.category === "gloves") {
     result = productColors[9].color;
   }
-  if (product.category === "opyn") {
+  if (product.subcategory === "opyn") {
     result = productColors[1].color;
   }
   if (product.category === "glowstringz") {
@@ -131,4 +131,13 @@ export const productInitalState = {
   option: false,
   macro_product: false,
   extra_cost: 0,
+};
+
+export const hasUpdatedProductOptionProduct = (parentProduct, option, value, valueProduct) => {
+  const newProductName = `${parentProduct?.name} - ${option?.name} - ${value?.name}`;
+  const newPathname = `${parentProduct.pathname}_${option?.name.toLowerCase().replace(/\s+/g, "_")}_${value?.name.toLowerCase().replace(/\s+/g, "_")}`;
+  if (newProductName === valueProduct?.name && newPathname === valueProduct?.pathname) {
+    return true;
+  }
+  return false;
 };

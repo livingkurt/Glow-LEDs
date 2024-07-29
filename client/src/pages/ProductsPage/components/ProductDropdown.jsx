@@ -9,6 +9,7 @@ import {
   Chip,
   Divider,
   Tooltip,
+  useTheme,
 } from "@mui/material";
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
@@ -19,8 +20,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLFlexGrid from "../../../shared/GlowLEDsComponents/GLFlexGrid/GLFlexGrid";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import { hasUpdatedProductOptionProduct } from "../productsPageHelpers";
+import { AssignmentTurnedIn, CreateNewFolder } from "@mui/icons-material";
+import { openProductOptionsGeneratorModal } from "../productsPageSlice";
 
 const ProductDropdown = ({ row, determineColor, colspan }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   return (
     <TableRow sx={{ backgroundColor: determineColor(row), p: 0 }}>
@@ -39,37 +44,50 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                 <Divider />
                 <List dense>
                   {option.values?.map(value => (
-                    <ListItem key={value._id} sx={{ p: 0 }}>
+                    <ListItem
+                      key={value._id}
+                      sx={{
+                        backgroundColor: value.isDefault ? theme.palette.primary.main : "",
+                        borderRadius: 10,
+                      }}
+                    >
                       <ListItemText
                         primary={
                           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              {value.colorCode && (
+                              {(value?.filament || value?.colorCode?.length > 0) && (
                                 <Box display="flex" gap={1}>
-                                  <Tooltip
-                                    title={value?.filament.color ? value?.filament.color_code : value?.colorCode}
-                                  >
+                                  <Tooltip title={value?.filament ? value?.filament.color_code : value?.colorCode}>
                                     <Box
                                       sx={{
                                         width: "36px",
                                         height: "14px",
                                         borderRadius: "4px",
-                                        bgcolor: value?.filament.color ? value?.filament.color_code : value?.colorCode,
+                                        bgcolor: value?.filament ? value?.filament.color_code : value?.colorCode,
                                         boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
                                       }}
                                     />
                                   </Tooltip>
-                                  <Typography variant="subtitle2">{value?.filament?.active ? "Active" : ""}</Typography>
                                 </Box>
                               )}
                               <Typography variant="body2">{value.name}</Typography>
-                              {value.isDefault && <Chip label="Default" size="small" color="primary" />}
+                              {/* {value.isDefault && <Chip label="Default" size="small" color="primary" />} */}
+                              {value?.filament && !value?.filament?.active ? (
+                                <Chip label="Inactive" size="small" color="error" />
+                              ) : (
+                                ""
+                              )}
+                              {!hasUpdatedProductOptionProduct(row, option, value, value.product) ? (
+                                <Chip label="Outdated Option Product" size="small" color="error" />
+                              ) : (
+                                ""
+                              )}
                             </Box>
 
                             <Box display={"flex"} justifyContent={"flex-end"}>
                               {value.additionalCost > 0 && (
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-                                  <Typography variant="body2">${value.additionalCost.toFixed(2)}</Typography>
+                                  <Typography variant="body2">+${value.additionalCost.toFixed(2)}</Typography>
                                 </Box>
                               )}
                               {value.replacePrice && (
@@ -85,6 +103,32 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                                 }}
                               >
                                 <EditIcon color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                tooltip="Option Products Generator"
+                                onClick={() => {
+                                  dispatch(
+                                    openProductOptionsGeneratorModal({
+                                      selectedProducts: [value.product],
+                                      useTemplate: false,
+                                    })
+                                  );
+                                }}
+                              >
+                                <AssignmentTurnedIn color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                tooltip="Complete Options Generator"
+                                onClick={() => {
+                                  dispatch(
+                                    openProductOptionsGeneratorModal({
+                                      selectedProducts: [value.product],
+                                      useTemplate: true,
+                                    })
+                                  );
+                                }}
+                              >
+                                <CreateNewFolder color="white" />
                               </GLIconButton>
                               <GLIconButton
                                 tooltip="Create New Option Product From "

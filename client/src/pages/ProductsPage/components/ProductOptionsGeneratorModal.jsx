@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -12,12 +12,19 @@ import {
   useTheme,
   Checkbox,
   FormControlLabel,
+  TextField,
+  Chip,
+  IconButton,
+  Popper,
+  ClickAwayListener,
 } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import { closeProductOptionsGeneratorModal, setTemplateProduct, setUseTemplate } from "../productsPageSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useProductsQuery } from "../../../api/allRecordsApi";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
+import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ProductOptionsGeneratorModal = () => {
   const dispatch = useDispatch();
@@ -28,79 +35,168 @@ const ProductOptionsGeneratorModal = () => {
 
   const { isOpen, templateProduct, selectedProducts, useTemplate } = productOptionsGeneratorModal;
 
+  const [localSelectedOptions, setLocalSelectedOptions] = useState([]);
+  const [updateNamesOnly, setUpdateNamesOnly] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openProductId, setOpenProductId] = useState(null);
+
+  useEffect(() => {
+    if (templateProduct && templateProduct.options) {
+      setLocalSelectedOptions(
+        templateProduct.options.map((option, index) => ({
+          ...option,
+          isSelected: true,
+          order: index + 1,
+        }))
+      );
+    }
+  }, [templateProduct]);
+
+  const handleOptionChange = (index, field, value) => {
+    setLocalSelectedOptions(prevOptions =>
+      prevOptions.map((option, i) => (i === index ? { ...option, [field]: value } : option))
+    );
+  };
+
   const renderOptionValues = values => {
     return values.map((value, index) => (
       <ListItem
-        key={index}
+        key={value._id}
         sx={{
-          backgroundColor: value.isDefault ? theme.palette.primary.main : "white",
+          backgroundColor: value.isDefault ? theme.palette.primary.main : "",
           borderRadius: 10,
           color: value.isDefault ? "white" : "black",
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Typography variant="subtitle2">{value.name}</Typography>
-          </Grid>
-          {value.colorCode && (
-            <Grid item xs={3} display="flex" gap={2}>
-              <Tooltip title={value?.colorCode}>
-                <Box
-                  sx={{
-                    width: "36px",
-                    height: "14px",
-                    borderRadius: "4px",
-                    bgcolor: value?.colorCode,
-                    boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
-                  }}
-                />
-              </Tooltip>
-              <Typography variant="subtitle2">
-                {value?.filament.color ? value?.filament.color_code : value?.colorCode}
-              </Typography>
-              <Typography variant="subtitle2">{value?.filament?.active ? "Active" : ""}</Typography>
-            </Grid>
-          )}
-          <Grid item xs={3}>
-            <Typography variant="subtitle2">{value.isDefault && " (Default)"}</Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Typography variant="subtitle2">
-              {value.additionalCost > 0 && `Additional Cost: $${value.additionalCost}`}
-            </Typography>
-          </Grid>
-        </Grid>
+        <ListItemText
+          primary={
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                {(value?.filament || value?.colorCode?.length > 0) && (
+                  <Box display="flex" gap={1}>
+                    <Tooltip title={value?.filament ? value?.filament.color_code : value?.colorCode}>
+                      <Box
+                        sx={{
+                          width: "36px",
+                          height: "14px",
+                          borderRadius: "4px",
+                          bgcolor: value?.filament ? value?.filament.color_code : value?.colorCode,
+                          boxShadow: "0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24)",
+                        }}
+                      />
+                    </Tooltip>
+                  </Box>
+                )}
+                <Typography variant="body2">{value.name}</Typography>
+                {value?.filament && !value?.filament?.active ? (
+                  <Chip label="Inactive" size="small" color="error" />
+                ) : (
+                  ""
+                )}
+              </Box>
+
+              <Box display={"flex"} justifyContent={"flex-end"}>
+                {value.additionalCost > 0 && (
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+                    <Typography variant="body2">+${value.additionalCost.toFixed(2)}</Typography>
+                  </Box>
+                )}
+                {value.replacePrice && (
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+                    <GLBoolean tooltip={"Replace Price"} boolean={!!value.replacePrice} />
+                    <Typography variant="body2">${value.product.price}</Typography>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+          }
+        />
       </ListItem>
+    ));
+  };
+
+  const renderProductOptions = options => {
+    return options.map((option, index) => (
+      <Grid item xs={12} key={index}>
+        <Paper style={{ margin: "10px 0", padding: "10px" }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <Typography variant="h6">{option.name}</Typography>
+              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
+              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <List dense>{renderOptionValues(option.values)}</List>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     ));
   };
 
   const renderTemplateOptions = () => {
     if (!templateProduct || !templateProduct.options) return null;
 
-    return templateProduct.options.map((option, index) => (
-      <Grid item xs={12}>
-        <Paper key={index} style={{ margin: "10px 0", padding: "10px" }}>
-          <Typography variant="h6">{option.name}</Typography>
-          <Typography variant="subtitle2">Type: {option.optionType}</Typography>
-          {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
-          {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
-          <List dense>{renderOptionValues(option.values)}</List>
+    return localSelectedOptions.map((option, index) => (
+      <Grid item xs={12} key={index}>
+        <Paper style={{ margin: "10px 0", padding: "10px" }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={1}>
+              <Checkbox
+                checked={option.isSelected}
+                onChange={e => handleOptionChange(index, "isSelected", e.target.checked)}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                type="number"
+                value={option.order}
+                onChange={e => handleOptionChange(index, "order", parseInt(e.target.value) || 0)}
+                disabled={!option.isSelected}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={9}>
+              <Typography variant="h6">{option.name}</Typography>
+              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
+              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <List dense>{renderOptionValues(option.values)}</List>
+            </Grid>
+          </Grid>
         </Paper>
       </Grid>
     ));
   };
 
+  const handleConfirm = () => {
+    const sortedSelectedOptions = localSelectedOptions
+      .filter(option => option.isSelected)
+      .sort((a, b) => a.order - b.order);
+
+    dispatch(
+      API.generateProductOptions({
+        selectedProductIds: selectedProducts.map(product => product._id),
+        templateProductId: templateProduct ? templateProduct._id : null,
+        selectedOptions: sortedSelectedOptions,
+        updateNamesOnly: updateNamesOnly,
+      })
+    );
+  };
+
+  const handleInfoClick = (event, productId) => {
+    setAnchorEl(event.currentTarget);
+    setOpenProductId(productId);
+  };
+
+  const handleInfoClose = () => {
+    setAnchorEl(null);
+    setOpenProductId(null);
+  };
+
   return (
     <GLActionModal
       isOpen={isOpen}
-      onConfirm={() =>
-        dispatch(
-          API.generateProductOptions({
-            selectedProductIds: selectedProducts.map(product => product._id),
-            templateProductId: templateProduct ? templateProduct._id : null,
-          })
-        )
-      }
+      onConfirm={handleConfirm}
       onCancel={() => {
         dispatch(closeProductOptionsGeneratorModal());
       }}
@@ -119,6 +215,22 @@ const ProductOptionsGeneratorModal = () => {
             {selectedProducts?.map((product, index) => (
               <ListItem key={product._id} component={Paper} style={{ marginBottom: "10px" }}>
                 <ListItemText primary={product.name} />
+                <IconButton onClick={e => handleInfoClick(e, product._id)}>
+                  <InfoIcon />
+                </IconButton>
+                <Popper
+                  open={openProductId === product._id}
+                  anchorEl={anchorEl}
+                  placement="right"
+                  style={{ zIndex: 1300 }}
+                >
+                  <ClickAwayListener onClickAway={handleInfoClose}>
+                    <Paper style={{ padding: "20px", maxWidth: "500px", maxHeight: "80vh", overflow: "auto" }}>
+                      <Typography variant="h6">Original Options</Typography>
+                      {renderProductOptions(product.options)}
+                    </Paper>
+                  </ClickAwayListener>
+                </Popper>
               </ListItem>
             ))}
           </List>
@@ -134,6 +246,19 @@ const ProductOptionsGeneratorModal = () => {
               />
             }
             label="Use Template Product"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={updateNamesOnly}
+                onChange={e => setUpdateNamesOnly(e.target.checked)}
+                name="updateNamesOnly"
+                color="primary"
+              />
+            }
+            label="Update Option Product Names Only"
           />
         </Grid>
         {useTemplate && (

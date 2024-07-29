@@ -242,6 +242,134 @@ export const addParentToOptionProduct = async (optionProductId, newParentId) => 
   });
 };
 
+// Main function
+export const generateProductOptionsProducts = async body => {
+  try {
+    validateInput(body);
+    const { selectedProductIds, templateProductId, selectedOptions, updateNamesOnly } = body;
+
+    const selectedProducts = await fetchSelectedProducts(selectedProductIds);
+    const templateProduct = await fetchTemplateProduct(templateProductId);
+
+    if (updateNamesOnly) {
+      const results = await Promise.all(selectedProducts.map(product => updateOptionProductNames(product)));
+      return results;
+    } else {
+      const results = await Promise.all(
+        selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
+      );
+      return results;
+    }
+  } catch (error) {
+    handleError(error, "generateProductOptionsProducts");
+  }
+};
+
+const updateOptionProductNames = async parentProduct => {
+  try {
+    for (const option of parentProduct.options) {
+      for (const value of option.values) {
+        if (value.product) {
+          const newProductName = `${parentProduct.name} - ${option.name} - ${value.name}`;
+          const newPathname = `${parentProduct.pathname}_${option.name.toLowerCase().replace(/\s+/g, "_")}_${value.name.toLowerCase().replace(/\s+/g, "_")}`;
+
+          await Product.findByIdAndUpdate(value.product, {
+            $set: {
+              name: newProductName,
+              pathname: newPathname,
+            },
+          });
+        }
+      }
+    }
+    return { productId: parentProduct._id, status: "Success" };
+  } catch (error) {
+    handleError(error, "updateOptionProductNames");
+    return { productId: parentProduct._id, status: "Error", message: error.message };
+  }
+};
+
+// Existing functions remain unchanged
+const validateInput = ({ selectedProductIds }) => {
+  if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
+    throw new Error("Invalid or empty product IDs array");
+  }
+};
+
+const fetchSelectedProducts = async selectedProductIds => {
+  const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
+  if (selectedProducts.length !== selectedProductIds.length) {
+    throw new Error("One or more products not found");
+  }
+  return selectedProducts;
+};
+
+const fetchTemplateProduct = async templateProductId => {
+  if (!templateProductId) return null;
+  const templateProduct = await Product.findById(templateProductId).lean();
+  if (!templateProduct) {
+    throw new Error("Template product not found");
+  }
+  return templateProduct;
+};
+
+const updateProductOptions = (existingOptions, templateProduct, selectedOptions) => {
+  if (!templateProduct) return existingOptions;
+
+  if (selectedOptions) {
+    return updateSelectedOptions(existingOptions, templateProduct, selectedOptions);
+  }
+
+  return JSON.parse(JSON.stringify(templateProduct.options));
+};
+
+const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions) => {
+  return selectedOptions.reduce(
+    (updatedOptions, selectedOption) => {
+      const templateOption = templateProduct.options.find(o => o.name === selectedOption.name);
+      if (templateOption) {
+        const index = selectedOption.order - 1;
+        if (index < updatedOptions.length) {
+          updatedOptions[index] = JSON.parse(JSON.stringify(templateOption));
+        } else {
+          updatedOptions.push(JSON.parse(JSON.stringify(templateOption)));
+        }
+      }
+      return updatedOptions;
+    },
+    [...existingOptions]
+  );
+};
+
+const processOptionValues = async (options, parentProduct) => {
+  for (const option of options) {
+    for (const value of option.values) {
+      const optionProduct = await createOrUpdateOptionProduct(parentProduct, option.name, value.name);
+      value.product = optionProduct._id;
+    }
+  }
+};
+
+const processProduct = async (product, templateProduct, selectedOptions) => {
+  const updatedOptions = updateProductOptions(product.options, templateProduct, selectedOptions);
+  await processOptionValues(updatedOptions, product);
+  await updateProductInDatabase(product._id, updatedOptions);
+  return { productId: product._id, status: "Success" };
+};
+
+const updateProductInDatabase = async (productId, updatedOptions) => {
+  await Product.findByIdAndUpdate(productId, {
+    $set: { options: updatedOptions },
+  });
+};
+
+const handleError = (error, functionName) => {
+  console.error(`Error in ${functionName}:`, error);
+  if (error instanceof Error) {
+    throw new Error(error.message);
+  }
+};
+
 export const createOrUpdateOptionProduct = async (parentProduct, optionName, valueName) => {
   const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
   const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
@@ -253,8 +381,8 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
         name: newProductName,
         isVariation: true,
         hidden: true,
+        parent: parentProduct._id,
       },
-      $addToSet: { parents: parentProduct._id },
     },
     { new: true, upsert: true }
   );
@@ -265,7 +393,7 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
       _id: undefined,
       name: newProductName,
       pathname: newPathname,
-      parents: [parentProduct._id],
+      parent: parentProduct._id,
       isVariation: true,
       hidden: true,
       options: [],
