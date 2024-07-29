@@ -184,6 +184,7 @@ const palette = {
   divider: "rgba(0, 0, 0, 0.12)",
   background: {
     paper: "#fff",
+    block: "#585858",
     default: "#fff",
     level2: "#f5f5f5",
     level1: "#eeeeee",
