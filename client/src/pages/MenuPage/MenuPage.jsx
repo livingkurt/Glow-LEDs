@@ -19,6 +19,10 @@ const MenuPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { menuItems, loadingSlideshowImages } = contentPage;
 
+  const { data: currentContent, isLoading } = API.useCurrentContentQuery();
+
+  const slideshow = currentContent?.home_page?.slideshow;
+
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -88,17 +92,11 @@ const MenuPage = () => {
 
   const determine_menu_items = content => {
     if (pathname === "manuals") {
-      return (
-        content &&
-        content.home_page &&
-        content.home_page.slideshow
-          .filter(
-            item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz"
-          )
-          .map(item => {
-            return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
-          })
-      );
+      return slideshow
+        .filter(item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz")
+        .map(item => {
+          return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
+        });
     } else if (pathname === "support") {
       return [
         {
@@ -228,8 +226,8 @@ const MenuPage = () => {
       <div className="product_big_screen">
         <div className="jc-c">
           <div className="jc-c wrap">
-            {menuItems &&
-              menuItems.map((item, index) => {
+            {slideshow &&
+              slideshow.map((item, index) => {
                 return <MenuItemD item={item} index={index} key={index} decide_url={decide_url} />;
               })}
           </div>
@@ -238,8 +236,8 @@ const MenuPage = () => {
       <div className="product_small_screen none">
         <div className="jc-c">
           <ul className="jc-c wrap">
-            {menuItems &&
-              menuItems.map((item, index) => {
+            {slideshow &&
+              slideshow.map((item, index) => {
                 return <MenuItemM item={item} index={index} key={index} decide_url={decide_url} />;
               })}
           </ul>
