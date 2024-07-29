@@ -109,6 +109,28 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
         },
       },
     },
+    prices_title: {
+      label: "Prices",
+      type: "title",
+      align: "center",
+      variant: "h6",
+    },
+    price: {
+      type: "number",
+      label: "Price",
+    },
+    wholesale_price: {
+      type: "number",
+      label: "Wholesale Price",
+    },
+    wholesale_product: {
+      type: "checkbox",
+      label: "Wholesale Product",
+    },
+    previous_price: {
+      type: "number",
+      label: "Previous Price",
+    },
     tags: {
       type: "autocomplete_multiple",
       label: "Tags",
@@ -656,33 +678,12 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
       type: "number",
       label: "Order",
     },
-    prices_title: {
-      label: "Prices",
-      type: "title",
-      align: "center",
-      variant: "h6",
-    },
-    price: {
-      type: "number",
-      label: "Price",
-    },
-    wholesale_price: {
-      type: "number",
-      label: "Wholesale Price",
-    },
-    wholesale_product: {
-      type: "checkbox",
-      label: "Wholesale Product",
-    },
-    previous_price: {
-      type: "number",
-      label: "Previous Price",
-    },
+
     sale: {
       type: "object",
       title: "Sale Info",
       fields: {
-        price: {
+        sale_price: {
           type: "number",
           label: "Sale Price",
           labelProp: "sale_price",
