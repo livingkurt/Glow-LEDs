@@ -14,13 +14,18 @@ import {
   FormControlLabel,
   TextField,
   Chip,
+  IconButton,
+  Popper,
+  ClickAwayListener,
 } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import { closeProductOptionsGeneratorModal, setTemplateProduct, setUseTemplate } from "../productsPageSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useProductsQuery } from "../../../api/allRecordsApi";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+
 const ProductOptionsGeneratorModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
@@ -31,6 +36,9 @@ const ProductOptionsGeneratorModal = () => {
   const { isOpen, templateProduct, selectedProducts, useTemplate } = productOptionsGeneratorModal;
 
   const [localSelectedOptions, setLocalSelectedOptions] = useState([]);
+  const [updateNamesOnly, setUpdateNamesOnly] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openProductId, setOpenProductId] = useState(null);
 
   useEffect(() => {
     if (templateProduct && templateProduct.options) {
@@ -49,6 +57,7 @@ const ProductOptionsGeneratorModal = () => {
       prevOptions.map((option, i) => (i === index ? { ...option, [field]: value } : option))
     );
   };
+
   const renderOptionValues = values => {
     return values.map((value, index) => (
       <ListItem
@@ -79,7 +88,6 @@ const ProductOptionsGeneratorModal = () => {
                   </Box>
                 )}
                 <Typography variant="body2">{value.name}</Typography>
-                {/* {value.isDefault && <Chip label="Default" size="small" color="primary" />} */}
                 {value?.filament && !value?.filament?.active ? (
                   <Chip label="Inactive" size="small" color="error" />
                 ) : (
@@ -104,6 +112,24 @@ const ProductOptionsGeneratorModal = () => {
           }
         />
       </ListItem>
+    ));
+  };
+
+  const renderProductOptions = options => {
+    return options.map((option, index) => (
+      <Grid item xs={12} key={index}>
+        <Paper style={{ margin: "10px 0", padding: "10px" }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <Typography variant="h6">{option.name}</Typography>
+              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
+              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <List dense>{renderOptionValues(option.values)}</List>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     ));
   };
 
@@ -152,8 +178,19 @@ const ProductOptionsGeneratorModal = () => {
         selectedProductIds: selectedProducts.map(product => product._id),
         templateProductId: templateProduct ? templateProduct._id : null,
         selectedOptions: sortedSelectedOptions,
+        updateNamesOnly: updateNamesOnly,
       })
     );
+  };
+
+  const handleInfoClick = (event, productId) => {
+    setAnchorEl(event.currentTarget);
+    setOpenProductId(productId);
+  };
+
+  const handleInfoClose = () => {
+    setAnchorEl(null);
+    setOpenProductId(null);
   };
 
   return (
@@ -178,6 +215,22 @@ const ProductOptionsGeneratorModal = () => {
             {selectedProducts?.map((product, index) => (
               <ListItem key={product._id} component={Paper} style={{ marginBottom: "10px" }}>
                 <ListItemText primary={product.name} />
+                <IconButton onClick={e => handleInfoClick(e, product._id)}>
+                  <InfoIcon />
+                </IconButton>
+                <Popper
+                  open={openProductId === product._id}
+                  anchorEl={anchorEl}
+                  placement="right"
+                  style={{ zIndex: 1300 }}
+                >
+                  <ClickAwayListener onClickAway={handleInfoClose}>
+                    <Paper style={{ padding: "20px", maxWidth: "500px", maxHeight: "80vh", overflow: "auto" }}>
+                      <Typography variant="h6">Original Options</Typography>
+                      {renderProductOptions(product.options)}
+                    </Paper>
+                  </ClickAwayListener>
+                </Popper>
               </ListItem>
             ))}
           </List>
@@ -193,6 +246,19 @@ const ProductOptionsGeneratorModal = () => {
               />
             }
             label="Use Template Product"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={updateNamesOnly}
+                onChange={e => setUpdateNamesOnly(e.target.checked)}
+                name="updateNamesOnly"
+                color="primary"
+              />
+            }
+            label="Update Option Product Names Only"
           />
         </Grid>
         {useTemplate && (

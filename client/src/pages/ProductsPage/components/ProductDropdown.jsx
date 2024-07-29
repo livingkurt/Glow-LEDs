@@ -20,6 +20,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLFlexGrid from "../../../shared/GlowLEDsComponents/GLFlexGrid/GLFlexGrid";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import { hasUpdatedProductOptionProduct } from "../productsPageHelpers";
+import { AssignmentTurnedIn, CreateNewFolder } from "@mui/icons-material";
+import { openProductOptionsGeneratorModal } from "../productsPageSlice";
 
 const ProductDropdown = ({ row, determineColor, colspan }) => {
   const theme = useTheme();
@@ -74,6 +77,11 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                               ) : (
                                 ""
                               )}
+                              {!hasUpdatedProductOptionProduct(row, option, value, value.product) ? (
+                                <Chip label="Outdated Option Product" size="small" color="error" />
+                              ) : (
+                                ""
+                              )}
                             </Box>
 
                             <Box display={"flex"} justifyContent={"flex-end"}>
@@ -95,6 +103,32 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                                 }}
                               >
                                 <EditIcon color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                tooltip="Option Products Generator"
+                                onClick={() => {
+                                  dispatch(
+                                    openProductOptionsGeneratorModal({
+                                      selectedProducts: [value.product],
+                                      useTemplate: false,
+                                    })
+                                  );
+                                }}
+                              >
+                                <AssignmentTurnedIn color="white" />
+                              </GLIconButton>
+                              <GLIconButton
+                                tooltip="Complete Options Generator"
+                                onClick={() => {
+                                  dispatch(
+                                    openProductOptionsGeneratorModal({
+                                      selectedProducts: [value.product],
+                                      useTemplate: true,
+                                    })
+                                  );
+                                }}
+                              >
+                                <CreateNewFolder color="white" />
                               </GLIconButton>
                               <GLIconButton
                                 tooltip="Create New Option Product From "

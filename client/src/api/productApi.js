@@ -67,12 +67,16 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 
 export const generateProductOptions = createAsyncThunk(
   "products/generateProductOptions",
-  async ({ selectedProductIds, templateProductId, selectedOptions }, { dispatch, rejectWithValue }) => {
+  async (
+    { selectedProductIds, templateProductId, selectedOptions, updateNamesOnly },
+    { dispatch, rejectWithValue }
+  ) => {
     try {
       const { data } = await axios.put(`/api/products/generate_product_options`, {
         selectedProductIds,
         templateProductId,
         selectedOptions,
+        updateNamesOnly,
       });
       dispatch(showSuccess({ message: `Options Generated for ${selectedProductIds.length} Products` }));
       return data;

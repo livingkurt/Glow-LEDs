@@ -246,29 +246,56 @@ export const addParentToOptionProduct = async (optionProductId, newParentId) => 
 export const generateProductOptionsProducts = async body => {
   try {
     validateInput(body);
-    const { selectedProductIds, templateProductId, selectedOptions } = body;
+    const { selectedProductIds, templateProductId, selectedOptions, updateNamesOnly } = body;
 
     const selectedProducts = await fetchSelectedProducts(selectedProductIds);
     const templateProduct = await fetchTemplateProduct(templateProductId);
 
-    const results = await Promise.all(
-      selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
-    );
-
-    return results;
+    if (updateNamesOnly) {
+      const results = await Promise.all(selectedProducts.map(product => updateOptionProductNames(product)));
+      return results;
+    } else {
+      const results = await Promise.all(
+        selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
+      );
+      return results;
+    }
   } catch (error) {
     handleError(error, "generateProductOptionsProducts");
   }
 };
 
-// Input validation
+const updateOptionProductNames = async parentProduct => {
+  try {
+    for (const option of parentProduct.options) {
+      for (const value of option.values) {
+        if (value.product) {
+          const newProductName = `${parentProduct.name} - ${option.name} - ${value.name}`;
+          const newPathname = `${parentProduct.pathname}_${option.name.toLowerCase().replace(/\s+/g, "_")}_${value.name.toLowerCase().replace(/\s+/g, "_")}`;
+
+          await Product.findByIdAndUpdate(value.product, {
+            $set: {
+              name: newProductName,
+              pathname: newPathname,
+            },
+          });
+        }
+      }
+    }
+    return { productId: parentProduct._id, status: "Success" };
+  } catch (error) {
+    handleError(error, "updateOptionProductNames");
+    return { productId: parentProduct._id, status: "Error", message: error.message };
+  }
+};
+
+// Existing functions remain unchanged
 const validateInput = ({ selectedProductIds }) => {
   if (!Array.isArray(selectedProductIds) || selectedProductIds.length === 0) {
     throw new Error("Invalid or empty product IDs array");
   }
 };
 
-// Fetch selected products
 const fetchSelectedProducts = async selectedProductIds => {
   const selectedProducts = await Product.find({ _id: { $in: selectedProductIds } });
   if (selectedProducts.length !== selectedProductIds.length) {
@@ -277,7 +304,6 @@ const fetchSelectedProducts = async selectedProductIds => {
   return selectedProducts;
 };
 
-// Fetch template product
 const fetchTemplateProduct = async templateProductId => {
   if (!templateProductId) return null;
   const templateProduct = await Product.findById(templateProductId).lean();
@@ -286,7 +312,7 @@ const fetchTemplateProduct = async templateProductId => {
   }
   return templateProduct;
 };
-// Update product options
+
 const updateProductOptions = (existingOptions, templateProduct, selectedOptions) => {
   if (!templateProduct) return existingOptions;
 
@@ -294,11 +320,9 @@ const updateProductOptions = (existingOptions, templateProduct, selectedOptions)
     return updateSelectedOptions(existingOptions, templateProduct, selectedOptions);
   }
 
-  // If no specific options are selected, replace all options with template options
   return JSON.parse(JSON.stringify(templateProduct.options));
 };
 
-// Update selected options
 const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions) => {
   return selectedOptions.reduce(
     (updatedOptions, selectedOption) => {
@@ -306,7 +330,6 @@ const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions
       if (templateOption) {
         const index = selectedOption.order - 1;
         if (index < updatedOptions.length) {
-          // Replace the entire option, including values, without preserving product references
           updatedOptions[index] = JSON.parse(JSON.stringify(templateOption));
         } else {
           updatedOptions.push(JSON.parse(JSON.stringify(templateOption)));
@@ -318,7 +341,6 @@ const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions
   );
 };
 
-// Process option values
 const processOptionValues = async (options, parentProduct) => {
   for (const option of options) {
     for (const value of option.values) {
@@ -328,7 +350,6 @@ const processOptionValues = async (options, parentProduct) => {
   }
 };
 
-// Main processing function
 const processProduct = async (product, templateProduct, selectedOptions) => {
   const updatedOptions = updateProductOptions(product.options, templateProduct, selectedOptions);
   await processOptionValues(updatedOptions, product);
@@ -336,14 +357,12 @@ const processProduct = async (product, templateProduct, selectedOptions) => {
   return { productId: product._id, status: "Success" };
 };
 
-// Update product in database
 const updateProductInDatabase = async (productId, updatedOptions) => {
   await Product.findByIdAndUpdate(productId, {
     $set: { options: updatedOptions },
   });
 };
 
-// Error handling
 const handleError = (error, functionName) => {
   console.error(`Error in ${functionName}:`, error);
   if (error instanceof Error) {
@@ -351,7 +370,6 @@ const handleError = (error, functionName) => {
   }
 };
 
-// Keep the createOrUpdateOptionProduct function as is
 export const createOrUpdateOptionProduct = async (parentProduct, optionName, valueName) => {
   const newProductName = `${parentProduct.name} - ${optionName} - ${valueName}`;
   const newPathname = `${parentProduct.pathname}_${optionName.toLowerCase().replace(/\s+/g, "_")}_${valueName.toLowerCase().replace(/\s+/g, "_")}`;
