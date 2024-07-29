@@ -33,7 +33,8 @@ const CartItem = ({ item, index, showQuantity }) => {
             label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
             size="small"
             sx={{
-              backgroundColor: bgColor,
+              backgroundColor: option.name === "Clear" ? "transparent" : bgColor,
+              border: option.name === "Clear" ? "1px solid white !important" : "none !important",
               color: theme.palette.getContrastText(bgColor),
               fontSize: "1rem",
               fontWeight: "500",
