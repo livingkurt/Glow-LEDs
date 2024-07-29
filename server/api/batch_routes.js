@@ -4091,9 +4091,7 @@ router.route("/fetch_all_replace_price_product_options_no_price").get(async (req
     const products = await Product.aggregate([
       {
         $match: {
-          category: "glowskinz",
-          subcategory: "opyn",
-          // product_collection: "novaskinz",
+          isVariation: true,
           "options": {
             $elemMatch: {
               "replacePrice": true,
@@ -4107,8 +4105,30 @@ router.route("/fetch_all_replace_price_product_options_no_price").get(async (req
         },
       },
       {
+        $lookup: {
+          from: "products",
+          localField: "parent",
+          foreignField: "_id",
+          as: "parentProduct",
+        },
+      },
+      // {
+      //   $match: {
+      //     "parentProduct.name": { $regex: /Novaskinz/i },
+      //   },
+      // },
+      {
+        $lookup: {
+          from: "products",
+          localField: "options.values.product",
+          foreignField: "_id",
+          as: "referencedProducts",
+        },
+      },
+      {
         $project: {
           name: 1,
+          parentName: { $arrayElemAt: ["$parentProduct.name", 0] },
           options: {
             $filter: {
               input: "$options",
@@ -4126,16 +4146,26 @@ router.route("/fetch_all_replace_price_product_options_no_price").get(async (req
                             { $ifNull: ["$$value.product", false] },
                             { $eq: [{ $type: "$$value.product" }, "objectId"] },
                             {
-                              $not: {
-                                $gt: [
-                                  {
-                                    $ifNull: [
-                                      { $getField: { field: "price", input: { $ifNull: ["$$value.product", {}] } } },
-                                      null,
+                              $let: {
+                                vars: {
+                                  referencedProduct: {
+                                    $arrayElemAt: [
+                                      {
+                                        $filter: {
+                                          input: "$referencedProducts",
+                                          cond: { $eq: ["$$this._id", "$$value.product"] },
+                                        },
+                                      },
+                                      0,
                                     ],
                                   },
-                                  0,
-                                ],
+                                },
+                                in: {
+                                  $or: [
+                                    { $eq: [{ $type: "$$referencedProduct.price" }, "missing"] },
+                                    { $lte: ["$$referencedProduct.price", 0] },
+                                  ],
+                                },
                               },
                             },
                           ],
@@ -4234,6 +4264,273 @@ router.route("/update_replace_prices_clozd_glowskinz").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+router.route("/update_omniskinz_prices").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          isVariation: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "parent",
+          foreignField: "_id",
+          as: "parentProduct",
+        },
+      },
+      {
+        $match: {
+          "parentProduct.name": { $regex: /Omniskinz/i },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 3.89;
+                  case "8":
+                    return 23.39;
+                  case "10":
+                    return 26.99;
+                  default:
+                    return null; // This will not update the price if it doesn't match
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} Omniskinz products.` });
+    } else {
+      res.json({ message: "No Omniskinz products found matching the criteria." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/update_novaskinz_prices").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          isVariation: true,
+          "options": {
+            $elemMatch: {
+              "replacePrice": true,
+              "values": {
+                $elemMatch: {
+                  "product": { $exists: true },
+                },
+              },
+            },
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "parent",
+          foreignField: "_id",
+          as: "parentProduct",
+        },
+      },
+      {
+        $match: {
+          "parentProduct.name": { $regex: /Novaskinz/i },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "options.values.product",
+          foreignField: "_id",
+          as: "referencedProducts",
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+          referencedProduct: {
+            $arrayElemAt: [
+              {
+                $filter: {
+                  input: "$referencedProducts",
+                  cond: { $eq: ["$$this._id", "$options.values.product"] },
+                },
+              },
+              0,
+            ],
+          },
+        },
+      },
+      {
+        $match: {
+          $or: [{ "referencedProduct.price": { $exists: false } }, { "referencedProduct.price": { $lte: 0 } }],
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 6.99;
+                  case "2":
+                    return 12.99;
+                  case "4":
+                    return 22.99;
+                  case "10":
+                    return 49.99;
+                  default:
+                    return null;
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} Novaskinz products.` });
+    } else {
+      res.json({ message: "No Novaskinz products found matching the criteria." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/update_omniskinz_prices").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          isVariation: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "parent",
+          foreignField: "_id",
+          as: "parentProduct",
+        },
+      },
+      {
+        $match: {
+          "parentProduct.name": { $regex: /Novaskinz/i },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 3.89;
+                  case "8":
+                    return 23.39;
+                  case "10":
+                    return 26.99;
+                  default:
+                    return null; // This will not update the price if it doesn't match
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} Omniskinz products.` });
+    } else {
+      res.json({ message: "No Omniskinz products found matching the criteria." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 router.route("/update_replace_prices_opyn_glowskinz").put(async (req, res) => {
   try {
     const productsToUpdate = await Product.aggregate([

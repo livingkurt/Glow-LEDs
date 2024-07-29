@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as API from "../../../api";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const Banner = () => {
   const theme = useTheme();
@@ -9,6 +9,7 @@ const Banner = () => {
 
   const link = currentContent?.banner?.link;
   const label = currentContent?.banner?.label;
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <>
       {label && !isLoading && (
@@ -23,7 +24,12 @@ const Banner = () => {
         >
           {!isLoading && (
             <Link to={link}>
-              <Typography variant="h6" fontSize={"12px"} mt={"5px"}>
+              <Typography
+                variant={isMobile ? "body2" : "subtitle1"}
+                fontSize={"12px"}
+                mt={isMobile ? "0px" : "5px"}
+                mx={1}
+              >
                 {label}
               </Typography>
             </Link>

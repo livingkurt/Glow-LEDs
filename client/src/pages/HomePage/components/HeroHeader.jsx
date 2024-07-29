@@ -9,7 +9,6 @@ import { Navigation, Pagination, A11y, EffectFade, Autoplay } from "swiper/modul
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/swiper-bundle.css";
-import "swiper/swiper-bundle.css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -26,7 +25,6 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        textAlign: "center",
       }}
     >
       <Swiper
@@ -72,20 +70,45 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                   left: 0,
                   right: 0,
                   color: "#fff",
-                  padding: "40px",
+                  padding: isMobile ? "30px 20px" : "40px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "flex-start",
+                  textAlign: "left", // Ensure text is always left-aligned
+                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)", // Add a gradient background for better text visibility
                 }}
               >
-                <Typography variant="h3" gutterBottom>
+                <Typography
+                  variant={isMobile ? "h5" : "h3"}
+                  gutterBottom
+                  sx={{
+                    mb: 1,
+                  }}
+                >
                   {slide.label}
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom mb={1}>
+                <Typography
+                  variant={isMobile ? "body2" : "subtitle1"}
+                  gutterBottom
+                  sx={{
+                    mb: 2,
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
+                    maxWidth: "80%", // Limit the width of the fact text
+                  }}
+                >
                   {slide.fact}
                 </Typography>
-                <Link to={slide.link}>
-                  <Button variant="contained" onClick={() => navigate(slide.link)}>
+                <Link to={slide.link} style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => navigate(slide.link)}
+                    sx={{
+                      backgroundColor: theme.palette.primary.main,
+                      "&:hover": {
+                        backgroundColor: theme.palette.primary.dark,
+                      },
+                    }}
+                  >
                     Shop Now
                   </Button>
                 </Link>
@@ -95,9 +118,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
         ))}
       </Swiper>
     </Box>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 HeroHeader.propTypes = {

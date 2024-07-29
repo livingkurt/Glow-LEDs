@@ -136,7 +136,7 @@ const SupportCenterPage = () => {
         />
       </Helmet>
 
-      <Typography variant="h3" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         Support Center
       </Typography>
       <Typography variant="body1" align="center" gutterBottom>
@@ -150,7 +150,7 @@ const SupportCenterPage = () => {
         {faqPage?.sections.map((section, index) => (
           <Accordion key={index}>
             <AccordionSummary expandIcon={<ExpandMore />}>
-              <Typography variant="h4">{section.title}</Typography>
+              <Typography variant="h6">{section.title}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               {section.video && <HeroVideo video={section.video} />}
@@ -177,7 +177,7 @@ const SupportCenterPage = () => {
         ))}
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            <Typography variant="h4">Track Your Order</Typography>
+            <Typography variant="h6">Track Your Order</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -219,7 +219,7 @@ const SupportCenterPage = () => {
 
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            <Typography variant="h4">Chip Compatibility</Typography>
+            <Typography variant="h6">Chip Compatibility</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography gutterBottom variant="body1" paragraph>

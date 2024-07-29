@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LazyImage } from "../../../shared/SharedComponents";
 
 const MenuItemM = ({ item, index, decide_url }) => {
+  console.log({ item });
   return (
     <li key={index} className="w-100per">
       <Link to={item.link}>
@@ -14,7 +15,7 @@ const MenuItemM = ({ item, index, decide_url }) => {
             title="Affiliate Image"
             effect="blur"
             size={{ height: "auto", width: "100%" }}
-            src={item.image}
+            src={typeof item.image === "string" ? item.image : item.image.link}
           />
           <div className="column jc-b  pl-2rem">
             <h2 className="w-100per ">{item.label}</h2>

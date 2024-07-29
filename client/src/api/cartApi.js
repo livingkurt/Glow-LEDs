@@ -62,7 +62,7 @@ export const addToCart = createAsyncThunk(
           current_user,
         });
       }
-      dispatch(showSuccess({ message: `Cart Item Added` }));
+      dispatch(showSuccess({ message: `Cart Item Added`, duration: 1000 }));
 
       // Add current_user to the returned payload
       return { data: data.data, type, current_user };

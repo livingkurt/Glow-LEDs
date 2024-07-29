@@ -1,9 +1,11 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const DiscoverMoreHero = ({ discover_more }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return !discover_more?.hidden ? (
     <Box
       sx={{
@@ -51,7 +53,7 @@ const DiscoverMoreHero = ({ discover_more }) => {
           }}
           gap={2}
         >
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant={isMobile ? "body2" : "subtitle1"} gutterBottom>
             {discover_more.subtitle}
           </Typography>
           <Typography variant="h3" gutterBottom>

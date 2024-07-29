@@ -5,6 +5,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 // import Resizer from 'react-image-file-resizer';
 
 const MenuItemD = ({ item, index, decide_url }) => {
+  console.log({ item });
   return (
     <div className="product m-1rem" style={{ height: "unset" }} key={index}>
       <Link to={item.link}>
@@ -17,7 +18,7 @@ const MenuItemD = ({ item, index, decide_url }) => {
               title="Product Image"
               size={{ height: "300px", width: "300px", objectFit: "cover" }}
               effect="blur"
-              src={item.image}
+              src={typeof item.image === "string" ? item.image : item.image.link}
             />
           )}
         </div>
