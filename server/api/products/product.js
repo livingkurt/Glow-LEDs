@@ -20,6 +20,7 @@ export const optionValueSchema = new mongoose.Schema({
   filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // Link to product variations
   // products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }], // Link to product variations
+  image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },
 });
@@ -27,6 +28,7 @@ export const optionValueSchema = new mongoose.Schema({
 export const optionSchema = new mongoose.Schema({
   name: { type: String }, // e.g., "Color", "Size"
   values: [optionValueSchema],
+  image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   optionType: { type: String },
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },

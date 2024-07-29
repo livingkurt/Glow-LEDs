@@ -28,14 +28,24 @@ export const calculateAdditionalCost = selectedOptions => {
   return Number(total.toFixed(2));
 };
 
-export const updateProductDetailsFromOption = (state, selectedOption) => {
+export const updateProductDetailsFromOption = (state, selectedOption, option) => {
   const { product } = selectedOption;
-  if (selectedOption?.product?.images?.length > 0) {
+
+  // Check if the option itself has an image
+  if (option.image) {
+    state.customizedProduct.images = [option.image];
+  } else if (selectedOption.image) {
+    // If the option doesn't have an image, check if the selected option value has an image
+    state.customizedProduct.images = [selectedOption.image];
+  } else if (selectedOption?.product?.images?.length > 0) {
+    // If neither the option nor the selected value has an image, use the product images if available
     state.customizedProduct.images = selectedOption.product.images;
   }
+
   if (selectedOption?.product?.chips?.length > 0) {
     state.customizedProduct.chips = selectedOption?.product?.chips;
   }
+
   // When product options are available, update the currentOptions based on option names
   if (product?.options?.length > 0) {
     const newOptionsByName = product.options.reduce((acc, option) => {
@@ -63,6 +73,9 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
         return existingOption;
       }
     });
+
+    // Update the selectedOptions state
+    state.customizedProduct.selectedOptions = newSelectedOptions;
   }
 
   if (product?.short_description) {
@@ -84,7 +97,6 @@ export const updateProductDetailsFromOption = (state, selectedOption) => {
     state.customizedProduct.dimensions = product.dimensions;
   }
 };
-
 export const handlePriceReplacement = (state, option, selectedOption) => {
   if (option?.replacePrice) {
     state.customizedProduct.price = selectedOption?.product?.price;
