@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Grid, Chip, ListItem, useTheme } from "@mui/material";
+import { Box, Typography, Grid, Chip, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setCartDrawer } from "../../slices/cartSlice";
 import { sale_price_switch } from "../../utils/react_helper_functions";
@@ -14,106 +14,154 @@ const CartItem = ({ item, index, showQuantity }) => {
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const dispatch = useDispatch();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
 
   const processedOptions = item.selectedOptions.map(option => ({
     ...option,
     normalizedColorCode: option.filament?.color_code || option.colorCode,
   }));
+
+  const renderOptions = () => (
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+      {processedOptions?.map((option, optionIndex) => {
+        const bgColor = option.normalizedColorCode || theme.palette.background.default;
+        if (!option.name) return null;
+        return (
+          <Chip
+            key={optionIndex}
+            label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
+            size="small"
+            sx={{
+              backgroundColor: bgColor,
+              color: theme.palette.getContrastText(bgColor),
+              fontSize: "1rem",
+              fontWeight: "500",
+            }}
+          />
+        );
+      })}
+    </Box>
+  );
+
+  const renderQuantityAndDelete = () =>
+    showQuantity ? (
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <GLSelect
+          value={item.quantity}
+          onChange={e => {
+            const updatedCartItems = [...my_cart.cartItems];
+            const itemIndex = updatedCartItems.findIndex(cartItem => cartItem._id === item._id);
+            updatedCartItems[itemIndex] = {
+              ...updatedCartItems[itemIndex],
+              quantity: parseInt(e.target.value),
+            };
+            dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
+          }}
+          size="small"
+          options={[...Array(current_user?.isWholesaler ? 500 : item.max_quantity).keys()].map(value => ({
+            name: value + 1,
+          }))}
+          width="70px"
+          getOptionLabel={option => option.name}
+          valueKey="name"
+        />
+        <GLIconButton
+          onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
+          size="large"
+          sx={{ mt: 2 }}
+          tooltip="Remove"
+        >
+          <DeleteIcon color="white" />
+        </GLIconButton>
+      </Box>
+    ) : item.quantity ? (
+      <Typography variant="body2">Quantity: {item.quantity}</Typography>
+    ) : null;
+
   return (
     <ListItem
       divider
       sx={{
         py: 2,
         "&.MuiListItem-divider": {
-          borderColor: "white", // This sets the divider color to white
+          borderColor: "white",
         },
       }}
     >
-      <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
-        <Grid item>
-          <Link to={`/collections/all/products/${item.pathname}`}>
-            <Box
-              onClick={closeMenu}
-              component="img"
-              src={item?.display_image_object?.link}
-              alt={item.name}
-              sx={{ width: 80, height: 80, borderRadius: 2 }}
-            />
-          </Link>
-        </Grid>
-        <Grid item xs container direction="column" spacing={1}>
-          <Grid item>
-            <Typography variant="subtitle1" component={Link} to={`/collections/all/products/${item.pathname}`}>
-              {item.name}
-            </Typography>
+      {isMobile ? (
+        <Grid container spacing={2} alignItems="start" flexWrap="wrap">
+          <Grid item xs={12} container spacing={2} alignItems="center">
+            <Grid item>
+              <Link to={`/collections/all/products/${item.pathname}`}>
+                <Box
+                  onClick={closeMenu}
+                  component="img"
+                  src={item?.display_image_object?.link}
+                  alt={item.name}
+                  sx={{ width: 80, height: 80, borderRadius: 2 }}
+                />
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Typography variant="subtitle2" component={Link} to={`/collections/all/products/${item.pathname}`}>
+                {item.name}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-              {processedOptions?.map((option, optionIndex) => {
-                const bgColor = option.normalizedColorCode || theme.palette.background.default;
-                if (!option.name) return null;
-                return (
-                  <Chip
-                    key={optionIndex}
-                    label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
-                    size="small"
-                    sx={{
-                      backgroundColor: bgColor,
-                      color: theme.palette.getContrastText(bgColor),
-                      fontSize: "1rem",
-                      fontWeight: "500",
-                    }}
-                  />
-                );
-              })}
+          <Grid item xs={12}>
+            {renderOptions()}
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
+              <Typography variant="body2" sx={{ mt: 2 }}>
+                {sale_price_switch({
+                  product: item,
+                  cartItem: true,
+                  background: "light",
+                  isWholesaler: current_user?.isWholesaler,
+                })}
+              </Typography>
+              {renderQuantityAndDelete()}
             </Box>
           </Grid>
+        </Grid>
+      ) : (
+        <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
           <Grid item>
-            <Typography variant="body2">
-              {sale_price_switch({
-                product: item,
-                cartItem: true,
-                background: "light",
-                isWholesaler: current_user?.isWholesaler,
-              })}
-            </Typography>
+            <Link to={`/collections/all/products/${item.pathname}`}>
+              <Box
+                onClick={closeMenu}
+                component="img"
+                src={item?.display_image_object?.link}
+                alt={item.name}
+                sx={{ width: 80, height: 80, borderRadius: 2 }}
+              />
+            </Link>
+          </Grid>
+          <Grid item xs container direction="column" spacing={1}>
+            <Grid item>
+              <Typography variant="subtitle2" component={Link} to={`/collections/all/products/${item.pathname}`}>
+                {item.name}
+              </Typography>
+            </Grid>
+            <Grid item>{renderOptions()}</Grid>
+            <Grid item>
+              <Typography variant="body2">
+                {sale_price_switch({
+                  product: item,
+                  cartItem: true,
+                  background: "light",
+                  isWholesaler: current_user?.isWholesaler,
+                })}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item mt={-2.5}>
+            {renderQuantityAndDelete()}
           </Grid>
         </Grid>
-        {showQuantity ? (
-          <Grid item sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <GLSelect
-              value={item.quantity}
-              onChange={e => {
-                const updatedCartItems = [...my_cart.cartItems];
-                const itemIndex = updatedCartItems.findIndex(cartItem => cartItem._id === item._id);
-                updatedCartItems[itemIndex] = {
-                  ...updatedCartItems[itemIndex],
-                  quantity: parseInt(e.target.value),
-                };
-                dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
-              }}
-              size="small"
-              options={[...Array(current_user?.isWholesaler ? 500 : item.max_quantity).keys()].map(value => ({
-                name: value + 1,
-              }))}
-              width="70px"
-              getOptionLabel={option => option.name}
-              valueKey="name"
-            />
-            <GLIconButton
-              onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
-              size="small"
-              sx={{ mt: 2 }}
-              tooltip="Remove"
-            >
-              <DeleteIcon color="white" />
-            </GLIconButton>
-          </Grid>
-        ) : item.quantity ? (
-          <Typography variant="body2">Quantity: {item.quantity}</Typography>
-        ) : null}
-      </Grid>
+      )}
     </ListItem>
   );
 };
