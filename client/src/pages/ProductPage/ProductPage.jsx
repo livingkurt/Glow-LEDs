@@ -116,7 +116,12 @@ const ProductPage = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
-                      className={isOptionCountDifferent(product, customizedProduct, isAddonChecked) ? "" : "bob"}
+                      className={
+                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
+                        product.count_in_stock <= 0
+                          ? ""
+                          : "bob"
+                      }
                       sx={{
                         fontSize: "1.6rem",
                         padding: 2,
@@ -126,10 +131,14 @@ const ProductPage = () => {
                         dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
                       }}
                       tooltip={
-                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) &&
+                        (isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
+                          product.count_in_stock <= 0) &&
                         "You must select all options to Add To Cart"
                       }
-                      disabled={isOptionCountDifferent(product, customizedProduct, isAddonChecked)}
+                      disabled={
+                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
+                        product.count_in_stock <= 0
+                      }
                     >
                       {determineInStock(customizedProduct)}
                     </GLButtonV2>
