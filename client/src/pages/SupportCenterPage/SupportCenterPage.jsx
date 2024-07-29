@@ -136,7 +136,7 @@ const SupportCenterPage = () => {
         />
       </Helmet>
 
-      <Typography variant="h3" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         Support Center
       </Typography>
       <Typography variant="body1" align="center" gutterBottom>
