@@ -67,9 +67,9 @@ const Cart = () => {
             </Box>
             <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
           </Box>
-          <IconButton onClick={closeMenu} color="inherit">
-            <CloseIcon />
-          </IconButton>
+          <Button onClick={closeMenu} color="inherit" variant="outlined">
+            <CloseIcon /> Close
+          </Button>
         </Box>
         <Divider color="white" />
         <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
@@ -100,7 +100,7 @@ const Cart = () => {
           <Box display={"flex"} justifyContent={"space-between"} sx={{ mb: 1 }}>
             <Typography variant="subtitle1">Total</Typography>
             <Typography variant="subtitle1">
-              ${determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)} USD
+              ${determineItemsTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} USD
             </Typography>
           </Box>
           <Typography variant="body2" sx={{ mb: 2 }}>
