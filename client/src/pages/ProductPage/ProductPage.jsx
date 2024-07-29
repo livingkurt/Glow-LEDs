@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Container, Grid, Rating, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Container, FormHelperText, Grid, Rating, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
@@ -33,9 +33,32 @@ import ContributorsDisplay from "./components/ContributorsDisplay";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
+  const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
+  const [validationErrors, setValidationErrors] = useState({});
 
-  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked } = useProductPage();
+  const validateOptions = () => {
+    const errors = {};
+    customizedProduct.currentOptions?.forEach((option, index) => {
+      if (!option.isAddOn && !customizedProduct.selectedOptions[index]?.name) {
+        errors[index] = `Please select a ${option.name}`;
+      }
+    });
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
+  const handleAddToCart = () => {
+    if (validateOptions()) {
+      dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+    }
+  };
+
+  const updateValidationError = (index, error) => {
+    setValidationErrors(prev => ({
+      ...prev,
+      [index]: error,
+    }));
+  };
   return (
     <Box>
       <ProductPageHead product={product} />
@@ -92,16 +115,35 @@ const ProductPage = () => {
                   </Typography>
                   <CompatibleChips chips={customizedProduct.chips} />
                   {customizedProduct.currentOptions?.map((option, index) => (
-                    <CustomizationOption
-                      key={index}
-                      index={index}
-                      option={option}
-                      selectedOption={customizedProduct?.selectedOptions[index]}
-                    />
+                    <Box key={index}>
+                      <CustomizationOption
+                        index={index}
+                        option={option}
+                        selectedOption={customizedProduct?.selectedOptions[index]}
+                        updateValidationError={updateValidationError}
+                      />
+                      {validationErrors[index] && (
+                        <FormHelperText>
+                          <Box
+                            sx={{
+                              display: "inline-block",
+                              bgcolor: "#8c444b",
+                              py: 1,
+                              px: 1.5,
+                              borderRadius: "10px",
+                              color: "white",
+                            }}
+                          >
+                            <Typography variant="subtitle2" fontWeight={800}>
+                              {validationErrors[index]}
+                            </Typography>
+                          </Box>
+                        </FormHelperText>
+                      )}
+                    </Box>
                   ))}
-
+                  <Typography variant="subtitle1">Quantity</Typography>
                   <GLSelect
-                    label="Quantity"
                     value={customizedProduct?.quantity}
                     onChange={e => dispatch(setQuantity(e.target.value))}
                     placeholder="Select Quantity"
@@ -116,29 +158,14 @@ const ProductPage = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
-                      className={
-                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
-                        product.count_in_stock <= 0
-                          ? ""
-                          : "bob"
-                      }
+                      className={product.count_in_stock > 0 ? "bob" : ""}
                       sx={{
                         fontSize: "1.6rem",
                         padding: 2,
                       }}
                       size="large"
-                      onClick={() => {
-                        dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
-                      }}
-                      tooltip={
-                        (isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
-                          product.count_in_stock <= 0) &&
-                        "You must select all options to Add To Cart"
-                      }
-                      disabled={
-                        isOptionCountDifferent(product, customizedProduct, isAddonChecked) ||
-                        product.count_in_stock <= 0
-                      }
+                      onClick={handleAddToCart}
+                      disabled={product.count_in_stock <= 0}
                     >
                       {determineInStock(customizedProduct)}
                     </GLButtonV2>

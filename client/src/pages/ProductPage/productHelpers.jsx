@@ -74,8 +74,7 @@ export const updateProductDetailsFromOption = (state, selectedOption, option) =>
       }
     });
 
-    // Update the selectedOptions state
-    state.customizedProduct.selectedOptions = newSelectedOptions;
+    // // Update the selectedOptions state
   }
 
   if (product?.short_description) {
