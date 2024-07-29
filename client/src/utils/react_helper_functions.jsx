@@ -91,7 +91,6 @@ export const product_page_sale_price_switch = (
 };
 
 export const sale_price_switch = ({ product, cartItem, background, isWholesaler }) => {
-  console.log({ product, cartItem, background, isWholesaler });
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
 
   const formatPrice = price => {

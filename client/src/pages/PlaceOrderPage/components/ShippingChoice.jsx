@@ -27,6 +27,7 @@ import { determineItemsTotal } from "../../../utils/helper_functions";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 import { Tooltip } from "@mui/material";
 import { Info } from "@mui/icons-material";
+import * as API from "../../../api";
 
 const ShippingChoice = () => {
   const dispatch = useDispatch();
@@ -45,13 +46,21 @@ const ShippingChoice = () => {
     modalShown,
   } = placeOrder;
 
+  const { data: currentContent } = API.useCurrentContentQuery();
+
   useEffect(() => {
     dispatch(set_hide_pay_button(true));
   }, [shipping_rates.rates, dispatch]);
 
   const choose_shipping_rate = rate => {
     const sortedRates = normalizeDomesticRates(shipping_rates.rates);
-    const freeShipping = isFreeShipping({ shipping, items_price, rate, sortedRates, freeShippingMinimum });
+    const freeShipping = isFreeShipping({
+      shipping,
+      items_price,
+      rate,
+      sortedRates,
+      freeShippingMinimum: currentContent?.free_shipping_minimum_amount,
+    });
     dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping }));
 
     dispatch(finalizeShippingRate());
