@@ -69,6 +69,12 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
             type: "text_multiline",
             label: "Details",
           },
+          image: {
+            type: "image_upload",
+            label: "Image",
+            labelProp: "_id",
+            album: `${product.name} Images`,
+          },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
           values: {
             type: "array",
@@ -88,6 +94,12 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
                 },
                 isDefault: { type: "checkbox", label: "Default Option" },
                 additionalCost: { type: "number", label: "Additional Cost" },
+                image: {
+                  type: "image_upload",
+                  label: "Image",
+                  labelProp: "_id",
+                  album: `${product.name} Images`,
+                },
                 product: {
                   type: "autocomplete_single",
                   label: "Option Product",

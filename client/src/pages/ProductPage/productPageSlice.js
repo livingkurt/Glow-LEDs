@@ -108,7 +108,7 @@ const productPage = createSlice({
           replacePrice: option.replacePrice,
           additionalCost: selectedOption.additionalCost,
         };
-        updateProductDetailsFromOption(state, selectedOption);
+        updateProductDetailsFromOption(state, selectedOption, option);
         handlePriceReplacement(state, option, selectedOption);
       }
     },

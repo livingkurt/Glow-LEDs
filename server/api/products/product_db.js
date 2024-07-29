@@ -289,41 +289,49 @@ export default {
         .populate("images")
         .populate({
           path: "options",
-          populate: {
-            path: "values",
-            populate: [
-              {
-                path: "product",
-                populate: [
-                  { path: "images" },
-                  { path: "color_object.filament" },
-                  { path: "filament" },
-                  { path: "tags" },
-                  { path: "chips" },
-                  {
-                    path: "options",
-                    populate: {
-                      path: "values",
+          populate: [
+            { path: "image" },
+            {
+              path: "values",
+              populate: [
+                { path: "image" },
+                { path: "filament" },
+                {
+                  path: "product",
+                  populate: [
+                    { path: "images" },
+                    { path: "color_object.filament" },
+                    { path: "filament" },
+                    { path: "tags" },
+                    { path: "chips" },
+                    {
+                      path: "options",
                       populate: [
+                        { path: "image" },
                         {
-                          path: "product",
+                          path: "values",
                           populate: [
-                            { path: "images" },
-                            { path: "color_object.filament" },
+                            { path: "image" },
                             { path: "filament" },
-                            { path: "tags" },
-                            { path: "chips" },
+                            {
+                              path: "product",
+                              populate: [
+                                { path: "images" },
+                                { path: "color_object.filament" },
+                                { path: "filament" },
+                                { path: "tags" },
+                                { path: "chips" },
+                              ],
+                            },
                           ],
                         },
-                        { path: "filament" }, // Added filament population for nested options
                       ],
                     },
-                  },
-                ],
-              },
-              { path: "filament" }, // Added filament population for top-level options
-            ],
-          },
+                  ],
+                },
+              ],
+            },
+          ],
         })
         .populate({
           path: "features",
