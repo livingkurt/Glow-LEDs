@@ -4057,7 +4057,7 @@ router.route("/fetch_all_replace_price_product_options").get(async (req, res) =>
       {
         $match: {
           deleted: false,
-          hidden: false,
+          // hidden: false,
           "options": {
             $elemMatch: {
               "replacePrice": true,
@@ -4081,6 +4081,297 @@ router.route("/fetch_all_replace_price_product_options").get(async (req, res) =>
     ]);
 
     res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/fetch_all_replace_price_product_options_no_price").get(async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $match: {
+          category: "glowskinz",
+          subcategory: "opyn",
+          // product_collection: "novaskinz",
+          "options": {
+            $elemMatch: {
+              "replacePrice": true,
+              "values": {
+                $elemMatch: {
+                  "product": { $exists: true },
+                },
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          options: {
+            $filter: {
+              input: "$options",
+              as: "option",
+              cond: {
+                $and: [
+                  { $eq: ["$$option.replacePrice", true] },
+                  {
+                    $anyElementTrue: {
+                      $map: {
+                        input: "$$option.values",
+                        as: "value",
+                        in: {
+                          $and: [
+                            { $ifNull: ["$$value.product", false] },
+                            { $eq: [{ $type: "$$value.product" }, "objectId"] },
+                            {
+                              $not: {
+                                $gt: [
+                                  {
+                                    $ifNull: [
+                                      { $getField: { field: "price", input: { $ifNull: ["$$value.product", {}] } } },
+                                      null,
+                                    ],
+                                  },
+                                  0,
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $match: {
+          "options": { $ne: [] },
+        },
+      },
+    ]);
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/update_replace_prices_clozd_glowskinz").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          category: "glowskinz",
+          subcategory: "clozd",
+          product_collection: "classics",
+          "options": {
+            $elemMatch: {
+              "name": "Set of",
+              "replacePrice": true,
+            },
+          },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 2.95;
+                  case "8":
+                    return 17.99;
+                  case "10":
+                    return 19.99;
+                  default:
+                    return null; // This will not update the price if it doesn't match
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} products.` });
+    } else {
+      res.json({ message: "No products found matching the criteria." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/update_replace_prices_opyn_glowskinz").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          category: "glowskinz",
+          subcategory: "opyn",
+          "options": {
+            $elemMatch: {
+              "name": "Set of",
+              "replacePrice": true,
+            },
+          },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 2.95;
+                  case "8":
+                    return 17.99;
+                  case "10":
+                    return 19.99;
+                  default:
+                    return null; // This will not update the price if it doesn't match
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} products.` });
+    } else {
+      res.json({ message: "No products found matching the criteria." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/update_replace_prices_novaskinz").put(async (req, res) => {
+  try {
+    const productsToUpdate = await Product.aggregate([
+      {
+        $match: {
+          category: "glowskinz",
+          subcategory: "clozd",
+          product_collection: "novaskinz",
+          "options": {
+            $elemMatch: {
+              "name": "Set of",
+              "replacePrice": true,
+            },
+          },
+        },
+      },
+      {
+        $unwind: "$options",
+      },
+      {
+        $match: {
+          "options.name": "Set of",
+          "options.replacePrice": true,
+        },
+      },
+      {
+        $unwind: "$options.values",
+      },
+      {
+        $project: {
+          productId: "$options.values.product",
+          setValue: "$options.values.name",
+        },
+      },
+    ]);
+
+    const bulkOps = productsToUpdate
+      .map(product => ({
+        updateOne: {
+          filter: { _id: product.productId },
+          update: {
+            $set: {
+              price: (() => {
+                switch (product.setValue) {
+                  case "1":
+                    return 6.99;
+                  case "2":
+                    return 12.99;
+                  case "8":
+                    return 22.99;
+                  case "10":
+                    return 49.99;
+                  default:
+                    return null; // This will not update the price if it doesn't match
+                }
+              })(),
+            },
+          },
+        },
+      }))
+      .filter(op => op.updateOne.update.$set.price !== null);
+
+    if (bulkOps.length > 0) {
+      const result = await Product.bulkWrite(bulkOps);
+      res.json({ message: `Updated prices for ${result.modifiedCount} products.` });
+    } else {
+      res.json({ message: "No products found matching the criteria." });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });
