@@ -1,33 +1,11 @@
 import React from "react";
-import { FormControl, Select, MenuItem, Typography, Box, useTheme, Tooltip } from "@mui/material";
-import { Info } from "@mui/icons-material";
+import { FormControl, Select, MenuItem, Box, useTheme } from "@mui/material";
 
-const GLSelect = ({
-  label,
-  value,
-  onChange,
-  placeholder,
-  options,
-  getOptionLabel,
-  valueKey,
-  fullWidth,
-  width,
-  size,
-  details,
-}) => {
+const GLSelect = ({ value, onChange, placeholder, options, getOptionLabel, valueKey, fullWidth, width, size }) => {
   const theme = useTheme();
+
   return (
-    <Box mt={1}>
-      <Box display="flex" alignItems={"center"} gap={1}>
-        <Typography variant="subtitle1" gutterBottom>
-          {label}
-        </Typography>
-        {details && (
-          <Tooltip title={details}>
-            <Info color="white" size="large" />
-          </Tooltip>
-        )}
-      </Box>
+    <Box>
       <FormControl fullWidth={fullWidth} sx={{ width }}>
         <Select
           value={value}
