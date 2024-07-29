@@ -9,17 +9,22 @@ import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GL
 import { CheckBox, CheckBoxOutlineBlank, Clear, Info } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
-const CustomizationOption = ({ index, option, selectedOption }) => {
+const CustomizationOption = ({ index, option, selectedOption, updateValidationError }) => {
   const dispatch = useDispatch();
   const productPage = useSelector(state => state.products.productPage);
   const { isAddonChecked } = productPage;
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const handleChange = value => {
     const fullSelectedOption = option.values.find(opt => opt.name === value);
     dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
+
+    // Clear the validation error when a valid option is selected
+    if (fullSelectedOption) {
+      updateValidationError(index, null);
+    }
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleAddonCheckboxChange = event => {
     dispatch(setIsAddonChecked(event.target.checked));
