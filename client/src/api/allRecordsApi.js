@@ -47,6 +47,9 @@ export const allRecordsApi = createApi({
     products: builder.query({
       query: query => `/products?${create_query(query)}`,
     }),
+    productsGrid: builder.query({
+      query: query => `/products/grid?${create_query(query)}`,
+    }),
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,
     }),
@@ -77,6 +80,7 @@ export const {
   useParcelsQuery,
   usePaychecksQuery,
   useProductsQuery,
+  useProductsGridQuery,
   usePromosQuery,
   useUsersQuery,
   useTeamsQuery,

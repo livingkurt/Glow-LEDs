@@ -34,6 +34,7 @@ import imageSlice from "./slices/imageSlice";
 import productPageSlice from "./pages/ProductPage/productPageSlice";
 import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 import { affiliateApi, contentApi } from "./api";
+import productsGridPageSlice from "./pages/ProductsGridPage/productsGridPageSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -103,6 +104,7 @@ const reducers = {
   products: combineReducers({
     productsPage: productsPageSlice,
     productPage: productPageSlice,
+    productsGridPage: productsGridPageSlice,
     productTable: glTableReducer("productTable", {
       sorting: [3, "desc"],
       nonTagFilters: ["category", "subcategory", "collection"],

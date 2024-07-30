@@ -67,7 +67,7 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
+      const products = await product_db.findAll_products_db(filter, sort, limit, page);
       return products;
     } catch (error) {
       if (error instanceof Error) {
@@ -220,12 +220,7 @@ export default {
         sort = { _id: -1 };
       }
       const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
-      const count = await product_db.count_products_db(filter);
-      return {
-        products,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page,
-      };
+      return products;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
