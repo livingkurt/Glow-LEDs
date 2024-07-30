@@ -86,7 +86,7 @@ export default {
         normalizeSearch: normalizeProductSearch,
       });
 
-      const products = await product_db.findAll_products_db(filter, sort, limit, page);
+      const products = await product_db.table_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
       return {
         data: products,
