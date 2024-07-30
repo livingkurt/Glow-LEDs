@@ -11,6 +11,7 @@ import {
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
+import { Category } from "../categorys";
 const fs = require("fs");
 const Papa = require("papaparse");
 
@@ -170,58 +171,33 @@ export default {
     }
   },
   findAllGrid_products_s: async query => {
+    console.log({ query });
     try {
-      const page = query.page ? query.page : "1";
-      const limit = query.limit ? query.limit : "0";
+      const filter = { deleted: false, hidden: false, isVariation: false };
 
-      let search = {};
-      if (categories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              category: {
-                $regex: snake_case(query.search),
-                $options: "i",
-              },
-            }
-          : {};
-      } else if (subcategories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              subcategory: {
-                $regex: snake_case(query.search),
-                $options: "i",
-              },
-            }
-          : {};
-      } else {
-        search = query.search
-          ? {
-              name: {
-                $regex: query.search.toLowerCase(),
-                $options: "i",
-              },
-            }
-          : {};
+      // Add tag filtering if tags are provided
+      if (query.tags && query.tags.length > 0) {
+        // Ensure query.tags is always an array
+        const tagArray = Array.isArray(query.tags) ? query.tags : [query.tags];
+
+        // First, find the Category documents that match the tag pathnames
+        const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+        console.log({ tagCategories });
+
+        // Extract the ObjectIds of the matching categories
+        const tagIds = tagCategories.map(cat => cat._id);
+
+        // Use these ObjectIds to filter the products, ensuring all tags are present
+        filter.tags = { $all: tagIds };
       }
 
-      const filter = determine_filter(query, search);
+      console.log("Final filter:", filter);
 
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort = { order: 1, _id: -1 };
-      if (sort_query === "lowest") {
-        sort = { price: 1 };
-      } else if (sort_query === "highest") {
-        sort = { price: -1 };
-      } else if (sort_query === "category") {
-        sort = { category: 1 };
-      } else if (sort_query === "hidden") {
-        sort = { hidden: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
-      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
+      const products = await product_db.findAllGrid_products_db(filter, { order: -1 });
+      console.log(`Found ${products.length} products`);
       return products;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -124,7 +124,7 @@ export default {
     const productFields = {
       name: 1,
       pathname: 1,
-      images: { $slice: 1 }, // Only get the first image
+      images: { $slice: 1 },
       price: 1,
       wholesale_price: 1,
       sale_price: 1,
@@ -135,11 +135,20 @@ export default {
       numReviews: 1,
       category: 1,
       subcategory: 1,
+      product_collection: 1,
       hidden: 1,
       order: 1,
+      tags: 1,
     };
     try {
-      return await Product.find(filter, productFields).sort(sort).populate("images").exec();
+      return await Product.find(filter, productFields)
+        .sort(sort)
+        .populate("images")
+        .populate({
+          path: "tags",
+          select: "name type pathname",
+        })
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

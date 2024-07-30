@@ -11,30 +11,30 @@ import ColumnTitle from "./ColumnTitle";
 const HeaderColumn = ({ columns }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const glowLeds = useSelector(state => state.glowLeds);
-  const { chip_name } = glowLeds;
+  // const glowLeds = useSelector(state => state.glowLeds);
+  // const { chip_name } = glowLeds;
 
-  const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips } = chipPage;
+  // const chipPage = useSelector(state => state.chips.chipPage);
+  // const { chips } = chipPage;
 
-  const filterHandler = e => {
-    const chip_selected = JSON.parse(e.target.value);
-    update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
-    dispatch(
-      API.listProducts({
-        chip: chip_selected._id,
-        hidden: false,
-      })
-    );
-    dispatch(set_chip_name({}));
-  };
+  // const filterHandler = e => {
+  //   const chip_selected = JSON.parse(e.target.value);
+  //   update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
+  //   dispatch(
+  //     API.listProducts({
+  //       chip: chip_selected._id,
+  //       hidden: false,
+  //     })
+  //   );
+  //   dispatch(set_chip_name({}));
+  // };
   return (
     <>
       {columns?.map(column => (
         <div key={column._id} className="header-column">
           <ColumnTitle>{column.name.toUpperCase()}</ColumnTitle>
           <hr className="w-95per m-0px" />
-          {chips && column.name === "Featured" && (
+          {/* {chips && column.name === "Featured" && (
             <Filter
               title="Shop By Chip"
               width="100per"
@@ -42,7 +42,7 @@ const HeaderColumn = ({ columns }) => {
               filterHandler={filterHandler}
               filter_options={chips}
             />
-          )}
+          )} */}
           {column.rows.map(row => (
             <HeaderDrawerButton {...row} key={row._id} from="headerColumn" />
           ))}

@@ -48,7 +48,11 @@ export const allRecordsApi = createApi({
       query: query => `/products?${create_query(query)}`,
     }),
     productsGrid: builder.query({
-      query: query => `/products/grid?${create_query(query)}`,
+      query: params => ({
+        url: `/products/grid`,
+        params: create_query(params),
+        method: "GET",
+      }),
     }),
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,

@@ -1,10 +1,20 @@
 import { determine_secondary_product_name } from "./react_helper_functions";
 
 export const create_query = query => {
-  const params = new URLSearchParams(query);
+  const params = new URLSearchParams();
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      // If the value is an array, append each item separately
+      value.forEach(item => params.append(`${key}[]`, item));
+    } else {
+      // For non-array values, append as usual
+      params.append(key, value);
+    }
+  });
+
   return params;
 };
-
 export const humanize = str => {
   const frags = str.split("_");
   for (let i = 0; i < frags.length; i++) {
