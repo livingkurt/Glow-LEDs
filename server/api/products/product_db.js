@@ -6,62 +6,6 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
-        .populate("color_products")
-        .populate("secondary_color_products")
-        .populate("option_products")
-        .populate("secondary_products")
-        .populate("categorys")
-        .populate({
-          path: "options",
-          populate: {
-            path: "values",
-            populate: [
-              {
-                path: "product",
-                populate: [
-                  { path: "images" },
-                  { path: "color_object.filament" },
-                  { path: "filament" },
-                  { path: "tags" },
-                  { path: "chips" },
-                  {
-                    path: "options",
-                    populate: {
-                      path: "values",
-                      populate: [
-                        {
-                          path: "product",
-                          populate: [
-                            { path: "images" },
-                            { path: "color_object.filament" },
-                            { path: "filament" },
-                            { path: "tags" },
-                            { path: "chips" },
-                          ],
-                        },
-                        { path: "filament" }, // Added filament population for nested options
-                      ],
-                    },
-                  },
-                ],
-              },
-              { path: "filament" }, // Added filament population for top-level options
-            ],
-          },
-        })
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
-        .exec();
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  findAllGrid_products_db: async (filter, sort, limit, page) => {
-    try {
-      return await Product.find(filter)
-        .sort(sort)
         .populate({
           path: "options",
           populate: {
@@ -219,6 +163,34 @@ export default {
         .populate("contributors")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findAllGrid_products_db: async (filter, sort, limit, page) => {
+    const productFields = {
+      name: 1,
+      pathname: 1,
+      images: { $slice: 1 }, // Only get the first image
+      price: 1,
+      sale_price: 1,
+      rating: 1,
+      numReviews: 1,
+      category: 1,
+      subcategory: 1,
+      hidden: 1,
+      order: 1,
+    };
+
+    try {
+      return await Product.find(filter, productFields)
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
+        .lean() // Use lean() for better performance when you don't need full Mongoose documents
         .exec();
     } catch (error) {
       if (error instanceof Error) {

@@ -159,7 +159,7 @@ const AllProductsPage = () => {
       }
 
       dispatch(
-        API.listProducts({
+        API.listGridProducts({
           category,
           subcategory,
           chip: filter,
@@ -213,7 +213,7 @@ const AllProductsPage = () => {
     set_sort(e.target.value);
     update_products_url(navigate, search, e.target.value, filter, limit);
     dispatch(
-      API.listProducts({
+      API.listGridProducts({
         category,
         subcategory,
         search,
@@ -238,7 +238,7 @@ const AllProductsPage = () => {
     //
     update_products_url(navigate, "", sort, chip_selected.name, limit);
     dispatch(
-      API.listProducts({
+      API.listGridProducts({
         category,
         subcategory,
         chip: chip_selected._id,
@@ -259,7 +259,7 @@ const AllProductsPage = () => {
     set_filter_on(false);
     set_chip_name({});
     dispatch(
-      API.listProducts({
+      API.listGridProducts({
         category,
         subcategory,
         page,
@@ -279,7 +279,7 @@ const AllProductsPage = () => {
 
     //
     dispatch(
-      API.listProducts({
+      API.listGridProducts({
         category,
         subcategory,
         chip: filter,
@@ -448,7 +448,7 @@ const AllProductsPage = () => {
         {!loading &&
           products &&
           products
-            .filter(product => !product.option)
+            ?.filter(product => !product.option)
             .map(product => (
               <>
                 {width >= 704 ? (
