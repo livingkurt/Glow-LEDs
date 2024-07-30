@@ -479,9 +479,7 @@ const AllProductsPage = () => {
                               }
                               className="mt-13px"
                             >
-                              <label style={{ fontSize: "1.6rem" }}>
-                                {determine_product_name_display(product, false)}
-                              </label>
+                              <label style={{ fontSize: "1.6rem" }}>{product?.name}</label>
                             </div>
 
                             <label className="product-price mv-3px">

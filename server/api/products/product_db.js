@@ -120,22 +120,26 @@ export default {
       }
     }
   },
-  findAllGrid_products_db: async (filter, sort, limit, page) => {
-    // const productFields = {
-    //   name: 1,
-    //   pathname: 1,
-    //   images: { $slice: 1 }, // Only get the first image
-    //   price: 1,
-    //   sale_price: 1,
-    //   rating: 1,
-    //   numReviews: 1,
-    //   category: 1,
-    //   subcategory: 1,
-    //   hidden: 1,
-    //   order: 1,
-    // };
+  findAllGrid_products_db: async (filter, sort) => {
+    const productFields = {
+      name: 1,
+      pathname: 1,
+      images: { $slice: 1 }, // Only get the first image
+      price: 1,
+      wholesale_price: 1,
+      sale_price: 1,
+      sale_start_date: 1,
+      sale_end_date: 1,
+      previous_price: 1,
+      rating: 1,
+      numReviews: 1,
+      category: 1,
+      subcategory: 1,
+      hidden: 1,
+      order: 1,
+    };
     try {
-      return await Product.find(filter).sort(sort).populate("images").exec();
+      return await Product.find(filter, productFields).sort(sort).populate("images").exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
