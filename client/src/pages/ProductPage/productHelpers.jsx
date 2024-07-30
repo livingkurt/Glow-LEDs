@@ -146,14 +146,14 @@ export const productPageBreadCrumbs = product => {
   const { category, subcategory, product_collection, name } = product;
   return [
     { name: "ALL PRODUCTS", to: "/collections/all/products" },
-    { name: category?.toUpperCase().split("_").join(" "), to: `/collections/all/products/category/${category}` },
+    { name: category?.toUpperCase().split("_").join(" "), to: `/collections/all/products/?tags[]=${category}` },
     {
       name: subcategory?.toUpperCase().split("_").join(" "),
-      to: `/collections/all/products/category/${category}/subcategory/${subcategory}`,
+      to: `/collections/all/products/?tags[]=${category}&tags[]=${subcategory}`,
     },
     {
       name: product_collection?.toUpperCase().split("_").join(" "),
-      to: `/collections/all/products/category/${category}/subcategory/${subcategory}/collection/${product_collection}`,
+      to: `/collections/all/products/?tags[]=${category}&tags[]=${subcategory}/collection/${product_collection}`,
     },
     { name: name?.toUpperCase().split("_").join(" ") },
   ];
