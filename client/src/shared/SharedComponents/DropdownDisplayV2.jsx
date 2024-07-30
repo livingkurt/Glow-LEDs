@@ -22,6 +22,8 @@ const DropdownDisplayV2 = ({
   onChange,
   showItems,
   onEdit,
+  nestingLevel,
+  nestingColors,
 }) => {
   const handleDragEnd = result => {
     if (!result.destination) return;
@@ -32,7 +34,16 @@ const DropdownDisplayV2 = ({
   };
 
   return (
-    <Paper sx={{ width: "100%" }} elevation={5} className="p-20px mv-10px">
+    <Paper
+      sx={{ width: "100%" }}
+      elevation={5}
+      className="p-20px mv-10px"
+      style={{
+        backgroundColor: nestingColors[nestingLevel % nestingColors.length],
+        padding: "16px",
+        marginBottom: "16px",
+      }}
+    >
       <Typography variant={"h6"} align={"left"} fontSize={16}>
         {label}
       </Typography>

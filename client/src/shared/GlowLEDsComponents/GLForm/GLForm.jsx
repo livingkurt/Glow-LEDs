@@ -21,7 +21,7 @@ import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
 
-const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode }) => {
+const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode, nestingLevel = 0 }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -72,6 +72,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       }
     }
   };
+
+  const nestingColors = ["#ffd8d8", "#ffefd8", "#eeffd8", "#d8ffee", "#d8e4ff", "##ecd8ff", "#ffd8f7"];
 
   return (
     <>
@@ -234,6 +236,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   onChange={value => handleInputChange(fieldName, value)}
                   onEdit={fieldData.onEdit}
                   showItems
+                  nestingColors={nestingColors}
+                  nestingLevel={nestingLevel}
                 />
               );
             case "checkbox":
@@ -481,7 +485,16 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                 : fieldState;
               return (
-                <Paper className="p-10px mv-10px" key={`${fieldName}-${fieldData.type}`} elevation={5}>
+                <Paper
+                  className="p-10px mv-10px"
+                  key={`${fieldName}-${fieldData.type}`}
+                  style={{
+                    backgroundColor: nestingColors[nestingLevel % nestingColors.length],
+                    padding: "16px",
+                    marginBottom: "16px",
+                  }}
+                  elevation={5}
+                >
                   <Typography component="h6" variant="h6" className="ta-c">
                     {fieldData.title}
                   </Typography>
@@ -528,6 +541,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       });
                     }}
                     loading={loading}
+                    nestingLevel={nestingLevel + 1}
                   />
                 </Paper>
               );
@@ -543,6 +557,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   onChange={onChange}
                   loading={loading}
                   getEmptyObjectFromSchema={getEmptyObjectFromSchema}
+                  nestingLevel={nestingLevel + 1}
+                  nestingColors={nestingColors}
                 />
               );
             case "color_picker":

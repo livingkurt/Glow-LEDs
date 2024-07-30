@@ -14,9 +14,19 @@ const GLArray = ({
   onChange,
   loading,
   getEmptyObjectFromSchema,
+  nestingLevel,
+  nestingColors,
 }) => {
   return (
-    <Paper className="p-10px mv-10px" elevation={5}>
+    <Paper
+      className="p-10px mv-10px"
+      elevation={5}
+      style={{
+        backgroundColor: nestingColors[nestingLevel % nestingColors.length],
+        padding: "16px",
+        marginBottom: "16px",
+      }}
+    >
       <Typography component="h6" variant="h6" className="ta-c mb-15px">
         {fieldData.title}
       </Typography>
@@ -140,6 +150,7 @@ const GLArray = ({
                 });
               }}
               loading={loading}
+              nestingLevel={nestingLevel + 1}
             />
           </GLTabPanel>
         ))}
