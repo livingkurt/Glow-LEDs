@@ -8,7 +8,7 @@ import { setCartDrawer } from "../../slices/cartSlice";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
-import CartItem from "../../shared/SharedComponents/CartItem";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ const Cart = () => {
           ) : (
             <List>
               {cartItems?.map((item, index) => (
-                <CartItem key={index} item={item} index={index} showQuantity />
+                <GLCartItem key={index} item={item} index={index} showQuantity />
               ))}
             </List>
           )}

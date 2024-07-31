@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid, Chip, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { setCartDrawer } from "../../slices/cartSlice";
-import { sale_price_switch } from "../../utils/react_helper_functions";
-import GLSelect from "../GlowLEDsComponents/GLSelect/GLSelect";
-import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
-import * as API from "../../api";
+import { setCartDrawer } from "../../../slices/cartSlice";
+import { sale_price_switch } from "../../../utils/react_helper_functions";
+import GLSelect from "../GLSelect/GLSelect";
+import GLIconButton from "../GLIconButton/GLIconButton";
+import * as API from "../../../api";
 
-const CartItem = ({ item, index, showQuantity }) => {
+const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const CartItem = ({ item, index, showQuantity }) => {
   );
 
   const renderQuantityAndDelete = () =>
-    showQuantity ? (
+    showQuantity && !isOrderItem ? (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <GLSelect
           value={item.quantity}
@@ -70,15 +70,54 @@ const CartItem = ({ item, index, showQuantity }) => {
         <GLIconButton
           onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
           size="large"
-          sx={{ mt: 2 }}
           tooltip="Remove"
         >
           <DeleteIcon color="white" />
         </GLIconButton>
       </Box>
-    ) : item.quantity ? (
-      <Typography variant="body2">Quantity: {item.quantity}</Typography>
     ) : null;
+
+  const renderImage = () => (
+    <Link to={`/collections/all/products/${item.pathname}`}>
+      <Box
+        onClick={closeMenu}
+        position="relative"
+        sx={{
+          width: isOrderItem ? 60 : 80,
+          height: isOrderItem ? 60 : 80,
+        }}
+      >
+        <Box
+          component="img"
+          src={item?.display_image_object?.link}
+          alt={item.name}
+          sx={{ width: "100%", height: "100%", borderRadius: 2 }}
+        />
+        {isOrderItem && item.quantity > 1 && (
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              backgroundColor: "white",
+              color: "black",
+              border: "1px solid #ccc",
+              borderRadius: "50%",
+              width: "24px",
+              height: "24px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+            }}
+          >
+            {item.quantity}
+          </Box>
+        )}
+      </Box>
+    </Link>
+  );
 
   return (
     <ListItem
@@ -86,26 +125,20 @@ const CartItem = ({ item, index, showQuantity }) => {
       sx={{
         py: 2,
         "&.MuiListItem-divider": {
-          borderColor: "white",
+          borderColor: isOrderItem ? "default" : "white",
         },
       }}
     >
       {isMobile ? (
         <Grid container spacing={2} alignItems="start" flexWrap="wrap">
           <Grid item xs={12} container spacing={2} alignItems="center">
-            <Grid item>
-              <Link to={`/collections/all/products/${item.pathname}`}>
-                <Box
-                  onClick={closeMenu}
-                  component="img"
-                  src={item?.display_image_object?.link}
-                  alt={item.name}
-                  sx={{ width: 80, height: 80, borderRadius: 2 }}
-                />
-              </Link>
-            </Grid>
+            <Grid item>{renderImage()}</Grid>
             <Grid item xs>
-              <Typography variant="subtitle2" component={Link} to={`/collections/all/products/${item.pathname}`}>
+              <Typography
+                variant={isOrderItem ? "body1" : "subtitle2"}
+                component={Link}
+                to={`/collections/all/products/${item.pathname}`}
+              >
                 {item.name}
               </Typography>
             </Grid>
@@ -113,58 +146,58 @@ const CartItem = ({ item, index, showQuantity }) => {
           <Grid item xs={12}>
             {renderOptions()}
           </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
-              <Typography variant="body2" sx={{ mt: 2 }}>
-                {sale_price_switch({
-                  product: item,
-                  cartItem: true,
-                  background: "light",
-                  isWholesaler: current_user?.isWholesaler,
-                })}
-              </Typography>
-              {renderQuantityAndDelete()}
-            </Box>
-          </Grid>
+          {!isOrderItem && (
+            <Grid item xs={12}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
+                <Typography variant="body2" sx={{ mt: 2 }}>
+                  {sale_price_switch({
+                    product: item,
+                    cartItem: true,
+                    background: "light",
+                    isWholesaler: current_user?.isWholesaler,
+                  })}
+                </Typography>
+                {renderQuantityAndDelete()}
+              </Box>
+            </Grid>
+          )}
         </Grid>
       ) : (
         <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
-          <Grid item>
-            <Link to={`/collections/all/products/${item.pathname}`}>
-              <Box
-                onClick={closeMenu}
-                component="img"
-                src={item?.display_image_object?.link}
-                alt={item.name}
-                sx={{ width: 80, height: 80, borderRadius: 2 }}
-              />
-            </Link>
-          </Grid>
+          <Grid item>{renderImage()}</Grid>
           <Grid item xs container direction="column" spacing={1}>
             <Grid item>
-              <Typography variant="subtitle2" component={Link} to={`/collections/all/products/${item.pathname}`}>
+              <Typography
+                variant={isOrderItem ? "body1" : "subtitle2"}
+                component={Link}
+                to={`/collections/all/products/${item.pathname}`}
+              >
                 {item.name}
               </Typography>
             </Grid>
             <Grid item>{renderOptions()}</Grid>
-            <Grid item>
-              <Typography variant="body2">
-                {sale_price_switch({
-                  product: item,
-                  cartItem: true,
-                  background: "light",
-                  isWholesaler: current_user?.isWholesaler,
-                })}
-              </Typography>
+            {!isOrderItem && (
+              <Grid item>
+                <Typography variant="body2">
+                  {sale_price_switch({
+                    product: item,
+                    cartItem: true,
+                    background: "light",
+                    isWholesaler: current_user?.isWholesaler,
+                  })}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
+          {!isOrderItem && (
+            <Grid item mt={-2.5}>
+              {renderQuantityAndDelete()}
             </Grid>
-          </Grid>
-          <Grid item mt={-2.5}>
-            {renderQuantityAndDelete()}
-          </Grid>
+          )}
         </Grid>
       )}
     </ListItem>
   );
 };
 
-export default CartItem;
+export default GLCartItem;

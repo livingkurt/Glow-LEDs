@@ -1,5 +1,5 @@
 import React from "react";
-import CartItem from "../../../shared/SharedComponents/CartItem";
+import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 const OrderSummaryStep = () => {
@@ -47,7 +47,7 @@ const OrderSummaryStep = () => {
             {cartItems.length === 0 ? (
               <div>Cart is empty</div>
             ) : (
-              cartItems.map((item, index) => <CartItem item={item} index={index} showQuantity={false} />)
+              cartItems.map((item, index) => <GLCartItem item={item} index={index} showQuantity={false} />)
             )}
           </ul>
         </li>
