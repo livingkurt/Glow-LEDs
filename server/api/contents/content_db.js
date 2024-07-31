@@ -18,6 +18,9 @@ export default {
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
         .populate("faq_page.sections.image")
+        .populate("products_grid_page.category_banners.image")
+        .populate("products_grid_page.category_banners.tag")
+        .populate("products_grid_page.our_picks")
         .populate("faq_page.sections.subsections.image")
         .populate("about_page.sections.image")
         .sort(sort)
@@ -48,7 +51,10 @@ export default {
         .populate("home_page.support_banner.image")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
-        .populate("about_page.sections.image");
+        .populate("about_page.sections.image")
+        .populate("products_grid_page.category_banners.image")
+        .populate("products_grid_page.category_banners.tag")
+        .populate("products_grid_page.our_picks");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

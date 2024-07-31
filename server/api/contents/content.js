@@ -94,6 +94,22 @@ const contentSchema = new mongoose.Schema(
       ],
       footer_title: { type: String },
     },
+    products_grid_page: {
+      title: { type: String },
+      subtitle: { type: String },
+      our_picks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+      category_banners: [
+        {
+          title: { type: String },
+          subtitle: { type: String },
+          short_description: { type: String },
+          fact: { type: String },
+          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          background_color: { type: String },
+          tag: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+        },
+      ],
+    },
     faq_page: {
       title: { type: String },
       sections: [

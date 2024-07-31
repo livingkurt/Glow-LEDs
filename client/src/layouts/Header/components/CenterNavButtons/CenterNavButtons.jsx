@@ -10,16 +10,6 @@ import GlowLEDsTextLogo from "./components/GlowLEDsTextLogo";
 import HeaderButton from "./components/HeaderButton";
 
 const CenterNavButtons = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listChips());
-    }
-    return () => (clean = false);
-  }, [dispatch]);
-
   return (
     <div className="column jc-c mh-auto">
       <GlowLEDsTextLogo />

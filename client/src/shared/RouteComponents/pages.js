@@ -16,7 +16,6 @@ import { FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
 import ChipsPage from "../../pages/ChipsPage/ChipsPage";
-import { ProductsDisplayPage } from "../../pages/ProductsGridPage/components";
 import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
@@ -31,7 +30,6 @@ import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../
 import ShippingPage from "../../pages/ProfiePage/components/UserShippingPage";
 import { CartPage } from "../../pages/CartPage";
 import { ProductsGridPage } from "../../pages/ProductsGridPage";
-import { ProductsGridByChipPage } from "../../pages/ProductsGridPage/components";
 import { ProductPage } from "../../pages/ProductPage";
 import { FeaturesGridPage } from "../../pages/FeaturesGridPage";
 import { FeaturedPage } from "../../pages/FeaturedPage";
@@ -62,7 +60,6 @@ export const Components = {
   ShippingPage,
   CartPage,
   ProductsGridPage,
-  ProductsGridByChipPage,
   ProductPage,
   FeaturesGridPage,
   FeaturedPage,
@@ -102,7 +99,6 @@ export const AdminComponents = {
   FeaturesPage,
   CartsPage,
   ContentsPage,
-  ProductsDisplayPage,
   AnnouncementEmail,
   PromosPage,
   AffiliatesPage,

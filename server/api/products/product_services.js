@@ -8,9 +8,16 @@ import {
   normalizeProductSearch,
   transformProducts,
   generateProductOptionsProducts,
+  handleTagFiltering,
+  handleCategoryFiltering,
+  getBestSellers,
+  getOurPicks,
+  sortProducts,
+  handleChipFiltering,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
+
 const fs = require("fs");
 const Papa = require("papaparse");
 
@@ -67,7 +74,7 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
+      const products = await product_db.findAll_products_db(filter, sort, limit, page);
       return products;
     } catch (error) {
       if (error instanceof Error) {
@@ -86,7 +93,7 @@ export default {
         normalizeSearch: normalizeProductSearch,
       });
 
-      const products = await product_db.findAll_products_db(filter, sort, limit, page);
+      const products = await product_db.table_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
       return {
         data: products,
@@ -170,68 +177,64 @@ export default {
     }
   },
   findAllGrid_products_s: async query => {
+    console.log({ query });
     try {
-      const page = query.page ? query.page : "1";
-      const limit = query.limit ? query.limit : "0";
+      let filter = { deleted: false, hidden: false };
+      let bestSellers, ourPicks;
+      let limit = 0;
 
-      let search = {};
-      if (categories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              category: {
-                $regex: snake_case(query.search),
-                $options: "i",
-              },
-            }
-          : {};
-      } else if (subcategories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              subcategory: {
-                $regex: snake_case(query.search),
-                $options: "i",
-              },
-            }
-          : {};
-      } else {
-        search = query.search
-          ? {
-              name: {
-                $regex: query.search.toLowerCase(),
-                $options: "i",
-              },
-            }
-          : {};
+      const tagFilter = await handleTagFiltering(query.tags);
+      filter = { ...filter, ...tagFilter };
+
+      if (query.chip && query.chip !== null) {
+        const chipFilter = await handleChipFiltering(query.chip);
+        filter = { ...filter, ...chipFilter };
       }
 
-      const filter = determine_filter(query, search);
-
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort = { order: 1, _id: -1 };
-      if (sort_query === "lowest") {
-        sort = { price: 1 };
-      } else if (sort_query === "highest") {
-        sort = { price: -1 };
-      } else if (sort_query === "category") {
-        sort = { category: 1 };
-      } else if (sort_query === "hidden") {
-        sort = { hidden: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
+      if (query.category) {
+        const categoryFilter = await handleCategoryFiltering(query.category);
+        if (categoryFilter === null) return []; // For "our_picks" when none are found
+        filter = { ...filter, ...categoryFilter };
+        if (query.category === "best_sellers") bestSellers = await getBestSellers();
+        if (query.category === "our_picks") ourPicks = await getOurPicks();
       }
-      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
-      const count = await product_db.count_products_db(filter);
-      return {
-        products,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page,
-      };
+
+      let sortOption = { order: 1 };
+      if (query.sort) {
+        switch (query.sort) {
+          case "-price":
+            sortOption = { price: -1 };
+            break;
+          case "price":
+            sortOption = { price: 1 };
+            break;
+          case "-createdAt":
+            sortOption = { createdAt: -1 };
+            break;
+          case "createdAt":
+            sortOption = { createdAt: 1 };
+            break;
+        }
+      }
+
+      if (query.category === "new_releases") {
+        sortOption = { createdAt: -1 }; // Sort by createdAt in descending order
+        limit = 5;
+      }
+
+      let products = await product_db.findAllGrid_products_db(filter, sortOption, limit);
+
+      if (query.category === "best_sellers" || query.category === "our_picks") {
+        products = sortProducts(products, query.category, bestSellers, ourPicks);
+      }
+
+      return products;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.error("Error in findAllGrid_products_s:", error);
+      throw new Error(error.message || "An error occurred while fetching products");
     }
   },
+
   findById_products_s: async params => {
     try {
       return await product_db.findById_products_db(params.id);

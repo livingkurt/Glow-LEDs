@@ -1,7 +1,7 @@
 import { Category } from "../categorys";
 
 export default {
-  findAll_categorys_db: async (filter, sort, limit, page) => {
+  table_categorys_db: async (filter, sort, limit, page) => {
     try {
       return await Category.find(filter)
         .sort(sort)
@@ -16,9 +16,18 @@ export default {
       }
     }
   },
+  findAll_categorys_db: async (filter, sort) => {
+    try {
+      return await Category.find(filter).sort(sort).populate("subcategorys");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findById_categorys_db: async id => {
     try {
-      // return await Category.findOne({ _id: id, deleted: false }).populate("subcategorys").populate("collections");
+      return await Category.findOne({ _id: id, deleted: false }).populate("subcategorys").populate("collections");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

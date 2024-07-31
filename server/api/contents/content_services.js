@@ -59,6 +59,7 @@ export default {
         .populate("about_page.sections.image")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
+        .populate("products_grid_page.category_banners.image")
         .sort({ _id: -1 })
         .limit(3);
       const count = await content_db.count_contents_db(filter);
@@ -100,6 +101,7 @@ export default {
         .populate("home_page.support_banner.image")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
+        .populate("products_grid_page.category_banners.image")
         .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {

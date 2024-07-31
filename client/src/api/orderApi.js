@@ -66,6 +66,19 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
   }
 });
 
+export const listProductOccurrences = createAsyncThunk(
+  "orders/listProductOccurrences",
+  async (_args, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/orders/occurrences`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const createNoPayOrder = createAsyncThunk(
   "orders/createNoPayOrder",
   async (order, { dispatch, rejectWithValue }) => {

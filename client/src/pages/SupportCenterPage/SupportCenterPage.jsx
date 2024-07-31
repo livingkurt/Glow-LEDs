@@ -31,12 +31,12 @@ const SupportCenterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: currentContent } = API.useCurrentContentQuery();
-  const [chip_name, set_chip_name] = useState();
+  const [chip, set_chip] = useState();
 
   const faqPage = currentContent?.faq_page;
 
   const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips: chips_list } = chipPage;
+  const { chips } = chipPage;
 
   useEffect(() => {
     let clean = true;
@@ -54,7 +54,7 @@ const SupportCenterPage = () => {
         hidden: false,
       })
     );
-    set_chip_name({});
+    set_chip({});
   };
 
   const userPage = useSelector(state => state.users.userPage);
@@ -226,9 +226,9 @@ const SupportCenterPage = () => {
               Select your chip from the dropdown below to see what products are compatible!
             </Typography>
             <Autocomplete
-              options={chips_list || []}
+              options={chips || []}
               getOptionLabel={option => option.name}
-              value={chip_name}
+              value={chip}
               onChange={(event, newValue) => {
                 filterHandler(newValue);
               }}

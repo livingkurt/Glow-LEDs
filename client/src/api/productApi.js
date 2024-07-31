@@ -47,6 +47,20 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
     return rejectWithValue(error.response?.data);
   }
 });
+export const listGridProducts = createAsyncThunk(
+  "products/listGridProducts",
+  async (query, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/products/grid?${create_query(query)}`);
+      console.log({ data });
+      return data;
+    } catch (error) {
+      console.log({ error });
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 export const saveProduct = createAsyncThunk("products/saveProduct", async (product, { dispatch, rejectWithValue }) => {
   try {

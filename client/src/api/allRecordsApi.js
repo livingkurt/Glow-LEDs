@@ -11,8 +11,13 @@ export const allRecordsApi = createApi({
     carts: builder.query({
       query: query => `/carts?${create_query(query)}`,
     }),
+
     categorys: builder.query({
-      query: query => `/categorys?${create_query(query)}`,
+      query: params => ({
+        url: `/categorys`,
+        params: create_query(params),
+        method: "GET",
+      }),
     }),
     chips: builder.query({
       query: query => `/chips?${create_query(query)}`,
@@ -47,6 +52,13 @@ export const allRecordsApi = createApi({
     products: builder.query({
       query: query => `/products?${create_query(query)}`,
     }),
+    productsGrid: builder.query({
+      query: params => ({
+        url: `/products/grid`,
+        params: create_query(params),
+        method: "GET",
+      }),
+    }),
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,
     }),
@@ -77,6 +89,7 @@ export const {
   useParcelsQuery,
   usePaychecksQuery,
   useProductsQuery,
+  useProductsGridQuery,
   usePromosQuery,
   useUsersQuery,
   useTeamsQuery,

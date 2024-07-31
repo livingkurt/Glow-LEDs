@@ -1,4 +1,8 @@
+import { Content } from "../contents";
 import { Product, product_db } from "../products";
+import { Category } from "../categorys";
+import { Order } from "../orders";
+import { Chip } from "../chips";
 export const diminish_single_glove_stock = async (product, item) => {
   const new_product_count = product.count_in_stock - item.quantity;
   product.count_in_stock = new_product_count;
@@ -402,4 +406,74 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
   }
 
   return optionProduct;
+};
+
+export const handleTagFiltering = async tags => {
+  if (!tags || tags.length === 0) return {};
+  const tagArray = Array.isArray(tags) ? tags : [tags];
+  const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+  const tagIds = tagCategories.map(cat => cat._id);
+  return { tags: { $all: tagIds } };
+};
+
+export const getBestSellers = async () => {
+  const bestSellers = await Order.aggregate([
+    { $match: { status: "delivered" } },
+    { $unwind: "$orderItems" },
+    {
+      $group: {
+        _id: "$orderItems.product",
+        totalSold: { $sum: "$orderItems.quantity" },
+      },
+    },
+    { $sort: { totalSold: -1 } },
+    { $limit: 10 },
+  ]);
+  return bestSellers.map(item => item._id);
+};
+
+export const getOurPicks = async () => {
+  const content = await Content.findOne({ active: true, deleted: false })
+    .sort({ createdAt: -1 })
+    .select("products_grid_page.our_picks");
+  if (content?.products_grid_page?.our_picks) {
+    return content.products_grid_page.our_picks;
+  }
+  console.log("No our_picks found in the content");
+  return null;
+};
+
+export const handleCategoryFiltering = async category => {
+  switch (category) {
+    case "best_sellers":
+      return { _id: { $in: await getBestSellers() } };
+    case "our_picks":
+      const ourPicks = await getOurPicks();
+      return ourPicks ? { _id: { $in: ourPicks } } : null;
+    case "discounted":
+      return { previous_price: { $gt: 0 } };
+    case "new_releases":
+      return {};
+    default:
+      const categoryDoc = await Category.findOne({ deleted: false, pathname: category });
+      return categoryDoc ? { tags: { $all: [categoryDoc._id] } } : {};
+  }
+};
+
+export const sortProducts = (products, category, bestSellers, ourPicks) => {
+  if (category === "best_sellers") {
+    const bestSellerOrder = bestSellers.reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
+    return products.sort((a, b) => bestSellerOrder[a._id.toString()] - bestSellerOrder[b._id.toString()]);
+  } else if (category === "our_picks" && ourPicks) {
+    const ourPicksOrder = ourPicks.reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
+    return products.sort((a, b) => ourPicksOrder[a._id.toString()] - ourPicksOrder[b._id.toString()]);
+  }
+  return products;
+};
+
+export const handleChipFiltering = async chipPathname => {
+  if (!chipPathname) return {};
+  const chip = await Chip.findOne({ deleted: false, pathname: chipPathname });
+  if (!chip) return {};
+  return { chips: chip._id };
 };

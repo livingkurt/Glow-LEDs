@@ -36,7 +36,7 @@ const HomePage = () => {
             <HeroHeader slideshow={slideshow} slideshow_hidden={slideshow_hidden} />
           )}
           {!featured_products_hidden && featured_products && (
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
               <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
                 <FeaturedProducts
                   featured_products={featured_products}
@@ -47,7 +47,7 @@ const HomePage = () => {
           )}
           {!hero_video_hidden && hero_video && <HeroVideo video={hero_video} video_hidden={hero_video_hidden} />}
           {!learn_more_products_hidden && !slideshow_hidden && (
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
               <Box pt={{ xs: 2, sm: 2 }} pb={{ xs: 2 }}>
                 <LearnMoreProducts
                   learn_more_products={learn_more_products}
@@ -58,7 +58,7 @@ const HomePage = () => {
           )}
           {learn_highlights && <LearnHighlights learn_highlights={learn_highlights} />}
           {!discover_more?.hidden && discover_more?.title && <DiscoverMoreHero discover_more={discover_more} />}
-          <Container maxWidth="lg">
+          <Container maxWidth="xl">
             <Box my={{ xs: 2, sm: 4 }}>
               {get_more_out_of && <GetTheMost get_more_out_of={get_more_out_of} />}
               <ProductProtectionDetails transparent />

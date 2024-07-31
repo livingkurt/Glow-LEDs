@@ -68,55 +68,54 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
 
 const features = {
   name: "Featured",
-  path: "/collections/all/products/category/our_picks",
+  path: "/collections/all/products?category=our_picks",
   _id: 139,
   rows: [
     {
       name: "New Releases!",
-      path: "/collections/all/products/category/new_releases",
+      path: "/collections/all/products?category=new_releases",
       _id: 0,
       extraContent: "🆕",
     },
     {
       name: "Best Sellers",
-      path: "/collections/all/products/category/best_sellers",
+      path: "/collections/all/products?category=best_sellers",
       _id: 1,
       extraContent: "✅",
     },
     {
       name: "Our Picks",
-      path: "/collections/all/products/category/our_picks",
+      path: "/collections/all/products?category=our_picks",
       _id: 2,
       extraContent: "⭐",
     },
     {
       name: "On Sale!",
-      path: "/collections/all/products/category/discounted",
+      path: "/collections/all/products?category=discounted",
       _id: 3,
       extraContent: "💰",
     },
     {
       name: "Stickers",
-      path: "/collections/all/products/category/merch/subcategory/stickers",
+      path: "/collections/all/products?tags[]=merch&stags[]=stickers",
       _id: 4,
     },
   ],
 };
-
 const glowskinz = {
   name: "Glowskinz",
-  path: "/collections/all/products/category/glowskinz",
+  path: "/collections/all/products?tags[]=glowskinz",
   _id: 5,
   id: "glowskinz_dropdown",
   sideDrawer: {
     name: "Glowskinz",
-    path: "/collections/all/products/category/glowskinz",
+    path: "/collections/all/products?tags[]=glowskinz",
     _id: 6,
     id: "glowskinz_dropdown",
     drawerItems: [
       {
         name: "CLOZD Glowskinz",
-        path: "/collections/all/products/category/glowskinz/subcategory/clozd",
+        path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd",
         _id: 7,
         id: "clozd_dropdown",
         subSideDrawer: {
@@ -124,12 +123,12 @@ const glowskinz = {
           subHeaderDrawers: [
             {
               name: "Classics",
-              path: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics",
+              path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd&tags[]=classics",
               _id: 8,
             },
             {
               name: "Novaskinz",
-              path: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/novaskinz",
+              path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd&tags[]=novaskinz",
               _id: 19,
             },
           ],
@@ -137,7 +136,7 @@ const glowskinz = {
       },
       {
         name: "OPYN Glowskinz",
-        path: "/collections/all/products/category/glowskinz/subcategory/opyn",
+        path: "/collections/all/products?tags[]=glowskinz&tags[]=opyn",
         _id: 110,
         subHeaderDrawers: [],
       },
@@ -147,14 +146,14 @@ const glowskinz = {
 
 const exo_diffusers = {
   name: "EXO Diffusers",
-  path: "/collections/all/products/category/exo_diffusers",
+  path: "/collections/all/products?tags[]=exo_diffusers",
   _id: 111,
   id: "exo_diffusers_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Collections",
-        path: "/collections/all/products/category/exo_diffusers",
+        path: "/collections/all/products?tags[]=exo_diffusers",
         _id: 112,
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
@@ -162,26 +161,25 @@ const exo_diffusers = {
           subHeaderDrawers: [
             {
               name: "Platonic Solids",
-              path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids",
+              path: "/collections/all/products?tags[]=exo_diffusers&tags[]=polyhedrons&tags[]=platonic_solids",
               _id: 113,
             },
             {
               name: "Spheroid",
-              path: "/collections/all/products/category/exo_diffusers/subcategory/domes/collection/spheroid",
+              path: "/collections/all/products?tags[]=exo_diffusers&tags[]=domes&tags[]=spheroid",
               _id: 114,
             },
           ],
         },
       },
-
       {
         name: "Polyhedrons",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons",
+        path: "/collections/all/products?tags[]=exo_diffusers&tags[]=polyhedrons",
         _id: 115,
       },
       {
         name: "Domes",
-        path: "/collections/all/products/category/exo_diffusers/subcategory/domes",
+        path: "/collections/all/products?tags[]=exo_diffusers&tags[]=domes",
         _id: 116,
       },
     ],
@@ -190,46 +188,46 @@ const exo_diffusers = {
 
 const diffuser_caps = {
   name: "Diffuser Caps",
-  path: "/collections/all/products/category/diffuser_caps",
+  path: "/collections/all/products?tags[]=diffuser_caps",
   _id: 117,
   id: "diffuser_caps_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Diffuser Caps Starter Kit",
-        path: "/collections/all/products/diffuser_caps_adapters_starter_kit",
+        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=adapters&tags[]=starter_kit",
         _id: 118,
       },
       {
         name: "Collections",
-        path: "/collections/all/products/category/diffuser_caps",
+        path: "/collections/all/products?tags[]=diffuser_caps",
         _id: 219,
         id: "collections_dropdown",
         subSideDrawer: {
           subHeaderDrawers: [
             {
               name: "Texture",
-              path: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture",
+              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=texture",
               _id: 220,
             },
             {
               name: "Fractal",
-              path: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal",
+              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=fractal",
               _id: 221,
             },
             {
               name: "Space Cadet",
-              path: "/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/space_cadet",
+              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=space_cadet",
               _id: 222,
             },
             {
               name: "Festie Bestie",
-              path: "/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festie_bestie",
+              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=festie_bestie",
               _id: 223,
             },
             {
               name: "Platonic Solids",
-              path: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids",
+              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=platonic_solids",
               _id: 224,
             },
           ],
@@ -237,22 +235,22 @@ const diffuser_caps = {
       },
       {
         name: "Geometric",
-        path: "/collections/all/products/category/diffuser_caps/subcategory/geometric",
+        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric",
         _id: 225,
       },
       {
         name: "Shapes",
-        path: "/collections/all/products/category/diffuser_caps/subcategory/shapes",
+        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes",
         _id: 226,
       },
       {
         name: "Abstract",
-        path: "/collections/all/products/category/diffuser_caps/subcategory/abstract",
+        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=abstract",
         _id: 227,
       },
       {
         name: "Patterns",
-        path: "/collections/all/products/category/diffuser_caps/subcategory/patterns",
+        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=patterns",
         _id: 228,
       },
     ],
@@ -261,39 +259,39 @@ const diffuser_caps = {
 
 const diffusers = {
   name: "Diffusers",
-  path: "/collections/all/products/category/diffusers",
+  path: "/collections/all/products?tags[]=diffusers",
   _id: 329,
   id: "diffusers_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Abstract",
-        path: "/collections/all/products/category/diffusers/subcategory/abstract",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=abstract",
         _id: 330,
       },
       {
         name: "Polygons",
-        path: "/collections/all/products/category/diffusers/subcategory/polygons",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=polygons",
         _id: 331,
       },
       {
         name: "Cylinders",
-        path: "/collections/all/products/category/diffusers/subcategory/cylinders",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=cylinders",
         _id: 332,
       },
       {
         name: "Domes",
-        path: "/collections/all/products/category/diffusers/subcategory/domes",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=domes",
         _id: 333,
       },
       {
         name: "Open Hole",
-        path: "/collections/all/products/category/diffusers/subcategory/open_hole",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=open_hole",
         _id: 334,
       },
       {
         name: "Closed Hole",
-        path: "/collections/all/products/category/diffusers/subcategory/closed_hole",
+        path: "/collections/all/products?tags[]=diffusers&tags[]=closed_hole",
         _id: 335,
       },
     ],
@@ -307,10 +305,9 @@ const enhancers = {
   _id: 336,
   rows: [
     glowskinz,
-
     {
       name: "Glowframez",
-      path: "/collections/all/products/category/glowframez",
+      path: "/collections/all/products?tags[]=glowframez",
       _id: 337,
     },
     exo_diffusers,
@@ -318,7 +315,7 @@ const enhancers = {
     diffusers,
     {
       name: "Decals",
-      path: "/collections/all/products/category/decals",
+      path: "/collections/all/products?tags[]=decals",
       _id: 338,
     },
   ],
@@ -327,37 +324,37 @@ const enhancers = {
 const essentials = {
   name: "Essentials",
   id: "essentials_dropdown",
-  path: "/collections/all/products/category/essentials",
+  path: "/collections/all/products?tags[]=essentials",
   _id: 439,
   rows: [
     {
       name: "Gloves",
-      path: "/collections/all/products/category/gloves/subcategory/singles",
+      path: "/collections/all/products?tags[]=gloves&tags[]=singles",
       _id: 440,
     },
     {
       name: "Refresh Packs",
-      path: "/collections/all/products/category/gloves/subcategory/refresh",
+      path: "/collections/all/products?tags[]=gloves&tags[]=refresh",
       _id: 441,
     },
     {
       name: "Sizing Samplers",
-      path: "/collections/all/products/category/gloves/subcategory/sampler",
+      path: "/collections/all/products?tags[]=gloves&tags[]=sampler",
       _id: 442,
     },
     {
       name: "Coin Batteries",
-      path: "/collections/all/products/category/batteries/subcategory/coin",
+      path: "/collections/all/products?tags[]=batteries&tags[]=coin",
       _id: 443,
     },
     {
       name: "Battery Storage",
-      path: "/collections/all/products/category/batteries/subcategory/storage",
+      path: "/collections/all/products?tags[]=batteries&tags[]=storage",
       _id: 444,
     },
     {
       name: "Wholesale",
-      path: "/collections/all/products/category/wholesale",
+      path: "/collections/all/products?tags[]=wholesale",
       _id: 445,
       permissions: item => (item ? item.isWholesaler : undefined),
     },

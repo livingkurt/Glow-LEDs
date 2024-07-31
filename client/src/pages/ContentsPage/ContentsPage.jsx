@@ -12,7 +12,7 @@ import { determineContentColors } from "./contentsPageHelpers";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContentCopy, Edit, Flag, Help, Home, Info } from "@mui/icons-material";
+import { ContentCopy, Edit, Flag, Help, Home, Info, Inventory } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -76,6 +76,12 @@ const ContentsPage = () => {
               onClick={() => dispatch(open_edit_content_modal({ content, contentType: "banner" }))}
             >
               <Flag color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit Products Grid Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "products_grid_page" }))}
+            >
+              <Inventory color="white" />
             </GLIconButton>
             <GLIconButton
               tooltip="Edit About Page"

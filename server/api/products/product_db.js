@@ -6,11 +6,70 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
+        .populate({
+          path: "options",
+          populate: {
+            path: "values",
+            populate: [
+              {
+                path: "product",
+                populate: [
+                  { path: "images" },
+                  { path: "color_object.filament" },
+                  { path: "filament" },
+                  { path: "tags" },
+                  { path: "chips" },
+                  {
+                    path: "options",
+                    populate: {
+                      path: "values",
+                      populate: [
+                        {
+                          path: "product",
+                          populate: [
+                            { path: "images" },
+                            { path: "color_object.filament" },
+                            { path: "filament" },
+                            { path: "tags" },
+                            { path: "chips" },
+                          ],
+                        },
+                        { path: "filament" }, // Added filament population for nested options
+                      ],
+                    },
+                  },
+                ],
+              },
+              { path: "filament" }, // Added filament population for top-level options
+            ],
+          },
+        })
+        .populate("images")
+        .populate("color_images")
+        .populate("secondary_color_images")
+        .populate("option_images")
+        .populate("secondary_images")
+        .populate("chips")
+        .populate("products")
+        // .populate("collections")
+        .populate("contributors")
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_products_db: async (filter, sort, limit, page) => {
+    try {
+      return await Product.find(filter)
+        .sort(sort)
         .populate("color_products")
         .populate("secondary_color_products")
         .populate("option_products")
         .populate("secondary_products")
-        .populate("categorys")
         .populate({
           path: "options",
           populate: {
@@ -58,168 +117,38 @@ export default {
       }
     }
   },
-  findAllGrid_products_db: async (filter, sort, limit, page) => {
+  findAllGrid_products_db: async (filter, sort, limit) => {
+    const productFields = {
+      name: 1,
+      pathname: 1,
+      images: { $slice: 1 },
+      price: 1,
+      wholesale_price: 1,
+      sale_price: 1,
+      sale_start_date: 1,
+      sale_end_date: 1,
+      previous_price: 1,
+      rating: 1,
+      numReviews: 1,
+      category: 1,
+      subcategory: 1,
+      product_collection: 1,
+      hidden: 1,
+      order: 1,
+      tags: 1,
+      createdAt: 1,
+    };
     try {
-      return await Product.find(filter)
-        .sort(sort)
-        .populate({
-          path: "options",
-          populate: {
-            path: "values",
-            populate: [
-              {
-                path: "product",
-                populate: [
-                  { path: "images" },
-                  { path: "color_object.filament" },
-                  { path: "filament" },
-                  { path: "tags" },
-                  { path: "chips" },
-                  {
-                    path: "options",
-                    populate: {
-                      path: "values",
-                      populate: [
-                        {
-                          path: "product",
-                          populate: [
-                            { path: "images" },
-                            { path: "color_object.filament" },
-                            { path: "filament" },
-                            { path: "tags" },
-                            { path: "chips" },
-                          ],
-                        },
-                        { path: "filament" }, // Added filament population for nested options
-                      ],
-                    },
-                  },
-                ],
-              },
-              { path: "filament" }, // Added filament population for top-level options
-            ],
-          },
-        })
-        .populate("images")
-        .populate("color_images")
-        .populate("secondary_color_images")
-        .populate("option_images")
-        .populate("secondary_images")
-        .populate("chips")
-        .populate("products")
-        .populate({
-          path: "color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate({
-          path: "secondary_color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate({
-          path: "option_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate("filament")
-        .populate({
-          path: "secondary_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
+      const query = Product.find(filter, productFields).sort(sort).populate("images").populate({
+        path: "tags",
+        select: "name type pathname",
+      });
 
-            {
-              path: "color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "option_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-          ],
-        })
-        .populate("categorys")
-        .populate("subcategorys")
-        // .populate("collections")
-        .populate("contributors")
-        .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
-        .exec();
+      if (limit > 0) {
+        query.limit(limit);
+      }
+
+      return await query.exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -283,9 +212,6 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
-        .populate("categorys")
-        .populate("subcategorys")
-        .populate("parents")
         .populate("images")
         .populate({
           path: "options",
