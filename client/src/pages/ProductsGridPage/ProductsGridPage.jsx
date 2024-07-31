@@ -1,35 +1,48 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { Container, Grid, Typography, Card, CardContent, CardMedia, Rating, Chip, Box } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Rating,
+  Chip,
+  Box,
+  Autocomplete,
+  TextField,
+} from "@mui/material";
 import { useChipsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
 import { useSelector } from "react-redux";
 import { random } from "lodash";
 import * as API from "../../api";
 import { toTitleCase } from "../../utils/helper_functions";
 
+// Utility function to convert string to snake_case
+const toSnakeCase = str => str.toLowerCase().replace(/\s+/g, "_");
+
 const ProductGridPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const tags = searchParams.getAll("tags[]");
+  const [selectedTags, setSelectedTags] = useState(searchParams.getAll("tags[]"));
+  const [selectedChip, setSelectedChip] = useState(searchParams.get("chip") || null);
   const category = searchParams.get("category");
-  const chip = searchParams.get("chip");
 
   const { current_user } = useSelector(state => state.users.userPage);
-
   const { data: currentContent } = API.useCurrentContentQuery();
+  const { data: chips } = useChipsQuery();
 
   const {
     data: products,
     isLoading,
     isError,
   } = useProductsGridQuery({
-    tags,
+    tags: selectedTags,
     category,
-    chip,
+    chip: selectedChip,
   });
-
-  const { data: chips } = useChipsQuery();
 
   const allTags = useMemo(() => {
     if (!products) return [];
@@ -44,104 +57,149 @@ const ProductGridPage = () => {
     return Array.from(tagSet);
   }, [products, current_user?.isWholesaler]);
 
-  const handleTagClick = tagName => {
-    const formattedTagName = tagName.toLowerCase().replace(/\s+/g, "_");
-    const newTags = tags.includes(formattedTagName)
-      ? tags.filter(t => t !== formattedTagName)
-      : [...tags, formattedTagName];
+  const handleTagChange = (event, newValue) => {
+    const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
+    setSelectedTags(snakeCaseTags);
+    updateUrl(snakeCaseTags, selectedChip, category);
+  };
 
-    const newSearchParams = new URLSearchParams();
-    newTags.forEach(tag => newSearchParams.append("tags[]", tag));
-    if (category) newSearchParams.append("category", category);
-
-    navigate(`${location.pathname}?${newSearchParams.toString()}`);
+  const handleChipChange = (event, newValue) => {
+    setSelectedChip(newValue ? newValue.pathname : null);
+    updateUrl(selectedTags, newValue ? newValue.pathname : null, category);
   };
 
   const handleCategoryClick = categoryName => {
-    const newSearchParams = new URLSearchParams();
-    if (categoryName !== category) {
-      newSearchParams.append("category", categoryName);
-    }
-    tags.forEach(tag => newSearchParams.append("tags[]", tag));
-
-    navigate(`${location.pathname}?${newSearchParams.toString()}`);
+    const newCategory = categoryName !== category ? categoryName : null;
+    updateUrl(selectedTags, selectedChip, newCategory);
   };
 
-  const handleChipClick = chipPathname => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    if (chip === chipPathname) {
-      newSearchParams.delete("chip");
-    } else {
-      newSearchParams.set("chip", chipPathname);
-    }
+  const updateUrl = (tags, chip, cat) => {
+    const newSearchParams = new URLSearchParams();
+    tags.forEach(tag => newSearchParams.append("tags[]", tag));
+    if (chip) newSearchParams.append("chip", chip);
+    if (cat) newSearchParams.append("category", cat);
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
   if (isLoading) return <Typography>Loading...</Typography>;
   if (isError) return <Typography>Error loading products</Typography>;
 
+  const autocompleteStyle = {
+    width: 300,
+    mb: 2,
+    "& .MuiOutlinedInput-root": {
+      color: "white",
+      transition: "box-shadow 0.3s ease-in-out",
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&:hover": {
+        borderColor: "white",
+        boxShadow: `0 12px 24px 0 rgb(255 255 255 / 50%)`,
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+        boxShadow: `0 12px 24px 0 rgb(255 255 255 / 50%)`,
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "white",
+    },
+    "& .MuiAutocomplete-popupIndicator": {
+      color: "white",
+    },
+    "& .MuiAutocomplete-clearIndicator": {
+      color: "white",
+    },
+    "& .MuiChip-root": {
+      backgroundColor: "white",
+      color: "black",
+      fontWeight: "bold",
+    },
+    "& .MuiChip-deleteIcon": {
+      color: "black",
+    },
+  };
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" align="center" pt={2}>
         {(category && toTitleCase(category)) ||
-          (tags && tags.length > 0 && toTitleCase(tags[0])) ||
+          (selectedTags.length > 0 && toTitleCase(selectedTags[0])) ||
           currentContent?.products_grid_page?.title}
       </Typography>
       <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
         {currentContent?.products_grid_page?.subtitle}
       </Typography>
-      <Box sx={{ mb: 2 }}>
-        {chips &&
-          chips.map(chipItem => (
+
+      <Box sx={{ mb: 2 }} display={"flex"} gap={2} justifyContent={"space-between"} alignItems={"center"}>
+        <Autocomplete
+          options={chips || []}
+          getOptionLabel={option => option.name}
+          renderInput={params => (
+            <TextField
+              {...params}
+              label="Filter By Chip"
+              InputLabelProps={{
+                style: { color: "white" },
+              }}
+            />
+          )}
+          value={chips?.find(c => c.pathname === selectedChip) || null}
+          onChange={handleChipChange}
+          sx={autocompleteStyle}
+        />
+
+        <Box sx={{ mb: 2 }}>
+          {["best_sellers", "our_picks", "discounted"].map(cat => (
             <Chip
-              key={chipItem.pathname}
-              label={chipItem.name}
-              onClick={() => handleChipClick(chipItem.pathname)}
+              key={cat}
+              label={cat.replace("_", " ").toUpperCase()}
+              onClick={() => handleCategoryClick(cat)}
               sx={{
                 m: 0.5,
-                backgroundColor: chip === chipItem.pathname ? "white" : "transparent",
-                color: chip === chipItem.pathname ? "black" : "white",
+                backgroundColor: category === cat ? "white" : "transparent",
+                color: category === cat ? "black" : "white",
                 border: "1px solid white",
-                fontSize: "1rem",
+                fontSize: "1.5rem",
                 fontWeight: "500",
               }}
             />
           ))}
-      </Box>
-      <Box sx={{ mb: 2 }}>
-        {["best_sellers", "our_picks", "discounted"].map(cat => (
-          <Chip
-            key={cat}
-            label={cat.replace("_", " ").toUpperCase()}
-            onClick={() => handleCategoryClick(cat)}
-            sx={{
-              m: 0.5,
-              backgroundColor: category === cat ? "white" : "transparent",
-              color: category === cat ? "black" : "white",
-              border: "1px solid white",
-              fontSize: "1rem",
-              fontWeight: "500",
-            }}
-          />
-        ))}
-      </Box>
+        </Box>
 
-      <Box sx={{ mb: 2 }}>
-        {allTags.map(tag => (
-          <Chip
-            key={tag}
-            label={tag}
-            onClick={() => handleTagClick(tag)}
-            sx={{
-              m: 0.5,
-              backgroundColor: tags.includes(tag.toLowerCase().replace(/\s+/g, "_")) ? "white" : "transparent",
-              color: tags.includes(tag.toLowerCase().replace(/\s+/g, "_")) ? "black" : "white",
-              border: "1px solid white",
-              fontSize: "1rem",
-              fontWeight: "500",
-            }}
-          />
-        ))}
+        <Autocomplete
+          multiple
+          options={allTags}
+          renderInput={params => (
+            <TextField
+              {...params}
+              label="Filter By Tags"
+              InputLabelProps={{
+                style: { color: "white" },
+              }}
+            />
+          )}
+          renderTags={(tagValues, getTagProps) =>
+            tagValues.map((option, index) => (
+              <Chip
+                label={toTitleCase(option)}
+                {...getTagProps({ index })}
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                }}
+              />
+            ))
+          }
+          value={selectedTags.map(tag => tag.replace(/_/g, " "))}
+          onChange={handleTagChange}
+          sx={autocompleteStyle}
+        />
       </Box>
 
       <Grid container spacing={4}>
