@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useChipsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
@@ -22,12 +22,34 @@ export const useProductsGridPage = () => {
     data: products,
     isLoading,
     isError,
+    refetch, // Add refetch function from the query hook
   } = useProductsGridQuery({
     tags: selectedTags,
     category,
     chip: selectedChip,
     sort,
   });
+
+  // Use useEffect to listen for location changes and refetch data
+  useEffect(() => {
+    const newSearchParams = new URLSearchParams(location.search);
+    const newSelectedTags = newSearchParams.getAll("tags[]");
+    const newSelectedChip = newSearchParams.get("chip") || null;
+    const newCategory = newSearchParams.get("category") || null;
+    const newSort = newSearchParams.get("sort") || null;
+
+    setSelectedTags(newSelectedTags);
+    setSelectedChip(newSelectedChip);
+    setCategory(newCategory);
+    setSort(newSort);
+
+    refetch({
+      tags: newSelectedTags,
+      category: newCategory,
+      chip: newSelectedChip,
+      sort: newSort,
+    });
+  }, [location, refetch]);
 
   const allTags = useMemo(() => {
     if (!products) return [];
