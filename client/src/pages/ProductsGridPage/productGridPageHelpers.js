@@ -26,7 +26,7 @@ export const sortOptions = [
 
 export const autocompleteStyle = {
   width: "100%",
-  mb: 2,
+  mb: 1,
   "& .MuiOutlinedInput-root": {
     color: "white",
     transition: "box-shadow 0.3s ease-in-out",
@@ -76,5 +76,20 @@ export const toggleButtonStyle = {
   },
   "&:hover": {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
+  },
+};
+export const selectStyle = {
+  color: "white",
+  ".MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  ".MuiSvgIcon-root": {
+    color: "white",
   },
 };

@@ -10,11 +10,16 @@ import {
   Button,
   Collapse,
   Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Typography,
 } from "@mui/material";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../../utils/helper_functions";
-import { FilterList } from "@mui/icons-material";
-import { autocompleteStyle, toggleButtonStyle } from "../productGridPageHelpers";
+import { Clear, FilterList } from "@mui/icons-material";
+import { autocompleteStyle, selectStyle, toggleButtonStyle } from "../productGridPageHelpers";
 
 const ProductsGridPageFilters = ({
   category,
@@ -32,6 +37,18 @@ const ProductsGridPageFilters = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleSortChangeWithClear = event => {
+    const value = event.target.value;
+    if (value === "clear") {
+      handleSortChange(event, null);
+    } else {
+      handleSortChange(
+        event,
+        sortOptions.find(option => option.value === value)
+      );
+    }
+  };
 
   return (
     <Box sx={{ my: 2 }}>
@@ -102,23 +119,38 @@ const ProductsGridPageFilters = ({
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Autocomplete
-              options={sortOptions}
-              getOptionLabel={option => option.label}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label="Sort By"
-                  fullWidth
-                  InputLabelProps={{
-                    style: { color: "white" },
-                  }}
-                />
-              )}
-              value={sortOptions.find(option => option.value === sort) || null}
-              onChange={handleSortChange}
-              sx={autocompleteStyle}
-            />
+            <FormControl fullWidth sx={autocompleteStyle}>
+              <InputLabel
+                id="sort-select-label"
+                sx={{
+                  color: "white",
+                  "&.Mui-focused": {
+                    color: "white",
+                  },
+                }}
+              >
+                Sort By
+              </InputLabel>
+              <Select
+                labelId="sort-select-label"
+                value={sort || ""}
+                label="Sort By"
+                onChange={handleSortChangeWithClear}
+                sx={selectStyle}
+              >
+                <MenuItem value="clear">
+                  <Box display="flex" justifyContent="flex-end" width={"100%"} alignItems={"center"}>
+                    <Clear fontSize="large" />
+                    <Typography ml={1}>Clear Sort</Typography>
+                  </Box>
+                </MenuItem>
+                {sortOptions.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12} md={4}>
             <Autocomplete

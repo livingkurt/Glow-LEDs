@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import ProductsGridPageFilters from "./components/ProductsGridPageFilters";
 import ProductCard from "./components/ProductCard";
@@ -8,9 +8,6 @@ import { sortOptions } from "./productGridPageHelpers";
 import ProductsGridPageSkeletons from "./components/ProductsGridPageSkeletons";
 
 const ProductGridPage = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const {
     selectedTags,
     selectedChip,
