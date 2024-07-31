@@ -51,8 +51,6 @@ export default {
         .populate("secondary_images")
         .populate("chips")
         .populate("products")
-        .populate("categorys")
-        .populate("subcategorys")
         // .populate("collections")
         .populate("contributors")
         .limit(parseInt(limit))
@@ -72,7 +70,6 @@ export default {
         .populate("secondary_color_products")
         .populate("option_products")
         .populate("secondary_products")
-        .populate("categorys")
         .populate({
           path: "options",
           populate: {
@@ -215,9 +212,6 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
-        .populate("categorys")
-        .populate("subcategorys")
-        .populate("parents")
         .populate("images")
         .populate({
           path: "options",
