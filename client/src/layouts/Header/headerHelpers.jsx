@@ -68,30 +68,30 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
 
 const features = {
   name: "Featured",
-  path: "/collections/all/products?tags[]=our_picks",
+  path: "/collections/all/products?category=our_picks",
   _id: 139,
   rows: [
     {
       name: "New Releases!",
-      path: "/collections/all/products?tags[]=new_releases",
+      path: "/collections/all/products?category=new_releases",
       _id: 0,
       extraContent: "🆕",
     },
     {
       name: "Best Sellers",
-      path: "/collections/all/products?tags[]=best_sellers",
+      path: "/collections/all/products?category=best_sellers",
       _id: 1,
       extraContent: "✅",
     },
     {
       name: "Our Picks",
-      path: "/collections/all/products?tags[]=our_picks",
+      path: "/collections/all/products?category=our_picks",
       _id: 2,
       extraContent: "⭐",
     },
     {
       name: "On Sale!",
-      path: "/collections/all/products?tags[]=discounted",
+      path: "/collections/all/products?category=discounted",
       _id: 3,
       extraContent: "💰",
     },

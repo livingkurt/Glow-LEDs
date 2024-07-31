@@ -189,7 +189,7 @@ export default {
         filter.tags = { $all: tagIds };
       }
 
-      const products = await product_db.findAllGrid_products_db(filter, { order: -1 });
+      const products = await product_db.findAllGrid_products_db(filter, { order: 1 });
       return products;
     } catch (error) {
       if (error instanceof Error) {
