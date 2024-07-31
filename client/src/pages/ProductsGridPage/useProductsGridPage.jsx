@@ -109,6 +109,15 @@ export const useProductsGridPage = () => {
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
+  const clearAllFilters = () => {
+    dispatch(setSelectedTags([]));
+    dispatch(setSelectedChip(null));
+    dispatch(setCategory(null));
+    dispatch(setSort(null));
+    dispatch(setSearch(""));
+    updateUrl([], null, null, null, "");
+  };
+
   return {
     selectedTags,
     selectedChip,
@@ -127,5 +136,6 @@ export const useProductsGridPage = () => {
     handleCategoryChange,
     handleSortChange,
     handleSearchChange,
+    clearAllFilters,
   };
 };

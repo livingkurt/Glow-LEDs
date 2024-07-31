@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Grid,
   Container,
@@ -15,6 +15,7 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Badge,
 } from "@mui/material";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../../utils/helper_functions";
@@ -33,10 +34,15 @@ const ProductsGridPageFilters = ({
   handleChipChange,
   handleSortChange,
   handleTagChange,
+  clearAllFilters,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const activeFiltersCount = useMemo(() => {
+    return (category ? 1 : 0) + (selectedChip ? 1 : 0) + (sort ? 1 : 0) + selectedTags.length;
+  }, [category, selectedChip, sort, selectedTags]);
 
   const handleSortChangeWithClear = event => {
     const value = event.target.value;
@@ -73,32 +79,49 @@ const ProductsGridPageFilters = ({
     window.history.pushState({}, "", newUrl);
   };
 
-  console.log({ selectedTags, allTags });
-  // Create a new array of tag options, marking selected ones as disabled
   const tagOptions = allTags.map(tag => ({
     value: tag,
     label: toTitleCase(tag.replace(/_/g, " ")),
     disabled: selectedTags.includes(toSnakeCase(tag)),
   }));
+
   return (
     <Box sx={{ my: 2 }}>
-      <Button
-        variant="contained"
-        onClick={() => setIsExpanded(!isExpanded)}
-        sx={{
-          mb: 2,
-          width: isMobile ? "100%" : "auto",
-          color: "white",
-          borderColor: "white",
-          "&:hover": {
-            borderColor: "white",
-          },
-        }}
-        startIcon={<FilterList />}
-      >
-        {isExpanded ? "Hide Filters" : "Show Filters"}
-      </Button>
-
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <Badge badgeContent={activeFiltersCount} color="primary" sx={{ mr: 2 }}>
+          <Button
+            variant="contained"
+            onClick={() => setIsExpanded(!isExpanded)}
+            sx={{
+              width: isMobile ? "100%" : "auto",
+              color: "white",
+              borderColor: "white",
+              "&:hover": {
+                borderColor: "white",
+              },
+            }}
+            startIcon={<FilterList />}
+          >
+            {isExpanded ? "Hide Filters" : "Show Filters"}
+          </Button>
+        </Badge>
+        {activeFiltersCount > 0 && (
+          <Button
+            variant="outlined"
+            onClick={clearAllFilters}
+            startIcon={<Clear />}
+            sx={{
+              color: "white",
+              borderColor: "white",
+              "&:hover": {
+                borderColor: "white",
+              },
+            }}
+          >
+            Clear Filters
+          </Button>
+        )}
+      </Box>
       <Collapse in={isExpanded}>
         <Grid container spacing={1}>
           <Grid item xs={12}>

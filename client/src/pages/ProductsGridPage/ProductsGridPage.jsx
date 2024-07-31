@@ -24,6 +24,7 @@ const ProductGridPage = () => {
     handleChipChange,
     handleCategoryChange,
     handleSortChange,
+    clearAllFilters,
   } = useProductsGridPage();
 
   const theme = useTheme();
@@ -67,6 +68,7 @@ const ProductGridPage = () => {
           handleChipChange={handleChipChange}
           handleSortChange={handleSortChange}
           handleTagChange={handleTagChange}
+          clearAllFilters={clearAllFilters}
         />
 
         <Grid container spacing={2}>
