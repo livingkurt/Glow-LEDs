@@ -221,7 +221,7 @@ export const contentFormFields = ({ content, products, categories }) => {
                 labelProp: "_id",
                 album: `${content?.products_grid_page?.title} Category Banner Images`,
               },
-              background_color: { type: "text", label: "Background Color" },
+              background_color: { type: "color_picker", label: "Background Color" },
               // tag: {
               //   type: "autocomplete_single",
               //   label: "Category",
