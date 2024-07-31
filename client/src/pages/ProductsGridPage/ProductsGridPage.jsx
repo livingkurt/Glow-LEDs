@@ -47,9 +47,11 @@ const ProductGridPage = () => {
                 (selectedTags.length > 0 && categoryBanner?.title) ||
                 currentContent?.products_grid_page?.title}
             </Typography>
-            <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
-              {currentContent?.products_grid_page?.subtitle}
-            </Typography>
+            {currentContent?.products_grid_page?.subtitle && (
+              <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+                {currentContent?.products_grid_page?.subtitle}
+              </Typography>
+            )}
           </>
         )}
 
