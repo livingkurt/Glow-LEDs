@@ -4,17 +4,19 @@ import { set_edit_content_modal, set_content } from "../../../slices/contentSlic
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { contentFormFields } from "./contentFormFields";
-import { useProductsQuery } from "../../../api/allRecordsApi";
+import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
 
 const EditContentModal = () => {
   const dispatch = useDispatch();
   const contentPage = useSelector(state => state.contents.contentPage);
   const { edit_content_modal, content, loading, contentType } = contentPage;
-  const { data: products } = useProductsQuery({ option: false });
+  const { data: products } = useProductsQuery({ option: false, hidden: false });
+  const { data: categories } = useCategorysQuery();
 
   const formFields = contentFormFields({
     content,
     products,
+    categories,
   });
 
   return (

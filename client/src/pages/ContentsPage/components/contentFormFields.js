@@ -1,4 +1,4 @@
-export const contentFormFields = ({ content, products }) => {
+export const contentFormFields = ({ content, products, categories }) => {
   return {
     name: { type: "text", label: "Name" },
     home_page: {
@@ -188,6 +188,47 @@ export const contentFormFields = ({ content, products }) => {
           },
         },
         footer_title: { type: "text", label: "Footer Title" },
+      },
+    },
+    products_grid_page: {
+      type: "object",
+      title: "Products Grid Page",
+      fields: {
+        title: { type: "text", label: "Title" },
+        subtitle: { type: "text", label: "Subtitle" },
+        our_picks: {
+          type: "autocomplete_multiple",
+          label: "Our Picks",
+          options: products,
+          labelProp: "name",
+        },
+        category_banners: {
+          type: "array",
+          title: "Category Banners",
+          label: item => item.title,
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: { type: "text", label: "Title" },
+              subtitle: { type: "text", label: "Subtitle" },
+              short_description: { type: "text_multiline", label: "Short Description" },
+              fact: { type: "text", label: "Fact" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: `${content?.products_grid_page?.title} Category Banner Images`,
+              },
+              background_color: { type: "text", label: "Background Color" },
+              tag: {
+                type: "autocomplete_single",
+                label: "Category",
+                options: categories,
+                labelProp: "name",
+              },
+            },
+          },
+        },
       },
     },
     faq_page: {

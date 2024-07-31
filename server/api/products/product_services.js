@@ -12,6 +12,8 @@ import {
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
 import { Category } from "../categorys";
+import { Order } from "../orders";
+import { Content } from "../contents";
 const fs = require("fs");
 const Papa = require("papaparse");
 
@@ -174,22 +176,95 @@ export default {
     try {
       const filter = { deleted: false, hidden: false };
 
-      // Add tag filtering if tags are provided
-      if (query.tags && query.tags.length > 0) {
-        // Ensure query.tags is always an array
+      let bestSellers = [];
+      let content = [];
+
+      // Check if a special category is requested
+      if (query.category) {
+        switch (query.category) {
+          case "best_sellers":
+            // Calculate best sellers
+            bestSellers = await Order.aggregate([
+              { $match: { status: "delivered" } }, // Only consider delivered orders
+              { $unwind: "$orderItems" },
+              {
+                $group: {
+                  _id: "$orderItems.product",
+                  totalSold: { $sum: "$orderItems.quantity" },
+                },
+              },
+              { $sort: { totalSold: -1 } },
+              { $limit: 10 },
+            ]);
+
+            // Get the product IDs of best sellers
+            const bestSellerIds = bestSellers.map(item => item._id);
+            // Add these IDs to the filter
+            filter._id = { $in: bestSellerIds };
+            break;
+
+          case "our_picks":
+            // Fetch the most recent active content document
+            content = await Content.findOne({ active: true, deleted: false })
+              .sort({ createdAt: -1 })
+              .select("products_grid_page.our_picks");
+
+            if (content && content.products_grid_page && content.products_grid_page.our_picks) {
+              // Add these IDs to the filter
+              filter._id = { $in: content.products_grid_page.our_picks };
+            } else {
+              console.log("No our_picks found in the content");
+              return []; // Return empty array if no our_picks are found
+            }
+            break;
+
+          case "discounted":
+            // Add a filter for discounted products
+            filter.previous_price = { $gt: 0 };
+            // filter.sale_start_date = { $lte: new Date() };
+            // filter.sale_end_date = { $gte: new Date() };
+            break;
+
+          default:
+            // If it's not a special category, treat it as a regular tag
+            const tagCategories = await Category.find({ deleted: false, pathname: query.category });
+            const tagIds = tagCategories.map(cat => cat._id);
+            filter.tags = { $all: tagIds };
+        }
+      } else if (query.tags && query.tags.length > 0) {
+        // Existing tag filtering logic
         const tagArray = Array.isArray(query.tags) ? query.tags : [query.tags];
-
-        // First, find the Category documents that match the tag pathnames
         const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
-
-        // Extract the ObjectIds of the matching categories
         const tagIds = tagCategories.map(cat => cat._id);
-
-        // Use these ObjectIds to filter the products, ensuring all tags are present
         filter.tags = { $all: tagIds };
       }
 
       const products = await product_db.findAllGrid_products_db(filter, { order: 1 });
+
+      // If it's best sellers, we need to sort the products based on the order from our aggregation
+      if (query.category === "best_sellers") {
+        const bestSellerOrder = bestSellers.reduce((acc, item, index) => {
+          acc[item._id.toString()] = index;
+          return acc;
+        }, {});
+
+        products.sort((a, b) => bestSellerOrder[a._id.toString()] - bestSellerOrder[b._id.toString()]);
+      }
+
+      if (
+        query.category === "our_picks" &&
+        content &&
+        content.products_grid_page &&
+        content.products_grid_page.our_picks
+      ) {
+        const ourPicksOrder = content.products_grid_page.our_picks.reduce((acc, id, index) => {
+          acc[id.toString()] = index;
+          return acc;
+        }, {});
+
+        products.sort((a, b) => ourPicksOrder[a._id.toString()] - ourPicksOrder[b._id.toString()]);
+      }
+
       return products;
     } catch (error) {
       if (error instanceof Error) {
@@ -197,6 +272,92 @@ export default {
       }
     }
   },
+  // findAllGrid_products_s: async query => {
+  //   try {
+  //     const filter = { deleted: false, hidden: false };
+  //     console.log({ query });
+
+  //     if (query.category) {
+  //       switch (query.category) {
+  //         case "best_sellers":
+  //           try {
+  //             const bestSellers = await Order.aggregate([
+  //               { $match: { status: "delivered" } },
+  //               { $unwind: "$orderItems" },
+  //               {
+  //                 $group: {
+  //                   _id: "$orderItems.product",
+  //                   totalSold: { $sum: "$orderItems.qty" },
+  //                 },
+  //               },
+  //               { $sort: { totalSold: -1 } },
+  //               { $limit: 10 },
+  //             ]);
+
+  //             console.log("Aggregation result:", bestSellers);
+
+  //             if (bestSellers.length === 0) {
+  //               console.log("No best sellers found");
+  //               return []; // Return empty array if no best sellers
+  //             }
+
+  //             const bestSellerIds = bestSellers.map(item => item._id);
+  //             console.log("Best seller IDs:", bestSellerIds);
+
+  //             filter._id = { $in: bestSellerIds };
+  //           } catch (aggregateError) {
+  //             console.error("Error in best sellers aggregation:", aggregateError);
+  //             throw new Error("Failed to calculate best sellers");
+  //           }
+  //           break;
+
+  //         case "our_picks":
+  //           // Logic for 'our_picks' - this might involve a separate collection or field in the Product model
+  //           break;
+
+  //         case "discounted":
+  //           // Add a filter for discounted products
+  //           filter.previous_price = { $gt: 0 };
+  //           // filter.sale_start_date = { $lte: new Date() };
+  //           // filter.sale_end_date = { $gte: new Date() };
+  //           break;
+
+  //         default:
+  //           // If it's not a special category, treat it as a regular tag
+  //           const tagCategories = await Category.find({ deleted: false, pathname: query.category });
+  //           const tagIds = tagCategories.map(cat => cat._id);
+  //           filter.tags = { $all: tagIds };
+  //       }
+  //     } else if (query.tags && query.tags.length > 0) {
+  //       // Existing tag filtering logic
+  //       const tagArray = Array.isArray(query.tags) ? query.tags : [query.tags];
+  //       const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+  //       const tagIds = tagCategories.map(cat => cat._id);
+  //       filter.tags = { $all: tagIds };
+  //     }
+
+  //     const products = await product_db.findAllGrid_products_db(filter, { order: 1 });
+  //     console.log(`Found ${products.length} products`);
+
+  //     if (query.category === "best_sellers" && products.length > 0) {
+  //       const bestSellerOrder = bestSellers.reduce((acc, item, index) => {
+  //         acc[item._id.toString()] = index;
+  //         return acc;
+  //       }, {});
+
+  //       products.sort((a, b) => {
+  //         const orderA = bestSellerOrder[a._id.toString()];
+  //         const orderB = bestSellerOrder[b._id.toString()];
+  //         return (orderA !== undefined ? orderA : Infinity) - (orderB !== undefined ? orderB : Infinity);
+  //       });
+  //     }
+
+  //     return products;
+  //   } catch (error) {
+  //     console.error("Error in findAllGrid_products_s:", error);
+  //     throw new Error(error.message || "An error occurred while fetching products");
+  //   }
+  // },
   findById_products_s: async params => {
     try {
       return await product_db.findById_products_db(params.id);

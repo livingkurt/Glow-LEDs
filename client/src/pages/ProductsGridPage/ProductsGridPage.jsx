@@ -10,6 +10,7 @@ const ProductGridPage = () => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const tags = searchParams.getAll("tags[]");
+  const category = searchParams.get("category");
 
   const { current_user } = useSelector(state => state.users.userPage);
 
@@ -19,7 +20,7 @@ const ProductGridPage = () => {
     isError,
   } = useProductsGridQuery({
     tags,
-    isWholesaler: current_user?.isWholesaler,
+    category,
   });
 
   const allTags = useMemo(() => {
@@ -41,8 +42,21 @@ const ProductGridPage = () => {
       ? tags.filter(t => t !== formattedTagName)
       : [...tags, formattedTagName];
 
-    const newUrl = `${location.pathname}?${newTags.map(tag => `tags[]=${tag}`).join("&")}`;
-    navigate(newUrl);
+    const newSearchParams = new URLSearchParams();
+    newTags.forEach(tag => newSearchParams.append("tags[]", tag));
+    if (category) newSearchParams.append("category", category);
+
+    navigate(`${location.pathname}?${newSearchParams.toString()}`);
+  };
+
+  const handleCategoryClick = categoryName => {
+    const newSearchParams = new URLSearchParams();
+    if (categoryName !== category) {
+      newSearchParams.append("category", categoryName);
+    }
+    tags.forEach(tag => newSearchParams.append("tags[]", tag));
+
+    navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
   if (isLoading) return <Typography>Loading...</Typography>;
@@ -53,6 +67,24 @@ const ProductGridPage = () => {
       <Typography variant="h4" component="h1" gutterBottom align="center" pt={2}>
         Our Products
       </Typography>
+
+      <Box sx={{ mb: 2 }}>
+        {["best_sellers", "our_picks", "discounted"].map(cat => (
+          <Chip
+            key={cat}
+            label={cat.replace("_", " ").toUpperCase()}
+            onClick={() => handleCategoryClick(cat)}
+            sx={{
+              m: 0.5,
+              backgroundColor: category === cat ? "white" : "transparent",
+              color: category === cat ? "black" : "white",
+              border: "1px solid white",
+              fontSize: "1rem",
+              fontWeight: "500",
+            }}
+          />
+        ))}
+      </Box>
 
       <Box sx={{ mb: 2 }}>
         {allTags.map(tag => (

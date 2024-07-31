@@ -55,6 +55,7 @@ export const listGridProducts = createAsyncThunk(
       console.log({ data });
       return data;
     } catch (error) {
+      console.log({ error });
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
     }
