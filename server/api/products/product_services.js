@@ -171,9 +171,8 @@ export default {
     }
   },
   findAllGrid_products_s: async query => {
-    console.log({ query });
     try {
-      const filter = { deleted: false, hidden: false, isVariation: false };
+      const filter = { deleted: false, hidden: false };
 
       // Add tag filtering if tags are provided
       if (query.tags && query.tags.length > 0) {
@@ -182,7 +181,6 @@ export default {
 
         // First, find the Category documents that match the tag pathnames
         const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
-        console.log({ tagCategories });
 
         // Extract the ObjectIds of the matching categories
         const tagIds = tagCategories.map(cat => cat._id);
@@ -191,13 +189,9 @@ export default {
         filter.tags = { $all: tagIds };
       }
 
-      console.log("Final filter:", filter);
-
       const products = await product_db.findAllGrid_products_db(filter, { order: -1 });
-      console.log(`Found ${products.length} products`);
       return products;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
