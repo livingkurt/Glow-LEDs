@@ -120,7 +120,7 @@ export default {
       }
     }
   },
-  findAllGrid_products_db: async (filter, sort) => {
+  findAllGrid_products_db: async (filter, sort, limit) => {
     const productFields = {
       name: 1,
       pathname: 1,
@@ -142,14 +142,16 @@ export default {
       createdAt: 1,
     };
     try {
-      return await Product.find(filter, productFields)
-        .sort(sort)
-        .populate("images")
-        .populate({
-          path: "tags",
-          select: "name type pathname",
-        })
-        .exec();
+      const query = Product.find(filter, productFields).sort(sort).populate("images").populate({
+        path: "tags",
+        select: "name type pathname",
+      });
+
+      if (limit > 0) {
+        query.limit(limit);
+      }
+
+      return await query.exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

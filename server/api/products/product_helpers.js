@@ -452,6 +452,8 @@ export const handleCategoryFiltering = async category => {
       return ourPicks ? { _id: { $in: ourPicks } } : null;
     case "discounted":
       return { previous_price: { $gt: 0 } };
+    case "new_releases":
+      return {};
     default:
       const categoryDoc = await Category.findOne({ deleted: false, pathname: category });
       return categoryDoc ? { tags: { $all: [categoryDoc._id] } } : {};

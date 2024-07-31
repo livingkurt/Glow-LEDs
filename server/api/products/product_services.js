@@ -181,6 +181,7 @@ export default {
     try {
       let filter = { deleted: false, hidden: false };
       let bestSellers, ourPicks;
+      let limit = 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -216,7 +217,12 @@ export default {
         }
       }
 
-      let products = await product_db.findAllGrid_products_db(filter, sortOption);
+      if (query.category === "new_releases") {
+        sortOption = { createdAt: -1 }; // Sort by createdAt in descending order
+        limit = 5;
+      }
+
+      let products = await product_db.findAllGrid_products_db(filter, sortOption, limit);
 
       if (query.category === "best_sellers" || query.category === "our_picks") {
         products = sortProducts(products, query.category, bestSellers, ourPicks);
@@ -228,6 +234,7 @@ export default {
       throw new Error(error.message || "An error occurred while fetching products");
     }
   },
+
   findById_products_s: async params => {
     try {
       return await product_db.findById_products_db(params.id);
