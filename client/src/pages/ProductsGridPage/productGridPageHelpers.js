@@ -13,3 +13,68 @@ export const productGridPageBreadCrumbs = breadCrumbs => {
     },
   ];
 };
+
+// Utility function to convert string to snake_case
+export const toSnakeCase = str => str.toLowerCase().replace(/\s+/g, "_");
+
+export const sortOptions = [
+  { label: "Highest Price", value: "-price" },
+  { label: "Lowest Price", value: "price" },
+  { label: "Newest", value: "-createdAt" },
+  { label: "Oldest", value: "createdAt" },
+];
+
+export const autocompleteStyle = {
+  width: "100%",
+  mb: 2,
+  "& .MuiOutlinedInput-root": {
+    color: "white",
+    transition: "box-shadow 0.3s ease-in-out",
+    "& fieldset": {
+      borderColor: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "white",
+    },
+    "&:hover": {
+      borderColor: "white",
+      boxShadow: `0 12px 24px 0 rgb(255 255 255 / 50%)`,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+      boxShadow: `0 12px 24px 0 rgb(255 255 255 / 50%)`,
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "white",
+  },
+  "& .MuiAutocomplete-popupIndicator": {
+    color: "white",
+  },
+  "& .MuiAutocomplete-clearIndicator": {
+    color: "white",
+  },
+  "& .MuiChip-root": {
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: "bold",
+  },
+  "& .MuiChip-deleteIcon": {
+    color: "black",
+  },
+};
+
+export const toggleButtonStyle = {
+  color: "white",
+  borderColor: "white",
+  "&.Mui-selected": {
+    backgroundColor: "white",
+    color: "black",
+    "&:hover": {
+      backgroundColor: "white",
+    },
+  },
+  "&:hover": {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+  },
+};
