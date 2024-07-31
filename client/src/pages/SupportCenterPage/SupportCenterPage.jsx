@@ -25,6 +25,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import { scrollToId } from "../../utils/helpers/universal_helpers";
+import { useChipsQuery } from "../../api/allRecordsApi";
 
 const SupportCenterPage = () => {
   const params = useParams();
@@ -35,26 +36,14 @@ const SupportCenterPage = () => {
 
   const faqPage = currentContent?.faq_page;
 
-  const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips } = chipPage;
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listChips({}));
-    }
-    return () => (clean = false);
-  }, []);
+  const { data: chips } = useChipsQuery();
 
   const filterHandler = chip_selected => {
-    update_products_url(navigate, "", "", chip_selected.name, "", "0", "/collections/all/products");
-    dispatch(
-      API.listProducts({
-        chip: chip_selected._id,
-        hidden: false,
-      })
-    );
-    set_chip({});
+    const newSearchParams = new URLSearchParams();
+    if (chip_selected) newSearchParams.append("chip", chip_selected.pathname);
+
+    set_chip(chip_selected);
+    navigate(`/collections/all/products?${newSearchParams.toString()}`);
   };
 
   const userPage = useSelector(state => state.users.userPage);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import CartItem from "../../shared/SharedComponents/CartItem";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";
 import { determineItemsTotal } from "../../utils/helper_functions";
 import { GLTooltip } from "../../shared/GlowLEDsComponents";
@@ -99,7 +99,7 @@ const CartPage = () => {
               <List disablePadding>
                 {cartItems.map((item, index) => (
                   <ListItem key={index} disablePadding sx={{ mb: 2 }}>
-                    <CartItem orderItems={cartItems} item={item} index={index} showQuantity />
+                    <GLCartItem orderItems={cartItems} item={item} index={index} showQuantity />
                   </ListItem>
                 ))}
               </List>

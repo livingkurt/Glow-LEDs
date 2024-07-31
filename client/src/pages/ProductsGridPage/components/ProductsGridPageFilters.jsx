@@ -19,7 +19,7 @@ import {
 import { useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { Clear, FilterList } from "@mui/icons-material";
-import { autocompleteStyle, selectStyle, toggleButtonStyle } from "../productGridPageHelpers";
+import { autocompleteStyle, selectStyle, toggleButtonStyle, toSnakeCase } from "../productGridPageHelpers";
 
 const ProductsGridPageFilters = ({
   category,
@@ -50,6 +50,36 @@ const ProductsGridPageFilters = ({
     }
   };
 
+  const handleTagChangeAndUpdateURL = (event, newValue) => {
+    handleTagChange(event, newValue);
+
+    // Update URL
+    const currentUrl = new URL(window.location.href);
+    const pathname = currentUrl.pathname;
+    const searchParams = currentUrl.searchParams;
+
+    // Remove all existing tag parameters
+    searchParams.delete("tags[]");
+
+    // Construct the new query string manually
+    let newQueryString = searchParams.toString();
+    newValue.forEach(tag => {
+      if (newQueryString) newQueryString += "&";
+      newQueryString += `tags[]=${encodeURIComponent(tag.toLowerCase().replace(/ /g, "_"))}`;
+    });
+
+    // Construct the new URL
+    const newUrl = `${pathname}${newQueryString ? "?" + newQueryString : ""}`;
+    window.history.pushState({}, "", newUrl);
+  };
+
+  console.log({ selectedTags, allTags });
+  // Create a new array of tag options, marking selected ones as disabled
+  const tagOptions = allTags.map(tag => ({
+    value: tag,
+    label: toTitleCase(tag.replace(/_/g, " ")),
+    disabled: selectedTags.includes(toSnakeCase(tag)),
+  }));
   return (
     <Box sx={{ my: 2 }}>
       <Button
@@ -155,7 +185,8 @@ const ProductsGridPageFilters = ({
           <Grid item xs={12} md={4}>
             <Autocomplete
               multiple
-              options={allTags}
+              options={tagOptions}
+              getOptionLabel={option => option.label}
               renderInput={params => (
                 <TextField
                   {...params}
@@ -169,7 +200,7 @@ const ProductsGridPageFilters = ({
               renderTags={(tagValues, getTagProps) =>
                 tagValues.map((option, index) => (
                   <Chip
-                    label={toTitleCase(option)}
+                    label={option.label}
                     {...getTagProps({ index })}
                     style={{
                       backgroundColor: "white",
@@ -180,8 +211,22 @@ const ProductsGridPageFilters = ({
                   />
                 ))
               }
-              value={selectedTags.map(tag => tag.replace(/_/g, " "))}
-              onChange={handleTagChange}
+              renderOption={(props, option) => (
+                <li {...props} style={{ opacity: option.disabled ? 0.5 : 1 }}>
+                  {option.label}
+                </li>
+              )}
+              getOptionDisabled={option => option.disabled}
+              value={selectedTags.map(tag => ({
+                value: tag,
+                label: toTitleCase(tag.replace(/_/g, " ")),
+              }))}
+              onChange={(event, newValue) =>
+                handleTagChangeAndUpdateURL(
+                  event,
+                  newValue.map(v => v.value)
+                )
+              }
               sx={autocompleteStyle}
             />
           </Grid>

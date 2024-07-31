@@ -39,6 +39,7 @@ import { showConfirm, showSuccess } from "../../slices/snackbarSlice";
 import { ShoppingCart } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { useTheme } from "@emotion/react";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -84,85 +85,7 @@ const OrdersPage = () => {
       socket.off("ordersChanged", onOrdersChanged);
       socket.disconnect(); // Consider if you need to disconnect when component unmounts
     };
-  }, []);
-
-  const OrderItem = ({ item }) => {
-    const theme = useTheme();
-
-    return (
-      <ListItem divider>
-        <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
-          <Grid item>
-            <Link to={`/collections/all/products/${item.pathname}`}>
-              <Box
-                position="relative"
-                sx={{
-                  width: 60,
-                  height: 60,
-                }}
-              >
-                <Box
-                  component="img"
-                  src={item?.display_image_object?.link}
-                  alt={item.name}
-                  sx={{ width: "100%", height: "100%", borderRadius: 2 }}
-                />
-                {item.quantity > 1 && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 0,
-                      right: 0,
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "1px solid #ccc",
-                      borderRadius: "50%",
-                      width: "24px",
-                      height: "24px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.5rem",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {item.quantity}
-                  </Box>
-                )}
-              </Box>
-            </Link>
-          </Grid>
-          <Grid item xs container direction="column" spacing={1}>
-            <Grid item>
-              <Typography variant="body1" component={Link} to={`/collections/all/products/${item.pathname}`}>
-                {item.name}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {item.selectedOptions?.map((option, optionIndex) => {
-                  const bgColor = option.colorCode || theme.palette.background.default;
-                  return (
-                    <Chip
-                      key={optionIndex}
-                      label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
-                      size="small"
-                      sx={{
-                        backgroundColor: bgColor,
-                        color: theme.palette.getContrastText(bgColor),
-                        fontSize: "1rem",
-                        fontWeight: "500",
-                      }}
-                    />
-                  );
-                })}
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItem>
-    );
-  };
+  }, [dispatch]);
 
   const columnDefs = useMemo(
     () => [
@@ -181,7 +104,7 @@ const OrdersPage = () => {
             <div>
               <List>
                 {row.orderItems?.map((item, index) => (
-                  <OrderItem key={index} item={item} index={index} />
+                  <GLCartItem key={index} item={item} index={index} isOrderItem={true} />
                 ))}
               </List>
             </div>

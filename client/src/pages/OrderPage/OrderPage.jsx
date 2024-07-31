@@ -5,7 +5,7 @@ import { determine_tracking_link, format_date, toTitleCase } from "../../utils/h
 import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import CartItem from "../../shared/SharedComponents/CartItem";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
@@ -236,7 +236,7 @@ const OrderPage = () => {
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem item={item} index={index} show_quantity={false} />
+                        <GLCartItem item={item} index={index} show_quantity={false} />
                       ))
                     )}
                   </ul>
