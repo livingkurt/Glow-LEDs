@@ -1,9 +1,12 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, Rating, Box } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Rating, Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
 
 const ProductCard = ({ product }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Link to={`/collections/all/products/${product._id}`} style={{ textDecoration: "none" }}>
       <Card
@@ -15,10 +18,20 @@ const ProductCard = ({ product }) => {
             boxShadow: `0 12px 24px 0 hsl(${random(0, 360)}deg 50% 50%)`,
           },
           borderRadius: "1rem",
+          display: isMobile ? "flex" : "block",
+          flexDirection: isMobile ? "row" : "column",
         }}
         elevation={0}
       >
-        <Box sx={{ position: "relative", paddingTop: "100%", overflow: "hidden" }}>
+        <Box
+          sx={{
+            position: "relative",
+            paddingTop: isMobile ? "30%" : "100%",
+            overflow: "hidden",
+            flexShrink: 0,
+            width: isMobile ? "30%" : "100%",
+          }}
+        >
           <CardMedia
             component="img"
             image={product.images[0].link}
@@ -33,19 +46,21 @@ const ProductCard = ({ product }) => {
               borderRadius: "1rem",
               transition: "border-radius 0.3s ease-in-out",
               "&:hover": {
-                borderRadius: "1rem 1rem 0 0",
+                borderRadius: isMobile ? 0 : "1rem 1rem 0 0",
               },
             }}
           />
         </Box>
-        <CardContent>
-          <Typography variant="h6" color="white">
-            {product.name}
-          </Typography>
-          <Typography variant="body1" color="white">
+        <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <Box>
+            <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+              {product.name}
+            </Typography>
+            {product.rating ? <Rating value={product.rating} readOnly size={isMobile ? "small" : "medium"} /> : null}
+          </Box>
+          <Typography variant={isMobile ? "body2" : "body1"} color="white">
             ${product.price.toFixed(2)}
           </Typography>
-          {product.rating ? <Rating value={product.rating} readOnly /> : null}
         </CardContent>
       </Card>
     </Link>

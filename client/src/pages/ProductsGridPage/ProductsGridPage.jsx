@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import ProductsGridPageFilters from "./components/ProductsGridPageFilters";
 import ProductCard from "./components/ProductCard";
@@ -8,6 +8,9 @@ import { sortOptions } from "./productGridPageHelpers";
 import ProductsGridPageSkeletons from "./components/ProductsGridPageSkeletons";
 
 const ProductGridPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const {
     selectedTags,
     selectedChip,
@@ -53,7 +56,7 @@ const ProductGridPage = () => {
         handleTagChange={handleTagChange}
       />
 
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         {products.length > 0 ? (
           products.map(product => (
             <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
