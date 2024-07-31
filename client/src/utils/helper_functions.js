@@ -1,6 +1,9 @@
 import { determine_secondary_product_name } from "./react_helper_functions";
 
 export const create_query = query => {
+  if (!query) {
+    return "";
+  }
   const params = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {

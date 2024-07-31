@@ -1,4 +1,3 @@
-import axios from "axios";
 import config from "../config";
 
 export const domain = () => {
@@ -13,7 +12,7 @@ export const domain = () => {
 
 export const errorMessage = error => {
   console.log({ error });
-  return `Error: ${error.response ? error.response.data.message : "An unexpected error occurred"}`;
+  return `Error: ${error?.response ? error.response.data.message : "An unexpected error occurred"}`;
 };
 
 export const debounce = (thisParams, func, wait, immediate) => {

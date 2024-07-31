@@ -1,6 +1,18 @@
 import { category_services } from "../categorys";
 
 export default {
+  table_categorys_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const categorys = await category_services.table_categorys_s(query);
+      if (categorys) {
+        return res.status(200).send(categorys);
+      }
+      return res.status(404).send({ message: "Categorys Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findAll_categorys_c: async (req, res) => {
     const { query } = req;
     try {

@@ -11,8 +11,13 @@ export const allRecordsApi = createApi({
     carts: builder.query({
       query: query => `/carts?${create_query(query)}`,
     }),
+
     categorys: builder.query({
-      query: query => `/categorys?${create_query(query)}`,
+      query: params => ({
+        url: `/categorys`,
+        params: create_query(params),
+        method: "GET",
+      }),
     }),
     chips: builder.query({
       query: query => `/chips?${create_query(query)}`,

@@ -8,12 +8,16 @@ import {
   normalizeProductSearch,
   transformProducts,
   generateProductOptionsProducts,
+  handleTagFiltering,
+  handleCategoryFiltering,
+  getBestSellers,
+  getOurPicks,
+  sortProducts,
+  handleChipFiltering,
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { Category } from "../categorys";
-import { Order } from "../orders";
-import { Content } from "../contents";
+
 const fs = require("fs");
 const Papa = require("papaparse");
 
@@ -173,103 +177,34 @@ export default {
     }
   },
   findAllGrid_products_s: async query => {
+    console.log({ query });
     try {
-      const filter = { deleted: false, hidden: false };
+      let filter = { deleted: false, hidden: false };
+      let bestSellers, ourPicks;
 
-      let bestSellers = [];
-      let content = [];
+      const tagFilter = await handleTagFiltering(query.tags);
+      filter = { ...filter, ...tagFilter };
 
-      // Check if a special category is requested
+      if (query.chip && query.chip !== null) {
+        const chipFilter = await handleChipFiltering(query.chip);
+        filter = { ...filter, ...chipFilter };
+      }
+
       if (query.category) {
-        switch (query.category) {
-          case "best_sellers":
-            // Calculate best sellers
-            bestSellers = await Order.aggregate([
-              { $match: { status: "delivered" } }, // Only consider delivered orders
-              { $unwind: "$orderItems" },
-              {
-                $group: {
-                  _id: "$orderItems.product",
-                  totalSold: { $sum: "$orderItems.quantity" },
-                },
-              },
-              { $sort: { totalSold: -1 } },
-              { $limit: 10 },
-            ]);
-
-            // Get the product IDs of best sellers
-            const bestSellerIds = bestSellers.map(item => item._id);
-            // Add these IDs to the filter
-            filter._id = { $in: bestSellerIds };
-            break;
-
-          case "our_picks":
-            // Fetch the most recent active content document
-            content = await Content.findOne({ active: true, deleted: false })
-              .sort({ createdAt: -1 })
-              .select("products_grid_page.our_picks");
-
-            if (content && content.products_grid_page && content.products_grid_page.our_picks) {
-              // Add these IDs to the filter
-              filter._id = { $in: content.products_grid_page.our_picks };
-            } else {
-              console.log("No our_picks found in the content");
-              return []; // Return empty array if no our_picks are found
-            }
-            break;
-
-          case "discounted":
-            // Add a filter for discounted products
-            filter.previous_price = { $gt: 0 };
-            // filter.sale_start_date = { $lte: new Date() };
-            // filter.sale_end_date = { $gte: new Date() };
-            break;
-
-          default:
-            // If it's not a special category, treat it as a regular tag
-            const tagCategories = await Category.find({ deleted: false, pathname: query.category });
-            const tagIds = tagCategories.map(cat => cat._id);
-            filter.tags = { $all: tagIds };
-        }
-      } else if (query.tags && query.tags.length > 0) {
-        // Existing tag filtering logic
-        const tagArray = Array.isArray(query.tags) ? query.tags : [query.tags];
-        const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
-        const tagIds = tagCategories.map(cat => cat._id);
-        filter.tags = { $all: tagIds };
+        const categoryFilter = await handleCategoryFiltering(query.category);
+        if (categoryFilter === null) return []; // For "our_picks" when none are found
+        filter = { ...filter, ...categoryFilter };
+        if (query.category === "best_sellers") bestSellers = await getBestSellers();
+        if (query.category === "our_picks") ourPicks = await getOurPicks();
       }
 
-      const products = await product_db.findAllGrid_products_db(filter, { order: 1 });
-
-      // If it's best sellers, we need to sort the products based on the order from our aggregation
-      if (query.category === "best_sellers") {
-        const bestSellerOrder = bestSellers.reduce((acc, item, index) => {
-          acc[item._id.toString()] = index;
-          return acc;
-        }, {});
-
-        products.sort((a, b) => bestSellerOrder[a._id.toString()] - bestSellerOrder[b._id.toString()]);
-      }
-
-      if (
-        query.category === "our_picks" &&
-        content &&
-        content.products_grid_page &&
-        content.products_grid_page.our_picks
-      ) {
-        const ourPicksOrder = content.products_grid_page.our_picks.reduce((acc, id, index) => {
-          acc[id.toString()] = index;
-          return acc;
-        }, {});
-
-        products.sort((a, b) => ourPicksOrder[a._id.toString()] - ourPicksOrder[b._id.toString()]);
-      }
+      let products = await product_db.findAllGrid_products_db(filter, { order: 1 });
+      products = sortProducts(products, query.category, bestSellers, ourPicks);
 
       return products;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.error("Error in findAllGrid_products_s:", error);
+      throw new Error(error.message || "An error occurred while fetching products");
     }
   },
   // findAllGrid_products_s: async query => {

@@ -1,3 +1,5 @@
+import { toCapitalize } from "../../../utils/helper_functions";
+
 export const contentFormFields = ({ content, products, categories }) => {
   return {
     name: { type: "text", label: "Name" },
@@ -220,11 +222,22 @@ export const contentFormFields = ({ content, products, categories }) => {
                 album: `${content?.products_grid_page?.title} Category Banner Images`,
               },
               background_color: { type: "text", label: "Background Color" },
-              tag: {
+              // tag: {
+              //   type: "autocomplete_single",
+              //   label: "Category",
+              //   options: categories,
+              //   labelProp: "name",
+              // },
+              category: {
                 type: "autocomplete_single",
                 label: "Category",
-                options: categories,
                 labelProp: "name",
+                getOptionLabel: option => {
+                  if (typeof option.name === "string") {
+                    return toCapitalize(option.name);
+                  }
+                },
+                options: categories,
               },
             },
           },

@@ -1,9 +1,10 @@
 import { category_db } from "../categorys";
 import { getFilteredData } from "../api_helpers";
 import { normalizeCategorySearch } from "./category_helpers";
+import { determine_filter } from "../../utils/util";
 
 export default {
-  findAll_categorys_s: async query => {
+  table_categorys_s: async query => {
     try {
       const sort_options = ["name", "type", "pathname"];
       const { filter, sort, limit, page } = getFilteredData({
@@ -12,13 +13,23 @@ export default {
         search_name: "name",
         normalizeSearch: normalizeCategorySearch,
       });
-      const categorys = await category_db.findAll_categorys_db(filter, sort, limit, page);
+      const categorys = await category_db.table_categorys_db(filter, sort, limit, page);
       const count = await category_db.count_categorys_db(filter);
       return {
         data: categorys,
         total_count: count,
         currentPage: page,
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findAll_categorys_s: async query => {
+    try {
+      const categorys = await category_db.findAll_categorys_db({}, {});
+      return categorys;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

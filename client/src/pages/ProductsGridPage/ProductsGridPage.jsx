@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Container, Grid, Typography, Card, CardContent, CardMedia, Rating, Chip, Box } from "@mui/material";
-import { useProductsGridQuery } from "../../api/allRecordsApi";
+import { useChipsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
 import { useSelector } from "react-redux";
 import { random } from "lodash";
+import * as API from "../../api";
+import { toTitleCase } from "../../utils/helper_functions";
 
 const ProductGridPage = () => {
   const location = useLocation();
@@ -11,8 +13,11 @@ const ProductGridPage = () => {
   const searchParams = new URLSearchParams(location.search);
   const tags = searchParams.getAll("tags[]");
   const category = searchParams.get("category");
+  const chip = searchParams.get("chip");
 
   const { current_user } = useSelector(state => state.users.userPage);
+
+  const { data: currentContent } = API.useCurrentContentQuery();
 
   const {
     data: products,
@@ -21,7 +26,10 @@ const ProductGridPage = () => {
   } = useProductsGridQuery({
     tags,
     category,
+    chip,
   });
+
+  const { data: chips } = useChipsQuery();
 
   const allTags = useMemo(() => {
     if (!products) return [];
@@ -59,15 +67,47 @@ const ProductGridPage = () => {
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
+  const handleChipClick = chipPathname => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (chip === chipPathname) {
+      newSearchParams.delete("chip");
+    } else {
+      newSearchParams.set("chip", chipPathname);
+    }
+    navigate(`${location.pathname}?${newSearchParams.toString()}`);
+  };
+
   if (isLoading) return <Typography>Loading...</Typography>;
   if (isError) return <Typography>Error loading products</Typography>;
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" component="h1" gutterBottom align="center" pt={2}>
-        Our Products
+      <Typography variant="h4" align="center" pt={2}>
+        {(category && toTitleCase(category)) ||
+          (tags && tags.length > 0 && toTitleCase(tags[0])) ||
+          currentContent?.products_grid_page?.title}
       </Typography>
-
+      <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+        {currentContent?.products_grid_page?.subtitle}
+      </Typography>
+      <Box sx={{ mb: 2 }}>
+        {chips &&
+          chips.map(chipItem => (
+            <Chip
+              key={chipItem.pathname}
+              label={chipItem.name}
+              onClick={() => handleChipClick(chipItem.pathname)}
+              sx={{
+                m: 0.5,
+                backgroundColor: chip === chipItem.pathname ? "white" : "transparent",
+                color: chip === chipItem.pathname ? "black" : "white",
+                border: "1px solid white",
+                fontSize: "1rem",
+                fontWeight: "500",
+              }}
+            />
+          ))}
+      </Box>
       <Box sx={{ mb: 2 }}>
         {["best_sellers", "our_picks", "discounted"].map(cat => (
           <Chip

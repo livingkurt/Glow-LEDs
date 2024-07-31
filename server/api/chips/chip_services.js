@@ -27,16 +27,7 @@ export default {
         sort = { name: 1 };
       }
       const chips = await chip_db.findAll_chips_db(filter, sort, limit, page);
-      const count = await chip_db.count_chips_db(filter);
-      if (count !== undefined) {
-        return {
-          chips,
-          totalPages: Math.ceil(count / parseInt(limit)),
-          currentPage: page,
-        };
-      } else {
-        throw new Error("Count is undefined");
-      }
+      return chips;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
