@@ -1,31 +1,42 @@
-/* eslint-disable max-lines-per-function */
-
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../../api";
 
 const productsGridPage = createSlice({
   name: "productsGridPage",
   initialState: {
-    gridProducts: [],
+    selectedTags: [],
+    selectedChip: null,
+    category: null,
+    sort: null,
+    search: "", // Add this line
   },
-  reducers: {},
-  extraReducers: {
-    [API.listGridProducts.pending]: (state, { payload }) => {
-      state.loading = true;
-      state.gridProducts = [];
+  reducers: {
+    setSelectedTags: (state, action) => {
+      state.selectedTags = action.payload;
     },
-    [API.listGridProducts.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.gridProducts = payload;
-      state.message = "Products Found";
+    setSelectedChip: (state, action) => {
+      state.selectedChip = action.payload;
     },
-    [API.listGridProducts.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
+    setSort: (state, action) => {
+      state.sort = action.payload;
+    },
+    setSearch: (state, action) => {
+      // Add this reducer
+      state.search = action.payload;
+    },
+    updateFilters: (state, action) => {
+      const { tags, chip, category, sort, search } = action.payload;
+      state.selectedTags = tags;
+      state.selectedChip = chip;
+      state.category = category;
+      state.sort = sort;
+      state.search = search;
     },
   },
 });
 
-export const { listProducts } = productsGridPage.actions;
+export const { setSelectedTags, setSelectedChip, setCategory, setSort, setSearch, updateFilters } =
+  productsGridPage.actions;
 export default productsGridPage.reducer;

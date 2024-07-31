@@ -1,20 +1,26 @@
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useChipsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
 import * as API from "../../api";
 import { toSnakeCase } from "./productGridPageHelpers";
+import {
+  setSelectedTags,
+  setSelectedChip,
+  setCategory,
+  setSort,
+  setSearch,
+  updateFilters,
+} from "./productsGridPageSlice";
 
 export const useProductsGridPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const [selectedTags, setSelectedTags] = useState(searchParams.getAll("tags[]"));
-  const [selectedChip, setSelectedChip] = useState(searchParams.get("chip") || null);
-  const [category, setCategory] = useState(searchParams.get("category") || null);
-  const [sort, setSort] = useState(searchParams.get("sort") || null);
+  const dispatch = useDispatch();
 
+  const { selectedTags, selectedChip, category, sort, search } = useSelector(state => state.products.productsGridPage);
   const { current_user } = useSelector(state => state.users.userPage);
+
   const { data: currentContent } = API.useCurrentContentQuery();
   const { data: chips } = useChipsQuery();
 
@@ -22,34 +28,35 @@ export const useProductsGridPage = () => {
     data: products,
     isLoading,
     isError,
-    refetch, // Add refetch function from the query hook
+    refetch,
   } = useProductsGridQuery({
     tags: selectedTags,
     category,
     chip: selectedChip,
     sort,
+    search, // Add this line
   });
 
-  // Use useEffect to listen for location changes and refetch data
   useEffect(() => {
-    const newSearchParams = new URLSearchParams(location.search);
-    const newSelectedTags = newSearchParams.getAll("tags[]");
-    const newSelectedChip = newSearchParams.get("chip") || null;
-    const newCategory = newSearchParams.get("category") || null;
-    const newSort = newSearchParams.get("sort") || null;
+    const searchParams = new URLSearchParams(location.search);
+    const newSelectedTags = searchParams.getAll("tags[]");
+    const newSelectedChip = searchParams.get("chip") || null;
+    const newCategory = searchParams.get("category") || null;
+    const newSort = searchParams.get("sort") || null;
+    const newSearch = searchParams.get("search") || ""; // Add this line
 
-    setSelectedTags(newSelectedTags);
-    setSelectedChip(newSelectedChip);
-    setCategory(newCategory);
-    setSort(newSort);
+    dispatch(
+      updateFilters({
+        tags: newSelectedTags,
+        chip: newSelectedChip,
+        category: newCategory,
+        sort: newSort,
+        search: newSearch, // Add this line
+      })
+    );
 
-    refetch({
-      tags: newSelectedTags,
-      category: newCategory,
-      chip: newSelectedChip,
-      sort: newSort,
-    });
-  }, [location, refetch]);
+    refetch();
+  }, [location, dispatch, refetch]);
 
   const allTags = useMemo(() => {
     if (!products) return [];
@@ -66,31 +73,39 @@ export const useProductsGridPage = () => {
 
   const handleTagChange = (event, newValue) => {
     const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
-    setSelectedTags(snakeCaseTags);
-    updateUrl(snakeCaseTags, selectedChip, category, sort);
+    dispatch(setSelectedTags(snakeCaseTags));
+    updateUrl(snakeCaseTags, selectedChip, category, sort, search);
   };
 
   const handleChipChange = (event, newValue) => {
-    setSelectedChip(newValue ? newValue.pathname : null);
-    updateUrl(selectedTags, newValue ? newValue.pathname : null, category, sort);
+    const newChip = newValue ? newValue.pathname : null;
+    dispatch(setSelectedChip(newChip));
+    updateUrl(selectedTags, newChip, category, sort, search);
   };
 
   const handleCategoryChange = (event, newCategory) => {
-    setCategory(newCategory);
-    updateUrl(selectedTags, selectedChip, newCategory, sort);
+    dispatch(setCategory(newCategory));
+    updateUrl(selectedTags, selectedChip, newCategory, sort, search);
   };
 
   const handleSortChange = (event, newValue) => {
-    setSort(newValue ? newValue.value : null);
-    updateUrl(selectedTags, selectedChip, category, newValue ? newValue.value : null);
+    const newSort = newValue ? newValue.value : null;
+    dispatch(setSort(newSort));
+    updateUrl(selectedTags, selectedChip, category, newSort, search);
   };
 
-  const updateUrl = (tags, chip, cat, sortValue) => {
+  const handleSearchChange = newSearch => {
+    dispatch(setSearch(newSearch));
+    updateUrl(selectedTags, selectedChip, category, sort, newSearch);
+  };
+
+  const updateUrl = (tags, chip, cat, sortValue, searchValue) => {
     const newSearchParams = new URLSearchParams();
     tags.forEach(tag => newSearchParams.append("tags[]", tag));
     if (chip) newSearchParams.append("chip", chip);
     if (cat) newSearchParams.append("category", cat);
     if (sortValue) newSearchParams.append("sort", sortValue);
+    if (searchValue) newSearchParams.append("search", searchValue);
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
@@ -99,6 +114,7 @@ export const useProductsGridPage = () => {
     selectedChip,
     category,
     sort,
+    search,
     current_user,
     currentContent,
     chips,
@@ -110,5 +126,6 @@ export const useProductsGridPage = () => {
     handleChipChange,
     handleCategoryChange,
     handleSortChange,
+    handleSearchChange,
   };
 };

@@ -199,6 +199,12 @@ export default {
         if (query.category === "our_picks") ourPicks = await getOurPicks();
       }
 
+      // Add search functionality
+      if (query.search) {
+        const searchRegex = new RegExp(query.search, "i");
+        filter.$or = [{ name: searchRegex }, { "tags.pathname": searchRegex }];
+      }
+
       let sortOption = { order: 1 };
       if (query.sort) {
         switch (query.sort) {
