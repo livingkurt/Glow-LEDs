@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import ProductsGridPageFilters from "./components/ProductsGridPageFilters";
 import ProductCard from "./components/ProductCard";
@@ -26,6 +26,9 @@ const ProductGridPage = () => {
     handleSortChange,
   } = useProductsGridPage();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   if (isLoading) return <ProductsGridPageSkeletons />;
   if (isError) return <Typography>Error loading products</Typography>;
 
@@ -35,9 +38,9 @@ const ProductGridPage = () => {
 
   return (
     <Box>
-      <CategoryBanner banner={categoryBanner} />
+      {!isMobile && <CategoryBanner banner={categoryBanner} />}
       <Container maxWidth="xl">
-        {!categoryBanner && (
+        {(isMobile || !categoryBanner) && (
           <>
             <Typography variant="h4" align="center" pt={2}>
               {(category && toTitleCase(category)) ||
