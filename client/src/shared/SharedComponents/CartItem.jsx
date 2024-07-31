@@ -17,7 +17,7 @@ const CartItem = ({ item, index, showQuantity }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
 
-  const processedOptions = item.selectedOptions.map(option => ({
+  const processedOptions = item.selectedOptions?.map(option => ({
     ...option,
     normalizedColorCode: option.filament?.color_code || option.colorCode,
   }));
