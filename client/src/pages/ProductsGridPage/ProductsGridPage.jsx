@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Container, Grid, Typography, Card, CardContent, CardMedia, Rating, Chip, Box } from "@mui/material";
 import { useProductsGridQuery } from "../../api/allRecordsApi";
 import { useSelector } from "react-redux";
+import { random } from "lodash";
 
 const ProductGridPage = () => {
   const location = useLocation();
@@ -82,7 +83,7 @@ const ProductGridPage = () => {
                     height: "100%",
                     transition: "box-shadow 0.3s ease-in-out",
                     "&:hover": {
-                      boxShadow: "0 12px 24px 0 rgba(255,255,255,0.5)",
+                      boxShadow: `0 12px 24px 0 hsl(${random(0, 360)}deg 50% 50%)`,
                     },
                     borderRadius: "1rem",
                   }}
