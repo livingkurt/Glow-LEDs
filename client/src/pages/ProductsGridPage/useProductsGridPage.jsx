@@ -13,21 +13,25 @@ export const useProductsGridPage = () => {
   const [selectedChip, setSelectedChip] = useState(searchParams.get("chip") || null);
   const [category, setCategory] = useState(searchParams.get("category") || null);
   const [sort, setSort] = useState(searchParams.get("sort") || null);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
 
   const { current_user } = useSelector(state => state.users.userPage);
   const { data: currentContent } = API.useCurrentContentQuery();
   const { data: chips } = useChipsQuery();
 
+  // ...
+
   const {
     data: products,
     isLoading,
     isError,
-    refetch, // Add refetch function from the query hook
+    refetch,
   } = useProductsGridQuery({
     tags: selectedTags,
     category,
     chip: selectedChip,
     sort,
+    search: searchQuery, // Add the search query to the query variables
   });
 
   // Use useEffect to listen for location changes and refetch data
@@ -85,12 +89,13 @@ export const useProductsGridPage = () => {
     updateUrl(selectedTags, selectedChip, category, newValue ? newValue.value : null);
   };
 
-  const updateUrl = (tags, chip, cat, sortValue) => {
+  const updateUrl = (tags, chip, cat, sortValue, search) => {
     const newSearchParams = new URLSearchParams();
     tags.forEach(tag => newSearchParams.append("tags[]", tag));
     if (chip) newSearchParams.append("chip", chip);
     if (cat) newSearchParams.append("category", cat);
     if (sortValue) newSearchParams.append("sort", sortValue);
+    if (search) newSearchParams.append("search", search); // Add the search query to the URL
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 

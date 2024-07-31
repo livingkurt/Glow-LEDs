@@ -222,6 +222,17 @@ export default {
         limit = 5;
       }
 
+      if (query.search) {
+        const searchFilter = {
+          $or: [
+            { name: { $regex: query.search, $options: "i" } },
+            { "tags.name": { $regex: query.search, $options: "i" } },
+            { "chips.name": { $regex: query.search, $options: "i" } },
+          ],
+        };
+        filter = { ...filter, ...searchFilter };
+      }
+
       let products = await product_db.findAllGrid_products_db(filter, sortOption, limit);
 
       if (query.category === "best_sellers" || query.category === "our_picks") {
