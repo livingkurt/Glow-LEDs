@@ -139,6 +139,7 @@ export default {
       hidden: 1,
       order: 1,
       tags: 1,
+      createdAt: 1,
     };
     try {
       return await Product.find(filter, productFields)

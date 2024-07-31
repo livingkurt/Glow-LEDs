@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { API_Users } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { ProductSimpleItemD, ProductSimpleItemM } from "../ProductsGridPage/components";
 import * as API from "../../api";
 
 const SponsorPage = () => {
@@ -126,54 +125,6 @@ const SponsorPage = () => {
                   <p className="p_descriptions">{affiliate.inspiration}</p>
                 </div>
               )}
-              {/* <div>
-								<h3 className="">Team</h3>
-								{
-								{teams.map((team) => {
-									return (
-										<Link to={'/collections/all/teams/' + teams.pathname} className=" pos-rel">
-											<LazyImage
-												className="sponsor-image w-200px"
-												alt={team.name}
-												title="Sponsor Image"
-												size={{ height: 'auto', width: '100%' }}
-												effect="blur"
-												src={team.picture}
-											/>
-											<h3
-												className="pos-abs fs-25px"
-												style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
-											>
-												{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
-											</h3>
-										</Link>
-									);
-								})}
-							</div> */}
-              {/* <div>
-                <h3 className="">Team{teams > 1 && "'s"}</h3>
-                {teams.map((team, index) => {
-                  return (
-                    <Link to={"/collections/all/teams/" + team.pathname} className="pos-rel" key={index}>
-                      <img
-                        className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-                        alt="Team Name"
-                        src={team.picture}
-                      />
-                      <h3
-                        className="pos-abs fs-25px"
-                        style={{
-                          top: "-119px",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      >
-                        {team.team_name}
-                      </h3>
-                    </Link>
-                  );
-                })}
-              </div> */}
               <div>
                 <h3 className="">Follow {affiliate.artist_name} </h3>
                 <div className="mt-2rem wrap  ">
@@ -235,72 +186,6 @@ const SponsorPage = () => {
               </div>
             </div>
           )}
-          {/* <h3 className=""> {affiliate.artist_name}'s Glow Gear</h3> */}
-          {/* {affiliate.products && (
-            <div>
-              <div className="product_big_screen">
-                {affiliate.products && (
-                  <ul className="products" style={{ marginTop: 0 }}>
-                    {affiliate.products.map((product, index) => (
-                      <ProductSimpleItemD
-                        size="300px"
-                        key={index}
-                        product={product}
-                        // product_occurrences={product_occurrences}
-                      />
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <div className="product_small_screen none">
-                {affiliate.products && (
-                  <ul className="products" style={{ marginTop: 0 }}>
-                    {affiliate.products.map((product, index) => (
-                      <ProductSimpleItemM
-                        size="300px"
-                        key={index}
-                        product={product}
-                        // product_occurrences={product_occurrences}
-                      />
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          )} */}
-          {/* <div className="products jc-c m-auto">
-						{affiliate.products &&
-							affiliate.products.map((product) => {
-								return (
-									<Link to={'/collections/all/products/' + product.pathname} className="pos-rel">
-										<img
-											className="m-1rem br-10px h-auto max-h-300px max-w-300px ta-c responsive_img "
-											src={product?.images[0].link}
-										/>
-										<h3
-											className="pos-abs m-1rem w-300px ta-c"
-											style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
-										>
-											{product.name}
-										</h3>
-									</Link>
-								);
-							})}
-					</div> */}
-          {/* <div className="p_descriptions" style={{ textAlign: 'center' }}>
-						<a
-							rel="noreferrer"
-							className="jc-c w-100per"
-							href={affiliate.link}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<GLButton variant="primary" className="" style={{ margin: 'auto', marginBottom: '10px' }}>
-								See More from ${affiliate.artist_name}
-							</GLButton>
-						</a>
-					</div> */}
         </div>
       )}
     </div>
