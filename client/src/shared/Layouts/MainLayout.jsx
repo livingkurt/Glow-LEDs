@@ -9,13 +9,13 @@ const MainLayout = ({ children }) => {
   const { height, width } = useWindowDimensions();
   return (
     <Container setVisible={setVisible} visible={visible}>
-      {isBrowser && width > 1158 && height > 900 ? (
+      {/* {isBrowser && width > 1158 && height > 900 ? (
         <Headroom style={{ zIndex: 1000 }}>
           <Header visible={visible} />
         </Headroom>
-      ) : (
-        <Header visible={visible} />
-      )}
+      ) : ( */}
+      <Header visible={visible} />
+      {/* )} */}
       <Cart visible={visible} height={height} width={width} />
       <Sidebar />
       <Content>{children}</Content>

@@ -109,7 +109,6 @@ const typography = {
   glow_leds: {
     fontFamily: '"heading_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
-    fontSize: "12px",
     letterSpacing: "0.83px",
     margin: "0",
     textAlign: "center",
