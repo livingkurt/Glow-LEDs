@@ -908,7 +908,11 @@ export const rightNav = (dispatch, sidebarOnly) => {
     {
       name: current_user =>
         sidebarOnly ? (
-          current_user && current_user.hasOwnProperty("first_name") && current_user.first_name.toUpperCase()
+          current_user && current_user.hasOwnProperty("first_name") ? (
+            current_user.first_name.toUpperCase()
+          ) : (
+            "LOGIN"
+          )
         ) : (
           <AccountCircle color="white" />
         ),
