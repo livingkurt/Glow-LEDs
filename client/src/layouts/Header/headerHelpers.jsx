@@ -2,7 +2,7 @@ import { updateVersion } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, AdminPanelSettings } from "@mui/icons-material";
 
 export const determineDropdown = (item, current_user) => {
   if (Object.keys(current_user).length === 0) {
@@ -903,11 +903,13 @@ export const navItems = [
   },
 ];
 
-export const rightNav = dispatch => {
+export const rightNav = (dispatch, sidebarOnly) => {
   return [
     {
       name: current_user =>
-        (current_user && current_user.hasOwnProperty("first_name") && current_user.first_name.toUpperCase()) || (
+        sidebarOnly ? (
+          current_user && current_user.hasOwnProperty("first_name") && current_user.first_name.toUpperCase()
+        ) : (
           <AccountCircle color="white" />
         ),
       path: "/secure/account/profile",
@@ -923,7 +925,7 @@ export const rightNav = dispatch => {
       permissions: x => true,
     },
     {
-      name: "ADMIN",
+      name: current_user => (sidebarOnly ? "ADMIN" : <AdminPanelSettings color="white" />),
       id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
@@ -936,7 +938,7 @@ export const rightNav = dispatch => {
 
 export const sidebarItems = dispatch => [
   navItems[0],
-  rightNav(dispatch)[0],
+  rightNav(dispatch, true)[0],
   ...navItems.slice(1),
-  rightNav(dispatch)[1],
+  rightNav(dispatch, true)[1],
 ];

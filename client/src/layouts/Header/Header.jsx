@@ -223,7 +223,6 @@ const Header = () => {
                   transform: "translateY(-2px)",
                   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
                 },
-                marginTop: "-4px",
               }}
             >
               <Search sx={{ fontSize: isLargeScreen ? "22px" : "18px" }} color="white" />
@@ -232,7 +231,6 @@ const Header = () => {
               onClick={() => dispatch(setCartDrawer(true))}
               sx={{
                 display: "flex",
-                marginTop: "-4px",
                 transition: "transform ease-in-out 0.3s",
                 "&:hover": {
                   backgroundColor: theme.palette.grey[800],
@@ -240,13 +238,6 @@ const Header = () => {
                   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
                 },
                 alignItems: "center",
-                ...(cartItems.length > 0 && isTabletUp
-                  ? {
-                      animation: "bob 2s infinite",
-                      boxShadow: theme.shadows[4],
-                      backgroundColor: theme.palette.primary.main,
-                    }
-                  : {}),
               }}
             >
               <ShoppingCart sx={{ fontSize: isLargeScreen ? "22px" : "18px" }} color="white" />
