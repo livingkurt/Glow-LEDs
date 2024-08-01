@@ -35,7 +35,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
             sx={{
               backgroundColor: option.name === "Clear" ? "transparent" : bgColor,
               border: option.name === "Clear" ? "1px solid white !important" : "none !important",
-              color: theme.palette.getContrastText(bgColor),
+              color: option.name === "Clear" ? "white" : theme.palette.getContrastText(bgColor),
               fontSize: "1rem",
               fontWeight: "500",
             }}
