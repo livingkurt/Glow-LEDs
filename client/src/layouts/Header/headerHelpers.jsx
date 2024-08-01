@@ -908,7 +908,7 @@ export const rightNav = dispatch => {
     {
       name: current_user =>
         (current_user && current_user.hasOwnProperty("first_name") && current_user.first_name.toUpperCase()) || (
-          <AccountCircle />
+          <AccountCircle color="white" />
         ),
       path: "/secure/account/profile",
       _id: 10138,

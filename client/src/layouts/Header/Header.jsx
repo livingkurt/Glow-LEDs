@@ -30,15 +30,16 @@ import { debounce } from "lodash";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
 import { set_first_name } from "../../slices/userSlice";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const Header = () => {
-  // ... (keep all the existing state and hooks)
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
   const isTabletDown = useMediaQuery(theme.breakpoints.down("md"));
   const isTabletUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("md", "lg"));
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { search } = useSelector(state => state.products.productsGridPage);
   const [localSearch, setLocalSearch] = useState(search);
@@ -97,7 +98,7 @@ const Header = () => {
   }, [current_user, dispatch]);
 
   return (
-    <AppBar position="static" color="transparent" elevation={5}>
+    <AppBar position="sticky" sx={{ bgcolor: "#333333" }} elevation={5}>
       <Environment />
       <Banner />
       <Toolbar sx={{ padding: theme.spacing(1, 2) }}>
@@ -110,7 +111,14 @@ const Header = () => {
             alignItems: "center",
           }}
         >
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{
+              flexShrink: 0,
+              minWidth: isLargeScreen ? "200px" : isMediumScreen ? "150px" : "120px",
+            }}
+          >
             {isTabletDown && (
               <GLButton
                 className="side-bar-open p-10px"
@@ -134,12 +142,22 @@ const Header = () => {
             >
               <Box
                 component="img"
-                sx={{ width: 50, marginRight: 1 }}
+                sx={{
+                  width: 50,
+                  marginRight: 1,
+                }}
                 src="/images/optimized_images/logo_images/glow_leds_text_logo.png"
                 alt="Glow LEDs Logo"
                 title="Big Logo"
               />
-              <Typography variant="glow_leds" sx={{ fontSize: isMobile ? "20px" : "24px", color: "white" }}>
+              <Typography
+                variant="glow_leds"
+                sx={{
+                  fontSize: isLargeScreen ? "24px" : "20px",
+                  color: "white",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Glow LEDs
               </Typography>
             </Link>
@@ -157,11 +175,19 @@ const Header = () => {
                   display: "none",
                 },
                 scrollbarWidth: "none",
+                mx: 2,
               }}
             >
               {navItems.map(item => (
                 <div key={item.name} className="header-center-dropdown-container">
-                  <HeaderButton to={item.path} ariaLabel={item.ariaLabel}>
+                  <HeaderButton
+                    to={item.path}
+                    ariaLabel={item.ariaLabel}
+                    sx={{
+                      fontSize: isLargeScreen ? "16px" : "14px",
+                      px: isLargeScreen ? 2 : 1,
+                    }}
+                  >
                     {item.name}
                   </HeaderButton>
                   {item.columns && (
@@ -179,14 +205,40 @@ const Header = () => {
             </Box>
           )}
 
-          <Box display="flex" alignItems="center">
-            <HeaderButton onClick={toggleSearch}>
-              <Search sx={{ marginTop: "-4px", fontSize: "20px" }} />
-            </HeaderButton>
-            <HeaderButton
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{
+              flexShrink: 0,
+              minWidth: isLargeScreen ? "200px" : isMediumScreen ? "150px" : "120px",
+              justifyContent: "flex-end",
+            }}
+          >
+            <GLIconButton
+              onClick={toggleSearch}
+              sx={{
+                transition: "transform ease-in-out 0.3s",
+                "&:hover": {
+                  backgroundColor: theme.palette.grey[800],
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                },
+                marginTop: "-4px",
+              }}
+            >
+              <Search sx={{ fontSize: isLargeScreen ? "22px" : "18px" }} color="white" />
+            </GLIconButton>
+            <GLIconButton
               onClick={() => dispatch(setCartDrawer(true))}
               sx={{
                 display: "flex",
+                marginTop: "-4px",
+                transition: "transform ease-in-out 0.3s",
+                "&:hover": {
+                  backgroundColor: theme.palette.grey[800],
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                },
                 alignItems: "center",
                 ...(cartItems.length > 0 && isTabletUp
                   ? {
@@ -197,22 +249,33 @@ const Header = () => {
                   : {}),
               }}
             >
-              <ShoppingCart sx={{ marginTop: "-4px" }} />
-              <Box component="span" sx={{ marginLeft: "1px" }}>
+              <ShoppingCart sx={{ fontSize: isLargeScreen ? "22px" : "18px" }} color="white" />
+              <Box
+                component="span"
+                sx={{ marginLeft: "1px", color: "white", fontSize: isLargeScreen ? "14px" : "12px" }}
+              >
                 {getCartQuantity(cartItems)}
               </Box>
-            </HeaderButton>
+            </GLIconButton>
             {isTabletUp &&
               rightNav(dispatch).map(
                 (item, index) =>
                   item.permissions(current_user) && (
                     <div key={index} className="dropdown">
-                      <HeaderButton
+                      <GLIconButton
                         ariaLabel={item.ariaLabel}
                         onClick={() => item.onClick && item.onClick(current_user)}
+                        sx={{
+                          transition: "transform ease-in-out 0.3s",
+                          "&:hover": {
+                            backgroundColor: theme.palette.grey[800],
+                            transform: "translateY(-2px)",
+                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                          },
+                        }}
                       >
                         {determineName(item, current_user)}
-                      </HeaderButton>
+                      </GLIconButton>
                       {determineDropdown(item, current_user) && (
                         <ul className="dropdown-content hover_fade_in w-175px">
                           {item.columns.map((column, colIndex) => (
