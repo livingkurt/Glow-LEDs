@@ -43,6 +43,7 @@ const SearchBar = () => {
         marginTop: width < 1107 ? "15px" : "5px",
         display: "flex",
         justifyContent: "center",
+        mr: 2,
       }}
     >
       <TextField

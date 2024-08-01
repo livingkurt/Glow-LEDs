@@ -4,23 +4,26 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { setSideNavDrawer } from "../../../slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { Box, Typography } from "@mui/material";
 
 const LeftNavButtons = () => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   return (
-    <div className="menu_button w-233px">
+    <div className="">
       <Link to="/" aria-label="Home Page">
-        <div className="row">
-          <div className="logo h-125px w-125px" aria-label="Home Page" role="button">
-            <img
-              className="zoom logo_s"
-              src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-              alt="Glow LEDs Logo"
-              title="Big Logo"
-            />
-          </div>
-        </div>
+        <Box display="flex" alignItems={"center"}>
+          <Box
+            component="img"
+            sx={{ width: 50, height: 50 }}
+            src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+            alt="Glow LEDs Logo"
+            title="Big Logo"
+          />
+          <Typography variant="glow_leds" style={{ fontSize: "30px", width: "200px" }}>
+            Glow LEDs
+          </Typography>
+        </Box>
       </Link>
       {width < 960 && (
         <GLButton

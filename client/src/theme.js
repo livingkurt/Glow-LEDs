@@ -106,6 +106,19 @@ const typography = {
     letterSpacing: "0.83px",
     textTransform: "uppercase",
   },
+  glow_leds: {
+    fontFamily: '"heading_font", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 500,
+    letterSpacing: "0.83px",
+    margin: "0",
+    textAlign: "center",
+    justifyContent: "center",
+    width: "100%",
+    marginBottom: "0",
+    marginTop: "0",
+    display: "flex",
+    textShadow: "0 0 10px #fff, 0 0 30px",
+  },
 };
 
 const palette = {

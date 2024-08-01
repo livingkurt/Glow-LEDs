@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Button, Typography, useTheme } from "@mui/material";
 
 const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
   return (
     <Link to={to} aria-label={ariaLabel} style={{ textDecoration: "none" }}>
-      <Box
+      <Button
         sx={{
           display: "flex",
           alignItems: "center",
@@ -17,7 +17,7 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
           whiteSpace: "nowrap",
           overflow: "hidden",
           "&:hover": {
-            backgroundColor: theme.palette.grey[600],
+            backgroundColor: theme.palette.grey[800],
             transform: "translateY(-2px)",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)",
           },
@@ -40,7 +40,7 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
         >
           {children}
         </Typography>
-      </Box>
+      </Button>
     </Link>
   );
 };
