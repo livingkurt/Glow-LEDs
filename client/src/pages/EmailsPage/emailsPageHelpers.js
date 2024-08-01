@@ -18,7 +18,7 @@ export const templates = [
   "affiliate_onboard",
   "verify",
   "reset_password",
-  "reset_password",
+  "invoice",
   "email_subscription",
   "order",
   "order_status",

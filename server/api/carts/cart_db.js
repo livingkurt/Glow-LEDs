@@ -9,10 +9,6 @@ export default {
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
         .populate("cartItems.selectedOptions.filament")
-        .populate("cartItems.color_product")
-        .populate("cartItems.secondary_color_product")
-        .populate("cartItems.option_product")
-        .populate("cartItems.secondary_product")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -26,8 +22,9 @@ export default {
     try {
       return await Cart.findOne({ _id: id, active: true, deleted: false })
         .populate("user")
-        .populate("cartItems.selectedOptions.filament")
-        .populate("cartItems.display_image_object");
+        .populate("cartItems.display_image_object")
+        .populate("cartItems.product")
+        .populate("cartItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -38,8 +35,9 @@ export default {
     try {
       return await Cart.findOne({ user: user_id, active: true, deleted: false })
         .populate("user")
-        .populate("cartItems.selectedOptions.filament")
-        .populate("cartItems.display_image_object");
+        .populate("cartItems.display_image_object")
+        .populate("cartItems.product")
+        .populate("cartItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

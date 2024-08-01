@@ -1,10 +1,5 @@
 import config from "../../config";
-import {
-  email_sale_price_switch,
-  determine_product_name,
-  determin_card_logo_images,
-  format_date,
-} from "../../utils/util";
+import { email_sale_price_switch, determin_card_logo_images, format_date } from "../../utils/util";
 
 export default ({ order, isSponsor }) => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
@@ -77,29 +72,67 @@ export default ({ order, isSponsor }) => {
         }
       </tbody>
     </table>
-    <table cellpadding="0" cellspacing="0" style="width:100%;line-height:inherit;text-align:left;font-size:25px"
+     <table cellpadding="0" cellspacing="0" style="width:100%;line-height:inherit;text-align:left;font-size:25px"
       width="100%" align="left">
       <tbody>
-        <tr>
-          <td style="padding:5px;vertical-align:top;background:#eee;border-bottom:1px solid black;font-weight:bold"
-            valign="top">Item</td>
-          <td
-            style="padding:5px;vertical-align:top;text-align:right;background:#eee;border-bottom:1px solid black;font-weight:bold"
-            valign="top" align="right">Price</td>
-        </tr>
         ${order.orderItems
           .map(
-            item => `<tr>
-          <td valign="top" style="padding: 5px; vertical-align: top; border-bottom: 1px solid black;">
-            <div> ${determine_product_name(item, true)} </div>
+            (item, index) => `
+        <tr>
+          <td style="font-family:helvetica">
+            <table style="width:100%;border-spacing:0;border-bottom:1px solid black">
+              <tbody>
+                <tr style="width:100%">
+                  <td style="font-family:helvetica">
+                    <table style="border-spacing:0px;width:100%;margin:10px auto">
+                      <tbody>
+                        <tr>
+                          <td style="font-family:helvetica;width:100%">
+                             <div style="font-size:25px;font-weight:600;color:black">
+                              ${item.name}
+                              ${item.selectedOptions
+                                .map((option, optionIndex) => {
+                                  if (option.name && item.currentOptions[optionIndex]) {
+                                    return `
+                                      <span style="
+                                        display:inline-block;
+                                        padding:4px 8px;
+                                        margin:2px;
+                                        border-radius:16px;
+                                        font-size:16px;
+                                        font-weight:500;
+                                        background-color:white;
+                                        border:1px solid black;
+                                        color: black;
+                                      ">
+                                        ${item.currentOptions[optionIndex].name}: ${option.name}
+                                      </span>
+                                    `;
+                                  }
+                                  return "";
+                                })
+                                .filter(Boolean)
+                                .join("")}
+                            </div>
+                          </td>
+                          <td style="font-family:helvetica;width:100%;white-space:nowrap">
+                            <p style="color:black;line-height:150%;font-size:25px;font-weight:600;margin:0 0 0 15px"
+                              align="right">
+                             ${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "black", order?.user?.isWholesaler)}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </td>
-          <td valign="top" align="right"
-            style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid black;"><label>
-              ${email_sale_price_switch(item, "black", order?.user?.isWholesaler)}</label></td>
-        </tr>`
+        </tr>
+        `
           )
           .join("")}
-
       </tbody>
     </table>
 

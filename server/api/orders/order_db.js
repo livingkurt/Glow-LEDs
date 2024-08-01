@@ -127,9 +127,9 @@ export default {
       return await Order.find(filter)
         .sort(sort)
         .populate("user")
-        .populate("orderItems.product")
         .populate("orderItems.display_image_object")
-        .populate("orderItems.secondary_product")
+        .populate("orderItems.product")
+        .populate("orderItems.selectedOptions.filament")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -149,7 +149,7 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
-        .populate("orderItems.secondary_product")
+        .populate("orderItems.selectedOptions.filament")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -167,27 +167,8 @@ export default {
       return await Order.findOne({ _id: id, deleted: false })
         .populate("user")
         .populate("orderItems.display_image_object")
-        .populate("orderItems.color_product")
-        .populate("orderItems.secondary_color_product")
-        .populate("orderItems.option_product")
-        .populate("orderItems.secondary_product")
-        .populate({
-          path: "orderItems.product",
-          populate: [
-            {
-              path: "color_products",
-            },
-            {
-              path: "secondary_color_products",
-            },
-            {
-              path: "option_products",
-            },
-            {
-              path: "secondary_products",
-            },
-          ],
-        });
+        .populate("orderItems.product")
+        .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -201,7 +182,7 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
-        .populate("orderItems.secondary_product");
+        .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -164,7 +164,7 @@ router.get("/order", async (req, res) => {
   res.send(App({ body: order(body), unsubscribe: false }));
 });
 router.get("/order_status", async (req, res) => {
-  const orderDocument = await order_db.findById_orders_db("64a11a605157930002f3eb94");
+  const orderDocument = await order_db.findById_orders_db("659cd96631c5c5730673e47b");
   const body = {
     email: {
       show_image: true,
@@ -181,6 +181,7 @@ router.get("/order_status", async (req, res) => {
     },
 
     title: "Thank you for your purchase!",
+    status: "shipped",
     order: orderDocument,
   };
   res.send(App({ body: order_status(body), unsubscribe: false }));
@@ -196,7 +197,7 @@ router.get("/shipping_status", async (req, res) => {
   res.send(App({ body: shipping_status(body), unsubscribe: false }));
 });
 router.get("/invoice", async (req, res) => {
-  const orderDocument = await order_db.findById_orders_db("64a11a605157930002f3eb94");
+  const orderDocument = await order_db.findById_orders_db("66a9ed448f71e2b3261e128e");
   const body = {
     email: {
       show_image: true,
