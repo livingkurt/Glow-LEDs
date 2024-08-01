@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   AppBar,
@@ -18,24 +18,22 @@ import { Search, ShoppingCart } from "@mui/icons-material";
 import { listContents } from "../../api";
 import { setCartDrawer, setSideNavDrawer } from "../../slices/cartSlice";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { navItems } from "./headerHelpers";
+import { navItems, determineDropdown, determineName, rightNav } from "./headerHelpers";
 import Banner from "./components/Banner";
-import RightNavButtons from "./components/RightNavButtons";
 import Environment from "./components/Environment";
 import HeaderButton from "./components/CenterNavButtons/components/HeaderButton";
 import HeaderColumn from "./components/CenterNavButtons/components/HeaderColumn";
 import HeaderDrawer from "./components/CenterNavButtons/components/HeaderDrawer";
 import HeaderSubDrawer from "./components/CenterNavButtons/components/HeaderSubDrawer";
-import { useNavigate } from "react-router-dom";
+import ColumnItemButton from "./components/CenterNavButtons/components/ColumnItemButton";
 import { debounce } from "lodash";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
 import { set_first_name } from "../../slices/userSlice";
-
-import { determineDropdown, determineName, rightNav } from "./headerHelpers";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
-import ColumnItemButton from "./components/CenterNavButtons/components/ColumnItemButton";
 
 const Header = () => {
+  // ... (keep all the existing state and hooks)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -112,23 +110,23 @@ const Header = () => {
             alignItems: "center",
           }}
         >
-          {isTabletDown && (
-            <GLButton
-              className="side-bar-open p-10px"
-              onClick={() => dispatch(setSideNavDrawer(true))}
-              aria-label="Sidebar"
-              style={{ fontSize: "30px !important" }}
-            >
-              <div className="box">
-                <div className="head-btn not-active">
-                  <span className="span" />
-                  <span className="span" />
-                  <span className="span" />
-                </div>
-              </div>
-            </GLButton>
-          )}
           <Box display="flex" alignItems="center">
+            {isTabletDown && (
+              <GLButton
+                className="side-bar-open p-10px"
+                onClick={() => dispatch(setSideNavDrawer(true))}
+                aria-label="Sidebar"
+                style={{ fontSize: "30px !important", marginRight: "10px" }}
+              >
+                <div className="box">
+                  <div className="head-btn not-active">
+                    <span className="span" />
+                    <span className="span" />
+                    <span className="span" />
+                  </div>
+                </div>
+              </GLButton>
+            )}
             <Link
               to="/"
               aria-label="Home Page"
@@ -148,7 +146,19 @@ const Header = () => {
           </Box>
 
           {!isTabletDown && (
-            <Box display="flex" alignItems="center" justifyContent="center" flexGrow={1}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                flexGrow: 1,
+                overflow: "auto",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+                scrollbarWidth: "none",
+              }}
+            >
               {navItems.map(item => (
                 <div key={item.name} className="header-center-dropdown-container">
                   <HeaderButton to={item.path} ariaLabel={item.ariaLabel}>
@@ -170,74 +180,62 @@ const Header = () => {
           )}
 
           <Box display="flex" alignItems="center">
-            <div>
-              <div className={`${isTabletUp ? "w-233px" : ""} jc-fe ai-c`}>
-                <HeaderButton
-                  onClick={toggleSearch}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Search sx={{ marginTop: "-4px", marginLeft: isTabletUp ? "1px" : 0 }} />
-                </HeaderButton>
-                <HeaderButton
-                  onClick={() => dispatch(setCartDrawer(true))}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    ...(cartItems.length > 0 && isTabletUp
-                      ? {
-                          animation: "bob 2s infinite",
-                          boxShadow: theme.shadows[4],
-                          backgroundColor: theme.palette.primary.main,
-                        }
-                      : {}),
-                  }}
-                >
-                  {/* {isTabletUp && "Cart"} */}
-                  <ShoppingCart sx={{ marginTop: "-4px", marginLeft: isTabletUp ? "1px" : 0 }} />
-                  <Box component="span" sx={{ marginLeft: "1px" }}>
-                    {getCartQuantity(cartItems)}
-                  </Box>
-                </HeaderButton>
-
-                {isTabletUp &&
-                  rightNav(dispatch).map(
-                    (item, index) =>
-                      item.permissions(current_user) && (
-                        <div key={index} className="dropdown">
-                          <HeaderButton
-                            ariaLabel={item.ariaLabel}
-                            onClick={() => item.onClick && item.onClick(current_user)}
-                          >
-                            {determineName(item, current_user)}
-                          </HeaderButton>
-                          {determineDropdown(item, current_user) && (
-                            <ul className="dropdown-content hover_fade_in w-175px">
-                              {item.columns.map((column, colIndex) => (
-                                <div key={colIndex}>
-                                  {column.rows.map((row, rowIndex) => (
-                                    <ColumnItemButton
-                                      key={rowIndex}
-                                      ariaLabel={row.ariaLabel}
-                                      fullWidth
-                                      to={row.path}
-                                      align={"left"}
-                                      onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
-                                    >
-                                      {determineName(row, current_user)}
-                                    </ColumnItemButton>
-                                  ))}
-                                </div>
+            <HeaderButton onClick={toggleSearch}>
+              <Search sx={{ marginTop: "-4px", fontSize: "20px" }} />
+            </HeaderButton>
+            <HeaderButton
+              onClick={() => dispatch(setCartDrawer(true))}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                ...(cartItems.length > 0 && isTabletUp
+                  ? {
+                      animation: "bob 2s infinite",
+                      boxShadow: theme.shadows[4],
+                      backgroundColor: theme.palette.primary.main,
+                    }
+                  : {}),
+              }}
+            >
+              <ShoppingCart sx={{ marginTop: "-4px" }} />
+              <Box component="span" sx={{ marginLeft: "1px" }}>
+                {getCartQuantity(cartItems)}
+              </Box>
+            </HeaderButton>
+            {isTabletUp &&
+              rightNav(dispatch).map(
+                (item, index) =>
+                  item.permissions(current_user) && (
+                    <div key={index} className="dropdown">
+                      <HeaderButton
+                        ariaLabel={item.ariaLabel}
+                        onClick={() => item.onClick && item.onClick(current_user)}
+                      >
+                        {determineName(item, current_user)}
+                      </HeaderButton>
+                      {determineDropdown(item, current_user) && (
+                        <ul className="dropdown-content hover_fade_in w-175px">
+                          {item.columns.map((column, colIndex) => (
+                            <div key={colIndex}>
+                              {column.rows.map((row, rowIndex) => (
+                                <ColumnItemButton
+                                  key={rowIndex}
+                                  ariaLabel={row.ariaLabel}
+                                  fullWidth
+                                  to={row.path}
+                                  align={"left"}
+                                  onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
+                                >
+                                  {determineName(row, current_user)}
+                                </ColumnItemButton>
                               ))}
-                            </ul>
-                          )}
-                        </div>
-                      )
-                  )}
-              </div>
-            </div>
+                            </div>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )
+              )}
           </Box>
         </Container>
       </Toolbar>
