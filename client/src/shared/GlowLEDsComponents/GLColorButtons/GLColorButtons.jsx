@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, ToggleButton, ToggleButtonGroup, useTheme, useMediaQuery, lighten } from "@mui/material";
 
-const GLColorButtons = ({ ariaLabel, value, onChange, options }) => {
+const GLColorButtons = ({ ariaLabel, value, onChange, options, disabledOptions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -44,6 +44,7 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options }) => {
         <ToggleButton
           key={option.name}
           value={option.name}
+          disabled={disabledOptions?.includes(option.name)}
           sx={{
             backgroundColor: option.name === "Clear" ? "transparent" : option.normalizedColorCode,
             borderRadius: "10px !important",
@@ -72,6 +73,10 @@ const GLColorButtons = ({ ariaLabel, value, onChange, options }) => {
             "&.Mui-selected:hover": {
               backgroundColor:
                 option.name === "Clear" ? "rgba(255, 255, 255, 0.3)" : lighten(option.normalizedColorCode, 0.1),
+            },
+            "&.Mui-disabled": {
+              opacity: 0.5,
+              cursor: "not-allowed",
             },
           }}
         />

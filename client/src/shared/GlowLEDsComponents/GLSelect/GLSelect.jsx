@@ -24,7 +24,11 @@ const GLSelect = ({ value, onChange, placeholder, options, getOptionLabel, value
             {placeholder} {options[0].isAddOn && "(Optional +$)"}
           </MenuItem>
           {options.map((option, index) => (
-            <MenuItem key={index} value={valueKey ? option[valueKey] : option}>
+            <MenuItem
+              key={index}
+              value={valueKey ? option[valueKey] : option}
+              disabled={option?.product?.count_in_stock === 0}
+            >
               {getOptionLabel(option)}
             </MenuItem>
           ))}

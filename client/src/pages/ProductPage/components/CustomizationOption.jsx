@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Box, Checkbox, FormControlLabel, useTheme, IconButton, Popover, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography, IconButton, Popover } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOption, setIsAddonChecked } from "../productPageSlice";
-import "react-medium-image-zoom/dist/styles.css";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
@@ -16,10 +15,8 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
 
   const handleChange = value => {
     const fullSelectedOption = option.values.find(opt => opt.name === value);
-    dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
-
-    // Clear the validation error when a valid option is selected
-    if (fullSelectedOption) {
+    if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
+      dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
       updateValidationError(index, null);
     }
   };
@@ -49,6 +46,8 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
   const id = open ? `info-popover-${index}` : undefined;
 
   const renderOptionComponent = () => {
+    const inStockOptions = option.values.filter(opt => opt.product.count_in_stock > 0);
+
     switch (option.optionType) {
       case "dropdown":
         return (
@@ -63,6 +62,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
               <>
                 {option.name}
                 {option.additionalCost > 0 && ` (+ $${option.additionalCost})`}
+                {option.product.count_in_stock === 0 && " (Out of Stock)"}
               </>
             )}
           />
@@ -74,6 +74,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
             value={selectedOption?.name}
             onChange={e => handleChange(e.target.value)}
             options={option.values}
+            disabledOptions={option.values.filter(opt => opt.product.count_in_stock === 0).map(opt => opt.name)}
           />
         );
       case "colors":
@@ -84,6 +85,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
             onChange={e => handleChange(e.target.value)}
             options={option.values}
             isAddOn={option.isAddOn}
+            disabledOptions={option.values.filter(opt => opt.product.count_in_stock === 0).map(opt => opt.name)}
           />
         );
       default:
