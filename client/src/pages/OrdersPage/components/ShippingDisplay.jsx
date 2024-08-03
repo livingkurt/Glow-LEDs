@@ -4,6 +4,7 @@ import { sendEmail } from "../ordersPageHelpers";
 import { determine_service, toTitleCaseSnakeCase } from "../../PlaceOrderPage/placeOrderHelpers";
 
 const ShippingDisplay = ({ shipping }) => {
+  console.log({ shipping });
   return (
     <Box>
       <Grid container spacing={1}>
@@ -82,6 +83,17 @@ const ShippingDisplay = ({ shipping }) => {
               </Typography>
               <Typography component="label" className=" mv-0px">
                 ${shipping.shipping_rate.retail_rate || shipping.shipping_rate.rate}
+              </Typography>
+            </Grid>
+            <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+              <Typography component="label" className="mv-0px mr-5px">
+                Dimensions:
+              </Typography>
+              <Typography component="label" className=" mv-0px">
+                {shipping?.shipping_rate?._params?.shipment?.parcel?.length} x{" "}
+                {shipping?.shipping_rate?._params?.shipment?.parcel?.width} x{" "}
+                {shipping?.shipping_rate?._params?.shipment?.parcel?.height} -{" "}
+                {shipping?.shipping_rate?._params?.shipment?.parcel?.weight} lbs
               </Typography>
             </Grid>
           </>

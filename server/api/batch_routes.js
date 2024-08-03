@@ -5212,4 +5212,38 @@ router.route("/finalize_display_image").put(async (req, res) => {
     });
   }
 });
+
+router.route("/migrate_translucent_white").put(async (req, res) => {
+  try {
+    const result = await Order.updateMany(
+      {
+        "orderItems.selectedOptions": {
+          $elemMatch: {
+            name: "Translucent White",
+            colorCode: { $ne: "#abaeb5" },
+          },
+        },
+      },
+      {
+        $set: {
+          "orderItems.$[].selectedOptions.$[option].colorCode": "#abaeb5",
+        },
+      },
+      {
+        arrayFilters: [{ "option.name": "Translucent White" }],
+        multi: true,
+      }
+    );
+
+    res.status(200).json({
+      message: "Migration completed",
+      matchedCount: result.matchedCount,
+      modifiedCount: result.modifiedCount,
+    });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

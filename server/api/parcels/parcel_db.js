@@ -2,6 +2,7 @@ import { Parcel } from "../parcels";
 
 export default {
   findAll_parcels_db: async (filter, sort, limit, page) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Parcel.find(filter)
         .sort(sort)
@@ -9,6 +10,7 @@ export default {
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

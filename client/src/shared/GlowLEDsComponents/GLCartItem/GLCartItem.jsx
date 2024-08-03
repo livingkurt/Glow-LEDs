@@ -27,6 +27,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
       {processedOptions?.map((option, optionIndex) => {
         const bgColor = option.normalizedColorCode || theme.palette.background.default;
         if (!option.name) return null;
+        console.log({ name: option.name, bgColor });
         return (
           <Chip
             key={optionIndex}

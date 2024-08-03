@@ -9,14 +9,16 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {
   try {
-    return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+    console.log("Buying label with:", { shipment_id, shipping_rate_id: shipping_rate?.id });
+    if (!shipment_id || !shipping_rate?.id) {
+      throw new Error("Invalid shipment_id or shipping_rate");
     }
+    return await EasyPost.Shipment.buy(shipment_id, shipping_rate.id);
+  } catch (error) {
+    console.log({ buyLabel: error });
+    throw error;
   }
 };
-
 const maxRetries = 3;
 let retries = 0;
 
@@ -37,6 +39,7 @@ async function fetchTracker(label) {
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }) => {
   try {
     const tracker = await fetchTracker(label);
+    console.log({ tracker });
 
     if (isReturnTracking) {
       order.shipping.return_shipment_tracker = label.tracker.id;
@@ -160,8 +163,11 @@ export const createLabel = async ({ order, shipping_rate }) => {
 
 export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
+    console.log({ order, returnLabel, returnToHeadquarters });
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
+    console.log({ parcels });
     const parcel = determine_parcel(order.orderItems, parcels);
+    console.log({ parcel });
 
     const customerAddress = {
       verify: ["delivery"],
