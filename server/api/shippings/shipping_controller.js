@@ -13,6 +13,7 @@ export default {
       }
       return res.status(404).send({ message: "Shipping Not Found" });
     } catch (error) {
+      console.log({ buy_label_shipping_c: error });
       const errorMessage = error instanceof Error ? error.message : "Error Finding Shipping";
       res.status(500).send({ error, message: errorMessage });
     }

@@ -47,7 +47,9 @@ const OrdersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const orderTable = useSelector(state => state.orders.orderTable);
-  const { selectedRows } = orderTable;
+  const { selectedRows, rows } = orderTable;
+
+  console.log({ rows });
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
 

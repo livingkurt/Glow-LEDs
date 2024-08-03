@@ -1,5 +1,6 @@
 export const determine_parcel = (orderItems, parcels) => {
   const dimensions = getOrderItemDimensions(orderItems);
+  console.log({ dimensions });
 
   const suitableParcel = findSuitableParcel(dimensions, parcels);
 
@@ -42,7 +43,7 @@ const findSuitableParcel = (dimensions, parcels) => {
     if (itemsVolume <= parcelVolume) {
       const packedItems = packItems(dimensions, parcel);
 
-      if (packedItems.length === dimensions.length) {
+      if (packedItems?.length === dimensions?.length) {
         return parcel;
       }
     }
