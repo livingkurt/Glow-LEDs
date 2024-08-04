@@ -119,11 +119,6 @@ export const cartFormFields = ({ products, users, cart }) => {
             label: "Sale End Date",
             labelProp: "sale_end_date",
           },
-          package_volume: {
-            type: "number",
-            label: "Package Volume",
-            labelProp: "package_volume",
-          },
 
           count_in_stock: {
             type: "number",
@@ -148,6 +143,11 @@ export const cartFormFields = ({ products, users, cart }) => {
                 type: "number",
                 label: "Height",
                 labelProp: "height",
+              },
+              package_volume: {
+                type: "number",
+                label: "Package Volume",
+                labelProp: "package_volume",
               },
               package_length: {
                 type: "number",
