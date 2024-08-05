@@ -1,16 +1,17 @@
-import { Typography, Grid, Container, Paper } from "@mui/material";
+import { Typography, Grid, Container, Paper, useTheme } from "@mui/material";
 import React from "react";
 
 const CategoryBanner = ({ banner }) => {
+  const theme = useTheme();
   if (!banner) return null;
   console.log({ banner });
 
   return (
     <Paper
       sx={{
-        backgroundColor: banner.background_color,
+        backgroundColor: banner.background_color || theme.palette.primary.main,
         color: "white",
-        padding: "2rem",
+        py: "2rem",
       }}
       elevation={5}
     >

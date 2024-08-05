@@ -1,6 +1,6 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const contentFormFields = ({ content, products, categories }) => {
+export const contentFormFields = ({ content, products, categorys }) => {
   return {
     name: { type: "text", label: "Name" },
     home_page: {
@@ -225,19 +225,19 @@ export const contentFormFields = ({ content, products, categories }) => {
               // tag: {
               //   type: "autocomplete_single",
               //   label: "Category",
-              //   options: categories,
+              //   options: categorys,
               //   labelProp: "name",
               // },
-              category: {
+              tag: {
                 type: "autocomplete_single",
-                label: "Category",
+                label: "Tag",
                 labelProp: "name",
                 getOptionLabel: option => {
                   if (typeof option.name === "string") {
                     return toCapitalize(option.name);
                   }
                 },
-                options: categories,
+                options: categorys,
               },
             },
           },

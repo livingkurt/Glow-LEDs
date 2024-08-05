@@ -99,11 +99,6 @@ export const cartFormFields = ({ products, users, cart }) => {
             label: "Size",
             labelProp: "size",
           },
-          preorder: {
-            type: "checkbox",
-            label: "Preorder",
-            labelProp: "preorder",
-          },
           sale_price: {
             type: "number",
             label: "Sale Price",
@@ -118,11 +113,6 @@ export const cartFormFields = ({ products, users, cart }) => {
             type: "date",
             label: "Sale End Date",
             labelProp: "sale_end_date",
-          },
-          package_volume: {
-            type: "number",
-            label: "Package Volume",
-            labelProp: "package_volume",
           },
 
           count_in_stock: {
@@ -148,6 +138,11 @@ export const cartFormFields = ({ products, users, cart }) => {
                 type: "number",
                 label: "Height",
                 labelProp: "height",
+              },
+              package_volume: {
+                type: "number",
+                label: "Package Volume",
+                labelProp: "package_volume",
               },
               package_length: {
                 type: "number",
