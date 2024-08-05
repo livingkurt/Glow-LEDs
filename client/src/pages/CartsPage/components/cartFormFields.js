@@ -99,11 +99,6 @@ export const cartFormFields = ({ products, users, cart }) => {
             label: "Size",
             labelProp: "size",
           },
-          preorder: {
-            type: "checkbox",
-            label: "Preorder",
-            labelProp: "preorder",
-          },
           sale_price: {
             type: "number",
             label: "Sale Price",

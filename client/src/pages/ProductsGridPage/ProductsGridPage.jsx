@@ -33,27 +33,33 @@ const ProductGridPage = () => {
   if (isLoading) return <ProductsGridPageSkeletons />;
   if (isError) return <Typography>Error loading products</Typography>;
 
-  const categoryBanner = currentContent?.products_grid_page?.category_banners?.find(
-    banner => banner?.title?.toLowerCase() === selectedTags[0]?.toLowerCase()
+  const categoryBanner = currentContent?.products_grid_page?.category_banners?.find(banner =>
+    selectedTags.some(tag => tag.toLowerCase() === banner?.tag.pathname?.toLowerCase())
   );
+
+  const getPageTitle = () => {
+    if (categoryBanner) {
+      return isMobile ? categoryBanner.title : null;
+    } else if (category) {
+      return toTitleCase(category);
+    } else if (selectedTags.length > 0) {
+      return toTitleCase(selectedTags.join(", "));
+    } else {
+      return currentContent?.products_grid_page?.title;
+    }
+  };
 
   return (
     <Box>
       {!isMobile && <CategoryBanner banner={categoryBanner} />}
       <Container maxWidth="xl">
-        {(isMobile || !categoryBanner) && (
-          <>
-            <Typography variant="h4" align="center" pt={2}>
-              {(category && toTitleCase(category)) ||
-                (selectedTags.length > 0 && categoryBanner?.title) ||
-                currentContent?.products_grid_page?.title}
-            </Typography>
-            {currentContent?.products_grid_page?.subtitle && (
-              <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
-                {currentContent?.products_grid_page?.subtitle}
-              </Typography>
-            )}
-          </>
+        <Typography variant="h4" align="center" pt={2}>
+          {getPageTitle()}
+        </Typography>
+        {!categoryBanner && currentContent?.products_grid_page?.subtitle && (
+          <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+            {currentContent.products_grid_page.subtitle}
+          </Typography>
         )}
 
         <ProductsGridPageFilters
@@ -80,10 +86,10 @@ const ProductGridPage = () => {
             ))
           ) : (
             <>
-              <Typography variant="h5" textAlign={"center"} width={"100%"} mt={4} gutterBottom>
+              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
                 No products found for matching criteria
               </Typography>
-              <Typography variant="subtitle2" textAlign={"center"} width={"100%"}>
+              <Typography variant="subtitle2" textAlign="center" width="100%">
                 Try removing some filters to find what you're looking for
               </Typography>
             </>
