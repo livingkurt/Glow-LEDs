@@ -9,7 +9,6 @@ const routes = [
   { path: "/checkout/order/:id", element: "OrderPage", exact: true },
 
   { path: "/collections/all/products", element: "ProductsGridPage", exact: true },
-  { path: "/collections/all/products/shop_by_chip", element: "ProductsGridByChipPage" },
   {
     path: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?",
     element: "ProductsGridPage",
@@ -64,7 +63,6 @@ const adminRoutes = [
   { path: "/secure/glow/features", element: "FeaturesPage" },
   { path: "/secure/glow/carts", element: "CartsPage" },
   { path: "/secure/glow/contents", element: "ContentsPage" },
-  { path: "/secure/glow/display_products", element: "ProductsDisplayPage" },
   { path: "/secure/glow/emails/announcement/:id", element: "AnnouncementEmail" },
   { path: "/secure/glow/emails", element: "EmailsPage" },
   { path: "/secure/glow/promos", element: "PromosPage" },
@@ -72,7 +70,6 @@ const adminRoutes = [
   { path: "/secure/glow/teams", element: "TeamsPage" },
   { path: "/secure/glow/teams/category/:category", element: "TeamsPage" },
   { path: "/secure/glow/chips", element: "ChipsPage" },
-  { path: "/secure/glow/product_display", element: "ProductsDisplayPage" },
   { path: "/secure/glow/tutorials", element: "TutorialsPage" },
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },

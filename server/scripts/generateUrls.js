@@ -11,7 +11,6 @@ const routes = [
   { path: "/checkout/order/:id", component: "OrderPage", exact: true },
 
   { path: "/collections/all/products", component: "ProductsGridPage", exact: true },
-  { path: "/collections/all/products/shop_by_chip", component: "ProductsGridByChipPage" },
   {
     path: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?",
     component: "ProductsGridPage",
