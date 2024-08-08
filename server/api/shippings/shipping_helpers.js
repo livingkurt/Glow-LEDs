@@ -194,8 +194,8 @@ export const calculateTotalOunces = cartItems => {
   return totalOunces;
 };
 
-export const covertToOunces = weight => {
-  const weightInOunces = (weight?.weight_pounds * 16 || 0) + (weight?.weight_ounces || 0);
+export const covertToOunces = item => {
+  const weightInOunces = (item?.dimensions.weight_pounds * 16 || 0) + (item?.dimensions.weight_ounces || 0);
   return weightInOunces;
 };
 
