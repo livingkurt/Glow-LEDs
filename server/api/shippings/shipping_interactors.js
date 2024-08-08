@@ -8,6 +8,7 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {
+  console.log({ shipment_id, shipping_rate });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
@@ -51,15 +52,19 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.shipping.shipping_label = label;
       order.shipping.shipping_rate = shipping_rate;
       order.shipping.shipment_id = label.id;
-      const hasFiniteStock = order.orderItems.some(item => item.finite_stock === true);
-      const hasInfiniteStock = order.orderItems.some(item => item.finite_stock === false);
 
-      if (hasFiniteStock && !hasInfiniteStock) {
-        order.status = "label_created";
-      }
+      const hasFiniteStock = order.orderItems.some(item => item.finite_stock === true);
+      const hasInfiniteStock = order.orderItems.some(
+        item => item.finite_stock === false || item.finite_stock === undefined
+      );
 
       if (hasInfiniteStock) {
         order.status = "crafting";
+      } else if (hasFiniteStock) {
+        order.status = "label_created";
+      } else {
+        // You might want to set a default status here or handle this case differently
+        order.status = "label_created"; // Default to this if all are undefined
       }
     }
 

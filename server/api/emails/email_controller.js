@@ -590,55 +590,60 @@ export default {
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
 
         const updateOrder = status => {
-          order.status = status;
-          order[`${toCamelCase(status)}At`] = new Date();
-          order.save();
+          if (order.status !== status) {
+            order.status = status;
+            order[`${toCamelCase(status)}At`] = new Date();
+            return order.save();
+          }
+          return Promise.resolve(order);
         };
 
-        const body = {
-          email: {},
-          title: determine_status(tracker.status),
-          order: order,
-          status: tracker.status,
-          tracker: tracker,
-          // tracking_details: tracker.tracking_details.reverse()[0]
-        };
-        const mailOptions = {
-          from: config.DISPLAY_INFO_EMAIL,
-          to: order.shipping.email,
-          subject: determine_status(tracker.status),
-          html: App({
-            body: shipping_status(body),
-            unsubscribe: false,
-          }),
-        };
-        if (
-          tracker.status === "delivered" ||
-          tracker.status === "out_for_delivery" ||
-          (tracker.status === "in_transit" && order.status === "shipped")
-        ) {
-          if (tracker.status === "in_transit" && order.status !== "in_transit") {
-            sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
-          } else if (tracker.status !== "in_transit") {
-            sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+        const shouldSendEmail = (trackerStatus, orderStatus) => {
+          if (trackerStatus === "delivered" || trackerStatus === "out_for_delivery") {
+            return true;
           }
+          if (trackerStatus === "in_transit" && orderStatus === "shipped") {
+            return true;
+          }
+          return false;
+        };
+
+        if (shouldSendEmail(tracker.status, order.status)) {
+          const body = {
+            email: {},
+            title: determine_status(tracker.status),
+            order: order,
+            status: tracker.status,
+            tracker: tracker,
+          };
+          const mailOptions = {
+            from: config.DISPLAY_INFO_EMAIL,
+            to: order.shipping.email,
+            subject: determine_status(tracker.status),
+            html: App({
+              body: shipping_status(body),
+              unsubscribe: false,
+            }),
+          };
+
+          await sendEmail(mailOptions, res, "info", `Order Status Email Sent to ${order.shipping.email}`);
         }
+
         if (tracker.status === "delivered") {
-          updateOrder("delivered");
+          await updateOrder("delivered");
         } else if (tracker.status === "out_for_delivery") {
-          updateOrder("out_for_delivery");
-        } else if (tracker.status === "in_transit" && order.status !== "in_transit") {
-          updateOrder("in_transit");
-        } else if (tracker.status === "in_transit") {
-          updateOrder("shipped");
+          await updateOrder("out_for_delivery");
+        } else if (tracker.status === "in_transit" && order.status === "shipped") {
+          await updateOrder("in_transit");
         }
+
+        res.status(200).send("Tracker event processed successfully");
       } else {
         res.status(200).send("Not a Tracker event, so nothing to do here for now...");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.error("Error processing shipping status:", error);
+      res.status(500).send("Error processing shipping status");
     }
   },
 };
