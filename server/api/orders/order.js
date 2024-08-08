@@ -26,9 +26,9 @@ const orderItemSchema = new mongoose.Schema(
     dimensions: {
       weight_pounds: { type: Number },
       weight_ounces: { type: Number },
-      length: { type: Number },
-      width: { type: Number },
-      height: { type: Number },
+      product_length: { type: Number },
+      product_width: { type: Number },
+      product_height: { type: Number },
       package_length: { type: Number },
       package_width: { type: Number },
       package_height: { type: Number },
