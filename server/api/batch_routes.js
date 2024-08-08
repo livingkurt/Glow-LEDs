@@ -3633,6 +3633,50 @@ router.route("/migrate_dimensions").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_order_dimensions").put(async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate("orderItems.product");
+    let updatedCount = 0;
+
+    for (const order of orders) {
+      let isOrderUpdated = false;
+
+      for (const item of order.orderItems) {
+        if (item.product) {
+          const product = await Product.findById(item.product);
+
+          if (product) {
+            item.dimensions = {
+              weight_pounds: product.dimensions.weight_pounds,
+              weight_ounces: product.dimensions.weight_ounces,
+              product_length: product.dimensions.product_length,
+              product_width: product.dimensions.product_width,
+              product_height: product.dimensions.product_height,
+              package_length: product.dimensions.package_length,
+              package_width: product.dimensions.package_width,
+              package_height: product.dimensions.package_height,
+              package_volume: product.dimensions.package_volume,
+            };
+            isOrderUpdated = true;
+          }
+        }
+      }
+
+      if (isOrderUpdated) {
+        await order.save();
+        updatedCount++;
+      }
+    }
+
+    res
+      .status(200)
+      .send({ message: `Dimension fields migration completed successfully. Updated ${updatedCount} orders.` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 router.route("/migrate_meta_data").put(async (req, res) => {
   try {
     const productsToUpdate = await Product.aggregate([

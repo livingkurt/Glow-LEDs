@@ -124,26 +124,6 @@ export const cartFormFields = ({ products, users, cart }) => {
             type: "object",
             title: "Dimensions",
             fields: {
-              length: {
-                type: "number",
-                label: "Length",
-                labelProp: "length",
-              },
-              width: {
-                type: "number",
-                label: "Width",
-                labelProp: "width",
-              },
-              height: {
-                type: "number",
-                label: "Height",
-                labelProp: "height",
-              },
-              package_volume: {
-                type: "number",
-                label: "Package Volume",
-                labelProp: "package_volume",
-              },
               package_length: {
                 type: "number",
                 label: "Package Length",
@@ -158,6 +138,26 @@ export const cartFormFields = ({ products, users, cart }) => {
                 type: "number",
                 label: "Package Height",
                 labelProp: "package_height",
+              },
+              package_volume: {
+                type: "number",
+                label: "Package Volume",
+                labelProp: "package_volume",
+              },
+              product_length: {
+                type: "number",
+                label: "Product Length",
+                labelProp: "length",
+              },
+              product_width: {
+                type: "number",
+                label: "Product Width",
+                labelProp: "width",
+              },
+              product_height: {
+                type: "number",
+                label: "Product Height",
+                labelProp: "height",
               },
               weight_pounds: {
                 type: "number",
