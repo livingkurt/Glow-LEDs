@@ -46,8 +46,6 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
   const id = open ? `info-popover-${index}` : undefined;
 
   const renderOptionComponent = () => {
-    const inStockOptions = option.values.filter(opt => opt.product.count_in_stock > 0);
-
     switch (option.optionType) {
       case "dropdown":
         return (
@@ -62,7 +60,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
               <>
                 {option.name}
                 {option.additionalCost > 0 && ` (+ $${option.additionalCost})`}
-                {option.product.count_in_stock === 0 && " (Out of Stock)"}
+                {option.product?.count_in_stock === 0 && " (Out of Stock)"}
               </>
             )}
           />
@@ -74,7 +72,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
             value={selectedOption?.name}
             onChange={e => handleChange(e.target.value)}
             options={option.values}
-            disabledOptions={option.values.filter(opt => opt.product.count_in_stock === 0).map(opt => opt.name)}
+            disabledOptions={option.values.filter(opt => opt.product?.count_in_stock === 0).map(opt => opt.name)}
           />
         );
       case "colors":
@@ -85,7 +83,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
             onChange={e => handleChange(e.target.value)}
             options={option.values}
             isAddOn={option.isAddOn}
-            disabledOptions={option.values.filter(opt => opt.product.count_in_stock === 0).map(opt => opt.name)}
+            disabledOptions={option.values.filter(opt => opt.product?.count_in_stock === 0).map(opt => opt.name)}
           />
         );
       default:

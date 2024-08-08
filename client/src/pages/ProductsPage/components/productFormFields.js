@@ -10,6 +10,12 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
       align: "center",
       variant: "h6",
     },
+    _id: {
+      type: "text",
+      label: "ID",
+      permissions: ["admin"],
+      disabled: true,
+    },
     name: {
       type: "text",
       label: "Name",

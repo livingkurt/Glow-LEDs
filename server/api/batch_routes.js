@@ -4051,6 +4051,69 @@ router.route("/get_products").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+router.route("/update_diffuser_caps").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false, category: "diffuser_caps", hidden: false });
+
+    // const products = await Product.updateMany(
+    //   { deleted: false, category: "diffuser_caps", hidden: false },
+    //   { $set: { isVariation: false } }
+    // );
+    res.status(200).json(products.map(product => product.name));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/get_diffuser_caps").put(async (req, res) => {
+  try {
+    const product = await Product.findOne({ name: "Diffuser Caps + Adapters Starter Kit V4" });
+    const products = await Product.find({ deleted: false, category: "diffuser_caps", hidden: false });
+
+    res.status(200).json({ products: products.map(product => product.name), product });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/update_diffuser_caps_kit").put(async (req, res) => {
+  try {
+    const mainProduct = await Product.findOne({ name: "Diffuser Caps + Adapters Starter Kit V4" });
+    const capDesignProducts = await Product.find({ deleted: false, category: "diffuser_caps", hidden: false });
+
+    if (!mainProduct) {
+      return res.status(404).json({ message: "Main product not found" });
+    }
+
+    // Find the "Cap Design" option
+    const capDesignOption = mainProduct.options.find(option => option.name === "Cap Design");
+
+    if (!capDesignOption) {
+      return res.status(404).json({ message: "Cap Design option not found" });
+    }
+
+    // Replace the Cap Design option values based on the found products
+    capDesignOption.values = capDesignProducts.map(product => ({
+      name: product.name,
+      product: product._id,
+      isDefault: false,
+      additionalCost: 0,
+    }));
+
+    // Save the updated main product
+    await mainProduct.save();
+
+    res.status(200).json({
+      message: "Diffuser Caps Kit updated successfully",
+      updatedOptions: capDesignOption.values,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 router.route("/fetch_all_replace_price_product_options").get(async (req, res) => {
   try {
     const products = await Product.aggregate([

@@ -424,7 +424,7 @@ export const handlePromoCode = (value, order, dispatch) => {
 
 export const nextStatus = (currentStatus, orderItems) => {
   const hasFiniteStock = orderItems.some(item => item.finite_stock === true);
-  const hasInfiniteStock = orderItems.some(item => item.finite_stock === false);
+  const hasInfiniteStock = orderItems.some(item => item.finite_stock === false || item.finite_stock === undefined);
 
   if (hasFiniteStock && !hasInfiniteStock) {
     switch (currentStatus) {
@@ -444,6 +444,18 @@ export const nextStatus = (currentStatus, orderItems) => {
       case "crafting":
         return "crafted";
       case "crafted":
+        return "packaged";
+      default:
+        return currentStatus;
+    }
+  }
+
+  // Handle the case when all items have undefined finite_stock
+  if (!hasFiniteStock && !hasInfiniteStock) {
+    switch (currentStatus) {
+      case "paid":
+        return "label_created";
+      case "label_created":
         return "packaged";
       default:
         return currentStatus;
