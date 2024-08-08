@@ -8,7 +8,6 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {
-  console.log({ shipment_id, shipping_rate });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
