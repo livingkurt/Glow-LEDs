@@ -172,7 +172,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
                 component={Link}
                 to={`/collections/all/products/${item.pathname}`}
               >
-                {item.name}
+                {item.quantity > 1 ? `${item.quantity}x` : ""} {item.name}
               </Typography>
             </Grid>
             <Grid item>{renderOptions()}</Grid>
