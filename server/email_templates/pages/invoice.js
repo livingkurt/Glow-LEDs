@@ -89,7 +89,7 @@ export default ({ order, isSponsor }) => {
                         <tr>
                           <td style="font-family:helvetica;width:100%">
                              <div style="font-size:25px;font-weight:600;color:black">
-                              ${item.name}
+                              ${item.quantity > 1 ? item.quantity + "x" : ""} ${item.name}
                               ${item.selectedOptions
                                 .map((option, optionIndex) => {
                                   if (option.name && item.currentOptions[optionIndex]) {
@@ -118,7 +118,7 @@ export default ({ order, isSponsor }) => {
                           <td style="font-family:helvetica;width:100%;white-space:nowrap">
                             <p style="color:black;line-height:150%;font-size:25px;font-weight:600;margin:0 0 0 15px"
                               align="right">
-                             ${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "black", order?.user?.isWholesaler)}
+                             ${email_sale_price_switch(item, "black", order?.user?.isWholesaler)}
                             </p>
                           </td>
                         </tr>
