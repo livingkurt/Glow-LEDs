@@ -2,8 +2,17 @@ import React from "react";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const RecentlyViewed = () => {
+const RecentlyViewed = ({ currentProduct }) => {
   const recently_viewed_products = JSON.parse(sessionStorage.getItem("recently_viewed")) || [];
+  console.log({ recently_viewed_products, currentProduct });
+
+  // Filter out the current product from the recently viewed list
+  const filteredProducts = recently_viewed_products.filter(product => product?.name !== currentProduct?.name);
+
+  // If there are no products to display after filtering, don't render the component
+  if (filteredProducts.length === 0) {
+    return null;
+  }
 
   return (
     <Box sx={{ my: 4 }}>
@@ -24,12 +33,13 @@ const RecentlyViewed = () => {
           },
         }}
       >
-        {recently_viewed_products.map(product => (
+        {filteredProducts.map(product => (
           <Box
             key={product.id}
             sx={{
-              minWidth: "250px", // Change minWidth to 250px
-              width: "100%", // Add width: 100% to make the item fill the available space
+              minWidth: "250px",
+              maxWidth: "300px",
+              width: "100%",
               marginRight: "20px",
               "&:last-child": {
                 marginRight: 0,

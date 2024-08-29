@@ -277,7 +277,7 @@ const ProductPage = () => {
                     <SupportBanner />
                   </Grid>
                   <Grid item xs={12}>
-                    <RecentlyViewed />
+                    <RecentlyViewed currentProduct={product} />
                   </Grid>
                 </Grid>
               </Container>
