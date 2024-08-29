@@ -92,6 +92,21 @@ export const updateProductDetailsFromOption = (state, selectedOption, option) =>
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
+  if (product?.sale.sale_price > 0) {
+    state.customizedProduct.sale_price = product.sale.sale_price;
+  }
+  if (product?.sale.sale_start_date) {
+    state.customizedProduct.sale_start_date = product.sale.sale_start_date;
+  }
+  if (product?.sale.sale_end_date) {
+    state.customizedProduct.sale_end_date = product.sale.sale_end_date;
+  }
+  if (product?.wholesale_price > 0) {
+    state.customizedProduct.wholesale_price = product.wholesale_price;
+  }
+  if (product?.wholesale_product) {
+    state.customizedProduct.wholesale_product = product.wholesale_product;
+  }
   if (product?.dimensions) {
     state.customizedProduct.dimensions = product.dimensions;
   }
