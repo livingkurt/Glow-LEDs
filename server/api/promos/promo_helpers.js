@@ -33,10 +33,14 @@ export const determineCartTotal = (cartItems, isWholesaler) => {
 };
 
 export const containsIncludedItems = (cartItems, includedProducts, includedCategories) => {
-  return cartItems.some(item => includedProducts.includes(item.product) || includedCategories.includes(item.category));
+  return cartItems.some(
+    item => includedProducts.includes(item.product._id) || includedCategories.includes(item.category)
+  );
 };
 
 // Function to check if the cart contains only excluded products/categories
 export const containsOnlyExcludedItems = (cartItems, excludedProducts, excludedCategories) => {
-  return cartItems.every(item => excludedProducts.includes(item.product) || excludedCategories.includes(item.category));
+  return cartItems.every(
+    item => excludedProducts.includes(item.product._id) || excludedCategories.includes(item.category)
+  );
 };
