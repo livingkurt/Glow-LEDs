@@ -182,7 +182,12 @@ export default ({ email, order }) => {
 																												 <div style="font-size:25px;font-weight:600;color:black">
 																													${item.selectedOptions
                                                             .map((option, optionIndex) => {
-                                                              if (option.name && item.currentOptions[optionIndex]) {
+                                                              if (
+                                                                option.name &&
+                                                                option.name.length > 0 &&
+                                                                item.currentOptions[optionIndex]?.name &&
+                                                                item.currentOptions[optionIndex]?.name.length > 0
+                                                              ) {
                                                                 const backgroundColor =
                                                                   option?.filament?.colorCode ||
                                                                   option?.colorCode ||

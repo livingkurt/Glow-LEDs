@@ -239,31 +239,48 @@ export default ({ email, order, status, message_to_user }) => {
                                             ${item.name}
                                           </span>
                                           <br />
-                                          <div style='margin-top: 5px;'>
+                                        		 <div style="font-size:25px;font-weight:600;color:black">
                                             ${item.selectedOptions
-                                              ?.map(
-                                                (option, optionIndex) => `
-                                              <span style='
+                                              .map((option, optionIndex) => {
+                                                if (
+                                                  option.name &&
+                                                  option.name.length > 0 &&
+                                                  item.currentOptions[optionIndex]?.name &&
+                                                  item.currentOptions[optionIndex]?.name.length > 0
+                                                ) {
+                                                  const backgroundColor =
+                                                    option?.filament?.colorCode || option?.colorCode || "white";
+                                                  const textColor =
+                                                    backgroundColor !== "white"
+                                                      ? isColorLight(backgroundColor)
+                                                        ? "black"
+                                                        : "white"
+                                                      : "black";
+                                                  return `
+                                                    <span style='
                                                 display: inline-block;
                                                 padding: 4px 8px;
                                                 margin: 2px;
                                                 border-radius: 16px;
                                                 font-size: 12px;
                                                 font-weight: 500;
-                                                background-color: ${option.colorCode || "#FFF"};
-                                                color: ${option.colorCode ? (isColorLight(option.colorCode) ? "black" : "white") : "black"};
+                                                background-color: ${backgroundColor};
+                                                color: ${textColor};
                                               '>
                                                 ${item.currentOptions[optionIndex].name}: ${option.name}
                                               </span>
-                                            `
-                                              )
+                                                    `;
+                                                }
+                                                return "";
+                                              })
+                                              .filter(Boolean)
                                               .join("")}
-                                          </div>
+                                            </div>
                                         </td>
-                                        <td style='font-family:helvetica;width:100%;white-space:nowrap;'>
+                                       	<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
                                           <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
                                             align="right">
-                                            ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
+                                            ${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
                                           </p>
                                         </td>
                                       </tr>

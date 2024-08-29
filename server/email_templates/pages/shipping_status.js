@@ -77,15 +77,21 @@ const createOrderItemsHTML = (orderItems, isWholesaler) => {
                             height="70" style='border-radius: 8px; object-fit: cover;' title="Product Image" />
                         </div>
                       </td>
-                      <td style='font-family:helvetica;width:100%;'>
+                     <td style='font-family:helvetica;width:100%;'>
                         <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
                           ${item.name}
                         </span>
                         <br />
-                        <div style="font-size:25px;font-weight:600;color:black">
+
+                          <div style="font-size:25px;font-weight:600;color:black">
                           ${item.selectedOptions
                             .map((option, optionIndex) => {
-                              if (option.name && item.currentOptions[optionIndex]) {
+                              if (
+                                option.name &&
+                                option.name.length > 0 &&
+                                item.currentOptions[optionIndex]?.name &&
+                                item.currentOptions[optionIndex]?.name.length > 0
+                              ) {
                                 const backgroundColor = option?.filament?.colorCode || option?.colorCode || "white";
                                 const textColor =
                                   backgroundColor !== "white"
@@ -95,24 +101,24 @@ const createOrderItemsHTML = (orderItems, isWholesaler) => {
                                     : "black";
                                 return `
                                   <span style='
-                                    display: inline-block;
-                                    padding: 4px 8px;
-                                    margin: 2px;
-                                    border-radius: 16px;
-                                    font-size: 12px;
-                                    font-weight: 500;
-                                    background-color: ${backgroundColor};
-                                    color: ${textColor};
-                                  '>
-                                    ${item.currentOptions[optionIndex].name}: ${option.name}
-                                  </span>
-                                `;
+                              display: inline-block;
+                              padding: 4px 8px;
+                              margin: 2px;
+                              border-radius: 16px;
+                              font-size: 12px;
+                              font-weight: 500;
+                              background-color: ${backgroundColor};
+                              color: ${textColor};
+                            '>
+                              ${item.currentOptions[optionIndex].name}: ${option.name}
+                            </span>
+                                  `;
                               }
                               return "";
                             })
                             .filter(Boolean)
                             .join("")}
-                        </div>
+                          </div>
                       </td>
                       <td style='font-family:helvetica;width:100%;white-space:nowrap;'>
                         <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
