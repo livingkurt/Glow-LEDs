@@ -30,6 +30,7 @@ import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleChips from "./components/CompatibleChips";
 import ContributorsDisplay from "./components/ContributorsDisplay";
+import { sale_price_switch } from "../../utils/react_helper_functions";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const ProductPage = () => {
       [index]: error,
     }));
   };
+
   return (
     <Box>
       <ProductPageHead product={product} />
@@ -108,7 +110,13 @@ const ProductPage = () => {
                     {customizedProduct.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                    Price: ${customizedProduct.price}
+                    Price:{" "}
+                    {sale_price_switch({
+                      product: customizedProduct,
+                      cartItem: false,
+                      background: "dark",
+                      isWholesaler: current_user?.isWholesaler,
+                    })}
                   </Typography>
                   <Typography variant="body1" gutterBottom mt={2} mb={2}>
                     {customizedProduct.short_description}

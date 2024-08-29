@@ -2,10 +2,13 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography, Rating, Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
+import { sale_price_switch } from "../../../utils/react_helper_functions";
+import { useSelector } from "react-redux";
 
 const ProductCard = ({ product }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { current_user } = useSelector(state => state.users.userPage);
 
   return (
     <Link to={`/collections/all/products/${product._id}`} style={{ textDecoration: "none" }}>
@@ -59,7 +62,12 @@ const ProductCard = ({ product }) => {
             {product.rating ? <Rating value={product.rating} readOnly size={isMobile ? "small" : "medium"} /> : null}
           </Box>
           <Typography variant={isMobile ? "body2" : "body1"} color="white">
-            ${product.price.toFixed(2)}
+            {sale_price_switch({
+              product,
+              cartItem: false,
+              background: "dark",
+              isWholesaler: current_user?.isWholesaler,
+            })}
           </Typography>
         </CardContent>
       </Card>
