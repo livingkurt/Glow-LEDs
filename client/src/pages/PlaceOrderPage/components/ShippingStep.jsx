@@ -75,6 +75,7 @@ const ShippingStep = () => {
     city: city_validations,
     state: state_validations,
     postal_code: postal_code_validations,
+    phone_number: phone_number_validations,
     country: country_validations,
   } = shippingValidations;
 
@@ -442,26 +443,51 @@ const ShippingStep = () => {
                     label="International"
                   />
                   {shipping.international && (
-                    <li>
-                      <label htmlFor="country">Country</label>
-                      <input
-                        type="text"
-                        value={shipping.country}
-                        name="country"
-                        id="country"
-                        onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
-                      />
-                    </li>
+                    <>
+                      <li>
+                        <label htmlFor="country">Country</label>
+                        <input
+                          type="text"
+                          value={shipping.country}
+                          name="country"
+                          id="country"
+                          onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                        />
+                      </li>
+                      <label
+                        className="validation_text"
+                        style={{
+                          justifyContent: "center",
+                        }}
+                      >
+                        {country_validations}
+                      </label>
+                    </>
+                  )}
+                  {shipping.international && (
+                    <>
+                      <li>
+                        <label htmlFor="phone_number">Phone Number</label>
+                        <input
+                          type="text"
+                          value={shipping.phone_number}
+                          name="phone_number"
+                          id="phone_number"
+                          onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                        />
+                      </li>
+                      <label
+                        className="validation_text"
+                        style={{
+                          justifyContent: "center",
+                        }}
+                      >
+                        {phone_number_validations}
+                      </label>
+                    </>
                   )}
                 </div>
-                <label
-                  className="validation_text"
-                  style={{
-                    justifyContent: "center",
-                  }}
-                >
-                  {country_validations}
-                </label>
+
                 <li>
                   <GLButton onClick={validateShipping} variant="primary" className="bob">
                     Continue

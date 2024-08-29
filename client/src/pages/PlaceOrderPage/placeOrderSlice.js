@@ -86,6 +86,7 @@ const initialState = {
     state: "",
     postalCode: "",
     country: "",
+    phone_number: "",
   },
 };
 

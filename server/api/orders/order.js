@@ -107,6 +107,7 @@ const shippingSchema = {
   state: { type: String },
   postalCode: { type: String },
   international: { type: Boolean },
+  phone_number: { type: Boolean },
   country: { type: String },
 };
 

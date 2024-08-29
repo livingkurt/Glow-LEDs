@@ -288,6 +288,11 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
           label: "Postal Code",
           required: true,
         },
+        phone_number: {
+          type: "text",
+          label: "Postal Code",
+          required: true,
+        },
         international: {
           type: "checkbox",
           label: "International",
