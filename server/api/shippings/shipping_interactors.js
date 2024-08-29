@@ -177,7 +177,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
       state: order.shipping.state,
       zip: order.shipping.postalCode,
       country: order.shipping.country,
-      phone: config.PHONE_NUMBER,
+      phone: order.shipping?.phone_number?.length > 0 ? order.shipping.phone_number : config.PHONE_NUMBER,
     };
 
     const productionReturnAddress = {

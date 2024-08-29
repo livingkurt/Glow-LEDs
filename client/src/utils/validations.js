@@ -1,4 +1,3 @@
-import isEmpty from "is-empty";
 // import Validator from 'validator';
 import axios from "axios";
 
@@ -304,71 +303,79 @@ export const validate_shipping = ({
   state,
   postalCode,
   country,
+  phone_number,
   international,
 }) => {
   let errors = {};
 
   // Convert empty fields to an empty string so we can use validator functions
-  email = !isEmpty(email) ? email : "";
-  first_name = !isEmpty(first_name) ? first_name : "";
-  last_name = !isEmpty(last_name) ? last_name : "";
-  address_1 = !isEmpty(address_1) ? address_1 : "";
-  city = !isEmpty(city) ? city : "";
-  state = !isEmpty(state) ? state : "";
-  postalCode = !isEmpty(postalCode) ? postalCode : "";
-  country = !isEmpty(country) ? country : "";
+  const fields = { email, first_name, last_name, address_1, city, state, postalCode, country, phone_number };
+  Object.keys(fields).forEach(key => {
+    fields[key] = !isEmpty(fields[key]) ? fields[key] : "";
+  });
 
-  // Email Name checks
-  if (isEmpty2(email)) {
-    errors.email = "Email field is required";
-  } else if (!isEmail(email)) {
+  // Required fields for all orders
+  const requiredFields = ["email", "first_name", "last_name", "address_1", "city", "postalCode"];
+  requiredFields.forEach(field => {
+    if (isEmpty2(fields[field])) {
+      errors[field] = `${field.replace("_", " ")} field is required`;
+    }
+  });
+
+  // Email validation
+  if (!isEmpty2(fields.email) && !isEmail(fields.email)) {
     errors.email = "Valid email required";
   }
 
-  // First Name checks
-  if (isEmpty2(first_name)) {
-    errors.first_name = "First Name field is required";
-  }
-  // Last Name checks
-  if (isEmpty2(last_name)) {
-    errors.last_name = "Last Name field is required";
-  }
-  // Address checks
-  if (isEmpty2(address_1)) {
-    errors.address_1 = "Address field is required";
-  }
-  // City checks
-  if (isEmpty2(city)) {
-    errors.city = "City field is required";
-  }
-  // State checks
-  if (isEmpty2(state)) {
-    errors.state = "State field is required";
-  }
-  // State checks
-  if (
-    (international && country.toLowerCase() === "us") ||
-    country.toLowerCase() === "united states" ||
-    country.toLowerCase() === "united states of america"
-  ) {
-    errors.country = "International option not available to United States";
-  }
   if (international) {
-    // Country checks
-    if (isEmpty2(country)) {
-      errors.country = "Country field is required";
+    // Additional checks for international orders
+    if (isEmpty2(fields.country)) {
+      errors.country = "Country field is required for international orders";
     }
+    if (isEmpty2(fields.phone_number)) {
+      errors.phone_number = "Phone number is required for international orders";
+    }
+  } else {
+    // State is required only for domestic (non-international) orders
+    if (isEmpty2(fields.state)) {
+      errors.state = "State field is required for domestic orders";
+    }
+  }
+
+  // Check if international is selected for a US address
+  if (international && ["us", "united states", "united states of america"].includes(fields.country.toLowerCase())) {
+    errors.country = "International option not available for United States addresses";
   }
 
   return {
     errors,
-    isValid: isEmpty(errors),
+    isValid: Object.keys(errors).length === 0,
   };
 };
 
+// Helper functions
+const isEmpty = value =>
+  value === undefined ||
+  value === null ||
+  (typeof value === "object" && Object.keys(value).length === 0) ||
+  (typeof value === "string" && value.trim().length === 0);
+
 const isEmpty2 = str => {
-  return !str || str.length === 0;
+  return !str || str.trim().length === 0;
 };
+
+const isEmail = email => {
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+const isValidPhoneNumber = phoneNumber => {
+  // This is a basic check. You might want to use a more robust validation if needed.
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  return phoneRegex.test(phoneNumber);
+};
+
 const isEquals = (str_1, str_2) => {
   return str_1 === str_2;
 };
@@ -378,13 +385,6 @@ const isLength = (str, length) => {
   } else {
     return true;
   }
-};
-
-const isEmail = email => {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  return re.test(String(email).toLowerCase());
 };
 
 export const validate_payment = data => {
