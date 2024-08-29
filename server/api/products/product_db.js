@@ -289,7 +289,9 @@ export default {
           select: "first_name last_name",
         })
         .populate("color_object.filament")
-        .populate("chips");
+        .populate("chips")
+        .lean()
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
