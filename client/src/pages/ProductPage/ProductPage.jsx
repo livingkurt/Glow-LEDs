@@ -9,7 +9,7 @@ import HeroVideo from "../HomePage/components/HeroVideo";
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { determineInStock, isOptionCountDifferent, productPageBreadCrumbs } from "./productHelpers";
+import { determineInStock, productPageBreadCrumbs } from "./productHelpers";
 import { openEditProductModal } from "../ProductsPage/productsPageSlice";
 import NavigationButtons from "./components/NavigationButtons";
 import ImageGrid from "./components/ImageGrid";
@@ -34,7 +34,7 @@ import { sale_price_switch } from "../../utils/react_helper_functions";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const { customizedProduct, current_user, my_cart, productPageLoading, product } = useProductPage();
+  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked } = useProductPage();
   const [validationErrors, setValidationErrors] = useState({});
 
   const validateOptions = () => {
@@ -42,6 +42,8 @@ const ProductPage = () => {
     customizedProduct.currentOptions?.forEach((option, index) => {
       if (!option.isAddOn && !customizedProduct.selectedOptions[index]?.name) {
         errors[index] = `Please select a ${option.name}`;
+      } else if (option.isAddOn && isAddonChecked && !customizedProduct.selectedOptions[index]?.name) {
+        errors[index] = `Please select an option for ${option.name}`;
       }
     });
     setValidationErrors(errors);
