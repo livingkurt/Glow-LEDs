@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { Box, Checkbox, FormControlLabel, Typography, IconButton, Popover } from "@mui/material";
+import React from "react";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOption, setIsAddonChecked } from "../productPageSlice";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
-import { CheckBox, CheckBoxOutlineBlank, Clear, Info } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Clear } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLInfoPopover from "../../../shared/GlowLEDsComponents/GLInfoPopover/GLInfoPopover";
 
 const CustomizationOption = ({ index, option, selectedOption, updateValidationError }) => {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
     }
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const handleAddonCheckboxChange = event => {
     dispatch(setIsAddonChecked(event.target.checked));
     if (!event.target.checked) {
@@ -31,20 +30,9 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
     }
   };
 
-  const handleInfoClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleInfoClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleClear = () => {
     handleChange("");
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? `info-popover-${index}` : undefined;
 
   const renderOptionComponent = () => {
     switch (option.optionType) {
@@ -109,53 +97,27 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
               checkedIcon={<CheckBox sx={{ color: "white" }} />}
             />
           }
-          label={`Add ${option.name} + $${option.values[0].additionalCost?.toFixed(2)}`}
+          label={
+            <Box sx={{ display: "flex", alignItems: "center" }} gap={1}>
+              Add {option.name} + ${option.values[0].additionalCost?.toFixed(2)}{" "}
+              {option.details && <GLInfoPopover details={option.details} />}
+            </Box>
+          }
         />
       ) : null}
       {(!option.isAddOn || (option.isAddOn && isAddonChecked)) && (
         <Box>
           <Box display="flex" alignItems="center" gap={1}>
-            <Box display="flex" alignItems={"center"} gap={1}>
-              <Typography variant="subtitle1">
-                {option.isAddOn ? "OPTIONAL: " : ""}
-                {option.name}
-              </Typography>
-              <Typography variant="body1">{!selectedOption?.name ? "" : `(${selectedOption?.name})`}</Typography>
-              {option.details && (
-                <>
-                  <IconButton onClick={handleInfoClick} size="large" aria-describedby={id}>
-                    <Info color="white" />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleInfoClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    slotProps={{
-                      paper: {
-                        sx: {
-                          backgroundColor: "#585858",
-                          color: "white",
-                          maxWidth: "300px",
-                          maxHeight: "200px",
-                          overflow: "auto",
-                        },
-                      },
-                    }}
-                  >
-                    <Typography sx={{ p: 2 }}>{option.details}</Typography>
-                  </Popover>
-                </>
-              )}
-            </Box>
+            {option.optionType !== "checkbox" && (
+              <Box display="flex" alignItems={"center"} gap={1}>
+                <Typography variant="subtitle1">
+                  {option.isAddOn ? "OPTIONAL: " : ""}
+                  {option.name}
+                </Typography>
+                <Typography variant="body1">{!selectedOption?.name ? "" : `(${selectedOption?.name})`}</Typography>
+                {option.details && <GLInfoPopover details={option.details} />}
+              </Box>
+            )}
             {selectedOption?.name && option.isAddOn && (
               <GLIconButton ml={2} onClick={handleClear} tooltip={`Clear Optional: ${option.name}`}>
                 <Clear color="white" />

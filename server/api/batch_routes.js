@@ -5319,4 +5319,44 @@ router.route("/finalize_display_image").put(async (req, res) => {
     });
   }
 });
+
+router.route("/migrate_diffusers").put(async (req, res) => {
+  try {
+    // Find all products in the "diffusers" category
+    const diffusers = await Product.find({ category: "diffusers" });
+
+    let updatedCount = 0;
+
+    for (const diffuser of diffusers) {
+      // Find the "Bulb Style" option (previously "Fisheye")
+      const bulbStyleOptionIndex = diffuser.options.findIndex(option => option.name === "Size");
+
+      if (bulbStyleOptionIndex !== -1) {
+        // Update the option name to "Bulb Style"
+        // diffuser.options[bulbStyleOptionIndex].name = "Bulb Style";
+        diffuser.options[bulbStyleOptionIndex].details =
+          "Choose from 4 diffuser sizes: Micro = 10 mm, Mini = 12.5 mm, Standard = 15 mm, Large = 20 mm";
+
+        // Find and update the specific value
+        // const specificValueIndex = diffuser.options[bulbStyleOptionIndex].values.findIndex(
+        //   value => value.name === "Vortex"
+        // );
+        // if (specificValueIndex !== -1) {
+        //   diffuser.options[bulbStyleOptionIndex].values[specificValueIndex].name = "Vortex NeoPixel";
+        // }
+
+        // Save the updated product
+        await diffuser.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} diffuser products.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;
