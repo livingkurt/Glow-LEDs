@@ -33,7 +33,6 @@ export const determineCartTotal = (cartItems, isWholesaler) => {
 };
 
 export const containsIncludedItems = (cartItems, includedProducts, includedCategories) => {
-  console.log({ cartItems, includedProducts, includedCategories });
   return cartItems.some(
     item => includedProducts.includes(item.product._id) || includedCategories.includes(item.category)
   );
