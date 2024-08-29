@@ -27,6 +27,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
     dispatch(setIsAddonChecked(event.target.checked));
     if (!event.target.checked) {
       dispatch(selectOption({ index, selectedOption: undefined, option }));
+      updateValidationError(index, null);
     }
   };
 
