@@ -1,3 +1,3 @@
 export { default as AnnouncementEmail } from "./AnnouncementEmail";
-export { default as EmailModal } from "./EmailModal";
+export { default as AskForEmailModal } from "./AskForEmailModal";
 export { default as EditEmailModal } from "./EditEmailModal";

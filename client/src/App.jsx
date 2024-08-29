@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes, useSearchParams } from "react-r
 import { ScrollToTop } from "./shared/SharedComponents";
 import { createTheme, ThemeProvider } from "@mui/material";
 import GLTheme from "./theme";
-import { EmailModal } from "./pages/EmailsPage/components";
+import { AskForEmailModal } from "./pages/EmailsPage/components";
 import { Four04Page } from "./pages/Four04Page";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTokenRefresh } from "./api/axiosInstance";
@@ -117,7 +117,7 @@ const App = () => {
             />
           </Routes>
         </ScrollToTop>
-        <EmailModal />
+        <AskForEmailModal />
         <UpdateNotifier />
         <GLLoading />
         <GLLoginModal />
