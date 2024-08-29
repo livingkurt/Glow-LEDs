@@ -6,11 +6,10 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
-import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
-const EmailModal = () => {
+const AskForEmailModal = () => {
   const [email, set_email] = useState("");
   const [complete, set_complete] = useState(false);
   const dispatch = useDispatch();
@@ -26,20 +25,17 @@ const EmailModal = () => {
   };
 
   const date = new Date();
-
   const today = date.toISOString();
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       const popup = JSON.parse(localStorage.getItem("popup"));
-      if (!popup) {
+      if (!popup || daysBetween(popup.date, today) > 2) {
         setTimeout(() => {
           set_show_modal(true);
-        }, 5000);
-      } else if (daysBetween(popup.date, today) > 2 && !popup.email) {
-        setTimeout(() => {
-          set_show_modal(true);
+          // Update local storage when the popup shows
+          localStorage.setItem("popup", JSON.stringify({ date: today }));
         }, 5000);
       }
     }
@@ -167,4 +163,4 @@ const EmailModal = () => {
   );
 };
 
-export default EmailModal;
+export default AskForEmailModal;
