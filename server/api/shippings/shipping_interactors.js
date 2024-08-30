@@ -8,9 +8,11 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {
+  console.log({ shipping_rate });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
+    console.log({ errors: error.errors });
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -162,6 +164,32 @@ export const createLabel = async ({ order, shipping_rate }) => {
   }
 };
 
+const getHSTariffNumber = category => {
+  switch (category) {
+    case "microlights":
+      return "8513.10";
+    case "gloves":
+      return "6116.10";
+    case "batteries":
+      return "8506.10";
+    default:
+      return "3926.40";
+  }
+};
+
+const getDescription = category => {
+  switch (category) {
+    case "microlights":
+      return "Microlight";
+    case "gloves":
+      return "Gloves";
+    case "batteries":
+      return "Coin Batteries";
+    default:
+      return "3D Print";
+  }
+};
+
 export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
@@ -226,11 +254,12 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         non_delivery_option: "return",
         customs_items: order.orderItems.map(item => {
           return {
-            description: "3D Printed Accessories",
+            description: getDescription(item.category),
             quantity: item.quantity,
             value: item.price,
             weight: covertToOunces(item),
             origin_country: "US",
+            hs_tariff_number: getHSTariffNumber(item.category),
           };
         }),
       },
