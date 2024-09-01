@@ -10,6 +10,12 @@ const EditImageModal = () => {
   const { edit_image_modal, image, loading } = imagePage;
 
   const formFields = {
+    _id: {
+      type: "text",
+      label: "ID",
+      permissions: ["admin"],
+      disabled: true,
+    },
     link: {
       type: "text",
       label: "link",

@@ -1,5 +1,5 @@
-import { Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Button, TextField, Typography } from "@mui/material";
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
 import * as API from "../../api";
@@ -29,25 +29,35 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
         foundLinks.map(singleLink => dispatch(API.getImagesByLink({ album: fieldData.album, link: singleLink })))
       );
 
+      const newImages = fetchedImages.map(({ payload }) => payload);
+
       if (Array.isArray(fieldState)) {
-        onChange([...fieldState, ...fetchedImages.map(({ payload }) => payload)]);
+        onChange([...fieldState, ...newImages]);
       } else if (typeof fieldState === "object") {
-        // Merge object properties if fieldState is an object
-        // Note: This would overwrite properties if they have the same key
-        onChange({ ...fieldState, ...Object.assign({}, ...fetchedImages.map(({ payload }) => payload)) });
+        onChange(newImages[0]); // Only use the first image for single image fields
       } else {
-        onChange(fetchedImages.map(({ payload }) => payload));
+        onChange(newImages);
       }
     }
     setLink("");
   };
 
-  const images = [fieldState].flat();
+  const handleImageUpload = uploadedImages => {
+    if (Array.isArray(fieldState)) {
+      onChange([...fieldState, ...uploadedImages]);
+    } else if (typeof fieldState === "object") {
+      onChange(uploadedImages[0]); // Only use the first image for single image fields
+    } else {
+      onChange(uploadedImages);
+    }
+  };
+
+  const images = Array.isArray(fieldState) ? fieldState : [fieldState].filter(Boolean);
 
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-      <ImageUploader onChange={onChange} album={fieldData.album} fieldName={fieldName} type="image" />
+      <ImageUploader onChange={handleImageUpload} album={fieldData.album} fieldName={fieldName} type="image" />
       <div className="ai-c g-10px">
         <TextField
           label="Enter an Image Link"
@@ -61,7 +71,18 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
           Save
         </Button>
       </div>
-      <ImageDisplay images={images} fieldName={fieldName} onChange={value => onChange(value)} />
+      <ImageDisplay
+        images={images}
+        fieldName={fieldName}
+        onChange={value => {
+          console.log({ fieldState });
+          if (Array.isArray(fieldState)) {
+            onChange(value);
+          } else {
+            onChange(value[0]); // Only use the first image for single image fields
+          }
+        }}
+      />
     </div>
   );
 };

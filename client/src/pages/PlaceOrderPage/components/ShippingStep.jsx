@@ -508,6 +508,7 @@ const ShippingStep = () => {
                   <div>
                     {shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
                   </div>
+                  <div>{shipping?.phone_number}</div>
                   <div>{shipping.international && "International"}</div>
                 </div>
               )}

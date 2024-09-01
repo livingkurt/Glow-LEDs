@@ -5320,6 +5320,47 @@ router.route("/finalize_display_image").put(async (req, res) => {
   }
 });
 
+// router.route("/migrate_diffusers").put(async (req, res) => {
+//   try {
+//     // Find all products in the "diffusers" category
+//     const diffusers = await Product.find({ category: "diffusers" });
+
+//     let updatedCount = 0;
+
+//     for (const diffuser of diffusers) {
+//       // Find the "Bulb Style" option (previously "Fisheye")
+//       const bulbStyleOptionIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
+
+//       if (bulbStyleOptionIndex !== -1) {
+//         // Update the option name to "Bulb Style"
+//         // diffuser.options[bulbStyleOptionIndex].name = "Bulb Style";
+//         diffuser.options[bulbStyleOptionIndex].image = "66d39f32834632c463c2f9b4";
+//         // diffuser.options[bulbStyleOptionIndex].details =
+//         //   "Choose from 4 diffuser sizes: Micro = 10 mm, Mini = 12.5 mm, Standard = 15 mm, Large = 20 mm";
+
+//         // Find and update the specific value
+//         // const specificValueIndex = diffuser.options[bulbStyleOptionIndex].values.findIndex(
+//         //   value => value.name === "Vortex"
+//         // );
+//         // if (specificValueIndex !== -1) {
+//         //   diffuser.options[bulbStyleOptionIndex].values[specificValueIndex].name = "Vortex NeoPixel";
+//         // }
+
+//         // Save the updated product
+//         await diffuser.save();
+//         updatedCount++;
+//       }
+//     }
+
+//     res.status(200).json({
+//       message: `Migration completed. Updated ${updatedCount} diffuser products.`,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// });
+
 router.route("/migrate_diffusers").put(async (req, res) => {
   try {
     // Find all products in the "diffusers" category
@@ -5328,21 +5369,30 @@ router.route("/migrate_diffusers").put(async (req, res) => {
     let updatedCount = 0;
 
     for (const diffuser of diffusers) {
-      // Find the "Bulb Style" option (previously "Fisheye")
-      const bulbStyleOptionIndex = diffuser.options.findIndex(option => option.name === "Size");
+      // Find the "Bulb Style" and "Center Style" options
+      const bulbStyleIndex = diffuser.options.findIndex(option => option.name === "Bulb Style");
+      const centerStyleIndex = diffuser.options.findIndex(option => option.name === "Center Style");
 
-      if (bulbStyleOptionIndex !== -1) {
-        // Update the option name to "Bulb Style"
-        // diffuser.options[bulbStyleOptionIndex].name = "Bulb Style";
-        diffuser.options[bulbStyleOptionIndex].details =
-          "Choose from 4 diffuser sizes: Micro = 10 mm, Mini = 12.5 mm, Standard = 15 mm, Large = 20 mm";
+      if (bulbStyleIndex !== -1 && centerStyleIndex !== -1) {
+        // Swap the positions of "Bulb Style" and "Center Style"
+        [diffuser.options[bulbStyleIndex], diffuser.options[centerStyleIndex]] = [
+          diffuser.options[centerStyleIndex],
+          diffuser.options[bulbStyleIndex],
+        ];
 
-        // Find and update the specific value
-        // const specificValueIndex = diffuser.options[bulbStyleOptionIndex].values.findIndex(
-        //   value => value.name === "Vortex"
-        // );
-        // if (specificValueIndex !== -1) {
-        //   diffuser.options[bulbStyleOptionIndex].values[specificValueIndex].name = "Vortex NeoPixel";
+        // Ensure "Center Style" is at index 3 (4th position) and "Bulb Style" is at index 4 (5th position)
+        if (bulbStyleIndex < centerStyleIndex) {
+          diffuser.options.splice(3, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
+          diffuser.options.splice(4, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
+        } else {
+          diffuser.options.splice(3, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
+          diffuser.options.splice(4, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
+        }
+
+        // // Update the "Bottom Color" option image if it exists
+        // const bottomColorIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
+        // if (bottomColorIndex !== -1) {
+        //   diffuser.options[bottomColorIndex].image = "66d39f32834632c463c2f9b4";
         // }
 
         // Save the updated product

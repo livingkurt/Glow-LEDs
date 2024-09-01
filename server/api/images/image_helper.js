@@ -41,12 +41,15 @@ export const convertDriveLinkToDirectLink = shareLink => {
 };
 
 export const compressImage = async imageBuffer => {
+  console.log("Starting image compression...");
   const jimpImage = await Jimp.read(imageBuffer);
   await jimpImage.resize(Jimp.AUTO, 800).quality(90);
+  console.log("Image compression completed");
   return await jimpImage.getBufferAsync(Jimp.MIME_JPEG);
 };
 
 export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
+  console.log("Preparing image upload to Imgur...");
   const FormData = require("form-data");
   const data = new FormData();
   data.append("image", imageBuffer, { filename: "image.jpg" });
@@ -67,9 +70,12 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
   };
 
   try {
+    console.log("Sending request to Imgur API...");
     const imgResponse = await axios(uploadImageToImgurConfig);
+    console.log("Image uploaded successfully to Imgur");
     return imgResponse.data.data.link;
   } catch (error) {
+    console.error("Error uploading image to Imgur:", error);
     throw new Error("Failed to upload image to Imgur");
   }
 };
@@ -90,6 +96,7 @@ export const upload = multer({
 });
 
 export const createImgurAlbum = async (albumName, imageHash) => {
+  console.log(`Creating Imgur album: ${albumName}`);
   const FormData = require("form-data");
   const data = new FormData();
   data.append("title", albumName);
@@ -111,13 +118,21 @@ export const createImgurAlbum = async (albumName, imageHash) => {
   };
 
   try {
+    console.log("Sending request to create Imgur album...");
     const albumResponse = await axios(createImgurAlbumConfig);
+    console.log("Imgur album created successfully");
     return albumResponse.data.data;
   } catch (error) {
+    console.error("Error creating Imgur album:", error);
     throw new Error("Failed to create Imgur album");
   }
 };
 
 export const createImageRecords = async (uploadedImageLinks, albumName) => {
-  return await Promise.all(uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName })));
+  console.log(`Creating ${uploadedImageLinks.length} image records in database...`);
+  const createdRecords = await Promise.all(
+    uploadedImageLinks.map(link => image_db.create_images_db({ link, album: albumName }))
+  );
+  console.log("Image records created successfully");
+  return createdRecords;
 };

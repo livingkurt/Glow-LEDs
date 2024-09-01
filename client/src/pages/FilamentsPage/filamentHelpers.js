@@ -16,7 +16,7 @@ export const filamentFormFields = ({ categorys }) => {
     tags: {
       type: "autocomplete_multiple",
       label: "Tags",
-      options: categorys.filter(category => category.type === "filament_tags"),
+      options: categorys?.filter(category => category.type === "filament_tags"),
       labelProp: "name",
     },
     active: {
