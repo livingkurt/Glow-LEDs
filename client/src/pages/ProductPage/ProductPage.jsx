@@ -26,7 +26,7 @@ import RecentlyViewed from "./components/RecentlyViewed";
 import * as API from "../../api";
 import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
-import { restoreOriginalImages, setQuantity } from "./productPageSlice";
+import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleChips from "./components/CompatibleChips";
 import ContributorsDisplay from "./components/ContributorsDisplay";

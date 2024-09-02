@@ -98,7 +98,7 @@ const productPage = createSlice({
       state.customizedProduct.images = state.customizedProduct.original_images;
     },
     selectOption: (state, { payload }) => {
-      const { selectedOption, index, option } = payload;
+      const { selectedOption, index, option, fromUrlParams } = payload;
       if (selectedOption === undefined) {
         // If the selected option is undefined, remove it from the selectedOptions array
         state.customizedProduct.selectedOptions[index] = {};
@@ -111,7 +111,7 @@ const productPage = createSlice({
           replacePrice: option.replacePrice,
           additionalCost: selectedOption.additionalCost,
         };
-        updateProductDetailsFromOption(state, selectedOption, option);
+        updateProductDetailsFromOption(state, selectedOption, option, fromUrlParams);
         handlePriceReplacement(state, option, selectedOption);
       }
     },
