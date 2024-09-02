@@ -140,6 +140,20 @@ const contentSchema = new mongoose.Schema(
         icon: { type: String },
       },
     ],
+    menus: [
+      {
+        name: { type: String },
+        menu_items: [
+          {
+            label: { type: String },
+            description: { type: String },
+            image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+            link: { type: String },
+          },
+        ],
+        pathname: { type: String },
+      },
+    ],
     free_shipping_minimum_amount: { type: Number },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },

@@ -301,7 +301,7 @@ const diffusers = {
 
 const enhancers = {
   name: "Enhancers",
-  path: "/pages/menu/gloving",
+  // path: "/pages/menu/enhancers",
   id: "enhancers_dropdown",
   _id: 336,
   rows: [
@@ -632,7 +632,7 @@ const tips = {
 const support = {
   name: "Support",
   id: "support_dropdown",
-  path: "/pages/menu/support",
+  // path: "/pages/menu/support",
   _id: 592,
   rows: [
     {
@@ -862,7 +862,7 @@ export const navItems = [
   },
   {
     name: "SHOP",
-    path: "/pages/menu/gloving",
+    path: "/pages/menu/shop",
     id: "shop_dropdown",
     _id: 9134,
     dataTestId: "shop_button",
@@ -894,7 +894,7 @@ export const navItems = [
   {
     name: "SUPPORT",
     id: "support_dropdown",
-    path: "/pages/menu/support",
+    // path: "/pages/menu/support",
     _id: 10137,
     dataTestId: "support_button",
     columns: [support],
