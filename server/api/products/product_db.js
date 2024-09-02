@@ -121,7 +121,7 @@ export default {
     const productFields = {
       name: 1,
       pathname: 1,
-      images: { $slice: 1 },
+      images: 1,
       price: 1,
       wholesale_price: 1,
       sale_price: 1,

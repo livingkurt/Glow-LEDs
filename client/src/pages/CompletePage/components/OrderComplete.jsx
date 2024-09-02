@@ -4,6 +4,7 @@ import Survey from "./Survey";
 import { Helmet } from "react-helmet";
 import config from "../../../config";
 import { Button, Divider, Grid } from "@mui/material";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const OrderComplete = ({ current_user, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
@@ -87,7 +88,7 @@ const OrderComplete = ({ current_user, order_id }) => {
           </Link>
           <Divider />
           <div className="jc-c mt-20px">
-            <img
+            <GLLazyImage
               src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
               alt="heart_caps"
               className="br-20px w-100per max-w-800px m-10px"

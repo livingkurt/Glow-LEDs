@@ -2,6 +2,7 @@ import { Box, Typography, Button, Grid, useTheme, useMediaQuery } from "@mui/mat
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const LearnMoreProducts = ({ learn_more_products, learn_more_products_hidden }) => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const LearnMoreProducts = ({ learn_more_products, learn_more_products_hidden }) 
             xl={index % 3 === 2 ? 12 : 6}
           >
             <Box sx={{ position: "relative" }}>
-              <img
+              <GLLazyImage
                 src={product.image?.link}
                 alt={`Slide ${index + 1}`}
                 style={{

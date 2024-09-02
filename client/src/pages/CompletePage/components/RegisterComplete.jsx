@@ -5,6 +5,7 @@ import * as API from "../../../api";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const RegisterComplete = ({ current_user }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const RegisterComplete = ({ current_user }) => {
       </p>
 
       <div className="jc-c">
-        <img
+        <GLLazyImage
           src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" // Update this URL as needed
           alt="email_verified"
           className="br-20px w-100per max-w-800px m-10px"

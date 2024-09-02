@@ -1,5 +1,6 @@
 import { Typography, Grid, Container, Paper, useTheme } from "@mui/material";
 import React from "react";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const CategoryBanner = ({ banner }) => {
   const theme = useTheme();
@@ -24,7 +25,7 @@ const CategoryBanner = ({ banner }) => {
             <Typography variant="body2">{banner.fact}</Typography>
           </Grid>
           <Grid item xs={12} md={3}>
-            <img
+            <GLLazyImage
               src={banner?.image?.link}
               alt={banner.title}
               style={{ width: "100%", height: "auto", aspectRatio: "16/9", objectFit: "cover", borderRadius: "1rem" }}

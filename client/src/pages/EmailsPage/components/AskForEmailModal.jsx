@@ -8,6 +8,7 @@ import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
 import { Close } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const AskForEmailModal = () => {
   const [email, set_email] = useState("");
@@ -112,7 +113,7 @@ const AskForEmailModal = () => {
             {/* <p className={`title_font ${width < 535 ? 'fs-16px lh-30px' : 'fs-20px lh-40px'} ta-c jc-c `}>
 							Shine Brighter than ever
 						</p> */}
-            <img
+            <GLLazyImage
               src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
               alt=""
               className="w-100per h-auto br-20px max-w-250px"

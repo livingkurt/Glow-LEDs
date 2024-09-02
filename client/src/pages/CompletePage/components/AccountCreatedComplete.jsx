@@ -10,6 +10,7 @@ import { openLoginModal } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
 import { Box, Button } from "@mui/material";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const AccountCreatedComplete = ({ current_user }) => {
   const params = useParams();
@@ -55,7 +56,7 @@ const AccountCreatedComplete = ({ current_user }) => {
             </Button>
           </Box>
           <div className="jc-c">
-            <img
+            <GLLazyImage
               src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" // Update this URL as needed
               alt="email_verified"
               className="br-20px w-100per max-w-800px m-10px"

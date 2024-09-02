@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Container } from "@mui/material";
+import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ManualPage = () => {
   const params = useParams();
@@ -77,7 +78,7 @@ const ManualPage = () => {
           ? "glowstringz"
           : pathname
       ].manual && (
-        <img
+        <GLLazyImage
           src={
             manuals[
               pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
