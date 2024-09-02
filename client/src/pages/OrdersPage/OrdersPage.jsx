@@ -21,7 +21,7 @@ import useOrdersPage from "./useOrdersPage";
 const OrdersPage = () => {
   const dispatch = useDispatch();
   const { columnDefs, remoteApi, remoteFiltersApi, loading, remoteVersionRequirement, selectedRows, order } =
-    useOrdersPage();
+    useOrdersPage({ userProfile: false });
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
