@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const RecentlyViewed = ({ closeMenu }) => {
   const recently_viewed_products = JSON.parse(sessionStorage.getItem("recently_viewed")) || [];
@@ -31,7 +32,7 @@ const RecentlyViewed = ({ closeMenu }) => {
                       }}
                     >
                       <div className="ai-c">
-                        <img
+                        <GLLazyImage
                           src={item.image.link}
                           height="60px"
                           width="60px"

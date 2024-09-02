@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "../aboutPageHelpers";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const SectionImage = ({ section, index, isMobile }) => (
   <Box
@@ -10,7 +11,7 @@ const SectionImage = ({ section, index, isMobile }) => (
     mb={{ xs: 2, md: 0 }}
   >
     {section.image && (
-      <img
+      <GLLazyImage
         alt={section.title}
         style={{
           borderRadius: "15px",

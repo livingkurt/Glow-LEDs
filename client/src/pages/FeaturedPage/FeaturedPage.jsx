@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { Container } from "@mui/material";
+import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const FeaturedPage = () => {
   const params = useParams();
@@ -93,7 +94,7 @@ const FeaturedPage = () => {
                   // <Zoom className="m-auto">
                   <div className="m-auto">
                     {/* <div className="responsive_container"> */}
-                    <img className="m-1rem br-15px  h-auto ta-c responsive_img" alt="Feature" src={image} />
+                    <GLLazyImage className="m-1rem br-15px  h-auto ta-c responsive_img" alt="Feature" src={image} />
                     {/* </div> */}
                   </div>
                   // </Zoom>

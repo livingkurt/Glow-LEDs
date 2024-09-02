@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageList, ImageListItem, useMediaQuery, useTheme } from "@mui/material";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -39,7 +40,7 @@ const LifestyleImageGrid = ({ lifestyleImages }) => {
           cols={isSmallScreen ? 1 : itemData[index].cols || 1}
           rows={isSmallScreen ? 1 : itemData[index].rows || 1}
         >
-          <img
+          <GLLazyImage
             {...srcset(
               image.link,
               isSmallScreen ? 350 : 200,

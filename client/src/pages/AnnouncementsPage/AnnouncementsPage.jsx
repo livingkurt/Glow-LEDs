@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import * as API from "../../api";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/material";
+import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const AnnouncementsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -79,7 +80,7 @@ const AnnouncementsPage = () => {
                     <table width="100%" style={{ maxWidth: "900px" }}>
                       <tr>
                         <td>
-                          <img
+                          <GLLazyImage
                             src={email.images.length > 0 ? email.images[0] : email.image}
                             alt="Promo"
                             title="Promo"

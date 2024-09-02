@@ -7,6 +7,7 @@ import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { Container } from "@mui/material";
+import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const TeamPage = () => {
   const params = useParams();
@@ -170,7 +171,7 @@ const TeamPage = () => {
                   <div className="pos-rel">
                     {affiliate.sponsor && (
                       <Link to={"/collections/all/sponsors/" + affiliate.pathname} key={index}>
-                        <img
+                        <GLLazyImage
                           className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                           alt="Team Mate"
                           src={affiliate.picture}
@@ -210,7 +211,7 @@ const TeamPage = () => {
                         rel="noopener noreferrer"
                         key={index}
                       >
-                        <img
+                        <GLLazyImage
                           className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                           alt="Team Mate"
                           src={affiliate.picture}

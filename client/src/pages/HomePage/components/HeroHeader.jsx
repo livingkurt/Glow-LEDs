@@ -12,6 +12,7 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const HeroHeader = ({ slideshow, slideshow_hidden }) => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
         {slideshow?.map((slide, index) => (
           <SwiperSlide key={index}>
             <Box sx={{ position: "relative" }}>
-              <img
+              <GLLazyImage
                 src={slide.image?.link}
                 alt={`Slide ${index + 1}`}
                 style={{

@@ -9,6 +9,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/zoom";
 import { isBrowser } from "react-device-detect";
 import { Box } from "@mui/material";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ProductImages = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -35,7 +36,7 @@ const ProductImages = ({ images }) => {
             >
               {images?.map((image, index) => (
                 <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <img
+                  <GLLazyImage
                     src={image?.link}
                     alt={`Product ${index}`}
                     style={{
@@ -68,7 +69,7 @@ const ProductImages = ({ images }) => {
             >
               {images?.map((image, index) => (
                 <SwiperSlide key={index} style={{ width: 60, height: 60 }}>
-                  <img
+                  <GLLazyImage
                     src={image?.link}
                     alt={`Thumbnail ${index}`}
                     style={{

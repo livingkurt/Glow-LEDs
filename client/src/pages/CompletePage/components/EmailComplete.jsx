@@ -2,6 +2,7 @@ import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Link } from "react-router-dom";
 import config from "../../../config";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const EmailComplete = () => {
   return (
@@ -45,7 +46,7 @@ const EmailComplete = () => {
       </div>
 
       <div className="jc-c">
-        <img
+        <GLLazyImage
           src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
           alt="heart_caps"
           className="br-20px w-100per max-w-800px m-10px"

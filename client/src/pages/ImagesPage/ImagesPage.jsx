@@ -19,6 +19,7 @@ import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageMo
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ImagesPage = () => {
   const imagePage = useSelector(state => state.images.imagePage);
@@ -36,7 +37,7 @@ const ImagesPage = () => {
         title: "Image",
         display: image => (
           <div className="jc-c">
-            <img
+            <GLLazyImage
               src={image.link}
               alt={image.name}
               style={{ width: "50px", height: "50px" }}

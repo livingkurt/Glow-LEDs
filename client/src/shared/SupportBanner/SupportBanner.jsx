@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as API from "../../api";
+import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const SupportBanner = () => {
   const theme = useTheme();
@@ -14,7 +15,7 @@ const SupportBanner = () => {
       <Grid container justifyContent="center" mb={2}>
         <Grid item xs={12} md={6} style={{ height: "100%" }}>
           <div style={{ position: "relative", paddingTop: "56.25%", height: "100%" }}>
-            <img
+            <GLLazyImage
               alt="Kurt"
               title="Founder Picture"
               style={{

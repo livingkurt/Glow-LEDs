@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const GetTheMost = ({ get_more_out_of }) => {
   const theme = useTheme();
@@ -40,7 +41,7 @@ const GetTheMost = ({ get_more_out_of }) => {
         </Grid>
         <Grid item xs={12} md={6} style={{ height: "100%" }}>
           <div style={{ position: "relative", paddingTop: "56.25%", height: "100%" }}>
-            <img
+            <GLLazyImage
               alt="Kurt"
               title="Founder Picture"
               style={{

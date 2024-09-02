@@ -4,6 +4,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
+import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
         <Grid container spacing={2} alignItems="flex-end">
           {previewUrls.map((url, index) => (
             <Grid item xs={4} key={index}>
-              <img src={url} alt="Preview" style={{ maxWidth: "100%" }} />
+              <GLLazyImage src={url} alt="Preview" style={{ maxWidth: "100%" }} />
             </Grid>
           ))}
         </Grid>
