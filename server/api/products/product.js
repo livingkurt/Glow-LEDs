@@ -23,6 +23,7 @@ export const optionValueSchema = new mongoose.Schema({
   image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   isDefault: { type: Boolean, default: false },
   additionalCost: { type: Number, default: 0 },
+  active: { type: Boolean, default: true },
 });
 
 export const optionSchema = new mongoose.Schema({
@@ -33,6 +34,7 @@ export const optionSchema = new mongoose.Schema({
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },
   details: { type: String },
+  active: { type: Boolean, default: true },
 });
 
 const productSchema = new mongoose.Schema(
@@ -157,7 +159,7 @@ const productSchema = new mongoose.Schema(
 
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
 
-    category: { type: String, required: true },
+    category: { type: String },
     subcategory: { type: String },
     product_collection: { type: String },
 
@@ -224,7 +226,7 @@ const productSchema = new mongoose.Schema(
 
     contributers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: "5f2d7c0e9005a57059801ce8" }],
 
-    brand: { type: String, required: true },
+    brand: { type: String },
 
     sale_price: { type: Number, default: 0 },
     sale_start_date: { type: Date },

@@ -2699,90 +2699,90 @@ router.route("/update_faq_page").put(async (req, res) => {
   }
 });
 
-router.route("/migrate_product_options").put(async (req, res) => {
-  try {
-    const mainProducts = await Product.find({ macro_product: true, deleted: false });
-    console.log("Total main products:", mainProducts.length);
+// router.route("/migrate_product_options").put(async (req, res) => {
+//   try {
+//     const mainProducts = await Product.find({ macro_product: true, deleted: false });
+//     console.log("Total main products:", mainProducts.length);
 
-    for (let i = 0; i < mainProducts.length; i++) {
-      const mainProduct = mainProducts[i];
-      console.log(`Processing main product ${i + 1} of ${mainProducts.length}`);
+//     for (let i = 0; i < mainProducts.length; i++) {
+//       const mainProduct = mainProducts[i];
+//       console.log(`Processing main product ${i + 1} of ${mainProducts.length}`);
 
-      const options = []; // Placeholder for new options structure
+//       const options = []; // Placeholder for new options structure
 
-      // Function to process each type of product option
-      const processOptionType = async (optionProducts, optionName, valueKey) => {
-        if (optionProducts && optionProducts.length > 0) {
-          const variations = await Product.find({ "_id": { $in: optionProducts } });
-          const option = {
-            name: optionName,
-            optionType:
-              valueKey === "color" ? "colors" : valueKey === "size" || optionName === "Size" ? "buttons" : "dropdown",
-            replacePrice: valueKey === "size" || optionName === "Size" || !optionName === "Cape Color" ? true : false,
-            isAddOn: optionName === "Cape Color" ? true : false,
-            values: variations.map(variation => {
-              return {
-                name: variation[valueKey],
-                colorCode: variation.color_code,
-                // images: variation.images_object,
-                product: variation._id,
-                isDefault: !!variation.default_option,
-                additionalCost: optionName === "Cape Color" ? 4 : 0,
-              };
-            }),
-          };
-          options.push(option);
+//       // Function to process each type of product option
+//       const processOptionType = async (optionProducts, optionName, valueKey) => {
+//         if (optionProducts && optionProducts.length > 0) {
+//           const variations = await Product.find({ "_id": { $in: optionProducts } });
+//           const option = {
+//             name: optionName,
+//             optionType:
+//               valueKey === "color" ? "colors" : valueKey === "size" || optionName === "Size" ? "buttons" : "dropdown",
+//             replacePrice: valueKey === "size" || optionName === "Size" || !optionName === "Cape Color" ? true : false,
+//             isAddOn: optionName === "Cape Color" ? true : false,
+//             values: variations.map(variation => {
+//               return {
+//                 name: variation[valueKey],
+//                 colorCode: variation.color_code,
+//                 // images: variation.images_object,
+//                 product: variation._id,
+//                 isDefault: !!variation.default_option,
+//                 additionalCost: optionName === "Cape Color" ? 4 : 0,
+//               };
+//             }),
+//           };
+//           options.push(option);
 
-          // Update each variation to set the parent and isVariation flag
-          for (let variation of variations) {
-            await Product.findByIdAndUpdate(variation._id, {
-              parent: mainProduct._id,
-              isVariation: true,
-            });
-          }
-        }
-      };
+//           // Update each variation to set the parent and isVariation flag
+//           for (let variation of variations) {
+//             await Product.findByIdAndUpdate(variation._id, {
+//               parent: mainProduct._id,
+//               isVariation: true,
+//             });
+//           }
+//         }
+//       };
 
-      // Migrate Color Options
-      console.log("Processing Color Options");
-      await processOptionType(mainProduct.color_products, mainProduct.color_group_name || "Color", "color");
+//       // Migrate Color Options
+//       console.log("Processing Color Options");
+//       await processOptionType(mainProduct.color_products, mainProduct.color_group_name || "Color", "color");
 
-      // Migrate Secondary Color Options
-      console.log("Processing Secondary Color Options");
-      await processOptionType(
-        mainProduct.secondary_color_products,
-        mainProduct.secondary_color_group_name || "Secondary Color",
-        "color"
-      );
+//       // Migrate Secondary Color Options
+//       console.log("Processing Secondary Color Options");
+//       await processOptionType(
+//         mainProduct.secondary_color_products,
+//         mainProduct.secondary_color_group_name || "Secondary Color",
+//         "color"
+//       );
 
-      // Migrate Option Products (assuming these are sizes for simplification)
-      console.log("Processing Option Products");
-      await processOptionType(mainProduct.option_products, mainProduct.option_group_name || "Size", "size");
+//       // Migrate Option Products (assuming these are sizes for simplification)
+//       console.log("Processing Option Products");
+//       await processOptionType(mainProduct.option_products, mainProduct.option_group_name || "Size", "size");
 
-      // Migrate Secondary Products (assuming these are included products)
-      console.log("Processing Secondary Products");
-      await processOptionType(
-        mainProduct.secondary_products,
-        mainProduct.secondary_group_name || "Included Product",
-        "name"
-      );
+//       // Migrate Secondary Products (assuming these are included products)
+//       console.log("Processing Secondary Products");
+//       await processOptionType(
+//         mainProduct.secondary_products,
+//         mainProduct.secondary_group_name || "Included Product",
+//         "name"
+//       );
 
-      // Update the main product with the new options structure
-      console.log("Updating main product");
-      await Product.findByIdAndUpdate(mainProduct._id, {
-        options: options,
-        // Consider uncommenting the $unset operation if you wish to clean up old fields
-        // $unset: { color_products: "", secondary_color_products: "", option_products: "", secondary_products: "" },
-      });
-    }
+//       // Update the main product with the new options structure
+//       console.log("Updating main product");
+//       await Product.findByIdAndUpdate(mainProduct._id, {
+//         options: options,
+//         // Consider uncommenting the $unset operation if you wish to clean up old fields
+//         // $unset: { color_products: "", secondary_color_products: "", option_products: "", secondary_products: "" },
+//       });
+//     }
 
-    // res.status(200).send(mainProducts);
-    res.status(200).send({ message: "Product Option Migration successful" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
+//     // res.status(200).send(mainProducts);
+//     res.status(200).send({ message: "Product Option Migration successful" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// });
 router.route("/migrate_quantity").put(async (req, res) => {
   try {
     // Update orderSchema
@@ -5320,6 +5320,66 @@ router.route("/finalize_display_image").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_diffusers").put(async (req, res) => {
+  try {
+    // Find all products in the "diffusers" category
+    const diffusers = await Product.find({ category: "diffusers" });
+
+    let updatedCount = 0;
+
+    for (const diffuser of diffusers) {
+      // Find the "Bulb Style" option (previously "Fisheye")
+      // const bulbStyleOptionIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
+
+      // if (bulbStyleOptionIndex !== -1) {
+      // Update the option name to "Bulb Style"
+      // diffuser.options[bulbStyleOptionIndex].name = "Bulb Style";
+      diffuser.options[bulbStyleOptionIndex].active = true;
+      // diffuser.options[bulbStyleOptionIndex].details =
+      //   "Choose from 4 diffuser sizes: Micro = 10 mm, Mini = 12.5 mm, Standard = 15 mm, Large = 20 mm";
+
+      // Find and update the specific value
+      // const specificValueIndex = diffuser.options[bulbStyleOptionIndex].values.findIndex(
+      //   value => value.name === "Vortex"
+      // );
+      // if (specificValueIndex !== -1) {
+      //   diffuser.options[bulbStyleOptionIndex].values[specificValueIndex].name = "Vortex NeoPixel";
+      // }
+
+      // Save the updated product
+      await diffuser.save();
+      updatedCount++;
+      // }
+    }
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} diffuser products.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/migrate_product_options_active").put(async (req, res) => {
+  try {
+    const products = await Product.find({});
+    let updatedCount = 0;
+
+    for (const product of products) {
+      await product.save();
+      updatedCount++;
+    }
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} products.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 // router.route("/migrate_diffusers").put(async (req, res) => {
 //   try {
 //     // Find all products in the "diffusers" category
@@ -5328,22 +5388,30 @@ router.route("/finalize_display_image").put(async (req, res) => {
 //     let updatedCount = 0;
 
 //     for (const diffuser of diffusers) {
-//       // Find the "Bulb Style" option (previously "Fisheye")
-//       const bulbStyleOptionIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
+//       // Find the "Bulb Style" and "Center Style" options
+//       const bulbStyleIndex = diffuser.options.findIndex(option => option.name === "Bulb Style");
+//       const centerStyleIndex = diffuser.options.findIndex(option => option.name === "Center Style");
 
-//       if (bulbStyleOptionIndex !== -1) {
-//         // Update the option name to "Bulb Style"
-//         // diffuser.options[bulbStyleOptionIndex].name = "Bulb Style";
-//         diffuser.options[bulbStyleOptionIndex].image = "66d39f32834632c463c2f9b4";
-//         // diffuser.options[bulbStyleOptionIndex].details =
-//         //   "Choose from 4 diffuser sizes: Micro = 10 mm, Mini = 12.5 mm, Standard = 15 mm, Large = 20 mm";
+//       if (bulbStyleIndex !== -1 && centerStyleIndex !== -1) {
+//         // Swap the positions of "Bulb Style" and "Center Style"
+//         [diffuser.options[bulbStyleIndex], diffuser.options[centerStyleIndex]] = [
+//           diffuser.options[centerStyleIndex],
+//           diffuser.options[bulbStyleIndex],
+//         ];
 
-//         // Find and update the specific value
-//         // const specificValueIndex = diffuser.options[bulbStyleOptionIndex].values.findIndex(
-//         //   value => value.name === "Vortex"
-//         // );
-//         // if (specificValueIndex !== -1) {
-//         //   diffuser.options[bulbStyleOptionIndex].values[specificValueIndex].name = "Vortex NeoPixel";
+//         // Ensure "Center Style" is at index 3 (4th position) and "Bulb Style" is at index 4 (5th position)
+//         if (bulbStyleIndex < centerStyleIndex) {
+//           diffuser.options.splice(3, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
+//           diffuser.options.splice(4, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
+//         } else {
+//           diffuser.options.splice(3, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
+//           diffuser.options.splice(4, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
+//         }
+
+//         // // Update the "Bottom Color" option image if it exists
+//         // const bottomColorIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
+//         // if (bottomColorIndex !== -1) {
+//         //   diffuser.options[bottomColorIndex].image = "66d39f32834632c463c2f9b4";
 //         // }
 
 //         // Save the updated product
@@ -5360,53 +5428,4 @@ router.route("/finalize_display_image").put(async (req, res) => {
 //     res.status(500).send({ error: error.message });
 //   }
 // });
-
-router.route("/migrate_diffusers").put(async (req, res) => {
-  try {
-    // Find all products in the "diffusers" category
-    const diffusers = await Product.find({ category: "diffusers" });
-
-    let updatedCount = 0;
-
-    for (const diffuser of diffusers) {
-      // Find the "Bulb Style" and "Center Style" options
-      const bulbStyleIndex = diffuser.options.findIndex(option => option.name === "Bulb Style");
-      const centerStyleIndex = diffuser.options.findIndex(option => option.name === "Center Style");
-
-      if (bulbStyleIndex !== -1 && centerStyleIndex !== -1) {
-        // Swap the positions of "Bulb Style" and "Center Style"
-        [diffuser.options[bulbStyleIndex], diffuser.options[centerStyleIndex]] = [
-          diffuser.options[centerStyleIndex],
-          diffuser.options[bulbStyleIndex],
-        ];
-
-        // Ensure "Center Style" is at index 3 (4th position) and "Bulb Style" is at index 4 (5th position)
-        if (bulbStyleIndex < centerStyleIndex) {
-          diffuser.options.splice(3, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
-          diffuser.options.splice(4, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
-        } else {
-          diffuser.options.splice(3, 0, diffuser.options.splice(bulbStyleIndex, 1)[0]);
-          diffuser.options.splice(4, 0, diffuser.options.splice(centerStyleIndex, 1)[0]);
-        }
-
-        // // Update the "Bottom Color" option image if it exists
-        // const bottomColorIndex = diffuser.options.findIndex(option => option.name === "Bottom Color");
-        // if (bottomColorIndex !== -1) {
-        //   diffuser.options[bottomColorIndex].image = "66d39f32834632c463c2f9b4";
-        // }
-
-        // Save the updated product
-        await diffuser.save();
-        updatedCount++;
-      }
-    }
-
-    res.status(200).json({
-      message: `Migration completed. Updated ${updatedCount} diffuser products.`,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
 export default router;
