@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, CardContent, CardMedia, Typography, Rating, Box, useMediaQuery, useTheme } from "@mui/material";
+import React, { useState } from "react";
+import { Card, CardContent, Typography, Rating, Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
@@ -9,6 +9,10 @@ const ProductCard = ({ product }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { current_user } = useSelector(state => state.users.userPage);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   return (
     <Link to={`/collections/all/products/${product._id}`} style={{ textDecoration: "none" }}>
@@ -25,6 +29,8 @@ const ProductCard = ({ product }) => {
           flexDirection: isMobile ? "row" : "column",
         }}
         elevation={0}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <Box
           sx={{
@@ -33,27 +39,29 @@ const ProductCard = ({ product }) => {
             overflow: "hidden",
             flexShrink: 0,
             width: isMobile ? "30%" : "100%",
-          }}
-        >
-          <CardMedia
-            component="img"
-            image={product.images[0].link}
-            alt={product.name}
-            sx={{
+            backgroundImage: `url(${product.images[0].link})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: "1rem",
+            transition: "background-image 0.3s ease-in-out, border-radius 0.3s ease-in-out",
+            "&::after": {
+              content: '""',
               position: "absolute",
               top: 0,
               left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: "1rem",
-              transition: "border-radius 0.3s ease-in-out",
-              "&:hover": {
-                borderRadius: isMobile ? 0 : "1rem 1rem 0 0",
-              },
-            }}
-          />
-        </Box>
+              right: 0,
+              bottom: 0,
+              backgroundImage: product.images.length > 1 ? `url(${product.images[1].link})` : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: isHovered ? 1 : 0,
+              transition: "opacity 0.3s ease-in-out",
+            },
+            "&:hover": {
+              borderRadius: isMobile ? 0 : "1rem 1rem 0 0",
+            },
+          }}
+        />
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
             <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
