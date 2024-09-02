@@ -37,10 +37,10 @@ const MenuItemCard = ({ item }) => {
         <Box
           sx={{
             position: "relative",
-            paddingTop: isMobile ? "30%" : "100%",
+            paddingTop: isMobile ? "50%" : "100%",
             overflow: "hidden",
             flexShrink: 0,
-            width: isMobile ? "30%" : "100%",
+            width: isMobile ? "50%" : "100%",
             borderRadius: "1rem",
             transition: "border-radius 0.3s ease-in-out",
             "&:hover": {
