@@ -30,7 +30,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link to={`/collections/all/products/${product._id}`} style={{ textDecoration: "none" }}>
+    <Link to={`/collections/all/products/${product.pathname}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",
