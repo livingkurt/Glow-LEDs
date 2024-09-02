@@ -5361,21 +5361,102 @@ router.route("/migrate_diffusers").put(async (req, res) => {
   }
 });
 
+// router.route("/migrate_product_options_active").put(async (req, res) => {
+//   try {
+//     const products = await Product.find({});
+//     let updatedCount = 0;
+
+//     for (const product of products) {
+//       await product.save();
+//       updatedCount++;
+//     }
+
+//     res.status(200).json({
+//       message: `Migration completed. Updated ${updatedCount} products.`,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// });
+
 router.route("/migrate_product_options_active").put(async (req, res) => {
   try {
-    const products = await Product.find({});
+    console.log("Starting product options migration...");
+    const products = await Product.find({ deleted: false, hidden: false });
+    console.log(`Found ${products.length} products to process.`);
+    let updatedCount = 0;
+
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      let productUpdated = false;
+
+      console.log(`Processing product ${i + 1}/${products.length}: ${product.name}`);
+
+      // Update options
+      product.options.forEach((option, optionIndex) => {
+        // if (option.active !== true) {
+        console.log(`  Updating option '${option.name}' to active`);
+        option.active = true;
+        productUpdated = true;
+        // }
+
+        // Update option values
+        option.values.forEach((value, valueIndex) => {
+          // if (value.active !== true) {
+          console.log(`    Updating value '${value.name}' in option '${option.name}' to active`);
+          value.active = true;
+          productUpdated = true;
+          // }
+        });
+      });
+
+      if (productUpdated) {
+        console.log(`  Saving updated product: ${product.name}`);
+        await product.save();
+        updatedCount++;
+      } else {
+        console.log(`  No changes needed for product: ${product.name}`);
+      }
+
+      // Log progress every 10 products
+      if ((i + 1) % 10 === 0 || i === products.length - 1) {
+        console.log(`Processed ${i + 1}/${products.length} products. Updated so far: ${updatedCount}`);
+      }
+    }
+
+    console.log(`Migration completed. Total products updated: ${updatedCount}`);
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} products with active options and option values.`,
+    });
+  } catch (error) {
+    console.error("Error during migration:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/deactivate_bulb_style_options").put(async (req, res) => {
+  try {
+    console.log("Starting 'Bulb Style' option deactivation migration...");
+    const products = await Product.find({ deleted: false, hidden: false });
+    console.log(`Found ${products.length} products to process.`);
     let updatedCount = 0;
 
     for (const product of products) {
-      await product.save();
-      updatedCount++;
+      const bulbStyleOption = product.options.find(option => option.name === "Hole Style");
+      if (bulbStyleOption && bulbStyleOption.active !== false) {
+        bulbStyleOption.active = false;
+        await product.save();
+        updatedCount++;
+      }
     }
 
+    console.log(`Migration completed. Total products updated: ${updatedCount}`);
     res.status(200).json({
-      message: `Migration completed. Updated ${updatedCount} products.`,
+      message: `Migration completed. Deactivated 'Bulb Style' option in ${updatedCount} products.`,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error during migration:", error);
     res.status(500).send({ error: error.message });
   }
 });
