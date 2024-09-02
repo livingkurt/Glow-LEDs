@@ -26,7 +26,7 @@ import RecentlyViewed from "./components/RecentlyViewed";
 import * as API from "../../api";
 import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
-import { setQuantity } from "./productPageSlice";
+import { restoreOriginalImages, setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleChips from "./components/CompatibleChips";
 import ContributorsDisplay from "./components/ContributorsDisplay";
@@ -92,7 +92,10 @@ const ProductPage = () => {
             <Container maxWidth="xl">
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <ProductImages images={customizedProduct.images} />
+                  <ProductImages
+                    images={customizedProduct?.images}
+                    originalImages={customizedProduct?.original_images}
+                  />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>

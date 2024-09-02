@@ -94,6 +94,9 @@ const productPage = createSlice({
         customizedProduct: { ...state.customizedProduct, ...customizedProduct },
       };
     },
+    restoreOriginalImages: state => {
+      state.customizedProduct.images = state.customizedProduct.original_images;
+    },
     selectOption: (state, { payload }) => {
       const { selectedOption, index, option } = payload;
       if (selectedOption === undefined) {
@@ -140,6 +143,7 @@ const productPage = createSlice({
           short_description: data.short_description,
           fact: data.fact,
           images: data.images,
+          original_images: data.images,
           display_image_object: data.images[0],
           category: data.category,
           subcategory: data.subcategory,
@@ -174,6 +178,12 @@ const productPage = createSlice({
   },
 });
 
-export const { setQuantity, setReviewModal, setCustomizedProduct, selectOption, setIsAddonChecked } =
-  productPage.actions;
+export const {
+  setQuantity,
+  setReviewModal,
+  setCustomizedProduct,
+  selectOption,
+  setIsAddonChecked,
+  restoreOriginalImages,
+} = productPage.actions;
 export default productPage.reducer;
