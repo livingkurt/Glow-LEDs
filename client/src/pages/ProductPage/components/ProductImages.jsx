@@ -10,8 +10,12 @@ import "swiper/css/zoom";
 import { isBrowser } from "react-device-detect";
 import { Box } from "@mui/material";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { restoreOriginalImages } from "../productPageSlice";
+import { useDispatch } from "react-redux";
 
-const ProductImages = ({ images }) => {
+const ProductImages = ({ images, originalImages }) => {
+  const dispatch = useDispatch();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -52,6 +56,11 @@ const ProductImages = ({ images }) => {
               ))}
             </Swiper>
           </Box>
+          {JSON.stringify(originalImages) !== JSON.stringify(images) && (
+            <GLButtonV2 variant="contained" color="secondary" onClick={() => dispatch(restoreOriginalImages())}>
+              View Original Images
+            </GLButtonV2>
+          )}
           <Box
             sx={{
               width: "100%",
