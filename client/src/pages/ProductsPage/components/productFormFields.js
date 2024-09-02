@@ -82,6 +82,10 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
             album: `${product.name} Images`,
           },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+          active: {
+            type: "checkbox",
+            label: "Active",
+          },
           values: {
             type: "array",
             title: "Option Choices",
@@ -120,6 +124,10 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
                     dispatch(API.saveProduct({ ...selectedProduct }));
                   },
                   showEditButton: true,
+                },
+                active: {
+                  type: "checkbox",
+                  label: "Active",
                 },
               },
             },

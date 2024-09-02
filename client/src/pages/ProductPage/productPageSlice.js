@@ -129,9 +129,23 @@ const productPage = createSlice({
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
 
-      const selectedOptions = data?.options?.map(option =>
-        !option.isAddOn ? option.values.find(value => value.isDefault) : {}
-      );
+      // Filter active options and their active values
+      const activeOptions = data?.options
+        ?.filter(option => option.active)
+        .map(option => ({
+          ...option,
+          values: option.values.filter(value => value.active),
+        }));
+
+      // Maintain original selectedOptions behavior, but only for active options and values
+      const selectedOptions = data?.options
+        ?.map(option => {
+          if (!option.active) return null;
+          if (option.isAddOn) return {};
+          const activeValue = option.values.find(value => value.active && value.isDefault);
+          return activeValue || {};
+        })
+        .filter(Boolean);
 
       return {
         ...state,
@@ -167,7 +181,7 @@ const productPage = createSlice({
           rating: data.rating,
           wholesale_product: data.wholesale_product,
           selectedOptions,
-          currentOptions: data?.options,
+          currentOptions: activeOptions,
         },
       };
     },
