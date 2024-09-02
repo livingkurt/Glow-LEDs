@@ -23,6 +23,7 @@ export default {
         .populate("products_grid_page.our_picks")
         .populate("faq_page.sections.subsections.image")
         .populate("about_page.sections.image")
+        .populate("menus.menu_items.image")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -54,7 +55,8 @@ export default {
         .populate("about_page.sections.image")
         .populate("products_grid_page.category_banners.image")
         .populate("products_grid_page.category_banners.tag")
-        .populate("products_grid_page.our_picks");
+        .populate("products_grid_page.our_picks")
+        .populate("menus.menu_items.image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

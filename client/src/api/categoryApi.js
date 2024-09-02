@@ -33,7 +33,6 @@ export const reorderCategorys = async ({ reorderedItems }) => {
 export const listCategorys = createAsyncThunk(
   "categorys/listCategorys",
   async (query, { dispatch, rejectWithValue }) => {
-    console.log({ query });
     try {
       const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
       console.log({ data });

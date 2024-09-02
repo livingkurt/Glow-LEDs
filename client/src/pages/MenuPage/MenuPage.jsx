@@ -1,249 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import { humanize, snake_case } from "../../utils/helper_functions";
-import { useDispatch } from "react-redux";
-import { API_Content, API_Features } from "../../utils";
-import { Loading } from "../../shared/SharedComponents";
-import { MenuItemD, MenuItemM } from "./components";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import * as API from "../../api";
-import { setMenuItems } from "../../slices/contentSlice";
-import { Container } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import MenuPageHead from "./components/MenuPageHead";
+import MenuItemCard from "./components/MenuItemCard";
+import MenuPageSkeletons from "./components/MenuPageSkeletons";
 
 const MenuPage = () => {
   const params = useParams();
-  const dispatch = useDispatch();
   const pathname = params.pathname;
-
-  const contentPage = useSelector(state => state.contents.contentPage);
-  const { menuItems, loadingSlideshowImages } = contentPage;
 
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();
 
-  const slideshow = currentContent?.home_page?.slideshow;
+  if (isLoading) return <MenuPageSkeletons />;
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (pathname === "featured") {
-        get_features();
-      }
-      if (
-        pathname === "gloving" ||
-        pathname === "manuals" ||
-        pathname === "support" ||
-        pathname === "sponsored_artists"
-      ) {
-        dispatch(setMenuItems(determine_menu_items()));
-      }
-      if (pathname === "gloving") {
-        dispatch(API.getSlideshowImages());
-      }
-    }
-    return () => (clean = false);
-  }, [pathname]);
+  const menus = currentContent?.menus || [];
+  const menu = menus.find(menu => menu.pathname === pathname);
 
-  const get_features = async () => {
-    const { data: glovers } = await API_Features.get_features_by_category("glovers");
-    const { data: artists } = await API_Features.get_features_by_category("artists");
-    const { data: producers } = await API_Features.get_features_by_category("producers");
-    const { data: vfx } = await API_Features.get_features_by_category("vfx");
-    if (glovers && artists && producers && vfx) {
-      const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
-      dispatch(setMenuItems(menu_items));
-    }
-  };
-
-  const date = new Date();
-
-  const today = date.toISOString();
-
-  const featured_menu_items = (glovers, artists, producers, vfx) => {
-    if (glovers && artists && producers && vfx) {
-      return [
-        {
-          label: "Artists",
-          image: artists[0] && artists[0].logo,
-          link: "/collections/all/features/category/artists",
-        },
-        {
-          label: "Glovers",
-          image: `http://img.youtube.com/vi/${
-            glovers.filter(glover => glover.release_date <= today && glover.category === "glovers") &&
-            glovers.filter(glover => glover.release_date <= today && glover.category === "glovers")[0].video
-          }/hqdefault.jpg`,
-          link: "/collections/all/features/category/glovers",
-        },
-
-        {
-          label: "Producers",
-          image: producers[0] && producers[0].logo,
-          link: "/collections/all/features/category/producers",
-        },
-        {
-          label: "VFX",
-          image: (vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx && vfx.video}/hqdefault.jpg`,
-          link: "/collections/all/features/category/vfx",
-        },
-      ];
-    }
-  };
-
-  const determine_menu_items = content => {
-    if (pathname === "manuals") {
-      return slideshow
-        .filter(item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz")
-        .map(item => {
-          return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
-        });
-    } else if (pathname === "support") {
-      return [
-        {
-          label: "About",
-          link: "/pages/about",
-          image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg",
-        },
-        {
-          label: "Support Center",
-          link: "/pages/support_center",
-          image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png",
-        },
-        {
-          label: "Terms",
-          link: "/pages/terms",
-          image: "https://images2.imgbox.com/0b/55/LAI7uhOb_o.png",
-        },
-      ];
-    } else if (pathname === "sponsored_artists") {
-      return [
-        {
-          label: "Sponsors",
-          image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
-          link: "/collections/all/sponsors",
-        },
-        {
-          label: "Teams",
-          image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams",
-        },
-      ];
-    } else if (pathname === "learn") {
-      return [
-        {
-          label: "Beginner",
-          image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
-          link: "/collections/all/tutorials?level=beginner",
-        },
-        {
-          label: "Intermediate",
-          image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams?level=intermediate",
-        },
-        {
-          label: "Advanced",
-          image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams?level=advanced",
-        },
-      ];
-    } else if (pathname === "collections") {
-      return [
-        {
-          label: "Texture",
-          link: "/collections/all/products/category/diffuser_caps/collection/texture",
-          image: "https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg",
-        },
-        {
-          label: "Space Cadet",
-          link: "/collections/all/products/category/diffuser_caps/collection/space_cadet",
-          image: "https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg",
-        },
-        {
-          label: "Festie Bestie",
-          link: "/collections/all/products/category/diffuser_caps/collection/festie_bestie",
-          image: "https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg",
-        },
-        {
-          label: "Platonic Solids",
-          link: "/collections/all/products/category/diffuser_caps/collection/platonic_solids",
-          image: "https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg",
-        },
-      ];
-    }
-  };
-
-  const decide_url = item => {
-    if (item) {
-      if (pathname === "gloving" || pathname === "decor") {
-        if (item.subcategory) {
-          return `/collections/all/products/${item.pathname}`;
-        } else {
-          return `/collections/all/products/category/${item.category}`;
-        }
-      } else if (pathname === "featured") {
-        return `/collections/all/features/${item.category}`;
-      } else if (pathname === "sponsored_artists") {
-        return `/collections/all/${item.category}`;
-      } else if (pathname === "manuals") {
-        return `/pages/manual/${item.category}`;
-      } else if (pathname === "support") {
-        if (item.category === "manuals") {
-          return `/pages/menu/${item.category}`;
-        } else {
-          return `/pages/${item.category}`;
-        }
-      } else {
-        return `/pages/${item.category}`;
-      }
-    }
-  };
+  if (!menu) return <Typography>Menu not found</Typography>;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 2 }}>
-      <Helmet>
-        <title>{humanize(pathname)} | Glow LEDs</title>
-        <meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />
-        <meta name="twitter:title" content={`${humanize(pathname)}| Glow LEDs`} />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
-        <meta
-          name="description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
-        <meta
-          property="og:description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
-        <meta
-          name="twitter:description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
-      </Helmet>
-      <Loading loading={loadingSlideshowImages} />
-      <div className="jc-c">
-        <h1> {pathname === "gloving" ? "All Gloving" : humanize(pathname)}</h1>
-      </div>
-      <div className="product_big_screen">
-        <div className="jc-c">
-          <div className="jc-c wrap">
-            {slideshow &&
-              slideshow.map((item, index) => {
-                return <MenuItemD item={item} index={index} key={index} decide_url={decide_url} />;
-              })}
-          </div>
-        </div>
-      </div>
-      <div className="product_small_screen none">
-        <div className="jc-c">
-          <ul className="jc-c wrap">
-            {slideshow &&
-              slideshow.map((item, index) => {
-                return <MenuItemM item={item} index={index} key={index} decide_url={decide_url} />;
-              })}
-          </ul>
-        </div>
-      </div>
-    </Container>
+    <Box>
+      <Container maxWidth="xl">
+        <MenuPageHead name={menu.name} />
+        <Typography variant="h4" align="center" py={2}>
+          {menu.name}
+        </Typography>
+        {menu.description && (
+          <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+            {menu.description}
+          </Typography>
+        )}
+        <Grid container spacing={2}>
+          {menu.menu_items.length > 0 ? (
+            menu.menu_items.map(item => (
+              <Grid item key={item._id} xs={12} sm={6} md={4} lg={3}>
+                <MenuItemCard item={item} />
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+              No items found in this menu
+            </Typography>
+          )}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
+
 export default MenuPage;

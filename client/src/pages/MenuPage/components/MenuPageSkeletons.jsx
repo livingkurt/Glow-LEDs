@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Grid, Typography, Card, CardContent, Box, Skeleton } from "@mui/material";
 
-const ProductsGridPageSkeletons = () => {
+const MenuPageSkeletons = () => {
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" align="center" pt={2}>
+      <Typography variant="h4" align="center" py={2}>
         <Skeleton
           animation="wave"
           sx={{ bgcolor: "#4e5061", borderRadius: "20px", margin: "auto" }}
@@ -13,16 +13,6 @@ const ProductsGridPageSkeletons = () => {
           height={56}
         />
       </Typography>
-      <Typography variant="subtitle1" gutterBottom align="center" pt={2} mb={2}>
-        <Skeleton
-          animation="wave"
-          sx={{ bgcolor: "#4e5061", borderRadius: "20px", margin: "auto" }}
-          width="70%"
-          variant="rectangular"
-          height={30}
-        />
-      </Typography>
-
       <Grid container spacing={4}>
         {[...Array(24)].map((_, index) => (
           <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
@@ -49,18 +39,6 @@ const ProductsGridPageSkeletons = () => {
                   variant="text"
                   width="80%"
                 />
-                <Skeleton
-                  animation="wave"
-                  sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
-                  variant="text"
-                  width="40%"
-                />
-                <Skeleton
-                  animation="wave"
-                  sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
-                  variant="text"
-                  width="60%"
-                />
               </CardContent>
             </Card>
           </Grid>
@@ -70,4 +48,4 @@ const ProductsGridPageSkeletons = () => {
   );
 };
 
-export default ProductsGridPageSkeletons;
+export default MenuPageSkeletons;

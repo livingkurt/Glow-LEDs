@@ -307,6 +307,37 @@ export const contentFormFields = ({ content, products, categorys }) => {
         },
       },
     },
+    menus: {
+      type: "array",
+      title: "Menus",
+      label: item => item.name,
+      itemSchema: {
+        type: "object",
+        fields: {
+          name: { type: "text", label: "Menu Name" },
+          menu_items: {
+            type: "array",
+            title: "Menu Items",
+            label: item => item.label,
+            itemSchema: {
+              type: "object",
+              fields: {
+                label: { type: "text", label: "Label" },
+                description: { type: "text", label: "Description" },
+                image: {
+                  type: "image_upload",
+                  label: "Image",
+                  labelProp: "_id",
+                  album: `${content?.faq_page?.title} Menu Images`,
+                },
+                link: { type: "text", label: "Link" },
+              },
+            },
+          },
+          pathname: { type: "text", label: "Menu Pathname" },
+        },
+      },
+    },
     free_shipping_minimum_amount: { type: "number", label: "Minimum Subtotal for Free Shipping" },
     active: { type: "checkbox", label: "Active" },
   };

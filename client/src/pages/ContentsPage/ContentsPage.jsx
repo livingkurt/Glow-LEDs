@@ -10,13 +10,12 @@ import { format_date } from "../../utils/helper_functions";
 import { open_create_content_modal, open_edit_content_modal } from "../../slices/contentSlice";
 import { determineContentColors } from "./contentsPageHelpers";
 
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ContentCopy, Edit, Flag, Help, Home, Info, Inventory } from "@mui/icons-material";
-import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const ContentsPage = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
@@ -94,6 +93,12 @@ const ContentsPage = () => {
               onClick={() => dispatch(open_edit_content_modal({ content, contentType: "faq_page" }))}
             >
               <Help color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit Menus Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "menus" }))}
+            >
+              <MenuBookIcon color="white" />
             </GLIconButton>
             <GLIconButton
               tooltip="Duplicate"

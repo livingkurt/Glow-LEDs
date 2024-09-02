@@ -94,6 +94,19 @@ const content = {
       icon: "",
     },
   ],
+  menus: [
+    {
+      name: "",
+      menu_items: [
+        {
+          label: "",
+          image: null,
+          link: "",
+        },
+      ],
+      pathname: "",
+    },
+  ],
   active: true,
   deleted: false,
 };

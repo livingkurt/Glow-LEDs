@@ -43,13 +43,13 @@ import { ColorPalettePage } from "../../pages/ColorPalettesPage";
 import { EventsPage } from "../../pages/EventsPage";
 import SupportCenterPage from "../../pages/SupportCenterPage/SupportCenterPage";
 import { TermsPage } from "../../pages/TermsPage";
-import { MenuPage } from "../../pages/MenuPage";
 import { AboutPage } from "../../pages/AboutPage";
 import { SitemapPage } from "../../pages/SitemapPage";
 import { MusicPage } from "../../pages/MusicPage";
 import { CompletePage } from "../../pages/CompletePage";
 import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
+import MenuPage from "../../pages/MenuPage/MenuPage";
 
 export const Components = {
   PlaceOrderPage,

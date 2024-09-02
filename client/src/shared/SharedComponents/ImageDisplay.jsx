@@ -4,7 +4,6 @@ import { FileCopy } from "@mui/icons-material";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
-import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ImageDisplay = ({ images, onChange, fieldName }) => {
   const remove_image = image_index => {
@@ -58,7 +57,7 @@ const ImageDisplay = ({ images, onChange, fieldName }) => {
                         }}
                       >
                         <Stack direction="row" alignItems="center" justifyContent="space-between">
-                          <GLLazyImage
+                          <img
                             alt="product"
                             style={{
                               width: "100%",

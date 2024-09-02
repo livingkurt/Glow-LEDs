@@ -30,6 +30,29 @@ const EditContentModal = () => {
     categorys,
   });
 
+  const getFormData = () => {
+    if (contentType === "") {
+      return formFields;
+    } else if (Array.isArray(content[contentType])) {
+      return {
+        [contentType]: {
+          type: "array",
+          title: contentType,
+          itemSchema: {
+            type: "object",
+            fields: formFields[contentType].itemSchema.fields,
+          },
+        },
+      };
+    } else {
+      return { [contentType]: formFields[contentType] };
+    }
+  };
+
+  const getFormState = () => {
+    return contentType !== "" ? { [contentType]: content[contentType] } : content;
+  };
+
   return (
     <div>
       <GLActionModal
@@ -48,15 +71,10 @@ const EditContentModal = () => {
         disableEscapeKeyDown
       >
         <GLForm
-          formData={contentType !== "" ? formFields[contentType]?.fields : formFields}
-          state={contentType !== "" ? content[contentType] : content}
+          formData={getFormData()}
+          state={getFormState()}
           onChange={value => {
-            if (contentType === "") {
-              dispatch(set_content(value));
-              return;
-            } else {
-              dispatch(set_content({ [contentType]: { ...content[contentType], ...value } }));
-            }
+            dispatch(set_content(value));
           }}
           loading={loading}
         />

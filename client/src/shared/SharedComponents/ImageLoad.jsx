@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ImageLoad = React.memo(({ src, placeholder, alt = "" }) => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +20,7 @@ const ImageLoad = React.memo(({ src, placeholder, alt = "" }) => {
   }, [src]);
 
   return (
-    <GLLazyImage
+    <img
       src={currentSrc}
       style={{
         opacity: loading ? 0.5 : 1,
