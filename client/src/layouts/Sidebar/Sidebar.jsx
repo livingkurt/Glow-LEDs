@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, List } from "@mui/material";
+import { Drawer, List, useMediaQuery, useTheme } from "@mui/material";
 import { sidebarItems } from "../Header/headerHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setSideNavDrawer } from "../../slices/cartSlice";
@@ -10,6 +10,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { sideNavDrawer } = cartPage;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleDrawerToggle = () => {
     dispatch(setSideNavDrawer(!sideNavDrawer));
@@ -21,7 +23,14 @@ const Sidebar = () => {
       open={sideNavDrawer}
       onClose={handleDrawerToggle}
       transitionDuration={{ enter: 500, exit: 400 }}
-      sx={{ "& .MuiDrawer-paper": { boxSizing: "border-box", width: "40rem", backgroundColor: "#333333" } }}
+      sx={{
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+          width: isMobile ? "100%" : "40rem",
+          maxWidth: "100vw",
+          backgroundColor: "#333333",
+        },
+      }}
     >
       <SidebarCloseButton />
       <List>
