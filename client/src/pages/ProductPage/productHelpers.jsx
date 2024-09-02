@@ -28,20 +28,19 @@ export const calculateAdditionalCost = selectedOptions => {
   return Number(total.toFixed(2));
 };
 
-export const updateProductDetailsFromOption = (state, selectedOption, option) => {
+export const updateProductDetailsFromOption = (state, selectedOption, option, fromUrlParams = false) => {
   const { product } = selectedOption;
 
-  // Check if the option itself has an image
-  if (option.image) {
-    state.customizedProduct.images = [option.image];
-  } else if (selectedOption.image) {
-    // If the option doesn't have an image, check if the selected option value has an image
-    state.customizedProduct.images = [selectedOption.image];
-  } else if (selectedOption?.product?.images?.length > 0) {
-    // If neither the option nor the selected value has an image, use the product images if available
-    state.customizedProduct.images = selectedOption.product.images;
+  // Only update images if not loading from URL parameters
+  if (!fromUrlParams) {
+    if (option.image) {
+      state.customizedProduct.images = [option.image];
+    } else if (selectedOption.image) {
+      state.customizedProduct.images = [selectedOption.image];
+    } else if (selectedOption?.product?.images?.length > 0) {
+      state.customizedProduct.images = selectedOption.product.images;
+    }
   }
-
   if (selectedOption?.product?.chips?.length > 0) {
     state.customizedProduct.chips = selectedOption?.product?.chips;
   }

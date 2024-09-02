@@ -138,7 +138,7 @@ const ShippingStep = () => {
     dispatch(clearShippingRates());
     if (shipping && Object.keys(shipping).length > 0) {
       dispatch(setLoadingShipping(true));
-      const package_volume = cartItems?.reduce((a, c) => a + c.dimensions.package_volume, 0);
+      const package_volume = cartItems?.reduce((a, c) => a + c.dimensions?.package_volume, 0);
 
       if (!package_volume) {
         dispatch(setFreeShipping());

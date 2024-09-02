@@ -8,6 +8,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import GLSelect from "../GLSelect/GLSelect";
 import GLIconButton from "../GLIconButton/GLIconButton";
 import * as API from "../../../api";
+import { generateProductUrl } from "../../../utils/helpers/product_helpers";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -21,6 +22,8 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
     ...option,
     normalizedColorCode: option.filament?.color_code || option.colorCode,
   }));
+
+  const productUrl = generateProductUrl(item);
 
   const renderOptions = () => (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
@@ -78,7 +81,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
     ) : null;
 
   const renderImage = () => (
-    <Link to={`/collections/all/products/${item.pathname}`}>
+    <Link to={productUrl}>
       <Box
         onClick={closeMenu}
         position="relative"
@@ -134,11 +137,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
           <Grid item xs={12} container spacing={2} alignItems="center">
             <Grid item>{renderImage()}</Grid>
             <Grid item xs>
-              <Typography
-                variant={isOrderItem ? "body1" : "subtitle2"}
-                component={Link}
-                to={`/collections/all/products/${item.pathname}`}
-              >
+              <Typography variant={isOrderItem ? "body1" : "subtitle2"} component={Link} to={productUrl}>
                 {item.name}
               </Typography>
             </Grid>
@@ -167,11 +166,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
           <Grid item>{renderImage()}</Grid>
           <Grid item xs container direction="column" spacing={1}>
             <Grid item>
-              <Typography
-                variant={isOrderItem ? "body1" : "subtitle2"}
-                component={Link}
-                to={`/collections/all/products/${item.pathname}`}
-              >
+              <Typography variant={isOrderItem ? "body1" : "subtitle2"} component={Link} to={productUrl}>
                 {item.quantity > 1 ? `${item.quantity}x` : ""} {item.name}
               </Typography>
             </Grid>
