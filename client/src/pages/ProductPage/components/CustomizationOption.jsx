@@ -15,10 +15,16 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
   const { isAddonChecked } = productPage;
 
   const handleChange = value => {
-    const fullSelectedOption = option.values.find(opt => opt.name === value);
-    if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
-      dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
+    if (value === null || value === "" || value === selectedOption?.name) {
+      // Deselect the option
+      dispatch(selectOption({ index, selectedOption: undefined, option }));
       updateValidationError(index, null);
+    } else {
+      const fullSelectedOption = option.values.find(opt => opt.name === value);
+      if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
+        dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
+        updateValidationError(index, null);
+      }
     }
   };
 

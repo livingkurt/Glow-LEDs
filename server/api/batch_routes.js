@@ -5443,7 +5443,7 @@ router.route("/deactivate_bulb_style_options").put(async (req, res) => {
     let updatedCount = 0;
 
     for (const product of products) {
-      const bulbStyleOption = product.options.find(option => option.name === "Hole Style");
+      const bulbStyleOption = product.options.find(option => option.name === "Bottom Color");
       if (bulbStyleOption && bulbStyleOption.active !== false) {
         bulbStyleOption.active = false;
         await product.save();
@@ -5509,4 +5509,71 @@ router.route("/deactivate_bulb_style_options").put(async (req, res) => {
 //     res.status(500).send({ error: error.message });
 //   }
 // });
+
+router.route("/update_violet_colorcode").put(async (req, res) => {
+  try {
+    console.log(`Starting 'Violet' colorCode update...`);
+    const orders = await Order.find({ deleted: false });
+    console.log(`Found ${orders.length} orders to process`);
+    let updatedCount = 0;
+
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      console.log(`Processing order ${i + 1} of ${orders.length} (ID: ${order._id})`);
+      let orderUpdated = false;
+
+      for (let j = 0; j < order.orderItems.length; j++) {
+        const item = order.orderItems[j];
+        console.log(`  Processing order item ${j + 1} of ${order.orderItems.length}`);
+
+        // Update currentOptions
+        if (item.currentOptions) {
+          for (let k = 0; k < item.currentOptions.length; k++) {
+            const option = item.currentOptions[k];
+            if (option.values) {
+              for (let l = 0; l < option.values.length; l++) {
+                const value = option.values[l];
+                if (value.colorCode === "Violet") {
+                  console.log(`    Found Violet colorCode in currentOptions`);
+                  value.colorCode = "#543abb";
+                  orderUpdated = true;
+                }
+              }
+            }
+          }
+        }
+
+        // Update selectedOptions
+        if (item.selectedOptions) {
+          for (let k = 0; k < item.selectedOptions.length; k++) {
+            const option = item.selectedOptions[k];
+            if (option.colorCode === "Violet") {
+              console.log(`    Found Violet colorCode in selectedOptions`);
+              option.colorCode = "#543abb";
+              orderUpdated = true;
+            }
+          }
+        }
+      }
+
+      if (orderUpdated) {
+        console.log(`  Saving updated order ${order._id}`);
+        await order.save();
+        updatedCount++;
+      } else {
+        console.log(`  No updates needed for order ${order._id}`);
+      }
+    }
+
+    console.log(`Updated ${updatedCount} orders`);
+
+    res.status(200).send({
+      message: "Violet colorCode update completed",
+      updatedOrders: updatedCount,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
 export default router;
