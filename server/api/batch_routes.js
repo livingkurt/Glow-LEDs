@@ -5576,4 +5576,34 @@ router.route("/update_violet_colorcode").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+router.route("/update_set_of_products").put(async (req, res) => {
+  try {
+    const categorySetOfMap = {
+      "diffusers": 10,
+      "exo_diffusers": 10,
+      "decals": 11,
+      "diffuser_caps": 10,
+    };
+
+    const bulkOps = Object.entries(categorySetOfMap).map(([category, setOf]) => ({
+      updateMany: {
+        filter: { category: category },
+        update: { $set: { set_of: setOf } },
+      },
+    }));
+
+    const result = await Product.bulkWrite(bulkOps);
+
+    res.status(200).json({
+      message: "Products updated successfully",
+      result: result,
+    });
+  } catch (error) {
+    console.error("Error during update:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+module.exports = router;
 export default router;

@@ -40,6 +40,12 @@ export const productFormFields = ({ products, users, tags, product, chips, filam
       default: 30,
       required: true,
     },
+    set_of: {
+      type: "number",
+      label: "How many comes for quantity of 1?",
+      default: 30,
+      required: true,
+    },
     finite_stock: {
       type: "checkbox",
       label: "Finite Stock",
