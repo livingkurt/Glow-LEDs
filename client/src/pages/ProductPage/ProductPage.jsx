@@ -155,7 +155,9 @@ const ProductPage = () => {
                       )}
                     </Box>
                   ))}
-                  <Typography variant="subtitle1">Quantity</Typography>
+                  <Typography variant="subtitle1">
+                    Quantity {customizedProduct.set_of ? `(Set of ${customizedProduct.set_of})` : ""}
+                  </Typography>
                   <GLSelect
                     value={customizedProduct?.quantity}
                     onChange={e => dispatch(setQuantity(e.target.value))}

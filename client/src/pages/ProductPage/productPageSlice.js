@@ -157,6 +157,7 @@ const productPage = createSlice({
           short_description: data.short_description,
           fact: data.fact,
           images: data.images,
+          set_of: data.set_of,
           original_images: data.images,
           display_image_object: data.images[0],
           category: data.category,

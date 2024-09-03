@@ -212,6 +212,7 @@ const productSchema = new mongoose.Schema(
       filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     },
     size: { type: String },
+    set_of: { type: Number },
 
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     deleted: { type: Boolean, default: false },
