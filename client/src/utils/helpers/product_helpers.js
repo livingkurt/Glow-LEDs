@@ -9,6 +9,5 @@ export const generateProductUrl = cartItem => {
   });
 
   const queryString = params.toString();
-  console.log({ queryString });
   return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 };
