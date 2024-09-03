@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const RecentlyViewed = ({ currentProduct }) => {
   const recently_viewed_products = JSON.parse(sessionStorage.getItem("recently_viewed")) || [];
-  console.log({ recently_viewed_products, currentProduct });
 
   // Filter out the current product from the recently viewed list
   const filteredProducts = recently_viewed_products.filter(product => product?.name !== currentProduct?.name);
