@@ -15,7 +15,6 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
   const { isAddonChecked } = productPage;
 
   const handleChange = value => {
-    console.log({ value });
     if (value === null || value === "" || value === selectedOption?.name) {
       // Deselect the option
       dispatch(selectOption({ index, selectedOption: undefined, option }));
