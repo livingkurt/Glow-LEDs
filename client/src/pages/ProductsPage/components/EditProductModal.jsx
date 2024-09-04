@@ -15,15 +15,12 @@ const EditProductModal = () => {
   const { edit_product_modal, product, loading, products, editProductHistory } = productsPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users, loading: loading_users } = userPage;
-  const categoryPage = useSelector(state => state.categorys.categoryPage);
-  const { categorys, loading: loading_categorys } = categoryPage;
   const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
   const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
   const categorysQuery = useCategorysQuery();
-  console.log({ categorysQuery });
 
   useEffect(() => {
     let clean = true;
@@ -88,7 +85,7 @@ const EditProductModal = () => {
           onChange={value => {
             dispatch(set_product(value));
           }}
-          loading={loading && loading_users && loading_categorys}
+          loading={loading && loading_users}
         />
       </GLActionModal>
     </div>

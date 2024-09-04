@@ -63,7 +63,7 @@ export const useProductsGridPage = () => {
     const tagSet = new Set();
     products.forEach(product => {
       product.tags.forEach(tag => {
-        if (current_user?.isWholesaler || tag.name.toLowerCase() !== "wholesale" || !tag.deleted) {
+        if (current_user?.isWholesaler || tag.name.toLowerCase() !== "wholesale") {
           tagSet.add(tag.name);
         }
       });
