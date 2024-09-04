@@ -23,6 +23,7 @@ export const orderExceptionStatusColors = {
   isPrioritized: { name: "isPrioritized", color: "#c4891e" },
   isPaused: { name: "isPaused", color: "#33323e" },
   isUpdated: { name: "isUpdated", color: "#4d3a63" },
+  isPrintIssue: { name: "isPrintIssue", color: "#6a0027" },
 };
 
 export const determineOrderColors = order => {
@@ -30,6 +31,9 @@ export const determineOrderColors = order => {
 
   if (order.isUpdated) {
     result = "#4d3a63";
+  }
+  if (order.isPrintIssue) {
+    result = "#6a0027";
   }
   if (order.isPaused) {
     result = "#33323e";
@@ -199,11 +203,7 @@ const waitForImagesToLoad = htmlString => {
 };
 
 export const printLabel = async label => {
-  const html = `<div style="width: 100%;
-  display: flex;
-  height: auto;
-  padding: 40px;
-  align-items: center;">
+  const html = `<div style="width: 100%; height: auto;">
       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
   </div>`;
   await waitForImagesToLoad(html);

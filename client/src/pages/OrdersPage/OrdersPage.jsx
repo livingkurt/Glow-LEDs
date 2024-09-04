@@ -59,11 +59,13 @@ const OrdersPage = () => {
                   "Set isPrioritized",
                   "Set isPaused",
                   "Set isUpdated",
+                  "Set isPrintIssue",
                   "Set isRefunded",
                   "Set isReassured",
                   "Unset isPrioritized",
                   "Unset isPaused",
                   "Unset isUpdated",
+                  "Unset isPrintIssue",
                   "Unset isRefunded",
                   "Unset isReassured",
                 ]}

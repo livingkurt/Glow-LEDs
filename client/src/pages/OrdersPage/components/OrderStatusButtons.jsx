@@ -8,11 +8,14 @@ import config from "../../../config";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { orderStatusColors, nextStatus } from "../ordersPageHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
+import { showConfirm } from "../../../slices/snackbarSlice";
 
 const OrderStatusButtons = ({ order }) => {
   const dispatch = useDispatch();
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading_label } = orderPage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const updateOrder = (status, sendEmail) => {
     let updatePayload = { ...order };
@@ -44,6 +47,9 @@ const OrderStatusButtons = ({ order }) => {
           updatePayload.isRefunded = !order.isRefunded;
           updatePayload.refundedAt = new Date();
           break;
+        case "print_issue":
+          updatePayload.isPrintIssue = !order.isPrintIssue;
+          break;
         case "error":
           // Assuming you want to toggle or set an error state
           updatePayload.isError = !order.isError;
@@ -54,8 +60,32 @@ const OrderStatusButtons = ({ order }) => {
           return;
       }
     }
-
-    dispatch(API.saveOrder(updatePayload));
+    if (status === "print_issue") {
+      dispatch(
+        showConfirm({
+          title: `What ${order.isPrintIssue ? "solved" : "caused"} the Print issue?`,
+          inputLabel: `Describe what ${order.isPrintIssue ? "solved" : "caused"} the print issue?`,
+          onConfirm: inputText => {
+            dispatch(
+              API.saveOrder({
+                ...order,
+                isPrintIssue: !order.isPrintIssue,
+                change_log: [
+                  ...order.change_log,
+                  {
+                    change: inputText,
+                    changedAt: new Date(),
+                    changedBy: current_user,
+                  },
+                ],
+              })
+            );
+          },
+        })
+      );
+    } else {
+      dispatch(API.saveOrder(updatePayload));
+    }
 
     if (sendEmail) {
       send_order_status_email(status);
@@ -158,6 +188,20 @@ const OrderStatusButtons = ({ order }) => {
             </Button>
           </Grid>
         )}
+        {order.isPrintIssue && (
+          <Grid item xs={12}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              onClick={() => {
+                updateOrder("print_issue", false);
+              }}
+            >
+              Print Issue Acknowledged
+            </Button>
+          </Grid>
+        )}
         {(order.status === "paid" ||
           order.status === "shipped" ||
           order.status === "crafted" ||
@@ -183,6 +227,11 @@ const OrderStatusButtons = ({ order }) => {
             onClick={() => updateOrder("updated", !order.isUpdated)}
           >
             {order.isUpdated ? "Unset" : "Set"} to Updated
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("print_issue", false)}>
+            {order.isPrintIssue ? "Unset" : "Set"} to Print Issue
           </Button>
         </Grid>
 
