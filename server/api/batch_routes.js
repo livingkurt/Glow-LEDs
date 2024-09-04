@@ -5630,4 +5630,47 @@ router.route("/migrate_diffuser_subcategory").put(async (req, res) => {
   }
 });
 
+router.route("/swap_purple_violet_colors").put(async (req, res) => {
+  try {
+    const products = await Product.find({
+      options: {
+        $elemMatch: {
+          values: {
+            $all: [{ $elemMatch: { name: "Purple" } }, { $elemMatch: { name: "Violet" } }],
+          },
+        },
+      },
+    });
+
+    let updatedCount = 0;
+
+    for (let product of products) {
+      let updated = false;
+      product.options.forEach(option => {
+        let purpleIndex = option.values.findIndex(value => value.name === "Purple");
+        let violetIndex = option.values.findIndex(value => value.name === "Violet");
+
+        if (purpleIndex !== -1 && violetIndex !== -1 && purpleIndex < violetIndex) {
+          // Swap the positions
+          [option.values[purpleIndex], option.values[violetIndex]] = [
+            option.values[violetIndex],
+            option.values[purpleIndex],
+          ];
+          updated = true;
+        }
+      });
+
+      if (updated) {
+        await Product.findByIdAndUpdate(product._id, { options: product.options });
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({ message: `Migration completed successfully. Updated ${updatedCount} products.` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;
