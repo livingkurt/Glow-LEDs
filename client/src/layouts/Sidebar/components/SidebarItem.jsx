@@ -16,6 +16,8 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
 
   const handleClick = () => setOpen(!open);
 
+  const showDropdown = determineDropdown(item, current_user);
+
   return (
     <>
       {(!item?.permissions || item.permissions(current_user)) && (
@@ -36,7 +38,11 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
             onClick={() => {
               dispatch(setSideNavDrawer(false));
               if (item.path) {
-                if (typeof item.name === "function" && item.name(current_user) === "Login") {
+                if (typeof item.name === "function" && item.name(current_user) === "LOGIN") {
+                  // Handle login action
+                  if (item.onClick) {
+                    item.onClick(dispatch, navigate, location);
+                  }
                 } else {
                   navigate(item.path);
                 }
@@ -50,37 +56,35 @@ const SidebarItem = ({ item, level, handleDrawerToggle }) => {
             {determineName(item, current_user)}
           </Typography>
 
-          {(!item?.permissions || item.permissions(current_user)) &&
-            determineDropdown(item, current_user) &&
-            hasChildren(item) && (
-              <Button
-                onClick={handleClick}
-                variant="contained"
-                sx={{
+          {showDropdown && hasChildren(item) && (
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              sx={{
+                backgroundColor: lighten(determineBackgroundColor(level), 0.25),
+                borderRadius: "0px 5px 20px 0px",
+                width: 34,
+                height: "100%",
+                fontSize: "30",
+                boxShadow:
+                  "5px -1px 1px 0 rgba(0, 0, 0, 0.14), 4px 1px 1px -1px rgba(0, 0, 0, 0.12), 3px 0px 3px 0 rgba(0, 0, 0, 0.2)",
+                color: "#333",
+                "&:hover": {
                   backgroundColor: lighten(determineBackgroundColor(level), 0.25),
-                  borderRadius: "0px 5px 20px 0px",
-                  width: 34,
-                  height: "100%",
-                  fontSize: "30",
-                  boxShadow:
-                    "5px -1px 1px 0 rgba(0, 0, 0, 0.14), 4px 1px 1px -1px rgba(0, 0, 0, 0.12), 3px 0px 3px 0 rgba(0, 0, 0, 0.2)",
-                  color: "#333",
-                  "&:hover": {
-                    backgroundColor: lighten(determineBackgroundColor(level), 0.25),
-                  },
-                }}
-              >
-                {open ? (
-                  <ExpandLess fontSize="large" sx={{ fontSize: 30 }} />
-                ) : (
-                  <ExpandMore fontSize="large" sx={{ fontSize: 30 }} />
-                )}
-              </Button>
-            )}
+                },
+              }}
+            >
+              {open ? (
+                <ExpandLess fontSize="large" sx={{ fontSize: 30 }} />
+              ) : (
+                <ExpandMore fontSize="large" sx={{ fontSize: 30 }} />
+              )}
+            </Button>
+          )}
         </ListItem>
       )}
 
-      {hasChildren(item) && (
+      {hasChildren(item) && showDropdown && (
         <NestedItems
           item={item}
           level={level}

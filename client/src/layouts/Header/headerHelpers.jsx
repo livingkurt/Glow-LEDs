@@ -5,9 +5,11 @@ import * as API from "../../api";
 import { AccountCircle, AdminPanelSettings } from "@mui/icons-material";
 
 export const determineDropdown = (item, current_user) => {
-  if (Object.keys(current_user).length === 0) {
+  // If it's the login item and there's no current user, don't show the dropdown
+  if (typeof item.name === "function" && item.name({}) === "LOGIN" && Object.keys(current_user).length === 0) {
     return false;
   }
+  // For all other items, or when there is a current user, show the dropdown
   return true;
 };
 
