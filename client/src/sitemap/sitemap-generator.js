@@ -16,7 +16,7 @@ async function generateSitemap() {
     const pathnames = pathnameRes.data;
 
     let pathnameMap = pathnames.map(pathname => ({ pathname }));
-    const menu_types = [{ pathname: "gloving" }, { pathname: "featured" }, { pathname: "support" }];
+    const menu_types = [{ pathname: "menu" }];
 
     const paramsConfig = {
       "/collections/all/products/:pathname": pathnameMap,

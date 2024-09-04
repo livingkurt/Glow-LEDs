@@ -208,9 +208,7 @@
 <url> <loc>https://www.glow-leds.com/pages/color_palettes</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/events</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/support_center/:reason?</loc> </url>
-<url> <loc>https://www.glow-leds.com/pages/menu/gloving</loc> </url>
-<url> <loc>https://www.glow-leds.com/pages/menu/featured</loc> </url>
-<url> <loc>https://www.glow-leds.com/pages/menu/support</loc> </url>
+<url> <loc>https://www.glow-leds.com/pages/menu/shop</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/sitemap</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/music</loc> </url>
 <url> <loc>https://www.glow-leds.com/pages/complete/:type/:id?</loc> </url>
