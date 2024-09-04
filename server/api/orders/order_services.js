@@ -110,6 +110,7 @@ export default {
           "isPaused",
           "isRefunded",
           "isUpdated",
+          "isPrintIssue",
         ],
         shipping: ["international"],
         carrier: ["usps", "ups", "fedex"],

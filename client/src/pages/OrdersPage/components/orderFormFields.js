@@ -290,7 +290,7 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
         },
         phone_number: {
           type: "text",
-          label: "Postal Code",
+          label: "Phone Number",
           required: true,
         },
         international: {

@@ -15,6 +15,7 @@ export default {
                 { case: { $eq: ["$isPrioritized", true] }, then: 1 },
                 { case: { $eq: ["$isPaused", true] }, then: 2 },
                 { case: { $eq: ["$isUpdated", true] }, then: 3 },
+                { case: { $eq: ["$isPrintIssue", true] }, then: 3 },
               ],
               default: 4, // Assign a default order for documents not matching any priority conditions
             },

@@ -189,6 +189,7 @@ const orderSchema = new mongoose.Schema(
     isReassured: { type: Boolean, default: false },
     isRefunded: { type: Boolean, default: false },
     isUpdated: { type: Boolean, default: false },
+    isPrintIssue: { type: Boolean, default: false },
     isPaused: { type: Boolean, default: false },
     isError: { type: Boolean, default: false },
     isPrioritized: { type: Boolean, default: false },
