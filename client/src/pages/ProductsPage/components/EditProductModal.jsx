@@ -7,7 +7,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
-import { useProductsQuery } from "../../../api/allRecordsApi";
+import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
 
 const EditProductModal = () => {
   const dispatch = useDispatch();
@@ -22,13 +22,14 @@ const EditProductModal = () => {
   const filamentPage = useSelector(state => state.filaments.filamentPage);
   const { filaments } = filamentPage;
   const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
+  const categorysQuery = useCategorysQuery();
+  console.log({ categorysQuery });
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listProducts({ option: true }));
       dispatch(API.listUsers({}));
-      dispatch(API.listCategorys({}));
       dispatch(API.listFilaments({}));
     }
     return () => {
@@ -39,7 +40,7 @@ const EditProductModal = () => {
   const formFields = productFormFields({
     products,
     users,
-    tags: categorys,
+    categorysQuery,
     chips,
     product,
     filaments,

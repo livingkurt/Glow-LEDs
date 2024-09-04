@@ -28,7 +28,7 @@ export default {
   },
   findAll_categorys_s: async query => {
     try {
-      const categorys = await category_db.findAll_categorys_db({}, {});
+      const categorys = await category_db.findAll_categorys_db({ deleted: false, ...query }, {});
       return categorys;
     } catch (error) {
       if (error instanceof Error) {

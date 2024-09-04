@@ -58,6 +58,32 @@ async function initializeAllOAuthClients() {
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
+const originalPopulate = mongoose.Query.prototype.populate;
+
+/**
+ * Override of mongoose.Query.prototype.populate
+ *
+ * Automatically adds a match of { deleted: { $ne: true } } to the populate
+ * query, so that deleted documents are not included in the result.
+ *
+ */
+mongoose.Query.prototype.populate = function (...args) {
+  // If the first argument is an object, modify it
+  if (typeof args[0] === "object" && args[0] !== null) {
+    args[0].match = { ...args[0].match, deleted: { $ne: true } };
+  }
+  // If it's a string (path), convert to object and add match
+  else if (typeof args[0] === "string") {
+    args[0] = {
+      path: args[0],
+      match: { deleted: { $ne: true } },
+    };
+  }
+
+  // Call the original populate method with modified arguments
+  return originalPopulate.apply(this, args);
+};
+
 const app = express();
 
 const server = createServer(app); // Attach Express to HTTP Server

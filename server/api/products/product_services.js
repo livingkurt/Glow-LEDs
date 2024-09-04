@@ -177,7 +177,6 @@ export default {
     }
   },
   findAllGrid_products_s: async query => {
-    console.log({ query });
     try {
       let filter = { deleted: false, hidden: false };
       let bestSellers, ourPicks;
