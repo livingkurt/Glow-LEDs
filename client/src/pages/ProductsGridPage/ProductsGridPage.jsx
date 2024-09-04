@@ -34,7 +34,7 @@ const ProductGridPage = () => {
   if (isError) return <Typography>Error loading products</Typography>;
 
   const categoryBanner = currentContent?.products_grid_page?.category_banners?.find(banner =>
-    selectedTags.some(tag => tag.toLowerCase() === banner?.tag.pathname?.toLowerCase())
+    selectedTags.some(tag => tag.toLowerCase() === banner?.tag?.pathname?.toLowerCase())
   );
 
   const getPageTitle = () => {
