@@ -139,10 +139,14 @@ export default {
       createdAt: 1,
     };
     try {
-      const query = Product.find(filter, productFields).sort(sort).populate("images").populate({
-        path: "tags",
-        select: "name type pathname",
-      });
+      const query = Product.find(filter, productFields)
+        .sort(sort)
+        .populate("images")
+        .populate({
+          path: "tags",
+          match: { deleted: { $ne: true } },
+          select: "name type pathname",
+        });
 
       if (limit > 0) {
         query.limit(limit);

@@ -5605,5 +5605,29 @@ router.route("/update_set_of_products").put(async (req, res) => {
   }
 });
 
-module.exports = router;
+router.route("/migrate_diffuser_subcategory").put(async (req, res) => {
+  try {
+    // Find all products in the "diffusers" category
+    const diffusers = await Product.find({ category: "diffusers" });
+
+    let updatedCount = 0;
+
+    for (const diffuser of diffusers) {
+      // Remove the subcategory field
+      diffuser.subcategory = undefined;
+
+      // Save the updated product
+      await diffuser.save();
+      updatedCount++;
+    }
+
+    res.status(200).json({
+      message: `Migration completed. Updated ${updatedCount} diffuser products.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

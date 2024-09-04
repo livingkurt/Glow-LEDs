@@ -313,7 +313,12 @@ const enhancers = {
     },
     exo_diffusers,
     diffuser_caps,
-    diffusers,
+    {
+      name: "Diffusers",
+      path: "/collections/all/products?tags[]=diffusers",
+      _id: 329,
+    },
+    // diffusers,
     {
       name: "Decals",
       path: "/collections/all/products?tags[]=decals",

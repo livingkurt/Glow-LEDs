@@ -18,7 +18,9 @@ export default {
   },
   findAll_categorys_db: async (filter, sort) => {
     try {
-      return await Category.find(filter).sort(sort).populate("subcategorys");
+      return await Category.find({ deleted: false, ...filter })
+        .sort(sort)
+        .populate("subcategorys");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
