@@ -5719,4 +5719,40 @@ router.route("/swap_purple_violet_colors").put(async (req, res) => {
   }
 });
 
+router.route("/update_product_tags").put(async (req, res) => {
+  try {
+    // Find the tag IDs for the existing and new tags
+    const requiredTagNames = ["Opyn"];
+    const newTagNames = ["Diffusers", "Diffuser Caps", "Exo Diffusers"];
+
+    const allTags = await Category.find({ name: { $in: [...requiredTagNames, ...newTagNames] } });
+
+    const requiredTagIds = allTags.filter(tag => requiredTagNames.includes(tag.name)).map(tag => tag._id);
+
+    const newTagIds = allTags.filter(tag => newTagNames.includes(tag.name)).map(tag => tag._id);
+
+    // Find products that have both 'Glowskinz' and 'OPYN' tags
+    const products = await Product.find({ tags: { $all: requiredTagIds } });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      // Add new tags if they don't already exist in the product's tags
+      const updatedTags = [...new Set([...product.tags, ...newTagIds])];
+
+      // Update the product with new tags
+      await Product.findByIdAndUpdate(product._id, { tags: updatedTags });
+      updatedCount++;
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} products.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;
