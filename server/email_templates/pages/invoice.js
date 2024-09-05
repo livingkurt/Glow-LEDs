@@ -99,8 +99,8 @@ export default ({ order, isSponsor }) => {
                                         padding:4px 8px;
                                         margin:2px;
                                         border-radius:16px;
-                                        font-size:16px;
-                                        font-weight:500;
+                                        font-size:25px;
+                                        font-weight:550;
                                         background-color:white;
                                         border:1px solid black;
                                         color: black;
@@ -368,7 +368,7 @@ export default ({ order, isSponsor }) => {
           <div style="text-align:center">@glowledsofficial</div>
           <div style="text-align:center"><strong>Instagram</strong></div>
           <div style="text-align:center">@glow_leds</div>
-        </div><img alt="QR Code" src="/images/optimized_images/logo_images/faq_qr_code.jpg"
+        </div><img alt="QR Code" src="/images/optimized_images/logo_images/support_center_qr_code.png"
           style="width:250px;text-align:center" />
         <div style="text-align:center;width:200px">
           <div style="text-align:center"><strong>Tiktok</strong></div>
