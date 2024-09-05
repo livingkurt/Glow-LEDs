@@ -126,7 +126,7 @@ const ShippingChoice = () => {
                   let isFreeShipping = items_price > freeShippingMinimum && serviceNames[index] === "USPS: Standard";
                   let displayRate = isFreeShipping
                     ? "Free"
-                    : `$${parseFloat(rate?.retail_rate || rate?.rate).toFixed(2)}`;
+                    : `$${parseFloat(rate?.list_rate || rate?.rate).toFixed(2)}`;
 
                   return (
                     <div className="rate-container mv-1rem jc-b ai-c" key={index}>

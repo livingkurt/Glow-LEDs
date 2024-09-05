@@ -87,8 +87,24 @@ export const displayRate = ({ current_shipping_speed, shipping }) =>
 export const normalizeDomesticRates = rates => {
   const USPSRates = rates.filter(rate => rate.carrier === "USPS");
   const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
-  const sortedUSPSRates = USPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-  const sortedUPSRates = UPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+
+  const sortRates = rateArray => {
+    return rateArray.sort((a, b) => {
+      if (a.list_rate && b.list_rate) {
+        return parseFloat(a.list_rate) - parseFloat(b.list_rate);
+      } else if (a.list_rate) {
+        return -1;
+      } else if (b.list_rate) {
+        return 1;
+      } else {
+        return parseFloat(a.rate) - parseFloat(b.rate);
+      }
+    });
+  };
+
+  const sortedUSPSRates = sortRates(USPSRates);
+  const sortedUPSRates = sortRates(UPSRates);
+
   const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
   return selectedRates;
 };
