@@ -191,7 +191,12 @@ const OrderPage = () => {
                       </div>
                       <div className="ai-c jc-b w-100per">
                         <label className="mv-0px mr-5px">Rate: </label>
-                        <label className=" mv-0px">${order.shipping.shipping_rate.retail_rate}</label>
+                        <label className=" mv-0px">
+                          ${" "}
+                          {order.shipping.international
+                            ? order.shipping.shipping_rate.rate
+                            : order.shipping.shipping_rate.list_rate || order.shipping.shipping_rate.rate}
+                        </label>
                       </div>
                     </div>
                   )}

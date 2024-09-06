@@ -43,7 +43,7 @@ const LinkLabelModal = () => {
       {
         title: "Rate",
         display: shipment =>
-          `$${parseFloat(shipment?.selected_rate.retail_rate || shipment?.selected_rate.rate || 0).toFixed(2)}`,
+          `$${parseFloat(shipment?.selected_rate.list_rate || shipment?.selected_rate.rate || 0).toFixed(2)}`,
       },
       {
         title: "Service",
@@ -150,7 +150,7 @@ const LinkLabelModal = () => {
                       <ListItemText
                         primary={<strong>Shipping Rate:</strong>}
                         secondary={`$${parseFloat(
-                          selectedShipment?.selected_rate?.retail_rate || selectedShipment?.selected_rate?.rate || 0
+                          selectedShipment?.selected_rate?.list_rate || selectedShipment?.selected_rate?.rate || 0
                         ).toFixed(2)}`}
                       />
                     </ListItem>{" "}

@@ -81,7 +81,10 @@ const ShippingDisplay = ({ shipping }) => {
                 Rate:
               </Typography>
               <Typography component="label" className=" mv-0px">
-                ${shipping.shipping_rate.retail_rate || shipping.shipping_rate.rate}
+                $
+                {shipping.international
+                  ? shipping.shipping_rate.rate
+                  : shipping.shipping_rate.list_rate || shipping.shipping_rate.rate}
               </Typography>
             </Grid>
           </>
