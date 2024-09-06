@@ -81,7 +81,9 @@ export const displayRate = ({ current_shipping_speed, shipping }) =>
   current_shipping_speed.freeShipping
     ? "Free"
     : `$${parseFloat(
-        shipping.international ? current_shipping_speed.rate.rate : current_shipping_speed.rate.retail_rate
+        shipping.international
+          ? current_shipping_speed.rate.rate
+          : current_shipping_speed.rate.list_rate || current_shipping_speed.rate.rate
       ).toFixed(2)}`;
 
 export const normalizeDomesticRates = rates => {

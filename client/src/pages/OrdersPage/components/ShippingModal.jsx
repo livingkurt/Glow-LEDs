@@ -26,11 +26,11 @@ const ShippingModal = () => {
   }, [dispatch, order, shippingModal]);
 
   const sortedRates = [...shippingRates].sort((a, b) => {
-    if (a.retail_rate && b.retail_rate) {
-      return parseFloat(a.retail_rate) - parseFloat(b.retail_rate);
-    } else if (a.retail_rate) {
+    if (a.list_rate && b.list_rate) {
+      return parseFloat(a.list_rate) - parseFloat(b.list_rate);
+    } else if (a.list_rate) {
       return -1;
-    } else if (b.retail_rate) {
+    } else if (b.list_rate) {
       return 1;
     } else {
       return parseFloat(a.rate) - parseFloat(b.rate);

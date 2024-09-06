@@ -4,7 +4,7 @@ import { applyAmountOff, applyFreeShipping, applyPercentageOff, calculateNewItem
 
 const initialState = {
   shipping_rates: {},
-  current_shipping_speed: { rate: { retail_rate: "", rate: "", speed: "" }, freeShipping: false },
+  current_shipping_speed: { rate: { list_rate: "", rate: "", speed: "" }, freeShipping: false },
   shipment_id: "",
   shipping_rate: {},
   hide_pay_button: true,
@@ -344,8 +344,8 @@ const placeOrder = createSlice({
         state.loadingShipping = false;
         state.show_shipping_complete = true;
       } else {
-        state.shippingPrice = parseFloat(shipping.international ? rate.rate : rate.retail_rate);
-        state.previousShippingPrice = parseFloat(shipping.international ? rate.rate : rate.retail_rate);
+        state.shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
+        state.previousShippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
       }
       state.hide_pay_button = false;
       state.shipping_rate = rate;
@@ -379,7 +379,7 @@ const placeOrder = createSlice({
       state.shipping_rates = {};
       state.shipment_id = "";
       state.parcel = "";
-      state.current_shipping_speed = { rate: { retail_rate: "", rate: "", speed: "" }, freeShipping: false };
+      state.current_shipping_speed = { rate: { list_rate: "", rate: "", speed: "" }, freeShipping: false };
     },
     initializePlaceOrderPage: state => {
       return initialState;
