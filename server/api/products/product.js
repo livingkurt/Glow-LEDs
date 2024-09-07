@@ -255,11 +255,6 @@ const productSchema = new mongoose.Schema(
 
     secondary_images_object: { type: Array },
 
-    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     has_add_on: { type: Boolean, default: false },
@@ -269,7 +264,6 @@ const productSchema = new mongoose.Schema(
     size: { type: String },
     sizing: { type: String },
     // Depreciated
-    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     // color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     // secondary_color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],

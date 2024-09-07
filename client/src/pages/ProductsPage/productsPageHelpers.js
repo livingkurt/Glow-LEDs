@@ -111,7 +111,7 @@ export const productInitalState = {
   color_product_group: false,
   color_group_name: "",
   color_products: [],
-  filament: {},
+  filament: null,
 
   secondary_color_product_group: false,
   secondary_color_group_name: "",
