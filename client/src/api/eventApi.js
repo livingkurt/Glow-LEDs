@@ -58,6 +58,19 @@ export const saveEvent = createAsyncThunk("events/saveEvent", async (event, { di
   }
 });
 
+export const getEventTickets = createAsyncThunk(
+  "events/getEventTickets",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/tickets/event/${pathname}`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const detailsEvent = createAsyncThunk(
   "events/detailsEvent",
   async ({ pathname, id }, { dispatch, rejectWithValue }) => {

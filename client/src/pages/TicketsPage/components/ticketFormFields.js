@@ -13,6 +13,11 @@ export const ticketFormFields = ({ eventsQuery }) => {
       label: "Ticket Type",
       required: true,
     },
+    pathname: {
+      type: "text",
+      label: "Pathname",
+      required: true,
+    },
     price: {
       type: "number",
       label: "Price",

@@ -8,6 +8,7 @@ const event_schema = new mongoose.Schema(
     start_date: { type: Date },
     end_date: { type: Date },
     location: { type: String },
+    pathname: { type: String },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

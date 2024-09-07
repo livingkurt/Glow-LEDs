@@ -15,6 +15,11 @@ export const eventFormFields = () => {
       label: "Short Description",
       required: true,
     },
+    pathname: {
+      type: "text",
+      label: "Pathname",
+      required: true,
+    },
     start_date: {
       type: "date",
       label: "Start Date",
