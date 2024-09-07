@@ -24,6 +24,8 @@ import wholesaler_routes from "./wholesalers/wholesaler_routes";
 import tutorial_routes from "./tutorials/tutorial_routes";
 import image_routes from "./images/image_routes";
 import version_routes from "./versions/version_routes";
+import event_routes from "./events/event_routes";
+import ticket_routes from "./tickets/ticket_routes";
 
 const router = express.Router();
 
@@ -50,6 +52,9 @@ router.use("/api/palettes", palette_routes);
 router.use("/api/filaments", filament_routes);
 router.use("/api/wholesalers", wholesaler_routes);
 router.use("/api/tutorials", tutorial_routes);
+router.use("/api/events", event_routes);
+router.use("/api/tickets", ticket_routes);
+
 router.use("/api/images", image_routes);
 router.use("/api/versions", version_routes);
 
