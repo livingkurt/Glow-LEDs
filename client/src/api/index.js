@@ -21,5 +21,7 @@ export * from "./tutorialApi";
 export * from "./wholesalerApi";
 export * from "./imageApi";
 export * from "./glowLedsApi";
+export * from "./eventApi";
+export * from "./ticketApi";
 export * from "../pages/PlaceOrderPage/placeOrderApi";
 export * from "../pages/DashboardPage/dashboardApi";

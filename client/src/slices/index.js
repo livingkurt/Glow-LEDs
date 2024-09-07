@@ -21,3 +21,5 @@ export { default as userSlice } from "./userSlice";
 export { default as wholesalerSlice } from "./wholesalerSlice";
 export { default as tutorialSlice } from "./tutorialSlice";
 export { default as snackbarSlice } from "./snackbarSlice";
+export { default as eventSlice } from "./eventSlice";
+export { default as ticketSlice } from "./ticketSlice";
