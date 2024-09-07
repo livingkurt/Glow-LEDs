@@ -8,6 +8,19 @@ export default {
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
       const tickets = await ticket_db.findAll_tickets_db(filter, sort, limit, page);
+      return tickets;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_tickets_s: async query => {
+    try {
+      const sort_options = ["title", "video", "level", "order"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
+
+      const tickets = await ticket_db.findAll_tickets_db(filter, sort, limit, page);
       const count = await ticket_db.count_tickets_db(filter);
       return {
         data: tickets,

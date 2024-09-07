@@ -5,7 +5,7 @@ export default {
     try {
       return await Event.find(filter)
         .sort(sort)
-        .populate("affiliate")
+
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -17,7 +17,7 @@ export default {
   },
   findBy_events_db: async params => {
     try {
-      return await Event.findOne(params).populate("affiliate");
+      return await Event.findOne(params);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -26,7 +26,7 @@ export default {
   },
   findByPathname_events_db: async pathname => {
     try {
-      return await Event.findOne({ pathname: pathname, deleted: false }).populate("affiliate");
+      return await Event.findOne({ pathname: pathname, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -35,7 +35,7 @@ export default {
   },
   findById_events_db: async id => {
     try {
-      return await Event.findOne({ _id: id, deleted: false }).populate("affiliate");
+      return await Event.findOne({ _id: id, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

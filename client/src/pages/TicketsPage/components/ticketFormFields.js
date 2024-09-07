@@ -1,42 +1,37 @@
-import { toCapitalize } from "../../../utils/helper_functions";
-
-export const ticketFormFields = ({ affiliates }) => {
+export const ticketFormFields = ({ eventsQuery }) => {
   return {
-    affiliate: {
+    event: {
       type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "artist_name",
+      label: "Event",
+      options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
+      loading: eventsQuery?.isLoading,
+      labelProp: "name",
+      required: true,
     },
-    title: {
+    ticket_type: {
       type: "text",
-      label: "Title",
+      label: "Ticket Type",
+      required: true,
     },
-    video: {
+    price: {
+      type: "number",
+      label: "Price",
+      required: true,
+    },
+    fact: {
       type: "text",
-      label: "Video",
+      label: "Fact",
+      required: true,
     },
-    description: {
-      type: "text_multiline",
-      label: "Description",
-    },
-    level: {
-      type: "autocomplete_single",
-      label: "Difficulty",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-      options: ["beginner", "intermediate", "advanced"],
-    },
-    order: {
+    short_description: {
       type: "text",
-      label: "Order",
+      label: "Short Description",
+      required: true,
     },
     active: {
       type: "checkbox",
       label: "Active",
+      default: true,
     },
   };
 };

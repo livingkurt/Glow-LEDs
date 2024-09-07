@@ -9,7 +9,7 @@ import store from "../store";
 
 export const getTickets = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/tickets`, {
+    return await axios.get(`/api/tickets/table`, {
       params: {
         limit: pageSize,
         page: page,

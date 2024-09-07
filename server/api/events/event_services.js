@@ -9,6 +9,20 @@ export default {
 
       const events = await event_db.findAll_events_db(filter, sort, limit, page);
       const count = await event_db.count_events_db(filter);
+      return events;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_events_s: async query => {
+    try {
+      const sort_options = ["title", "video", "level", "order"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
+
+      const events = await event_db.findAll_events_db(filter, sort, limit, page);
+      const count = await event_db.count_events_db(filter);
       return {
         data: events,
         total_count: count,

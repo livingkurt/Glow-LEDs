@@ -4,6 +4,7 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(event_controller.findAll_events_c).post(isAuth, isAdmin, event_controller.create_events_c);
+router.route("/table").get(event_controller.table_events_c);
 router.route("/reorder").put(event_controller.reorder_events_c);
 
 router

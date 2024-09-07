@@ -1,42 +1,36 @@
-import { toCapitalize } from "../../../utils/helper_functions";
-
-export const eventFormFields = ({ affiliates }) => {
+export const eventFormFields = () => {
   return {
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "artist_name",
-    },
-    title: {
+    name: {
       type: "text",
-      label: "Title",
+      label: "Event Name",
+      required: true,
     },
-    video: {
+    fact: {
       type: "text",
-      label: "Video",
+      label: "Fact",
+      required: true,
     },
-    description: {
-      type: "text_multiline",
-      label: "Description",
-    },
-    level: {
-      type: "autocomplete_single",
-      label: "Difficulty",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-      options: ["beginner", "intermediate", "advanced"],
-    },
-    order: {
+    short_description: {
       type: "text",
-      label: "Order",
+      label: "Short Description",
+      required: true,
+    },
+    start_date: {
+      type: "date",
+      label: "Start Date",
+    },
+    end_date: {
+      type: "date",
+      label: "End Date",
+    },
+    location: {
+      type: "text",
+      label: "Location",
     },
     active: {
       type: "checkbox",
       label: "Active",
+      default: true,
     },
   };
 };

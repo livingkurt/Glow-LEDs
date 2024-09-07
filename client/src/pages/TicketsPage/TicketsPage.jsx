@@ -14,7 +14,7 @@ import Delete from "@mui/icons-material/Delete";
 
 const TicketsPage = () => {
   const ticketPage = useSelector(state => state.tickets.ticketPage);
-  const { message, loading, remoteVersionRequirement } = ticketPage;
+  const { loading, remoteVersionRequirement } = ticketPage;
 
   const dispatch = useDispatch();
 
@@ -38,11 +38,9 @@ const TicketsPage = () => {
           </GLIconButton>
         ),
       },
-      { title: "Title", display: "title" },
-      { title: "Video", display: "video" },
-      { title: "Level", display: "level" },
-      { title: "Order", display: "order" },
-      { title: "Categorys", display: "categorys" },
+      { title: "Event", display: ticket => ticket.event.name },
+      { title: "Ticket Type", display: "ticket_type" },
+      { title: "Price", display: ticket => `$${ticket.price}` },
       {
         title: "",
         nonSelectable: true,

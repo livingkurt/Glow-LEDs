@@ -9,7 +9,7 @@ import store from "../store";
 
 export const getEvents = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/events`, {
+    return await axios.get(`/api/events/table`, {
       params: {
         limit: pageSize,
         page: page,

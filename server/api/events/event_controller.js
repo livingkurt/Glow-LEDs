@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_events_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const events = await event_services.table_events_s(query);
+      if (events) {
+        return res.status(200).send(events);
+      }
+      return res.status(404).send({ message: "Events Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_events_c: async (req, res) => {
     const { params } = req;
     try {

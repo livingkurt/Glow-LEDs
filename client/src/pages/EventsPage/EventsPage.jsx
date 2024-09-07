@@ -14,7 +14,7 @@ import Delete from "@mui/icons-material/Delete";
 
 const EventsPage = () => {
   const eventPage = useSelector(state => state.events.eventPage);
-  const { message, loading, remoteVersionRequirement } = eventPage;
+  const { loading, remoteVersionRequirement } = eventPage;
 
   const dispatch = useDispatch();
 
@@ -38,11 +38,10 @@ const EventsPage = () => {
           </GLIconButton>
         ),
       },
-      { title: "Title", display: "title" },
-      { title: "Video", display: "video" },
-      { title: "Level", display: "level" },
-      { title: "Order", display: "order" },
-      { title: "Categorys", display: "categorys" },
+      { title: "Name", display: "name" },
+      { title: "Location", display: "location" },
+      { title: "Start Date", display: "start_date" },
+      { title: "End Date", display: "end_date" },
       {
         title: "",
         nonSelectable: true,

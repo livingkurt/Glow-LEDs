@@ -5,7 +5,7 @@ export default {
     try {
       return await Ticket.find(filter)
         .sort(sort)
-        .populate("affiliate")
+        .populate("event")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -17,7 +17,7 @@ export default {
   },
   findBy_tickets_db: async params => {
     try {
-      return await Ticket.findOne(params).populate("affiliate");
+      return await Ticket.findOne(params).populate("event");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -26,7 +26,7 @@ export default {
   },
   findByPathname_tickets_db: async pathname => {
     try {
-      return await Ticket.findOne({ pathname: pathname, deleted: false }).populate("affiliate");
+      return await Ticket.findOne({ pathname: pathname, deleted: false }).populate("event");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -35,7 +35,7 @@ export default {
   },
   findById_tickets_db: async id => {
     try {
-      return await Ticket.findOne({ _id: id, deleted: false }).populate("affiliate");
+      return await Ticket.findOne({ _id: id, deleted: false }).populate("event");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

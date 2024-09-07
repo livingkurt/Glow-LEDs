@@ -4,6 +4,7 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(ticket_controller.findAll_tickets_c).post(isAuth, isAdmin, ticket_controller.create_tickets_c);
+router.route("/table").get(ticket_controller.table_tickets_c);
 router.route("/reorder").put(ticket_controller.reorder_tickets_c);
 
 router

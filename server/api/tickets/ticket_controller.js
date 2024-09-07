@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_tickets_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const tickets = await ticket_services.table_tickets_s(query);
+      if (tickets) {
+        return res.status(200).send(tickets);
+      }
+      return res.status(404).send({ message: "Tickets Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_tickets_c: async (req, res) => {
     const { params } = req;
     try {
