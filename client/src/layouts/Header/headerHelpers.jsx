@@ -375,6 +375,11 @@ const community = {
   _id: 446,
   rows: [
     {
+      name: "Events",
+      path: "/pages/events",
+      _id: 447,
+    },
+    {
       name: "Sponsored Glovers",
       path: "/collections/all/sponsors",
       _id: 447,
@@ -731,6 +736,20 @@ const admin = {
       path: "/secure/glow/affiliates",
       onClick: x => true,
       _id: 7110,
+    },
+
+    {
+      name: "Events",
+      path: "/secure/glow/events",
+      onClick: x => true,
+      _id: 17111,
+    },
+
+    {
+      name: "Tickets",
+      path: "/secure/glow/tickets",
+      onClick: x => true,
+      _id: 17111,
     },
 
     {
