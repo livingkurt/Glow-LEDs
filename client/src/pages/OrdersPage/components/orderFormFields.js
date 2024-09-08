@@ -1,6 +1,6 @@
 import { humanize, toCapitalize } from "../../../utils/helper_functions";
 
-export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels, order }) => {
+export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels, order, categorysQuery }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -419,6 +419,13 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Product Collection",
             labelProp: "product_collection",
           },
+          tags: {
+            type: "autocomplete_multiple",
+            label: "Tags",
+            options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+            loading: categorysQuery?.isLoading,
+            labelProp: "name",
+          },
           pathname: {
             type: "text",
             label: "Pathname",
@@ -618,74 +625,6 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
               },
             },
           },
-
-          // color_product: {
-          //   type: "autocomplete_single",
-          //   label: "Color Product",
-          //   options: "product.color_products",
-          //   labelProp: "name",
-          // },
-          // color_product_name: {
-          //   type: "text",
-          //   label: "Color Product Name",
-          //   labelProp: "color_product_name",
-          // },
-          // secondary_color_product: {
-          //   type: "autocomplete_single",
-          //   label: "Secondary Color Product",
-          //   options: "product.secondary_color_products",
-          //   labelProp: "name",
-          // },
-          // secondary_color_product_name: {
-          //   type: "text",
-          //   label: "Secondary Color Product Name",
-          //   labelProp: "secondary_color_product_name",
-          // },
-          // option_product_name: {
-          //   type: "text",
-          //   label: "Option Product Name",
-          //   labelProp: "option_product_name",
-          // },
-          // option_product: {
-          //   type: "autocomplete_single",
-          //   label: "Option Product",
-          //   options: "product.option_products",
-          //   labelProp: "name",
-          // },
-          // secondary_product_name: {
-          //   type: "text",
-          //   label: "Secondary Product Name",
-          //   labelProp: "secondary_product_name",
-          // },
-          // secondary_product: {
-          //   type: "autocomplete_single",
-          //   label: "Secondary Product",
-          //   options: "product.seconday_products",
-          //   labelProp: "name",
-          // },
-          is_printing: {
-            type: "checkbox",
-            label: "Is Printing",
-            default: false,
-          },
-          is_crafted: {
-            type: "checkbox",
-            label: "Is Crafted",
-            default: false,
-          },
-          is_packaged: {
-            type: "checkbox",
-            label: "Is Packaged",
-            default: false,
-          },
-          // secondary_group_name: {
-          //   type: "text",
-          //   label: "Secondary Group Name",
-          // },
-          // option_group_name: {
-          //   type: "text",
-          //   label: "Option Group Name",
-          // },
           reviewed: {
             type: "checkbox",
             label: "Reviewed",
