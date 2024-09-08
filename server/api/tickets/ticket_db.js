@@ -1,3 +1,4 @@
+import { Event } from "../events";
 import Ticket from "./ticket";
 
 export default {
@@ -36,6 +37,18 @@ export default {
   findById_tickets_db: async id => {
     try {
       return await Ticket.findOne({ _id: id, deleted: false }).populate("event");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findByEventPathname_tickets_db: async event_pathname => {
+    try {
+      const event = await Event.findOne({ pathname: event_pathname, deleted: false });
+      const tickets = await Ticket.find({ event: event._id, deleted: false }).populate("event");
+      console.log({ tickets });
+      return tickets;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

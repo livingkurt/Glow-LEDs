@@ -42,6 +42,15 @@ export default {
       }
     }
   },
+  findByEventPathname_tickets_s: async params => {
+    try {
+      return await ticket_db.findByEventPathname_tickets_db(params.event_pathname);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   create_tickets_s: async body => {
     try {
       return await ticket_db.create_tickets_db(body);

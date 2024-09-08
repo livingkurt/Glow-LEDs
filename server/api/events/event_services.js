@@ -35,9 +35,11 @@ export default {
     }
   },
   findById_events_s: async params => {
+    console.log({ params });
     try {
       return await event_db.findById_events_db(params.id);
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

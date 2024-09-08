@@ -207,14 +207,9 @@ export default {
   },
 
   findById_products_db: async id => {
-    let query = {};
+    const query = determineIDPathname(id);
 
     try {
-      if (id && mongoose.isValidObjectId(id)) {
-        query = { _id: id };
-      } else {
-        query = { pathname: id };
-      }
       return await Product.findOne(query)
         .populate("images")
         .populate({

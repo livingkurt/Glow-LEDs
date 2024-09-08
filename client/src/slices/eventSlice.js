@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/eventApi";
+import * as API from "../api";
 
 const eventPage = createSlice({
   name: "eventPage",
@@ -7,12 +7,13 @@ const eventPage = createSlice({
     loading: false,
     events: [],
     event: {
-      affiliate: "",
-      title: "",
-      video: "",
-      description: "",
-      categorys: [],
-      level: "",
+      name: "",
+      short_description: "",
+      long_description: "",
+      start_date: "",
+      end_date: "",
+      location: "",
+      fact: "",
       pathname: "",
       order: null,
       active: false,
@@ -135,6 +136,19 @@ const eventPage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.deleteEvent.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getEventTickets.pending]: state => {
+      state.loading = true;
+    },
+    [API.getEventTickets.fulfilled]: (state, { payload }) => {
+      console.log("payload", payload);
+      state.loading = false;
+      state.tickets = payload;
+    },
+    [API.getEventTickets.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

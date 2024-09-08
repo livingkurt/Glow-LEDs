@@ -57,38 +57,16 @@ export const saveEvent = createAsyncThunk("events/saveEvent", async (event, { di
     return rejectWithValue(error.response?.data);
   }
 });
-
-export const getEventTickets = createAsyncThunk(
-  "events/getEventTickets",
-  async (pathname, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(`/api/tickets/event/${pathname}`);
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
+export const detailsEvent = createAsyncThunk("events/detailsEvent", async (pathname, { dispatch, rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/api/events/${pathname}`);
+    dispatch(showSuccess({ message: `Event Found` }));
+    return data;
+  } catch (error) {
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
   }
-);
-
-export const detailsEvent = createAsyncThunk(
-  "events/detailsEvent",
-  async ({ pathname, id }, { dispatch, rejectWithValue }) => {
-    try {
-      let response = {};
-      if (id) {
-        response = await axios.get(`/api/events/${id}`);
-      } else if (pathname) {
-        response = await axios.get(`/api/events/${pathname}/pathname`);
-      }
-      dispatch(showSuccess({ message: `Event Found` }));
-      return response.data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
+});
 
 export const deleteEvent = createAsyncThunk("events/deleteEvent", async (id, { dispatch, rejectWithValue }) => {
   try {

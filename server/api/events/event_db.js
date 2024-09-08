@@ -1,3 +1,4 @@
+import { determineIDPathname } from "../api_helpers";
 import Event from "./event";
 
 export default {
@@ -24,18 +25,11 @@ export default {
       }
     }
   },
-  findByPathname_events_db: async pathname => {
-    try {
-      return await Event.findOne({ pathname: pathname, deleted: false });
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
+
   findById_events_db: async id => {
+    const query = determineIDPathname(id);
     try {
-      return await Event.findOne({ _id: id, deleted: false });
+      return await Event.findOne(query);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -21,11 +21,11 @@ export const eventFormFields = () => {
       required: true,
     },
     start_date: {
-      type: "date",
+      type: "datetime",
       label: "Start Date",
     },
     end_date: {
-      type: "date",
+      type: "datetime",
       label: "End Date",
     },
     location: {

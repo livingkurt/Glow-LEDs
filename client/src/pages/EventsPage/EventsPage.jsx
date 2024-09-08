@@ -11,6 +11,7 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import { formatDateTimeLocal } from "./eventsPageHelpers";
 
 const EventsPage = () => {
   const eventPage = useSelector(state => state.events.eventPage);
@@ -40,8 +41,8 @@ const EventsPage = () => {
       },
       { title: "Name", display: "name" },
       { title: "Location", display: "location" },
-      { title: "Start Date", display: "start_date" },
-      { title: "End Date", display: "end_date" },
+      { title: "Start Date", display: event => formatDateTimeLocal(event.start_date) },
+      { title: "End Date", display: event => formatDateTimeLocal(event.end_date) },
       {
         title: "",
         nonSelectable: true,
