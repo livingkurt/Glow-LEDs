@@ -13,7 +13,7 @@ import {
   handleQtyChange,
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { useProductsQuery } from "../../../api/allRecordsApi";
+import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
 import { showConfirm } from "../../../slices/snackbarSlice";
 
 const EditOrderModal = () => {
@@ -30,6 +30,8 @@ const EditOrderModal = () => {
 
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
+
+  const categorysQuery = useCategorysQuery();
 
   useEffect(() => {
     let clean = true;
@@ -49,6 +51,7 @@ const EditOrderModal = () => {
     promos,
     all_shipping,
     order,
+    categorysQuery,
   });
 
   return (
