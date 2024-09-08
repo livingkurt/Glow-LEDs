@@ -8,17 +8,10 @@ export const eventFormFields = () => {
     fact: {
       type: "text",
       label: "Fact",
-      required: true,
     },
     short_description: {
-      type: "text",
+      type: "text_multiline",
       label: "Short Description",
-      required: true,
-    },
-    pathname: {
-      type: "text",
-      label: "Pathname",
-      required: true,
     },
     start_date: {
       type: "datetime",
@@ -28,9 +21,39 @@ export const eventFormFields = () => {
       type: "datetime",
       label: "End Date",
     },
-    location: {
+    venue: {
       type: "text",
-      label: "Location",
+      label: "Venue",
+    },
+    address: {
+      type: "object",
+      title: "Address",
+      fields: {
+        address_1: {
+          type: "text",
+          label: "Address Line 1",
+        },
+        address_2: {
+          type: "text",
+          label: "Address Line 2",
+        },
+        city: {
+          type: "text",
+          label: "City",
+        },
+        state: {
+          type: "text",
+          label: "State",
+        },
+        postalCode: {
+          type: "text",
+          label: "Postal Code",
+        },
+      },
+    },
+    pathname: {
+      type: "text",
+      label: "Pathname",
     },
     active: {
       type: "checkbox",
