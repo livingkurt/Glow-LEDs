@@ -1,70 +1,32 @@
 export const areCartItemsEqual = (item1, item2) => {
-  // List the fields you're interested in
-  const fields = [
-    "name",
-    "price",
-    "category",
-    "subcategory",
-    "product_collection",
-    "color_code",
-    "pathname",
-    "sale_price",
-    "sale_start_date",
-    "sale_end_date",
-    "dimensions.weight_pounds",
-    "dimensions.weight_ounces",
-    "dimensions.length",
-    "dimensions.width",
-    "dimensions.height",
-    "dimensions.package_length",
-    "dimensions.package_width",
-    "dimensions.package_height",
-    "dimensions.package_volume",
-    "processing_time",
-    "finite_stock",
-    "wholesale_product",
-    "wholesale_price",
-    "product",
-  ];
+  // Compare names
+  if (item1.name !== item2.name) {
+    return false;
+  }
 
-  const compareSelectedOptions = (options1, options2) => {
-    if (options1.length !== options2.length) {
+  // Compare selectedOptions
+  if (item1.selectedOptions.length !== item2.selectedOptions.length) {
+    return false;
+  }
+
+  // Sort selectedOptions to ensure consistent comparison
+  const sortedOptions1 = [...item1.selectedOptions].sort((a, b) => a.name.localeCompare(b.name));
+  const sortedOptions2 = [...item2.selectedOptions].sort((a, b) => a.name.localeCompare(b.name));
+
+  for (let i = 0; i < sortedOptions1.length; i++) {
+    const option1 = sortedOptions1[i];
+    const option2 = sortedOptions2[i];
+
+    if (option1.name !== option2.name || option1.value !== option2.value) {
       return false;
     }
+  }
 
-    return options1.every((option1, index) => {
-      const option2 = options2[index];
-      return option1?._id?.toString() === option2?._id?.toString();
-    });
-  };
-
-  const fieldsEqual = fields.every(field => {
-    const nestedFields = field.split(".");
-    let val1 = item1;
-    let val2 = item2;
-
-    for (const nestedField of nestedFields) {
-      if (val1 && val1.hasOwnProperty(nestedField)) {
-        val1 = val1[nestedField];
-      } else {
-        return true; // Skip comparison if the field is missing in item1
-      }
-
-      if (val2 && val2.hasOwnProperty(nestedField)) {
-        val2 = val2[nestedField];
-      } else {
-        return true; // Skip comparison if the field is missing in item2
-      }
-    }
-
-    return val1 === val2;
-  });
-
-  const selectedOptionsEqual = compareSelectedOptions(item1.selectedOptions, item2.selectedOptions);
-
-  return fieldsEqual && selectedOptionsEqual;
+  // If we've made it this far, the items are considered equal
+  return true;
 };
 
+// The updateCartItems function remains the same
 export const updateCartItems = (cartItems, cart_item) => {
   let found = false;
 
