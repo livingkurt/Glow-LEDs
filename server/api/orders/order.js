@@ -1,92 +1,5 @@
-import { optionSchema, optionValueSchema } from "../products/product";
 import mongoose from "mongoose";
-
-const orderItemSchema = new mongoose.Schema(
-  {
-    name: { type: String },
-    currentOptions: [optionSchema],
-    selectedOptions: [optionValueSchema],
-    qty: { type: Number },
-    max_quantity: { type: Number },
-    quantity: { type: Number },
-    display_image: { type: String }, // Uncomment on first migration
-    // display_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" }, // Uncomment on first migration uncomment on second migration
-    display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-    secondary_image: { type: String },
-    category: { type: String },
-    count_in_stock: { type: Number },
-    subcategory: { type: String },
-    product_collection: { type: String },
-    pathname: { type: String },
-    size: { type: String },
-    preorder: { type: Boolean },
-    sale_price: { type: Number },
-    sale_start_date: { type: Date },
-    sale_end_date: { type: Date },
-    dimensions: {
-      weight_pounds: { type: Number },
-      weight_ounces: { type: Number },
-      product_length: { type: Number },
-      product_width: { type: Number },
-      product_height: { type: Number },
-      package_length: { type: Number },
-      package_width: { type: Number },
-      package_height: { type: Number },
-      package_volume: { type: Number },
-    },
-    processing_time: [{ type: Number }],
-    finite_stock: { type: Boolean },
-    wholesale_product: { type: Boolean },
-    wholesale_price: { type: Number },
-
-    is_printing: { type: Boolean, default: false },
-    is_crafting: { type: Boolean, default: false },
-    is_crafted: { type: Boolean, default: false },
-    is_packaged: { type: Boolean, default: false },
-    reviewed: { type: Boolean, default: false },
-    review_email_sent: { type: Boolean, default: false },
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    // Depreciated
-    color_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    color_product_name: { type: String },
-    secondary_color_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    secondary_color_product_name: { type: String },
-    option_product_name: { type: String },
-    option_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    secondary_product_name: { type: String },
-    secondary_product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-
-    secondary_color: { type: String },
-    color_group_name: { type: String },
-    secondary_color_group_name: { type: String },
-    secondary_color_code: { type: String },
-    secondary_group_name: { type: String },
-    option_group_name: { type: String },
-    color: { type: String },
-    color_code: { type: String },
-    price: { type: Number },
-    add_on_price: { type: Number },
-    show_add_on: { type: Boolean },
-  },
-  {
-    timestamps: true,
-  }
-);
+import { sharedItemSchema } from "../carts/shared_item";
 
 const shippingSchema = {
   shipment_id: { type: String },
@@ -163,6 +76,12 @@ const OrderStatusEnum = {
   DELIVERED: "delivered",
   RETURN_LABEL_CREATED: "return_label_created",
   CANCELED: "canceled",
+};
+
+const orderItemSchema = {
+  ...sharedItemSchema,
+  reviewed: { type: Boolean, default: false },
+  review_email_sent: { type: Boolean, default: false },
 };
 
 const orderSchema = new mongoose.Schema(
