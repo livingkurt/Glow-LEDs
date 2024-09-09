@@ -144,7 +144,6 @@ const eventPage = createSlice({
       state.loading = true;
     },
     [API.getEventTickets.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload);
       state.loading = false;
       state.tickets = payload;
     },

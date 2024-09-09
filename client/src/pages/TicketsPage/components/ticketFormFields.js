@@ -8,6 +8,11 @@ export const ticketFormFields = ({ eventsQuery }) => {
       labelProp: "name",
       required: true,
     },
+    title: {
+      type: "text",
+      label: "Title",
+      required: true,
+    },
     ticket_type: {
       type: "text",
       label: "Ticket Type",
@@ -23,13 +28,18 @@ export const ticketFormFields = ({ eventsQuery }) => {
       label: "Price",
       required: true,
     },
+    color: {
+      type: "color_picker",
+      label: "Color",
+      required: true,
+    },
     fact: {
       type: "text",
       label: "Fact",
       required: true,
     },
     short_description: {
-      type: "text",
+      type: "text_multiline",
       label: "Short Description",
       required: true,
     },

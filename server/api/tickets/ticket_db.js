@@ -47,7 +47,6 @@ export default {
     try {
       const event = await Event.findOne({ pathname: event_pathname, deleted: false });
       const tickets = await Ticket.find({ event: event._id, deleted: false }).populate("event");
-      console.log({ tickets });
       return tickets;
     } catch (error) {
       if (error instanceof Error) {
