@@ -38,12 +38,6 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
     setScanStatus("error");
   };
 
-  const resetScanner = () => {
-    setScanStatus(null);
-    setScanResult(null);
-    setIsScanning(true);
-  };
-
   const closeScanner = () => {
     setOpenScannerModal(false);
     setScanStatus(null);
@@ -60,11 +54,9 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
   return (
     <GLActionModal
       isOpen={openScannerModal}
-      onConfirm={resetScanner}
       onCancel={closeScanner}
       title={`Scan Tickets for ${event?.name}`}
       cancelLabel="Close"
-      confirmLabel="Scan Again"
       cancelColor="secondary"
       maxWidth="sm"
       disableEscapeKeyDown
