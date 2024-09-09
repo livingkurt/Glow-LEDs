@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { Typography, Button, Container, Box, CircularProgress, Modal, TextField } from "@mui/material";
+import { Typography, Box, CircularProgress } from "@mui/material";
 import TicketItem from "./components/TicketItem";
 import TicketModal from "./components/TicketModal";
 import EventContainer from "./components/EventContainer";
@@ -71,7 +71,7 @@ const EventPage = () => {
   }
 
   return (
-    <EventContainer>
+    <EventContainer event={event}>
       <Box>
         <EventTitle event={event} />
         <Box

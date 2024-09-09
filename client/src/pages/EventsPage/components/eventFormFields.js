@@ -25,9 +25,15 @@ export const eventFormFields = ({ event }) => {
       type: "text",
       label: "Venue",
     },
-    image: {
+    thumbnail_image: {
       type: "image_upload",
-      label: "Image",
+      label: "Thumbnail Image",
+      labelProp: "_id",
+      album: `${event.name} Images`,
+    },
+    background_image: {
+      type: "image_upload",
+      label: "Background Image",
       labelProp: "_id",
       album: `${event.name} Images`,
     },

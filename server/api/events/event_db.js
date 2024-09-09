@@ -6,6 +6,7 @@ export default {
     try {
       return await Event.find(filter)
         .sort(sort)
+        .populate("background_image")
 
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -18,7 +19,7 @@ export default {
   },
   findBy_events_db: async params => {
     try {
-      return await Event.findOne(params);
+      return await Event.findOne(params).populate("background_image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -29,7 +30,7 @@ export default {
   findById_events_db: async id => {
     const query = determineIDPathname(id);
     try {
-      return await Event.findOne(query);
+      return await Event.findOne(query).populate("background_image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

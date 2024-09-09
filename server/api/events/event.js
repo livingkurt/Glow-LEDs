@@ -8,6 +8,8 @@ const event_schema = new mongoose.Schema(
     start_date: { type: Date },
     end_date: { type: Date },
     venue: { type: String },
+    thumbnail_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    background_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ticket" }],
     address: {
       address_1: { type: String },
