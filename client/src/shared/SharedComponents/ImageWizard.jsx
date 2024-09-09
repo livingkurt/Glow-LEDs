@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
 import * as API from "../../api";
@@ -57,6 +57,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
+
       <ImageUploader onChange={handleImageUpload} album={fieldData.album} fieldName={fieldName} type="image" />
       <div className="ai-c g-10px">
         <TextField

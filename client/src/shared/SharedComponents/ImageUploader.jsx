@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
@@ -11,6 +11,7 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const [loading, setLoading] = useState(false);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [albumName, setAlbumName] = useState(album);
+  const [compressImages, setCompressImages] = useState(false);
 
   const handleFileChange = event => {
     const selectedFiles = event.target.files;
@@ -42,6 +43,7 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
       formData.append("images", files[i]);
     }
     formData.append("albumName", albumName);
+    formData.append("compress", compressImages);
 
     try {
       const response = await axios.post(`/api/images/upload/${type}`, formData, {
@@ -71,7 +73,7 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
       <Loading loading={loading} />
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={9}>
+          <Grid item xs={12} sm={6}>
             <TextField
               size="small"
               id="album-name"
@@ -80,6 +82,18 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
               value={albumName}
               onChange={handleAlbumNameChange}
               fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={compressImages}
+                  onChange={e => setCompressImages(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Compress images"
             />
           </Grid>
           <Grid item xs={12} sm={3} container justifyContent="space-around">
