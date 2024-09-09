@@ -1,7 +1,4 @@
-import { isColorLight } from "../email_template_helpers";
-
 export default ({ email, order, ticketQRCodes }) => {
-  console.log({ email, order, ticketQRCodes });
   return `
 <table style="width:100%;border-spacing:0; padding: 10px;">
   <tr>
