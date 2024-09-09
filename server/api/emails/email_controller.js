@@ -174,6 +174,7 @@ export default {
       subject: "Your Event Tickets",
       html: App({ body: ticketEmail(bodyTickets), unsubscribe: false }),
     };
+    await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
     await sendEmail(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
   },
   send_refund_emails_c: async (req, res) => {

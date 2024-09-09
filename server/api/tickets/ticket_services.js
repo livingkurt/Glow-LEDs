@@ -1,6 +1,7 @@
 import ticket_db from "./ticket_db";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
+import { event_db } from "../events";
 
 export default {
   findAll_tickets_s: async query => {
@@ -87,7 +88,6 @@ export default {
         throw new Error("Ticket not found");
       }
 
-      console.log({ ticketItem, ticketUsed: ticketItem.ticketUsed });
       if (ticketItem.ticketUsed) {
         throw new Error("Ticket already used");
       }
@@ -99,12 +99,10 @@ export default {
       await order.save();
 
       // Update the event's scanned_tickets_count
-      const ticket = await ticket_db.findById_tickets_db(itemId);
-      const event = await event_db.findById_events_db(ticket.event);
-      event.scanned_events_count = (ticket.scanned_tickets_count || 0) + 1;
-      await event.save();
+      const ticket = await ticket_db.findById_tickets_db(ticketItem.ticket);
+      const scanned_tickets_count = await ticket_db.count_scanned_tickets_db(ticket.event._id);
 
-      return { message: "Ticket validated successfully", scanned_events_count: event.scanned_events_count };
+      return { message: "Ticket validated successfully", scanned_tickets_count };
     } catch (error) {
       throw new Error(error.message);
     }

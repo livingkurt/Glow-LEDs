@@ -187,7 +187,7 @@ export const createPayOrder = createAsyncThunk(
           sendTicketEmail({
             order: order_created,
             subject: "New Order Created by " + order.shipping.first_name,
-            email: config.REACT_APP_INFO_EMAIL,
+            email: order.shipping.email,
           })
         );
       }

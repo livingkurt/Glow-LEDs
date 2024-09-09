@@ -1,5 +1,7 @@
+import { Order } from "../orders";
 import { Event } from "../events";
 import Ticket from "./ticket";
+import mongoose from "mongoose";
 
 export default {
   findAll_tickets_db: async (filter, sort, limit, page) => {
@@ -95,6 +97,23 @@ export default {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
+    }
+  },
+  count_scanned_tickets_db: async eventId => {
+    try {
+      const count = await Order.aggregate([
+        { $unwind: "$orderItems" },
+        {
+          $match: {
+            "orderItems.itemType": "ticket",
+            "orderItems.ticketUsed": true,
+          },
+        },
+        { $count: "scannedCount" },
+      ]);
+      return count[0]?.scannedCount || 0;
+    } catch (error) {
+      throw new Error(error.message);
     }
   },
 };
