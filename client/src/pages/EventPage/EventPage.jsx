@@ -50,6 +50,7 @@ const EventPage = () => {
           name: selectedTicket.title,
           color: selectedTicket.color,
           ticket_type: selectedTicket.ticket_type,
+          display_image_object: selectedTicket.image,
           count_in_stock: selectedTicket.count_in_stock,
         },
         type: "add_to_cart",
@@ -78,6 +79,7 @@ const EventPage = () => {
           display="flex"
           justifyContent="center"
           gap={2}
+          flexWrap="wrap"
           sx={{
             borderRadius: "10px",
           }}
