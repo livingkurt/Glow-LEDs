@@ -10,7 +10,7 @@ const EditEventModal = () => {
   const eventPage = useSelector(state => state.events.eventPage);
   const { edit_event_modal, event, loading } = eventPage;
 
-  const formFields = eventFormFields();
+  const formFields = eventFormFields({ event });
 
   return (
     <div>

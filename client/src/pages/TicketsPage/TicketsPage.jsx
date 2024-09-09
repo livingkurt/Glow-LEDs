@@ -38,9 +38,9 @@ const TicketsPage = () => {
           </GLIconButton>
         ),
       },
-      { title: "Event", display: ticket => ticket.event.name },
       { title: "Ticket Type", display: "ticket_type" },
       { title: "Price", display: ticket => `$${ticket.price}` },
+      { title: "Event", display: ticket => ticket.event.name },
       {
         title: "",
         nonSelectable: true,

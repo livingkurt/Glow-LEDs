@@ -8,6 +8,7 @@ const ticket_schema = new mongoose.Schema(
     price: { type: Number },
     fact: { type: String },
     color: { type: String },
+    count_in_stock: { type: Number },
     short_description: { type: String },
     pathname: { type: String },
     active: { type: Boolean, default: true },

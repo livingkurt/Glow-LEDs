@@ -1,4 +1,4 @@
-export const eventFormFields = () => {
+export const eventFormFields = ({ event }) => {
   return {
     name: {
       type: "text",
@@ -24,6 +24,12 @@ export const eventFormFields = () => {
     venue: {
       type: "text",
       label: "Venue",
+    },
+    image: {
+      type: "image_upload",
+      label: "Image",
+      labelProp: "_id",
+      album: `${event.name} Images`,
     },
     address: {
       type: "object",

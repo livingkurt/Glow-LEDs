@@ -17,6 +17,9 @@ const EventPage = () => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
+
   useEffect(() => {
     if (pathname) {
       dispatch(API.detailsEvent(pathname));
@@ -36,8 +39,22 @@ const EventPage = () => {
   };
 
   const handleAddToCart = () => {
-    // TODO: Implement add to cart functionality
-    console.log(`Added ${quantity} ${selectedTicket.ticket_type} ticket(s) to cart`);
+    dispatch(
+      API.addToCart({
+        cart: my_cart,
+        cartItem: {
+          itemType: "ticket",
+          ticket: selectedTicket._id,
+          quantity: quantity,
+          price: selectedTicket.price,
+          name: selectedTicket.title,
+          color: selectedTicket.color,
+          ticket_type: selectedTicket.ticket_type,
+          count_in_stock: selectedTicket.count_in_stock,
+        },
+        type: "add_to_cart",
+      })
+    );
     handleCloseModal();
   };
 

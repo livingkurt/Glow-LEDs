@@ -1,4 +1,4 @@
-export const ticketFormFields = ({ eventsQuery }) => {
+export const ticketFormFields = ({ eventsQuery, ticket }) => {
   return {
     event: {
       type: "autocomplete_single",
@@ -6,42 +6,44 @@ export const ticketFormFields = ({ eventsQuery }) => {
       options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
       loading: eventsQuery?.isLoading,
       labelProp: "name",
-      required: true,
     },
     title: {
       type: "text",
       label: "Title",
-      required: true,
     },
     ticket_type: {
       type: "text",
       label: "Ticket Type",
-      required: true,
+    },
+    count_in_stock: {
+      type: "number",
+      label: "Count in Stock",
+    },
+    image: {
+      type: "image_upload",
+      label: "Image",
+      labelProp: "_id",
+      album: `${ticket.name} Images`,
     },
     pathname: {
       type: "text",
       label: "Pathname",
-      required: true,
     },
     price: {
       type: "number",
       label: "Price",
-      required: true,
     },
     color: {
       type: "color_picker",
       label: "Color",
-      required: true,
     },
     fact: {
       type: "text",
       label: "Fact",
-      required: true,
     },
     short_description: {
       type: "text_multiline",
       label: "Short Description",
-      required: true,
     },
     active: {
       type: "checkbox",

@@ -13,7 +13,7 @@ const EditTicketModal = () => {
 
   const eventsQuery = useEventsQuery();
 
-  const formFields = ticketFormFields({ eventsQuery });
+  const formFields = ticketFormFields({ eventsQuery, ticket });
 
   return (
     <div>
