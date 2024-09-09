@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Container } from "@mui/material";
 
 const EventContainer = ({ children, event }) => {
-  console.log({ event });
   return (
     <Box
       sx={{

@@ -31,6 +31,7 @@ const initialState = {
   taxPrice: 0,
   totalPrice: 0,
   activePromoCodeIndicator: "",
+  shipping_choice: true,
   user: {},
   free_shipping_message: "------",
   loading: false,
@@ -115,6 +116,9 @@ const placeOrder = createSlice({
 
     set_shipping_completed: (state, { payload }) => {
       state.shipping_completed = payload;
+    },
+    set_shipping_choice: (state, { payload }) => {
+      state.shipping_choice = payload;
     },
 
     set_password: (state, { payload }) => {
@@ -488,6 +492,7 @@ export const {
   openProcessingTimeModal,
   clearShippingRates,
   initializePlaceOrderPage,
+  set_shipping_choice,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

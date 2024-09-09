@@ -73,6 +73,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  validate_ticket_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const ticket = await ticket_services.validate_ticket_s(body);
+      if (ticket) {
+        return res.status(200).send(ticket);
+      }
+      return res.status(500).send({ message: "Error Validating Ticket" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   reorder_tickets_c: async (req, res) => {
     const { body } = req;
     try {

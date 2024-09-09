@@ -25,7 +25,7 @@ import { content_db } from "../contents";
 import { Affiliate, affiliate_db } from "../affiliates";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
-import { determine_status } from "../emails/email_interactors";
+import { determine_status, generateTicketQRCodes } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
 import { sendEmail, sendEmailsInBatches, send_multiple_emails, toCamelCase } from "./email_helpers";
 import email_db from "./email_db";
@@ -38,6 +38,7 @@ import verify from "../../email_templates/pages/verify";
 import { domain } from "../../email_templates/email_template_helpers";
 import Email from "./email";
 import paycheck from "../../email_templates/pages/paycheck";
+import ticketEmail from "../../email_templates/pages/ticketEmail";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -134,7 +135,9 @@ export default {
   send_order_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
     const orderData = await order_db.findById_orders_db(order_data._id);
-    const body = {
+
+    // Send the original order confirmation email
+    const bodyConfirmation = {
       email: {
         h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
         h2: "We are starting production on your order! We will notify your as your order progresses.",
@@ -142,13 +145,36 @@ export default {
       title: "Thank you for your purchase!",
       order: orderData,
     };
-    const mailOptions = {
+    const mailOptionsConfirmation = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: subject,
-      html: App({ body: order(body), unsubscribe: false }),
+      html: App({ body: order(bodyConfirmation), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Order Email Sent to " + email);
+    await sendEmail(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
+  },
+  send_ticket_emails_c: async (req, res) => {
+    const { order: order_data, subject, email } = req.body;
+    const orderData = await order_db.findById_orders_db(order_data._id);
+
+    // Generate QR codes and send ticket email
+    const ticketQRCodes = await generateTicketQRCodes(orderData);
+    const bodyTickets = {
+      email: {
+        h1: "YOUR EVENT TICKETS",
+        h2: "Here are your QR codes for event entry.",
+      },
+      title: "Your Event Tickets",
+      order: orderData,
+      ticketQRCodes,
+    };
+    const mailOptionsTickets = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: email,
+      subject: "Your Event Tickets",
+      html: App({ body: ticketEmail(bodyTickets), unsubscribe: false }),
+    };
+    await sendEmail(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
   },
   send_refund_emails_c: async (req, res) => {
     const { order: order_data, email } = req.body;

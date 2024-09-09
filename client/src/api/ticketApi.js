@@ -58,6 +58,20 @@ export const saveTicket = createAsyncThunk("tickets/saveTicket", async (ticket, 
   }
 });
 
+export const validateTicket = createAsyncThunk(
+  "tickets/validateTicket",
+  async (ticketId, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/tickets/validate", { ticketId });
+      dispatch(showSuccess({ message: `Ticket validated: ${data.message}` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const getEventTickets = createAsyncThunk(
   "events/getEventTickets",
   async (pathname, { dispatch, rejectWithValue }) => {

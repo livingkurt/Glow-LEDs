@@ -19,6 +19,11 @@ export const ticketFormFields = ({ eventsQuery, ticket }) => {
       type: "number",
       label: "Count in Stock",
     },
+    finite_stock: {
+      type: "checkbox",
+      label: "Finite Stock",
+      default: false,
+    },
     image: {
       type: "image_upload",
       label: "Image",

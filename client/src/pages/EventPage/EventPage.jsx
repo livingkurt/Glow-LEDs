@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { Typography, Box, CircularProgress } from "@mui/material";
+import { Typography, Box, CircularProgress, Button } from "@mui/material";
 import TicketItem from "./components/TicketItem";
 import TicketModal from "./components/TicketModal";
 import EventContainer from "./components/EventContainer";
 import TicketPrice from "./components/TicketPrice";
 import EventTitle from "./components/EventTitle";
+import TicketScanner from "./components/TicketScanner";
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -16,9 +17,13 @@ const EventPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [openScannerModal, setOpenScannerModal] = useState(false);
 
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   useEffect(() => {
     if (pathname) {
@@ -49,6 +54,7 @@ const EventPage = () => {
           price: selectedTicket.price,
           name: selectedTicket.title,
           color: selectedTicket.color,
+          finite_stock: true,
           ticket_type: selectedTicket.ticket_type,
           display_image_object: selectedTicket.image,
           count_in_stock: selectedTicket.count_in_stock,
@@ -73,8 +79,16 @@ const EventPage = () => {
 
   return (
     <EventContainer event={event}>
+      {current_user?.isAdmin && (
+        <Box mt={2} mb={2} display="flex" justifyContent="flex-end">
+          <Button variant="contained" color="primary" onClick={() => setOpenScannerModal(true)}>
+            Scan Tickets
+          </Button>
+        </Box>
+      )}
       <Box>
         <EventTitle event={event} />
+
         <Box
           display="flex"
           justifyContent="center"
@@ -115,6 +129,8 @@ const EventPage = () => {
         setQuantity={setQuantity}
         onAddToCart={handleAddToCart}
       />
+
+      <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
     </EventContainer>
   );
 };

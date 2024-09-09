@@ -6,6 +6,7 @@ const router = express.Router();
 router.route("/").get(ticket_controller.findAll_tickets_c).post(isAuth, isAdmin, ticket_controller.create_tickets_c);
 router.route("/table").get(ticket_controller.table_tickets_c);
 router.route("/reorder").put(ticket_controller.reorder_tickets_c);
+router.route("/validate").post(ticket_controller.validate_ticket_c);
 
 router.route("/event/:event_pathname").get(ticket_controller.findByEventPathname_tickets_c);
 

@@ -39,6 +39,7 @@ import mongoose from "mongoose";
 import verify from "./pages/verify";
 import { domain } from "./email_template_helpers";
 import paycheck from "./pages/paycheck";
+import ticketEmail from "./pages/ticketEmail";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {
@@ -162,6 +163,102 @@ router.get("/order", async (req, res) => {
     order: orderDocument,
   };
   res.send(App({ body: order(body), unsubscribe: false }));
+});
+router.get("/ticket", async (req, res) => {
+  const orderDocument = await order_db.findById_orders_db("66df079b45e19055855ce506");
+  const body = {
+    "email": {
+      "h1": "Your Event Tickets",
+      "h2": "Here are your QR codes for event entry.",
+    },
+    "order": {
+      "shipping": {
+        "first_name": "Kurt",
+        "last_name": "LaVacque",
+        "email": "siqymufo@pelagius.net",
+        "address_1": "222 Gibson Lake Rd",
+        "address_2": "",
+        "city": "Crystal Falls",
+        "state": "MI",
+        "postalCode": "49920",
+        "international": false,
+        "country": "US",
+      },
+      "payment": {
+        "refund": [],
+        "refund_reason": [],
+        "paymentMethod": "stripe",
+        "payment": {},
+        "charge": {},
+      },
+      "_id": "66df079b45e19055855ce506",
+      "user": {
+        "shipping": {},
+        "_id": "6379a4497212b9524b2a49b2",
+        "isAdmin": true,
+        "isVerified": true,
+        "is_affiliated": true,
+        "is_employee": true,
+        "palettes": [],
+        "email_subscription": true,
+        "deleted": false,
+        "first_name": "Admin",
+        "last_name": "test",
+        "email": "admin@test.com",
+        "password": "$2a$10$z99KsjpQmtQ.jzm0jsmtJu0eWHIkAMk3iNMvYbQbKAlHJBmuZjZzW",
+        "createdAt": "2022-11-20T03:51:37.402Z",
+        "updatedAt": "2024-08-24T15:52:07.917Z",
+        "__v": 1,
+        "guest": true,
+        "cart": "642c3f469216481ed2708a92",
+        "affiliate": "648626f7ad972f000246e9a8",
+        "isWholesaler": false,
+      },
+      "orderItems": [{}, {}],
+      "itemsPrice": 60,
+      "taxPrice": 3.5999999999999996,
+      "shippingPrice": 0,
+      "totalPrice": 63.6,
+      "status": "paid",
+      "isReassured": false,
+      "isRefunded": false,
+      "isUpdated": true,
+      "isPrintIssue": false,
+      "isPaused": false,
+      "isError": false,
+      "isPrioritized": false,
+      "guest": false,
+      "parcel": null,
+      "order_note": "",
+      "production_note": "",
+      "tip": 0,
+      "promo_code": "",
+      "is_error": false,
+      "deleted": false,
+      "messages": [],
+      "payments": [],
+      "refunds": [],
+      "change_log": [{}],
+      "createdAt": "2024-09-09T14:35:07.709Z",
+      "updatedAt": "2024-09-09T17:28:22.028Z",
+      "__v": 0,
+      "paidAt": "2024-09-09T14:35:10.265Z",
+    },
+    "ticketQRCodes": [
+      {
+        "ticketType": "Space City Gloving Competition - Competitor Experience Pass",
+        "qrCode":
+          "data:image/png;base64,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",
+      },
+      {
+        ticketType: "Space City Gloving Competition - Spectator Experience Pass",
+        qrCode:
+          "data:image/png;base64,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",
+      },
+    ],
+  };
+
+  res.send(App({ body: ticketEmail(body), unsubscribe: false }));
 });
 router.get("/order_status", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("659cd96631c5c5730673e47b");

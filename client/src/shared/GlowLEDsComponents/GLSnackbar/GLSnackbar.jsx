@@ -34,7 +34,6 @@ const GLSnackbar = () => {
       id="covy-snackbar"
       message={message}
       open={open}
-      // sx={{ zIndex: theme => theme.zIndex.modal + 1 }}
       sx={{ zIndex: 9999 }}
       style={{ zIndex: 9999 }}
       autoHideDuration={duration || 4000}

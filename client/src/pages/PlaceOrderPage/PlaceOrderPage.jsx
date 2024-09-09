@@ -145,6 +145,10 @@ const PlaceOrderPage = () => {
     }
     sessionStorage.removeItem("shippingAddress");
     sessionStorage.setItem("manualNavigation", "true");
+    const hasItemsWithDimensions = cartItems.some(item => item.dimensions && item.dimensions.package_volume > 0);
+    if (!hasItemsWithDimensions) {
+      dispatch(API.saveOrder({ ...order, status: "delivered" }));
+    }
     navigate("/pages/complete/order/" + order._id);
   };
 

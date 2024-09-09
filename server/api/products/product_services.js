@@ -483,20 +483,28 @@ export default {
   update_stock_products_s: async (params, body) => {
     const { cartItems } = body;
     try {
-      cartItems.forEach(async item => {
-        const product = await Product.findOne({ _id: item.product });
-        if (product.finite_stock) {
-          if (product.subcategory === "singles") {
-            diminish_single_glove_stock(product, item);
-          } else if (product.subcategory === "sampler") {
-            diminish_sampler_stock(product, item);
-          } else if (product.subcategory === "refresh") {
-            diminish_refresh_pack_stock(product, item);
-          } else if (product.subcategory === "coin") {
-            diminish_batteries_stock(product, item);
+      for (const item of cartItems) {
+        if (item.itemType === "product") {
+          const product = await Product.findOne({ _id: item.product });
+          if (product?.finite_stock) {
+            if (product.subcategory === "singles") {
+              await diminish_single_glove_stock(product, item);
+            } else if (product.subcategory === "sampler") {
+              await diminish_sampler_stock(product, item);
+            } else if (product.subcategory === "refresh") {
+              await diminish_refresh_pack_stock(product, item);
+            } else if (product.subcategory === "coin") {
+              await diminish_batteries_stock(product, item);
+            }
+          }
+        } else if (item.itemType === "ticket") {
+          const ticket = await Ticket.findOne({ _id: item.ticket });
+          if (ticket?.finite_stock) {
+            ticket.count_in_stock -= item.quantity;
+            await ticket.save();
           }
         }
-      });
+      }
       return "Success";
     } catch (error) {
       if (error instanceof Error) {

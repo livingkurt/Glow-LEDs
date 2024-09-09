@@ -7,7 +7,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 import config from "../config";
-import { sendOrderEmail } from "./emailApi";
+import { sendOrderEmail, sendTicketEmail } from "./emailApi";
 
 export const getOrders = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -182,6 +182,15 @@ export const createPayOrder = createAsyncThunk(
           email: config.REACT_APP_INFO_EMAIL,
         })
       );
+      if (order.orderItems.some(item => item.itemType === "ticket")) {
+        dispatch(
+          sendTicketEmail({
+            order: order_created,
+            subject: "New Order Created by " + order.shipping.first_name,
+            email: config.REACT_APP_INFO_EMAIL,
+          })
+        );
+      }
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {

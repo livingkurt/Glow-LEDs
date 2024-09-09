@@ -33,6 +33,7 @@ const GLActionModal = ({
   contentClasses,
   actionClasses,
   cancelDisabled,
+  style,
   actionDisabled,
   disableEscapeKeyDown,
 }) => {
@@ -44,6 +45,9 @@ const GLActionModal = ({
         classes={dialogClasses}
         open={isOpen}
         onClose={onCancel}
+        PaperProps={{
+          style,
+        }}
         aria-labelledby={title}
         maxWidth={maxWidth}
         fullWidth={fullWidth}
@@ -144,6 +148,7 @@ GLActionModal.defaultProps = {
   actionClasses: null,
   onEnter: null,
   disableEscapeKeyDown: false,
+  style: null,
 };
 
 GLActionModal.propTypes = {
@@ -176,6 +181,7 @@ GLActionModal.propTypes = {
   titleClasses: PropTypes.object,
   contentClasses: PropTypes.object,
   actionClasses: PropTypes.object,
+  style: PropTypes.object,
 };
 
 export default GLActionModal;

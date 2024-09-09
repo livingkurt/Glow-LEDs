@@ -37,7 +37,32 @@ const MetaDataDisplay = ({ row }) => {
       "New Order Created by " + row.shipping.first_name,
       config.REACT_APP_INFO_EMAIL
     );
-
+    const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
+    console.log({ has_ticket });
+    if (has_ticket) {
+      dispatch(
+        API.sendTicketEmail({
+          order: row,
+          subject: "New Order Created by " + row.shipping.first_name,
+          email: config.REACT_APP_INFO_EMAIL,
+        })
+      );
+    }
+    dispatch(set_loading_label(false));
+  };
+  const send_ticket_email = async () => {
+    dispatch(set_loading_label(true));
+    const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
+    console.log({ has_ticket });
+    if (has_ticket) {
+      dispatch(
+        API.sendTicketEmail({
+          order: row,
+          subject: "New Order Created by " + row.shipping.first_name,
+          email: row.shipping.email,
+        })
+      );
+    }
     dispatch(set_loading_label(false));
   };
 
@@ -163,6 +188,11 @@ const MetaDataDisplay = ({ row }) => {
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_email()}>
           Send Order Email
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
+        <Button color="secondary" variant="contained" fullWidth onClick={() => send_ticket_email()}>
+          Send Ticket Email
         </Button>
       </Grid>
       <Grid item xs={12}>
