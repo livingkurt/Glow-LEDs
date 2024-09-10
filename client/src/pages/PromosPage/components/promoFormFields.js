@@ -1,16 +1,18 @@
-export const promoFormFields = ({ affiliates, users, categorys, products }) => {
+export const promoFormFields = ({ affiliatesQuery, usersQuery, categorysQuery, productsQuery }) => {
   return {
     affiliate: {
       type: "autocomplete_single",
       label: "Affiliates",
-      options: affiliates,
+      options: !affiliatesQuery?.isLoading ? affiliatesQuery?.data : [],
+      loading: affiliatesQuery?.isLoading,
       labelProp: "affiliate",
       getOptionLabel: option => option.artist_name,
     },
     user: {
       type: "autocomplete_single",
       label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
+      options: !usersQuery?.isLoading ? usersQuery?.data?.filter(user => user.first_name && user.last_name) : [],
+      loading: usersQuery?.isLoading,
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
@@ -34,28 +36,46 @@ export const promoFormFields = ({ affiliates, users, categorys, products }) => {
       label: "Sponsor Only",
       default: false,
     },
+    included_tags: {
+      type: "autocomplete_multiple",
+      label: "Included Tags",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
+    excluded_tags: {
+      type: "autocomplete_multiple",
+      label: "Excluded Tags",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
     excluded_categories: {
       type: "autocomplete_multiple",
       label: "Excluded Categories",
-      options: categorys,
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
       labelProp: "name",
     },
     included_categories: {
       type: "autocomplete_multiple",
       label: "Included Categories",
-      options: categorys,
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
       labelProp: "name",
     },
     included_products: {
       type: "autocomplete_multiple",
       label: "Included Products",
-      options: products,
+      options: !productsQuery?.isLoading ? productsQuery?.data : [],
+      loading: productsQuery?.isLoading,
       labelProp: "name",
     },
     excluded_products: {
       type: "autocomplete_multiple",
       label: "Excluded Products",
-      options: products,
+      options: !productsQuery?.isLoading ? productsQuery?.data : [],
+      loading: productsQuery?.isLoading,
       labelProp: "name",
     },
     percentage_off: {
@@ -65,14 +85,6 @@ export const promoFormFields = ({ affiliates, users, categorys, products }) => {
     free_shipping: {
       type: "checkbox",
       label: "Free Shipping",
-    },
-    exclude: {
-      type: "checkbox",
-      label: "Exclude",
-    },
-    include: {
-      type: "checkbox",
-      label: "Include",
     },
     amount_off: {
       type: "number",

@@ -7,14 +7,13 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
-import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
+import { useCategorysQuery, useProductsQuery, useUsersQuery } from "../../../api/allRecordsApi";
 
 const EditProductModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
   const { edit_product_modal, product, loading, products, editProductHistory } = productsPage;
-  const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users } = userPage;
+  const usersQuery = useUsersQuery({});
   const chipPage = useSelector(state => state.chips.chipPage);
   const { chips } = chipPage;
   const filamentPage = useSelector(state => state.filaments.filamentPage);
@@ -36,7 +35,7 @@ const EditProductModal = () => {
 
   const formFields = productFormFields({
     products,
-    users,
+    usersQuery,
     categorysQuery,
     chips,
     product,
@@ -85,7 +84,7 @@ const EditProductModal = () => {
           onChange={value => {
             dispatch(set_product(value));
           }}
-          loading={loading && loading_users}
+          loading={loading}
         />
       </GLActionModal>
     </div>

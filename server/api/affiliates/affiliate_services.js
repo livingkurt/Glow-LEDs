@@ -39,6 +39,44 @@ export default {
       }
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
+      return affiliates;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_affiliates_s: async query => {
+    try {
+      const page = query.page ? query.page : "1";
+      const limit = query.limit ? query.limit : "0";
+      const search = query.search
+        ? {
+            artist_name: {
+              $regex: query.search,
+              $options: "i",
+            },
+          }
+        : {};
+      const filter = determine_filter(query, search);
+
+      const sort_query = query.sort && query.sort.toLowerCase();
+      let sort = { _id: -1 };
+      if (sort_query === "glover name") {
+        sort = { artist_name: 1 };
+      } else if (sort_query === "facebook name") {
+        sort = { facebook_name: 1 };
+      } else if (sort_query === "sponsor") {
+        sort = { sponsor: -1 };
+      } else if (sort_query === "promoter") {
+        sort = { promoter: -1 };
+      } else if (sort_query === "active") {
+        sort = { active: -1 };
+      } else if (sort_query === "newest") {
+        sort = { _id: -1 };
+      }
+      const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
+      const count = await affiliate_db.count_affiliates_db(filter);
       return {
         data: affiliates,
         total_count: count,

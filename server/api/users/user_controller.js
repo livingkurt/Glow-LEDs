@@ -26,6 +26,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_users_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const user = await user_services.table_users_s(query);
+      if (user) {
+        return res.status(200).send(user);
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   create_filters_users_c: async (req, res) => {
     const { query } = req;
     try {

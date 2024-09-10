@@ -404,8 +404,6 @@ export default {
         return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
       }
 
-      // ... (other code remains the same)
-
       const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
       const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
 

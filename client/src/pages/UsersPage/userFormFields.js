@@ -1,6 +1,6 @@
 import { toCapitalize } from "../../utils/helper_functions";
 
-export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
+export const userFormFields = ({ affiliates, wholesalers, promos, teams, contents }) => {
   return {
     _id: {
       type: "text",
@@ -32,6 +32,14 @@ export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
     weekly_wage: {
       type: "number",
       label: "Weekly Wage",
+      permissions: ["admin"],
+    },
+    content: {
+      type: "autocomplete_single",
+      label: "Content",
+      options: contents,
+      labelProp: "content",
+      getOptionLabel: option => option.name,
       permissions: ["admin"],
     },
     affiliate: {

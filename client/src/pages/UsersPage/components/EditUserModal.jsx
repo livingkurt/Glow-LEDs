@@ -27,6 +27,9 @@ const EditUserModal = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
 
+  const contentPage = useSelector(state => state.contents.contentPage);
+  const { contents, loading: loading_contents } = contentPage;
+
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -34,6 +37,7 @@ const EditUserModal = () => {
       dispatch(API.listWholesalers());
       dispatch(API.listPromos({}));
       dispatch(API.listTeams({}));
+      dispatch(API.listContents({}));
     }
     return () => {
       clean = false;
@@ -45,6 +49,7 @@ const EditUserModal = () => {
     wholesalers,
     promos,
     teams,
+    contents,
   });
 
   return (
