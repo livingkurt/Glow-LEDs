@@ -291,6 +291,26 @@ const placeOrder = createSlice({
         isWholesaler: current_user?.isWholesaler,
       });
 
+      if (validPromo.promotionType === "freeItem") {
+        const eligibleItems = cartItems.filter(
+          item =>
+            validPromo.requiredCategories.includes(item.category) ||
+            validPromo.requiredTags.some(tag => item.tags.includes(tag))
+        );
+
+        const freeItems = cartItems.filter(
+          item =>
+            item.category === validPromo.freeItemCategory ||
+            validPromo.freeItemTags.some(tag => item.tags.includes(tag))
+        );
+
+        if (eligibleItems.length >= validPromo.requiredQuantity && freeItems.length > 0) {
+          const cheapestFreeItem = freeItems.reduce((min, item) => (item.price < min.price ? item : min));
+          state.itemsPrice -= cheapestFreeItem.price;
+          state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Item`;
+        }
+      }
+
       if (validPromo) {
         if (activePromoCodeIndicator) {
           state.promo_code_validations = "Can only use one promo code at a time";

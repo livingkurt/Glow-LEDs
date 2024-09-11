@@ -36,6 +36,47 @@ export const promoFormFields = ({ affiliatesQuery, usersQuery, categorysQuery, p
       label: "Sponsor Only",
       default: false,
     },
+    promotionType: {
+      type: "select",
+      label: "Promotion Type",
+      options: [
+        { value: "discount", label: "Discount" },
+        { value: "freeItem", label: "Free Item" },
+      ],
+      required: true,
+    },
+    requiredQuantity: {
+      type: "number",
+      label: "Required Quantity",
+    },
+    requiredCategories: {
+      type: "autocomplete_multiple",
+      label: "Required Categories",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
+    requiredTags: {
+      type: "autocomplete_multiple",
+      label: "Required Tags",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
+    freeItemCategory: {
+      type: "autocomplete_single",
+      label: "Free Item Category",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
+    freeItemTags: {
+      type: "autocomplete_multiple",
+      label: "Free Item Tags",
+      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      loading: categorysQuery?.isLoading,
+      labelProp: "name",
+    },
     included_tags: {
       type: "autocomplete_multiple",
       label: "Included Tags",
