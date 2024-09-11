@@ -45,6 +45,11 @@ export const promoFormFields = ({ affiliatesQuery, usersQuery, categorysQuery, p
       ],
       required: true,
     },
+    can_be_combined: {
+      type: "checkbox",
+      label: "Can Be Combined",
+      default: false,
+    },
     requiredQuantity: {
       type: "number",
       label: "Required Quantity",

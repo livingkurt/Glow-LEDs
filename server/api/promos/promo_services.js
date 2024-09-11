@@ -1,3 +1,4 @@
+import Content from "../contents/content";
 import {
   determine_filter,
   determine_promoter_code_tier,
@@ -15,6 +16,7 @@ import {
   generateSponsorCodes,
   normalizePromoFilters,
   normalizePromoSearch,
+  validatePromoCode,
 } from "./promo_interactors";
 
 export default {
@@ -348,111 +350,50 @@ export default {
   validate_promo_code_promos_s: async (params, body) => {
     const { promo_code } = params;
     const { current_user, cartItems, shipping } = body;
-    const errors = { promo_code: [] };
-    const isValid = true;
     try {
-      const itemsPrice = determineCartTotal(cartItems, current_user.isWholesaler);
-
-      // Check if promo_code exists in the database
-      const promo = await Promo.findOne({ promo_code: promo_code.toLowerCase(), deleted: false });
-      if (!promo) {
-        return { isValid: false, errors: { promo_code: "Invalid promo code." } };
-      }
-
-      // Check if promo is active
-      if (!promo.active) {
-        return { isValid: false, errors: { promo_code: "This promo code is not active." } };
-      }
-      if (promo.time_limit) {
-        // Check if promo has expired
-        const now = new Date();
-        if (promo.end_date && now > new Date(promo.end_date)) {
-          return { isValid: false, errors: { promo_code: "This promo code has expired." } };
-        }
-
-        // Check if promo is yet to start
-        if (promo.start_date && now < new Date(promo.start_date)) {
-          return { isValid: false, errors: { promo_code: "This promo code is not yet active." } };
-        }
-      }
-
-      // Check if promo is admin_only and current_user is not admin
-      if (promo.admin_only && !current_user.isAdmin) {
-        return { isValid: false, errors: { promo_code: "This promo code is restricted to admins." } };
-      }
-
-      // Check if promo is sponsor_only
-      if (promo.sponsor_only) {
-        const affiliate = await Affiliate.findOne({ user: current_user._id }).exec();
-        if (!affiliate || !affiliate.sponsor) {
-          return { isValid: false, errors: { promo_code: "This promo code is restricted to sponsors." } };
-        }
-      }
-
-      // Check if promo is affiliate_only and current_user is not an affiliate
-      if (promo.affiliate_only && !current_user.is_affiliated) {
-        return { isValid: false, errors: { promo_code: "This promo code is restricted to affiliates." } };
-      }
-
-      // Check if the promo is single_use and has been used
-      if (promo.single_use && promo.used_once) {
-        return { isValid: false, errors: { promo_code: "This promo code has already been used." } };
-      }
-
-      // Check if minimum_total is met
-      if (promo.minimum_total > itemsPrice) {
-        return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
-      }
-
-      const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
-      const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
-
-      if (affiliate && affiliate.user) {
-        const affiliateEmail = affiliate.user.email ? affiliate.user.email.toLowerCase() : null;
-        const currentEmail = current_user.email ? current_user.email.toLowerCase() : null;
-        const affiliateFirstName = affiliate.user.first_name ? affiliate.user.first_name.toLowerCase() : null;
-        const affiliateLastName = affiliate.user.last_name ? affiliate.user.last_name.toLowerCase() : null;
-        const shippingFirstName = shipping.first_name ? shipping.first_name.toLowerCase() : null;
-        const shippingLastName = shipping.last_name ? shipping.last_name.toLowerCase() : null;
-        const shippingEmail = shipping.email ? shipping.email.toLowerCase() : null;
-
-        if (Object.keys(current_user).length > 0) {
-          if (currentEmail && affiliateEmail === currentEmail) {
-            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
-          }
-          if (shippingFirstName === affiliateFirstName && shippingLastName === affiliateLastName) {
-            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
-          }
-        } else {
-          if (shippingFirstName === affiliateFirstName && shippingLastName === affiliateLastName) {
-            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
-          }
-          if (shippingEmail && affiliateEmail === shippingEmail) {
-            return { isValid: false, errors: { promo_code: "You can't use your own public promo code." } };
-          }
-        }
-      }
-
-      // Check if the promo code has included products/categories and if cart contains them
-      if (promo.included_products.length > 0 || promo.included_categories.length > 0) {
-        if (!containsIncludedItems(cartItems, promo.included_products, promo.included_categories)) {
-          return { isValid: false, errors: { promo_code: "Cart does not contain included products or categories." } };
-        }
-      }
-
-      // Check if the promo code has excluded products/categories and if cart contains only these
-      if (promo.excluded_products.length > 0 || promo.excluded_categories.length > 0) {
-        if (containsOnlyExcludedItems(cartItems, promo.excluded_products, promo.excluded_categories)) {
-          return { isValid: false, errors: { promo_code: "Cart contains only excluded products or categories." } };
-        }
-      }
-
-      return { isValid, errors, promo };
+      return await validatePromoCode(promo_code, current_user, cartItems, shipping);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
-    return { isValid, errors };
+  },
+  validate_current_promo_promos_s: async (params, body) => {
+    const { cartItems, current_user, shipping } = body;
+    try {
+      const content = await Content.findOne({ active: true, deleted: false })
+        .sort({ createdAt: -1 })
+        .populate("current_promotions");
+
+      if (!content || !content.current_promotions) {
+        return [];
+      }
+
+      const validPromotions = [];
+      const nonCombinablePromo = validPromotions.find(promo => !promo.can_be_combined);
+
+      for (const promo of content.current_promotions) {
+        const { isValid, errors } = await validate_promo_code_promos_s(
+          { promo_code: promo.promo_code },
+          { current_user, cartItems, shipping }
+        );
+
+        if (isValid) {
+          if (!promo.can_be_combined && validPromotions.length > 0) {
+            continue; // Skip this promo if it can't be combined and we already have valid promos
+          }
+          if (nonCombinablePromo && promo.can_be_combined) {
+            continue; // Skip this promo if we already have a non-combinable promo
+          }
+          validPromotions.push(promo);
+        }
+      }
+
+      return validPromotions;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
 };

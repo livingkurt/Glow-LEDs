@@ -136,3 +136,16 @@ export const validatePromoCode = createAsyncThunk(
     }
   }
 );
+
+export const validateCurrentPromos = createAsyncThunk(
+  "promo/validateCurrentPromoCode",
+  async ({ current_user, cartItems, shipping }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/promos/validate_current`, { current_user, cartItems, shipping });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
