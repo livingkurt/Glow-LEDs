@@ -24,7 +24,8 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
-        .populate("cartItems.selectedOptions.filament");
+        .populate("cartItems.selectedOptions.filament")
+        .populate("cartItems.tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -37,7 +38,8 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
-        .populate("cartItems.selectedOptions.filament");
+        .populate("cartItems.selectedOptions.filament")
+        .populate("cartItems.tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

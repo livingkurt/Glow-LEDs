@@ -123,9 +123,9 @@ export const refreshSponsorCodes = createAsyncThunk(
 
 export const validatePromoCode = createAsyncThunk(
   "promo/validatePromoCode",
-  async ({ promo_code, current_user, cartItems, shipping }, { dispatch, rejectWithValue }) => {
+  async ({ promo_code, current_user, cart, shipping }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/promos/${promo_code}/validate`, { cartItems, current_user, shipping });
+      const { data } = await axios.put(`/api/promos/${promo_code}/validate`, { cart, current_user, shipping });
       if (!data?.errors) {
         dispatch(showSuccess({ message: `Promo Code Validated` }));
       }
@@ -139,9 +139,9 @@ export const validatePromoCode = createAsyncThunk(
 
 export const validateCurrentPromos = createAsyncThunk(
   "promo/validateCurrentPromoCode",
-  async ({ current_user, cartItems, shipping }, { dispatch, rejectWithValue }) => {
+  async ({ current_user, cart, shipping }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/promos/validate_current`, { current_user, cartItems, shipping });
+      const { data } = await axios.put(`/api/promos/validate_current`, { current_user, cart, shipping });
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

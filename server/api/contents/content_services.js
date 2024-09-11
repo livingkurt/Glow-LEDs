@@ -62,6 +62,7 @@ export default {
         .populate("products_grid_page.category_banners.image")
         .populate("products_grid_page.category_banners.tag")
         .populate("menus.menu_items.image")
+        .populate("current_promotions")
         .sort({ _id: -1 })
         .limit(3);
       const count = await content_db.count_contents_db(filter);
@@ -106,7 +107,8 @@ export default {
         .populate("products_grid_page.category_banners.image")
         .populate("products_grid_page.category_banners.tag")
         .populate("menus.menu_items.image")
-        .populate("about_page.sections.image");
+        .populate("about_page.sections.image")
+        .populate("current_promotions");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

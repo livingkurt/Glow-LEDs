@@ -1,3 +1,5 @@
+import { toTitleCase } from "../../../utils/helper_functions";
+
 export const promoFormFields = ({ affiliatesQuery, usersQuery, categorysQuery, productsQuery }) => {
   return {
     affiliate: {
@@ -37,13 +39,14 @@ export const promoFormFields = ({ affiliatesQuery, usersQuery, categorysQuery, p
       default: false,
     },
     promotionType: {
-      type: "select",
+      type: "autocomplete_single",
       label: "Promotion Type",
-      options: [
-        { value: "discount", label: "Discount" },
-        { value: "freeItem", label: "Free Item" },
-      ],
-      required: true,
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toTitleCase(option);
+        }
+      },
+      options: ["discount", "freeItem"],
     },
     can_be_combined: {
       type: "checkbox",

@@ -48,11 +48,7 @@ export default {
       const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
       const count = await promo_db.count_promos_db(filter);
       if (count !== undefined) {
-        return {
-          promos,
-          totalPages: Math.ceil(count / parseInt(limit)),
-          currentPage: page,
-        };
+        return promos;
       } else {
         throw new Error("Count is undefined");
       }
@@ -349,17 +345,17 @@ export default {
   },
   validate_promo_code_promos_s: async (params, body) => {
     const { promo_code } = params;
-    const { current_user, cartItems, shipping } = body;
+    const { current_user, cart, shipping } = body;
     try {
-      return await validatePromoCode(promo_code, current_user, cartItems, shipping);
+      return await validatePromoCode(promo_code, cart, current_user, shipping);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  validate_current_promo_promos_s: async (params, body) => {
-    const { cartItems, current_user, shipping } = body;
+  validate_current_promo_promos_s: async body => {
+    const { cart, current_user, shipping } = body;
     try {
       const content = await Content.findOne({ active: true, deleted: false })
         .sort({ createdAt: -1 })
@@ -372,11 +368,13 @@ export default {
       const validPromotions = [];
       const nonCombinablePromo = validPromotions.find(promo => !promo.can_be_combined);
 
+      console.log({ nonCombinablePromo });
+
+      console.log({ current_promotions: content.current_promotions });
+
       for (const promo of content.current_promotions) {
-        const { isValid, errors } = await validate_promo_code_promos_s(
-          { promo_code: promo.promo_code },
-          { current_user, cartItems, shipping }
-        );
+        const { isValid, errors } = await validatePromoCode(promo.promo_code, cart, current_user, shipping);
+        console.log({ isValid });
 
         if (isValid) {
           if (!promo.can_be_combined && validPromotions.length > 0) {
@@ -388,6 +386,7 @@ export default {
           validPromotions.push(promo);
         }
       }
+      console.log({ validPromotions });
 
       return validPromotions;
     } catch (error) {
