@@ -29,6 +29,22 @@ export const eventFormFields = ({ event }) => {
       type: "text",
       label: "Age Group",
     },
+    social_media_type: {
+      type: "text",
+      label: "Social Media Type",
+    },
+    social_media_handle: {
+      type: "text",
+      label: "Social Media Handle",
+    },
+    social_media_url: {
+      type: "text",
+      label: "URL",
+    },
+    ticket_box_color: {
+      type: "color_picker",
+      label: "Ticket Box Color",
+    },
     thumbnail_image: {
       type: "image_upload",
       label: "Thumbnail Image",

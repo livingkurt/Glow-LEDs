@@ -12,6 +12,10 @@ const event_schema = new mongoose.Schema(
     background_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ticket" }],
     scanned_tickets_count: { type: Number, default: 0 },
+    social_media_type: { type: String },
+    social_media_handle: { type: String },
+    social_media_url: { type: String },
+    ticket_box_color: { type: String },
     age_group: { type: String },
     address: {
       address_1: { type: String },

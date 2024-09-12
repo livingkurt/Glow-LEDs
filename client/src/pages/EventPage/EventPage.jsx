@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { Typography, Box, CircularProgress, Button } from "@mui/material";
+import { Typography, Box, CircularProgress, Button, Paper, Link } from "@mui/material";
 import TicketItem from "./components/TicketItem";
 import TicketModal from "./components/TicketModal";
 import EventContainer from "./components/EventContainer";
@@ -102,23 +102,32 @@ const EventPage = () => {
             <TicketPrice key={ticket._id} ticket={ticket} />
           ))}
         </Box>
-        <Box my={4}>
-          {tickets && tickets.length > 0 ? (
-            tickets.map(ticket => (
-              <TicketItem
-                key={ticket._id}
-                ticket={ticket}
-                event={event}
-                onSelectTicket={ticket => handleOpenModal(ticket)}
-                ticketColors={tickets.map(ticket => ticket.color)}
-              />
-            ))
-          ) : (
-            <Typography variant="body1" align="center" color="white">
-              No tickets available for this event.
-            </Typography>
-          )}
-        </Box>
+        <Paper sx={{ backgroundColor: "transparent", padding: "10px", borderRadius: "10px" }}>
+          <Typography variant="subtitle1" textAlign="center" gutterBottom sx={{ mt: 2, color: "white" }}>
+            Follow us at{" "}
+            <Link href={event.social_media_url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
+              {event.social_media_handle}
+            </Link>{" "}
+            on {event.social_media_type} to get the latest updates
+          </Typography>
+          <Box my={4}>
+            {tickets && tickets.length > 0 ? (
+              tickets.map(ticket => (
+                <TicketItem
+                  key={ticket._id}
+                  ticket={ticket}
+                  event={event}
+                  onSelectTicket={ticket => handleOpenModal(ticket)}
+                  ticketColors={tickets.map(ticket => ticket.color)}
+                />
+              ))
+            ) : (
+              <Typography variant="body1" align="center" color="white">
+                No tickets available for this event.
+              </Typography>
+            )}
+          </Box>
+        </Paper>
       </Box>
       <TicketModal
         open={openModal}

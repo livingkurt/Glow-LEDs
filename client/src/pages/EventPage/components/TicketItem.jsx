@@ -110,10 +110,16 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
         <Typography variant="subtitle1" color="white">
           {ticket.title}
         </Typography>
-        <Typography variant="caption" color="white" sx={{ mt: 1 }}>
-          at {event.venue}
-        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="caption" color="white" sx={{ mt: 1 }}>
+            at {event.venue}
+          </Typography>
+          <Typography variant="caption" color="white" sx={{ mt: 1 }}>
+            Ages {event.age_group} Only
+          </Typography>
+        </Box>
       </Box>
+
       <Box sx={{ width: isSmallScreen ? "100%" : "auto" }}>
         <Button
           variant="contained"
