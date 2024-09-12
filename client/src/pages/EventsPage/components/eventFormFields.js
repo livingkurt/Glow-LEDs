@@ -25,6 +25,10 @@ export const eventFormFields = ({ event }) => {
       type: "text",
       label: "Venue",
     },
+    age_group: {
+      type: "text",
+      label: "Age Group",
+    },
     thumbnail_image: {
       type: "image_upload",
       label: "Thumbnail Image",

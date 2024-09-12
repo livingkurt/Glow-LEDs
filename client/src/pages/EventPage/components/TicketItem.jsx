@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
-import { lighten } from "@mui/material/styles";
+import { Box, Typography, Button, useMediaQuery, useTheme, lighten } from "@mui/material";
 
 const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
   const theme = useTheme();
@@ -37,7 +36,7 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
       >
         <Box
           sx={{
-            width: 90,
+            width: 80,
             height: 80,
             display: "flex",
             flexDirection: "column",
@@ -69,31 +68,37 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
           >
             {new Date(event.start_date).toLocaleString("default", { month: "short" }).toUpperCase()}
           </Typography>
-          <Typography variant="h5" sx={{ fontSize: "3rem", lineHeight: 1, margin: "2px 0" }}>
+          <Typography variant="h5" sx={{ fontSize: "3rem", lineHeight: 1 }}>
             {new Date(event.start_date).getDate()}
           </Typography>
           <Typography variant="subtitle2" sx={{ fontSize: "1.25rem", lineHeight: 1 }}>
             {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][new Date(event.start_date).getDay()]}
           </Typography>
         </Box>
-        <Box
-          sx={{
-            width: 120,
-            height: 80,
-            background: `linear-gradient(180deg, ${lighten(ticket.color || "#999999", 0.3)} 30%, ${ticket.color || "#999999"} 90%)`,
-            display: "flex",
-            alignItems: "center",
-            fontSize: "5rem",
-            justifyContent: "center",
-            borderRadius: "10px",
-            marginRight: isSmallScreen ? 0 : "16px",
-            color: "white",
-            fontWeight: "1000",
-            boxShadow: `0 0 15px ${ticket.color || "#999999"}`,
-          }}
-        >
-          {ticket.ticket_type.slice(0, 2).toUpperCase()}
-        </Box>
+        {ticket.image?.link ? (
+          <Box sx={{ display: "flex", alignItems: "center", height: 80 }}>
+            <img src={ticket.image?.link} alt={ticket.title} style={{ width: 80, height: 80, borderRadius: "10px" }} />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              width: 120,
+              height: 80,
+              background: `linear-gradient(180deg, ${lighten(ticket.color || "#999999", 0.3)} 30%, ${ticket.color || "#999999"} 90%)`,
+              display: "flex",
+              alignItems: "center",
+              fontSize: "5rem",
+              justifyContent: "center",
+              borderRadius: "10px",
+              marginRight: isSmallScreen ? 0 : "16px",
+              color: "white",
+              fontWeight: "1000",
+              boxShadow: `0 0 15px ${ticket.color || "#999999"}`,
+            }}
+          >
+            {ticket.ticket_type.slice(0, 2).toUpperCase()}
+          </Box>
+        )}
       </Box>
       <Box
         flexGrow={1}

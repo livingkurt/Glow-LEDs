@@ -61,29 +61,55 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
         <Divider sx={{ mb: 2 }} />
         {selectedTicket && (
           <Box display="flex" flexDirection={isMobile ? "column" : "row"} justifyContent="space-between">
-            <Box
-              sx={{
-                width: isMobile ? "100%" : 300,
-                height: 200,
-                background: `linear-gradient(180deg, ${lighten(selectedTicket.color || "#999999", 0.3)} 30%, ${selectedTicket.color || "#999999"} 90%)`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "10px",
-                mb: isMobile ? 2 : 0,
-                mr: isMobile ? 0 : 2,
-              }}
-            >
-              <Typography variant="h6" sx={{ color: "white", fontWeight: "bold", fontSize: "15rem" }}>
-                {selectedTicket.ticket_type.slice(0, 2).toUpperCase()}
-              </Typography>
-            </Box>
-            <Box sx={{ flex: 1, mb: isMobile ? 2 : 0 }}>
+            {selectedTicket.image?.link ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                  maxWidth: 300,
+                  height: 300,
+                  margin: isMobile ? "0 auto" : "0 20px 0 0",
+                }}
+              >
+                <img
+                  src={selectedTicket.image?.link}
+                  alt={selectedTicket.title}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "10px",
+                  }}
+                />
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: 300,
+                  height: 300,
+                  background: `linear-gradient(180deg, ${lighten(selectedTicket.color || "#999999", 0.3)} 30%, ${selectedTicket.color || "#999999"} 90%)`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "10px",
+                  mb: isMobile ? 2 : 0,
+                  mr: isMobile ? 0 : 2,
+                  margin: isMobile ? "0 auto" : "initial",
+                }}
+              >
+                <Typography variant="h6" sx={{ color: "white", fontWeight: "bold", fontSize: "15rem" }}>
+                  {selectedTicket.ticket_type.slice(0, 2).toUpperCase()}
+                </Typography>
+              </Box>
+            )}
+            <Box sx={{ flex: 1, mb: isMobile ? 2 : 0, mt: isMobile ? 2 : 0 }}>
               <Typography variant="subtitle1" color="text.secondary">
                 {selectedTicket.title}
               </Typography>
               <Typography variant="body1" mb={1}>
-                Ages 18+ Only
+                Ages {event.age_group} Only
               </Typography>
               <Box display="flex" alignItems="center" mb={1}>
                 <LocationOn sx={{ marginRight: 1, color: "black" }} />
