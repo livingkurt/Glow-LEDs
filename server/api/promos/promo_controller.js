@@ -181,4 +181,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  validate_current_promo_promos_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const promo = await promo_services.validate_current_promo_promos_s(body);
+      if (promo) {
+        return res.status(200).send(promo);
+      }
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

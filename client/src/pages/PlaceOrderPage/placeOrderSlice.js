@@ -266,8 +266,11 @@ const placeOrder = createSlice({
       }
     },
     removePromo: (state, { payload }) => {
-      const { items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping } = payload;
+      const { promoCode, items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping } = payload;
 
+      state.activePromotions = state.activePromotions.filter(promo => promo.promo_code !== promoCode);
+
+      // Recalculate totals
       state.itemsPrice = items_price;
       state.taxPrice = tax_rate * items_price;
       state.shippingPrice = shippingPrice;
@@ -276,10 +279,20 @@ const placeOrder = createSlice({
           ? items_price + shippingPrice + state.taxPrice
           : items_price + shippingPrice + state.taxPrice + parseInt(tip);
       state.free_shipping_message = "------";
-      state.activePromoCodeIndicator = "";
-      if (shipping) {
-        state.shippingPrice = previousShippingPrice;
-      }
+
+      // Reapply remaining promotions
+      state.activePromotions.forEach(promo => {
+        if (promo.percentage_off) {
+          applyPercentageOff(state, state.itemsPrice, promo, tax_rate);
+        } else if (promo.amount_off) {
+          applyAmountOff(state, state.itemsPrice, promo, tax_rate);
+        }
+        if (promo.free_shipping) {
+          applyFreeShipping(state, promo);
+        }
+      });
+
+      state.activePromoCodeIndicator = state.activePromotions.map(promo => promo.promo_code.toUpperCase()).join(", ");
       state.show_promo_code_input_box = true;
     },
     activatePromo: (state, { payload }) => {
@@ -292,20 +305,53 @@ const placeOrder = createSlice({
       });
 
       if (validPromo) {
-        if (activePromoCodeIndicator) {
-          state.promo_code_validations = "Can only use one promo code at a time";
+        if (!validPromo.can_be_combined && state.activePromotions.length > 0) {
+          state.promo_code_validations = "This promo code cannot be combined with other active promotions.";
         } else {
+          let promoApplied = false;
+
+          if (validPromo.promotionType === "freeItem") {
+            const eligibleItems = cartItems.filter(
+              item =>
+                validPromo.requiredCategories.includes(item.category) ||
+                validPromo.requiredTags.some(tag => item.tags.includes(tag))
+            );
+
+            const freeItems = cartItems.filter(
+              item =>
+                item.category === validPromo.freeItemCategory ||
+                validPromo.freeItemTags.some(tag => item.tags.includes(tag))
+            );
+
+            if (eligibleItems.length >= validPromo.requiredQuantity && freeItems.length > 0) {
+              const cheapestFreeItem = freeItems.reduce((min, item) => (item.price < min.price ? item : min));
+              state.itemsPrice -= cheapestFreeItem.price;
+              promoApplied = true;
+            }
+          }
+
           if (validPromo.percentage_off) {
             applyPercentageOff(state, totalEligibleForDiscount, validPromo, tax_rate);
+            promoApplied = true;
           } else if (validPromo.amount_off) {
             applyAmountOff(state, totalEligibleForDiscount, validPromo, tax_rate);
+            promoApplied = true;
           }
 
           if (validPromo.free_shipping) {
             applyFreeShipping(state, validPromo);
+            promoApplied = true;
           }
 
-          state.show_promo_code_input_box = false;
+          if (promoApplied) {
+            state.activePromotions.push(validPromo);
+            state.activePromoCodeIndicator = state.activePromotions
+              .map(promo => promo.promo_code.toUpperCase())
+              .join(", ");
+            state.show_promo_code_input_box = false;
+          } else {
+            state.promo_code_validations = "This promotion could not be applied to your order.";
+          }
         }
       } else {
         state.promo_code_validations = "Promo Code Not Found";

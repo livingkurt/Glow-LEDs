@@ -119,6 +119,7 @@ const orderSchema = new mongoose.Schema(
     errorAt: { type: Date },
     updatedAt: { type: Date },
     // Tracking the primary status changes
+    appliedPromotions: [{ type: String }],
     paidAt: { type: Date },
     craftingAt: { type: Date },
     craftedAt: { type: Date },

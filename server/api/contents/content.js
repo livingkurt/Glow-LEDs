@@ -155,6 +155,7 @@ const contentSchema = new mongoose.Schema(
       },
     ],
     free_shipping_minimum_amount: { type: Number },
+    current_promotions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Promo" }],
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

@@ -4,7 +4,7 @@ import { saveToEditProductHistory } from "../productsPageSlice";
 
 export const productFormFields = ({
   products,
-  users,
+  usersQuery,
   categorysQuery,
   product,
   chips,
@@ -581,7 +581,8 @@ export const productFormFields = ({
       type: "autocomplete_multiple",
       label: "Contributors",
       labelProp: "first_name",
-      options: users.filter(user => user.first_name && user.last_name),
+      options: !usersQuery?.isLoading ? usersQuery?.data?.filter(user => user.first_name && user.last_name) : [],
+      loading: usersQuery?.isLoading,
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
 

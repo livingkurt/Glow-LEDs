@@ -30,5 +30,6 @@ router
   .delete(user_controller.remove_users_c);
 
 router.route("/").get(user_controller.findAll_users_c).post(user_controller.create_users_c);
+router.route("/table").get(user_controller.table_users_c);
 
 export default router;

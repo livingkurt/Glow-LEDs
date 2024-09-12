@@ -11,6 +11,10 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products")
+        .populate("requiredTags")
+        .populate("requiredCategories")
+        .populate("freeItemCategory")
+        .populate("freeItemTags")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -43,7 +47,11 @@ export default {
         .populate("excluded_categories")
         .populate("included_categories")
         .populate("excluded_products")
-        .populate("included_products");
+        .populate("included_products")
+        .populate("requiredTags")
+        .populate("requiredCategories")
+        .populate("freeItemCategory")
+        .populate("freeItemTags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -58,7 +66,11 @@ export default {
         .populate("excluded_categories")
         .populate("included_categories")
         .populate("excluded_products")
-        .populate("included_products");
+        .populate("included_products")
+        .populate("requiredTags")
+        .populate("requiredCategories")
+        .populate("freeItemCategory")
+        .populate("freeItemTags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -73,7 +85,11 @@ export default {
         .populate("excluded_categories")
         .populate("included_categories")
         .populate("excluded_products")
-        .populate("included_products");
+        .populate("included_products")
+        .populate("requiredTags")
+        .populate("requiredCategories")
+        .populate("freeItemCategory")
+        .populate("freeItemTags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

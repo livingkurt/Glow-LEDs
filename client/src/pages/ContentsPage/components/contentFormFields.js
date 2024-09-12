@@ -1,6 +1,6 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const contentFormFields = ({ content, products, categorys }) => {
+export const contentFormFields = ({ content, products, categorys, promos }) => {
   return {
     name: { type: "text", label: "Name" },
     home_page: {
@@ -339,6 +339,12 @@ export const contentFormFields = ({ content, products, categorys }) => {
       },
     },
     free_shipping_minimum_amount: { type: "number", label: "Minimum Subtotal for Free Shipping" },
+    current_promotions: {
+      type: "autocomplete_multiple",
+      label: "Current Promotions",
+      options: promos,
+      labelProp: "promo_code",
+    },
     active: { type: "checkbox", label: "Active" },
   };
 };

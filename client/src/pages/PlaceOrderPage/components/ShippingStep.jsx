@@ -182,37 +182,58 @@ const ShippingStep = () => {
   const next_step = async step => {
     dispatch(nextStep(step));
     const promo_code_storage = sessionStorage.getItem("promo_code");
-    if (promo_code_storage && promo_code_storage.length > 0) {
-      dispatch(set_promo_code(promo_code_storage.toUpperCase()));
 
-      const request = await dispatch(
-        API.validatePromoCode({ promo_code: promo_code_storage.toUpperCase(), current_user, cartItems, shipping })
-      );
+    // Validate current promotions
+    const validPromotions = await dispatch(API.validateCurrentPromos({ cart: my_cart, current_user, shipping }));
+    console.log({ validPromotions });
 
-      if (request.payload.isValid) {
+    if (validPromotions.payload.length > 0) {
+      validPromotions.payload.forEach(promo => {
         dispatch(
           activatePromo({
             cartItems,
             tax_rate,
             activePromoCodeIndicator,
             current_user,
-            validPromo: request.payload.promo,
+            validPromo: promo,
           })
         );
+      });
+    }
+
+    // Handle user-entered promo code
+    if (promo_code_storage && promo_code_storage.length > 0) {
+      dispatch(set_promo_code(promo_code_storage.toUpperCase()));
+
+      const request = await dispatch(
+        API.validatePromoCode({ promo_code: promo_code_storage.toUpperCase(), current_user, cart: my_cart, shipping })
+      );
+
+      if (request.payload.isValid) {
+        const canApply =
+          validPromotions.every(promo => promo.can_be_combined) &&
+          (request.payload.promo.can_be_combined || validPromotions.length === 0);
+
+        if (canApply) {
+          dispatch(
+            activatePromo({
+              cartItems,
+              tax_rate,
+              activePromoCodeIndicator,
+              current_user,
+              validPromo: request.payload.promo,
+            })
+          );
+        } else {
+          dispatch(set_promo_code_validations("This promo code cannot be combined with other active promotions."));
+        }
       } else {
         dispatch(set_promo_code_validations(request.payload.errors.promo_code));
         dispatch(set_promo_code(""));
       }
     }
 
-    if (step === "shipping" && shipping.email.length === 0) {
-      dispatch(setEmailValidations("Email Field Empty"));
-    }
-
-    if (isMobile) {
-      const scrollTo = step === "shipping" ? 340 : 560;
-      window.scrollTo({ top: scrollTo, behavior: "smooth" });
-    }
+    // ... rest of the function
   };
 
   return (
