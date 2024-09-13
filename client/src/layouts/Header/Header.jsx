@@ -267,7 +267,7 @@ const Header = () => {
                       >
                         {determineName(item, current_user)}
                       </GLIconButton>
-                      {determineDropdown(item, current_user) && (
+                      {current_user && current_user.first_name && determineDropdown(item, current_user) && (
                         <ul className="dropdown-content hover_fade_in w-175px">
                           {item.columns.map((column, colIndex) => (
                             <div key={colIndex}>
