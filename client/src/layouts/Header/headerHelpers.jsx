@@ -841,7 +841,16 @@ export const rightNav = (dispatch, sidebarOnly) => {
       permissions: x => true,
     },
     {
-      name: current_user => (sidebarOnly ? "ADMIN" : <AdminPanelSettings color="white" />),
+      name: current_user =>
+        sidebarOnly ? (
+          current_user && current_user.hasOwnProperty("first_name") ? (
+            "ADMIN"
+          ) : (
+            ""
+          )
+        ) : (
+          <AdminPanelSettings color="white" />
+        ),
       id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,
