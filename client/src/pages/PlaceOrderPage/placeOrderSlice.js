@@ -396,8 +396,8 @@ const placeOrder = createSlice({
     [API.shippingRates.fulfilled]: (state, { payload }) => {
       state.loadingShipping = false;
       state.shipping_rates = payload.shipment;
-      state.shipment_id = payload.shipment.id;
-      state.parcel = payload.parcel._id;
+      state.shipment_id = payload.shipment?.id;
+      state.parcel = payload.parcel?._id;
     },
     [API.shippingRates.rejected]: (state, { payload, error }) => {
       state.loadingShipping = false;

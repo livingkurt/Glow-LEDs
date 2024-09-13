@@ -18,9 +18,11 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
   shipping_rates_shipping_s: async body => {
+    console.log({ body });
     try {
       return await createShippingRates({ order: body.order, returnLabel: false });
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

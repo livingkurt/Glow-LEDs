@@ -366,8 +366,15 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
               <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
               {cartItems.some(item => item.processing_time) && (
                 <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
-                  Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
-                  {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
+                  Estimated Time to Ship{" "}
+                  {Math.max(
+                    ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[0])
+                  )}{" "}
+                  -{" "}
+                  {Math.max(
+                    ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
+                  )}{" "}
+                  business days
                 </h4>
               )}
               {!show_payment && (

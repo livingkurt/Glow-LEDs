@@ -191,7 +191,8 @@ const getDescription = category => {
 export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
-    const parcel = determine_parcel(order.orderItems, parcels);
+    const shippableItems = order.orderItems.filter(item => item.itemType === "product");
+    const parcel = determine_parcel(shippableItems, parcels);
 
     const customerAddress = {
       verify: ["delivery"],
@@ -241,7 +242,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         length: parcel.length,
         width: parcel.width,
         height: parcel.height,
-        weight: calculateTotalOunces(order.orderItems),
+        weight: calculateTotalOunces(shippableItems),
       },
       customs_info: {
         eel_pfc: "NOEEI 30.37(a)",
@@ -250,7 +251,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         contents_type: "merchandise",
         restriction_type: "none",
         non_delivery_option: "return",
-        customs_items: order.orderItems.map(item => {
+        customs_items: shippableItems.map(item => {
           return {
             description: getDescription(item.category),
             quantity: item.quantity,
@@ -268,6 +269,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     });
     return { shipment, parcel };
   } catch (error) {
+    console.log({ error });
     if (error instanceof Error) {
       throw new Error(error.message);
     }
