@@ -458,7 +458,7 @@ const determine_preorder = product => {
 export const email_sale_price_switch = (item, color, wholesaler) => {
   if (wholesaler && item.wholesale_price) {
     return `<label>WSP: $${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>`;
-  } else if (item.sale_price !== 0) {
+  } else if (item.sale_price && item.sale_price !== 0) {
     return `<label>
 				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
