@@ -73,29 +73,43 @@ export default {
     const { cart_item, cartItems, current_user } = body;
 
     try {
-      // Get the user's active cart if the user is logged in
       if (current_user && Object.keys(current_user).length > 0) {
         let data = await cart_db.findByUser_carts_db(current_user._id);
         if (data) {
-          data.cartItems = updateCartItems(data.cartItems, cart_item);
+          const result = updateCartItems(data.cartItems, cart_item);
+          data.cartItems = result.items;
           await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
           data = await cart_db.findById_carts_db(data._id);
-          return data;
+          return {
+            data: data.toObject ? data.toObject() : data,
+            message: result.message,
+          };
         } else {
-          data = await cart_db.create_carts_db({ user: current_user._id, cartItems: [cart_item] });
+          const result = updateCartItems([], cart_item);
+          data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
           data = await cart_db.findById_carts_db(data._id);
-          return data;
+          return {
+            data: data.toObject ? data.toObject() : data,
+            message: result.message,
+          };
         }
       } else {
-        // If the user is not logged in, update the anonymous cart
         if (cartItems && cartItems.length > 0) {
-          const new_cart_items = updateCartItems(cartItems, cart_item);
-          return { cartItems: new_cart_items };
+          const result = updateCartItems(cartItems, cart_item);
+          return {
+            data: { ...data, cartItems: result.items },
+            message: result.message,
+          };
         } else {
-          return { cartItems: [cart_item] };
+          const result = updateCartItems([], cart_item);
+          return {
+            data: { ...data, cartItems: result.items },
+            message: result.message,
+          };
         }
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

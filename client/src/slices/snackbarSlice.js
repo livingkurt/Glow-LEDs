@@ -26,6 +26,13 @@ const snackbarPage = createSlice({
       state.loading = false;
       state.severity = "success";
     },
+    showInfo: (state, { payload }) => {
+      state.open = true;
+      state.message = payload.message;
+      state.duration = payload.duration;
+      state.loading = false;
+      state.severity = "info";
+    },
     showError: (state, { payload }) => {
       state.open = true;
       state.message = payload.message;
@@ -66,6 +73,7 @@ export const {
   setConfirmAction,
   hideSnackbar,
   showSuccess,
+  showInfo,
   showError,
   startLoading,
   stopLoading,

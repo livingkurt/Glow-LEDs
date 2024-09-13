@@ -3,18 +3,22 @@ import { Product, product_db } from "../products";
 import { Category } from "../categorys";
 import { Order } from "../orders";
 import { Chip } from "../chips";
-export const diminish_single_glove_stock = async (product, item) => {
-  const new_product_count = product.count_in_stock - item.quantity;
-  product.count_in_stock = new_product_count;
-  if (new_product_count <= product.quantity) {
-    product.quantity = new_product_count;
-  }
-  await product_db.update_products_db(product._id, product);
+export const updateProductStock = async (product, quantityToReduce) => {
+  const newStockCount = Math.max(0, product.count_in_stock - quantityToReduce);
+  const newMaxDisplayQuantity = Math.min(product.max_display_quantity, newStockCount);
+  const newMaxQuantity = Math.min(product.max_quantity || Infinity, newStockCount);
 
   await product_db.update_products_db(product._id, {
-    count_in_stock: new_product_count,
-    quantity: Math.min(product.quantity, new_product_count),
+    count_in_stock: newStockCount,
+    max_display_quantity: newMaxDisplayQuantity,
+    max_quantity: newMaxQuantity,
   });
+
+  return { newStockCount, newMaxDisplayQuantity, newMaxQuantity };
+};
+
+export const diminish_single_glove_stock = async (product, item) => {
+  await updateProductStock(product, item.quantity);
 };
 
 export const diminish_batteries_stock = async (product, item, isRefreshPack = false) => {
@@ -25,11 +29,7 @@ export const diminish_batteries_stock = async (product, item, isRefreshPack = fa
     batteries_to_remove = item.quantity * parseInt(item.size);
   }
 
-  const new_product_count = Math.max(0, product.count_in_stock - batteries_to_remove);
-  product.count_in_stock = new_product_count;
-  product.quantity = Math.min(product.quantity, new_product_count);
-
-  await product_db.update_products_db(product._id, product);
+  await updateProductStock(product, batteries_to_remove);
 
   if (!isRefreshPack) {
     const sizeOption = product.options ? product.options.find(option => option.name.toLowerCase() === "set of") : null;
@@ -38,10 +38,7 @@ export const diminish_batteries_stock = async (product, item, isRefreshPack = fa
       if (selectedValue) {
         const optionProduct = await Product.findById(selectedValue.product);
         if (optionProduct) {
-          const new_option_product_count = Math.max(0, optionProduct.count_in_stock - item.quantity);
-          optionProduct.count_in_stock = new_option_product_count;
-          optionProduct.quantity = Math.min(optionProduct.quantity, new_option_product_count);
-          await product_db.update_products_db(optionProduct._id, optionProduct);
+          await updateProductStock(optionProduct, item.quantity);
         }
       }
     }
@@ -49,12 +46,7 @@ export const diminish_batteries_stock = async (product, item, isRefreshPack = fa
 };
 
 export const diminish_refresh_pack_stock = async (product, item) => {
-  const new_product_count = product.count_in_stock - item.quantity;
-  product.count_in_stock = new_product_count;
-  if (new_product_count <= product.quantity) {
-    product.quantity = new_product_count;
-  }
-  await product_db.update_products_db(product._id, product);
+  await updateProductStock(product, item.quantity);
 
   const gloveOption = product.options.find(option => option.name.toLowerCase().includes("glove"));
   if (gloveOption) {
@@ -67,19 +59,13 @@ export const diminish_refresh_pack_stock = async (product, item) => {
       if (selectedGlove) {
         const glove_option_product = await Product.findById(selectedGlove.product);
         if (glove_option_product) {
-          const glove_item = {
-            product: glove_option_product._id,
-            selectedOptions: [{ _id: glove_option_product._id }],
-            quantity: item.quantity * 6,
-          };
-          await diminish_single_glove_stock(glove_option_product, glove_item);
+          await updateProductStock(glove_option_product, item.quantity * 6);
         }
       }
     }
   }
 
   const batteryOption = product.options.find(option => option.name === "Batteries");
-
   if (batteryOption) {
     const selectedBattery = item.selectedOptions.find(opt =>
       batteryOption.values.some(value => value.name === opt.name)
@@ -88,16 +74,16 @@ export const diminish_refresh_pack_stock = async (product, item) => {
     if (selectedBattery) {
       const battery_product = await Product.findById(selectedBattery.product);
       if (battery_product) {
-        const battery_item = {
-          product: battery_product._id,
-          quantity: item.quantity,
-          size: battery_product.name.includes("CR1225") ? 125 : 120,
-        };
-        await diminish_batteries_stock(battery_product, battery_item, true);
+        await diminish_batteries_stock(
+          battery_product,
+          { ...item, size: battery_product.name.includes("CR1225") ? 125 : 120 },
+          true
+        );
       }
     }
   }
 };
+
 export const diminish_sampler_stock = async (product, item) => {
   const sizeOption = product.options.find(
     option => option.name.toLowerCase().includes("size") || option.name.toLowerCase().includes("pack")
@@ -127,14 +113,7 @@ export const diminish_sampler_stock = async (product, item) => {
       continue;
     }
 
-    const newStockCount = Math.max(0, gloveProduct.count_in_stock - item.quantity);
-    gloveProduct.count_in_stock = newStockCount;
-    gloveProduct.quantity = Math.min(gloveProduct.quantity, newStockCount);
-
-    await product_db.update_products_db(gloveProduct._id, {
-      count_in_stock: gloveProduct.count_in_stock,
-      quantity: gloveProduct.quantity,
-    });
+    await updateProductStock(gloveProduct, item.quantity);
   }
 };
 export const normalizeProductFilters = input => {
@@ -214,7 +193,7 @@ export const transformProducts = products => {
       image_link: determineImage(product, 0),
       additional_image_link: determineImage(product, 1),
       brand: "Glow LEDs",
-      inventory: product.quantity,
+      inventory: product.max_display_quantity,
       fb_product_category: "toys & games > electronic toys",
       google_product_category: "Toys & Games > Toys > Visual Toys",
       sale_price: `${product.sale_price && product.sale_price.toFixed(2)} USD`,

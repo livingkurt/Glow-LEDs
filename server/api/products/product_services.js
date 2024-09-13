@@ -500,8 +500,15 @@ export default {
         } else if (item.itemType === "ticket") {
           const ticket = await Ticket.findOne({ _id: item.ticket });
           if (ticket?.finite_stock) {
-            ticket.count_in_stock -= item.quantity;
-            await ticket.save();
+            const newStockCount = Math.max(0, ticket.count_in_stock - item.quantity);
+            const newMaxDisplayQuantity = Math.min(ticket.max_display_quantity, newStockCount);
+            const newMaxQuantity = Math.min(ticket.max_quantity || Infinity, newStockCount);
+
+            await ticket.updateOne({
+              count_in_stock: newStockCount,
+              max_display_quantity: newMaxDisplayQuantity,
+              max_quantity: newMaxQuantity,
+            });
           }
         }
       }

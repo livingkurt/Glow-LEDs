@@ -26,7 +26,7 @@ export const ticketFormFields = ({ eventsQuery, ticket }) => {
     },
     max_display_quantity: {
       type: "number",
-      label: "Max Quantity",
+      label: "Max Display Quantity",
     },
     max_quantity: {
       type: "number",

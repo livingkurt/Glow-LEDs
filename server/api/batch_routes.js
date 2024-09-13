@@ -5756,7 +5756,7 @@ router.route("/update_product_tags").put(async (req, res) => {
 });
 router.route("/migrate_max_quantity").put(async (req, res) => {
   try {
-    const products = await Product.find({ deleted: false, hidden: false });
+    const products = await Product.find({ deleted: false });
 
     let updatedCount = 0;
 
