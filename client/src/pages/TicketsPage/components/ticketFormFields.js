@@ -24,6 +24,10 @@ export const ticketFormFields = ({ eventsQuery, ticket }) => {
       label: "Finite Stock",
       default: false,
     },
+    max_quantity: {
+      type: "number",
+      label: "Max Quantity",
+    },
     image: {
       type: "image_upload",
       label: "Image",

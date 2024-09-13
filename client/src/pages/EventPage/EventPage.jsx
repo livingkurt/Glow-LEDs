@@ -51,6 +51,7 @@ const EventPage = () => {
           itemType: "ticket",
           ticket: selectedTicket._id,
           quantity: quantity,
+          max_quantity: selectedTicket.max_quantity,
           price: selectedTicket.price,
           name: selectedTicket.title,
           color: selectedTicket.color,

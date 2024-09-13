@@ -142,9 +142,9 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
                   label="Quantity"
                   onChange={e => setQuantity(e.target.value)}
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-                    <MenuItem key={num} value={num}>
-                      {num}
+                  {[...Array(selectedTicket.max_quantity).keys()].map(num => (
+                    <MenuItem key={num} value={num + 1}>
+                      {num + 1}
                     </MenuItem>
                   ))}
                 </Select>
