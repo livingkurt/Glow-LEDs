@@ -49,6 +49,7 @@ const productSchema = new mongoose.Schema(
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
     short_description: { type: String },
+    max_display_quantity: { type: Number, default: 30, required: true },
     max_quantity: { type: Number, default: 30, required: true },
     count_in_stock: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },

@@ -10,6 +10,7 @@ export const sharedItemSchema = {
   display_image: { type: String },
   display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   quantity: { type: Number },
+  max_display_quantity: { type: Number },
   max_quantity: { type: Number },
   count_in_stock: { type: Number },
   currentOptions: [optionSchema],

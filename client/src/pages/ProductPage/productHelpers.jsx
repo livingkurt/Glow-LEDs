@@ -82,6 +82,9 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
   if (product?.fact) {
     state.customizedProduct.fact = product.fact;
   }
+  if (product?.max_display_quantity) {
+    state.customizedProduct.max_display_quantity = product.max_display_quantity;
+  }
   if (product?.max_quantity) {
     state.customizedProduct.max_quantity = product.max_quantity;
   }

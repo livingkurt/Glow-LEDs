@@ -20,6 +20,11 @@ export const cartFormFields = ({ products, users, cart }) => {
             labelProp: "name",
             required: true,
           },
+          max_display_quantity: {
+            type: "number",
+            label: "Max Quantity",
+            labelProp: "max_display_quantity",
+          },
           max_quantity: {
             type: "number",
             label: "Max Quantity",

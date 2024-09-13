@@ -2797,7 +2797,7 @@ router.route("/migrate_quantity").put(async (req, res) => {
                 $mergeObjects: [
                   "$$item",
                   {
-                    max_quantity: "$$item.quantity",
+                    max_display_quantity: "$$item.quantity",
                     quantity: "$$item.qty",
                   },
                 ],
@@ -2823,7 +2823,7 @@ router.route("/migrate_quantity").put(async (req, res) => {
                 $mergeObjects: [
                   "$$item",
                   {
-                    max_quantity: "$$item.quantity",
+                    max_display_quantity: "$$item.quantity",
                     quantity: "$$item.qty",
                   },
                 ],
@@ -2841,7 +2841,7 @@ router.route("/migrate_quantity").put(async (req, res) => {
     //   {},
     //   {
     //     $rename: {
-    //       quantity: "max_quantity",
+    //       quantity: "max_display_quantity",
     //     },
     //   }
     // );
@@ -5743,6 +5743,29 @@ router.route("/update_product_tags").put(async (req, res) => {
       // Update the product with new tags
       await Product.findByIdAndUpdate(product._id, { tags: updatedTags });
       updatedCount++;
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} products.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_max_quantity").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false, hidden: false });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      if (product.max_quantity) {
+        product.max_display_quantity = product.max_quantity;
+        await product.save();
+        updatedCount++;
+      }
     }
 
     res.status(200).json({

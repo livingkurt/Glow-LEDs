@@ -163,7 +163,9 @@ const ProductPage = () => {
                     onChange={e => dispatch(setQuantity(e.target.value))}
                     placeholder="Select Quantity"
                     size="small"
-                    options={[...Array(customizedProduct.max_quantity).keys()].map(value => ({ name: value + 1 }))}
+                    options={[...Array(customizedProduct.max_display_quantity).keys()].map(value => ({
+                      name: value + 1,
+                    }))}
                     getOptionLabel={option => option.name}
                     valueKey="name"
                     fullWidth
