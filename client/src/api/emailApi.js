@@ -147,6 +147,18 @@ export const sendOrderEmail = createAsyncThunk(
     }
   }
 );
+export const sendTicketEmail = createAsyncThunk(
+  "emails/sendOrderEmail",
+  async ({ order, subject, email }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/emails/ticket", { order, subject, email });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 export const sendRefundEmail = createAsyncThunk(
   "emails/sendRefundEmail",

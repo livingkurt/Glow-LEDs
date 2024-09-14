@@ -66,24 +66,26 @@ export default {
   },
 
   upload_images_s: async (body, files) => {
-    const { albumName } = body;
+    const { albumName, compress } = body;
     const uploadedImageLinks = [];
     console.log(`Starting upload process for ${files.length} images to album: ${albumName}`);
     try {
       console.log("Creating Imgur album...");
       const album = await createImgurAlbum(albumName);
       console.log(`Imgur album created successfully. Album ID: ${album.id}`);
-
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
         console.log(`Processing image ${i + 1} of ${files.length}`);
 
-        console.log("Compressing image...");
-        const compressedImageBuffer = await compressImage(image.buffer);
-        console.log("Image compressed successfully");
+        let processedImageBuffer = image.buffer;
+        if (compress === "true") {
+          console.log("Compressing image...");
+          processedImageBuffer = await compressImage(image.buffer);
+          console.log("Image compressed successfully");
+        }
 
         console.log("Uploading image to Imgur...");
-        const imageLink = await uploadImageToImgur(compressedImageBuffer, album.deletehash);
+        const imageLink = await uploadImageToImgur(processedImageBuffer, album.deletehash);
         console.log(`Image uploaded successfully. Link: ${imageLink}`);
 
         uploadedImageLinks.push(imageLink);

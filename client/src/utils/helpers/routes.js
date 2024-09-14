@@ -36,7 +36,7 @@ const routes = [
   { path: "/pages/manual/:pathname?", element: "ManualPage", exact: true },
   { path: "/pages/affiliate_terms", element: "AffiliateTermsPage", exact: true },
   { path: "/pages/color_palettes", element: "ColorPalettePage", exact: true },
-  { path: "/pages/events", element: "EventsPage", exact: true },
+  { path: "/pages/events/:pathname?", element: "EventPage", exact: true },
   { path: "/pages/support_center/:reason?", element: "SupportCenterPage", exact: true },
   { path: "/pages/terms", element: "TermsPage", exact: true },
   { path: "/pages/menu/:pathname", element: "MenuPage", exact: true },
@@ -71,6 +71,8 @@ const adminRoutes = [
   { path: "/secure/glow/teams/category/:category", element: "TeamsPage" },
   { path: "/secure/glow/chips", element: "ChipsPage" },
   { path: "/secure/glow/tutorials", element: "TutorialsPage" },
+  { path: "/secure/glow/tickets", element: "TicketsPage" },
+  { path: "/secure/glow/events", element: "EventsPage" },
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
 ];

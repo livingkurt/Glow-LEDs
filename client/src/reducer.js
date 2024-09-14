@@ -22,6 +22,8 @@ import {
   tutorialSlice,
   shippingSlice,
   snackbarSlice,
+  eventSlice,
+  ticketSlice,
 } from "./slices";
 
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
@@ -66,6 +68,14 @@ const reducers = {
     emailTable: glTableReducer("emailTable", {
       sorting: [0, "asc"],
     }),
+  }),
+  events: combineReducers({
+    eventPage: eventSlice,
+    eventTable: glTableReducer("eventTable", {}),
+  }),
+  tickets: combineReducers({
+    ticketPage: ticketSlice,
+    ticketTable: glTableReducer("ticketTable", {}),
   }),
   expenses: combineReducers({
     expensePage: expenseSlice,

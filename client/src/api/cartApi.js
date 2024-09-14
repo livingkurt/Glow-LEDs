@@ -5,7 +5,7 @@ import axios from "axios";
 import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
-import { showError, showSuccess } from "../slices/snackbarSlice";
+import { showError, showInfo, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
 export const getCarts = async ({ search, sorting, filters, page, pageSize }) => {
@@ -48,24 +48,31 @@ export const addToCart = createAsyncThunk(
       } = getState();
 
       // Call handle_cart route whether the cart exists or not
-      let data;
-      if (cart._id) {
-        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
+      let response;
+      if (cart?._id) {
+        response = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
           cart_item: cartItem,
-          cartItems: my_cart.cartItems,
+          cartItems: my_cart?.cartItems || [],
           current_user,
         });
       } else {
-        data = await axios.post(`/api/carts/add_to_cart`, {
+        response = await axios.post(`/api/carts/add_to_cart`, {
           cart_item: cartItem,
-          cartItems: my_cart.cartItems,
+          cartItems: my_cart?.cartItems || [],
           current_user,
         });
       }
-      dispatch(showSuccess({ message: `Cart Item Added`, duration: 1000 }));
+
+      const { data, message } = response.data;
+
+      if (message) {
+        dispatch(showInfo({ message, duration: 3000 }));
+      } else {
+        dispatch(showSuccess({ message: `Cart Item Added`, duration: 1000 }));
+      }
 
       // Add current_user to the returned payload
-      return { data: data.data, type, current_user };
+      return { data, type, current_user, message };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);

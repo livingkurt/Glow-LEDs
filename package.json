@@ -33,6 +33,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pdf2pic": "^2.2.1",
+    "qrcode": "^1.5.4",
     "request": "^2.88.2",
     "sales-tax": "^2.13.1",
     "sass": "^1.77.3",

@@ -1,5 +1,6 @@
 import Product from "./product";
 import mongoose from "mongoose";
+import { determineIDPathname } from "../api_helpers";
 
 export default {
   findAll_products_db: async (filter, sort, limit, page) => {
@@ -207,14 +208,9 @@ export default {
   },
 
   findById_products_db: async id => {
-    let query = {};
+    const query = determineIDPathname(id);
 
     try {
-      if (id && mongoose.isValidObjectId(id)) {
-        query = { _id: id };
-      } else {
-        query = { pathname: id };
-      }
       return await Product.findOne(query)
         .populate("images")
         .populate({

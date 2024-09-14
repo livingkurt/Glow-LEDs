@@ -17,6 +17,7 @@ import {
 } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
+import { Ticket } from "../tickets";
 
 const fs = require("fs");
 const Papa = require("papaparse");
@@ -254,35 +255,55 @@ export default {
     const outOfStockItems = []; // Store details of out-of-stock items
     try {
       for (const item of cartItems) {
-        const product = await Product.findOne({ _id: item.product, deleted: false }).populate("option_products");
-        if (!product) {
-          // If the main product doesn't exist
-          outOfStockItems.push({ id: item.product, name: "Unknown Product" });
-          continue;
-        }
-        let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
-        let optionProductOutOfStock = false;
-        let optionProductId = null; // Placeholder for the option product ID
-
-        // Check if the product is an option product and has other option products related
-        if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
-          // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
-          const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
-          if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.quantity) {
-            isOutOfStock = true;
-            optionProductOutOfStock = true;
-            optionProductId = optionProduct._id; // Capture the option product's unique ID
+        if (item.itemType === "product") {
+          const product = await Product.findOne({ _id: item.product, deleted: false }).populate("option_products");
+          if (!product) {
+            // If the main product doesn't exist
+            outOfStockItems.push({ id: item.product, name: "Unknown Product", itemType: "product" });
+            continue;
           }
-        }
 
-        if (isOutOfStock) {
-          // Include product name along with the ID, and now also include the option product ID if applicable
-          outOfStockItems.push({
-            id: item.product,
-            optionId: optionProductId, // Include this in the response
-            name: product.name,
-            option: optionProductOutOfStock ? `Size: ${item.size}` : "",
-          });
+          let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
+          let optionProductOutOfStock = false;
+          let optionProductId = null; // Placeholder for the option product ID
+
+          // Check if the product is an option product and has other option products related
+          if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
+            // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
+            const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
+            if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.quantity) {
+              isOutOfStock = true;
+              optionProductOutOfStock = true;
+              optionProductId = optionProduct._id; // Capture the option product's unique ID
+            }
+          }
+
+          if (isOutOfStock) {
+            // Include product name along with the ID, and now also include the option product ID if applicable
+            outOfStockItems.push({
+              id: item.product,
+              optionId: optionProductId, // Include this in the response
+              name: product.name,
+              option: optionProductOutOfStock ? `Size: ${item.size}` : "",
+              itemType: "product",
+            });
+          }
+        } else if (item.itemType === "ticket") {
+          const ticket = await Ticket.findOne({ _id: item.ticket, deleted: false });
+          if (!ticket) {
+            outOfStockItems.push({ id: item.ticket, name: "Unknown Ticket", itemType: "ticket" });
+            continue;
+          }
+          // Add ticket availability check logic here
+          // For example, if tickets have a limited quantity:
+          if (ticket.count_in_stock < item.quantity) {
+            outOfStockItems.push({
+              id: item.ticket,
+              name: ticket.title,
+              itemType: "ticket",
+              count_in_stock: ticket.count_in_stock,
+            });
+          }
         }
       }
       return outOfStockItems; // Return the details of out of stock items
@@ -462,20 +483,35 @@ export default {
   update_stock_products_s: async (params, body) => {
     const { cartItems } = body;
     try {
-      cartItems.forEach(async item => {
-        const product = await Product.findOne({ _id: item.product });
-        if (product.finite_stock) {
-          if (product.subcategory === "singles") {
-            diminish_single_glove_stock(product, item);
-          } else if (product.subcategory === "sampler") {
-            diminish_sampler_stock(product, item);
-          } else if (product.subcategory === "refresh") {
-            diminish_refresh_pack_stock(product, item);
-          } else if (product.subcategory === "coin") {
-            diminish_batteries_stock(product, item);
+      for (const item of cartItems) {
+        if (item.itemType === "product") {
+          const product = await Product.findOne({ _id: item.product });
+          if (product?.finite_stock) {
+            if (product.subcategory === "singles") {
+              await diminish_single_glove_stock(product, item);
+            } else if (product.subcategory === "sampler") {
+              await diminish_sampler_stock(product, item);
+            } else if (product.subcategory === "refresh") {
+              await diminish_refresh_pack_stock(product, item);
+            } else if (product.subcategory === "coin") {
+              await diminish_batteries_stock(product, item);
+            }
+          }
+        } else if (item.itemType === "ticket") {
+          const ticket = await Ticket.findOne({ _id: item.ticket });
+          if (ticket?.finite_stock) {
+            const newStockCount = Math.max(0, ticket.count_in_stock - item.quantity);
+            const newMaxDisplayQuantity = Math.min(ticket.max_display_quantity, newStockCount);
+            const newMaxQuantity = Math.min(ticket.max_quantity || Infinity, newStockCount);
+
+            await ticket.updateOne({
+              count_in_stock: newStockCount,
+              max_display_quantity: newMaxDisplayQuantity,
+              max_quantity: newMaxQuantity,
+            });
           }
         }
-      });
+      }
       return "Success";
     } catch (error) {
       if (error instanceof Error) {

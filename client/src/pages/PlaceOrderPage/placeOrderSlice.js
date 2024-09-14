@@ -31,6 +31,7 @@ const initialState = {
   taxPrice: 0,
   totalPrice: 0,
   activePromoCodeIndicator: "",
+  shipping_choice: true,
   user: {},
   free_shipping_message: "------",
   loading: false,
@@ -115,6 +116,9 @@ const placeOrder = createSlice({
 
     set_shipping_completed: (state, { payload }) => {
       state.shipping_completed = payload;
+    },
+    set_shipping_choice: (state, { payload }) => {
+      state.shipping_choice = payload;
     },
 
     set_password: (state, { payload }) => {
@@ -227,6 +231,7 @@ const placeOrder = createSlice({
       if (payload === "payment") {
         state.show_payment = true;
         state.show_shipping = false;
+        state.show_promo_code = true;
         state.show_email = false;
         state.shipping_completed = true;
         state.show_shipping_complete = false;
@@ -384,6 +389,9 @@ const placeOrder = createSlice({
     initializePlaceOrderPage: state => {
       return initialState;
     },
+    setServiceFee: (state, { payload }) => {
+      state.serviceFee = payload;
+    },
   },
   extraReducers: {
     [API.shippingRates.pending]: (state, { payload }) => {
@@ -392,8 +400,8 @@ const placeOrder = createSlice({
     [API.shippingRates.fulfilled]: (state, { payload }) => {
       state.loadingShipping = false;
       state.shipping_rates = payload.shipment;
-      state.shipment_id = payload.shipment.id;
-      state.parcel = payload.parcel._id;
+      state.shipment_id = payload.shipment?.id;
+      state.parcel = payload.parcel?._id;
     },
     [API.shippingRates.rejected]: (state, { payload, error }) => {
       state.loadingShipping = false;
@@ -455,6 +463,7 @@ export const {
   setItemsPrice,
   setTaxPrice,
   setTotalPrice,
+  setServiceFee,
   set_user,
   set_tip,
   set_error,
@@ -488,6 +497,7 @@ export const {
   openProcessingTimeModal,
   clearShippingRates,
   initializePlaceOrderPage,
+  set_shipping_choice,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

@@ -174,10 +174,20 @@ const OrderPage = () => {
                       <div className="ai-c jc-b w-100per">
                         <label className="mv-0px mr-5px">Estimated Processing Time: </label>
                         <label className=" mv-0px">
-                          {cartItems.some(item => item.processing_time) && (
+                          {cartItems.filter(item => item.itemType === "product").some(item => item.processing_time) && (
                             <div>
-                              {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
-                              {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
+                              {Math.max(
+                                ...cartItems
+                                  .filter(item => item.itemType === "product")
+                                  .map(item => item.processing_time[0])
+                              )}{" "}
+                              -{" "}
+                              {Math.max(
+                                ...cartItems
+                                  .filter(item => item.itemType === "product")
+                                  .map(item => item.processing_time[1])
+                              )}{" "}
+                              business days
                             </div>
                           )}
                         </label>

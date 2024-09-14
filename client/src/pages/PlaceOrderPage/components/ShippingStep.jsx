@@ -32,6 +32,7 @@ import {
   activatePromo,
   set_promo_code,
   set_promo_code_validations,
+  set_shipping_choice,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
@@ -50,6 +51,7 @@ const ShippingStep = () => {
     show_shipping,
     show_payment,
     shipping_completed,
+    shipping_choice,
     itemsPrice,
     loadingShipping,
     show_shipping_complete,
@@ -138,10 +140,15 @@ const ShippingStep = () => {
     dispatch(clearShippingRates());
     if (shipping && Object.keys(shipping).length > 0) {
       dispatch(setLoadingShipping(true));
-      const package_volume = cartItems?.reduce((a, c) => a + c.dimensions?.package_volume, 0);
+      const hasItemsWithDimensions = cartItems.some(item => item.dimensions && item.dimensions.package_volume > 0);
+      console.log({ hasItemsWithDimensions });
 
-      if (!package_volume) {
+      if (!hasItemsWithDimensions) {
         dispatch(setFreeShipping());
+        dispatch(set_show_shipping(false));
+        dispatch(set_shipping_choice(false));
+        dispatch(set_shipping_completed(true));
+        dispatch(nextStep("payment"));
       } else {
         if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
           get_shipping_rates();
@@ -515,12 +522,23 @@ const ShippingStep = () => {
 
               <Loading loading={loadingShipping} />
 
-              <ShippingChoice />
-              {cartItems.some(item => item.processing_time) && (
-                <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
-                  Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
-                  {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
-                </h4>
+              {shipping_choice && (
+                <>
+                  <ShippingChoice />
+                  {cartItems.some(item => item.processing_time) && (
+                    <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
+                      Estimated Time to Ship{" "}
+                      {Math.max(
+                        ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[0])
+                      )}{" "}
+                      -{" "}
+                      {Math.max(
+                        ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
+                      )}{" "}
+                      business days
+                    </h4>
+                  )}
+                </>
               )}
               {!show_payment && (
                 <GLTooltip

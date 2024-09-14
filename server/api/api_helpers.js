@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export const getSort = (sort_options, querySort) => {
   const sortIndex = querySort ? parseInt(querySort[0]) : 1;
   const direction = querySort ? (querySort[1] === "asc" ? -1 : 1) : 1;
@@ -24,4 +26,14 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
   const filter = filters ? { deleted: false, ...filters, ...customSearch } : search;
   const sort = getSort(sort_options, query?.sort);
   return { filter, sort, limit, page };
+};
+
+export const determineIDPathname = id => {
+  let query = {};
+  if (id && mongoose.isValidObjectId(id)) {
+    query = { _id: id };
+  } else {
+    query = { pathname: id };
+  }
+  return query;
 };

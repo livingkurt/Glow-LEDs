@@ -31,4 +31,5 @@ export const templates = [
   "custom_contact",
   "current_stock",
   "paycheck",
+  "ticket",
 ];

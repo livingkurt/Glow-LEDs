@@ -49,55 +49,70 @@ const App = () => {
       <Router>
         <ScrollToTop>
           <Routes>
-            {privateRoutes.map((route, index) => {
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  exact={route.exact}
-                  element={
-                    <ProtectedRoute>
-                      {route.element === "PlaceOrderPage" ? (
-                        <PlaceOrderLayout>{createElement(PrivateComponents[route.element])}</PlaceOrderLayout>
-                      ) : (
-                        <MainLayout>{createElement(PrivateComponents[route.element])}</MainLayout>
-                      )}
-                    </ProtectedRoute>
-                  }
-                />
-              );
-            })}
-            {adminRoutes.map((route, index) => {
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  exact={route.exact}
-                  element={
-                    <ProtectedRoute isAdminRoute={true}>
-                      <MainLayout>{createElement(AdminComponents[route.element])}</MainLayout>
-                    </ProtectedRoute>
-                  }
-                />
-              );
-            })}
-
-            {routes.map((route, index) => {
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  exact={route.exact}
-                  element={
-                    route.element === "PlaceOrderPage" ? (
-                      <PlaceOrderLayout>{createElement(Components[route.element])}</PlaceOrderLayout>
+            {privateRoutes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                element={
+                  <ProtectedRoute>
+                    {route.element === "PlaceOrderPage" ? (
+                      <PlaceOrderLayout>
+                        {createElement(
+                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                        )}
+                      </PlaceOrderLayout>
                     ) : (
-                      <MainLayout>{createElement(Components[route.element])}</MainLayout>
-                    )
-                  }
-                />
-              );
-            })}
+                      <MainLayout>
+                        {createElement(
+                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                        )}
+                      </MainLayout>
+                    )}
+                  </ProtectedRoute>
+                }
+              />
+            ))}
+
+            {adminRoutes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                element={
+                  <ProtectedRoute isAdminRoute={true}>
+                    <MainLayout>
+                      {createElement(
+                        AdminComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                      )}
+                    </MainLayout>
+                  </ProtectedRoute>
+                }
+              />
+            ))}
+
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                element={
+                  route.element === "PlaceOrderPage" ? (
+                    <PlaceOrderLayout>
+                      {createElement(
+                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                      )}
+                    </PlaceOrderLayout>
+                  ) : (
+                    <MainLayout>
+                      {createElement(
+                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                      )}
+                    </MainLayout>
+                  )
+                }
+              />
+            ))}
 
             <Route
               path={"/"}

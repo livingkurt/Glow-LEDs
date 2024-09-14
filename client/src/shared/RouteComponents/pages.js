@@ -40,7 +40,6 @@ import { TeamPage } from "../../pages/TeamPage";
 import { AnnouncementsPage } from "../../pages/AnnouncementsPage";
 import { ManualPage } from "../../pages/ManualPage";
 import { ColorPalettePage } from "../../pages/ColorPalettesPage";
-import { EventsPage } from "../../pages/EventsPage";
 import SupportCenterPage from "../../pages/SupportCenterPage/SupportCenterPage";
 import { TermsPage } from "../../pages/TermsPage";
 import { AboutPage } from "../../pages/AboutPage";
@@ -50,6 +49,9 @@ import { CompletePage } from "../../pages/CompletePage";
 import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
 import MenuPage from "../../pages/MenuPage/MenuPage";
+import EventsPage from "../../pages/EventsPage/EventsPage";
+import EventPage from "../../pages/EventPage/EventPage";
+import TicketsPage from "../../pages/TicketsPage/TicketsPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -70,7 +72,6 @@ export const Components = {
   AnnouncementsPage,
   ManualPage,
   ColorPalettePage,
-  EventsPage,
   SupportCenterPage,
   TermsPage,
   MenuPage,
@@ -80,6 +81,7 @@ export const Components = {
   CompletePage,
   AffiliateTermsPage,
   TutorialsGridPage,
+  EventPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,
@@ -108,6 +110,8 @@ export const AdminComponents = {
   ImagesPage,
   WholesalersPage,
   EmailsPage,
+  EventsPage,
+  TicketsPage,
 };
 export const PrivateComponents = {
   ProfilePage,

@@ -49,6 +49,7 @@ const productSchema = new mongoose.Schema(
     wholesale_product: { type: Boolean, default: false },
     previous_price: { type: Number },
     short_description: { type: String },
+    max_display_quantity: { type: Number, default: 30, required: true },
     max_quantity: { type: Number, default: 30, required: true },
     count_in_stock: { type: Number, default: 30, required: true },
     finite_stock: { type: Boolean, default: false },
@@ -193,7 +194,7 @@ const productSchema = new mongoose.Schema(
       weight_ounces: { type: Number },
     },
     meta_data: {
-      processing_time: { type: Array },
+      processing_time: [{ type: Number }],
       material_cost: { type: Number },
       filament_used: { type: Number },
       printing_time: { type: Number },
@@ -244,7 +245,7 @@ const productSchema = new mongoose.Schema(
     meta_description: { type: String },
     meta_keywords: { type: String },
 
-    processing_time: { type: Array },
+    processing_time: [{ type: Number }],
     material_cost: { type: Number },
     filament_used: { type: Number },
     printing_time: { type: Number },
@@ -255,11 +256,6 @@ const productSchema = new mongoose.Schema(
 
     secondary_images_object: { type: Array },
 
-    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
     has_add_on: { type: Boolean, default: false },
@@ -269,7 +265,6 @@ const productSchema = new mongoose.Schema(
     size: { type: String },
     sizing: { type: String },
     // Depreciated
-    item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     // color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     // secondary_color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],

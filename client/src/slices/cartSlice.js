@@ -192,16 +192,20 @@ const cartPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.addToCart.pending]: (state, { payload }) => {
+    [API.addToCart.pending]: state => {
       state.loadingAddToCart = true;
+      state.error = null;
+      state.message = null;
     },
     [API.addToCart.fulfilled]: (state, { payload }) => {
-      const { data, type, current_user } = payload;
+      const { data, type, current_user, message } = payload;
       if (type === "add_to_cart") {
-        state.my_cart = data;
-        // Only update local storage if the user is not logged in
-        if (Object.keys(current_user).length === 0) {
-          localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
+        if (data) {
+          state.my_cart = data;
+          // Only update local storage if the user is not logged in
+          if (Object.keys(current_user).length === 0) {
+            localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
+          }
         }
       }
       if (type === "edit_cart") {
@@ -209,11 +213,10 @@ const cartPage = createSlice({
       }
       state.success = true;
       state.cartDrawer = true;
-      state.message = "Cart Created";
+      state.message = message || "Cart Updated";
       state.edit_cart_modal = false;
       state.loadingAddToCart = false;
     },
-
     [API.addToCart.rejected]: (state, { payload, error }) => {
       state.loadingAddToCart = false;
       state.error = payload ? payload.error : error.message;

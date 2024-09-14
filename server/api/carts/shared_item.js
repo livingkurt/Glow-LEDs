@@ -10,6 +10,7 @@ export const sharedItemSchema = {
   display_image: { type: String },
   display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   quantity: { type: Number },
+  max_display_quantity: { type: Number },
   max_quantity: { type: Number },
   count_in_stock: { type: Number },
   currentOptions: [optionSchema],
@@ -34,9 +35,17 @@ export const sharedItemSchema = {
   finite_stock: { type: Boolean },
   wholesale_product: { type: Boolean },
   wholesale_price: { type: Number },
+  itemType: { type: String, enum: ["product", "ticket"] },
+  ticket_type: { type: String },
+  ticketsUsed: [
+    {
+      ticketId: { type: String },
+      used: { type: Boolean, default: false },
+    },
+  ],
+  ticket: { type: mongoose.Schema.Types.ObjectId, ref: "Ticket" },
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
-    required: true,
   },
 };

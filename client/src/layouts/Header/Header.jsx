@@ -21,16 +21,18 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import { navItems, determineDropdown, determineName, rightNav } from "./headerHelpers";
 import Banner from "./components/Banner";
 import Environment from "./components/Environment";
-import HeaderButton from "./components/CenterNavButtons/components/HeaderButton";
-import HeaderColumn from "./components/CenterNavButtons/components/HeaderColumn";
-import HeaderDrawer from "./components/CenterNavButtons/components/HeaderDrawer";
-import HeaderSubDrawer from "./components/CenterNavButtons/components/HeaderSubDrawer";
-import ColumnItemButton from "./components/CenterNavButtons/components/ColumnItemButton";
+import HeaderButton from "./components/HeaderButton";
+import HeaderColumn from "./components/HeaderColumn";
+import HeaderDrawer from "./components/HeaderDrawer";
+import HeaderSubDrawer from "./components/HeaderSubDrawer";
+import ColumnItemButton from "./components/ColumnItemButton";
 import { debounce } from "lodash";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
 import { set_first_name } from "../../slices/userSlice";
-import { getCartQuantity } from "../../helpers/sharedHelpers";
+import { flagState, getCartQuantity } from "../../helpers/sharedHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import * as API from "../../api";
+import useFeatureFlags from "../../shared/Hooks/useFeatureFlags";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -44,6 +46,8 @@ const Header = () => {
   const { search } = useSelector(state => state.products.productsGridPage);
   const [localSearch, setLocalSearch] = useState(search);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const activeFlags = useFeatureFlags();
 
   const debouncedSearch = useCallback(
     debounce(searchTerm => {

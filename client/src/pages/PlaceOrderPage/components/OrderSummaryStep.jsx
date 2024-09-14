@@ -2,6 +2,7 @@ import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
+
 const OrderSummaryStep = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
@@ -19,29 +20,26 @@ const OrderSummaryStep = () => {
     taxPrice,
     totalPrice,
   } = placeOrder;
+
+  // Calculate service fee for tickets
+  const ticketItems = cartItems.filter(item => item.itemType === "ticket");
+  const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const serviceFee = ticketTotal * 0.1; // 10% service fee
+
+  // Recalculate total price with service fee
+  const newTotalPrice = totalPrice + serviceFee;
+
   return (
     <div className="placeorder-action">
       <ul>
         <li>
-          <h2
-            style={{
-              marginTop: "0px",
-            }}
-          >
-            Order Summary
-          </h2>
+          <h2 style={{ marginTop: "0px" }}>Order Summary</h2>
         </li>
         <li>
           <ul className="cart-list-container w-100per">
             <li>
               <div className="">
-                <label
-                  style={{
-                    textAlign: "right",
-                  }}
-                >
-                  Price
-                </label>
+                <label style={{ textAlign: "right" }}>Price</label>
               </div>
             </li>
             {cartItems.length === 0 ? (
@@ -60,58 +58,32 @@ const OrderSummaryStep = () => {
         )}
 
         {activePromoCodeIndicator && (
-          <li>
-            <del
-              style={{
-                color: "red",
-              }}
-            >
-              <div
-                style={{
-                  color: "white",
-                }}
-              >
-                Subtotal
-              </div>
-            </del>
-            <div>
-              <del
-                style={{
-                  color: "red",
-                }}
-              >
-                <label
-                  style={{
-                    color: "white",
-                  }}
-                >
-                  ${items_price.toFixed(2)}
-                </label>
+          <>
+            <li>
+              <del style={{ color: "red" }}>
+                <div style={{ color: "white" }}>Subtotal</div>
               </del>
-            </div>
-          </li>
-        )}
-        {activePromoCodeIndicator && (
-          <li>
-            <div>Discount</div>
-            <div>-${(items_price - itemsPrice).toFixed(2)}</div>
-          </li>
-        )}
-        {activePromoCodeIndicator && (
-          <li>
-            <div>New Subtotal</div>
-            <div>${itemsPrice.toFixed(2)}</div>
-          </li>
+              <div>
+                <del style={{ color: "red" }}>
+                  <label style={{ color: "white" }}>${items_price.toFixed(2)}</label>
+                </del>
+              </div>
+            </li>
+            <li>
+              <div>Discount</div>
+              <div>-${(items_price - itemsPrice).toFixed(2)}</div>
+            </li>
+            <li>
+              <div>New Subtotal</div>
+              <div>${itemsPrice.toFixed(2)}</div>
+            </li>
+          </>
         )}
 
         <li>
           <div>Tax</div>
           <div>
-            {!loading
-              ? shipping && shipping.hasOwnProperty("first_name")
-                ? `$${taxPrice.toFixed(2)}`
-                : "------"
-              : "------"}
+            {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
           </div>
         </li>
         <li className="pos-rel">
@@ -122,6 +94,12 @@ const OrderSummaryStep = () => {
               : free_shipping_message}
           </div>
         </li>
+        {serviceFee > 0 && (
+          <li className="pos-rel">
+            <div>Service Fee (10% for tickets)</div>
+            <div>${serviceFee.toFixed(2)}</div>
+          </li>
+        )}
         {tip > 0 && (
           <li className="pos-rel">
             <div>Tip</div>
@@ -131,11 +109,7 @@ const OrderSummaryStep = () => {
         <li>
           <div>Order Total</div>
           <div>
-            {!loading
-              ? shipping && shipping.hasOwnProperty("first_name")
-                ? "$" + totalPrice.toFixed(2)
-                : "------"
-              : "------"}
+            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + newTotalPrice.toFixed(2) : "------"}
           </div>
         </li>
       </ul>

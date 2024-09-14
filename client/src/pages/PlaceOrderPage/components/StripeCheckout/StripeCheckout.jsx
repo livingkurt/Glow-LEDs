@@ -30,6 +30,7 @@ const StripeCheckout = () => {
     tip,
     order_note,
     production_note,
+    serviceFee,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -75,6 +76,7 @@ const StripeCheckout = () => {
               tip,
               promo_code: activePromoCodeIndicator && promo_code,
               parcel: parcel || null,
+              serviceFee,
             },
             create_account,
             new_password,

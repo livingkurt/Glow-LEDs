@@ -10,7 +10,7 @@ import { determineItemsTotal } from "../../utils/helper_functions";
 
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { OrderSummaryStep, ShippingStep } from "./components";
-import { initializePlaceOrderPage, setItemsPrice, setTotalPrice } from "./placeOrderSlice";
+import { initializePlaceOrderPage, setItemsPrice, setServiceFee, setTotalPrice } from "./placeOrderSlice";
 
 import * as API from "../../api";
 import { save_shipping, set_my_cart } from "../../slices/cartSlice";
@@ -173,6 +173,12 @@ const PlaceOrderPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
+      // Calculate service fee
+      const ticketItems = cartItems.filter(item => item.itemType === "ticket");
+      const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      const serviceFee = ticketTotal * 0.1; // 10% service fee
+      dispatch(setServiceFee(serviceFee));
+
       dispatch(
         setTotalPrice(
           tip === 0 || tip === "" || isNaN(tip)
@@ -182,7 +188,7 @@ const PlaceOrderPage = () => {
       );
     }
     return () => (clean = false);
-  }, [itemsPrice, taxPrice, tip, shippingPrice, dispatch]);
+  }, [itemsPrice, taxPrice, tip, shippingPrice, cartItems, dispatch]);
 
   return (
     <div>

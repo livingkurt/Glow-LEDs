@@ -28,6 +28,12 @@ export const allRecordsApi = createApi({
     emails: builder.query({
       query: query => `/emails?${create_query(query)}`,
     }),
+    events: builder.query({
+      query: query => `/events?${create_query(query)}`,
+    }),
+    tickets: builder.query({
+      query: query => `/tickets?${create_query(query)}`,
+    }),
     expenses: builder.query({
       query: query => `/expenses?${create_query(query)}`,
     }),
@@ -81,6 +87,8 @@ export const {
   useChipsQuery,
   useContentsQuery,
   useEmailsQuery,
+  useEventsQuery,
+  useTicketsQuery,
   useExpensesQuery,
   useFeaturesQuery,
   useFilamentsQuery,
