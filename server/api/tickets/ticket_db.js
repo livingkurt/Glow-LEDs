@@ -107,11 +107,30 @@ export default {
         {
           $match: {
             "orderItems.itemType": "ticket",
-            "orderItems.ticketUsed": true,
+            "orderItems.ticket": mongoose.Types.ObjectId(eventId),
           },
         },
-        { $count: "scannedCount" },
+        {
+          $project: {
+            usedTickets: {
+              $size: {
+                $filter: {
+                  input: "$orderItems.ticketsUsed",
+                  as: "ticket",
+                  cond: { $eq: ["$$ticket.used", true] },
+                },
+              },
+            },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            scannedCount: { $sum: "$usedTickets" },
+          },
+        },
       ]);
+
       return count[0]?.scannedCount || 0;
     } catch (error) {
       throw new Error(error.message);

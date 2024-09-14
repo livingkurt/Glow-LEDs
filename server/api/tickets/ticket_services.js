@@ -74,10 +74,8 @@ export default {
   validate_ticket_s: async body => {
     const { ticketId } = body;
     try {
-      // Parse the ticketId to get order, item, and ticket index
       const [orderId, itemId, ticketIndex] = ticketId.split("-");
 
-      // Find the order and validate the ticket
       const order = await order_db.findById_orders_db(orderId);
       if (!order) {
         throw new Error("Order not found");
@@ -85,24 +83,43 @@ export default {
 
       const ticketItem = order.orderItems.find(item => item._id.toString() === itemId);
       if (!ticketItem || ticketItem.itemType !== "ticket") {
-        throw new Error("Ticket not found");
+        throw new Error("Ticket item not found in order");
       }
 
-      if (ticketItem.ticketUsed) {
+      // Ensure ticketsUsed is an array and has the correct length
+      if (!Array.isArray(ticketItem.ticketsUsed) || ticketItem.ticketsUsed.length !== ticketItem.quantity) {
+        ticketItem.ticketsUsed = Array(ticketItem.quantity)
+          .fill()
+          .map((_, index) => ({
+            ticketId: `${orderId}-${itemId}-${index}`,
+            used: false,
+          }));
+      }
+
+      const ticketToUse = ticketItem.ticketsUsed[ticketIndex];
+      if (!ticketToUse) {
+        throw new Error("Invalid ticket index");
+      }
+
+      if (ticketToUse.used) {
         throw new Error("Ticket already used");
       }
 
-      // Mark the ticket as used
-      if (!ticketItem.ticketUsed) {
-        ticketItem.ticketUsed = true;
-      }
+      // Mark the specific ticket as used
+      ticketToUse.used = true;
       await order.save();
 
       // Update the event's scanned_tickets_count
-      const ticket = await ticket_db.findById_tickets_db(ticketItem.ticket);
-      const scanned_tickets_count = await ticket_db.count_scanned_tickets_db(ticket.event._id);
+      // Assuming the ticket reference is stored in the ticketItem
+      if (ticketItem.ticket) {
+        const ticket = await ticket_db.findById_tickets_db(ticketItem.ticket);
+        if (ticket && ticket.event) {
+          const scanned_tickets_count = await ticket_db.count_scanned_tickets_db(ticket.event._id);
+          return { message: "Ticket validated successfully", scanned_tickets_count };
+        }
+      }
 
-      return { message: "Ticket validated successfully", scanned_tickets_count };
+      return { message: "Ticket validated successfully" };
     } catch (error) {
       throw new Error(error.message);
     }

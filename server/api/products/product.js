@@ -194,7 +194,7 @@ const productSchema = new mongoose.Schema(
       weight_ounces: { type: Number },
     },
     meta_data: {
-      processing_time: { type: Array },
+      processing_time: [{ type: Number }],
       material_cost: { type: Number },
       filament_used: { type: Number },
       printing_time: { type: Number },
@@ -245,7 +245,7 @@ const productSchema = new mongoose.Schema(
     meta_description: { type: String },
     meta_keywords: { type: String },
 
-    processing_time: { type: Array },
+    processing_time: [{ type: Number }],
     material_cost: { type: Number },
     filament_used: { type: Number },
     printing_time: { type: Number },

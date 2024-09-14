@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControlLabel, Grid, Paper, Skeleton, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -71,6 +71,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
         handleInputChange(fieldName, inputValue);
       }
     }
+  };
+
+  const handleBooleanArrayChange = (fieldName, index, value) => {
+    const newArray = [...(state[fieldName] || [])];
+    newArray[index] = value;
+    handleInputChange(fieldName, newArray);
   };
 
   return (
@@ -250,6 +256,19 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     />
                   }
                   label={fieldData.label}
+                />
+              );
+            case "simple_array":
+              return (
+                <GLForm
+                  formData={fieldData.fields}
+                  state={fieldState}
+                  onChange={newObjectState => {
+                    onChange({
+                      [fieldName]: { ...fieldState, ...newObjectState },
+                    });
+                  }}
+                  loading={loading}
                 />
               );
             case "title":

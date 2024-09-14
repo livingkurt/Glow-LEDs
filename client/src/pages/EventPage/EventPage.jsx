@@ -13,7 +13,7 @@ import TicketScanner from "./components/TicketScanner";
 const EventPage = () => {
   const { pathname } = useParams();
   const dispatch = useDispatch();
-  const { event, loading, tickets } = useSelector(state => state.events.eventPage);
+  const { event, loading } = useSelector(state => state.events.eventPage);
   const [openModal, setOpenModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +28,6 @@ const EventPage = () => {
   useEffect(() => {
     if (pathname) {
       dispatch(API.detailsEvent(pathname));
-      dispatch(API.getEventTickets(pathname));
     }
   }, [dispatch, pathname]);
 
@@ -100,7 +99,7 @@ const EventPage = () => {
             borderRadius: "10px",
           }}
         >
-          {tickets?.map(ticket => (
+          {event.tickets?.map(ticket => (
             <TicketPrice key={ticket._id} ticket={ticket} />
           ))}
         </Box>
@@ -113,14 +112,14 @@ const EventPage = () => {
             on {event.social_media_type} to get the latest updates
           </Typography>
           <Box my={4}>
-            {tickets && tickets.length > 0 ? (
-              tickets.map(ticket => (
+            {event.tickets && event.tickets.length > 0 ? (
+              event.tickets.map(ticket => (
                 <TicketItem
                   key={ticket._id}
                   ticket={ticket}
                   event={event}
                   onSelectTicket={ticket => handleOpenModal(ticket)}
-                  ticketColors={tickets.map(ticket => ticket.color)}
+                  ticketColors={event.tickets.map(ticket => ticket.color)}
                 />
               ))
             ) : (

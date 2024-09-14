@@ -419,10 +419,23 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             label: "Product Collection",
             labelProp: "product_collection",
           },
-          ticketUsed: {
-            type: "checkbox",
-            label: "Ticket Used",
-            default: false,
+          ticketsUsed: {
+            type: "array",
+            title: "Tickets Used",
+            label: "ticketId",
+            itemSchema: {
+              type: "object",
+              fields: {
+                ticketId: {
+                  type: "text",
+                  label: "Ticket ID",
+                },
+                used: {
+                  type: "checkbox",
+                  label: "Used",
+                },
+              },
+            },
           },
           tags: {
             type: "autocomplete_multiple",

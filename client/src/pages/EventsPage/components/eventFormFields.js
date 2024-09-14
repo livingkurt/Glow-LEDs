@@ -1,4 +1,4 @@
-export const eventFormFields = ({ event }) => {
+export const eventFormFields = ({ event, ticketsQuery }) => {
   return {
     name: {
       type: "text",
@@ -28,6 +28,13 @@ export const eventFormFields = ({ event }) => {
     age_group: {
       type: "text",
       label: "Age Group",
+    },
+    tickets: {
+      type: "autocomplete_multiple",
+      label: "Tickets",
+      options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
+      loading: ticketsQuery?.isLoading,
+      labelProp: "title",
     },
     social_media_type: {
       type: "text",

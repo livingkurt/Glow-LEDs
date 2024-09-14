@@ -4,13 +4,16 @@ import { set_edit_event_modal, set_event } from "../../../slices/eventSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { eventFormFields } from "./eventFormFields";
+import { useTicketsQuery } from "../../../api/allRecordsApi";
 
 const EditEventModal = () => {
   const dispatch = useDispatch();
   const eventPage = useSelector(state => state.events.eventPage);
   const { edit_event_modal, event, loading } = eventPage;
 
-  const formFields = eventFormFields({ event });
+  const ticketsQuery = useTicketsQuery();
+
+  const formFields = eventFormFields({ event, ticketsQuery });
 
   return (
     <div>
