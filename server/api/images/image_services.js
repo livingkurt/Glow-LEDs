@@ -73,7 +73,6 @@ export default {
       console.log("Creating Imgur album...");
       const album = await createImgurAlbum(albumName);
       console.log(`Imgur album created successfully. Album ID: ${album.id}`);
-      console.log({ compress });
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
         console.log(`Processing image ${i + 1} of ${files.length}`);
