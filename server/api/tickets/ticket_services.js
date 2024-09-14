@@ -2,6 +2,7 @@ import ticket_db from "./ticket_db";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { event_db } from "../events";
+import { countScannedTickets } from "./ticket_interactors";
 
 export default {
   findAll_tickets_s: async query => {
@@ -95,6 +96,7 @@ export default {
             used: false,
           }));
       }
+      console.log({ ticketsUsed: ticketItem.ticketsUsed });
 
       const ticketToUse = ticketItem.ticketsUsed[ticketIndex];
       if (!ticketToUse) {
@@ -112,15 +114,15 @@ export default {
       // Update the event's scanned_tickets_count
       // Assuming the ticket reference is stored in the ticketItem
       if (ticketItem.ticket) {
-        const ticket = await ticket_db.findById_tickets_db(ticketItem.ticket);
-        if (ticket && ticket.event) {
-          const scanned_tickets_count = await ticket_db.count_scanned_tickets_db(ticket.event._id);
-          return { message: "Ticket validated successfully", scanned_tickets_count };
-        }
+        const scannedTicketsCount = await countScannedTickets(ticketItem.ticket);
+        // Update the event's scanned_tickets_count
+        // await Event.findByIdAndUpdate(ticketItem.ticket, { scanned_tickets_count: scannedTicketsCount });
+        return { message: "Ticket validated successfully", scanned_tickets_count: scannedTicketsCount };
       }
 
       return { message: "Ticket validated successfully" };
     } catch (error) {
+      console.log({ error });
       throw new Error(error.message);
     }
   },

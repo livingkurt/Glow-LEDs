@@ -1,7 +1,7 @@
 import { Order } from "../orders";
 import { Event } from "../events";
 import Ticket from "./ticket";
-import mongoose from "mongoose";
+import { getEventTicketIds } from "./ticket_interactors";
 
 export default {
   findAll_tickets_db: async (filter, sort, limit, page) => {
@@ -105,9 +105,18 @@ export default {
       const count = await Order.aggregate([
         { $unwind: "$orderItems" },
         {
+          $lookup: {
+            from: "tickets",
+            localField: "orderItems.ticket",
+            foreignField: "_id",
+            as: "ticketInfo",
+          },
+        },
+        { $unwind: "$ticketInfo" },
+        {
           $match: {
             "orderItems.itemType": "ticket",
-            "orderItems.ticket": mongoose.Types.ObjectId(eventId),
+            "ticketInfo._id": { $in: await getEventTicketIds(eventId) },
           },
         },
         {
