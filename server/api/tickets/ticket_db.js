@@ -8,7 +8,7 @@ export default {
     try {
       return await Ticket.find(filter)
         .sort(sort)
-        .populate("event")
+
         .populate("image")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -21,7 +21,7 @@ export default {
   },
   findBy_tickets_db: async params => {
     try {
-      return await Ticket.findOne(params).populate("event").populate("image");
+      return await Ticket.findOne(params).populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -30,7 +30,7 @@ export default {
   },
   findByPathname_tickets_db: async pathname => {
     try {
-      return await Ticket.findOne({ pathname: pathname, deleted: false }).populate("event").populate("image");
+      return await Ticket.findOne({ pathname: pathname, deleted: false }).populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -39,7 +39,7 @@ export default {
   },
   findById_tickets_db: async id => {
     try {
-      return await Ticket.findOne({ _id: id, deleted: false }).populate("event").populate("image");
+      return await Ticket.findOne({ _id: id, deleted: false }).populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -49,7 +49,7 @@ export default {
   findByEventPathname_tickets_db: async event_pathname => {
     try {
       const event = await Event.findOne({ pathname: event_pathname, deleted: false });
-      const tickets = await Ticket.find({ event: event._id, deleted: false }).populate("event").populate("image");
+      const tickets = await Ticket.find({ event: event._id, deleted: false }).populate("image");
       return tickets;
     } catch (error) {
       if (error instanceof Error) {
