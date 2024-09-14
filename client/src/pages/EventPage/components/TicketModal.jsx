@@ -20,13 +20,30 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const formatDate = date => {
-    return new Date(date).toLocaleDateString("en-US", {
-      weekday: "long",
+  const formatEventDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const formatOptions = {
+      weekday: "short",
+      month: "short",
       year: "numeric",
-      month: "long",
       day: "numeric",
-    });
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    let formattedStart = start.toLocaleString("en-US", formatOptions);
+    let formattedEnd = end.toLocaleString("en-US", formatOptions);
+
+    // If the event is on the same day, don't repeat the date
+    if (start.toDateString() === end.toDateString()) {
+      formattedEnd = end.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
+      return `${formattedStart} - ${formattedEnd}`;
+    }
+
+    return `${formattedStart} - ${formattedEnd}`;
   };
 
   return (
@@ -117,13 +134,11 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
               </Box>
               <Typography variant="body2" ml={4}>
                 {event.address.address_1} {event.address.address_2}, {event.address.city}, {event.address.state}{" "}
-                {event.address.zipCode}
+                {event.address.postalCode}
               </Typography>
               <Box display="flex" alignItems="center" mt={1}>
                 <CalendarToday sx={{ marginRight: 1, color: "black" }} />
-                <Typography variant="body1">
-                  {formatDate(event.start_date)} - {formatDate(event.end_date)}
-                </Typography>
+                <Typography variant="body1">{formatEventDates(event.start_date, event.end_date)}</Typography>
               </Box>
             </Box>
             <Box sx={{ width: isMobile ? "100%" : "30%" }}>
