@@ -21,6 +21,10 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
       type: "number",
       label: "Shipping Price",
     },
+    serviceFee: {
+      type: "number",
+      label: "Service Fee",
+    },
     totalPrice: {
       type: "number",
       label: "Total Price",

@@ -231,6 +231,7 @@ const placeOrder = createSlice({
       if (payload === "payment") {
         state.show_payment = true;
         state.show_shipping = false;
+        state.show_promo_code = true;
         state.show_email = false;
         state.shipping_completed = true;
         state.show_shipping_complete = false;
@@ -388,6 +389,9 @@ const placeOrder = createSlice({
     initializePlaceOrderPage: state => {
       return initialState;
     },
+    setServiceFee: (state, { payload }) => {
+      state.serviceFee = payload;
+    },
   },
   extraReducers: {
     [API.shippingRates.pending]: (state, { payload }) => {
@@ -459,6 +463,7 @@ export const {
   setItemsPrice,
   setTaxPrice,
   setTotalPrice,
+  setServiceFee,
   set_user,
   set_tip,
   set_error,

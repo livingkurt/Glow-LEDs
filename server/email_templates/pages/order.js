@@ -343,6 +343,22 @@ export default ({ email, order }) => {
 																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : "0.00"}</strong>
 															</td>
 														</tr>
+														  ${
+                                order.serviceFee > 0
+                                  ? `
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+																					<span style="font-size:16px">Service Fee (10% for tickets)</span>
+																				</p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+																				<strong style="font-size:16px;color:white">$${order.serviceFee.toFixed(2)}</strong>
+																			</td>
+																		</tr>
+																		`
+                                  : ""
+                              }
 														${
                               order.tip > 0
                                 ? `

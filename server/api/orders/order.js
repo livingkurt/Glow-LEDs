@@ -96,6 +96,7 @@ const orderSchema = new mongoose.Schema(
     itemsPrice: { type: Number },
     taxPrice: { type: Number },
     shippingPrice: { type: Number },
+    serviceFee: { type: Number },
     totalPrice: { type: Number },
     refundTotal: { type: Number },
     // Primary status
