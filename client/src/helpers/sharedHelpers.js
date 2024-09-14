@@ -82,3 +82,8 @@ export const determineProductNameString = item => {
   });
   return name;
 };
+
+export const flagState = (feature_flags, flag) => {
+  const flagObject = feature_flags.find(f => f.feature === flag);
+  return flagObject?.active;
+};

@@ -347,6 +347,7 @@ const community = addIdsRecursively({
     {
       name: "Space City Gloving Competition",
       path: "/pages/events/space_city_gloving_competition",
+      feature: "events",
     },
     {
       name: "Sponsored Glovers",

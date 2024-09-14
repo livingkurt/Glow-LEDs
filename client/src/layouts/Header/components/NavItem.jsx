@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const NavItem = ({ item, children }) => (
   <div className="dropdown-nav">

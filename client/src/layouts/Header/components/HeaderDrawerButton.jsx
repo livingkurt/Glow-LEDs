@@ -1,14 +1,20 @@
-import { GLButton } from "../../../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { useSelector } from "react-redux";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { toggleDropdown } from "../../../headerHelpers";
 import ColumnItemButton from "./ColumnItemButton";
+import { toggleDropdown } from "../headerHelpers";
+import useFeatureFlags from "../../../shared/Hooks/useFeatureFlags";
 
-const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from }) => {
+const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from, feature }) => {
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
+  const activeFlags = useFeatureFlags();
 
   if (permissions && !permissions(current_user)) {
+    return null;
+  }
+  console.log({ activeFlags, feature });
+  if (feature && !activeFlags.includes(feature)) {
     return null;
   }
   return (

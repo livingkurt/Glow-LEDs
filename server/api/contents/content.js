@@ -155,6 +155,12 @@ const contentSchema = new mongoose.Schema(
       },
     ],
     free_shipping_minimum_amount: { type: Number },
+    feature_flags: [
+      {
+        feature: { type: String },
+        active: { type: Boolean, default: false },
+      },
+    ],
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

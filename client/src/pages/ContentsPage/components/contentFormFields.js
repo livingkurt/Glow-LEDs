@@ -339,6 +339,18 @@ export const contentFormFields = ({ content, products, categorys }) => {
       },
     },
     free_shipping_minimum_amount: { type: "number", label: "Minimum Subtotal for Free Shipping" },
+    feature_flags: {
+      type: "array",
+      title: "Feature Flags",
+      label: item => item.feature,
+      itemSchema: {
+        type: "object",
+        fields: {
+          feature: { type: "text", label: "Feature" },
+          active: { type: "checkbox", label: "Active" },
+        },
+      },
+    },
     active: { type: "checkbox", label: "Active" },
   };
 };
