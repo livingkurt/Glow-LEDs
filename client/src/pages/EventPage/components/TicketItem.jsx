@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Button, useMediaQuery, useTheme, lighten } from "@mui/material";
+import DateBox from "./DateBox";
 
 const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
   const theme = useTheme();
@@ -34,47 +35,7 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
           marginBottom: isSmallScreen ? 2 : 0,
         }}
       >
-        <Box
-          sx={{
-            width: 80,
-            height: 80,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "8px",
-            marginRight: "16px",
-            color: "white",
-            fontWeight: "bold",
-            boxShadow: `0 0 15px ${ticket.color || "#999999"}`,
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "1.25rem",
-              lineHeight: 1,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              paddingTop: "5px",
-              paddingBottom: "2px",
-              textAlign: "center",
-            }}
-          >
-            {new Date(event.start_date).toLocaleString("default", { month: "short" }).toUpperCase()}
-          </Typography>
-          <Typography variant="h5" sx={{ fontSize: "3rem", lineHeight: 1 }}>
-            {new Date(event.start_date).getDate()}
-          </Typography>
-          <Typography variant="subtitle2" sx={{ fontSize: "1.25rem", lineHeight: 1 }}>
-            {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][new Date(event.start_date).getDay()]}
-          </Typography>
-        </Box>
+        <DateBox startDate={event.start_date} endDate={event.end_date} color={ticket.color} />
         {ticket.image?.link ? (
           <Box sx={{ display: "flex", alignItems: "center", height: 80 }}>
             <img src={ticket.image?.link} alt={ticket.title} style={{ width: 80, height: 80, borderRadius: "10px" }} />

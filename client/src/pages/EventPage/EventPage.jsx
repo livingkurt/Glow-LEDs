@@ -9,6 +9,8 @@ import EventContainer from "./components/EventContainer";
 import TicketPrice from "./components/TicketPrice";
 import EventTitle from "./components/EventTitle";
 import TicketScanner from "./components/TicketScanner";
+import { EditEventModal } from "../EventsPage/components";
+import { open_edit_event_modal } from "../../slices/eventSlice";
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -81,7 +83,10 @@ const EventPage = () => {
   return (
     <EventContainer event={event}>
       {current_user?.isAdmin && (
-        <Box mt={2} mb={2} display="flex" justifyContent="flex-end">
+        <Box mt={2} mb={2} display="flex" justifyContent="flex-end" gap={2}>
+          <Button variant="contained" color="primary" onClick={() => dispatch(open_edit_event_modal(event))}>
+            Edit Event
+          </Button>
           <Button variant="contained" color="primary" onClick={() => setOpenScannerModal(true)}>
             Scan Tickets
           </Button>
@@ -141,6 +146,7 @@ const EventPage = () => {
       />
 
       <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
+      <EditEventModal />
     </EventContainer>
   );
 };
