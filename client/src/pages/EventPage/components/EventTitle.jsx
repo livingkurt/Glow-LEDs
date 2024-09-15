@@ -3,6 +3,14 @@ import { Box, Typography, useTheme } from "@mui/material";
 
 const EventTitle = ({ event }) => {
   const theme = useTheme();
+
+  const commonTextStyles = {
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    color: "#ffffff",
+  };
+
   return (
     <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
       <img
@@ -14,13 +22,9 @@ const EventTitle = ({ event }) => {
         }}
       />
       <Typography
-        fontFamily={theme.typography.fontFamily}
         align="center"
         sx={{
-          fontWeight: "bold",
-          textTransform: "uppercase",
-          color: "#ffffff",
-          textShadow: "0 0 10px #fff",
+          ...commonTextStyles,
           fontSize: {
             xs: "50px",
             sm: "72px",
@@ -31,13 +35,9 @@ const EventTitle = ({ event }) => {
         {event.name.split(" ")[0]} {event.name.split(" ")[1]}
       </Typography>
       <Typography
-        fontFamily={theme.typography.fontFamily}
         align="center"
         sx={{
-          fontWeight: "bold",
-          color: "#ffffff",
-          textTransform: "uppercase",
-          textShadow: "0 0 10px #fff",
+          ...commonTextStyles,
           fontSize: {
             xs: "25px",
             sm: "35px",
@@ -48,13 +48,9 @@ const EventTitle = ({ event }) => {
         {event.name.split(" ")[2]} {event.name.split(" ")[3]}
       </Typography>
       <Typography
-        fontFamily={theme.typography.fontFamily}
         align="center"
         sx={{
-          color: "#ffffff",
-          textTransform: "uppercase",
-          fontWeight: "bold",
-          textShadow: "0 0 10px #fff",
+          ...commonTextStyles,
           fontSize: {
             xs: "20px",
             sm: "30px",
@@ -65,13 +61,9 @@ const EventTitle = ({ event }) => {
         {event.address.city}, {event.address.state}
       </Typography>
       <Typography
-        fontFamily={theme.typography.fontFamily}
         align="center"
         sx={{
-          color: "#ffffff",
-          textTransform: "uppercase",
-          fontWeight: "bold",
-          textShadow: "0 0 10px #fff",
+          ...commonTextStyles,
           fontSize: {
             xs: "20px",
             sm: "30px",
