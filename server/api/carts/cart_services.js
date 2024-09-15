@@ -75,6 +75,7 @@ export default {
     try {
       if (current_user && Object.keys(current_user).length > 0) {
         let data = await cart_db.findByUser_carts_db(current_user._id);
+        console.log({ data });
         if (data) {
           const result = updateCartItems(data.cartItems, cart_item);
           data.cartItems = result.items;
@@ -97,13 +98,13 @@ export default {
         if (cartItems && cartItems.length > 0) {
           const result = updateCartItems(cartItems, cart_item);
           return {
-            data: { ...data, cartItems: result.items },
+            data: { cartItems: result.items },
             message: result.message,
           };
         } else {
           const result = updateCartItems([], cart_item);
           return {
-            data: { ...data, cartItems: result.items },
+            data: { cartItems: result.items },
             message: result.message,
           };
         }
