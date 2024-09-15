@@ -48,7 +48,7 @@ const DateBox = ({ startDate, endDate, color }) => {
         {sameMonth ? getMonthAbbr(start) : `${getMonthAbbr(start)}-${getMonthAbbr(end)}`}
         {!sameYear && ` ${start.getFullYear().toString().substr(-2)}-${end.getFullYear().toString().substr(-2)}`}
       </Typography>
-      <Typography variant="h5" sx={{ fontSize: "3rem", lineHeight: 1 }}>
+      <Typography variant="h5" sx={{ fontSize: sameDay ? "3rem" : "2.5rem", lineHeight: 1 }}>
         {sameDay ? start.getDate() : `${start.getDate()}-${end.getDate()}`}
       </Typography>
       <Typography

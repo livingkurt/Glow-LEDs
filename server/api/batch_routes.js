@@ -5778,4 +5778,74 @@ router.route("/migrate_max_quantity").put(async (req, res) => {
   }
 });
 
+router.route("/migrate_max_quantity_everything").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      if (product.count_in_stock) {
+        product.max_quantity = 0;
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} products.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_max_quantity_gloves").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false, category: "gloves" });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      if (product.count_in_stock) {
+        product.max_quantity = product.count_in_stock;
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} products.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_max_quantity_batteries").put(async (req, res) => {
+  try {
+    const products = await Product.find({ deleted: false, category: "batteries", subcategory: "coin" });
+
+    let updatedCount = 0;
+
+    for (const product of products) {
+      if (product.count_in_stock) {
+        product.max_quantity = product.count_in_stock;
+        await product.save();
+        updatedCount++;
+      }
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} products.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;

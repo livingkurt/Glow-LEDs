@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, lighten, Typography } from "@mui/material";
 
-const TicketPrice = ({ ticket }) => {
+const TicketPrice = ({ ticket, tickets }) => {
+  const [maxWidth, setMaxWidth] = useState(0);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const updateMaxWidth = () => {
+      const elements = document.querySelectorAll(".ticket-type-text");
+      const widths = Array.from(elements).map(el => el.offsetWidth);
+      const newMaxWidth = Math.max(...widths);
+      setMaxWidth(newMaxWidth);
+    };
+
+    updateMaxWidth();
+    window.addEventListener("resize", updateMaxWidth);
+
+    return () => window.removeEventListener("resize", updateMaxWidth);
+  }, [tickets]);
+
   return (
     <Box
-      key={ticket?._id}
       sx={{
         borderRadius: "8px",
-        minWidth: "120px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -16,7 +31,7 @@ const TicketPrice = ({ ticket }) => {
     >
       <Box
         sx={{
-          width: 175,
+          width: maxWidth > 0 ? `${maxWidth + 40}px` : "auto", // Add some padding
           height: 50,
           background: `linear-gradient(180deg, ${lighten(ticket.color || "#999999", 0.3)} 30%, ${ticket.color || "#999999"} 90%)`,
           display: "flex",
@@ -27,9 +42,12 @@ const TicketPrice = ({ ticket }) => {
           fontWeight: "1000",
           boxShadow: `0 0 15px ${ticket?.color || "#999999"}`,
           marginBottom: "8px",
+          transition: "width 0.3s ease", // Smooth transition for width changes
         }}
       >
-        <Typography variant="h5">{ticket?.ticket_type}</Typography>
+        <Typography variant="h5" className="ticket-type-text" ref={textRef}>
+          {ticket?.ticket_type}
+        </Typography>
       </Box>
       <Typography variant="h4" color="white" fontWeight="bold" align="center">
         ${ticket?.price}

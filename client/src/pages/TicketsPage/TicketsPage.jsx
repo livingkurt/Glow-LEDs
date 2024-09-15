@@ -11,6 +11,7 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import { FileCopy } from "@mui/icons-material";
 
 const TicketsPage = () => {
   const ticketPage = useSelector(state => state.tickets.ticketPage);
@@ -38,9 +39,9 @@ const TicketsPage = () => {
           </GLIconButton>
         ),
       },
+      { title: "Title", display: "title" },
       { title: "Ticket Type", display: "ticket_type" },
       { title: "Price", display: ticket => `$${ticket.price}` },
-      { title: "Event", display: ticket => ticket.event.name },
       {
         title: "",
         nonSelectable: true,
@@ -53,6 +54,21 @@ const TicketsPage = () => {
               }}
             >
               <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
+              onClick={() => {
+                dispatch(
+                  API.saveTicket({
+                    ...ticket,
+                    _id: null,
+                    title: `${ticket.title} Copy`,
+                    pathname: `${ticket.pathname}_copy`,
+                  })
+                );
+              }}
+            >
+              <FileCopy color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteTicket(ticket.pathname))} tooltip="Delete">
               <Delete color="white" />

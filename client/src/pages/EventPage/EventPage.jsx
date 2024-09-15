@@ -11,6 +11,7 @@ import EventTitle from "./components/EventTitle";
 import TicketScanner from "./components/TicketScanner";
 import { EditEventModal } from "../EventsPage/components";
 import { open_edit_event_modal } from "../../slices/eventSlice";
+import { EditTicketModal } from "../TicketsPage/components";
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -80,6 +81,16 @@ const EventPage = () => {
     return <Typography variant="h4">Event not found</Typography>;
   }
 
+  const fullTickets = tickets => {
+    const outOfStockTicket = tickets.find(ticket => ticket.count_in_stock <= 0);
+    if (outOfStockTicket?.backup_ticket) {
+      return [...tickets, outOfStockTicket.backup_ticket];
+    }
+    return tickets;
+  };
+
+  const allTickets = fullTickets(event.tickets);
+
   return (
     <EventContainer event={event}>
       {current_user?.isAdmin && (
@@ -104,11 +115,11 @@ const EventPage = () => {
             borderRadius: "10px",
           }}
         >
-          {event.tickets?.map(ticket => (
+          {allTickets?.map(ticket => (
             <TicketPrice key={ticket._id} ticket={ticket} />
           ))}
         </Box>
-        <Paper sx={{ backgroundColor: "transparent", padding: "10px", borderRadius: "10px" }}>
+        <Box sx={{ padding: "10px", borderRadius: "10px" }}>
           <Typography variant="subtitle1" textAlign="center" gutterBottom sx={{ mt: 2, color: "white" }}>
             Follow us at{" "}
             <Link href={event.social_media_url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
@@ -117,8 +128,8 @@ const EventPage = () => {
             on {event.social_media_type} to get the latest updates
           </Typography>
           <Box my={4}>
-            {event.tickets && event.tickets.length > 0 ? (
-              event.tickets.map(ticket => (
+            {allTickets && allTickets.length > 0 ? (
+              allTickets.map(ticket => (
                 <TicketItem
                   key={ticket._id}
                   ticket={ticket}
@@ -133,7 +144,7 @@ const EventPage = () => {
               </Typography>
             )}
           </Box>
-        </Paper>
+        </Box>
       </Box>
       <TicketModal
         open={openModal}
@@ -147,6 +158,7 @@ const EventPage = () => {
 
       <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
       <EditEventModal />
+      <EditTicketModal />
     </EventContainer>
   );
 };
