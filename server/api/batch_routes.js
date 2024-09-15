@@ -5847,5 +5847,57 @@ router.route("/migrate_max_quantity_batteries").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+router.route("/migrate_max_display_quantity_cart").put(async (req, res) => {
+  try {
+    const carts = await Cart.find({ deleted: false });
+
+    let updatedCount = 0;
+
+    for (const cart of carts) {
+      for (const cartItem of cart.cartItems) {
+        if (cartItem.count_in_stock) {
+          cartItem.max_display_quantity = cartItem.max_quantity;
+          cartItem.max_display_quantity = cartItem.max_quantity;
+        }
+      }
+      await cart.save();
+      updatedCount++;
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} carts.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+router.route("/migrate_max_display_quantity_order").put(async (req, res) => {
+  try {
+    const orders = await Order.find({ deleted: false });
+
+    let updatedCount = 0;
+
+    for (const order of orders) {
+      for (const orderItem of order.orderItems) {
+        if (orderItem.count_in_stock) {
+          orderItem.max_display_quantity = orderItem.max_quantity;
+          orderItem.max_display_quantity = orderItem.max_quantity;
+          updatedCount++;
+        }
+      }
+      await order.save();
+    }
+
+    res.status(200).json({
+      message: `Update completed. Updated tags for ${updatedCount} orders.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error("Update failed:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
 
 export default router;

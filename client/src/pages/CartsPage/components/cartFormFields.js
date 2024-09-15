@@ -22,7 +22,7 @@ export const cartFormFields = ({ products, users, cart }) => {
           },
           max_display_quantity: {
             type: "number",
-            label: "Max Quantity",
+            label: "Max Display Quantity",
             labelProp: "max_display_quantity",
           },
           max_quantity: {
