@@ -1,12 +1,5 @@
-export const ticketFormFields = ({ eventsQuery, ticket }) => {
+export const ticketFormFields = ({ eventsQuery, ticket, ticketsQuery }) => {
   return {
-    event: {
-      type: "autocomplete_single",
-      label: "Event",
-      options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
-      loading: eventsQuery?.isLoading,
-      labelProp: "name",
-    },
     title: {
       type: "text",
       label: "Title",
@@ -57,6 +50,13 @@ export const ticketFormFields = ({ eventsQuery, ticket }) => {
     short_description: {
       type: "text_multiline",
       label: "Short Description",
+    },
+    backup_ticket: {
+      type: "autocomplete_single",
+      label: "Backup Ticket",
+      options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
+      loading: ticketsQuery?.isLoading,
+      labelProp: "title",
     },
     active: {
       type: "checkbox",

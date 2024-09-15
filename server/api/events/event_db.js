@@ -9,7 +9,13 @@ export default {
         .populate("background_image")
         .populate({
           path: "tickets",
-          populate: { path: "image" },
+          populate: [
+            { path: "image" },
+            {
+              path: "backup_ticket",
+              populate: { path: "image" },
+            },
+          ],
         })
         .populate("thumbnail_image")
 
@@ -28,7 +34,13 @@ export default {
         .populate("background_image")
         .populate({
           path: "tickets",
-          populate: { path: "image" },
+          populate: [
+            { path: "image" },
+            {
+              path: "backup_ticket",
+              populate: { path: "image" },
+            },
+          ],
         })
         .populate("thumbnail_image");
     } catch (error) {
@@ -45,7 +57,13 @@ export default {
         .populate("background_image")
         .populate({
           path: "tickets",
-          populate: { path: "image" },
+          populate: [
+            { path: "image" },
+            {
+              path: "backup_ticket",
+              populate: { path: "image" },
+            },
+          ],
         })
         .populate("thumbnail_image");
     } catch (error) {

@@ -13,7 +13,6 @@ const HeaderDrawerButton = ({ path, name, id, permissions, extraContent, from, f
   if (permissions && !permissions(current_user)) {
     return null;
   }
-  console.log({ activeFlags, feature });
   if (feature && !activeFlags.includes(feature)) {
     return null;
   }

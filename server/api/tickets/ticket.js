@@ -14,6 +14,7 @@ const ticket_schema = new mongoose.Schema(
     finite_stock: { type: Boolean, default: false },
     short_description: { type: String },
     pathname: { type: String },
+    backup_ticket: { type: mongoose.Schema.Types.ObjectId, ref: "Ticket" },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },
