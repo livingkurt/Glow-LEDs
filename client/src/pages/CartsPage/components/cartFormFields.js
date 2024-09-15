@@ -7,6 +7,10 @@ export const cartFormFields = ({ products, users, cart }) => {
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
+    active: {
+      type: "checkbox",
+      label: "Active",
+    },
     cartItems: {
       type: "array",
       title: "Cart Items",

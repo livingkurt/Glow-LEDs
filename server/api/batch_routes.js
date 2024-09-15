@@ -5780,124 +5780,183 @@ router.route("/migrate_max_quantity").put(async (req, res) => {
 
 router.route("/migrate_max_quantity_everything").put(async (req, res) => {
   try {
-    const products = await Product.find({ deleted: false });
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-    let updatedCount = 0;
+    try {
+      const result = await Product.updateMany(
+        { deleted: false, count_in_stock: { $exists: true, $ne: null } },
+        { $set: { max_quantity: 0 } },
+        { session }
+      );
 
-    for (const product of products) {
-      if (product.count_in_stock) {
-        product.max_quantity = 0;
-        await product.save();
-        updatedCount++;
-      }
+      await session.commitTransaction();
+      session.endSession();
+
+      res.status(200).json({
+        message: `Update completed. Updated ${result.modifiedCount} products.`,
+        updatedCount: result.modifiedCount,
+      });
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      throw error;
     }
-
-    res.status(200).json({
-      message: `Update completed. Updated tags for ${updatedCount} products.`,
-      updatedCount,
-    });
   } catch (error) {
     console.error("Update failed:", error);
     res.status(500).send({ error: error.message });
   }
 });
 router.route("/migrate_max_quantity_gloves").put(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    const products = await Product.find({ deleted: false, category: "gloves" });
+    const result = await Product.updateMany(
+      { deleted: false, category: "gloves", count_in_stock: { $exists: true, $ne: null } },
+      [{ $set: { max_quantity: "$count_in_stock" } }],
+      { session }
+    );
 
-    let updatedCount = 0;
-
-    for (const product of products) {
-      if (product.count_in_stock) {
-        product.max_quantity = product.count_in_stock;
-        await product.save();
-        updatedCount++;
-      }
-    }
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(200).json({
-      message: `Update completed. Updated tags for ${updatedCount} products.`,
-      updatedCount,
+      message: `Update completed. Updated ${result.modifiedCount} glove products.`,
+      updatedCount: result.modifiedCount,
     });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     console.error("Update failed:", error);
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate max quantity for coin batteries
 router.route("/migrate_max_quantity_batteries").put(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    const products = await Product.find({ deleted: false, category: "batteries", subcategory: "coin" });
+    const result = await Product.updateMany(
+      { deleted: false, category: "batteries", subcategory: "coin", count_in_stock: { $exists: true, $ne: null } },
+      [{ $set: { max_quantity: "$count_in_stock" } }],
+      { session }
+    );
 
-    let updatedCount = 0;
-
-    for (const product of products) {
-      if (product.count_in_stock) {
-        product.max_quantity = product.count_in_stock;
-        await product.save();
-        updatedCount++;
-      }
-    }
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(200).json({
-      message: `Update completed. Updated tags for ${updatedCount} products.`,
-      updatedCount,
+      message: `Update completed. Updated ${result.modifiedCount} coin battery products.`,
+      updatedCount: result.modifiedCount,
     });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     console.error("Update failed:", error);
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate max display quantity for cart items and set all carts to active
 router.route("/migrate_max_display_quantity_cart").put(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    const carts = await Cart.find({ deleted: false });
+    const result = await Cart.updateMany(
+      {},
+      [
+        {
+          $set: {
+            "cartItems": {
+              $map: {
+                input: "$cartItems",
+                as: "item",
+                in: {
+                  $mergeObjects: [
+                    "$$item",
+                    {
+                      max_quantity: 30,
+                      max_display_quantity: 30,
+                    },
+                  ],
+                },
+              },
+            },
+            active: true,
+          },
+        },
+      ],
+      { session }
+    );
 
-    let updatedCount = 0;
-
-    for (const cart of carts) {
-      for (const cartItem of cart.cartItems) {
-        if (cartItem.count_in_stock) {
-          cartItem.max_display_quantity = cartItem.max_quantity;
-          cartItem.max_display_quantity = cartItem.max_quantity;
-        }
-      }
-      await cart.save();
-      updatedCount++;
-    }
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(200).json({
-      message: `Update completed. Updated tags for ${updatedCount} carts.`,
-      updatedCount,
+      message: `Update completed. Updated ${result.modifiedCount} carts.`,
+      updatedCount: result.modifiedCount,
     });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     console.error("Update failed:", error);
     res.status(500).send({ error: error.message });
   }
 });
+
+// Migrate max display quantity for order items
 router.route("/migrate_max_display_quantity_order").put(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    const orders = await Order.find({ deleted: false });
+    const result = await Order.updateMany(
+      { deleted: false, "orderItems.count_in_stock": { $exists: true, $ne: null } },
+      [
+        {
+          $set: {
+            "orderItems": {
+              $map: {
+                input: "$orderItems",
+                as: "item",
+                in: {
+                  $mergeObjects: [
+                    "$$item",
+                    {
+                      max_display_quantity: {
+                        $cond: [
+                          { $ifNull: ["$$item.count_in_stock", false] },
+                          "$$item.max_quantity",
+                          "$$item.max_display_quantity",
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+      { session }
+    );
 
-    let updatedCount = 0;
-
-    for (const order of orders) {
-      for (const orderItem of order.orderItems) {
-        if (orderItem.count_in_stock) {
-          orderItem.max_display_quantity = orderItem.max_quantity;
-          orderItem.max_display_quantity = orderItem.max_quantity;
-          updatedCount++;
-        }
-      }
-      await order.save();
-    }
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(200).json({
-      message: `Update completed. Updated tags for ${updatedCount} orders.`,
-      updatedCount,
+      message: `Update completed. Updated items in ${result.modifiedCount} orders.`,
+      updatedCount: result.modifiedCount,
     });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     console.error("Update failed:", error);
     res.status(500).send({ error: error.message });
   }
 });
-
 export default router;
