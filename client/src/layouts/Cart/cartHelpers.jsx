@@ -3,6 +3,7 @@ import { set_success } from "../../slices/cartSlice";
 import { clear_order_state } from "../../slices/orderSlice";
 import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
 import { setLoadingPlaceOrderPage } from "../../pages/PlaceOrderPage/placeOrderSlice";
+import { showInfo } from "../../slices/snackbarSlice";
 
 export const useOutsideAlerter = (ref, dispatch) => {
   useEffect(() => {
@@ -23,8 +24,12 @@ export const useOutsideAlerter = (ref, dispatch) => {
   }, [ref]);
 };
 
-export const checkoutHandler = (dispatch, navigate, current_user, closeMenu) => {
+export const checkoutHandler = (dispatch, navigate, current_user, closeMenu, cartItems) => {
   dispatch(clear_order_state());
+  if (cartItems.length === 0) {
+    dispatch(showInfo({ message: "Cannot proceed to checkout without any items in cart" }));
+    return;
+  }
   // dispatch(setLoadingPlaceOrderPage(true));
 
   // dispatch(setLoadingPlaceOrderPage(false));

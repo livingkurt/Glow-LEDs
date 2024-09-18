@@ -23,8 +23,8 @@ const Cart = () => {
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
 
   const handleCheckout = useCallback(
-    () => checkoutHandler(dispatch, navigate, current_user, closeMenu),
-    [dispatch, navigate, current_user, closeMenu]
+    () => checkoutHandler(dispatch, navigate, current_user, closeMenu, cartItems),
+    [dispatch, navigate, current_user, closeMenu, cartItems]
   );
 
   const wholesaleProceed = useCallback(
