@@ -1,69 +1,40 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";
 import { determineItemsTotal } from "../../utils/helper_functions";
-import { GLTooltip } from "../../shared/GlowLEDsComponents";
-import { API_Products } from "../../utils";
-import { useNavigate, useParams } from "react-router-dom";
-import { getCartQuantity } from "../../helpers/sharedHelpers";
-import {
-  Container,
-  Typography,
-  Box,
-  Grid,
-  List,
-  ListItem,
-  Divider,
-  useTheme,
-  Paper,
-  useMediaQuery,
-} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Container, Typography, Box, Grid, List, ListItem, Divider, useTheme, Paper } from "@mui/material";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import * as API from "../../api";
+import { showInfo } from "../../slices/snackbarSlice";
 
 const CartPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const params = useParams();
   const cartPage = useSelector(state => state.carts.cartPage);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
-  const { data: currentContent, isLoading } = API.useCurrentContentQuery();
+  const { data: currentContent } = API.useCurrentContentQuery();
 
   const product_protection_details = currentContent?.home_page?.product_protection_details;
 
-  // const { data: currentContent, isLoading } = API.useCurrentContentQuery();
-
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const [no_items_in_cart, set_no_items_in_cart] = useState("");
-  const [giftMessage, setGiftMessage] = useState("");
 
   const checkoutHandler = () => {
     if (cartItems.length === 0) {
-      set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
-    } else {
-      if (current_user.hasOwnProperty("first_name")) {
-        navigate("/secure/checkout/placeorder");
-      } else {
-        navigate("/checkout/placeorder");
-      }
+      dispatch(showInfo({ message: "Cannot proceed to checkout without any items in cart" }));
+      return;
     }
-  };
-
-  const diminish_stock = async () => {
-    const request = await API_Products.update_stock(cartItems);
-  };
-
-  const determine_wholesale_proceed = () => {
-    return (
-      current_user?.isWholesaler &&
-      determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
-    );
+    if (current_user.hasOwnProperty("first_name")) {
+      navigate("/secure/checkout/placeorder");
+    } else {
+      navigate("/checkout/placeorder");
+    }
   };
 
   return (
@@ -85,12 +56,6 @@ const CartPage = () => {
               <Grid item xs={9}>
                 <Typography variant="subtitle1">Product</Typography>
               </Grid>
-              {/* <Grid item xs={3}>
-                <Typography variant="subtitle1">Quantity</Typography>
-              </Grid> */}
-              {/* <Grid item xs={3}>
-                <Typography variant="subtitle1">Total</Typography>
-              </Grid> */}
             </Grid>
             <Divider sx={{ mb: 2, bgcolor: "white" }} />
             {cartItems.length === 0 ? (
@@ -105,11 +70,6 @@ const CartPage = () => {
               </List>
             )}
           </Box>
-          {/* <Box sx={{ mb: 4 }}>
-            <Typography variant="h6" gutterBottom>
-              Complete with
-            </Typography>
-          </Box> */}
         </Grid>
         <Grid item xs={12} md={5} display={"flex"} flexDirection={"column"}>
           <Paper sx={{ p: 3, borderRadius: 2, bgcolor: theme.palette.background.block, color: "white" }}>
@@ -124,16 +84,6 @@ const CartPage = () => {
             <Typography variant="body2" gutterBottom>
               Taxes and shipping calculated at checkout
             </Typography>
-            {/* <TextField
-              fullWidth
-              multiline
-              rows={4}
-              variant="outlined"
-              label="Enter gift message"
-              value={giftMessage}
-              onChange={e => setGiftMessage(e.target.value)}
-              sx={{ mt: 2, mb: 2 }}
-            /> */}
             <GLButtonV2
               onClick={checkoutHandler}
               variant="primary"
@@ -171,11 +121,6 @@ const CartPage = () => {
           )}
         </Grid>
       </Grid>
-      {no_items_in_cart && (
-        <Typography variant="h6" align="center" sx={{ mt: 2 }}>
-          {no_items_in_cart}
-        </Typography>
-      )}
     </Container>
   );
 };

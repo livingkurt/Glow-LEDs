@@ -38,6 +38,12 @@ const PlaceOrderPage = () => {
     placeOrder;
 
   useEffect(() => {
+    if (!cartItems || cartItems.length === 0) {
+      navigate("/checkout/cart");
+    }
+  }, [cartItems, navigate]);
+
+  useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listPromos({}));
