@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, Grid, Container } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Grid,
+  Container,
+  useTheme,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const TechSpecs = ({ tech_specs }) => {
+  const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = panel => (event, isExpanded) => {
@@ -22,13 +32,20 @@ const TechSpecs = ({ tech_specs }) => {
         <Grid item xs={12} sm={12} md={8} lg={8}>
           <Box width="100%">
             {tech_specs?.navigation.map((section, index) => (
-              <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
+              <Accordion
+                key={index}
+                expanded={expanded === `panel${index}`}
+                onChange={handleChange(`panel${index}`)}
+                style={{ backgroundColor: theme.palette.primary.main, color: "white" }}
+              >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
+                  expandIcon={<ExpandMoreIcon style={{ fontSize: 30 }} color="white" />}
                   aria-controls={`panel${index}bh-content`}
                   id={`panel${index}bh-header`}
                 >
-                  <Typography variant="subtitle1">{section.title}</Typography>
+                  <Typography variant="subtitle1" p={2}>
+                    {section.title}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Grid container spacing={2}>

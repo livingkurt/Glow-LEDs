@@ -17,7 +17,7 @@ const HeroFact = ({ heroFact }) => {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "4rem 2rem",
+            padding: "14rem 2rem",
             borderRadius: "20px",
             // backgroundColor: theme.palette.primary.main,
           }}
@@ -26,8 +26,8 @@ const HeroFact = ({ heroFact }) => {
             variant="h2"
             component="h2"
             sx={{
-              fontSize: { xs: "4rem", md: "5rem" },
-              fontWeight: "bold",
+              fontSize: { xs: "5rem", md: "6rem" },
+              // fontWeight: "bold",
               marginBottom: "1rem",
             }}
           >

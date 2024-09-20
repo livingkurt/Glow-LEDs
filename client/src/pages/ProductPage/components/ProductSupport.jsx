@@ -11,6 +11,7 @@ const SupportLink = ({ icon, text, href, isExternal }) => {
     display: "flex",
     alignItems: "center",
     color: "inherit",
+
     textDecoration: "none",
     mb: 1,
     "&:hover": {
@@ -21,7 +22,7 @@ const SupportLink = ({ icon, text, href, isExternal }) => {
   const content = (
     <>
       {icon}
-      <Typography variant="body1" sx={{ ml: 1 }}>
+      <Typography variant="body1" sx={{ ml: 1 }} fontSize={20}>
         {text}
       </Typography>
     </>
@@ -63,7 +64,7 @@ const ProductSupport = ({ productSupport }) => {
               {quick_guide && (
                 <>
                   <SupportLink
-                    icon={<DownloadIcon />}
+                    icon={<DownloadIcon style={{ fontSize: 40 }} />}
                     text="Download | Quick Start Guide"
                     href={quick_guide}
                     isExternal={quick_guide.startsWith("http")}
@@ -74,7 +75,7 @@ const ProductSupport = ({ productSupport }) => {
               {manual && (
                 <>
                   <SupportLink
-                    icon={<DownloadIcon />}
+                    icon={<DownloadIcon style={{ fontSize: 40 }} />}
                     text="Download | Manual"
                     href={manual}
                     isExternal={manual.startsWith("http")}
@@ -85,7 +86,7 @@ const ProductSupport = ({ productSupport }) => {
               {support_link && (
                 <>
                   <SupportLink
-                    icon={<LaunchIcon />}
+                    icon={<LaunchIcon style={{ fontSize: 40 }} />}
                     text="Product Support"
                     href={support_link}
                     isExternal={support_link.startsWith("http")}
@@ -95,7 +96,7 @@ const ProductSupport = ({ productSupport }) => {
               )}
               {tutorial_video && (
                 <SupportLink
-                  icon={<PlayCircleOutlineIcon />}
+                  icon={<PlayCircleOutlineIcon style={{ fontSize: 40 }} />}
                   text="Watch Video Tutorial"
                   href={tutorial_video}
                   isExternal={tutorial_video.startsWith("http")}
