@@ -110,7 +110,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                       },
                     }}
                   >
-                    Shop Now
+                    {slide.button_text || "Shop Now"}
                   </Button>
                 </Link>
               </Box>
