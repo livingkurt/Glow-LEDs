@@ -31,6 +31,7 @@ import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleChips from "./components/CompatibleChips";
 import ContributorsDisplay from "./components/ContributorsDisplay";
 import { sale_price_switch } from "../../utils/react_helper_functions";
+import IconFeatures from "./components/IconFeatures";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -187,6 +188,7 @@ const ProductPage = () => {
                       {determineInStock(customizedProduct)}
                     </GLButtonV2>
                   </Box>
+                  {!product.icon_specs_hidden && <IconFeatures icon_specs={product?.icon_specs} />}
                 </Grid>
               </Grid>
             </Container>

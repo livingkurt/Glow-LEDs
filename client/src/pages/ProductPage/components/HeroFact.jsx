@@ -19,14 +19,14 @@ const HeroFact = ({ heroFact }) => {
             textAlign: "center",
             padding: "4rem 2rem",
             borderRadius: "20px",
-            backgroundColor: theme.palette.primary.main,
+            // backgroundColor: theme.palette.primary.main,
           }}
         >
           <Typography
             variant="h2"
             component="h2"
             sx={{
-              fontSize: { xs: "2rem", md: "3rem" },
+              fontSize: { xs: "4rem", md: "5rem" },
               fontWeight: "bold",
               marginBottom: "1rem",
             }}
@@ -34,7 +34,7 @@ const HeroFact = ({ heroFact }) => {
             {title}
           </Typography>
           <Typography
-            variant="h4"
+            variant="body1"
             component="p"
             sx={{
               fontSize: { xs: "1.25rem", md: "1.5rem" },
