@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 
-const HeroFact = ({ heroFact }) => {
+const HeroFact = ({ heroFact, text_color, secondary_color, header_text_color }) => {
   const theme = useTheme();
   if (!heroFact || heroFact.hidden) return null;
 
-  const { title, description } = heroFact;
+  const { title, description, subtitle } = heroFact;
 
   return (
     <>
@@ -17,28 +17,38 @@ const HeroFact = ({ heroFact }) => {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "4rem 2rem",
+            padding: "14rem 2rem",
             borderRadius: "20px",
-            backgroundColor: theme.palette.primary.main,
           }}
         >
           <Typography
-            variant="h2"
-            component="h2"
+            variant="h4"
+            component="h4"
             sx={{
-              fontSize: { xs: "2rem", md: "3rem" },
-              fontWeight: "bold",
+              fontSize: { xs: "6rem", md: "8rem" },
+              color: secondary_color ? secondary_color : "white",
               marginBottom: "1rem",
             }}
           >
             {title}
           </Typography>
+          {subtitle && (
+            <Typography
+              variant="h4"
+              component="h4"
+              sx={{
+                color: header_text_color ? header_text_color : "white",
+                marginBottom: "1rem",
+              }}
+            >
+              {subtitle}
+            </Typography>
+          )}
           <Typography
-            variant="h4"
-            component="p"
+            variant="body1"
             sx={{
-              fontSize: { xs: "1.25rem", md: "1.5rem" },
               maxWidth: "800px",
+              color: text_color ? text_color : "white",
               margin: "0 auto",
             }}
           >

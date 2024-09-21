@@ -259,14 +259,23 @@ export default {
             },
           ],
         })
+        .populate("title_image")
+        .populate("themed_logo")
+        .populate("line_break")
+        .populate("pattern_tile")
+        .populate("corner_image")
+        .populate("hero_image")
         .populate({
           path: "features",
           populate: [
             { path: "image_grid_1.image" },
+            { path: "image_grid_1.text_image" },
             { path: "hero_image_1" },
             { path: "image_grid_2.image" },
+            { path: "image_grid_2.text_image" },
             { path: "hero_image_2" },
             { path: "lifestyle_images" },
+            { path: "hero_image_3" },
           ],
         })
         .populate({

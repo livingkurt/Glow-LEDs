@@ -19,8 +19,9 @@ import { Image, image_db, image_services } from "./images";
 import { Category } from "./categorys";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware";
 import { Cart } from "./carts";
+import { promises as fs } from "fs";
 import path from "path";
-import fs from "fs";
+
 import axios from "axios";
 import appRoot from "app-root-path";
 import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
@@ -5959,4 +5960,110 @@ router.route("/migrate_max_display_quantity_order").put(async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+
+router.route("/make_markdown").put(async (req, res) => {
+  try {
+    const specificProducts = [
+      "Helios Gloveset",
+      "Helios Microlight",
+      "Glow Jar",
+      "CLOZD Helioskinz",
+      "OPYN Helioskinz"
+    ];
+
+    const products = await Product.find({
+      deleted: false,
+      isVariation: false,
+      $or: [
+        { hidden: false },
+        { name: { $in: specificProducts } }
+      ]
+    }).select("name options hidden category").sort("category name");
+
+    let markdown = "# Product Options\n\n";
+
+    // Organize products by category
+    const productsByCategory = {};
+    products.forEach(product => {
+      if (!product.hidden || specificProducts.includes(product.name)) {
+        if (!productsByCategory[product.category]) {
+          productsByCategory[product.category] = [];
+        }
+        productsByCategory[product.category].push(product);
+      }
+    });
+
+    // Create a list of all main product names, organized by category
+    markdown += "## Main Products\n\n";
+    for (const [category, categoryProducts] of Object.entries(productsByCategory)) {
+      markdown += `### ${category.charAt(0).toUpperCase() + category.slice(1)}\n\n`;
+      categoryProducts.forEach(product => {
+        markdown += `- ${product.name}\n`;
+      });
+      markdown += "\n";
+    }
+    markdown += "---\n\n";
+
+    // Generate detailed markdown for each category
+    for (const [category, categoryProducts] of Object.entries(productsByCategory)) {
+      markdown += `# ${category.charAt(0).toUpperCase() + category.slice(1)}\n\n`;
+
+      for (const product of categoryProducts) {
+        markdown += `## ${product.name}\n\n`;
+
+        if (product.options && product.options.length > 0) {
+          const activeOptions = product.options.filter(option => option.active !== false);
+
+          for (const option of activeOptions) {
+            markdown += `### ${option.name}\n\n`;
+            if (option.values && option.values.length > 0) {
+              const activeValues = option.values.filter(value => value.active !== false);
+
+              if (activeValues.length > 0) {
+                for (const value of activeValues) {
+                  markdown += `- ${value.name}\n`;
+                }
+                markdown += "\n";
+              } else {
+                markdown += "No active values for this option.\n\n";
+              }
+            } else {
+              markdown += "No values for this option.\n\n";
+            }
+          }
+
+          if (activeOptions.length === 0) {
+            markdown += "No active options available for this product.\n\n";
+          }
+        } else {
+          markdown += "No options available for this product.\n\n";
+        }
+
+        markdown += "---\n\n";
+      }
+    }
+
+    // Create a temporary file
+    const tempDir = path.join(process.cwd(), "temp");
+    await fs.mkdir(tempDir, { recursive: true });
+    const filePath = path.join(tempDir, "product_options.md");
+    await fs.writeFile(filePath, markdown);
+
+    // Send the file
+    res.download(filePath, "product_options.md", err => {
+      if (err) {
+        console.error("Error sending file:", err);
+        res.status(500).send({ error: "Error sending file" });
+      }
+      // Delete the temporary file after sending
+      fs.unlink(filePath).catch(console.error);
+    });
+  } catch (error) {
+    console.error("Error generating product options markdown:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+
 export default router;

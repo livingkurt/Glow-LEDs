@@ -65,6 +65,7 @@ const productSchema = new mongoose.Schema(
       video: { type: String },
       hidden: { type: Boolean, default: false },
     },
+    hero_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
 
     icon_specs: [
       {
@@ -73,14 +74,36 @@ const productSchema = new mongoose.Schema(
       },
     ],
     icon_specs_hidden: { type: Boolean, default: false },
-    navigation_buttons_hidden: { type: Boolean, default: false },
+    navigation: {
+      navigation_buttons: [
+        {
+          label: { type: String },
+          target: { type: String },
+          hidden: { type: Boolean, default: false },
+        },
+      ],
+      hidden: { type: Boolean, default: false },
+    },
+    title_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    themed_logo: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    line_break: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    pattern_tile: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    corner_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    subtitle_text: { type: String },
 
+    primary_color: { type: String },
+    secondary_color: { type: String },
+    background_color: { type: String },
+    header_text_color: { type: String },
+    text_color: { type: String },
+    navigation_buttons_hidden: { type: Boolean, default: true },
     features: {
       image_grid_1: [
         {
           title: { type: String },
           description: { type: String },
           image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          text_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           button_text: { type: String },
           link: { type: String },
         },
@@ -89,6 +112,7 @@ const productSchema = new mongoose.Schema(
       hero_image_1: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
       hero_fact_1: {
         title: { type: String },
+        subtitle: { type: String },
         description: { type: String },
         hidden: { type: Boolean, default: false },
       },
@@ -97,19 +121,29 @@ const productSchema = new mongoose.Schema(
           title: { type: String },
           description: { type: String },
           image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          text_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           button_text: { type: String },
           link: { type: String },
         },
       ],
       image_grid_2_hidden: { type: Boolean, default: false },
-      hero_image_2: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+
       hero_fact_2: {
         title: { type: String },
+        subtitle: { type: String },
         description: { type: String },
         hidden: { type: Boolean, default: false },
       },
+      hero_image_2: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
       lifestyle_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
       lifestyle_images_hidden: { type: Boolean, default: false },
+      hero_fact_3: {
+        title: { type: String },
+        subtitle: { type: String },
+        description: { type: String },
+        hidden: { type: Boolean, default: false },
+      },
+      hero_image_3: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     },
 
     not_sure: {
