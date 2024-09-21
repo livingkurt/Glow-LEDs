@@ -1,36 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Box, darken, Typography, useTheme } from "@mui/material";
 
-const useStyles = makeStyles(theme => ({
-  navigationButtons: {
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: theme.palette.primary.main,
-  },
-  button: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: `${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(2)} ${theme.spacing(4)}`,
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-    "&:hover": {
-      backgroundColor: theme.palette.primary.dark,
-      borderBottom: `2px solid ${theme.palette.custom.white}`,
-      paddingBottom: theme.spacing(2),
-      marginBottom: -2,
-    },
-  },
-  buttonText: {
-    color: theme.palette.common.white,
-    fontWeight: "bold",
-    fontSize: "14px",
-  },
-}));
-
-const NavigationButtons = () => {
-  const classes = useStyles();
+const NavigationButtons = ({ primary_color }) => {
+  const theme = useTheme();
 
   const handleClick = target => {
     const element = document.getElementById(target);
@@ -46,24 +18,50 @@ const NavigationButtons = () => {
     }
   };
 
+  const buttonStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+    cursor: "pointer",
+    transition: "background-color 0.3s, border-color 0.3s",
+    borderBottom: "2px solid transparent",
+    "&:hover": {
+      backgroundColor: primary_color ? darken(primary_color, 0.1) : theme.palette.primary.dark,
+      borderBottomColor: primary_color ? theme.palette.getContrastText(primary_color) : theme.palette.common.white,
+    },
+  };
+
+  const buttonTextStyle = {
+    fontWeight: "bold",
+    fontSize: "14px",
+  };
+
   return (
-    <div className={classes.navigationButtons}>
-      <Box className={classes.button} onClick={() => handleClick("features")}>
-        <Typography variant="h6" className={classes.buttonText}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: primary_color || theme.palette.primary.main,
+        color: primary_color ? theme.palette.getContrastText(primary_color) : theme.palette.common.white,
+      }}
+    >
+      <Box sx={buttonStyle} onClick={() => handleClick("features")}>
+        <Typography variant="h6" sx={buttonTextStyle}>
           Features
         </Typography>
       </Box>
-      <Box className={classes.button} onClick={() => handleClick("tech-specs")}>
-        <Typography variant="h6" className={classes.buttonText}>
+      <Box sx={buttonStyle} onClick={() => handleClick("tech-specs")}>
+        <Typography variant="h6" sx={buttonTextStyle}>
           Tech Specs
         </Typography>
       </Box>
-      <Box className={classes.button} onClick={() => handleClick("manual")}>
-        <Typography variant="h6" className={classes.buttonText}>
+      <Box sx={buttonStyle} onClick={() => handleClick("manual")}>
+        <Typography variant="h6" sx={buttonTextStyle}>
           Manual
         </Typography>
       </Box>
-    </div>
+    </Box>
   );
 };
 

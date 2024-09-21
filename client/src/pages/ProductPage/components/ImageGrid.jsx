@@ -35,7 +35,7 @@ const TextImageContainer = styled(Box)({
   position: "relative",
 });
 
-const TextOverlay = styled(Box)({
+const TextOverlay = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: 0,
   left: 0,
@@ -44,8 +44,17 @@ const TextOverlay = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: "7rem",
-});
+  padding: theme.spacing(2), // Default padding for extra small screens
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(4),
+  },
+  [theme.breakpoints.up("md")]: {
+    padding: theme.spacing(5),
+  },
+  [theme.breakpoints.up("lg")]: {
+    padding: "7rem",
+  },
+}));
 
 const ImageGrid = ({ image_grid, image_grid_hidden, text_color, header_text_color }) => {
   return (

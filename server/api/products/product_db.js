@@ -264,6 +264,7 @@ export default {
         .populate("line_break")
         .populate("pattern_tile")
         .populate("corner_image")
+        .populate("hero_image")
         .populate({
           path: "features",
           populate: [
@@ -274,6 +275,7 @@ export default {
             { path: "image_grid_2.text_image" },
             { path: "hero_image_2" },
             { path: "lifestyle_images" },
+            { path: "hero_image_3" },
           ],
         })
         .populate({

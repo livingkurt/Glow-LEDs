@@ -194,10 +194,9 @@ const ProductPage = () => {
                 </Grid>
               </Grid>
             </Container>
-            {console.log({ navigation: product.navigation })}
             {!product?.navigation?.hidden && (
               <Box mb={-4}>
-                <NavigationButtons navigation={product?.navigation} />
+                <NavigationButtons navigation={product?.navigation} primary_color={product.primary_color} />
               </Box>
             )}
             <Box
@@ -213,8 +212,13 @@ const ProductPage = () => {
                     <HeroVideo video={product?.hero_video?.video} video_hidden={product?.hero_video?.hidden} />
                   </Grid>
                 )}
+                {product?.hero_image && (
+                  <Grid item xs={12}>
+                    <HeroImage image={product?.hero_image} />
+                  </Grid>
+                )}
                 <Grid item xs={12} mt={!product?.hero_video?.hidden && product?.hero_video?.video ? -4 : 0}>
-                  <ProductProtectionDetails transparent={false} />
+                  <ProductProtectionDetails transparent={false} primary_color={product.primary_color} />
                 </Grid>
                 {product?.header_image?.link && (
                   <Grid item xs={12} id="features">
@@ -234,7 +238,7 @@ const ProductPage = () => {
                           }}
                         />
                       </Box>
-                      <Typography variant="h3" gutterBottom color={product.secondary_color} textAlign="center">
+                      <Typography variant="h4" gutterBottom color={product.secondary_color} textAlign="center">
                         {product?.subtitle_text}
                       </Typography>
                       <LineBreak line_break={product?.line_break} />
@@ -253,11 +257,6 @@ const ProductPage = () => {
                     </Container>
                   </Grid>
                 )}
-                {product?.features?.hero_image_1 && (
-                  <Grid item xs={12}>
-                    <HeroImage image={product?.features?.hero_image_1} />
-                  </Grid>
-                )}
               </Grid>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
@@ -267,10 +266,16 @@ const ProductPage = () => {
                       <HeroFact
                         heroFact={product?.features?.hero_fact_1}
                         text_color={product.text_color}
-                        header_text_color={product.header_text_color}
+                        secondary_color={product.secondary_color}
                         line_break={product?.line_break}
+                        header_text_color={product.header_text_color}
                       />
                       <LineBreak line_break={product?.line_break} />
+                    </Grid>
+                  )}
+                  {product?.features?.hero_image_1 && (
+                    <Grid item xs={12}>
+                      <HeroImage image={product?.features?.hero_image_1} />
                     </Grid>
                   )}
                   {!product?.features?.image_grid_2_hidden && product?.features?.image_grid_2.length > 0 && (
@@ -289,21 +294,32 @@ const ProductPage = () => {
                       <HeroFact
                         heroFact={product?.features?.hero_fact_2}
                         text_color={product.text_color}
-                        header_text_color={product.header_text_color}
+                        secondary_color={product.secondary_color}
                         line_break={product?.line_break}
+                        header_text_color={product.header_text_color}
                       />
                       <LineBreak line_break={product?.line_break} />
+                    </Grid>
+                  )}
+                  {product?.features?.hero_image_2 && (
+                    <Grid item xs={12}>
+                      <HeroImage image={product?.features?.hero_image_2} />
+                    </Grid>
+                  )}
+                  {product?.features?.lifestyle_images.length > 0 && !product?.features?.lifestyle_images_hidden && (
+                    <Grid item xs={12} mt={2}>
+                      <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
+                    </Grid>
+                  )}
+                  {product?.features?.hero_image_3 && (
+                    <Grid item xs={12}>
+                      <HeroImage image={product?.features?.hero_image_3} />
                     </Grid>
                   )}
                 </Grid>
               </Container>
               <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                  {product?.features?.lifestyle_images.length > 0 && !product?.features?.lifestyle_images_hidden && (
-                    <Grid item xs={12} mt={2}>
-                      <LifestyleImageGrid lifestyleImages={product?.features?.lifestyle_images} />
-                    </Grid>
-                  )}
                   {product?.not_sure && !product?.not_sure.hidden && (
                     <Grid item xs={12}>
                       <CompareModels notSure={product?.not_sure} />
@@ -362,7 +378,7 @@ const ProductPage = () => {
                     <SupportBanner
                       text_color={product.text_color}
                       header_text_color={product.header_text_color}
-                      secondary_color={product.secondary_color}
+                      primary_color={product.primary_color}
                     />
                   </Grid>
                   <Grid item xs={12}>

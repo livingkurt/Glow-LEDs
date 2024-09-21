@@ -65,12 +65,18 @@ const TechSpecs = ({ tech_specs, text_color, primary_color, header_text_color })
                     {section.values.map((value, valueIndex) => (
                       <React.Fragment key={valueIndex}>
                         <Grid item xs={4}>
-                          <Typography variant="subtitle2" color={text_color ? text_color : "white"}>
+                          <Typography
+                            variant="subtitle2"
+                            color={primary_color ? theme.palette.getContrastText(primary_color) : "white"}
+                          >
                             {value.title}
                           </Typography>
                         </Grid>
                         <Grid item xs={8}>
-                          <Typography variant="body2" color={text_color ? text_color : "white"}>
+                          <Typography
+                            variant="body2"
+                            color={primary_color ? theme.palette.getContrastText(primary_color) : "white"}
+                          >
                             {value.description}
                           </Typography>
                         </Grid>

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import * as API from "../../api";
 
-const ProductProtectionDetails = ({ transparent }) => {
+const ProductProtectionDetails = ({ transparent, primary_color }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -13,8 +13,8 @@ const ProductProtectionDetails = ({ transparent }) => {
     product_protection_details?.length > 0 && (
       <Box
         sx={{
-          color: "white",
-          backgroundColor: transparent ? "transparent" : theme.palette.primary.main,
+          backgroundColor: transparent ? "transparent" : primary_color ? primary_color : theme.palette.primary.main,
+          color: primary_color ? theme.palette.getContrastText(primary_color) : theme.palette.common.white,
           overflow: "hidden", // This ensures the inner content doesn't overflow the rounded corners
         }}
       >

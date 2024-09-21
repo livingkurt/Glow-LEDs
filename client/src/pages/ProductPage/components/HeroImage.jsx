@@ -11,7 +11,7 @@ const HeroImage = ({ image }) => {
       alt={"Hero"}
       sx={{
         width: "100%",
-        aspectRatio: "16/9",
+        // aspectRatio: "16/9",
         height: "100%",
         objectFit: "cover",
       }}

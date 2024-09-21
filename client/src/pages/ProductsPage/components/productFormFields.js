@@ -236,6 +236,13 @@ export const productFormFields = ({
         },
       },
     },
+    hero_image: {
+      type: "image_upload",
+      label: "Hero Image",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
+    },
     icon_specs: {
       type: "array",
       label: item => item.description,
@@ -418,6 +425,10 @@ export const productFormFields = ({
               type: "text",
               label: "Title",
             },
+            subtitle: {
+              type: "text",
+              label: "Subtitle",
+            },
             description: {
               type: "text_multiline",
               label: "Description",
@@ -489,6 +500,10 @@ export const productFormFields = ({
               type: "text",
               label: "Title",
             },
+            subtitle: {
+              type: "text",
+              label: "Subtitle",
+            },
             description: {
               type: "text_multiline",
               label: "Description",
@@ -511,6 +526,36 @@ export const productFormFields = ({
           type: "checkbox",
           label: "Hide Lifestyle Images",
           default: false,
+        },
+        hero_image_3: {
+          type: "image_upload",
+          label: "Hero Image 3",
+          labelProp: "link",
+          album: `${product.name} Images`,
+          getOptionLabel: option => option.link,
+        },
+        hero_fact_3: {
+          type: "object",
+          title: "Hero Fact 3",
+          fields: {
+            title: {
+              type: "text",
+              label: "Title",
+            },
+            subtitle: {
+              type: "text",
+              label: "Subtitle",
+            },
+            description: {
+              type: "text_multiline",
+              label: "Description",
+            },
+            hidden: {
+              type: "checkbox",
+              label: "Hidden",
+              default: false,
+            },
+          },
         },
       },
     },
