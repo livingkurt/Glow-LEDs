@@ -175,3 +175,17 @@ export const productPageBreadCrumbs = product => {
     { name: name?.toUpperCase().split("_").join(" ") },
   ];
 };
+
+export const scrollToElement = target => {
+  const element = document.getElementById(target);
+  if (element) {
+    const offset = 80; // Adjust this value based on your header height
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  }
+};
