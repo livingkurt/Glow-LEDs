@@ -194,7 +194,7 @@ const ProductPage = () => {
                 </Grid>
               </Grid>
             </Container>
-            {!product?.navigation?.hidden && (
+            {!product?.navigation_buttons_hidden && (
               <Box mb={-4}>
                 <NavigationButtons navigation={product?.navigation} primary_color={product.primary_color} />
               </Box>

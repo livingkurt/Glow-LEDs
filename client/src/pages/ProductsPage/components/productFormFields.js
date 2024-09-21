@@ -360,6 +360,11 @@ export const productFormFields = ({
         },
       },
     },
+    navigation_buttons_hidden: {
+      type: "checkbox",
+      label: "Hide Navigation Buttons",
+      default: false,
+    },
 
     features: {
       type: "object",

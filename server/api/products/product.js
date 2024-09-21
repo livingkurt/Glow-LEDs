@@ -96,6 +96,7 @@ const productSchema = new mongoose.Schema(
     background_color: { type: String },
     header_text_color: { type: String },
     text_color: { type: String },
+    navigation_buttons_hidden: { type: Boolean, default: true },
     features: {
       image_grid_1: [
         {
