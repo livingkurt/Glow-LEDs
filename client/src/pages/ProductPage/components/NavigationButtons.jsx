@@ -1,22 +1,9 @@
 import React from "react";
 import { Box, darken, Typography, useTheme } from "@mui/material";
+import { scrollToElement } from "../productHelpers";
 
 const NavigationButtons = ({ primary_color }) => {
   const theme = useTheme();
-
-  const handleClick = target => {
-    const element = document.getElementById(target);
-    if (element) {
-      const offset = 80; // Adjust this value based on your header height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
 
   const buttonStyle = {
     display: "flex",
@@ -46,17 +33,17 @@ const NavigationButtons = ({ primary_color }) => {
         color: primary_color ? theme.palette.getContrastText(primary_color) : theme.palette.common.white,
       }}
     >
-      <Box sx={buttonStyle} onClick={() => handleClick("features")}>
+      <Box sx={buttonStyle} onClick={() => scrollToElement("features")}>
         <Typography variant="h6" sx={buttonTextStyle}>
           Features
         </Typography>
       </Box>
-      <Box sx={buttonStyle} onClick={() => handleClick("tech-specs")}>
+      <Box sx={buttonStyle} onClick={() => scrollToElement("tech-specs")}>
         <Typography variant="h6" sx={buttonTextStyle}>
           Tech Specs
         </Typography>
       </Box>
-      <Box sx={buttonStyle} onClick={() => handleClick("manual")}>
+      <Box sx={buttonStyle} onClick={() => scrollToElement("manual")}>
         <Typography variant="h6" sx={buttonTextStyle}>
           Manual
         </Typography>

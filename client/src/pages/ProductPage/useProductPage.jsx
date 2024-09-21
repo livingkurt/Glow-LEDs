@@ -1,14 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { detailsProductPage, selectOption, setCustomizedProduct, setIsAddonChecked } from "./productPageSlice";
-import { updateRecentlyViewed } from "./productHelpers";
+import { scrollToElement, updateRecentlyViewed } from "./productHelpers";
 
 const useProductPage = () => {
   const params = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
   const urlParamsApplied = useRef(false);
+  const [scrollTarget, setScrollTarget] = useState(null);
 
   useEffect(() => {
     dispatch(detailsProductPage({ pathname: params.pathname }));
@@ -28,6 +29,7 @@ const useProductPage = () => {
 
   useEffect(() => {
     if (customizedProduct.currentOptions && !urlParamsApplied.current && !productPageLoading) {
+      const searchParams = new URLSearchParams(location.search);
       const newSelectedOptions = [...customizedProduct.selectedOptions];
       let optionsChanged = false;
       let hasAddonSelected = false;
@@ -49,12 +51,10 @@ const useProductPage = () => {
       if (optionsChanged) {
         dispatch(setCustomizedProduct({ selectedOptions: newSelectedOptions }));
 
-        // Set isAddonChecked if an add-on option is selected
         if (hasAddonSelected) {
           dispatch(setIsAddonChecked(true));
         }
 
-        // Apply each option individually to trigger necessary updates
         newSelectedOptions.forEach((selectedOption, index) => {
           if (selectedOption && selectedOption.name) {
             dispatch(
@@ -71,23 +71,47 @@ const useProductPage = () => {
 
       urlParamsApplied.current = true;
     }
-  }, [searchParams, customizedProduct.currentOptions, customizedProduct.selectedOptions, dispatch, productPageLoading]);
+  }, [
+    location.search,
+    customizedProduct.currentOptions,
+    customizedProduct.selectedOptions,
+    dispatch,
+    productPageLoading,
+  ]);
 
   useEffect(() => {
     if (urlParamsApplied.current) {
-      const newParams = new URLSearchParams();
+      const searchParams = new URLSearchParams(location.search);
       customizedProduct.selectedOptions?.forEach((selectedOption, index) => {
         if (selectedOption && selectedOption.name) {
-          newParams.set(customizedProduct.currentOptions[index].name, selectedOption.name);
+          searchParams.set(customizedProduct.currentOptions[index].name, selectedOption.name);
         }
       });
 
-      const newSearch = newParams.toString();
-      if (newSearch !== searchParams.toString()) {
-        window.history.replaceState(null, "", `${window.location.pathname}?${newSearch}`);
+      const newSearch = searchParams.toString();
+      const [pathname, hash] = location.pathname.split("#");
+      const newUrl = `${pathname}${newSearch ? `?${newSearch}` : ""}${hash ? `#${hash}` : ""}`;
+
+      if (newUrl !== window.location.pathname + window.location.search + window.location.hash) {
+        window.history.replaceState(null, "", newUrl);
       }
     }
-  }, [customizedProduct.selectedOptions, customizedProduct.currentOptions, searchParams]);
+  }, [customizedProduct.selectedOptions, customizedProduct.currentOptions, location]);
+
+  useEffect(() => {
+    if (location.hash && !productPageLoading) {
+      setScrollTarget(location.hash.slice(1));
+    }
+  }, [location.hash, productPageLoading]);
+
+  useEffect(() => {
+    if (scrollTarget && !productPageLoading) {
+      setTimeout(() => {
+        scrollToElement(scrollTarget);
+        setScrollTarget(null);
+      }, 500);
+    }
+  }, [scrollTarget, productPageLoading]);
 
   return { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked };
 };

@@ -33,7 +33,6 @@ import ContributorsDisplay from "./components/ContributorsDisplay";
 import { sale_price_switch } from "../../utils/react_helper_functions";
 import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
-import { Link } from "react-router-dom";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
