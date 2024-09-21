@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import ProductCard from "../../ProductsGridPage/components/ProductCard";
 
-const ElevateYourExperience = ({ elevateYourExperience }) => {
+const ElevateYourExperience = ({ elevateYourExperience, text_color, header_text_color }) => {
   const { title, description, products, hidden } = elevateYourExperience;
 
   if (hidden && title) {
@@ -12,14 +13,16 @@ const ElevateYourExperience = ({ elevateYourExperience }) => {
 
   return (
     <Box sx={{ my: 4 }}>
-      <Typography variant="h5" component="h2" gutterBottom>
+      <Typography variant="h4" component="h2" gutterBottom color={header_text_color ? header_text_color : "white"}>
         {title}
       </Typography>
-      <Typography variant="body1" paragraph>
+      <Typography variant="body1" paragraph color={text_color ? text_color : "white"}>
         {description}
       </Typography>
       <Box
         sx={{
+          pb: 6,
+          px: 2,
           display: "flex",
           overflowX: "auto",
           minWidth: "100%",
@@ -43,32 +46,7 @@ const ElevateYourExperience = ({ elevateYourExperience }) => {
               },
             }}
           >
-            <Link to={`/collections/all/products/${product.pathname}`} key={product.pathname}>
-              <Card
-                elevation={0}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "20px",
-                  color: "white",
-                  backgroundColor: "transparent",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={product?.images[0]?.link}
-                  alt={product.name}
-                  sx={{ borderRadius: "20px" }}
-                />
-                <CardContent sx={{ width: "100%", padding: "10px" }}>
-                  <Typography variant="subtitle2" component="div">
-                    {product.name}
-                  </Typography>
-                  <Typography variant="body2">${product?.price?.toFixed(2)}</Typography>
-                </CardContent>
-              </Card>
-            </Link>
+            <ProductCard product={product} />
           </Box>
         ))}
       </Box>

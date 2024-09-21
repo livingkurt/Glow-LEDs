@@ -73,14 +73,35 @@ const productSchema = new mongoose.Schema(
       },
     ],
     icon_specs_hidden: { type: Boolean, default: false },
-    navigation_buttons_hidden: { type: Boolean, default: false },
+    navigation: {
+      navigation_buttons: [
+        {
+          label: { type: String },
+          target: { type: String },
+          hidden: { type: Boolean, default: false },
+        },
+      ],
+      hidden: { type: Boolean, default: false },
+    },
+    title_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    themed_logo: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    line_break: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    pattern_tile: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    corner_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    subtitle_text: { type: String },
 
+    primary_color: { type: String },
+    secondary_color: { type: String },
+    background_color: { type: String },
+    header_text_color: { type: String },
+    text_color: { type: String },
     features: {
       image_grid_1: [
         {
           title: { type: String },
           description: { type: String },
           image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          text_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           button_text: { type: String },
           link: { type: String },
         },
@@ -97,6 +118,7 @@ const productSchema = new mongoose.Schema(
           title: { type: String },
           description: { type: String },
           image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+          text_image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           button_text: { type: String },
           link: { type: String },
         },

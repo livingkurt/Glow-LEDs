@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import * as API from "../../api";
 import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const SupportBanner = () => {
+const SupportBanner = ({ text_color, header_text_color, secondary_color }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -35,7 +35,7 @@ const SupportBanner = () => {
           <Box
             p={{ xs: 2, md: 4 }}
             sx={{
-              backgroundColor: theme.palette.primary.main,
+              backgroundColor: secondary_color ? secondary_color : theme.palette.primary.main,
               borderRadius: isMobile ? "0px 0px 20px 20px " : "0px 20px 20px 0px",
               height: "100%",
               display: "flex",
@@ -45,10 +45,10 @@ const SupportBanner = () => {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ color: header_text_color }}>
               {support_banner?.title}
             </Typography>
-            <Typography variant="body2" mb={2}>
+            <Typography variant="body2" mb={2} sx={{ color: text_color }}>
               {support_banner?.subtitle}
             </Typography>
             <Box display="flex" justifyContent={{ xs: "center", md: "flex-start" }}>

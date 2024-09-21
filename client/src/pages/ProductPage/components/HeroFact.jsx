@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 
-const HeroFact = ({ heroFact }) => {
+const HeroFact = ({ heroFact, text_color, header_text_color }) => {
   const theme = useTheme();
   if (!heroFact || heroFact.hidden) return null;
 
@@ -19,15 +19,14 @@ const HeroFact = ({ heroFact }) => {
             textAlign: "center",
             padding: "14rem 2rem",
             borderRadius: "20px",
-            // backgroundColor: theme.palette.primary.main,
           }}
         >
           <Typography
-            variant="h2"
-            component="h2"
+            variant="h4"
+            component="h4"
             sx={{
-              fontSize: { xs: "5rem", md: "6rem" },
-              // fontWeight: "bold",
+              fontSize: { xs: "4rem", md: "6rem" },
+              color: header_text_color ? header_text_color : "white",
               marginBottom: "1rem",
             }}
           >
@@ -35,10 +34,9 @@ const HeroFact = ({ heroFact }) => {
           </Typography>
           <Typography
             variant="body1"
-            component="p"
             sx={{
-              fontSize: { xs: "1.25rem", md: "1.5rem" },
               maxWidth: "800px",
+              color: text_color ? text_color : "white",
               margin: "0 auto",
             }}
           >

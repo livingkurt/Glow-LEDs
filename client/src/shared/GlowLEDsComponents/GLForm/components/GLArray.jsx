@@ -15,6 +15,16 @@ const GLArray = ({
   loading,
   getEmptyObjectFromSchema,
 }) => {
+  console.log({
+    fieldName,
+    fieldState,
+    fieldData,
+    tabIndex,
+    setTabIndex,
+    onChange,
+    loading,
+    getEmptyObjectFromSchema,
+  });
   return (
     <Paper className="p-10px mv-10px" elevation={5}>
       <Typography component="h6" variant="h6" className="ta-c mb-15px">
@@ -31,8 +41,8 @@ const GLArray = ({
               setTabIndex(newValue);
             }}
           >
-            {fieldState.length > 0 &&
-              fieldState.map((item, index) => (
+            {fieldState?.length > 0 &&
+              fieldState?.map((item, index) => (
                 <Tab
                   value={index}
                   label={typeof fieldData.label === "function" ? fieldData.label(item) : item[fieldData.label]}
@@ -56,8 +66,8 @@ const GLArray = ({
         Add Item
       </Button>
       <Box sx={{ m: 3 }} />
-      {fieldState.length > 0 &&
-        fieldState.map((item, index) => (
+      {fieldState?.length > 0 &&
+        fieldState?.map((item, index) => (
           <GLTabPanel value={tabIndex} index={index} key={index}>
             <GLIconButton
               tooltip="Delete"
@@ -94,7 +104,7 @@ const GLArray = ({
               tooltip="Move Right"
               color="primary"
               onClick={() => {
-                if (index < fieldState.length - 1) {
+                if (index < fieldState?.length - 1) {
                   const newArray = [...fieldState];
                   [newArray[index + 1], newArray[index]] = [newArray[index], newArray[index + 1]];
                   onChange({ [fieldName]: newArray });

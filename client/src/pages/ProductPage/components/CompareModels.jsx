@@ -19,7 +19,7 @@ const CompareModels = ({ notSure }) => {
             borderRadius: "8px",
           }}
         >
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography variant="h4" component="h2" gutterBottom>
             {notSure.title}
           </Typography>
           <Link to={notSure.link}>

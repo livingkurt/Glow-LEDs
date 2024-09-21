@@ -259,11 +259,101 @@ export const productFormFields = ({
       label: "Hide Icon Specs",
       default: false,
     },
-    navigation_buttons_hidden: {
-      type: "checkbox",
-      label: "Hide Navigation Buttons",
-      default: false,
+    title_image: {
+      type: "image_upload",
+      label: "Title Image",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
     },
+    themed_logo: {
+      type: "image_upload",
+      label: "Themed Logo",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
+    },
+    line_break: {
+      type: "image_upload",
+      label: "Line Break",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
+    },
+    pattern_tile: {
+      type: "image_upload",
+      label: "Pattern Tile",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
+    },
+    corner_image: {
+      type: "image_upload",
+      label: "Corner Image",
+      labelProp: "link",
+      album: `${product.name} Images`,
+      getOptionLabel: option => option.link,
+    },
+    primary_color: {
+      type: "color_picker",
+      label: "Primary Color",
+    },
+    secondary_color: {
+      type: "color_picker",
+      label: "Secondary Color",
+    },
+    header_text_color: {
+      type: "color_picker",
+      label: "Header Text Color",
+    },
+    text_color: {
+      type: "color_picker",
+      label: "Text Color",
+    },
+    background_color: {
+      type: "color_picker",
+      label: "Background Color",
+    },
+    subtitle_text: {
+      type: "text",
+      label: "Subtitle Text",
+    },
+
+    navigation: {
+      type: "object",
+      title: "Navigation",
+      fields: {
+        navigation_buttons: {
+          type: "array",
+          label: item => item.label,
+          title: "Navigation Buttons",
+          itemSchema: {
+            type: "object",
+            fields: {
+              label: {
+                type: "text",
+                label: "Label",
+              },
+              target: {
+                type: "text",
+                label: "Target",
+              },
+              hidden: {
+                type: "checkbox",
+                label: "Hidden",
+                default: false,
+              },
+            },
+          },
+        },
+        hidden: {
+          type: "checkbox",
+          label: "Hide Navigation",
+          default: false,
+        },
+      },
+    },
+
     features: {
       type: "object",
       title: "Features",
@@ -286,6 +376,13 @@ export const productFormFields = ({
               image: {
                 type: "image_upload",
                 label: "Image",
+                labelProp: "link",
+                album: `${product.name} Images`,
+                getOptionLabel: option => option.link,
+              },
+              text_image: {
+                type: "image_upload",
+                label: "Text Image",
                 labelProp: "link",
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
@@ -350,6 +447,13 @@ export const productFormFields = ({
               image: {
                 type: "image_upload",
                 label: "Image",
+                labelProp: "link",
+                album: `${product.name} Images`,
+                getOptionLabel: option => option.link,
+              },
+              text_image: {
+                type: "image_upload",
+                label: "Text Image",
                 labelProp: "link",
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
