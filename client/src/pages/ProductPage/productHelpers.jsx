@@ -179,7 +179,7 @@ export const productPageBreadCrumbs = product => {
 export const scrollToElement = target => {
   const element = document.getElementById(target);
   if (element) {
-    const offset = 80; // Adjust this value based on your header height
+    const offset = 200; // Adjust this value based on your header height
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - offset;
 
