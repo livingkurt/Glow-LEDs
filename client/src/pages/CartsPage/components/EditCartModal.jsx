@@ -6,7 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
 import { cartFormFields } from "./cartFormFields";
-import { useEventsQuery, useTicketsQuery } from "../../../api/allRecordsApi";
+import { useCategorysQuery, useEventsQuery, useProductsQuery, useTicketsQuery } from "../../../api/allRecordsApi";
 
 const EditCartModal = () => {
   const dispatch = useDispatch();
@@ -16,16 +16,12 @@ const EditCartModal = () => {
   const { user } = cart;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users } = userPage;
-
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { products, loading: loading_products } = productsPage;
+  const { users } = userPage;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true }));
-      dispatch(API.listProducts({}));
       dispatch(API.listUsers({}));
     }
     return () => {
@@ -35,13 +31,16 @@ const EditCartModal = () => {
 
   const eventsQuery = useEventsQuery();
   const ticketsQuery = useTicketsQuery();
+  const categorysQuery = useCategorysQuery();
+  const productsQuery = useProductsQuery();
 
   const formFields = cartFormFields({
     users,
     cart,
-    products,
     eventsQuery,
     ticketsQuery,
+    categorysQuery,
+    productsQuery,
   });
 
   return (
@@ -61,12 +60,7 @@ const EditCartModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm
-          formData={formFields}
-          state={cart}
-          onChange={value => dispatch(set_cart(value))}
-          loading={loading && loading_users && loading_products}
-        />
+        <GLForm formData={formFields} state={cart} onChange={value => dispatch(set_cart(value))} loading={loading} />
       </GLActionModal>
     </div>
   );

@@ -58,7 +58,6 @@ const EditOrderModal = () => {
     ticketsQuery,
   });
 
-  console.log({ orderItems: order.orderItems });
   return (
     <div>
       <GLActionModal

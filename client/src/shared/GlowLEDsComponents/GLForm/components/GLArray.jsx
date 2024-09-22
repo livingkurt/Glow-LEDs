@@ -15,16 +15,6 @@ const GLArray = ({
   loading,
   getEmptyObjectFromSchema,
 }) => {
-  console.log({
-    fieldName,
-    fieldState,
-    fieldData,
-    tabIndex,
-    setTabIndex,
-    onChange,
-    loading,
-    getEmptyObjectFromSchema,
-  });
   return (
     <Paper className="p-10px mv-10px" elevation={5}>
       <Typography component="h6" variant="h6" className="ta-c mb-15px">

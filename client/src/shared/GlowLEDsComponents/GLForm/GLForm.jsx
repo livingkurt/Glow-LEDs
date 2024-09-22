@@ -73,12 +73,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
     }
   };
 
-  const handleBooleanArrayChange = (fieldName, index, value) => {
-    const newArray = [...(state[fieldName] || [])];
-    newArray[index] = value;
-    handleInputChange(fieldName, newArray);
-  };
-
   return (
     <>
       {Object.keys(formData).map(fieldName => {
