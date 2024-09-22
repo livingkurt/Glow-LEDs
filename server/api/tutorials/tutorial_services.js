@@ -1,5 +1,6 @@
 import tutorial_db from "./tutorial_db";
 import { getFilteredData } from "../api_helpers";
+import { handleTagFiltering } from "../products/product_helpers";
 
 export default {
   findAll_tutorials_s: async query => {
@@ -18,6 +19,50 @@ export default {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
+    }
+  },
+  findAllGrid_tutorials_s: async query => {
+    try {
+      let filter = { deleted: false };
+      let limit = 0;
+
+      const tagFilter = await handleTagFiltering(query.tags);
+      filter = { ...filter, ...tagFilter };
+
+      if (query.level) {
+        filter.level = query.level;
+      }
+
+      // Add search functionality
+      if (query.search) {
+        const searchRegex = new RegExp(query.search, "i");
+        filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
+      }
+
+      let sortOption = { order: 1 };
+      if (query.sort) {
+        switch (query.sort) {
+          case "-views":
+            sortOption = { views: -1 };
+            break;
+          case "views":
+            sortOption = { views: 1 };
+            break;
+          case "-createdAt":
+            sortOption = { createdAt: -1 };
+            break;
+          case "createdAt":
+            sortOption = { createdAt: 1 };
+            break;
+        }
+      }
+
+      let tutorials = await tutorial_db.findAllGrid_tutorials_db(filter, sortOption, limit);
+
+      return tutorials;
+    } catch (error) {
+      console.error("Error in findAllGrid_tutorials_s:", error);
+      throw new Error(error.message || "An error occurred while fetching tutorials");
     }
   },
   findById_tutorials_s: async params => {

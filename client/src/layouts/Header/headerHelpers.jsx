@@ -433,19 +433,19 @@ const tutorials = addIdsRecursively({
         drawerItems: [
           {
             name: "Beginner",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?level=beginner",
           },
           {
             name: "Intermediate",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?level=intermediate",
           },
           {
             name: "Advanced",
-            path: "/collections/all/teams",
+            path: "/collections/all/tutorials?level=advanced",
           },
           {
             name: "Experimental",
-            path: "/collections/all/teams/category/rave_mob",
+            path: "/collections/all/tutorials?level=experimental",
           },
         ],
       },

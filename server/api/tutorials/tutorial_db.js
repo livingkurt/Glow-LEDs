@@ -15,6 +15,46 @@ export default {
       }
     }
   },
+  findAllGrid_tutorials_db: async (filter, sort, limit, page) => {
+    const tutorialFields = {
+      title: 1,
+      pathname: 1,
+      video: 1,
+      level: 1,
+      categorys: 1,
+      affiliate: 1,
+      views: 1,
+      createdAt: 1,
+    };
+    console.log({ filter });
+    try {
+      const query = Tutorial.find(filter, tutorialFields)
+        .sort(sort)
+        .populate({
+          path: "affiliate",
+          select: "artist_name pathname",
+        })
+        .populate({
+          path: "categorys",
+          match: { deleted: { $ne: true } },
+          select: "name type pathname",
+        });
+
+      if (limit > 0) {
+        query.limit(limit);
+      }
+
+      if (page > 0) {
+        query.skip((page - 1) * limit);
+      }
+
+      return await query.exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findBy_tutorials_db: async params => {
     try {
       return await Tutorial.findOne(params).populate("affiliate");

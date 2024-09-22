@@ -37,6 +37,7 @@ import productPageSlice from "./pages/ProductPage/productPageSlice";
 import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 import { affiliateApi, contentApi } from "./api";
 import productsGridPageSlice from "./pages/ProductsGridPage/productsGridPageSlice";
+import tutorialsGridPageSlice from "./pages/TutorialsGridPage/tutorialsGridPageSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -164,6 +165,7 @@ const reducers = {
   }),
   tutorials: combineReducers({
     tutorialPage: tutorialSlice,
+    tutorialsGridPage: tutorialsGridPageSlice,
     tutorialTable: glTableReducer("tutorialTable", {
       sorting: [3, "desc"],
     }),

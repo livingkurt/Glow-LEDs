@@ -6,17 +6,24 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import GLIconButton from "../GLIconButton/GLIconButton";
 
-const GLDisplayModal = ({ children, onClose, open, title }) => {
+const GLDisplayModal = ({ children, onClose, open, title, ...modalProps }) => {
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="tutorial-modal" aria-describedby="tutorial-modal-description">
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="tutorial-modal"
+      aria-describedby="tutorial-modal-description"
+      {...modalProps}
+    >
       <Box
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "80vw",
-          maxWidth: "800px",
+          width: "100vw",
+          height: "800px",
+          maxWidth: "1200px",
           bgcolor: "background.paper",
           boxShadow: 24,
           p: 4,

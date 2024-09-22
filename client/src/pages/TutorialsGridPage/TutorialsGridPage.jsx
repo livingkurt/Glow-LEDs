@@ -1,97 +1,75 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as API from "../../api";
-import { useNavigate, useLocation } from "react-router-dom";
-import "./TutorialsGridPage.scss";
-import TutorialModal from "./component/TutorialModal";
-import { close_tutorial_modal, open_tutorial_modal } from "../../slices/tutorialSlice";
-import TutorialSection from "./component/TutorialSection";
+import React from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
+import useTutorialsGridPage from "./useTutorialsGridPage";
+import TutorialsGridPageSkeletons from "./component/TutorialsGridPageSkeletons";
+import TutorialCard from "./component/TutorialsCard";
+import TutorialsGridPageFilters from "./component/TutorialsGridPageFilters";
+import TutorialModal from "./component/TutorialModal";
 
 const TutorialsGridPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
-  const { tutorials, loading, tutorial_modal, tutorial } = tutorialPage;
+  const {
+    selectedCategorys,
+    selectedLevel,
+    sort,
+    currentContent,
+    tutorials,
+    isLoading,
+    isError,
+    allCategorys,
+    handleCategoryChange,
+    handleLevelChange,
+    handleSortChange,
+    clearAllFilters,
+    selectedTutorial,
+    handleClose,
+    isOpen,
+    handleOpen,
+  } = useTutorialsGridPage();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      const params = new URLSearchParams(location.search);
-      const tutorialParam = params.get("tutorial");
-      if (tutorialParam && tutorials.length > 0) {
-        const tutorial = tutorials.find(t => t.pathname === tutorialParam);
-        if (tutorial) {
-          dispatch(open_tutorial_modal(tutorial));
-        }
-      }
-    }
-    return () => (clean = false);
-  }, [dispatch, location.search, tutorials]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listTutorials({ limit: 0, page: 0, sort: [3, "desc"] }));
-    }
-    return () => (clean = false);
-  }, [dispatch]);
-
-  const handleOpen = tutorial => {
-    dispatch(open_tutorial_modal(tutorial));
-    const newPath = `/collections/all/tutorials?tutorial=${tutorial.pathname}`;
-    navigate(newPath);
-  };
-
-  const handleClose = () => {
-    dispatch(close_tutorial_modal(tutorial));
-    const newPath = "/collections/all/tutorials";
-    navigate(newPath);
-  };
-
-  const beginnerTutorials = tutorials?.filter(item => item.level === "beginner");
-  const intermediateTutorials = tutorials?.filter(item => item.level === "intermediate");
-  const advancedTutorials = tutorials?.filter(item => item.level === "advanced");
+  if (isLoading) return <TutorialsGridPageSkeletons />;
+  if (isError) return <Typography>Error loading tutorials</Typography>;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 2 }}>
-      <Typography variant="h2" textAlign={"center"} gutterBottom>
-        Learn Gloving
-      </Typography>
-      <Typography variant="h4" textAlign={"center"} gutterBottom>
-        Your Journey Starts Here
-      </Typography>
-      <Typography variant="body3" gutterBottom>
-        Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics
-        to melting serious face. Our talented glovers will guide you step by step, providing tips and tricks to help you
-        improve your skills and create your own unique light shows. Get ready to leave your audience speechless with
-        your mesmerizing moves!
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TutorialSection
-            title="Beginner"
-            defaultOpen
-            tutorials={beginnerTutorials}
-            handleOpen={handleOpen}
-            loading={loading}
-          />
+    <Box>
+      <Container maxWidth="xl">
+        <Typography variant="h4" align="center" pt={2}>
+          {currentContent?.tutorials_grid_page?.title || "Learn Gloving"}
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+          {currentContent?.tutorials_grid_page?.subtitle || "Your Journey Starts Here"}
+        </Typography>
+
+        <TutorialsGridPageFilters
+          selectedLevel={selectedLevel}
+          sort={sort}
+          allCategorys={allCategorys}
+          selectedCategorys={selectedCategorys}
+          handleLevelChange={handleLevelChange}
+          handleSortChange={handleSortChange}
+          handleCategoryChange={handleCategoryChange}
+          clearAllFilters={clearAllFilters}
+        />
+        <Grid container spacing={2}>
+          {tutorials.length > 0 ? (
+            tutorials.map(tutorial => (
+              <Grid item key={tutorial._id} xs={12} sm={6} md={4} lg={3}>
+                <TutorialCard tutorial={tutorial} handleOpen={handleOpen} />
+              </Grid>
+            ))
+          ) : (
+            <>
+              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                No tutorials found for matching criteria
+              </Typography>
+              <Typography variant="subtitle2" textAlign="center" width="100%">
+                Try removing some filters to find what you're looking for
+              </Typography>
+            </>
+          )}
         </Grid>
-        <Grid item xs={12}>
-          <TutorialSection
-            title="Intermediate"
-            tutorials={intermediateTutorials}
-            handleOpen={handleOpen}
-            loading={loading}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TutorialSection title="Advanced" tutorials={advancedTutorials} handleOpen={handleOpen} loading={loading} />
-        </Grid>
-      </Grid>
-      <TutorialModal selectedTutorial={tutorial} handleClose={handleClose} open={tutorial_modal} />
-    </Container>
+        <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
+      </Container>
+    </Box>
   );
 };
 

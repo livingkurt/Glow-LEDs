@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  findAllGrid_tutorials_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const tutorials = await tutorial_services.findAllGrid_tutorials_s(query);
+      if (tutorials) {
+        return res.status(200).send(tutorials);
+      }
+      return res.status(404).send({ message: "Tutorials Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_tutorials_c: async (req, res) => {
     const { params } = req;
     try {

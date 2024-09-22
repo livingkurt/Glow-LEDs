@@ -7,10 +7,10 @@ import GLDisplayModal from "../../../shared/GlowLEDsComponents/GLDisplayModal/GL
 const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
   return (
     <div>
-      <GLDisplayModal onClose={handleClose} open={open} title={selectedTutorial?.title}>
+      <GLDisplayModal onClose={handleClose} open={open} title={selectedTutorial?.title} maxWidth="xl">
         <iframe
           width="100%"
-          height="400"
+          height="600"
           src={`https://www.youtube.com/embed/${selectedTutorial?.video}`}
           title={selectedTutorial?.title}
           frameborder="0"
