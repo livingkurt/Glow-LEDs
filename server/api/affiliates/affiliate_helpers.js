@@ -56,3 +56,16 @@ export const createPrivatePromoCode = (user, percentageOff = 10) => {
     active: true,
   };
 };
+
+export const normalizeAffiliateSearch = query => {
+  const search = query.search
+    ? {
+        artist_name: {
+          $regex: query.search.toLowerCase(),
+          $options: "i",
+        },
+      }
+    : {};
+
+  return search;
+};

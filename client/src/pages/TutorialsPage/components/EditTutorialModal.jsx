@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { snake_case } from "../../../utils/helper_functions";
 import { tutorialFormFields } from "./tutorialFormFields";
+import { useAffiliatesQuery, useCategorysQuery } from "../../../api/allRecordsApi";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
@@ -13,24 +14,14 @@ const EditTutorialModal = () => {
   const { edit_tutorial_modal, tutorial, loading } = tutorialPage;
   const { affiliate, title } = tutorial;
 
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates, loading: loading_affiliates } = affiliatePage;
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listAffiliates({ active: true }));
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch, tutorial._id]);
-
   const generate_pathname = () => {
     return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
   };
 
-  const formFields = tutorialFormFields({ affiliates });
+  const categorysQuery = useCategorysQuery();
+  const affiliatesQuery = useAffiliatesQuery();
+
+  const formFields = tutorialFormFields({ categorysQuery, affiliatesQuery });
 
   return (
     <div>
@@ -54,7 +45,7 @@ const EditTutorialModal = () => {
           formData={formFields}
           state={tutorial}
           onChange={value => dispatch(set_tutorial(value))}
-          loading={loading && loading_affiliates}
+          loading={loading}
         />
       </GLActionModal>
     </div>

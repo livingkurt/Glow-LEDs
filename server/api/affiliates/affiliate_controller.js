@@ -13,6 +13,19 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+
+  table_affiliates_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const affiliates = await affiliate_services.table_affiliates_s(query);
+      if (affiliates) {
+        return res.status(200).send(affiliates);
+      }
+      return res.status(404).send({ message: "Affiliates Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findByPathname_affiliates_c: async (req, res) => {
     const { params } = req;
     try {

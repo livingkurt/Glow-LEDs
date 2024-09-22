@@ -109,7 +109,7 @@ const TutorialsGridPageFilters = ({
               orientation={isMobile ? "vertical" : "horizontal"}
               sx={{ width: "100%", height: "100%", mb: 2 }}
             >
-              {["beginner", "intermediate", "advanced"].map(level => (
+              {["beginner", "intermediate", "advanced", "experimental"].map(level => (
                 <ToggleButton
                   key={level}
                   value={level}

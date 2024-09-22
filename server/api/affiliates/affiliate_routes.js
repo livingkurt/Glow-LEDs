@@ -9,6 +9,8 @@ router
   .put(isAuth, affiliate_controller.update_affiliates_c);
 
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
+
+router.route("/table").get(affiliate_controller.table_affiliates_c);
 // router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
 router.route("/:id/generate_sponsor_codes").post(affiliate_controller.generate_sponsor_codes_affiliates_c);
 router.route("/checkin_status").get(affiliate_controller.checkin_status_affiliates_c);

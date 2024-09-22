@@ -423,11 +423,11 @@ const learn = addIdsRecursively({
 const tutorials = addIdsRecursively({
   name: "Tutorials",
   id: "tutorials_dropdown",
-  path: "/pages/learn",
+  path: "/collections/all/tutorials",
   rows: [
     {
       name: "By Skill Level",
-      path: "/pages/menu/featured",
+      // path: "/pages/menu/featured",
       id: "skill_level_dropdown",
       sideDrawer: {
         drawerItems: [
@@ -452,7 +452,7 @@ const tutorials = addIdsRecursively({
     },
     {
       name: "By Style",
-      path: "/pages/menu/featured",
+      // path: "/pages/menu/featured",
       id: "style_dropdown",
       sideDrawer: {
         drawerItems: [
