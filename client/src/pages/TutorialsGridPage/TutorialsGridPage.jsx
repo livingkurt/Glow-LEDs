@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
+import { toTitleCase } from "../../utils/helper_functions";
 import useTutorialsGridPage from "./useTutorialsGridPage";
 import TutorialsGridPageSkeletons from "./component/TutorialsGridPageSkeletons";
 import TutorialCard from "./component/TutorialsCard";
@@ -8,15 +9,14 @@ import TutorialModal from "./component/TutorialModal";
 
 const TutorialsGridPage = () => {
   const {
-    selectedCategorys,
+    selectedTags,
     selectedLevel,
     sort,
-    currentContent,
     tutorials,
     isLoading,
     isError,
-    allCategorys,
-    handleCategoryChange,
+    allTags,
+    handleTagChange,
     handleLevelChange,
     handleSortChange,
     clearAllFilters,
@@ -24,29 +24,42 @@ const TutorialsGridPage = () => {
     handleClose,
     isOpen,
     handleOpen,
+    currentContent,
   } = useTutorialsGridPage();
 
   if (isLoading) return <TutorialsGridPageSkeletons />;
   if (isError) return <Typography>Error loading tutorials</Typography>;
 
+  const getPageTitle = () => {
+    if (selectedLevel) {
+      return `${toTitleCase(selectedLevel)} Level Tutorials`;
+    } else if (selectedTags.length > 0) {
+      return toTitleCase(selectedTags.join(", ")) + " Tutorials";
+    } else {
+      return currentContent?.tutorials_grid_page?.title || "Our Tutorials";
+    }
+  };
+
   return (
     <Box>
       <Container maxWidth="xl">
         <Typography variant="h4" align="center" pt={2}>
-          {currentContent?.tutorials_grid_page?.title || "Learn Gloving"}
+          {getPageTitle()}
         </Typography>
-        <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
-          {currentContent?.tutorials_grid_page?.subtitle || "Your Journey Starts Here"}
-        </Typography>
+        {currentContent?.tutorials_grid_page?.subtitle && (
+          <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+            {currentContent.tutorials_grid_page.subtitle}
+          </Typography>
+        )}
 
         <TutorialsGridPageFilters
           selectedLevel={selectedLevel}
           sort={sort}
-          allCategorys={allCategorys}
-          selectedCategorys={selectedCategorys}
+          allTags={allTags}
+          selectedTags={selectedTags}
           handleLevelChange={handleLevelChange}
           handleSortChange={handleSortChange}
-          handleCategoryChange={handleCategoryChange}
+          handleTagChange={handleTagChange}
           clearAllFilters={clearAllFilters}
         />
         <Grid container spacing={2}>

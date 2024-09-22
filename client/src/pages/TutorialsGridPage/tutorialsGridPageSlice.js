@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const tutorialsGridPage = createSlice({
   name: "tutorialsGridPage",
   initialState: {
-    selectedCategorys: [],
+    selectedTags: [],
     selectedLevel: "",
     sort: "",
   },
   reducers: {
-    setSelectedCategorys: (state, action) => {
-      state.selectedCategorys = action.payload;
+    setSelectedTags: (state, action) => {
+      state.selectedTags = action.payload;
     },
     setSelectedLevel: (state, action) => {
       state.selectedLevel = action.payload;
@@ -19,12 +19,12 @@ const tutorialsGridPage = createSlice({
     },
     updateFilters: (state, action) => {
       const { tags, level, sort } = action.payload;
-      state.selectedCategorys = tags;
+      state.selectedTags = tags;
       state.selectedLevel = level;
       state.sort = sort;
     },
   },
 });
 
-export const { setSelectedCategorys, setSelectedLevel, setSort, updateFilters } = tutorialsGridPage.actions;
+export const { setSelectedTags, setSelectedLevel, setSort, updateFilters } = tutorialsGridPage.actions;
 export default tutorialsGridPage.reducer;

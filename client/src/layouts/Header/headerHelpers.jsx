@@ -458,24 +458,24 @@ const tutorials = addIdsRecursively({
         drawerItems: [
           {
             name: "Flow",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?tags[]=flow",
           },
           {
             name: "Tech",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?tags[]=tech",
           },
-          // {
-          //   name: "Conjuring",
-          //   path: "/collections/all/teams",
-          // },
-          // {
-          //   name: "Impacting",
-          //   path: "/collections/all/teams/category/rave_mob",
-          // },
-          // {
-          //   name: "Morphing",
-          //   path: "/collections/all/teams/category/rave_mob",
-          // },
+          {
+            name: "Conjuring",
+            path: "/collections/all/tutorials?tags[]=conjuring",
+          },
+          {
+            name: "Impacting",
+            path: "/collections/all/tutorials?tags[]=impacting",
+          },
+          {
+            name: "Morphing",
+            path: "/collections/all/tutorials?tags[]=morphing",
+          },
         ],
       },
     },
@@ -484,41 +484,45 @@ const tutorials = addIdsRecursively({
     //   path: "/collections/all/tutorials",
     // },
     {
-      // name: "By Concept",
-      // path: "/pages/menu/featured",
-      // id: "concept_dropdown",
-      // sideDrawer: {
-      //   drawerItems: [
-      //     {
-      //       name: "Showmanship",
-      //       path: "/collections/all/sponsors",
-      //     },
-      //     {
-      //       name: "Musicality",
-      //       path: "/collections/all/sponsors",
-      //     },
-      //     {
-      //       name: "Transistions",
-      //       path: "/collections/all/teams",
-      //     },
-      //     {
-      //       name: "Stretches",
-      //       path: "/collections/all/teams/category/rave_mob",
-      //     },
-      //     {
-      //       name: "Finger Independence",
-      //       path: "/collections/all/teams/category/rave_mob",
-      //     },
-      //     {
-      //       name: "Story Telling",
-      //       path: "/collections/all/teams/category/rave_mob",
-      //     },
-      //     {
-      //       name: "Cleanliness",
-      //       path: "/collections/all/teams/category/rave_mob",
-      //     },
-      //   ],
-      // },
+      name: "By Concept",
+      // path: "/collections/all/tutorials?tags[]=concept",
+      id: "concept_dropdown",
+      sideDrawer: {
+        drawerItems: [
+          {
+            name: "Theory",
+            path: "/collections/all/tutorials?&tags[]=theory",
+          },
+          {
+            name: "Showmanship",
+            path: "/collections/all/tutorials?&tags[]=showmanship",
+          },
+          {
+            name: "Musicality",
+            path: "/collections/all/tutorials?&tags[]=musicality",
+          },
+          {
+            name: "Transitions",
+            path: "/collections/all/tutorials?&tags[]=transitions",
+          },
+          {
+            name: "Stretches",
+            path: "/collections/all/tutorials?&tags[]=stretches",
+          },
+          {
+            name: "Finger Independence",
+            path: "/collections/all/tutorials?&tags[]=finger_independence",
+          },
+          {
+            name: "Storytelling",
+            path: "/collections/all/tutorials?&tags[]=storytelling",
+          },
+          {
+            name: "Cleanliness",
+            path: "/collections/all/tutorials?&tags[]=cleanliness",
+          },
+        ],
+      },
     },
     // {
     //   name: "By Artist",

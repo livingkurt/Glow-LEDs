@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTutorialsGridQuery } from "../../api/allRecordsApi";
-import { setSelectedCategorys, setSelectedLevel, setSort, updateFilters } from "./tutorialsGridPageSlice";
+import { setSelectedTags, setSelectedLevel, setSort, updateFilters } from "./tutorialsGridPageSlice";
 import { useCurrentContentQuery } from "../../api";
+import { toSnakeCase } from "../ProductsGridPage/productGridPageHelpers";
 
 const useTutorialsGridPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,7 @@ const useTutorialsGridPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { selectedCategorys, selectedLevel, sort } = useSelector(state => state.tutorials.tutorialsGridPage);
+  const { selectedTags, selectedLevel, sort } = useSelector(state => state.tutorials.tutorialsGridPage);
 
   const { data: currentContent } = useCurrentContentQuery();
 
@@ -22,7 +23,7 @@ const useTutorialsGridPage = () => {
     isError,
     refetch,
   } = useTutorialsGridQuery({
-    categorys: selectedCategorys,
+    tags: selectedTags,
     level: selectedLevel,
     sort,
   });
@@ -39,13 +40,13 @@ const useTutorialsGridPage = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const newSelectedCategorys = searchParams.getAll("categorys[]");
+    const newSelectedTags = searchParams.getAll("tags[]");
     const newSelectedLevel = searchParams.get("level") || "";
     const newSort = searchParams.get("sort") || "";
 
     dispatch(
       updateFilters({
-        categorys: newSelectedCategorys,
+        tags: newSelectedTags,
         level: newSelectedLevel,
         sort: newSort,
       })
@@ -53,58 +54,57 @@ const useTutorialsGridPage = () => {
 
     refetch();
   }, [location, dispatch, refetch]);
-  const allCategorys = useMemo(() => {
+  const allTags = useMemo(() => {
     if (!tutorials) return [];
-    const categorySet = new Set();
+    const tagSet = new Set();
     tutorials.forEach(tutorial => {
-      tutorial.categorys.forEach(category => {
-        categorySet.add(category.name);
+      tutorial.tags.forEach(tag => {
+        tagSet.add(tag.name);
       });
     });
-    return Array.from(categorySet);
+    return Array.from(tagSet);
   }, [tutorials]);
 
-  const handleCategoryChange = (event, newValue) => {
-    dispatch(setSelectedCategorys(newValue));
-    updateUrl(newValue, selectedLevel, sort);
+  const handleTagChange = (event, newValue) => {
+    const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
+    dispatch(setSelectedTags(snakeCaseTags));
+    updateUrl(snakeCaseTags, selectedLevel, sort);
   };
 
   const handleLevelChange = (event, newLevel) => {
     dispatch(setSelectedLevel(newLevel));
-    updateUrl(selectedCategorys, newLevel, sort);
+    updateUrl(selectedTags, newLevel, sort);
   };
 
   const handleSortChange = (event, newValue) => {
     const newSort = newValue ? newValue.value : null;
     dispatch(setSort(newSort));
-    updateUrl(selectedCategorys || [], selectedLevel, newSort);
+    updateUrl(selectedTags || [], selectedLevel, newSort);
   };
-  const updateUrl = (categorys, level, sortValue) => {
+  const updateUrl = (tags, level, sortValue) => {
     const newSearchParams = new URLSearchParams();
-    if (Array.isArray(categorys)) {
-      categorys.forEach(category => newSearchParams.append("categorys[]", category));
-    }
+    tags.forEach(tag => newSearchParams.append("tags[]", tag));
     if (level) newSearchParams.append("level", level);
     if (sortValue) newSearchParams.append("sort", sortValue);
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
   const clearAllFilters = () => {
-    dispatch(setSelectedCategorys([]));
+    dispatch(setSelectedTags([]));
     dispatch(setSelectedLevel(null));
     dispatch(setSort(null));
     updateUrl([], null, null);
   };
 
   return {
-    selectedCategorys,
+    selectedTags,
     selectedLevel,
     sort,
     currentContent,
     tutorials,
     isLoading,
     isError,
-    allCategorys,
-    handleCategoryChange,
+    allTags,
+    handleTagChange,
     handleLevelChange,
     handleSortChange,
     clearAllFilters,

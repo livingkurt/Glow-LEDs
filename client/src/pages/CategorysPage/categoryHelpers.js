@@ -1,4 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
+import { toCapitalize } from "../../utils/helper_functions";
 
 export const categoryFormFields = ({ categorys }) => {
   return {
@@ -8,8 +9,14 @@ export const categoryFormFields = ({ categorys }) => {
       required: true,
     },
     type: {
-      type: "text",
-      label: "Type",
+      type: "autocomplete_single",
+      label: "Category Type",
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+      options: ["category", "subcategory", "collection"],
     },
     subcategorys: {
       type: "autocomplete_multiple",

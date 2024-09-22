@@ -29,19 +29,18 @@ const sortOptions = [
 const TutorialsGridPageFilters = ({
   selectedLevel,
   sort,
-  allCategorys = [],
-  selectedCategorys = [],
+  allTags = [],
+  selectedTags = [],
   handleLevelChange,
   handleSortChange,
-  handleCategoryChange,
+  handleTagChange,
   clearAllFilters,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const activeFiltersCount =
-    (selectedLevel ? 1 : 0) + (sort ? 1 : 0) + (selectedCategorys ? selectedCategorys.length : 0);
+  const activeFiltersCount = (selectedLevel ? 1 : 0) + (sort ? 1 : 0) + (selectedTags ? selectedTags.length : 0);
 
   const handleSortChangeWithClear = event => {
     const value = event.target.value;
@@ -55,10 +54,33 @@ const TutorialsGridPageFilters = ({
     }
   };
 
-  const categoryOptions = allCategorys.map(category => ({
-    value: category,
-    label: toTitleCase(category.replace(/_/g, " ")),
-    disabled: selectedCategorys.includes(category),
+  const handleTagChangeAndUpdateURL = (event, newValue) => {
+    handleTagChange(event, newValue);
+
+    // Update URL
+    const currentUrl = new URL(window.location.href);
+    const pathname = currentUrl.pathname;
+    const searchParams = currentUrl.searchParams;
+
+    // Remove all existing tag parameters
+    searchParams.delete("tags[]");
+
+    // Construct the new query string manually
+    let newQueryString = searchParams.toString();
+    newValue.forEach(tag => {
+      if (newQueryString) newQueryString += "&";
+      newQueryString += `tags[]=${encodeURIComponent(tag.toLowerCase().replace(/ /g, "_"))}`;
+    });
+
+    // Construct the new URL
+    const newUrl = `${pathname}${newQueryString ? "?" + newQueryString : ""}`;
+    window.history.pushState({}, "", newUrl);
+  };
+
+  const tagOptions = allTags.map(tag => ({
+    value: tag,
+    label: toTitleCase(tag.replace(/_/g, " ")),
+    disabled: selectedTags.includes(tag),
   }));
 
   return (
@@ -163,23 +185,23 @@ const TutorialsGridPageFilters = ({
           <Grid item xs={12} sm={6}>
             <Autocomplete
               multiple
-              options={categoryOptions}
+              options={tagOptions}
               getOptionLabel={option => option.label}
               renderInput={params => (
                 <TextField
                   {...params}
-                  label="Filter By Categorys"
+                  label="Filter By Tags"
                   fullWidth
                   InputLabelProps={{
                     style: { color: "white" },
                   }}
                 />
               )}
-              renderCategorys={(categoryValues, getCategoryProps) =>
-                categoryValues.map((option, index) => (
+              renderTags={(tagValues, getTagProps) =>
+                tagValues.map((option, index) => (
                   <Chip
                     label={option.label}
-                    {...getCategoryProps({ index })}
+                    {...getTagProps({ index })}
                     style={{
                       backgroundColor: "white",
                       color: "black",
@@ -195,12 +217,12 @@ const TutorialsGridPageFilters = ({
                 </li>
               )}
               getOptionDisabled={option => option.disabled}
-              value={selectedCategorys.map(category => ({
-                value: category,
-                label: toTitleCase(category.replace(/_/g, " ")),
+              value={selectedTags.map(tag => ({
+                value: tag,
+                label: toTitleCase(tag.replace(/_/g, " ")),
               }))}
               onChange={(event, newValue) =>
-                handleCategoryChange(
+                handleTagChangeAndUpdateURL(
                   event,
                   newValue.map(v => v.value)
                 )

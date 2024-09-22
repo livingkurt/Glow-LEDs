@@ -1,6 +1,6 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const tutorialFormFields = ({ affiliatesQuery, categorysQuery }) => {
+export const tutorialFormFields = ({ affiliatesQuery, tagsQuery }) => {
   return {
     affiliate: {
       type: "autocomplete_single",
@@ -30,10 +30,10 @@ export const tutorialFormFields = ({ affiliatesQuery, categorysQuery }) => {
       },
       options: ["beginner", "intermediate", "advanced"],
     },
-    categorys: {
+    tags: {
       type: "autocomplete_multiple",
-      label: "Categorys",
-      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
+      label: "Tags",
+      options: !tagsQuery?.isLoading ? tagsQuery?.data : [],
       labelProp: "name",
     },
     order: {

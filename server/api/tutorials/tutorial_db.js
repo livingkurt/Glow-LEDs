@@ -6,6 +6,7 @@ export default {
       return await Tutorial.find(filter)
         .sort(sort)
         .populate("affiliate")
+        .populate("tags")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -21,13 +22,13 @@ export default {
       pathname: 1,
       video: 1,
       level: 1,
-      categorys: 1,
+      tags: 1,
       affiliate: 1,
       views: 1,
       createdAt: 1,
     };
-    console.log({ filter });
     try {
+      console.log({ filter });
       const query = Tutorial.find(filter, tutorialFields)
         .sort(sort)
         .populate({
@@ -35,7 +36,7 @@ export default {
           select: "artist_name pathname",
         })
         .populate({
-          path: "categorys",
+          path: "tags",
           match: { deleted: { $ne: true } },
           select: "name type pathname",
         });
@@ -57,7 +58,7 @@ export default {
   },
   findBy_tutorials_db: async params => {
     try {
-      return await Tutorial.findOne(params).populate("affiliate");
+      return await Tutorial.findOne(params).populate("affiliate").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -66,7 +67,7 @@ export default {
   },
   findByPathname_tutorials_db: async pathname => {
     try {
-      return await Tutorial.findOne({ pathname: pathname, deleted: false }).populate("affiliate");
+      return await Tutorial.findOne({ pathname: pathname, deleted: false }).populate("affiliate").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -75,7 +76,7 @@ export default {
   },
   findById_tutorials_db: async id => {
     try {
-      return await Tutorial.findOne({ _id: id, deleted: false }).populate("affiliate");
+      return await Tutorial.findOne({ _id: id, deleted: false }).populate("affiliate").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
