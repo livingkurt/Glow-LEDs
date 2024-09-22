@@ -6,43 +6,67 @@ import { dedupeAddresses } from "./order_helpers";
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
     try {
-      // Define custom sort logic with nuanced handling for sorting by date and status
-      const customSortStage = {
-        $addFields: {
-          prioritySortOrder: {
-            $switch: {
-              branches: [
-                { case: { $eq: ["$isPrioritized", true] }, then: 1 },
-                { case: { $eq: ["$isPaused", true] }, then: 2 },
-                { case: { $eq: ["$isUpdated", true] }, then: 3 },
-                { case: { $eq: ["$isPrintIssue", true] }, then: 3 },
-              ],
-              default: 4, // Assign a default order for documents not matching any priority conditions
+      const hasCustomFilters =
+        Object.keys(filter).length > 1 || (Object.keys(filter).length === 1 && !filter.hasOwnProperty("deleted"));
+
+      // Define stages based on whether custom filters are applied
+      let sortingStages;
+      if (hasCustomFilters) {
+        // If custom filters are applied, sort by newest first
+        sortingStages = [
+          {
+            $sort: { createdAt: -1 }, // Sort by createdAt in descending order (newest first)
+          },
+        ];
+      } else {
+        // If no custom filters, use the existing custom sort logic
+        sortingStages = [
+          {
+            $addFields: {
+              prioritySortOrder: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ["$isPrioritized", true] }, then: 1 },
+                    { case: { $eq: ["$isPaused", true] }, then: 2 },
+                    { case: { $eq: ["$isUpdated", true] }, then: 3 },
+                    { case: { $eq: ["$isPrintIssue", true] }, then: 3 },
+                  ],
+                  default: 4,
+                },
+              },
+              statusSortOrder: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ["$status", "return_label_created"] }, then: 1 },
+                    { case: { $eq: ["$status", "packaged"] }, then: 2 },
+                    { case: { $eq: ["$status", "shipped"] }, then: 3 },
+                    { case: { $eq: ["$status", "in_transit"] }, then: 4 },
+                    { case: { $eq: ["$status", "out_for_delivery"] }, then: 5 },
+                    { case: { $eq: ["$status", "delivered"] }, then: 6 },
+                    { case: { $eq: ["$status", "canceled"] }, then: 7 },
+                  ],
+                  default: 0,
+                },
+              },
+              sortByDateDescending: {
+                $cond: {
+                  if: { $gt: ["$statusSortOrder", 0] },
+                  then: -1,
+                  else: 0,
+                },
+              },
             },
           },
-          statusSortOrder: {
-            $switch: {
-              branches: [
-                { case: { $eq: ["$status", "return_label_created"] }, then: 1 },
-                { case: { $eq: ["$status", "packaged"] }, then: 2 },
-                { case: { $eq: ["$status", "shipped"] }, then: 3 },
-                { case: { $eq: ["$status", "in_transit"] }, then: 4 },
-                { case: { $eq: ["$status", "out_for_delivery"] }, then: 5 },
-                { case: { $eq: ["$status", "delivered"] }, then: 6 },
-                { case: { $eq: ["$status", "canceled"] }, then: 7 },
-              ],
-              default: 0, // Orders not in the specified statuses should not be sorted by status
+          {
+            $sort: {
+              prioritySortOrder: 1,
+              statusSortOrder: 1,
+              sortByDateDescending: 1,
+              createdAt: 1,
             },
           },
-          sortByDateDescending: {
-            $cond: {
-              if: { $gt: ["$statusSortOrder", 0] }, // If statusSortOrder is greater than 0, sort these by date descending
-              then: -1, // For statuses to be sorted from newest to oldest
-              else: 0, // Do not sort by this field for other documents
-            },
-          },
-        },
-      };
+        ];
+      }
 
       // Adjust the existing sort stage to prioritize by prioritySortOrder, then statusSortOrder, and finally by date
       const existingSortStage = {
@@ -61,7 +85,6 @@ export default {
       const limitStage = { $limit: limitAmount };
       const skipStage = { $skip: skipAmount };
 
-      // Add a lookup stage to populate the display_image field
       // Add a lookup stage to populate the display_image field
       const lookupStage = {
         $lookup: {
@@ -135,16 +158,14 @@ export default {
       // Construct the aggregation pipeline
       const pipeline = [
         { $match: filter },
-        customSortStage,
-        existingSortStage,
+        ...sortingStages,
         skipStage,
         limitStage,
         lookupStage,
         eventLookupStage,
         replaceDisplayImageStage,
-        { $project: { populatedDisplayImages: 0, populatedEvents: 0 } }, // Remove the temporary fields
+        { $project: { populatedDisplayImages: 0, populatedEvents: 0 } },
       ];
-
       // Execute the aggregation pipeline
       return await Order.aggregate(pipeline).exec();
     } catch (error) {
