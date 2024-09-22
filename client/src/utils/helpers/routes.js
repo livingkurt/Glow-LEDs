@@ -32,7 +32,8 @@ const routes = [
   { path: "/collections/all/tutorials", element: "TutorialsGridPage", exact: true },
 
   { path: "/pages/announcements", element: "AnnouncementsPage", exact: true },
-  // { path: "/pages/learn/*", element: "LearnPage" },
+  { path: "/pages/learn", element: "ArticlesGridPage", exact: true },
+  { path: "/pages/learn/:pathname", element: "ArticlePage", exact: true },
   { path: "/pages/manual/:pathname?", element: "ManualPage", exact: true },
   { path: "/pages/affiliate_terms", element: "AffiliateTermsPage", exact: true },
   { path: "/pages/color_palettes", element: "ColorPalettePage", exact: true },

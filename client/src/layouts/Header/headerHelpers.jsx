@@ -400,15 +400,19 @@ const learn = addIdsRecursively({
     },
     {
       name: "Anatomy of the Glove Set",
-      path: "/pages/learn/what_is_a_microlight",
+      path: "/pages/learn/anatomy_of_the_glove_set",
+    },
+    {
+      name: "Anatomy of the Lightshow",
+      path: "/pages/learn/anatomy_of_the_lightshow",
     },
     {
       name: "Deep Dive into Accessories",
-      path: "/pages/learn/what_is_a_microlight",
+      path: "/pages/learn/deep_dive_into_accessories",
     },
     {
-      name: "Concept/Term Glossery",
-      path: "/pages/learn/what_is_a_microlight",
+      name: "Concept/Term Dictionary",
+      path: "/pages/learn/concept_term_dictionary",
     },
     {
       name: "Gloving History",
@@ -460,95 +464,95 @@ const tutorials = addIdsRecursively({
             name: "Tech",
             path: "/collections/all/sponsors",
           },
-          {
-            name: "Conjuring",
-            path: "/collections/all/teams",
-          },
-          {
-            name: "Impacting",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Morphing",
-            path: "/collections/all/teams/category/rave_mob",
-          },
+          // {
+          //   name: "Conjuring",
+          //   path: "/collections/all/teams",
+          // },
+          // {
+          //   name: "Impacting",
+          //   path: "/collections/all/teams/category/rave_mob",
+          // },
+          // {
+          //   name: "Morphing",
+          //   path: "/collections/all/teams/category/rave_mob",
+          // },
         ],
       },
     },
+    // {
+    //   name: "By Move",
+    //   path: "/collections/all/tutorials",
+    // },
     {
-      name: "By Move",
-      path: "/collections/all/tutorials",
+      // name: "By Concept",
+      // path: "/pages/menu/featured",
+      // id: "concept_dropdown",
+      // sideDrawer: {
+      //   drawerItems: [
+      //     {
+      //       name: "Showmanship",
+      //       path: "/collections/all/sponsors",
+      //     },
+      //     {
+      //       name: "Musicality",
+      //       path: "/collections/all/sponsors",
+      //     },
+      //     {
+      //       name: "Transistions",
+      //       path: "/collections/all/teams",
+      //     },
+      //     {
+      //       name: "Stretches",
+      //       path: "/collections/all/teams/category/rave_mob",
+      //     },
+      //     {
+      //       name: "Finger Independence",
+      //       path: "/collections/all/teams/category/rave_mob",
+      //     },
+      //     {
+      //       name: "Story Telling",
+      //       path: "/collections/all/teams/category/rave_mob",
+      //     },
+      //     {
+      //       name: "Cleanliness",
+      //       path: "/collections/all/teams/category/rave_mob",
+      //     },
+      //   ],
+      // },
     },
-    {
-      name: "By Concept",
-      path: "/pages/menu/featured",
-      id: "concept_dropdown",
-      sideDrawer: {
-        drawerItems: [
-          {
-            name: "Showmanship",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Musicality",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Transistions",
-            path: "/collections/all/teams",
-          },
-          {
-            name: "Stretches",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Finger Independence",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Story Telling",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Cleanliness",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-        ],
-      },
-    },
-    {
-      name: "By Artist",
-      path: "/pages/menu/featured",
-      id: "artist_dropdown",
-      sideDrawer: {
-        drawerItems: [
-          {
-            name: "BeMO",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Lykaios",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Po",
-            path: "/collections/all/teams",
-          },
-          {
-            name: "Puppet",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Rekursion",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Starstream TuT",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-        ],
-      },
-    },
+    // {
+    //   name: "By Artist",
+    //   path: "/pages/menu/featured",
+    //   id: "artist_dropdown",
+    //   sideDrawer: {
+    //     drawerItems: [
+    //       {
+    //         name: "BeMO",
+    //         path: "/collections/all/sponsors",
+    //       },
+    //       {
+    //         name: "Lykaios",
+    //         path: "/collections/all/sponsors",
+    //       },
+    //       {
+    //         name: "Po",
+    //         path: "/collections/all/teams",
+    //       },
+    //       {
+    //         name: "Puppet",
+    //         path: "/collections/all/teams/category/rave_mob",
+    //       },
+    //       {
+    //         name: "Rekursion",
+    //         path: "/collections/all/teams/category/rave_mob",
+    //       },
+    //       {
+    //         name: "Starstream TuT",
+    //         path: "/collections/all/teams/category/rave_mob",
+    //       },
+    //     ],
+    //   },
+    // },
   ],
 });
 const tips = addIdsRecursively({
@@ -558,7 +562,7 @@ const tips = addIdsRecursively({
   rows: [
     {
       name: "Gloving Etiquette",
-      path: "/pages/learn/what_is_gloving",
+      path: "/pages/learn/gloving_etiquette",
     },
     {
       name: "Where do I start?",
@@ -789,12 +793,13 @@ export const navItems = [
   },
   {
     name: "LEARN",
-    path: "/collections/all/tutorials",
+    // path: "/collections/all/tutorials",
     id: "learn_dropdown",
     // path: "/pages/learn",
     dataTestId: "learn_button",
-    // columns: [learn, tutorials],
-    // otherColumns: [tips],
+    // columns: [learn],
+    columns: [learn, tutorials],
+    otherColumns: [tips],
     headerLocation: "center",
   },
   {

@@ -7,7 +7,7 @@ import GLIconButton from "../../GLIconButton/GLIconButton";
 
 const GLArray = ({
   fieldName,
-  fieldState,
+  fieldState = [],
   fieldData,
   tabIndex,
   setTabIndex,
@@ -48,8 +48,8 @@ const GLArray = ({
         fullWidth
         onClick={() => {
           const emptyItem = getEmptyObjectFromSchema(fieldData.itemSchema.fields);
-          const newArray = [...fieldState, { ...emptyItem }];
-          onChange({ [fieldName]: [...fieldState, { ...emptyItem }] });
+          const newArray = Array.isArray(fieldState) ? [...fieldState, emptyItem] : [emptyItem];
+          onChange({ [fieldName]: newArray });
           setTabIndex(newArray.length - 1);
         }}
       >

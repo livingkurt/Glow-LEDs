@@ -351,6 +351,33 @@ export const contentFormFields = ({ content, products, categorys }) => {
         },
       },
     },
+    learn: {
+      type: "object",
+      title: "Learn",
+      fields: {
+        articles: {
+          type: "array",
+          title: "Articles",
+          label: item => item.title,
+          itemSchema: {
+            type: "object",
+            fields: {
+              title: { type: "text", label: "Title" },
+              subtitle: { type: "text", label: "Subtitle" },
+              content: { type: "text_multiline", label: "Content" },
+              image: {
+                type: "image_upload",
+                label: "Image",
+                labelProp: "_id",
+                album: "Learn Articles Images",
+              },
+              pathname: { type: "text", label: "Pathname" },
+              featured: { type: "boolean", label: "Featured" },
+            },
+          },
+        },
+      },
+    },
     active: { type: "checkbox", label: "Active" },
   };
 };
