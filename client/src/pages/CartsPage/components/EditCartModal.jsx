@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
 import { cartFormFields } from "./cartFormFields";
+import { useEventsQuery, useTicketsQuery } from "../../../api/allRecordsApi";
 
 const EditCartModal = () => {
   const dispatch = useDispatch();
@@ -32,10 +33,15 @@ const EditCartModal = () => {
     };
   }, [dispatch, cart._id]);
 
+  const eventsQuery = useEventsQuery();
+  const ticketsQuery = useTicketsQuery();
+
   const formFields = cartFormFields({
     users,
     cart,
     products,
+    eventsQuery,
+    ticketsQuery,
   });
 
   return (

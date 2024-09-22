@@ -62,6 +62,7 @@ export default {
       const skipStage = { $skip: skipAmount };
 
       // Add a lookup stage to populate the display_image field
+      // Add a lookup stage to populate the display_image field
       const lookupStage = {
         $lookup: {
           from: "images",
@@ -71,7 +72,17 @@ export default {
         },
       };
 
-      // Add a stage to replace the display_image_object ObjectId with the populated image data
+      // Add a lookup stage to populate the event field
+      const eventLookupStage = {
+        $lookup: {
+          from: "events",
+          localField: "orderItems.event",
+          foreignField: "_id",
+          as: "populatedEvents",
+        },
+      };
+
+      // Update the replaceDisplayImageStage to include event pathname
       const replaceDisplayImageStage = {
         $addFields: {
           "orderItems": {
@@ -94,6 +105,25 @@ export default {
                         0,
                       ],
                     },
+                    event_pathname: {
+                      $let: {
+                        vars: {
+                          event: {
+                            $arrayElemAt: [
+                              {
+                                $filter: {
+                                  input: "$populatedEvents",
+                                  as: "evt",
+                                  cond: { $eq: ["$$evt._id", "$$item.event"] },
+                                },
+                              },
+                              0,
+                            ],
+                          },
+                        },
+                        in: "$$event.pathname",
+                      },
+                    },
                   },
                 ],
               },
@@ -110,8 +140,9 @@ export default {
         skipStage,
         limitStage,
         lookupStage,
+        eventLookupStage,
         replaceDisplayImageStage,
-        { $project: { populatedDisplayImages: 0 } }, // Remove the temporary field
+        { $project: { populatedDisplayImages: 0, populatedEvents: 0 } }, // Remove the temporary fields
       ];
 
       // Execute the aggregation pipeline
@@ -130,6 +161,8 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
+        .populate("orderItems.event")
+        .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
         .sort(sort)
         .limit(parseInt(limit))
@@ -150,6 +183,8 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
+        .populate("orderItems.event")
+        .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
         .sort(sort)
         .limit(parseInt(limit))
@@ -169,6 +204,8 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
+        .populate("orderItems.event")
+        .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
@@ -183,6 +220,8 @@ export default {
         .populate("user")
         .populate("orderItems.display_image_object")
         .populate("orderItems.product")
+        .populate("orderItems.event")
+        .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {

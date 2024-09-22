@@ -8,6 +8,8 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
+        .populate("cartItems.event")
+        .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -24,6 +26,8 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
+        .populate("cartItems.event")
+        .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
@@ -37,6 +41,8 @@ export default {
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
+        .populate("cartItems.event")
+        .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {

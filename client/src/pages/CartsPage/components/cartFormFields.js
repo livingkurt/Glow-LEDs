@@ -1,4 +1,6 @@
-export const cartFormFields = ({ products, users, cart }) => {
+import { toCapitalize } from "../../../utils/helper_functions";
+
+export const cartFormFields = ({ products, users, cart, eventsQuery, ticketsQuery }) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -18,6 +20,16 @@ export const cartFormFields = ({ products, users, cart }) => {
       itemSchema: {
         type: "object",
         fields: {
+          itemType: {
+            type: "autocomplete_single",
+            label: "Item Type",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return toCapitalize(option);
+              }
+            },
+            options: ["product", "ticket"],
+          },
           name: {
             type: "text",
             label: "Name",
@@ -267,6 +279,20 @@ export const cartFormFields = ({ products, users, cart }) => {
             label: "Secondary Product",
             options: products,
             labelProp: "name",
+          },
+          event: {
+            type: "autocomplete_single",
+            label: "Event",
+            options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
+            loading: eventsQuery?.isLoading,
+            labelProp: "name",
+          },
+          ticket: {
+            type: "autocomplete_single",
+            label: "Ticket",
+            options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
+            loading: ticketsQuery?.isLoading,
+            labelProp: "title",
           },
         },
       },

@@ -1,6 +1,16 @@
 import { humanize, toCapitalize } from "../../../utils/helper_functions";
 
-export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels, order, categorysQuery }) => {
+export const orderFormFields = ({
+  users,
+  productsQuery,
+  promos,
+  all_shipping,
+  parcels,
+  order,
+  categorysQuery,
+  eventsQuery,
+  ticketsQuery,
+}) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -348,6 +358,30 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
             loading: productsQuery?.isLoading,
             labelProp: "name",
             required: true,
+          },
+          event: {
+            type: "autocomplete_single",
+            label: "Event",
+            options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
+            loading: eventsQuery?.isLoading,
+            labelProp: "name",
+          },
+          ticket: {
+            type: "autocomplete_single",
+            label: "Ticket",
+            options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
+            loading: ticketsQuery?.isLoading,
+            labelProp: "title",
+          },
+          itemType: {
+            type: "autocomplete_single",
+            label: "Item Type",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return toCapitalize(option);
+              }
+            },
+            options: ["product", "ticket"],
           },
           name: {
             type: "text",
