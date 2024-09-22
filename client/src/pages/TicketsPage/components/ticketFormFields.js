@@ -1,4 +1,4 @@
-export const ticketFormFields = ({ eventsQuery, ticket, ticketsQuery }) => {
+export const ticketFormFields = ({ ticket, ticketsQuery }) => {
   return {
     title: {
       type: "text",

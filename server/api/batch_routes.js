@@ -28,6 +28,7 @@ import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
 import config from "../config";
 import Stripe from "stripe";
 import { Team } from "./teams";
+import { Event } from "./events";
 const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -5961,7 +5962,6 @@ router.route("/migrate_max_display_quantity_order").put(async (req, res) => {
   }
 });
 
-
 router.route("/make_markdown").put(async (req, res) => {
   try {
     const specificProducts = [
@@ -5969,17 +5969,16 @@ router.route("/make_markdown").put(async (req, res) => {
       "Helios Microlight",
       "Glow Jar",
       "CLOZD Helioskinz",
-      "OPYN Helioskinz"
+      "OPYN Helioskinz",
     ];
 
     const products = await Product.find({
       deleted: false,
       isVariation: false,
-      $or: [
-        { hidden: false },
-        { name: { $in: specificProducts } }
-      ]
-    }).select("name options hidden category").sort("category name");
+      $or: [{ hidden: false }, { name: { $in: specificProducts } }],
+    })
+      .select("name options hidden category")
+      .sort("category name");
 
     let markdown = "# Product Options\n\n";
 
@@ -6065,5 +6064,30 @@ router.route("/make_markdown").put(async (req, res) => {
   }
 });
 
+router.route("/add_event_to_order_items").put(async (req, res) => {
+  try {
+    // Find the single event in the database
+    const event = await Event.findOne();
+
+    if (!event) {
+      return res.status(404).json({ message: "No event found in the database" });
+    }
+
+    // Update all orders
+    const result = await Order.updateMany(
+      { "orderItems.event": { $exists: false } },
+      { $set: { "orderItems.$[].event": event._id } }
+    );
+
+    res.status(200).json({
+      message: "Event added to all orderItems successfully",
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount,
+    });
+  } catch (error) {
+    console.error("Error adding event to orderItems:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 export default router;

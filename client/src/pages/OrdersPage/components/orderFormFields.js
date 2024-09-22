@@ -1,6 +1,17 @@
 import { humanize, toCapitalize } from "../../../utils/helper_functions";
+import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
-export const orderFormFields = ({ users, productsQuery, promos, all_shipping, parcels, order, categorysQuery }) => {
+export const orderFormFields = ({
+  users,
+  productsQuery,
+  promos,
+  all_shipping,
+  parcels,
+  order,
+  categorysQuery,
+  eventsQuery,
+  ticketsQuery,
+}) => {
   return {
     user: {
       type: "autocomplete_single",
@@ -225,34 +236,10 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
           type: "text",
           label: "Shipment ID",
         },
-        // shipping_rate: {
-        //   type: "object",
-        //   label: "Shipping Rate",
-        // },
-        // shipping_label: {
-        //   type: "object",
-        //   label: "Shipping Label",
-        // },
-        // shipment_tracker: {
-        //   type: "object",
-        //   label: "Shipment Tracker",
-        // },
         return_shipment_id: {
           type: "text",
           label: "Return Shipment ID",
         },
-        // return_shipping_rate: {
-        //   type: "object",
-        //   label: "Return Shipping Rate",
-        // },
-        // return_shipping_label: {
-        //   type: "object",
-        //   label: "Return Shipping Label",
-        // },
-        // return_shipment_tracker: {
-        //   type: "object",
-        //   label: "Return Shipment Tracker",
-        // },
         first_name: {
           type: "text",
           label: "First Name",
@@ -334,332 +321,14 @@ export const orderFormFields = ({ users, productsQuery, promos, all_shipping, pa
         // },
       },
     },
-    orderItems: {
-      type: "array",
-      title: "Order Items",
-      label: "name",
-      itemSchema: {
-        type: "object",
-        fields: {
-          product: {
-            type: "autocomplete_single",
-            label: "Product",
-            options: !productsQuery?.isLoading ? productsQuery?.data : [],
-            loading: productsQuery?.isLoading,
-            labelProp: "name",
-            required: true,
-          },
-          name: {
-            type: "text",
-            label: "Name",
-            labelProp: "name",
-            required: true,
-          },
-          quantity: {
-            type: "autocomplete_single",
-            label: "Quantity",
-            labelProp: "quantity",
-            getOptionLabel: option => `${option}`,
-            options: Array.from({ length: 30 }, (_, i) => i + 1),
-          },
-          display_image_object: {
-            type: "image_upload",
-            label: "Images",
-            labelProp: "link",
-            album: `${order?.user?.first_name} ${order?.user?.last_name} Images`,
-            getOptionLabel: option => option.link,
-          },
-          secondary_image: {
-            type: "text",
-            label: "Secondary Image",
-            labelProp: "secondary_image",
-          },
-          color: {
-            type: "text",
-            label: "Color",
-          },
-
-          secondary_color: {
-            type: "text",
-            label: "Secondary Color",
-          },
-          secondary_color_code: {
-            type: "text",
-            label: "Secondary Color Code",
-          },
-          color_group_name: {
-            type: "text",
-            label: "Color Group Name",
-            labelProp: "color_group_name",
-          },
-          secondary_color_group_name: {
-            type: "text",
-            label: "Secondary Color Group Name",
-            labelProp: "secondary_color_group_name",
-          },
-          color_code: {
-            type: "text",
-            label: "Color Code",
-          },
-          price: {
-            type: "number",
-            label: "Price",
-            labelProp: "price",
-            required: true,
-          },
-          category: {
-            type: "text",
-            label: "Category",
-            labelProp: "category",
-            required: true,
-          },
-          subcategory: {
-            type: "text",
-            label: "Subcategory",
-            labelProp: "subcategory",
-          },
-          product_collection: {
-            type: "text",
-            label: "Product Collection",
-            labelProp: "product_collection",
-          },
-          ticketsUsed: {
-            type: "array",
-            title: "Tickets Used",
-            label: "ticketId",
-            itemSchema: {
-              type: "object",
-              fields: {
-                ticketId: {
-                  type: "text",
-                  label: "Ticket ID",
-                },
-                used: {
-                  type: "checkbox",
-                  label: "Used",
-                },
-              },
-            },
-          },
-          tags: {
-            type: "autocomplete_multiple",
-            label: "Tags",
-            options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
-            loading: categorysQuery?.isLoading,
-            labelProp: "name",
-          },
-          pathname: {
-            type: "text",
-            label: "Pathname",
-            labelProp: "pathname",
-          },
-          size: {
-            type: "text",
-            label: "Size",
-            labelProp: "size",
-          },
-          sale_price: {
-            type: "number",
-            label: "Sale Price",
-            labelProp: "sale_price",
-          },
-          sale_start_date: {
-            type: "date",
-            label: "Sale Start Date",
-            labelProp: "sale_start_date",
-          },
-          sale_end_date: {
-            type: "date",
-            label: "Sale End Date",
-            labelProp: "sale_end_date",
-          },
-
-          count_in_stock: {
-            type: "number",
-            label: "Count in Stock",
-            labelProp: "count_in_stock",
-          },
-          dimensions: {
-            type: "object",
-            title: "Dimensions",
-            fields: {
-              package_length: {
-                type: "number",
-                label: "Package Length",
-                labelProp: "package_length",
-              },
-              package_width: {
-                type: "number",
-                label: "Package Width",
-                labelProp: "package_width",
-              },
-              package_height: {
-                type: "number",
-                label: "Package Height",
-                labelProp: "package_height",
-              },
-              package_volume: {
-                type: "number",
-                label: "Package Volume",
-                labelProp: "package_volume",
-              },
-              product_length: {
-                type: "number",
-                label: "Product Length",
-                labelProp: "length",
-              },
-              product_width: {
-                type: "number",
-                label: "Product Width",
-                labelProp: "width",
-              },
-              product_height: {
-                type: "number",
-                label: "Product Height",
-                labelProp: "height",
-              },
-              weight_pounds: {
-                type: "number",
-                label: "Weight (lbs)",
-                labelProp: "weight_pounds",
-              },
-              weight_ounces: {
-                type: "number",
-                label: "Weight (oz)",
-                labelProp: "weight_ounces",
-              },
-            },
-          },
-          processing_time: {
-            type: "multi-select",
-            label: "Processing Time",
-            labelProp: "processing_time",
-            options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"],
-          },
-          finite_stock: {
-            type: "number",
-            label: "Finite Stock",
-            labelProp: "finite_stock",
-          },
-          add_on_price: {
-            type: "number",
-            label: "Add-On Price",
-            labelProp: "add_on_price",
-          },
-          show_add_on: {
-            type: "checkbox",
-            label: "Show Add-On",
-            labelProp: "show_add_on",
-          },
-          selectedOptions: {
-            type: "array",
-            title: "Selected Options",
-            label: item => item.name,
-            itemSchema: {
-              type: "object",
-              fields: {
-                name: { type: "text", label: "Name" },
-                replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-                isDefault: { type: "checkbox", label: "Default Option" },
-                // product: {
-                //   type: "autocomplete_single",
-                //   label: "Option Product",
-                //   options: productsQuery,
-                //   labelProp: "name",
-                //   onEditButtonClick: selectedProduct => {
-                //     dispatch(saveToEditProductHistory(product));
-                //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-                //   },
-                //   onCreateNewButtonClick: selectedProduct => {
-                //     dispatch(saveToEditProductHistory(product));
-                //     dispatch(API.saveProduct({ ...selectedProduct }));
-                //   },
-                //   showEditButton: true,
-                // },
-              },
-            },
-          },
-          wholesale_product: {
-            type: "checkbox",
-            label: "Wholesale Product",
-            labelProp: "wholesale_product",
-          },
-          wholesale_price: {
-            type: "number",
-            label: "Wholesale Price",
-            labelProp: "wholesale_price",
-          },
-          currentOptions: {
-            type: "array",
-            label: item => item.name,
-            title: "Current Product Options",
-            itemSchema: {
-              type: "object",
-              fields: {
-                name: {
-                  type: "text",
-                  label: "Option Name",
-                  labelProp: "name",
-                },
-                optionType: {
-                  type: "autocomplete_single",
-                  label: "Option Type",
-                  getOptionLabel: option => {
-                    if (typeof option === "string") {
-                      return toCapitalize(option);
-                    }
-                  },
-                  options: ["dropdown", "buttons"],
-                },
-                isAddOn: {
-                  type: "checkbox",
-                  label: "Is Add-On",
-                },
-                additionalCost: { type: "number", label: "Additional Cost" },
-                values: {
-                  type: "array",
-                  title: "Option Choices",
-                  label: item => item.name,
-                  itemSchema: {
-                    type: "object",
-                    fields: {
-                      name: { type: "text", label: "Name" },
-                      replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-                      isDefault: { type: "checkbox", label: "Default Option" },
-                      // product: {
-                      //   type: "autocomplete_single",
-                      //   label: "Option Product",
-                      //   options: productsQuery,
-                      //   labelProp: "name",
-                      //   onEditButtonClick: selectedProduct => {
-                      //     dispatch(saveToEditProductHistory(product));
-                      //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-                      //   },
-                      //   onCreateNewButtonClick: selectedProduct => {
-                      //     dispatch(saveToEditProductHistory(product));
-                      //     dispatch(API.saveProduct({ ...selectedProduct }));
-                      //   },
-                      //   showEditButton: true,
-                      // },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          reviewed: {
-            type: "checkbox",
-            label: "Reviewed",
-            default: false,
-          },
-          review_email_sent: {
-            type: "checkbox",
-            label: "Review Email Sent",
-            default: false,
-          },
-        },
-      },
-    },
+    orderItems: sharedItemSchema({
+      productsQuery,
+      eventsQuery,
+      ticketsQuery,
+      categorysQuery,
+      itemType: "order",
+      item: order,
+    }),
     messages: {
       type: "array",
       title: "Messages",
