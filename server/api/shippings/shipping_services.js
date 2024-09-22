@@ -52,7 +52,7 @@ export default {
       await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
-      console.log({ error });
+      console.log({ error, errors: error.errors });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

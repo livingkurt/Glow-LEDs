@@ -12,7 +12,7 @@ export const buyLabel = async ({ shipment_id, shipping_rate }) => {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.errors.map(error => error.message).join(", "));
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -70,7 +70,7 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
     await order_db.update_orders_db(order._id, order);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -92,7 +92,7 @@ export const clearTracking = async ({ order, isReturnTracking = false }) => {
     await order_db.update_orders_db(order._id, order);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -113,7 +113,7 @@ export const createTracker = async ({ order }) => {
     return tracker;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -143,7 +143,7 @@ export const refundLabel = async ({ order, is_return_tracking }) => {
     return await order_db.update_orders_db(order._id, order);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -157,7 +157,7 @@ export const createLabel = async ({ order, shipping_rate }) => {
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -269,9 +269,9 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     });
     return { shipment, parcel };
   } catch (error) {
-    console.log({ error });
+    console.log({ error, errors: error.errors });
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
@@ -318,7 +318,7 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
     return { shipment, parcel };
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
 };
