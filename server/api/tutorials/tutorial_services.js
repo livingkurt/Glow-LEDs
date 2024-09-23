@@ -1,6 +1,7 @@
 import tutorial_db from "./tutorial_db";
 import { getFilteredData } from "../api_helpers";
 import { handleTagFiltering } from "../products/product_helpers";
+import { Affiliate } from "../affiliates";
 
 export default {
   findAll_tutorials_s: async query => {
@@ -23,6 +24,7 @@ export default {
   },
   findAllGrid_tutorials_s: async query => {
     try {
+      console.log({ query });
       let filter = { deleted: false };
       let limit = 0;
 
@@ -32,7 +34,12 @@ export default {
       if (query.level) {
         filter.level = query.level;
       }
-
+      if (query.glover) {
+        const affiliate = await Affiliate.findOne({ pathname: query.glover });
+        if (affiliate) {
+          filter.affiliate = affiliate._id;
+        }
+      }
       // Add search functionality
       if (query.search) {
         const searchRegex = new RegExp(query.search, "i");

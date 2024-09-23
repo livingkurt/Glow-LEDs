@@ -524,39 +524,43 @@ const tutorials = addIdsRecursively({
         ],
       },
     },
-    // {
-    //   name: "By Artist",
-    //   path: "/pages/menu/featured",
-    //   id: "artist_dropdown",
-    //   sideDrawer: {
-    //     drawerItems: [
-    //       {
-    //         name: "BeMO",
-    //         path: "/collections/all/sponsors",
-    //       },
-    //       {
-    //         name: "Lykaios",
-    //         path: "/collections/all/sponsors",
-    //       },
-    //       {
-    //         name: "Po",
-    //         path: "/collections/all/teams",
-    //       },
-    //       {
-    //         name: "Puppet",
-    //         path: "/collections/all/teams/category/rave_mob",
-    //       },
-    //       {
-    //         name: "Rekursion",
-    //         path: "/collections/all/teams/category/rave_mob",
-    //       },
-    //       {
-    //         name: "Starstream TuT",
-    //         path: "/collections/all/teams/category/rave_mob",
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      name: "By Glover",
+      path: "/pages/menu/featured",
+      id: "artist_dropdown",
+      sideDrawer: {
+        drawerItems: [
+          {
+            name: "Puppet",
+            path: "/collections/all/tutorials?&glover=puppet",
+          },
+          {
+            name: "BeMO",
+            path: "/collections/all/tutorials?&glover=bemo",
+          },
+          {
+            name: "Lykaios",
+            path: "/collections/all/tutorials?&glover=lykaios",
+          },
+          {
+            name: "Po",
+            path: "/collections/all/tutorials?&glover=po",
+          },
+          {
+            name: "Puppet",
+            path: "/collections/all/tutorials?&glover=puppet",
+          },
+          {
+            name: "Zielzibub",
+            path: "/collections/all/tutorials?&glover=zielzibub",
+          },
+          {
+            name: "Starstream",
+            path: "/collections/all/tutorials?&glover=starstream",
+          },
+        ],
+      },
+    },
   ],
 });
 const tips = addIdsRecursively({

@@ -21,10 +21,13 @@ const TutorialsGridPage = () => {
     handleSortChange,
     clearAllFilters,
     selectedTutorial,
+
     handleClose,
     isOpen,
     handleOpen,
     currentContent,
+    selectedGlover,
+    handleGloverChange,
   } = useTutorialsGridPage();
 
   if (isLoading) return <TutorialsGridPageSkeletons />;
@@ -35,6 +38,8 @@ const TutorialsGridPage = () => {
       return `${toTitleCase(selectedLevel)} Level Tutorials`;
     } else if (selectedTags.length > 0) {
       return toTitleCase(selectedTags.join(", ")) + " Tutorials";
+    } else if (selectedGlover) {
+      return `${toTitleCase(selectedGlover.artist_name)} Tutorials`;
     } else {
       return currentContent?.tutorials_grid_page?.title || "Our Tutorials";
     }
@@ -61,6 +66,8 @@ const TutorialsGridPage = () => {
           handleSortChange={handleSortChange}
           handleTagChange={handleTagChange}
           clearAllFilters={clearAllFilters}
+          selectedGlover={selectedGlover}
+          handleGloverChange={handleGloverChange}
         />
         <Grid container spacing={2}>
           {tutorials.length > 0 ? (

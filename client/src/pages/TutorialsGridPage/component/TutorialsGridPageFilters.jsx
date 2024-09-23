@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -18,6 +18,8 @@ import { Autocomplete, TextField, Chip, Badge } from "@mui/material";
 import { FilterList, Clear } from "@mui/icons-material";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { autocompleteStyle, toggleButtonStyle, selectStyle } from "../../ProductsGridPage/productGridPageHelpers";
+import { useAffiliatesQuery } from "../../../api/allRecordsApi";
+import { useLocation } from "react-router-dom";
 
 const sortOptions = [
   { label: "Newest", value: "-createdAt" },
@@ -35,13 +37,31 @@ const TutorialsGridPageFilters = ({
   handleSortChange,
   handleTagChange,
   clearAllFilters,
+  selectedGlover,
+  handleGloverChange,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isExpanded, setIsExpanded] = useState(false);
+  const { data: affiliates } = useAffiliatesQuery({ sponsor: true });
+  const location = useLocation();
 
-  const activeFiltersCount = (selectedLevel ? 1 : 0) + (sort ? 1 : 0) + (selectedTags ? selectedTags.length : 0);
+  const activeFiltersCount =
+    (selectedLevel ? 1 : 0) + (sort ? 1 : 0) + (selectedTags ? selectedTags.length : 0) + (selectedGlover ? 1 : 0);
 
+  useEffect(() => {
+    if (affiliates) {
+      const searchParams = new URLSearchParams(location.search);
+      const gloverPathname = searchParams.get("glover");
+
+      if (gloverPathname && !selectedGlover) {
+        const matchingAffiliate = affiliates.find(affiliate => affiliate.pathname === gloverPathname);
+        if (matchingAffiliate) {
+          handleGloverChange(null, matchingAffiliate);
+        }
+      }
+    }
+  }, [affiliates, location, selectedGlover, handleGloverChange]);
   const handleSortChangeWithClear = event => {
     const value = event.target.value;
     if (value === "clear") {
@@ -148,7 +168,7 @@ const TutorialsGridPageFilters = ({
             </ToggleButtonGroup>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <FormControl fullWidth sx={autocompleteStyle}>
               <InputLabel
                 id="sort-select-label"
@@ -182,7 +202,7 @@ const TutorialsGridPageFilters = ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Autocomplete
               multiple
               options={tagOptions}
@@ -227,6 +247,27 @@ const TutorialsGridPageFilters = ({
                   newValue.map(v => v.value)
                 )
               }
+              sx={autocompleteStyle}
+            />
+          </Grid>
+          {console.log({ selectedGlover, affiliates })}
+          <Grid item xs={12} sm={4}>
+            <Autocomplete
+              options={affiliates || []}
+              getOptionLabel={option => option.artist_name}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label="Filter By Glover"
+                  fullWidth
+                  InputLabelProps={{
+                    style: { color: "white" },
+                  }}
+                />
+              )}
+              value={selectedGlover}
+              onChange={(event, newValue) => handleGloverChange(event, newValue)}
+              isOptionEqualToValue={(option, value) => option.pathname === value.pathname}
               sx={autocompleteStyle}
             />
           </Grid>

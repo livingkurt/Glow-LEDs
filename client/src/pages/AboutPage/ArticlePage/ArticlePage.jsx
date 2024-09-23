@@ -16,8 +16,7 @@ const ArticlePage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const { data: content, isLoading } = useCurrentContentQuery();
-  console.log({ content });
+  const { data: content } = useCurrentContentQuery();
 
   useEffect(() => {
     if (content && content.learn && content.learn.articles) {
