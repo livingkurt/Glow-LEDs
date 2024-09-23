@@ -28,7 +28,6 @@ export default {
       createdAt: 1,
     };
     try {
-      console.log({ filter });
       const query = Tutorial.find(filter, tutorialFields)
         .sort(sort)
         .populate({
