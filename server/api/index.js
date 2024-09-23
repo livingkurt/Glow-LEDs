@@ -26,6 +26,7 @@ import image_routes from "./images/image_routes";
 import version_routes from "./versions/version_routes";
 import event_routes from "./events/event_routes";
 import ticket_routes from "./tickets/ticket_routes";
+import article_routes from "./articles/article_routes";
 
 const router = express.Router();
 
@@ -54,7 +55,7 @@ router.use("/api/wholesalers", wholesaler_routes);
 router.use("/api/tutorials", tutorial_routes);
 router.use("/api/events", event_routes);
 router.use("/api/tickets", ticket_routes);
-
+router.use("/api/articles", article_routes);
 router.use("/api/images", image_routes);
 router.use("/api/versions", version_routes);
 

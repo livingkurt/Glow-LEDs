@@ -9,7 +9,7 @@ import store from "../store";
 
 export const getTutorials = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/tutorials`, {
+    return await axios.get(`/api/tutorials/table`, {
       params: {
         limit: pageSize,
         page: page,

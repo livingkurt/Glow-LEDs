@@ -53,6 +53,7 @@ import EventsPage from "../../pages/EventsPage/EventsPage";
 import EventPage from "../../pages/EventPage/EventPage";
 import TicketsPage from "../../pages/TicketsPage/TicketsPage";
 import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
+import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 
 export const Components = {
@@ -116,6 +117,7 @@ export const AdminComponents = {
   EmailsPage,
   EventsPage,
   TicketsPage,
+  ArticlesPage,
 };
 export const PrivateComponents = {
   ProfilePage,

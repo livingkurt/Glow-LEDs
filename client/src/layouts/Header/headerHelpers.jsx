@@ -688,6 +688,12 @@ const admin = addIdsRecursively({
     },
 
     {
+      name: "Articles",
+      path: "/secure/glow/articles",
+      onClick: x => true,
+    },
+
+    {
       name: "Images",
       path: "/secure/glow/images",
       onClick: x => true,

@@ -38,6 +38,8 @@ import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 import { affiliateApi, contentApi } from "./api";
 import productsGridPageSlice from "./pages/ProductsGridPage/productsGridPageSlice";
 import tutorialsGridPageSlice from "./pages/TutorialsGridPage/tutorialsGridPageSlice";
+import articleSlice from "./slices/articleSlice";
+import articlesGridPageSlice from "./pages/ArticlesGridPage/articlesGridPageSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -167,6 +169,13 @@ const reducers = {
     tutorialPage: tutorialSlice,
     tutorialsGridPage: tutorialsGridPageSlice,
     tutorialTable: glTableReducer("tutorialTable", {
+      sorting: [3, "desc"],
+    }),
+  }),
+  articles: combineReducers({
+    articlePage: articleSlice,
+    articlesGridPage: articlesGridPageSlice,
+    articleTable: glTableReducer("articleTable", {
       sorting: [3, "desc"],
     }),
   }),

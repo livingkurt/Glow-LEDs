@@ -1,43 +1,88 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Container, Typography, Grid, Card, CardContent, CardMedia, Button } from "@mui/material";
-import { useCurrentContentQuery } from "../../api";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { toTitleCase } from "../../utils/helper_functions";
+import useArticlesGridPage from "./useArticlesGridPage";
+import ArticlesGridPageSkeletons from "./component/ArticlesGridPageSkeletons";
+import ArticleCard from "./component/ArticlesCard";
+import ArticlesGridPageFilters from "./component/ArticlesGridPageFilters";
 
 const ArticlesGridPage = () => {
-  const { data: content, isLoading } = useCurrentContentQuery();
+  const {
+    selectedTags,
+    selectedLevel,
+    sort,
+    articles,
+    isLoading,
+    isError,
+    allTags,
+    handleTagChange,
+    handleLevelChange,
+    handleSortChange,
+    clearAllFilters,
+    currentContent,
+    selectedGlover,
+    handleGloverChange,
+  } = useArticlesGridPage();
+
+  if (isLoading) return <ArticlesGridPageSkeletons />;
+  if (isError) return <Typography>Error loading articles</Typography>;
+
+  const getPageTitle = () => {
+    if (selectedLevel) {
+      return `${toTitleCase(selectedLevel)} Level Articles`;
+    } else if (selectedTags.length > 0) {
+      return toTitleCase(selectedTags.join(", ")) + " Articles";
+    } else if (selectedGlover) {
+      return `${toTitleCase(selectedGlover.artist_name)} Articles`;
+    } else {
+      return currentContent?.articles_grid_page?.title || "Our Articles";
+    }
+  };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h2" gutterBottom>
-        Learn Gloving
-      </Typography>
-      <Grid container spacing={4}>
-        {!isLoading &&
-          content?.learn?.articles.map(article => (
-            <Grid item xs={12} sm={6} md={4} key={article.slug}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={article.image ? article.image.url : "/placeholder-image.jpg"}
-                  alt={article.title}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {article.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {article.subtitle}
-                  </Typography>
-                  <Button component={Link} to={`/learn/${article.slug}`} sx={{ mt: 2 }}>
-                    Read More
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-      </Grid>
-    </Container>
+    <Box>
+      <Container maxWidth="xl">
+        <Typography variant="h4" align="center" pt={2}>
+          {getPageTitle()}
+        </Typography>
+        {currentContent?.articles_grid_page?.subtitle && (
+          <Typography variant="subtitle1" gutterBottom align="center" pt={2}>
+            {currentContent.articles_grid_page.subtitle}
+          </Typography>
+        )}
+
+        <ArticlesGridPageFilters
+          selectedLevel={selectedLevel}
+          sort={sort}
+          allTags={allTags}
+          selectedTags={selectedTags}
+          handleLevelChange={handleLevelChange}
+          handleSortChange={handleSortChange}
+          handleTagChange={handleTagChange}
+          clearAllFilters={clearAllFilters}
+          selectedGlover={selectedGlover}
+          handleGloverChange={handleGloverChange}
+        />
+        <Grid container spacing={2}>
+          {articles.length > 0 ? (
+            articles.map(article => (
+              <Grid item key={article._id} xs={12} sm={6} md={4} lg={3}>
+                <ArticleCard article={article} />
+              </Grid>
+            ))
+          ) : (
+            <>
+              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                No articles found for matching criteria
+              </Typography>
+              <Typography variant="subtitle2" textAlign="center" width="100%">
+                Try removing some filters to find what you're looking for
+              </Typography>
+            </>
+          )}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

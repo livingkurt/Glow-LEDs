@@ -19,6 +19,24 @@ export default {
       });
 
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
+      return users;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_users_s: async query => {
+    try {
+      const sort_options = ["createdAt", "first_name", "email", "is_guest", "is_affiliated"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeFilters: normalizeUserFilters,
+        normalizeSearch: normalizeUserSearch,
+      });
+
+      const users = await user_db.findAll_users_db(filter, sort, limit, page);
       const count = await user_db.count_users_db(filter);
       return {
         data: users,

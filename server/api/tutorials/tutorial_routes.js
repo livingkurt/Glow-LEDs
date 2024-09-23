@@ -10,6 +10,8 @@ router
 router.route("/reorder").put(tutorial_controller.reorder_tutorials_c);
 router.route("/grid").get(tutorial_controller.findAllGrid_tutorials_c);
 
+router.route("/table").get(tutorial_controller.table_tutorials_c);
+
 router
   .route("/:id")
   .get(tutorial_controller.findById_tutorials_c)

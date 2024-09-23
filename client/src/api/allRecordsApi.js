@@ -72,6 +72,13 @@ export const allRecordsApi = createApi({
         method: "GET",
       }),
     }),
+    articlesGrid: builder.query({
+      query: params => ({
+        url: `/articles/grid`,
+        params: create_query(params),
+        method: "GET",
+      }),
+    }),
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,
     }),
@@ -110,4 +117,5 @@ export const {
   useTeamsQuery,
   useSurveysQuery,
   useTutorialsGridQuery,
+  useArticlesGridQuery,
 } = allRecordsApi;

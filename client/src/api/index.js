@@ -22,6 +22,7 @@ export * from "./wholesalerApi";
 export * from "./imageApi";
 export * from "./glowLedsApi";
 export * from "./eventApi";
+export * from "./articleApi";
 export * from "./ticketApi";
 export * from "../pages/PlaceOrderPage/placeOrderApi";
 export * from "../pages/DashboardPage/dashboardApi";
