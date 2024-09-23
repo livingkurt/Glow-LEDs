@@ -2,14 +2,13 @@ import mongoose from "mongoose";
 
 const article_schema = new mongoose.Schema(
   {
-    affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     title: { type: String },
-    video: { type: String },
-    description: { type: String },
+    short_description: { type: String },
+    content: { type: String },
+    image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    level: { type: String },
     pathname: { type: String },
-    order: { type: Number },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

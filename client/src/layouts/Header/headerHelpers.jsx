@@ -418,6 +418,10 @@ const learn = addIdsRecursively({
       name: "Gloving History",
       path: "/pages/learn/gloving_history",
     },
+    {
+      name: "Learn More",
+      path: "/pages/learn",
+    },
   ],
 });
 const tutorials = addIdsRecursively({

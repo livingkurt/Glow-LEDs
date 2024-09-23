@@ -1,11 +1,11 @@
 import Article from "./article";
 
 export default {
-  findAll_article_db: async (filter, sort, limit, page) => {
+  findAll_articles_db: async (filter, sort, limit, page) => {
     try {
       return await Article.find(filter)
         .sort(sort)
-        .populate("affiliate")
+        .populate("author")
         .populate("tags")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -16,14 +16,14 @@ export default {
       }
     }
   },
-  findAllGrid_article_db: async (filter, sort, limit, page) => {
+  findAllGrid_articles_db: async (filter, sort, limit, page) => {
     const articleFields = {
       title: 1,
       pathname: 1,
-      video: 1,
-      level: 1,
+      short_description: 1,
+      image: 1,
       tags: 1,
-      affiliate: 1,
+      author: 1,
       views: 1,
       createdAt: 1,
     };
@@ -31,13 +31,17 @@ export default {
       const query = Article.find(filter, articleFields)
         .sort(sort)
         .populate({
-          path: "affiliate",
-          select: "artist_name pathname",
+          path: "author",
+          select: "first_name last_name pathname",
         })
         .populate({
           path: "tags",
           match: { deleted: { $ne: true } },
           select: "name type pathname",
+        })
+        .populate({
+          path: "image",
+          select: "url",
         });
 
       if (limit > 0) {
@@ -55,43 +59,46 @@ export default {
       }
     }
   },
-  findBy_article_db: async params => {
+
+  findBy_articles_db: async params => {
     try {
-      return await Article.findOne(params).populate("affiliate").populate("tags");
+      return await Article.findOne(params).populate("author").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findByPathname_article_db: async pathname => {
+  findByPathname_articles_db: async pathname => {
     try {
-      return await Article.findOne({ pathname: pathname, deleted: false }).populate("affiliate").populate("tags");
+      return await Article.findOne({ pathname: pathname, deleted: false }).populate("author").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findById_article_db: async id => {
+  findById_articles_db: async id => {
     try {
-      return await Article.findOne({ _id: id, deleted: false }).populate("affiliate").populate("tags");
+      return await Article.findOne({ _id: id, deleted: false }).populate("author").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  create_article_db: async body => {
+  create_articles_db: async body => {
+    console.log({ body });
     try {
       return await Article.create(body);
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  update_article_db: async (params, body) => {
+  update_articles_db: async (params, body) => {
     const { id } = params;
     try {
       const article = await Article.findOne({ _id: id, deleted: false });
@@ -104,7 +111,7 @@ export default {
       }
     }
   },
-  remove_article_db: async params => {
+  remove_articles_db: async params => {
     try {
       const article = await Article.findOne({ pathname: params.pathname, deleted: false });
       if (article) {
@@ -116,7 +123,7 @@ export default {
       }
     }
   },
-  count_article_db: async filter => {
+  count_articles_db: async filter => {
     try {
       return await Article.countDocuments(filter);
     } catch (error) {

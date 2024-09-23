@@ -1,7 +1,7 @@
 import article_db from "./article_db";
 import { getFilteredData } from "../api_helpers";
 import { handleTagFiltering } from "../products/product_helpers";
-import { Affiliate } from "../affiliates";
+import { User } from "../users";
 
 export default {
   findAll_articles_s: async query => {
@@ -9,7 +9,7 @@ export default {
       const sort_options = ["title", "video", "level", "order"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
-      const articles = await article_db.findAll_article_db(filter, sort, limit, page);
+      const articles = await article_db.findAll_articles_db(filter, sort, limit, page);
       return articles;
     } catch (error) {
       if (error instanceof Error) {
@@ -23,8 +23,8 @@ export default {
         query,
         sort_options: ["active", "title", "author"],
       });
-      const articles = await article_db.findAll_article_db(filter, sort, limit, page);
-      const count = await article_db.count_article_db(filter);
+      const articles = await article_db.findAll_articles_db(filter, sort, limit, page);
+      const count = await article_db.count_articles_db(filter);
       return {
         data: articles,
         total_count: count,
@@ -38,28 +38,27 @@ export default {
   },
   findAllGrid_articles_s: async query => {
     try {
+      console.log({ query });
       let filter = { deleted: false };
       let limit = 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
 
-      if (query.level) {
-        filter.level = query.level;
-      }
-      if (query.glover) {
-        const affiliate = await Affiliate.findOne({ pathname: query.glover });
-        if (affiliate) {
-          filter.affiliate = affiliate._id;
+      if (query.author) {
+        const user = await User.findOne({ pathname: query.author });
+        if (user) {
+          filter.author = user._id;
         }
       }
+
       // Add search functionality
       if (query.search) {
         const searchRegex = new RegExp(query.search, "i");
         filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
       }
 
-      let sortOption = { order: 1 };
+      let sortOption = { createdAt: -1 }; // Default sort by newest
       if (query.sort) {
         switch (query.sort) {
           case "-views":
@@ -85,6 +84,7 @@ export default {
       throw new Error(error.message || "An error occurred while fetching articles");
     }
   },
+
   findById_articles_s: async params => {
     try {
       return await article_db.findById_articles_db(params.id);

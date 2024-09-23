@@ -12,11 +12,6 @@ const EditArticleModal = () => {
   const dispatch = useDispatch();
   const articlePage = useSelector(state => state.articles.articlePage);
   const { edit_article_modal, article, loading } = articlePage;
-  const { affiliate, title } = article;
-
-  const generate_pathname = () => {
-    return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
-  };
 
   const tagsQuery = useCategorysQuery();
   const usersQuery = useUsersQuery();
@@ -28,7 +23,7 @@ const EditArticleModal = () => {
       <GLActionModal
         isOpen={edit_article_modal}
         onConfirm={() => {
-          dispatch(API.saveArticle({ ...article, affiliate: affiliate._id, pathname: generate_pathname() }));
+          dispatch(API.saveArticle(article));
           dispatch(API.listAffiliates({ active: true }));
         }}
         onCancel={() => {

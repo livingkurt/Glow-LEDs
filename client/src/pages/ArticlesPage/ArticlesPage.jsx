@@ -11,6 +11,7 @@ import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import EditArticleModal from "./components/EditArticleModal";
+import { ContentCopy } from "@mui/icons-material";
 
 const ArticlesPage = () => {
   const articlePage = useSelector(state => state.articles.articlePage);
@@ -39,7 +40,10 @@ const ArticlesPage = () => {
         ),
       },
       { title: "Title", display: "title" },
-      { title: "Author", display: "author" },
+      {
+        title: "Author",
+        display: article => (article?.author ? `${article?.author?.first_name} ${article?.author?.last_name}` : ""),
+      },
       { title: "Tags", display: article => article.tags.map(tag => tag.name).join(", ") },
       {
         title: "",
@@ -53,6 +57,23 @@ const ArticlesPage = () => {
               }}
             >
               <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Duplicate"
+              onClick={() =>
+                dispatch(
+                  API.saveArticle({
+                    ...article,
+                    _id: null,
+                    title: article.title + " Copy",
+                    pathname: article.pathname + "_copy",
+                    createdAt: null,
+                    updatedAt: null,
+                  })
+                )
+              }
+            >
+              <ContentCopy color="white" />
             </GLIconButton>
             <GLIconButton onClick={() => dispatch(API.deleteArticle(article.pathname))} tooltip="Delete">
               <Delete color="white" />

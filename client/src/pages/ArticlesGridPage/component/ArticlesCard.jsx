@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Box, useMediaQuery, useTheme } from "@mui/material";
+import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { toCapitalize } from "../../../utils/helper_functions";
@@ -9,7 +9,7 @@ const ArticleCard = ({ article }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Link to={`/collections/all/articles/${article.pathname}`} style={{ textDecoration: "none" }}>
+    <Link to={`/pages/learn/${article.pathname}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",
@@ -36,7 +36,7 @@ const ArticleCard = ({ article }) => {
           }}
         >
           <GLLazyImage
-            src={`http://img.youtube.com/vi/${article.video}/hqdefault.jpg`}
+            src={article.image ? article.image.url : "path/to/default/image.jpg"}
             alt={article.title}
             style={{
               position: "absolute",
@@ -53,13 +53,31 @@ const ArticleCard = ({ article }) => {
             <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
               {article.title}
             </Typography>
-            <Typography variant={isMobile ? "body2" : "body1"} color="white">
-              by {article?.affiliate?.artist_name}
+            <Typography variant={isMobile ? "body2" : "body1"} color="white" gutterBottom>
+              by {article?.author ? article.author.first_name + " " + article.author.last_name : "Unknown Author"}
+            </Typography>
+            <Typography variant="body2" color="white" gutterBottom>
+              {new Date(article.createdAt).toLocaleDateString()}
             </Typography>
           </Box>
-          <Typography variant="body2" color="white">
-            Level: {toCapitalize(article.level)}
-          </Typography>
+          <Box sx={{ mt: 2 }}>
+            {article.tags &&
+              article.tags
+                .slice(0, 3)
+                .map((tag, index) => (
+                  <Chip
+                    key={index}
+                    label={toCapitalize(tag.name)}
+                    size="small"
+                    sx={{ mr: 1, mb: 1, backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white" }}
+                  />
+                ))}
+          </Box>
+          {article.short_description && (
+            <Typography variant="body2" color="white" sx={{ mt: 2 }}>
+              {article.short_description.slice(0, 100)}...
+            </Typography>
+          )}
         </CardContent>
       </Card>
     </Link>

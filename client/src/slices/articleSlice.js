@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const articleInitialState = {
+  author: null,
+  title: "",
+  short_description: "",
+  content: "",
+  image: null,
+  tags: [],
+  pathname: "",
+  active: false,
+};
+
 const articlePage = createSlice({
   name: "articlePage",
   initialState: {
     loading: false,
     articles: [],
-    article: {
-      name: "",
-      short_description: "",
-      long_description: "",
-      start_date: "",
-      end_date: "",
-      location: "",
-      fact: "",
-      pathname: "",
-      order: null,
-      active: false,
-    },
+    article: articleInitialState,
     remoteVersionRequirement: 0,
     edit_article_modal: false,
     article_modal: false,
@@ -44,17 +44,7 @@ const articlePage = createSlice({
     },
     open_create_article_modal: (state, { payload }) => {
       state.edit_article_modal = true;
-      state.article = {
-        affiliate: "",
-        title: "",
-        video: "",
-        description: "",
-        categorys: [],
-        level: "",
-        pathname: "",
-        order: null,
-        active: false,
-      };
+      state.article = articleInitialState;
     },
     open_edit_article_modal: (state, { payload }) => {
       state.edit_article_modal = true;
@@ -62,17 +52,7 @@ const articlePage = createSlice({
     },
     close_article_modal: (state, { payload }) => {
       state.article_modal = false;
-      state.article = {
-        affiliate: "",
-        title: "",
-        video: "",
-        description: "",
-        categorys: [],
-        level: "",
-        pathname: "",
-        order: null,
-        active: false,
-      };
+      state.article = articleInitialState;
     },
     open_article_modal: (state, { payload }) => {
       state.article_modal = true;

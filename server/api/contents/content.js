@@ -163,6 +163,7 @@ const contentSchema = new mongoose.Schema(
     ],
     active: { type: Boolean, default: true },
     learn: {
+      // articles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
       articles: [
         {
           author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

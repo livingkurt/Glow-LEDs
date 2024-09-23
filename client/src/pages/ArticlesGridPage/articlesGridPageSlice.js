@@ -4,29 +4,25 @@ const articlesGridPage = createSlice({
   name: "articlesGridPage",
   initialState: {
     selectedTags: [],
-    selectedLevel: "",
     sort: "",
-    selectedGlover: null,
+    selectedAuthor: null,
     selectedArticle: null,
   },
   reducers: {
     setSelectedTags: (state, action) => {
       state.selectedTags = action.payload;
     },
-    setSelectedLevel: (state, action) => {
-      state.selectedLevel = action.payload;
-    },
     setSort: (state, action) => {
       state.sort = action.payload;
     },
-    setSelectedGlover: (state, action) => {
-      state.selectedGlover = action.payload;
+    setSelectedAuthor: (state, action) => {
+      state.selectedAuthor = action.payload;
     },
     updateFilters: (state, action) => {
-      const { tags, level, sort } = action.payload;
+      const { tags, sort, author } = action.payload;
       state.selectedTags = tags;
-      state.selectedLevel = level;
       state.sort = sort;
+      state.selectedAuthor = author;
     },
     setSelectedArticle: (state, action) => {
       state.selectedArticle = action.payload;
@@ -34,6 +30,6 @@ const articlesGridPage = createSlice({
   },
 });
 
-export const { setSelectedTags, setSelectedLevel, setSort, updateFilters, setSelectedGlover, setSelectedArticle } =
+export const { setSelectedTags, setSort, updateFilters, setSelectedAuthor, setSelectedArticle } =
   articlesGridPage.actions;
 export default articlesGridPage.reducer;

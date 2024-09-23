@@ -8,7 +8,7 @@ export const articleFormFields = ({ usersQuery, tagsQuery }) => {
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
     title: { type: "text", label: "Title" },
-    subtitle: { type: "text", label: "Subtitle" },
+    short_description: { type: "text", label: "Short Description" },
     content: { type: "text_multiline", label: "Content" },
     image: {
       type: "image_upload",

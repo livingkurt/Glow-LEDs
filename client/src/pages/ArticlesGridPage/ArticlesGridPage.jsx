@@ -9,31 +9,28 @@ import ArticlesGridPageFilters from "./component/ArticlesGridPageFilters";
 const ArticlesGridPage = () => {
   const {
     selectedTags,
-    selectedLevel,
     sort,
     articles,
     isLoading,
     isError,
     allTags,
+    allAuthors,
     handleTagChange,
-    handleLevelChange,
     handleSortChange,
     clearAllFilters,
     currentContent,
-    selectedGlover,
-    handleGloverChange,
+    selectedAuthor,
+    handleAuthorChange,
   } = useArticlesGridPage();
 
   if (isLoading) return <ArticlesGridPageSkeletons />;
   if (isError) return <Typography>Error loading articles</Typography>;
 
   const getPageTitle = () => {
-    if (selectedLevel) {
-      return `${toTitleCase(selectedLevel)} Level Articles`;
-    } else if (selectedTags.length > 0) {
+    if (selectedTags.length > 0) {
       return toTitleCase(selectedTags.join(", ")) + " Articles";
-    } else if (selectedGlover) {
-      return `${toTitleCase(selectedGlover.artist_name)} Articles`;
+    } else if (selectedAuthor) {
+      return `Articles by ${selectedAuthor.name}`;
     } else {
       return currentContent?.articles_grid_page?.title || "Our Articles";
     }
@@ -52,16 +49,15 @@ const ArticlesGridPage = () => {
         )}
 
         <ArticlesGridPageFilters
-          selectedLevel={selectedLevel}
           sort={sort}
           allTags={allTags}
+          allAuthors={allAuthors}
           selectedTags={selectedTags}
-          handleLevelChange={handleLevelChange}
           handleSortChange={handleSortChange}
           handleTagChange={handleTagChange}
           clearAllFilters={clearAllFilters}
-          selectedGlover={selectedGlover}
-          handleGloverChange={handleGloverChange}
+          selectedAuthor={selectedAuthor}
+          handleAuthorChange={handleAuthorChange}
         />
         <Grid container spacing={2}>
           {articles.length > 0 ? (

@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useArticlesGridQuery, useAffiliatesQuery } from "../../api/allRecordsApi";
+import { useArticlesGridQuery } from "../../api/allRecordsApi";
 import {
   setSelectedTags,
-  setSelectedLevel,
   setSort,
   updateFilters,
-  setSelectedGlover,
+  setSelectedAuthor,
   setSelectedArticle,
 } from "./articlesGridPageSlice";
 import { useCurrentContentQuery } from "../../api";
@@ -19,17 +18,9 @@ const useArticlesGridPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { selectedTags, selectedLevel, sort, selectedGlover, selectedArticle } = useSelector(
-    state => state.articles.articlesGridPage
-  );
+  const { selectedTags, sort, selectedAuthor, selectedArticle } = useSelector(state => state.articles.articlesGridPage);
 
   const { data: currentContent } = useCurrentContentQuery();
-
-  const { data: affiliates, isLoading: isLoadingAffiliates } = useAffiliatesQuery({ sponsor: true });
-
-  // Get the glover pathname directly from the URL
-  const searchParams = new URLSearchParams(location.search);
-  const gloverPathname = searchParams.get("glover") || "";
 
   const {
     data: articles,
@@ -38,36 +29,33 @@ const useArticlesGridPage = () => {
     refetch,
   } = useArticlesGridQuery({
     tags: selectedTags,
-    level: selectedLevel,
     sort,
-    glover: gloverPathname || selectedGlover?.pathname,
+    author: selectedAuthor?.id,
   });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const newSelectedTags = searchParams.getAll("tags[]");
-    const newSelectedLevel = searchParams.get("level") || "";
     const newSort = searchParams.get("sort") || "";
-    const gloverPathname = searchParams.get("glover") || "";
+    const authorId = searchParams.get("author");
 
     dispatch(
       updateFilters({
         tags: newSelectedTags,
-        level: newSelectedLevel,
         sort: newSort,
-        glover: gloverPathname,
+        author: authorId,
       })
     );
 
-    // Update selectedGlover based on the URL parameter
-    if (affiliates && gloverPathname) {
-      const matchingAffiliate = affiliates.find(affiliate => affiliate.pathname === gloverPathname);
-      if (matchingAffiliate) {
-        dispatch(setSelectedGlover(matchingAffiliate));
+    // Update selectedAuthor based on the URL parameter
+    if (articles && authorId) {
+      const matchingAuthor = articles.find(article => article.author._id === authorId)?.author;
+      if (matchingAuthor) {
+        dispatch(setSelectedAuthor(matchingAuthor));
       }
     }
     refetch();
-  }, [location, dispatch, affiliates, refetch]);
+  }, [location, dispatch, articles, refetch]);
 
   const handleOpen = article => {
     dispatch(setSelectedArticle(article));
@@ -90,78 +78,69 @@ const useArticlesGridPage = () => {
     return Array.from(tagSet);
   }, [articles]);
 
+  const allAuthors = useMemo(() => {
+    if (!articles) return [];
+    const authorSet = new Set();
+    articles.forEach(article => {
+      if (article.author) {
+        authorSet.add(JSON.stringify(article.author));
+      }
+    });
+    return Array.from(authorSet).map(authorString => JSON.parse(authorString));
+  }, [articles]);
+
   const handleTagChange = (event, newValue) => {
     const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
     dispatch(setSelectedTags(snakeCaseTags));
-    updateUrl(snakeCaseTags, selectedLevel, sort, selectedGlover);
-  };
-
-  const handleLevelChange = (event, newLevel) => {
-    dispatch(setSelectedLevel(newLevel));
-    updateUrl(selectedTags, newLevel, sort, selectedGlover);
+    updateUrl(snakeCaseTags, sort, selectedAuthor?.id);
   };
 
   const handleSortChange = (event, newValue) => {
     const newSort = newValue ? newValue.value : null;
     dispatch(setSort(newSort));
-    updateUrl(selectedTags || [], selectedLevel, newSort, selectedGlover);
+    updateUrl(selectedTags || [], newSort, selectedAuthor?.id);
   };
+
+  const handleAuthorChange = useCallback(
+    (event, newValue) => {
+      dispatch(setSelectedAuthor(newValue));
+      updateUrl(selectedTags || [], sort, newValue?.id);
+    },
+    [dispatch, selectedTags, sort]
+  );
+
   const updateUrl = useCallback(
-    (tags, level, sortValue, glover) => {
+    (tags, sortValue, authorId) => {
       const newSearchParams = new URLSearchParams();
       tags.forEach(tag => newSearchParams.append("tags[]", tag));
-      if (level) newSearchParams.append("level", level);
-      if (glover) newSearchParams.append("glover", glover);
       if (sortValue) newSearchParams.append("sort", sortValue);
+      if (authorId) newSearchParams.append("author", authorId);
       navigate(`${location.pathname}?${newSearchParams.toString()}`);
     },
     [location.pathname, navigate]
   );
 
-  const handleGloverChange = useCallback(
-    (event, newValue) => {
-      dispatch(setSelectedGlover(newValue));
-      updateUrl(selectedTags || [], selectedLevel, sort, newValue?.pathname);
-    },
-    [dispatch, selectedTags, selectedLevel, sort, updateUrl]
-  );
   const clearAllFilters = () => {
     dispatch(setSelectedTags([]));
-    dispatch(setSelectedLevel(null));
     dispatch(setSort(null));
-    dispatch(setSelectedGlover(null));
-    updateUrl([], null, null, null);
+    dispatch(setSelectedAuthor(null));
+    updateUrl([], null, null);
   };
-
-  useEffect(() => {
-    if (affiliates && !isLoadingAffiliates) {
-      const searchParams = new URLSearchParams(location.search);
-      const gloverPathname = searchParams.get("glover");
-
-      if (gloverPathname && !selectedGlover) {
-        const matchingAffiliate = affiliates.find(affiliate => affiliate.pathname === gloverPathname);
-        if (matchingAffiliate) {
-          dispatch(setSelectedGlover(matchingAffiliate));
-        }
-      }
-    }
-  }, [affiliates, isLoadingAffiliates, location, dispatch, selectedGlover]);
 
   return {
     selectedTags,
-    selectedLevel,
-    selectedGlover,
+    selectedAuthor,
     sort,
     currentContent,
     articles,
     isLoading,
     isError,
     allTags,
+    allAuthors,
     handleTagChange,
-    handleLevelChange,
     handleSortChange,
+    handleAuthorChange,
     clearAllFilters,
-    handleGloverChange,
     handleOpen,
     handleClose,
     isOpen,
