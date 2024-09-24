@@ -38,7 +38,6 @@ export default {
   },
   findAllGrid_articles_s: async query => {
     try {
-      console.log({ query });
       let filter = { deleted: false };
       let limit = 0;
 
@@ -80,7 +79,6 @@ export default {
 
       return articles;
     } catch (error) {
-      console.error("Error in findAllGrid_articles_s:", error);
       throw new Error(error.message || "An error occurred while fetching articles");
     }
   },

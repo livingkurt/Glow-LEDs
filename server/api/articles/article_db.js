@@ -81,9 +81,7 @@ export default {
     }
   },
   findById_articles_db: async id => {
-    console.log({ id });
     const query = determineIDPathname(id);
-    console.log({ query });
     try {
       return await Article.findOne(query).populate("author").populate("tags").populate("image");
     } catch (error) {
@@ -93,11 +91,9 @@ export default {
     }
   },
   create_articles_db: async body => {
-    console.log({ body });
     try {
       return await Article.create(body);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
