@@ -54,11 +54,8 @@ const SponsorPage = () => {
           <title>{affiliate.artist_name + " | Glow LEDs"}</title>
           <meta property="og:title" content={affiliate.artist_name + " | Glow LEDs"} />
           <meta name="twitter:title" content={affiliate.artist_name + " | Glow LEDs"} />
-          <link rel="canonical" href={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
-          <meta
-            property="og:url"
-            content={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname}
-          />
+          <link rel="canonical" href={"https://www.glow-leds.com/sponsors/" + affiliate.pathname} />
+          <meta property="og:url" content={"https://www.glow-leds.com/sponsors/" + affiliate.pathname} />
           <meta name="description" content={affiliate.bio} />
           <meta property="og:description" content={affiliate.bio} />
           <meta name="twitter:description" content={affiliate.bio} />

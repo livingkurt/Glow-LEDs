@@ -69,13 +69,7 @@ const AccountCreatedComplete = ({ current_user }) => {
               <div className="jc-c wrap">
                 {contents[0]?.home_page?.slideshow &&
                   contents[0]?.home_page?.slideshow.map((item, index) => {
-                    return (
-                      <MenuItemD
-                        item={item}
-                        index={index}
-                        decide_url={`/collections/all/products/category/${item.category}`}
-                      />
-                    );
+                    return <MenuItemD item={item} index={index} decide_url={`/products/category/${item.category}`} />;
                   })}
               </div>
             </div>
@@ -85,13 +79,7 @@ const AccountCreatedComplete = ({ current_user }) => {
               <ul className="jc-c wrap">
                 {contents[0]?.home_page?.slideshow &&
                   contents[0]?.home_page?.slideshow.map((item, index) => {
-                    return (
-                      <MenuItemM
-                        item={item}
-                        index={index}
-                        decide_url={`/collections/all/products/category/${item.category}`}
-                      />
-                    );
+                    return <MenuItemM item={item} index={index} decide_url={`/products/category/${item.category}`} />;
                   })}
               </ul>
             </div>
@@ -100,7 +88,7 @@ const AccountCreatedComplete = ({ current_user }) => {
             <div>
               <h3 className="ta-c">Discover More of Your Glow</h3>
               <div className="jc-c m-auto wrap">
-                <Link to="/collections/all/products">
+                <Link to="/products">
                   <GLButton variant="primary" className="mh-10px">
                     Products
                   </GLButton>
@@ -111,12 +99,12 @@ const AccountCreatedComplete = ({ current_user }) => {
                     Featured Videos
                   </GLButton>
                 </Link>
-                <Link to="/collections/all/sponsors">
+                <Link to="/sponsors">
                   <GLButton variant="primary" className="mh-10px">
                     Sponsored Glovers
                   </GLButton>
                 </Link>
-                <Link to="/collections/all/teams">
+                <Link to="/teams">
                   <GLButton variant="primary" className="mh-10px">
                     Sponsored Teams
                   </GLButton>

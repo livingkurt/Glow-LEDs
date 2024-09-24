@@ -19,7 +19,7 @@ async function generateSitemap() {
     const menu_types = [{ pathname: "menu" }];
 
     const paramsConfig = {
-      "/collections/all/products/:pathname": pathnameMap,
+      "/products/:pathname": pathnameMap,
       "/pages/menu/:pathname": menu_types,
     };
 

@@ -5,7 +5,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 const SponsorItemD = ({ affiliate, style, size }) => {
   return (
     <div key={affiliate._id} style={{ ...style, textDecoration: "none" }}>
-      <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
+      <Link to={`/sponsors/${affiliate && affiliate.pathname}`}>
         <div className="tooltip">
           <div className="tooltipoverlay">
             <div className="sponsor">
@@ -28,7 +28,7 @@ const SponsorItemD = ({ affiliate, style, size }) => {
 
                 <label style={{ fontSize: "1.6rem" }}>{affiliate.location}</label>
               </div>
-              <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
+              <Link to={`/sponsors/${affiliate && affiliate.pathname}`}>
                 <label style={{ fontSize: "1.6rem" }}>{affiliate.name}</label>
               </Link>
             </div>

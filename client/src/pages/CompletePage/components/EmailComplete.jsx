@@ -63,7 +63,7 @@ const EmailComplete = () => {
         <div>
           <h3 className="ta-c">Discover More of Your Glow</h3>
           <div className="jc-c m-auto wrap">
-            <Link to="/collections/all/products">
+            <Link to="/products">
               <GLButton variant="primary" className="mh-10px">
                 Products
               </GLButton>
@@ -74,12 +74,12 @@ const EmailComplete = () => {
                 Featured Videos
               </GLButton>
             </Link>
-            <Link to="/collections/all/sponsors">
+            <Link to="/sponsors">
               <GLButton variant="primary" className="mh-10px">
                 Sponsored Glovers
               </GLButton>
             </Link>
-            <Link to="/collections/all/teams">
+            <Link to="/teams">
               <GLButton variant="primary" className="mh-10px">
                 Sponsored Teams
               </GLButton>

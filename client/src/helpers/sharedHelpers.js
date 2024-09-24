@@ -39,7 +39,7 @@ export const getCartQuantity = items => {
 };
 
 export const determineProductLink = item => {
-  let link = `/collections/all/products/${item.pathname}`;
+  let link = `/products/${item.pathname}`;
 
   const params = [];
   if (!item?.selectedOptions || !item?.currentOptions) return link;

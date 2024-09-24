@@ -53,7 +53,7 @@ const FeaturesGridPage = () => {
   const handleListItems = e => {
     e.preventDefault();
     // navigate(
-    // 	'/collections/all/features/category' + category + '/' + subcategory + '?search=' + search
+    // 	'/features/category' + category + '/' + subcategory + '?search=' + search
     // );
     navigate({
       search: "?search=" + search,

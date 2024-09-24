@@ -55,7 +55,7 @@ const TeamPage = () => {
             <GLButton variant="secondary" onClick={() => navigate(-1)}>
               Back
             </GLButton>
-            {/* <Link to="/collections/all/teams">
+            {/* <Link to="/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
             {current_user?.isAdmin && (
@@ -170,7 +170,7 @@ const TeamPage = () => {
                 return (
                   <div className="pos-rel">
                     {affiliate.sponsor && (
-                      <Link to={"/collections/all/sponsors/" + affiliate.pathname} key={index}>
+                      <Link to={"/sponsors/" + affiliate.pathname} key={index}>
                         <GLLazyImage
                           className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                           alt="Team Mate"

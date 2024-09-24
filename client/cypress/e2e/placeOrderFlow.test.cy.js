@@ -2,7 +2,7 @@
 
 describe("Place Order Flow", () => {
   it("should simulate a user going through the steps to place an order", () => {
-    cy.visit("/collections/all/tutorials");
+    cy.visit("/tutorials");
     cy.contains("button", "Shop").click();
     cy.get(".product").contains("Batman Decals").click();
     cy.get(".product").contains("Double Chevron Decals - 11").click();

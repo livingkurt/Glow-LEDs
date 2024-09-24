@@ -5,7 +5,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 const SponsorItemM = ({ affiliate, style }) => {
   return (
     <div key={affiliate._id} className=" w-100per" style={style}>
-      <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
+      <Link to={`/sponsors/${affiliate && affiliate.pathname}`}>
         <div className="small_screen_product row">
           <div className="">
             <LazyImage

@@ -378,7 +378,7 @@ export default ({ user, categories }) => {
   </table>
   <table width="100%" style="max-width:800px;margin:auto;">
     <tr>
-      <div style="display:flex;justify-content:center;margin:10px 0"><a href="/collections/all/products"
+      <div style="display:flex;justify-content:center;margin:10px 0"><a href="/products"
           style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none"
           target="_blank">
           <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Explore Today</h4>

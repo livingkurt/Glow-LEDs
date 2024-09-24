@@ -22,7 +22,7 @@ const CompatibleChips = ({ chips }) => {
           <Chip
             label={chip.name}
             // onClick={() => {
-            //   update_products_url(navigate, "", "", chip.name, "", "0", "/collections/all/products");
+            //   update_products_url(navigate, "", "", chip.name, "", "0", "/products");
             //   dispatch(
             //     API.listProducts({
             //       chip: chip._id,

@@ -9,7 +9,7 @@ const TutorialCard = ({ tutorial, handleOpen }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    // <Link to={`/collections/all/tutorials/${tutorial.pathname}`} style={{ textDecoration: "none" }}>
+    // <Link to={`/tutorials/${tutorial.pathname}`} style={{ textDecoration: "none" }}>
     <Card
       sx={{
         bgcolor: "transparent",

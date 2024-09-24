@@ -17,7 +17,7 @@ const SearchBar = () => {
   const debouncedSearch = useCallback(
     debounce(searchTerm => {
       dispatch(setSearch(searchTerm));
-      navigate(`/collections/all/products?search=${searchTerm}`);
+      navigate(`/products?search=${searchTerm}`);
     }, 300),
     [dispatch, navigate]
   );
@@ -30,7 +30,7 @@ const SearchBar = () => {
 
   const handleSearchSubmit = () => {
     dispatch(setSearch(localSearch));
-    navigate(`/collections/all/products?search=${localSearch}`);
+    navigate(`/products?search=${localSearch}`);
   };
 
   return (

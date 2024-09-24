@@ -6,7 +6,7 @@ import { humanize } from "../../../utils/helper_functions";
 const FeatureSmallScreen = ({ feature, category, style }) => {
   return (
     <li key={feature._id} className=" w-100per" style={style}>
-      <Link to={`/collections/all/features/category/${category.toLowerCase()}/${feature.pathname}`}>
+      <Link to={`/features/category/${category.toLowerCase()}/${feature.pathname}`}>
         <div className="small_screen_product row">
           <div className="">
             <LazyImage

@@ -7,7 +7,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 const Feature = ({ feature, category, style, size }) => {
   return (
     <li key={feature._id} style={{ ...style, textDecoration: "none" }}>
-      <Link to={`/collections/all/features/category/${category.toLowerCase()}/${feature.pathname}`}>
+      <Link to={`/features/category/${category.toLowerCase()}/${feature.pathname}`}>
         <div className="tooltip">
           <div className="tooltipoverlay">
             <div className="product">
@@ -29,7 +29,7 @@ const Feature = ({ feature, category, style, size }) => {
               </label>
               {/* <label style={{ fontSize: '1.3rem' }}>{feature.song_id}</label> */}
               <label style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</label>
-              <Link to={`/collections/all/features/category/${category.toLowerCase()}/${feature.pathname}`}>
+              <Link to={`/features/category/${category.toLowerCase()}/${feature.pathname}`}>
                 <label style={{ fontSize: "1.6rem" }}>{feature.name}</label>
               </Link>
             </div>

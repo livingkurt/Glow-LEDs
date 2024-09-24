@@ -137,7 +137,7 @@ export const sizes_conversion = size => {
 };
 
 // export const determine_link = (item) => {
-// 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
+// 	return `/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
 // 		? '?secondary_color=' + item.secondary_color
 // 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
 // 		? '?secondary=' + item.size ? item.size : item.option_product_name
@@ -145,7 +145,7 @@ export const sizes_conversion = size => {
 // };
 export const determine_link = item => {
   //
-  const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
+  const link = `/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
     item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
   }${item.option_product ? "?option=" + item.size : ""}${
     item.secondary_product_name
@@ -159,7 +159,7 @@ export const determine_link = item => {
 // item.size ? item.size : item.option_product_name
 // export const determine_link = (item) => {
 //
-// 	const link = `/collections/all/products/${item.pathname}${item.color
+// 	const link = `/products/${item.pathname}${item.color
 // 		? '?color=' + item.color
 // 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
 // 		? item.option_product ? '?option=' + item.option_product.split('-')[1].trim() : ''

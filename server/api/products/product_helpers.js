@@ -189,7 +189,7 @@ export const transformProducts = products => {
       availability: "In Stock",
       condition: "New",
       price: `${product.price} USD`,
-      link: `https://www.glow-leds.com/collections/all/products/${product.pathname}`,
+      link: `https://www.glow-leds.com/products/${product.pathname}`,
       image_link: determineImage(product, 0),
       additional_image_link: determineImage(product, 1),
       brand: "Glow LEDs",

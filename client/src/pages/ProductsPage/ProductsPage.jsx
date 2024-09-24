@@ -69,7 +69,7 @@ const ProductsPage = () => {
             >
               <EditIcon color="white" />
             </GLIconButton>
-            <Link to={`/collections/all/products/${row.pathname}`}>
+            <Link to={`/products/${row.pathname}`}>
               <GLIconButton tooltip="View Product Page">
                 <LandscapeIcon color="white" />
               </GLIconButton>

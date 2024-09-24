@@ -98,7 +98,7 @@ const OrderComplete = ({ current_user, order_id }) => {
             <div>
               <h3 className="ta-c">Discover More of Your Glow</h3>
               <div className="jc-b w-100per m-auto wrap">
-                <Link to="/collections/all/products">
+                <Link to="/products">
                   <Button variant="contained" color="primary">
                     Products
                   </Button>
@@ -109,12 +109,12 @@ const OrderComplete = ({ current_user, order_id }) => {
                     Featured Videos
                   </Button>
                 </Link>
-                <Link to="/collections/all/sponsors">
+                <Link to="/sponsors">
                   <Button variant="contained" color="primary">
                     Sponsored Glovers
                   </Button>
                 </Link>
-                <Link to="/collections/all/teams">
+                <Link to="/teams">
                   <Button variant="contained" color="primary">
                     Sponsored Teams
                   </Button>

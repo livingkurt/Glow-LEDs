@@ -9,8 +9,8 @@ const ProductPageHead = ({ product }) => {
       <title>{seo?.meta_title + " | Glow LEDs"}</title>
       <meta property="og:title" content={seo?.meta_title} />
       <meta name="twitter:title" content={seo?.meta_title} />
-      <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
-      <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${pathname}`} />
+      <link rel="canonical" href={`https://www.glow-leds.com/products/${pathname}`} />
+      <meta property="og:url" content={`https://www.glow-leds.com/products/${pathname}`} />
 
       {images && <meta property="og:image" content={"https://www.glow-leds.com/" + images[0]?.link} />}
 

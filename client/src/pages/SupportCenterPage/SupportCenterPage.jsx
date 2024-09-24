@@ -43,7 +43,7 @@ const SupportCenterPage = () => {
     if (chip_selected) newSearchParams.append("chip", chip_selected.pathname);
 
     set_chip(chip_selected);
-    navigate(`/collections/all/products?${newSearchParams.toString()}`);
+    navigate(`/products?${newSearchParams.toString()}`);
   };
 
   const userPage = useSelector(state => state.users.userPage);

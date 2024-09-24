@@ -6,7 +6,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 const Team = ({ team, style, size }) => {
   return (
     <li key={team._id} style={{ ...style, textDecoration: "none" }}>
-      <Link to={`/collections/all/teams/${team && team.pathname}`}>
+      <Link to={`/teams/${team && team.pathname}`}>
         <div className="tooltip">
           <div className="tooltipoverlay">
             <div className="product">
@@ -22,7 +22,7 @@ const Team = ({ team, style, size }) => {
               <label style={{ fontSize: "2rem", WebkitTextStroke: "1px white" }} className="pv-1rem">
                 {team.team_name}
               </label>
-              <Link to={`/collections/all/teams/${team && team.pathname}`}>
+              <Link to={`/teams/${team && team.pathname}`}>
                 <label style={{ fontSize: "1.6rem" }}>{team.name}</label>
               </Link>
             </div>
