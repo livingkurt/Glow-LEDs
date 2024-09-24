@@ -27,7 +27,6 @@ import { WholesalersPage } from "../../pages/WholesalersPage";
 import TeamsPage from "../../pages/TeamsPage/TeamsPage";
 import { ImagesPage } from "../../pages/ImagesPage";
 import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfiePage/components";
-import ShippingPage from "../../pages/ProfiePage/components/UserShippingPage";
 import { CartPage } from "../../pages/CartPage";
 import { ProductsGridPage } from "../../pages/ProductsGridPage";
 import { ProductPage } from "../../pages/ProductPage";
@@ -37,16 +36,13 @@ import { SponsorsGridPage } from "../../pages/SponsorsGridPage";
 import { SponsorPage } from "../../pages/SponsorPage";
 import { TeamsGridPage } from "../../pages/TeamsGridPage";
 import { TeamPage } from "../../pages/TeamPage";
-import { AnnouncementsPage } from "../../pages/AnnouncementsPage";
 import { ManualPage } from "../../pages/ManualPage";
 import { ColorPalettePage } from "../../pages/ColorPalettesPage";
 import SupportCenterPage from "../../pages/SupportCenterPage/SupportCenterPage";
 import { TermsPage } from "../../pages/TermsPage";
 import { AboutPage } from "../../pages/AboutPage";
 import { SitemapPage } from "../../pages/SitemapPage";
-import { MusicPage } from "../../pages/MusicPage";
 import { CompletePage } from "../../pages/CompletePage";
-import { AffiliateTermsPage } from "../../pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
 import MenuPage from "../../pages/MenuPage/MenuPage";
 import EventsPage from "../../pages/EventsPage/EventsPage";
@@ -62,7 +58,6 @@ export const Components = {
   ChangePasswordPage,
   PasswordResetPage,
   ResetPasswordPage,
-  ShippingPage,
   CartPage,
   ProductsGridPage,
   ProductPage,
@@ -72,7 +67,6 @@ export const Components = {
   SponsorPage,
   TeamsGridPage,
   TeamPage,
-  AnnouncementsPage,
   ManualPage,
   ColorPalettePage,
   SupportCenterPage,
@@ -80,9 +74,7 @@ export const Components = {
   MenuPage,
   AboutPage,
   SitemapPage,
-  MusicPage,
   CompletePage,
-  AffiliateTermsPage,
   TutorialsGridPage,
   EventPage,
   ArticlesGridPage,
