@@ -3,8 +3,14 @@ import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
 import { generateSponsorCodes } from "../promos/promo_interactors";
-import { createPrivatePromoCode, createPublicPromoCode, monthToNum } from "./affiliate_helpers";
+import {
+  createPrivatePromoCode,
+  createPublicPromoCode,
+  monthToNum,
+  normalizeAffiliateSearch,
+} from "./affiliate_helpers";
 import { createStripeAccountLink } from "./affiliate_interactors";
+import { getFilteredData } from "../api_helpers";
 const bcrypt = require("bcryptjs");
 
 export default {
@@ -37,6 +43,24 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
+      const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
+      return affiliates;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_affiliates_s: async query => {
+    try {
+      const sort_options = ["active", "artist_name", "percentage_off"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "artist_name",
+        normalizeSearch: normalizeAffiliateSearch,
+      });
+      console.log({ query, filter, sort, limit, page });
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {

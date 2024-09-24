@@ -52,6 +52,9 @@ import MenuPage from "../../pages/MenuPage/MenuPage";
 import EventsPage from "../../pages/EventsPage/EventsPage";
 import EventPage from "../../pages/EventPage/EventPage";
 import TicketsPage from "../../pages/TicketsPage/TicketsPage";
+import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
+import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
+import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -82,6 +85,8 @@ export const Components = {
   AffiliateTermsPage,
   TutorialsGridPage,
   EventPage,
+  ArticlesGridPage,
+  ArticlePage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,
@@ -112,6 +117,7 @@ export const AdminComponents = {
   EmailsPage,
   EventsPage,
   TicketsPage,
+  ArticlesPage,
 };
 export const PrivateComponents = {
   ProfilePage,

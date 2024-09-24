@@ -395,20 +395,28 @@ const learn = addIdsRecursively({
   path: "/pages/learn",
   rows: [
     {
+      name: "All Learning",
+      path: "/pages/learn",
+    },
+    {
       name: "What is Gloving?",
       path: "/pages/learn/what_is_gloving",
     },
     {
       name: "Anatomy of the Glove Set",
-      path: "/pages/learn/what_is_a_microlight",
+      path: "/pages/learn/anatomy_of_the_glove_set",
+    },
+    {
+      name: "Anatomy of the Lightshow",
+      path: "/pages/learn/anatomy_of_the_lightshow",
     },
     {
       name: "Deep Dive into Accessories",
-      path: "/pages/learn/what_is_a_microlight",
+      path: "/pages/learn/deep_dive_into_accessories",
     },
     {
-      name: "Concept/Term Glossery",
-      path: "/pages/learn/what_is_a_microlight",
+      name: "Concept/Term Dictionary",
+      path: "/pages/learn/concept_term_dictionary",
     },
     {
       name: "Gloving History",
@@ -419,132 +427,140 @@ const learn = addIdsRecursively({
 const tutorials = addIdsRecursively({
   name: "Tutorials",
   id: "tutorials_dropdown",
-  path: "/pages/learn",
+  path: "/collections/all/tutorials",
   rows: [
     {
+      name: "All Tutorials",
+      path: "/collections/all/tutorials",
+    },
+    {
       name: "By Skill Level",
-      path: "/pages/menu/featured",
+      // path: "/pages/menu/featured",
       id: "skill_level_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Beginner",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?level=beginner",
           },
           {
             name: "Intermediate",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?level=intermediate",
           },
           {
-            name: "Advanced",
-            path: "/collections/all/teams",
+            name: "Advanced (Coming Soon)",
+            path: "/collections/all/tutorials?level=advanced",
           },
           {
-            name: "Experimental",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Experimental (Coming Soon)",
+            path: "/collections/all/tutorials?level=experimental",
           },
         ],
       },
     },
     {
       name: "By Style",
-      path: "/pages/menu/featured",
+      // path: "/pages/menu/featured",
       id: "style_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Flow",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?tags[]=flow",
           },
           {
             name: "Tech",
-            path: "/collections/all/sponsors",
+            path: "/collections/all/tutorials?tags[]=tech",
           },
           {
-            name: "Conjuring",
-            path: "/collections/all/teams",
+            name: "Conjuring (Coming Soon)",
+            path: "/collections/all/tutorials?tags[]=conjuring",
           },
           {
-            name: "Impacting",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Impacting (Coming Soon)",
+            path: "/collections/all/tutorials?tags[]=impacting",
           },
           {
-            name: "Morphing",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Morphing (Coming Soon)",
+            path: "/collections/all/tutorials?tags[]=morphing",
           },
         ],
       },
     },
-    {
-      name: "By Move",
-      path: "/collections/all/tutorials",
-    },
+    // {
+    //   name: "By Move",
+    //   path: "/collections/all/tutorials",
+    // },
     {
       name: "By Concept",
-      path: "/pages/menu/featured",
+      // path: "/collections/all/tutorials?tags[]=concept",
       id: "concept_dropdown",
       sideDrawer: {
         drawerItems: [
           {
-            name: "Showmanship",
-            path: "/collections/all/sponsors",
+            name: "Theory",
+            path: "/collections/all/tutorials?&tags[]=theory",
           },
           {
-            name: "Musicality",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Transistions",
-            path: "/collections/all/teams",
+            name: "Transitions",
+            path: "/collections/all/tutorials?&tags[]=transitions",
           },
           {
             name: "Stretches",
-            path: "/collections/all/teams/category/rave_mob",
+            path: "/collections/all/tutorials?&tags[]=stretches",
           },
           {
             name: "Finger Independence",
-            path: "/collections/all/teams/category/rave_mob",
+            path: "/collections/all/tutorials?&tags[]=finger_independence",
           },
           {
-            name: "Story Telling",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Storytelling (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=storytelling",
           },
           {
-            name: "Cleanliness",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Cleanliness (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=cleanliness",
+          },
+          {
+            name: "Showmanship (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=showmanship",
+          },
+          {
+            name: "Musicality (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=musicality",
           },
         ],
       },
     },
     {
-      name: "By Artist",
+      name: "By Glover",
       path: "/pages/menu/featured",
       id: "artist_dropdown",
       sideDrawer: {
         drawerItems: [
           {
-            name: "BeMO",
-            path: "/collections/all/sponsors",
-          },
-          {
-            name: "Lykaios",
-            path: "/collections/all/sponsors",
-          },
-          {
             name: "Po",
-            path: "/collections/all/teams",
+            path: "/collections/all/tutorials?&glover=po",
           },
           {
             name: "Puppet",
-            path: "/collections/all/teams/category/rave_mob",
+            path: "/collections/all/tutorials?&glover=puppet",
           },
+          // {
+          //   name: "BeMO",
+          //   path: "/collections/all/tutorials?&glover=bemo",
+          // },
+          // {
+          //   name: "Lykaios",
+          //   path: "/collections/all/tutorials?&glover=lykaios",
+          // },
+          // {
+          //   name: "Zielzibub",
+          //   path: "/collections/all/tutorials?&glover=zielzibub",
+          // },
           {
-            name: "Rekursion",
-            path: "/collections/all/teams/category/rave_mob",
-          },
-          {
-            name: "Starstream TuT",
-            path: "/collections/all/teams/category/rave_mob",
+            name: "Starstream",
+            path: "/collections/all/tutorials?&glover=starstream",
           },
         ],
       },
@@ -558,11 +574,23 @@ const tips = addIdsRecursively({
   rows: [
     {
       name: "Gloving Etiquette",
-      path: "/pages/learn/what_is_gloving",
+      path: "/pages/learn/gloving_etiquette",
     },
     {
       name: "Where do I start?",
       path: "/pages/learn/where_do_i_start",
+    },
+    {
+      name: "Maintaining Your Glove Set",
+      path: "/pages/learn/maintaining_your_glove_set",
+    },
+    {
+      name: "Filming Lightshows",
+      path: "/pages/learn/filming_lightshows",
+    },
+    {
+      name: "What's a Double Lightshow?",
+      path: "/pages/learn/whats_a_double_lightshow",
     },
   ],
 });
@@ -672,6 +700,12 @@ const admin = addIdsRecursively({
     {
       name: "Tutorials",
       path: "/secure/glow/tutorials",
+      onClick: x => true,
+    },
+
+    {
+      name: "Articles",
+      path: "/secure/glow/articles",
       onClick: x => true,
     },
 
@@ -789,12 +823,13 @@ export const navItems = [
   },
   {
     name: "LEARN",
-    path: "/collections/all/tutorials",
+    // path: "/collections/all/tutorials",
     id: "learn_dropdown",
     // path: "/pages/learn",
     dataTestId: "learn_button",
-    // columns: [learn, tutorials],
-    // otherColumns: [tips],
+    // columns: [learn],
+    columns: [learn, tutorials],
+    otherColumns: [tips],
     headerLocation: "center",
   },
   {

@@ -11,7 +11,7 @@ import { open_create_content_modal, open_edit_content_modal } from "../../slices
 import { determineContentColors } from "./contentsPageHelpers";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContentCopy, Edit, Flag, Help, Home, Info, Inventory } from "@mui/icons-material";
+import { ContentCopy, Edit, Flag, Help, Home, Info, Inventory, LocalLibrary } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
@@ -99,6 +99,12 @@ const ContentsPage = () => {
               onClick={() => dispatch(open_edit_content_modal({ content, contentType: "menus" }))}
             >
               <MenuBookIcon color="white" />
+            </GLIconButton>
+            <GLIconButton
+              tooltip="Edit Learn Page"
+              onClick={() => dispatch(open_edit_content_modal({ content, contentType: "learn" }))}
+            >
+              <LocalLibrary color="white" />
             </GLIconButton>
             <GLIconButton
               tooltip="Duplicate"

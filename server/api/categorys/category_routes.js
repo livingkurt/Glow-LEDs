@@ -3,12 +3,12 @@ import { category_controller } from "../categorys";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
-router.route("/").get(category_controller.findAll_categorys_c);
-
 router
-  .route("/table")
-  .get(category_controller.table_categorys_c)
+  .route("/")
+  .get(category_controller.findAll_categorys_c)
   .post(isAuth, isAdmin, category_controller.create_categorys_c);
+
+router.route("/table").get(category_controller.table_categorys_c);
 
 router
   .route("/:id")

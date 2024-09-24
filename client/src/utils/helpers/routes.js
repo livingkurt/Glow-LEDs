@@ -32,7 +32,8 @@ const routes = [
   { path: "/collections/all/tutorials", element: "TutorialsGridPage", exact: true },
 
   { path: "/pages/announcements", element: "AnnouncementsPage", exact: true },
-  // { path: "/pages/learn/*", element: "LearnPage" },
+  { path: "/pages/learn", element: "ArticlesGridPage", exact: true },
+  { path: "/pages/learn/:pathname", element: "ArticlePage", exact: true },
   { path: "/pages/manual/:pathname?", element: "ManualPage", exact: true },
   { path: "/pages/affiliate_terms", element: "AffiliateTermsPage", exact: true },
   { path: "/pages/color_palettes", element: "ColorPalettePage", exact: true },
@@ -44,6 +45,8 @@ const routes = [
   { path: "/pages/sitemap", element: "SitemapPage", exact: true },
   { path: "/pages/music", element: "MusicPage", exact: true },
   { path: "/pages/complete/:type/:id?", element: "CompletePage", exact: true },
+  { path: "/pages/learn/:pathname", element: "ArticlePage", exact: true },
+  { path: "/pages/learn", element: "ArticlesGridPage", exact: true },
 ];
 const adminRoutes = [
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
@@ -75,6 +78,7 @@ const adminRoutes = [
   { path: "/secure/glow/events", element: "EventsPage" },
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
+  { path: "/secure/glow/articles", element: "ArticlesPage" },
 ];
 const privateRoutes = [
   { path: "/secure/account/profile", element: "ProfilePage" },

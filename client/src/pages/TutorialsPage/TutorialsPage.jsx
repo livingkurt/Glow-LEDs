@@ -42,7 +42,7 @@ const TutorialsPage = () => {
       { title: "Video", display: "video" },
       { title: "Level", display: "level" },
       { title: "Order", display: "order" },
-      { title: "Categorys", display: "categorys" },
+      { title: "Tags", display: tutorial => tutorial.tags.map(tag => tag.name).join(", ") },
       {
         title: "",
         nonSelectable: true,

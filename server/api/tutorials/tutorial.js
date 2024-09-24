@@ -6,7 +6,7 @@ const tutorial_schema = new mongoose.Schema(
     title: { type: String },
     video: { type: String },
     description: { type: String },
-    categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     level: { type: String },
     pathname: { type: String },
     order: { type: Number },

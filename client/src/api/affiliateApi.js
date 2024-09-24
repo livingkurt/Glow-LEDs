@@ -13,13 +13,13 @@ import { handleTokenRefresh } from "./axiosInstance";
 
 export const getAffiliates = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/affiliates`, {
+    return await axios.get(`/api/affiliates/table`, {
       params: {
         limit: pageSize,
         page: page,
         search: search,
-        // sort: sorting,
-        // filters: pickBy(filters, (val) => val.length > 0)
+        sort: sorting,
+        filters: JSON.stringify(filters),
       },
     });
   } catch (error) {
