@@ -2,7 +2,7 @@ import { humanize, toCapitalize } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
 export const orderFormFields = ({
-  users,
+  usersQuery,
   productsQuery,
   promos,
   all_shipping,
@@ -16,7 +16,7 @@ export const orderFormFields = ({
     user: {
       type: "autocomplete_single",
       label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
+      options: !usersQuery?.isLoading ? usersQuery?.data?.filter(user => user.first_name && user.last_name) : [],
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
@@ -228,7 +228,7 @@ export const orderFormFields = ({
       type: "object",
       title: "Shipping",
       label: "Choose Shipping",
-      options: !all_shipping.isLoading && all_shipping.data.filter(user => user.first_name && user.last_name),
+      options: !all_shipping?.isLoading && all_shipping?.data?.filter(user => user.first_name && user.last_name),
       labelProp: "shipping",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       fields: {

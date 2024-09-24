@@ -13,7 +13,13 @@ import {
   handleQtyChange,
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { useCategorysQuery, useEventsQuery, useProductsQuery, useTicketsQuery } from "../../../api/allRecordsApi";
+import {
+  useCategorysQuery,
+  useEventsQuery,
+  useProductsQuery,
+  useTicketsQuery,
+  useUsersQuery,
+} from "../../../api/allRecordsApi";
 import { showConfirm } from "../../../slices/snackbarSlice";
 
 const EditOrderModal = () => {
@@ -34,6 +40,7 @@ const EditOrderModal = () => {
   const categorysQuery = useCategorysQuery();
   const eventsQuery = useEventsQuery();
   const ticketsQuery = useTicketsQuery();
+  const usersQuery = useUsersQuery();
 
   useEffect(() => {
     let clean = true;
@@ -48,7 +55,7 @@ const EditOrderModal = () => {
   }, [dispatch, order._id]);
 
   const formFields = orderFormFields({
-    users,
+    usersQuery,
     productsQuery,
     promos,
     all_shipping,
