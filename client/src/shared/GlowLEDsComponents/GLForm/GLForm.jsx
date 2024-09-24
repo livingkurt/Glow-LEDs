@@ -20,8 +20,6 @@ import GLColorPicker from "./components/GLColorPicker";
 import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
-import ReactQuill from "react-quill"; // Add this import
-import "react-quill/dist/quill.snow.css"; // Add this import for default styles
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -310,43 +308,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   }}
                   onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
-              );
-            case "rich_text":
-              return (
-                <Box key={`${fieldName}-${fieldData.type}`} mt={2}>
-                  <Typography variant="subtitle1">{fieldData.label}</Typography>
-                  <ReactQuill
-                    value={fieldState || ""}
-                    onChange={content => handleInputChange(fieldName, content)}
-                    modules={{
-                      toolbar: [
-                        [{ "header": [1, 2, false] }],
-                        ["bold", "italic", "underline", "strike", "blockquote"],
-                        [{ "list": "ordered" }, { "list": "bullet" }, { "indent": "-1" }, { "indent": "+1" }],
-                        ["link", "image"],
-                        ["clean"],
-                      ],
-                    }}
-                    formats={[
-                      "header",
-                      "bold",
-                      "italic",
-                      "underline",
-                      "strike",
-                      "blockquote",
-                      "list",
-                      "bullet",
-                      "indent",
-                      "link",
-                      "image",
-                    ]}
-                  />
-                  {formErrors && formErrors[fieldName] && (
-                    <Typography color="error" variant="caption">
-                      {formErrors[fieldName]}
-                    </Typography>
-                  )}
-                </Box>
               );
             case "text":
               return (
