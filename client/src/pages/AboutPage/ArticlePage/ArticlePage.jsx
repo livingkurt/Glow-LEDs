@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Container, Typography, Box } from "@mui/material";
 import ReactMarkdown from "react-markdown";
-import { useCurrentContentQuery } from "../../../api";
+import { detailsArticle } from "../../../api";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { EditContentModal } from "../../ContentsPage/components";
 import { useDispatch, useSelector } from "react-redux";
-import { open_edit_content_modal } from "../../../slices/contentSlice";
+import EditArticleModal from "../../ArticlesPage/components/EditArticleModal";
+import { open_edit_article_modal } from "../../../slices/articleSlice";
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
   const { pathname } = useParams();
-  const [article, setArticle] = useState(null);
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const { data: content } = useCurrentContentQuery();
+  const articlePage = useSelector(state => state.articles.articlePage);
+  const { article } = articlePage;
+  console.log({ article });
 
   useEffect(() => {
-    if (content && content.learn && content.learn.articles) {
-      const foundArticle = content.learn.articles.find(a => a.pathname === pathname);
-      setArticle(foundArticle);
-    }
-  }, [content, pathname]);
+    dispatch(detailsArticle(pathname));
+  }, [dispatch, pathname]);
 
   if (!article) {
     return <Typography>Loading...</Typography>;
@@ -31,28 +29,33 @@ const ArticlePage = () => {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h2" gutterBottom>
-          {article.title}
-        </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+        <Link to="/pages/learn">
+          <GLButtonV2>Back to Articles</GLButtonV2>
+        </Link>
         {current_user.isAdmin && (
-          <GLButtonV2 onClick={() => dispatch(open_edit_content_modal({ content, contentType: "learn" }))}>
-            Edit Article
-          </GLButtonV2>
+          <GLButtonV2 onClick={() => dispatch(open_edit_article_modal(article))}>Edit Article</GLButtonV2>
         )}
       </Box>
+      <Typography variant="h4" gutterBottom>
+        {article.title}
+      </Typography>
       <Typography variant="subtitle1" gutterBottom>
         {article.subtitle}
       </Typography>
       {article.image && (
         <Box sx={{ my: 2 }}>
-          <img src={article.image.url} alt={article.title} style={{ maxWidth: "100%", height: "auto" }} />
+          <img
+            src={article.image.link}
+            alt={article.title}
+            style={{ maxWidth: "100%", height: "auto", borderRadius: "20px" }}
+          />
         </Box>
       )}
       <Box sx={{ mt: 4 }}>
         <ReactMarkdown>{article.content}</ReactMarkdown>
       </Box>
-      <EditContentModal />
+      <EditArticleModal />
     </Container>
   );
 };

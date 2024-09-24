@@ -395,6 +395,10 @@ const learn = addIdsRecursively({
   path: "/pages/learn",
   rows: [
     {
+      name: "All Learning",
+      path: "/pages/learn",
+    },
+    {
       name: "What is Gloving?",
       path: "/pages/learn/what_is_gloving",
     },
@@ -418,10 +422,6 @@ const learn = addIdsRecursively({
       name: "Gloving History",
       path: "/pages/learn/gloving_history",
     },
-    {
-      name: "Learn More",
-      path: "/pages/learn",
-    },
   ],
 });
 const tutorials = addIdsRecursively({
@@ -429,6 +429,10 @@ const tutorials = addIdsRecursively({
   id: "tutorials_dropdown",
   path: "/collections/all/tutorials",
   rows: [
+    {
+      name: "All Tutorials",
+      path: "/collections/all/tutorials",
+    },
     {
       name: "By Skill Level",
       // path: "/pages/menu/featured",
@@ -444,11 +448,11 @@ const tutorials = addIdsRecursively({
             path: "/collections/all/tutorials?level=intermediate",
           },
           {
-            name: "Advanced",
+            name: "Advanced (Coming Soon)",
             path: "/collections/all/tutorials?level=advanced",
           },
           {
-            name: "Experimental",
+            name: "Experimental (Coming Soon)",
             path: "/collections/all/tutorials?level=experimental",
           },
         ],
@@ -469,15 +473,15 @@ const tutorials = addIdsRecursively({
             path: "/collections/all/tutorials?tags[]=tech",
           },
           {
-            name: "Conjuring",
+            name: "Conjuring (Coming Soon)",
             path: "/collections/all/tutorials?tags[]=conjuring",
           },
           {
-            name: "Impacting",
+            name: "Impacting (Coming Soon)",
             path: "/collections/all/tutorials?tags[]=impacting",
           },
           {
-            name: "Morphing",
+            name: "Morphing (Coming Soon)",
             path: "/collections/all/tutorials?tags[]=morphing",
           },
         ],
@@ -498,14 +502,6 @@ const tutorials = addIdsRecursively({
             path: "/collections/all/tutorials?&tags[]=theory",
           },
           {
-            name: "Showmanship",
-            path: "/collections/all/tutorials?&tags[]=showmanship",
-          },
-          {
-            name: "Musicality",
-            path: "/collections/all/tutorials?&tags[]=musicality",
-          },
-          {
             name: "Transitions",
             path: "/collections/all/tutorials?&tags[]=transitions",
           },
@@ -518,12 +514,20 @@ const tutorials = addIdsRecursively({
             path: "/collections/all/tutorials?&tags[]=finger_independence",
           },
           {
-            name: "Storytelling",
+            name: "Storytelling (Coming Soon)",
             path: "/collections/all/tutorials?&tags[]=storytelling",
           },
           {
-            name: "Cleanliness",
+            name: "Cleanliness (Coming Soon)",
             path: "/collections/all/tutorials?&tags[]=cleanliness",
+          },
+          {
+            name: "Showmanship (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=showmanship",
+          },
+          {
+            name: "Musicality (Coming Soon)",
+            path: "/collections/all/tutorials?&tags[]=musicality",
           },
         ],
       },
@@ -535,18 +539,6 @@ const tutorials = addIdsRecursively({
       sideDrawer: {
         drawerItems: [
           {
-            name: "Puppet",
-            path: "/collections/all/tutorials?&glover=puppet",
-          },
-          {
-            name: "BeMO",
-            path: "/collections/all/tutorials?&glover=bemo",
-          },
-          {
-            name: "Lykaios",
-            path: "/collections/all/tutorials?&glover=lykaios",
-          },
-          {
             name: "Po",
             path: "/collections/all/tutorials?&glover=po",
           },
@@ -554,10 +546,18 @@ const tutorials = addIdsRecursively({
             name: "Puppet",
             path: "/collections/all/tutorials?&glover=puppet",
           },
-          {
-            name: "Zielzibub",
-            path: "/collections/all/tutorials?&glover=zielzibub",
-          },
+          // {
+          //   name: "BeMO",
+          //   path: "/collections/all/tutorials?&glover=bemo",
+          // },
+          // {
+          //   name: "Lykaios",
+          //   path: "/collections/all/tutorials?&glover=lykaios",
+          // },
+          // {
+          //   name: "Zielzibub",
+          //   path: "/collections/all/tutorials?&glover=zielzibub",
+          // },
           {
             name: "Starstream",
             path: "/collections/all/tutorials?&glover=starstream",
@@ -579,6 +579,18 @@ const tips = addIdsRecursively({
     {
       name: "Where do I start?",
       path: "/pages/learn/where_do_i_start",
+    },
+    {
+      name: "Maintaining Your Glove Set",
+      path: "/pages/learn/maintaining_your_glove_set",
+    },
+    {
+      name: "Filming Lightshows",
+      path: "/pages/learn/filming_lightshows",
+    },
+    {
+      name: "What's a Double Lightshow?",
+      path: "/pages/learn/whats_a_double_lightshow",
     },
   ],
 });

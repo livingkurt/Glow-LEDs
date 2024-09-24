@@ -36,7 +36,7 @@ const ArticleCard = ({ article }) => {
           }}
         >
           <GLLazyImage
-            src={article.image ? article.image.url : "path/to/default/image.jpg"}
+            src={article.image ? article.image.link : "path/to/default/image.jpg"}
             alt={article.title}
             style={{
               position: "absolute",

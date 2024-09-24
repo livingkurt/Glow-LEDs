@@ -1,3 +1,4 @@
+import { determineIDPathname } from "../api_helpers";
 import Article from "./article";
 
 export default {
@@ -7,6 +8,7 @@ export default {
         .sort(sort)
         .populate("author")
         .populate("tags")
+        .populate("image")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -39,10 +41,7 @@ export default {
           match: { deleted: { $ne: true } },
           select: "name type pathname",
         })
-        .populate({
-          path: "image",
-          select: "url",
-        });
+        .populate("image");
 
       if (limit > 0) {
         query.limit(limit);
@@ -62,7 +61,7 @@ export default {
 
   findBy_articles_db: async params => {
     try {
-      return await Article.findOne(params).populate("author").populate("tags");
+      return await Article.findOne(params).populate("author").populate("tags").populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -71,7 +70,10 @@ export default {
   },
   findByPathname_articles_db: async pathname => {
     try {
-      return await Article.findOne({ pathname: pathname, deleted: false }).populate("author").populate("tags");
+      return await Article.findOne({ pathname: pathname, deleted: false })
+        .populate("author")
+        .populate("tags")
+        .populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -79,8 +81,11 @@ export default {
     }
   },
   findById_articles_db: async id => {
+    console.log({ id });
+    const query = determineIDPathname(id);
+    console.log({ query });
     try {
-      return await Article.findOne({ _id: id, deleted: false }).populate("author").populate("tags");
+      return await Article.findOne(query).populate("author").populate("tags").populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

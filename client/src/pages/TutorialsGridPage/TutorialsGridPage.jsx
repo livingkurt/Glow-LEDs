@@ -21,7 +21,7 @@ const TutorialsGridPage = () => {
     handleSortChange,
     clearAllFilters,
     selectedTutorial,
-
+    allGlovers,
     handleClose,
     isOpen,
     handleOpen,
@@ -67,6 +67,7 @@ const TutorialsGridPage = () => {
           handleTagChange={handleTagChange}
           clearAllFilters={clearAllFilters}
           selectedGlover={selectedGlover}
+          allGlovers={allGlovers}
           handleGloverChange={handleGloverChange}
         />
         <Grid container spacing={2}>

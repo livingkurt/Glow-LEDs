@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useTutorialsGridQuery, useAffiliatesQuery } from "../../api/allRecordsApi";
+import { useTutorialsGridQuery } from "../../api/allRecordsApi";
 import {
   setSelectedTags,
   setSelectedLevel,
@@ -25,12 +25,6 @@ const useTutorialsGridPage = () => {
 
   const { data: currentContent } = useCurrentContentQuery();
 
-  const { data: affiliates, isLoading: isLoadingAffiliates } = useAffiliatesQuery({ sponsor: true });
-
-  // Get the glover pathname directly from the URL
-  const searchParams = new URLSearchParams(location.search);
-  const gloverPathname = searchParams.get("glover") || "";
-
   const {
     data: tutorials,
     isLoading,
@@ -40,7 +34,7 @@ const useTutorialsGridPage = () => {
     tags: selectedTags,
     level: selectedLevel,
     sort,
-    glover: gloverPathname || selectedGlover?.pathname,
+    glover: selectedGlover?.pathname,
   });
 
   useEffect(() => {
@@ -60,14 +54,14 @@ const useTutorialsGridPage = () => {
     );
 
     // Update selectedGlover based on the URL parameter
-    if (affiliates && gloverPathname) {
-      const matchingAffiliate = affiliates.find(affiliate => affiliate.pathname === gloverPathname);
-      if (matchingAffiliate) {
-        dispatch(setSelectedGlover(matchingAffiliate));
+    if (tutorials && gloverPathname) {
+      const matchingGlover = tutorials.find(tutorial => tutorial.affiliate?.pathname === gloverPathname)?.affiliate;
+      if (matchingGlover) {
+        dispatch(setSelectedGlover(matchingGlover));
       }
     }
     refetch();
-  }, [location, dispatch, affiliates, refetch]);
+  }, [location, dispatch, tutorials, refetch]);
 
   const handleOpen = tutorial => {
     dispatch(setSelectedTutorial(tutorial));
@@ -90,22 +84,42 @@ const useTutorialsGridPage = () => {
     return Array.from(tagSet);
   }, [tutorials]);
 
+  const allGlovers = useMemo(() => {
+    if (!tutorials) return [];
+    const gloverSet = new Set();
+    tutorials.forEach(tutorial => {
+      if (tutorial.affiliate) {
+        gloverSet.add(JSON.stringify(tutorial.affiliate));
+      }
+    });
+    return Array.from(gloverSet).map(gloverString => JSON.parse(gloverString));
+  }, [tutorials]);
+
   const handleTagChange = (event, newValue) => {
     const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
     dispatch(setSelectedTags(snakeCaseTags));
-    updateUrl(snakeCaseTags, selectedLevel, sort, selectedGlover);
+    updateUrl(snakeCaseTags, selectedLevel, sort, selectedGlover?.pathname);
   };
 
   const handleLevelChange = (event, newLevel) => {
     dispatch(setSelectedLevel(newLevel));
-    updateUrl(selectedTags, newLevel, sort, selectedGlover);
+    updateUrl(selectedTags, newLevel, sort, selectedGlover?.pathname);
   };
 
   const handleSortChange = (event, newValue) => {
     const newSort = newValue ? newValue.value : null;
     dispatch(setSort(newSort));
-    updateUrl(selectedTags || [], selectedLevel, newSort, selectedGlover);
+    updateUrl(selectedTags || [], selectedLevel, newSort, selectedGlover?.pathname);
   };
+
+  const handleGloverChange = useCallback(
+    (event, newValue) => {
+      dispatch(setSelectedGlover(newValue));
+      updateUrl(selectedTags || [], selectedLevel, sort, newValue?.pathname);
+    },
+    [dispatch, selectedTags, selectedLevel, sort]
+  );
+
   const updateUrl = useCallback(
     (tags, level, sortValue, glover) => {
       const newSearchParams = new URLSearchParams();
@@ -118,13 +132,6 @@ const useTutorialsGridPage = () => {
     [location.pathname, navigate]
   );
 
-  const handleGloverChange = useCallback(
-    (event, newValue) => {
-      dispatch(setSelectedGlover(newValue));
-      updateUrl(selectedTags || [], selectedLevel, sort, newValue?.pathname);
-    },
-    [dispatch, selectedTags, selectedLevel, sort, updateUrl]
-  );
   const clearAllFilters = () => {
     dispatch(setSelectedTags([]));
     dispatch(setSelectedLevel(null));
@@ -132,20 +139,6 @@ const useTutorialsGridPage = () => {
     dispatch(setSelectedGlover(null));
     updateUrl([], null, null, null);
   };
-
-  useEffect(() => {
-    if (affiliates && !isLoadingAffiliates) {
-      const searchParams = new URLSearchParams(location.search);
-      const gloverPathname = searchParams.get("glover");
-
-      if (gloverPathname && !selectedGlover) {
-        const matchingAffiliate = affiliates.find(affiliate => affiliate.pathname === gloverPathname);
-        if (matchingAffiliate) {
-          dispatch(setSelectedGlover(matchingAffiliate));
-        }
-      }
-    }
-  }, [affiliates, isLoadingAffiliates, location, dispatch, selectedGlover]);
 
   return {
     selectedTags,
@@ -157,6 +150,7 @@ const useTutorialsGridPage = () => {
     isLoading,
     isError,
     allTags,
+    allGlovers,
     handleTagChange,
     handleLevelChange,
     handleSortChange,

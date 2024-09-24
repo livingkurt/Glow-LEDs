@@ -35,6 +35,7 @@ const ArticlesGridPage = () => {
       return currentContent?.articles_grid_page?.title || "Our Articles";
     }
   };
+  console.log({ articles });
 
   return (
     <Box>
