@@ -55,7 +55,7 @@ const CompletePage = () => {
         `,
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/order",
+        link: "https://www.glow-leds.com/complete/order",
       });
     } else if (params.type === "affiliate") {
       set_data({
@@ -65,7 +65,7 @@ const CompletePage = () => {
         p: "You will be recieving a conformation email with your affiliate details",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/affiliate",
+        link: "https://www.glow-leds.com/complete/affiliate",
       });
     } else if (params.type === "email") {
       set_data({
@@ -75,7 +75,7 @@ const CompletePage = () => {
         p: "We'll answer your questions or requests as soon as possible.",
         button_label: "",
         button_link: "",
-        link: "/pages/faq",
+        link: "/faq",
       });
     } else if (params.type === "feature") {
       set_data({
@@ -85,7 +85,7 @@ const CompletePage = () => {
         p: "You will be recieving a conformation email with your affiliate details",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/affiliate",
+        link: "https://www.glow-leds.com/complete/affiliate",
       });
     } else if (params.type === "registered") {
       // 2. Add new condition
@@ -96,7 +96,7 @@ const CompletePage = () => {
         p: "",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/register",
+        link: "https://www.glow-leds.com/complete/register",
       });
     } else if (params.type === "account_created") {
       // 2. Add new condition
@@ -107,7 +107,7 @@ const CompletePage = () => {
         p: "",
         button_label: "",
         button_link: "",
-        link: "https://www.glow-leds.com/pages/complete/register",
+        link: "https://www.glow-leds.com/complete/register",
       });
     }
   };
@@ -265,8 +265,8 @@ export default CompletePage;
 //           <title>Complete | Glow LEDs</title>
 //           <meta property="og:title" content="Check Email" />
 //           <meta name="twitter:title" content="Check Email" />
-//           <link rel="canonical" href={`https://www.glow-leds.com/pages/complete/${params.type}`} />
-//           <meta property="og:url" content={`https://www.glow-leds.com/pages/complete/${params.type}`} />
+//           <link rel="canonical" href={`https://www.glow-leds.com/complete/${params.type}`} />
+//           <meta property="og:url" content={`https://www.glow-leds.com/complete/${params.type}`} />
 //         </Helmet>
 //         {params.type === "order" && <OrderComplete current_user={current_user} order_id={params.id} />}
 //         {params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}

@@ -23,8 +23,8 @@ const OrderComplete = ({ current_user, order_id }) => {
         <title>Order Complete | Glow LEDs</title>
         <meta property="og:title" content="Check Email" />
         <meta name="twitter:title" content="Check Email" />
-        <link rel="canonical" href={"https://www.glow-leds.com/pages/complete/order"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/pages/complete/order"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/complete/order"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
       </Helmet>
       <Link to="/">
         <Button style={{ color: "white" }}>Back to Home</Button>
@@ -81,7 +81,7 @@ const OrderComplete = ({ current_user, order_id }) => {
           <p className="mv-10px ">
             For more information about how we create our products and shipping times, refer to our FAQs.
           </p>
-          <Link to="/pages/faq">
+          <Link to="/faq">
             <Button variant="contained" color="primary" className="w-100per mt-10px">
               FAQ Page
             </Button>
@@ -119,7 +119,7 @@ const OrderComplete = ({ current_user, order_id }) => {
                     Sponsored Teams
                   </Button>
                 </Link>
-                <Link to="/pages/music">
+                <Link to="/music">
                   <Button variant="contained" color="primary">
                     NTRE Music
                   </Button>

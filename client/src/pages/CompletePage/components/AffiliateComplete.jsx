@@ -10,8 +10,8 @@ const AffiliateComplete = ({ current_user, order_id }) => {
         <title>Affiliate Complete | Glow LEDs</title>
         <meta property="og:title" content="Check Email" />
         <meta name="twitter:title" content="Check Email" />
-        <link rel="canonical" href={"https://www.glow-leds.com/pages/complete/order"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/pages/complete/order"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/complete/order"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
       </Helmet>
       <h2 className="ta-c">Affiliate Sign Up Complete!</h2>
       <p className="ta-c max-w-800px lh-30px m-auto">Thank you for Applying!</p>

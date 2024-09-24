@@ -7,8 +7,8 @@ const MenuPageHead = ({ name }) => {
       <title>{name} | Glow LEDs</title>
       <meta property="og:title" content={`${name}| Glow LEDs`} />
       <meta name="twitter:title" content={`${name}| Glow LEDs`} />
-      <link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
-      <meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
+      <link rel="canonical" href="https://www.glow-leds.com/featured" />
+      <meta property="og:url" content="https://www.glow-leds.com/featured" />
       <meta
         name="description"
         content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."

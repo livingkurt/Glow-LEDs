@@ -8,7 +8,7 @@ const PlaceOrderLayout = ({ children }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box display={"flex"} justifyContent={"center"}>
-            <Link to="/pages/menu/gloving" aria-label="Gloving">
+            <Link to="/menu/gloving" aria-label="Gloving">
               <div className="row pos-rel">
                 <label className="glow_leds_text" data-testid="glow_leds_title">
                   Glow LEDs

@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { set_success } from "../../slices/cartSlice";
 import { clear_order_state } from "../../slices/orderSlice";
-import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
-import { setLoadingPlaceOrderPage } from "../../pages/PlaceOrderPage/placeOrderSlice";
+import { determineItemsTotal } from "../../utils/helper_functions";
 import { showInfo } from "../../slices/snackbarSlice";
 
 export const useOutsideAlerter = (ref, dispatch) => {

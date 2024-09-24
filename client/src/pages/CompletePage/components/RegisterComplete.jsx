@@ -18,8 +18,8 @@ const RegisterComplete = ({ current_user }) => {
         <title>Almost There | Glow LEDs</title>
         <meta property="og:title" content="Almost There" />
         <meta name="twitter:title" content="Almost There" />
-        <link rel="canonical" href={"https://www.glow-leds.com/pages/complete/email-verified"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/pages/complete/email-verified"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/complete/email-verified"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/complete/email-verified"} />
       </Helmet>
       <h2 className="ta-c">Thank you for registering at Glow-LEDs.com!</h2>
       <p className="ta-c max-w-800px lh-30px m-auto">

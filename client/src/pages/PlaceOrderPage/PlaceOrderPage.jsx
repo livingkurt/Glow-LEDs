@@ -151,7 +151,7 @@ const PlaceOrderPage = () => {
     }
     sessionStorage.removeItem("shippingAddress");
     sessionStorage.setItem("manualNavigation", "true");
-    navigate("/pages/complete/order/" + order._id);
+    navigate("/complete/order/" + order._id);
   };
 
   useEffect(() => {

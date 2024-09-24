@@ -34,8 +34,8 @@ const AccountCreatedComplete = ({ current_user }) => {
         <title>Account Created | Glow LEDs</title>
         <meta property="og:title" content="Account Created" />
         <meta name="twitter:title" content="Account Created" />
-        <link rel="canonical" href={"https://www.glow-leds.com/pages/complete/email-verified"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/pages/complete/email-verified"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/complete/email-verified"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/complete/email-verified"} />
       </Helmet>
       <Loading
         loading={verificationLoading}
@@ -109,7 +109,7 @@ const AccountCreatedComplete = ({ current_user }) => {
                     Sponsored Teams
                   </GLButton>
                 </Link>
-                <Link to="/pages/music">
+                <Link to="/music">
                   <GLButton variant="primary" className="mh-10px">
                     NTRE Music
                   </GLButton>

@@ -9,7 +9,7 @@ const ArticleCard = ({ article }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Link to={`/pages/learn/${article.pathname}`} style={{ textDecoration: "none" }}>
+    <Link to={`/learn/${article.pathname}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",

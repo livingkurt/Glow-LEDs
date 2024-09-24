@@ -33,8 +33,8 @@ const TeamPage = () => {
         <title>Team | Glow LEDs</title>
         <meta property="og:title" content="Team" />
         <meta name="twitter:title" content="Team" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/teamd" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/teamd" />
+        <link rel="canonical" href="https://www.glow-leds.com/teamd" />
+        <meta property="og:url" content="https://www.glow-leds.com/teamd" />
         <meta
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."

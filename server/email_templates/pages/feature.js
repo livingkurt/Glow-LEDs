@@ -200,7 +200,7 @@ export default ({ feature }) => {
         </tbody>
       </table>
       <div style="display:flex;justify-content:center;margin:10px"><a
-          href="https://www.glow-leds.com/pages/menu/featured"
+          href="https://www.glow-leds.com/menu/featured"
           style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
           <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Check Out the Glow LEDs
             Feature Section</h4>

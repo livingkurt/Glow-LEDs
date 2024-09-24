@@ -26,32 +26,32 @@ const FeatureComplete = ({ current_user, order_id }) => {
         <p className="ta-c max-w-800px lh-30px m-auto">
           In the meantime, check out these pages for answers to frequently asked questions.
         </p>
-        <Link to="/pages/faq#glowskinz">
+        <Link to="/faq#glowskinz">
           <GLButton variant="primary" className="w-100per">
             Glowskinz FAQ
           </GLButton>
         </Link>
-        <Link to="/pages/faq#diffuser_caps">
+        <Link to="/faq#diffuser_caps">
           <GLButton variant="primary" className="w-100per">
             Diffuser Caps FAQ
           </GLButton>
         </Link>
-        <Link to="/pages/faq#custom_products">
+        <Link to="/faq#custom_products">
           <GLButton variant="primary" className="w-100per">
             Custom Products FAQ
           </GLButton>
         </Link>
-        <Link to="/pages/faq#featured_content">
+        <Link to="/faq#featured_content">
           <GLButton variant="primary" className="w-100per">
             Featured Content FAQ
           </GLButton>
         </Link>
-        <Link to="/pages/faq#processing_shipping">
+        <Link to="/faq#processing_shipping">
           <GLButton variant="primary" className="w-100per">
             Processing/Shipping FAQ
           </GLButton>
         </Link>
-        <Link to="/pages/faq#order_issues">
+        <Link to="/faq#order_issues">
           <GLButton variant="primary" className="w-100per">
             Order Issues FAQ
           </GLButton>
@@ -120,7 +120,7 @@ const FeatureComplete = ({ current_user, order_id }) => {
                 Sponsored Teams
               </GLButton>
             </Link>
-            <Link to="/pages/music">
+            <Link to="/music">
               <GLButton variant="primary" className="mh-10px">
                 NTRE Music
               </GLButton>

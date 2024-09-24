@@ -4,7 +4,7 @@ const routes = [
   { path: "/account/reset_password", element: "ResetPasswordPage" },
 
   { path: "/checkout/place_order", element: "PlaceOrderPage" },
-  { path: "/checkout/cart/:pathname?", element: "CartPage" },
+  { path: "/checkout/cart", element: "CartPage" },
   { path: "/checkout/order/:id", element: "OrderPage", exact: true },
 
   { path: "/products", element: "ProductsGridPage", exact: true },

@@ -101,7 +101,7 @@ const GLLoginModal = () => {
     let cleanup = true;
     if (cleanup) {
       if (registerationSuccess) {
-        navigate("/pages/complete/registered");
+        navigate("/complete/registered");
       }
     }
     return () => {
@@ -312,10 +312,10 @@ const GLLoginModal = () => {
                   {showRegister
                     ? "Register"
                     : email_validations === "Account not verified"
-                    ? "Resend Verification"
-                    : showForgotPassword
-                    ? "Send Reset Link"
-                    : "Login"}
+                      ? "Resend Verification"
+                      : showForgotPassword
+                        ? "Send Reset Link"
+                        : "Login"}
                 </Button>
               </Grid>
               {!showForgotPassword && (

@@ -285,7 +285,7 @@ const diffusers = addIdsRecursively({
 
 const enhancers = addIdsRecursively({
   name: "Enhancers",
-  // path: "/pages/menu/enhancers",
+  // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
     glowskinz,
@@ -342,11 +342,11 @@ const essentials = addIdsRecursively({
 const community = addIdsRecursively({
   name: "Community",
   id: "community_dropdown",
-  // path: "/pages/menu/community",
+  // path: "/menu/community",
   rows: [
     {
       name: "Space City Gloving Competition",
-      path: "/pages/events/space_city_gloving_competition",
+      path: "/events/space_city_gloving_competition",
       feature: "events",
     },
     {
@@ -363,7 +363,7 @@ const community = addIdsRecursively({
     },
     // {
     //   name: "Featured",
-    //   path: "/pages/menu/featured",
+    //   path: "/menu/featured",
     //   id: "featured_dropdown",
     //   sideDrawer: {
     //     drawerItems: [
@@ -392,35 +392,35 @@ const community = addIdsRecursively({
 const learn = addIdsRecursively({
   name: "Learn",
   id: "learn_dropdown",
-  path: "/pages/learn",
+  path: "/learn",
   rows: [
     {
       name: "All Learning",
-      path: "/pages/learn",
+      path: "/learn",
     },
     {
       name: "What is Gloving?",
-      path: "/pages/learn/what_is_gloving",
+      path: "/learn/what_is_gloving",
     },
     {
       name: "Anatomy of the Glove Set",
-      path: "/pages/learn/anatomy_of_the_glove_set",
+      path: "/learn/anatomy_of_the_glove_set",
     },
     {
       name: "Anatomy of the Lightshow",
-      path: "/pages/learn/anatomy_of_the_lightshow",
+      path: "/learn/anatomy_of_the_lightshow",
     },
     {
       name: "Deep Dive into Accessories",
-      path: "/pages/learn/deep_dive_into_accessories",
+      path: "/learn/deep_dive_into_accessories",
     },
     {
       name: "Concept/Term Dictionary",
-      path: "/pages/learn/concept_term_dictionary",
+      path: "/learn/concept_term_dictionary",
     },
     {
       name: "Gloving History",
-      path: "/pages/learn/gloving_history",
+      path: "/learn/gloving_history",
     },
   ],
 });
@@ -435,7 +435,7 @@ const tutorials = addIdsRecursively({
     },
     {
       name: "By Skill Level",
-      // path: "/pages/menu/featured",
+      // path: "/menu/featured",
       id: "skill_level_dropdown",
       sideDrawer: {
         drawerItems: [
@@ -460,7 +460,7 @@ const tutorials = addIdsRecursively({
     },
     {
       name: "By Style",
-      // path: "/pages/menu/featured",
+      // path: "/menu/featured",
       id: "style_dropdown",
       sideDrawer: {
         drawerItems: [
@@ -534,7 +534,7 @@ const tutorials = addIdsRecursively({
     },
     {
       name: "By Glover",
-      path: "/pages/menu/featured",
+      path: "/menu/featured",
       id: "artist_dropdown",
       sideDrawer: {
         drawerItems: [
@@ -570,50 +570,50 @@ const tutorials = addIdsRecursively({
 const tips = addIdsRecursively({
   name: "Gloving Tips",
   id: "tips_dropdown",
-  path: "/pages/learn",
+  path: "/learn",
   rows: [
     {
       name: "Gloving Etiquette",
-      path: "/pages/learn/gloving_etiquette",
+      path: "/learn/gloving_etiquette",
     },
     {
       name: "Where do I start?",
-      path: "/pages/learn/where_do_i_start",
+      path: "/learn/where_do_i_start",
     },
     {
       name: "Maintaining Your Glove Set",
-      path: "/pages/learn/maintaining_your_glove_set",
+      path: "/learn/maintaining_your_glove_set",
     },
     {
       name: "Filming Lightshows",
-      path: "/pages/learn/filming_lightshows",
+      path: "/learn/filming_lightshows",
     },
     {
       name: "What's a Double Lightshow?",
-      path: "/pages/learn/whats_a_double_lightshow",
+      path: "/learn/whats_a_double_lightshow",
     },
   ],
 });
 const support = addIdsRecursively({
   name: "Support",
   id: "support_dropdown",
-  // path: "/pages/menu/support",
+  // path: "/menu/support",
   rows: [
     {
       name: "Support Center",
-      path: "/pages/support_center",
+      path: "/support_center",
     },
     {
       name: "About",
-      path: "/pages/about",
+      path: "/about",
     },
     // {
     //   name: "Announcements",
-    //   path: "/pages/announcements",
+    //   path: "/announcements",
     // },
     {
       name: "Term and Condition",
-      path: "/pages/terms",
+      path: "/terms",
     },
   ],
 });
@@ -814,7 +814,7 @@ export const navItems = [
   },
   {
     name: "SHOP",
-    path: "/pages/menu/shop",
+    path: "/menu/shop",
     id: "shop_dropdown",
     dataTestId: "shop_button",
     columns: [features, enhancers],
@@ -825,7 +825,7 @@ export const navItems = [
     name: "LEARN",
     // path: "/tutorials",
     id: "learn_dropdown",
-    // path: "/pages/learn",
+    // path: "/learn",
     dataTestId: "learn_button",
     // columns: [learn],
     columns: [learn, tutorials],
@@ -835,7 +835,7 @@ export const navItems = [
   {
     name: "COMMUNITY",
     id: "community_dropdown",
-    // path: "/pages/menu/community",
+    // path: "/menu/community",
     dataTestId: "community_button",
     columns: [community],
     column: community.rows,
@@ -844,7 +844,7 @@ export const navItems = [
   {
     name: "SUPPORT",
     id: "support_dropdown",
-    // path: "/pages/menu/support",
+    // path: "/menu/support",
     dataTestId: "support_button",
     columns: [support],
     column: support.rows,

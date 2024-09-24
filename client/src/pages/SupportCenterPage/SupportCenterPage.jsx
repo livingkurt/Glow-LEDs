@@ -76,7 +76,7 @@ const SupportCenterPage = () => {
 
   useEffect(() => {
     if (successContactSend) {
-      navigate("/pages/complete/email");
+      navigate("/complete/email");
       dispatch(setSuccessContactSend(false));
     }
   }, [navigate, successContactSend, dispatch]);
@@ -109,8 +109,8 @@ const SupportCenterPage = () => {
         <title>Contact | Glow LEDs</title>
         <meta property="og:title" content="Contact" />
         <meta name="twitter:title" content="Contact" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/support_center" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/support_center" />
+        <link rel="canonical" href="https://www.glow-leds.com/support_center" />
+        <meta property="og:url" content="https://www.glow-leds.com/support_center" />
         <meta
           name="description"
           content="If you have any questions, do not hesitate to use our contact page for support."

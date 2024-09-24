@@ -35,7 +35,7 @@ export const navigation = [
       },
       {
         title: "Enhancers",
-        link: "/pages/menu/gloving",
+        link: "/menu/gloving",
         sub_menu: [
           {
             title: "Glowskinz",
@@ -99,7 +99,7 @@ export const navigation = [
               },
               {
                 title: "Collections",
-                link: "/pages/menu/collections",
+                link: "/menu/collections",
                 sub_menu: [
                   {
                     title: "Texture",
@@ -213,15 +213,15 @@ export const navigation = [
   },
   {
     title: "Features",
-    link: "/pages/menu/featured",
+    link: "/menu/featured",
     sub_menu: [
       {
         title: "Features",
-        link: "/pages/menu/features",
+        link: "/menu/features",
         sub_menu: [
           {
             title: "Featured",
-            link: "/pages/menu/featured",
+            link: "/menu/featured",
           },
           {
             title: "Rave Mob",
@@ -229,11 +229,11 @@ export const navigation = [
           },
           {
             title: "Sponsored Artists",
-            link: "/pages/menu/sponsored_artists",
+            link: "/menu/sponsored_artists",
             sub_menu: [
               {
                 title: "Sponsored Artists",
-                link: "/pages/menu/sponsored_artists",
+                link: "/menu/sponsored_artists",
               },
               {
                 title: "Sponsored Glovers",
@@ -267,69 +267,69 @@ export const navigation = [
   },
   {
     title: "Support",
-    link: "/pages/menu/support",
+    link: "/menu/support",
     sub_menu: [
       {
         title: "Support",
-        link: "/pages/menu/support",
+        link: "/menu/support",
         sub_menu: [
           {
             title: "Track Your Order",
-            link: "/pages/track_your_order",
+            link: "/track_your_order",
           },
           {
             title: "About",
-            link: "/pages/aboutz",
+            link: "/aboutz",
           },
           {
             title: "Events",
-            link: "/pages/events",
+            link: "/events",
           },
           {
             title: "Manuals",
-            link: "/pages/menu/manuals",
+            link: "/menu/manuals",
           },
           {
             title: "Announcements",
-            link: "/pages/announcements",
+            link: "/announcements",
           },
           {
             title: "FAQ",
-            linsk: "/pages/faq",
+            linsk: "/faq",
             sub_menu: [
               {
                 title: "Glowskinz",
-                link: "/pages/faq#glowskinz",
+                link: "/faq#glowskinz",
               },
               {
                 title: "Diffuser Caps",
-                link: "/pages/faq#diffuser_caps",
+                link: "/faq#diffuser_caps",
               },
               {
                 title: "Ordering Custom Products",
-                link: "/pages/faq#ordering_custom_products",
+                link: "/faq#ordering_custom_products",
               },
               {
                 title: "Featured Content",
-                link: "/pages/faq#featured_content",
+                link: "/faq#featured_content",
               },
               {
                 title: "Processing/Shipping",
-                link: "/pages/faq#processing_shipping",
+                link: "/faq#processing_shipping",
               },
               {
                 title: "Order Issues",
-                link: "/pages/faq#order_issues",
+                link: "/faq#order_issues",
               },
             ],
           },
           {
             title: "Contact",
-            link: "/pages/support_center",
+            link: "/support_center",
           },
           {
             title: "Term and Conditions",
-            link: "/pages/terms",
+            link: "/terms",
           },
         ],
       },

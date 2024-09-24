@@ -16,7 +16,7 @@ export const footerSections = [
   {
     title: "SHOP",
     links: [
-      { text: "All Categories", url: "/pages/menu/gloving" },
+      { text: "All Categories", url: "/menu/gloving" },
       { text: "New Releases", url: "/products/new_releases" },
       { text: "Best Sellers", url: "/products/best_sellers" },
       { text: "Our Picks", url: "/products/our_picks" },
@@ -26,7 +26,7 @@ export const footerSections = [
   {
     title: "LEARN",
     links: [
-      { text: "About Us", url: "/pages/about" },
+      { text: "About Us", url: "/about" },
       { text: "Tutorials", url: "/tutorials" },
       { text: "Sponsored Glovers", url: "/sponsors" },
     ],
@@ -34,7 +34,7 @@ export const footerSections = [
   {
     title: "SUPPORT",
     links: [
-      { text: "Support Center", url: "/pages/support_center" },
+      { text: "Support Center", url: "/support_center" },
       { text: "Shop by Chip", url: "/products?filter=All%20Chips?limit=0" },
     ],
   },

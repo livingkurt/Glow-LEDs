@@ -2586,7 +2586,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact",
+          button_link: "/contact",
         },
         {
           title: "Ordering Custom Products",
@@ -2619,7 +2619,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact/custom_orders",
+          button_link: "/contact/custom_orders",
         },
         {
           title: "Processing/Shipping",
@@ -2648,7 +2648,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact",
+          button_link: "/contact",
         },
         {
           title: "Order Issues",

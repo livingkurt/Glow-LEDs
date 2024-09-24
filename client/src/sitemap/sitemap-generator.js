@@ -20,7 +20,7 @@ async function generateSitemap() {
 
     const paramsConfig = {
       "/products/:pathname": pathnameMap,
-      "/pages/menu/:pathname": menu_types,
+      "/menu/:pathname": menu_types,
     };
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';

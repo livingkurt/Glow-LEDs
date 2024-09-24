@@ -10,8 +10,8 @@ const SitemapPage = () => {
         <title>Sitemap | Glow LEDs</title>
         <meta property="og:title" content="Sitemap" />
         <meta name="twitter:title" content="Sitemap" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/sitemap" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/sitemap" />
+        <link rel="canonical" href="https://www.glow-leds.com/sitemap" />
+        <meta property="og:url" content="https://www.glow-leds.com/sitemap" />
         <meta
           name="description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
@@ -55,16 +55,16 @@ const SitemapPage = () => {
             <h2 style={{ textAlign: "left" }}>Pages</h2>
             <ul>
               <li>
-                <Link to="/pages/support_center  ">Support Center</Link>
+                <Link to="/support_center  ">Support Center</Link>
               </li>
               <li>
-                <Link to="/pages/terms  ">Terms and Conditions</Link>
+                <Link to="/terms  ">Terms and Conditions</Link>
               </li>
               <li>
-                <Link to="/pages/about  ">About</Link>
+                <Link to="/about  ">About</Link>
               </li>
               <li>
-                <Link to="/pages/faq  ">Frequently Asked Questions</Link>
+                <Link to="/faq  ">Frequently Asked Questions</Link>
               </li>
             </ul>
 
