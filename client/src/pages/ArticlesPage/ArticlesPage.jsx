@@ -15,7 +15,7 @@ import { ContentCopy } from "@mui/icons-material";
 
 const ArticlesPage = () => {
   const articlePage = useSelector(state => state.articles.articlePage);
-  const { message, loading, remoteVersionRequirement } = articlePage;
+  const { loading, remoteVersionRequirement } = articlePage;
 
   const dispatch = useDispatch();
 

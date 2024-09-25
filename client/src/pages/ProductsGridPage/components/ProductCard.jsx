@@ -6,6 +6,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { useSelector } from "react-redux";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ProductCard = ({ product, promo_code }) => {
   const theme = useTheme();
@@ -64,16 +65,16 @@ const ProductCard = ({ product, promo_code }) => {
             },
           }}
         >
-          <Box
-            sx={{
+          <GLLazyImage
+            src={product.images[currentImageIndex].link}
+            alt={product.name}
+            style={{
               position: "absolute",
               top: 0,
               left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundImage: `url(${product.images[currentImageIndex].link})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
               transition: "opacity 0.3s ease-in-out",
               opacity: 1,
             }}

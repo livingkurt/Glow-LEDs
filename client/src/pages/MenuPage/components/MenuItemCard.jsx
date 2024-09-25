@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const MenuItemCard = ({ item }) => {
   const theme = useTheme();
@@ -48,25 +49,16 @@ const MenuItemCard = ({ item }) => {
             },
           }}
         >
-          <Box
-            sx={{
+          <GLLazyImage
+            src={imageUrl}
+            alt={item.label}
+            style={{
               position: "absolute",
               top: 0,
               left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundImage: `url(${imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.1)", // Fallback color if image fails to load
-              "&::after": {
-                content: "''",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              },
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
             }}
           />
         </Box>
