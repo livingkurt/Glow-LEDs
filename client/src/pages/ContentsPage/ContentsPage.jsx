@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Container, Button, Box, Grid, AppBar, Tabs, Tab, Paper } from "@mui/material";
+import { Container, Button, Box, AppBar, Tabs, Tab, Paper } from "@mui/material";
 import * as API from "../../api";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
 import {
@@ -14,10 +14,11 @@ import {
   menusFields,
   featureFlagsFields,
 } from "./components/contentFormFields";
-import { set_content } from "../../slices/contentSlice";
 import { useCategorysQuery, useProductsQuery } from "../../api/allRecordsApi";
 import GLArray from "../../shared/GlowLEDsComponents/GLForm/components/GLArray";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
+import { debounce } from "lodash";
+import { set_content } from "../../slices/contentSlice";
 
 const ContentsPage = () => {
   const dispatch = useDispatch();
@@ -34,9 +35,29 @@ const ContentsPage = () => {
     dispatch(API.getActiveContent());
   }, [dispatch]);
 
+  const [saveStatus, setSaveStatus] = useState(null);
+
+  // Debounced save function
+  const debouncedSave = useCallback(
+    debounce(updatedContent => {
+      setSaveStatus("Autosaving...");
+      dispatch(API.saveContent(updatedContent))
+        .then(() => {
+          dispatch(set_content(updatedContent));
+          setSaveStatus("Save Complete");
+          setTimeout(() => setSaveStatus(null), 2000); // Clear the message after 2 seconds
+        })
+        .catch(() => {
+          setSaveStatus("Save Failed");
+          setTimeout(() => setSaveStatus(null), 4000); // Clear the message after 2 seconds
+        });
+    }, 1000),
+    [dispatch]
+  );
+
   const handleContentChange = updatedContent => {
-    dispatch(set_content(updatedContent));
-    dispatch(API.saveContent(updatedContent));
+    console.log({ updatedContent });
+    debouncedSave(updatedContent);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -71,19 +92,18 @@ const ContentsPage = () => {
       </Helmet>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <h1>Content Management</h1>
-        <Box display="flex" gap={2}>
+        <Box display="flex" gap={2} alignItems="center">
+          {saveStatus && <span>{saveStatus}</span>}
+
           <Button
             variant="contained"
             color="secondary"
             onClick={() => {
-              const newContent = { ...content, _id: null, name: `${content.name} - New Version` };
+              const newContent = { ...content, _id: null, name: `${content.name} - New Version`, active: true };
               dispatch(API.saveContent(newContent));
             }}
           >
             Create New Version
-          </Button>
-          <Button variant="contained" color="primary" onClick={() => dispatch(API.saveContent(content))}>
-            Update Content
           </Button>
         </Box>
       </Box>
@@ -93,7 +113,7 @@ const ContentsPage = () => {
           <GLForm
             formData={mainFormFields(formFieldsData)}
             state={content}
-            onChange={handleContentChange}
+            onChange={updated => handleContentChange({ ...content, ...updated })}
             loading={loading}
           />
         </Box>

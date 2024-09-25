@@ -168,10 +168,6 @@ const contentPage = createSlice({
     setMenuItems: (state, { payload }) => {
       state.menuItems = payload;
     },
-    getActiveContent: (state, action) => {
-      state.content = action.payload;
-      state.loading = false;
-    },
   },
   extraReducers: {
     [API.listContents.pending]: (state, { payload }) => {
@@ -190,19 +186,13 @@ const contentPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveContent.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
     [API.saveContent.fulfilled]: (state, { payload }) => {
-      state.loading = false;
+      if (payload.type === "create") {
+        state.content = payload.data;
+      }
       state.message = "Content Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_content_modal = false;
-    },
-    [API.saveContent.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsContent.pending]: (state, { payload }) => {
       state.loading = true;
