@@ -30,7 +30,10 @@ const ProductCard = ({ product, promo_code }) => {
   };
 
   return (
-    <Link to={`/products/${product.pathname}?promo_code=${promo_code}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/products/${product.pathname}${promo_code ? `?code=${promo_code}` : ""}`}
+      style={{ textDecoration: "none" }}
+    >
       <Card
         sx={{
           bgcolor: "transparent",

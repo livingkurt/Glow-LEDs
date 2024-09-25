@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { showError, showSuccess } from "../../slices/snackbarSlice";
+import { showError } from "../../slices/snackbarSlice";
 import axios from "axios";
 import { errorMessage } from "../../helpers/sharedHelpers";
 import {
@@ -16,7 +16,6 @@ export const detailsProductPage = createAsyncThunk(
   async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/products/${pathname}`);
-      dispatch(showSuccess({ message: `Product Found` }));
       return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

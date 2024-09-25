@@ -212,7 +212,6 @@ const productsPage = createSlice({
       }
       state.loading = false;
       state.product = data;
-      state.message = "Product Found";
       if (openEditModal) {
         state.edit_product_modal = true;
       }

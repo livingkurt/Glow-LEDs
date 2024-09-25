@@ -54,21 +54,23 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       type: "text_multiline",
       label: "Bio about you and your gloving career so far, your goals, etc.",
     },
-    instagram_link: {
-      type: "text",
-      label: "Instagram Share Link",
-    },
-    tiktok_link: {
-      type: "text",
-      label: "TikTok Share Link",
-    },
-    youtube_link: {
-      type: "text",
-      label: "YouTube Share Link",
-    },
-    facebook_link: {
-      type: "text",
-      label: "Facebook Share Link",
+    social_media: {
+      type: "array",
+      title: "Social Media",
+      label: "platform",
+      itemSchema: {
+        type: "object",
+        fields: {
+          platform: {
+            type: "text",
+            label: "Platform",
+          },
+          link: {
+            type: "text",
+            label: "Link",
+          },
+        },
+      },
     },
 
     chips: {

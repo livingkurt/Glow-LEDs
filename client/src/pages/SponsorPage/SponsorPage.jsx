@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { API_Users } from "../../utils";
 import * as API from "../../api";
 import {
   Container,
@@ -16,10 +15,15 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { Facebook, Instagram } from "@mui/icons-material";
 import ProductCard from "../ProductsGridPage/components/ProductCard";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import TikTokIcon from "../../layouts/Footer/TikTokIcon";
+import { showInfo } from "../../slices/snackbarSlice";
 
 const SponsorPage = () => {
   const params = useParams();
@@ -34,6 +38,14 @@ const SponsorPage = () => {
   }, [dispatch, params.pathname]);
 
   if (!affiliate) return null;
+
+  const socialIcons = [
+    { icon: InstagramIcon, platform: "Instagram" },
+    { icon: FacebookIcon, platform: "Facebook" },
+    { icon: YouTubeIcon, platform: "YouTube" },
+    { icon: CloudQueueIcon, platform: "SoundCloud" },
+    { icon: TikTokIcon, platform: "TikTok" },
+  ];
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -83,27 +95,7 @@ const SponsorPage = () => {
                 Who is this?
               </Typography>
               <Typography variant="body1" paragraph>
-                {affiliate.user?.first_name} {affiliate.user?.last_name}
-              </Typography>
-
-              <Typography variant="h6" gutterBottom>
-                Gloving Since
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {affiliate.start_year}
-              </Typography>
-
-              <Typography variant="h6" gutterBottom>
-                Location
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {affiliate.location}
-              </Typography>
-              <Typography variant="h6" gutterBottom>
-                Promo Code
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {affiliate.public_code?.promo_code.toUpperCase()}
+                {affiliate.user?.first_name} {affiliate.user?.last_name} AKA {affiliate.artist_name}
               </Typography>
 
               {affiliate.bio && (
@@ -117,6 +109,20 @@ const SponsorPage = () => {
                 </>
               )}
 
+              <Typography variant="h6" gutterBottom>
+                Gloving Since
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
+              </Typography>
+
+              <Typography variant="h6" gutterBottom>
+                Location
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {affiliate.location}
+              </Typography>
+
               {affiliate.inspiration && (
                 <>
                   <Typography variant="h6" gutterBottom>
@@ -127,36 +133,47 @@ const SponsorPage = () => {
                   </Typography>
                 </>
               )}
-
               <Typography variant="h6" gutterBottom>
-                Follow {affiliate.artist_name}
+                Promo Code
               </Typography>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                {affiliate.facebook_name && (
-                  <IconButton
-                    color="primary"
-                    aria-label="Facebook"
-                    component="a"
-                    href={affiliate.facebook_name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook />
-                  </IconButton>
-                )}
-                {affiliate.instagram_handle && (
-                  <IconButton
-                    color="primary"
-                    aria-label="Instagram"
-                    component="a"
-                    href={`https://www.instagram.com/${affiliate.instagram_handle}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram />
-                  </IconButton>
-                )}
+              <Box display={"flex"} alignItems={"center"} gap={2} sx={{ mb: 2 }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    sessionStorage.setItem("promo_code", affiliate.public_code?.promo_code);
+                    dispatch(
+                      showInfo({ message: `Code ${affiliate.public_code?.promo_code.toUpperCase()} Added to Checkout` })
+                    );
+                  }}
+                >
+                  Use Code {affiliate.public_code?.promo_code.toUpperCase()} at checkout
+                </Button>
               </Box>
+              {affiliate.social_media && affiliate.social_media.length > 0 && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Follow {affiliate.artist_name}
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    {affiliate?.social_media?.map(({ platform, link }, index) => {
+                      const IconComponent = socialIcons.find(icon => icon.platform === platform)?.icon;
+                      return (
+                        <IconButton
+                          key={index}
+                          href={link}
+                          target="_blank"
+                          size="large"
+                          rel="noopener noreferrer"
+                          sx={{ color: "white" }}
+                        >
+                          {IconComponent && React.createElement(IconComponent, { style: { fontSize: "4rem" } })}
+                        </IconButton>
+                      );
+                    })}
+                  </Box>
+                </>
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -164,9 +181,9 @@ const SponsorPage = () => {
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
       {affiliate.products && affiliate.products.length > 0 && (
-        <Box sx={{ mt: 6 }}>
+        <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            {affiliate.artist_name}'s Store Front
+            {affiliate.artist_name}'s Favorite Gear
           </Typography>
           <Grid container spacing={3}>
             {affiliate.products.map(product => (
@@ -179,7 +196,7 @@ const SponsorPage = () => {
       )}
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.video && (
-        <Box sx={{ mt: 6 }}>
+        <Box>
           <Typography variant="h4" align="center" gutterBottom>
             Watch {affiliate.artist_name} Throw Down
           </Typography>
@@ -200,8 +217,6 @@ const SponsorPage = () => {
               autoPlay
               loop
               playsInline
-              frameBorder="0"
-              allowFullScreen
             />
           </Box>
         </Box>

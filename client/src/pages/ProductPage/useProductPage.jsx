@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import { detailsProductPage, selectOption, setCustomizedProduct, setIsAddonChecked } from "./productPageSlice";
 import { scrollToElement, updateRecentlyViewed } from "./productHelpers";
+import { showInfo } from "../../slices/snackbarSlice";
 
 const useProductPage = () => {
   const params = useParams();
@@ -112,6 +113,15 @@ const useProductPage = () => {
       }, 500);
     }
   }, [scrollTarget, productPageLoading]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const code = queryParams.get("code");
+    if (code) {
+      sessionStorage.setItem("promo_code", code);
+      dispatch(showInfo({ message: `Code ${code.toUpperCase()} Added to Checkout` }));
+    }
+  }, [dispatch]);
 
   return { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked };
 };

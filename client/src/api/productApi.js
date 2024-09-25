@@ -122,7 +122,6 @@ export const detailsProductPage = createAsyncThunk(
   async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/products/${pathname}`);
-      dispatch(showSuccess({ message: `Product Found` }));
       return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
