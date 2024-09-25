@@ -6,6 +6,7 @@ import Affiliate from "../affiliates/affiliate";
 import Team from "../teams/team";
 import Article from "../articles/article";
 import Event from "../events/event";
+import Content from "../contents/content";
 const router = express.Router();
 
 router.get("/environment", async (req, res) => {
@@ -46,7 +47,7 @@ router.put("/increment", async (req, res) => {
 });
 router.put("/sitemap", async (req, res) => {
   try {
-    const [products, sponsors, teams, articles, events] = await Promise.all([
+    const [products, sponsors, teams, articles, events, contents] = await Promise.all([
       Product.find(
         { deleted: false, isVariation: false, hidden: false },
         "pathname name category subcategory product_collection updatedAt"
@@ -55,27 +56,19 @@ router.put("/sitemap", async (req, res) => {
       Team.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
       Article.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
       Event.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
+      Content.findOne({ deleted: false, active: true }).sort({ updatedAt: -1 }).select("menus").lean(),
     ]);
-
-    console.log({ products, sponsors, teams, articles, events });
 
     const normalizeData = data =>
       data.map(item => ({
         pathname: item.pathname,
-        lastmod: item.updatedAt.toISOString().split("T")[0],
+        lastmod: item?.updatedAt?.toISOString()?.split("T")[0],
       }));
 
     const normalizedProducts = products.map(product => ({
       pathname: product.pathname,
-      lastmod: product.updatedAt.toISOString().split("T")[0],
-      category: product.category?.toLowerCase().replace(/\s+/g, "-") || "",
-      subcategory: product.subcategory?.toLowerCase().replace(/\s+/g, "-") || "",
-      collection: product.product_collection?.toLowerCase().replace(/\s+/g, "-") || "",
+      lastmod: product?.updatedAt?.toISOString()?.split("T")[0],
     }));
-
-    const categories = [...new Set(normalizedProducts.map(p => p.category))].filter(Boolean);
-    const subcategories = [...new Set(normalizedProducts.map(p => p.subcategory))].filter(Boolean);
-    const collections = [...new Set(normalizedProducts.map(p => p.collection))].filter(Boolean);
 
     res.json({
       products: normalizedProducts,
@@ -83,9 +76,8 @@ router.put("/sitemap", async (req, res) => {
       teams: normalizeData(teams),
       articles: normalizeData(articles),
       events: normalizeData(events),
-      categories: categories.map(c => ({ pathname: c })),
-      subcategories: subcategories.map(s => ({ pathname: s })),
-      collections: collections.map(c => ({ pathname: c })),
+      contents: normalizeData(contents.menus),
+      articles: normalizeData(articles),
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

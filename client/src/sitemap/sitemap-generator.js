@@ -18,8 +18,7 @@ function generateUrlXML(url, lastmod = null) {
 
 async function generateSitemap() {
   try {
-    const { data } = await axios.put(`http://127.0.0.1:3000/api/versions/sitemap`);
-    console.log({ data });
+    const { data } = await axios.put(`https://www.glow-leds.com/api/versions/sitemap`);
 
     const paramsConfig = {
       "/products/:pathname": data.products,
@@ -27,7 +26,7 @@ async function generateSitemap() {
       "/teams/:pathname": data.teams,
       "/learn/:pathname": data.articles,
       "/events/:pathname": data.events,
-      "/menu/:pathname": [{ pathname: "menu" }],
+      "/menu/:pathname": data.contents,
     };
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -51,8 +50,9 @@ async function generateSitemap() {
     });
 
     sitemapXML += "</urlset>";
+    console.log({ path: path.join(__dirname, "../../public/sitemap.xml") });
 
-    fs.writeFileSync(path.join(__dirname, "../sitemap.xml"), sitemapXML);
+    fs.writeFileSync(path.join(__dirname, "../../public/sitemap.xml"), sitemapXML);
   } catch (error) {
     console.error("An error occurred while generating the sitemap:", error);
   }
