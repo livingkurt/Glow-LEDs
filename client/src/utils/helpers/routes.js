@@ -21,7 +21,7 @@ const routes = [
   { path: "/learn", element: "ArticlesGridPage", exact: true },
   { path: "/learn/:pathname", element: "ArticlePage", exact: true },
 
-  { path: "/events/:pathname?", element: "EventPage", exact: true },
+  { path: "/events/:pathname", element: "EventPage", exact: true },
 
   { path: "/support_center", element: "SupportCenterPage", exact: true },
 

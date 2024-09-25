@@ -3,24 +3,31 @@ const path = require("path");
 const { default: axios } = require("axios");
 const { routes } = require("../utils/helpers/routes");
 
-function generateUrlXML(url) {
-  return `
-    <url><loc>${url}</loc></url>`;
+function generateUrlXML(url, lastmod = null) {
+  let xml = `
+    <url>
+      <loc>${url}</loc>`;
+  if (lastmod) {
+    xml += `
+      <lastmod>${lastmod}</lastmod>`;
+  }
+  xml += `
+    </url>`;
+  return xml;
 }
 
 async function generateSitemap() {
   try {
-    const fetchPromises = [axios.get(`https://www.glow-leds.com/api/products/pathname/distinct`)];
-
-    const [pathnameRes] = await Promise.all(fetchPromises);
-    const pathnames = pathnameRes.data;
-
-    let pathnameMap = pathnames.map(pathname => ({ pathname }));
-    const menu_types = [{ pathname: "menu" }];
+    const { data } = await axios.put(`http://127.0.0.1:3000/api/versions/sitemap`);
+    console.log({ data });
 
     const paramsConfig = {
-      "/products/:pathname": pathnameMap,
-      "/menu/:pathname": menu_types,
+      "/products/:pathname": data.products,
+      "/sponsors/:pathname": data.sponsors,
+      "/teams/:pathname": data.teams,
+      "/learn/:pathname": data.articles,
+      "/events/:pathname": data.events,
+      "/menu/:pathname": [{ pathname: "menu" }],
     };
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -36,7 +43,7 @@ async function generateSitemap() {
 
         values?.forEach(value => {
           const dynamicUrl = url.replace(`:${param}`, value.pathname);
-          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`);
+          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`, value.lastmod);
         });
       } else {
         sitemapXML += generateUrlXML(`https://www.glow-leds.com${url}`);
