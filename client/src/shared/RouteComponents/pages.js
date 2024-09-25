@@ -42,7 +42,6 @@ import SupportCenterPage from "../../pages/SupportCenterPage/SupportCenterPage";
 import { TermsPage } from "../../pages/TermsPage";
 import { AboutPage } from "../../pages/AboutPage";
 import { SitemapPage } from "../../pages/SitemapPage";
-import { CompletePage } from "../../pages/CompletePage";
 import { TutorialsGridPage } from "../../pages/TutorialsGridPage";
 import MenuPage from "../../pages/MenuPage/MenuPage";
 import EventsPage from "../../pages/EventsPage/EventsPage";
@@ -74,7 +73,6 @@ export const Components = {
   MenuPage,
   AboutPage,
   SitemapPage,
-  CompletePage,
   TutorialsGridPage,
   EventPage,
   ArticlesGridPage,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Survey from "./Survey";
 import { Helmet } from "react-helmet";
 import config from "../../../config";
 import { Button, Divider, Grid } from "@mui/material";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import Survey from "./Survey";
 
 const OrderComplete = ({ current_user, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
@@ -18,7 +18,7 @@ const OrderComplete = ({ current_user, order_id }) => {
     };
   }, []);
   return (
-    <div className="">
+    <div className="fade_in">
       <Helmet>
         <title>Order Complete | Glow LEDs</title>
         <meta property="og:title" content="Check Email" />
@@ -26,9 +26,6 @@ const OrderComplete = ({ current_user, order_id }) => {
         <link rel="canonical" href={"https://www.glow-leds.com/complete/order"} />
         <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
       </Helmet>
-      <Link to="/">
-        <Button style={{ color: "white" }}>Back to Home</Button>
-      </Link>
       <div className="column jc-c">
         <div className="ta-c m-auto ">
           <h2 className="ta-c">Thank you for your Glow LEDs Order</h2>

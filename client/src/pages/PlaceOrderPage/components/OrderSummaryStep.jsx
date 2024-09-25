@@ -30,7 +30,7 @@ const OrderSummaryStep = () => {
   const newTotalPrice = totalPrice + serviceFee;
 
   return (
-    <div className="placeorder-action">
+    <div className="place_order-action">
       <ul>
         <li>
           <h2 style={{ marginTop: "0px" }}>Order Summary</h2>

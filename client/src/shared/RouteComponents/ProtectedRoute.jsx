@@ -17,8 +17,8 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
   const getRedirectPath = () => {
-    if (location.pathname === "/secure/checkout/placeorder") {
-      return "/checkout/placeorder";
+    if (location.pathname === "/secure/checkout/place_order") {
+      return "/checkout/place_order";
     }
 
     return "/";

@@ -33,9 +33,9 @@ export const checkoutHandler = (dispatch, navigate, current_user, closeMenu, car
 
   // dispatch(setLoadingPlaceOrderPage(false));
   if (current_user.hasOwnProperty("first_name")) {
-    navigate("/secure/checkout/placeorder");
+    navigate("/secure/checkout/place_order");
   } else {
-    navigate("/checkout/placeorder");
+    navigate("/checkout/place_order");
   }
   closeMenu();
   // setTimeout(() => {

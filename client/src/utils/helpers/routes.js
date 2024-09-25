@@ -34,8 +34,6 @@ const routes = [
   { path: "/menu/:pathname", element: "MenuPage", exact: true },
 
   { path: "/palettes", element: "ColorPalettePage", exact: true },
-
-  { path: "/complete/:type/:id?", element: "CompletePage", exact: true },
 ];
 const adminRoutes = [
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
