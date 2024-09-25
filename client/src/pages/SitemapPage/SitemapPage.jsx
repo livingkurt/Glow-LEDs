@@ -39,7 +39,7 @@ const SitemapPage = () => {
             <h2 style={{ textAlign: "left" }}>Account</h2>
             <ul>
               <li>
-                <Link to="/account/passwordreset ">Password Reset</Link>
+                <Link to="/account/password_reset ">Password Reset</Link>
               </li>
               <li>
                 <Link to="/account/resetpassword ">Reset Password</Link>

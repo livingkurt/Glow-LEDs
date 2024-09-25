@@ -72,4 +72,39 @@ const privateRoutes = [
   { path: "/secure/checkout/place_order", element: "PlaceOrderPage" },
 ];
 
-module.exports = { routes, adminRoutes, privateRoutes };
+const redirects = [
+  { from: "/account/changepassword", to: "/account/change_password" },
+  { from: "/account/passwordreset", to: "/account/password_reset" },
+  { from: "/checkout/placeorder", to: "/checkout/place_order" },
+  { from: "/checkout/shipping", to: "/checkout/cart" },
+  { from: "/checkout/cart/:pathname?", to: "/checkout/cart" },
+  { from: "/collections/all/products", to: "/products" },
+  {
+    from: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?",
+    to: "/products",
+  },
+  { from: "/collections/all/products/category/:category/subcategory/:subcategory?", to: "/products" },
+  { from: "/collections/all/products/category/:category", to: "/products" },
+  { from: "/collections/all/products/:pathname", to: "/products/:pathname" },
+  { from: "/collections/all/sponsors", to: "/sponsors" },
+  { from: "/collections/all/sponsors/:promo_code?", to: "/sponsors/:promo_code" },
+  { from: "/collections/all/teams", to: "/teams" },
+  { from: "/collections/all/teams/:pathname?", to: "/teams/:pathname" },
+  { from: "/collections/all/tutorials", to: "/tutorials" },
+  { from: "/pages/announcements", to: "/learn" },
+  { from: "/pages/learn", to: "/learn" },
+  { from: "/pages/learn/:pathname", to: "/learn/:pathname" },
+  { from: "/pages/manual/:pathname?", to: "/learn" },
+  { from: "/pages/affiliate_terms", to: "/terms" },
+  { from: "/pages/color_palettes", to: "/palettes" },
+  { from: "/pages/events/:pathname?", to: "/events/:pathname" },
+  { from: "/pages/support_center/:reason?", to: "/support_center" },
+  { from: "/pages/terms", to: "/terms" },
+  { from: "/pages/menu/:pathname", to: "/menu/:pathname" },
+  { from: "/pages/about", to: "/about" },
+  { from: "/pages/sitemap", to: "/sitemap" },
+  { from: "/pages/music", to: "/about" },
+  { from: "/pages/complete/:type/:id?", to: "/" },
+];
+
+module.exports = { routes, adminRoutes, privateRoutes, redirects };

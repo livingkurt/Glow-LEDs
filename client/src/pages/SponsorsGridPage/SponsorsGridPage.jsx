@@ -1,27 +1,10 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import { SponsorItemD, SponsorItemM } from "./components";
-import * as API from "../../api";
-import { Container } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
+import { useAffiliatesQuery } from "../../api/allRecordsApi";
+import SponsorsCard from "./components/SponsorCard";
 
-const AllSponsorsPage = () => {
-  const params = useParams();
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates, loading, error } = affiliatePage;
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listAffiliates({ sponsor: true }));
-    }
-    return () => (clean = false);
-  }, [dispatch]);
-
+const SponsorsGridPage = () => {
+  const { data: affiliates, isLoading } = useAffiliatesQuery({ sponsor: true });
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
@@ -36,45 +19,23 @@ const AllSponsorsPage = () => {
       </Helmet>
       <div className="jc-c">
         <div className="row">
-          <h1>Sponsored Glovers</h1>
+          <h1>Meet Our Official Sponsored Glover Team</h1>
         </div>
       </div>
-
-      {affiliates && (
-        <Loading loading={loading} error={error}>
-          <div>
-            <div className="product_big_screen">
-              {affiliates && (
-                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                  {affiliates.map(
-                    (affiliate, index) =>
-                      !affiliate.hidden && (
-                        <SponsorItemD size="300px" key={index} affiliate={affiliate} category={params.category} />
-                      )
-                  )}
-                </ul>
-              )}
-            </div>
-
-            <div className="product_small_screen none">
-              {affiliates && (
-                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                  {affiliates.map(
-                    (affiliate, index) =>
-                      !affiliate.hidden && (
-                        <SponsorItemM size="300px" key={index} affiliate={affiliate} category={params.category} />
-                      )
-                  )}
-                </ul>
-              )}
-            </div>
-          </div>
-          {affiliates.length === 0 && (
-            <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
-          )}
-        </Loading>
-      )}
+      <Typography variant="subtitle1" textAlign="center" gutterBottom>
+        These are the artists that we're proud to support. They're the best in the business and we're excited to see
+        what they'll do next.
+      </Typography>
+      <Grid container spacing={2}>
+        {!isLoading &&
+          affiliates?.length > 0 &&
+          affiliates.map(affiliate => (
+            <Grid item key={affiliate._id} xs={12} sm={6} md={4} lg={3}>
+              <SponsorsCard affiliate={affiliate} />
+            </Grid>
+          ))}
+      </Grid>
     </Container>
   );
 };
-export default AllSponsorsPage;
+export default SponsorsGridPage;
