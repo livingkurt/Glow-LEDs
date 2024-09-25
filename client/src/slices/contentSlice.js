@@ -168,6 +168,10 @@ const contentPage = createSlice({
     setMenuItems: (state, { payload }) => {
       state.menuItems = payload;
     },
+    getActiveContent: (state, action) => {
+      state.content = action.payload;
+      state.loading = false;
+    },
   },
   extraReducers: {
     [API.listContents.pending]: (state, { payload }) => {
@@ -236,6 +240,19 @@ const contentPage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.deleteContent.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getActiveContent.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.getActiveContent.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.content = payload;
+      state.message = "Content Deleted";
+    },
+    [API.getActiveContent.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
