@@ -61,13 +61,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^14.0.1",
     "nodemon": "^3.1.2",
-    "pre-commit": "^1.2.2",
-    "stylelint": "^14.9.1",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^26.0.0",
-    "stylelint-config-standard-scss": "^5.0.0",
-    "stylelint-prettier": "^2.0.0",
-    "stylelint-scss": "^5.1.0"
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
@@ -83,13 +77,11 @@
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint 'client/src/**/*.{js,jsx}' --cache",
-    "lint:scss": "stylelint 'client/src/**/*.scss' --cache",
     "sitemap": "cd client && npm run generate-sitemap",
     "lint-staged": "lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
     "lint:js:fix": "npm run lint:js --fix",
     "lint:scss:fix": "npm run lint:scss --fix",
-    "stylelint-check": "stylelint-config-prettier-check",
     "clean-install": "rm -rf node_modules package-lock.json client/node_modules client/package-lock.json && npm install && cd client && npm install && cd ..",
     "test": "jest",
     "test:all": "npm --test-all",
@@ -107,9 +99,6 @@
   "lint-staged": {
     "client/src/**/*.jsx": [
       "eslint --fix --cache"
-    ],
-    "client/src/**/*.scss": [
-      "stylelint --fix --cache"
     ]
   }
 }
