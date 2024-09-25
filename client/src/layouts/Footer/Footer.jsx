@@ -240,8 +240,8 @@ const Footer = () => {
                 }}
               >
                 {[
-                  { text: "Terms", url: "/pages/terms" },
-                  { text: "Sitemap", url: "/pages/sitemap" },
+                  { text: "Terms", url: "/terms" },
+                  { text: "Sitemap", url: "/sitemap" },
                 ].map((link, index) => (
                   <Link
                     key={index}

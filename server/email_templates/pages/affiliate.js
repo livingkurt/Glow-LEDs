@@ -112,7 +112,7 @@ export default ({ affiliate }) => {
 									</tr>
 									<tr>
 										<td style="font-size:16px; line-height: 20px; height: 50px; text-align:center;">
-											<a href="https://www.glow-leds.com/collections/all/products/code/${affiliate.public_code.promo_code.toUpperCase()}" alt="discount image"
+											<a href="https://www.glow-leds.com/products/code/${affiliate.public_code.promo_code.toUpperCase()}" alt="discount image"
 													style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px; width: 100%; text-decoration: none;" target="_blank">
 												Link
 												</a>

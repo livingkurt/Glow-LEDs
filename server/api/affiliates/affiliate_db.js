@@ -7,7 +7,7 @@ export default {
       return await Affiliate.find(filter)
         .sort(sort)
         .populate("user")
-        .populate("products")
+        .populate({ path: "products", populate: { path: "images" } })
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
@@ -25,7 +25,7 @@ export default {
       return await Affiliate.findOne(params)
         .populate("user")
         .populate("chips")
-        .populate("products")
+        .populate({ path: "products", populate: { path: "images" } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
@@ -39,7 +39,7 @@ export default {
       return await Affiliate.findOne({ pathname: pathname, deleted: false })
         .populate("user")
         .populate("chips")
-        .populate("products")
+        .populate({ path: "products", populate: { path: "images" } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
@@ -53,7 +53,7 @@ export default {
       return await Affiliate.findOne({ _id: id, deleted: false })
         .populate("user")
         .populate("chips")
-        .populate("products")
+        .populate({ path: "products", populate: { path: "images" } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {

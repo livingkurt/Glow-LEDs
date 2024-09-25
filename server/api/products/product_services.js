@@ -1,4 +1,5 @@
 import { Product, product_db } from "../products";
+
 import {
   diminish_sampler_stock,
   diminish_batteries_stock,
@@ -675,16 +676,7 @@ export default {
       }
     }
   },
-  distinct_products_s: async params => {
-    const { attribute } = params;
-    try {
-      return await product_db.distinct_products_db(attribute);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
+
   facebook_catelog_products_s: async params => {
     try {
       const products = await Product.find({ hidden: false, deleted: false, option: false })

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PaymentStep from "./components/PaymentStep";
 import EmailStep from "./components/EmailStep";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
 import { LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
@@ -20,6 +20,9 @@ import { ArrowBack } from "@mui/icons-material";
 import { showConfirm } from "../../slices/snackbarSlice";
 import { constructOutOfStockMessage } from "./placeOrderHelpers";
 
+import { Link } from "react-router-dom";
+import OrderComplete from "./components/OrderComplete";
+
 const PlaceOrderPage = () => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -30,6 +33,8 @@ const PlaceOrderPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { order, success_no_pay_order, success } = orderPage;
 
+  const [orderCompleted, setOrderCompleted] = useState(false);
+
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, success: user_success } = userPage;
 
@@ -37,11 +42,14 @@ const PlaceOrderPage = () => {
   const { show_payment, shipping_completed, shippingPrice, promo_code, itemsPrice, taxPrice, totalPrice, tip } =
     placeOrder;
 
-  useEffect(() => {
-    if (!cartItems || cartItems.length === 0) {
-      navigate("/checkout/cart");
-    }
-  }, [cartItems, navigate]);
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get("order_id");
+
+  // useEffect(() => {
+  //   if (!cartItems || cartItems.length === 0) {
+  //     navigate("/checkout/cart");
+  //   }
+  // }, [cartItems, navigate]);
 
   useEffect(() => {
     let clean = true;
@@ -151,7 +159,8 @@ const PlaceOrderPage = () => {
     }
     sessionStorage.removeItem("shippingAddress");
     sessionStorage.setItem("manualNavigation", "true");
-    navigate("/pages/complete/order/" + order._id);
+    navigate(`/secure/checkout/place_order?order_id=${order._id}`, { replace: true });
+    setOrderCompleted(true);
   };
 
   useEffect(() => {
@@ -171,6 +180,9 @@ const PlaceOrderPage = () => {
     if (clean) {
       if (success && order?.hasOwnProperty("_id")) {
         finishOrder();
+      } else if (orderId) {
+        // If there's an orderId in the search params, set the order as completed
+        setOrderCompleted(true);
       }
     }
     return () => (clean = false);
@@ -202,11 +214,11 @@ const PlaceOrderPage = () => {
         <title>Place Order | Glow LEDs</title>
         <meta property="og:title" content="Place Order" />
         <meta name="twitter:title" content="Place Order" />
-        <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
-        <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/place_order" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/place_order" />
       </Helmet>
       <Box display={"flex"} justifyContent={"space-between"} wrap pl={2} pr={2}>
-        <div>
+        {!orderCompleted ? (
           <Button
             aria-label="Back"
             style={{ color: "#fff" }}
@@ -226,29 +238,43 @@ const PlaceOrderPage = () => {
           >
             <div className="mt-3px">Back to Shopping</div>
           </Button>
-        </div>
+        ) : (
+          <Link to="/">
+            <Button style={{ color: "white" }} startIcon={<ArrowBack />}>
+              Back to Home
+            </Button>
+          </Link>
+        )}
         {width > 960 && (
-          <CheckoutSteps success={success} show_payment={show_payment} shipping_completed={shipping_completed} />
+          <CheckoutSteps
+            success={success || orderCompleted}
+            show_payment={show_payment}
+            shipping_completed={shipping_completed}
+          />
         )}
         {width > 960 && (
           <Button aria-label="Back" variant="contained" startIcon={<ArrowBack />} style={{ visibility: "hidden" }}>
-            Back to Shopping
+            {!orderCompleted ? "Back to Shopping" : "Back to Home"}
           </Button>
         )}
       </Box>
 
       <LoadingPayments />
       <LoadingShipping />
-      <div className="placeorder">
-        <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
-          <div className="placeorder-info">
-            <EmailStep />
-            <ShippingStep />
-            <PaymentStep />
+      {!orderCompleted ? (
+        <div className="place_order">
+          <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
+            <div className="place_order-info">
+              <EmailStep />
+              <ShippingStep />
+              <PaymentStep />
+            </div>
           </div>
+          <OrderSummaryStep />
         </div>
-        <OrderSummaryStep />
-      </div>
+      ) : (
+        <OrderComplete current_user={current_user} order_id={order._id || orderId} />
+      )}
     </div>
   );
 };

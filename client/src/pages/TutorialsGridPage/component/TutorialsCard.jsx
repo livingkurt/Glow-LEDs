@@ -9,7 +9,6 @@ const TutorialCard = ({ tutorial, handleOpen }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    // <Link to={`/collections/all/tutorials/${tutorial.pathname}`} style={{ textDecoration: "none" }}>
     <Card
       sx={{
         bgcolor: "transparent",
@@ -63,7 +62,6 @@ const TutorialCard = ({ tutorial, handleOpen }) => {
         </Typography>
       </CardContent>
     </Card>
-    // </Link>
   );
 };
 

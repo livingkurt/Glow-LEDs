@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Survey from "./Survey";
 import { Helmet } from "react-helmet";
 import config from "../../../config";
 import { Button, Divider, Grid } from "@mui/material";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import Survey from "./Survey";
 
 const OrderComplete = ({ current_user, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
@@ -18,17 +18,14 @@ const OrderComplete = ({ current_user, order_id }) => {
     };
   }, []);
   return (
-    <div className="">
+    <div className="fade_in">
       <Helmet>
         <title>Order Complete | Glow LEDs</title>
         <meta property="og:title" content="Check Email" />
         <meta name="twitter:title" content="Check Email" />
-        <link rel="canonical" href={"https://www.glow-leds.com/pages/complete/order"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/pages/complete/order"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/complete/order"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
       </Helmet>
-      <Link to="/">
-        <Button style={{ color: "white" }}>Back to Home</Button>
-      </Link>
       <div className="column jc-c">
         <div className="ta-c m-auto ">
           <h2 className="ta-c">Thank you for your Glow LEDs Order</h2>
@@ -81,7 +78,7 @@ const OrderComplete = ({ current_user, order_id }) => {
           <p className="mv-10px ">
             For more information about how we create our products and shipping times, refer to our FAQs.
           </p>
-          <Link to="/pages/faq">
+          <Link to="/faq">
             <Button variant="contained" color="primary" className="w-100per mt-10px">
               FAQ Page
             </Button>
@@ -98,7 +95,7 @@ const OrderComplete = ({ current_user, order_id }) => {
             <div>
               <h3 className="ta-c">Discover More of Your Glow</h3>
               <div className="jc-b w-100per m-auto wrap">
-                <Link to="/collections/all/products">
+                <Link to="/products">
                   <Button variant="contained" color="primary">
                     Products
                   </Button>
@@ -109,17 +106,17 @@ const OrderComplete = ({ current_user, order_id }) => {
                     Featured Videos
                   </Button>
                 </Link>
-                <Link to="/collections/all/sponsors">
+                <Link to="/sponsors">
                   <Button variant="contained" color="primary">
                     Sponsored Glovers
                   </Button>
                 </Link>
-                <Link to="/collections/all/teams">
+                <Link to="/teams">
                   <Button variant="contained" color="primary">
                     Sponsored Teams
                   </Button>
                 </Link>
-                <Link to="/pages/music">
+                <Link to="/music">
                   <Button variant="contained" color="primary">
                     NTRE Music
                   </Button>

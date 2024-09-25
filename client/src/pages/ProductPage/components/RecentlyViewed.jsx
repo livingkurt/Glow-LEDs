@@ -45,7 +45,7 @@ const RecentlyViewed = ({ currentProduct }) => {
               },
             }}
           >
-            <Link to={`/collections/all/products/${product.pathname}`}>
+            <Link to={`/products/${product.pathname}`}>
               <Card
                 elevation={0}
                 sx={{

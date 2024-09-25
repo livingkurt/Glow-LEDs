@@ -21,7 +21,7 @@ const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
           {selectedTutorial?.description}
         </Typography>
         <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
-          <Link to={`/collections/all/sponsors/${selectedTutorial?.affiliate.pathname}`}>
+          <Link to={`/sponsors/${selectedTutorial?.affiliate.pathname}`}>
             <Button variant="contained" color="primary">
               Learn more about {selectedTutorial?.affiliate.artist_name}
             </Button>

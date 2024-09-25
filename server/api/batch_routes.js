@@ -2586,7 +2586,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact",
+          button_link: "/contact",
         },
         {
           title: "Ordering Custom Products",
@@ -2619,7 +2619,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact/custom_orders",
+          button_link: "/contact/custom_orders",
         },
         {
           title: "Processing/Shipping",
@@ -2648,7 +2648,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
           ],
           button_text: "Contact",
-          button_link: "/pages/contact",
+          button_link: "/contact",
         },
         {
           title: "Order Issues",
@@ -6064,29 +6064,65 @@ router.route("/make_markdown").put(async (req, res) => {
   }
 });
 
-router.route("/add_event_to_order_items").put(async (req, res) => {
+router.route("/migrate_content_links").put(async (req, res) => {
   try {
-    // Find the single event in the database
-    const event = await Event.findOne();
+    const contents = await Content.find({});
+    let updatedCount = 0;
 
-    if (!event) {
-      return res.status(404).json({ message: "No event found in the database" });
+    for (const content of contents) {
+      let updated = false;
+
+      // Update links
+      if (content.links && content.links.length > 0) {
+        content.links = content.links.map(link => {
+          if (link.link && link.link.startsWith("/")) {
+            link.link = `/menu${link.link}`;
+            updated = true;
+          }
+          return link;
+        });
+      }
+
+      // Update menus
+      if (content.menus && content.menus.length > 0) {
+        content.menus = content.menus.map(menu => {
+          if (menu.menu_items && menu.menu_items.length > 0) {
+            menu.menu_items = menu.menu_items.map(item => {
+              if (item.link && item.link.startsWith("/")) {
+                item.link = `/menu${item.link}`;
+                updated = true;
+              }
+              return item;
+            });
+          }
+          return menu;
+        });
+      }
+
+      // Update learn articles
+      if (content.learn && content.learn.articles && content.learn.articles.length > 0) {
+        content.learn.articles = content.learn.articles.map(article => {
+          if (article.pathname && article.pathname.startsWith("/")) {
+            article.pathname = `/learn${article.pathname}`;
+            updated = true;
+          }
+          return article;
+        });
+      }
+
+      if (updated) {
+        await content.save();
+        updatedCount++;
+      }
     }
 
-    // Update all orders
-    const result = await Order.updateMany(
-      { "orderItems.event": { $exists: false } },
-      { $set: { "orderItems.$[].event": event._id } }
-    );
-
     res.status(200).json({
-      message: "Event added to all orderItems successfully",
-      modifiedCount: result.modifiedCount,
-      matchedCount: result.matchedCount,
+      message: `Migration completed. Updated ${updatedCount} content documents.`,
+      updatedCount,
     });
   } catch (error) {
-    console.error("Error adding event to orderItems:", error);
-    res.status(500).json({ error: error.message });
+    console.error("Migration failed:", error);
+    res.status(500).send({ error: error.message });
   }
 });
 

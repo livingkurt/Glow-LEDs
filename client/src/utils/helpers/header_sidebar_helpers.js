@@ -5,207 +5,207 @@ export const navigation = [
   },
   {
     title: "Products",
-    link: "/collections/all/products?page=1?limit=21",
+    link: "/products?page=1?limit=21",
     sub_menu: [
       {
         title: "Products",
-        link: "/collections/all/products?page=1?limit=21",
+        link: "/products?page=1?limit=21",
         sub_menu: [
           {
             title: "New Releases! 🆕️",
-            link: "/collections/all/products/category/new_releases",
+            link: "/products/category/new_releases",
           },
           {
             title: "Best Sellers ✅",
-            link: "/collections/all/products/category/best_sellers",
+            link: "/products/category/best_sellers",
           },
           {
             title: "Our Picks ⭐",
-            link: "/collections/all/products/category/our_picks",
+            link: "/products/category/our_picks",
           },
           {
             title: "On Sale! 💰",
-            link: "/collections/all/products/category/discounted",
+            link: "/products/category/discounted",
           },
           {
             title: "Stickers",
-            link: "/collections/all/products/category/merch/subcategory/stickers",
+            link: "/products/category/merch/subcategory/stickers",
           },
         ],
       },
       {
         title: "Enhancers",
-        link: "/pages/menu/gloving",
+        link: "/menu/gloving",
         sub_menu: [
           {
             title: "Glowskinz",
-            link: "/collections/all/products/category/glowskinz",
+            link: "/products/category/glowskinz",
             sub_menu: [
               {
                 title: "CLOZD Glowskinz",
-                link: "/collections/all/products/category/glowskinz/subcategory/clozd",
+                link: "/products/category/glowskinz/subcategory/clozd",
                 sub_menu: [
                   {
                     title: "Classics",
-                    link: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics",
+                    link: "/products/category/glowskinz/subcategory/clozd/collection/classics",
                   },
                   {
                     title: "Novaskinz",
-                    link: "/collections/all/products/category/glowskinz/subcategory/clozd/collection/novaskinz",
+                    link: "/products/category/glowskinz/subcategory/clozd/collection/novaskinz",
                   },
                 ],
               },
               {
                 title: "OPYN Glowskinz",
-                link: "/collections/all/products/category/glowskinz/subcategory/opyn",
+                link: "/products/category/glowskinz/subcategory/opyn",
               },
             ],
           },
           {
             title: "Glowframez",
-            link: "/collections/all/products/category/glowframez",
+            link: "/products/category/glowframez",
           },
           {
             title: "EXO Diffusers",
-            link: "/collections/all/products/category/exo_diffusers",
+            link: "/products/category/exo_diffusers",
             sub_menu: [
               {
                 title: "Collections",
-                link: "/collections/all/products/category/exo_diffusers",
+                link: "/products/category/exo_diffusers",
                 sub_menu: [
                   {
                     title: "Platonic Solids",
-                    link: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids",
+                    link: "/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids",
                   },
                   {
                     title: "Spheroid",
-                    link: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/spheroid",
+                    link: "/products/category/exo_diffusers/subcategory/polyhedrons/collection/spheroid",
                   },
                 ],
               },
               {
                 title: "Polyhedrons",
-                link: "/collections/all/products/category/exo_diffusers/subcategory/polyhedrons",
+                link: "/products/category/exo_diffusers/subcategory/polyhedrons",
               },
             ],
           },
           {
             title: "Diffuser Caps",
-            link: "/collections/all/products/category/diffuser_caps",
+            link: "/products/category/diffuser_caps",
             sub_menu: [
               {
                 title: "Diffuser Caps Starter Kit",
-                link: "/collections/all/products/diffuser_caps_adapters_starter_kit",
+                link: "/products/diffuser_caps_adapters_starter_kit",
               },
               {
                 title: "Collections",
-                link: "/pages/menu/collections",
+                link: "/menu/collections",
                 sub_menu: [
                   {
                     title: "Texture",
-                    link: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture",
+                    link: "/products/category/diffuser_caps/subcategory/geometric/collection/texture",
                   },
                   {
                     title: "Fractal",
-                    link: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal",
+                    link: "/products/category/diffuser_caps/subcategory/geometric/collection/fractal",
                   },
                   {
                     title: "Space Cadet",
-                    link: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/space_cadet",
+                    link: "/products/category/diffuser_caps/subcategory/geometric/collection/space_cadet",
                   },
                   {
                     title: "Festie Bestie",
-                    link: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/festie_bestie",
+                    link: "/products/category/diffuser_caps/subcategory/geometric/collection/festie_bestie",
                   },
                   {
                     title: "Platonic Solids",
-                    link: "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids",
+                    link: "/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids",
                   },
                 ],
               },
               {
                 title: "Geometric",
-                link: "/collections/all/products/category/diffuser_caps/subcategory/geometric",
+                link: "/products/category/diffuser_caps/subcategory/geometric",
               },
             ],
           },
           {
             title: "Diffusers",
-            link: "/collections/all/products/category/diffusers",
+            link: "/products/category/diffusers",
             sub_menu: [
               {
                 title: "Abstract",
-                link: "/collections/all/products/category/diffusers/subcategory/abstract",
+                link: "/products/category/diffusers/subcategory/abstract",
               },
               {
                 title: "Polygons",
-                link: "/collections/all/products/category/diffusers/subcategory/polygons",
+                link: "/products/category/diffusers/subcategory/polygons",
               },
               {
                 title: "Cylinders",
-                link: "/collections/all/products/category/diffusers/subcategory/cylinders",
+                link: "/products/category/diffusers/subcategory/cylinders",
               },
               {
                 title: "Domes",
-                link: "/collections/all/products/category/diffusers/subcategory/domes",
+                link: "/products/category/diffusers/subcategory/domes",
               },
               {
                 title: "Open Hole",
-                link: "/collections/all/products/category/diffusers/subcategory/open_hole",
+                link: "/products/category/diffusers/subcategory/open_hole",
               },
               {
                 title: "Closed Hole",
-                link: "/collections/all/products/category/diffusers/subcategory/closed_hole",
+                link: "/products/category/diffusers/subcategory/closed_hole",
               },
             ],
           },
           {
             title: "Decals",
-            link: "/collections/all/products/category/decals",
+            link: "/products/category/decals",
           },
         ],
       },
       {
         title: "Essentials",
-        link: "/collections/all/products/category/our_picks",
+        link: "/products/category/our_picks",
         sub_menu: [
           {
             title: "Gloves",
-            link: "/collections/all/products/category/glowskinz",
+            link: "/products/category/glowskinz",
             sub_menu: [],
           },
           {
             title: "Refresh Packs",
-            link: "/collections/all/products/category/glowframez",
+            link: "/products/category/glowframez",
           },
           {
             title: "Sizing Sampler",
-            link: "/collections/all/products/category/exo_diffusers",
+            link: "/products/category/exo_diffusers",
             sub_menu: [],
           },
           {
             title: "1225 Batteries",
-            link: "/collections/all/products/category/diffuser_caps",
+            link: "/products/category/diffuser_caps",
             sub_menu: [],
           },
           {
             title: "1616 Batteries",
-            link: "/collections/all/products/category/diffusers",
+            link: "/products/category/diffusers",
             sub_menu: [],
           },
           {
             title: "1620 Batteries",
-            link: "/collections/all/products/category/diffusers",
+            link: "/products/category/diffusers",
             sub_menu: [],
           },
           {
             title: "2016 Batteries",
-            link: "/collections/all/products/category/diffusers",
+            link: "/products/category/diffusers",
             sub_menu: [],
           },
           {
             title: "Battery Storage",
-            link: "/collections/all/products/category/decals",
+            link: "/products/category/decals",
           },
         ],
       },
@@ -213,53 +213,53 @@ export const navigation = [
   },
   {
     title: "Features",
-    link: "/pages/menu/featured",
+    link: "/menu/featured",
     sub_menu: [
       {
         title: "Features",
-        link: "/pages/menu/features",
+        link: "/menu/features",
         sub_menu: [
           {
             title: "Featured",
-            link: "/pages/menu/featured",
+            link: "/menu/featured",
           },
           {
             title: "Rave Mob",
-            link: "/collections/all/teams/category/rave_mob",
+            link: "/teams/category/rave_mob",
           },
           {
             title: "Sponsored Artists",
-            link: "/pages/menu/sponsored_artists",
+            link: "/menu/sponsored_artists",
             sub_menu: [
               {
                 title: "Sponsored Artists",
-                link: "/pages/menu/sponsored_artists",
+                link: "/menu/sponsored_artists",
               },
               {
                 title: "Sponsored Glovers",
-                link: "/collections/all/sponsors",
+                link: "/sponsors",
               },
               {
                 title: "Sponsored Teams",
-                link: "/collections/all/teams",
+                link: "/teams",
               },
             ],
           },
           {
             title: "Artists",
-            link: "/collections/all/features/category/artists",
+            link: "/features/category/artists",
           },
           {
             title: "Glovers",
-            link: "/collections/all/features/category/glovers",
+            link: "/features/category/glovers",
           },
           {
             title: "Producers",
-            link: "/collections/all/features/category/producers",
+            link: "/features/category/producers",
           },
           {
             title: "VFX",
-            link: "/collections/all/features/category/vfx",
+            link: "/features/category/vfx",
           },
         ],
       },
@@ -267,69 +267,69 @@ export const navigation = [
   },
   {
     title: "Support",
-    link: "/pages/menu/support",
+    link: "/menu/support",
     sub_menu: [
       {
         title: "Support",
-        link: "/pages/menu/support",
+        link: "/menu/support",
         sub_menu: [
           {
             title: "Track Your Order",
-            link: "/pages/track_your_order",
+            link: "/track_your_order",
           },
           {
             title: "About",
-            link: "/pages/aboutz",
+            link: "/aboutz",
           },
           {
             title: "Events",
-            link: "/pages/events",
+            link: "/events",
           },
           {
             title: "Manuals",
-            link: "/pages/menu/manuals",
+            link: "/menu/manuals",
           },
           {
             title: "Announcements",
-            link: "/pages/announcements",
+            link: "/announcements",
           },
           {
             title: "FAQ",
-            linsk: "/pages/faq",
+            linsk: "/faq",
             sub_menu: [
               {
                 title: "Glowskinz",
-                link: "/pages/faq#glowskinz",
+                link: "/faq#glowskinz",
               },
               {
                 title: "Diffuser Caps",
-                link: "/pages/faq#diffuser_caps",
+                link: "/faq#diffuser_caps",
               },
               {
                 title: "Ordering Custom Products",
-                link: "/pages/faq#ordering_custom_products",
+                link: "/faq#ordering_custom_products",
               },
               {
                 title: "Featured Content",
-                link: "/pages/faq#featured_content",
+                link: "/faq#featured_content",
               },
               {
                 title: "Processing/Shipping",
-                link: "/pages/faq#processing_shipping",
+                link: "/faq#processing_shipping",
               },
               {
                 title: "Order Issues",
-                link: "/pages/faq#order_issues",
+                link: "/faq#order_issues",
               },
             ],
           },
           {
             title: "Contact",
-            link: "/pages/support_center",
+            link: "/support_center",
           },
           {
             title: "Term and Conditions",
-            link: "/pages/terms",
+            link: "/terms",
           },
         ],
       },

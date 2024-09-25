@@ -186,19 +186,13 @@ const contentPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveContent.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
     [API.saveContent.fulfilled]: (state, { payload }) => {
-      state.loading = false;
+      if (payload.type === "create") {
+        state.content = payload.data;
+      }
       state.message = "Content Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_content_modal = false;
-    },
-    [API.saveContent.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsContent.pending]: (state, { payload }) => {
       state.loading = true;
@@ -236,6 +230,19 @@ const contentPage = createSlice({
       state.remoteVersionRequirement = Date.now();
     },
     [API.deleteContent.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getActiveContent.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.getActiveContent.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.content = payload;
+      state.message = "Content Deleted";
+    },
+    [API.getActiveContent.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

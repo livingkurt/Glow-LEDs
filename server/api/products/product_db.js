@@ -381,17 +381,4 @@ export default {
       }
     }
   },
-  distinct_products_db: async attribute => {
-    try {
-      if (attribute === "pathname") {
-        return await Product.find({ deleted: false, option: false, hidden: false }).distinct(attribute);
-      } else {
-        return await Product.distinct(attribute);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
 };

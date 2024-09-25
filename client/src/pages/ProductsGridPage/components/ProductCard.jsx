@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, promo_code }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { current_user } = useSelector(state => state.users.userPage);
@@ -30,7 +30,10 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link to={`/collections/all/products/${product.pathname}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/products/${product.pathname}${promo_code ? `?code=${promo_code}` : ""}`}
+      style={{ textDecoration: "none" }}
+    >
       <Card
         sx={{
           bgcolor: "transparent",

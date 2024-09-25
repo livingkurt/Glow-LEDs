@@ -47,7 +47,7 @@ export const ProfileActions = () => {
         Edit Profile
       </Button>
 
-      {/* <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/changepassword"} className="w-100per"> */}
+      {/* <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/change_password"} className="w-100per"> */}
       <Button variant="contained" color="secondary" fullWidth onClick={() => dispatch(openChangePasswordModal())}>
         Change Password
       </Button>

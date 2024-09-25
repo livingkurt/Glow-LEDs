@@ -5,7 +5,7 @@ import { LazyImage } from "../../../shared/SharedComponents";
 const TeamSmallScreen = ({ team, style }) => {
   return (
     <li key={team._id} className=" w-100per" style={style}>
-      <Link to={`/collections/all/teams/${team && team.pathname}`}>
+      <Link to={`/teams/${team && team.pathname}`}>
         <div className="small_screen_product row">
           <div className="">
             <LazyImage
@@ -61,7 +61,7 @@ const TeamSmallScreen = ({ team, style }) => {
 export default TeamSmallScreen;
 
 // <li key={team._id} className=" w-100per" style={style}>
-// 			<Link to={`/collections/all/teams/${team && team.pathname}`}>
+// 			<Link to={`/teams/${team && team.pathname}`}>
 // 				<div className="small_screen_product row">
 // 					<div className="">
 // 						<LazyImage

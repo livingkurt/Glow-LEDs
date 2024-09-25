@@ -25,13 +25,13 @@ const EmailStep = () => {
 
   // useEffect(() => {
   //   if (current_user && current_user.hasOwnProperty("first_name")) {
-  //     navigate("/secure/checkout/placeorder");
+  //     navigate("/secure/checkout/place_order");
   //   }
   // }, [current_user]);
 
   const submit_logout = e => {
     e.preventDefault();
-    navigate("/checkout/placeorder");
+    navigate("/checkout/place_order");
     dispatch(API.logoutUser());
   };
 

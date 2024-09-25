@@ -30,7 +30,7 @@ const ArticlePage = () => {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Link to="/pages/learn">
+        <Link to="/learn">
           <GLButtonV2>Back to Articles</GLButtonV2>
         </Link>
         {current_user.isAdmin && (

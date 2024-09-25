@@ -373,7 +373,7 @@ export default ({ categories, promo_code }) => {
     </table>
 
     <div style="display:flex;justify-content:center;margin:10px 0"><a
-        href="/collections/all/products/code/${promo_code.toUpperCase()}"
+        href="/products/code/${promo_code.toUpperCase()}"
         style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none" target="_blank">
         <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Make it Glow with Glow LEDs</h4>
       </a></div>

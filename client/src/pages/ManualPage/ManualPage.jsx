@@ -16,15 +16,15 @@ const ManualPage = () => {
         <title>Manual | Glow LEDs</title>
         <meta property="og:title" content="Manual" />
         <meta name="twitter:title" content="Manual" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/about" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/about" />
+        <link rel="canonical" href="https://www.glow-leds.com/about" />
+        <meta property="og:url" content="https://www.glow-leds.com/about" />
         <meta name="description" content="Learn how Glow LEDs got started and more in our Manual Page" />
         <meta property="og:description" content="Learn how Glow LEDs got started and more in our Manual Page" />
         <meta name="twitter:description" content="Learn how Glow LEDs got started and more in our Manual Page" />
       </Helmet>
       <div className="jc-b">
         <div className="mb-10px">
-          <Link to={`/pages/menu/manuals`}>
+          <Link to={`/menu/manuals`}>
             <GLButton variant="secondary">Back to Manuals</GLButton>
           </Link>
         </div>
@@ -48,7 +48,7 @@ const ManualPage = () => {
         )}
         <div className="mb-10px">
           <Link
-            to={`/collections/all/products/${
+            to={`/products/${
               pathname === "glow_strings_v2" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2_manual"
                 ? "glowstringz_v2"
                 : pathname

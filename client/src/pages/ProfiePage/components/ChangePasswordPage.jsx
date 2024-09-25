@@ -58,8 +58,8 @@ const ChangePasswordPage = () => {
         <title>Change Password | Glow LEDs</title>
         <meta property="og:title" content="Change Password" />
         <meta name="twitter:title" content="Change Password" />
-        <link rel="canonical" href="https://www.glow-leds.com/secure/account/changepassword" />
-        <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/change_password" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/change_password" />
       </Helmet>
       <div className="mb-10px">
         <GLButton variant="secondary" onClick={() => navigate(-1)}>

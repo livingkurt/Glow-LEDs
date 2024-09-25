@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { set_success } from "../../slices/cartSlice";
 import { clear_order_state } from "../../slices/orderSlice";
-import { decide_warning, determineItemsTotal } from "../../utils/helper_functions";
-import { setLoadingPlaceOrderPage } from "../../pages/PlaceOrderPage/placeOrderSlice";
+import { determineItemsTotal } from "../../utils/helper_functions";
 import { showInfo } from "../../slices/snackbarSlice";
 
 export const useOutsideAlerter = (ref, dispatch) => {
@@ -34,9 +33,9 @@ export const checkoutHandler = (dispatch, navigate, current_user, closeMenu, car
 
   // dispatch(setLoadingPlaceOrderPage(false));
   if (current_user.hasOwnProperty("first_name")) {
-    navigate("/secure/checkout/placeorder");
+    navigate("/secure/checkout/place_order");
   } else {
-    navigate("/checkout/placeorder");
+    navigate("/checkout/place_order");
   }
   closeMenu();
   // setTimeout(() => {

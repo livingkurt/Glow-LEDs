@@ -6,8 +6,6 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setCustomizedProduct } from "../pages/ProductPage/productPageSlice";
 
 export const getProducts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -124,7 +122,6 @@ export const detailsProductPage = createAsyncThunk(
   async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/products/${pathname}`);
-      dispatch(showSuccess({ message: `Product Found` }));
       return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

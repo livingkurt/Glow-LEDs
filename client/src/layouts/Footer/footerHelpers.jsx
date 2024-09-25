@@ -16,26 +16,26 @@ export const footerSections = [
   {
     title: "SHOP",
     links: [
-      { text: "All Categories", url: "/pages/menu/gloving" },
-      { text: "New Releases", url: "/collections/all/products/new_releases" },
-      { text: "Best Sellers", url: "/collections/all/products/best_sellers" },
-      { text: "Our Picks", url: "/collections/all/products/our_picks" },
-      { text: "On Sale", url: "/collections/all/products/on_sale" },
+      { text: "All Categories", url: "/menu/gloving" },
+      { text: "New Releases", url: "/products/new_releases" },
+      { text: "Best Sellers", url: "/products/best_sellers" },
+      { text: "Our Picks", url: "/products/our_picks" },
+      { text: "On Sale", url: "/products/on_sale" },
     ],
   },
   {
     title: "LEARN",
     links: [
-      { text: "About Us", url: "/pages/about" },
-      { text: "Tutorials", url: "/collections/all/tutorials" },
-      { text: "Sponsored Glovers", url: "/collections/all/sponsors" },
+      { text: "About Us", url: "/about" },
+      { text: "Tutorials", url: "/tutorials" },
+      { text: "Sponsored Glovers", url: "/sponsors" },
     ],
   },
   {
     title: "SUPPORT",
     links: [
-      { text: "Support Center", url: "/pages/support_center" },
-      { text: "Shop by Chip", url: "/collections/all/products?filter=All%20Chips?limit=0" },
+      { text: "Support Center", url: "/support_center" },
+      { text: "Shop by Chip", url: "/products?filter=All%20Chips?limit=0" },
     ],
   },
 ];

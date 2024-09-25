@@ -90,64 +90,64 @@ const addIdsRecursively = obj => {
 
 const features = addIdsRecursively({
   name: "Featured",
-  path: "/collections/all/products?category=our_picks",
+  path: "/products?category=our_picks",
   rows: [
     {
       name: "New Releases!",
-      path: "/collections/all/products?category=new_releases",
+      path: "/products?category=new_releases",
       extraContent: "🆕",
     },
     {
       name: "Best Sellers",
-      path: "/collections/all/products?category=best_sellers",
+      path: "/products?category=best_sellers",
       extraContent: "✅",
     },
     {
       name: "Our Picks",
-      path: "/collections/all/products?category=our_picks",
+      path: "/products?category=our_picks",
       extraContent: "⭐",
     },
     {
       name: "On Sale!",
-      path: "/collections/all/products?category=discounted",
+      path: "/products?category=discounted",
       extraContent: "💰",
     },
     {
       name: "Stickers",
-      path: "/collections/all/products?tags[]=merch&stags[]=stickers",
+      path: "/products?tags[]=merch&stags[]=stickers",
     },
   ],
 });
 const glowskinz = addIdsRecursively({
   name: "Glowskinz",
-  path: "/collections/all/products?tags[]=glowskinz",
+  path: "/products?tags[]=glowskinz",
   id: "glowskinz_dropdown",
   sideDrawer: {
     name: "Glowskinz",
-    path: "/collections/all/products?tags[]=glowskinz",
+    path: "/products?tags[]=glowskinz",
     id: "glowskinz_dropdown",
     drawerItems: [
       {
         name: "CLOZD Glowskinz",
-        path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd",
+        path: "/products?tags[]=glowskinz&tags[]=clozd",
         id: "clozd_dropdown",
         subSideDrawer: {
           id: "clozd_dropdown",
           subHeaderDrawers: [
             {
               name: "Classics",
-              path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd&tags[]=classics",
+              path: "/products?tags[]=glowskinz&tags[]=clozd&tags[]=classics",
             },
             {
               name: "Novaskinz",
-              path: "/collections/all/products?tags[]=glowskinz&tags[]=clozd&tags[]=novaskinz",
+              path: "/products?tags[]=glowskinz&tags[]=clozd&tags[]=novaskinz",
             },
           ],
         },
       },
       {
         name: "OPYN Glowskinz",
-        path: "/collections/all/products?tags[]=glowskinz&tags[]=opyn",
+        path: "/products?tags[]=glowskinz&tags[]=opyn",
         subHeaderDrawers: [],
       },
     ],
@@ -156,35 +156,35 @@ const glowskinz = addIdsRecursively({
 
 const exo_diffusers = addIdsRecursively({
   name: "EXO Diffusers",
-  path: "/collections/all/products?tags[]=exo_diffusers",
+  path: "/products?tags[]=exo_diffusers",
   id: "exo_diffusers_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Collections",
-        path: "/collections/all/products?tags[]=exo_diffusers",
+        path: "/products?tags[]=exo_diffusers",
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
           id: "exo_diffusers_collections_dropdown",
           subHeaderDrawers: [
             {
               name: "Platonic Solids",
-              path: "/collections/all/products?tags[]=exo_diffusers&tags[]=polyhedrons&tags[]=platonic_solids",
+              path: "/products?tags[]=exo_diffusers&tags[]=polyhedrons&tags[]=platonic_solids",
             },
             {
               name: "Spheroid",
-              path: "/collections/all/products?tags[]=exo_diffusers&tags[]=domes&tags[]=spheroid",
+              path: "/products?tags[]=exo_diffusers&tags[]=domes&tags[]=spheroid",
             },
           ],
         },
       },
       {
         name: "Polyhedrons",
-        path: "/collections/all/products?tags[]=exo_diffusers&tags[]=polyhedrons",
+        path: "/products?tags[]=exo_diffusers&tags[]=polyhedrons",
       },
       {
         name: "Domes",
-        path: "/collections/all/products?tags[]=exo_diffusers&tags[]=domes",
+        path: "/products?tags[]=exo_diffusers&tags[]=domes",
       },
     ],
   },
@@ -192,58 +192,58 @@ const exo_diffusers = addIdsRecursively({
 
 const diffuser_caps = addIdsRecursively({
   name: "Diffuser Caps",
-  path: "/collections/all/products?tags[]=diffuser_caps",
+  path: "/products?tags[]=diffuser_caps",
   id: "diffuser_caps_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Diffuser Caps Starter Kit",
-        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=adapters&tags[]=starter_kit",
+        path: "/products?tags[]=diffuser_caps&tags[]=adapters&tags[]=starter_kit",
       },
       {
         name: "Collections",
-        path: "/collections/all/products?tags[]=diffuser_caps",
+        path: "/products?tags[]=diffuser_caps",
         id: "collections_dropdown",
         subSideDrawer: {
           subHeaderDrawers: [
             {
               name: "Texture",
-              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=texture",
+              path: "/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=texture",
             },
             {
               name: "Fractal",
-              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=fractal",
+              path: "/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=fractal",
             },
             {
               name: "Space Cadet",
-              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=space_cadet",
+              path: "/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=space_cadet",
             },
             {
               name: "Festie Bestie",
-              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=festie_bestie",
+              path: "/products?tags[]=diffuser_caps&tags[]=shapes&tags[]=festie_bestie",
             },
             {
               name: "Platonic Solids",
-              path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=platonic_solids",
+              path: "/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=platonic_solids",
             },
           ],
         },
       },
       {
         name: "Geometric",
-        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=geometric",
+        path: "/products?tags[]=diffuser_caps&tags[]=geometric",
       },
       {
         name: "Shapes",
-        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=shapes",
+        path: "/products?tags[]=diffuser_caps&tags[]=shapes",
       },
       {
         name: "Abstract",
-        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=abstract",
+        path: "/products?tags[]=diffuser_caps&tags[]=abstract",
       },
       {
         name: "Patterns",
-        path: "/collections/all/products?tags[]=diffuser_caps&tags[]=patterns",
+        path: "/products?tags[]=diffuser_caps&tags[]=patterns",
       },
     ],
   },
@@ -251,33 +251,33 @@ const diffuser_caps = addIdsRecursively({
 
 const diffusers = addIdsRecursively({
   name: "Diffusers",
-  path: "/collections/all/products?tags[]=diffusers",
+  path: "/products?tags[]=diffusers",
   id: "diffusers_dropdown",
   sideDrawer: {
     drawerItems: [
       {
         name: "Abstract",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=abstract",
+        path: "/products?tags[]=diffusers&tags[]=abstract",
       },
       {
         name: "Polygons",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=polygons",
+        path: "/products?tags[]=diffusers&tags[]=polygons",
       },
       {
         name: "Cylinders",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=cylinders",
+        path: "/products?tags[]=diffusers&tags[]=cylinders",
       },
       {
         name: "Domes",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=domes",
+        path: "/products?tags[]=diffusers&tags[]=domes",
       },
       {
         name: "Open Hole",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=open_hole",
+        path: "/products?tags[]=diffusers&tags[]=open_hole",
       },
       {
         name: "Closed Hole",
-        path: "/collections/all/products?tags[]=diffusers&tags[]=closed_hole",
+        path: "/products?tags[]=diffusers&tags[]=closed_hole",
       },
     ],
   },
@@ -285,24 +285,24 @@ const diffusers = addIdsRecursively({
 
 const enhancers = addIdsRecursively({
   name: "Enhancers",
-  // path: "/pages/menu/enhancers",
+  // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
     glowskinz,
     {
       name: "Glowframez",
-      path: "/collections/all/products?tags[]=glowframez",
+      path: "/products?tags[]=glowframez",
     },
     exo_diffusers,
     diffuser_caps,
     {
       name: "Diffusers",
-      path: "/collections/all/products?tags[]=diffusers",
+      path: "/products?tags[]=diffusers",
     },
     // diffusers,
     {
       name: "Decals",
-      path: "/collections/all/products?tags[]=decals",
+      path: "/products?tags[]=decals",
     },
   ],
 });
@@ -310,31 +310,31 @@ const enhancers = addIdsRecursively({
 const essentials = addIdsRecursively({
   name: "Essentials",
   id: "essentials_dropdown",
-  path: "/collections/all/products?tags[]=essentials",
+  path: "/products?tags[]=essentials",
   rows: [
     {
       name: "Gloves",
-      path: "/collections/all/products?tags[]=gloves&tags[]=singles",
+      path: "/products?tags[]=gloves&tags[]=singles",
     },
     {
       name: "Refresh Packs",
-      path: "/collections/all/products?tags[]=gloves&tags[]=refresh",
+      path: "/products?tags[]=gloves&tags[]=refresh",
     },
     {
       name: "Sizing Samplers",
-      path: "/collections/all/products?tags[]=gloves&tags[]=sampler",
+      path: "/products?tags[]=gloves&tags[]=sampler",
     },
     {
       name: "Coin Batteries",
-      path: "/collections/all/products?tags[]=batteries&tags[]=coin",
+      path: "/products?tags[]=batteries&tags[]=coin",
     },
     {
       name: "Battery Storage",
-      path: "/collections/all/products?tags[]=batteries&tags[]=storage",
+      path: "/products?tags[]=batteries&tags[]=storage",
     },
     {
       name: "Wholesale",
-      path: "/collections/all/products?tags[]=wholesale",
+      path: "/products?tags[]=wholesale",
       permissions: item => (item ? item.isWholesaler : undefined),
     },
   ],
@@ -342,46 +342,46 @@ const essentials = addIdsRecursively({
 const community = addIdsRecursively({
   name: "Community",
   id: "community_dropdown",
-  // path: "/pages/menu/community",
+  // path: "/menu/community",
   rows: [
     {
       name: "Space City Gloving Competition",
-      path: "/pages/events/space_city_gloving_competition",
+      path: "/events/space_city_gloving_competition",
       feature: "events",
     },
     {
       name: "Sponsored Glovers",
-      path: "/collections/all/sponsors",
+      path: "/sponsors",
     },
     {
       name: "Sponsored Teams",
-      path: "/collections/all/teams",
+      path: "/teams",
     },
     {
       name: "Rave Mob",
-      path: "/collections/all/teams/category/rave_mob",
+      path: "/teams/category/rave_mob",
     },
     // {
     //   name: "Featured",
-    //   path: "/pages/menu/featured",
+    //   path: "/menu/featured",
     //   id: "featured_dropdown",
     //   sideDrawer: {
     //     drawerItems: [
     //       {
     //         name: "Glovers",
-    //         path: "/collections/all/sponsors",
+    //         path: "/sponsors",
     //       },
     //       {
     //         name: "Artists",
-    //         path: "/collections/all/sponsors",
+    //         path: "/sponsors",
     //       },
     //       {
     //         name: "Producers",
-    //         path: "/collections/all/teams",
+    //         path: "/teams",
     //       },
     //       {
     //         name: "VFX",
-    //         path: "/collections/all/teams/category/rave_mob",
+    //         path: "/teams/category/rave_mob",
     //       },
     //     ],
     //   },
@@ -392,175 +392,175 @@ const community = addIdsRecursively({
 const learn = addIdsRecursively({
   name: "Learn",
   id: "learn_dropdown",
-  path: "/pages/learn",
+  path: "/learn",
   rows: [
     {
       name: "All Learning",
-      path: "/pages/learn",
+      path: "/learn",
     },
     {
       name: "What is Gloving?",
-      path: "/pages/learn/what_is_gloving",
+      path: "/learn/what_is_gloving",
     },
     {
       name: "Anatomy of the Glove Set",
-      path: "/pages/learn/anatomy_of_the_glove_set",
+      path: "/learn/anatomy_of_the_glove_set",
     },
     {
       name: "Anatomy of the Lightshow",
-      path: "/pages/learn/anatomy_of_the_lightshow",
+      path: "/learn/anatomy_of_the_lightshow",
     },
     {
       name: "Deep Dive into Accessories",
-      path: "/pages/learn/deep_dive_into_accessories",
+      path: "/learn/deep_dive_into_accessories",
     },
     {
       name: "Concept/Term Dictionary",
-      path: "/pages/learn/concept_term_dictionary",
+      path: "/learn/concept_term_dictionary",
     },
     {
       name: "Gloving History",
-      path: "/pages/learn/gloving_history",
+      path: "/learn/gloving_history",
     },
   ],
 });
 const tutorials = addIdsRecursively({
   name: "Tutorials",
   id: "tutorials_dropdown",
-  path: "/collections/all/tutorials",
+  path: "/tutorials",
   rows: [
     {
       name: "All Tutorials",
-      path: "/collections/all/tutorials",
+      path: "/tutorials",
     },
     {
       name: "By Skill Level",
-      // path: "/pages/menu/featured",
+      // path: "/menu/featured",
       id: "skill_level_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Beginner",
-            path: "/collections/all/tutorials?level=beginner",
+            path: "/tutorials?level=beginner",
           },
           {
             name: "Intermediate",
-            path: "/collections/all/tutorials?level=intermediate",
+            path: "/tutorials?level=intermediate",
           },
           {
             name: "Advanced (Coming Soon)",
-            path: "/collections/all/tutorials?level=advanced",
+            path: "/tutorials?level=advanced",
           },
           {
             name: "Experimental (Coming Soon)",
-            path: "/collections/all/tutorials?level=experimental",
+            path: "/tutorials?level=experimental",
           },
         ],
       },
     },
     {
       name: "By Style",
-      // path: "/pages/menu/featured",
+      // path: "/menu/featured",
       id: "style_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Flow",
-            path: "/collections/all/tutorials?tags[]=flow",
+            path: "/tutorials?tags[]=flow",
           },
           {
             name: "Tech",
-            path: "/collections/all/tutorials?tags[]=tech",
+            path: "/tutorials?tags[]=tech",
           },
           {
             name: "Conjuring (Coming Soon)",
-            path: "/collections/all/tutorials?tags[]=conjuring",
+            path: "/tutorials?tags[]=conjuring",
           },
           {
             name: "Impacting (Coming Soon)",
-            path: "/collections/all/tutorials?tags[]=impacting",
+            path: "/tutorials?tags[]=impacting",
           },
           {
             name: "Morphing (Coming Soon)",
-            path: "/collections/all/tutorials?tags[]=morphing",
+            path: "/tutorials?tags[]=morphing",
           },
         ],
       },
     },
     // {
     //   name: "By Move",
-    //   path: "/collections/all/tutorials",
+    //   path: "/tutorials",
     // },
     {
       name: "By Concept",
-      // path: "/collections/all/tutorials?tags[]=concept",
+      // path: "/tutorials?tags[]=concept",
       id: "concept_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Theory",
-            path: "/collections/all/tutorials?&tags[]=theory",
+            path: "/tutorials?&tags[]=theory",
           },
           {
             name: "Transitions",
-            path: "/collections/all/tutorials?&tags[]=transitions",
+            path: "/tutorials?&tags[]=transitions",
           },
           {
             name: "Stretches",
-            path: "/collections/all/tutorials?&tags[]=stretches",
+            path: "/tutorials?&tags[]=stretches",
           },
           {
             name: "Finger Independence",
-            path: "/collections/all/tutorials?&tags[]=finger_independence",
+            path: "/tutorials?&tags[]=finger_independence",
           },
           {
             name: "Storytelling (Coming Soon)",
-            path: "/collections/all/tutorials?&tags[]=storytelling",
+            path: "/tutorials?&tags[]=storytelling",
           },
           {
             name: "Cleanliness (Coming Soon)",
-            path: "/collections/all/tutorials?&tags[]=cleanliness",
+            path: "/tutorials?&tags[]=cleanliness",
           },
           {
             name: "Showmanship (Coming Soon)",
-            path: "/collections/all/tutorials?&tags[]=showmanship",
+            path: "/tutorials?&tags[]=showmanship",
           },
           {
             name: "Musicality (Coming Soon)",
-            path: "/collections/all/tutorials?&tags[]=musicality",
+            path: "/tutorials?&tags[]=musicality",
           },
         ],
       },
     },
     {
       name: "By Glover",
-      path: "/pages/menu/featured",
+      path: "/menu/featured",
       id: "artist_dropdown",
       sideDrawer: {
         drawerItems: [
           {
             name: "Po",
-            path: "/collections/all/tutorials?&glover=po",
+            path: "/tutorials?&glover=po",
           },
           {
             name: "Puppet",
-            path: "/collections/all/tutorials?&glover=puppet",
+            path: "/tutorials?&glover=puppet",
           },
           // {
           //   name: "BeMO",
-          //   path: "/collections/all/tutorials?&glover=bemo",
+          //   path: "/tutorials?&glover=bemo",
           // },
           // {
           //   name: "Lykaios",
-          //   path: "/collections/all/tutorials?&glover=lykaios",
+          //   path: "/tutorials?&glover=lykaios",
           // },
           // {
           //   name: "Zielzibub",
-          //   path: "/collections/all/tutorials?&glover=zielzibub",
+          //   path: "/tutorials?&glover=zielzibub",
           // },
           {
             name: "Starstream",
-            path: "/collections/all/tutorials?&glover=starstream",
+            path: "/tutorials?&glover=starstream",
           },
         ],
       },
@@ -570,50 +570,50 @@ const tutorials = addIdsRecursively({
 const tips = addIdsRecursively({
   name: "Gloving Tips",
   id: "tips_dropdown",
-  path: "/pages/learn",
+  path: "/learn",
   rows: [
     {
       name: "Gloving Etiquette",
-      path: "/pages/learn/gloving_etiquette",
+      path: "/learn/gloving_etiquette",
     },
     {
       name: "Where do I start?",
-      path: "/pages/learn/where_do_i_start",
+      path: "/learn/where_do_i_start",
     },
     {
       name: "Maintaining Your Glove Set",
-      path: "/pages/learn/maintaining_your_glove_set",
+      path: "/learn/maintaining_your_glove_set",
     },
     {
       name: "Filming Lightshows",
-      path: "/pages/learn/filming_lightshows",
+      path: "/learn/filming_lightshows",
     },
     {
       name: "What's a Double Lightshow?",
-      path: "/pages/learn/whats_a_double_lightshow",
+      path: "/learn/whats_a_double_lightshow",
     },
   ],
 });
 const support = addIdsRecursively({
   name: "Support",
   id: "support_dropdown",
-  // path: "/pages/menu/support",
+  // path: "/menu/support",
   rows: [
     {
       name: "Support Center",
-      path: "/pages/support_center",
+      path: "/support_center",
     },
     {
       name: "About",
-      path: "/pages/about",
+      path: "/about",
     },
     // {
     //   name: "Announcements",
-    //   path: "/pages/announcements",
+    //   path: "/announcements",
     // },
     {
       name: "Term and Condition",
-      path: "/pages/terms",
+      path: "/terms",
     },
   ],
 });
@@ -814,7 +814,7 @@ export const navItems = [
   },
   {
     name: "SHOP",
-    path: "/pages/menu/shop",
+    path: "/menu/shop",
     id: "shop_dropdown",
     dataTestId: "shop_button",
     columns: [features, enhancers],
@@ -823,9 +823,9 @@ export const navItems = [
   },
   {
     name: "LEARN",
-    // path: "/collections/all/tutorials",
+    // path: "/tutorials",
     id: "learn_dropdown",
-    // path: "/pages/learn",
+    // path: "/learn",
     dataTestId: "learn_button",
     // columns: [learn],
     columns: [learn, tutorials],
@@ -835,7 +835,7 @@ export const navItems = [
   {
     name: "COMMUNITY",
     id: "community_dropdown",
-    // path: "/pages/menu/community",
+    // path: "/menu/community",
     dataTestId: "community_button",
     columns: [community],
     column: community.rows,
@@ -844,7 +844,7 @@ export const navItems = [
   {
     name: "SUPPORT",
     id: "support_dropdown",
-    // path: "/pages/menu/support",
+    // path: "/menu/support",
     dataTestId: "support_button",
     columns: [support],
     column: support.rows,

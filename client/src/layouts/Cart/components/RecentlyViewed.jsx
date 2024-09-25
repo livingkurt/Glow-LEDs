@@ -17,12 +17,7 @@ const RecentlyViewed = ({ closeMenu }) => {
               return (
                 item &&
                 item.name !== "" && (
-                  <Link
-                    to={`/collections/all/products/${item.pathname}`}
-                    className="w-100per mb-1rem"
-                    key={index}
-                    onClick={closeMenu}
-                  >
+                  <Link to={`/products/${item.pathname}`} className="w-100per mb-1rem" key={index} onClick={closeMenu}>
                     <li
                       className="ph-1rem w-100per row ai-c"
                       style={{

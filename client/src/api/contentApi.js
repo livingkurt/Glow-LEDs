@@ -44,12 +44,11 @@ export const saveContent = createAsyncThunk("contents/saveContent", async (conte
   try {
     if (!content._id) {
       const { data } = await axios.post("/api/contents", content);
-      dispatch(showSuccess({ message: `Content Created` }));
-      return data;
+      dispatch(showSuccess({ message: `New Version Created` }));
+      return { data, type: "create" };
     } else {
       const { data } = await axios.put(`/api/contents/${content._id}`, content);
-      dispatch(showSuccess({ message: `Content Updated` }));
-      return data;
+      return { data, type: "update" };
     }
   } catch (error) {
     dispatch(showError({ message: errorMessage(error) }));
@@ -80,6 +79,15 @@ export const getContentsByLink = createAsyncThunk(
     }
   }
 );
+
+export const getActiveContent = createAsyncThunk("contents/getActiveContent", async () => {
+  try {
+    const { data } = await axios.get("/api/contents/current");
+    return data;
+  } catch (error) {
+    console.error("Error fetching active content:", error);
+  }
+});
 
 export const getSlideshowImages = createAsyncThunk(
   "contents/getSlideshowImages",

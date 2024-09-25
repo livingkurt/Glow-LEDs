@@ -162,15 +162,15 @@ export const updateRecentlyViewed = product => {
 export const productPageBreadCrumbs = product => {
   const { category, subcategory, product_collection, name } = product;
   return [
-    { name: "ALL PRODUCTS", to: "/collections/all/products" },
-    { name: category?.toUpperCase().split("_").join(" "), to: `/collections/all/products/?tags[]=${category}` },
+    { name: "ALL PRODUCTS", to: "/products" },
+    { name: category?.toUpperCase().split("_").join(" "), to: `/products/?tags[]=${category}` },
     {
       name: subcategory?.toUpperCase().split("_").join(" "),
-      to: `/collections/all/products/?tags[]=${category}&tags[]=${subcategory}`,
+      to: `/products/?tags[]=${category}&tags[]=${subcategory}`,
     },
     {
       name: product_collection?.toUpperCase().split("_").join(" "),
-      to: `/collections/all/products/?tags[]=${category}&tags[]=${subcategory}/collection/${product_collection}`,
+      to: `/products/?tags[]=${category}&tags[]=${subcategory}/collection/${product_collection}`,
     },
     { name: name?.toUpperCase().split("_").join(" ") },
   ];

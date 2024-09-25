@@ -1,8 +1,8 @@
 export const generateProductUrl = cartItem => {
   if (cartItem.itemType === "ticket") {
-    return `/pages/events/${cartItem?.event_pathname}`;
+    return `/events/${cartItem?.event_pathname}`;
   }
-  const baseUrl = `/collections/all/products/${cartItem.pathname}`;
+  const baseUrl = `/products/${cartItem.pathname}`;
   const params = new URLSearchParams();
 
   cartItem.selectedOptions?.forEach((option, index) => {

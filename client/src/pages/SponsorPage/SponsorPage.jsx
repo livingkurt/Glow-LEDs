@@ -1,194 +1,229 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
-import { LazyImage } from "../../shared/SharedComponents";
-import { API_Users } from "../../utils";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import {
+  Container,
+  Typography,
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
+  IconButton,
+  Divider,
+} from "@mui/material";
+import ProductCard from "../ProductsGridPage/components/ProductCard";
+import { EditAffiliateModal } from "../AffiliatesPage/components";
+import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import TikTokIcon from "../../layouts/Footer/TikTokIcon";
+import { showInfo } from "../../slices/snackbarSlice";
 
 const SponsorPage = () => {
   const params = useParams();
-  const [teams, set_teams] = useState([]);
   const navigate = useNavigate();
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliate } = affiliatePage;
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
-
   const dispatch = useDispatch();
+  const { affiliate } = useSelector(state => state.affiliates.affiliatePage);
+
+  const { current_user } = useSelector(state => state.users.userPage);
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.detailsAffiliate({ pathname: params.promo_code }));
-    }
-    return () => (clean = false);
-  }, []);
+    dispatch(API.detailsAffiliate({ pathname: params.pathname }));
+  }, [dispatch, params.pathname]);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (affiliate && affiliate._id) {
-        find_team();
-      }
-    }
-    return () => (clean = false);
-  }, [affiliate]);
+  if (!affiliate) return null;
 
-  const find_team = async () => {
-    try {
-      const { data } = await API_Users.get_teams(affiliate._id);
-      set_teams(data);
-    } catch (error) {}
-  };
+  const socialIcons = [
+    { icon: InstagramIcon, platform: "Instagram" },
+    { icon: FacebookIcon, platform: "Facebook" },
+    { icon: YouTubeIcon, platform: "YouTube" },
+    { icon: CloudQueueIcon, platform: "SoundCloud" },
+    { icon: TikTokIcon, platform: "TikTok" },
+  ];
 
-  const date = new Date();
-
-  const today = date.toISOString();
   return (
-    <div className="main_container p-20px">
-      {affiliate && (
-        <Helmet>
-          <title>{affiliate.artist_name + " | Glow LEDs"}</title>
-          <meta property="og:title" content={affiliate.artist_name + " | Glow LEDs"} />
-          <meta name="twitter:title" content={affiliate.artist_name + " | Glow LEDs"} />
-          <link rel="canonical" href={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
-          <meta
-            property="og:url"
-            content={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname}
-          />
-          <meta name="description" content={affiliate.bio} />
-          <meta property="og:description" content={affiliate.bio} />
-          <meta name="twitter:description" content={affiliate.bio} />
-        </Helmet>
-      )}
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Helmet>
+        <title>{`${affiliate.artist_name} | Glow LEDs`}</title>
+        <meta property="og:title" content={`${affiliate.artist_name} | Glow LEDs`} />
+        <meta name="twitter:title" content={`${affiliate.artist_name} | Glow LEDs`} />
+        <link rel="canonical" href={`https://www.glow-leds.com/sponsors/${affiliate.pathname}`} />
+        <meta property="og:url" content={`https://www.glow-leds.com/sponsors/${affiliate.pathname}`} />
+        <meta name="description" content={affiliate.bio} />
+        <meta property="og:description" content={affiliate.bio} />
+        <meta name="twitter:description" content={affiliate.bio} />
+      </Helmet>
 
-      {affiliate && (
-        <div className="">
-          <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => navigate(-1)}>
-              Back
-            </GLButton>
-            {/* {current_user?.isAdmin && (
-              <Link to={"/secure/glow/editaffiliate/" + params.pathname}>
-                <GLButton variant="secondary" style={{ width: "156px" }}>
-                  Edit Affiliate
-                </GLButton>
-              </Link>
-            )} */}
-          </div>
-
-          <div className="column jc-c">
-            <h2 style={{ textAlign: "center" }}>{affiliate.artist_name}</h2>
-          </div>
-          <div className="">
-            <LazyImage
-              className="sponsor-image sponsor_image_small"
-              alt={affiliate.artist_name}
-              title="Sponsor Image"
-              size={{
-                height: "auto",
-                width: "100%",
-                display: "none",
-                maxWidth: "unset",
-                maxHeight: "unset",
-              }}
-              effect="blur"
-              src={affiliate.picture}
-            />
-          </div>
-          <div className="jc-b">
-            <div className="" style={{ flex: "1 1 70%" }}>
-              <div>
-                <h3 className="">Who be this</h3>
-                <p className="p_descriptions">
-                  {affiliate.user && affiliate.user.first_name} {affiliate.user && affiliate.user.last_name}
-                </p>
-              </div>
-              <div>
-                <h3 className="">Gloving for</h3>
-                <p className="p_descriptions">{affiliate.years} Years</p>
-              </div>
-              <div>
-                <h3 className="">Chillin in </h3>
-                <p className="p_descriptions">{affiliate.location}</p>
-              </div>
-              <div>
-                <h3 className="">Bio</h3>
-                <p className="p_descriptions">{affiliate.bio}</p>
-              </div>
-              {affiliate.inspiration && (
-                <div>
-                  <h3 className="">Inspired by</h3>
-                  <p className="p_descriptions">{affiliate.inspiration}</p>
-                </div>
-              )}
-              <div>
-                <h3 className="">Follow {affiliate.artist_name} </h3>
-                <div className="mt-2rem wrap  ">
-                  <div className="fs-25px jc-fs w-100per max-w-500px ai-c">
-                    <div className="fs-40px">
-                      {affiliate.facebook_name && (
-                        <a
-                          href={affiliate.facebook_name}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Facebook"
-                        >
-                          <i className="fab fa-facebook zoom" />
-                        </a>
-                      )}
-                    </div>
-                    <div className="ml-10px fs-40px">
-                      {affiliate.instagram_handle && (
-                        <a
-                          href={"https://www.instagram.com/" + affiliate.instagram_handle}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Instagram"
-                        >
-                          <i className="fab fa-instagram zoom" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="">
-              <LazyImage
-                className="sponsor-image sponsor_image_big"
-                alt={affiliate.name}
-                title="Sponsor Image"
-                size={{ height: "auto", width: "100%" }}
-                effect="blur"
-                src={affiliate.picture}
-              />
-            </div>
-          </div>
-          <div className="column jc-c">
-            <h3 style={{ textAlign: "center" }}>Watch {affiliate.artist_name} Throw Down</h3>
-          </div>
-          {affiliate.video && (
-            <div className="jc-c pos-rel mt-2rem max-w-75rem m-auto">
-              <div className="iframe-container">
-                <iframe
-                  width="996"
-                  height="560"
-                  title="sponsor"
-                  style={{ borderRadius: "20px" }}
-                  src={`https://www.youtube.com/embed/${affiliate.video}`}
-                  frameborder="0"
-                  allowfullscreen
-                />
-              </div>
-            </div>
+      <Box sx={{ mb: 4 }}>
+        <Box display={"flex"} justifyContent={"space-between"}>
+          <Button onClick={() => navigate(-1)} sx={{ mb: 2, color: "#fff" }}>
+            Back to Sponsors
+          </Button>
+          {current_user.isAdmin && (
+            <Button onClick={() => dispatch(open_edit_affiliate_modal(affiliate))} sx={{ mb: 2, color: "#fff" }}>
+              Edit Sponsor
+            </Button>
           )}
-        </div>
+        </Box>
+        <Typography variant="h3" component="h1" align="center" gutterBottom>
+          {affiliate.artist_name}
+        </Typography>
+      </Box>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ borderRadius: "20px" }}>
+            <CardMedia
+              component="img"
+              alt={affiliate.artist_name}
+              image={affiliate.picture}
+              title="Sponsor Image"
+              sx={{ objectFit: "cover" }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ color: "#fff", bgcolor: "#4c526d", borderRadius: "20px" }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Who is this?
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {affiliate.user?.first_name} {affiliate.user?.last_name} AKA {affiliate.artist_name}
+              </Typography>
+
+              {affiliate.bio && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Bio
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {affiliate.bio}
+                  </Typography>
+                </>
+              )}
+
+              <Typography variant="h6" gutterBottom>
+                Gloving Since
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
+              </Typography>
+
+              <Typography variant="h6" gutterBottom>
+                Location
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {affiliate.location}
+              </Typography>
+
+              {affiliate.inspiration && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Inspired by
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {affiliate.inspiration}
+                  </Typography>
+                </>
+              )}
+              <Typography variant="h6" gutterBottom>
+                Promo Code
+              </Typography>
+              <Box display={"flex"} alignItems={"center"} gap={2} sx={{ mb: 2 }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    sessionStorage.setItem("promo_code", affiliate.public_code?.promo_code);
+                    dispatch(
+                      showInfo({ message: `Code ${affiliate.public_code?.promo_code.toUpperCase()} Added to Checkout` })
+                    );
+                  }}
+                >
+                  Use Code {affiliate.public_code?.promo_code.toUpperCase()} at checkout
+                </Button>
+              </Box>
+              {affiliate.social_media && affiliate.social_media.length > 0 && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Follow {affiliate.artist_name}
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    {affiliate?.social_media?.map(({ platform, link }, index) => {
+                      const IconComponent = socialIcons.find(icon => icon.platform === platform)?.icon;
+                      return (
+                        <IconButton
+                          key={index}
+                          href={link}
+                          target="_blank"
+                          size="large"
+                          rel="noopener noreferrer"
+                          sx={{ color: "white" }}
+                        >
+                          {IconComponent && React.createElement(IconComponent, { style: { fontSize: "4rem" } })}
+                        </IconButton>
+                      );
+                    })}
+                  </Box>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      <Divider sx={{ my: 4, borderColor: "#fff" }} />
+
+      {affiliate.products && affiliate.products.length > 0 && (
+        <Box>
+          <Typography variant="h4" align="center" gutterBottom>
+            {affiliate.artist_name}'s Favorite Gear
+          </Typography>
+          <Grid container spacing={3}>
+            {affiliate.products.map(product => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
+                <ProductCard product={product} promo_code={affiliate.public_code?.promo_code} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       )}
-    </div>
+      <Divider sx={{ my: 4, borderColor: "#fff" }} />
+      {affiliate.video && (
+        <Box>
+          <Typography variant="h4" align="center" gutterBottom>
+            Watch {affiliate.artist_name} Throw Down
+          </Typography>
+          <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
+            <iframe
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                border: 0,
+              }}
+              title={`${affiliate.artist_name} video`}
+              allowFullScreen
+              src={`https://www.youtube.com/embed/${affiliate.video}?autoplay=1&mute=0`}
+              allow="autoplay"
+              autoPlay
+              loop
+              playsInline
+            />
+          </Box>
+        </Box>
+      )}
+      <EditAffiliateModal />
+    </Container>
   );
 };
+
 export default SponsorPage;

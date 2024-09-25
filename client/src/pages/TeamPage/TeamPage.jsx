@@ -33,8 +33,8 @@ const TeamPage = () => {
         <title>Team | Glow LEDs</title>
         <meta property="og:title" content="Team" />
         <meta name="twitter:title" content="Team" />
-        <link rel="canonical" href="https://www.glow-leds.com/pages/teamd" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/teamd" />
+        <link rel="canonical" href="https://www.glow-leds.com/teamd" />
+        <meta property="og:url" content="https://www.glow-leds.com/teamd" />
         <meta
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
@@ -55,7 +55,7 @@ const TeamPage = () => {
             <GLButton variant="secondary" onClick={() => navigate(-1)}>
               Back
             </GLButton>
-            {/* <Link to="/collections/all/teams">
+            {/* <Link to="/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
             {current_user?.isAdmin && (
@@ -170,7 +170,7 @@ const TeamPage = () => {
                 return (
                   <div className="pos-rel">
                     {affiliate.sponsor && (
-                      <Link to={"/collections/all/sponsors/" + affiliate.pathname} key={index}>
+                      <Link to={"/sponsors/" + affiliate.pathname} key={index}>
                         <GLLazyImage
                           className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                           alt="Team Mate"

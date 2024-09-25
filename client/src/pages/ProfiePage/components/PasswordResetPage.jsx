@@ -24,8 +24,8 @@ const PasswordResetPublicPage = () => {
         <title>Password Reset | Glow LEDs</title>
         <meta property="og:title" content="Password Reset" />
         <meta name="twitter:title" content="Password Reset" />
-        <link rel="canonical" href="https://www.glow-leds.com/account/passwordreset" />
-        <meta property="og:url" content="https://www.glow-leds.com/account/passwordreset" />
+        <link rel="canonical" href="https://www.glow-leds.com/account/password_reset" />
+        <meta property="og:url" content="https://www.glow-leds.com/account/password_reset" />
       </Helmet>
       <form onSubmit={submitHandler}>
         <ul className="form-container">

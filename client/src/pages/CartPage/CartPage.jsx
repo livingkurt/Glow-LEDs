@@ -31,9 +31,9 @@ const CartPage = () => {
       return;
     }
     if (current_user.hasOwnProperty("first_name")) {
-      navigate("/secure/checkout/placeorder");
+      navigate("/secure/checkout/place_order");
     } else {
-      navigate("/checkout/placeorder");
+      navigate("/checkout/place_order");
     }
   };
 

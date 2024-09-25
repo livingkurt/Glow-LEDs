@@ -13,7 +13,7 @@ import { loginUpdateCartItems } from "../helpers/userHelpers";
 
 export const getUsers = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/users`, {
+    return await axios.get(`/api/users/table`, {
       params: {
         limit: pageSize,
         page: page,

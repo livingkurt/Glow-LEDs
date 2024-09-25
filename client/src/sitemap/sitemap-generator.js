@@ -3,24 +3,30 @@ const path = require("path");
 const { default: axios } = require("axios");
 const { routes } = require("../utils/helpers/routes");
 
-function generateUrlXML(url) {
-  return `
-    <url><loc>${url}</loc></url>`;
+function generateUrlXML(url, lastmod = null) {
+  let xml = `
+    <url>
+      <loc>${url}</loc>`;
+  if (lastmod) {
+    xml += `
+      <lastmod>${lastmod}</lastmod>`;
+  }
+  xml += `
+    </url>`;
+  return xml;
 }
 
 async function generateSitemap() {
   try {
-    const fetchPromises = [axios.get(`https://www.glow-leds.com/api/products/pathname/distinct`)];
-
-    const [pathnameRes] = await Promise.all(fetchPromises);
-    const pathnames = pathnameRes.data;
-
-    let pathnameMap = pathnames.map(pathname => ({ pathname }));
-    const menu_types = [{ pathname: "menu" }];
+    const { data } = await axios.put(`https://www.glow-leds.com/api/versions/sitemap`);
 
     const paramsConfig = {
-      "/collections/all/products/:pathname": pathnameMap,
-      "/pages/menu/:pathname": menu_types,
+      "/products/:pathname": data.products,
+      "/sponsors/:pathname": data.sponsors,
+      "/teams/:pathname": data.teams,
+      "/learn/:pathname": data.articles,
+      "/events/:pathname": data.events,
+      "/menu/:pathname": data.contents,
     };
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -36,7 +42,7 @@ async function generateSitemap() {
 
         values?.forEach(value => {
           const dynamicUrl = url.replace(`:${param}`, value.pathname);
-          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`);
+          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`, value.lastmod);
         });
       } else {
         sitemapXML += generateUrlXML(`https://www.glow-leds.com${url}`);
@@ -44,8 +50,9 @@ async function generateSitemap() {
     });
 
     sitemapXML += "</urlset>";
+    console.log({ path: path.join(__dirname, "../../public/sitemap.xml") });
 
-    fs.writeFileSync(path.join(__dirname, "../sitemap.xml"), sitemapXML);
+    fs.writeFileSync(path.join(__dirname, "../../public/sitemap.xml"), sitemapXML);
   } catch (error) {
     console.error("An error occurred while generating the sitemap:", error);
   }

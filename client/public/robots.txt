@@ -1,9 +1,4 @@
-# Group 1
 User-agent: *
 Disallow: /secure/*
-
-# Group 2
-User-agent: *
-Allow: /
 
 Sitemap: https://www.glow-leds.com/sitemap.xml
