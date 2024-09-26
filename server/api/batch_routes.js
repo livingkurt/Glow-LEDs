@@ -21,6 +21,7 @@ import { isAdmin, isAuth } from "../middlewares/authMiddleware";
 import { Cart } from "./carts";
 import { promises as fs } from "fs";
 import path from "path";
+import * as cheerio from "cheerio";
 
 import axios from "axios";
 import appRoot from "app-root-path";
@@ -3867,19 +3868,19 @@ router.route("/migrate_display_image").put(async (req, res) => {
   };
 
   try {
-    // Migrate Cart schema
-    const carts = await Cart.find({});
-    for (const cart of carts) {
-      let modified = false;
-      for (const item of cart.cartItems) {
-        if (await migrateDisplayImage(item, "Cart", cart._id)) {
-          modified = true;
-        }
-      }
-      if (modified) {
-        await cart.save();
-      }
-    }
+    // // Migrate Cart schema
+    // const carts = await Cart.find({});
+    // for (const cart of carts) {
+    //   let modified = false;
+    //   for (const item of cart.cartItems) {
+    //     if (await migrateDisplayImage(item, "Cart", cart._id)) {
+    //       modified = true;
+    //     }
+    //   }
+    //   if (modified) {
+    //     await cart.save();
+    //   }
+    // }
 
     // Migrate Order schema
     const orders = await Order.find({});
@@ -6123,6 +6124,330 @@ router.route("/migrate_content_links").put(async (req, res) => {
   } catch (error) {
     console.error("Migration failed:", error);
     res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/fetch_stripe_data").put(async (req, res) => {
+  const startDate = Math.floor(new Date("2024-05-01").getTime() / 1000);
+  let allCharges = [];
+  let hasMore = true;
+  let lastObject = null;
+
+  try {
+    while (hasMore) {
+      const params = {
+        created: { gte: startDate },
+        expand: ["data.customer", "data.invoice", "data.payment_intent"],
+        limit: 100,
+      };
+
+      if (lastObject) {
+        params.starting_after = lastObject;
+      }
+
+      const chargeList = await stripe.charges.list(params);
+
+      allCharges = allCharges.concat(chargeList.data);
+      hasMore = chargeList.has_more;
+
+      if (hasMore) {
+        lastObject = chargeList.data[chargeList.data.length - 1].id;
+      }
+
+      console.log(`Retrieved ${allCharges.length} charges so far...`);
+    }
+
+    await fs.writeFile("stripe_full_data.json", JSON.stringify(allCharges, null, 2));
+    console.log(`Retrieved a total of ${allCharges.length} charge objects from Stripe.`);
+
+    res.status(200).json({
+      message: `Retrieved ${allCharges.length} charge objects from Stripe.`,
+      charges: allCharges,
+    });
+  } catch (error) {
+    console.error("Error fetching data from Stripe:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+const easy_post_api = require("@easypost/api");
+const EasyPost = new easy_post_api(config.EASY_POST);
+
+router.route("/fetch_easypost_data").put(async (req, res) => {
+  const startDate = new Date("2024-05-01T00:00:00Z");
+  const endDate = new Date();
+  let allShipments = [];
+
+  try {
+    let params = {
+      page_size: 100,
+      start_datetime: startDate.toISOString(),
+      end_datetime: endDate.toISOString(),
+      purchased: true,
+      include_children: false,
+    };
+
+    let currentPage = await EasyPost.Shipment.all(params);
+    allShipments = allShipments.concat(currentPage.shipments);
+    console.log(`Retrieved ${allShipments.length} shipments so far...`);
+    console.log({ hasMore: currentPage.hasMore });
+    while (currentPage.has_more) {
+      currentPage = await EasyPost.Shipment.getNextPage(currentPage);
+      allShipments = allShipments.concat(currentPage.shipments);
+      console.log(`Retrieved ${allShipments.length} shipments so far...`);
+    }
+
+    await fs.writeFile("easypost_full_data.json", JSON.stringify(allShipments, null, 2));
+    console.log(`Retrieved a total of ${allShipments.length} shipment objects from EasyPost.`);
+
+    res.status(200).json({
+      message: `Retrieved ${allShipments.length} shipment objects from EasyPost.`,
+      shipments: allShipments,
+    });
+  } catch (error) {
+    console.error("Error fetching data from EasyPost:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+function extractShippingAddress(html) {
+  console.log({ html });
+  // Remove HTML tags and trim whitespace
+  const cleanText = html
+    ?.replace(/<[^>]*>/g, "\n")
+    ?.replace(/=20/g, "")
+    ?.split("\n")
+    .map(line => line?.trim())
+    .filter(line => line.length > 0);
+  // Extract information
+  const [firstName, lastName, address1, address2, cityWithComma, state, zipCountry] = cleanText;
+
+  // Process city (remove trailing comma)
+  const city = cityWithComma ? cityWithComma?.replace(/,\s*$/, "") : "";
+
+  // Process zip and country
+  const [postalCode, country] = zipCountry ? zipCountry.split(" ") : ["", ""];
+
+  return {
+    shippingFirstName: firstName || "",
+    shippingLastName: lastName || "",
+    address1: address1 || "",
+    address2: address2 === "=09" ? "" : address2 || "",
+    city: city,
+    state: state || "",
+    postalCode: postalCode || "",
+    country: country || "",
+  };
+}
+
+function extractLast4Digits(str) {
+  const match = str.match(/(\d{4})\s*$/);
+  return match ? match[1] : null;
+}
+
+async function parseOrderEmail(filePath) {
+  const content = await fs.readFile(filePath, "utf-8");
+  const $ = cheerio.load(content);
+
+  const orderNumberElement = $('strong:contains("Order #:")').parent();
+  const orderNumberText = orderNumberElement.text().trim();
+  const orderNumber = orderNumberText.split(":")[1]?.trim().split("<")[0].trim() || "";
+  const dateMatch = content.match(/Date:\s*(.*)/);
+  const orderDate = dateMatch ? new Date(dateMatch[1]).toISOString() : null;
+  // console.log({ orderDate });
+
+  const customerFirstName = $("h1").first().text().trim().split(",")[0];
+  // console.log({ customerFirstName });
+  const toMatch = content.match(/To:\s*(.*)/);
+  const email = toMatch ? toMatch[1].trim() : null;
+  // console.log({ email });
+
+  const shippingDetailsHtml = $('h4:contains("Shipping:")').parent().next().find("p").first().html();
+  // console.log({ shippingDetailsHtml: shippingDetailsHtml.replace(/<[^>]*>/g, "").trim() });
+  let shippingAddress = null;
+  if (shippingDetailsHtml) {
+    shippingAddress = extractShippingAddress(shippingDetailsHtml);
+    // console.log({ result });
+  }
+
+  const paymentMethod = $('h4:contains("Payment:")').parent().next().text();
+  // const last4 = paymentMethod.match(/ending with (\d{4})/)?.[1];
+  const last4 = extractLast4Digits(paymentMethod);
+  console.log({ last4 });
+
+  // const orderItems = [];
+  // $('table[style*="border-bottom: 1px white solid"] tbody tr').each((i, elem) => {
+  //   const itemText = $(elem).find('span[style*="font-size:16px;font-weight:600"]').text().trim();
+  //   const price = $(elem).find('p[style*="color:white;line-height:150%"] label').text().trim();
+  //   if (itemText && price) {
+  //     const [quantity, ...nameParts] = itemText.split(/\s+/);
+  //     const name = nameParts
+  //       .join(" ")
+  //       .replace(/\s+- [^-]+$/, "")
+  //       .trim();
+  //     const selectedOptions = [];
+  //     $(elem)
+  //       .find(
+  //         'span[style*="display: inline-block;padding: 4px 8px;margin: 2px;border-radius: 16px;font-size: 12px;font-weight: 500;"]'
+  //       )
+  //       .each((i, optionElem) => {
+  //         const [optionName, optionValue] = $(optionElem)
+  //           .text()
+  //           .split(":")
+  //           .map(s => s.trim());
+  //         selectedOptions.push({ name: optionName, value: optionValue });
+  //       });
+  //     orderItems.push({
+  //       quantity: parseInt(quantity) || 1,
+  //       name,
+  //       selectedOptions,
+  //       price: parseFloat(price.replace("$", "")),
+  //     });
+  //   }
+  // });
+
+  // const subtotal = parseFloat($('span:contains("Subtotal")').parent().next().find("strong").text().replace("$", ""));
+  // const taxPrice = parseFloat($('span:contains("Taxes")').parent().next().find("strong").text().replace("$", ""));
+  // const shippingPrice = parseFloat(
+  //   $('span:contains("Shipping")').parent().next().find("strong").text().replace("$", "")
+  // );
+  // const totalPrice = parseFloat($('span:contains("Total")').parent().next().find("strong").text().replace("$", ""));
+
+  // const orderNote = $('strong:contains("Order Note:")').parent().text().replace("Order Note:", "").trim();
+
+  // return {
+  //   orderNumber,
+  //   orderDate,
+  //   customerFirstName,
+  //   email,
+  //   shipping: {
+  //     first_name: shippingAddress.shippingFirstName,
+  //     last_name: shippingAddress.shippingLastName,
+  //     address_1: shippingAddress.address1,
+  //     city: shippingAddress.city,
+  //     state: shippingAddress.state,
+  //     postalCode: shippingAddress.postalCode,
+  //     country: shippingAddress.country,
+  //   },
+  //   payment: {
+  //     paymentMethod: {},
+  //     last4,
+  //   },
+  //   orderItems,
+  //   itemsPrice: subtotal,
+  //   taxPrice,
+  //   shippingPrice,
+  //   totalPrice,
+  //   order_note: orderNote,
+  // };
+}
+
+router.put("/restore_orders", async (req, res) => {
+  try {
+    const emailDir = path.join(process.cwd(), "server", "api", "zOrdersRestore", "order_emails");
+    const files = await fs.readdir(emailDir);
+
+    const filteredFiles = files.filter(file => file.includes("Thank you for your Glow LEDs Order"));
+
+    const restoredOrders = [];
+    const skippedOrders = [];
+
+    for (const file of filteredFiles) {
+      if (path.extname(file).toLowerCase() === ".eml") {
+        const filePath = path.join(emailDir, file);
+        const orderData = await parseOrderEmail(filePath);
+        // console.log({ orderData });
+
+        // const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
+        // if (existingOrder) {
+        //   skippedOrders.push({
+        //     email: orderData.email,
+        //     orderNumber: orderData.orderNumber,
+        //     reason: "Order already exists",
+        //   });
+        //   continue;
+        // }
+
+        // const user = await User.findOne({ email: orderData.email });
+
+        // if (user) {
+        //   const orderItems = await Promise.all(
+        //     orderData.orderItems.map(async item => {
+        //       const product = await Product.findOne({ name: item.name });
+        //       return {
+        //         ...item,
+        //         product: product ? product._id : null,
+        //         name: item.name,
+        //         price: item.price / item.quantity,
+        //         category: product?.category,
+        //         subcategory: product?.subcategory,
+        //         product_collection: product?.product_collection,
+        //         display_image: product?.images[0],
+        //         display_image_object: product?.images[0],
+        //         quantity: item.quantity,
+        //         max_display_quantity: product?.max_display_quantity,
+        //         max_quantity: product?.max_quantity,
+        //         count_in_stock: product?.count_in_stock,
+        //         currentOptions: product?.options,
+        //         selectedOptions: item.selectedOptions.map(option => ({
+        //           name: option.name,
+        //           value: option.value,
+        //           // You might need to find the actual optionValue object here
+        //         })),
+        //         tags: product?.tags,
+        //         pathname: product?.pathname,
+        //         sale_price: product?.sale?.price,
+        //         sale_start_date: product?.sale?.start_date,
+        //         sale_end_date: product?.sale?.end_date,
+        //         dimensions: product?.dimensions,
+        //         processing_time: product?.meta_data?.processing_time,
+        //         finite_stock: product?.finite_stock,
+        //         wholesale_product: product?.wholesale_product,
+        //         wholesale_price: product?.wholesale_price,
+        //         itemType: "product", // Assuming all items are products, not tickets
+        //       };
+        //     })
+        //   );
+
+        //   const order = new Order({
+        //     _id: orderData.orderNumber,
+        //     user: user._id,
+        //     orderItems,
+        //     shipping: orderData.shipping,
+        //     payment: {
+        //       paymentMethod: orderData.payment.paymentMethod,
+        //       payment: { card: { last4: orderData.payment.last4 } },
+        //     },
+        //     itemsPrice: orderData.itemsPrice,
+        //     taxPrice: orderData.taxPrice,
+        //     shippingPrice: orderData.shippingPrice,
+        //     totalPrice: orderData.totalPrice,
+        //     order_note: orderData.order_note,
+        //     paidAt: orderData.orderDate,
+        //     status: "delivered",
+        //     deliveredAt: orderData.orderDate,
+        //   });
+
+        //   await order.save();
+        //   restoredOrders.push(order);
+        // } else {
+        //   skippedOrders.push({
+        //     email: orderData.email,
+        //     orderNumber: orderData.orderNumber,
+        //     reason: "User not found",
+        //   });
+        // }
+      }
+    }
+
+    res.status(200).json({
+      message: `Restored ${restoredOrders.length} orders. Skipped ${skippedOrders.length} orders.`,
+      restoredOrders,
+      skippedOrders,
+    });
+  } catch (error) {
+    console.error("Error restoring orders:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
