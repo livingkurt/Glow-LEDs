@@ -73,7 +73,6 @@ export const saveTeam = createAsyncThunk(
 export const detailsTeam = createAsyncThunk(
   "teams/detailsTeam",
   async ({ pathname, id, affiliateId }, { dispatch, rejectWithValue }) => {
-    console.log({ pathname, id, affiliateId });
     try {
       if (id) {
         const { data } = await axios.get(`/api/teams/${id}`);
