@@ -14,10 +14,10 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
   icon: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing,
   },
   popper: {
-    zIndex: theme.zIndex.tooltip,
+    zIndex: 1500,
   },
   paper: {
     padding: 0,
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   listItemIcon: {
     minWidth: "auto",
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing,
   },
   list: {
     paddingTop: 0,

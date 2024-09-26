@@ -10,7 +10,7 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: theme.spacing(1),
+          padding: theme.spacing,
           cursor: "pointer",
           borderRadius: hasColumnRows ? "10px 0px 0px 10px" : "10px",
           transition: "box-shadow 0.3s, transform 0.3s",

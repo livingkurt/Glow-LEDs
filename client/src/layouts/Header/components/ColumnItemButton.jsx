@@ -11,7 +11,7 @@ const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColu
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: theme.spacing(1),
+          padding: theme.spacing,
           cursor: "pointer",
           transition: "background-color 0.3s",
           borderRadius: hasColumnRows ? "10px 0px 0px 10px" : "10px",
@@ -41,7 +41,7 @@ const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColu
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: theme.spacing(1),
+          padding: theme.spacing,
           cursor: "pointer",
           transition: "background-color 0.3s",
           borderRadius: hasColumnRows ? "10px 0px 0px 10px" : "10px",

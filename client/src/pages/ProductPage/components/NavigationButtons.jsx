@@ -9,7 +9,7 @@ const NavigationButtons = ({ primary_color }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+    padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
     cursor: "pointer",
     transition: "background-color 0.3s, border-color 0.3s",
     borderBottom: "2px solid transparent",

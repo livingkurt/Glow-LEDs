@@ -105,7 +105,7 @@ const Header = () => {
     <AppBar position="sticky" sx={{ bgcolor: "#333333" }} elevation={5}>
       <Environment />
       <Banner />
-      <Toolbar sx={{ padding: theme.spacing(1, 2) }}>
+      <Toolbar sx={{ padding: `${theme.spacing * 2}px ${theme.spacing}px` }}>
         <Container
           disableGutters
           maxWidth="xl"

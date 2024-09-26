@@ -44,12 +44,12 @@ const TextOverlay = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: theme.spacing(2), // Default padding for extra small screens
+  padding: theme.spacing * 2, // Default padding for extra small screens
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(4),
+    padding: theme.spacing * 4,
   },
   [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(5),
+    padding: theme.spacing * 5,
   },
   [theme.breakpoints.up("lg")]: {
     padding: "7rem",

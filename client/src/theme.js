@@ -312,55 +312,43 @@ const shadows = [
 
 const theme = {
   breakpoints: {
-    keys: ["xs", "sm", "md", "lg", "xl"],
     values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1500 },
   },
   direction: "ltr",
-  mixins: {},
-  overrides: {
+  components: {
     MuiCssBaseline: {
-      "@global": {
+      styleOverrides: {
         html: {
           WebkitFontSmoothing: "auto",
         },
       },
     },
-    MuiTextField: {
-      root: {
-        "& MuiOutlinedInput": {
-          color: "white",
-          border: "1px solid white",
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: '"Comic Sans", sans-serif',
+          borderRadius: "20px",
+          "&:hover": {
+            borderRadius: "30px",
+          },
+          "&:active": {
+            borderRadius: "30px",
+          },
         },
       },
     },
-    MuiButton: {
-      label: {
-        fontFamily: '"Comic Sans", sans-serif',
-      },
-      borderRadius: "20px",
-      "&:hover": {
-        borderRadius: "30px",
-      },
-      "&:active": {
-        borderRadius: "30px",
-      },
-    },
-  },
-  palette,
-  props: {},
-  components: {
     MuiDrawer: {
       styleOverrides: {
         paper: {
           transitionDuration: "3s",
-          transitionTimingFunction: "ease-in-out", // Add your easing function here
+          transitionTimingFunction: "ease-in-out",
         },
       },
     },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          fontSize: "20px", // Set the default icon size here
+          fontSize: "20px",
           "&.MuiSvgIcon-colorWhite": {
             color: palette.custom.white,
           },
@@ -371,7 +359,7 @@ const theme = {
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: "#393e55", // Lighter background color on hover
+            backgroundColor: "#393e55",
           },
         },
       },
@@ -399,20 +387,19 @@ const theme = {
         root: {
           "& .MuiOutlinedInput-root": {
             borderRadius: "10px",
-            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);",
+            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)",
           },
           "& .MuiFilledInput-root": {
             borderRadius: "10px",
-            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);",
+            boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)",
           },
         },
       },
     },
-
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);",
+          boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)",
         },
       },
     },
@@ -428,17 +415,16 @@ const theme = {
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          fontSize: "1.2rem", // Set the font size you desire here
+          fontSize: "1.2rem",
           lineHeight: "1.5",
         },
       },
     },
   },
+  palette,
   shadows,
   typography,
-  // ...table,
   shape: { borderRadius: 4 },
-  // spacing: [0,4,8,16,32,64],
   transitions: {
     easing: {
       easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -465,8 +451,6 @@ const theme = {
     snackbar: 1400,
     tooltip: 1500,
   },
-  nprogress: { color: "#000" },
-  themeName: "Glow LEDs",
 };
 
 export default theme;

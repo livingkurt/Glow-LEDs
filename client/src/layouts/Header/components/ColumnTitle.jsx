@@ -8,7 +8,7 @@ const ColumnTitle = ({ align, ariaLabel, children, onClick, sx, hasColumnRows, .
       sx={{
         display: "flex",
         alignItems: "center",
-        padding: theme.spacing(1),
+        padding: theme.spacing,
         borderRadius: hasColumnRows ? "10px 0px 0px 10px" : "10px",
         ...sx,
       }}
