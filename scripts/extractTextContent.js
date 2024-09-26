@@ -1,194 +1,5 @@
 const { JSDOM } = require("jsdom");
 
-// const html = `<table
-// style=3D"max-width:560px;padding:10px;text-align:left;border-spac=
-// ing:0;margin:0 auto;width:100%; ">
-// <tr>
-//   <td =
-// style=3D"font-family:helvetica">
-//     <table =
-// style=3D"width:100%;border-spacing:0;">
-//       <tbody>
-//         <tr>
-//           <td style=3D'font-family: helvetica;'>
-//             <table style=3D'
-//                     width: 100%;
-//                     border-spacing: 0;
-//                     border-bottom: =
-// 1px white solid;'>
-//               <tbody>
-//                 <tr =
-// style=3D'width: 100%'>
-//                   <td style=3D'font-family: =
-// helvetica'>
-//                     <table style=3D'border-spacing: 0px; width:=
-// 100%; margin: 10px auto;'>
-//                       <tbody>
-//                         <tr>
-//                           <td style=3D'font-family:=
-// helvetica;'>
-//                             <div style=3D'margin-bottom: 10px; =
-// margin-right: 10px;'>
-//                               <img src=3Dhttps://thumbs2.=
-// imgbox.com/10/ec/IZYEd3it_t.jpg alt=3DOPYN Batman Decals width=3D"60"
-//                                 height=3D"60" style=3D'border-radius:8px;' =
-// title=3D"Product Image" />
-//                             =09
-//                               <div />
-//                             </div>
-//                           </td>
-//                           <td =
-// style=3D'font-family:helvetica;width:100%;'>
-//                             <span
-//                               style=3D'font-size:16px;font-weight:600;line-heigh=
-// t:1.4;color:white;'>
-//                               <div>
-// OPYN Batman Decals=20
-// =20
-// - OPYN Nanoskinz V2=20
-// </div>
-//                             </span>
-//                             <br />
-//                           </td>
-//                           <td =
-// style=3D'font-family:helvetica;width:100%;white-space:nowrap;'>
-//                             <p style=3D'color:white;line-height:150%;font-size:=
-// 16px;font-weight:600;margin:0 0 0 15px;'
-//                               =
-// align=3D"right">
-//                               <label>
-// $7.99
-// </label>
-//                             </p>
-//                           </td>
-//                         </tr>
-//                       </tbody>
-//                     </table>
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             </table>
-//           </td>
-//         </tr><tr>
-//           <td =
-// style=3D'font-family: helvetica;'>
-//             <table style=3D'
-//                     width: 100%;
-//                     border-spacing: 0;
-//                     border-bottom: 1px white solid;'>
-//               <tbody>
-//                 <tr style=3D'width: 100%'>
-//                   <td style=3D'font-family: helvetica'>
-//                     <table style=3D'border-spacing: 0px; width: 100%; =
-// margin: 10px auto;'>
-//                       <tbody>
-//                         =
-// <tr>
-//                           <td style=3D'font-family: helvetica;'>
-//                             <div style=3D'margin-bottom: 10px; margin-right: =
-// 10px;'>
-//                               <img src=3Dhttps://thumbs2.imgbox.=
-// com/72/18/yHpXwBIq_b.jpg alt=3DMini Flashtip Diffusers width=3D"60"
-//                                 height=3D"60" style=3D'border-radius:8px;' =
-// title=3D"Product Image" />
-//                             =09
-//                               <div />
-//                             </div>
-//                           </td>
-//                           <td =
-// style=3D'font-family:helvetica;width:100%;'>
-//                             <span
-//                               style=3D'font-size:16px;font-weight:600;line-heigh=
-// t:1.4;color:white;'>
-//                               <div>
-// Frosted  Mini Flashtip Diffusers  - Classic
-// Style
-// =20
-// </div>
-//                             </span>
-//                             <br />
-//                           </td>
-//                           <td =
-// style=3D'font-family:helvetica;width:100%;white-space:nowrap;'>
-//                             <p style=3D'color:white;line-height:150%;font-size:=
-// 16px;font-weight:600;margin:0 0 0 15px;'
-//                               =
-// align=3D"right">
-//                               <label>
-// $11.99
-// </label>
-//                             </p>
-//                           </td>
-//                         </tr>
-//                       </tbody>
-//                     </table>
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             </table>
-//           </td>
-//         </tr><tr>
-//           <td =
-// style=3D'font-family: helvetica;'>
-//             <table style=3D'
-//                     width: 100%;
-//                     border-spacing: 0;
-//                     border-bottom: 1px white solid;'>
-//               <tbody>
-//                 <tr style=3D'width: 100%'>
-//                   <td style=3D'font-family: helvetica'>
-//                     <table style=3D'border-spacing: 0px; width: 100%; =
-// margin: 10px auto;'>
-//                       <tbody>
-//                         =
-// <tr>
-//                           <td style=3D'font-family: helvetica;'>
-//                             <div style=3D'margin-bottom: 10px; margin-right: =
-// 10px;'>
-//                               <img src=3Dhttps://images2.imgbox.=
-// com/65/6d/7XQ4sCYh_o.jpeg alt=3DSupreme V2 Refresh Pack (6 Pairs Supreme =
-// Gloves V2 + 120 Batteries) width=3D"60"
-//                                 =
-// height=3D"60" style=3D'border-radius:8px;' title=3D"Product Image" />
-//                             =09
-//                               <div />
-//                             </div>
-//                           </td>
-//                           <td style=3D'font-family:helvetica;width:100%;'>
-//                             <span
-//                               =
-// style=3D'font-size:16px;font-weight:600;line-height:1.4;color:white;'>
-//                               <div>
-// Red  Supreme V2 Refresh Pack (6 Pairs=
-// Supreme Gloves V2 + 120 Batteries)  - L
-// =20
-// - CR1620=20
-// </div>
-//                             </span>
-//                             <br />
-//                           </td>
-//                           <td =
-// style=3D'font-family:helvetica;width:100%;white-space:nowrap;'>
-//                             <p style=3D'color:white;line-height:150%;font-size:=
-// 16px;font-weight:600;margin:0 0 0 15px;'
-//                               =
-// align=3D"right">
-//                               <label>
-// $34.99
-// </label>
-//                             </p>
-//                           </td>
-//                         </tr>
-//                       </tbody>
-//                     </table>
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             </table>
-//           </td>
-//         </tr>
-//       </tbody>
-//     </table>`;
 const html = `								<table
 										style=3D"max-width:560px;padding:10px;text-align:left;border-spac=
 ing:0;margin:0 auto;width:100%; ">
@@ -757,8 +568,21 @@ e-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
 												</table>
 												<table style=3D"width:100%;border-spacing:=`;
 
+// Function to decode quoted-printable encoding
+function decodeQuotedPrintable(str) {
+  return str
+    .replace(/=\r\n/g, "") // Remove soft line breaks (Windows)
+    .replace(/=\n/g, "") // Remove soft line breaks (Unix)
+    .replace(/=([0-9A-F]{2})/gi, (match, hex) => {
+      return String.fromCharCode(parseInt(hex, 16));
+    });
+}
+
 const extractProductInfo = html => {
-  const dom = new JSDOM(html);
+  // Decode the HTML
+  const decodedHTML = decodeQuotedPrintable(html);
+
+  const dom = new JSDOM(decodedHTML);
   const document = dom.window.document;
 
   const products = [];
@@ -771,11 +595,18 @@ const extractProductInfo = html => {
     const priceElement = row.querySelector("label");
 
     if (nameElement && priceElement) {
-      const name = nameElement.textContent.trim().replace(/=20/g, "").replace(/\s+/g, " ");
+      const name = nameElement.textContent.trim().replace(/\s+/g, " ");
       const price = parseFloat(priceElement.textContent.trim().replace("$", ""));
 
-      const optionsElements = row.querySelectorAll('span[style*="display: inline-block"]');
-      const selectedOptions = Array.from(optionsElements).map(opt => opt.textContent.trim());
+      const optionsElements = row.querySelectorAll('div[style*="font-size:25px"] span[style*="display: inline-block"]');
+
+      const selectedOptions = Array.from(optionsElements)
+        .map(opt => {
+          let optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
+          const [option, value] = optionText.split(":").map(s => s.trim());
+          return { option, value };
+        })
+        .filter(option => option.option && option.value); // Filter out any invalid options
 
       products.push({
         quantity: 1,
@@ -793,8 +624,10 @@ const removeDuplicatesAndCombineQuantities = products => {
   const productMap = new Map();
 
   products.forEach(product => {
-    const key = `${product.name}-${product.price}-${product.selectedOptions.join(",")}`;
-    if (!productMap.has(key)) {
+    const key = `${product.name}-${product.price}-${JSON.stringify(product.selectedOptions)}`;
+    if (productMap.has(key)) {
+      productMap.get(key).quantity += product.quantity;
+    } else {
       productMap.set(key, { ...product });
     }
   });

@@ -6225,87 +6225,95 @@ router.put("/restore_orders", async (req, res) => {
       if (path.extname(file).toLowerCase() === ".eml") {
         const filePath = path.join(emailDir, file);
         const orderData = await parseOrderEmail(filePath);
+        if (!orderData.orderNumber) {
+          skippedOrders.push({
+            email: orderData.email,
+            orderNumber: orderData?.orderNumber,
+            reason: "Order data not found",
+          });
+          continue;
+        }
         // console.log({ orderData });
 
-        // const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
-        // if (existingOrder) {
-        //   skippedOrders.push({
-        //     email: orderData.email,
-        //     orderNumber: orderData.orderNumber,
-        //     reason: "Order already exists",
-        //   });
-        //   continue;
-        // }
+        const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
+        if (existingOrder) {
+          skippedOrders.push({
+            email: orderData.email,
+            orderNumber: orderData.orderNumber,
+            reason: "Order already exists",
+          });
+          continue;
+        }
 
-        // const user = await User.findOne({ email: orderData.email });
+        const user = await User.findOne({ email: orderData.email });
 
-        // if (user) {
-        //   const orderItems = await Promise.all(
-        //     orderData.orderItems.map(async item => {
-        //       const product = await Product.findOne({ name: item.name });
-        //       return {
-        //         ...item,
-        //         product: product ? product._id : null,
-        //         name: item.name,
-        //         price: item.price / item.quantity,
-        //         category: product?.category,
-        //         subcategory: product?.subcategory,
-        //         product_collection: product?.product_collection,
-        //         display_image: product?.images[0],
-        //         display_image_object: product?.images[0],
-        //         quantity: item.quantity,
-        //         max_display_quantity: product?.max_display_quantity,
-        //         max_quantity: product?.max_quantity,
-        //         count_in_stock: product?.count_in_stock,
-        //         currentOptions: product?.options,
-        //         selectedOptions: item.selectedOptions.map(option => ({
-        //           name: option.name,
-        //           value: option.value,
-        //           // You might need to find the actual optionValue object here
-        //         })),
-        //         tags: product?.tags,
-        //         pathname: product?.pathname,
-        //         sale_price: product?.sale?.price,
-        //         sale_start_date: product?.sale?.start_date,
-        //         sale_end_date: product?.sale?.end_date,
-        //         dimensions: product?.dimensions,
-        //         processing_time: product?.meta_data?.processing_time,
-        //         finite_stock: product?.finite_stock,
-        //         wholesale_product: product?.wholesale_product,
-        //         wholesale_price: product?.wholesale_price,
-        //         itemType: "product", // Assuming all items are products, not tickets
-        //       };
-        //     })
-        //   );
+        if (user) {
+          const orderItems = await Promise.all(
+            orderData.orderItems.map(async item => {
+              const product = await Product.findOne({ name: item.name });
+              return {
+                ...item,
+                product: product ? product._id : null,
+                name: item.name,
+                price: item.price / item.quantity,
+                category: product?.category,
+                subcategory: product?.subcategory,
+                product_collection: product?.product_collection,
+                display_image: product?.images[0],
+                display_image_object: product?.images[0],
+                quantity: item.quantity,
+                max_display_quantity: product?.max_display_quantity,
+                max_quantity: product?.max_quantity,
+                count_in_stock: product?.count_in_stock,
+                currentOptions: product?.options,
+                selectedOptions: item.selectedOptions.map(option => ({
+                  name: option.name,
+                  value: option.value,
+                  // You might need to find the actual optionValue object here
+                })),
+                tags: product?.tags,
+                pathname: product?.pathname,
+                sale_price: product?.sale?.price,
+                sale_start_date: product?.sale?.start_date,
+                sale_end_date: product?.sale?.end_date,
+                dimensions: product?.dimensions,
+                processing_time: product?.meta_data?.processing_time,
+                finite_stock: product?.finite_stock,
+                wholesale_product: product?.wholesale_product,
+                wholesale_price: product?.wholesale_price,
+                itemType: "product", // Assuming all items are products, not tickets
+              };
+            })
+          );
 
-        //   const order = new Order({
-        //     _id: orderData.orderNumber,
-        //     user: user._id,
-        //     orderItems,
-        //     shipping: orderData.shipping,
-        //     payment: {
-        //       paymentMethod: orderData.payment.paymentMethod,
-        //       payment: { card: { last4: orderData.payment.last4 } },
-        //     },
-        //     itemsPrice: orderData.itemsPrice,
-        //     taxPrice: orderData.taxPrice,
-        //     shippingPrice: orderData.shippingPrice,
-        //     totalPrice: orderData.totalPrice,
-        //     order_note: orderData.order_note,
-        //     paidAt: orderData.orderDate,
-        //     status: "delivered",
-        //     deliveredAt: orderData.orderDate,
-        //   });
+          const order = new Order({
+            _id: orderData.orderNumber,
+            user: user._id,
+            orderItems,
+            shipping: orderData.shipping,
+            payment: {
+              paymentMethod: orderData.payment.paymentMethod,
+              payment: { card: { last4: orderData.payment.last4 } },
+            },
+            itemsPrice: orderData.itemsPrice,
+            taxPrice: orderData.taxPrice,
+            shippingPrice: orderData.shippingPrice,
+            totalPrice: orderData.totalPrice,
+            order_note: orderData.order_note,
+            paidAt: orderData.orderDate,
+            status: "delivered",
+            deliveredAt: orderData.orderDate,
+          });
 
-        //   await order.save();
-        //   restoredOrders.push(order);
-        // } else {
-        //   skippedOrders.push({
-        //     email: orderData.email,
-        //     orderNumber: orderData.orderNumber,
-        //     reason: "User not found",
-        //   });
-        // }
+          await order.save();
+          restoredOrders.push(order);
+        } else {
+          skippedOrders.push({
+            email: orderData.email,
+            orderNumber: orderData.orderNumber,
+            reason: "User not found",
+          });
+        }
       }
     }
 

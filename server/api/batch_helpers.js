@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import { JSDOM } from "jsdom";
 import * as cheerio from "cheerio";
+import { toCapitalize } from "../utils/util";
 
 export const extractShippingAddress = html => {
   // Remove HTML tags and trim whitespace
@@ -62,8 +63,20 @@ export const extractDiscountInfo = $ => {
   return { code: "", amount: 0 };
 };
 
+function decodeQuotedPrintable(str) {
+  return str
+    .replace(/=\r\n/g, "") // Remove soft line breaks (Windows)
+    .replace(/=\n/g, "") // Remove soft line breaks (Unix)
+    .replace(/=([0-9A-F]{2})/gi, (match, hex) => {
+      return String.fromCharCode(parseInt(hex, 16));
+    });
+}
+
 const extractProductInfo = html => {
-  const dom = new JSDOM(html);
+  // Decode the HTML
+  const decodedHTML = decodeQuotedPrintable(html);
+
+  const dom = new JSDOM(decodedHTML);
   const document = dom.window.document;
 
   const products = [];
@@ -76,11 +89,18 @@ const extractProductInfo = html => {
     const priceElement = row.querySelector("label");
 
     if (nameElement && priceElement) {
-      const name = nameElement.textContent.trim().replace(/=20/g, "").replace(/\s+/g, " ");
+      const name = nameElement.textContent.trim().replace(/\s+/g, " ");
       const price = parseFloat(priceElement.textContent.trim().replace("$", ""));
 
-      const optionsElements = row.querySelectorAll('span[style*="display: inline-block"]');
-      const selectedOptions = Array.from(optionsElements).map(opt => opt.textContent.trim());
+      const optionsElements = row.querySelectorAll('div[style*="font-size:25px"] span[style*="display: inline-block"]');
+
+      const selectedOptions = Array.from(optionsElements)
+        .map(opt => {
+          let optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
+          const [option, value] = optionText.split(":").map(s => s.trim());
+          return { option, value };
+        })
+        .filter(option => option.option && option.value); // Filter out any invalid options
 
       products.push({
         quantity: 1,
@@ -105,60 +125,6 @@ const removeDuplicates = products => {
   });
 
   return Array.from(productMap.values());
-};
-
-export const parseOrderItems = $ => {
-  const orderItems = new Map(); // Use a Map to avoid duplicates
-
-  $("table").each((i, table) => {
-    const $table = $(table);
-
-    const itemText = $table.find('span[style*="font-size:16px;font-weight:600"]').text().trim();
-    const price = $table.find('p[style*="color:white;line-height:150%"] label').text().trim();
-
-    if (itemText && price) {
-      // console.log("Found item:", itemText, price);
-
-      // Extract quantity if present (assuming it's the first number in the item text)
-      const quantityMatch = itemText.match(/^(\d+)x?\s/);
-      const quantity = quantityMatch ? parseInt(quantityMatch[1]) : 1;
-
-      // Remove quantity from the name if present
-      let name = itemText
-        .replace(/^\d+x?\s/, "")
-        .replace(/\s+/g, " ")
-        .trim();
-
-      // Remove any trailing '=20' or similar
-      name = name.replace(/\s*=\d+\s*$/, "");
-
-      const selectedOptions = [];
-
-      // Parse option chips (if any)
-      $table.find('span[style*="display: inline-block"][style*="padding: 4px 8px"]').each((i, elem) => {
-        const optionText = $(elem).text().trim();
-        const [optionName, optionValue] = optionText.split(":").map(s => s.trim());
-        if (optionName && optionValue) {
-          selectedOptions.push({ name: optionName, value: optionValue });
-        }
-      });
-
-      // Use the name and price as a unique key to avoid duplicates
-      const key = `${name}-${price}`;
-      if (!orderItems.has(key)) {
-        orderItems.set(key, {
-          quantity,
-          name: name.trim(),
-          selectedOptions,
-          price: parseFloat(price.replace("$", "")),
-        });
-      }
-    }
-  });
-
-  const result = Array.from(orderItems.values());
-  console.log("Total unique items found:", result.length);
-  return result;
 };
 
 export const parseOrderEmail = async filePath => {
@@ -192,9 +158,8 @@ export const parseOrderEmail = async filePath => {
   // console.log({ last4 });
 
   const dupOrderItems = extractProductInfo(content);
-  console.log({ dupOrderItems });
   const orderItems = removeDuplicates(dupOrderItems);
-  console.log({ orderItems });
+  // console.log({ orderItems });
 
   const subtotal = extractPrice('span:contains("Subtotal")', $) || extractPrice('span:contains("New Subtotal")', $);
   const taxPrice = extractPrice('span:contains("Taxes")', $);
@@ -205,41 +170,48 @@ export const parseOrderEmail = async filePath => {
 
   const orderNote = $('strong:contains("Order Note:")').parent().text().replace("Order Note:", "").trim();
 
-  // console.log({
-  //   subtotal,
-  //   taxPrice,
-  //   shippingPrice,
-  //   totalPrice,
-  //   discount: {
-  //     code: discountCode,
-  //     amount: discountAmount,
-  //   },
-  //   orderNote,
-  // });
-
-  // return {
-  //   orderNumber,
-  //   orderDate,
-  //   customerFirstName,
-  //   email,
-  //   shipping: {
-  //     first_name: shippingAddress.shippingFirstName,
-  //     last_name: shippingAddress.shippingLastName,
-  //     address_1: shippingAddress.address1,
-  //     city: shippingAddress.city,
-  //     state: shippingAddress.state,
-  //     postalCode: shippingAddress.postalCode,
-  //     country: shippingAddress.country,
-  //   },
-  //   payment: {
-  //     paymentMethod: {},
-  //     last4,
-  //   },
-  //   orderItems,
-  //   itemsPrice: subtotal,
-  //   taxPrice,
-  //   shippingPrice,
-  //   totalPrice,
-  //   order_note: orderNote,
-  // };
+  console.log({
+    orderNumber,
+    createdAt: orderDate,
+    email,
+    shippingAddress,
+    payment: {
+      paymentMethod: {},
+      last4,
+    },
+    promo_code: discountCode,
+    promo_amount: discountAmount,
+    orderItems,
+    itemsPrice: subtotal,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+    order_note: orderNote,
+  });
+  return {
+    orderNumber,
+    createdAt: orderDate,
+    email,
+    shipping: {
+      first_name: shippingAddress?.shippingFirstName || toCapitalize(customerFirstName),
+      last_name: shippingAddress?.shippingLastName,
+      address_1: shippingAddress?.address1,
+      city: shippingAddress?.city,
+      state: shippingAddress?.state,
+      postalCode: shippingAddress?.postalCode,
+      country: shippingAddress?.country,
+    },
+    payment: {
+      paymentMethod: {},
+      last4,
+    },
+    promo_code: discountCode,
+    promo_amount: discountAmount,
+    orderItems,
+    itemsPrice: subtotal,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+    order_note: orderNote,
+  };
 };
