@@ -2,10 +2,12 @@ import { Helmet } from "react-helmet";
 import { Container, Grid, Typography } from "@mui/material";
 import TeamCard from "./components/TeamCard";
 import { useTeamsQuery } from "../../api/allRecordsApi";
+import TeamsGridPageSkeletons from "./components/TeamGridPageSkeletons";
 
 const TeamsGridPage = () => {
   const { data: teams, isLoading } = useTeamsQuery();
-  console.log({ teams });
+
+  if (isLoading) return <TeamsGridPageSkeletons />;
 
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
@@ -20,19 +22,16 @@ const TeamsGridPage = () => {
         <meta name="twitter:description" content="Glow LEDs Glover Teams" />
       </Helmet>
 
-      <div className="jc-c">
-        <div className="row">
-          <h1>Sponsored Teams</h1>
-        </div>
-      </div>
+      <Typography variant="h4" align="center" gutterBottom>
+        Sponsored Teams
+      </Typography>
 
       <Typography variant="subtitle1" textAlign="center" gutterBottom>
         These are the teams that represent Glow LEDs. They're passionate about the art of gloving and light shows.
       </Typography>
 
       <Grid container spacing={2}>
-        {!isLoading &&
-          teams?.length > 0 &&
+        {teams?.length > 0 &&
           teams.map(
             team =>
               !team.hidden && (

@@ -28,7 +28,7 @@ const TeamCard = ({ team }) => {
         <Box
           sx={{
             position: "relative",
-            paddingTop: isMobile ? "50%" : "56.25%", // 16:9 aspect ratio
+            paddingTop: "100%", // 1:1 aspect ratio (square)
             overflow: "hidden",
             flexShrink: 0,
             width: isMobile ? "50%" : "100%",

@@ -8,7 +8,10 @@ const SponsorCard = ({ affiliate }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Link to={`/sponsors/${affiliate.pathname}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={affiliate.sponsor ? `/sponsors/${affiliate.pathname}` : ""}
+      style={{ textDecoration: "none", cursor: affiliate.sponsor ? "pointer" : "auto" }}
+    >
       <Card
         sx={{
           bgcolor: "transparent",

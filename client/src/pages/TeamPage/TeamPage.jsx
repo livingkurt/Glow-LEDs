@@ -8,19 +8,20 @@ import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage
 import EditTeamModal from "../TeamsPage/EditTeamModal";
 import { open_edit_team_modal } from "../../slices/teamSlice";
 import SponsorsCard from "../SponsorsGridPage/components/SponsorCard";
+import TeamPageSkeleton from "./components/TeamPageSkeleton";
 
 const TeamPage = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { team } = useSelector(state => state.teams.teamPage);
+  const { team, loading } = useSelector(state => state.teams.teamPage);
   const { current_user } = useSelector(state => state.users.userPage);
 
   useEffect(() => {
     dispatch(API.detailsTeam({ id: params.pathname }));
   }, [dispatch, params.pathname]);
 
-  if (!team) return null;
+  if (loading || !team) return <TeamPageSkeleton />;
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

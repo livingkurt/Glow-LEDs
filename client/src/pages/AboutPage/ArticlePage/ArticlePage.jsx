@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EditArticleModal from "../../ArticlesPage/components/EditArticleModal";
 import { open_edit_article_modal } from "../../../slices/articleSlice";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import ArticlePageSkeleton from "./components/ArticlePageSkeletons";
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
@@ -17,14 +18,16 @@ const ArticlePage = () => {
   const { current_user } = userPage;
 
   const articlePage = useSelector(state => state.articles.articlePage);
-  const { article } = articlePage;
+  const { article, loading } = articlePage;
 
   useEffect(() => {
     dispatch(detailsArticle(pathname));
   }, [dispatch, pathname]);
 
-  if (!article) {
-    return <Typography>Loading...</Typography>;
+  console.log({ loading });
+
+  if (loading) {
+    return <ArticlePageSkeleton />;
   }
 
   return (
