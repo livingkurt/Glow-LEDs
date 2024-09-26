@@ -5,7 +5,7 @@ export default {
   findAll_teams_db: async (filter, sort, limit, page) => {
     try {
       return await Team.find(filter)
-        .populate("affiliates")
+        .populate({ path: "affiliates", populate: { path: "user" } })
         .populate("public_code")
         .populate("private_code")
         .populate("captain")
@@ -21,8 +21,8 @@ export default {
   },
   findById_teams_db: async id => {
     try {
-      return await Team.findOne({ _id: i, deleted: falsed })
-        .populate("affiliates")
+      return await Team.findOne({ _id: id, deleted: false })
+        .populate({ path: "affiliates", populate: { path: "user" } })
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
@@ -35,7 +35,7 @@ export default {
   findByPathname_teams_db: async pathname => {
     try {
       return await Team.findOne({ pathname, deleted: false })
-        .populate("affiliates")
+        .populate({ path: "affiliates", populate: { path: "user" } })
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
@@ -48,7 +48,7 @@ export default {
   findBy_teams_db: async query => {
     try {
       return await Team.findOne(query)
-        .populate("affiliates")
+        .populate({ path: "affiliates", populate: { path: "user" } })
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
@@ -61,7 +61,7 @@ export default {
   findByAffiliate_teams_db: async affiliate_id => {
     try {
       return await Team.findOne({ affiliates: { $in: [affiliate_id] }, deleted: false })
-        .populate("affiliates")
+        .populate({ path: "affiliates", populate: { path: "user" } })
         .populate("public_code")
         .populate("private_code")
         .populate("captain");
@@ -89,6 +89,7 @@ export default {
     }
   },
   update_teams_db: async (id, body) => {
+    console.log({ id, body });
     try {
       const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {

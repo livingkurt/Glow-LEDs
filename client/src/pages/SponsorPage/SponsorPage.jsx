@@ -62,7 +62,7 @@ const SponsorPage = () => {
 
       <Box sx={{ mb: 4 }}>
         <Box display={"flex"} justifyContent={"space-between"}>
-          <Button onClick={() => navigate(-1)} sx={{ mb: 2, color: "#fff" }}>
+          <Button onClick={() => navigate("/sponsors")} sx={{ mb: 2, color: "#fff" }}>
             Back to Sponsors
           </Button>
           {current_user.isAdmin && (

@@ -37,11 +37,7 @@ export default {
       const teams = await team_db.findAll_teams_db(filter, sort, limit, page);
       const count = await team_db.count_teams_db(filter);
       if (count !== undefined) {
-        return {
-          teams,
-          totalPages: Math.ceil(count / parseInt(limit)),
-          currentPage: page,
-        };
+        return teams;
       } else {
         // Handle the case where count is undefined
         throw new Error("Count is undefined");

@@ -1,268 +1,173 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
-import { LazyImage } from "../../shared/SharedComponents";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
-import { Container } from "@mui/material";
+import { Container, Typography, Box, Grid, Card, CardContent, CardMedia, Button, Divider } from "@mui/material";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import EditTeamModal from "../TeamsPage/EditTeamModal";
+import { open_edit_team_modal } from "../../slices/teamSlice";
+import SponsorsCard from "../SponsorsGridPage/components/SponsorCard";
 
 const TeamPage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const teamPage = useSelector(state => state.teams.teamPage);
-  const { team } = teamPage;
-  const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
-
   const dispatch = useDispatch();
+  const { team } = useSelector(state => state.teams.teamPage);
+  const { current_user } = useSelector(state => state.users.userPage);
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.detailsTeam(params.pathname));
-    }
-    return () => (clean = false);
-  }, []);
+    dispatch(API.detailsTeam({ id: params.pathname }));
+  }, [dispatch, params.pathname]);
+
+  if (!team) return null;
 
   return (
-    <Container maxWidth="xl" sx={{ py: 2 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Helmet>
-        <title>Team | Glow LEDs</title>
-        <meta property="og:title" content="Team" />
-        <meta name="twitter:title" content="Team" />
-        <link rel="canonical" href="https://www.glow-leds.com/teamd" />
-        <meta property="og:url" content="https://www.glow-leds.com/teamd" />
-        <meta
-          name="description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
-        <meta
-          property="og:description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
-        <meta
-          name="twitter:description"
-          content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
-        />
+        <title>{`${team.team_name} | Glow LEDs`}</title>
+        <meta property="og:title" content={`${team.team_name} | Glow LEDs`} />
+        <meta name="twitter:title" content={`${team.team_name} | Glow LEDs`} />
+        <link rel="canonical" href={`https://www.glow-leds.com/team/${team.pathname}`} />
+        <meta property="og:url" content={`https://www.glow-leds.com/team/${team.pathname}`} />
+        <meta name="description" content={team.bio} />
+        <meta property="og:description" content={team.bio} />
+        <meta name="twitter:description" content={team.bio} />
       </Helmet>
 
-      {team && (
-        <div className="">
-          <div className="jc-b">
-            <GLButton variant="secondary" onClick={() => navigate(-1)}>
-              Back
-            </GLButton>
-            {/* <Link to="/teams">
-							<GLButton variant="secondary">Back to Teams</GLButton>
-						</Link> */}
-            {current_user?.isAdmin && (
-              <Link to={"/secure/glow/editteam/" + params.pathname}>
-                <GLButton variant="secondary" style={{ width: "156px" }}>
-                  Edit Team
-                </GLButton>
-              </Link>
-            )}
-          </div>
-          <div className="column jc-c">
-            <h2 style={{ textAlign: "center" }}>{team.team_name}</h2>
-          </div>
-          <div className="">
-            <LazyImage
-              className="sponsor-image sponsor_image_small"
-              alt={team.team_name}
-              title="Sponsor Image"
-              size={{
-                height: "auto",
-                width: "100%",
-                display: "none",
-                maxWidth: "unset",
-                maxHeight: "unset",
-              }}
-              effect="blur"
-              src={team.picture}
-            />
-          </div>
-          {team.video && (
-            <div className="jc-c pos-rel">
-              <div className="iframe-container">
-                <iframe
-                  width="996"
-                  height="560"
-                  title="Team Video"
-                  style={{ borderRadius: "20px" }}
-                  src={`https://www.youtube.com/embed/${team.video}`}
-                  frameborder="0"
-                  allowfullscreen
-                />
-              </div>
-            </div>
+      <Box sx={{ mb: 4 }}>
+        <Box display="flex" justifyContent="space-between">
+          <Button onClick={() => navigate("/teams")} sx={{ mb: 2, color: "#fff" }}>
+            Back to Teams
+          </Button>
+          {current_user?.isAdmin && (
+            <Button sx={{ mb: 2, color: "#fff" }} onClick={() => dispatch(open_edit_team_modal(team))}>
+              Edit Team
+            </Button>
           )}
+        </Box>
+        <Typography variant="h3" component="h1" align="center" gutterBottom>
+          {team.team_name}
+        </Typography>
+      </Box>
 
-          {/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out {team.team_name} with the {team.product && humanize(team.product)}!
-					</p> */}
-          {/* <div className="mt-2rem">
-						<LazyImage
-							className="sponsor-image"
-							alt={team.name}
-							title="Sponsor Image"
-							size={{ height: 'auto', width: '100%' }}
-							effect="blur"
-							src={team.picture}
-						/>
-					</div> */}
-          <div className="jc-b ">
-            <div className="" style={{ flex: "1 1 70%" }}>
-              <h3 className="">Bio</h3>
-              <pre className="p_descriptions ">{team.bio}</pre>
-              {(team.facebook_name || team.instagram_handle) && (
-                <div>
-                  <h3 className="">Follow {team.team_name} </h3>
-                  <div className="mt-2rem wrap  ">
-                    <div className="fs-25px jc-fs w-100per max-w-500px ai-c">
-                      <div className="fs-40px">
-                        {team.facebook_name && (
-                          <a
-                            href={"https://www.facebook.com/" + team.facebook_name}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Facebook"
-                          >
-                            <i className="fab fa-facebook zoom" />
-                          </a>
-                        )}
-                      </div>
-                      <div className="ml-10px fs-40px">
-                        {team.instagram_handle && (
-                          <a
-                            href={"https://www.instagram.com/" + team.instagram_handle}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Instagram"
-                          >
-                            <i className="fab fa-instagram zoom" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ borderRadius: "20px" }}>
+            <CardMedia
+              component="img"
+              alt={team.team_name}
+              image={team.picture}
+              title="Team Image"
+              sx={{ objectFit: "cover" }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ color: "#fff", bgcolor: "#4c526d", borderRadius: "20px" }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                About {team.team_name}
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {team.bio}
+              </Typography>
+
+              {team.start_year && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Founded
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {team.start_year}
+                  </Typography>
+                </>
               )}
-            </div>
-            <div className="mt-2rem">
-              <LazyImage
-                className="sponsor-image sponsor_image_big"
-                alt={team.name}
-                title="Sponsor Image"
-                size={{ height: "auto", width: "100%" }}
-                effect="blur"
-                src={team.picture}
+
+              {team.captain && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Team Captain
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {team.captain.artist_name}
+                  </Typography>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Divider sx={{ my: 4, borderColor: "#fff" }} />
+
+      <Typography variant="h4" align="center" gutterBottom>
+        {team.team_name} Members
+      </Typography>
+      <Grid container spacing={3}>
+        {team.affiliates &&
+          team.affiliates.map((affiliate, index) => (
+            <Grid item key={affiliate._id} xs={12} sm={6} md={4} lg={3}>
+              <SponsorsCard affiliate={affiliate} />
+            </Grid>
+          ))}
+      </Grid>
+
+      {team.video && (
+        <>
+          <Divider sx={{ my: 4, borderColor: "#fff" }} />
+          <Box>
+            <Typography variant="h4" align="center" gutterBottom>
+              Watch {team.team_name} in Action
+            </Typography>
+            <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
+              <iframe
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+                title={`${team.team_name} video`}
+                allowFullScreen
+                src={`https://www.youtube.com/embed/${team.video}`}
               />
-            </div>
-          </div>
-          <h3 className=""> {team.team_name} Team Members</h3>
-          <div className="products">
-            {team.affiliates &&
-              team.affiliates.map((affiliate, index) => {
-                return (
-                  <div className="pos-rel">
-                    {affiliate.sponsor && (
-                      <Link to={"/sponsors/" + affiliate.pathname} key={index}>
-                        <GLLazyImage
-                          className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-                          alt="Team Mate"
-                          src={affiliate.picture}
-                        />
-                        <h3
-                          className="pos-abs fs-25px"
-                          style={{
-                            top: "40%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                          }}
-                        >
-                          {affiliate.artist_name}
-                        </h3>
-                        <h4
-                          className="pos-abs fs-16px title_font"
-                          style={{
-                            top: "70%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                          }}
-                        >
-                          Sponsored
-                        </h4>
-                      </Link>
-                    )}
-                    {!affiliate.sponsor && (
-                      <a
-                        href={
-                          affiliate.instagram_handle
-                            ? "https://www.instagram.com/" + affiliate.instagram_handle
-                            : affiliate.facebook
-                              ? affiliate.facebook
-                              : ""
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        key={index}
-                      >
-                        <GLLazyImage
-                          className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-                          alt="Team Mate"
-                          src={affiliate.picture}
-                        />
-                        <h3
-                          className="pos-abs fs-25px"
-                          style={{
-                            top: "40%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                          }}
-                        >
-                          {affiliate.artist_name}
-                        </h3>
-                      </a>
-                    )}
-                  </div>
-                );
-              })}
-          </div>
-          {team.rave_mob && (
-            <div>
-              <h3 className="ta-c"> {team.team_name} Meetup Map</h3>
-              <div className="mt-2rem jc-c">
-                <LazyImage
-                  className="sponsor-image sponsor_image_big "
-                  alt={team.name}
-                  title="Sponsor Image"
-                  size={{ height: "auto", width: "100%" }}
-                  effect="blur"
-                  src={team.map}
-                />
-              </div>
-              <h3 className="ta-c"> {team.team_name} Moments in Time</h3>
-              <div className="mt-2rem ta-c jc-a wrap">
-                {team.images.map(image => (
-                  <LazyImage
-                    className="sponsor-image sponsor_image_big"
-                    alt={team.name}
-                    title="Sponsor Image"
-                    size={{ height: "auto", width: "100%" }}
-                    effect="blur"
-                    src={image}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+            </Box>
+          </Box>
+        </>
       )}
+
+      {team.rave_mob && (
+        <>
+          <Divider sx={{ my: 4, borderColor: "#fff" }} />
+          <Typography variant="h4" align="center" gutterBottom>
+            {team.team_name} Meetup Map
+          </Typography>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+            <GLLazyImage
+              src={team.map}
+              alt={`${team.team_name} Meetup Map`}
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </Box>
+
+          <Typography variant="h4" align="center" sx={{ mt: 4 }} gutterBottom>
+            {team.team_name} Moments in Time
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            {team.images.map((image, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
+                <GLLazyImage src={image} alt={`${team.team_name} Moment ${index + 1}`} style={{ width: "100%" }} />
+              </Grid>
+            ))}
+          </Grid>
+        </>
+      )}
+      <EditTeamModal />
     </Container>
   );
 };
+
 export default TeamPage;

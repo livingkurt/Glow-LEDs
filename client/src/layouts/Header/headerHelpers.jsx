@@ -357,10 +357,10 @@ const community = addIdsRecursively({
       name: "Sponsored Teams",
       path: "/teams",
     },
-    {
-      name: "Rave Mob",
-      path: "/teams/category/rave_mob",
-    },
+    // {
+    //   name: "Rave Mob",
+    //   path: "/teams/rave_mob",
+    // },
     // {
     //   name: "Featured",
     //   path: "/menu/featured",

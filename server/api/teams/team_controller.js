@@ -51,6 +51,7 @@ export default {
   },
   findByPathname_teams_c: async (req, res) => {
     const { params } = req;
+    console.log({ params });
     try {
       const team = await team_services.findByPathname_teams_s(params);
       if (team) {
