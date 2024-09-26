@@ -24,12 +24,13 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import TikTokIcon from "../../layouts/Footer/TikTokIcon";
 import { showInfo } from "../../slices/snackbarSlice";
+import SponsorPageSkeleton from "./components/SponsorPageSkeleton";
 
 const SponsorPage = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { affiliate } = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
 
   const { current_user } = useSelector(state => state.users.userPage);
 
@@ -37,7 +38,7 @@ const SponsorPage = () => {
     dispatch(API.detailsAffiliate({ pathname: params.pathname }));
   }, [dispatch, params.pathname]);
 
-  if (!affiliate) return null;
+  if (loading || !affiliate?.artist_name) return <SponsorPageSkeleton />;
 
   const socialIcons = [
     { icon: InstagramIcon, platform: "Instagram" },
@@ -62,7 +63,7 @@ const SponsorPage = () => {
 
       <Box sx={{ mb: 4 }}>
         <Box display={"flex"} justifyContent={"space-between"}>
-          <Button onClick={() => navigate(-1)} sx={{ mb: 2, color: "#fff" }}>
+          <Button onClick={() => navigate("/sponsors")} sx={{ mb: 2, color: "#fff" }}>
             Back to Sponsors
           </Button>
           {current_user.isAdmin && (
@@ -109,12 +110,16 @@ const SponsorPage = () => {
                 </>
               )}
 
-              <Typography variant="h6" gutterBottom>
-                Gloving Since
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
-              </Typography>
+              {affiliate.start_year && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Gloving Since
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
+                  </Typography>
+                </>
+              )}
 
               <Typography variant="h6" gutterBottom>
                 Location

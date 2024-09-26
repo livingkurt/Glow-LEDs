@@ -77,7 +77,6 @@ const redirects = [
   { from: "/account/passwordreset", to: "/account/password_reset" },
   { from: "/checkout/placeorder", to: "/checkout/place_order" },
   { from: "/checkout/shipping", to: "/checkout/cart" },
-  { from: "/checkout/cart/:pathname?", to: "/checkout/cart" },
   { from: "/collections/all/products", to: "/products" },
   {
     from: "/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?",

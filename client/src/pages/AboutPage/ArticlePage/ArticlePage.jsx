@@ -7,6 +7,8 @@ import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2
 import { useDispatch, useSelector } from "react-redux";
 import EditArticleModal from "../../ArticlesPage/components/EditArticleModal";
 import { open_edit_article_modal } from "../../../slices/articleSlice";
+import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import ArticlePageSkeleton from "./components/ArticlePageSkeletons";
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
@@ -16,15 +18,16 @@ const ArticlePage = () => {
   const { current_user } = userPage;
 
   const articlePage = useSelector(state => state.articles.articlePage);
-  const { article } = articlePage;
-  console.log({ article });
+  const { article, loading } = articlePage;
 
   useEffect(() => {
     dispatch(detailsArticle(pathname));
   }, [dispatch, pathname]);
 
-  if (!article) {
-    return <Typography>Loading...</Typography>;
+  console.log({ loading });
+
+  if (loading) {
+    return <ArticlePageSkeleton />;
   }
 
   return (
@@ -45,7 +48,7 @@ const ArticlePage = () => {
       </Typography>
       {article.image && (
         <Box sx={{ my: 2 }}>
-          <img
+          <GLLazyImage
             src={article.image.link}
             alt={article.title}
             style={{ maxWidth: "100%", height: "auto", borderRadius: "20px" }}

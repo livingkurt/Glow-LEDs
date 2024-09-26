@@ -3,7 +3,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import useArticlesGridPage from "./useArticlesGridPage";
 import ArticlesGridPageSkeletons from "./component/ArticlesGridPageSkeletons";
-import ArticleCard from "./component/ArticlesCard";
+import ArticleCard from "./component/ArticleCard";
 import ArticlesGridPageFilters from "./component/ArticlesGridPageFilters";
 
 const ArticlesGridPage = () => {

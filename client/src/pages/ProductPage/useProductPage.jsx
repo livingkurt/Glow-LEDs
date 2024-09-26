@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
-import { detailsProductPage, selectOption, setCustomizedProduct, setIsAddonChecked } from "./productPageSlice";
+import { selectOption, setCustomizedProduct, setIsAddonChecked } from "./productPageSlice";
 import { scrollToElement, updateRecentlyViewed } from "./productHelpers";
 import { showInfo } from "../../slices/snackbarSlice";
+import { detailsProductPage } from "../../api";
 
 const useProductPage = () => {
   const params = useParams();

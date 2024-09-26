@@ -118,10 +118,10 @@ export const detailsProduct = createAsyncThunk(
 );
 
 export const detailsProductPage = createAsyncThunk(
-  "products/productPage/detailsProductPage",
+  "products/detailsProductPage",
   async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/products/${pathname}`);
+      const { data } = await axios.get(`/api/products/${pathname}/page`);
       return { data, openEditModal };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

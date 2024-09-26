@@ -1,86 +1,54 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import { TeamItemD, TeamItemM } from "./components";
-import * as API from "../../api";
+import { Container, Grid, Typography } from "@mui/material";
+import TeamCard from "./components/TeamCard";
+import { useTeamsQuery } from "../../api/allRecordsApi";
+import TeamsGridPageSkeletons from "./components/TeamGridPageSkeletons";
 
-const AllTeamsPage = () => {
-  const params = useParams();
-  const teamPage = useSelector(state => state.teams.teamPage);
-  const { teams, loading, error } = teamPage;
-  const dispatch = useDispatch();
-  const category = params.category ? params.category : "";
+const TeamsGridPage = () => {
+  const { data: teams, isLoading } = useTeamsQuery();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (category === "rave_mob") {
-        dispatch(API.listTeams({ rave_mob: true }));
-      } else {
-        dispatch(API.listTeams({}));
-      }
-    }
-    return () => (clean = false);
-  }, [category]);
+  if (isLoading) return <TeamsGridPageSkeletons />;
 
   return (
-    <div>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
         <title>Team | Glow LEDs</title>
-        <meta property="og:title" content="Teamd" />
-        <meta name="twitter:title" content="Teamd" />
+        <meta property="og:title" content="Team" />
+        <meta name="twitter:title" content="Team" />
         <link rel="canonical" href="https://www.glow-leds.com/teams" />
         <meta property="og:url" content="https://www.glow-leds.com/teams" />
-        <meta name="description" content={"Glow LEDs Glover Teams"} />
-        <meta property="og:description" content={"Glow LEDs Glover Teams"} />
-        <meta name="twitter:description" content={"Glow LEDs Glover Teams"} />
+        <meta name="description" content="Glow LEDs Glover Teams" />
+        <meta property="og:description" content="Glow LEDs Glover Teams" />
+        <meta name="twitter:description" content="Glow LEDs Glover Teams" />
       </Helmet>
 
-      <div className="jc-fe">
-        <Link to="/sponsors">
-          <GLButton variant="secondary" className="">
-            Sponsored Artists
-          </GLButton>
-        </Link>
-      </div>
-      <div className="jc-c">
-        <div className="row">
-          <h1>{params.category === "rave_mob" ? "Glow LEDs Rave Mobs" : "Sponsored Teams"}</h1>
-        </div>
-      </div>
+      <Typography variant="h4" align="center" gutterBottom>
+        Sponsored Teams
+      </Typography>
 
-      {teams && (
-        <Loading loading={loading} error={error}>
-          <div>
-            <div className="product_big_screen">
-              {teams && (
-                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                  {teams.map(
-                    (team, index) =>
-                      !team.hidden && <TeamItemD size="300px" key={index} team={team} category={params.category} />
-                  )}
-                </ul>
-              )}
-            </div>
+      <Typography variant="subtitle1" textAlign="center" gutterBottom>
+        These are the teams that represent Glow LEDs. They're passionate about the art of gloving and light shows.
+      </Typography>
 
-            <div className="product_small_screen none">
-              {teams && (
-                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                  {teams.map(
-                    (team, index) =>
-                      !team.hidden && <TeamItemM size="300px" key={index} team={team} category={params.category} />
-                  )}
-                </ul>
-              )}
-            </div>
-          </div>
-          {teams.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
-        </Loading>
+      <Grid container spacing={2}>
+        {teams?.length > 0 &&
+          teams.map(
+            team =>
+              !team.hidden && (
+                <Grid item key={team._id} xs={12} sm={6} md={4} lg={3}>
+                  <TeamCard team={team} />
+                </Grid>
+              )
+          )}
+      </Grid>
+
+      {teams?.length === 0 && (
+        <Typography variant="h6" textAlign="center">
+          Sorry, we can't find any teams matching your criteria.
+        </Typography>
       )}
-    </div>
+    </Container>
   );
 };
-export default AllTeamsPage;
+
+export default TeamsGridPage;

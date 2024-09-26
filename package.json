@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "babel-jest": "^29.7.0",
-    "concurrently": "^8.2.1",
+    "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -61,21 +61,15 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^14.0.1",
     "nodemon": "^3.1.2",
-    "pre-commit": "^1.2.2",
-    "stylelint": "^14.9.1",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^26.0.0",
-    "stylelint-config-standard-scss": "^5.0.0",
-    "stylelint-prettier": "^2.0.0",
-    "stylelint-scss": "^5.1.0"
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
     "env-check": "cross-env NODE_ENV=production",
-    "start:prod": "node --max_old_space_size=2560 dist/server.js",
+    "start:prod": "node dist/server.js",
     "start:dev": "concurrently \"npm:server-dev\" \"npm:client\"",
     "transpile-watch": "babel server --out-dir dist --ignore node_modules --watch",
-    "server-dev": "nodemon --max_old_space_size=2560 dist/server.js",
+    "server-dev": "nodemon dist/server.js",
     "client": "cd client && npm start",
     "build": "babel server --out-dir dist",
     "heroku-postbuild": "npm run build && npm run build:client",
@@ -83,13 +77,11 @@
     "build:client": "cd client && npm run build",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint 'client/src/**/*.{js,jsx}' --cache",
-    "lint:scss": "stylelint 'client/src/**/*.scss' --cache",
     "sitemap": "cd client && npm run generate-sitemap",
     "lint-staged": "lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
     "lint:js:fix": "npm run lint:js --fix",
     "lint:scss:fix": "npm run lint:scss --fix",
-    "stylelint-check": "stylelint-config-prettier-check",
     "clean-install": "rm -rf node_modules package-lock.json client/node_modules client/package-lock.json && npm install && cd client && npm install && cd ..",
     "test": "jest",
     "test:all": "npm --test-all",
@@ -98,7 +90,7 @@
     "g": "node server/scripts/generateMigration.js"
   },
   "engines": {
-    "node": "18.20.1",
+    "node": "20.11.1",
     "npm": "10.2.4"
   },
   "pre-commit": [
@@ -107,9 +99,6 @@
   "lint-staged": {
     "client/src/**/*.jsx": [
       "eslint --fix --cache"
-    ],
-    "client/src/**/*.scss": [
-      "stylelint --fix --cache"
     ]
   }
 }

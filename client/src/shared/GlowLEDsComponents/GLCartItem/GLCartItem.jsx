@@ -9,6 +9,7 @@ import GLSelect from "../GLSelect/GLSelect";
 import GLIconButton from "../GLIconButton/GLIconButton";
 import * as API from "../../../api";
 import { generateProductUrl } from "../../../utils/helpers/product_helpers";
+import GLLazyImage from "../GLLazyImage/GLLazyImage";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -96,12 +97,12 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
           height: isOrderItem ? 60 : 80,
         }}
       >
-        <Box
-          component="img"
+        <GLLazyImage
           src={item?.display_image_object?.link}
           alt={item.name}
-          sx={{ width: "100%", height: "100%", borderRadius: 2 }}
+          style={{ width: "100%", height: "100%", borderRadius: 10 }}
         />
+
         {isOrderItem && item.quantity > 1 && (
           <Box
             sx={{
