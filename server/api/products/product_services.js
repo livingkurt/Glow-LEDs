@@ -251,6 +251,15 @@ export default {
       }
     }
   },
+  page_products_s: async params => {
+    try {
+      return await product_db.page_products_db(params.pathname);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   check_stock_products_s: async body => {
     const { cartItems } = body;
     const outOfStockItems = []; // Store details of out-of-stock items

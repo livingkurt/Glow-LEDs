@@ -10,19 +10,7 @@ import {
   updatePrice,
   updateProductDetailsFromOption,
 } from "./productHelpers";
-
-export const detailsProductPage = createAsyncThunk(
-  "products/detailsProductPage",
-  async ({ pathname, openEditModal }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(`/api/products/${pathname}`);
-      return { data, openEditModal };
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
+import { detailsProductPage } from "../../api";
 
 const productPage = createSlice({
   name: "productPage",

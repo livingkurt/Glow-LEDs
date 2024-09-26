@@ -110,12 +110,16 @@ const SponsorPage = () => {
                 </>
               )}
 
-              <Typography variant="h6" gutterBottom>
-                Gloving Since
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
-              </Typography>
+              {affiliate.start_year && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Gloving Since
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
+                  </Typography>
+                </>
+              )}
 
               <Typography variant="h6" gutterBottom>
                 Location

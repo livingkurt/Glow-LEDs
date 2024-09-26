@@ -349,6 +349,8 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+productSchema.index({ pathname: 1 }, { unique: true });
+
 const Product = mongoose.model("Product", productSchema);
 
 export default Product;

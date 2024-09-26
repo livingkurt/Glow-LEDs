@@ -189,7 +189,9 @@ const ProductPage = () => {
                       {determineInStock(customizedProduct)}
                     </GLButtonV2>
                   </Box>
-                  {!product.icon_specs_hidden && <IconFeatures icon_specs={product?.icon_specs} />}
+                  {product?.icon_specs && !product.icon_specs_hidden && (
+                    <IconFeatures icon_specs={product.icon_specs} />
+                  )}
                 </Grid>
               </Grid>
             </Container>

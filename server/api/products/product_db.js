@@ -307,6 +307,106 @@ export default {
       }
     }
   },
+  page_products_db: async id => {
+    const query = determineIDPathname(id);
+
+    try {
+      return await Product.findOne(query)
+        .populate("images")
+        .populate({
+          path: "options",
+          populate: [
+            { path: "image" },
+            {
+              path: "values",
+              populate: [
+                { path: "image" },
+                { path: "filament" },
+                {
+                  path: "product",
+                  populate: [
+                    { path: "images" },
+                    { path: "color_object.filament" },
+                    { path: "filament" },
+                    { path: "tags" },
+                    { path: "chips" },
+                    {
+                      path: "options",
+                      populate: [
+                        { path: "image" },
+                        {
+                          path: "values",
+                          populate: [
+                            { path: "image" },
+                            { path: "filament" },
+                            {
+                              path: "product",
+                              populate: [
+                                { path: "images" },
+                                { path: "color_object.filament" },
+                                { path: "filament" },
+                                { path: "tags" },
+                                { path: "chips" },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        })
+        .populate("title_image")
+        .populate("themed_logo")
+        .populate("line_break")
+        .populate("pattern_tile")
+        .populate("corner_image")
+        .populate("hero_image")
+        .populate({
+          path: "features",
+          populate: [
+            { path: "image_grid_1.image" },
+            { path: "image_grid_1.text_image" },
+            { path: "hero_image_1" },
+            { path: "image_grid_2.image" },
+            { path: "image_grid_2.text_image" },
+            { path: "hero_image_2" },
+            { path: "lifestyle_images" },
+            { path: "hero_image_3" },
+          ],
+        })
+        .populate({
+          path: "in_the_box.items.image",
+        })
+        .populate({
+          path: "elevate_your_experience.products",
+          populate: [
+            { path: "images" },
+            { path: "color_object.filament" },
+            { path: "filament" },
+            { path: "tags" },
+            { path: "chips" },
+          ],
+        })
+        .populate("tags")
+        .populate("contributors")
+        .populate({
+          path: "reviews.user",
+          select: "first_name last_name",
+        })
+        .populate("color_object.filament")
+        .populate("chips")
+        .lean()
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 
   create_products_db: async body => {
     try {

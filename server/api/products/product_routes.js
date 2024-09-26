@@ -30,6 +30,8 @@ router.route("/generate_product_options").put(product_controller.generate_produc
 
 // CRUD Actions
 
+router.route("/:pathname/page").get(product_controller.page_products_c);
+
 router
   .route("/:id")
   .get(product_controller.findById_products_c)

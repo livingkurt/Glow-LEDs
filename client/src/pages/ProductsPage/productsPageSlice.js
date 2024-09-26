@@ -35,6 +35,7 @@ const productsPage = createSlice({
     search: "",
     sort: "",
     page: 1,
+    icon_specs: [],
     remoteVersionRequirement: 0,
     edit_product_modal: false,
     product_modal: false,
