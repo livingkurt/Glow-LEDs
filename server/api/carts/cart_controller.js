@@ -119,18 +119,12 @@ export default {
   empty_carts_c: async (req, res) => {
     const { params } = req;
     try {
-      // const cart = await cart_services.empty_carts_s(params);
-      const cart = await cart_services.remove_carts_s(params);
-      if (cart) {
-        return res.status(201).send(cart);
-      }
-      return res.status(500).send({
-        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
-      });
+      await cart_services.remove_carts_s(params);
+      return res.status(201);
     } catch (error) {
       res.status(500).send({
         error,
-        message: "Error Deleting Cart Item: If issue persists, please clear your cache and try adding your items again",
+        message: "Error Emptyring Cart: If issue persists, please clear your cache and try adding your items again",
       });
     }
   },

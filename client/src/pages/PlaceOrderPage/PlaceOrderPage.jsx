@@ -159,7 +159,7 @@ const PlaceOrderPage = () => {
     }
     sessionStorage.removeItem("shippingAddress");
     sessionStorage.setItem("manualNavigation", "true");
-    navigate(`/secure/checkout/place_order?order_id=${order._id}`, { replace: true });
+    navigate(`/checkout/place_order?order_id=${order._id}`, { replace: true });
     setOrderCompleted(true);
   };
 
