@@ -30,6 +30,7 @@ import config from "../config";
 import Stripe from "stripe";
 import { Team } from "./teams";
 import { Event } from "./events";
+import { parseOrderEmail } from "./batch_helpers";
 const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -6209,138 +6210,6 @@ router.route("/fetch_easypost_data").put(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-function extractShippingAddress(html) {
-  console.log({ html });
-  // Remove HTML tags and trim whitespace
-  const cleanText = html
-    ?.replace(/<[^>]*>/g, "\n")
-    ?.replace(/=20/g, "")
-    ?.split("\n")
-    .map(line => line?.trim())
-    .filter(line => line.length > 0);
-  // Extract information
-  const [firstName, lastName, address1, address2, cityWithComma, state, zipCountry] = cleanText;
-
-  // Process city (remove trailing comma)
-  const city = cityWithComma ? cityWithComma?.replace(/,\s*$/, "") : "";
-
-  // Process zip and country
-  const [postalCode, country] = zipCountry ? zipCountry.split(" ") : ["", ""];
-
-  return {
-    shippingFirstName: firstName || "",
-    shippingLastName: lastName || "",
-    address1: address1 || "",
-    address2: address2 === "=09" ? "" : address2 || "",
-    city: city,
-    state: state || "",
-    postalCode: postalCode || "",
-    country: country || "",
-  };
-}
-
-function extractLast4Digits(str) {
-  const match = str.match(/(\d{4})\s*$/);
-  return match ? match[1] : null;
-}
-
-async function parseOrderEmail(filePath) {
-  const content = await fs.readFile(filePath, "utf-8");
-  const $ = cheerio.load(content);
-
-  const orderNumberElement = $('strong:contains("Order #:")').parent();
-  const orderNumberText = orderNumberElement.text().trim();
-  const orderNumber = orderNumberText.split(":")[1]?.trim().split("<")[0].trim() || "";
-  const dateMatch = content.match(/Date:\s*(.*)/);
-  const orderDate = dateMatch ? new Date(dateMatch[1]).toISOString() : null;
-  // console.log({ orderDate });
-
-  const customerFirstName = $("h1").first().text().trim().split(",")[0];
-  // console.log({ customerFirstName });
-  const toMatch = content.match(/To:\s*(.*)/);
-  const email = toMatch ? toMatch[1].trim() : null;
-  // console.log({ email });
-
-  const shippingDetailsHtml = $('h4:contains("Shipping:")').parent().next().find("p").first().html();
-  // console.log({ shippingDetailsHtml: shippingDetailsHtml.replace(/<[^>]*>/g, "").trim() });
-  let shippingAddress = null;
-  if (shippingDetailsHtml) {
-    shippingAddress = extractShippingAddress(shippingDetailsHtml);
-    // console.log({ result });
-  }
-
-  const paymentMethod = $('h4:contains("Payment:")').parent().next().text();
-  // const last4 = paymentMethod.match(/ending with (\d{4})/)?.[1];
-  const last4 = extractLast4Digits(paymentMethod);
-  console.log({ last4 });
-
-  // const orderItems = [];
-  // $('table[style*="border-bottom: 1px white solid"] tbody tr').each((i, elem) => {
-  //   const itemText = $(elem).find('span[style*="font-size:16px;font-weight:600"]').text().trim();
-  //   const price = $(elem).find('p[style*="color:white;line-height:150%"] label').text().trim();
-  //   if (itemText && price) {
-  //     const [quantity, ...nameParts] = itemText.split(/\s+/);
-  //     const name = nameParts
-  //       .join(" ")
-  //       .replace(/\s+- [^-]+$/, "")
-  //       .trim();
-  //     const selectedOptions = [];
-  //     $(elem)
-  //       .find(
-  //         'span[style*="display: inline-block;padding: 4px 8px;margin: 2px;border-radius: 16px;font-size: 12px;font-weight: 500;"]'
-  //       )
-  //       .each((i, optionElem) => {
-  //         const [optionName, optionValue] = $(optionElem)
-  //           .text()
-  //           .split(":")
-  //           .map(s => s.trim());
-  //         selectedOptions.push({ name: optionName, value: optionValue });
-  //       });
-  //     orderItems.push({
-  //       quantity: parseInt(quantity) || 1,
-  //       name,
-  //       selectedOptions,
-  //       price: parseFloat(price.replace("$", "")),
-  //     });
-  //   }
-  // });
-
-  // const subtotal = parseFloat($('span:contains("Subtotal")').parent().next().find("strong").text().replace("$", ""));
-  // const taxPrice = parseFloat($('span:contains("Taxes")').parent().next().find("strong").text().replace("$", ""));
-  // const shippingPrice = parseFloat(
-  //   $('span:contains("Shipping")').parent().next().find("strong").text().replace("$", "")
-  // );
-  // const totalPrice = parseFloat($('span:contains("Total")').parent().next().find("strong").text().replace("$", ""));
-
-  // const orderNote = $('strong:contains("Order Note:")').parent().text().replace("Order Note:", "").trim();
-
-  // return {
-  //   orderNumber,
-  //   orderDate,
-  //   customerFirstName,
-  //   email,
-  //   shipping: {
-  //     first_name: shippingAddress.shippingFirstName,
-  //     last_name: shippingAddress.shippingLastName,
-  //     address_1: shippingAddress.address1,
-  //     city: shippingAddress.city,
-  //     state: shippingAddress.state,
-  //     postalCode: shippingAddress.postalCode,
-  //     country: shippingAddress.country,
-  //   },
-  //   payment: {
-  //     paymentMethod: {},
-  //     last4,
-  //   },
-  //   orderItems,
-  //   itemsPrice: subtotal,
-  //   taxPrice,
-  //   shippingPrice,
-  //   totalPrice,
-  //   order_note: orderNote,
-  // };
-}
 
 router.put("/restore_orders", async (req, res) => {
   try {
