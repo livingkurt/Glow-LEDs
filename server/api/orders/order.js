@@ -30,6 +30,7 @@ const paymentSchema = {
   charge: { type: Object },
   refund: { type: Array },
   refund_reason: { type: Array },
+  last4: { type: String },
 };
 const paymentsSchema = {
   paymentMethod: { type: String },

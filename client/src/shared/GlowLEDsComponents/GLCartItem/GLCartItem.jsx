@@ -34,7 +34,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
         return (
           <Chip
             key={optionIndex}
-            label={`${item.currentOptions[optionIndex].name}: ${option.name}`}
+            label={`${item.currentOptions[optionIndex]?.name}: ${option?.name}`}
             size="small"
             sx={{
               backgroundColor: option.name === "Clear" ? "transparent" : bgColor,

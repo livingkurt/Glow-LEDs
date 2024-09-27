@@ -22,7 +22,8 @@ import { Cart } from "./carts";
 import { promises as fs } from "fs";
 import path from "path";
 import * as cheerio from "cheerio";
-
+import paymentsData from "./zOrdersRestore/payments.json";
+import shipmentsData from "./zOrdersRestore/shipments.json";
 import axios from "axios";
 import appRoot from "app-root-path";
 import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
@@ -6250,16 +6251,15 @@ router.put("/restore_orders", async (req, res) => {
         if (user) {
           const orderItems = await Promise.all(
             orderData.orderItems.map(async item => {
-              const product = await Product.findOne({ name: item.name });
+              const product = await Product.findOne({ name: item.name }).populate("images");
               return {
                 ...item,
                 product: product ? product._id : null,
                 name: item.name,
-                price: item.price / item.quantity,
+                price: item.price,
                 category: product?.category,
                 subcategory: product?.subcategory,
                 product_collection: product?.product_collection,
-                display_image: product?.images[0],
                 display_image_object: product?.images[0],
                 quantity: item.quantity,
                 max_display_quantity: product?.max_display_quantity,
@@ -6267,9 +6267,8 @@ router.put("/restore_orders", async (req, res) => {
                 count_in_stock: product?.count_in_stock,
                 currentOptions: product?.options,
                 selectedOptions: item.selectedOptions.map(option => ({
-                  name: option.name,
-                  value: option.value,
-                  // You might need to find the actual optionValue object here
+                  name: option.value,
+                  active: true,
                 })),
                 tags: product?.tags,
                 pathname: product?.pathname,
@@ -6281,7 +6280,7 @@ router.put("/restore_orders", async (req, res) => {
                 finite_stock: product?.finite_stock,
                 wholesale_product: product?.wholesale_product,
                 wholesale_price: product?.wholesale_price,
-                itemType: "product", // Assuming all items are products, not tickets
+                itemType: "product",
               };
             })
           );
@@ -6292,8 +6291,8 @@ router.put("/restore_orders", async (req, res) => {
             orderItems,
             shipping: orderData.shipping,
             payment: {
-              paymentMethod: orderData.payment.paymentMethod,
-              payment: { card: { last4: orderData.payment.last4 } },
+              paymentMethod: "stripe",
+              last4: orderData.payment.last4,
             },
             itemsPrice: orderData.itemsPrice,
             taxPrice: orderData.taxPrice,

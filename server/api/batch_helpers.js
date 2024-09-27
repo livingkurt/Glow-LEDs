@@ -106,7 +106,7 @@ const extractProductInfo = html => {
         quantity: 1,
         name: name,
         selectedOptions: selectedOptions,
-        price: price,
+        price: isNaN(price) ? 0 : price,
       });
     }
   });
