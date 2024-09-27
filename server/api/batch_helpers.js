@@ -384,7 +384,7 @@ const toTitleCase = str => {
 };
 
 export const extractShipmentDetails = shipment => {
-  console.log({ shipment });
+  console.log({ shipmentExtractShipmentDetails: shipment });
   console.log({
     first_name: toTitleCase(shipment.to_address?.name?.split(" ")[0]),
     last_name: toTitleCase(shipment.to_address?.name?.split(" ")[1]),

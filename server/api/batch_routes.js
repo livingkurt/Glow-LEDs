@@ -6349,7 +6349,7 @@ router.put("/restore_orders", async (req, res) => {
     for (const orderData of orderEmailsData) {
       if (!orderData?.orderNumber) {
         skippedOrders.push({
-          email: orderData.shipping.email,
+          email: orderData?.shipping?.email,
           orderNumber: orderData?.orderNumber,
           reason: "Order data not found",
         });
@@ -6359,14 +6359,14 @@ router.put("/restore_orders", async (req, res) => {
       const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
       if (existingOrder) {
         skippedOrders.push({
-          email: orderData.shipping.email,
+          email: orderData?.shipping?.email,
           orderNumber: orderData?.orderNumber,
           reason: "Order already exists",
         });
         continue;
       }
 
-      const user = await User.findOne({ email: orderData.shipping.email });
+      const user = await User.findOne({ email: { $regex: new RegExp(`^${orderData?.shipping?.email}$`, "i") } });
 
       // if (user) {
       // **Find Matching Payment**
@@ -6382,11 +6382,11 @@ router.put("/restore_orders", async (req, res) => {
       //   FoundMatchingPayment: !!matchingPayment,
       //   FoundMatchingPaymentMethod: !!matchingPaymentMethod,
       //   orderNumber: orderData.orderNumber,
-      //   email: orderData.shipping.email,
-      //   shipping: orderData.shipping,
+      //   email: orderData?.shipping?.email,
+      //   shipping: orderData?.shipping?,
       // });
 
-      if (orderData.payment.last4 === "4242" || orderData.shipping.email === "admin@test.com") {
+      if (orderData.payment.last4 === "4242" || orderData?.shipping?.email === "admin@test.com") {
         skippedOrders.push({
           email: orderData?.shipping?.email,
           orderNumber: orderData?.orderNumber,
@@ -6452,32 +6452,33 @@ router.put("/restore_orders", async (req, res) => {
       );
       console.log({
         orderAddress: {
-          first_name: orderData.shipping.first_name,
-          last_name: orderData.shipping.last_name,
-          address_1: orderData.shipping.address_1,
-          address_2: orderData.shipping.address_2,
-          city: orderData.shipping.city,
-          state: orderData.shipping.state,
-          postalCode: orderData.shipping.postalCode,
-          country: orderData.shipping.country,
-          email: orderData.shipping.email,
-          address_string: orderData.shipping.address_string,
+          first_name: orderData?.shipping?.first_name,
+          last_name: orderData?.shipping?.last_name,
+          address_1: orderData?.shipping?.address_1,
+          address_2: orderData?.shipping?.address_2,
+          city: orderData?.shipping?.city,
+          state: orderData?.shipping?.state,
+          postalCode: orderData?.shipping?.postalCode,
+          country: orderData?.shipping?.country,
+          email: orderData?.shipping?.email,
+          address_string: orderData?.shipping?.address_string,
         },
       });
       let shipping = {};
-      if (!matchingShipment) {
+      console.log({ matchingShipment });
+      if (matchingShipment) {
         shipping = extractShipmentDetails(matchingShipment);
       }
       console.log({
         labelAddress: {
-          first_name: shipping.first_name,
-          last_name: shipping.last_name,
-          address_1: shipping.address_1,
-          address_2: shipping.address_2,
-          city: shipping.city,
-          state: shipping.state,
-          postalCode: shipping.postalCode,
-          country: shipping.country,
+          first_name: shipping?.first_name,
+          last_name: shipping?.last_name,
+          address_1: shipping?.address_1,
+          address_2: shipping?.address_2,
+          city: shipping?.city,
+          state: shipping?.state,
+          postalCode: shipping?.postalCode,
+          country: shipping?.country,
         },
       });
       const order = new Order({
@@ -6485,16 +6486,16 @@ router.put("/restore_orders", async (req, res) => {
         user: user?._id || null,
         orderItems,
         shipping: {
-          ...orderData.shipping,
+          ...orderData?.shipping,
           ...shipping,
-          first_name: shipping?.first_name || orderData.shipping.first_name,
-          last_name: shipping?.last_name || orderData.shipping.last_name,
-          address_1: shipping?.address_1 || orderData.shipping.address_1,
-          address_2: shipping?.address_2 || orderData.shipping.address_2 || "",
-          city: shipping?.city || orderData.shipping.city,
-          state: shipping?.state || orderData.shipping.state,
-          postalCode: shipping?.postalCode || orderData.shipping.postalCode,
-          country: shipping?.country || orderData.shipping.country,
+          first_name: shipping?.first_name || orderData?.shipping?.first_name,
+          last_name: shipping?.last_name || orderData?.shipping?.last_name,
+          address_1: shipping?.address_1 || orderData?.shipping?.address_1,
+          address_2: shipping?.address_2 || orderData?.shipping?.address_2 || "",
+          city: shipping?.city || orderData?.shipping?.city,
+          state: shipping?.state || orderData?.shipping?.state,
+          postalCode: shipping?.postalCode || orderData?.shipping?.postalCode,
+          country: shipping?.country || orderData?.shipping?.country,
         },
         payment: {
           paymentMethod: "stripe",
@@ -6504,7 +6505,7 @@ router.put("/restore_orders", async (req, res) => {
         },
         itemsPrice: orderData.itemsPrice,
         taxPrice: orderData.taxPrice,
-        shippingPrice: orderData.shippingPrice,
+        shippingPrice: orderData?.shippingPrice,
         promo_code: orderData.promo_code,
         tracking_number: matchingShipment?.tracking_number,
         tracking_url: matchingShipment?.tracking_url,
@@ -6517,12 +6518,12 @@ router.put("/restore_orders", async (req, res) => {
 
       await order.save();
       console.log(
-        `Order created: ${order._id}, email: ${shipping.email}, name: ${shipping.first_name} ${shipping.last_name}`
+        `Order created: ${order._id}, email: ${shipping?.email}, name: ${shipping?.first_name} ${shipping?.last_name}`
       );
       restoredOrders.push(order);
       // } else {
       //   skippedOrders.push({
-      //     email: orderData.shipping.email,
+      //     email: orderData?.shipping?.email,
       //     orderNumber: orderData.orderNumber,
       //     reason: "User not found",
       //   });
