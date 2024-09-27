@@ -167,7 +167,7 @@ export default {
         { $project: { populatedDisplayImages: 0, populatedEvents: 0 } },
       ];
       // Execute the aggregation pipeline
-      return await Order.aggregate(pipeline).exec();
+      return await Order.aggregate(pipeline).allowDiskUse(true).exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -22,8 +22,6 @@ import { Cart } from "./carts";
 import { promises as fs } from "fs";
 import path from "path";
 import * as cheerio from "cheerio";
-import paymentsData from "./zOrdersRestore/payments.json";
-import shipmentsData from "./zOrdersRestore/shipments.json";
 import axios from "axios";
 import appRoot from "app-root-path";
 import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
@@ -31,7 +29,15 @@ import config from "../config";
 import Stripe from "stripe";
 import { Team } from "./teams";
 import { Event } from "./events";
-import { parseOrderEmail } from "./batch_helpers";
+import {
+  preprocessShipments,
+  findMatchingPayment,
+  findMatchingPaymentIntent,
+  findMatchingShipment,
+  parseOrderEmail,
+  preprocessPayments,
+  extractShipmentDetails,
+} from "./batch_helpers";
 const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -6172,6 +6178,49 @@ router.route("/fetch_stripe_data").put(async (req, res) => {
   }
 });
 
+router.route("/fetch_stripe_payment_intents").put(async (req, res) => {
+  const startDate = Math.floor(new Date("2024-05-01").getTime() / 1000);
+  let allPaymentIntents = [];
+  let hasMore = true;
+  let lastObject = null;
+
+  try {
+    while (hasMore) {
+      const params = {
+        created: { gte: startDate },
+        expand: ["data.payment_method"],
+        limit: 100,
+      };
+
+      if (lastObject) {
+        params.starting_after = lastObject;
+      }
+
+      const paymentIntentList = await stripe.paymentIntents.list(params);
+
+      allPaymentIntents = allPaymentIntents.concat(paymentIntentList.data);
+      hasMore = paymentIntentList.has_more;
+
+      if (hasMore) {
+        lastObject = paymentIntentList.data[paymentIntentList.data.length - 1].id;
+      }
+
+      console.log(`Retrieved ${allPaymentIntents.length} payment intents so far...`);
+    }
+
+    await fs.writeFile("stripe_payment_intents_data.json", JSON.stringify(allPaymentIntents, null, 2));
+    console.log(`Retrieved a total of ${allPaymentIntents.length} payment intent objects from Stripe.`);
+
+    res.status(200).json({
+      message: `Retrieved ${allPaymentIntents.length} payment intent objects from Stripe.`,
+      paymentIntents: allPaymentIntents,
+    });
+  } catch (error) {
+    console.error("Error fetching payment intents from Stripe:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
@@ -6212,15 +6261,54 @@ router.route("/fetch_easypost_data").put(async (req, res) => {
   }
 });
 
-router.put("/restore_orders", async (req, res) => {
+router.put("/parse_order_emails", async (req, res) => {
   try {
     const emailDir = path.join(process.cwd(), "server", "api", "zOrdersRestore", "order_emails");
     const files = await fs.readdir(emailDir);
 
     const filteredFiles = files.filter(file => file.includes("Thank you for your Glow LEDs Order"));
 
+    const orderDataArray = [];
+
+    for (const file of filteredFiles) {
+      if (path.extname(file).toLowerCase() === ".eml") {
+        const filePath = path.join(emailDir, file);
+        const orderData = await parseOrderEmail(filePath);
+        orderDataArray.push(orderData);
+      }
+    }
+
+    await fs.writeFile("order_emails_data.json", JSON.stringify(orderDataArray, null, 2));
+    res.status(200).json({
+      message: `Parsed ${orderDataArray.length} order emails.`,
+      orderDataArray,
+    });
+  } catch (error) {
+    console.error("Error restoring orders:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put("/restore_orders", async (req, res) => {
+  try {
+    const emailDir = path.join(process.cwd(), "server", "api", "zOrdersRestore", "order_emails");
+    const dataDir = path.join(process.cwd(), "server", "api", "zOrdersRestore");
+    const files = await fs.readdir(emailDir);
+
+    const filteredFiles = files.filter(file => file.includes("Thank you for your Glow LEDs Order"));
+
     const restoredOrders = [];
     const skippedOrders = [];
+
+    // Load payment and shipment data
+    const shipmentsData = JSON.parse(await fs.readFile(path.join(dataDir, "easypost_full_data.json"), "utf-8"));
+    const chargeData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_full_data.json"), "utf-8"));
+    const paymentIntentData = JSON.parse(
+      await fs.readFile(path.join(dataDir, "stripe_payment_intents_data.json"), "utf-8")
+    );
+    // Preprocess payments and shipments
+    const charges = preprocessPayments(chargeData);
+    const shipments = preprocessShipments(shipmentsData);
 
     for (const file of filteredFiles) {
       if (path.extname(file).toLowerCase() === ".eml") {
@@ -6234,7 +6322,6 @@ router.put("/restore_orders", async (req, res) => {
           });
           continue;
         }
-        // console.log({ orderData });
 
         const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
         if (existingOrder) {
@@ -6248,71 +6335,87 @@ router.put("/restore_orders", async (req, res) => {
 
         const user = await User.findOne({ email: orderData.email });
 
-        if (user) {
-          const orderItems = await Promise.all(
-            orderData.orderItems.map(async item => {
-              const product = await Product.findOne({ name: item.name }).populate("images");
-              return {
-                ...item,
-                product: product ? product._id : null,
-                name: item.name,
-                price: item.price,
-                category: product?.category,
-                subcategory: product?.subcategory,
-                product_collection: product?.product_collection,
-                display_image_object: product?.images[0],
-                quantity: item.quantity,
-                max_display_quantity: product?.max_display_quantity,
-                max_quantity: product?.max_quantity,
-                count_in_stock: product?.count_in_stock,
-                currentOptions: product?.options,
-                selectedOptions: item.selectedOptions.map(option => ({
-                  name: option.value,
-                  active: true,
-                })),
-                tags: product?.tags,
-                pathname: product?.pathname,
-                sale_price: product?.sale?.price,
-                sale_start_date: product?.sale?.start_date,
-                sale_end_date: product?.sale?.end_date,
-                dimensions: product?.dimensions,
-                processing_time: product?.meta_data?.processing_time,
-                finite_stock: product?.finite_stock,
-                wholesale_product: product?.wholesale_product,
-                wholesale_price: product?.wholesale_price,
-                itemType: "product",
-              };
-            })
-          );
+        // if (user) {
+        // **Find Matching Payment**
+        const matchingPayment = findMatchingPayment(orderData, charges);
 
-          const order = new Order({
-            _id: orderData.orderNumber,
-            user: user._id,
-            orderItems,
-            shipping: orderData.shipping,
-            payment: {
-              paymentMethod: "stripe",
-              last4: orderData.payment.last4,
-            },
-            itemsPrice: orderData.itemsPrice,
-            taxPrice: orderData.taxPrice,
-            shippingPrice: orderData.shippingPrice,
-            totalPrice: orderData.totalPrice,
-            order_note: orderData.order_note,
-            paidAt: orderData.orderDate,
-            status: "delivered",
-            deliveredAt: orderData.orderDate,
-          });
+        // **Find Matching Payment Intent**
+        const matchingPaymentIntent = findMatchingPaymentIntent(orderData, paymentIntentData, matchingPayment);
 
-          await order.save();
-          restoredOrders.push(order);
-        } else {
-          skippedOrders.push({
-            email: orderData.email,
-            orderNumber: orderData.orderNumber,
-            reason: "User not found",
-          });
-        }
+        // **Find Matching Shipment**
+        const matchingShipment = findMatchingShipment(orderData, shipments);
+
+        const orderItems = await Promise.all(
+          orderData.orderItems.map(async item => {
+            const product = await Product.findOne({ name: item.name }).populate("images");
+            return {
+              ...item,
+              product: product ? product._id : null,
+              name: item.name,
+              price: item.price,
+              category: product?.category,
+              subcategory: product?.subcategory,
+              product_collection: product?.product_collection,
+              display_image_object: product?.images[0],
+              quantity: item.quantity,
+              max_display_quantity: product?.max_display_quantity,
+              max_quantity: product?.max_quantity,
+              count_in_stock: product?.count_in_stock,
+              currentOptions: product?.options,
+              selectedOptions: item.selectedOptions.map(option => ({
+                name: option.value,
+                active: true,
+              })),
+              tags: product?.tags,
+              pathname: product?.pathname,
+              sale_price: product?.sale?.price,
+              sale_start_date: product?.sale?.start_date,
+              sale_end_date: product?.sale?.end_date,
+              dimensions: product?.dimensions,
+              processing_time: product?.meta_data?.processing_time,
+              finite_stock: product?.finite_stock,
+              wholesale_product: product?.wholesale_product,
+              wholesale_price: product?.wholesale_price,
+              itemType: "product",
+            };
+          })
+        );
+
+        const order = new Order({
+          _id: orderData.orderNumber,
+          user: user?._id || null,
+          orderItems,
+          shipping: {
+            ...orderData.shipping,
+            ...extractShipmentDetails(matchingShipment),
+          },
+          payment: {
+            paymentMethod: "stripe",
+            last4: orderData.payment.last4,
+            charge: matchingPayment || {},
+            payment: matchingPaymentIntent || {},
+          },
+          itemsPrice: orderData.itemsPrice,
+          taxPrice: orderData.taxPrice,
+          shippingPrice: orderData.shippingPrice,
+          tracking_number: matchingShipment?.tracking_number,
+          tracking_url: matchingShipment?.tracking_url,
+          totalPrice: orderData.totalPrice,
+          order_note: orderData.order_note,
+          paidAt: orderData.createdAt,
+          status: "delivered",
+          createdAt: orderData.createdAt,
+        });
+
+        // await order.save();
+        restoredOrders.push(order);
+        // } else {
+        //   skippedOrders.push({
+        //     email: orderData.email,
+        //     orderNumber: orderData.orderNumber,
+        //     reason: "User not found",
+        //   });
+        // }
       }
     }
 

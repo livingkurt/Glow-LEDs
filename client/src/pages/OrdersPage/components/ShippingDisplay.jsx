@@ -38,7 +38,7 @@ const ShippingDisplay = ({ shipping }) => {
         <Grid item xs={12}>
           <Typography>{shipping.email}</Typography>
         </Grid>
-
+        {console.log({ shipping_rate: shipping })}
         {shipping.shipping_rate && (
           <>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
