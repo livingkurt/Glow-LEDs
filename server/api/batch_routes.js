@@ -6488,6 +6488,10 @@ router.put("/restore_orders", async (req, res) => {
         shipping: {
           ...orderData?.shipping,
           ...shipping,
+          shipment_id: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipment_id,
+          shipping_rate: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipping_rate,
+          shipping_label: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipping_label,
+          shipment_tracker: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipment_tracker,
           first_name: shipping?.first_name || orderData?.shipping?.first_name,
           last_name: shipping?.last_name || orderData?.shipping?.last_name,
           address_1: shipping?.address_1 || orderData?.shipping?.address_1,
