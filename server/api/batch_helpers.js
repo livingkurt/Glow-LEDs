@@ -2,35 +2,9 @@ import { promises as fs } from "fs";
 import { JSDOM } from "jsdom";
 import * as cheerio from "cheerio";
 import { toCapitalize } from "../utils/util";
-
-export const extractShippingAddress = html => {
-  // Remove HTML tags and trim whitespace
-  const cleanText = html
-    ?.replace(/<[^>]*>/g, "\n")
-    ?.replace(/=20/g, "")
-    ?.split("\n")
-    .map(line => line?.trim())
-    .filter(line => line.length > 0);
-  // Extract information
-  const [firstName, lastName, address1, address2, cityWithComma, state, zipCountry] = cleanText;
-
-  // Process city (remove trailing comma)
-  const city = cityWithComma ? cityWithComma?.replace(/,\s*$/, "") : "";
-
-  // Process zip and country
-  const [postalCode, country] = zipCountry ? zipCountry.split(" ") : ["", ""];
-
-  return {
-    shippingFirstName: firstName || "",
-    shippingLastName: lastName || "",
-    address1: address1 || "",
-    address2: address2 === "=09" ? "" : address2 || "",
-    city: city,
-    state: state || "",
-    postalCode: postalCode || "",
-    country: country || "",
-  };
-};
+import { simpleParser } from "mailparser";
+import parseAddress from "parse-address";
+import he from "he";
 
 export const extractLast4Digits = str => {
   const match = str.match(/(\d{4})\s*$/);
@@ -127,19 +101,68 @@ const removeDuplicates = products => {
   return Array.from(productMap.values());
 };
 
+export const extractShippingAddress = html => {
+  // Decode HTML entities
+  const decodedHtml = he.decode(html);
+
+  // Remove any soft line breaks and encoded spaces
+  const cleanHtml = decodedHtml
+    .replace(/=\r\n/g, "")
+    .replace(/=\n/g, "")
+    .replace(/=20/g, " ")
+    .replace(/=09/g, " ")
+    .replace(/=/g, "")
+    .replace(/[\s]+/g, " ");
+
+  // Load the clean HTML into cheerio
+  const $ = cheerio.load(cleanHtml);
+
+  // Extract text content and remove extra spaces
+  const textContent = $.text().replace(/\s+/g, " ").trim();
+
+  // Parse the address using parse-address
+  const parsedAddress = parseAddress.parseLocation(textContent);
+
+  // Extract name (assuming it's the first part before the address)
+  const nameParts = textContent
+    .split(parsedAddress.street || parsedAddress.number || "")[0]
+    .trim()
+    .split(" ");
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(" ");
+
+  return {
+    shippingFirstName: firstName || "",
+    shippingLastName: lastName || "",
+    address1: `${parsedAddress.number || ""} ${parsedAddress.street || ""}`.trim(),
+    address2: parsedAddress.secondary || "",
+    city: parsedAddress.city || "",
+    state: parsedAddress.state || "",
+    postalCode: parsedAddress.zip || "",
+    country: parsedAddress.country || "US", // Default to US if not specified
+    address_string: textContent,
+  };
+};
+
 export const parseOrderEmail = async filePath => {
-  const content = await fs.readFile(filePath, "utf-8");
-  const $ = cheerio.load(content);
+  const content = await fs.readFile(filePath);
+  const parsedEmail = await simpleParser(content);
+
+  const emailContent = parsedEmail.html || parsedEmail.text;
+  if (!emailContent || typeof emailContent !== "string") {
+    console.error("Email content is not a string or is empty");
+    return;
+  }
+
+  const $ = cheerio.load(emailContent);
 
   const orderNumberElement = $('strong:contains("Order #:")').parent();
   const orderNumberText = orderNumberElement.text().trim();
   const orderNumber = orderNumberText.split(":")[1]?.trim().split("<")[0].trim() || "";
-  const dateMatch = content.match(/Date:\s*(.*)/);
-  const orderDate = dateMatch ? new Date(dateMatch[1]).toISOString() : null;
+  const orderDate = parsedEmail.date ? parsedEmail.date.toISOString() : null;
 
   const customerFirstName = $("h1").first().text().trim().split(",")[0];
-  const toMatch = content.match(/To:\s*(.*)/);
-  const email = toMatch ? toMatch[1].trim() : null;
+  const email = parsedEmail.to?.value?.[0]?.address || "";
 
   const shippingDetailsHtml = $('h4:contains("Shipping:")').parent().next().find("p").first().html();
   let shippingAddress = null;
@@ -148,10 +171,9 @@ export const parseOrderEmail = async filePath => {
   }
 
   const paymentMethod = $('h4:contains("Payment:")').parent().next().text();
-  // const last4 = paymentMethod.match(/ending with (\d{4})/)?.[1];
   const last4 = extractLast4Digits(paymentMethod);
 
-  const dupOrderItems = extractProductInfo(content);
+  const dupOrderItems = extractProductInfo(emailContent);
   const orderItems = removeDuplicates(dupOrderItems);
 
   const subtotal = extractPrice('span:contains("Subtotal")', $) || extractPrice('span:contains("New Subtotal")', $);
@@ -168,13 +190,15 @@ export const parseOrderEmail = async filePath => {
     createdAt: orderDate,
 
     shipping: {
-      first_name: shippingAddress?.shippingFirstName || toCapitalize(customerFirstName),
-      last_name: shippingAddress?.shippingLastName,
-      address_1: shippingAddress?.address1,
-      city: shippingAddress?.city,
-      state: shippingAddress?.state,
-      postalCode: shippingAddress?.postalCode,
-      country: shippingAddress?.country,
+      // first_name: shippingAddress?.shippingFirstName || toCapitalize(customerFirstName),
+      // last_name: shippingAddress?.shippingLastName,
+      // address_1: shippingAddress?.address1,
+      // address_2: shippingAddress?.address2 || "",
+      // city: shippingAddress?.city,
+      // state: shippingAddress?.state,
+      // postalCode: shippingAddress?.postalCode,
+      // country: shippingAddress?.country,
+      address_string: shippingAddress?.address_string,
       email,
     },
     payment: {
@@ -197,7 +221,7 @@ export const findMatchingPayment = (orderData, payments) => {
   const candidatePayments = payments.filter(payment => payment.email === orderData?.shipping.email?.toLowerCase());
 
   // Further filter by amount
-  const amountMatchPayments = candidatePayments.filter(payment => payment.amount === orderData.totalPrice);
+  const amountMatchPayments = candidatePayments.filter(payment => payment.amount / 100 === orderData.totalPrice);
 
   // Further filter by last4 digits
   const last4MatchPayments = amountMatchPayments.filter(payment => payment.last4 === orderData.payment.last4);
@@ -215,65 +239,75 @@ export const findMatchingPayment = (orderData, payments) => {
   return bestMatch;
 };
 
-export const findMatchingPaymentIntent = (orderData, paymentIntentData, matchingPayment) => {
+export const findMatchingPaymentMethod = (orderData, paymentMethodData, matchingPayment) => {
   if (!matchingPayment || !matchingPayment.payment_method) {
     console.warn("No matching payment or payment method found");
     return null;
   }
 
-  // Find the payment intent that matches the payment method from the charge
-  const matchingIntent = paymentIntentData.find(
-    intent => intent.payment_method && intent.payment_method.id === matchingPayment.payment_method
+  // Find the payment method that matches the payment method ID from the charge
+  const matchingPaymentMethod = paymentMethodData.find(
+    payment_method => payment_method.id && payment_method.id === matchingPayment.payment_method
   );
 
-  if (!matchingIntent) {
-    console.warn("No matching payment intent found");
-    return null;
-  }
-
-  // Verify the amount matches
-  if (matchingIntent.amount !== orderData.totalPrice * 100) {
-    // Convert to cents for Stripe
-    console.warn("Payment intent amount does not match order total");
-    return null;
-  }
-
-  // Verify the last4 matches if available
-  if (matchingIntent.payment_method && matchingIntent.payment_method.card) {
-    if (matchingIntent.payment_method.card.last4 !== orderData.payment.last4) {
-      console.warn("Payment method last4 does not match order data");
-      return null;
-    }
-  }
-
-  return matchingIntent;
+  return matchingPaymentMethod;
 };
 
 export const findMatchingShipment = (orderData, shipments) => {
   // Filter shipments by email
   const candidateShipments = shipments.filter(shipment => shipment.email === orderData?.shipping.email?.toLowerCase());
+  console.log({ FoundCandidateShipments: !!candidateShipments });
   // Further filter by address
   const addressMatchShipments = candidateShipments.filter(shipment => {
     const addr = shipment.to_address;
+    const noSpecialCharsAddress = orderData.shipping.address_string.toLowerCase().replace(/[^a-z0-9\s]/g, "");
+    console.log({
+      // addr,
+      shipping: noSpecialCharsAddress,
+      name: addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+      street1: addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+      city: addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+      state: addr.state.toLowerCase(),
+      zip: addr.zip,
+      country: addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+      includesName: noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+      includesStreet1: noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+      includesCity: noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+      includesState: noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+      includesZip: noSpecialCharsAddress.includes(addr.zip.split("-")[0]),
+      includesCountry: noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    });
     return (
-      addr.city.toLowerCase() === orderData.shipping.city.toLowerCase() &&
-      addr.state.toLowerCase() === orderData.shipping.state.toLowerCase() &&
-      addr.zip.split("-")[0] === orderData.shipping.postalCode
+      noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
+      // noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
+      noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
+      noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
+      noSpecialCharsAddress.includes(addr.zip.split("-")[0])
+      // noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, ""))
     );
   });
+
+  console.log({ FoundAddressMatchShipments: !!addressMatchShipments });
 
   // Find the closest date
   let bestMatch = null;
   let minTimeDiff = Infinity;
   addressMatchShipments.forEach(shipment => {
-    const timeDiff = Math.abs(shipment.createdAt - new Date(orderData.createdAt));
+    console.log({ shipment: shipment.buyer_address.created_at, orderData: orderData.createdAt });
+    const timeDiff = Math.abs(new Date(shipment.buyer_address.created_at) - new Date(orderData.createdAt));
     if (timeDiff < minTimeDiff) {
       minTimeDiff = timeDiff;
       bestMatch = shipment;
     }
   });
 
+  console.log({ FoundBestMatch: !!bestMatch });
+
   return bestMatch;
+};
+
+const toTitleCase = str => {
+  return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 };
 
 export const extractShipmentDetails = shipment => {
@@ -286,7 +320,14 @@ export const extractShipmentDetails = shipment => {
     shipment_tracker: shipment.tracker,
     tracking_number: shipment.tracking_code,
     tracking_url: shipment.tracker.public_url,
-    // Add other fields as needed
+    first_name: toTitleCase(shipment.to_address?.name?.split(" ")[0]),
+    last_name: toTitleCase(shipment.to_address?.name?.split(" ")[1]),
+    address_1: toTitleCase(shipment.to_address?.street1),
+    address_2: shipment.to_address?.street2,
+    city: toTitleCase(shipment.to_address?.city),
+    state: shipment.to_address?.state,
+    postalCode: shipment.to_address?.zip?.split("-")[0],
+    country: shipment.to_address?.country,
   };
 };
 
@@ -295,7 +336,7 @@ export const preprocessPayments = paymentsData => {
   const payments = paymentsData.map(payment => {
     const email = payment?.customer?.email?.toLowerCase();
     const last4 = payment.payment_method_details?.card?.last4;
-    const amount = payment.amount / 100; // Stripe amounts are in cents
+    const amount = payment.amount; // Stripe amounts are in cents
     const createdAt = new Date(payment.created * 1000); // Stripe timestamps are in seconds
     return { ...payment, email, last4, amount, createdAt };
   });
