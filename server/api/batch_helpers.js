@@ -167,7 +167,7 @@ const extractShippingAddress = html => {
   // Parse the address using parse-address
   const parsedAddress = parseAddress.parseLocation(addressText);
 
-  console.log({ parsedAddress });
+  // console.log({ parsedAddress });
 
   // Extract first name and last name
   const nameParts = name.split(" ");
@@ -211,7 +211,7 @@ export const parseOrderEmail = async filePath => {
   // let shippingAddress = null;
   // if (shippingDetailsHtml) {
   const shippingAddress = extractShippingAddress(emailContent);
-  console.log({ shippingAddress });
+  // console.log({ shippingAddress });
   // }
 
   const paymentMethod = $('h4:contains("Payment:")').parent().next().text();
@@ -227,6 +227,15 @@ export const parseOrderEmail = async filePath => {
   const { code: discountCode, amount: discountAmount } = extractDiscountInfo($);
 
   const orderNote = $('strong:contains("Order Note:")').parent().text().replace("Order Note:", "").trim();
+
+  console.log({
+    orderItemsPrice: orderItems.reduce((a, c) => a + c.price * c.quantity, 0),
+    subtotal: subtotal - discountAmount,
+    discountAmount,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+  });
 
   return {
     orderNumber,
@@ -251,7 +260,7 @@ export const parseOrderEmail = async filePath => {
     promo_code: discountCode,
     promo_amount: discountAmount,
     orderItems,
-    itemsPrice: subtotal,
+    itemsPrice: subtotal - discountAmount,
     taxPrice,
     shippingPrice,
     totalPrice,
@@ -299,7 +308,7 @@ export const findMatchingPaymentMethod = (orderData, paymentMethodData, matching
 export const findMatchingShipment = (orderData, shipments) => {
   // Filter shipments by email
   const candidateShipments = shipments.filter(shipment => shipment.email === orderData?.shipping.email?.toLowerCase());
-  console.log({ FoundCandidateShipments: !!candidateShipments });
+  // console.log({ FoundCandidateShipments: !!candidateShipments });
   // Further filter by address
   const addressMatchShipments = candidateShipments.filter(shipment => {
     const addr = shipment.to_address;
@@ -307,34 +316,34 @@ export const findMatchingShipment = (orderData, shipments) => {
       .toLowerCase()
       .replace(/[^a-z0-9\s]/g, "")
       .replace("  ", " ");
-    console.log({
-      // addr,
-      shipping: noSpecialCharsAddress,
-      name: addr.name
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace("  ", " "),
-      street1: addr.street1
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace("  ", " "),
-      city: addr.city
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace("  ", " "),
-      state: addr.state.toLowerCase(),
-      zip: addr.zip,
-      country: addr.country
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace("  ", " "),
-      includesName: noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesStreet1: noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesCity: noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesState: noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesZip: noSpecialCharsAddress.includes(addr.zip.split("-")[0]),
-      includesCountry: noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-    });
+    // console.log({
+    //   // addr,
+    //   shipping: noSpecialCharsAddress,
+    //   name: addr.name
+    //     .toLowerCase()
+    //     .replace(/[^a-z0-9\s]/g, "")
+    //     .replace("  ", " "),
+    //   street1: addr.street1
+    //     .toLowerCase()
+    //     .replace(/[^a-z0-9\s]/g, "")
+    //     .replace("  ", " "),
+    //   city: addr.city
+    //     .toLowerCase()
+    //     .replace(/[^a-z0-9\s]/g, "")
+    //     .replace("  ", " "),
+    //   state: addr.state.toLowerCase(),
+    //   zip: addr.zip,
+    //   country: addr.country
+    //     .toLowerCase()
+    //     .replace(/[^a-z0-9\s]/g, "")
+    //     .replace("  ", " "),
+    //   includesName: noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesStreet1: noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesCity: noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesState: noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesZip: noSpecialCharsAddress.includes(addr.zip.split("-")[0]),
+    //   includesCountry: noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    // });
     return (
       noSpecialCharsAddress.includes(
         addr.name
@@ -360,7 +369,7 @@ export const findMatchingShipment = (orderData, shipments) => {
     );
   });
 
-  console.log({ FoundAddressMatchShipments: !!addressMatchShipments, addressMatchShipments });
+  // console.log({ FoundAddressMatchShipments: !!addressMatchShipments, addressMatchShipments });
 
   // Find the closest date
   let bestMatch = null;
@@ -374,7 +383,7 @@ export const findMatchingShipment = (orderData, shipments) => {
     }
   });
 
-  console.log({ FoundBestMatch: !!bestMatch, bestMatch });
+  // console.log({ FoundBestMatch: !!bestMatch, bestMatch });
 
   return bestMatch;
 };
@@ -384,17 +393,17 @@ const toTitleCase = str => {
 };
 
 export const extractShipmentDetails = shipment => {
-  console.log({ shipmentExtractShipmentDetails: shipment });
-  console.log({
-    first_name: toTitleCase(shipment.to_address?.name?.split(" ")[0]),
-    last_name: toTitleCase(shipment.to_address?.name?.split(" ")[1]),
-    address_1: toTitleCase(shipment.to_address?.street1),
-    address_2: shipment.to_address?.street2,
-    city: toTitleCase(shipment.to_address?.city),
-    state: shipment.to_address?.state,
-    postalCode: shipment.to_address?.zip?.split("-")[0],
-    country: shipment.to_address?.country,
-  });
+  // console.log({ shipmentExtractShipmentDetails: shipment });
+  // console.log({
+  //   first_name: toTitleCase(shipment.to_address?.name?.split(" ")[0]),
+  //   last_name: toTitleCase(shipment.to_address?.name?.split(" ")[1]),
+  //   address_1: toTitleCase(shipment.to_address?.street1),
+  //   address_2: shipment.to_address?.street2,
+  //   city: toTitleCase(shipment.to_address?.city),
+  //   state: shipment.to_address?.state,
+  //   postalCode: shipment.to_address?.zip?.split("-")[0],
+  //   country: shipment.to_address?.country,
+  // });
   if (!shipment) return {};
   return {
     email: shipment.email,
