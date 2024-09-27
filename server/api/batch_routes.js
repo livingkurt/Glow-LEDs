@@ -38,6 +38,7 @@ import {
   preprocessPayments,
   extractShipmentDetails,
 } from "./batch_helpers";
+import { Ticket } from "./tickets";
 const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -6348,7 +6349,7 @@ router.put("/restore_orders", async (req, res) => {
     for (const orderData of orderEmailsData) {
       if (!orderData?.orderNumber) {
         skippedOrders.push({
-          email: orderData?.email,
+          email: orderData.shipping.email,
           orderNumber: orderData?.orderNumber,
           reason: "Order data not found",
         });
@@ -6358,7 +6359,7 @@ router.put("/restore_orders", async (req, res) => {
       const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
       if (existingOrder) {
         skippedOrders.push({
-          email: orderData?.email,
+          email: orderData.shipping.email,
           orderNumber: orderData?.orderNumber,
           reason: "Order already exists",
         });
@@ -6385,9 +6386,9 @@ router.put("/restore_orders", async (req, res) => {
       //   shipping: orderData.shipping,
       // });
 
-      if (orderData.payment.last4 === "4242") {
+      if (orderData.payment.last4 === "4242" || orderData.shipping.email === "admin@test.com") {
         skippedOrders.push({
-          email: orderData?.email,
+          email: orderData?.shipping?.email,
           orderNumber: orderData?.orderNumber,
           reason: "Test Order",
         });
@@ -6399,7 +6400,24 @@ router.put("/restore_orders", async (req, res) => {
 
       const orderItems = await Promise.all(
         orderData.orderItems.map(async item => {
-          const product = await Product.findOne({ name: item.name }).populate("images");
+          if (item.name.includes("Pass")) {
+            const ticket = await Ticket.findOne({ title: item.name }).populate("image");
+            return {
+              ...ticket,
+              product: ticket ? ticket._id : null,
+              name: item.name,
+              price: item.price,
+              display_image_object: ticket?.image,
+              quantity: item.quantity,
+              max_display_quantity: ticket?.max_display_quantity,
+              max_quantity: ticket?.max_quantity,
+              count_in_stock: ticket?.count_in_stock,
+              pathname: ticket?.pathname,
+              finite_stock: ticket?.finite_stock,
+              itemType: "ticket",
+            };
+          }
+          let product = await Product.findOne({ name: item.name }).populate("images");
           return {
             ...item,
             product: product ? product._id : null,
@@ -6432,51 +6450,36 @@ router.put("/restore_orders", async (req, res) => {
           };
         })
       );
-
-      const shipping = extractShipmentDetails(matchingShipment);
-      // console.log({
-      //   labelAddress: {
-      //     first_name: shipping.first_name,
-      //     last_name: shipping.last_name,
-      //     address_1: shipping.address_1,
-      //     address_2: shipping.address_2,
-      //     city: shipping.city,
-      //     state: shipping.state,
-      //     postalCode: shipping.postalCode,
-      //     country: shipping.country,
-      //   },
-      //   orderAddress: {
-      //     first_name: orderData.shipping.first_name,
-      //     last_name: orderData.shipping.last_name,
-      //     address_1: orderData.shipping.address_1,
-      //     address_2: orderData.shipping.address_2,
-      //     city: orderData.shipping.city,
-      //     state: orderData.shipping.state,
-      //     postalCode: orderData.shipping.postalCode,
-      //     country: orderData.shipping.country,
-      //     email: orderData.shipping.email,
-      //     address_string: orderData.shipping.address_string,
-      //   },
-      // });
-
-      if (
-        !shipping.first_name ||
-        !shipping.last_name ||
-        !shipping.address_1 ||
-        !shipping.city ||
-        !shipping.state ||
-        !shipping.postalCode ||
-        !shipping.country
-      ) {
-        skippedOrders.push({
-          email: orderData?.email,
-          orderNumber: orderData?.orderNumber,
-          reason: "Shipping Label Not Found",
-        });
-        incompleteShippingOrders.push(orderData);
-        continue;
+      console.log({
+        orderAddress: {
+          first_name: orderData.shipping.first_name,
+          last_name: orderData.shipping.last_name,
+          address_1: orderData.shipping.address_1,
+          address_2: orderData.shipping.address_2,
+          city: orderData.shipping.city,
+          state: orderData.shipping.state,
+          postalCode: orderData.shipping.postalCode,
+          country: orderData.shipping.country,
+          email: orderData.shipping.email,
+          address_string: orderData.shipping.address_string,
+        },
+      });
+      let shipping = {};
+      if (!matchingShipment) {
+        shipping = extractShipmentDetails(matchingShipment);
       }
-
+      console.log({
+        labelAddress: {
+          first_name: shipping.first_name,
+          last_name: shipping.last_name,
+          address_1: shipping.address_1,
+          address_2: shipping.address_2,
+          city: shipping.city,
+          state: shipping.state,
+          postalCode: shipping.postalCode,
+          country: shipping.country,
+        },
+      });
       const order = new Order({
         _id: orderData._id,
         user: user?._id || null,
@@ -6484,6 +6487,14 @@ router.put("/restore_orders", async (req, res) => {
         shipping: {
           ...orderData.shipping,
           ...shipping,
+          first_name: shipping?.first_name || orderData.shipping.first_name,
+          last_name: shipping?.last_name || orderData.shipping.last_name,
+          address_1: shipping?.address_1 || orderData.shipping.address_1,
+          address_2: shipping?.address_2 || orderData.shipping.address_2 || "",
+          city: shipping?.city || orderData.shipping.city,
+          state: shipping?.state || orderData.shipping.state,
+          postalCode: shipping?.postalCode || orderData.shipping.postalCode,
+          country: shipping?.country || orderData.shipping.country,
         },
         payment: {
           paymentMethod: "stripe",
