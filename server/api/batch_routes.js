@@ -6508,6 +6508,13 @@ router.put("/restore_orders", async (req, res) => {
           payment: matchingPaymentMethod || {},
         },
         itemsPrice: orderData.itemsPrice,
+        serviceFee: orderItems.some(item => item.itemType === "ticket")
+          ? (
+              orderItems
+                .filter(item => item.itemType === "ticket")
+                .reduce((acc, item) => acc + item.price * item.quantity, 0) * 0.1
+            ).toFixed(2)
+          : 0,
         taxPrice: orderData.taxPrice,
         shippingPrice: orderData?.shippingPrice,
         promo_code: orderData.promo_code,
