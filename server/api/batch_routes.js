@@ -6179,48 +6179,6 @@ router.route("/fetch_stripe_data").put(async (req, res) => {
   }
 });
 
-router.route("/fetch_stripe_payment_intents").put(async (req, res) => {
-  const startDate = Math.floor(new Date("2024-05-01").getTime() / 1000);
-  let allPaymentIntents = [];
-  let hasMore = true;
-  let lastObject = null;
-
-  try {
-    while (hasMore) {
-      const params = {
-        created: { gte: startDate },
-        expand: ["data.payment_method"],
-        limit: 100,
-      };
-
-      if (lastObject) {
-        params.starting_after = lastObject;
-      }
-
-      const paymentIntentList = await stripe.paymentIntents.list(params);
-
-      allPaymentIntents = allPaymentIntents.concat(paymentIntentList.data);
-      hasMore = paymentIntentList.has_more;
-
-      if (hasMore) {
-        lastObject = paymentIntentList.data[paymentIntentList.data.length - 1].id;
-      }
-
-      console.log(`Retrieved ${allPaymentIntents.length} payment intents so far...`);
-    }
-
-    await fs.writeFile("stripe_payment_intents_data.json", JSON.stringify(allPaymentIntents, null, 2));
-    console.log(`Retrieved a total of ${allPaymentIntents.length} payment intent objects from Stripe.`);
-
-    res.status(200).json({
-      message: `Retrieved ${allPaymentIntents.length} payment intent objects from Stripe.`,
-      paymentIntents: allPaymentIntents,
-    });
-  } catch (error) {
-    console.error("Error fetching payment intents from Stripe:", error);
-    res.status(500).send({ error: error.message });
-  }
-});
 router.route("/fetch_stripe_payment_methods").put(async (req, res) => {
   try {
     // Define the directory where your data is stored
@@ -6257,6 +6215,41 @@ router.route("/fetch_stripe_payment_methods").put(async (req, res) => {
     console.log(`Saved ${fetchedPaymentMethods.length} payment methods to payment_methods_data.json`);
   } catch (error) {
     console.error("Error:", error);
+  }
+});
+
+router.route("/fetch_stripe_refunds").put(async (req, res) => {
+  try {
+    // Define the directory where your data is stored
+    const dataDir = path.join(process.cwd(), "server", "api", "zOrdersRestore");
+
+    // Load the charge data from your JSON file
+    const chargeData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_full_data.json"), "utf-8"));
+
+    // Array to store fetched refunds
+    const fetchedRefunds = [];
+
+    // Fetch refunds for each charge
+    for (const charge of chargeData) {
+      try {
+        const refunds = await stripe.refunds.list({ charge: charge.id });
+        if (refunds.data.length > 0) {
+          fetchedRefunds.push(...refunds.data);
+          console.log(`Fetched ${refunds.data.length} refunds for charge ${charge.id}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching refunds for charge ${charge.id}:`, error);
+      }
+    }
+
+    // Save the fetched refunds to a JSON file
+    await fs.writeFile(path.join(dataDir, "stripe_refunds_data.json"), JSON.stringify(fetchedRefunds, null, 2));
+    console.log(`Saved ${fetchedRefunds.length} refunds to stripe_refunds_data.json`);
+
+    res.status(200).json({ message: `Successfully fetched and saved ${fetchedRefunds.length} refunds.` });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred while fetching refunds." });
   }
 });
 
@@ -6342,6 +6335,7 @@ router.put("/restore_orders", async (req, res) => {
     const paymentMethodData = JSON.parse(
       await fs.readFile(path.join(dataDir, "stripe_payment_methods_data.json"), "utf-8")
     );
+    const refundsData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_refunds_data.json"), "utf-8"));
     // Preprocess payments and shipments
     const charges = preprocessPayments(chargeData);
     const shipments = preprocessShipments(shipmentsData);
@@ -6378,6 +6372,7 @@ router.put("/restore_orders", async (req, res) => {
         payment_method => payment_method?.id === matchingPayment?.payment_method
       );
 
+      const matchingRefunds = refundsData.filter(refund => refund?.charge === matchingPayment?.id);
       // console.log({
       //   FoundMatchingPayment: !!matchingPayment,
       //   FoundMatchingPaymentMethod: !!matchingPaymentMethod,
@@ -6506,7 +6501,9 @@ router.put("/restore_orders", async (req, res) => {
           last4: orderData.payment.last4,
           charge: matchingPayment || {},
           payment: matchingPaymentMethod || {},
+          refund: matchingRefunds || [],
         },
+        isRefunded: matchingRefunds?.length > 0,
         itemsPrice: orderData.itemsPrice,
         serviceFee: orderItems.some(item => item.itemType === "ticket")
           ? (
@@ -6515,6 +6512,8 @@ router.put("/restore_orders", async (req, res) => {
                 .reduce((acc, item) => acc + item.price * item.quantity, 0) * 0.1
             ).toFixed(2)
           : 0,
+        tracking_number: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.tracking_number,
+        tracking_url: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.tracking_url,
         taxPrice: orderData.taxPrice,
         shippingPrice: orderData?.shippingPrice,
         promo_code: orderData.promo_code,
