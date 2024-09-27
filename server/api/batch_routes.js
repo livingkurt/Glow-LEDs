@@ -6434,30 +6434,30 @@ router.put("/restore_orders", async (req, res) => {
       );
 
       const shipping = extractShipmentDetails(matchingShipment);
-      console.log({
-        labelAddress: {
-          first_name: shipping.first_name,
-          last_name: shipping.last_name,
-          address_1: shipping.address_1,
-          address_2: shipping.address_2,
-          city: shipping.city,
-          state: shipping.state,
-          postalCode: shipping.postalCode,
-          country: shipping.country,
-        },
-        orderAddress: {
-          first_name: orderData.shipping.first_name,
-          last_name: orderData.shipping.last_name,
-          address_1: orderData.shipping.address_1,
-          address_2: orderData.shipping.address_2,
-          city: orderData.shipping.city,
-          state: orderData.shipping.state,
-          postalCode: orderData.shipping.postalCode,
-          country: orderData.shipping.country,
-          email: orderData.shipping.email,
-          address_string: orderData.shipping.address_string,
-        },
-      });
+      // console.log({
+      //   labelAddress: {
+      //     first_name: shipping.first_name,
+      //     last_name: shipping.last_name,
+      //     address_1: shipping.address_1,
+      //     address_2: shipping.address_2,
+      //     city: shipping.city,
+      //     state: shipping.state,
+      //     postalCode: shipping.postalCode,
+      //     country: shipping.country,
+      //   },
+      //   orderAddress: {
+      //     first_name: orderData.shipping.first_name,
+      //     last_name: orderData.shipping.last_name,
+      //     address_1: orderData.shipping.address_1,
+      //     address_2: orderData.shipping.address_2,
+      //     city: orderData.shipping.city,
+      //     state: orderData.shipping.state,
+      //     postalCode: orderData.shipping.postalCode,
+      //     country: orderData.shipping.country,
+      //     email: orderData.shipping.email,
+      //     address_string: orderData.shipping.address_string,
+      //   },
+      // });
 
       if (
         !shipping.first_name ||
@@ -6506,7 +6506,7 @@ router.put("/restore_orders", async (req, res) => {
 
       await order.save();
       console.log(
-        `Order created: ${order._id}, email: ${order.shipping.email}, name: ${order.shipping.first_name} ${order.shipping.last_name}`
+        `Order created: ${order._id}, email: ${shipping.email}, name: ${shipping.first_name} ${shipping.last_name}`
       );
       restoredOrders.push(order);
       // } else {

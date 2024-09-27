@@ -37,6 +37,7 @@ export const extractDiscountInfo = $ => {
   return { code: "", amount: 0 };
 };
 
+// Function to decode quoted-printable encoding
 function decodeQuotedPrintable(str) {
   return str
     .replace(/=\r\n/g, "") // Remove soft line breaks (Windows)
@@ -45,6 +46,23 @@ function decodeQuotedPrintable(str) {
       return String.fromCharCode(parseInt(hex, 16));
     });
 }
+
+// Updated removeDuplicates function to sum quantities of duplicate products
+const removeDuplicates = products => {
+  const productMap = new Map();
+
+  products.forEach(product => {
+    const key = `${product.name}-${product.price}-${JSON.stringify(product.selectedOptions)}`;
+    if (productMap.has(key)) {
+      // Sum the quantities for duplicate products
+      productMap.get(key).quantity;
+    } else {
+      productMap.set(key, { ...product });
+    }
+  });
+
+  return Array.from(productMap.values());
+};
 
 const extractProductInfo = html => {
   // Decode the HTML
@@ -63,9 +81,29 @@ const extractProductInfo = html => {
     const priceElement = row.querySelector("label");
 
     if (nameElement && priceElement) {
-      const name = nameElement.textContent.trim().replace(/\s+/g, " ");
-      const price = parseFloat(priceElement.textContent.trim().replace("$", ""));
+      let nameText = nameElement.textContent.trim().replace(/\s+/g, " ");
+      let priceText = priceElement.textContent.trim();
 
+      let quantity = 1;
+
+      // Extract quantity from the name (e.g., "2x Frosted Dome Diffusers - Classic Style")
+      let nameMatch = nameText.match(/^(\d+)x\s+(.*)/);
+      if (nameMatch) {
+        quantity = parseInt(nameMatch[1], 10);
+        nameText = nameMatch[2].trim();
+      } else {
+        // If quantity not in name, check in price (e.g., "2x $39.98")
+        let priceMatch = priceText.match(/^(\d+)x\s+\$(.*)/);
+        if (priceMatch) {
+          quantity = parseInt(priceMatch[1], 10);
+          priceText = `$${priceMatch[2].trim()}`;
+        }
+      }
+
+      const name = nameText;
+      const price = parseFloat(priceText.replace("$", ""));
+
+      // Extract selected options (if any)
       const optionsElements = row.querySelectorAll('div[style*="font-size:25px"] span[style*="display: inline-block"]');
 
       const selectedOptions = Array.from(optionsElements)
@@ -74,10 +112,16 @@ const extractProductInfo = html => {
           const [option, value] = optionText.split(":").map(s => s.trim());
           return { option, value };
         })
-        .filter(option => option.option && option.value); // Filter out any invalid options
+        .filter(option => option.option && option.value)
+        .reduce((acc, current) => {
+          if (!acc.some(item => item.option === current.option)) {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
 
       products.push({
-        quantity: 1,
+        quantity: quantity,
         name: name,
         selectedOptions: selectedOptions,
         price: isNaN(price) ? 0 : price,
@@ -85,20 +129,10 @@ const extractProductInfo = html => {
     }
   });
 
-  return products;
-};
+  const orderItems = removeDuplicates(products);
+  console.log({ orderItems: JSON.stringify(orderItems) });
 
-const removeDuplicates = products => {
-  const productMap = new Map();
-
-  products.forEach(product => {
-    const key = `${product.name}-${product.price}-${product.selectedOptions.join(",")}`;
-    if (!productMap.has(key)) {
-      productMap.set(key, { ...product });
-    }
-  });
-
-  return Array.from(productMap.values());
+  return orderItems;
 };
 
 export const extractShippingAddress = html => {
@@ -173,8 +207,7 @@ export const parseOrderEmail = async filePath => {
   const paymentMethod = $('h4:contains("Payment:")').parent().next().text();
   const last4 = extractLast4Digits(paymentMethod);
 
-  const dupOrderItems = extractProductInfo(emailContent);
-  const orderItems = removeDuplicates(dupOrderItems);
+  const orderItems = extractProductInfo(emailContent);
 
   const subtotal = extractPrice('span:contains("Subtotal")', $) || extractPrice('span:contains("New Subtotal")', $);
   const taxPrice = extractPrice('span:contains("Taxes")', $);
@@ -256,27 +289,27 @@ export const findMatchingPaymentMethod = (orderData, paymentMethodData, matching
 export const findMatchingShipment = (orderData, shipments) => {
   // Filter shipments by email
   const candidateShipments = shipments.filter(shipment => shipment.email === orderData?.shipping.email?.toLowerCase());
-  console.log({ FoundCandidateShipments: !!candidateShipments });
+  // console.log({ FoundCandidateShipments: !!candidateShipments });
   // Further filter by address
   const addressMatchShipments = candidateShipments.filter(shipment => {
     const addr = shipment.to_address;
     const noSpecialCharsAddress = orderData.shipping.address_string.toLowerCase().replace(/[^a-z0-9\s]/g, "");
-    console.log({
-      // addr,
-      shipping: noSpecialCharsAddress,
-      name: addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
-      street1: addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
-      city: addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
-      state: addr.state.toLowerCase(),
-      zip: addr.zip,
-      country: addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
-      includesName: noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesStreet1: noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesCity: noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesState: noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-      includesZip: noSpecialCharsAddress.includes(addr.zip.split("-")[0]),
-      includesCountry: noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
-    });
+    // console.log({
+    //   // addr,
+    //   shipping: noSpecialCharsAddress,
+    //   name: addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+    //   street1: addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+    //   city: addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+    //   state: addr.state.toLowerCase(),
+    //   zip: addr.zip,
+    //   country: addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, ""),
+    //   includesName: noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesStreet1: noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesCity: noSpecialCharsAddress.includes(addr.city.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesState: noSpecialCharsAddress.includes(addr.state.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    //   includesZip: noSpecialCharsAddress.includes(addr.zip.split("-")[0]),
+    //   includesCountry: noSpecialCharsAddress.includes(addr.country.toLowerCase().replace(/[^a-z0-9\s]/g, "")),
+    // });
     return (
       noSpecialCharsAddress.includes(addr.name.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
       // noSpecialCharsAddress.includes(addr.street1.toLowerCase().replace(/[^a-z0-9\s]/g, "")) &&
@@ -287,13 +320,13 @@ export const findMatchingShipment = (orderData, shipments) => {
     );
   });
 
-  console.log({ FoundAddressMatchShipments: !!addressMatchShipments });
+  // console.log({ FoundAddressMatchShipments: !!addressMatchShipments });
 
   // Find the closest date
   let bestMatch = null;
   let minTimeDiff = Infinity;
   addressMatchShipments.forEach(shipment => {
-    console.log({ shipment: shipment.buyer_address.created_at, orderData: orderData.createdAt });
+    // console.log({ shipment: shipment.buyer_address.created_at, orderData: orderData.createdAt });
     const timeDiff = Math.abs(new Date(shipment.buyer_address.created_at) - new Date(orderData.createdAt));
     if (timeDiff < minTimeDiff) {
       minTimeDiff = timeDiff;
@@ -301,7 +334,7 @@ export const findMatchingShipment = (orderData, shipments) => {
     }
   });
 
-  console.log({ FoundBestMatch: !!bestMatch });
+  // console.log({ FoundBestMatch: !!bestMatch });
 
   return bestMatch;
 };
