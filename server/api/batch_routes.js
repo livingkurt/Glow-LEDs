@@ -6381,7 +6381,11 @@ router.put("/restore_orders", async (req, res) => {
       //   shipping: orderData?.shipping?,
       // });
 
-      if (orderData.payment.last4 === "4242" || orderData?.shipping?.email === "admin@test.com") {
+      if (
+        orderData.payment.last4 === "4242" ||
+        orderData?.shipping?.email === "admin@test.com" ||
+        orderData?.shipping?.email === "test@example.com"
+      ) {
         skippedOrders.push({
           email: orderData?.shipping?.email,
           orderNumber: orderData?.orderNumber,
@@ -6445,39 +6449,57 @@ router.put("/restore_orders", async (req, res) => {
           };
         })
       );
-      console.log({
-        orderAddress: {
-          first_name: orderData?.shipping?.first_name,
-          last_name: orderData?.shipping?.last_name,
-          address_1: orderData?.shipping?.address_1,
-          address_2: orderData?.shipping?.address_2,
-          city: orderData?.shipping?.city,
-          state: orderData?.shipping?.state,
-          postalCode: orderData?.shipping?.postalCode,
-          country: orderData?.shipping?.country,
-          email: orderData?.shipping?.email,
-          address_string: orderData?.shipping?.address_string,
-        },
-      });
+      // console.log({
+      //   orderAddress: {
+      //     first_name: orderData?.shipping?.first_name,
+      //     last_name: orderData?.shipping?.last_name,
+      //     address_1: orderData?.shipping?.address_1,
+      //     address_2: orderData?.shipping?.address_2,
+      //     city: orderData?.shipping?.city,
+      //     state: orderData?.shipping?.state,
+      //     postalCode: orderData?.shipping?.postalCode,
+      //     country: orderData?.shipping?.country,
+      //     email: orderData?.shipping?.email,
+      //     address_string: orderData?.shipping?.address_string,
+      //   },
+      // });
       let shipping = {};
-      console.log({ matchingShipment });
+      // console.log({ matchingShipment });
       if (matchingShipment) {
         shipping = extractShipmentDetails(matchingShipment);
       }
-      console.log({
-        labelAddress: {
-          first_name: shipping?.first_name,
-          last_name: shipping?.last_name,
-          address_1: shipping?.address_1,
-          address_2: shipping?.address_2,
-          city: shipping?.city,
-          state: shipping?.state,
-          postalCode: shipping?.postalCode,
-          country: shipping?.country,
-        },
-      });
+      // console.log({
+      //   labelAddress: {
+      //     first_name: shipping?.first_name,
+      //     last_name: shipping?.last_name,
+      //     address_1: shipping?.address_1,
+      //     address_2: shipping?.address_2,
+      //     city: shipping?.city,
+      //     state: shipping?.state,
+      //     postalCode: shipping?.postalCode,
+      //     country: shipping?.country,
+      //   },
+      // });
+      let status = "paid";
+      switch (matchingShipment?.status) {
+        case "pre_transit":
+          status = "label_created";
+          break;
+        case "in_transit":
+          status = "in_transit";
+          break;
+        case "out_for_delivery":
+          status = "out_for_delivery";
+          break;
+        case "delivered":
+          status = "delivered";
+          break;
+        default:
+          status = "paid";
+      }
+
       const order = new Order({
-        _id: orderData._id,
+        _id: orderData.orderNumber,
         user: user?._id || null,
         orderItems,
         shipping: {
@@ -6522,7 +6544,10 @@ router.put("/restore_orders", async (req, res) => {
         totalPrice: orderData.totalPrice,
         order_note: orderData.order_note,
         paidAt: orderData.createdAt,
-        status: "delivered",
+        status:
+          new Date(orderData.createdAt) < new Date("2024-09-01") || orderItems.every(item => item.itemType === "ticket")
+            ? "delivered"
+            : status,
         createdAt: orderData.createdAt,
       });
 
