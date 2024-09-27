@@ -1175,17 +1175,15 @@ alt=3D"logo" style=3D"width:143px;">
 
 `;
 
-// Function to decode quoted-printable encoding
 function decodeQuotedPrintable(str) {
   return str
     .replace(/=\r\n/g, "") // Remove soft line breaks (Windows)
-    .replace(/=\n/g, "") // Remove soft line breaks (Unix)
+    .replace(/=\n/g, "")
     .replace(/=([0-9A-F]{2})/gi, (match, hex) => {
       return String.fromCharCode(parseInt(hex, 16));
     });
 }
 
-// Updated removeDuplicates function to sum quantities of duplicate products
 const removeDuplicates = products => {
   const productMap = new Map();
 
@@ -1193,7 +1191,7 @@ const removeDuplicates = products => {
     const key = `${product.name}-${product.price}-${JSON.stringify(product.selectedOptions)}`;
     if (productMap.has(key)) {
       // Sum the quantities for duplicate products
-      productMap.get(key).quantity;
+      productMap.get(key).quantity += product.quantity;
     } else {
       productMap.set(key, { ...product });
     }
@@ -1210,13 +1208,13 @@ const extractProductInfo = html => {
   const document = dom.window.document;
 
   const products = [];
-  const productRows = document.querySelectorAll(
-    'table[style*="max-width:560px"] > tbody > tr > td > table > tbody > tr'
-  );
+  // Select each product table using the unique style attribute
+  const productTables = document.querySelectorAll('table[style*="border-bottom: 1px white solid;"]');
 
-  productRows.forEach(row => {
-    const nameElement = row.querySelector('span[style*="font-size:16px"]');
-    const priceElement = row.querySelector("label");
+  productTables.forEach(table => {
+    // Extract product name
+    const nameElement = table.querySelector('span[style*="font-size:16px"]');
+    const priceElement = table.querySelector("label");
 
     if (nameElement && priceElement) {
       let nameText = nameElement.textContent.trim().replace(/\s+/g, " ");
@@ -1242,7 +1240,9 @@ const extractProductInfo = html => {
       const price = parseFloat(priceText.replace("$", ""));
 
       // Extract selected options (if any)
-      const optionsElements = row.querySelectorAll('div[style*="font-size:25px"] span[style*="display: inline-block"]');
+      const optionsElements = table.querySelectorAll(
+        'div[style*="font-size:25px"] span[style*="display: inline-block"]'
+      );
 
       const selectedOptions = Array.from(optionsElements)
         .map(opt => {
@@ -1251,6 +1251,7 @@ const extractProductInfo = html => {
           return { option, value };
         })
         .filter(option => option.option && option.value)
+        // Remove duplicate options within the same product
         .reduce((acc, current) => {
           if (!acc.some(item => item.option === current.option)) {
             acc.push(current);
@@ -1268,7 +1269,6 @@ const extractProductInfo = html => {
   });
 
   const orderItems = removeDuplicates(products);
-  console.log({ orderItems: JSON.stringify(orderItems) });
 
   return orderItems;
 };
