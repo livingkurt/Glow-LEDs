@@ -85,7 +85,6 @@ const useOrdersPage = ({ userProfile }) => {
                 ))}
               </List>
             </div>
-            {console.log({ row })}
             <div className="mt-10px">
               {row.order_note && (
                 <div className="ai-c">
