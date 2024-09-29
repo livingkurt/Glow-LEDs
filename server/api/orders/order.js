@@ -22,6 +22,7 @@ const shippingSchema = {
   international: { type: Boolean },
   phone_number: { type: String },
   country: { type: String },
+  address_string: { type: String },
 };
 
 const paymentSchema = {
@@ -30,6 +31,7 @@ const paymentSchema = {
   charge: { type: Object },
   refund: { type: Array },
   refund_reason: { type: Array },
+  last4: { type: String },
 };
 const paymentsSchema = {
   paymentMethod: { type: String },

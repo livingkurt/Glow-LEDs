@@ -21,7 +21,7 @@ import { isAdmin, isAuth } from "../middlewares/authMiddleware";
 import { Cart } from "./carts";
 import { promises as fs } from "fs";
 import path from "path";
-
+import * as cheerio from "cheerio";
 import axios from "axios";
 import appRoot from "app-root-path";
 import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
@@ -29,6 +29,16 @@ import config from "../config";
 import Stripe from "stripe";
 import { Team } from "./teams";
 import { Event } from "./events";
+import {
+  preprocessShipments,
+  findMatchingPayment,
+  findMatchingPaymentMethod,
+  findMatchingShipment,
+  parseOrderEmail,
+  preprocessPayments,
+  extractShipmentDetails,
+} from "./batch_helpers";
+import { Ticket } from "./tickets";
 const Papa = require("papaparse");
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -3867,19 +3877,19 @@ router.route("/migrate_display_image").put(async (req, res) => {
   };
 
   try {
-    // Migrate Cart schema
-    const carts = await Cart.find({});
-    for (const cart of carts) {
-      let modified = false;
-      for (const item of cart.cartItems) {
-        if (await migrateDisplayImage(item, "Cart", cart._id)) {
-          modified = true;
-        }
-      }
-      if (modified) {
-        await cart.save();
-      }
-    }
+    // // Migrate Cart schema
+    // const carts = await Cart.find({});
+    // for (const cart of carts) {
+    //   let modified = false;
+    //   for (const item of cart.cartItems) {
+    //     if (await migrateDisplayImage(item, "Cart", cart._id)) {
+    //       modified = true;
+    //     }
+    //   }
+    //   if (modified) {
+    //     await cart.save();
+    //   }
+    // }
 
     // Migrate Order schema
     const orders = await Order.find({});
@@ -6123,6 +6133,447 @@ router.route("/migrate_content_links").put(async (req, res) => {
   } catch (error) {
     console.error("Migration failed:", error);
     res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/fetch_stripe_data").put(async (req, res) => {
+  const startDate = Math.floor(new Date("2024-05-01").getTime() / 1000);
+  let allCharges = [];
+  let hasMore = true;
+  let lastObject = null;
+
+  try {
+    while (hasMore) {
+      const params = {
+        created: { gte: startDate },
+        expand: ["data.customer", "data.invoice", "data.payment_intent"],
+        limit: 100,
+      };
+
+      if (lastObject) {
+        params.starting_after = lastObject;
+      }
+
+      const chargeList = await stripe.charges.list(params);
+
+      allCharges = allCharges.concat(chargeList.data);
+      hasMore = chargeList.has_more;
+
+      if (hasMore) {
+        lastObject = chargeList.data[chargeList.data.length - 1].id;
+      }
+
+      console.log(`Retrieved ${allCharges.length} charges so far...`);
+    }
+
+    await fs.writeFile("stripe_full_data.json", JSON.stringify(allCharges, null, 2));
+    console.log(`Retrieved a total of ${allCharges.length} charge objects from Stripe.`);
+
+    res.status(200).json({
+      message: `Retrieved ${allCharges.length} charge objects from Stripe.`,
+      charges: allCharges,
+    });
+  } catch (error) {
+    console.error("Error fetching data from Stripe:", error);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.route("/fetch_stripe_payment_methods").put(async (req, res) => {
+  try {
+    // Define the directory where your data is stored
+    const dataDir = path.join(process.cwd(), "server", "api", "zOrdersRestore");
+
+    // Load the charge data from your JSON file
+    const chargeData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_full_data.json"), "utf-8"));
+
+    // Extract payment_method IDs from the charge data
+    const paymentMethodIds = chargeData.map(charge => charge.payment_method).filter(Boolean); // Filter out any undefined or null values
+
+    // Remove duplicate payment_method IDs to avoid redundant API calls
+    const uniquePaymentMethodIds = [...new Set(paymentMethodIds)];
+
+    // Array to store fetched payment methods
+    const fetchedPaymentMethods = [];
+
+    // Fetch each payment method from Stripe
+    for (const paymentMethodId of uniquePaymentMethodIds) {
+      try {
+        const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+        fetchedPaymentMethods.push(paymentMethod);
+        console.log(`Fetched payment method ${paymentMethodId}`);
+      } catch (error) {
+        console.error(`Error fetching payment method ${paymentMethodId}:`, error);
+      }
+    }
+
+    // Save the fetched payment methods to a JSON file
+    await fs.writeFile(
+      path.join(dataDir, "stripe_payment_methods_data.json"),
+      JSON.stringify(fetchedPaymentMethods, null, 2)
+    );
+    console.log(`Saved ${fetchedPaymentMethods.length} payment methods to payment_methods_data.json`);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+});
+
+router.route("/fetch_stripe_refunds").put(async (req, res) => {
+  try {
+    // Define the directory where your data is stored
+    const dataDir = path.join(process.cwd(), "server", "api", "zOrdersRestore");
+
+    // Load the charge data from your JSON file
+    const chargeData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_full_data.json"), "utf-8"));
+
+    // Array to store fetched refunds
+    const fetchedRefunds = [];
+
+    // Fetch refunds for each charge
+    for (const charge of chargeData) {
+      try {
+        const refunds = await stripe.refunds.list({ charge: charge.id });
+        if (refunds.data.length > 0) {
+          fetchedRefunds.push(...refunds.data);
+          console.log(`Fetched ${refunds.data.length} refunds for charge ${charge.id}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching refunds for charge ${charge.id}:`, error);
+      }
+    }
+
+    // Save the fetched refunds to a JSON file
+    await fs.writeFile(path.join(dataDir, "stripe_refunds_data.json"), JSON.stringify(fetchedRefunds, null, 2));
+    console.log(`Saved ${fetchedRefunds.length} refunds to stripe_refunds_data.json`);
+
+    res.status(200).json({ message: `Successfully fetched and saved ${fetchedRefunds.length} refunds.` });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred while fetching refunds." });
+  }
+});
+
+const easy_post_api = require("@easypost/api");
+const EasyPost = new easy_post_api(config.EASY_POST);
+
+router.route("/fetch_easypost_data").put(async (req, res) => {
+  const startDate = new Date("2024-05-01T00:00:00Z");
+  const endDate = new Date();
+  let allShipments = [];
+
+  try {
+    let params = {
+      page_size: 100,
+      start_datetime: startDate.toISOString(),
+      end_datetime: endDate.toISOString(),
+      purchased: true,
+      include_children: false,
+    };
+
+    let currentPage = await EasyPost.Shipment.all(params);
+    allShipments = allShipments.concat(currentPage.shipments);
+    console.log(`Retrieved ${allShipments.length} shipments so far...`);
+    console.log({ hasMore: currentPage.hasMore });
+    while (currentPage.has_more) {
+      currentPage = await EasyPost.Shipment.getNextPage(currentPage);
+      allShipments = allShipments.concat(currentPage.shipments);
+      console.log(`Retrieved ${allShipments.length} shipments so far...`);
+    }
+
+    await fs.writeFile("easypost_full_data.json", JSON.stringify(allShipments, null, 2));
+    console.log(`Retrieved a total of ${allShipments.length} shipment objects from EasyPost.`);
+
+    res.status(200).json({
+      message: `Retrieved ${allShipments.length} shipment objects from EasyPost.`,
+      shipments: allShipments,
+    });
+  } catch (error) {
+    console.error("Error fetching data from EasyPost:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put("/parse_order_emails", async (req, res) => {
+  try {
+    const emailDir = path.join(process.cwd(), "server", "api", "zOrdersRestore", "order_emails");
+    const files = await fs.readdir(emailDir);
+
+    const filteredFiles = files.filter(file => file.includes("Thank you for your Glow LEDs Order"));
+
+    const orderDataArray = [];
+
+    for (const file of filteredFiles) {
+      if (path.extname(file).toLowerCase() === ".eml") {
+        const filePath = path.join(emailDir, file);
+        const orderData = await parseOrderEmail(filePath);
+        orderDataArray.push(orderData);
+      }
+    }
+
+    await fs.writeFile("order_emails_data.json", JSON.stringify(orderDataArray, null, 2));
+    res.status(200).json({
+      message: `Parsed ${orderDataArray.length} order emails.`,
+    });
+  } catch (error) {
+    console.error("Error restoring orders:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put("/restore_orders", async (req, res) => {
+  try {
+    const dataDir = path.join(process.cwd(), "server", "api", "zOrdersRestore");
+
+    const restoredOrders = [];
+    const skippedOrders = [];
+    const incompleteShippingOrders = [];
+
+    // Load payment and shipment data
+    const shipmentsData = JSON.parse(await fs.readFile(path.join(dataDir, "easypost_full_data.json"), "utf-8"));
+    const orderEmailsData = JSON.parse(await fs.readFile(path.join(dataDir, "order_emails_data.json"), "utf-8"));
+    const chargeData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_full_data.json"), "utf-8"));
+    const paymentMethodData = JSON.parse(
+      await fs.readFile(path.join(dataDir, "stripe_payment_methods_data.json"), "utf-8")
+    );
+    const refundsData = JSON.parse(await fs.readFile(path.join(dataDir, "stripe_refunds_data.json"), "utf-8"));
+    // Preprocess payments and shipments
+    const charges = preprocessPayments(chargeData);
+    const shipments = preprocessShipments(shipmentsData);
+
+    for (const orderData of orderEmailsData) {
+      if (!orderData?.orderNumber) {
+        skippedOrders.push({
+          email: orderData?.shipping?.email,
+          orderNumber: orderData?.orderNumber,
+          reason: "Order data not found",
+        });
+        continue;
+      }
+
+      const existingOrder = await Order.findOne({ _id: orderData.orderNumber });
+      if (existingOrder) {
+        skippedOrders.push({
+          email: orderData?.shipping?.email,
+          orderNumber: orderData?.orderNumber,
+          reason: "Order already exists",
+        });
+        continue;
+      }
+
+      const user = await User.findOne({ email: { $regex: new RegExp(`^${orderData?.shipping?.email}$`, "i") } });
+
+      // if (user) {
+      // **Find Matching Payment**
+      const matchingPayment = findMatchingPayment(orderData, charges);
+
+      // **Find Matching Payment Intent**
+      // const matchingPaymentMethod = findMatchingPaymentMethod(orderData, paymentMethodData, matchingPayment);
+      const matchingPaymentMethod = paymentMethodData.find(
+        payment_method => payment_method?.id === matchingPayment?.payment_method
+      );
+
+      const matchingRefunds = refundsData.filter(refund => refund?.charge === matchingPayment?.id);
+      // console.log({
+      //   FoundMatchingPayment: !!matchingPayment,
+      //   FoundMatchingPaymentMethod: !!matchingPaymentMethod,
+      //   orderNumber: orderData.orderNumber,
+      //   email: orderData?.shipping?.email,
+      //   shipping: orderData?.shipping?,
+      // });
+
+      if (
+        orderData.payment.last4 === "4242" ||
+        orderData?.shipping?.email === "admin@test.com" ||
+        orderData?.shipping?.email === "test@example.com"
+      ) {
+        skippedOrders.push({
+          email: orderData?.shipping?.email,
+          orderNumber: orderData?.orderNumber,
+          reason: "Test Order",
+        });
+        continue;
+      }
+
+      // **Find Matching Shipment**
+      const matchingShipment = findMatchingShipment(orderData, shipments);
+
+      const orderItems = await Promise.all(
+        orderData.orderItems.map(async item => {
+          if (item.name.includes("Pass")) {
+            const ticket = await Ticket.findOne({ title: item.name }).populate("image");
+            return {
+              ...ticket,
+              product: ticket ? ticket._id : null,
+              name: item.name,
+              price: item.price,
+              display_image_object: ticket?.image,
+              quantity: item.quantity,
+              max_display_quantity: ticket?.max_display_quantity,
+              max_quantity: ticket?.max_quantity,
+              count_in_stock: ticket?.count_in_stock,
+              pathname: ticket?.pathname,
+              finite_stock: ticket?.finite_stock,
+              itemType: "ticket",
+            };
+          }
+          let product = await Product.findOne({ name: item.name }).populate("images");
+          return {
+            ...item,
+            product: product ? product._id : null,
+            name: item.name,
+            price: item.price,
+            category: product?.category,
+            subcategory: product?.subcategory,
+            product_collection: product?.product_collection,
+            display_image_object: product?.images[0],
+            quantity: item.quantity,
+            max_display_quantity: product?.max_display_quantity,
+            max_quantity: product?.max_quantity,
+            count_in_stock: product?.count_in_stock,
+            currentOptions: product?.options,
+            selectedOptions: item.selectedOptions.map(option => ({
+              name: option.value,
+              active: true,
+            })),
+            tags: product?.tags,
+            pathname: product?.pathname,
+            sale_price: product?.sale?.price,
+            sale_start_date: product?.sale?.start_date,
+            sale_end_date: product?.sale?.end_date,
+            dimensions: product?.dimensions,
+            processing_time: product?.meta_data?.processing_time,
+            finite_stock: product?.finite_stock,
+            wholesale_product: product?.wholesale_product,
+            wholesale_price: product?.wholesale_price,
+            itemType: "product",
+          };
+        })
+      );
+      // console.log({
+      //   orderAddress: {
+      //     first_name: orderData?.shipping?.first_name,
+      //     last_name: orderData?.shipping?.last_name,
+      //     address_1: orderData?.shipping?.address_1,
+      //     address_2: orderData?.shipping?.address_2,
+      //     city: orderData?.shipping?.city,
+      //     state: orderData?.shipping?.state,
+      //     postalCode: orderData?.shipping?.postalCode,
+      //     country: orderData?.shipping?.country,
+      //     email: orderData?.shipping?.email,
+      //     address_string: orderData?.shipping?.address_string,
+      //   },
+      // });
+      let shipping = {};
+      // console.log({ matchingShipment });
+      if (matchingShipment) {
+        shipping = extractShipmentDetails(matchingShipment);
+      }
+      // console.log({
+      //   labelAddress: {
+      //     first_name: shipping?.first_name,
+      //     last_name: shipping?.last_name,
+      //     address_1: shipping?.address_1,
+      //     address_2: shipping?.address_2,
+      //     city: shipping?.city,
+      //     state: shipping?.state,
+      //     postalCode: shipping?.postalCode,
+      //     country: shipping?.country,
+      //   },
+      // });
+      let status = "paid";
+      switch (matchingShipment?.status) {
+        case "pre_transit":
+          status = "label_created";
+          break;
+        case "in_transit":
+          status = "in_transit";
+          break;
+        case "out_for_delivery":
+          status = "out_for_delivery";
+          break;
+        case "delivered":
+          status = "delivered";
+          break;
+        default:
+          status = "paid";
+      }
+
+      const order = new Order({
+        _id: orderData.orderNumber,
+        user: user?._id || null,
+        orderItems,
+        shipping: {
+          ...orderData?.shipping,
+          ...shipping,
+          shipment_id: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipment_id,
+          shipping_rate: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipping_rate,
+          shipping_label: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipping_label,
+          shipment_tracker: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.shipment_tracker,
+          first_name: shipping?.first_name || orderData?.shipping?.first_name,
+          last_name: shipping?.last_name || orderData?.shipping?.last_name,
+          address_1: shipping?.address_1 || orderData?.shipping?.address_1,
+          address_2: shipping?.address_2 || orderData?.shipping?.address_2 || "",
+          city: shipping?.city || orderData?.shipping?.city,
+          state: shipping?.state || orderData?.shipping?.state,
+          postalCode: shipping?.postalCode || orderData?.shipping?.postalCode,
+          country: shipping?.country || orderData?.shipping?.country,
+        },
+        payment: {
+          paymentMethod: "stripe",
+          last4: orderData.payment.last4,
+          charge: matchingPayment || {},
+          payment: matchingPaymentMethod || {},
+          refund: matchingRefunds || [],
+        },
+        isRefunded: matchingRefunds?.length > 0,
+        itemsPrice: orderData.itemsPrice,
+        serviceFee: orderItems.some(item => item.itemType === "ticket")
+          ? (
+              orderItems
+                .filter(item => item.itemType === "ticket")
+                .reduce((acc, item) => acc + item.price * item.quantity, 0) * 0.1
+            ).toFixed(2)
+          : 0,
+        tracking_number: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.tracking_number,
+        tracking_url: orderItems.every(item => item.itemType === "ticket") ? null : shipping?.tracking_url,
+        taxPrice: orderData.taxPrice,
+        shippingPrice: orderData?.shippingPrice,
+        promo_code: orderData.promo_code,
+        tracking_number: matchingShipment?.tracking_number,
+        tracking_url: matchingShipment?.tracking_url,
+        totalPrice: orderData.totalPrice,
+        order_note: orderData.order_note,
+        paidAt: orderData.createdAt,
+        status:
+          new Date(orderData.createdAt) < new Date("2024-09-01") || orderItems.every(item => item.itemType === "ticket")
+            ? "delivered"
+            : status,
+        createdAt: orderData.createdAt,
+      });
+
+      await order.save();
+      console.log(
+        `Order created: ${order._id}, email: ${shipping?.email}, name: ${shipping?.first_name} ${shipping?.last_name}`
+      );
+      restoredOrders.push(order);
+      // } else {
+      //   skippedOrders.push({
+      //     email: orderData?.shipping?.email,
+      //     orderNumber: orderData.orderNumber,
+      //     reason: "User not found",
+      //   });
+      // }
+    }
+    await fs.writeFile("restored_orders.json", JSON.stringify(restoredOrders, null, 2));
+    await fs.writeFile("skipped_orders.json", JSON.stringify(skippedOrders, null, 2));
+    await fs.writeFile("incomplete_shipping_orders.json", JSON.stringify(incompleteShippingOrders, null, 2));
+
+    res.status(200).json({
+      message: `Restored ${restoredOrders.length} orders. Skipped ${skippedOrders.length} orders. Incomplete shipping orders: ${incompleteShippingOrders.length}`,
+    });
+  } catch (error) {
+    console.error("Error restoring orders:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
