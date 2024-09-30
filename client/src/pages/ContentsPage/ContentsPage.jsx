@@ -138,7 +138,7 @@ const ContentsPage = () => {
             <GLForm
               formData={homePageFields(formFieldsData).fields}
               state={content?.home_page}
-              onChange={updated => handleContentChange({ ...content, home_page: updated })}
+              onChange={updated => handleContentChange({ ...content, home_page: { ...content.home_page, ...updated } })}
               loading={loading}
             />
           </GLTabPanel>
@@ -146,7 +146,7 @@ const ContentsPage = () => {
             <GLForm
               formData={bannerFields().fields}
               state={content?.banner}
-              onChange={updated => handleContentChange({ ...content, banner: updated })}
+              onChange={updated => handleContentChange({ ...content, banner: { ...content.banner, ...updated } })}
               loading={loading}
             />
           </GLTabPanel>
@@ -154,7 +154,9 @@ const ContentsPage = () => {
             <GLForm
               formData={aboutPageFields(formFieldsData).fields}
               state={content?.about_page}
-              onChange={updated => handleContentChange({ ...content, about_page: updated })}
+              onChange={updated =>
+                handleContentChange({ ...content, about_page: { ...content.about_page, ...updated } })
+              }
               loading={loading}
             />
           </GLTabPanel>
@@ -162,7 +164,9 @@ const ContentsPage = () => {
             <GLForm
               formData={productsGridPageFields(formFieldsData).fields}
               state={content?.products_grid_page}
-              onChange={updated => handleContentChange({ ...content, products_grid_page: updated })}
+              onChange={updated =>
+                handleContentChange({ ...content, products_grid_page: { ...content.products_grid_page, ...updated } })
+              }
               loading={loading}
             />
           </GLTabPanel>
@@ -170,7 +174,7 @@ const ContentsPage = () => {
             <GLForm
               formData={faqPageFields(formFieldsData).fields}
               state={content?.faq_page}
-              onChange={updated => handleContentChange({ ...content, faq_page: updated })}
+              onChange={updated => handleContentChange({ ...content, faq_page: { ...content.faq_page, ...updated } })}
               loading={loading}
             />
           </GLTabPanel>
@@ -182,8 +186,7 @@ const ContentsPage = () => {
               tabIndex={menusTabIndex}
               setTabIndex={setMenusTabIndex}
               onChange={(updatedMenus, action, index) => {
-                const newContent = { ...content, menus: updatedMenus.menus };
-                handleContentChange(newContent);
+                handleContentChange({ ...content, menus: { ...content.menus, ...updatedMenus } });
               }}
               loading={loading}
               getEmptyObjectFromSchema={getEmptyObjectFromSchema}
@@ -196,7 +199,9 @@ const ContentsPage = () => {
               fieldData={featureFlagsFields()}
               tabIndex={featureFlagsTabIndex}
               setTabIndex={setFeatureFlagsTabIndex}
-              onChange={updatedFeatureFlags => handleContentChange({ ...content, feature_flags: updatedFeatureFlags })}
+              onChange={updatedFeatureFlags =>
+                handleContentChange({ ...content, feature_flags: { ...content.feature_flags, ...updatedFeatureFlags } })
+              }
               loading={loading}
               getEmptyObjectFromSchema={getEmptyObjectFromSchema}
             />
