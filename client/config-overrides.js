@@ -1,8 +1,10 @@
 const rewireReactHotLoader = require("react-app-rewire-hot-loader");
-const { override, addBabelPlugin } = require("customize-cra");
+const { override, addBabelPlugin, addWebpackPlugin } = require("customize-cra");
+const webpack = require("webpack");
 
 module.exports = override(
   addBabelPlugin(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]),
+  addWebpackPlugin(new webpack.HotModuleReplacementPlugin()),
   (config, env) => {
     // This is your existing logic
     config.resolve.fallback = {
@@ -33,11 +35,15 @@ module.exports = override(
     // Existing logic for devServer
     config.devServer = {
       ...config.devServer,
-      setupMiddlewares: (middlewares, devServer) => {
-        return middlewares;
+      hot: true,
+      watchFiles: ["src/**/*"],
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false,
+        },
       },
     };
-
     // Existing logic for Hot Loader
     config = rewireReactHotLoader(config, env);
 
