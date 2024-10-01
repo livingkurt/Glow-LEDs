@@ -22,7 +22,7 @@ const ProductImages = ({ images, originalImages }) => {
     <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
       {images && (
         <>
-          <Box sx={{ flex: 1, width: "100%", mb: 2 }}>
+          <Box sx={{ flex: 1, width: "100%", mb: 2, aspectRatio: "1/1", position: "relative" }}>
             <Swiper
               spaceBetween={0}
               modules={[Navigation, Pagination, Scrollbar, A11y, Zoom, Thumbs]}
@@ -40,18 +40,28 @@ const ProductImages = ({ images, originalImages }) => {
             >
               {images?.map((image, index) => (
                 <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <GLLazyImage
-                    src={image?.link}
-                    alt={`Product ${index}`}
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      width: "auto",
-                      height: "auto",
-                      objectFit: "contain",
-                      borderRadius: 20,
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      position: "relative",
+                      overflow: "hidden",
+                      borderRadius: 5,
                     }}
-                  />
+                  >
+                    <GLLazyImage
+                      src={image?.link}
+                      alt={`Product ${index}`}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Box>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -77,18 +87,30 @@ const ProductImages = ({ images, originalImages }) => {
               style={{ width: "100%" }}
             >
               {images?.map((image, index) => (
-                <SwiperSlide key={index} style={{ width: 60, height: 60 }}>
-                  <GLLazyImage
-                    src={image?.link}
-                    alt={`Thumbnail ${index}`}
-                    style={{
+                <SwiperSlide key={index} style={{ width: 60, height: 60, position: "relative" }}>
+                  <Box
+                    sx={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover",
-                      borderRadius: 5,
-                      cursor: "pointer",
+                      position: "relative",
+                      overflow: "hidden",
+                      borderRadius: 2,
                     }}
-                  />
+                  >
+                    <GLLazyImage
+                      src={image?.link}
+                      alt={`Thumbnail ${index}`}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </Box>
                 </SwiperSlide>
               ))}
             </Swiper>
