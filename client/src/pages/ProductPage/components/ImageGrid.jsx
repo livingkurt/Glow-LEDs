@@ -7,18 +7,22 @@ const StyledImage = styled("img")({
   width: "100%",
   height: "100%",
   objectFit: "cover",
+  objectPosition: "center",
 });
+
 const StyledTextImage = styled("img")({
   width: "100%",
   height: "100%",
   opacity: 0.25,
   objectFit: "cover",
+  objectPosition: "center",
 });
 
 const ImageContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   overflow: "hidden",
-  height: "100%",
+  height: 0,
+  paddingTop: "100%", // This creates a 1:1 aspect ratio
   transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
   "&:hover": {
     transform: "scale(1.01)",
@@ -28,10 +32,8 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 
 const TextImageContainer = styled(Box)({
   width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
+  height: 0,
+  paddingTop: "100%", // This creates a 1:1 aspect ratio
   position: "relative",
 });
 
@@ -44,7 +46,7 @@ const TextOverlay = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: theme.spacing(2), // Default padding for extra small screens
+  padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
   },
@@ -65,14 +67,34 @@ const ImageGrid = ({ image_grid, image_grid_hidden, text_color, header_text_colo
             {image_grid?.map((grid, index) => (
               <Grid item xs={12} key={index}>
                 <Grid container direction={index % 2 === 0 ? "row" : "row-reverse"} alignItems="stretch">
-                  <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+                  <Grid item xs={12} md={6}>
                     <ImageContainer>
-                      <StyledImage src={grid?.image?.link} alt={grid.title} />
+                      <StyledImage
+                        src={grid?.image?.link}
+                        alt={grid.title}
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      />
                     </ImageContainer>
                   </Grid>
-                  <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+                  <Grid item xs={12} md={6}>
                     <TextImageContainer>
-                      <StyledTextImage src={grid?.text_image?.link} alt={grid.title} />
+                      <StyledTextImage
+                        src={grid?.text_image?.link}
+                        alt={grid.title}
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      />
                       <TextOverlay>
                         <Typography variant="h4" gutterBottom color={header_text_color ? header_text_color : "white"}>
                           {grid.title}
