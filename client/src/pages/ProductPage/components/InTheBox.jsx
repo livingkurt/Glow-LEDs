@@ -19,17 +19,31 @@ const InTheBox = ({ in_the_box, text_color, header_text_color }) => {
                 <Box sx={{ textAlign: "center" }}>
                   {item?.image && (
                     <Box
-                      component="img"
-                      src={item?.image?.link}
-                      alt={item.description}
                       sx={{
-                        borderRadius: "10px",
                         width: "100%",
-                        height: "auto",
-                        maxWidth: "200px",
+                        paddingBottom: "100%", // This creates a 1:1 aspect ratio
+                        position: "relative",
+                        overflow: "hidden",
+                        borderRadius: "10px",
                         marginBottom: 2,
+                        maxWidth: "200px",
+                        margin: "0 auto",
                       }}
-                    />
+                    >
+                      <Box
+                        component="img"
+                        src={item?.image?.link}
+                        alt={item.description}
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Box>
                   )}
                   <Typography variant="body2" color={text_color ? text_color : "white"}>
                     {item.description}

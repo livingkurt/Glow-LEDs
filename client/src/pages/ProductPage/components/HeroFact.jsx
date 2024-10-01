@@ -25,7 +25,7 @@ const HeroFact = ({ heroFact, text_color, secondary_color, header_text_color }) 
             variant="h4"
             component="h4"
             sx={{
-              fontSize: { xs: "6rem", md: "8rem" },
+              fontSize: { xs: "8rem", md: "12rem" },
               color: secondary_color ? secondary_color : "white",
               marginBottom: "1rem",
             }}

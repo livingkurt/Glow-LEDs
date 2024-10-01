@@ -54,7 +54,7 @@ const ProductCard = ({ product, promo_code }) => {
         <Box
           sx={{
             position: "relative",
-            paddingTop: isMobile ? "50%" : "100%",
+            paddingTop: "100%", // This ensures a 1:1 aspect ratio
             overflow: "hidden",
             flexShrink: 0,
             width: isMobile ? "50%" : "100%",
@@ -65,20 +65,31 @@ const ProductCard = ({ product, promo_code }) => {
             },
           }}
         >
-          <GLLazyImage
-            src={product.images[currentImageIndex].link}
-            alt={product.name}
-            style={{
+          <Box
+            sx={{
               position: "absolute",
               top: 0,
               left: 0,
               width: "100%",
               height: "100%",
-              objectFit: "cover",
-              transition: "opacity 0.3s ease-in-out",
-              opacity: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              overflow: "hidden",
             }}
-          />
+          >
+            <GLLazyImage
+              src={product.images[currentImageIndex].link}
+              alt={product.name}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "opacity 0.3s ease-in-out",
+                opacity: 1,
+              }}
+            />
+          </Box>
           <Box
             sx={{
               position: "absolute",
