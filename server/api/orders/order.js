@@ -145,6 +145,8 @@ const orderSchema = new mongoose.Schema(
     is_error: { type: Boolean, default: false },
     error_at: { type: Date },
     error: { type: Object },
+    containsPreOrderItems: { type: Boolean, default: false },
+    preOrderShippingDate: { type: Date },
     deleted: { type: Boolean, default: false },
   },
   {
