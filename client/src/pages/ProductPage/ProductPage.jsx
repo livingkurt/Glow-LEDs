@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, FormHelperText, Grid, Rating, Typography } from "@mui/material";
+import { Box, Container, FormHelperText, Grid, Rating, Typography, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
@@ -35,6 +35,7 @@ import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
 
 const ProductPage = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked } = useProductPage();
   const [validationErrors, setValidationErrors] = useState({});
@@ -101,10 +102,30 @@ const ProductPage = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
-                    {product.name}
-                  </Typography>
-
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
+                      {product.name}
+                    </Typography>
+                    {customizedProduct.isPreOrder && (
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{
+                          ml: 1,
+                          bgcolor: product.primary_color,
+                          px: 1,
+                          py: 0.5,
+                          mb: 1,
+                          borderRadius: 1,
+                          fontSize: "1.2rem",
+                          fontWeight: 800,
+                          color: theme.palette.getContrastText(product.primary_color),
+                        }}
+                      >
+                        New In
+                      </Typography>
+                    )}
+                  </Box>
                   {product.numReviews > 0 && (
                     <Box display="flex" alignItems="center" mb={2}>
                       <Rating value={product.rating} precision={0.5} readOnly />
@@ -124,7 +145,32 @@ const ProductPage = () => {
                       background: "dark",
                       isWholesaler: current_user?.isWholesaler,
                     })}
+                    {customizedProduct.isPreOrder && (
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{
+                          ml: 1,
+                          bgcolor: theme.palette.primary.main,
+                          px: 0.5,
+                          py: 0.5,
+                          fontSize: "1.2rem",
+                          borderRadius: 1,
+                          fontWeight: 800,
+                          color: theme.palette.getContrastText(theme.palette.primary.main),
+                        }}
+                      >
+                        Pre-Order
+                      </Typography>
+                    )}
                   </Typography>
+
+                  {customizedProduct.isPreOrder && (
+                    <Typography variant="body2" gutterBottom mt={1} mb={2}>
+                      Estimated Availability: {new Date(customizedProduct.preOrderReleaseDate).toLocaleDateString()}
+                    </Typography>
+                  )}
+
                   <Typography variant="body1" gutterBottom mt={2} mb={2}>
                     {customizedProduct.short_description}
                   </Typography>
@@ -172,23 +218,34 @@ const ProductPage = () => {
                     valueKey="name"
                     fullWidth
                   />
+                  {product.isPreOrder && (
+                    <Typography variant="body2" fontWeight={800} mt={1}>
+                      Pre-Order: Estimated Availability{" "}
+                      {new Date(product.preOrderReleaseDate).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </Typography>
+                  )}
                   <Box mt={2}>
                     <GLButtonV2
                       variant="contained"
                       color="primary"
                       fullWidth
-                      className={product.count_in_stock > 0 ? "bob" : ""}
+                      className={product.count_in_stock > 0 || product.isPreOrder ? "bob" : ""}
                       sx={{
                         fontSize: "1.6rem",
                         padding: 2,
                       }}
                       size="large"
                       onClick={handleAddToCart}
-                      disabled={product.count_in_stock <= 0}
+                      disabled={!product.isPreOrder && product.count_in_stock <= 0}
                     >
-                      {determineInStock(customizedProduct)}
+                      {product.isPreOrder ? "Pre-Order Now" : determineInStock(customizedProduct)}
                     </GLButtonV2>
                   </Box>
+
                   {product?.icon_specs && !product.icon_specs_hidden && (
                     <IconFeatures icon_specs={product.icon_specs} />
                   )}
