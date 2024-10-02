@@ -12,7 +12,7 @@ import { errorMessage } from "../../../../helpers/sharedHelpers";
 
 const stripePromise = loadStripe(config.REACT_APP_STRIPE_KEY);
 
-const StripeCheckout = () => {
+const StripeCheckout = ({ hasPreOrderItems, preOrderShippingDate }) => {
   const dispatch = useDispatch();
   const placeOrder = useSelector(state => state.placeOrder);
   const {
@@ -77,6 +77,8 @@ const StripeCheckout = () => {
               promo_code: activePromoCodeIndicator && promo_code,
               parcel: parcel || null,
               serviceFee,
+              hasPreOrderItems,
+              preOrderShippingDate,
             },
             create_account,
             new_password,

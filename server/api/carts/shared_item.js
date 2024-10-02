@@ -38,8 +38,9 @@ export const sharedItemSchema = {
   itemType: { type: String, enum: ["product", "ticket"] },
   event: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
   ticket_type: { type: String },
-  isPreOrderItem: { type: Boolean, default: false },
+  isPreOrder: { type: Boolean, default: false },
   preOrderReleaseDate: { type: Date },
+  preOrderQuantity: { type: Number, default: 0 },
   ticketsUsed: [
     {
       ticketId: { type: String },

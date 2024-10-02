@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PaymentStep from "./components/PaymentStep";
 import EmailStep from "./components/EmailStep";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
 import { LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
@@ -17,7 +17,7 @@ import { save_shipping, set_my_cart } from "../../slices/cartSlice";
 import { setLoadingPayment } from "../../slices/orderSlice";
 import { Box, Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-import { showConfirm } from "../../slices/snackbarSlice";
+import { showConfirm, showInfo } from "../../slices/snackbarSlice";
 import { constructOutOfStockMessage } from "./placeOrderHelpers";
 
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ const PlaceOrderPage = () => {
   const [orderCompleted, setOrderCompleted] = useState(false);
 
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user, success: user_success } = userPage;
+  const { current_user } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
   const { show_payment, shipping_completed, shippingPrice, promo_code, itemsPrice, taxPrice, totalPrice, tip } =
@@ -45,11 +45,16 @@ const PlaceOrderPage = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("order_id");
 
-  // useEffect(() => {
-  //   if (!cartItems || cartItems.length === 0) {
-  //     navigate("/checkout/cart");
-  //   }
-  // }, [cartItems, navigate]);
+  const hasPreOrderItems = cartItems.some(item => item.isPreOrder);
+  const preOrderReleaseDate = cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
+
+  useEffect(() => {
+    if (hasPreOrderItems) {
+      dispatch(
+        showInfo({ message: "Your order contains pre-order items. Please note the estimated availability date." })
+      );
+    }
+  }, [hasPreOrderItems, dispatch]);
 
   useEffect(() => {
     let clean = true;
@@ -267,10 +272,10 @@ const PlaceOrderPage = () => {
             <div className="place_order-info">
               <EmailStep />
               <ShippingStep />
-              <PaymentStep />
+              <PaymentStep hasPreOrderItems={hasPreOrderItems} preOrderShippingDate={preOrderReleaseDate} />
             </div>
           </div>
-          <OrderSummaryStep />
+          <OrderSummaryStep hasPreOrderItems={hasPreOrderItems} />
         </div>
       ) : (
         <OrderComplete current_user={current_user} order_id={order._id || orderId} />

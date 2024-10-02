@@ -10,6 +10,7 @@ import GLIconButton from "../GLIconButton/GLIconButton";
 import * as API from "../../../api";
 import { generateProductUrl } from "../../../utils/helpers/product_helpers";
 import GLLazyImage from "../GLLazyImage/GLLazyImage";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -95,12 +96,19 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
         sx={{
           width: isOrderItem ? 60 : 80,
           height: isOrderItem ? 60 : 80,
+          overflow: "hidden",
+          borderRadius: 2,
         }}
       >
         <GLLazyImage
           src={item?.display_image_object?.link}
           alt={item.name}
-          style={{ width: "100%", height: "100%", borderRadius: 10 }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
         />
 
         {isOrderItem && item.quantity > 1 && (
@@ -178,6 +186,15 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
               </Typography>
             </Grid>
             <Grid item>{renderOptions()}</Grid>
+            <Grid item>
+              {item.isPreOrder && (
+                <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
+                  <ShoppingBagIcon sx={{ mb: 0.25, mr: 0.5 }} />
+                  Pre-Order: Estimated Availability{" "}
+                  {new Date(item.preOrderReleaseDate).toLocaleDateString(undefined, { timeZone: "UTC" })}
+                </Typography>
+              )}
+            </Grid>
             {!isOrderItem && (
               <Grid item>
                 <Typography variant="body2">

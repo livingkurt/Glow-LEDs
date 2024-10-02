@@ -27,7 +27,7 @@ import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 
-const PaymentStep = () => {
+const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -338,7 +338,11 @@ const PaymentStep = () => {
               </li>
             )}
             <li>
-              {cartItems.length > 0 && totalPrice ? <StripeCheckout /> : <div></div>}
+              {cartItems.length > 0 && totalPrice ? (
+                <StripeCheckout hasPreOrderItems={hasPreOrderItems} preOrderReleaseDate={preOrderReleaseDate} />
+              ) : (
+                <div></div>
+              )}
               {(!totalPrice || totalPrice === 0) && (
                 <>
                   <p htmlFor="password">Payment is not necessary at this time</p>

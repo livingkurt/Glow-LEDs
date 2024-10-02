@@ -167,7 +167,10 @@ const ProductPage = () => {
 
                   {customizedProduct.isPreOrder && (
                     <Typography variant="body2" gutterBottom mt={1} mb={2}>
-                      Estimated Availability: {new Date(customizedProduct.preOrderReleaseDate).toLocaleDateString()}
+                      Estimated Availability:{" "}
+                      {new Date(customizedProduct.preOrderReleaseDate).toLocaleDateString(undefined, {
+                        timeZone: "UTC",
+                      })}
                     </Typography>
                   )}
 
