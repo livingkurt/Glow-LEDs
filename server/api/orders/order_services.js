@@ -1,10 +1,11 @@
 import { affiliate_db } from "../affiliates";
-import { expense_db } from "../expenses";
 import { Order, order_db } from "../orders";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
+import { cart_services } from "../carts";
+import { product_services } from "../products";
+import { promo_services } from "../promos";
 import {
-  categories,
   dates_in_year,
   determine_filter,
   determine_promoter_code_tier,
@@ -16,8 +17,17 @@ import {
   toCapitalize,
 } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { getCodeUsage, getMonthlyCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
-import { states } from "./order_helpers";
+import {
+  getCodeUsage,
+  getMonthlyCodeUsage,
+  handleUserCreation,
+  normalizeOrderFilters,
+  normalizeOrderSearch,
+  processPayment,
+  sendCodeUsedEmail,
+  sendOrderEmail,
+  sendTicketEmail,
+} from "./order_interactors";
 const SalesTax = require("sales-tax");
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
@@ -199,6 +209,51 @@ export default {
   findById_orders_s: async params => {
     try {
       return await order_db.findById_orders_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_pay_order_orders_s: async body => {
+    const { order, cartId, paymentMethod, create_account, new_password } = body;
+
+    try {
+      // Check if any orderItem has subcategory "sampler" and quantity greater than 1
+      const hasSamplerWithQtyGreaterThanOne = order.orderItems.some(
+        item => item.subcategory === "sampler" && item.quantity > 1
+      );
+
+      if (hasSamplerWithQtyGreaterThanOne) {
+        return res.status(400).send({
+          message: "Only one sampler pack allowed per order.",
+        });
+      }
+      // Handle user creation or retrieval
+      const user = await handleUserCreation(order.shipping, create_account, new_password);
+
+      // Create the order
+      const createdOrder = await Order.create({ ...order, user: user._id });
+
+      // Process payment
+      const updatedOrder = await processPayment(createdOrder._id, paymentMethod);
+
+      // Send emails
+      await sendOrderEmail(updatedOrder);
+      if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
+        await sendTicketEmail(updatedOrder);
+      }
+
+      await product_services.update_stock_products_s({ cartItems: updatedOrder.orderItems });
+
+      await cart_services.empty_carts_s({ id: cartId });
+
+      if (updatedOrder.promo_code) {
+        await promo_services.update_code_used_promos_s(updatedOrder.promo_code);
+        await sendCodeUsedEmail(updatedOrder.promo_code);
+      }
+
+      return updatedOrder;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

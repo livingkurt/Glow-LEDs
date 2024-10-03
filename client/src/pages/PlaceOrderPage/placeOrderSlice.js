@@ -31,6 +31,7 @@ const initialState = {
   taxPrice: 0,
   totalPrice: 0,
   activePromoCodeIndicator: "",
+  orderCompleted: false,
   shipping_choice: true,
   user: {},
   free_shipping_message: "------",
@@ -432,10 +433,17 @@ const placeOrder = createSlice({
     [API.createPayOrder.fulfilled]: (state, { payload }) => {
       return { ...initialState, promo_code: state.promo_code };
     },
-
+    [API.createPayOrder.pending]: (state, { payload }) => {
+      state.loadingPayment = true;
+      state.hideCheckoutButton = true;
+    },
+    [API.createPayOrder.fulfilled]: (state, { payload }) => {
+      state.loadingPayment = false;
+      state.orderCompleted = true;
+      state.paymentValidations = payload.message;
+    },
     [API.createPayOrder.rejected]: (state, { payload, error }) => {
       state.loadingPayment = false;
-      state.paymentValidations = payload.message;
     },
     [API.validatePromoCode.fulfilled]: (state, { payload }) => {
       state.promo_code_validations = payload.errors.promo_code;

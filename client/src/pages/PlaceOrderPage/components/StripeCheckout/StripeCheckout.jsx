@@ -80,6 +80,7 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderShippingDate }) => {
               hasPreOrderItems,
               preOrderShippingDate,
             },
+            cartId: my_cart._id,
             create_account,
             new_password,
             paymentMethod,

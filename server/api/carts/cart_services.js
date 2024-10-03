@@ -118,7 +118,8 @@ export default {
 
   empty_carts_s: async params => {
     try {
-      return await cart_db.update_carts_db(params.id, { active: false });
+      const data = await cart_db.update_carts_db(params.id, { active: false });
+      return data;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

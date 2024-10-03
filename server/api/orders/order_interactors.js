@@ -1,7 +1,24 @@
 import mongoose from "mongoose";
-import { isEmail } from "../../utils/util";
+import { determine_code_tier, isEmail } from "../../utils/util";
 import order_db from "./order_db";
 import Order from "./order";
+import { User } from "../users";
+import { normalizeCustomerInfo, normalizePaymentInfo } from "../payments/payment_helpers";
+import {
+  createOrUpdateCustomer,
+  createPaymentIntent,
+  confirmPaymentIntent,
+  logStripeFeeToExpenses,
+  updateOrder,
+} from "../payments/payment_interactors";
+import { code_used, order } from "../../email_templates/pages";
+import config from "../../config";
+import { Affiliate } from "../affiliates";
+import order_services from "./order_services";
+import App from "../../email_templates/App";
+import ticketEmail from "../../email_templates/pages/ticketEmail";
+import { generateTicketQRCodes } from "../emails/email_interactors";
+import { createTransporter } from "../emails/email_helpers";
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -255,5 +272,158 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
     if (error instanceof Error) {
       throw new Error(error.message);
     }
+  }
+};
+
+export const handleUserCreation = async (shipping, create_account, new_password) => {
+  try {
+    if (create_account) {
+      return await User.create({
+        first_name: shipping.first_name,
+        last_name: shipping.last_name,
+        email: shipping.email,
+        password: new_password,
+      });
+    } else {
+      let user = await User.findOne({ email: shipping.email.toLowerCase() });
+      if (!user) {
+        user = await User.create({
+          first_name: shipping.first_name,
+          last_name: shipping.last_name,
+          email: shipping.email,
+          isVerified: true,
+          email_subscription: true,
+          guest: true,
+          password: config.REACT_APP_TEMP_PASS,
+        });
+      }
+      return user;
+    }
+  } catch (error) {
+    console.error("Error in handleUserCreation:", error);
+    throw new Error("Failed to create or find user");
+  }
+};
+
+export const processPayment = async (orderId, paymentMethod) => {
+  try {
+    // Implement your payment processing logic here
+    const order = await Order.findById(orderId).populate("user");
+    const current_userrmation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
+    const paymentInformation = normalizePaymentInfo({ totalPrice: order.totalPrice });
+    const customer = await createOrUpdateCustomer(current_userrmation);
+    const paymentIntent = await createPaymentIntent(customer, paymentInformation);
+    const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
+    await logStripeFeeToExpenses(confirmedPayment);
+    const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod);
+    return updatedOrder;
+  } catch (error) {
+    console.error("Error processing payment:", error);
+    throw new Error("Failed to process payment");
+  }
+};
+
+export const sendEmail = async (type, emailOptions) => {
+  const emailTransporter = await createTransporter(type);
+  try {
+    if (emailTransporter) {
+      await emailTransporter.sendMail(emailOptions);
+    }
+  } catch (error) {
+    console.log({ sendOrderEmail: error });
+  }
+};
+export const sendOrderEmail = async orderData => {
+  try {
+    const bodyConfirmation = {
+      email: {
+        h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
+        h2: "We are starting production on your order! We will notify your as your order progresses.",
+      },
+      title: "Thank you for your purchase!",
+      order: orderData,
+    };
+    const mailOptionsConfirmation = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: orderData.shipping.email,
+      subject: "Thank you for your Glow LEDs Order",
+      html: App({ body: order(bodyConfirmation), unsubscribe: false }),
+    };
+    await sendEmail("info", mailOptionsConfirmation);
+  } catch (error) {
+    console.error("Error sending order email:", error);
+    throw new Error("Failed to send order email");
+  }
+};
+
+export const sendTicketEmail = async orderData => {
+  try {
+    const ticketQRCodes = await generateTicketQRCodes(orderData);
+    const bodyTickets = {
+      email: {
+        h1: "YOUR EVENT TICKETS",
+        h2: "Here are your QR codes for event entry.",
+      },
+      title: "Your Event Tickets",
+      order: orderData,
+      ticketQRCodes,
+    };
+    const mailOptionsTickets = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: orderData.shipping.email,
+      subject: "Your Event Tickets",
+      html: App({ body: ticketEmail(bodyTickets), unsubscribe: false }),
+    };
+    if (orderData.orderItems.every(item => item.itemType === "ticket")) {
+      await order_db.update_orders_db(orderData._id, { status: "delivered", deliveredAt: new Date() });
+    }
+    await sendEmail("info", mailOptionsTickets);
+  } catch (error) {
+    console.error("Error sending ticket email:", error);
+    throw new Error("Failed to send ticket email");
+  }
+};
+
+export const sendCodeUsedEmail = async promo_code => {
+  try {
+    const today = new Date();
+    const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
+    const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
+
+    if (promo) {
+      const affiliates = await Affiliate.find({ deleted: false });
+      // Filter affiliates by public_code
+      const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
+
+      if (affiliate) {
+        const users = await User.find({ deleted: false, is_affiliated: true });
+        const user = users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
+        const stats = await order_services.code_usage_orders_s(
+          { promo_code },
+          { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
+        );
+        const mailBodyData = {
+          name: affiliate.artist_name,
+          promo_code: promo_code,
+          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+          number_of_uses: stats.number_of_uses,
+          earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
+        };
+
+        const mailOptions = {
+          from: config.DISPLAY_INFO_EMAIL,
+          to: user.email,
+          subject: `Your code was just used!`,
+          html: App({
+            body: code_used(mailBodyData),
+            unsubscribe: false,
+          }),
+        };
+        await sendEmail("info", mailOptions);
+      }
+    }
+  } catch (error) {
+    console.error("Error sending code used email:", error);
+    throw new Error("Failed to send code used email");
   }
 };

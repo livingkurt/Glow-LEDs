@@ -65,6 +65,8 @@ router.route("/test_delete/:id").delete(order_controller.test_delete_orders_c);
 
 router.route("/table").get(order_controller.get_table_orders_c);
 
+router.route("/create_pay").post(order_controller.create_pay_order_orders_c);
+
 router
   .route("/glow/:id")
   .get(isAuth, isAdmin, order_controller.findMy_orders_c)

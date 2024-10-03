@@ -123,20 +123,9 @@ const orderPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createPayOrder.pending]: (state, { payload }) => {
-      state.loadingPayment = true;
-      state.hideCheckoutButton = true;
-    },
+
     [API.createPayOrder.fulfilled]: (state, { payload }) => {
-      state.loadingPayment = false;
-      state.success = true;
-      state.order = payload.order;
-      state.message = "Order Created and Paid";
-    },
-    [API.createPayOrder.rejected]: (state, { payload, error }) => {
-      state.loadingPayment = false;
-      // state.error = payload ? payload.error : error.message;
-      // state.message = payload ? payload.message : "An error occurred";
+      state.order = payload;
     },
     [API.saveOrder.pending]: (state, { payload }) => {
       state.loading = true;
