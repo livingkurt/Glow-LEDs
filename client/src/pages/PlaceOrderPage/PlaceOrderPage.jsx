@@ -15,6 +15,7 @@ import { showConfirm } from "../../slices/snackbarSlice";
 import { Link } from "react-router-dom";
 import OrderComplete from "./components/OrderComplete";
 import usePlaceOrderPage from "./usePlaceOrderPage";
+import { isOrderComplete } from "./placeOrderHelpers";
 
 const PlaceOrderPage = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const PlaceOrderPage = () => {
 
       <LoadingPayments />
       <LoadingShipping />
-      {!orderId || !orderCompleted ? (
+      {isOrderComplete({ orderId, orderCompleted }) ? (
         <div className="place_order">
           <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
             <div className="place_order-info">

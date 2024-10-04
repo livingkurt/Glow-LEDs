@@ -277,28 +277,45 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
 
 export const handleUserCreation = async (shipping, create_account, new_password) => {
   try {
-    if (create_account) {
-      return await User.create({
-        first_name: shipping.first_name,
-        last_name: shipping.last_name,
-        email: shipping.email,
-        password: new_password,
+    const { email, first_name, last_name } = shipping;
+    const lowercaseEmail = email.toLowerCase();
+
+    // Check if user exists
+    let user = await User.findOne({ email: lowercaseEmail });
+
+    if (!user) {
+      // Create new user if email doesn't exist
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(create_account ? new_password : config.REACT_APP_TEMP_PASS, salt);
+
+      user = await User.create({
+        email: lowercaseEmail,
+        first_name,
+        last_name,
+        isVerified: true,
+        email_subscription: true,
+        guest: !create_account,
+        password: hashedPassword,
       });
     } else {
-      let user = await User.findOne({ email: shipping.email.toLowerCase() });
-      if (!user) {
-        user = await User.create({
-          first_name: shipping.first_name,
-          last_name: shipping.last_name,
-          email: shipping.email,
-          isVerified: true,
-          email_subscription: true,
-          guest: true,
-          password: config.REACT_APP_TEMP_PASS,
-        });
+      // Update existing user
+      const updateData = {
+        first_name: first_name || user.first_name,
+        last_name: last_name || user.last_name,
+        email_subscription: true,
+        guest: !create_account,
+      };
+
+      if (!user.password) {
+        const salt = await bcrypt.genSalt(10);
+        updateData.password = await bcrypt.hash(create_account ? new_password : config.REACT_APP_TEMP_PASS, salt);
       }
-      return user;
+
+      await User.updateOne({ _id: user._id }, updateData);
+      user = await User.findOne({ _id: user._id });
     }
+
+    return user._id;
   } catch (error) {
     console.error("Error in handleUserCreation:", error);
     throw new Error("Failed to create or find user");

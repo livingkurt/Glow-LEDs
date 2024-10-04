@@ -3,12 +3,13 @@ import { Product, product_db } from "../products";
 import { Category } from "../categorys";
 import { Order } from "../orders";
 import { Chip } from "../chips";
+
 export const updateProductStock = async (product, quantityToReduce) => {
   const newStockCount = Math.max(0, product.count_in_stock - quantityToReduce);
   const newMaxDisplayQuantity = Math.min(product.max_display_quantity, newStockCount);
-  const newMaxQuantity = Math.min(product.max_quantity || Infinity, newStockCount);
+  const newMaxQuantity = Math.min(product.max_quantity, newStockCount);
 
-  await product_db.update_products_db(product._id, {
+  await Product.findByIdAndUpdate(product._id, {
     count_in_stock: newStockCount,
     max_display_quantity: newMaxDisplayQuantity,
     max_quantity: newMaxQuantity,
@@ -17,34 +18,59 @@ export const updateProductStock = async (product, quantityToReduce) => {
   return { newStockCount, newMaxDisplayQuantity, newMaxQuantity };
 };
 
-export const diminish_single_glove_stock = async (product, item) => {
-  await updateProductStock(product, item.quantity);
-};
-
 export const diminish_batteries_stock = async (product, item, isRefreshPack = false) => {
-  let batteries_to_remove;
+  let batteries_to_remove = 0;
+
   if (isRefreshPack) {
-    batteries_to_remove = item.quantity * (product.name.includes("CR1225") ? 125 : 120);
+    batteries_to_remove = item.quantity * 120;
   } else {
-    batteries_to_remove = item.quantity * parseInt(item.size);
-  }
-
-  await updateProductStock(product, batteries_to_remove);
-
-  if (!isRefreshPack) {
-    const sizeOption = product.options ? product.options.find(option => option.name.toLowerCase() === "set of") : null;
+    const sizeOption = product.options.find(option => option.name.toLowerCase() === "set of");
     if (sizeOption) {
-      const selectedValue = sizeOption.values.find(value => value.name === item.size.toString());
+      const selectedValue = sizeOption.values.find(value => value.name === item.selectedOptions[0].name);
       if (selectedValue) {
-        const optionProduct = await Product.findById(selectedValue.product);
-        if (optionProduct) {
-          await updateProductStock(optionProduct, item.quantity);
+        const setSize = parseInt(selectedValue.name);
+        if (!isNaN(setSize)) {
+          batteries_to_remove = item.quantity * setSize;
         }
       }
     }
   }
-};
 
+  if (batteries_to_remove > 0) {
+    // Update parent product stock
+    const parentStockResult = await updateProductStock(product, batteries_to_remove);
+
+    // After updating parent stock, recalculate the option products' stocks
+    const optionProductIds = product.options
+      .flatMap(option => option.values)
+      .map(value => value.product)
+      .filter(id => id); // Filter out any undefined or null values
+
+    const optionProducts = await Product.find({ _id: { $in: optionProductIds } });
+
+    const updatedOptionProducts = [];
+
+    for (const optionProduct of optionProducts) {
+      const optionSetSize = parseInt(optionProduct.size);
+      if (!isNaN(optionSetSize) && optionSetSize > 0) {
+        // Calculate the new count_in_stock for this option product
+        const newOptionStockCount = Math.floor(parentStockResult.newStockCount / optionSetSize);
+
+        // Update the option product's stock
+        await Product.findByIdAndUpdate(optionProduct._id, {
+          count_in_stock: newOptionStockCount,
+          max_display_quantity: newOptionStockCount,
+          max_quantity: newOptionStockCount,
+        });
+
+        updatedOptionProducts.push({
+          optionProductId: optionProduct._id,
+          newOptionStockCount,
+        });
+      }
+    }
+  }
+};
 export const diminish_refresh_pack_stock = async (product, item) => {
   await updateProductStock(product, item.quantity);
 

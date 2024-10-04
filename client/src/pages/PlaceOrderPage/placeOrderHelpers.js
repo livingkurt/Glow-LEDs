@@ -201,3 +201,13 @@ export const constructOutOfStockMessage = outOfStockItems => {
     .join(", ");
   return `The following items are out of stock: ${itemsList}. Select Yes to remove them and continue or No to exit checkout to update your cart.`;
 };
+
+export const isOrderComplete = ({ orderId, orderCompleted }) => {
+  if (orderId) {
+    return false;
+  }
+  if (orderCompleted) {
+    return false;
+  }
+  return true;
+};

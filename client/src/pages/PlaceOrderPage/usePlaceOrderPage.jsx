@@ -53,8 +53,6 @@ const usePlaceOrderPage = () => {
     };
   }, [dispatch]);
 
-  console.log({ orderCompleted });
-
   useEffect(() => {
     let clean = true;
 

@@ -79,34 +79,6 @@ export const listProductOccurrences = createAsyncThunk(
   }
 );
 
-export const createNoPayOrder = createAsyncThunk(
-  "orders/createNoPayOrder",
-  async (order, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.post("/api/orders", order);
-      // dispatch(
-      //   sendOrderEmail({
-      //     order: data,
-      //     subject: "Thank you for your Glow LEDs Order",
-      //     email: order.shipping.email,
-      //   })
-      // );
-      // dispatch(
-      //   sendOrderEmail({
-      //     order: data,
-      //     subject: "New Order Created by " + order.shipping.first_name,
-      //     email: config.REACT_APP_INFO_EMAIL,
-      //   })
-      // );
-      sessionStorage.removeItem("shippingAddress");
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { dispatch, rejectWithValue }) => {
   try {
     if (!order._id) {
@@ -144,6 +116,28 @@ export const createPayOrder = createAsyncThunk(
     } catch (error) {
       console.log({ createPayOrder: error });
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const createNoPayOrder = createAsyncThunk(
+  "orders/createNoPayOrder",
+  async ({ order, cartId, create_account, new_password }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/orders/create_no_pay", {
+        order,
+        cartId,
+        create_account,
+        new_password,
+      });
+      dispatch(showSuccess({ message: "Order created" }));
+      sessionStorage.removeItem("shippingAddress");
+      sessionStorage.setItem("manualNavigation", "true");
+      localStorage.removeItem("cartItems");
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
     }
   }

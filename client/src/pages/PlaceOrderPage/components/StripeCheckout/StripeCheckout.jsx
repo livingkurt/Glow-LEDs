@@ -12,7 +12,7 @@ import { errorMessage } from "../../../../helpers/sharedHelpers";
 
 const stripePromise = loadStripe(config.REACT_APP_STRIPE_KEY);
 
-const StripeCheckout = ({ hasPreOrderItems, preOrderShippingDate }) => {
+const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
   const dispatch = useDispatch();
   const placeOrder = useSelector(state => state.placeOrder);
   const {
@@ -78,7 +78,7 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderShippingDate }) => {
               parcel: parcel || null,
               serviceFee,
               hasPreOrderItems,
-              preOrderShippingDate,
+              preOrderShippingDate: preOrderReleaseDate,
             },
             cartId: my_cart._id,
             create_account,

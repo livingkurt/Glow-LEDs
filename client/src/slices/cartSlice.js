@@ -274,9 +274,6 @@ const cartPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createPayOrder.fulfilled]: (state, { payload }) => {
-      state.cart = {};
-    },
     [API.emptyCart.fulfilled]: (state, { payload }) => {
       localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
@@ -286,6 +283,9 @@ const cartPage = createSlice({
       state.my_cart = { cartItems: [] };
     },
     [API.createPayOrder.fulfilled]: state => {
+      state.my_cart = { cartItems: [] };
+    },
+    [API.createNoPayOrder.fulfilled]: state => {
       state.my_cart = { cartItems: [] };
     },
     [API.getCurrentUserCart.pending]: (state, { payload }) => {

@@ -68,6 +68,7 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
     tax_rate,
     activePromoCodeIndicator,
     production_note,
+    new_password,
   } = placeOrder;
 
   const check_code = async e => {
@@ -109,7 +110,7 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
         shippingPrice,
         taxPrice,
         totalPrice,
-        user: user._id,
+        user: current_user._id,
         order_note,
         production_note,
         tip,
@@ -132,29 +133,36 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
   };
 
   const create_no_payment_order = async () => {
-    dispatch(setLoadingPayment(true));
     dispatch(
       API.createNoPayOrder({
-        orderItems: cartItems,
-        shipping: {
-          ...shipping,
-          email: user.email,
-          shipment_id: shipment_id && shipment_id,
-          shipping_rate: shipping_rate && shipping_rate,
+        order: {
+          orderItems: cartItems,
+          shipping: shipment_id
+            ? {
+                ...shipping,
+                shipment_id,
+                shipping_rate,
+              }
+            : shipping,
+          payment,
+          itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice,
+          user: current_user._id,
+          order_note,
+          production_note,
+          tip,
+          promo_code: activePromoCodeIndicator && promo_code,
+          parcel: parcel || null,
+          status: "paid",
+          paidAt: today,
+          preOrderShippingDate: preOrderReleaseDate,
+          hasPreOrderItems,
         },
-        payment,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-        user: user._id,
-        order_note,
-        production_note,
-        tip,
-        promo_code,
-        parcel: parcel ? parcel : null,
-        status: "paid",
-        paidAt: today,
+        cartId: my_cart._id,
+        create_account,
+        new_password,
       })
     );
   };

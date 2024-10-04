@@ -65,6 +65,7 @@ const ProductPage = () => {
       [index]: error,
     }));
   };
+  console.log({ product });
 
   return (
     <Box>
