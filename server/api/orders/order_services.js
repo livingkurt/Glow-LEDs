@@ -225,9 +225,7 @@ export default {
       );
 
       if (hasSamplerWithQtyGreaterThanOne) {
-        return res.status(400).send({
-          message: "Only one sampler pack allowed per order.",
-        });
+        throw new Error("Only one sampler pack allowed per order.");
       }
       // Use existing user ID if provided, otherwise create or retrieve user
       let userId = order?.user;
@@ -267,6 +265,14 @@ export default {
     const { order, cartId, create_account, new_password } = body;
 
     try {
+      // Check if any orderItem has subcategory "sampler" and quantity greater than 1
+      const hasSamplerWithQtyGreaterThanOne = order.orderItems.some(
+        item => item.subcategory === "sampler" && item.quantity > 1
+      );
+
+      if (hasSamplerWithQtyGreaterThanOne) {
+        throw new Error("Only one sampler pack allowed per order.");
+      }
       let userId = order.user;
       if (!userId) {
         // Handle user creation or retrieval
