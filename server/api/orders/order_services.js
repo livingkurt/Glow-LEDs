@@ -255,7 +255,6 @@ export default {
 
       await cart_services.empty_carts_s({ id: cartId });
 
-      console.log({ promo_code: updatedOrder.promo_code });
       if (updatedOrder.promo_code) {
         await promo_services.update_code_used_promos_s({ promo_code: updatedOrder.promo_code });
         await sendCodeUsedEmail(updatedOrder.promo_code);

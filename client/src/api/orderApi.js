@@ -108,7 +108,7 @@ export const placeOrder = createAsyncThunk(
         new_password,
       });
 
-      dispatch(showSuccess({ message: "Order created and paid successfully" }));
+      dispatch(showSuccess({ message: "Order created successfully" }));
       sessionStorage.removeItem("shippingAddress");
       sessionStorage.setItem("manualNavigation", "true");
       localStorage.removeItem("cartItems");
