@@ -430,28 +430,16 @@ const placeOrder = createSlice({
       state.error = payload ? payload.error : error.message;
     },
 
-    [API.createPayOrder.pending]: (state, { payload }) => {
+    [API.placeOrder.pending]: (state, { payload }) => {
       state.loadingPayment = true;
       state.hideCheckoutButton = true;
     },
-    [API.createPayOrder.fulfilled]: (state, { payload }) => {
+    [API.placeOrder.fulfilled]: (state, { payload }) => {
       state.loadingPayment = false;
       state.orderCompleted = true;
       state.paymentValidations = payload.message;
     },
-    [API.createPayOrder.rejected]: (state, { payload, error }) => {
-      state.loadingPayment = false;
-    },
-    [API.createNoPayOrder.pending]: (state, { payload }) => {
-      state.loadingPayment = true;
-      state.hideCheckoutButton = true;
-    },
-    [API.createNoPayOrder.fulfilled]: (state, { payload }) => {
-      state.loadingPayment = false;
-      state.orderCompleted = true;
-      state.paymentValidations = payload.message;
-    },
-    [API.createNoPayOrder.rejected]: (state, { payload, error }) => {
+    [API.placeOrder.rejected]: (state, { payload, error }) => {
       state.loadingPayment = false;
     },
     [API.validatePromoCode.fulfilled]: (state, { payload }) => {

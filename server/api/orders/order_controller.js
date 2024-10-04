@@ -88,11 +88,11 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  create_pay_order_orders_c: async (req, res) => {
+  place_order_orders_c: async (req, res) => {
     const { body } = req;
 
     try {
-      const order = await order_services.create_pay_order_orders_s(body);
+      const order = await order_services.place_order_orders_s(body);
       if (order) {
         console.log("ordersChanged socket triggered");
         req.io.emit("ordersChanged");
@@ -103,21 +103,7 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  create_no_pay_order_orders_c: async (req, res) => {
-    const { body } = req;
 
-    try {
-      const order = await order_services.create_no_pay_order_orders_s(body);
-      if (order) {
-        console.log("ordersChanged socket triggered");
-        req.io.emit("ordersChanged");
-        return res.status(201).send(order);
-      }
-      return res.status(500).send(order);
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   create_orders_c: async (req, res) => {
     const { body } = req;
 

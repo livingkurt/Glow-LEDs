@@ -215,7 +215,7 @@ export default {
       }
     }
   },
-  create_pay_order_orders_s: async body => {
+  place_order_orders_s: async body => {
     const { order, cartId, paymentMethod, create_account, new_password } = body;
 
     try {
@@ -227,62 +227,23 @@ export default {
       if (hasSamplerWithQtyGreaterThanOne) {
         throw new Error("Only one sampler pack allowed per order.");
       }
+
       // Use existing user ID if provided, otherwise create or retrieve user
-      let userId = order?.user;
-      if (!userId) {
-        userId = await handleUserCreation(order.shipping, create_account, new_password);
-      }
-      // Create the order
-      const createdOrder = await Order.create({ ...order, user: userId });
-
-      // Process payment
-      const updatedOrder = await processPayment(createdOrder._id, paymentMethod);
-
-      // Send emails
-      await sendOrderEmail(updatedOrder);
-      if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
-        await sendTicketEmail(updatedOrder);
-      }
-
-      await product_services.update_stock_products_s({ cartItems: updatedOrder.orderItems });
-
-      await cart_services.empty_carts_s({ id: cartId });
-
-      if (updatedOrder.promo_code) {
-        await promo_services.update_code_used_promos_s(updatedOrder.promo_code);
-        await sendCodeUsedEmail(updatedOrder.promo_code);
-      }
-
-      return updatedOrder;
-    } catch (error) {
-      console.log({ create_pay_order_orders_s: error });
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  create_no_pay_order_orders_s: async body => {
-    const { order, cartId, create_account, new_password } = body;
-
-    try {
-      // Check if any orderItem has subcategory "sampler" and quantity greater than 1
-      const hasSamplerWithQtyGreaterThanOne = order.orderItems.some(
-        item => item.subcategory === "sampler" && item.quantity > 1
-      );
-
-      if (hasSamplerWithQtyGreaterThanOne) {
-        throw new Error("Only one sampler pack allowed per order.");
-      }
       let userId = order.user;
       if (!userId) {
-        // Handle user creation or retrieval
         userId = await handleUserCreation(order.shipping, create_account, new_password);
       }
 
       // Create the order
       const createdOrder = await Order.create({ ...order, user: userId });
 
-      const updatedOrder = await Order.findById(createdOrder._id).populate("user");
+      // Process payment if paymentMethod is provided
+      let updatedOrder;
+      if (paymentMethod) {
+        updatedOrder = await processPayment(createdOrder._id, paymentMethod);
+      } else {
+        updatedOrder = await Order.findById(createdOrder._id).populate("user");
+      }
 
       // Send emails
       await sendOrderEmail(updatedOrder);
@@ -294,18 +255,21 @@ export default {
 
       await cart_services.empty_carts_s({ id: cartId });
 
+      console.log({ promo_code: updatedOrder.promo_code });
       if (updatedOrder.promo_code) {
-        await promo_services.update_code_used_promos_s(updatedOrder.promo_code);
+        await promo_services.update_code_used_promos_s({ promo_code: updatedOrder.promo_code });
         await sendCodeUsedEmail(updatedOrder.promo_code);
       }
 
       return updatedOrder;
     } catch (error) {
+      console.log({ create_order_orders_s: error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   create_orders_s: async body => {
     try {
       return await order_db.create_orders_db(body);

@@ -56,7 +56,7 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
       }
       if (cartItems.length > 0) {
         dispatch(
-          API.createPayOrder({
+          API.placeOrder({
             order: {
               orderItems: cartItems,
               shipping: shipment_id

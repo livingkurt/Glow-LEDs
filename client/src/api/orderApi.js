@@ -96,11 +96,11 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { di
   }
 });
 
-export const createPayOrder = createAsyncThunk(
-  "orders/createPayOrder",
+export const placeOrder = createAsyncThunk(
+  "orders/placeOrder",
   async ({ order, cartId, paymentMethod, create_account, new_password }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.post("/api/orders/create_pay", {
+      const { data } = await axios.post("/api/orders/place_order", {
         order,
         cartId,
         paymentMethod,
@@ -116,28 +116,6 @@ export const createPayOrder = createAsyncThunk(
     } catch (error) {
       console.log({ createPayOrder: error });
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
-export const createNoPayOrder = createAsyncThunk(
-  "orders/createNoPayOrder",
-  async ({ order, cartId, create_account, new_password }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.post("/api/orders/create_no_pay", {
-        order,
-        cartId,
-        create_account,
-        new_password,
-      });
-      dispatch(showSuccess({ message: "Order created" }));
-      sessionStorage.removeItem("shippingAddress");
-      sessionStorage.setItem("manualNavigation", "true");
-      localStorage.removeItem("cartItems");
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
     }
   }

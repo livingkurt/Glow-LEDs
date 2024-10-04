@@ -19,6 +19,7 @@ import App from "../../email_templates/App";
 import ticketEmail from "../../email_templates/pages/ticketEmail";
 import { generateTicketQRCodes } from "../emails/email_interactors";
 import { createTransporter } from "../emails/email_helpers";
+import { promo_db } from "../promos";
 
 export const normalizeOrderFilters = input => {
   const output = {};

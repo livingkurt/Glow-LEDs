@@ -282,10 +282,7 @@ const cartPage = createSlice({
       localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
     },
-    [API.createPayOrder.fulfilled]: state => {
-      state.my_cart = { cartItems: [] };
-    },
-    [API.createNoPayOrder.fulfilled]: state => {
+    [API.placeOrder.fulfilled]: state => {
       state.my_cart = { cartItems: [] };
     },
     [API.getCurrentUserCart.pending]: (state, { payload }) => {

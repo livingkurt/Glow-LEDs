@@ -134,7 +134,7 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
 
   const create_no_payment_order = async () => {
     dispatch(
-      API.createNoPayOrder({
+      API.placeOrder({
         order: {
           orderItems: cartItems,
           shipping: shipment_id
