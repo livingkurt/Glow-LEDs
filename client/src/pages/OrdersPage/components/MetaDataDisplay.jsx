@@ -38,7 +38,6 @@ const MetaDataDisplay = ({ row }) => {
       config.REACT_APP_INFO_EMAIL
     );
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
-    console.log({ has_ticket });
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({
@@ -53,7 +52,6 @@ const MetaDataDisplay = ({ row }) => {
   const send_ticket_email = async () => {
     dispatch(set_loading_label(true));
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
-    console.log({ has_ticket });
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({

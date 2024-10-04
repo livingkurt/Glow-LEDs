@@ -445,3 +445,39 @@ export const sendCodeUsedEmail = async promo_code => {
     throw new Error("Failed to send code used email");
   }
 };
+
+export const splitOrderItems = orderItems => {
+  const preOrderItems = orderItems.filter(item => item.isPreOrder);
+  const nonPreOrderItems = orderItems.filter(item => !item.isPreOrder);
+  return { preOrderItems, nonPreOrderItems };
+};
+
+export const createSplitOrder = async (originalOrder, items, userId, isPreOrder = false, shipping_rate) => {
+  const { itemsPrice, shippingPrice, taxPrice } = calculateOrderPrices(items, originalOrder);
+
+  const splitOrder = {
+    ...originalOrder,
+    orderItems: items,
+    shipping: {
+      ...originalOrder.shipping,
+      shipping_rate,
+      shipment_id: shipping_rate.id,
+    },
+    itemsPrice,
+    shippingPrice,
+    taxPrice,
+    totalPrice: itemsPrice + shippingPrice + taxPrice,
+    user: userId,
+    isPreOrder,
+  };
+
+  return await Order.create(splitOrder);
+};
+
+export const calculateOrderPrices = (items, originalOrder) => {
+  const itemsPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const shippingPrice = calculateShippingPrice(items, originalOrder.shipping);
+  const taxPrice = itemsPrice * originalOrder.taxRate;
+
+  return { itemsPrice, shippingPrice, taxPrice };
+};

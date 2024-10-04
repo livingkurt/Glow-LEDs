@@ -77,6 +77,8 @@ const initialState = {
   hideCheckoutButton: false,
   paymentValidations: "",
   showSaveShippingModal: false,
+  preOrderShippingPrice: 0,
+  nonPreOrderShippingPrice: 0,
   environment: "production",
   shippingSaved: false,
   modalText: false,
@@ -90,6 +92,11 @@ const initialState = {
     country: "",
     phone_number: "",
   },
+  splitOrder: false,
+  showSplitOrderModal: false,
+  isPreOrder: false,
+  preOrderShippingRate: {},
+  nonPreOrderShippingRate: {},
 };
 
 const placeOrder = createSlice({
@@ -318,12 +325,26 @@ const placeOrder = createSlice({
       }
     },
 
-    re_choose_shipping_rate: state => {
-      state.shippingPrice = 0;
-      state.previousShippingPrice = 0;
+    re_choose_shipping_rate: (state, { payload }) => {
+      const { splitOrder, isPreOrder } = payload || {};
+
+      if (splitOrder) {
+        if (isPreOrder) {
+          state.preOrderShippingPrice = 0;
+          state.preOrderShippingRate = null;
+        } else {
+          state.nonPreOrderShippingPrice = 0;
+          state.nonPreOrderShippingRate = null;
+        }
+        state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
+      } else {
+        state.shippingPrice = 0;
+        state.previousShippingPrice = 0;
+        state.shipping_rate = {};
+      }
+
       state.hide_pay_button = true;
       state.free_shipping_message = "------";
-      state.shipping_rate = {};
       state.show_payment = false;
     },
     setShippingValidation: (state, { payload }) => {
@@ -341,19 +362,35 @@ const placeOrder = createSlice({
       state.show_shipping_complete = true;
     },
     chooseShippingRateBasic: (state, { payload }) => {
-      const { rate, freeShipping, shipping } = payload;
+      const { rate, freeShipping, shipping, isPreOrder } = payload;
 
       if (freeShipping) {
-        state.hide_pay_button = false;
         state.shippingPrice = 0;
         state.free_shipping_message = "Free";
         state.loadingShipping = false;
         state.show_shipping_complete = true;
       } else {
-        state.shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
-        state.previousShippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
+        const shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
+        if (state.splitOrder) {
+          if (isPreOrder) {
+            state.preOrderShippingPrice = shippingPrice;
+            state.preOrderShippingRate = rate;
+          } else {
+            state.nonPreOrderShippingPrice = shippingPrice;
+            state.nonPreOrderShippingRate = rate;
+          }
+          state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
+        } else {
+          state.shippingPrice = shippingPrice;
+        }
+        state.previousShippingPrice = state.shippingPrice;
       }
-      state.hide_pay_button = false;
+
+      if (!state.splitOrder || (state.preOrderShippingRate && state.nonPreOrderShippingRate)) {
+        state.hide_pay_button = false;
+        state.show_shipping_complete = true;
+      }
+
       state.shipping_rate = rate;
       state.current_shipping_speed = { rate, freeShipping };
     },
@@ -364,9 +401,24 @@ const placeOrder = createSlice({
       state.activePromoCodeIndicator = promo_code_storage;
       state.show_promo_code_input_box = false;
     },
+    setPreOrderShippingRate: (state, { payload }) => {
+      state.preOrderShippingRate = payload;
+    },
+    setNonPreOrderShippingRate: (state, { payload }) => {
+      state.nonPreOrderShippingRate = payload;
+    },
     finalizeShippingRate: state => {
-      state.show_promo_code = true;
-      state.show_shipping_complete = true;
+      if (state.splitOrder) {
+        if (state.preOrderShippingRate && state.nonPreOrderShippingRate) {
+          state.shippingPrice =
+            parseFloat(state.preOrderShippingRate.rate) + parseFloat(state.nonPreOrderShippingRate.rate);
+          state.hide_pay_button = false;
+          state.show_shipping_complete = true;
+        }
+      } else {
+        state.hide_pay_button = false;
+        state.show_shipping_complete = true;
+      }
     },
     hiddenCheckoutButton: state => {
       state.hideCheckoutButton = true;
@@ -393,16 +445,31 @@ const placeOrder = createSlice({
     setServiceFee: (state, { payload }) => {
       state.serviceFee = payload;
     },
+    setSplitOrder: (state, { payload }) => {
+      state.splitOrder = payload;
+    },
+    openSplitOrderModal: (state, { payload }) => {
+      state.showSplitOrderModal = true;
+    },
+    closeSplitOrderModal: (state, { payload }) => {
+      state.showSplitOrderModal = false;
+    },
   },
   extraReducers: {
     [API.shippingRates.pending]: (state, { payload }) => {
       state.loadingShipping = true;
     },
     [API.shippingRates.fulfilled]: (state, { payload }) => {
+      const { splitOrder, data } = payload;
+      if (splitOrder) {
+        state.preOrderRates = data.preOrderRates;
+        state.nonPreOrderRates = data.nonPreOrderRates;
+      } else {
+        state.shipping_rates = data.shipment;
+        state.shipment_id = data.shipment?.id;
+        state.parcel = data.parcel?._id;
+      }
       state.loadingShipping = false;
-      state.shipping_rates = payload.shipment;
-      state.shipment_id = payload.shipment?.id;
-      state.parcel = payload.parcel?._id;
     },
     [API.shippingRates.rejected]: (state, { payload, error }) => {
       state.loadingShipping = false;
@@ -503,6 +570,11 @@ export const {
   clearShippingRates,
   initializePlaceOrderPage,
   set_shipping_choice,
+  setSplitOrder,
+  openSplitOrderModal,
+  closeSplitOrderModal,
+  setPreOrderShippingRate,
+  setNonPreOrderShippingRate,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

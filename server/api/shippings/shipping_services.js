@@ -19,7 +19,30 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 export default {
   shipping_rates_shipping_s: async body => {
     try {
-      return await createShippingRates({ order: body.order, returnLabel: false });
+      const { order, splitOrder } = body;
+      console.log({ order, splitOrder });
+
+      if (splitOrder) {
+        const preOrderItems = order.orderItems.filter(item => item.isPreOrder);
+        const nonPreOrderItems = order.orderItems.filter(item => !item.isPreOrder);
+
+        const preOrderRates = await createShippingRates({
+          order: { ...order, orderItems: preOrderItems },
+          returnLabel: false,
+        });
+
+        const nonPreOrderRates = await createShippingRates({
+          order: { ...order, orderItems: nonPreOrderItems },
+          returnLabel: false,
+        });
+
+        return {
+          preOrderRates,
+          nonPreOrderRates,
+        };
+      } else {
+        return await createShippingRates({ order, returnLabel: false });
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

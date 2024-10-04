@@ -75,7 +75,6 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
         images={images}
         fieldName={fieldName}
         onChange={value => {
-          console.log({ fieldState });
           if (Array.isArray(fieldState)) {
             onChange(value);
           } else {

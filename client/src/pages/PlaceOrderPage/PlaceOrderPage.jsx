@@ -30,6 +30,8 @@ const PlaceOrderPage = () => {
     preOrderReleaseDate,
     hasPreOrderItems,
     current_user,
+    hasNonPreOrderItems,
+    splitOrder,
   } = usePlaceOrderPage();
 
   return (
@@ -86,11 +88,19 @@ const PlaceOrderPage = () => {
           <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
             <div className="place_order-info">
               <EmailStep />
-              <ShippingStep />
-              <PaymentStep hasPreOrderItems={hasPreOrderItems} preOrderShippingDate={preOrderReleaseDate} />
+              <ShippingStep
+                hasPreOrderItems={hasPreOrderItems}
+                hasNonPreOrderItems={hasNonPreOrderItems}
+                splitOrder={splitOrder}
+              />
+              <PaymentStep
+                hasPreOrderItems={hasPreOrderItems}
+                preOrderShippingDate={preOrderReleaseDate}
+                splitOrder={splitOrder}
+              />
             </div>
           </div>
-          <OrderSummaryStep hasPreOrderItems={hasPreOrderItems} />
+          <OrderSummaryStep hasPreOrderItems={hasPreOrderItems} splitOrder={splitOrder} />
         </div>
       ) : (
         <OrderComplete current_user={current_user} order_id={order._id || orderId} />

@@ -27,6 +27,9 @@ import {
   sendCodeUsedEmail,
   sendOrderEmail,
   sendTicketEmail,
+  splitOrderItems,
+  createSplitOrder,
+  calculateOrderPrices,
 } from "./order_interactors";
 const SalesTax = require("sales-tax");
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
@@ -216,7 +219,16 @@ export default {
     }
   },
   place_order_orders_s: async body => {
-    const { order, cartId, paymentMethod, create_account, new_password } = body;
+    const {
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingPrice,
+      nonPreOrderShippingPrice,
+    } = body;
 
     try {
       // Check if any orderItem has subcategory "sampler" and quantity greater than 1
@@ -234,33 +246,60 @@ export default {
         userId = await handleUserCreation(order.shipping, create_account, new_password);
       }
 
-      // Create the order
-      const createdOrder = await Order.create({ ...order, user: userId });
+      let orders = [];
+      if (splitOrder) {
+        const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
 
-      // Process payment if paymentMethod is provided
-      let updatedOrder;
-      if (paymentMethod) {
-        updatedOrder = await processPayment(createdOrder._id, paymentMethod);
+        if (nonPreOrderItems.length > 0) {
+          const nonPreOrderOrder = await createSplitOrder(
+            order,
+            nonPreOrderItems,
+            userId,
+            false,
+            nonPreOrderShippingPrice
+          );
+          orders.push(nonPreOrderOrder);
+        }
+
+        if (preOrderItems.length > 0) {
+          const preOrderOrder = await createSplitOrder(order, preOrderItems, userId, true, preOrderShippingPrice);
+          orders.push(preOrderOrder);
+        }
       } else {
-        updatedOrder = await Order.findById(createdOrder._id).populate("user");
+        const createdOrder = await Order.create({ ...order, user: userId });
+        orders.push(createdOrder);
       }
 
-      // Send emails
-      await sendOrderEmail(updatedOrder);
-      if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
-        await sendTicketEmail(updatedOrder);
-      }
+      // Process payments and send emails for each order
+      const updatedOrders = await Promise.all(
+        orders.map(async order => {
+          let updatedOrder = order;
+          if (paymentMethod) {
+            updatedOrder = await processPayment(order._id, paymentMethod);
+          } else {
+            updatedOrder = await Order.findById(order._id).populate("user");
+          }
 
-      await product_services.update_stock_products_s({ cartItems: updatedOrder.orderItems });
+          await sendOrderEmail(updatedOrder);
+          if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
+            await sendTicketEmail(updatedOrder);
+          }
 
+          return updatedOrder;
+        })
+      );
+
+      // Update stock and empty cart
+      await product_services.update_stock_products_s({ cartItems: order.orderItems });
       await cart_services.empty_carts_s({ id: cartId });
 
-      if (updatedOrder.promo_code) {
-        await promo_services.update_code_used_promos_s({ promo_code: updatedOrder.promo_code });
-        await sendCodeUsedEmail(updatedOrder.promo_code);
+      // Handle promo code
+      if (order.promo_code) {
+        await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });
+        await sendCodeUsedEmail(order.promo_code);
       }
 
-      return updatedOrder;
+      return updatedOrders;
     } catch (error) {
       console.log({ create_order_orders_s: error });
       if (error instanceof Error) {

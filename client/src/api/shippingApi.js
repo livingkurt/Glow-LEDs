@@ -92,10 +92,10 @@ export const createReturnLabel = createAsyncThunk(
 
 export const shippingRates = createAsyncThunk(
   "shipping/shippingRates",
-  async ({ order }, { dispatch, rejectWithValue }) => {
+  async ({ order, splitOrder }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
-      return data;
+      const { data } = await axios.put(`/api/shipping/shipping_rates`, { order, splitOrder });
+      return { data, splitOrder };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);

@@ -53,10 +53,6 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const renderQuantityAndDelete = () =>
     showQuantity && !isOrderItem ? (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        {console.log({
-          quantity: item?.quantity,
-          max_display_quantity: item?.max_display_quantity,
-        })}
         <GLSelect
           value={item.quantity}
           onChange={e => {

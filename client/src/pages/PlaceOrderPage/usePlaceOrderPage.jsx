@@ -25,12 +25,14 @@ const usePlaceOrderPage = () => {
   const { current_user } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
-  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted } = placeOrder;
+  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted, splitOrder } =
+    placeOrder;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const orderId = searchParams.get("order_id");
 
   const hasPreOrderItems = cartItems.some(item => item.isPreOrder);
+  const hasNonPreOrderItems = cartItems.some(item => !item.isPreOrder);
   const preOrderReleaseDate = cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
 
   useEffect(() => {
@@ -182,6 +184,8 @@ const usePlaceOrderPage = () => {
     preOrderReleaseDate,
     hasPreOrderItems,
     current_user,
+    splitOrder,
+    hasNonPreOrderItems,
   };
 };
 

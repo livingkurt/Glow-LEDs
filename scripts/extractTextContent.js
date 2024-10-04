@@ -1280,4 +1280,3 @@ let orderItems = extractProductInfo(html);
 const result = { orderItems };
 
 // Output the result
-console.log(JSON.stringify(result, null, 2));

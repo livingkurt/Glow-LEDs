@@ -31,6 +31,9 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
     order_note,
     production_note,
     serviceFee,
+    splitOrder,
+    preOrderShippingRate,
+    nonPreOrderShippingRate,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -80,6 +83,9 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
               hasPreOrderItems,
               preOrderShippingDate: preOrderReleaseDate,
             },
+            splitOrder: splitOrder,
+            preOrderShippingRate: preOrderShippingRate,
+            nonPreOrderShippingRate: nonPreOrderShippingRate,
             cartId: my_cart._id,
             create_account,
             new_password,

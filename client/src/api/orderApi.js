@@ -114,7 +114,6 @@ export const placeOrder = createAsyncThunk(
       localStorage.removeItem("cartItems");
       return data;
     } catch (error) {
-      console.log({ createPayOrder: error });
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
       return rejectWithValue(error.response?.data);
     }

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import { Tooltip, Typography, useTheme } from "@mui/material";
 
-const OrderSummaryStep = ({ hasPreOrderItems }) => {
+const OrderSummaryStep = ({ hasPreOrderItems, splitOrder }) => {
   const theme = useTheme();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
@@ -21,6 +21,8 @@ const OrderSummaryStep = ({ hasPreOrderItems }) => {
     itemsPrice,
     taxPrice,
     totalPrice,
+    preOrderShippingPrice,
+    nonPreOrderShippingPrice,
   } = placeOrder;
 
   // Calculate service fee for tickets
@@ -28,8 +30,10 @@ const OrderSummaryStep = ({ hasPreOrderItems }) => {
   const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const serviceFee = ticketTotal * 0.1; // 10% service fee
 
-  // Recalculate total price with service fee
-  const newTotalPrice = totalPrice + serviceFee;
+  // Recalculate total price with service fee and split shipping if applicable
+  const newTotalPrice = splitOrder
+    ? totalPrice + serviceFee + preOrderShippingPrice + nonPreOrderShippingPrice
+    : totalPrice + serviceFee;
 
   return (
     <div className="place_order-action">
@@ -109,14 +113,35 @@ const OrderSummaryStep = ({ hasPreOrderItems }) => {
             {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
           </div>
         </li>
-        <li className="pos-rel">
-          <div>Shipping</div>
-          <div>
-            {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
-              ? "$" + shippingPrice.toFixed(2)
-              : free_shipping_message}
-          </div>
-        </li>
+        {splitOrder ? (
+          <>
+            <li className="pos-rel">
+              <div>In-stock Items Shipping</div>
+              <div>
+                {shipping && shipping.hasOwnProperty("first_name") && nonPreOrderShippingPrice > 0
+                  ? "$" + nonPreOrderShippingPrice.toFixed(2)
+                  : free_shipping_message}
+              </div>
+            </li>
+            <li className="pos-rel">
+              <div>Pre-order Items Shipping</div>
+              <div>
+                {shipping && shipping.hasOwnProperty("first_name") && preOrderShippingPrice > 0
+                  ? "$" + preOrderShippingPrice.toFixed(2)
+                  : free_shipping_message}
+              </div>
+            </li>
+          </>
+        ) : (
+          <li className="pos-rel">
+            <div>Shipping</div>
+            <div>
+              {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
+                ? "$" + shippingPrice.toFixed(2)
+                : free_shipping_message}
+            </div>
+          </li>
+        )}
         {serviceFee > 0 && (
           <li className="pos-rel">
             <div>Service Fee (10% for tickets)</div>

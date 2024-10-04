@@ -27,7 +27,6 @@ const ProductsPage = () => {
 
   const productTable = useSelector(state => state.products.productTable);
   const { selectedRows, selectedRowObjects } = productTable;
-  console.log({ selectedRowObjects });
 
   const dispatch = useDispatch();
 

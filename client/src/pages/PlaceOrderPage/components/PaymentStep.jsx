@@ -69,6 +69,9 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
     activePromoCodeIndicator,
     production_note,
     new_password,
+    splitOrder,
+    preOrderShippingPrice,
+    nonPreOrderShippingPrice,
   } = placeOrder;
 
   const check_code = async e => {
@@ -160,6 +163,9 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
           preOrderShippingDate: preOrderReleaseDate,
           hasPreOrderItems,
         },
+        splitOrder,
+        preOrderShippingPrice: splitOrder ? preOrderShippingPrice : null,
+        nonPreOrderShippingPrice: splitOrder ? nonPreOrderShippingPrice : null,
         cartId: my_cart._id,
         create_account,
         new_password,

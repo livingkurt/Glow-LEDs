@@ -24,8 +24,6 @@ const ArticlePage = () => {
     dispatch(detailsArticle(pathname));
   }, [dispatch, pathname]);
 
-  console.log({ loading });
-
   if (loading) {
     return <ArticlePageSkeleton />;
   }
