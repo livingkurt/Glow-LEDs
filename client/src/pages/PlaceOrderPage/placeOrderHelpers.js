@@ -77,14 +77,16 @@ export const isFreeShipping = ({ shipping, items_price, rate, sortedRates, freeS
     : false;
 };
 
-export const displayRate = ({ current_shipping_speed, shipping }) =>
-  current_shipping_speed.freeShipping
+export const displayRate = ({ current_shipping_speed, shipping }) => {
+  console.log({ current_shipping_speed });
+  return current_shipping_speed.freeShipping
     ? "Free"
     : `$${parseFloat(
         shipping.international
           ? current_shipping_speed.rate.rate
           : current_shipping_speed.rate.list_rate || current_shipping_speed.rate.rate
       ).toFixed(2)}`;
+};
 
 export const normalizeDomesticRates = rates => {
   if (!rates || !Array.isArray(rates)) {

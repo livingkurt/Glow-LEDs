@@ -51,6 +51,8 @@ const ShippingChoice = () => {
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
+    currentPreOrderShippingSpeed,
+    currentNonPreOrderShippingSpeed,
   } = placeOrder;
 
   const { data: currentContent } = API.useCurrentContentQuery();
@@ -59,9 +61,8 @@ const ShippingChoice = () => {
     dispatch(set_hide_pay_button(true));
   }, [shipping_rates.rates, dispatch]);
 
-  const choose_shipping_rate = (rate, isPreOrder) => {
-    console.log({ rate, isPreOrder });
-
+  const choose_shipping_rate = (rate, isPreOrder, friendlyCarrierService) => {
+    console.log({ rate, isPreOrder, friendlyCarrierService });
     let sortedRates;
     if (splitOrder) {
       sortedRates = isPreOrder ? preOrderRates?.shipment?.rates : nonPreOrderRates?.shipment?.rates;
@@ -69,21 +70,11 @@ const ShippingChoice = () => {
       sortedRates = shipping_rates?.rates;
     }
 
-    console.log({
-      sortedRates,
-      shipping,
-      items_price,
-      rate,
-      freeShippingMinimum: currentContent?.free_shipping_minimum_amount,
-    });
-
     if (sortedRates && Array.isArray(sortedRates)) {
       sortedRates = normalizeDomesticRates(sortedRates);
     } else {
       sortedRates = [];
     }
-
-    console.log({ sortedRates });
 
     const freeShipping = isFreeShipping({
       shipping,
@@ -93,8 +84,7 @@ const ShippingChoice = () => {
       freeShippingMinimum: currentContent?.free_shipping_minimum_amount,
     });
 
-    console.log({ freeShipping });
-    dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping, isPreOrder }));
+    dispatch(chooseShippingRateBasic({ rate, freeShipping, shipping, isPreOrder, friendlyCarrierService }));
 
     if (splitOrder) {
       if (isPreOrder) {
@@ -109,18 +99,19 @@ const ShippingChoice = () => {
     }
   };
 
-  const handleOpen = (rate, index, isPreOrder) => {
+  const handleOpen = (rate, index, isPreOrder, friendlyCarrierService) => {
+    console.log({ rate, index, isPreOrder, friendlyCarrierService });
     if (modalShown) {
-      choose_shipping_rate(rate, isPreOrder);
+      choose_shipping_rate(rate, isPreOrder, friendlyCarrierService);
       return;
     }
     const hasProcessingTime = processingTime({ cartItems });
     const chooseFasterShipping = isFasterShipping({ shipping, rate, index });
 
     if (chooseFasterShipping && hasProcessingTime) {
-      dispatch(openProcessingTimeModal({ rate, isPreOrder }));
+      dispatch(openProcessingTimeModal({ rate, isPreOrder, friendlyCarrierService }));
     } else {
-      choose_shipping_rate(rate, isPreOrder);
+      choose_shipping_rate(rate, isPreOrder, friendlyCarrierService);
     }
   };
 
@@ -150,7 +141,10 @@ const ShippingChoice = () => {
                 <label> ${parseFloat(rate.rate).toFixed(2)} </label>
               </div>
             </div>
-            <GLButton variant="rates" onClick={() => handleOpen(rate, index, isPreOrder)}>
+            <GLButton
+              variant="rates"
+              onClick={() => handleOpen(rate, index, isPreOrder, `${friendlyCarrier}: ${friendlyService}`)}
+            >
               Select
             </GLButton>
           </div>
@@ -172,7 +166,12 @@ const ShippingChoice = () => {
                   <label>{displayRate}</label>
                 </div>
               </div>
-              <GLButton variant="rates" onClick={() => handleOpen(rate, index, isPreOrder)}>
+              <GLButton
+                variant="rates"
+                onClick={() =>
+                  handleOpen(rate, index, isPreOrder, serviceNames[index] || toTitleCaseSnakeCase(rate.service))
+                }
+              >
                 Select
               </GLButton>
             </div>
@@ -191,23 +190,59 @@ const ShippingChoice = () => {
                 <>
                   <h3>In-stock Items Shipping</h3>
                   {renderShippingRates(nonPreOrderRates.shipment, false)}
-                  {nonPreOrderShippingRate && (
-                    <div>
-                      Selected: {nonPreOrderShippingRate.service} - ${nonPreOrderShippingRate.rate}
-                    </div>
-                  )}
                 </>
+              )}
+              {nonPreOrderShippingRate?.rate && (
+                <div>
+                  <h3>In-stock Items Shipping</h3>
+                  <div className="mv-1rem jc-b ai-c w-100per">
+                    <div className="shipping_rates jc-b w-100per ">
+                      <div className="jc-b w-100per">
+                        <div>{currentNonPreOrderShippingSpeed.friendlyCarrierService}</div>
+                        <div className="jc-b max-w-150px w-100per">
+                          <div>
+                            <div>{determine_service(nonPreOrderShippingRate)}</div>
+                            {displayRate({ current_shipping_speed: currentNonPreOrderShippingSpeed, shipping })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <GLButton
+                      className="rates w-10rem"
+                      onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: false }))}
+                    >
+                      Change
+                    </GLButton>
+                  </div>
+                </div>
               )}
               {!preOrderShippingRate?.rate && (
                 <>
                   <h3>Pre-order Items Shipping</h3>
                   {renderShippingRates(preOrderRates.shipment, true)}
-                  {preOrderShippingRate && (
-                    <div>
-                      Selected: {preOrderShippingRate.service} - ${preOrderShippingRate.rate}
-                    </div>
-                  )}
                 </>
+              )}
+              {preOrderShippingRate?.rate && (
+                <div>
+                  <h3>Pre-order Items Shipping</h3>
+                  <div className="mv-1rem jc-b ai-c w-100per">
+                    <div className="shipping_rates jc-b w-100per ">
+                      <div className="jc-b w-100per">
+                        <div>{currentPreOrderShippingSpeed.friendlyCarrierService}</div>
+                        <div className="jc-b max-w-150px w-100per">
+                          <div>{determine_service(preOrderShippingRate)}</div>
+                          <div>{displayRate({ current_shipping_speed: currentPreOrderShippingSpeed, shipping })}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <GLButton
+                      className="rates w-10rem"
+                      onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: true }))}
+                    >
+                      Change
+                    </GLButton>
+                  </div>
+                </div>
               )}
             </>
           ) : (
@@ -215,106 +250,32 @@ const ShippingChoice = () => {
           )}
         </div>
       )}
-      {splitOrder ? (
-        <>
-          {nonPreOrderShippingRate?.rate && (
-            <div>
-              <h3>In-stock Items Shipping</h3>
-              Selected: {nonPreOrderShippingRate.service} - ${nonPreOrderShippingRate.rate}
-              <div className="mv-1rem jc-b ai-c w-100per">
-                <div className="shipping_rates jc-b w-100per ">
-                  <div className="jc-b w-100per">
-                    <div>
-                      {getShippingInfo(
-                        shipping,
-                        nonPreOrderShippingRate,
-                        shipping_rates,
-                        serviceNames,
-                        mapCarrierName,
-                        mapServiceName,
-                        normalizeDomesticRates
-                      )}
-                    </div>
-                    <div className="jc-b max-w-150px w-100per">
-                      <div>{determine_service(nonPreOrderShippingRate)}</div>
-                      <div>{displayRate({ current_shipping_speed, shipping })}</div>
-                    </div>
-                  </div>
-                </div>
-                <GLButton
-                  className="rates w-10rem"
-                  onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: false }))}
-                >
-                  Change
-                </GLButton>
+
+      {!splitOrder && !hide_pay_button && current_shipping_speed && (
+        <div className="mv-1rem jc-b ai-c w-100per">
+          <div className="shipping_rates jc-b w-100per ">
+            <div className="jc-b w-100per">
+              <div>
+                {getShippingInfo(
+                  shipping,
+                  current_shipping_speed,
+                  shipping_rates,
+                  serviceNames,
+                  mapCarrierName,
+                  mapServiceName,
+                  normalizeDomesticRates
+                )}
+              </div>
+              <div className="jc-b max-w-150px w-100per">
+                <div>{determine_service(current_shipping_speed.rate)}</div>
+                <div>{displayRate({ current_shipping_speed, shipping })}</div>
               </div>
             </div>
-          )}
-          {preOrderShippingRate?.rate && (
-            <div>
-              <h3>Pre-order Items Shipping</h3>
-              Selected: {preOrderShippingRate.service} - ${preOrderShippingRate.rate}
-              <div className="mv-1rem jc-b ai-c w-100per">
-                <div className="shipping_rates jc-b w-100per ">
-                  <div className="jc-b w-100per">
-                    <div>
-                      {getShippingInfo(
-                        shipping,
-                        preOrderShippingRate,
-                        shipping_rates,
-                        serviceNames,
-                        mapCarrierName,
-                        mapServiceName,
-                        normalizeDomesticRates
-                      )}
-                    </div>
-                    <div className="jc-b max-w-150px w-100per">
-                      <div>{determine_service(preOrderShippingRate)}</div>
-                      <div>{displayRate({ current_shipping_speed, shipping })}</div>
-                    </div>
-                  </div>
-                </div>
-                <GLButton
-                  className="rates w-10rem"
-                  onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: true }))}
-                >
-                  Change
-                </GLButton>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        !hide_pay_button &&
-        current_shipping_speed && (
-          <div className="mv-1rem jc-b ai-c w-100per">
-            <div className="shipping_rates jc-b w-100per ">
-              <div className="jc-b w-100per">
-                <div>
-                  {getShippingInfo(
-                    shipping,
-                    current_shipping_speed,
-                    shipping_rates,
-                    serviceNames,
-                    mapCarrierName,
-                    mapServiceName,
-                    normalizeDomesticRates
-                  )}
-                </div>
-                <div className="jc-b max-w-150px w-100per">
-                  <div>{determine_service(current_shipping_speed.rate)}</div>
-                  <div>{displayRate({ current_shipping_speed, shipping })}</div>
-                </div>
-              </div>
-            </div>
-            <GLButton
-              className="rates w-10rem"
-              onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: false }))}
-            >
-              Change
-            </GLButton>
           </div>
-        )
+          <GLButton className="rates w-10rem" onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: false }))}>
+            Change
+          </GLButton>
+        </div>
       )}
       <ProcessingConfirmModal
         open={open}
