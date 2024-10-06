@@ -145,7 +145,7 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
     return JSON.stringify(address).toLowerCase().replace(/\s/g, "");
   };
 
-  const submitShipping = ({ splitOrder }) => {
+  const submitShipping = (splitOrder = false) => {
     dispatch(clearShippingRates());
 
     if (shipping && Object.keys(shipping).length > 0) {
@@ -617,7 +617,7 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
         isOpen={showSplitOrderModal}
         onConfirm={() => {
           dispatch(setSplitOrder(true));
-          submitShipping({ splitOrder: true });
+          submitShipping(true);
           dispatch(closeSplitOrderModal(false));
         }}
         onCancel={() => {
