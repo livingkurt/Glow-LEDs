@@ -27,9 +27,6 @@ const PlaceOrderPage = () => {
   }
 
   console.log({ orderIds, orderCompleted, isOrderComplete: isOrderComplete({ orderIds, orderCompleted }) });
-  if (isOrderComplete({ orderIds, orderCompleted })) {
-    return <OrderComplete current_user={current_user} order_id={orders.map(o => o._id) || orderIds} />;
-  }
 
   return (
     <div>
@@ -73,16 +70,20 @@ const PlaceOrderPage = () => {
 
       <LoadingPayments />
       <LoadingShipping />
-      <div className="place_order">
-        <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
-          <div className="place_order-info">
-            <EmailStep />
-            <ShippingStep />
-            <PaymentStep />
+      {!isOrderComplete({ orderIds, orderCompleted }) ? (
+        <div className="place_order">
+          <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
+            <div className="place_order-info">
+              <EmailStep />
+              <ShippingStep />
+              <PaymentStep />
+            </div>
           </div>
+          <OrderSummaryStep />
         </div>
-        <OrderSummaryStep />
-      </div>
+      ) : (
+        <OrderComplete current_user={current_user} order_id={orders.map(o => o._id) || orderIds} />
+      )}
     </div>
   );
 };
