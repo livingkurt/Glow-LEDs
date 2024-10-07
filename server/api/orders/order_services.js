@@ -111,6 +111,7 @@ export default {
         order_status: [
           "Unpaid",
           "Paid",
+          "Paid Pre Order",
           "Label Created",
           "Crafting",
           "Crafted",
@@ -288,7 +289,7 @@ export default {
 
       // Update preOrder status if it exists
       if (splitOrder && preOrderOrder) {
-        preOrderOrder.status = "paid";
+        preOrderOrder.status = "paid_pre_order";
         preOrderOrder.paidAt = Date.now();
         await preOrderOrder.save();
       }

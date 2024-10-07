@@ -68,6 +68,7 @@ const changeLogSchema = {
 const OrderStatusEnum = {
   UNPAID: "unpaid",
   PAID: "paid",
+  PAID_PRE_ORDER: "paid_pre_order",
   LABEL_CREATED: "label_created",
   CRAFTING: "crafting",
   CRAFTED: "crafted",

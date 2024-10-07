@@ -65,6 +65,18 @@ export const normalizeOrderFilters = input => {
             case "isPaused":
               output["isPaused"] = true;
               break;
+            case "Paid Pre Order":
+              output["status"] = "paid_pre_order";
+              break;
+            case "Canceled":
+              output["status"] = "canceled";
+              break;
+            case "isPrioritized":
+              output["isPrioritized"] = true;
+              break;
+            case "isPrintIssue":
+              output["isPrintIssue"] = true;
+              break;
             case "Return Label Created":
               output["status"] = "return_label_created";
               break;

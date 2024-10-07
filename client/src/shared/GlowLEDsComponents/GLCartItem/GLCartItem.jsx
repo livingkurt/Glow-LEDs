@@ -11,6 +11,7 @@ import * as API from "../../../api";
 import { generateProductUrl } from "../../../utils/helpers/product_helpers";
 import GLLazyImage from "../GLLazyImage/GLLazyImage";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import { formatDate } from "../../../utils/helpers/universal_helpers";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -186,8 +187,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
               {item.isPreOrder && (
                 <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
                   <ShoppingBagIcon sx={{ mb: 0.25, mr: 0.5 }} />
-                  Pre-Order: Estimated Availability{" "}
-                  {new Date(item.preOrderReleaseDate).toLocaleDateString(undefined, { timeZone: "UTC" })}
+                  Pre-Order: Estimated Availability {formatDate(item.preOrderReleaseDate)}
                 </Typography>
               )}
             </Grid>

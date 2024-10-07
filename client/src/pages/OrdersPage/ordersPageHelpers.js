@@ -8,6 +8,7 @@ import { io } from "socket.io-client";
 export const orderStatusColors = {
   unpaid: { name: "Unpaid", color: "#6d3e3e" },
   paid: { name: "Paid", color: "#3e4c6d" },
+  paid_pre_order: { name: "Paid Pre-Order", color: "#304648" },
   label_created: { name: "Label Created", color: "#276e64" },
   crafting: { name: "Crafting", color: "#4b7188" },
   crafted: { name: "Crafted", color: "#3c596a" },

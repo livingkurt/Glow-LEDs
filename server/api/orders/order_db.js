@@ -37,13 +37,14 @@ export default {
               statusSortOrder: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ["$status", "return_label_created"] }, then: 1 },
-                    { case: { $eq: ["$status", "packaged"] }, then: 2 },
-                    { case: { $eq: ["$status", "shipped"] }, then: 3 },
-                    { case: { $eq: ["$status", "in_transit"] }, then: 4 },
-                    { case: { $eq: ["$status", "out_for_delivery"] }, then: 5 },
-                    { case: { $eq: ["$status", "delivered"] }, then: 6 },
-                    { case: { $eq: ["$status", "canceled"] }, then: 7 },
+                    { case: { $eq: ["$status", "packaged"] }, then: 1 },
+                    { case: { $eq: ["$status", "paid_pre_order"] }, then: 2 },
+                    { case: { $eq: ["$status", "return_label_created"] }, then: 3 },
+                    { case: { $eq: ["$status", "shipped"] }, then: 4 },
+                    { case: { $eq: ["$status", "in_transit"] }, then: 5 },
+                    { case: { $eq: ["$status", "out_for_delivery"] }, then: 6 },
+                    { case: { $eq: ["$status", "delivered"] }, then: 7 },
+                    { case: { $eq: ["$status", "canceled"] }, then: 8 },
                   ],
                   default: 0,
                 },
