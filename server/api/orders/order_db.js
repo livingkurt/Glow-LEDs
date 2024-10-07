@@ -37,8 +37,8 @@ export default {
               statusSortOrder: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ["$status", "packaged"] }, then: 1 },
-                    { case: { $eq: ["$status", "paid_pre_order"] }, then: 2 },
+                    { case: { $eq: ["$status", "paid_pre_order"] }, then: 1 },
+                    { case: { $eq: ["$status", "packaged"] }, then: 2 },
                     { case: { $eq: ["$status", "return_label_created"] }, then: 3 },
                     { case: { $eq: ["$status", "shipped"] }, then: 4 },
                     { case: { $eq: ["$status", "in_transit"] }, then: 5 },
