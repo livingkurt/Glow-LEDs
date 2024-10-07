@@ -8,6 +8,7 @@ import {
   updateProductDetailsFromOption,
 } from "./productHelpers";
 import { detailsProductPage } from "../../api";
+import { productInitialState } from "../ProductsPage/productsPageHelpers";
 
 const productPage = createSlice({
   name: "productPage",
@@ -28,9 +29,9 @@ const productPage = createSlice({
     review_modal: "none",
     rating: 5,
     comment: "",
-    product: {},
     isAddonChecked: false,
     productPageLoading: true,
+    product: productInitialState,
     customizedProduct: {
       name: "",
       description: "",

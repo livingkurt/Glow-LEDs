@@ -3,14 +3,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../../api";
 import { accurate_date, format_date, format_time } from "../../utils/helper_functions";
-import { productInitalState } from "./productsPageHelpers";
+import { productInitialState } from "./productsPageHelpers";
 
 const productsPage = createSlice({
   name: "productsPage",
   initialState: {
     loading: false,
     products: [],
-    product: productInitalState,
+    product: productInitialState,
     color_modifier: "",
     secondary_color_modifier: "",
     option_modifier: "",
@@ -73,7 +73,7 @@ const productsPage = createSlice({
     },
     open_create_product_modal: (state, { payload }) => {
       state.edit_product_modal = true;
-      state.product = productInitalState;
+      state.product = productInitialState;
     },
     openEditProductModal: (state, { payload }) => {
       state.edit_product_modal = true;
