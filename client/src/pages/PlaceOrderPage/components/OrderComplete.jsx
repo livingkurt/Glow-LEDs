@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import config from "../../../config";
 import { Button, Divider, Grid } from "@mui/material";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-import Survey from "./Survey";
 import { ArrowBack } from "@mui/icons-material";
 
 import { useDispatch } from "react-redux";
@@ -12,17 +11,8 @@ import { initializePlaceOrderPage } from "../placeOrderSlice";
 import CheckoutSteps from "../../../shared/SharedComponents/CheckoutSteps";
 
 const OrderComplete = ({ current_user, orderIds }) => {
-  const [show_modal, set_show_modal] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      set_show_modal(true);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
   return (
     <div className="fade_in">
       <Helmet>
@@ -55,7 +45,7 @@ const OrderComplete = ({ current_user, orderIds }) => {
           {orderIds.map((orderId, index) => (
             <div key={orderId}>
               <h4 className="ta-c title_font ">
-                Order {index + 1} ID: {orderId}
+                Order {index > 1 ? index + 1 : ""} ID: {orderId}
               </h4>
 
               <div className="ta-c max-w-800px m-auto">
@@ -69,7 +59,7 @@ const OrderComplete = ({ current_user, orderIds }) => {
                       }
                     >
                       <Button variant="contained" color="primary" fullWidth>
-                        View Order
+                        View Order {index > 1 ? index + 1 : ""}
                       </Button>
                     </Link>
                   </Grid>
@@ -127,10 +117,14 @@ const OrderComplete = ({ current_user, orderIds }) => {
                     Products
                   </Button>
                 </Link>
-
-                <Link to="collections/all/features/category/glovers">
+                <Link to="/learn">
                   <Button variant="contained" color="primary">
-                    Featured Videos
+                    Learn
+                  </Button>
+                </Link>
+                <Link to="/tutorials">
+                  <Button variant="contained" color="primary">
+                    Tutorials
                   </Button>
                 </Link>
                 <Link to="/sponsors">
@@ -138,27 +132,14 @@ const OrderComplete = ({ current_user, orderIds }) => {
                     Sponsored Glovers
                   </Button>
                 </Link>
-                <Link to="/teams">
+                <Link to="/support_center">
                   <Button variant="contained" color="primary">
-                    Sponsored Teams
-                  </Button>
-                </Link>
-                <Link to="/music">
-                  <Button variant="contained" color="primary">
-                    NTRE Music
+                    Support Center
                   </Button>
                 </Link>
               </div>
             </div>
           </div>
-          {/* <div id="myModal" style={{ display: show_modal ? "block" : "none" }} className="modal fade_in">
-            <div className="modal-content">
-              <span className="close" onClick={() => set_show_modal(false)}>
-                &times;
-              </span>
-              <Survey order_id={orderIds[0]} />
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

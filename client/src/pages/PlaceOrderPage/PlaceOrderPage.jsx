@@ -23,7 +23,9 @@ const PlaceOrderPage = () => {
     usePlaceOrderPage();
 
   if (isOrderComplete({ orderIds, orderCompleted })) {
-    return <OrderComplete current_user={current_user} orderIds={orders.map(o => o._id) || orderIds} />;
+    return (
+      <OrderComplete current_user={current_user} orderIds={orders.length > 0 ? orders.map(o => o._id) : orderIds} />
+    );
   }
 
   return (
