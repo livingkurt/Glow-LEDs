@@ -35,9 +35,9 @@ const PlaceOrderPage = () => {
         <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/place_order" />
         <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/place_order" />
       </Helmet>
-      <LoadingPayments loading={true} />
+      <LoadingPayments loading={loadingPayment} />
       <LoadingShipping />
-      <Box sx={{ visibility: loadingPayment ? "hidden" : "visible" }}>
+      <Box>
         <Box wrap pl={2} pr={2}>
           <Button
             aria-label="Back"

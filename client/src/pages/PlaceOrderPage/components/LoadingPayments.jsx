@@ -24,7 +24,6 @@ const LoadingPayments = ({ loading }) => {
         "Fun fact: You can practice gloving anywhere, with the lights on or off, and with your gloves on or off.",
         "Remember: Proper glove care can significantly extend the life of your LEDs.",
       ];
-
       const tipInterval = setInterval(() => {
         setTip(glovingTips[Math.floor(Math.random() * glovingTips.length)]);
       }, 5000);
