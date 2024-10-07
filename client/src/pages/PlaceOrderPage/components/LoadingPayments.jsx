@@ -2,8 +2,20 @@ import React, { useState, useEffect } from "react";
 import config from "../../../config";
 
 const LoadingPayments = ({ loading }) => {
+  const glovingTips = [
+    "A Lightshow is dance performance that can conducted using gloves with lights in each finger.",
+    "Tip: Practice in front of a mirror to see your show from the audience's perspective.",
+    "Microlights are small, wearable flashing LEDs that are placed inside of the glove on each finger tip.",
+    "Remember: Good finger control is key to mastering complex moves.",
+    "Experiment with different diffuser shapes and colors to make your lightshow even more unique!",
+    "When two glovers exchange lightshows it is called 'trading'",
+    "Pro tip: Use your non-dominant hand more to improve ambidexterity.",
+    "Challenge yourself: Practice each move until you are proficient before moving on to the next move.",
+    "Fun fact: You can practice gloving anywhere, with the lights on or off, and with your gloves on or off.",
+    "Remember: Proper glove care can significantly extend the life of your LEDs.",
+  ];
   const [dots, setDots] = useState("");
-  const [tip, setTip] = useState("");
+  const [tip, setTip] = useState(glovingTips[Math.floor(Math.random() * glovingTips.length)]);
   const [hue, setHue] = useState(0);
 
   useEffect(() => {
@@ -12,18 +24,6 @@ const LoadingPayments = ({ loading }) => {
         setDots(prev => (prev.length < 3 ? prev + "." : ""));
       }, 500);
 
-      const glovingTips = [
-        "A Lightshow is dance performance that can conducted using gloves with lights in each finger.",
-        "Tip: Practice in front of a mirror to see your show from the audience's perspective.",
-        "Microlights are small, wearable flashing LEDs that are placed inside of the glove on each finger tip.",
-        "Remember: Good finger control is key to mastering complex moves.",
-        "Experiment with different diffuser shapes and colors to make your lightshow even more unique!",
-        "When two glovers exchange lightshows it is called 'trading'",
-        "Pro tip: Use your non-dominant hand more to improve ambidexterity.",
-        "Challenge yourself: Practice each move until you are proficient before moving on to the next move.",
-        "Fun fact: You can practice gloving anywhere, with the lights on or off, and with your gloves on or off.",
-        "Remember: Proper glove care can significantly extend the life of your LEDs.",
-      ];
       const tipInterval = setInterval(() => {
         setTip(glovingTips[Math.floor(Math.random() * glovingTips.length)]);
       }, 5000);
@@ -66,36 +66,6 @@ const LoadingPayments = ({ loading }) => {
           position: "relative",
         }}
       >
-        <img
-          src={config.PUBLIC_URL + "/loading.gif"}
-          alt="Loading Circle"
-          title="Loading Circle"
-          style={{
-            height: "100px",
-            position: "fixed",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 5,
-            margin: "auto",
-          }}
-        />
-        <img
-          src={config.PUBLIC_URL + "/loading_overlay.png"}
-          alt="Loading Overlay"
-          title="Loading Overlay"
-          style={{
-            height: "100px",
-            zIndex: 10,
-            position: "fixed",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            margin: "auto",
-          }}
-        />
         <div
           style={{
             zIndex: 2,
