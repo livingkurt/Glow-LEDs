@@ -12,7 +12,6 @@ import { Box, Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { showConfirm } from "../../slices/snackbarSlice";
 
-import { Link } from "react-router-dom";
 import OrderComplete from "./components/OrderComplete";
 import usePlaceOrderPage from "./usePlaceOrderPage";
 import { isOrderComplete } from "./placeOrderHelpers";
@@ -20,7 +19,17 @@ import { isOrderComplete } from "./placeOrderHelpers";
 const PlaceOrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { width, show_payment, shipping_completed, order, orderId, orderCompleted, current_user } = usePlaceOrderPage();
+  const { width, show_payment, shipping_completed, orders, orderIds, orderCompleted, current_user, loadingPayment } =
+    usePlaceOrderPage();
+
+  if (loadingPayment) {
+    return <LoadingPayments />;
+  }
+
+  console.log({ orderIds, orderCompleted, isOrderComplete: isOrderComplete({ orderIds, orderCompleted }) });
+  if (isOrderComplete({ orderIds, orderCompleted })) {
+    return <OrderComplete current_user={current_user} order_id={orders.map(o => o._id) || orderIds} />;
+  }
 
   return (
     <div>
@@ -32,59 +41,48 @@ const PlaceOrderPage = () => {
         <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/place_order" />
       </Helmet>
       <Box display={"flex"} justifyContent={"space-between"} wrap pl={2} pr={2}>
-        {!orderCompleted ? (
-          <Button
-            aria-label="Back"
-            style={{ color: "#fff" }}
-            onClick={() => {
-              dispatch(
-                showConfirm({
-                  title: "Confirm Exit",
-                  message: "Are you sure you want to exit checkout?",
-                  onConfirm: () => {
-                    navigate("/checkout/cart");
-                    dispatch(initializePlaceOrderPage());
-                  },
-                })
-              );
-            }}
-            startIcon={<ArrowBack />}
-          >
-            <div className="mt-3px">Back to Shopping</div>
-          </Button>
-        ) : (
-          <Link to="/">
-            <Button style={{ color: "white" }} startIcon={<ArrowBack />}>
-              Back to Home
-            </Button>
-          </Link>
-        )}
+        <Button
+          aria-label="Back"
+          style={{ color: "#fff" }}
+          onClick={() => {
+            dispatch(
+              showConfirm({
+                title: "Confirm Exit",
+                message: "Are you sure you want to exit checkout?",
+                onConfirm: () => {
+                  navigate("/checkout/cart");
+                  dispatch(initializePlaceOrderPage());
+                },
+              })
+            );
+          }}
+          startIcon={<ArrowBack />}
+        >
+          <div className="mt-3px">Back to Shopping</div>
+        </Button>
+
         {width > 960 && (
           <CheckoutSteps success={orderCompleted} show_payment={show_payment} shipping_completed={shipping_completed} />
         )}
         {width > 960 && (
           <Button aria-label="Back" variant="contained" startIcon={<ArrowBack />} style={{ visibility: "hidden" }}>
-            {!orderCompleted ? "Back to Shopping" : "Back to Home"}
+            {"Back to Shopping"}
           </Button>
         )}
       </Box>
 
       <LoadingPayments />
       <LoadingShipping />
-      {isOrderComplete({ orderId, orderCompleted }) ? (
-        <div className="place_order">
-          <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
-            <div className="place_order-info">
-              <EmailStep />
-              <ShippingStep />
-              <PaymentStep />
-            </div>
+      <div className="place_order">
+        <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
+          <div className="place_order-info">
+            <EmailStep />
+            <ShippingStep />
+            <PaymentStep />
           </div>
-          <OrderSummaryStep />
         </div>
-      ) : (
-        <OrderComplete current_user={current_user} order_id={order._id || orderId} />
-      )}
+        <OrderSummaryStep />
+      </div>
     </div>
   );
 };

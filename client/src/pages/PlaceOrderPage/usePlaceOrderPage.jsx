@@ -19,16 +19,17 @@ const usePlaceOrderPage = () => {
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { order } = orderPage;
+  const { orders } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
-  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted } = placeOrder;
+  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted, loadingPayment } =
+    placeOrder;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const orderId = searchParams.get("order_id");
+  const orderIds = searchParams.get("order_ids")?.split(",") || [];
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
 
@@ -57,14 +58,16 @@ const usePlaceOrderPage = () => {
 
     if (clean) {
       if (orderCompleted) {
-        setSearchParams({ order_id: order._id });
+        // Check if order is an array
+        const orderArray = Array.isArray(orders) ? orders : [orders];
+        const newOrderIds = orderArray.map(o => o._id).join(",");
+        setSearchParams({ order_ids: newOrderIds });
       }
     }
     return () => {
       clean = false;
     };
-  }, [order._id, orderCompleted, setSearchParams]);
-
+  }, [orders, orderCompleted, setSearchParams]);
   useEffect(() => {
     let clean = true;
 
@@ -175,11 +178,12 @@ const usePlaceOrderPage = () => {
     width,
     show_payment,
     shipping_completed,
-    order,
-    orderId,
+    orders,
+    orderIds,
     orderCompleted,
     hasPreOrderItems,
     current_user,
+    loadingPayment,
   };
 };
 
