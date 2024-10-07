@@ -5,9 +5,15 @@ import config from "../../../config";
 import { Button, Divider, Grid } from "@mui/material";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import Survey from "./Survey";
+import { ArrowBack } from "@mui/icons-material";
 
-const OrderComplete = ({ current_user, order_id }) => {
+import { useDispatch } from "react-redux";
+import { initializePlaceOrderPage } from "../placeOrderSlice";
+import CheckoutSteps from "../../../shared/SharedComponents/CheckoutSteps";
+
+const OrderComplete = ({ current_user, orderIds }) => {
   const [show_modal, set_show_modal] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,38 +33,59 @@ const OrderComplete = ({ current_user, order_id }) => {
         <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
       </Helmet>
       <div className="column jc-c">
+        <Link to="/">
+          <Button
+            style={{ color: "white" }}
+            startIcon={<ArrowBack />}
+            onClick={() => dispatch(initializePlaceOrderPage())}
+          >
+            Back to Home
+          </Button>
+        </Link>
+        <CheckoutSteps success={true} show_payment={true} shipping_completed={true} />
         <div className="ta-c m-auto ">
           <h2 className="ta-c">Thank you for your Glow LEDs Order</h2>
+          {orderIds.length > 1 && (
+            <div className="mb-15px">
+              <p>Your order has been split into {orderIds.length} separate orders.</p>
+              <p>These orders will be shipped separately.</p>
+            </div>
+          )}
           <Divider />
-          <h4 className="ta-c title_font ">Order ID: {order_id}</h4>
+          {orderIds.map((orderId, index) => (
+            <div key={orderId}>
+              <h4 className="ta-c title_font ">
+                Order {index + 1} ID: {orderId}
+              </h4>
 
-          <div className="ta-c max-w-800px m-auto">
-            <Grid container spacing={2}>
-              <Grid item xs={current_user && current_user?.hasOwnProperty("first_name") ? 6 : 12}>
-                <Link
-                  to={
-                    current_user && current_user?.hasOwnProperty("first_name")
-                      ? "/secure/account/order/" + order_id
-                      : "/checkout/order/" + order_id
-                  }
-                >
-                  <Button variant="contained" color="primary" fullWidth>
-                    View Order
-                  </Button>
-                </Link>
-              </Grid>
-              {current_user && current_user?.hasOwnProperty("first_name") && (
-                <Grid item xs={6}>
-                  <Link to="/secure/account/profile">
-                    <Button variant="contained" color="primary" fullWidth>
-                      Your Orders
-                    </Button>
-                  </Link>
+              <div className="ta-c max-w-800px m-auto">
+                <Grid container spacing={2}>
+                  <Grid item xs={current_user && current_user?.hasOwnProperty("first_name") ? 6 : 12}>
+                    <Link
+                      to={
+                        current_user && current_user?.hasOwnProperty("first_name")
+                          ? "/secure/account/order/" + orderId
+                          : "/checkout/order/" + orderId
+                      }
+                    >
+                      <Button variant="contained" color="primary" fullWidth>
+                        View Order
+                      </Button>
+                    </Link>
+                  </Grid>
+                  {current_user && current_user?.hasOwnProperty("first_name") && (
+                    <Grid item xs={6}>
+                      <Link to="/secure/account/profile">
+                        <Button variant="contained" color="primary" fullWidth>
+                          Your Orders
+                        </Button>
+                      </Link>
+                    </Grid>
+                  )}
                 </Grid>
-              )}
-            </Grid>
-          </div>
-
+              </div>
+            </div>
+          ))}
           <p className="ta-c max-w-800px lh-30px m-auto mt-15px mb-15px">
             You will be receiving a confirmation email with your order details shortly. Double check your spam folder if
             you don't see it in your inbox. Please reach out with any questions or concerns to{" "}
@@ -129,7 +156,7 @@ const OrderComplete = ({ current_user, order_id }) => {
               <span className="close" onClick={() => set_show_modal(false)}>
                 &times;
               </span>
-              <Survey order_id={order_id} />
+              <Survey order_id={orderIds[0]} />
             </div>
           </div>
         </div>

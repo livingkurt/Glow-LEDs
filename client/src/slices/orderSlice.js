@@ -125,7 +125,7 @@ const orderPage = createSlice({
     },
 
     [API.placeOrder.fulfilled]: (state, { payload }) => {
-      state.order = payload;
+      state.orders = payload;
     },
     [API.saveOrder.pending]: (state, { payload }) => {
       state.loading = true;

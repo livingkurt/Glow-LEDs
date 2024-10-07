@@ -207,14 +207,14 @@ export const constructOutOfStockMessage = outOfStockItems => {
   return `The following items are out of stock: ${itemsList}. Select Yes to remove them and continue or No to exit checkout to update your cart.`;
 };
 
-export const isOrderComplete = ({ orderId, orderCompleted }) => {
-  if (orderId) {
-    return false;
+export const isOrderComplete = ({ orderIds, orderCompleted }) => {
+  if (orderIds.length > 0) {
+    return true;
   }
   if (orderCompleted) {
-    return false;
+    return true;
   }
-  return true;
+  return false;
 };
 
 export const getHasPreOrderItems = cartItems => cartItems.some(item => item.isPreOrder);

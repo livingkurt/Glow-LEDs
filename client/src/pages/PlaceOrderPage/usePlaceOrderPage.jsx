@@ -21,6 +21,8 @@ const usePlaceOrderPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { orders } = orderPage;
 
+  console.log({ orders });
+
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -59,8 +61,7 @@ const usePlaceOrderPage = () => {
     if (clean) {
       if (orderCompleted) {
         // Check if order is an array
-        const orderArray = Array.isArray(orders) ? orders : [orders];
-        const newOrderIds = orderArray.map(o => o._id).join(",");
+        const newOrderIds = orders?.map(o => o._id).join(",");
         setSearchParams({ order_ids: newOrderIds });
       }
     }
