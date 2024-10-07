@@ -9,6 +9,7 @@ import config from "../../../../config";
 import { setPaymentValidations, setLoadingPayment } from "../../placeOrderSlice";
 import { showError } from "../../../../slices/snackbarSlice";
 import { errorMessage } from "../../../../helpers/sharedHelpers";
+import { getHasPreOrderItems, getPreOrderReleaseDate } from "../../placeOrderHelpers";
 
 const stripePromise = loadStripe(config.REACT_APP_STRIPE_KEY);
 
@@ -25,17 +26,24 @@ const StripeCheckout = () => {
     promo_code,
     itemsPrice,
     taxPrice,
+    taxRate,
     totalPrice,
     activePromoCodeIndicator,
     tip,
     order_note,
     production_note,
     serviceFee,
+    splitOrder,
+    preOrderShippingRate,
+    nonPreOrderShippingRate,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
   const handleSubmit = async (event, stripe, elements) => {
     event.preventDefault();
@@ -54,9 +62,14 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
+      console.log({
+        splitOrder: splitOrder,
+        preOrderShippingRate: preOrderShippingRate,
+        nonPreOrderShippingRate: nonPreOrderShippingRate,
+      });
       if (cartItems.length > 0) {
         dispatch(
-          API.createPayOrder({
+          API.placeOrder({
             order: {
               orderItems: cartItems,
               shipping: shipment_id
@@ -70,14 +83,21 @@ const StripeCheckout = () => {
               itemsPrice,
               shippingPrice,
               taxPrice,
-              totalPrice,
+              taxRate,
+              totalPrice: totalPrice,
               order_note,
               production_note,
               tip,
               promo_code: activePromoCodeIndicator && promo_code,
               parcel: parcel || null,
               serviceFee,
+              hasPreOrderItems,
+              preOrderShippingDate: preOrderReleaseDate,
             },
+            splitOrder: splitOrder,
+            preOrderShippingRate: preOrderShippingRate,
+            nonPreOrderShippingRate: nonPreOrderShippingRate,
+            cartId: my_cart._id,
             create_account,
             new_password,
             paymentMethod,

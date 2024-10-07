@@ -56,14 +56,12 @@ const ContentsPage = () => {
   );
 
   const handleContentChange = updatedContent => {
-    console.log({ updatedContent });
     debouncedSave(updatedContent);
   };
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
-  console.log({ content });
 
   const formFieldsData = {
     content,

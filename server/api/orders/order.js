@@ -68,6 +68,7 @@ const changeLogSchema = {
 const OrderStatusEnum = {
   UNPAID: "unpaid",
   PAID: "paid",
+  PAID_PRE_ORDER: "paid_pre_order",
   LABEL_CREATED: "label_created",
   CRAFTING: "crafting",
   CRAFTED: "crafted",
@@ -97,6 +98,7 @@ const orderSchema = new mongoose.Schema(
     refunds: [refundsSchema],
     itemsPrice: { type: Number },
     taxPrice: { type: Number },
+    taxRate: { type: Number },
     shippingPrice: { type: Number },
     serviceFee: { type: Number },
     totalPrice: { type: Number },
@@ -145,6 +147,9 @@ const orderSchema = new mongoose.Schema(
     is_error: { type: Boolean, default: false },
     error_at: { type: Date },
     error: { type: Object },
+    hasPreOrderItems: { type: Boolean, default: false },
+    preOrderShippingDate: { type: Date },
+    splitOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
     deleted: { type: Boolean, default: false },
   },
   {

@@ -1,10 +1,11 @@
 import { affiliate_db } from "../affiliates";
-import { expense_db } from "../expenses";
 import { Order, order_db } from "../orders";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
+import { cart_services } from "../carts";
+import { product_services } from "../products";
+import { promo_services } from "../promos";
 import {
-  categories,
   dates_in_year,
   determine_filter,
   determine_promoter_code_tier,
@@ -16,8 +17,19 @@ import {
   toCapitalize,
 } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { getCodeUsage, getMonthlyCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
-import { states } from "./order_helpers";
+import {
+  getCodeUsage,
+  getMonthlyCodeUsage,
+  handleUserCreation,
+  normalizeOrderFilters,
+  normalizeOrderSearch,
+  processPayment,
+  sendCodeUsedEmail,
+  sendOrderEmail,
+  sendTicketEmail,
+  splitOrderItems,
+  createSplitOrder,
+} from "./order_interactors";
 const SalesTax = require("sales-tax");
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
@@ -98,6 +110,7 @@ export default {
         order_status: [
           "Unpaid",
           "Paid",
+          "Paid Pre Order",
           "Label Created",
           "Crafting",
           "Crafted",
@@ -205,6 +218,112 @@ export default {
       }
     }
   },
+  place_order_orders_s: async body => {
+    const {
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    } = body;
+
+    console.log({
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    });
+
+    try {
+      // Check if any orderItem has subcategory "sampler" and quantity greater than 1
+      const hasSamplerWithQtyGreaterThanOne = order.orderItems.some(
+        item => item.subcategory === "sampler" && item.quantity > 1
+      );
+
+      if (hasSamplerWithQtyGreaterThanOne) {
+        throw new Error("Only one sampler pack allowed per order.");
+      }
+
+      // Use existing user ID if provided, otherwise create or retrieve user
+      let userId = order.user;
+      if (!userId) {
+        userId = await handleUserCreation(order.shipping, create_account, new_password);
+      }
+
+      let orders = [];
+      let nonPreOrderOrder, preOrderOrder;
+
+      if (splitOrder) {
+        const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
+
+        if (nonPreOrderItems.length > 0) {
+          nonPreOrderOrder = await createSplitOrder(order, nonPreOrderItems, userId, false, nonPreOrderShippingRate);
+          orders.push(nonPreOrderOrder);
+        }
+
+        if (preOrderItems.length > 0) {
+          preOrderOrder = await createSplitOrder(order, preOrderItems, userId, true, preOrderShippingRate);
+          orders.push(preOrderOrder);
+        }
+
+        // Link the orders
+        if (nonPreOrderOrder && preOrderOrder) {
+          nonPreOrderOrder.splitOrder = preOrderOrder._id;
+          preOrderOrder.splitOrder = nonPreOrderOrder._id;
+          await nonPreOrderOrder.save();
+          await preOrderOrder.save();
+        }
+      } else {
+        const createdOrder = await Order.create({ ...order, user: userId });
+        orders.push(createdOrder);
+      }
+
+      // Process payment for non-pre-order items or the entire order if not split
+      let paymentOrder = splitOrder ? nonPreOrderOrder : orders[0];
+      if (paymentOrder && paymentMethod) {
+        paymentOrder = await processPayment(paymentOrder._id, paymentMethod, order.totalPrice);
+      }
+
+      // Update preOrder status if it exists
+      if (splitOrder && preOrderOrder) {
+        preOrderOrder.status = "paid_pre_order";
+        preOrderOrder.paidAt = Date.now();
+        await preOrderOrder.save();
+      }
+
+      // Process payments and send emails for each order
+      const updatedOrders = await Promise.all(
+        orders.map(async order => {
+          await sendOrderEmail(order);
+          if (order.orderItems.some(item => item.itemType === "ticket")) {
+            await sendTicketEmail(order);
+          }
+
+          return order;
+        })
+      );
+
+      // Update stock and empty cart
+      await product_services.update_stock_products_s({ cartItems: order.orderItems });
+      await cart_services.empty_carts_s({ id: cartId });
+
+      // Handle promo code
+      if (order.promo_code) {
+        await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });
+        await sendCodeUsedEmail(order.promo_code);
+      }
+
+      return updatedOrders;
+    } catch (error) {
+      console.log({ create_order_orders_s: error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   create_orders_s: async body => {
     try {
       return await order_db.create_orders_db(body);

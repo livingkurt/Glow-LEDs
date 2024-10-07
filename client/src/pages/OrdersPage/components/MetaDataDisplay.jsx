@@ -6,6 +6,8 @@ import { set_loading_label } from "../../../slices/orderSlice";
 import config from "../../../config";
 import * as API from "../../../api";
 import { Button, Grid, Typography } from "@mui/material";
+import { applySearch } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
+import { formatDate } from "../../../utils/helpers/universal_helpers";
 
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
@@ -38,7 +40,6 @@ const MetaDataDisplay = ({ row }) => {
       config.REACT_APP_INFO_EMAIL
     );
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
-    console.log({ has_ticket });
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({
@@ -53,7 +54,6 @@ const MetaDataDisplay = ({ row }) => {
   const send_ticket_email = async () => {
     dispatch(set_loading_label(true));
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
-    console.log({ has_ticket });
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({
@@ -141,6 +141,18 @@ const MetaDataDisplay = ({ row }) => {
           ${totalRefundAmount?.toFixed(2)}
         </Typography>
       </Grid>
+
+      {row.hasPreOrderItems && (
+        <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+          <Typography component="label" className="mv-0px mr-5px">
+            Pre-Order Shipping Date:
+          </Typography>
+          <Typography component="label" className=" mv-0px">
+            {formatDate(row.preOrderShippingDate)}
+          </Typography>
+        </Grid>
+      )}
+
       {row.tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
@@ -183,6 +195,18 @@ const MetaDataDisplay = ({ row }) => {
               {row.return_tracking_number}
             </a>
           </Typography>
+        </Grid>
+      )}
+      {row.splitOrder && (
+        <Grid item xs={12}>
+          <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            onClick={() => dispatch(applySearch("orderTable", row.splitOrder))}
+          >
+            Go to Split Order
+          </Button>
         </Grid>
       )}
       <Grid item xs={12}>

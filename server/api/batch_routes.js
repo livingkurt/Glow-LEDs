@@ -3735,36 +3735,6 @@ router.route("/migrate_meta_data").put(async (req, res) => {
   }
 });
 
-// Migrate restock_status
-router.route("/migrate_restock_status").put(async (req, res) => {
-  try {
-    await Product.updateMany(
-      {
-        $or: [{ sold_out: { $exists: true } }, { preorder: { $exists: true } }],
-      },
-      [
-        {
-          $set: {
-            restock_status: {
-              $cond: [
-                { $eq: ["$sold_out", true] },
-                "Sold Out",
-                {
-                  $cond: [{ $eq: ["$preorder", true] }, "Preorder", "In Stock"],
-                },
-              ],
-            },
-          },
-        },
-      ]
-    );
-    res.status(200).send({ message: "Restock status migration completed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-});
-
 // Migrate contributors field
 router.route("/migrate_contributors").put(async (req, res) => {
   try {

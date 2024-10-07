@@ -35,10 +35,8 @@ export const listCategorys = createAsyncThunk(
   async (query, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
-      console.log({ data });
       return data;
     } catch (error) {
-      console.log({ error });
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
     }

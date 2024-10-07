@@ -77,16 +77,21 @@ export const isFreeShipping = ({ shipping, items_price, rate, sortedRates, freeS
     : false;
 };
 
-export const displayRate = ({ current_shipping_speed, shipping }) =>
-  current_shipping_speed.freeShipping
+export const displayRate = ({ current_shipping_speed, shipping }) => {
+  console.log({ current_shipping_speed });
+  return current_shipping_speed.freeShipping
     ? "Free"
     : `$${parseFloat(
         shipping.international
           ? current_shipping_speed.rate.rate
           : current_shipping_speed.rate.list_rate || current_shipping_speed.rate.rate
       ).toFixed(2)}`;
+};
 
 export const normalizeDomesticRates = rates => {
+  if (!rates || !Array.isArray(rates)) {
+    return [];
+  }
   const USPSRates = rates.filter(rate => rate.carrier === "USPS");
   const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
 
@@ -162,6 +167,8 @@ export const applyAmountOff = (state, eligibleTotal, validPromo, tax_rate) => {
 
 export const applyFreeShipping = (state, validPromo) => {
   state.shippingPrice = 0;
+  state.preOrderShippingPrice = 0;
+  state.nonPreOrderShippingPrice = 0;
   state.free_shipping_message = "Free";
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
@@ -201,3 +208,17 @@ export const constructOutOfStockMessage = outOfStockItems => {
     .join(", ");
   return `The following items are out of stock: ${itemsList}. Select Yes to remove them and continue or No to exit checkout to update your cart.`;
 };
+
+export const isOrderComplete = ({ orderIds, orderCompleted }) => {
+  if (orderIds.length > 0) {
+    return true;
+  }
+  if (orderCompleted) {
+    return true;
+  }
+  return false;
+};
+
+export const getHasPreOrderItems = cartItems => cartItems.some(item => item.isPreOrder);
+export const getHasNonPreOrderItems = cartItems => cartItems.some(item => !item.isPreOrder);
+export const getPreOrderReleaseDate = cartItems => cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;

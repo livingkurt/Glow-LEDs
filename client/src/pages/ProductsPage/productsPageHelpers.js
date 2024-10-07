@@ -112,6 +112,9 @@ export const productInitalState = {
   color_group_name: "",
   color_products: [],
   filament: null,
+  isPreOrder: false,
+  preOrderReleaseDate: "",
+  preOrderQuantity: 0,
 
   secondary_color_product_group: false,
   secondary_color_group_name: "",

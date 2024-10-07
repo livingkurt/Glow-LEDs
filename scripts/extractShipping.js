@@ -717,12 +717,8 @@ const extractShippingAddress = html => {
   const name = textContent.substring(0, firstDigitIndex).trim();
   const addressText = textContent.substring(firstDigitIndex).trim();
 
-  console.log({ name, addressText });
-
   // Parse the address using parse-address
   const parsedAddress = parseAddress.parseLocation(addressText);
-
-  console.log({ parsedAddress });
 
   // Extract first name and last name
   const nameParts = name.split(" ");
@@ -749,4 +745,3 @@ let shipping = extractShippingAddress(html);
 const result = { shipping };
 
 // Output the result
-console.log(JSON.stringify(result, null, 2));

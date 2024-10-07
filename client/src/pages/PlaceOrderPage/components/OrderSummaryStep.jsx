@@ -2,8 +2,11 @@ import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
+import { Tooltip, Typography, useTheme } from "@mui/material";
+import { getHasPreOrderItems } from "../placeOrderHelpers";
 
 const OrderSummaryStep = () => {
+  const theme = useTheme();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
   const { cartItems } = my_cart;
@@ -19,22 +22,45 @@ const OrderSummaryStep = () => {
     itemsPrice,
     taxPrice,
     totalPrice,
+    preOrderShippingPrice,
+    nonPreOrderShippingPrice,
+    splitOrder,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
 
   // Calculate service fee for tickets
   const ticketItems = cartItems.filter(item => item.itemType === "ticket");
   const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const serviceFee = ticketTotal * 0.1; // 10% service fee
 
-  // Recalculate total price with service fee
-  const newTotalPrice = totalPrice + serviceFee;
-
   return (
     <div className="place_order-action">
       <ul>
         <li>
-          <h2 style={{ marginTop: "0px" }}>Order Summary</h2>
+          <h2 style={{ marginTop: "0px", marginBottom: "0px" }}>Order Summary</h2>
+          {hasPreOrderItems && (
+            <Tooltip title="Pre-order items are items that are not yet available for immediate delivery. If ordered with non-pre-order items, the pre-order items will be released on their estimated release date.">
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{
+                  ml: 1,
+                  bgcolor: "#496cba",
+                  px: 0.5,
+                  py: 0.5,
+                  fontSize: "1.2rem",
+                  borderRadius: 1,
+                  fontWeight: 800,
+                  color: theme.palette.getContrastText("#496cba"),
+                }}
+              >
+                This order contains pre-order items.
+              </Typography>
+            </Tooltip>
+          )}
         </li>
+        <li></li>
         <li>
           <ul className="cart-list-container w-100per">
             <li>
@@ -86,14 +112,35 @@ const OrderSummaryStep = () => {
             {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
           </div>
         </li>
-        <li className="pos-rel">
-          <div>Shipping</div>
-          <div>
-            {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
-              ? "$" + shippingPrice.toFixed(2)
-              : free_shipping_message}
-          </div>
-        </li>
+        {splitOrder ? (
+          <>
+            <li className="pos-rel">
+              <div>In-stock Items Shipping</div>
+              <div>
+                {shipping && shipping.hasOwnProperty("first_name") && nonPreOrderShippingPrice > 0
+                  ? "$" + nonPreOrderShippingPrice.toFixed(2)
+                  : free_shipping_message}
+              </div>
+            </li>
+            <li className="pos-rel">
+              <div>Pre-order Items Shipping</div>
+              <div>
+                {shipping && shipping.hasOwnProperty("first_name") && preOrderShippingPrice > 0
+                  ? "$" + preOrderShippingPrice.toFixed(2)
+                  : free_shipping_message}
+              </div>
+            </li>
+          </>
+        ) : (
+          <li className="pos-rel">
+            <div>Shipping</div>
+            <div>
+              {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
+                ? "$" + shippingPrice.toFixed(2)
+                : free_shipping_message}
+            </div>
+          </li>
+        )}
         {serviceFee > 0 && (
           <li className="pos-rel">
             <div>Service Fee (10% for tickets)</div>
@@ -109,7 +156,7 @@ const OrderSummaryStep = () => {
         <li>
           <div>Order Total</div>
           <div>
-            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + newTotalPrice.toFixed(2) : "------"}
+            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + totalPrice.toFixed(2) : "------"}
           </div>
         </li>
       </ul>

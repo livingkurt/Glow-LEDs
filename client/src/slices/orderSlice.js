@@ -123,20 +123,9 @@ const orderPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createPayOrder.pending]: (state, { payload }) => {
-      state.loadingPayment = true;
-      state.hideCheckoutButton = true;
-    },
-    [API.createPayOrder.fulfilled]: (state, { payload }) => {
-      state.loadingPayment = false;
-      state.success = true;
-      state.order = payload.order;
-      state.message = "Order Created and Paid";
-    },
-    [API.createPayOrder.rejected]: (state, { payload, error }) => {
-      state.loadingPayment = false;
-      // state.error = payload ? payload.error : error.message;
-      // state.message = payload ? payload.message : "An error occurred";
+
+    [API.placeOrder.fulfilled]: (state, { payload }) => {
+      state.orders = payload;
     },
     [API.saveOrder.pending]: (state, { payload }) => {
       state.loading = true;
@@ -153,23 +142,7 @@ const orderPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createNoPayOrder.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.createNoPayOrder.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.message = "Order Saved";
-      state.shippingModal = false;
-      state.edit_order_modal = false;
-      state.order = payload;
-      state.success_no_pay_order = true;
-      state.remoteVersionRequirement = Date.now();
-    },
-    [API.createNoPayOrder.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
+
     [API.detailsOrder.pending]: (state, { payload }) => {
       state.loading_order = true;
     },

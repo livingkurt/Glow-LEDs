@@ -50,7 +50,6 @@ async function generateSitemap() {
     });
 
     sitemapXML += "</urlset>";
-    console.log({ path: path.join(__dirname, "../../public/sitemap.xml") });
 
     fs.writeFileSync(path.join(__dirname, "../../public/sitemap.xml"), sitemapXML);
   } catch (error) {

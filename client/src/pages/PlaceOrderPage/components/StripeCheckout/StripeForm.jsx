@@ -38,11 +38,11 @@ const StripeForm = ({ handleSubmit }) => {
           {paymentValidations}
         </label>
       )}
-      {!hideCheckoutButton && (
-        <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>
-          Complete Order
-        </GLButton>
-      )}
+      {/* {!hideCheckoutButton && ( */}
+      <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>
+        Complete Order
+      </GLButton>
+      {/* )} */}
     </form>
   );
 };

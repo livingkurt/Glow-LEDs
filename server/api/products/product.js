@@ -56,8 +56,11 @@ const productSchema = new mongoose.Schema(
 
     options: [optionSchema], // Embed the options schema here
 
-    restock_status: { type: String },
     pathname: { type: String },
+
+    isPreOrder: { type: Boolean, default: false },
+    preOrderReleaseDate: { type: Date },
+    preOrderQuantity: { type: Number, default: 0 },
 
     hero_video: {
       title: { type: String },

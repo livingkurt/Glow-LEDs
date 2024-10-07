@@ -319,7 +319,6 @@ const reducer =
         const updatedObjectSelections = selectedRowObjects.some(row => row._id === rowId || row.id === rowId)
           ? selectedRowObjects.filter(row => row._id !== rowId && row.id !== rowId)
           : [...selectedRowObjects, rowObject];
-        console.log({ selectedRows, selectedRowObjects, updatedObjectSelections });
         return {
           ...state,
           selectedRows: [...updatedSelections],

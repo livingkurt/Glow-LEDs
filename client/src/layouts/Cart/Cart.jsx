@@ -17,6 +17,7 @@ const Cart = () => {
 
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
+
   const { cartItems } = my_cart;
   const { contents } = useSelector(state => state.contents.contentPage);
 

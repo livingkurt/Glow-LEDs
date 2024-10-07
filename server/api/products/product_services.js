@@ -490,7 +490,7 @@ export default {
       }
     }
   },
-  update_stock_products_s: async (params, body) => {
+  update_stock_products_s: async body => {
     const { cartItems } = body;
     try {
       for (const item of cartItems) {

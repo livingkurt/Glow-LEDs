@@ -5,7 +5,6 @@ import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyIm
 const CategoryBanner = ({ banner }) => {
   const theme = useTheme();
   if (!banner) return null;
-  console.log({ banner });
 
   return (
     <Paper

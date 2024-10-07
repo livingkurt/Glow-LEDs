@@ -3,49 +3,109 @@ import { Product, product_db } from "../products";
 import { Category } from "../categorys";
 import { Order } from "../orders";
 import { Chip } from "../chips";
+
 export const updateProductStock = async (product, quantityToReduce) => {
+  console.log(`Updating stock for product: ${product.name}`);
   const newStockCount = Math.max(0, product.count_in_stock - quantityToReduce);
   const newMaxDisplayQuantity = Math.min(product.max_display_quantity, newStockCount);
-  const newMaxQuantity = Math.min(product.max_quantity || Infinity, newStockCount);
+  const newMaxQuantity = Math.min(product.max_quantity, newStockCount);
 
-  await product_db.update_products_db(product._id, {
+  console.log(
+    `${product.name} - New stock count: ${newStockCount}, New max display quantity: ${newMaxDisplayQuantity}, New max quantity: ${newMaxQuantity}`
+  );
+
+  await Product.findByIdAndUpdate(product._id, {
     count_in_stock: newStockCount,
     max_display_quantity: newMaxDisplayQuantity,
     max_quantity: newMaxQuantity,
   });
 
+  console.log(`Stock updated for product: ${product.name}`);
   return { newStockCount, newMaxDisplayQuantity, newMaxQuantity };
 };
 
-export const diminish_single_glove_stock = async (product, item) => {
-  await updateProductStock(product, item.quantity);
-};
-
 export const diminish_batteries_stock = async (product, item, isRefreshPack = false) => {
-  let batteries_to_remove;
+  console.log(`Diminishing batteries stock for product: ${product.name}`);
+  let batteries_to_remove = 0;
+
   if (isRefreshPack) {
-    batteries_to_remove = item.quantity * (product.name.includes("CR1225") ? 125 : 120);
+    batteries_to_remove = item.quantity * 120;
   } else {
-    batteries_to_remove = item.quantity * parseInt(item.size);
+    const sizeOption = product.options.find(option => option.name.toLowerCase() === "set of");
+    if (sizeOption) {
+      const selectedValue = sizeOption.values.find(value => value.name === item.selectedOptions[0].name);
+      if (selectedValue) {
+        const setSize = parseInt(selectedValue.name);
+        if (!isNaN(setSize)) {
+          batteries_to_remove = item.quantity * setSize;
+        }
+      }
+    }
   }
 
-  await updateProductStock(product, batteries_to_remove);
+  console.log(`Batteries to remove: ${batteries_to_remove}`);
 
-  if (!isRefreshPack) {
-    const sizeOption = product.options ? product.options.find(option => option.name.toLowerCase() === "set of") : null;
-    if (sizeOption) {
-      const selectedValue = sizeOption.values.find(value => value.name === item.size.toString());
-      if (selectedValue) {
-        const optionProduct = await Product.findById(selectedValue.product);
-        if (optionProduct) {
-          await updateProductStock(optionProduct, item.quantity);
-        }
+  if (batteries_to_remove > 0) {
+    // Update parent product stock
+    const parentStockResult = await updateProductStock(product, batteries_to_remove);
+
+    // After updating parent stock, recalculate the option products' stocks
+    const optionProductIds = product.options
+      .flatMap(option => option.values)
+      .map(value => value.product)
+      .filter(id => id); // Filter out any undefined or null values
+
+    const optionProducts = await Product.find({ _id: { $in: optionProductIds } });
+
+    const updatedOptionProducts = [];
+
+    for (const optionProduct of optionProducts) {
+      const optionSetSize = parseInt(optionProduct.size);
+      if (!isNaN(optionSetSize) && optionSetSize > 0) {
+        // Calculate the new count_in_stock for this option product
+        const newOptionStockCount = Math.floor(parentStockResult.newStockCount / optionSetSize);
+
+        console.log(`New stock count for option product ${optionProduct.name}: ${newOptionStockCount}`);
+
+        await updateProductStock(optionProduct, newOptionStockCount);
+        // Update the option product's stock
+        await Product.findByIdAndUpdate(optionProduct._id, {
+          count_in_stock: newOptionStockCount,
+          max_display_quantity: newOptionStockCount,
+          max_quantity: newOptionStockCount,
+        });
+
+        updatedOptionProducts.push({
+          optionProductId: optionProduct._id,
+          newOptionStockCount,
+        });
+      }
+    }
+  }
+};
+export const diminish_refresh_pack_stock = async (product, item) => {
+  console.log(`Diminishing refresh pack stock for product: ${product.name}`);
+  await updateProductStock(product, item.quantity);
+
+  diminish_single_glove_stock(product, item, true);
+
+  const batteryOption = product.options.find(option => option.name === "Batteries");
+  if (batteryOption) {
+    const selectedBattery = item.selectedOptions.find(opt =>
+      batteryOption.values.some(value => value.name === opt.name)
+    );
+
+    if (selectedBattery) {
+      const battery_product = await Product.findById(selectedBattery.product);
+      if (battery_product) {
+        await diminish_batteries_stock(battery_product, item, true);
       }
     }
   }
 };
 
-export const diminish_refresh_pack_stock = async (product, item) => {
+export const diminish_single_glove_stock = async (product, item, isRefreshPack = false) => {
+  console.log(`Diminishing single glove stock for product: ${product.name}`);
   await updateProductStock(product, item.quantity);
 
   const gloveOption = product.options.find(option => option.name.toLowerCase().includes("glove"));
@@ -59,37 +119,25 @@ export const diminish_refresh_pack_stock = async (product, item) => {
       if (selectedGlove) {
         const glove_option_product = await Product.findById(selectedGlove.product);
         if (glove_option_product) {
-          await updateProductStock(glove_option_product, item.quantity * 6);
+          if (isRefreshPack) {
+            await updateProductStock(glove_option_product, item.quantity * 6);
+          } else {
+            await updateProductStock(glove_option_product, item.quantity);
+          }
         }
-      }
-    }
-  }
-
-  const batteryOption = product.options.find(option => option.name === "Batteries");
-  if (batteryOption) {
-    const selectedBattery = item.selectedOptions.find(opt =>
-      batteryOption.values.some(value => value.name === opt.name)
-    );
-
-    if (selectedBattery) {
-      const battery_product = await Product.findById(selectedBattery.product);
-      if (battery_product) {
-        await diminish_batteries_stock(
-          battery_product,
-          { ...item, size: battery_product.name.includes("CR1225") ? 125 : 120 },
-          true
-        );
       }
     }
   }
 };
 
 export const diminish_sampler_stock = async (product, item) => {
+  console.log(`Diminishing sampler stock for product: ${product.name}`);
   const sizeOption = product.options.find(
     option => option.name.toLowerCase().includes("size") || option.name.toLowerCase().includes("pack")
   );
 
   if (!sizeOption) {
+    console.log(`Size option not found for product: ${product.name}`);
     return;
   }
 
@@ -98,6 +146,7 @@ export const diminish_sampler_stock = async (product, item) => {
   );
 
   if (!selectedSize) {
+    console.log(`Selected size not found for product: ${product.name}`);
     return;
   }
 
@@ -110,6 +159,7 @@ export const diminish_sampler_stock = async (product, item) => {
     });
 
     if (!gloveProduct) {
+      console.log(`Glove product not found for size: ${size}`);
       continue;
     }
 

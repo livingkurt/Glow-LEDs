@@ -14,6 +14,10 @@ export const scrollToId = target => {
   }
 };
 
+export const formatDate = date => {
+  return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
+};
+
 export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, categorysQuery, itemType, item }) => {
   return {
     type: "array",

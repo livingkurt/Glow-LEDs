@@ -1,5 +1,5 @@
 import {
-  format_date,
+  formatDate,
   email_sale_price_switch,
   determine_product_name,
   determin_card_logo_images_white,
@@ -66,6 +66,26 @@ export default ({ email, order }) => {
 											${email && email.h2 ? email.h2 : ""}
 										</p>
 									</tr>
+                    ${
+                      order.hasPreOrderItems
+                        ? `<tr style="font-family:helvetica">
+          <h2 style="text-align:center;font-family:helvetica; font-size: 25px; width:100%;margin:0px;line-height:50px;color:white; padding-bottom: 7px;">
+            Pre-Order Information
+          </h2>
+        </tr>
+        <tr style="font-family:helvetica">
+          <p style="font-size: 16px; line-height: 30px;">
+            Your order contains pre-order item(s). The estimated shipping date for pre-order items is:
+            <strong>${formatDate(order.preOrderShippingDate)}</strong>
+          </p>
+        </tr>
+        <tr style="font-family:helvetica">
+          <p style="font-size: 16px; line-height: 30px;">
+            Please note that this is an estimated date and may be subject to change. We'll keep you updated on the status of your pre-order.
+          </p>
+        </tr>`
+                        : ""
+                    }
 									${
                     !order.isRefunded
                       ? `<tr style="font-family:helvetica">

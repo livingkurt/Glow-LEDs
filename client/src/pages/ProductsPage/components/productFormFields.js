@@ -165,6 +165,18 @@ export const productFormFields = ({
       type: "number",
       label: "Price",
     },
+    isPreOrder: {
+      type: "checkbox",
+      label: "Is Pre-Order",
+    },
+    preOrderReleaseDate: {
+      type: "date",
+      label: "Pre-Order Release Date",
+    },
+    preOrderQuantity: {
+      type: "number",
+      label: "Pre-Order Quantity",
+    },
     wholesale_price: {
       type: "number",
       label: "Wholesale Price",
@@ -202,17 +214,6 @@ export const productFormFields = ({
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
-    restock_status: {
-      type: "autocomplete_single",
-      label: "Restock Status",
-      options: ["sold_out", "preorder", "restocking"],
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
-    },
-
     hero_video: {
       type: "object",
       title: "Hero Video",

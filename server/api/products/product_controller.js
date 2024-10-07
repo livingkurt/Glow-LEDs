@@ -200,9 +200,9 @@ export default {
     }
   },
   update_stock_products_c: async (req, res) => {
-    const { params, body } = req;
+    const { body } = req;
     try {
-      const product = await product_services.update_stock_products_s(params, body);
+      const product = await product_services.update_stock_products_s(body);
       if (product) {
         return res.status(204).send({ message: "Product Deleted" });
       }

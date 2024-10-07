@@ -33,10 +33,14 @@ import {
   set_promo_code,
   set_promo_code_validations,
   set_shipping_choice,
+  setSplitOrder,
+  closeSplitOrderModal,
+  openSplitOrderModal,
 } from "../placeOrderSlice";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+import { getHasNonPreOrderItems, getHasPreOrderItems } from "../placeOrderHelpers";
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
@@ -67,8 +71,12 @@ const ShippingStep = () => {
     shippingSaved,
     shippingValidations,
     modalText,
+    showSplitOrderModal,
     tax_rate,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const hasNonPreOrderItems = getHasNonPreOrderItems(cartItems);
 
   const {
     first_name: first_name_validations,
@@ -128,7 +136,11 @@ const ShippingStep = () => {
         dispatch(openSaveShippingModal(true)); // Open the modal
         return;
       } else {
-        submitShipping();
+        if (hasPreOrderItems && hasNonPreOrderItems) {
+          dispatch(openSplitOrderModal());
+        } else {
+          submitShipping();
+        }
       }
     }
   };
@@ -136,12 +148,12 @@ const ShippingStep = () => {
     return JSON.stringify(address).toLowerCase().replace(/\s/g, "");
   };
 
-  const submitShipping = () => {
+  const submitShipping = (splitOrder = false) => {
     dispatch(clearShippingRates());
+
     if (shipping && Object.keys(shipping).length > 0) {
       dispatch(setLoadingShipping(true));
       const hasItemsWithDimensions = cartItems.some(item => item.dimensions && item.dimensions.package_volume > 0);
-      console.log({ hasItemsWithDimensions });
 
       if (!hasItemsWithDimensions) {
         dispatch(setFreeShipping());
@@ -151,7 +163,7 @@ const ShippingStep = () => {
         dispatch(nextStep("payment"));
       } else {
         if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
-          get_shipping_rates();
+          get_shipping_rates(splitOrder);
         }
       }
       if (shipping.international) {
@@ -166,8 +178,7 @@ const ShippingStep = () => {
     dispatch(setShippingSaved(false));
   };
 
-  const get_shipping_rates = async verify_ship => {
-    const verify = shipping.international ? false : verify_ship;
+  const get_shipping_rates = async splitOrder => {
     const order = {
       orderItems: cartItems,
       shipping,
@@ -183,7 +194,7 @@ const ShippingStep = () => {
       promo_code: activePromoCodeIndicator && promo_code,
     };
 
-    dispatch(API.shippingRates({ order, verify_shipping: verify }));
+    dispatch(API.shippingRates({ order, splitOrder }));
   };
 
   const next_step = async step => {
@@ -584,10 +595,13 @@ const ShippingStep = () => {
             })
           );
           dispatch(closeSaveShippingModal(false));
-          submitShipping();
+          if (hasPreOrderItems && hasNonPreOrderItems) {
+            dispatch(openSplitOrderModal());
+          } else {
+            submitShipping();
+          }
         }}
         onCancel={() => {
-          dispatch(closeSaveShippingModal(false));
           submitShipping();
         }}
         title={"Save Shipping Address"}
@@ -600,6 +614,30 @@ const ShippingStep = () => {
         <p>{modalText}</p>
         <p>
           <strong>Note</strong>: You can change your saved address later from your profile page
+        </p>
+      </GLActionModal>
+      <GLActionModal
+        isOpen={showSplitOrderModal}
+        onConfirm={() => {
+          dispatch(setSplitOrder(true));
+          dispatch(closeSplitOrderModal(false));
+          submitShipping(true);
+        }}
+        onCancel={() => {
+          dispatch(setSplitOrder(false));
+          dispatch(closeSplitOrderModal(false));
+          submitShipping();
+        }}
+        title={"Your order contains both pre-order and in-stock items."}
+        confirmLabel={"Yes, split my order"}
+        confirmColor="primary"
+        cancelLabel={"No, ship everything together"}
+        cancelColor="secondary"
+        disableEscapeKeyDown
+      >
+        <p>Would you like to receive your in-stock items first and pre-order items later?</p>
+        <p>
+          <strong>Note</strong>: If you split your order, you must pay for shipping twice.
         </p>
       </GLActionModal>
     </div>

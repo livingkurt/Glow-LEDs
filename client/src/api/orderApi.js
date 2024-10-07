@@ -79,34 +79,6 @@ export const listProductOccurrences = createAsyncThunk(
   }
 );
 
-export const createNoPayOrder = createAsyncThunk(
-  "orders/createNoPayOrder",
-  async (order, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.post("/api/orders", order);
-      // dispatch(
-      //   sendOrderEmail({
-      //     order: data,
-      //     subject: "Thank you for your Glow LEDs Order",
-      //     email: order.shipping.email,
-      //   })
-      // );
-      // dispatch(
-      //   sendOrderEmail({
-      //     order: data,
-      //     subject: "New Order Created by " + order.shipping.first_name,
-      //     email: config.REACT_APP_INFO_EMAIL,
-      //   })
-      // );
-      sessionStorage.removeItem("shippingAddress");
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { dispatch, rejectWithValue }) => {
   try {
     if (!order._id) {
@@ -124,75 +96,48 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { di
   }
 });
 
-export const createPayOrder = createAsyncThunk(
-  "orders/createPayOrder",
-  async ({ order, paymentMethod, create_account, new_password }, { dispatch, rejectWithValue, getState }) => {
-    let user_id = null;
-
-    const {
-      users: {
-        userPage: { current_user },
-      },
-      placeOrder: { environment },
-    } = getState();
-
+export const placeOrder = createAsyncThunk(
+  "orders/placeOrder",
+  async (
+    {
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    },
+    { dispatch, rejectWithValue }
+  ) => {
+    console.log({
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    });
     try {
-      if (current_user && Object.keys(current_user).length > 0) {
-        user_id = current_user ? current_user._id : null;
-      } else if (create_account) {
-        const { data: create_user } = await axios.post("/api/users/register", {
-          first_name: order.shipping.first_name,
-          last_name: order.shipping.last_name,
-          email: order.shipping.email,
-          password: new_password,
-        });
-        axios.post("/api/emails/account_created", create_user);
-        user_id = create_user._id;
-      } else if (!create_account) {
-        const { data: user } = await axios.get("/api/users/email/" + order.shipping.email.toLowerCase());
-        if (user && Object.keys(user).length > 0) {
-          user_id = user._id;
-        } else {
-          const { data: new_user } = await axios.post("/api/users", {
-            first_name: order.shipping.first_name,
-            last_name: order.shipping.last_name,
-            email: order.shipping.email,
-            isVerified: true,
-            email_subscription: true,
-            guest: true,
-            password: config.REACT_APP_TEMP_PASS,
-          });
-          user_id = new_user._id;
-        }
-      }
+      const { data } = await axios.post("/api/orders/place_order", {
+        order,
+        cartId,
+        paymentMethod,
+        create_account,
+        new_password,
+        splitOrder,
+        preOrderShippingRate,
+        nonPreOrderShippingRate,
+      });
 
-      const { data: order_created } = await axios.post("/api/orders", { ...order, user: user_id });
-      const { data: payment_created } = await axios.put(`/api/payments/${order_created._id}/pay`, { paymentMethod });
-      dispatch(
-        sendOrderEmail({
-          order: order_created,
-          subject: "Thank you for your Glow LEDs Order",
-          email: order.shipping.email,
-        })
-      );
-      dispatch(
-        sendOrderEmail({
-          order: order_created,
-          subject: "New Order Created by " + order.shipping.first_name,
-          email: config.REACT_APP_INFO_EMAIL,
-        })
-      );
-      if (order.orderItems.some(item => item.itemType === "ticket")) {
-        dispatch(
-          sendTicketEmail({
-            order: order_created,
-            subject: "New Order Created by " + order.shipping.first_name,
-            email: order.shipping.email,
-          })
-        );
-      }
+      dispatch(showSuccess({ message: "Order created successfully" }));
       sessionStorage.removeItem("shippingAddress");
-      return { order: order_created, payment_created };
+      sessionStorage.setItem("manualNavigation", "true");
+      localStorage.removeItem("cartItems");
+      return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
       return rejectWithValue(error.response?.data);

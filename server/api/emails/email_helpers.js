@@ -7,7 +7,7 @@ import { oauthClients } from "../../server";
 const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
 
-const createTransporter = async type => {
+export const createTransporter = async type => {
   try {
     const { client, accessToken, user } = oauthClients[type];
     const transporter = nodemailer.createTransport({

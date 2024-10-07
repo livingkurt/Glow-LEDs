@@ -5,7 +5,6 @@ import { LazyImage } from "../../../shared/SharedComponents";
 // import Resizer from 'react-image-file-resizer';
 
 const MenuItemD = ({ item, index, decide_url }) => {
-  console.log({ item });
   return (
     <div className="product m-1rem" style={{ height: "unset" }} key={index}>
       <Link to={item.link}>

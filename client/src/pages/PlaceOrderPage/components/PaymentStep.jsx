@@ -26,6 +26,7 @@ import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
+import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -68,7 +69,14 @@ const PaymentStep = () => {
     tax_rate,
     activePromoCodeIndicator,
     production_note,
+    new_password,
+    splitOrder,
+    preOrderShippingPrice,
+    nonPreOrderShippingPrice,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
   const check_code = async e => {
     e.preventDefault();
@@ -109,7 +117,7 @@ const PaymentStep = () => {
         shippingPrice,
         taxPrice,
         totalPrice,
-        user: user._id,
+        user: current_user._id,
         order_note,
         production_note,
         tip,
@@ -132,29 +140,39 @@ const PaymentStep = () => {
   };
 
   const create_no_payment_order = async () => {
-    dispatch(setLoadingPayment(true));
     dispatch(
-      API.createNoPayOrder({
-        orderItems: cartItems,
-        shipping: {
-          ...shipping,
-          email: user.email,
-          shipment_id: shipment_id && shipment_id,
-          shipping_rate: shipping_rate && shipping_rate,
+      API.placeOrder({
+        order: {
+          orderItems: cartItems,
+          shipping: shipment_id
+            ? {
+                ...shipping,
+                shipment_id,
+                shipping_rate,
+              }
+            : shipping,
+          payment,
+          itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice,
+          user: current_user._id,
+          order_note,
+          production_note,
+          tip,
+          promo_code: activePromoCodeIndicator && promo_code,
+          parcel: parcel || null,
+          status: "paid",
+          paidAt: today,
+          preOrderShippingDate: preOrderReleaseDate,
+          hasPreOrderItems,
         },
-        payment,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-        user: user._id,
-        order_note,
-        production_note,
-        tip,
-        promo_code,
-        parcel: parcel ? parcel : null,
-        status: "paid",
-        paidAt: today,
+        splitOrder,
+        preOrderShippingPrice: splitOrder ? preOrderShippingPrice : null,
+        nonPreOrderShippingPrice: splitOrder ? nonPreOrderShippingPrice : null,
+        cartId: my_cart._id,
+        create_account,
+        new_password,
       })
     );
   };
@@ -273,7 +291,16 @@ const PaymentStep = () => {
                       variant="icon"
                       onClick={() =>
                         dispatch(
-                          removePromo({ items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping })
+                          removePromo({
+                            items_price,
+                            tax_rate,
+                            shippingPrice,
+                            preOrderShippingPrice,
+                            nonPreOrderShippingPrice,
+                            previousShippingPrice,
+                            shipping,
+                            splitOrder,
+                          })
                         )
                       }
                       aria-label="Detete"
@@ -338,7 +365,11 @@ const PaymentStep = () => {
               </li>
             )}
             <li>
-              {cartItems.length > 0 && totalPrice ? <StripeCheckout /> : <div></div>}
+              {cartItems.length > 0 && totalPrice ? (
+                <StripeCheckout hasPreOrderItems={hasPreOrderItems} preOrderReleaseDate={preOrderReleaseDate} />
+              ) : (
+                <div></div>
+              )}
               {(!totalPrice || totalPrice === 0) && (
                 <>
                   <p htmlFor="password">Payment is not necessary at this time</p>
