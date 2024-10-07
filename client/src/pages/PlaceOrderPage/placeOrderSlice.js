@@ -502,6 +502,7 @@ const placeOrder = createSlice({
           state.taxPrice = 0;
         } else {
           state.taxPrice = tax_rate * itemsPrice;
+          state.taxRate = parseFloat(tax_rate);
         }
       }
     },

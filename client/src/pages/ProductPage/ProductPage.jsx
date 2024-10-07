@@ -33,6 +33,7 @@ import ContributorsDisplay from "./components/ContributorsDisplay";
 import { sale_price_switch } from "../../utils/react_helper_functions";
 import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
+import { formatDate } from "../../utils/helpers/universal_helpers";
 
 const ProductPage = () => {
   const theme = useTheme();
@@ -167,10 +168,7 @@ const ProductPage = () => {
 
                   {customizedProduct.isPreOrder && (
                     <Typography variant="body2" gutterBottom mt={1} mb={2}>
-                      Estimated Availability:{" "}
-                      {new Date(customizedProduct.preOrderReleaseDate).toLocaleDateString(undefined, {
-                        timeZone: "UTC",
-                      })}
+                      Estimated Availability: {formatDate(customizedProduct.preOrderReleaseDate)}
                     </Typography>
                   )}
 

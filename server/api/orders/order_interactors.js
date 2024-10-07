@@ -485,7 +485,7 @@ export const createSplitOrder = async (originalOrder, items, userId, isPreOrder 
     totalPrice: parseFloat(itemsPrice) + parseFloat(shippingPrice) + parseFloat(taxPrice),
     user: userId,
     hasPreOrderItems: isPreOrder,
-    preOrderShippingDate: isPreOrder ? originalOrder.shipping.preOrderShippingDate : null,
+    preOrderShippingDate: isPreOrder ? originalOrder.preOrderShippingDate : null,
   };
 
   return await Order.create(splitOrder);

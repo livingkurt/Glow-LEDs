@@ -393,6 +393,10 @@ export const format_date = isoDateString => {
   return `${month}/${day}/${year}`;
 };
 
+export const formatDate = date => {
+  return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
+};
+
 export const humanDate = date => {
   return new Date(date).toLocaleDateString();
 };
