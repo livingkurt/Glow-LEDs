@@ -407,7 +407,6 @@ const placeOrder = createSlice({
 
       state.loadingShipping = false;
     },
-    // ... rest of the code ...
     chooseShippingRateWithPromo: (state, { payload }) => {
       const { promo_code_storage } = payload;
       state.promo_code = promo_code_storage.toLowerCase();
