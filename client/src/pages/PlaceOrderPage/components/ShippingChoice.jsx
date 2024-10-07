@@ -62,7 +62,6 @@ const ShippingChoice = () => {
   }, [shipping_rates.rates, dispatch]);
 
   const choose_shipping_rate = (rate, isPreOrder, friendlyCarrierService) => {
-    console.log({ rate, isPreOrder, friendlyCarrierService });
     let sortedRates;
     if (splitOrder) {
       sortedRates = isPreOrder ? preOrderRates?.shipment?.rates : nonPreOrderRates?.shipment?.rates;
@@ -100,7 +99,6 @@ const ShippingChoice = () => {
   };
 
   const handleOpen = (rate, index, isPreOrder, friendlyCarrierService) => {
-    console.log({ rate, index, isPreOrder, friendlyCarrierService });
     if (modalShown) {
       choose_shipping_rate(rate, isPreOrder, friendlyCarrierService);
       return;

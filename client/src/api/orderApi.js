@@ -98,7 +98,29 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order, { di
 
 export const placeOrder = createAsyncThunk(
   "orders/placeOrder",
-  async ({ order, cartId, paymentMethod, create_account, new_password }, { dispatch, rejectWithValue }) => {
+  async (
+    {
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    },
+    { dispatch, rejectWithValue }
+  ) => {
+    console.log({
+      order,
+      cartId,
+      paymentMethod,
+      create_account,
+      new_password,
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    });
     try {
       const { data } = await axios.post("/api/orders/place_order", {
         order,
@@ -106,6 +128,9 @@ export const placeOrder = createAsyncThunk(
         paymentMethod,
         create_account,
         new_password,
+        splitOrder,
+        preOrderShippingRate,
+        nonPreOrderShippingRate,
       });
 
       dispatch(showSuccess({ message: "Order created successfully" }));

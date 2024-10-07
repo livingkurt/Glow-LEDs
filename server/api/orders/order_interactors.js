@@ -20,6 +20,7 @@ import ticketEmail from "../../email_templates/pages/ticketEmail";
 import { generateTicketQRCodes } from "../emails/email_interactors";
 import { createTransporter } from "../emails/email_helpers";
 import { promo_db } from "../promos";
+const bcrypt = require("bcryptjs");
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -277,9 +278,12 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
 };
 
 export const handleUserCreation = async (shipping, create_account, new_password) => {
+  console.log({ shipping, create_account, new_password });
   try {
     const { email, first_name, last_name } = shipping;
     const lowercaseEmail = email.toLowerCase();
+
+    console.log({ lowercaseEmail, first_name, last_name });
 
     // Check if user exists
     let user = await User.findOne({ email: lowercaseEmail });
@@ -287,7 +291,7 @@ export const handleUserCreation = async (shipping, create_account, new_password)
     if (!user) {
       // Create new user if email doesn't exist
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(create_account ? new_password : config.REACT_APP_TEMP_PASS, salt);
+      const hashedPassword = await bcrypt.hash(create_account ? new_password : config.TEMP_PASS, salt);
 
       user = await User.create({
         email: lowercaseEmail,
@@ -309,7 +313,7 @@ export const handleUserCreation = async (shipping, create_account, new_password)
 
       if (!user.password) {
         const salt = await bcrypt.genSalt(10);
-        updateData.password = await bcrypt.hash(create_account ? new_password : config.REACT_APP_TEMP_PASS, salt);
+        updateData.password = await bcrypt.hash(create_account ? new_password : config.TEMP_PASS, salt);
       }
 
       await User.updateOne({ _id: user._id }, updateData);
@@ -323,12 +327,12 @@ export const handleUserCreation = async (shipping, create_account, new_password)
   }
 };
 
-export const processPayment = async (orderId, paymentMethod) => {
+export const processPayment = async (orderId, paymentMethod, totalPrice) => {
   try {
     // Implement your payment processing logic here
     const order = await Order.findById(orderId).populate("user");
     const current_userrmation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
-    const paymentInformation = normalizePaymentInfo({ totalPrice: order.totalPrice });
+    const paymentInformation = normalizePaymentInfo({ totalPrice });
     const customer = await createOrUpdateCustomer(current_userrmation);
     const paymentIntent = await createPaymentIntent(customer, paymentInformation);
     const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
@@ -453,7 +457,7 @@ export const splitOrderItems = orderItems => {
 };
 
 export const createSplitOrder = async (originalOrder, items, userId, isPreOrder = false, shipping_rate) => {
-  const { itemsPrice, shippingPrice, taxPrice } = calculateOrderPrices(items, originalOrder);
+  const { itemsPrice, shippingPrice, taxPrice } = calculateOrderPrices(items, originalOrder, shipping_rate);
 
   const splitOrder = {
     ...originalOrder,
@@ -466,7 +470,7 @@ export const createSplitOrder = async (originalOrder, items, userId, isPreOrder 
     itemsPrice,
     shippingPrice,
     taxPrice,
-    totalPrice: itemsPrice + shippingPrice + taxPrice,
+    totalPrice: parseFloat(itemsPrice) + parseFloat(shippingPrice) + parseFloat(taxPrice),
     user: userId,
     isPreOrder,
   };
@@ -474,9 +478,11 @@ export const createSplitOrder = async (originalOrder, items, userId, isPreOrder 
   return await Order.create(splitOrder);
 };
 
-export const calculateOrderPrices = (items, originalOrder) => {
+export const calculateOrderPrices = (items, originalOrder, shipping_rate) => {
   const itemsPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
-  const shippingPrice = calculateShippingPrice(items, originalOrder.shipping);
+  const shippingPrice = originalOrder.shipping.international
+    ? shipping_rate.rate
+    : shipping_rate.list_rate || shipping_rate.rate;
   const taxPrice = itemsPrice * originalOrder.taxRate;
 
   return { itemsPrice, shippingPrice, taxPrice };

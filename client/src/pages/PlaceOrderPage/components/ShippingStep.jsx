@@ -40,8 +40,9 @@ import {
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+import { getHasNonPreOrderItems, getHasPreOrderItems } from "../placeOrderHelpers";
 
-const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
+const ShippingStep = () => {
   const { width } = useWindowDimensions();
   const all_shipping = API.useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -72,8 +73,10 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
     modalText,
     showSplitOrderModal,
     tax_rate,
-    splitOrder: splitOrderRedux,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const hasNonPreOrderItems = getHasNonPreOrderItems(cartItems);
 
   const {
     first_name: first_name_validations,
@@ -160,7 +163,7 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
         dispatch(nextStep("payment"));
       } else {
         if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
-          get_shipping_rates({ splitOrder });
+          get_shipping_rates(splitOrder);
         }
       }
       if (shipping.international) {
@@ -175,7 +178,7 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
     dispatch(setShippingSaved(false));
   };
 
-  const get_shipping_rates = async ({ splitOrder }) => {
+  const get_shipping_rates = async splitOrder => {
     const order = {
       orderItems: cartItems,
       shipping,
@@ -617,8 +620,8 @@ const ShippingStep = ({ hasPreOrderItems, hasNonPreOrderItems }) => {
         isOpen={showSplitOrderModal}
         onConfirm={() => {
           dispatch(setSplitOrder(true));
-          submitShipping(true);
           dispatch(closeSplitOrderModal(false));
+          submitShipping(true);
         }}
         onCancel={() => {
           dispatch(setSplitOrder(false));

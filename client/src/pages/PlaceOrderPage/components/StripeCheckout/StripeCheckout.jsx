@@ -9,10 +9,11 @@ import config from "../../../../config";
 import { setPaymentValidations, setLoadingPayment } from "../../placeOrderSlice";
 import { showError } from "../../../../slices/snackbarSlice";
 import { errorMessage } from "../../../../helpers/sharedHelpers";
+import { getHasPreOrderItems, getPreOrderReleaseDate } from "../../placeOrderHelpers";
 
 const stripePromise = loadStripe(config.REACT_APP_STRIPE_KEY);
 
-const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
+const StripeCheckout = () => {
   const dispatch = useDispatch();
   const placeOrder = useSelector(state => state.placeOrder);
   const {
@@ -25,6 +26,7 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
     promo_code,
     itemsPrice,
     taxPrice,
+    taxRate,
     totalPrice,
     activePromoCodeIndicator,
     tip,
@@ -39,6 +41,9 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
   const handleSubmit = async (event, stripe, elements) => {
     event.preventDefault();
@@ -57,6 +62,11 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
         dispatch(showError({ message: error.message }));
         return;
       }
+      console.log({
+        splitOrder: splitOrder,
+        preOrderShippingRate: preOrderShippingRate,
+        nonPreOrderShippingRate: nonPreOrderShippingRate,
+      });
       if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
@@ -73,6 +83,7 @@ const StripeCheckout = ({ hasPreOrderItems, preOrderReleaseDate }) => {
               itemsPrice,
               shippingPrice,
               taxPrice,
+              taxRate,
               totalPrice,
               order_note,
               production_note,

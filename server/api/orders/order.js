@@ -97,6 +97,7 @@ const orderSchema = new mongoose.Schema(
     refunds: [refundsSchema],
     itemsPrice: { type: Number },
     taxPrice: { type: Number },
+    taxRate: { type: Number },
     shippingPrice: { type: Number },
     serviceFee: { type: Number },
     totalPrice: { type: Number },
@@ -147,6 +148,7 @@ const orderSchema = new mongoose.Schema(
     error: { type: Object },
     hasPreOrderItems: { type: Boolean, default: false },
     preOrderShippingDate: { type: Date },
+    splitOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
     deleted: { type: Boolean, default: false },
   },
   {

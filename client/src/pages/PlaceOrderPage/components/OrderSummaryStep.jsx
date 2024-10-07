@@ -3,8 +3,9 @@ import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem
 import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import { Tooltip, Typography, useTheme } from "@mui/material";
+import { getHasPreOrderItems } from "../placeOrderHelpers";
 
-const OrderSummaryStep = ({ hasPreOrderItems, splitOrder }) => {
+const OrderSummaryStep = () => {
   const theme = useTheme();
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
@@ -23,7 +24,10 @@ const OrderSummaryStep = ({ hasPreOrderItems, splitOrder }) => {
     totalPrice,
     preOrderShippingPrice,
     nonPreOrderShippingPrice,
+    splitOrder,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
 
   // Calculate service fee for tickets
   const ticketItems = cartItems.filter(item => item.itemType === "ticket");

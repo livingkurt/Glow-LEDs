@@ -9,7 +9,7 @@ import { initializePlaceOrderPage, setItemsPrice, setServiceFee, setTotalPrice }
 import * as API from "../../api";
 import { save_shipping, set_my_cart } from "../../slices/cartSlice";
 import { showConfirm, showInfo } from "../../slices/snackbarSlice";
-import { constructOutOfStockMessage } from "./placeOrderHelpers";
+import { constructOutOfStockMessage, getHasPreOrderItems } from "./placeOrderHelpers";
 
 const usePlaceOrderPage = () => {
   const { width } = useWindowDimensions();
@@ -25,15 +25,12 @@ const usePlaceOrderPage = () => {
   const { current_user } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
-  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted, splitOrder } =
-    placeOrder;
+  const { show_payment, shipping_completed, shippingPrice, itemsPrice, taxPrice, tip, orderCompleted } = placeOrder;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const orderId = searchParams.get("order_id");
 
-  const hasPreOrderItems = cartItems.some(item => item.isPreOrder);
-  const hasNonPreOrderItems = cartItems.some(item => !item.isPreOrder);
-  const preOrderReleaseDate = cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
 
   useEffect(() => {
     if (hasPreOrderItems) {
@@ -181,11 +178,8 @@ const usePlaceOrderPage = () => {
     order,
     orderId,
     orderCompleted,
-    preOrderReleaseDate,
     hasPreOrderItems,
     current_user,
-    splitOrder,
-    hasNonPreOrderItems,
   };
 };
 

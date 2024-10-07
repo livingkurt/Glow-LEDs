@@ -26,8 +26,9 @@ import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
+import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
 
-const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
+const PaymentStep = () => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -73,6 +74,9 @@ const PaymentStep = ({ hasPreOrderItems, preOrderReleaseDate }) => {
     preOrderShippingPrice,
     nonPreOrderShippingPrice,
   } = placeOrder;
+
+  const hasPreOrderItems = getHasPreOrderItems(cartItems);
+  const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
   const check_code = async e => {
     e.preventDefault();

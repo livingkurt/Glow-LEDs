@@ -29,6 +29,7 @@ const initialState = {
   itemsPrice: 0,
   tax_rate: 0,
   taxPrice: 0,
+  taxRate: 0,
   totalPrice: 0,
   activePromoCodeIndicator: "",
   orderCompleted: false,
@@ -285,6 +286,7 @@ const placeOrder = createSlice({
 
       state.itemsPrice = items_price;
       state.taxPrice = tax_rate * items_price;
+      state.taxRate = parseFloat(tax_rate);
       state.shippingPrice = shippingPrice;
       state.totalPrice =
         tip === 0 || tip === "" || isNaN(tip)

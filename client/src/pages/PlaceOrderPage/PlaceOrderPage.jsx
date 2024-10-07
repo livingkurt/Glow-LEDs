@@ -20,19 +20,7 @@ import { isOrderComplete } from "./placeOrderHelpers";
 const PlaceOrderPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    width,
-    show_payment,
-    shipping_completed,
-    order,
-    orderId,
-    orderCompleted,
-    preOrderReleaseDate,
-    hasPreOrderItems,
-    current_user,
-    hasNonPreOrderItems,
-    splitOrder,
-  } = usePlaceOrderPage();
+  const { width, show_payment, shipping_completed, order, orderId, orderCompleted, current_user } = usePlaceOrderPage();
 
   return (
     <div>
@@ -88,19 +76,11 @@ const PlaceOrderPage = () => {
           <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
             <div className="place_order-info">
               <EmailStep />
-              <ShippingStep
-                hasPreOrderItems={hasPreOrderItems}
-                hasNonPreOrderItems={hasNonPreOrderItems}
-                splitOrder={splitOrder}
-              />
-              <PaymentStep
-                hasPreOrderItems={hasPreOrderItems}
-                preOrderShippingDate={preOrderReleaseDate}
-                splitOrder={splitOrder}
-              />
+              <ShippingStep />
+              <PaymentStep />
             </div>
           </div>
-          <OrderSummaryStep hasPreOrderItems={hasPreOrderItems} splitOrder={splitOrder} />
+          <OrderSummaryStep />
         </div>
       ) : (
         <OrderComplete current_user={current_user} order_id={order._id || orderId} />

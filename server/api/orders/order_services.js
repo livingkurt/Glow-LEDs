@@ -226,9 +226,15 @@ export default {
       create_account,
       new_password,
       splitOrder,
-      preOrderShippingPrice,
-      nonPreOrderShippingPrice,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
     } = body;
+
+    console.log({
+      splitOrder,
+      preOrderShippingRate,
+      nonPreOrderShippingRate,
+    });
 
     try {
       // Check if any orderItem has subcategory "sampler" and quantity greater than 1
@@ -247,45 +253,55 @@ export default {
       }
 
       let orders = [];
+      let nonPreOrderOrder, preOrderOrder;
+
       if (splitOrder) {
         const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
 
         if (nonPreOrderItems.length > 0) {
-          const nonPreOrderOrder = await createSplitOrder(
-            order,
-            nonPreOrderItems,
-            userId,
-            false,
-            nonPreOrderShippingPrice
-          );
+          nonPreOrderOrder = await createSplitOrder(order, nonPreOrderItems, userId, false, nonPreOrderShippingRate);
           orders.push(nonPreOrderOrder);
         }
 
         if (preOrderItems.length > 0) {
-          const preOrderOrder = await createSplitOrder(order, preOrderItems, userId, true, preOrderShippingPrice);
+          preOrderOrder = await createSplitOrder(order, preOrderItems, userId, true, preOrderShippingRate);
           orders.push(preOrderOrder);
+        }
+
+        // Link the orders
+        if (nonPreOrderOrder && preOrderOrder) {
+          nonPreOrderOrder.splitOrder = preOrderOrder._id;
+          preOrderOrder.splitOrder = nonPreOrderOrder._id;
+          await nonPreOrderOrder.save();
+          await preOrderOrder.save();
         }
       } else {
         const createdOrder = await Order.create({ ...order, user: userId });
         orders.push(createdOrder);
       }
 
+      // Process payment for non-preorder items or the entire order if not split
+      let paymentOrder = splitOrder ? nonPreOrderOrder : orders[0];
+      if (paymentOrder && paymentMethod) {
+        paymentOrder = await processPayment(paymentOrder._id, paymentMethod, order.totalPrice);
+      }
+
+      // Update preOrder status if it exists
+      if (splitOrder && preOrderOrder) {
+        preOrderOrder.status = "paid";
+        preOrderOrder.paidAt = Date.now();
+        await preOrderOrder.save();
+      }
+
       // Process payments and send emails for each order
       const updatedOrders = await Promise.all(
         orders.map(async order => {
-          let updatedOrder = order;
-          if (paymentMethod) {
-            updatedOrder = await processPayment(order._id, paymentMethod);
-          } else {
-            updatedOrder = await Order.findById(order._id).populate("user");
+          await sendOrderEmail(order);
+          if (order.orderItems.some(item => item.itemType === "ticket")) {
+            await sendTicketEmail(order);
           }
 
-          await sendOrderEmail(updatedOrder);
-          if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
-            await sendTicketEmail(updatedOrder);
-          }
-
-          return updatedOrder;
+          return order;
         })
       );
 

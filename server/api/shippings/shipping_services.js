@@ -20,7 +20,6 @@ export default {
   shipping_rates_shipping_s: async body => {
     try {
       const { order, splitOrder } = body;
-      console.log({ order, splitOrder });
 
       if (splitOrder) {
         const preOrderItems = order.orderItems.filter(item => item.isPreOrder);

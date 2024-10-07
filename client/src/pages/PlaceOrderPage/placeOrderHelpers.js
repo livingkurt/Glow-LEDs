@@ -216,3 +216,7 @@ export const isOrderComplete = ({ orderId, orderCompleted }) => {
   }
   return true;
 };
+
+export const getHasPreOrderItems = cartItems => cartItems.some(item => item.isPreOrder);
+export const getHasNonPreOrderItems = cartItems => cartItems.some(item => !item.isPreOrder);
+export const getPreOrderReleaseDate = cartItems => cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
