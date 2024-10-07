@@ -291,7 +291,16 @@ const PaymentStep = () => {
                       variant="icon"
                       onClick={() =>
                         dispatch(
-                          removePromo({ items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping })
+                          removePromo({
+                            items_price,
+                            tax_rate,
+                            shippingPrice,
+                            preOrderShippingPrice,
+                            nonPreOrderShippingPrice,
+                            previousShippingPrice,
+                            shipping,
+                            splitOrder,
+                          })
                         )
                       }
                       aria-label="Detete"

@@ -34,9 +34,6 @@ const OrderSummaryStep = () => {
   const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const serviceFee = ticketTotal * 0.1; // 10% service fee
 
-  // Recalculate total price with service fee and split shipping if applicable
-  const newTotalPrice = (totalPrice || 0) + (serviceFee || 0);
-
   return (
     <div className="place_order-action">
       <ul>
@@ -159,7 +156,7 @@ const OrderSummaryStep = () => {
         <li>
           <div>Order Total</div>
           <div>
-            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + newTotalPrice.toFixed(2) : "------"}
+            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + totalPrice.toFixed(2) : "------"}
           </div>
         </li>
       </ul>

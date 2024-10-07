@@ -21,8 +21,6 @@ const usePlaceOrderPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { orders } = orderPage;
 
-  console.log({ orders });
-
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -167,8 +165,8 @@ const usePlaceOrderPage = () => {
       dispatch(
         setTotalPrice(
           tip === 0 || tip === "" || isNaN(tip)
-            ? itemsPrice + shippingPrice + taxPrice
-            : itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+            ? itemsPrice + shippingPrice + taxPrice + serviceFee
+            : itemsPrice + shippingPrice + taxPrice + serviceFee + parseInt(tip)
         )
       );
     }

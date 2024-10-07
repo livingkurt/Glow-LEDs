@@ -84,7 +84,7 @@ const StripeCheckout = () => {
               shippingPrice,
               taxPrice,
               taxRate,
-              totalPrice,
+              totalPrice: totalPrice,
               order_note,
               production_note,
               tip,

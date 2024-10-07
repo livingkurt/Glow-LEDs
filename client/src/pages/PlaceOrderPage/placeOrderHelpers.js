@@ -167,6 +167,8 @@ export const applyAmountOff = (state, eligibleTotal, validPromo, tax_rate) => {
 
 export const applyFreeShipping = (state, validPromo) => {
   state.shippingPrice = 0;
+  state.preOrderShippingPrice = 0;
+  state.nonPreOrderShippingPrice = 0;
   state.free_shipping_message = "Free";
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };

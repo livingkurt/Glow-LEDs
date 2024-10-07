@@ -100,6 +100,11 @@ const initialState = {
   nonPreOrderShippingRate: {},
   currentPreOrderShippingSpeed: {},
   currentNonPreOrderShippingSpeed: {},
+  order: {},
+  orderId: "",
+  orderIds: [],
+  previousPreOrderShippingPrice: 0,
+  previousNonPreOrderShippingPrice: 0,
 };
 
 const placeOrder = createSlice({
@@ -282,19 +287,16 @@ const placeOrder = createSlice({
       }
     },
     removePromo: (state, { payload }) => {
-      const { items_price, tax_rate, shippingPrice, tip, previousShippingPrice, shipping } = payload;
+      const { items_price, tax_rate, previousShippingPrice, shipping } = payload;
 
       state.itemsPrice = items_price;
       state.taxPrice = tax_rate * items_price;
       state.taxRate = parseFloat(tax_rate);
-      state.shippingPrice = shippingPrice;
-      state.totalPrice =
-        tip === 0 || tip === "" || isNaN(tip)
-          ? items_price + shippingPrice + state.taxPrice
-          : items_price + shippingPrice + state.taxPrice + parseInt(tip);
       state.free_shipping_message = "------";
       state.activePromoCodeIndicator = "";
       if (shipping) {
+        state.preOrderShippingPrice = state.previousPreOrderShippingPrice;
+        state.nonPreOrderShippingPrice = state.previousNonPreOrderShippingPrice;
         state.shippingPrice = previousShippingPrice;
       }
       state.show_promo_code_input_box = true;
@@ -382,10 +384,12 @@ const placeOrder = createSlice({
           state.preOrderShippingPrice = shippingPrice;
           state.preOrderShippingRate = rate;
           state.currentPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
+          state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
         } else {
           state.nonPreOrderShippingPrice = shippingPrice;
           state.nonPreOrderShippingRate = rate;
           state.currentNonPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
+          state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
         }
         state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
       } else {
@@ -400,10 +404,6 @@ const placeOrder = createSlice({
         state.hide_pay_button = false;
         state.show_shipping_complete = true;
       }
-
-      // Recalculate totalPrice
-      state.totalPrice =
-        (state.itemsPrice || 0) + (state.shippingPrice || 0) + (state.taxPrice || 0) + (state.tip || 0);
 
       state.loadingShipping = false;
     },
@@ -431,10 +431,6 @@ const placeOrder = createSlice({
         state.hide_pay_button = false;
         state.show_shipping_complete = true;
       }
-
-      // Recalculate totalPrice
-      state.totalPrice =
-        (state.itemsPrice || 0) + (state.shippingPrice || 0) + (state.taxPrice || 0) + (state.tip || 0);
     },
 
     hiddenCheckoutButton: state => {

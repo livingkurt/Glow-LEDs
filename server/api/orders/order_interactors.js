@@ -477,7 +477,7 @@ export const createSplitOrder = async (originalOrder, items, userId, isPreOrder 
     shipping: {
       ...originalOrder.shipping,
       shipping_rate,
-      shipment_id: shipping_rate.id,
+      shipment_id: shipping_rate?.id,
     },
     itemsPrice,
     shippingPrice,
@@ -494,9 +494,9 @@ export const createSplitOrder = async (originalOrder, items, userId, isPreOrder 
 export const calculateOrderPrices = (items, originalOrder, shipping_rate) => {
   const itemsPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
   const shippingPrice = originalOrder.shipping.international
-    ? shipping_rate.rate
-    : shipping_rate.list_rate || shipping_rate.rate;
-  const taxPrice = itemsPrice * originalOrder.taxRate;
+    ? shipping_rate?.rate
+    : shipping_rate?.list_rate || shipping_rate?.rate || 0;
+  const taxPrice = originalOrder?.taxRate ? itemsPrice * originalOrder?.taxRate : 0;
 
   return { itemsPrice, shippingPrice, taxPrice };
 };
