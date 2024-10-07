@@ -8,6 +8,7 @@ import * as API from "../../../api";
 import { Button, Grid, Typography } from "@mui/material";
 import { applySearch } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
+
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
   const send_order_status_email = async (status, message_to_user) => {
@@ -140,20 +141,7 @@ const MetaDataDisplay = ({ row }) => {
           ${totalRefundAmount?.toFixed(2)}
         </Typography>
       </Grid>
-      {row.splitOrder && (
-        <Grid item container xs={12} alignItems="center" justifyContent="space-between">
-          <Typography component="label" className="mv-0px mr-5px">
-            Split Order ID:
-          </Typography>
-          <Typography
-            component="label"
-            className=" mv-0px"
-            onClick={() => dispatch(applySearch("ordersTable", row.splitOrder))}
-          >
-            {row.splitOrder}
-          </Typography>
-        </Grid>
-      )}
+
       {row.hasPreOrderItems && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
@@ -164,6 +152,7 @@ const MetaDataDisplay = ({ row }) => {
           </Typography>
         </Grid>
       )}
+
       {row.tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
@@ -206,6 +195,18 @@ const MetaDataDisplay = ({ row }) => {
               {row.return_tracking_number}
             </a>
           </Typography>
+        </Grid>
+      )}
+      {row.splitOrder && (
+        <Grid item xs={12}>
+          <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            onClick={() => dispatch(applySearch("orderTable", row.splitOrder))}
+          >
+            Go to Split Order
+          </Button>
         </Grid>
       )}
       <Grid item xs={12}>

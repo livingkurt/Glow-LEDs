@@ -35,9 +35,7 @@ const OrderSummaryStep = () => {
   const serviceFee = ticketTotal * 0.1; // 10% service fee
 
   // Recalculate total price with service fee and split shipping if applicable
-  const newTotalPrice = splitOrder
-    ? totalPrice + serviceFee + preOrderShippingPrice + nonPreOrderShippingPrice
-    : totalPrice + serviceFee;
+  const newTotalPrice = (totalPrice || 0) + (serviceFee || 0);
 
   return (
     <div className="place_order-action">

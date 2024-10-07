@@ -626,6 +626,7 @@ const ShippingStep = () => {
         onCancel={() => {
           dispatch(setSplitOrder(false));
           dispatch(closeSplitOrderModal(false));
+          submitShipping();
         }}
         title={"Your order contains both pre-order and in-stock items."}
         confirmLabel={"Yes, split my order"}

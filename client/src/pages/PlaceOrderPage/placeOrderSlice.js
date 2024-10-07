@@ -365,41 +365,49 @@ const placeOrder = createSlice({
       state.loadingShipping = false;
       state.show_shipping_complete = true;
     },
+
     chooseShippingRateBasic: (state, { payload }) => {
       const { rate, freeShipping, shipping, isPreOrder, friendlyCarrierService } = payload;
 
-      console.log({ friendlyCarrierService });
+      let shippingPrice = 0;
+
       if (freeShipping) {
-        state.shippingPrice = 0;
         state.free_shipping_message = "Free";
-        state.loadingShipping = false;
-        state.show_shipping_complete = true;
       } else {
-        const shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
-        if (state.splitOrder) {
-          if (isPreOrder) {
-            state.preOrderShippingPrice = shippingPrice;
-            state.preOrderShippingRate = rate;
-            state.currentPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
-          } else {
-            state.nonPreOrderShippingPrice = shippingPrice;
-            state.nonPreOrderShippingRate = rate;
-            state.currentNonPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
-          }
-          state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
-        } else {
-          state.shippingPrice = shippingPrice;
-        }
-        state.previousShippingPrice = state.shippingPrice;
+        shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
       }
+
+      if (state.splitOrder) {
+        if (isPreOrder) {
+          state.preOrderShippingPrice = shippingPrice;
+          state.preOrderShippingRate = rate;
+          state.currentPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
+        } else {
+          state.nonPreOrderShippingPrice = shippingPrice;
+          state.nonPreOrderShippingRate = rate;
+          state.currentNonPreOrderShippingSpeed = { rate, freeShipping, friendlyCarrierService };
+        }
+        state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
+      } else {
+        state.shippingPrice = shippingPrice;
+        state.current_shipping_speed = { rate, freeShipping, friendlyCarrierService };
+        state.shipping_rate = rate;
+      }
+
+      state.previousShippingPrice = state.shippingPrice;
 
       if (!state.splitOrder || (state.preOrderShippingRate && state.nonPreOrderShippingRate)) {
         state.hide_pay_button = false;
         state.show_shipping_complete = true;
-        state.current_shipping_speed = { rate, freeShipping };
-        state.shipping_rate = rate;
       }
+
+      // Recalculate totalPrice
+      state.totalPrice =
+        (state.itemsPrice || 0) + (state.shippingPrice || 0) + (state.taxPrice || 0) + (state.tip || 0);
+
+      state.loadingShipping = false;
     },
+    // ... rest of the code ...
     chooseShippingRateWithPromo: (state, { payload }) => {
       const { promo_code_storage } = payload;
       state.promo_code = promo_code_storage.toLowerCase();
@@ -416,8 +424,7 @@ const placeOrder = createSlice({
     finalizeShippingRate: state => {
       if (state.splitOrder) {
         if (state.preOrderShippingRate && state.nonPreOrderShippingRate) {
-          state.shippingPrice =
-            parseFloat(state.preOrderShippingRate.rate) + parseFloat(state.nonPreOrderShippingRate.rate);
+          state.shippingPrice = (state.preOrderShippingPrice || 0) + (state.nonPreOrderShippingPrice || 0);
           state.hide_pay_button = false;
           state.show_shipping_complete = true;
         }
@@ -425,7 +432,12 @@ const placeOrder = createSlice({
         state.hide_pay_button = false;
         state.show_shipping_complete = true;
       }
+
+      // Recalculate totalPrice
+      state.totalPrice =
+        (state.itemsPrice || 0) + (state.shippingPrice || 0) + (state.taxPrice || 0) + (state.tip || 0);
     },
+
     hiddenCheckoutButton: state => {
       state.hideCheckoutButton = true;
     },

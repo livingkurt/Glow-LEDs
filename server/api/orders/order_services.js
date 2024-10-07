@@ -281,7 +281,7 @@ export default {
         orders.push(createdOrder);
       }
 
-      // Process payment for non-preorder items or the entire order if not split
+      // Process payment for non-pre-order items or the entire order if not split
       let paymentOrder = splitOrder ? nonPreOrderOrder : orders[0];
       if (paymentOrder && paymentMethod) {
         paymentOrder = await processPayment(paymentOrder._id, paymentMethod, order.totalPrice);
