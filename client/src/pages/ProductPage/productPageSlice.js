@@ -1,9 +1,6 @@
 /* eslint-disable max-lines-per-function */
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { showError } from "../../slices/snackbarSlice";
-import axios from "axios";
-import { errorMessage } from "../../helpers/sharedHelpers";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   calculateAdditionalCost,
   handlePriceReplacement,

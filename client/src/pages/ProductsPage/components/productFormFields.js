@@ -177,6 +177,24 @@ export const productFormFields = ({
       type: "number",
       label: "Pre-Order Quantity",
     },
+    isPasswordProtected: {
+      type: "checkbox",
+      label: "Is Password Protected",
+    },
+    passwordProtection: {
+      type: "object",
+      title: "Password Protection",
+      fields: {
+        password: {
+          type: "text",
+          label: "Password",
+        },
+        expirationDate: {
+          type: "date",
+          label: "Expiration Date",
+        },
+      },
+    },
     wholesale_price: {
       type: "number",
       label: "Wholesale Price",
