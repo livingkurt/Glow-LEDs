@@ -351,6 +351,31 @@ export default {
       }
     }
   },
+  check_password_products_s: async (params, body) => {
+    console.log("check_password_products_s", params, body);
+    try {
+      const product = await Product.findById(params.id);
+      if (!product) {
+        return { success: false, message: "Product not found" };
+      }
+
+      if (!product.isPasswordProtected) {
+        return { success: false, message: "This product is not password protected" };
+      }
+
+      const { password } = body;
+      const isPasswordCorrect = product.passwordProtection.password === password;
+      const isExpired = new Date() > product.passwordProtection.expirationDate;
+
+      if (isPasswordCorrect && !isExpired) {
+        return { success: true };
+      } else {
+        return { success: false };
+      }
+    } catch (error) {
+      return { success: false, message: "Server error", error: error.message };
+    }
+  },
   create_option_products_s: async (params, body) => {
     const { id, option_product_id } = params;
     const { newOptionProductData } = body;

@@ -200,3 +200,16 @@ export const getOurPicksProducts = createAsyncThunk(
     }
   }
 );
+
+export const checkProductPassword = createAsyncThunk(
+  "products/checkProductPassword",
+  async ({ productId, password }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/api/products/${productId}/check_password`, { password });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

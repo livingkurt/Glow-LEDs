@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, FormHelperText, Grid, Rating, Typography, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
@@ -34,12 +34,15 @@ import { sale_price_switch } from "../../utils/react_helper_functions";
 import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
 import { formatDate } from "../../utils/helpers/universal_helpers";
+import PasswordPromptModal from "./components/PasswordPromptModal";
 
 const ProductPage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked } = useProductPage();
+  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked, isPasswordProtected } =
+    useProductPage();
   const [validationErrors, setValidationErrors] = useState({});
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(isPasswordProtected);
 
   const validateOptions = () => {
     const errors = {};
@@ -66,6 +69,18 @@ const ProductPage = () => {
       [index]: error,
     }));
   };
+
+  useEffect(() => {
+    if (product && product.isPasswordProtected) {
+      setShowPasswordPrompt(true);
+    }
+  }, [product]);
+
+  if (showPasswordPrompt) {
+    return (
+      <PasswordPromptModal productId={product._id} onUnlock={() => setShowPasswordPrompt(false)} product={product} />
+    );
+  }
 
   return (
     <Box>

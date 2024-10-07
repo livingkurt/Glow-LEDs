@@ -253,6 +253,11 @@ const productSchema = new mongoose.Schema(
     set_of: { type: Number },
 
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
+    isPasswordProtected: { type: Boolean, default: false },
+    passwordProtection: {
+      password: String,
+      expirationDate: Date,
+    },
     deleted: { type: Boolean, default: false },
 
     // ---------------------------

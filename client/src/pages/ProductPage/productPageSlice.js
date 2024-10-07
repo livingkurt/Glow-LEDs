@@ -1,9 +1,6 @@
 /* eslint-disable max-lines-per-function */
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { showError } from "../../slices/snackbarSlice";
-import axios from "axios";
-import { errorMessage } from "../../helpers/sharedHelpers";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   calculateAdditionalCost,
   handlePriceReplacement,
@@ -11,6 +8,7 @@ import {
   updateProductDetailsFromOption,
 } from "./productHelpers";
 import { detailsProductPage } from "../../api";
+import { productInitialState } from "../ProductsPage/productsPageHelpers";
 
 const productPage = createSlice({
   name: "productPage",
@@ -31,9 +29,9 @@ const productPage = createSlice({
     review_modal: "none",
     rating: 5,
     comment: "",
-    product: {},
     isAddonChecked: false,
     productPageLoading: true,
+    product: productInitialState,
     customizedProduct: {
       name: "",
       description: "",

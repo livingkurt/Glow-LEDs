@@ -127,6 +127,19 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  check_password_products_c: async (req, res) => {
+    const { params, body } = req;
+    console.log("check_password_products_c", params, body);
+    try {
+      const product = await product_services.check_password_products_s(params, body);
+      if (product) {
+        return res.status(200).send(product);
+      }
+      return res.status(500).send({ message: "Error Updating Product" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   create_option_products_c: async (req, res) => {
     const { params, body } = req;
     try {
