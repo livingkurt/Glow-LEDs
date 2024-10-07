@@ -341,12 +341,12 @@ export const format_date_and_time = (formatted_date, formatted_time) => {
 };
 
 export const daysBetween = (date1, date2) => {
-  //
   const date_1 = new Date(date1);
   const date_2 = new Date(date2);
-  const diffTime = date_1 - date_2;
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
-  //
+  let diffTime = date_1.getTime() - date_2.getTime();
+  let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  let weekendDays = Math.floor(diffDays / 7) * 2;
+  diffDays = diffDays - weekendDays;
   return diffDays;
 };
 

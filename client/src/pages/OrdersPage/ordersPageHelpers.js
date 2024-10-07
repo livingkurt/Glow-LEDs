@@ -4,6 +4,7 @@ import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 import config from "../../config";
 import { io } from "socket.io-client";
+import { formatDate } from "../../utils/helpers/universal_helpers";
 
 export const orderStatusColors = {
   unpaid: { name: "Unpaid", color: "#6d3e3e" },
@@ -58,7 +59,7 @@ export const determineOrderColors = order => {
 
 export const sinceOrdered = date => {
   const today = new Date();
-  const numDays = daysBetween(today, date);
+  const numDays = daysBetween(formatDate(today), formatDate(date));
   if (numDays === 0) {
     return "Today";
   } else {
