@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import config from "../../../config";
+import { Typography } from "@mui/material";
 
 const LoadingPayments = ({ loading }) => {
   const glovingTips = [
@@ -87,7 +88,7 @@ const LoadingPayments = ({ loading }) => {
               display: "flex",
               justifyContent: "space-around",
               marginTop: "40px",
-              height: "40px", // Increased height to accommodate the wave motion
+              height: "60px", // Increased height to accommodate the wave motion
             }}
           >
             {[...Array(5)].map((_, i) => (
@@ -105,6 +106,9 @@ const LoadingPayments = ({ loading }) => {
               ></div>
             ))}
           </div>
+          <Typography variant="h6" textAlign="center">
+            The more your know
+          </Typography>
           <p style={{ textAlign: "center", color: "#ffffff" }}>{tip}</p>
         </div>
       </div>
