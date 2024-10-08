@@ -8,6 +8,7 @@ export default {
         .sort(sort)
         .populate("user")
         .populate({ path: "products", populate: { path: "images" } })
+        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
@@ -26,6 +27,7 @@ export default {
         .populate("user")
         .populate("chips")
         .populate({ path: "products", populate: { path: "images" } })
+        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
@@ -40,6 +42,7 @@ export default {
         .populate("user")
         .populate("chips")
         .populate({ path: "products", populate: { path: "images" } })
+        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
@@ -54,6 +57,7 @@ export default {
         .populate("user")
         .populate("chips")
         .populate({ path: "products", populate: { path: "images" } })
+        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
         .populate("private_code");
     } catch (error) {

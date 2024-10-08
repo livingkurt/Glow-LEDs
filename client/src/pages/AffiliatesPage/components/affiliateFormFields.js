@@ -79,6 +79,35 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       options: chips,
       labelProp: "name",
     },
+    product_bundles: {
+      type: "array",
+      title: "Product Bundles",
+      label: "title",
+      itemSchema: {
+        type: "object",
+        fields: {
+          title: {
+            type: "text",
+            label: "Title",
+          },
+          subtitle: {
+            type: "text",
+            label: "Subtitle",
+          },
+          short_description: {
+            type: "text",
+            label: "Short Description",
+          },
+          products: {
+            type: "autocomplete_multiple",
+            label: "Products",
+            options: products,
+            labelProp: "name",
+          },
+        },
+      },
+    },
+
     products: {
       type: "autocomplete_multiple",
       label: "Glow LEDs Gear you currently have",
@@ -114,6 +143,25 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       type: "text",
       label: "Video",
       permissions: ["admin"],
+    },
+    videos: {
+      type: "array",
+      label: "Videos",
+      permissions: ["admin"],
+      labelProp: "title",
+      itemSchema: {
+        type: "object",
+        fields: {
+          title: {
+            type: "text",
+            label: "Title",
+          },
+          video: {
+            type: "text",
+            label: "Video",
+          },
+        },
+      },
     },
 
     link: {

@@ -12,13 +12,38 @@ const SponsorsBanner = ({ sponsors }) => {
       <Button component={Link} to="/sponsors" variant="text" sx={{ mb: 2, color: "#fff" }}>
         View All Sponsors
       </Button>
-      <Grid container spacing={3}>
+      <Box
+        sx={{
+          pb: 6,
+          px: 2,
+          display: "flex",
+          overflowX: "auto",
+          minWidth: "100%",
+          "&::-webkit-scrollbar": {
+            height: "8px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            borderRadius: "4px",
+          },
+        }}
+      >
         {sponsors?.map(sponsor => (
-          <Grid item key={sponsor._id} xs={12} sm={6} md={4} lg={3}>
+          <Box
+            key={sponsor._id}
+            sx={{
+              minWidth: "250px", // Change minWidth to 250px
+              width: "100%", // Add width: 100% to make the item fill the available space
+              marginRight: "20px",
+              "&:last-child": {
+                marginRight: 0,
+              },
+            }}
+          >
             <SponsorsCard affiliate={sponsor} />
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
     </Box>
   );
 };
