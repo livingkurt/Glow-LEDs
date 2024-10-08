@@ -392,8 +392,12 @@ const community = addIdsRecursively({
 const learn = addIdsRecursively({
   name: "Learn",
   id: "learn_dropdown",
-  path: "/learn",
+  path: "/academy",
   rows: [
+    {
+      name: "Academy Home",
+      path: "/academy",
+    },
     {
       name: "All Learning",
       path: "/learn",

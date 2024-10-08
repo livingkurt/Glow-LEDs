@@ -107,6 +107,13 @@ const content = {
       pathname: "",
     },
   ],
+  academy_page: {
+    title: "",
+    subtitle: "",
+    featured_articles: [],
+    featured_tutorials: [],
+    sponsors: [],
+  },
   active: true,
   deleted: false,
 };

@@ -13,8 +13,15 @@ import {
   faqPageFields,
   menusFields,
   featureFlagsFields,
+  academyPageFields,
 } from "./components/contentFormFields";
-import { useCategorysQuery, useProductsQuery } from "../../api/allRecordsApi";
+import {
+  useAffiliatesQuery,
+  useArticlesQuery,
+  useCategorysQuery,
+  useProductsQuery,
+  useTutorialsQuery,
+} from "../../api/allRecordsApi";
 import GLArray from "../../shared/GlowLEDsComponents/GLForm/components/GLArray";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { debounce } from "lodash";
@@ -27,6 +34,9 @@ const ContentsPage = () => {
 
   const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: articles, isLoading: articlesLoading } = useArticlesQuery();
+  const { data: tutorials, isLoading: tutorialsLoading } = useTutorialsQuery();
+  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
 
   const [tabValue, setTabValue] = useState(0);
   const [menusTabIndex, setMenusTabIndex] = useState(0);
@@ -40,6 +50,7 @@ const ContentsPage = () => {
   // Debounced save function
   const debouncedSave = useCallback(
     debounce(updatedContent => {
+      console.log({ updatedContent });
       setSaveStatus("Autosaving...");
       dispatch(API.saveContent(updatedContent))
         .then(() => {
@@ -67,6 +78,9 @@ const ContentsPage = () => {
     content,
     products: productsLoading ? [] : products,
     categorys: categorysLoading ? [] : categorys,
+    articles: articlesLoading ? [] : articles,
+    tutorials: tutorialsLoading ? [] : tutorials,
+    affiliates: affiliatesLoading ? [] : affiliates,
   };
 
   const getEmptyObjectFromSchema = schema => {
@@ -129,7 +143,8 @@ const ContentsPage = () => {
               <Tab label="Products Grid" style={{ color: tabValue === 3 ? "white" : "lightgray" }} />
               <Tab label="FAQ Page" style={{ color: tabValue === 4 ? "white" : "lightgray" }} />
               <Tab label="Menus" style={{ color: tabValue === 5 ? "white" : "lightgray" }} />
-              <Tab label="Feature Flags" style={{ color: tabValue === 6 ? "white" : "lightgray" }} />
+              <Tab label="Academy Page" style={{ color: tabValue === 6 ? "white" : "lightgray" }} />
+              <Tab label="Feature Flags" style={{ color: tabValue === 7 ? "white" : "lightgray" }} />
             </Tabs>
           </AppBar>
           <GLTabPanel value={tabValue} index={0}>
@@ -191,6 +206,17 @@ const ContentsPage = () => {
             />
           </GLTabPanel>
           <GLTabPanel value={tabValue} index={6}>
+            <GLForm
+              formData={academyPageFields(formFieldsData).fields}
+              state={content?.academy_page || {}}
+              onChange={updated => {
+                console.log({ updated });
+                handleContentChange({ ...content, academy_page: { ...content.academy_page, ...updated } });
+              }}
+              loading={loading}
+            />
+          </GLTabPanel>
+          <GLTabPanel value={tabValue} index={7}>
             <GLArray
               fieldName="feature_flags"
               fieldState={content?.feature_flags}

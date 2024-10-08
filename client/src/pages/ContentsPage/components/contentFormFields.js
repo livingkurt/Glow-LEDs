@@ -688,6 +688,48 @@ export const menusFields = ({ content }) => ({
   },
 });
 
+export const academyPageFields = ({ articles, tutorials, affiliates }) => ({
+  type: "object",
+  title: "Academy Page",
+  fields: {
+    title: { type: "text", label: "Title" },
+    subtitle: { type: "text", label: "Subtitle" },
+    featured_articles: {
+      type: "autocomplete_multiple",
+      label: "Featured Articles",
+      options: articles,
+      labelProp: "title",
+      getOptionLabel: option => {
+        if (typeof option.title === "string") {
+          return toCapitalize(option.title);
+        }
+      },
+    },
+    featured_tutorials: {
+      type: "autocomplete_multiple",
+      label: "Featured Tutorials",
+      options: tutorials,
+      labelProp: "title",
+      getOptionLabel: option => {
+        if (typeof option.title === "string") {
+          return toCapitalize(option.title);
+        }
+      },
+    },
+    sponsors: {
+      type: "autocomplete_multiple",
+      label: "Sponsors",
+      options: affiliates,
+      labelProp: "artist_name",
+      getOptionLabel: option => {
+        if (typeof option.artist_name === "string") {
+          return toCapitalize(option.artist_name);
+        }
+      },
+    },
+  },
+});
+
 export const featureFlagsFields = () => ({
   type: "array",
   title: "Feature Flags",

@@ -162,18 +162,12 @@ const contentSchema = new mongoose.Schema(
       },
     ],
     active: { type: Boolean, default: true },
-    learn: {
-      // articles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
-      articles: [
-        {
-          author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-          title: { type: String },
-          short_description: { type: String },
-          content: { type: String },
-          image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
-          pathname: { type: String },
-        },
-      ],
+    academy_page: {
+      title: { type: String },
+      subtitle: { type: String },
+      featured_articles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+      featured_tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tutorial" }],
+      sponsors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" }],
     },
     deleted: { type: Boolean, default: false },
   },
