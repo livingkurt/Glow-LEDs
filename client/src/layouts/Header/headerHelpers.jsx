@@ -391,11 +391,15 @@ const community = addIdsRecursively({
 
 const learn = addIdsRecursively({
   name: "Learn",
-  id: "learn_dropdown",
-  path: "/learn",
+  id: "academy_dropdown",
+  path: "/academy",
   rows: [
     {
-      name: "All Learning",
+      name: "Academy Home",
+      path: "/academy",
+    },
+    {
+      name: "All Articles",
       path: "/learn",
     },
     {
@@ -822,9 +826,9 @@ export const navItems = [
     headerLocation: "center",
   },
   {
-    name: "LEARN",
+    name: "ACADEMY",
     // path: "/tutorials",
-    id: "learn_dropdown",
+    id: "academy_dropdown",
     // path: "/learn",
     dataTestId: "learn_button",
     // columns: [learn],

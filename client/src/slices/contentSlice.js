@@ -56,6 +56,15 @@ const content = {
       },
     ],
     product_protection_details_hidden: false,
+    sponsors: [],
+    // sponsors_banner: {
+    //   title: "",
+    //   subtitle: "",
+    //   quotes: [],
+    //   button_text: "",
+    //   link: "",
+    //   hidden: false,
+    // },
     slideshow: [
       {
         label: "",
@@ -107,6 +116,13 @@ const content = {
       pathname: "",
     },
   ],
+  academy_page: {
+    title: "",
+    subtitle: "",
+    featured_articles: [],
+    featured_tutorials: [],
+    sponsors: [],
+  },
   active: true,
   deleted: false,
 };

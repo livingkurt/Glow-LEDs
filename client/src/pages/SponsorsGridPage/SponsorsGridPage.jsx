@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet";
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { useAffiliatesQuery } from "../../api/allRecordsApi";
 import SponsorsCard from "./components/SponsorCard";
 import SponsorsGridPageSkeleton from "./components/SponsorGridPageSkeleton";
+import { Link } from "react-router-dom";
 
 const SponsorsGridPage = () => {
   const { data: affiliates, isLoading } = useAffiliatesQuery({ sponsor: true });
@@ -23,6 +24,9 @@ const SponsorsGridPage = () => {
         <meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
         <meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
       </Helmet>
+      <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
+        Back to Academy
+      </Button>
       <Typography variant="h4" align="center" gutterBottom>
         Meet Our Official Sponsored Glover Team
       </Typography>

@@ -96,18 +96,46 @@ export default {
             model: "Image",
           },
         })
+        .populate({
+          path: "academy_page.featured_articles",
+          populate: {
+            path: "image",
+            model: "Image",
+          },
+        })
+        .populate({
+          path: "academy_page.featured_articles",
+          populate: {
+            path: "author",
+            model: "User",
+          },
+        })
+        .populate({
+          path: "academy_page.featured_tutorials",
+          populate: {
+            path: "affiliate",
+            model: "Affiliate",
+          },
+        })
         .populate("home_page.learn_more_products.image")
         .populate("home_page.learn_highlights.images_data.image")
         .populate("home_page.discover_more.image")
         .populate("home_page.get_more_out_of.image")
         .populate("home_page.slideshow.image")
         .populate("home_page.support_banner.image")
+        // .populate("home_page.sponsors_banner.image")
+        // .populate("home_page.sponsors_banner.quotes.image")
+        // .populate("home_page.sponsors_banner.quotes.sponsor")
+        .populate("home_page.sponsors")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
         .populate("products_grid_page.category_banners.image")
         .populate("products_grid_page.category_banners.tag")
         .populate("menus.menu_items.image")
         .populate("products_grid_page.our_picks")
+        .populate("academy_page.featured_articles.image")
+        .populate("academy_page.featured_tutorials.image")
+        .populate("academy_page.sponsors")
         .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -25,14 +25,33 @@ import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import TikTokIcon from "../../layouts/Footer/TikTokIcon";
 import { showInfo } from "../../slices/snackbarSlice";
 import SponsorPageSkeleton from "./components/SponsorPageSkeleton";
+import { useTutorialsQuery } from "../../api/allRecordsApi";
+import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
+import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
+import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
 
 const SponsorPage = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
 
+  const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
+
+  const handleOpen = tutorial => {
+    dispatch(setSelectedTutorial(tutorial));
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    dispatch(setSelectedTutorial(null));
+    setIsOpen(false);
+  };
+
   const { current_user } = useSelector(state => state.users.userPage);
+
+  const { data: tutorials, isLoading: isLoadingTutorials } = useTutorialsQuery({ affiliate: affiliate._id });
 
   useEffect(() => {
     dispatch(API.detailsAffiliate({ pathname: params.pathname }));
@@ -162,7 +181,9 @@ const SponsorPage = () => {
                   </Typography>
                   <Box sx={{ display: "flex", gap: 2 }}>
                     {affiliate?.social_media?.map(({ platform, link }, index) => {
-                      const IconComponent = socialIcons.find(icon => icon.platform === platform)?.icon;
+                      const IconComponent = socialIcons.find(
+                        icon => icon.platform.toLowerCase() === platform.toLowerCase()
+                      )?.icon;
                       return (
                         <IconButton
                           key={index}
@@ -185,47 +206,180 @@ const SponsorPage = () => {
       </Grid>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
-      {affiliate.products && affiliate.products.length > 0 && (
+      {affiliate.product_bundles && affiliate.product_bundles.length > 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            {affiliate.artist_name}'s Favorite Gear
+            Product Bundles by {affiliate.artist_name}
           </Typography>
-          <Grid container spacing={3}>
-            {affiliate.products.map(product => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
-                <ProductCard product={product} promo_code={affiliate.public_code?.promo_code} />
-              </Grid>
-            ))}
-          </Grid>
         </Box>
       )}
+      {affiliate.product_bundles &&
+        affiliate.product_bundles.length > 0 &&
+        affiliate.product_bundles.map(bundle => (
+          <>
+            {bundle.title && (
+              <Box>
+                <Typography variant="h5" align="center" gutterBottom>
+                  {bundle.title}
+                </Typography>
+              </Box>
+            )}
+            {bundle.subtitle && (
+              <Box>
+                <Typography variant="subtitle1" align="center" gutterBottom>
+                  {bundle.subtitle}
+                </Typography>
+              </Box>
+            )}
+            {bundle.short_description && (
+              <Box>
+                <Typography variant="body1" align="center" gutterBottom>
+                  {bundle.short_description}
+                </Typography>
+              </Box>
+            )}
+            {bundle.products && bundle.products.length > 0 && (
+              <Box
+                sx={{
+                  pb: 6,
+                  px: 2,
+                  display: "flex",
+                  overflowX: "auto",
+                  minWidth: "100%",
+                  "&::-webkit-scrollbar": {
+                    height: "8px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "rgba(0, 0, 0, 0.2)",
+                    borderRadius: "4px",
+                  },
+                }}
+              >
+                {console.log({ products: bundle.products })}
+                {bundle.products.length > 0 ? (
+                  bundle.products.map(product => (
+                    <Box
+                      key={product._id}
+                      sx={{
+                        minWidth: "250px", // Change minWidth to 250px
+                        width: "100%", // Add width: 100% to make the item fill the available space
+                        marginRight: "20px",
+                        "&:last-child": {
+                          marginRight: 0,
+                        },
+                      }}
+                    >
+                      <ProductCard product={product} promo_code={affiliate.public_code?.promo_code} />
+                    </Box>
+                  ))
+                ) : (
+                  <>
+                    <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                      No products found for matching criteria
+                    </Typography>
+                    <Typography variant="subtitle2" textAlign="center" width="100%">
+                      Try removing some filters to find what you're looking for
+                    </Typography>
+                  </>
+                )}
+              </Box>
+            )}
+          </>
+        ))}
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
-      {affiliate.video && (
+      {tutorials && tutorials.length > 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            Watch {affiliate.artist_name} Throw Down
+            Tutorials by {affiliate.artist_name}
           </Typography>
-          <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
-            <iframe
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                border: 0,
-              }}
-              title={`${affiliate.artist_name} video`}
-              allowFullScreen
-              src={`https://www.youtube.com/embed/${affiliate.video}?autoplay=1&mute=0`}
-              allow="autoplay"
-              autoPlay
-              loop
-              playsInline
-            />
-          </Box>
         </Box>
       )}
+      {tutorials && tutorials.length === 0 && (
+        <Box>
+          <Typography variant="h4" align="center" gutterBottom>
+            {affiliate.artist_name} has no tutorials yet.
+          </Typography>
+        </Box>
+      )}
+      {tutorials && tutorials.length > 0 && (
+        <Box
+          sx={{
+            pb: 6,
+            px: 2,
+            display: "flex",
+            overflowX: "auto",
+            minWidth: "100%",
+            "&::-webkit-scrollbar": {
+              height: "8px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              borderRadius: "4px",
+            },
+          }}
+        >
+          {tutorials.length > 0 ? (
+            tutorials
+              .filter(tutorial => tutorial.affiliate?._id === affiliate._id)
+              .map(tutorial => (
+                <Box
+                  key={tutorial._id}
+                  sx={{
+                    minWidth: "250px", // Change minWidth to 250px
+                    width: "100%", // Add width: 100% to make the item fill the available space
+                    marginRight: "20px",
+                    "&:last-child": {
+                      marginRight: 0,
+                    },
+                  }}
+                >
+                  <TutorialCard tutorial={tutorial} handleOpen={handleOpen} />
+                </Box>
+              ))
+          ) : (
+            <>
+              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                No tutorials found for matching criteria
+              </Typography>
+              <Typography variant="subtitle2" textAlign="center" width="100%">
+                Try removing some filters to find what you're looking for
+              </Typography>
+            </>
+          )}
+        </Box>
+      )}
+      <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
+      <Divider sx={{ my: 4, borderColor: "#fff" }} />
+      {affiliate.videos && affiliate.videos.length > 0 && (
+        <Typography variant="h4" align="center" gutterBottom>
+          Lightshows By {affiliate.artist_name}
+        </Typography>
+      )}
+      {affiliate.videos &&
+        affiliate.videos.length > 0 &&
+        affiliate.videos.map(videoObj => (
+          <Box key={videoObj._id}>
+            <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
+              <iframe
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+                title={videoObj.title || `${affiliate.artist_name} video`}
+                allowFullScreen
+                src={`https://www.youtube.com/embed/${videoObj.video}?autoplay=1&mute=0`}
+                allow="autoplay"
+                autoPlay
+                loop
+                playsInline
+              />
+            </Box>
+          </Box>
+        ))}
       <EditAffiliateModal />
     </Container>
   );

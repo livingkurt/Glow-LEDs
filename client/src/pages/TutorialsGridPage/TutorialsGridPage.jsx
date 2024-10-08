@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import useTutorialsGridPage from "./useTutorialsGridPage";
 import TutorialsGridPageSkeletons from "./component/TutorialsGridPageSkeletons";
 import TutorialCard from "./component/TutorialsCard";
 import TutorialsGridPageFilters from "./component/TutorialsGridPageFilters";
 import TutorialModal from "./component/TutorialModal";
+import { Link } from "react-router-dom";
 
 const TutorialsGridPage = () => {
   const {
@@ -48,6 +49,9 @@ const TutorialsGridPage = () => {
   return (
     <Box>
       <Container maxWidth="xl">
+        <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
+          Back to Academy
+        </Button>
         <Typography variant="h4" align="center" pt={2}>
           {getPageTitle()}
         </Typography>

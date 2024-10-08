@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { toTitleCase } from "../../utils/helper_functions";
 import useArticlesGridPage from "./useArticlesGridPage";
 import ArticlesGridPageSkeletons from "./component/ArticlesGridPageSkeletons";
 import ArticleCard from "./component/ArticleCard";
 import ArticlesGridPageFilters from "./component/ArticlesGridPageFilters";
+import { Link } from "react-router-dom";
 
 const ArticlesGridPage = () => {
   const {
@@ -39,6 +40,10 @@ const ArticlesGridPage = () => {
   return (
     <Box>
       <Container maxWidth="xl">
+        <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
+          Back to Academy
+        </Button>
+
         <Typography variant="h4" align="center" pt={2}>
           {getPageTitle()}
         </Typography>

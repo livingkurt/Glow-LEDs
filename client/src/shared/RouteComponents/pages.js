@@ -50,6 +50,7 @@ import TicketsPage from "../../pages/TicketsPage/TicketsPage";
 import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
 import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
+import AcademyPage from "../../pages/AcademyPage/AcademyPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -77,6 +78,7 @@ export const Components = {
   EventPage,
   ArticlesGridPage,
   ArticlePage,
+  AcademyPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

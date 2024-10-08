@@ -8,6 +8,12 @@ export const allRecordsApi = createApi({
     affiliates: builder.query({
       query: query => `/affiliates?${create_query(query)}`,
     }),
+    articles: builder.query({
+      query: query => `/articles?${create_query(query)}`,
+    }),
+    tutorials: builder.query({
+      query: query => `/tutorials?${create_query(query)}`,
+    }),
     carts: builder.query({
       query: query => `/carts?${create_query(query)}`,
     }),
@@ -118,4 +124,6 @@ export const {
   useSurveysQuery,
   useTutorialsGridQuery,
   useArticlesGridQuery,
+  useArticlesQuery,
+  useTutorialsQuery,
 } = allRecordsApi;

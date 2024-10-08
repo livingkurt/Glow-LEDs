@@ -361,7 +361,7 @@ export const mainFormFields = () => ({
   active: { type: "checkbox", label: "Active" },
 });
 
-export const homePageFields = ({ content, products }) => ({
+export const homePageFields = ({ content, products, affiliates }) => ({
   type: "object",
   title: "Home Page",
   fields: {
@@ -510,6 +510,52 @@ export const homePageFields = ({ content, products }) => ({
         link: { type: "text", label: "Link" },
       },
     },
+    sponsors: {
+      type: "autocomplete_multiple",
+      label: "Sponsors",
+      options: affiliates,
+      labelProp: "artist_name",
+      getOptionLabel: option => {
+        if (typeof option.artist_name === "string") {
+          return toCapitalize(option.artist_name);
+        }
+      },
+    },
+    // sponsors_banner: {
+    //   type: "object",
+    //   title: "Sponsors Banner",
+    //   fields: {
+    //     title: { type: "text", label: "Title" },
+    //     subtitle: { type: "text_multiline", label: "Subtitle" },
+    //     button_text: { type: "text", label: "Button Text" },
+    //     link: { type: "text", label: "Link" },
+    //     hidden: { type: "checkbox", label: "Hidden" },
+    //     quotes: {
+    //       type: "array",
+    //       title: "Quotes",
+    //       label: item => item.quote,
+    //       itemSchema: {
+    //         type: "object",
+    //         fields: {
+    //           quote: { type: "text", label: "Quote" },
+    //           author: { type: "text", label: "Author" },
+    //           image: {
+    //             type: "image_upload",
+    //             label: "Image",
+    //             labelProp: "_id",
+    //             album: `${content?.home_page?.sponsors?.title} Quotes Images`,
+    //           },
+    //           sponsor: {
+    //             type: "autocomplete_single",
+    //             label: "Sponsors",
+    //             options: affiliates,
+    //             labelProp: "artist_name",
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 
@@ -684,6 +730,48 @@ export const menusFields = ({ content }) => ({
         },
       },
       pathname: { type: "text", label: "Menu Pathname" },
+    },
+  },
+});
+
+export const academyPageFields = ({ articles, tutorials, affiliates }) => ({
+  type: "object",
+  title: "Academy Page",
+  fields: {
+    title: { type: "text", label: "Title" },
+    subtitle: { type: "text", label: "Subtitle" },
+    featured_articles: {
+      type: "autocomplete_multiple",
+      label: "Featured Articles",
+      options: articles,
+      labelProp: "title",
+      getOptionLabel: option => {
+        if (typeof option.title === "string") {
+          return toCapitalize(option.title);
+        }
+      },
+    },
+    featured_tutorials: {
+      type: "autocomplete_multiple",
+      label: "Featured Tutorials",
+      options: tutorials,
+      labelProp: "title",
+      getOptionLabel: option => {
+        if (typeof option.title === "string") {
+          return toCapitalize(option.title);
+        }
+      },
+    },
+    sponsors: {
+      type: "autocomplete_multiple",
+      label: "Sponsors",
+      options: affiliates,
+      labelProp: "artist_name",
+      getOptionLabel: option => {
+        if (typeof option.artist_name === "string") {
+          return toCapitalize(option.artist_name);
+        }
+      },
     },
   },
 });

@@ -11,6 +11,7 @@ import useHomePage from "./useHomePage";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
 import GetTheMost from "./components/GetTheMost.jsx";
 import HeroVideo from "./components/HeroVideo.jsx";
+import SponsorsBanner from "./components/SponsorsBanner.jsx";
 
 const HomePage = () => {
   const {
@@ -26,6 +27,7 @@ const HomePage = () => {
     slideshow_hidden,
     hero_video_hidden,
     learn_more_products_hidden,
+    sponsors,
   } = useHomePage();
   return (
     <Box>
@@ -60,6 +62,7 @@ const HomePage = () => {
           {!discover_more?.hidden && discover_more?.title && <DiscoverMoreHero discover_more={discover_more} />}
           <Container maxWidth="xl">
             <Box my={{ xs: 2, sm: 4 }}>
+              {sponsors && <SponsorsBanner sponsors={sponsors} />}
               {get_more_out_of && <GetTheMost get_more_out_of={get_more_out_of} />}
               <ProductProtectionDetails transparent />
               <Box my={2}>

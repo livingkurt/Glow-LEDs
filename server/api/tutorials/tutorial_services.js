@@ -39,7 +39,7 @@ export default {
   findAllGrid_tutorials_s: async query => {
     try {
       let filter = { deleted: false };
-      let limit = 0;
+      let limit = query.limit ? query.limit : 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
