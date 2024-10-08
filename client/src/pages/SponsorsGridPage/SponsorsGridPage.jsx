@@ -24,7 +24,7 @@ const SponsorsGridPage = () => {
         <meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
         <meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
       </Helmet>
-      <Button component={Link} to="/academy" variant="contained" sx={{ mt: 2 }}>
+      <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
         Back to Academy
       </Button>
       <Typography variant="h4" align="center" gutterBottom>

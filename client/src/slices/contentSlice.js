@@ -56,6 +56,15 @@ const content = {
       },
     ],
     product_protection_details_hidden: false,
+    sponsors: [],
+    // sponsors_banner: {
+    //   title: "",
+    //   subtitle: "",
+    //   quotes: [],
+    //   button_text: "",
+    //   link: "",
+    //   hidden: false,
+    // },
     slideshow: [
       {
         label: "",

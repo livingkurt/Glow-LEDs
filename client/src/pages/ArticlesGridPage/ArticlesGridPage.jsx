@@ -40,7 +40,7 @@ const ArticlesGridPage = () => {
   return (
     <Box>
       <Container maxWidth="xl">
-        <Button component={Link} to="/academy" variant="contained" sx={{ mt: 2 }}>
+        <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
           Back to Academy
         </Button>
 

@@ -70,6 +70,22 @@ const contentSchema = new mongoose.Schema(
           description: { type: String },
         },
       ],
+      sponsors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" }],
+      sponsors_banner: {
+        title: { type: String },
+        subtitle: { type: String },
+        quotes: [
+          {
+            quote: { type: String },
+            author: { type: String },
+            image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+            sponsor: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
+          },
+        ],
+        button_text: { type: String },
+        link: { type: String },
+        hidden: { type: Boolean, default: false },
+      },
       product_protection_details_hidden: { type: Boolean, default: false },
 
       hero_video: { type: String },

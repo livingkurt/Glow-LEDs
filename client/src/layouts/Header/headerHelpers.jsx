@@ -399,7 +399,7 @@ const learn = addIdsRecursively({
       path: "/academy",
     },
     {
-      name: "All Learning",
+      name: "All Articles",
       path: "/learn",
     },
     {

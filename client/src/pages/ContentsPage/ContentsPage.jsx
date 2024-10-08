@@ -150,7 +150,7 @@ const ContentsPage = () => {
           <GLTabPanel value={tabValue} index={0}>
             <GLForm
               formData={homePageFields(formFieldsData).fields}
-              state={content?.home_page}
+              state={content?.home_page || {}}
               onChange={updated => handleContentChange({ ...content, home_page: { ...content.home_page, ...updated } })}
               loading={loading}
             />
@@ -158,7 +158,7 @@ const ContentsPage = () => {
           <GLTabPanel value={tabValue} index={1}>
             <GLForm
               formData={bannerFields().fields}
-              state={content?.banner}
+              state={content?.banner || {}}
               onChange={updated => handleContentChange({ ...content, banner: { ...content.banner, ...updated } })}
               loading={loading}
             />
@@ -166,7 +166,7 @@ const ContentsPage = () => {
           <GLTabPanel value={tabValue} index={2}>
             <GLForm
               formData={aboutPageFields(formFieldsData).fields}
-              state={content?.about_page}
+              state={content?.about_page || {}}
               onChange={updated =>
                 handleContentChange({ ...content, about_page: { ...content.about_page, ...updated } })
               }
@@ -176,7 +176,7 @@ const ContentsPage = () => {
           <GLTabPanel value={tabValue} index={3}>
             <GLForm
               formData={productsGridPageFields(formFieldsData).fields}
-              state={content?.products_grid_page}
+              state={content?.products_grid_page || {}}
               onChange={updated =>
                 handleContentChange({ ...content, products_grid_page: { ...content.products_grid_page, ...updated } })
               }
@@ -186,7 +186,7 @@ const ContentsPage = () => {
           <GLTabPanel value={tabValue} index={4}>
             <GLForm
               formData={faqPageFields(formFieldsData).fields}
-              state={content?.faq_page}
+              state={content?.faq_page || {}}
               onChange={updated => handleContentChange({ ...content, faq_page: { ...content.faq_page, ...updated } })}
               loading={loading}
             />
