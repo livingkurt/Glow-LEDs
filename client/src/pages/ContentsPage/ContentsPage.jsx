@@ -183,8 +183,8 @@ const ContentsPage = () => {
               fieldData={menusFields(formFieldsData)}
               tabIndex={menusTabIndex}
               setTabIndex={setMenusTabIndex}
-              onChange={(updatedMenus, action, index) => {
-                handleContentChange({ ...content, menus: { ...content.menus, ...updatedMenus } });
+              onChange={updatedMenus => {
+                handleContentChange({ ...content, menus: updatedMenus.menus });
               }}
               loading={loading}
               getEmptyObjectFromSchema={getEmptyObjectFromSchema}
@@ -198,7 +198,7 @@ const ContentsPage = () => {
               tabIndex={featureFlagsTabIndex}
               setTabIndex={setFeatureFlagsTabIndex}
               onChange={updatedFeatureFlags =>
-                handleContentChange({ ...content, feature_flags: { ...content.feature_flags, ...updatedFeatureFlags } })
+                handleContentChange({ ...content, feature_flags: updatedFeatureFlags.feature_flags })
               }
               loading={loading}
               getEmptyObjectFromSchema={getEmptyObjectFromSchema}
