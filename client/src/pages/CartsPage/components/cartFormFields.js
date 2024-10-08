@@ -2,6 +2,18 @@ import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
 export const cartFormFields = ({ productsQuery, userQuery, cart, eventsQuery, ticketsQuery, categorysQuery }) => {
   return {
+    title: {
+      type: "text",
+      label: "Title",
+    },
+    subtitle: {
+      type: "text",
+      label: "Subtitle",
+    },
+    short_description: {
+      type: "text",
+      label: "Short Description",
+    },
     user: {
       type: "autocomplete_single",
       label: "Users",
@@ -13,6 +25,7 @@ export const cartFormFields = ({ productsQuery, userQuery, cart, eventsQuery, ti
       type: "checkbox",
       label: "Active",
     },
+
     cartItems: sharedItemSchema({
       productsQuery,
       eventsQuery,

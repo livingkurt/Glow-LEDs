@@ -21,7 +21,7 @@ const affiliateSchema = new mongoose.Schema(
         title: { type: String },
         subtitle: { type: String },
         short_description: { type: String },
-        products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+        cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
       },
     ],
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],

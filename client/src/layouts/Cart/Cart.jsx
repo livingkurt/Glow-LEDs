@@ -9,6 +9,7 @@ import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -32,6 +33,10 @@ const Cart = () => {
     () => determine_wholesale_proceed(current_user, cartItems),
     [current_user, cartItems]
   );
+
+  const handleCreateCartBundle = useCallback(() => {
+    dispatch(createCartBundle(cartItems));
+  }, [dispatch, cartItems]);
 
   return (
     <Drawer
@@ -68,6 +73,11 @@ const Cart = () => {
             </Box>
             <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
           </Box>
+          {current_user?.isAdmin && current_user?.affiliate?.sponsor && (
+            <Button onClick={() => dispatch(openCreateBundleModal())} color="inherit" variant="outlined">
+              Create Product Bundle
+            </Button>
+          )}
           <Button onClick={closeMenu} color="inherit" variant="outlined">
             <CloseIcon /> Close
           </Button>
@@ -152,6 +162,30 @@ const Cart = () => {
             )}
           </Box>
         </Box>
+        {/* <GLActionModal
+        isOpen={createBundleModal}
+        onConfirm={() => {
+          dispatch(API.createCartBundle(cartItems));
+        }}
+        onCancel={() => {
+          dispatch(closeCreateBundleModal());
+        }}
+        title={"Create Product Bundle"}
+        confirmLabel={"Create"}
+        confirmColor="primary"
+        cancelLabel={"Cancel"}
+        cancelColor="secondary"
+        disableEscapeKeyDown
+      >
+          <Box>
+            <Typography variant="h6">Create Product Bundle</Typography>
+            <Typography variant="body1">
+              Create a product bundle with the products in your cart.
+            </Typography>
+
+
+          </Box>
+        </GLActionModal> */}
       </Box>
     </Drawer>
   );
