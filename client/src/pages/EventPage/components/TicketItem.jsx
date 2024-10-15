@@ -4,6 +4,7 @@ import DateBox from "./DateBox";
 import { open_edit_ticket_modal } from "../../../slices/ticketSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Edit } from "@mui/icons-material";
+import { isSafari } from "react-device-detect";
 
 const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
   const dispatch = useDispatch();
@@ -112,7 +113,12 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
         ) : (
           <Typography
             variant="h6"
-            sx={{ color: "white", fontWeight: "bold", width: isSmallScreen ? "100%" : 150, textAlign: "center" }}
+            sx={{
+              color: "white",
+              width: isSmallScreen ? "100%" : 150,
+              textAlign: "center",
+              fontWeight: isSafari ? 699 : 700,
+            }}
           >
             SOLD OUT{" "}
           </Typography>

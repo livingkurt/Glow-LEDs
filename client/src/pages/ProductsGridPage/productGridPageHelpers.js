@@ -1,3 +1,5 @@
+import { isSafari } from "react-device-detect";
+
 export const productGridPageBreadCrumbs = breadCrumbs => {
   const { category, subcategory, collection } = breadCrumbs;
   return [
@@ -57,7 +59,7 @@ export const autocompleteStyle = {
   "& .MuiChip-root": {
     backgroundColor: "white",
     color: "black",
-    fontWeight: "bold",
+    fontWeight: isSafari ? 699 : 700,
   },
   "& .MuiChip-deleteIcon": {
     color: "black",

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography, useTheme } from "@mui/material";
 import { HashLink } from "react-router-hash-link";
+import { isSafari } from "react-device-detect";
 
 const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
@@ -28,7 +29,7 @@ const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColu
           align={align}
           sx={{
             color: theme.palette.common.white,
-            fontWeight: 600,
+            fontWeight: isSafari ? 599 : 600,
           }}
         >
           {children}
@@ -58,7 +59,7 @@ const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColu
           align={align}
           sx={{
             color: theme.palette.common.white,
-            fontWeight: 600,
+            fontWeight: isSafari ? 599 : 600,
           }}
         >
           {children}

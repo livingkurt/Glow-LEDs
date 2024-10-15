@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
+import { isSafari } from "react-device-detect";
 
 const EventTitle = ({ event }) => {
   const theme = useTheme();
 
   const commonTextStyles = {
     fontFamily: theme.typography.fontFamily,
-    fontWeight: "bold",
+    fontWeight: isSafari ? 699 : 700,
     textTransform: "uppercase",
     color: "#ffffff",
   };

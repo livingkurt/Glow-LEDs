@@ -1,3 +1,7 @@
+import { isSafari } from "react-device-detect";
+
+console.log({ isSafari });
+
 const typography = {
   htmlFontSize: 16,
   fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -8,84 +12,84 @@ const typography = {
   fontWeightBold: 700,
   h1: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "96px",
     lineHeight: 1,
     letterSpacing: "-0.66px",
   },
   h2: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "60px",
     lineHeight: 1,
     letterSpacing: "-0.5px",
   },
   h3: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "48px",
     lineHeight: 1.02,
     letterSpacing: "0px",
   },
   h4: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "34px",
     lineHeight: 1.15,
     letterSpacing: "0.07px",
   },
   h5: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "24px",
     lineHeight: 1.33,
     letterSpacing: "0px",
   },
   h6: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "20px",
     lineHeight: 1.6,
     letterSpacing: "0.07px",
   },
   subtitle1: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "18px",
     lineHeight: 1.75,
     letterSpacing: "0.09px",
   },
   subtitle2: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "14px",
     lineHeight: 1.57,
     letterSpacing: "0.07px",
   },
   body1: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: isSafari ? 399 : 400,
     fontSize: "16px",
     lineHeight: 1.5,
     letterSpacing: "0.09px",
   },
   body2: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: isSafari ? 399 : 400,
     fontSize: "14px",
     lineHeight: 1.43,
     letterSpacing: "0.1px",
   },
   body3: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 400,
+    fontWeight: isSafari ? 399 : 400,
     fontSize: "146x",
     lineHeight: "3.4rem",
     letterSpacing: "0.1px",
   },
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 800,
+    fontWeight: isSafari ? 600 : 800,
     fontSize: "13px",
     lineHeight: 1.69,
     letterSpacing: "0.3px",
@@ -93,14 +97,14 @@ const typography = {
   },
   caption: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 600,
+    fontWeight: isSafari ? 599 : 600,
     fontSize: "12px",
     lineHeight: 1.58,
     letterSpacing: "0.3px",
   },
   overline: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
+    fontWeight: isSafari ? 499 : 500,
     fontSize: "12px",
     lineHeight: 2.58,
     letterSpacing: "0.83px",
@@ -108,7 +112,6 @@ const typography = {
   },
   glow_leds: {
     fontFamily: '"heading_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 500,
     letterSpacing: "0.83px",
     margin: "0",
     textAlign: "center",
@@ -117,7 +120,7 @@ const typography = {
     marginBottom: "0",
     marginTop: "0",
     display: "flex",
-    textShadow: "0 0 10px #fff, 0 0 30px",
+    textShadow: "0 0 1px #fff, 0 0 13px",
   },
 };
 

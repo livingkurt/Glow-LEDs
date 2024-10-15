@@ -21,6 +21,7 @@ body {
   color: $theme_color_phrase_font;
   scroll-padding-top: 220px; /* height of sticky header */
   scroll-margin-top: 220px;
+  -webkit-font-smoothing: antialiased;
 }
 
 *:focus {

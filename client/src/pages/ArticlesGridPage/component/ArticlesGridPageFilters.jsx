@@ -16,6 +16,7 @@ import { Autocomplete, TextField, Chip } from "@mui/material";
 import { FilterList, Clear } from "@mui/icons-material";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { autocompleteStyle, selectStyle } from "../../ProductsGridPage/productGridPageHelpers";
+import { isSafari } from "react-device-detect";
 
 const sortOptions = [
   { label: "Newest", value: "-createdAt" },
@@ -151,8 +152,8 @@ const ArticlesGridPageFilters = ({
                     style={{
                       backgroundColor: "white",
                       color: "black",
-                      fontWeight: "bold",
                       fontSize: "1rem",
+                      fontWeight: isSafari ? 599 : 600,
                     }}
                   />
                 ))

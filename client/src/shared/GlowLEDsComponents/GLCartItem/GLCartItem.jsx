@@ -12,6 +12,7 @@ import { generateProductUrl } from "../../../utils/helpers/product_helpers";
 import GLLazyImage from "../GLLazyImage/GLLazyImage";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
+import { isSafari } from "react-device-detect";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -124,7 +125,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
               alignItems: "center",
               justifyContent: "center",
               fontSize: "1.5rem",
-              fontWeight: "bold",
+              fontWeight: isSafari ? 699 : 700,
             }}
           >
             {item.quantity}

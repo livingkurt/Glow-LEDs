@@ -116,15 +116,13 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
                   margin: isMobile ? "0 auto" : "initial",
                 }}
               >
-                <Typography variant="h6" sx={{ color: "white", fontWeight: "bold", fontSize: "15rem" }}>
+                <Typography variant="h6" sx={{ color: "white", fontSize: "15rem" }}>
                   {selectedTicket.ticket_type.slice(0, 2).toUpperCase()}
                 </Typography>
               </Box>
             )}
             <Box sx={{ flex: 1, mb: isMobile ? 2 : 0, mt: isMobile ? 2 : 0 }}>
-              <Typography variant="subtitle1" color="text.secondary">
-                {selectedTicket.title}
-              </Typography>
+              <Typography variant="subtitle1">{selectedTicket.title}</Typography>
               <Typography variant="body1" mb={1}>
                 Ages {event.age_group} Only
               </Typography>
@@ -144,7 +142,7 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
             <Box sx={{ width: isMobile ? "100%" : "30%" }}>
               <Typography variant="subtitle1" sx={{ mb: 2, textAlign: isMobile ? "left" : "right" }}>
                 Ticket Price: ${selectedTicket.price}
-                <Typography variant="caption" sx={{ color: "lightgray", display: "block" }}>
+                <Typography variant="caption" sx={{ display: "block" }}>
                   + service fees
                 </Typography>
               </Typography>
@@ -172,7 +170,6 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
                   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
                   py: 1.5,
                   fontSize: "1.5rem",
-                  fontWeight: "bold",
                 }}
               >
                 Add to Cart

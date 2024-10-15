@@ -31,7 +31,6 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
           align={align}
           sx={{
             color: theme.palette.common.white,
-            fontWeight: "bold",
             fontSize: "16px",
             display: "flex",
             alignItems: "center",
