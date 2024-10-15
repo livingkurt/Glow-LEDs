@@ -18,13 +18,13 @@ import { Search, ShoppingCart } from "@mui/icons-material";
 import { listContents } from "../../api";
 import { setCartDrawer, setSideNavDrawer } from "../../slices/cartSlice";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { navItems, determineDropdown, determineName, rightNav } from "./headerHelpers";
+import { navItems, determineDropdown, determineName, rightNav } from "./navbarHelpers";
 import Banner from "./components/Banner";
 import Environment from "./components/Environment";
-import HeaderButton from "./components/HeaderButton";
-import HeaderColumn from "./components/HeaderColumn";
-import HeaderDrawer from "./components/HeaderDrawer";
-import HeaderSubDrawer from "./components/HeaderSubDrawer";
+import NavbarButton from "./components/NavbarButton";
+import NavbarColumn from "./components/NavbarColumn";
+import NavbarDrawer from "./components/NavbarDrawer";
+import NavbarSubDrawer from "./components/NavbarSubDrawer";
 import ColumnItemButton from "./components/ColumnItemButton";
 import { debounce } from "lodash";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
@@ -34,7 +34,7 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import * as API from "../../api";
 import useFeatureFlags from "../../shared/Hooks/useFeatureFlags";
 
-const Header = () => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -183,8 +183,8 @@ const Header = () => {
               }}
             >
               {navItems.map(item => (
-                <div key={item.name} className="header-center-dropdown-container">
-                  <HeaderButton
+                <div key={item.name} className="navbar-center-dropdown-container">
+                  <NavbarButton
                     to={item.path}
                     ariaLabel={item.ariaLabel}
                     sx={{
@@ -193,14 +193,14 @@ const Header = () => {
                     }}
                   >
                     {item.name}
-                  </HeaderButton>
+                  </NavbarButton>
                   {item.columns && (
-                    <div className="header-center-dropdown hover_fade_in">
+                    <div className="navbar-center-dropdown hover_fade_in">
                       <div className="jc-c">
-                        <HeaderColumn columns={item.columns} />
-                        <HeaderDrawer columns={item.columns} />
-                        <HeaderSubDrawer columns={item.columns} />
-                        <HeaderColumn columns={item.otherColumns} />
+                        <NavbarColumn columns={item.columns} />
+                        <NavbarDrawer columns={item.columns} />
+                        <NavbarSubDrawer columns={item.columns} />
+                        <NavbarColumn columns={item.otherColumns} />
                       </div>
                     </div>
                   )}
@@ -347,4 +347,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

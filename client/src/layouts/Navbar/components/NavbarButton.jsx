@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Typography, useTheme } from "@mui/material";
 
-const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
+const NavbarButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
   return (
     <Link to={to} aria-label={ariaLabel} style={{ textDecoration: "none" }}>
@@ -44,4 +44,4 @@ const HeaderButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRo
   );
 };
 
-export default HeaderButton;
+export default NavbarButton;

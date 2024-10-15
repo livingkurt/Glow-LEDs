@@ -1,138 +1,138 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 // Hover Dropdown
 
 .dropdown {
-	display: inline-block;
-	position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .dropdown-content {
-	position: absolute;
-	display: none;
-	right: 0;
-	padding: 1rem;
-	list-style-type: none;
-	z-index: 1;
-	background-color: $theme_color_header;
-	margin: 0;
-	border-radius: $br_small_containers;
-	box-shadow: $bs_deep;
+  position: absolute;
+  display: none;
+  right: 0;
+  padding: 1rem;
+  list-style-type: none;
+  z-index: 1;
+  background-color: $theme_color_navbar;
+  margin: 0;
+  border-radius: $br_small_containers;
+  box-shadow: $bs_deep;
 }
 
 .dropdown:hover .dropdown-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .dropdown-nav {
-	display: inline-block;
-	// position: relative;
+  display: inline-block;
+  // position: relative;
 }
 
 .dropdown-nav-content {
-	position: absolute;
-	display: none;
-	left: 0;
-	width: 100%;
-	padding: 1rem;
-	list-style-type: none;
-	z-index: 1;
-	background-color: $theme_color_header_dropdown;
-	margin: 0;
-	// border-radius: $br_small_containers;
-	/* margin-top: 0.4rem; */
-	box-shadow: $bs_deep;
+  position: absolute;
+  display: none;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  list-style-type: none;
+  z-index: 1;
+  background-color: $theme_color_navbar_dropdown;
+  margin: 0;
+  // border-radius: $br_small_containers;
+  /* margin-top: 0.4rem; */
+  box-shadow: $bs_deep;
 }
 
 .dropdown-nav-subcategory {
-	display: inline-block;
-	// position: relative;
+  display: inline-block;
+  // position: relative;
 }
 
 .dropdown-nav-subcategory-content {
-	// position: absolute;
-	display: none;
-	// left: 268px;
-	// top: -5px;
-	// padding: 1rem;
-	list-style-type: none;
-	z-index: 1;
-	background-color: $theme_color_header_dropdown;
-	margin: 0;
-	// border-radius: $br_small_containers;
-	/* margin-top: 0.4rem; */
-	// box-shadow: $bs_deep;
+  // position: absolute;
+  display: none;
+  // left: 268px;
+  // top: -5px;
+  // padding: 1rem;
+  list-style-type: none;
+  z-index: 1;
+  background-color: $theme_color_navbar_dropdown;
+  margin: 0;
+  // border-radius: $br_small_containers;
+  /* margin-top: 0.4rem; */
+  // box-shadow: $bs_deep;
 }
 .dropdown-nav-nested {
-	display: inline-block;
-	// position: relative;
+  display: inline-block;
+  // position: relative;
 }
 
 .dropdown-nav-nested-content {
-	// position: absolute;
-	display: none;
-	left: 268px;
-	top: -5px;
-	padding: 1rem;
-	list-style-type: none;
-	z-index: 1;
-	background-color: $theme_color_header;
-	margin: 0;
-	border-radius: $br_small_containers;
-	/* margin-top: 0.4rem; */
-	// box-shadow: $bs_deep;
+  // position: absolute;
+  display: none;
+  left: 268px;
+  top: -5px;
+  padding: 1rem;
+  list-style-type: none;
+  z-index: 1;
+  background-color: $theme_color_navbar;
+  margin: 0;
+  border-radius: $br_small_containers;
+  /* margin-top: 0.4rem; */
+  // box-shadow: $bs_deep;
 }
 
 .dropdown-nav-nested-2 {
-	display: inline-block;
-	position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .dropdown-nav-nested-2-content {
-	position: absolute;
-	display: none;
-	padding: 1rem;
-	list-style-type: none;
-	z-index: 1;
-	background-color: $theme_color_header;
-	margin: 0;
-	border-radius: $br_small_containers;
-	/* margin-top: 0.4rem; */
-	// box-shadow: $bs_deep;
+  position: absolute;
+  display: none;
+  padding: 1rem;
+  list-style-type: none;
+  z-index: 1;
+  background-color: $theme_color_navbar;
+  margin: 0;
+  border-radius: $br_small_containers;
+  /* margin-top: 0.4rem; */
+  // box-shadow: $bs_deep;
 }
 
 .dropdown-nav:hover .dropdown-nav-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .dropdown-nav-subcategory:hover .dropdown-nav-subcategory-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .dropdown-nav-nested:hover .dropdown-nav-nested-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .dropdown-nav-nested-2:hover .dropdown-nav-nested-2-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact_dropdown {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	padding: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 1rem;
 }
 
 .contact_options {
-	color: $theme_color_secondary_font;
+  color: $theme_color_secondary_font;
 }
 .contact_grey_option {
-	color: gray;
+  color: gray;
 }
 
 select {
-	font-size: 16px;
+  font-size: 16px;
 }

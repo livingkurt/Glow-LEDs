@@ -21,7 +21,7 @@ export const hasChildren = item =>
   item.column?.length > 0 ||
   item.otherColumns?.length > 0 ||
   item.sideDrawer?.drawerItems?.length > 0 ||
-  item.subSideDrawer?.subHeaderDrawers?.length > 0;
+  item.subSideDrawer?.subNavbarDrawers?.length > 0;
 
 export const determineName = (item, current_user) => {
   return typeof item.name === "function" ? item.name(current_user) : item.name;
@@ -48,9 +48,9 @@ export const toggleDropdown = ({ id, dropdownClass, toggleClass }) => {
   const elems = document.querySelectorAll(`.${dropdownClass}`);
 
   // Always close nested dropdowns when a subcategory is toggled
-  const nestedElems = document.querySelectorAll(".header-subdrawer.show-header-subdrawer");
+  const nestedElems = document.querySelectorAll(".navbar-subdrawer.show-navbar-subdrawer");
   nestedElems.forEach(el => {
-    el.classList.remove("show-header-subdrawer");
+    el.classList.remove("show-navbar-subdrawer");
   });
 
   let isAlreadyOpen = false;
@@ -133,7 +133,7 @@ const glowskinz = addIdsRecursively({
         id: "clozd_dropdown",
         subSideDrawer: {
           id: "clozd_dropdown",
-          subHeaderDrawers: [
+          subNavbarDrawers: [
             {
               name: "Classics",
               path: "/products?tags[]=glowskinz&tags[]=clozd&tags[]=classics",
@@ -148,7 +148,7 @@ const glowskinz = addIdsRecursively({
       {
         name: "OPYN Glowskinz",
         path: "/products?tags[]=glowskinz&tags[]=opyn",
-        subHeaderDrawers: [],
+        subNavbarDrawers: [],
       },
     ],
   },
@@ -166,7 +166,7 @@ const exo_diffusers = addIdsRecursively({
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
           id: "exo_diffusers_collections_dropdown",
-          subHeaderDrawers: [
+          subNavbarDrawers: [
             {
               name: "Platonic Solids",
               path: "/products?tags[]=exo_diffusers&tags[]=polyhedrons&tags[]=platonic_solids",
@@ -205,7 +205,7 @@ const diffuser_caps = addIdsRecursively({
         path: "/products?tags[]=diffuser_caps",
         id: "collections_dropdown",
         subSideDrawer: {
-          subHeaderDrawers: [
+          subNavbarDrawers: [
             {
               name: "Texture",
               path: "/products?tags[]=diffuser_caps&tags[]=geometric&tags[]=texture",
@@ -814,7 +814,7 @@ export const navItems = [
     name: "HOME",
     path: "/",
     ariaLabel: "Home Page",
-    headerLocation: "center",
+    navbarLocation: "center",
   },
   {
     name: "SHOP",
@@ -823,7 +823,7 @@ export const navItems = [
     dataTestId: "shop_button",
     columns: [features, enhancers],
     otherColumns: [essentials],
-    headerLocation: "center",
+    navbarLocation: "center",
   },
   {
     name: "ACADEMY",
@@ -834,7 +834,7 @@ export const navItems = [
     // columns: [learn],
     columns: [learn, tutorials],
     otherColumns: [tips],
-    headerLocation: "center",
+    navbarLocation: "center",
   },
   {
     name: "COMMUNITY",
@@ -843,7 +843,7 @@ export const navItems = [
     dataTestId: "community_button",
     columns: [community],
     column: community.rows,
-    headerLocation: "center",
+    navbarLocation: "center",
   },
   {
     name: "SUPPORT",
@@ -852,7 +852,7 @@ export const navItems = [
     dataTestId: "support_button",
     columns: [support],
     column: support.rows,
-    headerLocation: "center",
+    navbarLocation: "center",
   },
 ];
 
@@ -877,7 +877,7 @@ export const rightNav = (dispatch, sidebarOnly) => {
       id: "user_dropdown",
       columns: [user],
       column: user.rows,
-      headerLocation: "center",
+      navbarLocation: "center",
       permissions: x => true,
     },
     {
@@ -896,7 +896,7 @@ export const rightNav = (dispatch, sidebarOnly) => {
       permissions: current_user => current_user.isAdmin,
       columns: [admin],
       column: admin.rows,
-      headerLocation: "center",
+      navbarLocation: "center",
     },
   ];
 };
