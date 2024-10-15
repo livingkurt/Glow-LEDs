@@ -5,7 +5,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import NestedItems from "./NestedItems";
 import { setSideNavDrawer } from "../../../slices/cartSlice";
 import { useNavigate, useLocation } from "react-router-dom";
-import { determineBackgroundColor, determineDropdown, determineName, hasChildren } from "../../Header/headerHelpers";
+import { determineBackgroundColor, determineDropdown, determineName, hasChildren } from "../../Navbar/navbarHelpers";
 import useFeatureFlags from "../../../shared/Hooks/useFeatureFlags";
 
 const SidebarItem = ({ item, level, handleDrawerToggle }) => {

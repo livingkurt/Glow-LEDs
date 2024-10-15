@@ -13,7 +13,6 @@ const EventContainer = ({ children, event }) => {
         minHeight: "100vh",
         position: "relative",
         overflow: "hidden",
-        border: "1px solid rgba(255, 255, 255, 0.18)",
       }}
     >
       <Container maxWidth="md" sx={{ mt: 2, position: "relative", zIndex: 1 }}>

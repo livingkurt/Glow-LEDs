@@ -1,8 +1,8 @@
 import React from "react";
-import HeaderDrawerButton from "./HeaderDrawerButton";
+import NavbarDrawerButton from "./NavbarDrawerButton";
 import ColumnTitle from "./ColumnTitle";
 
-const HeaderDrawer = ({ columns }) => {
+const NavbarDrawer = ({ columns }) => {
   // Create a normalized array
   const normalizedItems = [];
 
@@ -25,11 +25,11 @@ const HeaderDrawer = ({ columns }) => {
       {normalizedItems.map(item => {
         if (item.type === "sideDrawer") {
           return (
-            <div className="header-drawer hover_fade_in" id={item.id} key={item.id}>
+            <div className="navbar-drawer hover_fade_in" id={item.id} key={item.id}>
               <ColumnTitle>{item.name.toUpperCase()}</ColumnTitle>
               <hr className="w-95per m-0px" />
               {item.drawerItems.map((drawerItem, index) => (
-                <HeaderDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="headerDrawer" />
+                <NavbarDrawerButton key={`${item.id}-${index}`} {...drawerItem} from="navbarDrawer" />
               ))}
             </div>
           );
@@ -41,4 +41,4 @@ const HeaderDrawer = ({ columns }) => {
   );
 };
 
-export default HeaderDrawer;
+export default NavbarDrawer;

@@ -1,7 +1,7 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import Environment from "../../layouts/Header/components/Environment";
+import Environment from "../../layouts/Navbar/components/Environment";
 
 const PlaceOrderLayout = ({ children }) => {
   return (
