@@ -52,20 +52,22 @@ router.put("/sitemap", async (req, res) => {
         { deleted: false, isVariation: false, hidden: false },
         "pathname name category subcategory product_collection updatedAt"
       ).lean(),
-      Affiliate.find({ deleted: false, active: true, sponsor: true }, "pathname updatedAt").lean(),
-      Team.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
-      Article.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
-      Event.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
+      Affiliate.find({ deleted: false, active: true, sponsor: true }, "artist_name pathname updatedAt").lean(),
+      Team.find({ deleted: false, active: true }, "team_name pathname updatedAt").lean(),
+      Article.find({ deleted: false, active: true }, "title pathname updatedAt").lean(),
+      Event.find({ deleted: false, active: true }, "name pathname updatedAt").lean(),
       Content.findOne({ deleted: false, active: true }).sort({ updatedAt: -1 }).select("menus").lean(),
     ]);
 
     const normalizeData = data =>
       data.map(item => ({
+        name: item.name || item.artist_name || item.title || item.team_name,
         pathname: item.pathname,
         lastmod: item?.updatedAt?.toISOString()?.split("T")[0],
       }));
 
     const normalizedProducts = products.map(product => ({
+      name: product.name,
       pathname: product.pathname,
       lastmod: product?.updatedAt?.toISOString()?.split("T")[0],
     }));

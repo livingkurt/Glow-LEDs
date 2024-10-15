@@ -97,6 +97,12 @@ export const allRecordsApi = createApi({
     users: builder.query({
       query: query => `/users?${create_query(query)}`,
     }),
+    sitemap: builder.query({
+      query: () => ({
+        url: `/versions/sitemap`,
+        method: "PUT",
+      }),
+    }),
   }),
 });
 
@@ -126,4 +132,5 @@ export const {
   useArticlesGridQuery,
   useArticlesQuery,
   useTutorialsQuery,
+  useSitemapQuery,
 } = allRecordsApi;
