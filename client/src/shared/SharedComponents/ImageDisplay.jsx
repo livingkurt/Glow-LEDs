@@ -5,7 +5,7 @@ import { FileCopy } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
-const ImageDisplay = ({ images, onChange, fieldName }) => {
+const ImageDisplay = ({ images, onChange }) => {
   const remove_image = image_index => {
     const updatedImages = images.filter((image, index) => {
       return image_index !== index;

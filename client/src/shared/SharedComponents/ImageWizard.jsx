@@ -52,7 +52,11 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
     }
   };
 
-  const images = Array.isArray(fieldState) ? fieldState : [fieldState].filter(Boolean);
+  const images = Array.isArray(fieldState)
+    ? fieldState
+    : fieldState && Object.keys(fieldState).length > 0
+      ? [fieldState]
+      : [];
 
   return (
     <div>
