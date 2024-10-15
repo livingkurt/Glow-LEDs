@@ -4,17 +4,16 @@ import { set_edit_ticket_modal, set_ticket } from "../../../slices/ticketSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { ticketFormFields } from "./ticketFormFields";
-import { useEventsQuery, useTicketsQuery } from "../../../api/allRecordsApi";
+import { useTicketsQuery } from "../../../api/allRecordsApi";
 
 const EditTicketModal = () => {
   const dispatch = useDispatch();
   const ticketPage = useSelector(state => state.tickets.ticketPage);
   const { edit_ticket_modal, ticket, loading } = ticketPage;
 
-  const eventsQuery = useEventsQuery();
   const ticketsQuery = useTicketsQuery();
 
-  const formFields = ticketFormFields({ eventsQuery, ticket, ticketsQuery });
+  const formFields = ticketFormFields({ ticket, ticketsQuery });
 
   return (
     <div>
