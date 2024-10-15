@@ -21,6 +21,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { Clear, FilterList } from "@mui/icons-material";
 import { autocompleteStyle, selectStyle, toggleButtonStyle, toSnakeCase } from "../productGridPageHelpers";
+import { isSafari } from "react-device-detect";
 
 const ProductsGridPageFilters = ({
   category,
@@ -228,7 +229,7 @@ const ProductsGridPageFilters = ({
                     style={{
                       backgroundColor: "white",
                       color: "black",
-                      fontWeight: "bold",
+                      fontWeight: isSafari ? 699 : 700,
                       fontSize: "1rem",
                     }}
                   />

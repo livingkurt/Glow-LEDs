@@ -20,7 +20,6 @@ const ColumnTitle = ({ align, ariaLabel, children, onClick, sx, hasColumnRows, .
         align={align}
         sx={{
           color: theme.palette.common.white,
-          fontWeight: "bold",
           fontSize: "16px",
         }}
       >

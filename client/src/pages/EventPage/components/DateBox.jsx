@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import { isSafari } from "react-device-detect";
 
 const DateBox = ({ startDate, endDate, color }) => {
   const start = new Date(startDate);
@@ -24,7 +25,7 @@ const DateBox = ({ startDate, endDate, color }) => {
         borderRadius: "8px",
         marginRight: "16px",
         color: "white",
-        fontWeight: "bold",
+        fontWeight: isSafari ? 599 : 600,
         boxShadow: `0 0 15px ${color || "#999999"}`,
         position: "relative",
         overflow: "hidden",
