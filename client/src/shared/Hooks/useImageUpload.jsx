@@ -16,7 +16,7 @@ const useImageUpload = () => {
     images,
     albumTitle,
     handleImageChange,
-    handleAlbumTitleChange
+    handleAlbumTitleChange,
   };
 };
 

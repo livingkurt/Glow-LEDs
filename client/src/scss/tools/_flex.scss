@@ -1,5 +1,16 @@
-$justify: "c" center, "fs" flex-start, "fe" flex-end, "b" space-between, "a" space-around, "e" space-evenly;
-$align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
+$justify:
+  "c" center,
+  "fs" flex-start,
+  "fe" flex-end,
+  "b" space-between,
+  "a" space-around,
+  "e" space-evenly;
+$align:
+  "c" center,
+  "fs" flex-start,
+  "fe" flex-end,
+  "b" stretch,
+  "b" baseline;
 
 @each $i in $justify {
   .jc-#{nth($i, 1)} {

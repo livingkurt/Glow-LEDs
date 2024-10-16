@@ -70,7 +70,6 @@
     "nodemon": "^3.1.2",
     "pre-commit": "^1.2.2",
     "prettier": "^3.3.3"
-
   },
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
