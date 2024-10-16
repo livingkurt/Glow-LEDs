@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import config from "../../../config";
+import { Typography } from "@mui/material";
 
 const LoadingShipment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);
@@ -29,7 +30,9 @@ const LoadingShipment = ({ children }) => {
             title="Loading Overlay"
           />
           <div className="payment_message">
-            <h2 className="ta-c">Calculating Shipping Speeds</h2>
+            <Typography variant="h3" className="ta-c mv-10px">
+              Calculating Shipping Speeds
+            </Typography>
             <p className="ta-c">Please do not refresh page</p>
           </div>
           {loading_message()}

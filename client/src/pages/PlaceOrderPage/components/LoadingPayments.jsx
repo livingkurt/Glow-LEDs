@@ -81,8 +81,12 @@ const LoadingPayments = ({ loading }) => {
             marginLeft: "-165px",
           }}
         >
-          <h2 style={{ textAlign: "center", color: "#ffffff" }}>Processing your Payment{dots}</h2>
-          <p style={{ textAlign: "center", color: "#ffffff" }}>Please do not refresh the page</p>
+          <Typography variant="h3" style={{ textAlign: "center", color: "#ffffff" }}>
+            Processing your Payment{dots}
+          </Typography>
+          <Typography variant="h6" style={{ textAlign: "center", color: "#ffffff" }}>
+            Please do not refresh the page
+          </Typography>
           <div
             style={{
               display: "flex",

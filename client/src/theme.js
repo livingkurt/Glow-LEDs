@@ -59,7 +59,7 @@ const typography = {
   },
   h3: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.02,
     letterSpacing: "0px",
     [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
@@ -80,7 +80,7 @@ const typography = {
   },
   h4: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.15,
     letterSpacing: "0.07px",
     [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
@@ -101,7 +101,7 @@ const typography = {
   },
   h5: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.33,
     letterSpacing: "0px",
     [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
@@ -122,7 +122,7 @@ const typography = {
   },
   h6: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.6,
     letterSpacing: "0.07px",
     [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {

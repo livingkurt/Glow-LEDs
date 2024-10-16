@@ -37,10 +37,11 @@ import {
   closeSplitOrderModal,
   openSplitOrderModal,
 } from "../placeOrderSlice";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { getHasNonPreOrderItems, getHasPreOrderItems } from "../placeOrderHelpers";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
@@ -235,16 +236,21 @@ const ShippingStep = () => {
 
   return (
     <div>
-      <div className="jc-b">
-        <h2>2. Shipping</h2>
+      <div className="jc-b mt-10px">
+        <Typography variant="h4">2. Shipping</Typography>
         {shipping_completed && !show_shipping && (
-          <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("shipping"))}>
+          <GLButtonV2
+            variant="contained"
+            className="mv-10px"
+            color="secondary"
+            onClick={() => dispatch(showHideSteps("shipping"))}
+          >
             Edit
-          </GLButton>
+          </GLButtonV2>
         )}
       </div>
       {shipping_completed && (
-        <div>
+        <div className="mt-20px">
           {show_shipping ? (
             <>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "" : "p-0px"}`}>
@@ -514,7 +520,7 @@ const ShippingStep = () => {
               </ul>
             </>
           ) : (
-            <div className="wrap jc-b w-100per pos-rel">
+            <div className="wrap jc-b w-100per pos-rel mt-20px">
               {shipping && shipping.hasOwnProperty("first_name") && (
                 <div className="paragraph_font lh-25px mb-10px">
                   <div>
@@ -537,7 +543,7 @@ const ShippingStep = () => {
                 <>
                   <ShippingChoice />
                   {cartItems.some(item => item.processing_time) && (
-                    <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
+                    <h6 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
                       Estimated Time to Ship{" "}
                       {Math.max(
                         ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[0])
@@ -547,7 +553,7 @@ const ShippingStep = () => {
                         ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
                       )}{" "}
                       business days
-                    </h4>
+                    </h6>
                   )}
                 </>
               )}

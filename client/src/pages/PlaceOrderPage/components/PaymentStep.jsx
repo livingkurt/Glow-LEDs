@@ -20,13 +20,14 @@ import {
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -214,17 +215,22 @@ const PaymentStep = () => {
   return (
     <div>
       <ul className="mv-0px">
-        <div className="jc-b">
-          <h2>3. Payment & Review</h2>
+        <div className="jc-b mv-10px">
+          <Typography variant="h4">3. Payment & Review</Typography>
           {payment_completed && !show_payment && (
-            <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("payment"))}>
+            <GLButtonV2
+              variant="contained"
+              className="mv-10px"
+              color="secondary"
+              onClick={() => dispatch(showHideSteps("payment"))}
+            >
               Edit
-            </GLButton>
+            </GLButtonV2>
           )}
         </div>
         <Loading loading={loading_tax_rates} />
         {show_payment && !loading_tax_rates && (
-          <div>
+          <div className="w-100per">
             <div className="w-100per ">
               <div htmlFor="order_note">Add a note</div>
               <input
