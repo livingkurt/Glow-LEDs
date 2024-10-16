@@ -5,8 +5,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { emailFormFields } from "./emailFormFields";
 import { Box, Grid, Paper } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 let debounceTimer;
 
@@ -20,32 +19,38 @@ const EditEmailModal = () => {
   });
 
   const [debounceValue, setDebounceValue] = useState(null);
-
-  const hasFetched = useRef(false);
+  const initialFetchDone = useRef(false);
 
   useEffect(() => {
-    if (email && !hasFetched.current) {
+    if (email && edit_email_modal && !initialFetchDone.current) {
       dispatch(API.viewAnnouncement({ template: email }));
-      hasFetched.current = true;
+      initialFetchDone.current = true;
     }
-  }, [dispatch, email]);
+  }, [dispatch, email, edit_email_modal]);
+
+  useEffect(() => {
+    initialFetchDone.current = false;
+  }, [edit_email_modal]);
 
   const debounceKeys = ["status", "scheduled_at", "active", "link", "subject"];
 
   useEffect(() => {
-    const keys = Object.keys(debounceValue || {});
-    const shouldDebounce = keys.some(key => debounceKeys.includes(key));
+    if (debounceValue && initialFetchDone.current) {
+      const keys = Object.keys(debounceValue);
+      const shouldDebounce = keys.some(key => debounceKeys.includes(key));
 
-    if (debounceValue && !shouldDebounce) {
-      debounceTimer = setTimeout(() => {
-        dispatch(API.viewAnnouncement({ template: email }));
-      }, 2000); // 2000ms debounce time
+      if (!shouldDebounce) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          dispatch(API.viewAnnouncement({ template: email }));
+        }, 2000); // 2000ms debounce time
+      }
     }
 
     return () => {
       clearTimeout(debounceTimer);
     };
-  }, [debounceValue]);
+  }, [debounceValue, dispatch, email]);
 
   return (
     <div>
@@ -75,7 +80,6 @@ const EditEmailModal = () => {
                 dispatch(set_email(value));
                 setDebounceValue(value);
               }}
-              loading={loading}
             />
           </Grid>
           <Grid item xs={6}>
