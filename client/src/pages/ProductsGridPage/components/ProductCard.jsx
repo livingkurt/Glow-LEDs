@@ -54,7 +54,6 @@ const ProductCard = ({ product, promo_code }) => {
         <Box
           sx={{
             position: "relative",
-            paddingTop: "100%", // This ensures a 1:1 aspect ratio
             overflow: "hidden",
             flexShrink: 0,
             width: isMobile ? "50%" : "100%",
@@ -63,6 +62,7 @@ const ProductCard = ({ product, promo_code }) => {
             "&:hover": {
               borderRadius: isMobile ? 0 : "1rem 1rem 0 0",
             },
+            aspectRatio: 1,
           }}
         >
           <Box

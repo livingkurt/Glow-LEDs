@@ -30,10 +30,10 @@ const SponsorCard = ({ affiliate }) => {
         <Box
           sx={{
             position: "relative",
-            paddingTop: isMobile ? "40%" : "100%", // Adjust this value for mobile
+            paddingTop: isMobile ? "50%" : "100%", // Adjust this value for mobile
             overflow: "hidden",
             flexShrink: 0,
-            width: isMobile ? "40%" : "100%", // Adjust this value for mobile
+            width: isMobile ? "50%" : "100%", // Adjust this value for mobile
             borderRadius: "1rem",
           }}
         >
