@@ -422,20 +422,21 @@ export const sendCodeUsedEmail = async promo_code => {
   try {
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
-    const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
+    const promo = await promo_db.findBy_promos_db({ promo_code: promo_code.toLowerCase(), deleted: false });
 
     if (promo) {
       const affiliates = await Affiliate.find({ deleted: false });
-      // Filter affiliates by public_code
       const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
 
       if (affiliate) {
         const users = await User.find({ deleted: false, is_affiliated: true });
         const user = users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
+
         const stats = await order_services.code_usage_orders_s(
           { promo_code },
           { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
         );
+
         const mailBodyData = {
           name: affiliate.artist_name,
           promo_code: promo_code,
@@ -457,7 +458,6 @@ export const sendCodeUsedEmail = async promo_code => {
       }
     }
   } catch (error) {
-    console.error("Error sending code used email:", error);
     throw new Error("Failed to send code used email");
   }
 };
