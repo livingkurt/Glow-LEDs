@@ -27,7 +27,7 @@ import {
 } from "../placeOrderSlice";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
-import { Tooltip } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import * as API from "../../../api";
 
@@ -186,13 +186,13 @@ const ShippingChoice = () => {
             <>
               {!nonPreOrderShippingRate?.rate && (
                 <>
-                  <h3>In-stock Items Shipping</h3>
+                  <Typography variant="subtitle1">In-stock Items Shipping</Typography>
                   {renderShippingRates(nonPreOrderRates.shipment, false)}
                 </>
               )}
               {nonPreOrderShippingRate?.rate && (
                 <div>
-                  <h3>In-stock Items Shipping</h3>
+                  <Typography variant="subtitle1">In-stock Items Shipping</Typography>
                   <div className="mv-1rem jc-b ai-c w-100per">
                     <div className="shipping_rates jc-b w-100per ">
                       <div className="jc-b w-100per">
@@ -216,13 +216,13 @@ const ShippingChoice = () => {
               )}
               {!preOrderShippingRate?.rate && (
                 <>
-                  <h3>Pre-order Items Shipping</h3>
+                  <Typography variant="subtitle1">Pre-order Items Shipping</Typography>
                   {renderShippingRates(preOrderRates.shipment, true)}
                 </>
               )}
               {preOrderShippingRate?.rate && (
                 <div>
-                  <h3>Pre-order Items Shipping</h3>
+                  <Typography variant="subtitle1">Pre-order Items Shipping</Typography>
                   <div className="mv-1rem jc-b ai-c w-100per">
                     <div className="shipping_rates jc-b w-100per ">
                       <div className="jc-b w-100per">
