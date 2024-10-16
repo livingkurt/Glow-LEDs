@@ -101,13 +101,6 @@ const OrderStatusButtons = ({ order }) => {
     const emailMessageToUser = ""; // Define your message to the user here
 
     await API_Emails.send_order_status_email(order, emailSubject, order.shipping.email, status, emailMessageToUser);
-    await API_Emails.send_order_status_email(
-      order,
-      `${order.shipping.first_name}'s Order has ${status === "crafting" ? "begun" : "been"} ${orderStatusColors[status].name}!`,
-      config.REACT_APP_INFO_EMAIL,
-      status,
-      emailMessageToUser
-    );
   };
 
   return (
