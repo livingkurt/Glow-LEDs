@@ -37,7 +37,7 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
               },
             }}
           >
-            <ProductCard product={product} />
+            <ProductCard product={product} goHorizontal={false} />
           </Box>
         ))}
       </Box>

@@ -8,7 +8,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const ProductCard = ({ product, promo_code }) => {
+const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { current_user } = useSelector(state => state.users.userPage);
@@ -44,8 +44,8 @@ const ProductCard = ({ product, promo_code }) => {
             boxShadow: `0 12px 24px 0 hsl(${random(0, 360)}deg 50% 50%)`,
           },
           borderRadius: "1rem",
-          display: isMobile ? "flex" : "block",
-          flexDirection: isMobile ? "row" : "column",
+          display: goHorizontal && isMobile ? "flex" : "block",
+          flexDirection: goHorizontal && isMobile ? "row" : "column",
         }}
         elevation={0}
         onMouseEnter={handleMouseEnter}
@@ -56,11 +56,11 @@ const ProductCard = ({ product, promo_code }) => {
             position: "relative",
             overflow: "hidden",
             flexShrink: 0,
-            width: isMobile ? "50%" : "100%",
+            width: goHorizontal && isMobile ? "50%" : "100%",
             borderRadius: "1rem",
             transition: "border-radius 0.3s ease-in-out",
             "&:hover": {
-              borderRadius: isMobile ? 0 : "1rem 1rem 0 0",
+              borderRadius: goHorizontal && isMobile ? 0 : "1rem 1rem 0 0",
             },
             aspectRatio: 1,
           }}
@@ -142,12 +142,12 @@ const ProductCard = ({ product, promo_code }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+            <Typography variant={"h6"} color="white" gutterBottom>
               {product.name}
             </Typography>
             {product.rating ? <Rating value={product.rating} readOnly size={isMobile ? "small" : "medium"} /> : null}
           </Box>
-          <Typography variant={isMobile ? "body2" : "body1"} color="white">
+          <Typography variant={"body1"} color="white">
             {sale_price_switch({
               product,
               cartItem: false,

@@ -73,12 +73,12 @@ const MenuItemCard = ({ item }) => {
           }}
         >
           <Box>
-            <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+            <Typography variant={"h6"} color="white" gutterBottom>
               {item.label}
             </Typography>
           </Box>
           {item.description && (
-            <Typography variant={isMobile ? "body2" : "body1"} color="white">
+            <Typography variant={"body1"} color="white">
               {item.description}
             </Typography>
           )}
