@@ -9,7 +9,7 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
-  "plugins": ["react", "jsx-a11y", "react-hooks", "prettier"],
+  "plugins": ["react", "jsx-a11y", "react-hooks", "prettier", "unused-imports"],
   "ignorePatterns": ["!.eslintrc.js", "!.prettierrc.js"],
   "env": {
     "browser": true,
@@ -25,37 +25,37 @@
     }
   },
   "rules": {
-    "no-unused-vars": "warn",
-    "unused-imports/no-unused-imports": "warn",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "warn",
       { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
     ],
-    "prettier/prettier": "warn",
+    "prettier/prettier": "error",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": "off",
-    "import/prefer-default-export": "warn",
+    "import/prefer-default-export": "error",
     "react/prop-types": [
-      "warn",
+      "error",
       {
         "ignore": ["intl", "data", "router", "children"]
       }
     ],
     "no-param-reassign": [
-      "warn",
+      "error",
       {
         "props": true,
         "ignorePropertyModificationsFor": ["state"]
       }
     ],
     "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "warn",
+    "react/require-default-props": "error",
     "react/function-component-definition": [
       1,
       { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
     ],
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 120,
         "ignoreComments": true,
@@ -65,11 +65,11 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "no-console": "warn",
-    "no-alert": "warn",
+    "no-console": "error",
+    "no-alert": "error",
     "jsx-a11y/label-has-associated-control": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "no-use-before-define": ["warn", { "functions": false, "classes": true, "variables": true }]
+    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }]
   },
   "settings": {
     "react": {

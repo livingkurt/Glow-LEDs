@@ -1,7 +1,7 @@
 {
   "root": true,
   "extends": ["eslint:recommended", "plugin:node/recommended", "plugin:prettier/recommended"],
-  "plugins": ["node", "prettier"],
+  "plugins": ["node", "prettier", "unused-imports"],
   "env": {
     "node": true,
     "es2021": true
@@ -19,13 +19,13 @@
       "warn",
       { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
     ],
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-console": ["error", { "allow": ["error", "error"] }],
     "no-process-exit": "off",
     "node/no-unsupported-features/es-syntax": ["error", { "ignores": ["modules"] }],
     "node/no-missing-import": "off",
     "node/no-unpublished-import": "off",
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 120,
         "ignoreComments": true,
@@ -35,10 +35,10 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "complexity": ["warn", 20],
-    "max-depth": ["warn", 4],
+    "complexity": ["error", 20],
+    "max-depth": ["error", 4],
     "max-lines": [
-      "warn",
+      "error",
       {
         "max": 800,
         "skipBlankLines": true,
@@ -46,7 +46,7 @@
       }
     ],
     "max-lines-per-function": [
-      "warn",
+      "error",
       {
         "max": 100,
         "skipBlankLines": true,
@@ -54,8 +54,8 @@
         "IIFEs": true
       }
     ],
-    "max-nested-callbacks": ["warn", 4],
-    "max-statements": ["warn", 200],
+    "max-nested-callbacks": ["error", 4],
+    "max-statements": ["error", 200],
     "no-param-reassign": "error",
     "prefer-const": "error",
     "no-var": "error",
