@@ -230,12 +230,6 @@ export default {
       nonPreOrderShippingRate,
     } = body;
 
-    console.log({
-      splitOrder,
-      preOrderShippingRate,
-      nonPreOrderShippingRate,
-    });
-
     try {
       // Check if any orderItem has subcategory "sampler" and quantity greater than 1
       const hasSamplerWithQtyGreaterThanOne = order.orderItems.some(
