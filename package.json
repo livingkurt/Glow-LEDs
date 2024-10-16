@@ -93,10 +93,10 @@
     "test:backend": "npm test --config=jest.config.js",
     "cypress:run": "cd client && npm run cypress:run",
     "g": "node server/scripts/generateMigration.js",
-    "lint": "eslint . && cd client && npm run lint",
-    "lint:fix": "eslint . --fix && cd client && npm run lint:fix",
-    "prettier": "prettier --check \"**/*.{js,json,md}\" && cd client && npm run prettier",
-    "prettier:fix": "prettier --write \"**/*.{js,json,md}\" && cd client && npm run prettier:fix"
+    "lint": "eslint . --debug && cd client && eslint . --debug",
+    "lint:fix": "eslint . --fix --debug && cd client && eslint . --fix --debug",
+    "prettier": "prettier --check . --debug && cd client && prettier --check . --debug",
+    "prettier:fix": "prettier --write . --debug && cd client && prettier --write . --debug"
   },
   "engines": {
     "node": "20.11.1",

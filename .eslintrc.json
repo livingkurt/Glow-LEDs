@@ -10,6 +10,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "ignorePatterns": ["!.eslintrc.js", "!.prettierrc.js"],
   "rules": {
     "prettier/prettier": "error",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
@@ -46,7 +47,7 @@
         "skipBlankLines": true,
         "skipComments": true,
         "IIFEs": true
-      }p
+      }
     ],
     "max-nested-callbacks": ["warn", 4],
     "max-statements": ["warn", 200],

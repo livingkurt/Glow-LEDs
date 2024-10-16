@@ -10,6 +10,7 @@
     "plugin:react-hooks/recommended"
   ],
   "plugins": ["react", "jsx-a11y", "react-hooks", "prettier"],
+  "ignorePatterns": ["!.eslintrc.js", "!.prettierrc.js"],
   "env": {
     "browser": true,
     "es2021": true,

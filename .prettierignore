@@ -1,1 +1,5 @@
+# Use .gitignore rules
+
 package.json
+!.prettierrc
+!.eslintrc
