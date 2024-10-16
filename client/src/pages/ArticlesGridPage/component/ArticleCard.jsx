@@ -51,14 +51,8 @@ const ArticleCard = ({ article }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={"h6"} color="white" gutterBottom>
+            <Typography variant={"h5"} color="white" gutterBottom>
               {article.title}
-            </Typography>
-            <Typography variant={"body1"} color="white" gutterBottom>
-              by {article?.author ? article.author.first_name + " " + article.author.last_name : "Unknown Author"}
-            </Typography>
-            <Typography variant="body2" color="white" gutterBottom>
-              {new Date(article.createdAt).toLocaleDateString()}
             </Typography>
           </Box>
           <Box sx={{ mt: 2 }}>
