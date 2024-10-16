@@ -1,4 +1,5 @@
 import QRCode from "qrcode";
+import { toCamelCase } from "./email_helpers";
 
 export const determine_status = status => {
   switch (status) {
@@ -43,4 +44,20 @@ export const generateTicketQRCodes = async order => {
     }
   }
   return ticketQRCodes;
+};
+
+export const updateOrder = async (status, order) => {
+  if (order.status !== status) {
+    order.status = status;
+    order[`${toCamelCase(status)}At`] = new Date();
+    await order.save();
+  } else {
+  }
+};
+
+export const shouldSendEmail = (trackerStatus, orderStatus) => {
+  return (
+    ["in_transit", "out_for_delivery", "delivered"].includes(trackerStatus) &&
+    (orderStatus === "packaged" || trackerStatus !== "in_transit")
+  );
 };
