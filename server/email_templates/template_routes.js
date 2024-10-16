@@ -68,7 +68,7 @@ router.get("/verify", async (req, res) => {
       body: verify({
         title: "Verify your Email",
         url: `${domain()}/verify/123456`,
-        user: user,
+        user,
       }),
 
       unsubscribe: false,
@@ -121,7 +121,7 @@ router.get("/code_used", async (req, res) => {
     { promo_code },
     {
       month: months[monthNumber].toLowerCase(),
-      year: year,
+      year,
     }
   );
 

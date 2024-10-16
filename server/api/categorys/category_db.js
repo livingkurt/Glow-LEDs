@@ -38,7 +38,7 @@ export default {
   },
   findByPathname_categorys_db: async pathname => {
     try {
-      return await Category.findOne({ pathname: pathname, deleted: false }).populate("subcategorys");
+      return await Category.findOne({ pathname, deleted: false }).populate("subcategorys");
       // .populate("collections");
     } catch (error) {
       if (error instanceof Error) {

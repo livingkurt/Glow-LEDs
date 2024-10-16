@@ -122,9 +122,9 @@ export default {
     try {
       // Prepare the check-in object
       const checkin = {
-        month: month,
-        year: year,
-        questionsConcerns: questionsConcerns,
+        month,
+        year,
+        questionsConcerns,
         numberOfContent,
         // add any additional fields here
       };
@@ -275,34 +275,33 @@ export default {
             public_code,
             private_code
           );
-        } else {
-          try {
-            let hashed_password = "";
-            const temporary_password = config.TEMP_PASS;
-            bcrypt.genSalt(10, (err, salt) => {
-              bcrypt.hash(temporary_password, salt, async (err, hash) => {
-                if (err) throw err;
-                hashed_password = hash;
-                const user_w_password = { ...user, password: hashed_password };
-                try {
-                  const new_user = await user_db.create_users_db(user_w_password);
+        }
+        try {
+          let hashed_password = "";
+          const temporary_password = config.TEMP_PASS;
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(temporary_password, salt, async (err, hash) => {
+              if (err) throw err;
+              hashed_password = hash;
+              const user_w_password = { ...user, password: hashed_password };
+              try {
+                const new_user = await user_db.create_users_db(user_w_password);
 
-                  return await affiliate_db.create_affiliates_db(
-                    { ...affiliate, user: new_user._id },
-                    public_code,
-                    private_code
-                  );
-                } catch (error) {
-                  if (error instanceof Error) {
-                    throw new Error(error.message);
-                  }
+                return await affiliate_db.create_affiliates_db(
+                  { ...affiliate, user: new_user._id },
+                  public_code,
+                  private_code
+                );
+              } catch (error) {
+                if (error instanceof Error) {
+                  throw new Error(error.message);
                 }
-              });
+              }
             });
-          } catch (error) {
-            if (error instanceof Error) {
-              throw new Error(error.message);
-            }
+          });
+        } catch (error) {
+          if (error instanceof Error) {
+            throw new Error(error.message);
           }
         }
       });

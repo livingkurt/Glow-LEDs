@@ -129,7 +129,7 @@ export default {
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Invoice Email Sent to ${req.body.email}`);
   },
   send_order_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -147,10 +147,10 @@ export default {
     const mailOptionsConfirmation = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({ body: order(bodyConfirmation), unsubscribe: false }),
     };
-    await sendEmail(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
+    await sendEmail(mailOptionsConfirmation, res, "info", `Order Confirmation Email Sent to ${email}`);
   },
   send_ticket_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -176,7 +176,7 @@ export default {
     if (order_data.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
     }
-    await sendEmail(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
+    await sendEmail(mailOptionsTickets, res, "info", `Ticket Email Sent to ${email}`);
   },
   send_refund_emails_c: async (req, res) => {
     const { order: order_data, email } = req.body;
@@ -200,7 +200,7 @@ export default {
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Refund Email Sent to ${req.body.email}`);
   },
   send_order_status_emails_c: async (req, res) => {
     const body = {
@@ -208,7 +208,7 @@ export default {
         h1: "Thank you for your Order!",
         h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
-      title: "Your Order has been " + toCapitalize(req.body.status),
+      title: `Your Order has been ${toCapitalize(req.body.status)}`,
       order: req.body.order,
       status: req.body.status,
       message_to_user: req.body.message_to_user,
@@ -224,7 +224,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Order Status Email Sent to ${req.body.email}`);
   },
   send_current_stock_emails_c: async (req, res) => {
     const data = await product_db.current_stock_products_db();
@@ -238,7 +238,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
+    sendEmail(mailOptions, res, "info", `Current Stock Email Sent to ${config.INFO_EMAIL}`);
   },
   send_paycheck_emails_c: async (req, res) => {
     const { email, subject } = req.body;
@@ -246,13 +246,13 @@ export default {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({
         body: paycheck(req.body),
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Paycheck Email Sent to " + email);
+    sendEmail(mailOptions, res, "info", `Paycheck Email Sent to ${email}`);
   },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;
@@ -268,7 +268,7 @@ export default {
         html: affiliate_onboard(data),
       };
 
-      await sendEmail(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
+      await sendEmail(mailOptions, res, "info", `Affiliate Onboarding Email Sent to ${data.email}`);
     }
   },
 
@@ -284,7 +284,7 @@ export default {
       html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
-    sendEmail(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Affiliate Email Sent to ${req.body.email}`);
   },
   send_feature_emails_c: async (req, res) => {
     const body = {
@@ -301,7 +301,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Featured Email Sent to ${req.body.email}`);
   },
   send_external_contact_emails_c: async (req, res) => {
     const mailOptions = {
@@ -310,7 +310,7 @@ export default {
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message,
     };
-    sendEmail(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
+    sendEmail(mailOptions, res, "info", `Contact Email Sent to ${req.body.first_name}`);
   },
   send_user_contact_emails_c: async (req, res) => {
     const { email, first_name, reason_for_contact } = req.body;
@@ -321,7 +321,7 @@ export default {
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: contact(req.body),
     };
-    sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
+    sendEmail(mailOptions, res, "contact", `User Contact Email Sent to ${first_name}`);
   },
   send_admin_contact_emails_c: async (req, res) => {
     const { email, first_name } = req.body;
@@ -333,7 +333,7 @@ export default {
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
     };
-    sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
+    sendEmail(mailOptions, res, "contact", `Admin Contact Email Sent to ${first_name}`);
   },
   send_custom_contact_emails_c: async (req, res) => {
     const { order, email } = req.body;
@@ -343,7 +343,7 @@ export default {
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
       html: custom_contact({ order }),
     };
-    sendEmail(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
+    sendEmail(mailOptions, res, "contact", `Custom Contact Email Sent to ${order.shipping.first_name}`);
   },
   send_code_used_emails_c: async (req, res) => {
     const { promo_code } = req.params;
@@ -375,7 +375,7 @@ export default {
           );
           mailBodyData = {
             name: team.team_name,
-            promo_code: promo_code,
+            promo_code,
             percentage_off: null,
             number_of_uses: stats.number_of_uses,
             earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
@@ -414,7 +414,7 @@ export default {
           );
           mailBodyData = {
             name: affiliate.artist_name,
-            promo_code: promo_code,
+            promo_code,
             percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
             number_of_uses: stats.number_of_uses,
             earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
@@ -433,12 +433,12 @@ export default {
             unsubscribe: false,
           }),
         };
-        sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
+        sendEmail(mailOptions, res, "info", `Code Used Email sent to ${mailRecipients.join(", ")}`);
       }
     }
   },
   send_verify_email_password_reset_emails_c: async (req, res) => {
-    const email = req.body.email;
+    const { email } = req.body;
 
     const user = await user_db.findByEmail_users_db(email);
 
@@ -462,7 +462,7 @@ export default {
           unsubscribe: false,
         }),
       };
-      sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+      sendEmail(mailOptions, res, "info", `Reset Password Link Email Sent to ${user.first_name}`);
     } else {
       res.status(500).send({ message: "You do not have an account with us" });
     }
@@ -480,7 +480,7 @@ export default {
         unsubscribe: false,
       }),
     };
-    sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
+    sendEmail(mailOptions, res, "info", `Reset Password Email Sent to ${req.body.first_name}`);
   },
   send_review_emails_c: async (req, res) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -500,7 +500,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Email Sent to ${req.body.email}`);
   },
 
   send_scheduled_emails_c: async (req, res) => {
@@ -522,7 +522,7 @@ export default {
 
       res.status(200).send({ message: "Scheduled emails have been processed." });
     } catch (error) {
-      res.status(500).send({ message: "Error sending scheduled emails", error: error });
+      res.status(500).send({ message: "Error sending scheduled emails", error });
     }
   },
   send_announcement_emails_c: async (req, res) => {
@@ -565,7 +565,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+    sendEmail(mailOptions, res, "info", `Email Sent to ${req.body.email}`);
   },
 
   send_account_created_emails_c: async (req, res) => {
@@ -586,7 +586,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
+    sendEmail(mailOptions, res, "info", `Registration Email Sent to ${req.body.first_name}`);
   },
   send_verified_emails_c: async (req, res) => {
     const { email } = req.body;
@@ -601,14 +601,14 @@ export default {
         body: verify({
           title: "Verify your Email",
           url: `${domain()}/pages/complete/account_created/${token}`,
-          user: user,
+          user,
         }),
 
         unsubscribe: false,
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
+    sendEmail(mailOptions, res, "info", `Verification Email Sent to ${req.body.first_name}`);
   },
   send_shipping_status_emails_c: async (req, res) => {
     try {
@@ -621,9 +621,9 @@ export default {
           const body = {
             email: {},
             title: determine_status(tracker.status),
-            order: order,
+            order,
             status: tracker.status,
-            tracker: tracker,
+            tracker,
           };
           const mailOptions = {
             from: config.DISPLAY_INFO_EMAIL,

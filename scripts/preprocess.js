@@ -583,7 +583,7 @@ const extractProductInfo = html => {
   const decodedHTML = decodeQuotedPrintable(html);
 
   const dom = new JSDOM(decodedHTML);
-  const document = dom.window.document;
+  const { document } = dom.window;
 
   const products = [];
   const productRows = document.querySelectorAll(
@@ -602,7 +602,7 @@ const extractProductInfo = html => {
 
       const selectedOptions = Array.from(optionsElements)
         .map(opt => {
-          let optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
+          const optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
           const [option, value] = optionText.split(":").map(s => s.trim());
           return { option, value };
         })
@@ -610,9 +610,9 @@ const extractProductInfo = html => {
 
       products.push({
         quantity: 1,
-        name: name,
-        selectedOptions: selectedOptions,
-        price: price,
+        name,
+        selectedOptions,
+        price,
       });
     }
   });

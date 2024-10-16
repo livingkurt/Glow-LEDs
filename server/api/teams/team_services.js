@@ -38,10 +38,9 @@ export default {
       const count = await team_db.count_teams_db(filter);
       if (count !== undefined) {
         return teams;
-      } else {
-        // Handle the case where count is undefined
-        throw new Error("Count is undefined");
       }
+      // Handle the case where count is undefined
+      throw new Error("Count is undefined");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -154,9 +153,9 @@ export default {
     try {
       // Prepare the check-in object
       const checkin = {
-        month: month,
-        year: year,
-        questionsConcerns: questionsConcerns,
+        month,
+        year,
+        questionsConcerns,
         numberOfContent,
         // add any additional fields here
       };

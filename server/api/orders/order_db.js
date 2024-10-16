@@ -516,7 +516,7 @@ export default {
   // },
   get_monthly_revenue_product_orders_db: async (year, product_id) => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const { ObjectId } = require("mongoose").Types;
       const totalPriceByMonth = await Order.aggregate([
         {
           $match: {
@@ -584,7 +584,7 @@ export default {
 
   get_yearly_revenue_product_orders_db: async product_id => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const { ObjectId } = require("mongoose").Types;
       const totalPriceByYear = await Order.aggregate([
         {
           $match: {

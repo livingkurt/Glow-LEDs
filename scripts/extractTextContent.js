@@ -1205,7 +1205,7 @@ const extractProductInfo = html => {
   const decodedHTML = decodeQuotedPrintable(html);
 
   const dom = new JSDOM(decodedHTML);
-  const document = dom.window.document;
+  const { document } = dom.window;
 
   const products = [];
   // Select each product table using the unique style attribute
@@ -1223,13 +1223,13 @@ const extractProductInfo = html => {
       let quantity = 1;
 
       // Extract quantity from the name (e.g., "2x Frosted Dome Diffusers - Classic Style")
-      let nameMatch = nameText.match(/^(\d+)x\s+(.*)/);
+      const nameMatch = nameText.match(/^(\d+)x\s+(.*)/);
       if (nameMatch) {
         quantity = parseInt(nameMatch[1], 10);
         nameText = nameMatch[2].trim();
       } else {
         // If quantity not in name, check in price (e.g., "2x $39.98")
-        let priceMatch = priceText.match(/^(\d+)x\s+\$(.*)/);
+        const priceMatch = priceText.match(/^(\d+)x\s+\$(.*)/);
         if (priceMatch) {
           quantity = parseInt(priceMatch[1], 10);
           priceText = `$${priceMatch[2].trim()}`;
@@ -1246,7 +1246,7 @@ const extractProductInfo = html => {
 
       const selectedOptions = Array.from(optionsElements)
         .map(opt => {
-          let optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
+          const optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
           const [option, value] = optionText.split(":").map(s => s.trim());
           return { option, value };
         })
@@ -1260,9 +1260,9 @@ const extractProductInfo = html => {
         }, []);
 
       products.push({
-        quantity: quantity,
-        name: name,
-        selectedOptions: selectedOptions,
+        quantity,
+        name,
+        selectedOptions,
         price: isNaN(price) ? 0 : price,
       });
     }
@@ -1274,7 +1274,7 @@ const extractProductInfo = html => {
 };
 
 // Extract product information from the HTML
-let orderItems = extractProductInfo(html);
+const orderItems = extractProductInfo(html);
 
 // Create the final structure
 const result = { orderItems };

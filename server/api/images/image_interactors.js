@@ -7,7 +7,7 @@ export const exchangeCodeForToken = async code => {
       client_id: config.IMGUR_ClIENT_ID,
       client_secret: config.IMGUR_ClIENT_SECRET,
       grant_type: "authorization_code",
-      code: code,
+      code,
     });
 
     return response.data;

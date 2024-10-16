@@ -212,9 +212,8 @@ export const determine_category = place_of_purchase => {
     return "Supplies";
   } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
     return "Entertainment";
-  } else {
-    return "Not Categorized";
   }
+  return "Not Categorized";
 };
 export const determine_place = place_of_purchase => {
   if (
@@ -263,9 +262,8 @@ export const determine_place = place_of_purchase => {
     return "EmazingLights";
   } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
     return "Spec's";
-  } else {
-    return "Unknown";
   }
+  return "Unknown";
 };
 export const determine_application = place_of_purchase => {
   if (place_of_purchase.includes("PIRATE SHIP")) {
@@ -314,7 +312,6 @@ export const determine_application = place_of_purchase => {
     return "Tools";
   } else if (place_of_purchase.includes("SPEC") || place_of_purchase.includes("Spec")) {
     return "Entertainment";
-  } else {
-    return "Unknown";
   }
+  return "Unknown";
 };

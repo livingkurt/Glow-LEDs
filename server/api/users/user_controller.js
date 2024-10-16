@@ -170,7 +170,7 @@ export default {
               }),
             };
 
-            sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
+            sendEmail(mailOptions, res, "info", `Verification Email Sent to ${req.body.first_name}`);
 
             return res.status(200).send(new_user);
           } catch (error) {
@@ -197,7 +197,7 @@ export default {
         subject: "Glow LEDs Account Created",
         html: App({
           body: account_created({
-            user: user,
+            user,
             categories: contents && contents[0].home_page?.slideshow,
             title: "Glow LEDs Account Created",
           }),
@@ -206,7 +206,7 @@ export default {
         }),
       };
 
-      sendEmail(mailOptions, res, "info", "Registration Email Sent to " + user.first_name);
+      sendEmail(mailOptions, res, "info", `Registration Email Sent to ${user.first_name}`);
       res.status(200).json({ message: "Email verified successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -222,7 +222,7 @@ export default {
         const access_token = getAccessToken(user);
         return res.status(200).send({
           success: true,
-          access_token: access_token,
+          access_token,
           refresh_token: user.refresh_token,
         });
       }
@@ -239,27 +239,25 @@ export default {
       // send error if no refresh_token is sent
       if (!refresh_token) {
         return res.status(403).send({ message: "Access denied, token missing!" });
-      } else {
-        // query for the token to check if it is valid:
-        const tokenDoc = await Token.findOne({ token: refresh_token });
-        // send error if no token found:
-        if (!tokenDoc) {
-          return res.status(401).json({ message: "Token expired!" });
-        } else {
-          // await Token.findOneAndDelete({ token: refresh_token });
-          // extract payload from refresh token and generate a new access token and send it
-          const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
-
-          const user = await user_services.refresh_login_users_s(payload.email);
-
-          const access_token = getAccessToken(user);
-          return res.status(200).send({
-            success: true,
-            access_token: access_token,
-            refresh_token: user.refresh_token,
-          });
-        }
       }
+      // query for the token to check if it is valid:
+      const tokenDoc = await Token.findOne({ token: refresh_token });
+      // send error if no token found:
+      if (!tokenDoc) {
+        return res.status(401).json({ message: "Token expired!" });
+      }
+      // await Token.findOneAndDelete({ token: refresh_token });
+      // extract payload from refresh token and generate a new access token and send it
+      const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+
+      const user = await user_services.refresh_login_users_s(payload.email);
+
+      const access_token = getAccessToken(user);
+      return res.status(200).send({
+        success: true,
+        access_token,
+        refresh_token: user.refresh_token,
+      });
     } catch (error) {
       return res.status(500).send({ error, message: error.message });
     }
@@ -275,7 +273,7 @@ export default {
         const access_token = getAccessToken(user);
         return res.status(200).send({
           success: true,
-          access_token: access_token,
+          access_token,
           // Include the refresh_token in the response
           refresh_token: user.refresh_token,
         });
@@ -326,7 +324,7 @@ export default {
                 unsubscribe: false,
               }),
             };
-            sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + user.first_name);
+            sendEmail(mailOptions, res, "info", `Reset Password Email Sent to ${user.first_name}`);
             // return res.status(200).send(new_user);
           } catch (error) {
             res.status(500).json({ message: error.message, error });
@@ -339,7 +337,7 @@ export default {
   },
   verify_email_password_reset_users_c: async (req, res) => {
     try {
-      const email = req.body.email;
+      const { email } = req.body;
 
       const user = await user_db.findByEmail_users_db(email);
 
@@ -363,7 +361,7 @@ export default {
             unsubscribe: false,
           }),
         };
-        sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+        sendEmail(mailOptions, res, "info", `Reset Password Link Email Sent to ${user.first_name}`);
       } else {
         res.status(500).send({ message: "You do not have an account with us" });
       }
@@ -382,9 +380,8 @@ export default {
       if (isMatch) {
         const token = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
         return res.status(200).send({ token });
-      } else {
-        return res.status(401).send({ message: "Passwords do not match" });
       }
+      return res.status(401).send({ message: "Passwords do not match" });
     } catch (error) {
       return res.status(500).send({ error, message: error.message });
     }

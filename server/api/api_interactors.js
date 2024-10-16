@@ -37,7 +37,7 @@ export const mongodbFindAll = async (collectionName, options, populateMap) => {
   let result = await cursor.toArray();
 
   if (populateMap) {
-    for (let field in populateMap) {
+    for (const field in populateMap) {
       const relatedCollectionName = populateMap[field];
       const relatedCollection = db.collection(relatedCollectionName);
 

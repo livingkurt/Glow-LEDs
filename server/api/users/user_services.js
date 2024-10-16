@@ -154,10 +154,9 @@ export default {
     if (user) {
       const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
       if (isMatch) {
-        return { user: user, matched: true };
-      } else {
-        throw new Error("User Already Exists");
+        return { user, matched: true };
       }
+      throw new Error("User Already Exists");
     } else {
       return {
         user: {
@@ -207,9 +206,8 @@ export default {
         wholesaler: user.wholesaler,
         refresh_token: refreshToken,
       };
-    } else {
-      throw new Error("Invalid Credentials");
     }
+    throw new Error("Invalid Credentials");
   },
 
   refresh_login_users_s: async email => {

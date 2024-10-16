@@ -15,9 +15,9 @@ module.exports = {
     const products = await Product.find({});
 
     for (const product of products) {
-      let categoryIds = [];
-      let subCategoryIds = [];
-      let collectionIds = [];
+      const categoryIds = [];
+      const subCategoryIds = [];
+      const collectionIds = [];
 
       let existingCategory = null;
       let existingSubCategory = null;

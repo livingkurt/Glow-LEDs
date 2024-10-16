@@ -39,9 +39,8 @@ export default {
           preOrderRates,
           nonPreOrderRates,
         };
-      } else {
-        return await createShippingRates({ order, returnLabel: false });
       }
+      return await createShippingRates({ order, returnLabel: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -56,9 +55,8 @@ export default {
       if (shipment_id && !order.shipping.shipping_label) {
         const shipment = await EasyPost.Shipment.retrieve(shipment_id);
         return { shipment };
-      } else {
-        return await createShippingRates({ order, returnLabel: false });
       }
+      return await createShippingRates({ order, returnLabel: false });
     } catch (error) {
       return await createShippingRates({ order, returnLabel: false });
     }
@@ -185,7 +183,7 @@ export default {
       if (shipments) {
         // Create a batch with the shipments
         const batch = await EasyPost.Batch.create({
-          shipments: shipments,
+          shipments,
         });
 
         const pickup = await EasyPost.Pickup.create({
@@ -197,7 +195,7 @@ export default {
             .join(", ")} Orders`,
           is_account_address: false,
           instructions: "Pick up on front porch please.",
-          batch: batch,
+          batch,
         });
         return { pickup, orders };
       }

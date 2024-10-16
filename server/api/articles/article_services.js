@@ -40,7 +40,7 @@ export default {
     console.log({ query });
     try {
       let filter = { deleted: false };
-      let limit = query.limit ? query.limit : 0;
+      const limit = query.limit ? query.limit : 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -76,7 +76,7 @@ export default {
         }
       }
 
-      let articles = await article_db.findAllGrid_articles_db(filter, sortOption, limit);
+      const articles = await article_db.findAllGrid_articles_db(filter, sortOption, limit);
 
       return articles;
     } catch (error) {

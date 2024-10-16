@@ -154,8 +154,8 @@ export default {
         discount = 0.15;
       }
       if (params.month && params.month.length > 0) {
-        const start_date = month_dates(params.month, params.year).start_date;
-        const end_date = month_dates(params.month, params.year).end_date;
+        const { start_date } = month_dates(params.month, params.year);
+        const { end_date } = month_dates(params.month, params.year);
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -165,8 +165,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },

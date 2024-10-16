@@ -5,15 +5,14 @@ export const determine_parcel = (orderItems, parcels) => {
 
   if (suitableParcel) {
     return suitableParcel;
-  } else {
-    const binDimensions = calculateCustomParcelDimensions(dimensions);
-
-    const packedItems = packItems(dimensions, binDimensions);
-
-    const customParcel = createCustomParcel(binDimensions.length, binDimensions.width, binDimensions.height);
-
-    return customParcel;
   }
+  const binDimensions = calculateCustomParcelDimensions(dimensions);
+
+  const packedItems = packItems(dimensions, binDimensions);
+
+  const customParcel = createCustomParcel(binDimensions.length, binDimensions.width, binDimensions.height);
+
+  return customParcel;
 };
 
 const findSuitableParcel = (dimensions, parcels) => {

@@ -195,16 +195,16 @@ const pathnames = [
   "popcorn_pyramids_diffusers",
 ];
 
-let generatedUrls = [];
+const generatedUrls = [];
 
 routes.forEach(route => {
   if (route.path.includes(":category") && route.path.includes(":subcategory") && route.path.includes(":collection")) {
     categories.forEach(category => {
-      let categoryUrl = route.path.replace(":category", category);
+      const categoryUrl = route.path.replace(":category", category);
       subcategories.forEach(subcategory => {
-        let subcategoryUrl = categoryUrl.replace(":subcategory", subcategory);
+        const subcategoryUrl = categoryUrl.replace(":subcategory", subcategory);
         collections.forEach(collection => {
-          let collectionUrl = subcategoryUrl.replace(":collection", collection);
+          const collectionUrl = subcategoryUrl.replace(":collection", collection);
           generatedUrls.push(collectionUrl);
         });
       });

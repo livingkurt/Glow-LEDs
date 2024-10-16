@@ -41,7 +41,7 @@ export const createPublicPromoCode = promoCodeName => {
 export const createPrivatePromoCode = (user, percentageOff = 10) => {
   return {
     promo_code: make_private_code(6),
-    user: user,
+    user,
     admin_only: false,
     affiliate_only: true,
     single_use: false,
