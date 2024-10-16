@@ -352,7 +352,6 @@ export default {
     }
   },
   check_password_products_s: async (params, body) => {
-    console.log("check_password_products_s", params, body);
     try {
       const product = await Product.findById(params.id);
       if (!product) {
