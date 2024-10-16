@@ -84,30 +84,27 @@ export default {
             data: data.toObject ? data.toObject() : data,
             message: result.message,
           };
-        } else {
-          const result = updateCartItems([], cart_item);
-          data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
-          data = await cart_db.findById_carts_db(data._id);
-          return {
-            data: data.toObject ? data.toObject() : data,
-            message: result.message,
-          };
         }
-      } else {
-        if (cartItems && cartItems.length > 0) {
-          const result = updateCartItems(cartItems, cart_item);
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        } else {
-          const result = updateCartItems([], cart_item);
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        }
+        const result = updateCartItems([], cart_item);
+        data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
+        data = await cart_db.findById_carts_db(data._id);
+        return {
+          data: data.toObject ? data.toObject() : data,
+          message: result.message,
+        };
       }
+      if (cartItems && cartItems.length > 0) {
+        const result = updateCartItems(cartItems, cart_item);
+        return {
+          data: { cartItems: result.items },
+          message: result.message,
+        };
+      }
+      const result = updateCartItems([], cart_item);
+      return {
+        data: { cartItems: result.items },
+        message: result.message,
+      };
     } catch (error) {
       console.log({ error });
       if (error instanceof Error) {
@@ -154,24 +151,20 @@ export default {
         if (cartItems.length === 0) {
           await cart_db.remove_carts_db(actualId);
           return { message: "Cart Deleted" };
-        } else {
-          await cart_db.update_carts_db(actualId, { cartItems });
-          const new_cart = await cart_db.findById_carts_db(actualId);
-          return new_cart;
         }
-      } else {
-        if (my_cart && my_cart.cartItems.length > 0) {
-          my_cart.cartItems.splice(actualItemIndex, 1);
-
-          if (my_cart.cartItems.length === 0) {
-            return { message: "Cart is now empty" };
-          } else {
-            return { cartItems: my_cart.cartItems };
-          }
-        } else {
-          throw new Error("There is no cart to modify");
-        }
+        await cart_db.update_carts_db(actualId, { cartItems });
+        const new_cart = await cart_db.findById_carts_db(actualId);
+        return new_cart;
       }
+      if (my_cart && my_cart.cartItems.length > 0) {
+        my_cart.cartItems.splice(actualItemIndex, 1);
+
+        if (my_cart.cartItems.length === 0) {
+          return { message: "Cart is now empty" };
+        }
+        return { cartItems: my_cart.cartItems };
+      }
+      throw new Error("There is no cart to modify");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

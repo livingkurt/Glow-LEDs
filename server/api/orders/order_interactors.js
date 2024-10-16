@@ -439,7 +439,7 @@ export const sendCodeUsedEmail = async promo_code => {
 
         const mailBodyData = {
           name: affiliate.artist_name,
-          promo_code: promo_code,
+          promo_code,
           percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,

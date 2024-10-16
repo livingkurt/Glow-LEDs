@@ -4,6 +4,7 @@ const webpack = require("webpack");
 
 module.exports = override(
   addBabelPlugin(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]),
+  addBabelPlugin(["@babel/plugin-proposal-class-properties", { loose: true }]),
   addWebpackPlugin(new webpack.HotModuleReplacementPlugin()),
   (config, env) => {
     // This is your existing logic

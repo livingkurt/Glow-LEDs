@@ -81,9 +81,8 @@ export default {
       if (cart) {
         cart.cartItems = body.cartItems;
         return await cart.save();
-      } else {
-        return await Cart.create({ ...body, user: id });
       }
+      return await Cart.create({ ...body, user: id });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

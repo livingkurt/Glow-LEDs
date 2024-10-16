@@ -1,5 +1,5 @@
 export const normalizeCustomerInfo = ({ shipping, paymentMethod }) => ({
-  name: shipping.first_name + " " + shipping.last_name,
+  name: `${shipping.first_name} ${shipping.last_name}`,
   email: shipping.email,
   address: {
     city: shipping.city,

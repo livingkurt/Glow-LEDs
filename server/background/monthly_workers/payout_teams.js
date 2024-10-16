@@ -6,7 +6,7 @@ export const payout_teams = async () => {
     const domainUrl = domain();
     const { start_date, end_date } = last_month_date_range();
     const { data } = await axios.get(`${domainUrl}/api/teams?active=true&rave_mob=false`);
-    const teams = data.teams;
+    const { teams } = data;
 
     for (const team of teams) {
       const { data: promo_code_usage } = await axios.get(

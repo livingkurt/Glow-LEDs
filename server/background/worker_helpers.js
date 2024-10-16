@@ -8,9 +8,8 @@ export const domain = () => {
     return "https://www.glow-leds.com";
   } else if (config.ENVIRONMENT === "staging") {
     return "https://glow-leds-dev.herokuapp.com";
-  } else {
-    return "http://localhost:3000";
   }
+  return "http://localhost:3000";
 };
 
 export const last_month_date_range = () => {

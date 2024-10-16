@@ -369,9 +369,8 @@ export default {
 
       if (isPasswordCorrect && !isExpired) {
         return { success: true };
-      } else {
-        return { success: false };
       }
+      return { success: false };
     } catch (error) {
       return { success: false, message: "Server error", error: error.message };
     }
@@ -401,9 +400,8 @@ export default {
         if (optionIndex !== -1) {
           product.options[optionIndex].values.push(newOptionProduct);
           return await product_db.update_products_db(id, product);
-        } else {
-          throw new Error("Option not found for the option product.");
         }
+        throw new Error("Option not found for the option product.");
       } else {
         throw new Error("Error in Creating Option Product.");
       }
@@ -445,7 +443,7 @@ export default {
 
   get_best_sellers_products_s: async body => {
     try {
-      const occurences = body.occurences;
+      const { occurences } = body;
 
       const names = occurences.map(item => item.name);
 
@@ -600,8 +598,8 @@ export default {
 
   save_item_group_id_products_s: async (params, body) => {
     try {
-      const option = body.option;
-      const item_group = body.item_group;
+      const { option } = body;
+      const { item_group } = body;
       const product = await product_db.findById_products_db(option._id);
 
       if (product && option._id && item_group.price) {
@@ -609,9 +607,8 @@ export default {
           ...body,
           price: item_group.price,
         });
-      } else {
-        throw new Error("Error in Updating Product.");
       }
+      throw new Error("Error in Updating Product.");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

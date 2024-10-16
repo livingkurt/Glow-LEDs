@@ -29,7 +29,7 @@ export const normalizePaycheckFilters = input => {
 };
 
 export const normalizePaycheckSearch = query => {
-  let search = {};
+  const search = {};
   if (query.search) {
     const amountNumber = parseFloat(query.search);
     if (!isNaN(amountNumber)) {
