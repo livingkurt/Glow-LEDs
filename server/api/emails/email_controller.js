@@ -22,15 +22,14 @@ import {
 import email_subscription from "../../email_templates/pages/email_subscription";
 import { order_db, order_services } from "../orders";
 import { content_db } from "../contents";
-import { Affiliate, affiliate_db } from "../affiliates";
+import { Affiliate } from "../affiliates";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
-import { determine_status, generateTicketQRCodes } from "../emails/email_interactors";
+import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
-import { sendEmail, sendEmailsInBatches, send_multiple_emails, toCamelCase } from "./email_helpers";
+import { sendEmail, sendEmailsInBatches } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
-import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 const jwt = require("jsonwebtoken");
 import config from "../../config";
@@ -618,25 +617,6 @@ export default {
         const tracker = event.result;
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
 
-        const updateOrder = status => {
-          if (order.status !== status) {
-            order.status = status;
-            order[`${toCamelCase(status)}At`] = new Date();
-            return order.save();
-          }
-          return Promise.resolve(order);
-        };
-
-        const shouldSendEmail = (trackerStatus, orderStatus) => {
-          if (trackerStatus === "delivered" || trackerStatus === "out_for_delivery") {
-            return true;
-          }
-          if (trackerStatus === "in_transit" && orderStatus === "shipped") {
-            return true;
-          }
-          return false;
-        };
-
         if (shouldSendEmail(tracker.status, order.status)) {
           const body = {
             email: {},
@@ -659,11 +639,13 @@ export default {
         }
 
         if (tracker.status === "delivered") {
-          await updateOrder("delivered");
+          await updateOrder("delivered", order);
         } else if (tracker.status === "out_for_delivery") {
-          await updateOrder("out_for_delivery");
-        } else if (tracker.status === "in_transit" && order.status === "shipped") {
-          await updateOrder("in_transit");
+          await updateOrder("out_for_delivery", order);
+        } else if (tracker.status === "in_transit") {
+          if (order.status === "packaged") {
+            await updateOrder("in_transit", order);
+          }
         }
 
         res.status(200).send("Tracker event processed successfully");
@@ -671,7 +653,6 @@ export default {
         res.status(200).send("Not a Tracker event, so nothing to do here for now...");
       }
     } catch (error) {
-      console.error("Error processing shipping status:", error);
       res.status(500).send("Error processing shipping status");
     }
   },

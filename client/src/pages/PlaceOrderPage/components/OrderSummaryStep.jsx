@@ -38,7 +38,7 @@ const OrderSummaryStep = () => {
     <div className="place_order-action">
       <ul>
         <li>
-          <h2 style={{ marginTop: "0px", marginBottom: "0px" }}>Order Summary</h2>
+          <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>Order Summary</h4>
           {hasPreOrderItems && (
             <Tooltip title="Pre-order items are items that are not yet available for immediate delivery. If ordered with non-pre-order items, the pre-order items will be released on their estimated release date.">
               <Typography

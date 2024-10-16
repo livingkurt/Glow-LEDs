@@ -122,7 +122,7 @@ const OrderStatusButtons = ({ order }) => {
                   borderRadius={1}
                   p={1}
                 >
-                  <Typography variant="h3" fontSize={16} textAlign="center">
+                  <Typography variant="button" textAlign="center">
                     Buy Label to Change Status
                   </Typography>
                 </Box>
@@ -138,7 +138,7 @@ const OrderStatusButtons = ({ order }) => {
                   borderRadius={1}
                   p={1}
                 >
-                  <Typography variant="h3" fontSize={16} textAlign="center">
+                  <Typography variant="button" textAlign="center">
                     Will Change to Shipped
                   </Typography>
                 </Box>

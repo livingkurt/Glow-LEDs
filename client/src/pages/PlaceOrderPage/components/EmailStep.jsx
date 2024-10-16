@@ -9,6 +9,8 @@ import { setEmailValidations, set_is_guest, showHideSteps, nextStep } from "../p
 import { isMobile } from "react-device-detect";
 import { save_shipping } from "../../../slices/cartSlice";
 import { openLoginModal } from "../../../slices/userSlice";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { Typography } from "@mui/material";
 
 const EmailStep = () => {
   const dispatch = useDispatch();
@@ -60,16 +62,21 @@ const EmailStep = () => {
 
   return (
     <div>
-      <div className="jc-b">
-        <h2>1. Email</h2>
+      <div className="jc-b mv-10px">
+        <Typography variant="h4">1. Email</Typography>
         {email_completed && !show_email && (
-          <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("email"))}>
+          <GLButtonV2
+            variant="contained"
+            className="mv-10px"
+            color="secondary"
+            onClick={() => dispatch(showHideSteps("email"))}
+          >
             Edit
-          </GLButton>
+          </GLButtonV2>
         )}
       </div>
       {show_email ? (
-        <div className="w-100per">
+        <div className="w-100per mt-10px">
           {current_user && current_user.hasOwnProperty("first_name") ? (
             <div>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
@@ -131,7 +138,7 @@ const EmailStep = () => {
           )}
         </div>
       ) : (
-        <div className="wrap jc-b w-100per">
+        <div className="wrap jc-b w-100per mt-10px">
           <div className="paragraph_font lh-25px">
             <div>{shipping.email.toLowerCase()}</div>
           </div>

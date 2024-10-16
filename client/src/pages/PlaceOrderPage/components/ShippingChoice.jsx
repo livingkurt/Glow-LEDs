@@ -122,7 +122,7 @@ const ShippingChoice = () => {
         return (
           <div className="rate-container mv-1rem jc-b ai-c" key={index}>
             <div className="shipping_rates jc-b w-100per wrap">
-              <label className="service">
+              <div className="service">
                 {friendlyCarrier}: {friendlyService}
                 {rate.carrier === "USPS" && (
                   <Tooltip
@@ -133,10 +133,10 @@ const ShippingChoice = () => {
                     <Info fontSize="small" style={{ marginLeft: "8px" }} />
                   </Tooltip>
                 )}
-              </label>
+              </div>
               <div className="jc-b max-w-150px w-100per">
-                <label className="">{determine_service(rate)}</label>
-                <label> ${parseFloat(rate.rate).toFixed(2)} </label>
+                <div className="">{determine_service(rate)}</div>
+                <div> ${parseFloat(rate.rate).toFixed(2)} </div>
               </div>
             </div>
             <GLButton
