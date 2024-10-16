@@ -80,7 +80,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                 }}
               >
                 <Typography
-                  variant={isMobile ? "h5" : "h3"}
+                  variant="h2"
                   gutterBottom
                   sx={{
                     mb: 1,
@@ -89,7 +89,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                   {slide.label}
                 </Typography>
                 <Typography
-                  variant={isMobile ? "body2" : "subtitle1"}
+                  variant={"subtitle1"}
                   gutterBottom
                   sx={{
                     mb: 2,

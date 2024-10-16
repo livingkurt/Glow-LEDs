@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import SponsorsCard from "../../SponsorsGridPage/components/SponsorCard";
 
@@ -40,7 +40,7 @@ const SponsorsBanner = ({ sponsors }) => {
               },
             }}
           >
-            <SponsorsCard affiliate={sponsor} />
+            <SponsorsCard affiliate={sponsor} goHorizontal={false} />
           </Box>
         ))}
       </Box>

@@ -607,3 +607,109 @@
     display: none;
   }
 }
+
+// New breakpoints for h1-h6
+@media only screen and (min-width: 0px) and (max-width: 600px) {
+  h1 {
+    font-size: 3.6rem;
+  }
+  h2 {
+    font-size: 3rem;
+  }
+  h3 {
+    font-size: 2.4rem;
+  }
+  h4 {
+    font-size: 2.1rem;
+  }
+  h5 {
+    font-size: 1.8rem;
+  }
+  h6 {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  h1 {
+    font-size: 4.08rem;
+  }
+  h2 {
+    font-size: 3.4rem;
+  }
+  h3 {
+    font-size: 2.72rem;
+  }
+  h4 {
+    font-size: 2.38rem;
+  }
+  h5 {
+    font-size: 2.04rem;
+  }
+  h6 {
+    font-size: 1.7rem;
+  }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1200px) {
+  h1 {
+    font-size: 4.32rem;
+  }
+  h2 {
+    font-size: 3.6rem;
+  }
+  h3 {
+    font-size: 2.88rem;
+  }
+  h4 {
+    font-size: 2.52rem;
+  }
+  h5 {
+    font-size: 2.16rem;
+  }
+  h6 {
+    font-size: 1.8rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1536px) {
+  h1 {
+    font-size: 4.8rem;
+  }
+  h2 {
+    font-size: 4rem;
+  }
+  h3 {
+    font-size: 3.2rem;
+  }
+  h4 {
+    font-size: 2.8rem;
+  }
+  h5 {
+    font-size: 2.4rem;
+  }
+  h6 {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1536px) {
+  h1 {
+    font-size: 5.04rem;
+  }
+  h2 {
+    font-size: 4.2rem;
+  }
+  h3 {
+    font-size: 3.36rem;
+  }
+  h4 {
+    font-size: 2.94rem;
+  }
+  h5 {
+    font-size: 2.52rem;
+  }
+  h6 {
+    font-size: 2.1rem;
+  }
+}

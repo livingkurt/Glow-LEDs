@@ -24,12 +24,7 @@ const Banner = () => {
         >
           {!isLoading && (
             <Link to={link}>
-              <Typography
-                variant={isMobile ? "body2" : "subtitle1"}
-                fontSize={"12px"}
-                mt={isMobile ? "0px" : "5px"}
-                mx={1}
-              >
+              <Typography variant={"body2"} fontSize={"12px"} mt={isMobile ? "0px" : "5px"} mx={1}>
                 {label}
               </Typography>
             </Link>

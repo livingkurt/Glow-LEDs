@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Box, useMediaQuery, useTheme } from "@mu
 import { Link } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const SponsorCard = ({ affiliate }) => {
+const SponsorCard = ({ affiliate, goHorizontal = true }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -22,18 +22,18 @@ const SponsorCard = ({ affiliate }) => {
           },
           cursor: "pointer",
           borderRadius: "1rem",
-          display: isMobile ? "flex" : "block",
-          flexDirection: isMobile ? "row" : "column",
+          display: goHorizontal && isMobile ? "flex" : "block",
+          flexDirection: goHorizontal && isMobile ? "row" : "column",
         }}
         elevation={0}
       >
         <Box
           sx={{
             position: "relative",
-            paddingTop: isMobile ? "40%" : "100%", // Adjust this value for mobile
+            paddingTop: goHorizontal && isMobile ? "50%" : "100%", // Adjust this value for mobile
             overflow: "hidden",
             flexShrink: 0,
-            width: isMobile ? "40%" : "100%", // Adjust this value for mobile
+            width: goHorizontal && isMobile ? "50%" : "100%", // Adjust this value for mobile
             borderRadius: "1rem",
           }}
         >
@@ -51,13 +51,13 @@ const SponsorCard = ({ affiliate }) => {
           />
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+          <Typography variant={"h6"} color="white" gutterBottom>
             {affiliate.artist_name}
           </Typography>
 
           <Box display="flex" justifyContent="space-between">
             {!isMobile && (
-              <Typography variant={isMobile ? "body2" : "body1"} color="white">
+              <Typography variant={"body1"} color="white">
                 {affiliate?.user.first_name} {affiliate?.user.last_name}
               </Typography>
             )}

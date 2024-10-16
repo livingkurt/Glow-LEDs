@@ -33,6 +33,7 @@ const ArticleCard = ({ article }) => {
             flexShrink: 0,
             width: isMobile ? "50%" : "100%",
             borderRadius: "1rem",
+            aspectRatio: isMobile ? 1 : "16/9",
           }}
         >
           <GLLazyImage
@@ -50,10 +51,10 @@ const ArticleCard = ({ article }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+            <Typography variant={"h6"} color="white" gutterBottom>
               {article.title}
             </Typography>
-            <Typography variant={isMobile ? "body2" : "body1"} color="white" gutterBottom>
+            <Typography variant={"body1"} color="white" gutterBottom>
               by {article?.author ? article.author.first_name + " " + article.author.last_name : "Unknown Author"}
             </Typography>
             <Typography variant="body2" color="white" gutterBottom>
@@ -73,11 +74,6 @@ const ArticleCard = ({ article }) => {
                   />
                 ))}
           </Box>
-          {article.short_description && (
-            <Typography variant="body2" color="white" sx={{ mt: 2 }}>
-              {article.short_description.slice(0, 100)}...
-            </Typography>
-          )}
         </CardContent>
       </Card>
     </Link>

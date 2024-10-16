@@ -2,6 +2,11 @@ import { isSafari } from "react-device-detect";
 
 console.log({ isSafari });
 
+const breakpoints = {
+  keys: ["xs", "sm", "md", "lg", "xl"],
+  values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1500 },
+};
+
 const typography = {
   htmlFontSize: 16,
   fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -12,80 +17,193 @@ const typography = {
   fontWeightBold: 700,
   h1: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
-    fontSize: "96px",
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1,
     letterSpacing: "-0.66px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "3.6rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "4.08rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "4.32rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "4.8rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "5.04rem",
+    },
   },
   h2: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
-    fontSize: "60px",
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1,
     letterSpacing: "-0.5px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "3rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "3.4rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "3.6rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "4rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "4.2rem",
+    },
   },
   h3: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: isSafari ? 599 : 600,
-    fontSize: "48px",
     lineHeight: 1.02,
     letterSpacing: "0px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "2.4rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "2.72rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "2.88rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "3.2rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "3.36rem",
+    },
   },
   h4: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: isSafari ? 599 : 600,
-    fontSize: "34px",
     lineHeight: 1.15,
     letterSpacing: "0.07px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "2.1rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "2.38rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "2.52rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.8rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.94rem",
+    },
   },
   h5: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: isSafari ? 599 : 600,
-    fontSize: "24px",
     lineHeight: 1.33,
     letterSpacing: "0px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "1.8rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "2.04rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "2.16rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.4rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.52rem",
+    },
   },
   h6: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: isSafari ? 599 : 600,
-    fontSize: "20px",
     lineHeight: 1.6,
     letterSpacing: "0.07px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "1.5rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "1.7rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "1.8rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.1rem",
+    },
   },
+
   subtitle1: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
-    fontSize: "18px",
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.75,
     letterSpacing: "0.09px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "1.5rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "1.75rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "2rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.25rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2.5rem",
+    },
   },
   subtitle2: {
     fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 599 : 600,
-    fontSize: "14px",
+    fontWeight: isSafari ? 599 : 700,
     lineHeight: 1.57,
     letterSpacing: "0.07px",
+    [`@media only screen and (min-width:${breakpoints.values.xs}px) and (max-width:${breakpoints.values.sm}px)`]: {
+      fontSize: "1rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.sm}px) and (max-width:${breakpoints.values.md}px)`]: {
+      fontSize: "1.25rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.md}px) and (max-width:${breakpoints.values.lg}px)`]: {
+      fontSize: "1.5rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.lg}px) and (max-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "1.75rem",
+    },
+    [`@media only screen and (min-width:${breakpoints.values.xl}px)`]: {
+      fontSize: "2rem",
+    },
   },
   body1: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 399 : 400,
-    fontSize: "16px",
+    fontWeight: isSafari ? 399 : 600,
+    fontSize: "1.6rem",
     lineHeight: 1.5,
     letterSpacing: "0.09px",
   },
   body2: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 399 : 400,
-    fontSize: "14px",
+    fontWeight: isSafari ? 399 : 600,
     lineHeight: 1.43,
     letterSpacing: "0.1px",
+    fontSize: "1.6rem",
   },
   body3: {
     fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: isSafari ? 399 : 400,
-    fontSize: "146x",
+    fontWeight: isSafari ? 399 : 600,
     lineHeight: "3.4rem",
     letterSpacing: "0.1px",
+    fontSize: "1.6rem",
   },
   button: {
     fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -314,10 +432,7 @@ const shadows = [
 // };
 
 const theme = {
-  breakpoints: {
-    keys: ["xs", "sm", "md", "lg", "xl"],
-    values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1500 },
-  },
+  breakpoints,
   direction: "ltr",
   mixins: {},
   overrides: {

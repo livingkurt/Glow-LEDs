@@ -50,10 +50,10 @@ const TeamCard = ({ team }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={isMobile ? "body1" : "h6"} color="white" gutterBottom>
+            <Typography variant={"h6"} color="white" gutterBottom>
               {team.team_name}
             </Typography>
-            <Typography variant={isMobile ? "body2" : "body1"} color="white" gutterBottom>
+            <Typography variant={"body1"} color="white" gutterBottom>
               {team?.affiliates?.length} Members
             </Typography>
             <Typography variant="body2" color="white" gutterBottom>
