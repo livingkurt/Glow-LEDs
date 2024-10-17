@@ -39,7 +39,6 @@
     "prefer-arrow-callback": "off",
     // End rules that must be disabled for prettier integration to work
     "prettier/prettier": "error",
-    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
     "sort-imports": [
       "error",
       {
@@ -128,7 +127,6 @@
         "devDependencies": true
       }
     ],
-    "no-cycle": "off",
     "no-mixed-operators": "off",
     "function-paren-newline": "off",
     "space-before-function-paren": "off",
@@ -158,14 +156,6 @@
       }
     ]
   },
-  "overrides": [
-    {
-      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
-      "rules": {
-        "no-unused-vars": "off"
-      }
-    }
-  ],
   "settings": {
     "react": {
       "version": "16.14"
