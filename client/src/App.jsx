@@ -1,4 +1,4 @@
-import { createElement, useEffect } from "react";
+import React, { createElement, useEffect } from "react";
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -62,13 +62,25 @@ const App = () => {
                     {route.element === "PlaceOrderPage" ? (
                       <PlaceOrderLayout>
                         {createElement(
-                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                          PrivateComponents[route.element] ||
+                            (() => (
+                              <div>
+                                {"Component not found "}
+                                {route.element}{" "}
+                              </div>
+                            ))
                         )}
                       </PlaceOrderLayout>
                     ) : (
                       <MainLayout>
                         {createElement(
-                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                          PrivateComponents[route.element] ||
+                            (() => (
+                              <div>
+                                {"Component not found "}
+                                {route.element}{" "}
+                              </div>
+                            ))
                         )}
                       </MainLayout>
                     )}
@@ -83,10 +95,16 @@ const App = () => {
                 path={route.path}
                 exact={route.exact}
                 element={
-                  <ProtectedRoute isAdminRoute={true}>
+                  <ProtectedRoute isAdminRoute>
                     <MainLayout>
                       {createElement(
-                        AdminComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                        AdminComponents[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </MainLayout>
                   </ProtectedRoute>
@@ -103,13 +121,25 @@ const App = () => {
                   route.element === "PlaceOrderPage" ? (
                     <PlaceOrderLayout>
                       {createElement(
-                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                        Components[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </PlaceOrderLayout>
                   ) : (
                     <MainLayout>
                       {createElement(
-                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                        Components[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </MainLayout>
                   )
@@ -118,8 +148,8 @@ const App = () => {
             ))}
 
             <Route
-              path={"/"}
-              exact={true}
+              path="/"
+              exact
               element={
                 <MainLayout>
                   <HomePage />

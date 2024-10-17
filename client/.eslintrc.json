@@ -1,7 +1,14 @@
 {
   "root": true,
-  "extends": ["airbnb", "plugin:jest/recommended", "plugin:prettier/recommended", "plugin:jest-dom/recommended"],
-  "plugins": ["@babel", "jest", "prettier", "jest-dom"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ],
+  "plugins": ["@babel", "jest", "react", "prettier", "testing-library", "jest-dom"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -17,6 +24,10 @@
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true
+    },
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
     }
   },
   "rules": {
@@ -47,44 +58,55 @@
     "jsx-quotes": ["error", "prefer-double"],
     "prefer-object-spread": "error",
     "complexity": ["warn", 20],
-    "max-len": [
-      "warn",
-      {
-        "code": 120,
-        "ignoreComments": true,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
-      }
-    ],
+    // "max-len": [
+    //   "warn",
+    //   {
+    //     "code": 120,
+    //     "ignoreComments": true,
+    //     "ignoreUrls": true,
+    //     "ignoreStrings": true,
+    //     "ignoreTemplateLiterals": true,
+    //     "ignoreRegExpLiterals": true
+    //   }
+    // ],
     "max-nested-callbacks": ["warn", 4],
     "no-implicit-coercion": "warn",
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "always" }],
+    "react/no-access-state-in-setstate": "warn",
     // Temporarily removing this rule until codacy fixes the issues
     "import/no-unresolved": "off",
     // Temporarily removing this rule until codacy fixes the issues
     "import/order": "off",
+    // Probably want to set options for this
+    "react/sort-comp": "warn",
     // maximum depth that blocks can be nested
     "max-depth": ["warn", 4],
-    "max-lines": [
-      "warn",
+    // "max-lines": [
+    //   "warn",
+    //   {
+    //     "max": 800,
+    //     "skipBlankLines": true,
+    //     "skipComments": true
+    //   }
+    // ],
+    // "max-lines-per-function": [
+    //   "warn",
+    //   {
+    //     "max": 100,
+    //     "skipBlankLines": true,
+    //     "skipComments": true,
+    //     "IIFEs": true
+    //   }
+    // ],
+    // "max-statements": ["warn", 200],
+    // "max-classes-per-file": ["warn", 1],
+    // "semi": [2, "never"],
+    "react/prop-types": [
+      "error",
       {
-        "max": 800,
-        "skipBlankLines": true,
-        "skipComments": true
+        "ignore": ["intl", "data", "router", "children"]
       }
     ],
-    "max-lines-per-function": [
-      "warn",
-      {
-        "max": 100,
-        "skipBlankLines": true,
-        "skipComments": true,
-        "IIFEs": true
-      }
-    ],
-    "max-statements": ["warn", 200],
-    "max-classes-per-file": ["warn", 1],
     "no-param-reassign": [
       "error",
       {
@@ -92,6 +114,9 @@
         "ignorePropertyModificationsFor": ["state"]
       }
     ],
+    "react/jsx-no-literals": "off",
+    "react/no-unused-prop-types": "error",
+    "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "warn",
     "import/no-extraneous-dependencies": [
       "error",
@@ -104,11 +129,24 @@
     "space-before-function-paren": "off",
     "no-console": "error",
     "no-alert": "error",
-    "jest/no-mocks-import": "off",
+    "react/require-default-props": "error",
+    "react/forbid-prop-types": "off",
+    "react/function-component-definition": [
+      1,
+      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+    ],
     "no-else-return": "off",
     "no-use-before-define": ["error", { "variables": false }],
     "camelcase": "off",
-    "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__", "__typename"] }]
+    "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__", "__typename"] }],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "required": {
+          "every": ["id"]
+        }
+      }
+    ]
   },
   "settings": {
     "react": {
