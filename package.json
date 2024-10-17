@@ -90,7 +90,6 @@
     "test": "jest",
     "test:all": "npm --test-all",
     "test:backend": "npm test --config=jest.config.js",
-    "cypress:run": "cd client && npm run cypress:run",
     "g": "node server/scripts/generateMigration.js"
   },
   "engines": {

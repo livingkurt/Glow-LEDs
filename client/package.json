@@ -78,9 +78,7 @@
     "postbuild": "npm run generate-sitemap",
     "eject": "react-scripts eject",
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
-    "clean-install": "rm -rf client/node_modules client/package-lock.json && cd client && npm install",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "clean-install": "rm -rf client/node_modules client/package-lock.json && cd client && npm install"
   },
   "engines": {
     "node": "20.11.1",
@@ -108,10 +106,8 @@
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^14.4.3",
-    "cypress": "^13.10.0",
     "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-cypress": "^2.15.2",
     "jest-preview": "^0.3.1",
     "webpack": "^5.91.0"
   }
