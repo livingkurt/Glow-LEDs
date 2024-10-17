@@ -248,9 +248,6 @@ export default {
       const orders = [];
       let nonPreOrderOrder, preOrderOrder;
 
-      // Check if the order contains any pre-order items
-      const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
-
       if (splitOrder) {
         const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
 
@@ -272,11 +269,7 @@ export default {
           await preOrderOrder.save();
         }
       } else {
-        const createdOrder = await Order.create({
-          ...order,
-          user: userId,
-          status: hasPreOrderItems ? "paid_pre_order" : "paid", // Set status based on presence of pre-order items
-        });
+        const createdOrder = await Order.create({ ...order, user: userId });
         orders.push(createdOrder);
       }
 

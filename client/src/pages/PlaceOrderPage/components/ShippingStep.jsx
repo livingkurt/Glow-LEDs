@@ -234,38 +234,6 @@ const ShippingStep = () => {
     }
   };
 
-  const calculateEstimatedShippingTime = () => {
-    const today = new Date();
-
-    if (placeOrder.splitOrder) {
-      const inStockItems = cartItems.filter(item => !item.isPreOrder && item.itemType === "product");
-      const preOrderItems = cartItems.filter(item => item.isPreOrder && item.itemType === "product");
-
-      const inStockEstimate = Math.max(...inStockItems.map(item => item.processing_time[1]));
-
-      const preOrderReleaseDate = new Date(Math.max(...preOrderItems.map(item => new Date(item.preOrderReleaseDate))));
-      const daysUntilRelease = Math.ceil((preOrderReleaseDate - today) / (1000 * 60 * 60 * 24));
-      const preOrderEstimate =
-        Math.max(0, daysUntilRelease) + Math.max(...preOrderItems.map(item => item.processing_time[1]));
-
-      return {
-        inStock: inStockEstimate,
-        preOrder: preOrderEstimate,
-      };
-    } else {
-      const maxProcessingTime = Math.max(
-        ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
-      );
-
-      const preOrderReleaseDate = new Date(
-        Math.max(...cartItems.filter(item => item.isPreOrder).map(item => new Date(item.preOrderReleaseDate)))
-      );
-
-      const daysUntilRelease = Math.ceil((preOrderReleaseDate - today) / (1000 * 60 * 60 * 24));
-      return Math.max(0, daysUntilRelease) + maxProcessingTime;
-    }
-  };
-
   return (
     <div>
       <div className="jc-b mt-10px">
@@ -575,24 +543,17 @@ const ShippingStep = () => {
                 <>
                   <ShippingChoice />
                   {cartItems.some(item => item.processing_time) && (
-                    <>
-                      {placeOrder.splitOrder ? (
-                        <>
-                          <Typography variant="subtitle2" className="mb-0px mt-0px">
-                            Estimated Time to Ship (In-Stock Items): {calculateEstimatedShippingTime().inStock} business
-                            days
-                          </Typography>
-                          <Typography variant="subtitle2" className="mb-0px mt-0px">
-                            Estimated Time to Ship (Pre-Order Items): {calculateEstimatedShippingTime().preOrder}{" "}
-                            business days
-                          </Typography>
-                        </>
-                      ) : (
-                        <Typography variant="subtitle2" className="mb-0px mt-0px">
-                          Estimated Time to Ship: {calculateEstimatedShippingTime()} business days
-                        </Typography>
-                      )}
-                    </>
+                    <h6 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
+                      Estimated Time to Ship{" "}
+                      {Math.max(
+                        ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[0])
+                      )}{" "}
+                      -{" "}
+                      {Math.max(
+                        ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
+                      )}{" "}
+                      business days
+                    </h6>
                   )}
                 </>
               )}

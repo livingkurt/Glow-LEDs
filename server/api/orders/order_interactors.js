@@ -349,19 +349,14 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     const paymentIntent = await createPaymentIntent(customer, paymentInformation);
     const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
     await logStripeFeeToExpenses(confirmedPayment);
-
-    // Check if the order contains pre-order items
-    const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
-
-    // Update the order, maintaining "paid_pre_order" status if necessary
-    const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod, hasPreOrderItems);
-
+    const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod);
     return updatedOrder;
   } catch (error) {
     console.error("Error processing payment:", error);
     throw new Error("Failed to process payment");
   }
 };
+
 export const sendEmail = async (type, emailOptions) => {
   const emailTransporter = await createTransporter(type);
   try {
