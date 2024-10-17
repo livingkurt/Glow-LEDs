@@ -129,7 +129,6 @@ export default {
   },
   check_password_products_c: async (req, res) => {
     const { params, body } = req;
-    console.log("check_password_products_c", params, body);
     try {
       const product = await product_services.check_password_products_s(params, body);
       if (product) {
