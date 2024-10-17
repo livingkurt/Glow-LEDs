@@ -66,7 +66,7 @@ export default {
   },
   findByPathname_tutorials_db: async pathname => {
     try {
-      return await Tutorial.findOne({ pathname, deleted: false }).populate("affiliate").populate("tags");
+      return await Tutorial.findOne({ pathname: pathname, deleted: false }).populate("affiliate").populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

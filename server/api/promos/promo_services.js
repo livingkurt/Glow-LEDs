@@ -51,8 +51,9 @@ export default {
           totalPages: Math.ceil(count / parseInt(limit)),
           currentPage: page,
         };
+      } else {
+        throw new Error("Count is undefined");
       }
-      throw new Error("Count is undefined");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -236,8 +237,8 @@ export default {
     try {
       let o_filter = {};
       if (params.month && params.month.length > 0) {
-        const { start_date } = month_dates(params.month, params.year);
-        const { end_date } = month_dates(params.month, params.year);
+        const start_date = month_dates(params.month, params.year).start_date;
+        const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -247,8 +248,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = `${params.year}-01-01`;
-        const end_date = `${params.year}-12-31`;
+        const start_date = params.year + "-01-01";
+        const end_date = params.year + "-12-31";
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },

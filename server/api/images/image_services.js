@@ -53,7 +53,7 @@ export default {
         // Create new image
         const newImage = await image_db.create_images_db({
           link: convertedLink,
-          album,
+          album: album,
         });
 
         return newImage;

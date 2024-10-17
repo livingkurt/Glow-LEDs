@@ -2,7 +2,7 @@ import { User } from "./api/users";
 import config from "./config";
 
 const JwtStrategy = require("passport-jwt").Strategy;
-const { ExtractJwt } = require("passport-jwt");
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
 // dotenv.config();
 

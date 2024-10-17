@@ -95,8 +95,8 @@ export const generateSponsorCodes = async affiliate => {
       free_shipping: true,
       affiliate: affiliate._id,
       time_limit: true,
-      start_date,
-      end_date,
+      start_date: start_date,
+      end_date: end_date,
       active: true,
     };
     const refresh_private_code = {
@@ -114,8 +114,8 @@ export const generateSponsorCodes = async affiliate => {
       free_shipping: true,
       include: true,
       time_limit: true,
-      start_date,
-      end_date,
+      start_date: start_date,
+      end_date: end_date,
       active: true,
     };
     const refresh_pack_code = await promo_db.create_promos_db(refresh_private_code);

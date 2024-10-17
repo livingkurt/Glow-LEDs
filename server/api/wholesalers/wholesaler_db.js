@@ -27,7 +27,7 @@ export default {
   },
   findByPathname_wholesalers_db: async pathname => {
     try {
-      return await Wholesaler.findOne({ pathname, deleted: false }).populate("user");
+      return await Wholesaler.findOne({ pathname: pathname, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

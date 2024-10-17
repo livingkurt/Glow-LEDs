@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import NumberFormat from "react-number-format";
+import React from 'react';
+import PropTypes from 'prop-types';
+import NumberFormat from 'react-number-format';
 
 const PhoneNumberFormat = props => {
   const { inputRef, onChange, name, ...other } = props;

@@ -1,11 +1,11 @@
-@use "../abstracts" as *;
+@use '../abstracts' as *;
 
 /* Style Settings */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
 
 :root {
-  --transition-time: 10s;
-  --transition-color: rgba(150, 100, 80, 1);
+	--transition-time: 10s;
+	--transition-color: rgba(150, 100, 80, 1);
 }
 
 // body {
@@ -15,121 +15,115 @@
 // }
 
 #userPhoto {
-  width: 100px;
-  height: 100px;
-  display: block;
-  margin: 10px auto;
-  border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin: 10px auto;
+	border-radius: 50%;
 }
 
 #userName {
-  color: #fff;
-  display: block;
-  width: 100%;
-  text-align: center;
-  text-decoration: none;
+	color: #fff;
+	display: block;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
 }
 
 #userName h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  letter-spacing: 0.2rem;
-  margin: 0 auto;
+	font-size: 2rem;
+	font-weight: 300;
+	letter-spacing: 0.2rem;
+	margin: 0 auto;
 }
 
 #userName p {
-  font-weight: 300;
-  margin-top: 5px;
-  text-transform: none;
+	font-weight: 300;
+	margin-top: 5px;
+	text-transform: none;
 }
 
 i.fa {
-  margin-right: 0.3rem;
+	margin-right: 0.3rem;
 }
 
 #links {
-  max-width: 500px;
-  width: auto;
-  display: block;
-  margin: 20px auto;
+	max-width: 500px;
+	width: auto;
+	display: block;
+	margin: 20px auto;
 }
 
 .link {
-  display: block;
-  background-color: rgba(66, 110, 255, 0.2);
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 17px;
-  text-decoration: none;
-  font-size: 1.6rem;
-  font-weight: 300;
-  transition: all 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99);
-  border-radius: 10px;
+	display: block;
+	background-color: rgba(66, 110, 255, 0.2);
+	color: #333;
+	text-align: center;
+	margin-bottom: 20px;
+	padding: 17px;
+	text-decoration: none;
+	font-size: 1.6rem;
+	font-weight: 300;
+	transition: all 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99);
+	border-radius: 10px;
 
-  background-color: #aaa;
-  border: 1px solid transparent;
-  border-color: #b33434;
-  -webkit-box-shadow: 0 0 10px #b33434;
-  -moz-box-shadow: 0 0 10px #b33434;
-  box-shadow: 0 0 10px #b33434;
-  // -webkit-animation: glow var(--transition-time) infinite alternate;
-  -webkit-transition:
-    border var(--transition-time) linear,
-    box-shadow var(--transition-time) linear;
-  -moz-transition:
-    border var(--transition-time) linear,
-    box-shadow var(--transition-time) linear;
-  transition:
-    border var(--transition-time) linear,
-    box-shadow var(--transition-time) linear;
-  transition: transform 0.2s; /* Animation */
+	background-color: #aaa;
+	border: 1px solid transparent;
+	border-color: #b33434;
+	-webkit-box-shadow: 0 0 10px #b33434;
+	-moz-box-shadow: 0 0 10px #b33434;
+	box-shadow: 0 0 10px #b33434;
+	// -webkit-animation: glow var(--transition-time) infinite alternate;
+	-webkit-transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
+	-moz-transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
+	transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
+	transition: transform .2s; /* Animation */
 }
 
 .link:hover {
-  background-color: rgba(255, 255, 255, 1);
-  color: #000000;
-  // border: none;
-  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	background-color: rgba(255, 255, 255, 1);
+	color: #000000;
+	// border: none;
+	transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 @keyframes glow {
-  0% {
-    border-color: #b33434;
-    -webkit-box-shadow: 0 0 10px #b33434;
-    -moz-box-shadow: 0 0 10px #b33434;
-    box-shadow: 0 0 10px #b33434;
-  }
-  20% {
-    border-color: #bfbf26;
-    -webkit-box-shadow: 0 0 10px #bfbf26;
-    -moz-box-shadow: 0 0 10px #bfbf26;
-    box-shadow: 0 0 10px #bfbf26;
-  }
-  40% {
-    border-color: #2bc92b;
-    -webkit-box-shadow: 0 0 10px #2bc92b;
-    -moz-box-shadow: 0 0 10px #2bc92b;
-    box-shadow: 0 0 10px #2bc92b;
-  }
-  60% {
-    border-color: #27bfbf;
-    -webkit-box-shadow: 0 0 10px #27bfbf;
-    -moz-box-shadow: 0 0 10px #27bfbf;
-    box-shadow: 0 0 10px #27bfbf;
-  }
-  80% {
-    border-color: #2a2ab5;
-    -webkit-box-shadow: 0 0 10px #2a2ab5;
-    -moz-box-shadow: 0 0 10px #2a2ab5;
-    box-shadow: 0 0 10px #2a2ab5;
-  }
-  100% {
-    border-color: #bd28bd;
-    -webkit-box-shadow: 0 0 10px #bd28bd;
-    -moz-box-shadow: 0 0 10px #bd28bd;
-    box-shadow: 0 0 10px #bd28bd;
-  }
+	0% {
+		border-color: #b33434;
+		-webkit-box-shadow: 0 0 10px #b33434;
+		-moz-box-shadow: 0 0 10px #b33434;
+		box-shadow: 0 0 10px #b33434;
+	}
+	20% {
+		border-color: #bfbf26;
+		-webkit-box-shadow: 0 0 10px #bfbf26;
+		-moz-box-shadow: 0 0 10px #bfbf26;
+		box-shadow: 0 0 10px #bfbf26;
+	}
+	40% {
+		border-color: #2bc92b;
+		-webkit-box-shadow: 0 0 10px #2bc92b;
+		-moz-box-shadow: 0 0 10px #2bc92b;
+		box-shadow: 0 0 10px #2bc92b;
+	}
+	60% {
+		border-color: #27bfbf;
+		-webkit-box-shadow: 0 0 10px #27bfbf;
+		-moz-box-shadow: 0 0 10px #27bfbf;
+		box-shadow: 0 0 10px #27bfbf;
+	}
+	80% {
+		border-color: #2a2ab5;
+		-webkit-box-shadow: 0 0 10px #2a2ab5;
+		-moz-box-shadow: 0 0 10px #2a2ab5;
+		box-shadow: 0 0 10px #2a2ab5;
+	}
+	100% {
+		border-color: #bd28bd;
+		-webkit-box-shadow: 0 0 10px #bd28bd;
+		-moz-box-shadow: 0 0 10px #bd28bd;
+		box-shadow: 0 0 10px #bd28bd;
+	}
 }
 // @keyframes glow {
 // 	0% {
@@ -171,32 +165,28 @@ i.fa {
 // }
 
 .glow_leds_text_links {
-  font-size: 67px;
-  margin: 0;
-  text-align: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 10px;
-  margin-top: 17px;
-  display: flex;
-  font-family: $heading_font;
-  // text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  text-shadow:
-    0 0 10px #fff,
-    0 0 30px;
+	font-size: 67px;
+	margin: 0;
+	text-align: center;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 10px;
+	margin-top: 17px;
+	display: flex;
+	font-family: $heading_font;
+	// text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+	text-shadow: 0 0 10px #fff, 0 0 30px;
 }
 .make_it_glow_text_links {
-  font-size: 67px;
-  margin: 0;
-  text-align: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 10px;
-  margin-top: 17px;
-  display: flex;
-  font-family: $heading_font;
-  // text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  text-shadow:
-    0 0 10px #fff,
-    0 0 30px;
+	font-size: 67px;
+	margin: 0;
+	text-align: center;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 10px;
+	margin-top: 17px;
+	display: flex;
+	font-family: $heading_font;
+	// text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+	text-shadow: 0 0 10px #fff, 0 0 30px;
 }

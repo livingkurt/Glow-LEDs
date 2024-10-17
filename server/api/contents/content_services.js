@@ -72,8 +72,9 @@ export default {
           totalPages: Math.ceil(count / parseInt(limit)),
           currentPage: page,
         };
+      } else {
+        throw new Error("Count is undefined");
       }
-      throw new Error("Count is undefined");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

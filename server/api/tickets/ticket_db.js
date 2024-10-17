@@ -39,7 +39,7 @@ export default {
   },
   findByPathname_tickets_db: async pathname => {
     try {
-      return await Ticket.findOne({ pathname, deleted: false })
+      return await Ticket.findOne({ pathname: pathname, deleted: false })
         .populate("image")
         .populate({
           path: "backup_ticket",

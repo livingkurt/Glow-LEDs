@@ -23,9 +23,10 @@ export const createOrUpdateCustomer = async current_userrmation => {
     if (error.code === "resource_already_exists") {
       const existingCustomer = await stripe.customers.retrieve(error.raw.requestId);
       return existingCustomer;
-    }
-    if (error instanceof Error) {
-      throw new Error(error.message);
+    } else {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

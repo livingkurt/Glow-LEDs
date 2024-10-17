@@ -25,7 +25,7 @@ export default {
   },
   findByName_chips_db: async name => {
     try {
-      return await Chip.findOne({ name, deleted: false });
+      return await Chip.findOne({ name: name, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

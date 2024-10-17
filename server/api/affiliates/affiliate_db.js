@@ -38,7 +38,7 @@ export default {
   },
   findByPathname_affiliates_db: async pathname => {
     try {
-      return await Affiliate.findOne({ pathname, deleted: false })
+      return await Affiliate.findOne({ pathname: pathname, deleted: false })
         .populate("user")
         .populate("chips")
         .populate({ path: "products", populate: { path: "images" } })

@@ -6,22 +6,20 @@
   <!-- <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1> -->
 </p>
 
+
 # Inspiration
 
-I have been facinated with LEDs ever since I saw my first light show back in early 2014, and always wanted the top of the line gloves so that I could customize the modes as much as possible. I've noticed that led diffusers have not made any significant advancements and feel little bored with what is avaiable. So then I bought my Prusa i3 MK3s 3D printer, and got to work developing what I call **\_\_\_** (To Be Announced)!
+I have been facinated with LEDs ever since I saw my first light show back in early 2014, and always wanted the top of the line gloves so that I could customize the modes as much as possible. I've noticed that led diffusers have not made any significant advancements and feel little bored with what is avaiable. So then I bought my Prusa i3 MK3s 3D printer, and got to work developing what I call _______ (To Be Announced)!
 
 # Features
 
 ### Admin
-
 - Add a Product
 - Edit a Product
 - Delete a Product
 - View Orders
 - Mark Orders and Shipped and Delivered
-
 ### User
-
 - Create an Account
 - View Products
 - View Cart
@@ -33,6 +31,7 @@ I have been facinated with LEDs ever since I saw my first light show back in ear
 - Recieve Email Notifications based on order and account status
 - Account Verification via Email Link
 - Forgot your Password Flow
+
 
 # Installation
 
@@ -78,6 +77,7 @@ So that the display email will be formatted correctly
 
 DISPLAY_EMAIL='"Name" <email@email.com>'
 
+
 Run App
 
 ```shell
@@ -104,6 +104,7 @@ npm start
 - redux-thunk
 - validator
 
+
 ## Back End
 
 - Node.js
@@ -114,6 +115,7 @@ npm start
 - bcryptjs
 - body-parser
 - jsonwebtoken
+
 
 # Pictures
 

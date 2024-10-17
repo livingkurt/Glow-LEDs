@@ -3,17 +3,8 @@ import React, { forwardRef } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 
 function ReactGoogleAutocomplete(props) {
-  const {
-    onPlaceSelected,
-    apiKey,
-    libraries,
-    inputAutocompleteValue,
-    options,
-    googleMapsScriptBaseUrl,
-    refProp,
-    language,
-    ...rest
-  } = props;
+  const { onPlaceSelected, apiKey, libraries, inputAutocompleteValue, options, googleMapsScriptBaseUrl, refProp, language, ...rest } =
+    props;
 
   const { ref } = usePlacesWidget({
     ref: refProp,
@@ -23,7 +14,7 @@ function ReactGoogleAutocomplete(props) {
     libraries,
     inputAutocompleteValue,
     options,
-    language,
+    language
   });
 
   return <input ref={ref} {...rest} id="autocomplete_single" />;

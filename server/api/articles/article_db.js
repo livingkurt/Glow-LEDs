@@ -70,7 +70,10 @@ export default {
   },
   findByPathname_articles_db: async pathname => {
     try {
-      return await Article.findOne({ pathname, deleted: false }).populate("author").populate("tags").populate("image");
+      return await Article.findOne({ pathname: pathname, deleted: false })
+        .populate("author")
+        .populate("tags")
+        .populate("image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

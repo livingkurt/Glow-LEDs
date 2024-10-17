@@ -6,7 +6,7 @@ const options = {
   savePath: "temp",
   format: "png",
   width: 600,
-  height: 600,
+  height: 600
 };
 const storeAsImage = fromPath("temp/mUlT65fl6_hcSnL3VU05hRNCYRZd1d_HV1OjL_FgsnQ.pdf", options);
 const pageToConvertAsImage = 1;

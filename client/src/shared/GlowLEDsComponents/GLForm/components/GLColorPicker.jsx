@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { SketchPicker } from "react-color";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Grid, Box, TextField } from "@mui/material";
@@ -57,19 +56,6 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
       </Grid>
     </Grid>
   );
-};
-
-GLColorPicker.propTypes = {
-  fieldName: PropTypes.string.isRequired,
-  fieldState: PropTypes.string,
-  fieldData: PropTypes.object.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  localState: PropTypes.object.isRequired,
-  setLocalState: PropTypes.func.isRequired,
-};
-
-GLColorPicker.defaultProps = {
-  fieldState: "",
 };
 
 export default GLColorPicker;

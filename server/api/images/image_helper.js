@@ -66,7 +66,7 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
       ...data.getHeaders(),
     },
     params: { album: albumDeletehash },
-    data,
+    data: data,
   };
 
   try {
@@ -83,14 +83,15 @@ export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
 export const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
-  fileFilter(req, file, cb) {
+  fileFilter: function (req, file, cb) {
     const fileTypes = /jpeg|jpg|png|gif/;
     const mimeType = fileTypes.test(file.mimetype);
     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
     if (mimeType && extName) {
       return cb(null, true);
+    } else {
+      cb(new Error("Error: Images only!"));
     }
-    cb(new Error("Error: Images only!"));
   },
 });
 
@@ -113,7 +114,7 @@ export const createImgurAlbum = async (albumName, imageHash) => {
       Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
       ...data.getHeaders(),
     },
-    data,
+    data: data,
   };
 
   try {

@@ -67,7 +67,7 @@ export default {
   },
   findByCode_promos_db: async promo_code => {
     try {
-      return await Promo.findOne({ promo_code, deleted: false })
+      return await Promo.findOne({ promo_code: promo_code, deleted: false })
         .populate("affiliate")
         .populate("user")
         .populate("excluded_categories")
