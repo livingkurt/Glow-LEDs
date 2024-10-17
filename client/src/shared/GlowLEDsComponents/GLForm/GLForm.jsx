@@ -78,7 +78,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       {formData &&
         Object.keys(formData).map(fieldName => {
           const fieldData = formData[fieldName];
-          let fieldState = localState[fieldName] ?? {};
+          const fieldState = localState[fieldName] ?? {};
           if (loading) {
             if (fieldData.type === "checkbox") {
               return (
@@ -117,7 +117,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   : fieldState;
 
                 return (
-                  <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"space-between"}>
+                  <Box display="flex" flexDirection="column" gap={1} justifyContent="space-between">
                     <GLAutocomplete
                       key={`${fieldName}-${fieldData.type}`}
                       autoComplete="new-password"
@@ -167,18 +167,19 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       <>
                         {selected?.name && (
                           <Button
-                            variant={"contained"}
+                            variant="contained"
                             fullWidth
                             onClick={() => {
                               fieldData.onEditButtonClick(selected);
                             }}
                           >
-                            Edit {selected?.name}
+                            {"Edit "}
+                            {selected?.name}
                           </Button>
                         )}
                         <Button
-                          variant={"contained"}
-                          color={"secondary"}
+                          variant="contained"
+                          color="secondary"
                           fullWidth
                           onClick={() => {
                             fieldData.onCreateNewButtonClick({
@@ -189,7 +190,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                             });
                           }}
                         >
-                          New Based On {selected?.name}
+                          {"New Based On "}
+                          {selected?.name}
                         </Button>
                       </>
                     )}
@@ -450,7 +452,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     margin="normal"
                     size="small"
                     fullWidth
-                    type={"datetime-local"}
+                    type="datetime-local"
                     label={fieldData.label}
                     variant="outlined"
                     value={formatDateTimeLocal(fieldState)}
@@ -576,7 +578,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   />
                 );
               default:
-                return <div></div>;
+                return <div />;
             }
           }
         })}

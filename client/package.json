@@ -105,10 +105,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/eslint-parser": "^7.25.8",
     "@babel/eslint-plugin": "^7.25.7",
+    "@babel/preset-env": "^7.25.8",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^14.4.3",
+    "babel-eslint": "^10.1.0",
     "cypress": "^13.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-jest-enzyme": "^7.1.2",
