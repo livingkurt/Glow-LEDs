@@ -32,7 +32,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
   const [localState, setLocalState] = useState({});
 
   useEffect(() => {
-    setLocalState(state);
+    if (state !== localState) {
+      setLocalState(state);
+    }
   }, [state]);
 
   const determineOptions = (fieldData, fieldState) => {
@@ -45,9 +47,13 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
 
   const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
 
-  const handleInputChange = (fieldName, value) => {
+  const handleInputChange = (fieldName, value, fieldType) => {
     setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
-    debouncedOnChange({ [fieldName]: value }, fieldName);
+    if (fieldType === "text" || fieldType === "text_multiline" || fieldType === "number") {
+      onChange({ [fieldName]: value }, fieldName);
+    } else {
+      debouncedOnChange({ [fieldName]: value }, fieldName);
+    }
   };
 
   const [tabIndex, setTabIndex] = useState(0);
