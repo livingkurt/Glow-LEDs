@@ -128,6 +128,7 @@
         "devDependencies": true
       }
     ],
+    "no-cycle": "off",
     "no-mixed-operators": "off",
     "function-paren-newline": "off",
     "space-before-function-paren": "off",
