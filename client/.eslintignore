@@ -1,0 +1,13 @@
+/node_modules/
+/build/
+/public/
+/src/scss/
+*.config.js
+*.d.ts
+*.json
+*.md
+*.css
+src/react-app-env.d.js
+src/custom.d.js
+src/serviceWorker.js
+src/setupTests.js
