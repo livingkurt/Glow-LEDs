@@ -1,6 +1,7 @@
 const rewireReactHotLoader = require("react-app-rewire-hot-loader");
 const { override, addBabelPlugin, addWebpackPlugin } = require("customize-cra");
 const webpack = require("webpack");
+const path = require("path");
 
 module.exports = override(
   addBabelPlugin(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]),
@@ -51,6 +52,20 @@ module.exports = override(
     config.stats = {
       warningsFilter: /source-map/,
     };
+
+    const eslintRule = config.module.rules.find(
+      rule => rule.use && rule.use.some(use => use.loader && use.loader.includes("eslint-loader"))
+    );
+
+    if (eslintRule) {
+      eslintRule.use.forEach(use => {
+        if (use.loader && use.loader.includes("eslint-loader")) {
+          use.options.useEslintrc = true;
+          use.options.ignore = true;
+          use.options.configFile = path.resolve(__dirname, "../.eslintrc.json");
+        }
+      });
+    }
 
     return config;
   }

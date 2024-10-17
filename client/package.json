@@ -78,7 +78,8 @@
     "postbuild": "npm run generate-sitemap",
     "eject": "react-scripts eject",
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
-    "clean-install": "rm -rf client/node_modules client/package-lock.json && cd client && npm install"
+    "clean-install": "rm -rf client/node_modules client/package-lock.json && cd client && npm install",
+    "lint": "eslint 'src/**/*.{js,jsx}' --cache"
   },
   "engines": {
     "node": "20.11.1",
@@ -103,11 +104,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-plugin": "^7.25.7",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^14.4.3",
     "eslint": "^8.0.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-jest-enzyme": "^7.1.2",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
+    "eslint-import-resolver-webpack": "^0.13.9",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-testing-library": "^6.3.0",
     "jest-preview": "^0.3.1",
     "webpack": "^5.91.0"
   }
