@@ -47,10 +47,10 @@ export const make_private_code = length => {
 // };
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, "tmp/");
   },
-  filename: function (req, file, cb) {
+  filename(req, file, cb) {
     const fileExtension = path.extname(file.originalname);
     const fileName = uuidv4() + fileExtension;
     cb(null, fileName);
@@ -59,9 +59,9 @@ const storage = multer.diskStorage({
 
 // Set up multer middleware for handling file uploads
 export const upload = multer({
-  storage: storage,
+  storage,
   limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
-  fileFilter: function (req, file, cb) {
+  fileFilter(req, file, cb) {
     const fileTypes = /jpeg|jpg|png|gif/;
     const mimeType = fileTypes.test(file.mimetype);
     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -103,9 +103,8 @@ export const snake_case = str => {
 
     if (snake_case.substr(-1) === ")") {
       return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_").slice(0, -1);
-    } else {
-      return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
     }
+    return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
   }
 };
 
@@ -214,29 +213,28 @@ export const determine_filter = (query, search) => {
   Object.entries(query).forEach(item => {
     if (item[0] === "search" || item[0] === "limit" || item[0] === "page" || item[0] === "sort") {
       return {};
-    } else {
-      if (item[0] === "sale" && item[1] === "true") {
-        filter.$or = [
-          {
-            sale_price: {
-              $gt: 0,
-            },
+    }
+    if (item[0] === "sale" && item[1] === "true") {
+      filter.$or = [
+        {
+          sale_price: {
+            $gt: 0,
           },
-          {
-            previous_price: {
-              $gt: 0,
-            },
+        },
+        {
+          previous_price: {
+            $gt: 0,
           },
-        ];
-      } else if (item[1]) {
-        if (item[0] === "chip") {
-          filter["chips"] = { $in: [item[1]] };
-        } else {
-          filter[item[0]] = item[1];
-        }
+        },
+      ];
+    } else if (item[1]) {
+      if (item[0] === "chip") {
+        filter["chips"] = { $in: [item[1]] };
       } else {
-        return {};
+        filter[item[0]] = item[1];
       }
+    } else {
+      return {};
     }
   });
 
@@ -290,74 +288,74 @@ export const month_dates = (month, year) => {
     january: {
       month: "january",
       number_of_days: 31,
-      start_date: year + "-01-01",
-      end_date: year + "-02-01",
+      start_date: `${year}-01-01`,
+      end_date: `${year}-02-01`,
     },
     february: {
       month: "february",
       number_of_days: 28,
-      start_date: year + "-02-01",
-      end_date: year + "-03-01",
+      start_date: `${year}-02-01`,
+      end_date: `${year}-03-01`,
     },
     march: {
       month: "march",
       number_of_days: 31,
-      start_date: year + "-03-01",
-      end_date: year + "-04-01",
+      start_date: `${year}-03-01`,
+      end_date: `${year}-04-01`,
     },
     april: {
       month: "april",
       number_of_days: 30,
-      start_date: year + "-04-01",
-      end_date: year + "-05-01",
+      start_date: `${year}-04-01`,
+      end_date: `${year}-05-01`,
     },
     may: {
       month: "may",
       number_of_days: 31,
-      start_date: year + "-05-01",
-      end_date: year + "-06-01",
+      start_date: `${year}-05-01`,
+      end_date: `${year}-06-01`,
     },
     june: {
       month: "june",
       number_of_days: 30,
-      start_date: year + "-06-01",
-      end_date: year + "-07-01",
+      start_date: `${year}-06-01`,
+      end_date: `${year}-07-01`,
     },
     july: {
       month: "july",
       number_of_days: 31,
-      start_date: year + "-07-01",
-      end_date: year + "-08-01",
+      start_date: `${year}-07-01`,
+      end_date: `${year}-08-01`,
     },
     august: {
       month: "august",
       number_of_days: 31,
-      start_date: year + "-08-01",
-      end_date: year + "-09-01",
+      start_date: `${year}-08-01`,
+      end_date: `${year}-09-01`,
     },
     september: {
       month: "september",
       number_of_days: 30,
-      start_date: year + "-09-01",
-      end_date: year + "-10-01",
+      start_date: `${year}-09-01`,
+      end_date: `${year}-10-01`,
     },
     october: {
       month: "october",
       number_of_days: 31,
-      start_date: year + "-10-01",
-      end_date: year + "-11-01",
+      start_date: `${year}-10-01`,
+      end_date: `${year}-11-01`,
     },
     november: {
       month: "november",
       number_of_days: 30,
-      start_date: year + "-11-01",
-      end_date: year + "-12-01",
+      start_date: `${year}-11-01`,
+      end_date: `${year}-12-01`,
     },
     december: {
       month: "december",
       number_of_days: 31,
-      start_date: year + "-12-01",
-      end_date: parseInt(year) + 1 + "-01-01",
+      start_date: `${year}-12-01`,
+      end_date: `${parseInt(year) + 1}-01-01`,
     },
   };
   return month_date[month];
@@ -387,8 +385,8 @@ export const removeDuplicates = (originalArray, prop) => {
 
 export const format_date = isoDateString => {
   const date = new Date(isoDateString);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
-  const day = ("0" + date.getDate()).slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2); // Months are zero indexed, so +1
+  const day = `0${date.getDate()}`.slice(-2);
   const year = date.getFullYear();
   return `${month}/${day}/${year}`;
 };
@@ -454,9 +452,8 @@ export const determin_card_logo_images_white = card_type => {
 const determine_preorder = product => {
   if (product.preorder) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 export const email_sale_price_switch = (item, color, wholesaler) => {
@@ -480,11 +477,10 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 				</del>${" "}
 				${"-->"} <label style='${`color: ${color}; margin-left: 7px;`}'>Sold Out</label>
 			</label>`;
-  } else {
-    return `<label>
+  }
+  return `<label>
 				${determine_preorder(item) ? "Preorder " : ""} $${item.price && (item.price * item.quantity).toFixed(2)}
 			</label>`;
-  }
 };
 const included_for_option_name = ["diffusers"];
 const determine_option_show_modifier = item => {
@@ -492,10 +488,10 @@ const determine_option_show_modifier = item => {
 };
 
 const quantity = (item, show_quantity) => {
-  return show_quantity && item.quantity > 1 ? item.quantity + "x" : "";
+  return show_quantity && item.quantity > 1 ? `${item.quantity}x` : "";
 };
 const color = item => {
-  return item.color ? item.color + " " : "";
+  return item.color ? `${item.color} ` : "";
 };
 
 const size = item => {
@@ -511,7 +507,7 @@ const secondary_color = item => {
 };
 const secondary_color_name = item => {
   const secondary_color_name = item.secondary_color_group_name
-    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    ? `${item.secondary_color_group_name.split(" ")[0]}s`
     : "";
   if (item.category === "gloves") {
     return secondary_color_name;
@@ -640,9 +636,8 @@ export const determine_secondary_product_name = (name, item) => {
     return name.split(" ")[1].trim();
   } else if (name.includes("Capez")) {
     return name.replace(" Capez", "");
-  } else {
-    return name.includes("-") ? name.split("-")[1].trim() : name;
   }
+  return name.includes("-") ? name.split("-")[1].trim() : name;
 };
 
 export const order_status_steps = (order, status) => {
@@ -752,9 +747,8 @@ export const determine_tracking_carrier = tracking_number => {
     return "DHL";
   } else if (tracking_number.startsWith("CJ")) {
     return "USPS";
-  } else {
-    return "USPS";
   }
+  return "USPS";
 };
 
 export const determine_tracking_link = tracking_number => {
@@ -774,9 +768,8 @@ export const determine_tracking_link = tracking_number => {
     return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
   } else if (tracking_number.startsWith("CJ")) {
     return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
-  } else {
-    return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
   }
+  return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
 };
 
 export const months = [

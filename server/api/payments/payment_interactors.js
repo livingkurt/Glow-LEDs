@@ -23,10 +23,9 @@ export const createOrUpdateCustomer = async current_userrmation => {
     if (error.code === "resource_already_exists") {
       const existingCustomer = await stripe.customers.retrieve(error.raw.requestId);
       return existingCustomer;
-    } else {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+    }
+    if (error instanceof Error) {
+      throw new Error(error.message);
     }
   }
 };
@@ -65,9 +64,14 @@ export const confirmPaymentIntent = async (result, paymentMethodId) => {
 };
 
 // Function to confirm a payment intent
-export const updateOrder = async (order, confirmedPayment, paymentMethod) => {
+// Function to update order after payment confirmation
+export const updateOrder = async (order, confirmedPayment, paymentMethod, hasPreOrderItems) => {
   try {
-    order.status = "paid";
+    // If the order already has "paid_pre_order" status or contains pre-order items, keep that status
+    if (order.status !== "paid_pre_order" && !hasPreOrderItems) {
+      order.status = "paid";
+    }
+
     order.paidAt = Date.now();
     order.payment = {
       paymentMethod: "stripe",
@@ -82,7 +86,6 @@ export const updateOrder = async (order, confirmedPayment, paymentMethod) => {
     }
   }
 };
-
 // Function to confirm a payment intent
 export const logStripeFeeToExpenses = async confirmedResult => {
   try {

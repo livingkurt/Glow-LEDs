@@ -177,8 +177,8 @@ export default {
           : {};
       }
       const sort_query = query.sort && query.sort.toLowerCase();
-      let sort = { createdAt: -1 };
-      let filter = { deleted: false, status: sort_query };
+      const sort = { createdAt: -1 };
+      const filter = { deleted: false, status: sort_query };
       const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, limit, page);
       const count = await order_db.count_orders_db({ ...filter, ...search });
       if (count !== undefined) {
@@ -187,9 +187,8 @@ export default {
           totalPages: Math.ceil(count / parseInt(limit)),
           currentPage: page,
         };
-      } else {
-        throw new Error("Count is undefined");
       }
+      throw new Error("Count is undefined");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -246,8 +245,11 @@ export default {
         userId = await handleUserCreation(order.shipping, create_account, new_password);
       }
 
-      let orders = [];
+      const orders = [];
       let nonPreOrderOrder, preOrderOrder;
+
+      // Check if the order contains any pre-order items
+      const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
 
       if (splitOrder) {
         const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
@@ -270,7 +272,11 @@ export default {
           await preOrderOrder.save();
         }
       } else {
-        const createdOrder = await Order.create({ ...order, user: userId });
+        const createdOrder = await Order.create({
+          ...order,
+          user: userId,
+          status: hasPreOrderItems ? "paid_pre_order" : "paid", // Set status based on presence of pre-order items
+        });
         orders.push(createdOrder);
       }
 
@@ -371,9 +377,9 @@ export default {
           const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 }, "0", "1");
           const amount = orders.reduce((total, c) => parseFloat(total) + parseFloat(c.totalPrice), 0);
           return {
-            user: user,
+            user,
             number_of_orders: orders.length,
-            amount: amount,
+            amount,
           };
         })
       );
@@ -454,8 +460,8 @@ export default {
       // };
 
       if (query.month && query.month.length > 0) {
-        const start_date = month_dates(query.month, query.year).start_date;
-        const end_date = month_dates(query.month, query.year).end_date;
+        const { start_date } = month_dates(query.month, query.year);
+        const { end_date } = month_dates(query.month, query.year);
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -466,8 +472,8 @@ export default {
           },
         };
       } else if (query.year && query.year.length > 0) {
-        const start_date = query.year + "-01-01";
-        const end_date = query.year + "-12-31";
+        const start_date = `${query.year}-01-01`;
+        const end_date = `${query.year}-12-31`;
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -520,17 +526,16 @@ export default {
       if (taxInfo && taxInfo.rate !== undefined) {
         // Constructing an object with relevant tax information
         const result = {
-          state: state,
-          country: country,
+          state,
+          country,
           taxRate: `${taxInfo.rate * 100}%`,
           type: taxInfo.type, // Assuming you might be interested in the type of tax (VAT, GST, etc.)
           area: taxInfo.area, // Useful if you want to know the tax jurisdiction area (national, regional, worldwide)
         };
 
         return result;
-      } else {
-        return { error: "Tax rate information not available" };
       }
+      return { error: "Tax rate information not available" };
     } catch (error) {
       throw new Error(error.message);
     }
@@ -542,8 +547,8 @@ export default {
       let o_filter = {};
 
       if (params.month && params.month.length > 0) {
-        const start_date = month_dates(params.month, params.year).start_date;
-        const end_date = month_dates(params.month, params.year).end_date;
+        const { start_date } = month_dates(params.month, params.year);
+        const { end_date } = month_dates(params.month, params.year);
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -553,8 +558,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -707,8 +712,8 @@ export default {
       let o_filter = {};
 
       if (params.month && params.month.length > 0) {
-        const start_date = month_dates(params.month, params.year).start_date;
-        const end_date = month_dates(params.month, params.year).end_date;
+        const { start_date } = month_dates(params.month, params.year);
+        const { end_date } = month_dates(params.month, params.year);
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -718,8 +723,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -772,7 +777,7 @@ export default {
   },
   each_day_income_orders_s: async params => {
     try {
-      const date = params.date;
+      const { date } = params;
 
       const sort = {};
       const filter = {
@@ -797,7 +802,7 @@ export default {
       const year = start_date.split("-")[0];
       const month = start_date.split("-")[1];
       const day = dates_in_year[parseInt(start_date.split("-")[1]) - 1].number_of_days;
-      const end_date = year + "-" + month + "-" + day;
+      const end_date = `${year}-${month}-${day}`;
       const sort = {};
       const filter = {
         deleted: false,
@@ -877,8 +882,8 @@ export default {
 
     if (params.year) {
       const createdAt = {
-        $gte: new Date(params.year + "-01-01"),
-        $lte: new Date(params.year + "-12-31"),
+        $gte: new Date(`${params.year}-01-01`),
+        $lte: new Date(`${params.year}-12-31`),
       };
       o_filter.createdAt = createdAt;
       e_filter.date_of_purchase = createdAt;
@@ -1603,8 +1608,8 @@ export default {
     const earnings = await Promise.all(
       filtered_affiliates.map(async affiliate => {
         const promo_code = affiliate?.public_code?.promo_code;
-        const sponsor = affiliate.sponsor;
-        const sponsorTeamCaptain = affiliate.sponsorTeamCaptain;
+        const { sponsor } = affiliate;
+        const { sponsorTeamCaptain } = affiliate;
         const { number_of_uses, revenue, earnings } = await getCodeUsage({
           promo_code,
           start_date,

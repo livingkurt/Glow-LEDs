@@ -338,8 +338,8 @@ router.route("/contents").put(isAuth, isAdmin, async (req, res) => {
 router.route("/product_sale_price").put(isAuth, isAdmin, async (req, res) => {
   const products = await Product.find({});
 
-  const sale_start_date = req.body.sale_start_date;
-  const sale_end_date = req.body.sale_end_date;
+  const { sale_start_date } = req.body;
+  const { sale_end_date } = req.body;
   products
     // .filter((product) => !product.hidden)
     .forEach(async product => {
@@ -358,8 +358,8 @@ router.route("/product_sale_price").put(isAuth, isAdmin, async (req, res) => {
 router.route("/clear_sale").put(isAuth, isAdmin, async (req, res) => {
   const products = await Product.find({});
   const cleared_sale_price = 0;
-  const sale_start_date = req.body.sale_start_date;
-  const sale_end_date = req.body.sale_end_date;
+  const { sale_start_date } = req.body;
+  const { sale_end_date } = req.body;
   products
     // .filter((product) => !product.hidden)
     .forEach(async product => {
@@ -472,7 +472,7 @@ router.route("/update_diffuser_caps_product_name").put(async (req, res) => {
   const diffuser_caps = products.filter(product => product.category === "diffuser_caps");
 
   diffuser_caps.forEach(async product => {
-    product.name = product.name + " V4";
+    product.name = `${product.name} V4`;
     const result = await product.save();
   });
   //
@@ -579,7 +579,7 @@ router.route("/clozd_glowframez").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "OPYN " + product.name.replace(" Glow Casings", "framez");
+    const product_name = `OPYN ${product.name.replace(" Glow Casings", "framez")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -601,7 +601,7 @@ router.route("/opyn_glowskinz").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "OPYN " + product.name.replace(" Glow Casings", "skinz");
+    const product_name = `OPYN ${product.name.replace(" Glow Casings", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -624,7 +624,7 @@ router.route("/clozd_novaskinz").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "CLOZD " + product.name.replace("skins", "skinz");
+    const product_name = `CLOZD ${product.name.replace("skins", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -647,7 +647,7 @@ router.route("/clozd_alt_novaskinz").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "CLOZD " + product.name.replace("skins", "skinz");
+    const product_name = `CLOZD ${product.name.replace("skins", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -675,7 +675,7 @@ router.route("/clozd_skin_color_options").put(async (req, res) => {
 
   products.forEach(async product => {
     const product_name = product.name
-      .replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD")
+      .replace(product.name.split(" ")[0], `${product.name.split(" ")[0]} CLOZD`)
       .replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -698,7 +698,7 @@ router.route("/clozd_skin_size_options").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "CLOZD " + product.name.replace("skins", "skinz");
+    const product_name = `CLOZD ${product.name.replace("skins", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -721,7 +721,7 @@ router.route("/clozd_casing_color_options").put(async (req, res) => {
 
   products.forEach(async product => {
     const product_name = product.name
-      .replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD")
+      .replace(product.name.split(" ")[0], `${product.name.split(" ")[0]} CLOZD`)
       .replace(" Glow Casings", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
@@ -744,7 +744,7 @@ router.route("/clozd_casing_size_options").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "CLOZD " + product.name.replace(" Glow Casings", "skinz");
+    const product_name = `CLOZD ${product.name.replace(" Glow Casings", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -762,7 +762,7 @@ router.route("/clozd_glowskinz").put(async (req, res) => {
   });
 
   products.forEach(async product => {
-    const product_name = "CLOZD " + product.name.replace("skins", "skinz");
+    const product_name = `CLOZD ${product.name.replace("skins", "skinz")}`;
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -1884,8 +1884,8 @@ router.route("/update_status").put(async (req, res) => {
     // Update the documents
     let prevStatus = "isPaid";
     for (const [status, interval] of Object.entries(timeIntervals)) {
-      const dateStatus = status.slice(2).toLowerCase() + "At";
-      const prevDateStatus = prevStatus.slice(2).toLowerCase() + "At";
+      const dateStatus = `${status.slice(2).toLowerCase()}At`;
+      const prevDateStatus = `${prevStatus.slice(2).toLowerCase()}At`;
 
       // Find all documents that match the condition
       console.log(
@@ -1962,7 +1962,7 @@ router.route("/sample_ids").put(async (req, res) => {
     const users = [...employees, ...sponsoredAffiliateUsers];
 
     // Send the user ids as the response
-    res.send(users.map(user => ({ id: user._id, user: user.first_name + " " + user.last_name })));
+    res.send(users.map(user => ({ id: user._id, user: `${user.first_name} ${user.last_name}` })));
   } catch (err) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
@@ -1996,7 +1996,7 @@ router.route("/migrate_payments").put(async (req, res) => {
             paymentType: "",
             paymentMethod: {},
             payment: {},
-            refund: refund,
+            refund,
             refundReason: order.payment.refund_reason,
           });
         }
@@ -2115,9 +2115,9 @@ router.route("/generate_categories").put(async (req, res) => {
     const products = await Product.find({});
 
     for (const product of products) {
-      let categoryIds = [];
-      let subCategoryIds = [];
-      let collectionIds = [];
+      const categoryIds = [];
+      const subCategoryIds = [];
+      const collectionIds = [];
 
       let existingCategory = null;
       let existingSubCategory = null;
@@ -2488,7 +2488,7 @@ router.route("/irs_expenses_categories").put(async (req, res) => {
   try {
     // Loop through each category and update the expenses in bulk
     for (const [category, irsCategory] of Object.entries(categoryMapping)) {
-      await Expense.updateMany({ category: category }, { $set: { irs_category: irsCategory } });
+      await Expense.updateMany({ category }, { $set: { irs_category: irsCategory } });
     }
 
     res.status(200).send({ message: "IRS Categories updated successfully" });
@@ -3049,7 +3049,7 @@ router.route("/migrate_color_codes").put(async (req, res) => {
     const products = await Product.find({});
     const failedProducts = [];
 
-    for (let product of products) {
+    for (const product of products) {
       try {
         let updated = false;
 
@@ -3090,7 +3090,7 @@ router.route("/migrate_color_codes").put(async (req, res) => {
 
     res.status(200).send({
       message: "Color code migration completed",
-      failedProducts: failedProducts,
+      failedProducts,
     });
   } catch (error) {
     console.error("Migration error:", error);
@@ -3877,15 +3877,15 @@ router.route("/migrate_display_image").put(async (req, res) => {
 
     res.status(200).json({
       message: "display_image_object population completed for Cart and Order",
-      createdImages: createdImages,
-      errors: errors,
+      createdImages,
+      errors,
     });
   } catch (error) {
     console.error("Migration error:", error);
     res.status(500).json({
       error: error.message,
-      createdImages: createdImages,
-      errors: errors,
+      createdImages,
+      errors,
     });
   }
 });
@@ -3897,17 +3897,17 @@ router.route("/migrate_order_numeric_options").put(async (req, res) => {
 
     let updatedCount = 0;
 
-    for (let product of products) {
+    for (const product of products) {
       let updated = false;
 
       if (product.options && product.options.length > 0) {
-        for (let option of product.options) {
+        for (const option of product.options) {
           if (option.values && option.values.length > 0) {
             // Separate numeric and non-numeric values
             const numericValues = [];
             const nonNumericValues = [];
 
-            for (let value of option.values) {
+            for (const value of option.values) {
               if (/^\d+$/.test(value.name)) {
                 numericValues.push(value);
               } else {
@@ -5062,7 +5062,7 @@ router.route("/migrate_in_the_box").put(async (req, res) => {
 router.route("/migrate_facts").put(async (req, res) => {
   let successCount = 0;
   let failureCount = 0;
-  let failedIds = [];
+  const failedIds = [];
 
   try {
     const productsToUpdate = await Product.aggregate([
@@ -5096,7 +5096,7 @@ router.route("/migrate_facts").put(async (req, res) => {
 
         const updateObj = {
           $set: {
-            fact: fact,
+            fact,
           },
         };
 
@@ -5235,13 +5235,13 @@ router.route("/migrate_image_object").put(async (req, res) => {
 
     res.status(200).json({
       message: "Image migration completed",
-      skippedDocuments: skippedDocuments,
+      skippedDocuments,
     });
   } catch (error) {
     console.error("Migration error:", error);
     res.status(500).json({
       error: error.message,
-      skippedDocuments: skippedDocuments,
+      skippedDocuments,
     });
   }
 });
@@ -5291,13 +5291,13 @@ router.route("/finalize_display_image").put(async (req, res) => {
 
     res.status(200).json({
       message: "display_image finalization completed for Cart and Order",
-      skippedItems: skippedItems,
+      skippedItems,
     });
   } catch (error) {
     console.error("Migration error:", error);
     res.status(500).json({
       error: error.message,
-      skippedItems: skippedItems,
+      skippedItems,
     });
   }
 });
@@ -5309,7 +5309,7 @@ router.route("/migrate_diffusers").put(async (req, res) => {
 
     let updatedCount = 0;
     let errorCount = 0;
-    let errorProducts = [];
+    const errorProducts = [];
 
     for (const diffuser of diffusers) {
       try {
@@ -5340,7 +5340,7 @@ router.route("/migrate_diffusers").put(async (req, res) => {
 
     res.status(200).json({
       message: `Migration completed. Updated ${updatedCount} diffuser products. Encountered errors with ${errorCount} products.`,
-      errorProducts: errorProducts,
+      errorProducts,
     });
   } catch (error) {
     console.error("Migration failed:", error);
@@ -5616,7 +5616,7 @@ router.route("/update_set_of_products").put(async (req, res) => {
 
     const bulkOps = Object.entries(categorySetOfMap).map(([category, setOf]) => ({
       updateMany: {
-        filter: { category: category },
+        filter: { category },
         update: { $set: { set_of: setOf } },
       },
     }));
@@ -5625,7 +5625,7 @@ router.route("/update_set_of_products").put(async (req, res) => {
 
     res.status(200).json({
       message: "Products updated successfully",
-      result: result,
+      result,
     });
   } catch (error) {
     console.error("Error during update:", error);
@@ -5672,11 +5672,11 @@ router.route("/swap_purple_violet_colors").put(async (req, res) => {
 
     let updatedCount = 0;
 
-    for (let product of products) {
+    for (const product of products) {
       let updated = false;
       product.options.forEach(option => {
-        let purpleIndex = option.values.findIndex(value => value.name === "Purple");
-        let violetIndex = option.values.findIndex(value => value.name === "Violet");
+        const purpleIndex = option.values.findIndex(value => value.name === "Purple");
+        const violetIndex = option.values.findIndex(value => value.name === "Violet");
 
         if (purpleIndex !== -1 && violetIndex !== -1 && purpleIndex < violetIndex) {
           // Swap the positions
@@ -6232,7 +6232,7 @@ router.route("/fetch_easypost_data").put(async (req, res) => {
   let allShipments = [];
 
   try {
-    let params = {
+    const params = {
       page_size: 100,
       start_datetime: startDate.toISOString(),
       end_datetime: endDate.toISOString(),
@@ -6386,7 +6386,7 @@ router.put("/restore_orders", async (req, res) => {
               itemType: "ticket",
             };
           }
-          let product = await Product.findOne({ name: item.name }).populate("images");
+          const product = await Product.findOne({ name: item.name }).populate("images");
           return {
             ...item,
             product: product ? product._id : null,

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import config from "../../../config";
 import { Typography } from "@mui/material";
 
 const LoadingPayments = ({ loading }) => {
@@ -81,7 +80,7 @@ const LoadingPayments = ({ loading }) => {
             marginLeft: "-165px",
           }}
         >
-          <Typography variant="h3" style={{ textAlign: "center", color: "#ffffff" }}>
+          <Typography variant="h3" sx={{ textAlign: "center", color: "#ffffff", my: 2 }}>
             Processing your Payment{dots}
           </Typography>
           <Typography variant="h6" style={{ textAlign: "center", color: "#ffffff" }}>

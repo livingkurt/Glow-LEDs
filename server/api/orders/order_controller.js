@@ -333,9 +333,8 @@ export default {
       if (order.user && order.user.affiliate) {
         const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate, deleted: false });
         return res.status(200).send(invoice({ order, isSponsor: affiliate.sponsor }));
-      } else {
-        return res.status(200).send(invoice({ order, isSponsor: false }));
       }
+      return res.status(200).send(invoice({ order, isSponsor: false }));
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }

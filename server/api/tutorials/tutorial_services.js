@@ -39,7 +39,7 @@ export default {
   findAllGrid_tutorials_s: async query => {
     try {
       let filter = { deleted: false };
-      let limit = query.limit ? query.limit : 0;
+      const limit = query.limit ? query.limit : 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -77,7 +77,7 @@ export default {
         }
       }
 
-      let tutorials = await tutorial_db.findAllGrid_tutorials_db(filter, sortOption, limit);
+      const tutorials = await tutorial_db.findAllGrid_tutorials_db(filter, sortOption, limit);
 
       return tutorials;
     } catch (error) {

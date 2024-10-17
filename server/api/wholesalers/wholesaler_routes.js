@@ -3,7 +3,10 @@ import { wholesaler_controller } from "../wholesalers";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
-router.route("/").get(wholesaler_controller.findAll_wholesalers_c).post(isAuth, wholesaler_controller.create_wholesalers_c);
+router
+  .route("/")
+  .get(wholesaler_controller.findAll_wholesalers_c)
+  .post(isAuth, wholesaler_controller.create_wholesalers_c);
 
 router
   .route("/:id")

@@ -349,14 +349,19 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     const paymentIntent = await createPaymentIntent(customer, paymentInformation);
     const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
     await logStripeFeeToExpenses(confirmedPayment);
-    const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod);
+
+    // Check if the order contains pre-order items
+    const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
+
+    // Update the order, maintaining "paid_pre_order" status if necessary
+    const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod, hasPreOrderItems);
+
     return updatedOrder;
   } catch (error) {
     console.error("Error processing payment:", error);
     throw new Error("Failed to process payment");
   }
 };
-
 export const sendEmail = async (type, emailOptions) => {
   const emailTransporter = await createTransporter(type);
   try {
@@ -439,7 +444,7 @@ export const sendCodeUsedEmail = async promo_code => {
 
         const mailBodyData = {
           name: affiliate.artist_name,
-          promo_code: promo_code,
+          promo_code,
           percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,

@@ -89,7 +89,7 @@ export default ({ order, isSponsor }) => {
                         <tr>
                           <td style="font-family:helvetica;width:100%">
                              <div style="font-size:25px;font-weight:600;color:black">
-                              ${item.quantity > 1 ? item.quantity + "x" : ""} ${item.name}
+                              ${item.quantity > 1 ? `${item.quantity}x` : ""} ${item.name}
                               ${item.selectedOptions
                                 .map((option, optionIndex) => {
                                   if (option.name && item.currentOptions[optionIndex]) {

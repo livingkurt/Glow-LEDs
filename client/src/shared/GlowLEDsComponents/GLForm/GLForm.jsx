@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Skeleton, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -7,7 +7,6 @@ import ImageWizard from "../../SharedComponents/ImageWizard";
 import {
   determine_shown_fields,
   formatDate,
-  formatDateTime,
   formatDateTimeLocal,
   getEmptyObjectFromSchema,
   getValueByStringPath,
@@ -589,6 +588,18 @@ GLForm.defaultProps = {
   formErrors: {},
   classes: {},
   loading: false,
+  mode: "edit",
+};
+
+GLForm.propTypes = {
+  formData: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+  formErrors: PropTypes.object,
+  setFormErrors: PropTypes.func,
+  classes: PropTypes.object,
+  mode: PropTypes.string,
 };
 
 export default GLForm;
