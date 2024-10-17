@@ -32,7 +32,7 @@ export default {
     }
   },
   findByLink_images_db: async link => {
-    const image = await Image.findOne({ link, deleted: false });
+    const image = await Image.findOne({ link: link, deleted: false });
     if (image) {
       return image;
     }

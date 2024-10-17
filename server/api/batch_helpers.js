@@ -67,7 +67,7 @@ const extractProductInfo = html => {
   const decodedHTML = decodeQuotedPrintable(html);
 
   const dom = new JSDOM(decodedHTML);
-  const { document } = dom.window;
+  const document = dom.window.document;
 
   const products = [];
   // Select each product table using the unique style attribute
@@ -85,13 +85,13 @@ const extractProductInfo = html => {
       let quantity = 1;
 
       // Extract quantity from the name (e.g., "2x Frosted Dome Diffusers - Classic Style")
-      const nameMatch = nameText.match(/^(\d+)x\s+(.*)/);
+      let nameMatch = nameText.match(/^(\d+)x\s+(.*)/);
       if (nameMatch) {
         quantity = parseInt(nameMatch[1], 10);
         nameText = nameMatch[2].trim();
       } else {
         // If quantity not in name, check in price (e.g., "2x $39.98")
-        const priceMatch = priceText.match(/^(\d+)x\s+\$(.*)/);
+        let priceMatch = priceText.match(/^(\d+)x\s+\$(.*)/);
         if (priceMatch) {
           quantity = parseInt(priceMatch[1], 10);
           priceText = `$${priceMatch[2].trim()}`;
@@ -108,7 +108,7 @@ const extractProductInfo = html => {
 
       const selectedOptions = Array.from(optionsElements)
         .map(opt => {
-          const optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
+          let optionText = opt.textContent.replace(/=\r\n/g, "").replace(/=\n/g, "").replace(/=/g, "").trim();
           const [option, value] = optionText.split(":").map(s => s.trim());
           return { option, value };
         })
@@ -122,9 +122,9 @@ const extractProductInfo = html => {
         }, []);
 
       products.push({
-        quantity,
-        name,
-        selectedOptions,
+        quantity: quantity,
+        name: name,
+        selectedOptions: selectedOptions,
         price: isNaN(price) ? 0 : price,
       });
     }
@@ -429,7 +429,7 @@ export const preprocessPayments = paymentsData => {
   const payments = paymentsData.map(payment => {
     const email = payment?.customer?.email?.toLowerCase();
     const last4 = payment.payment_method_details?.card?.last4;
-    const { amount } = payment; // Stripe amounts are in cents
+    const amount = payment.amount; // Stripe amounts are in cents
     const createdAt = new Date(payment.created * 1000); // Stripe timestamps are in seconds
     return { ...payment, email, last4, amount, createdAt };
   });
@@ -440,11 +440,11 @@ export const preprocessShipments = shipmentsData => {
   // Preprocess shipments
   const shipments = shipmentsData.map(shipment => {
     const email = shipment.to_address.email?.toLowerCase();
-    const { name } = shipment.to_address;
+    const name = shipment.to_address.name;
     const address = shipment.to_address;
     const shipment_tracker = shipment.tracker.id;
     const shipping_label = shipment.postage_label;
-    const { selected_rate } = shipment;
+    const selected_rate = shipment.selected_rate;
     const tracking_number = shipment?.tracking_code;
     const tracking_url = shipment?.tracker?.public_url;
     const createdAt = new Date(shipment.created_at);

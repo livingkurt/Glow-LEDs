@@ -1,32 +1,32 @@
-@use "../abstracts" as *;
+@use '../abstracts' as *;
 
 /* Home Page */
 
 .container {
-  box-shadow: $bs_deep;
-  border-radius: $br_large_containers;
-  padding: 1.5rem;
-  margin-bottom: 25px;
+	box-shadow: $bs_deep;
+	border-radius: $br_large_containers;
+	padding: 1.5rem;
+	margin-bottom: 25px;
 }
 
 .home_page_pictures {
-  display: grid;
-  grid-template-areas: "image_1 image_2" "image_3 image_4";
-  // grid-template-columns: 400px 400px;
-  grid-template-columns: repeat(autofit, minmax(200px));
-  // grid-template-rows: 400px 400px;
-  gap: 1rem;
+	display: grid;
+	grid-template-areas: "image_1 image_2" "image_3 image_4";
+	// grid-template-columns: 400px 400px;
+	grid-template-columns: repeat(autofit, minmax(200px));
+	// grid-template-rows: 400px 400px;
+	gap: 1rem;
 }
 
 .image_1 {
-  grid-area: image_1;
+	grid-area: image_1;
 }
 .image_2 {
-  grid-area: image_2;
+	grid-area: image_2;
 }
 .image_3 {
-  grid-area: image_3;
+	grid-area: image_3;
 }
 .image_4 {
-  grid-area: image_4;
+	grid-area: image_4;
 }

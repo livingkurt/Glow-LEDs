@@ -91,8 +91,8 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
                   {user?.affiliate?.sponsorTeamCaptain
                     ? "20% = $3.60"
                     : user?.affiliate?.sponsor
-                      ? "15% = $2.70"
-                      : "10% = $2.00"}
+                    ? "15% = $2.70"
+                    : "10% = $2.00"}
                 </label>
               </div>
             </>

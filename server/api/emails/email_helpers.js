@@ -15,7 +15,7 @@ export const createTransporter = async type => {
       pool: true,
       auth: {
         type: "OAuth2",
-        user, // Use the stored user email
+        user: user, // Use the stored user email
         accessToken,
         clientId: client._clientId,
         clientSecret: client._clientSecret,
@@ -55,7 +55,7 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
     const mailOptions = {
       to: config.INFO_EMAIL,
       from: config.DISPLAY_INFO_EMAIL,
-      subject,
+      subject: subject,
       html: App({
         body: announcement(email),
         unsubscribe: true,
@@ -66,7 +66,7 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
 
     email.status = "Sent";
     email.save();
-    sendEmail(mailOptions, res, "info", `Email ${subject} to everyone`);
+    sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
   } catch (err) {
     return "Error Sending Email";
   }
@@ -148,8 +148,9 @@ export const toCamelCase = string => {
   const camelCaseWords = words.map((word, index) => {
     if (index === 0) {
       return word.toLowerCase();
+    } else {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     }
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   });
   return camelCaseWords.join("");
 };

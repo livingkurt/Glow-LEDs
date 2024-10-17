@@ -4,7 +4,7 @@ import { deleteTempFile, downloadFile, sanitizeExpenseName, uploadToImgur } from
 // Interactors
 export const processInvoice = async (doc, record) => {
   try {
-    const { url } = doc;
+    const url = doc.url;
     const sanitizedExpenseName = sanitizeExpenseName(record.Expense); // function to sanitize expense name
     const path = `temp/${sanitizedExpenseName}`;
 

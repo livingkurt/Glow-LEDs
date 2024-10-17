@@ -739,7 +739,7 @@ const extractShippingAddress = html => {
 };
 
 // Extract product information from the HTML
-const shipping = extractShippingAddress(html);
+let shipping = extractShippingAddress(html);
 
 // Create the final structure
 const result = { shipping };

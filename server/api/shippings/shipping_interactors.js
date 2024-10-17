@@ -247,7 +247,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
       customs_info: {
         eel_pfc: "NOEEI 30.37(a)",
         customs_certify: true,
-        customs_signer: `${order.shipping.first_name} ${order.shipping.last_name}`,
+        customs_signer: order.shipping.first_name + " " + order.shipping.last_name,
         contents_type: "merchandise",
         restriction_type: "none",
         non_delivery_option: "return",

@@ -223,8 +223,9 @@ export const determineImage = (product, imageNum) => {
       return product.images[imageNum];
     }
     return product.images[imageNum].link;
+  } else {
+    return "";
   }
-  return "";
 };
 
 export const transformProducts = products => {
@@ -286,11 +287,12 @@ export const generateProductOptionsProducts = async body => {
     if (updateNamesOnly) {
       const results = await Promise.all(selectedProducts.map(product => updateOptionProductNames(product)));
       return results;
+    } else {
+      const results = await Promise.all(
+        selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
+      );
+      return results;
     }
-    const results = await Promise.all(
-      selectedProducts.map(product => processProduct(product, templateProduct, selectedOptions))
-    );
-    return results;
   } catch (error) {
     handleError(error, "generateProductOptionsProducts");
   }

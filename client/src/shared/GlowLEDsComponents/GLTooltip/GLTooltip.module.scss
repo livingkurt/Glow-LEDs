@@ -1,4 +1,4 @@
-@use "../../../scss/abstracts/" as *;
+@use '../../../scss/abstracts/' as *;
 
 // Button
 
@@ -13,7 +13,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
 }
 .btn-no-s {
@@ -36,7 +36,11 @@ button {
 // }
 .btn.primary {
   // background-color: $theme_color_primary;
-  background: linear-gradient(180deg, $theme_color_primary 50%, $theme_color_secondary 100%);
+  background: linear-gradient(
+    180deg,
+    $theme_color_primary 50%,
+    $theme_color_secondary 100%
+  );
 }
 
 .btn.primary:hover {
@@ -67,7 +71,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
   background-color: $theme_color_off;
 }
@@ -83,7 +87,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
   background-color: $theme_color_on;
 }
@@ -101,7 +105,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
   background-color: $theme_color_inactive;
 }
@@ -150,7 +154,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
 }
 
@@ -170,7 +174,7 @@ button {
   padding-top: 0;
   cursor: pointer;
   position: absolute;
-  right: 0.5rem;
+  right: .5rem;
   top: 1rem;
   background-color: transparent;
   border: 0;
@@ -203,7 +207,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   padding: 10px;
 }
 
@@ -250,7 +254,7 @@ button {
   border: 0px;
   font-family: $phrase_font;
   // border-radius: $br_small_containers;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   // padding: 10px;
   box-shadow: unset;
   padding: 2px 0px;
@@ -265,6 +269,6 @@ button {
   font-size: 14px;
   border-radius: 5px;
   border: 1px white solid;
-  font-family: "phrase_font";
+  font-family: 'phrase_font';
   padding-top: 3px;
 }

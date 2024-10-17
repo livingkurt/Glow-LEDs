@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/node": "^7.24.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@bugsnag/js": "^7.23.0",
     "@bugsnag/plugin-express": "^7.22.7",
     "@bugsnag/plugin-react": "^7.22.7",
@@ -59,7 +60,7 @@
     "react-scripts": "^5.0.1",
     "react-youtube": "^10.1.0",
     "redux": "^4.1.0",
-    "sass": "^1.79.5",
+    "sass": "^1.80.1",
     "sass-loader": "^12.6.0",
     "socket.io-client": "^4.7.5",
     "stream-browserify": "^3.0.0",
@@ -79,8 +80,7 @@
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
     "clean-install": "rm -rf client/node_modules client/package-lock.json && cd client && npm install",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "lint": "eslint src"
+    "cypress:run": "cypress run"
   },
   "engines": {
     "node": "20.11.1",
@@ -105,30 +105,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.25.8",
-    "@babel/eslint-parser": "^7.25.8",
-    "@babel/eslint-plugin": "^7.25.7",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.25.8",
-    "@babel/preset-react": "^7.25.7",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^14.4.3",
-    "babel-eslint": "^10.1.0",
     "cypress": "^13.10.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-jest-enzyme": "^7.1.2",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-import-resolver-webpack": "^0.13.2",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^27.9.0",
-    "eslint-plugin-jest-dom": "^5.4.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.34.2",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-unused-imports": "^4.1.4",
+    "eslint-plugin-cypress": "^2.15.2",
     "jest-preview": "^0.3.1",
     "webpack": "^5.91.0"
   }

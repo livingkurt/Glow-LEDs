@@ -1,24 +1,24 @@
-@use "../abstracts" as *;
+@use '../abstracts' as *;
 
 .skeleton-img {
-  position: relative;
-  width: 100%;
-  max-width: 2000px;
-  height: 0;
-  box-sizing: content-box;
-  padding-bottom: 75%; /* Aspect ratio of the width/height */
+	position: relative;
+	width: 100%;
+	max-width: 2000px;
+	height: 0;
+	box-sizing: content-box;
+	padding-bottom: 75%; /* Aspect ratio of the width/height */
 }
 
 .skeleton {
-  animation: skeleton-loading 1s linear infinite alternate;
+	animation: skeleton-loading 1s linear infinite alternate;
 }
 
 @keyframes skeleton-loading {
-  0% {
-    background-color: $theme_color_primary;
-  }
-  100% {
-    // background-color: hsl(200, 20%, 95%);
-    background-color: $theme_color_secondary;
-  }
+	0% {
+		background-color: $theme_color_primary;
+	}
+	100% {
+		// background-color: hsl(200, 20%, 95%);
+		background-color: $theme_color_secondary;
+	}
 }

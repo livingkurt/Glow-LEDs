@@ -123,7 +123,7 @@ const createOrderItemsHTML = (orderItems, isWholesaler) => {
                       <td style='font-family:helvetica;width:100%;white-space:nowrap;'>
                         <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
                           align="right">
-                          ${item.quantity > 1 ? `${item.quantity}x` : ""}${email_sale_price_switch(item, "white", isWholesaler)}
+                          ${item.quantity > 1 ? item.quantity + "x" : ""}${email_sale_price_switch(item, "white", isWholesaler)}
                         </p>
                       </td>
                     </tr>

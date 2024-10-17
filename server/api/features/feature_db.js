@@ -17,7 +17,7 @@ export default {
   },
   findByPathname_features_db: async pathname => {
     try {
-      return await Feature.findOne({ pathname, deleted: false }).populate("user");
+      return await Feature.findOne({ pathname: pathname, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
