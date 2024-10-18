@@ -246,6 +246,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
               case "checkbox":
                 return (
                   <FormControlLabel
+                    sx={fieldData.leftSpacing ? { ml: 1 } : {}}
                     key={`${fieldName}-${fieldData.type}`}
                     control={
                       <Checkbox
@@ -343,6 +344,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
+                    sx={fieldData.leftSpacing ? { ml: 1 } : {}}
                     margin="normal"
                     size="small"
                     fullWidth
@@ -505,7 +507,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                   : fieldState;
                 return (
-                  <Paper className="p-10px mv-10px" key={`${fieldName}-${fieldData.type}`} elevation={5}>
+                  <Paper className="p-10px m-10px" key={`${fieldName}-${fieldData.type}`} elevation={5}>
                     <Typography component="h6" variant="h6" className="ta-c">
                       {fieldData.title}
                     </Typography>

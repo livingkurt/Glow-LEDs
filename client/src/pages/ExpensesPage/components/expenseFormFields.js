@@ -102,7 +102,7 @@ export const expenseFormFields = ({ expense, dispatch, expenses, filters }) => {
     documents: {
       type: "image_upload",
       label: "Documents",
-      labelProp: "link",
+
       album: `${expense.expense_name} Documents`,
       getOptionLabel: option => option.link,
       onUpload: (value, key) => dispatch(set_expense({ documents: [...expense.documents, ...value] })),

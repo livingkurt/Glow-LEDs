@@ -129,7 +129,7 @@ const ContentsPage = () => {
             loading={loading}
           />
         </Box>
-        <Box m={2}>
+        <Box>
           <AppBar position="static">
             <Tabs
               value={tabValue}

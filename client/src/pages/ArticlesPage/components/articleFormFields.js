@@ -1,4 +1,4 @@
-export const articleFormFields = ({ usersQuery, tagsQuery }) => {
+export const articleFormFields = ({ usersQuery, tagsQuery, article }) => {
   return {
     author: {
       type: "autocomplete_single",
@@ -12,15 +12,13 @@ export const articleFormFields = ({ usersQuery, tagsQuery }) => {
     image: {
       type: "image_upload",
       label: "Thumbnail",
-      labelProp: "_id",
-      album: "Learn Articles Images",
+      album: `${article.title} Images`,
     },
     content: { type: "text_multiline", label: "Content" },
     images: {
       type: "image_upload",
       label: "Images",
-      labelProp: "_id",
-      album: "Learn Articles Images",
+      album: `${article.title} Images`,
     },
 
     tags: {

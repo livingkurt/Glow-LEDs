@@ -16,11 +16,11 @@ const GLArray = ({
   getEmptyObjectFromSchema,
 }) => {
   return (
-    <Paper className="p-10px mv-10px" elevation={5}>
+    <Paper className="p-10px m-10px" elevation={5}>
       <Typography component="h6" variant="h6" className="ta-c mb-15px">
         {fieldData.title}
       </Typography>
-      <Paper style={{ backgroundColor: "#4e5061" }}>
+      <Paper sx={{ backgroundColor: "#4e5061", p: 0 }}>
         <AppBar position="sticky" color="transparent">
           <Tabs
             variant="scrollable"

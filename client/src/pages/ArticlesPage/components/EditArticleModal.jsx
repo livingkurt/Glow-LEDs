@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_article_modal, set_article } from "../../../slices/articleSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
 import { articleFormFields } from "./articleFormFields";
 import { useCategorysQuery, useUsersQuery } from "../../../api/allRecordsApi";
 
@@ -16,7 +14,7 @@ const EditArticleModal = () => {
   const tagsQuery = useCategorysQuery();
   const usersQuery = useUsersQuery();
 
-  const formFields = articleFormFields({ tagsQuery, usersQuery });
+  const formFields = articleFormFields({ tagsQuery, usersQuery, article });
 
   return (
     <div>

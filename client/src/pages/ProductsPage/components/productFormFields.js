@@ -98,7 +98,7 @@ export const productFormFields = ({
           image: {
             type: "image_upload",
             label: "Image",
-            labelProp: "_id",
+
             album: `${product.name} Images`,
           },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
@@ -127,7 +127,7 @@ export const productFormFields = ({
                 image: {
                   type: "image_upload",
                   label: "Image",
-                  labelProp: "_id",
+
                   album: `${product.name} Images`,
                 },
                 product: {
@@ -228,7 +228,7 @@ export const productFormFields = ({
     images: {
       type: "image_upload",
       label: "Images",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
@@ -258,7 +258,7 @@ export const productFormFields = ({
     hero_image: {
       type: "image_upload",
       label: "Hero Image",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
@@ -288,35 +288,35 @@ export const productFormFields = ({
     title_image: {
       type: "image_upload",
       label: "Title Image",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
     themed_logo: {
       type: "image_upload",
       label: "Themed Logo",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
     line_break: {
       type: "image_upload",
       label: "Line Break",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
     pattern_tile: {
       type: "image_upload",
       label: "Pattern Tile",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
     corner_image: {
       type: "image_upload",
       label: "Corner Image",
-      labelProp: "link",
+
       album: `${product.name} Images`,
       getOptionLabel: option => option.link,
     },
@@ -407,14 +407,14 @@ export const productFormFields = ({
               image: {
                 type: "image_upload",
                 label: "Image",
-                labelProp: "link",
+
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
               },
               text_image: {
                 type: "image_upload",
                 label: "Text Image",
-                labelProp: "link",
+
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
               },
@@ -437,7 +437,7 @@ export const productFormFields = ({
         hero_image_1: {
           type: "image_upload",
           label: "Hero Image 1",
-          labelProp: "link",
+
           album: `${product.name} Images`,
           getOptionLabel: option => option.link,
         },
@@ -482,14 +482,14 @@ export const productFormFields = ({
               image: {
                 type: "image_upload",
                 label: "Image",
-                labelProp: "link",
+
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
               },
               text_image: {
                 type: "image_upload",
                 label: "Text Image",
-                labelProp: "link",
+
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
               },
@@ -512,7 +512,7 @@ export const productFormFields = ({
         hero_image_2: {
           type: "image_upload",
           label: "Hero Image 2",
-          labelProp: "link",
+
           album: `${product.name} Images`,
           getOptionLabel: option => option.link,
         },
@@ -542,7 +542,7 @@ export const productFormFields = ({
         lifestyle_images: {
           type: "image_upload",
           label: "Lifestyle Images",
-          labelProp: "link",
+
           album: `${product.name} Images`,
           getOptionLabel: option => option.link,
         },
@@ -554,7 +554,7 @@ export const productFormFields = ({
         hero_image_3: {
           type: "image_upload",
           label: "Hero Image 3",
-          labelProp: "link",
+
           album: `${product.name} Images`,
           getOptionLabel: option => option.link,
         },
@@ -671,7 +671,7 @@ export const productFormFields = ({
               image: {
                 type: "image_upload",
                 label: "Image",
-                labelProp: "link",
+
                 album: `${product.name} Images`,
                 getOptionLabel: option => option.link,
               },

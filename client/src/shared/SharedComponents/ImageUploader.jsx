@@ -102,11 +102,11 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
                 type="file"
                 hidden
                 onChange={handleFileChange}
-                id={`${fieldName}-upload-input`}
+                id={`${album}-upload-input`}
                 multiple
                 ref={fileInputRef}
               />
-              <label htmlFor={`${fieldName}-upload-input`}>
+              <label htmlFor={`${album}-upload-input`}>
                 <Button variant="contained" component="span">
                   Select
                 </Button>

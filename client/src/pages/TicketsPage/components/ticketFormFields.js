@@ -28,7 +28,7 @@ export const ticketFormFields = ({ ticket, ticketsQuery }) => {
     image: {
       type: "image_upload",
       label: "Image",
-      labelProp: "_id",
+
       album: `${ticket.title} Images`,
     },
     pathname: {
