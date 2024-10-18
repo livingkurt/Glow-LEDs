@@ -80,7 +80,7 @@ export const ProfileActions = () => {
       )}
       {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
         <>
-          {!previousCheckin && (
+          {/* {!previousCheckin && (
             <Typography variant="body1" gutterBottom>
               You have not checked in for the month of {previousMonth}
             </Typography>
@@ -99,7 +99,7 @@ export const ProfileActions = () => {
                 month: previousMonth,
               })}
             </Button>
-          )}
+          )} */}
           {!checkinCompleted && (
             <Typography variant="body1" gutterBottom>
               You have not checked in for the month of {currentMonth}
