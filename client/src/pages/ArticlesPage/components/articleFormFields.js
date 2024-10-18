@@ -9,13 +9,20 @@ export const articleFormFields = ({ usersQuery, tagsQuery }) => {
     },
     title: { type: "text", label: "Title" },
     short_description: { type: "text", label: "Short Description" },
-    content: { type: "text_multiline", label: "Content" },
     image: {
       type: "image_upload",
-      label: "Image",
+      label: "Thumbnail",
       labelProp: "_id",
       album: "Learn Articles Images",
     },
+    content: { type: "text_multiline", label: "Content" },
+    images: {
+      type: "image_upload",
+      label: "Images",
+      labelProp: "_id",
+      album: "Learn Articles Images",
+    },
+
     tags: {
       type: "autocomplete_multiple",
       label: "Tags",
