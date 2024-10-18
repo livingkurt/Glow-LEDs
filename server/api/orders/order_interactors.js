@@ -359,7 +359,7 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     return updatedOrder;
   } catch (error) {
     console.error("Error processing payment:", error);
-    throw new Error("Failed to process payment");
+    throw new Error(error);
   }
 };
 export const sendEmail = async (type, emailOptions) => {
