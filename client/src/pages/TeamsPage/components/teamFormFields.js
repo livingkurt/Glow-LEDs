@@ -45,21 +45,21 @@ export const teamFormFields = ({ team, promos, affiliates }) => {
     images: {
       type: "image_upload",
       label: "Images",
-      labelProp: "link",
+
       album: `${team.team_name} Images`,
       permissions: ["admin"],
     },
     map: {
       type: "image_upload",
       label: "Map Image",
-      labelProp: "link",
+
       album: `${team.team_name} Map Image`,
       permissions: ["admin"],
     },
     profile_image: {
       type: "image_upload",
       label: "Profile Image",
-      labelProp: "link",
+
       album: `${team.team_name} Profile Image`,
       permissions: ["admin"],
     },

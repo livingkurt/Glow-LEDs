@@ -74,7 +74,7 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
         display_image_object: {
           type: "image_upload",
           label: "Images",
-          labelProp: "link",
+
           album: `${itemType} ${item.name} Images`,
           getOptionLabel: option => option.link,
         },
