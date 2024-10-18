@@ -7,6 +7,7 @@ const article_schema = new mongoose.Schema(
     short_description: { type: String },
     content: { type: String },
     image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     pathname: { type: String },
     active: { type: Boolean, default: true },
