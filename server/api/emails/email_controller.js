@@ -558,7 +558,7 @@ export default {
       html: App({
         body: email_subscription({
           ...req.body,
-          categories: contents && contents[0].home_page?.slideshow,
+          categories: contents && contents[0]?.menus[0]?.menu_items,
           title: "Enjoy 10% off your next purchase!",
         }),
         unsubscribe: true,
@@ -579,7 +579,7 @@ export default {
       html: App({
         body: account_created({
           user: req.body,
-          categories: contents && contents[0].home_page?.slideshow,
+          categories: contents && contents[0]?.menus[0]?.menu_items,
           title: "Glow LEDs Account Created",
         }),
 

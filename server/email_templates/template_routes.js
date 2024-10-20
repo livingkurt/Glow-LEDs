@@ -47,7 +47,7 @@ router.get("/email_subscription", async (req, res) => {
   const body = {
     email: config.CONTACT_EMAIL,
     promo_code: "xoteag",
-    categories: contents && contents[0].home_page?.slideshow,
+    categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 
   res.send(
