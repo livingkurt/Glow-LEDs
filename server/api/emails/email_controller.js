@@ -529,7 +529,7 @@ export default {
     const { id, test } = req.params;
     const email = await email_db.findById_emails_db(id);
     if (test === "true") {
-      const test_emails = ["lavacquek@icloud.com", "kachaubusiness@gmail.com"];
+      const test_emails = ["lavacquek@icloud.com"];
       await sendEmailsInBatches(email, res, test_emails);
     } else {
       await sendEmailsInBatches(email, res);

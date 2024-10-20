@@ -62,6 +62,12 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
         header_footer_color: email.header_footer_color,
       }),
       bcc: emailAddresses,
+      headers: {
+        "X-Priority": "1",
+        "X-MSMail-Priority": "High",
+        "Importance": "high",
+        "X-Bulk-Email": "true",
+      },
     };
 
     email.status = "Sent";
@@ -73,7 +79,7 @@ export const send_multiple_emails = async (emailAddresses, email, res) => {
 };
 
 export const sendEmailsInBatches = async (email, res, testEmails = null) => {
-  const emailsPerIteration = 100;
+  const emailsPerIteration = 50;
   let subscribed_users;
   let emailAddresses;
   let iterations;
@@ -98,7 +104,7 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
 
     if (!testEmails) {
       // If not testing, wait before sending the next batch
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      await new Promise(resolve => setTimeout(resolve, 30000));
     }
   }
 };

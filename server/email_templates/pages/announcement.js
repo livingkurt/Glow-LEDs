@@ -50,7 +50,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[0]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[0]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -63,7 +63,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[1]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[1]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -82,7 +82,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[2]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[2]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -95,7 +95,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                             ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${images[3]?.link} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[3]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -114,7 +114,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[4]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[4]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -127,7 +127,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[5]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[5]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -147,7 +147,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[6]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[6]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
@@ -160,7 +160,7 @@ export default ({ h1, h2, images, p, button, link, module_color, button_color, t
                               ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
-                                <td><img src=${images[7]?.link} alt="Glow LEDs" title="Email Image"
+                                <td><img src=${images[7]?.link}?t=${Date.now()}" alt="Glow LEDs" title="Email Image"
                                     style="text-align:center;width:100%;border-radius:20px" />
                                 </td>
                               </tr>
