@@ -123,9 +123,9 @@ export const sendAnnouncement = createAsyncThunk(
 
 export const sendEmailSubscription = createAsyncThunk(
   "emails/sendEmailSubscription",
-  async ({ email, promo_code }, { dispatch, rejectWithValue }) => {
+  async ({ email }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.post("/api/emails/email_subscription", { email, promo_code });
+      const { data } = await axios.post("/api/emails/email_subscription", { email });
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

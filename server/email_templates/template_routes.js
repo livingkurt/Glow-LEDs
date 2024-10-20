@@ -27,7 +27,7 @@ import { order_db, order_services } from "../api/orders";
 import { content_db } from "../api/contents";
 import { affiliate_db } from "../api/affiliates";
 import { promo_db } from "../api/promos";
-import { months } from "../utils/util";
+import { make_private_code, months } from "../utils/util";
 import { user_db } from "../api/users";
 import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
@@ -46,8 +46,8 @@ router.get("/email_subscription", async (req, res) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     email: config.CONTACT_EMAIL,
-    promo_code: "xoteag",
-    categories: contents && contents[0].home_page?.slideshow,
+    promo_code: make_private_code(5),
+    categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 
   res.send(
@@ -1353,9 +1353,10 @@ router.get("/reset_password", async (req, res) => {
 router.get("/account_created", async (req, res) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+  console.log({ categories: contents && contents[0]?.menus[0]?.menu_items.map(item => item.image) });
   const body = {
     user,
-    categories: contents && contents[0].home_page?.slideshow,
+    categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 
   res.send(App({ body: account_created(body), title: "Glow LEDs Account Created" }));
