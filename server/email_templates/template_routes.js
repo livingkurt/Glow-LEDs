@@ -27,7 +27,7 @@ import { order_db, order_services } from "../api/orders";
 import { content_db } from "../api/contents";
 import { affiliate_db } from "../api/affiliates";
 import { promo_db } from "../api/promos";
-import { months } from "../utils/util";
+import { make_private_code, months } from "../utils/util";
 import { user_db } from "../api/users";
 import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
