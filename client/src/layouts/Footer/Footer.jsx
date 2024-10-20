@@ -22,7 +22,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { footerSections, socialIcons } from "./footerHelpers";
 import { useDispatch } from "react-redux";
 import * as API from "../../api";
-import { API_Emails } from "../../utils";
 
 const Footer = () => {
   const theme = useTheme();
@@ -77,29 +76,18 @@ const Footer = () => {
 
     if (isValid) {
       try {
-        dispatch(
-          API.saveUser({
-            user: {
-              _id: null,
-              first_name: "",
-              last_name: "",
-              email,
-              affiliate: null,
-              is_affiliated: false,
-              isVerified: true,
-              isAdmin: false,
-              email_subscription: isSubscribed,
-              shipping: {},
-            },
-            profile: false,
-          })
-        );
-        await API_Emails.send_email_subscription(email);
-        setIsSubmitted(true);
-        setEmail("");
-        setIsSubscribed(false);
+        const { payload } = await dispatch(API.sendEmailSubscription({ email }));
+        console.log({ payload });
+        if (payload.message === "Email already exists") {
+          setEmailError("Email already exists");
+        } else {
+          setIsSubmitted(true);
+          setEmail("");
+          setIsSubscribed(false);
+        }
       } catch (error) {
-        setEmailError("An error occurred. Please try again.");
+        console.log({ error });
+        setEmailError(error.response.data.message);
       }
     }
   };
@@ -165,6 +153,11 @@ const Footer = () => {
             {isSubmitted && (
               <Typography variant="body2" sx={{ mt: 2, color: "green" }}>
                 Thank you for signing up!
+              </Typography>
+            )}
+            {emailError && (
+              <Typography variant="body2" sx={{ mt: 2, color: "red" }}>
+                {emailError}
               </Typography>
             )}
           </Grid>

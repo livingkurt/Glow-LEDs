@@ -46,7 +46,7 @@ router.get("/email_subscription", async (req, res) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     email: config.CONTACT_EMAIL,
-    promo_code: "xoteag",
+    promo_code: make_private_code(5),
     categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 

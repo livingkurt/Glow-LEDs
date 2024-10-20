@@ -26,7 +26,7 @@ import { Affiliate } from "../affiliates";
 import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors";
-import { determine_code_tier, format_date, toCapitalize } from "../../utils/util";
+import { determine_code_tier, format_date, make_private_code, toCapitalize } from "../../utils/util";
 import { sendEmail, sendEmailsInBatches } from "./email_helpers";
 import email_db from "./email_db";
 import { product_db } from "../products";
@@ -549,23 +549,65 @@ export default {
     }
   },
   send_email_subscription_emails_c: async (req, res) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+    try {
+      const user = await user_db.findByEmail_users_db(req.body.email);
 
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Enjoy 10% off your next purchase!",
-      html: App({
-        body: email_subscription({
-          ...req.body,
-          categories: contents && contents[0]?.menus[0]?.menu_items,
-          title: "Enjoy 10% off your next purchase!",
+      if (user) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+
+      // Create a new user account
+      await user_db.create_users_db({
+        email: req.body.email,
+        _id: null,
+        first_name: "",
+        last_name: "",
+        affiliate: null,
+        is_affiliated: false,
+        isVerified: true,
+        isAdmin: false,
+        email_subscription: true,
+        shipping: {},
+      });
+
+      const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+      const code = make_private_code(5);
+      const promo_code = await promo_db.create_promos_db({
+        promo_code: code,
+        admin_only: false,
+        sponsor_only: false,
+        single_use: true,
+        used_once: false,
+        excluded_categories: [],
+        included_products: [],
+        percentage_off: 10,
+        amount_off: 0,
+        free_shipping: false,
+        active: true,
+      });
+
+      console.log({ promo_code });
+
+      const mailOptions = {
+        from: config.DISPLAY_INFO_EMAIL,
+        to: req.body.email,
+        subject: "Enjoy 10% off your next purchase!",
+        html: App({
+          body: email_subscription({
+            ...req.body,
+            categories: contents && contents[0]?.menus[0]?.menu_items,
+            title: "Enjoy 10% off your next purchase!",
+            promo_code: code,
+          }),
+          unsubscribe: true,
         }),
-        unsubscribe: true,
-      }),
-    };
+      };
 
-    sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+      sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "An error occurred", error: error.message });
+    }
   },
 
   send_account_created_emails_c: async (req, res) => {
