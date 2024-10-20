@@ -1353,9 +1353,10 @@ router.get("/reset_password", async (req, res) => {
 router.get("/account_created", async (req, res) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+  console.log({ categories: contents && contents[0]?.menus[0]?.menu_items.map(item => item.image) });
   const body = {
     user,
-    categories: contents && contents[0].home_page?.slideshow,
+    categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 
   res.send(App({ body: account_created(body), title: "Glow LEDs Account Created" }));

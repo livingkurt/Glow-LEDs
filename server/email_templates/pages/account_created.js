@@ -1,4 +1,5 @@
 export default ({ user, categories }) => {
+  console.log({ categories });
   return `<div style="background-color:#7d7c7c;padding:10px">
 
 
@@ -74,7 +75,7 @@ export default ({ user, categories }) => {
       </tr>
     </tbody>
   </table>
-  <table style="width:100%;border-spacing:0">
+    <table style="width:100%;border-spacing:0">
     <tbody>
       <tr>
         <td style="font-family:helvetica">
@@ -83,290 +84,35 @@ export default ({ user, categories }) => {
               <tbody>
                 <tr>
                   <td style="font-family:helvetica">
+                    ${categories.reduce((acc, category, index) => {
+                      if (index % 2 === 0) {
+                        acc += '<table style="width:100%;border-spacing:0"><tbody><tr>';
+                      }
 
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[0]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
+                      acc += `
+                        <td style="font-family:helvetica;width:50%;padding:5px;">
+                          <table width="100%" style="max-width:800px">
+                            <tr>
+                              <td style="position: relative; width: 100%; padding-top: 100%; overflow: hidden; border-radius:20px;">
+                                <a href=${category.link} target="_blank" rel="noopener noreferrer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                  <img src=${category.image?.link} alt="Glow LEDs" title="Email Image"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" />
+                                  <h3 style="color: white; font-size: 25px; width: 100%; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; padding: 10px; background-color: rgba(0,0,0,0.5);">
+                                    ${category.label}
+                                  </h3>
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      `;
 
-                                  <a href=${categories[0].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[0].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[0].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[1]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
+                      if (index % 2 === 1 || index === categories.length - 1) {
+                        acc += "</tr></tbody></table>";
+                      }
 
-                                  <a href=${categories[1].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[1].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[1].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[2]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[2].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[2].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[2].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[3]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[3].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[3].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[3].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[4]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[4].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[4].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[4].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[5]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[5].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[5].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[5].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[6]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[6].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[6].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[6].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[7]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[7].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[7].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[7].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[8]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[8].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[8].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[8].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[9]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[9].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[9].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[9].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table style="width:100%;border-spacing:0">
-                      <tbody>
-                        <tr>
-                          ${
-                            categories[10]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[10].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[10].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[10].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-                          ${
-                            categories[11]
-                              ? `<td style="font-family:helvetica;width:50%">
-                            <table width="100%" style="max-width:800px">
-                              <tr>
-                                <td style="position: relative;">
-
-                                  <a href=${categories[11].link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${categories[11].image?.link} alt="Glow LEDs" title="Email Image"
-                                      style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                    <h3
-                                      style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                      ${categories[11].label}</h3>
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>`
-                              : ""
-                          }
-
-                        </tr>
-                      </tbody>
-                    </table>
-
+                      return acc;
+                    }, "")}
                   </td>
                 </tr>
               </tbody>

@@ -569,7 +569,8 @@ export default {
   },
 
   send_account_created_emails_c: async (req, res) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
+    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "10", "2");
+    console.log({ contents });
 
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
