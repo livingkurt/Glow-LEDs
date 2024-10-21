@@ -66,6 +66,9 @@ export default {
   },
   update_emails_db: async (id, body) => {
     try {
+      console.log({
+        modules: body.modules[5].content.images,
+      });
       const email = await Email.findOne({ _id: id, deleted: false });
       if (email) {
         return await Email.updateOne({ _id: id }, body);

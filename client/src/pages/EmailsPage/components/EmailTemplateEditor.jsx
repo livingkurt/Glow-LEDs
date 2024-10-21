@@ -1,36 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, Select, Typography, Paper } from "@mui/material";
 import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { toTitleCase } from "../../../utils/helper_functions";
 
 const MODULE_TYPES = [
-  { value: "Heading", label: "Heading" },
-  { value: "Subheading", label: "Subheading" },
-  { value: "Body", label: "Body" },
-  { value: "Images", label: "Images" },
-  { value: "Image", label: "Image" },
-  { value: "Button", label: "Button" },
-  { value: "HTML", label: "HTML" },
-  { value: "Divider", label: "Divider" },
-  { value: "Spacer", label: "Spacer" },
-  { value: "Line Break", label: "Line Break" },
-  { value: "Title Image", label: "Title Image" },
+  { value: "heading", label: "Heading" },
+  { value: "subheading", label: "Subheading" },
+  { value: "body", label: "Body" },
+  { value: "images", label: "Images" },
+  { value: "image", label: "Image" },
+  { value: "button", label: "Button" },
+  { value: "html", label: "HTML" },
+  { value: "divider", label: "Divider" },
+  { value: "spacer", label: "Spacer" },
+  { value: "line_break", label: "Line Break" },
+  { value: "title_image", label: "Title Image" },
 ];
 
 const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
-  const [modules, setModules] = useState(initialModules);
+  const [modules, setModules] = useState(initialModules.map(module => ({ ...module, content: { ...module.content } })));
+  console.log({ modules });
 
   useEffect(() => {
     if (JSON.stringify(modules) !== JSON.stringify(initialModules)) {
       onChange(modules);
     }
   }, [modules, onChange, initialModules]);
-  const addModule = type => {
-    setModules([...modules, { type, content: {} }]);
-  };
 
+  const addModule = type => {
+    const newModule = { type, content: {} };
+    if (type === "images") {
+      newModule.content.images = [];
+    }
+    setModules([...modules, newModule]);
+  };
   const updateModule = (index, content) => {
-    const newModules = [...modules];
-    newModules[index].content = content;
+    const newModules = modules.map((module, i) => {
+      if (i === index) {
+        const updatedContent = { ...module.content, ...content };
+        if (module.type === "images" && !Array.isArray(updatedContent.images)) {
+          updatedContent.images = Array.isArray(updatedContent.images) ? updatedContent.images : [];
+        }
+        return { ...module, content: updatedContent };
+      }
+      return module;
+    });
     setModules(newModules);
   };
 
@@ -39,40 +57,68 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
     setModules(newModules);
   };
 
-  const moveModule = (index, direction) => {
-    if ((direction === "up" && index === 0) || (direction === "down" && index === modules.length - 1)) {
-      return;
-    }
-
-    const newModules = [...modules];
-    const swap = direction === "up" ? index - 1 : index + 1;
-    [newModules[index], newModules[swap]] = [newModules[swap], newModules[index]];
+  const duplicateModule = index => {
+    const moduleToDuplicate = modules[index];
+    const newModule = { ...moduleToDuplicate, content: { ...moduleToDuplicate.content } };
+    const newModules = [...modules.slice(0, index + 1), newModule, ...modules.slice(index + 1)];
     setModules(newModules);
+  };
+
+  const handleDragEnd = result => {
+    if (!result.destination) return;
+    const items = Array.from(modules);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setModules(items);
   };
 
   const renderModule = (module, index) => {
     const formData = getFormDataForModule(module.type);
     return (
-      <Box key={index} mb={2} p={2} border={1} borderColor="grey.300" borderRadius={1}>
-        <GLForm formData={formData} state={module.content} onChange={newContent => updateModule(index, newContent)} />
-        <Box mt={2}>
-          <Button onClick={() => moveModule(index, "up")} disabled={index === 0}>
-            Move Up
-          </Button>
-          <Button onClick={() => moveModule(index, "down")} disabled={index === modules.length - 1}>
-            Move Down
-          </Button>
-          <Button onClick={() => deleteModule(index)} color="error">
-            Delete
-          </Button>
-        </Box>
-      </Box>
+      <Draggable key={index} draggableId={`module-${index}`} index={index}>
+        {(provided, snapshot) => (
+          <Paper
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            elevation={3}
+            sx={{
+              mb: 2,
+              p: 2,
+              backgroundColor: snapshot.isDragging ? "secondary.main" : "background.paper",
+              "&:hover": {
+                backgroundColor: "action.hover",
+              },
+            }}
+          >
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography variant="h6">{toTitleCase(module.type)}</Typography>
+              <Box>
+                <GLIconButton tooltip="Duplicate" onClick={() => duplicateModule(index)}>
+                  <ContentCopyIcon />
+                </GLIconButton>
+                <GLIconButton tooltip="Delete" onClick={() => deleteModule(index)}>
+                  <DeleteIcon />
+                </GLIconButton>
+              </Box>
+            </Box>
+            <GLForm
+              formData={formData}
+              state={module.content}
+              onChange={newContent => {
+                console.log({ newContent });
+                updateModule(index, newContent);
+              }}
+            />
+          </Paper>
+        )}
+      </Draggable>
     );
   };
 
   const getFormDataForModule = moduleType => {
     switch (moduleType) {
-      case "Title Image":
+      case "title_image":
         return {
           image: {
             type: "image_upload",
@@ -81,7 +127,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
             album: "Email Title Images",
           },
         };
-      case "Heading":
+      case "heading":
         return {
           text: { type: "text", label: "Heading Text" },
           size: {
@@ -95,17 +141,17 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
             options: ["h1", "h2", "h3"],
           },
         };
-      case "Images":
+      case "images":
         return {
-          image: {
+          images: {
             type: "image_upload",
-            label: "Image",
+            label: "Images",
             labelProp: "image",
             album: "Email Images",
             forceArray: true,
           },
         };
-      case "Image":
+      case "image":
         return {
           image: {
             type: "image_upload",
@@ -115,20 +161,20 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
           },
         };
 
-      case "Subheading":
+      case "subheading":
         return {
           text: { type: "text", label: "Subheading Text" },
         };
-      case "Body":
+      case "body":
         return {
           text: { type: "text", label: "Body Text" },
         };
-      case "Button":
+      case "button":
         return {
           text: { type: "text", label: "Button Text" },
           link: { type: "text", label: "Button Link" },
         };
-      case "Line Break":
+      case "line_break":
         return {
           line_break: {
             type: "image_upload",
@@ -161,7 +207,16 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
               ))}
             </Select>
           </Box>
-          {modules.map((module, index) => renderModule(module, index))}
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="modules">
+              {provided => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {modules.map((module, index) => renderModule(module, index))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Grid>
       </Grid>
     </Box>

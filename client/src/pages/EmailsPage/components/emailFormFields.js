@@ -1,76 +1,76 @@
 export const emailFormFields = ({ email }) => {
   return {
     subject: { type: "text", label: "Subject" },
-    modules: {
-      type: "array",
-      title: "Modules",
-      label: item => item.type,
-      itemSchema: {
-        fields: {
-          type: {
-            type: "autocomplete_single",
-            label: "Module Type",
-            getOptionLabel: option => {
-              if (typeof option === "string") {
-                return option;
-              }
-            },
-            options: [
-              "Heading",
-              "Subheading",
-              "Body",
-              "Images",
-              "Image",
-              "Button",
-              "HTML",
-              "Divider",
-              "Spacer",
-              "Line Break",
-              "Title Image",
-            ],
-          },
-          content: {
-            type: "object",
-            fields: {
-              title_image: {
-                type: "image_upload",
-                label: "Title Image",
-                labelProp: "title_image",
-                album: `${email?.subject} Title Image`,
-              },
-              heading: { type: "text", label: "Heading" },
-              subheading: { type: "text", label: "Subheading" },
-              body: { type: "text_multiline", label: "Body" },
-              images: {
-                type: "image_upload",
-                label: "Images",
-                labelProp: "images",
-                album: `${email?.subject} Images`,
-                forceArray: true,
-              },
-              image: {
-                type: "image_upload",
-                label: "Image",
-                labelProp: "image",
-                album: `${email?.subject} Images`,
-              },
-              buttonText: { type: "text", label: "Button Text" },
-              buttonLink: { type: "text", label: "Button Link" },
-              html: { type: "text", label: "HTML" },
-              divider: { type: "checkbox", label: "Divider" },
-              spacer: { type: "checkbox", label: "Spacer" },
-              styling: { type: "text_multiline", label: "Styling" },
-              line_break: {
-                type: "image_upload",
-                label: "Line Break",
-                labelProp: "line_break",
-                album: `${email?.subject} Line Break`,
-              },
-            },
-          },
-        },
-      },
-    },
+    // modules: {
+    //   type: "array",
+    //   title: "Modules",
+    //   label: item => item.type,
+    //   itemSchema: {
+    //     fields: {
+    //       type: {
+    //         type: "autocomplete_single",
+    //         label: "Module Type",
+    //         getOptionLabel: option => {
+    //           if (typeof option === "string") {
+    //             return option;
+    //           }
+    //         },
+    //         options: [
+    //           "Heading",
+    //           "Subheading",
+    //           "Body",
+    //           "Images",
+    //           "Image",
+    //           "Button",
+    //           "HTML",
+    //           "Divider",
+    //           "Spacer",
+    //           "Line Break",
+    //           "Title Image",
+    //         ],
+    //       },
+    //       content: {
+    //         type: "object",
+    //         fields: {
+    //           title_image: {
+    //             type: "image_upload",
+    //             label: "Title Image",
+    //             labelProp: "title_image",
+    //             album: `${email?.subject} Title Image`,
+    //           },
+    //           heading: { type: "text", label: "Heading" },
+    //           subheading: { type: "text", label: "Subheading" },
+    //           body: { type: "text_multiline", label: "Body" },
+    //           images: {
+    //             type: "image_upload",
+    //             label: "Images",
+    //             labelProp: "images",
+    //             album: `${email?.subject} Images`,
+    //             forceArray: true,
+    //           },
+    //           image: {
+    //             type: "image_upload",
+    //             label: "Image",
+    //             labelProp: "image",
+    //             album: `${email?.subject} Images`,
+    //           },
+    //           buttonText: { type: "text", label: "Button Text" },
+    //           buttonLink: { type: "text", label: "Button Link" },
+    //           html: { type: "text", label: "HTML" },
+    //           divider: { type: "checkbox", label: "Divider" },
+    //           spacer: { type: "checkbox", label: "Spacer" },
+    //           styling: { type: "text_multiline", label: "Styling" },
+    //           line_break: {
+    //             type: "image_upload",
+    //             label: "Line Break",
+    //             labelProp: "line_break",
+    //             album: `${email?.subject} Line Break`,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
     status: {
       type: "autocomplete_single",
       label: "Status",

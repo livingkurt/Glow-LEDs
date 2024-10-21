@@ -40,12 +40,10 @@ const EmailsPage = () => {
           ),
       },
       {
-        title: "Title",
-        display: email => email?.h1,
-      },
-      {
-        title: "Summary",
-        display: email => email?.h2,
+        title: "Subject",
+        display: email => {
+          return email?.subject;
+        },
       },
 
       {

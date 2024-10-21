@@ -5,6 +5,8 @@ import * as API from "../../../api";
 import { Box, Grid, Paper } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import EmailTemplateEditor from "./EmailTemplateEditor";
+import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
+import { emailFormFields } from "./emailFormFields";
 
 let debounceTimer;
 
@@ -27,19 +29,12 @@ const EditEmailModal = () => {
     initialFetchDone.current = false;
   }, [edit_email_modal]);
 
-  const debounceKeys = ["status", "scheduled_at", "active", "link", "subject"];
-
   useEffect(() => {
     if (debounceValue && initialFetchDone.current) {
-      const keys = Object.keys(debounceValue);
-      const shouldDebounce = keys.some(key => debounceKeys.includes(key));
-
-      if (!shouldDebounce) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          dispatch(API.viewAnnouncement({ template: email }));
-        }, 2000); // 2000ms debounce time
-      }
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        dispatch(API.viewAnnouncement({ template: email }));
+      }, 500); // Reduced debounce time to 500ms for better responsiveness
     }
 
     return () => {
@@ -49,9 +44,13 @@ const EditEmailModal = () => {
 
   const handleEmailChange = newModules => {
     const updatedEmail = { ...email, modules: newModules };
+    console.log({ updatedEmail });
     dispatch(set_email(updatedEmail));
-    setDebounceValue(updatedEmail);
+    setDebounceValue(Date.now()); // Use current timestamp to trigger debounce
   };
+  const formFields = emailFormFields({
+    email,
+  });
 
   return (
     <div>
@@ -74,6 +73,14 @@ const EditEmailModal = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
+            <GLForm
+              formData={formFields}
+              state={email}
+              onChange={value => {
+                dispatch(set_email(value));
+                setDebounceValue(value);
+              }}
+            />
             <EmailTemplateEditor initialModules={email.modules || []} onChange={handleEmailChange} />
           </Grid>
           <Grid item xs={6}>
@@ -88,3 +95,8 @@ const EditEmailModal = () => {
 };
 
 export default EditEmailModal;
+
+// https://i.imgur.com/9bhKqmv.png
+// https://i.imgur.com/XGMEp77.jpeg
+// https://i.imgur.com/gaZaou5.jpeg
+// https://i.imgur.com/zFF9erd.png

@@ -13,6 +13,7 @@ const emailSchema = new mongoose.Schema(
     background_color: { type: String, default: "#7d7c7c" },
     module_color: { type: String, default: "#585858" },
     button_color: { type: String, default: "#4c4f60" },
+    button_text_color: { type: String, default: "#ffffff" },
     text_color: { type: String, default: "#ffffff" },
     title_color: { type: String, default: "#ffffff" },
     scheduled_at: { type: Date },
