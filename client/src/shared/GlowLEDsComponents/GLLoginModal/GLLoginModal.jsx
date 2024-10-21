@@ -49,13 +49,12 @@ const GLLoginModal = () => {
     first_name_validations,
     last_name_validations,
     re_password_validations,
-    registerationSuccess,
+    registrationSuccess,
     loginSuccess,
     resendVerificationSucess,
     loadingVerification,
     showForgotPassword,
     loadingPasswordReset,
-    verificationSuccess,
     verificationLoading,
   } = userPage;
 
@@ -167,7 +166,7 @@ const GLLoginModal = () => {
           <div>
             <h2 className="ta-c">Your Glow LEDs Account has been created!</h2>
             <h3 className="ta-c max-w-800px lh-30px m-auto">Thank you joining the Glow LEDs family!</h3>
-            <Box display="flex" justifyContent="center" mt={1}>
+            <Box display="flex" justifyContent="center" my={1}>
               <Button variant="contained" onClick={() => dispatch(openLoginModal())}>
                 Login Here
               </Button>
@@ -189,7 +188,7 @@ const GLLoginModal = () => {
           </div>
         )}
 
-        {registerationSuccess ? (
+        {registrationSuccess ? (
           <div className="column jc-c">
             <h2 className="ta-c">Thank you for registering at Glow-LEDs.com!</h2>
             <p className="ta-c max-w-800px lh-30px m-auto">

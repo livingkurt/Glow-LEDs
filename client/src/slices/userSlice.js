@@ -64,7 +64,7 @@ const userPage = createSlice({
     first_name_validations: "",
     last_name_validations: "",
     checkEmail: false,
-    registerationSuccess: false,
+    registrationSuccess: false,
     verificationSuccess: false,
     verificationLoading: false,
     loginSuccess: false,
@@ -278,12 +278,12 @@ const userPage = createSlice({
     },
     [API.registerUser.pending]: (state, { payload }) => {
       state.loading = true;
-      state.registerationSuccess = false;
+      state.registrationSuccess = false;
     },
     [API.registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.message = "User Registered";
-      state.registerationSuccess = true;
+      state.registrationSuccess = true;
       // state.loginModal = false;
     },
     [API.registerUser.rejected]: (state, { payload, error }) => {
@@ -293,7 +293,7 @@ const userPage = createSlice({
     },
     [API.verifyUser.pending]: (state, { payload }) => {
       state.verificationLoading = true;
-      state.registerationSuccess = false;
+      state.registrationSuccess = false;
     },
     [API.verifyUser.fulfilled]: (state, { payload }) => {
       state.verificationLoading = false;
