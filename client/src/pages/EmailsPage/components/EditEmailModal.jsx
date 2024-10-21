@@ -12,7 +12,7 @@ let debounceTimer;
 const EditEmailModal = () => {
   const dispatch = useDispatch();
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { edit_email_modal, email, loading, template } = emailPage;
+  const { edit_email_modal, email, template } = emailPage;
 
   const formFields = emailFormFields({
     email,

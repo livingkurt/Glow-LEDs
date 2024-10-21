@@ -19,6 +19,10 @@ export default {
           path: "modules.content.title_image",
           model: "Image",
         })
+        .populate({
+          path: "modules.content.image",
+          model: "Image",
+        })
         .exec();
     } catch (error) {
       if (error instanceof Error) {
@@ -35,6 +39,10 @@ export default {
         })
         .populate({
           path: "modules.content.line_break",
+          model: "Image",
+        })
+        .populate({
+          path: "modules.content.image",
           model: "Image",
         })
         .populate({

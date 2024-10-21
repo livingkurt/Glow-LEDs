@@ -18,14 +18,16 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
         break;
       case "Line Break":
         emailContent += `
-          <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:10px auto;">
-            <tr>
-              <td style="font-family:helvetica;padding:10px;">
-                <img src=${module.content?.line_break?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image"
-                  style="width:100%;" />
-              </td>
-            </tr>
-          </table>`;
+            <table style="width:100%;text-align:center;border-spacing:0;margin:10px auto;overflow:hidden;">
+              <tr>
+                <td style="padding:0;">
+                  <div style="max-width:100%;overflow:hidden;position:relative;height:20px;">
+                    <img src=${module.content?.line_break?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image"
+                      style="position:absolute;left:50%;transform:translateX(-50%);height:100%;max-width:100%;object-fit:cover;" />
+                  </div>
+                </td>
+              </tr>
+            </table>`;
         break;
       case "Heading":
         emailContent += `
@@ -82,7 +84,16 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
               </tr>
             </table>`;
         break;
-
+      case "Image":
+        emailContent += `
+          <table style="max-width:800px;width:100%;text-align:center;border-spacing:0;margin:10px auto;">
+            <tr>
+              <td style="font-family:helvetica;padding:10px;">
+                <img src=${module.content.image.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image" style="width:100%;" />
+              </td>
+            </tr>
+          </table>`;
+        break;
       case "Button":
         emailContent += `
           <table style="max-width:800px;width:100%;text-align:center;border-spacing:0;margin:10px auto;">

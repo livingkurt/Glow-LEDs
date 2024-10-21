@@ -6,6 +6,7 @@ const contentSchema = new mongoose.Schema({
   subheading: { type: String },
   body: { type: String },
   images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+  image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   buttonText: { type: String },
   buttonLink: { type: String },
   html: { type: String },
