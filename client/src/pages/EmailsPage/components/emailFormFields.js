@@ -1,17 +1,69 @@
 export const emailFormFields = ({ email }) => {
   return {
     subject: { type: "text", label: "Subject" },
-    h1: { type: "text", label: "Heading" },
-    h2: { type: "text_multiline", label: "Summary" },
-    images: {
-      type: "image_upload",
-      label: "Images",
-      labelProp: "images",
-      album: `${email?.h1} Images`,
+    modules: {
+      type: "array",
+      title: "Modules",
+      label: item => item.type,
+      itemSchema: {
+        fields: {
+          type: {
+            type: "autocomplete_single",
+            label: "Module Type",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return option;
+              }
+            },
+            options: [
+              "Heading",
+              "Subheading",
+              "Body",
+              "Images",
+              "Button",
+              "HTML",
+              "Divider",
+              "Spacer",
+              "Line Break",
+              "Title Image",
+            ],
+          },
+          content: {
+            type: "object",
+            fields: {
+              title_image: {
+                type: "image_upload",
+                label: "Title Image",
+                labelProp: "title_image",
+                album: `${email?.subject} Title Image`,
+              },
+              heading: { type: "text", label: "Heading" },
+              subheading: { type: "text", label: "Subheading" },
+              body: { type: "text_multiline", label: "Body" },
+              images: {
+                type: "image_upload",
+                label: "Images",
+                labelProp: "images",
+                album: `${email?.subject} Images`,
+                forceArray: true,
+              },
+              buttonText: { type: "text", label: "Button Text" },
+              buttonLink: { type: "text", label: "Button Link" },
+              html: { type: "text", label: "HTML" },
+              divider: { type: "checkbox", label: "Divider" },
+              spacer: { type: "checkbox", label: "Spacer" },
+              styling: { type: "text_multiline", label: "Styling" },
+              line_break: {
+                type: "image_upload",
+                label: "Line Break",
+                labelProp: "line_break",
+                album: `${email?.subject} Line Break`,
+              },
+            },
+          },
+        },
+      },
     },
-    p: { type: "text_multiline", label: "Body" },
-    button: { type: "text", label: "Button Text" },
-    link: { type: "text", label: "Button Link" },
     status: {
       type: "autocomplete_single",
       label: "Status",
@@ -29,6 +81,7 @@ export const emailFormFields = ({ email }) => {
     module_color: { type: "color_picker", label: "Module Color", defaultColor: "#585858" },
     header_footer_color: { type: "color_picker", label: "Header Footer Color", defaultColor: "#333333" },
     button_color: { type: "color_picker", label: "Button Color", defaultColor: "#4c4f60" },
+    button_text_color: { type: "color_picker", label: "Button Text Color", defaultColor: "#ffffff" },
     scheduled_at: { type: "datetime", label: "Scheduled At" },
     active: { type: "checkbox", label: "Active", default: true },
   };

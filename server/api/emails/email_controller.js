@@ -527,7 +527,15 @@ export default {
   },
   send_announcement_emails_c: async (req, res) => {
     const { id, test } = req.params;
-    const email = await email_db.findById_emails_db(id);
+    const email = await Email.findOne({ _id: id, deleted: false })
+      .populate({
+        path: "modules",
+        populate: {
+          path: "content.images",
+          model: "Image",
+        },
+      })
+      .lean();
     if (test === "true") {
       const test_emails = ["lavacquek@icloud.com"];
       await sendEmailsInBatches(email, res, test_emails);
@@ -544,6 +552,7 @@ export default {
           body: announcement(template),
           unsubscribe: true,
           background_color: template.background_color,
+          header_footer_color: template.header_footer_color,
         })
       );
     }

@@ -31,7 +31,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
 
       const newImages = fetchedImages.map(({ payload }) => payload);
 
-      if (Array.isArray(fieldState)) {
+      if (Array.isArray(fieldState) || fieldData.forceArray) {
         onChange([...fieldState, ...newImages]);
       } else if (typeof fieldState === "object") {
         onChange(newImages[0]); // Only use the first image for single image fields
@@ -43,7 +43,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   };
 
   const handleImageUpload = uploadedImages => {
-    if (Array.isArray(fieldState)) {
+    if (Array.isArray(fieldState) || fieldData.forceArray) {
       onChange([...fieldState, ...uploadedImages]);
     } else if (typeof fieldState === "object") {
       onChange(uploadedImages[0]); // Only use the first image for single image fields

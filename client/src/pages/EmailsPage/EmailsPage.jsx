@@ -98,9 +98,7 @@ const EmailsPage = () => {
                   API.saveEmail({
                     ...email,
                     _id: null,
-                    home_page: { ...email.home_page, h1: `${email.home_page.h1} Copy` },
-                    createdAt: null,
-                    updatedAt: null,
+                    subject: `${email.subject} Copy`,
                   })
                 )
               }

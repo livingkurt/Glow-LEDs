@@ -62,7 +62,7 @@ const EditEmailModal = () => {
         onCancel={() => {
           dispatch(set_edit_email_modal(false));
         }}
-        maxWidth="xl"
+        maxWidth="xxl"
         title={"Edit Email"}
         confirmLabel={"Save"}
         confirmColor="primary"
