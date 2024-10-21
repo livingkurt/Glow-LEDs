@@ -2,10 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_email_modal, set_email } from "../../../slices/emailSlice";
 import * as API from "../../../api";
-import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { emailFormFields } from "./emailFormFields";
 import { Box, Grid, Paper } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
+import EmailTemplateEditor from "./EmailTemplateEditor";
 
 let debounceTimer;
 
@@ -13,10 +12,6 @@ const EditEmailModal = () => {
   const dispatch = useDispatch();
   const emailPage = useSelector(state => state.emails.emailPage);
   const { edit_email_modal, email, template } = emailPage;
-
-  const formFields = emailFormFields({
-    email,
-  });
 
   const [debounceValue, setDebounceValue] = useState(null);
   const initialFetchDone = useRef(false);
@@ -52,6 +47,12 @@ const EditEmailModal = () => {
     };
   }, [debounceValue, dispatch, email]);
 
+  const handleEmailChange = newModules => {
+    const updatedEmail = { ...email, modules: newModules };
+    dispatch(set_email(updatedEmail));
+    setDebounceValue(updatedEmail);
+  };
+
   return (
     <div>
       <GLActionModal
@@ -73,14 +74,7 @@ const EditEmailModal = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <GLForm
-              formData={formFields}
-              state={email}
-              onChange={value => {
-                dispatch(set_email(value));
-                setDebounceValue(value);
-              }}
-            />
+            <EmailTemplateEditor initialModules={email.modules || []} onChange={handleEmailChange} />
           </Grid>
           <Grid item xs={6}>
             <Box m={2}>
