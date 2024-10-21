@@ -95,8 +95,3 @@ const EditEmailModal = () => {
 };
 
 export default EditEmailModal;
-
-// https://i.imgur.com/9bhKqmv.png
-// https://i.imgur.com/XGMEp77.jpeg
-// https://i.imgur.com/gaZaou5.jpeg
-// https://i.imgur.com/zFF9erd.png
