@@ -138,7 +138,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
                 return option;
               }
             },
-            options: ["h1", "h2", "h3"],
+            options: ["h1", "h2", "h3", "h4", "h5", "h6"],
           },
         };
       case "images":
@@ -161,13 +161,9 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
           },
         };
 
-      case "subheading":
-        return {
-          text: { type: "text", label: "Subheading Text" },
-        };
       case "body":
         return {
-          text: { type: "text", label: "Body Text" },
+          text: { type: "text_multiline", label: "Body Text" },
         };
       case "button":
         return {

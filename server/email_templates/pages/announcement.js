@@ -40,18 +40,6 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
             </tr>
           </table>`;
           break;
-        case "subheading":
-          emailContent += `
-          <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:10px auto;">
-            <tr>
-              <td style="font-family:helvetica;padding:10px;">
-                <h2 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:${title_color};font-size:30px; padding-bottom: 7px;">
-                  ${module.content.text}
-                </h2>
-              </td>
-            </tr>
-          </table>`;
-          break;
         case "body":
           emailContent += `
           <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:10px auto;">
@@ -88,8 +76,8 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
           emailContent += `
           <table style="max-width:800px;width:100%;text-align:center;border-spacing:0;margin:10px auto;">
             <tr>
-              <td style="font-family:helvetica;padding:10px;">
-                <img src=${module.content?.image?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image" style="width:100%;" />
+              <td style="font-family:helvetica;padding:10px; border-radius:20px;">
+                <img src=${module.content?.image?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image"   style="width:100%; height:auto; display:block; border:0; object-fit: cover;  border-radius:20px;" />
               </td>
             </tr>
           </table>`;
