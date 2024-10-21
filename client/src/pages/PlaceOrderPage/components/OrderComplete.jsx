@@ -19,8 +19,8 @@ const OrderComplete = ({ current_user, orderIds }) => {
         <title>Order Complete | Glow LEDs</title>
         <meta property="og:title" content="Check Email" />
         <meta name="twitter:title" content="Check Email" />
-        <link rel="canonical" href={"https://www.glow-leds.com/complete/order"} />
-        <meta property="og:url" content={"https://www.glow-leds.com/complete/order"} />
+        <link rel="canonical" href={"https://www.glow-leds.com/place_order"} />
+        <meta property="og:url" content={"https://www.glow-leds.com/place_order"} />
       </Helmet>
       <div className="column jc-c">
         <Link to="/">

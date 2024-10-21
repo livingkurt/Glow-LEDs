@@ -19,8 +19,8 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
     const searchParams = new URLSearchParams(location.search);
     const passwordParam = searchParams.get("password");
     if (passwordParam) {
-      setPassword(passwordParam);
-      handleSubmit(null, passwordParam);
+      setPassword(passwordParam.toLowerCase());
+      handleSubmit(null, passwordParam.toLowerCase());
     }
   }, [location]);
 

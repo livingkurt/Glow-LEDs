@@ -122,6 +122,7 @@ const userPage = createSlice({
     openLoginModal: (state, { payload }) => {
       state.loginModal = true;
       state.showRegister = payload?.register;
+      state.token = payload?.token;
     },
     closeLoginModal: (state, { payload }) => {
       state.loginModal = false;
@@ -283,7 +284,7 @@ const userPage = createSlice({
       state.loading = false;
       state.message = "User Registered";
       state.registerationSuccess = true;
-      state.loginModal = false;
+      // state.loginModal = false;
     },
     [API.registerUser.rejected]: (state, { payload, error }) => {
       state.loading = false;

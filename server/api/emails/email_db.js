@@ -8,10 +8,6 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .populate({
-          path: "modules.content.images",
-          model: "Image",
-        })
-        .populate({
           path: "modules.content.line_break",
           model: "Image",
         })
@@ -33,10 +29,6 @@ export default {
   findById_emails_db: async id => {
     try {
       return await Email.findOne({ _id: id, deleted: false })
-        .populate({
-          path: "modules.content.images",
-          model: "Image",
-        })
         .populate({
           path: "modules.content.line_break",
           model: "Image",

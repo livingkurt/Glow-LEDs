@@ -529,12 +529,22 @@ export default {
     const { id, test } = req.params;
     const email = await Email.findOne({ _id: id, deleted: false })
       .populate({
-        path: "modules",
-        populate: {
-          path: "content.images",
-          model: "Image",
-        },
+        path: "modules.content.images",
+        model: "Image",
       })
+      .populate({
+        path: "modules.content.line_break",
+        model: "Image",
+      })
+      .populate({
+        path: "modules.content.title_image",
+        model: "Image",
+      })
+      .populate({
+        path: "modules.content.image",
+        model: "Image",
+      })
+      .exec()
       .lean();
     if (test === "true") {
       const test_emails = ["lavacquek@icloud.com"];
@@ -652,7 +662,7 @@ export default {
       html: App({
         body: verify({
           title: "Verify your Email",
-          url: `${domain()}/pages/complete/account_created/${token}`,
+          url: `${domain()}?token=${token}`,
           user: user,
         }),
 
