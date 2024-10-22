@@ -11,6 +11,7 @@ import {
 } from "./affiliate_helpers";
 import { createStripeAccountLink } from "./affiliate_interactors";
 import { getFilteredData } from "../api_helpers";
+import { Cart } from "../carts";
 const bcrypt = require("bcryptjs");
 
 export default {
@@ -331,6 +332,53 @@ export default {
       await generateSponsorCodes(affiliate);
       return affiliate;
     } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_product_bundle_affiliates_s: async (params, body) => {
+    const { id, cartId } = params;
+    const { title, subtitle, short_description } = body;
+    console.log({ params, body });
+    try {
+      const originalCart = await Cart.findById(cartId);
+      console.log({ originalCart });
+      if (!originalCart) {
+        throw new Error("Cart not found");
+      }
+
+      const newCart = new Cart({
+        ...originalCart.toObject(),
+        _id: undefined,
+        user: undefined,
+        affiliate: id,
+      });
+      console.log({ newCart });
+      const savedCart = await newCart.save();
+
+      const newProductBundle = {
+        title,
+        subtitle,
+        short_description,
+        cart: savedCart._id,
+      };
+      console.log({ newProductBundle });
+
+      const updatedAffiliate = await Affiliate.findByIdAndUpdate(
+        id,
+        { $push: { product_bundles: newProductBundle } },
+        { new: true }
+      );
+      console.log({ updatedAffiliate });
+
+      if (!updatedAffiliate) {
+        throw new Error("Affiliate not found");
+      }
+
+      return updatedAffiliate;
+    } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

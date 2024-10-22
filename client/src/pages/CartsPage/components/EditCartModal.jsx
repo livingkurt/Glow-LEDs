@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";
@@ -17,60 +17,58 @@ import {
 const EditCartModal = () => {
   const dispatch = useDispatch();
 
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { edit_cart_modal, cart, loading } = cartPage;
-  const { user } = cart;
-
-  const userPage = useSelector(state => state.users.userPage);
-  const { users } = userPage;
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listAffiliates({ active: true }));
-      dispatch(API.listUsers({}));
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch, cart._id]);
+  const { edit_cart_modal, cart, loading } = useSelector(state => state.carts.cartPage);
+  const { user } = cart || {};
 
   const eventsQuery = useEventsQuery();
   const ticketsQuery = useTicketsQuery();
   const categorysQuery = useCategorysQuery();
-  const productsQuery = useProductsQuery();
+  const productsQuery = useProductsQuery({ option: false, hidden: false });
   const userQuery = useUsersQuery();
 
-  const formFields = cartFormFields({
-    userQuery,
-    cart,
-    eventsQuery,
-    ticketsQuery,
-    categorysQuery,
-    productsQuery,
-  });
+  const formFields = React.useMemo(
+    () =>
+      cartFormFields({
+        userQuery,
+        cart,
+        eventsQuery,
+        ticketsQuery,
+        categorysQuery,
+        productsQuery,
+      }),
+    [userQuery, cart, eventsQuery, ticketsQuery, categorysQuery, productsQuery]
+  );
+
+  const handleConfirm = useCallback(() => {
+    dispatch(API.saveCart({ ...cart, user: user?._id ? user?._id : null }));
+  }, [dispatch, cart, user]);
+
+  const handleCancel = useCallback(() => {
+    dispatch(set_edit_cart_modal(false));
+  }, [dispatch]);
+
+  const handleChange = useCallback(
+    value => {
+      dispatch(set_cart(value));
+    },
+    [dispatch]
+  );
 
   return (
-    <div>
-      <GLActionModal
-        isOpen={edit_cart_modal}
-        onConfirm={() => {
-          dispatch(API.saveCart({ ...cart, user: user?._id ? user?._id : null }));
-        }}
-        onCancel={() => {
-          dispatch(set_edit_cart_modal(false));
-        }}
-        title={"Edit Cart"}
-        confirmLabel={"Save"}
-        confirmColor="primary"
-        cancelLabel={"Cancel"}
-        cancelColor="secondary"
-        disableEscapeKeyDown
-      >
-        <GLForm formData={formFields} state={cart} onChange={value => dispatch(set_cart(value))} loading={loading} />
-      </GLActionModal>
-    </div>
+    <GLActionModal
+      isOpen={edit_cart_modal}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+      title="Edit Cart"
+      confirmLabel="Save"
+      confirmColor="primary"
+      cancelLabel="Cancel"
+      cancelColor="secondary"
+      disableEscapeKeyDown
+    >
+      <GLForm formData={formFields} state={cart} onChange={handleChange} loading={loading} />
+    </GLActionModal>
   );
 };
 
-export default EditCartModal;
+export default React.memo(EditCartModal);

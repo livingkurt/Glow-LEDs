@@ -9,6 +9,15 @@ import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import { Add } from "@mui/icons-material";
+import * as API from "../../api";
+import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
+import {
+  closeCreateProductBundleModal,
+  openCreateProductBundleModal,
+  setProductBundle,
+} from "../../slices/affiliateSlice";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -17,6 +26,8 @@ const Cart = () => {
 
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
+
+  const { create_product_bundle_modal, productBundle, loading } = useSelector(state => state.affiliates.affiliatePage);
 
   const { cartItems } = my_cart;
   const { contents } = useSelector(state => state.contents.contentPage);
@@ -32,6 +43,12 @@ const Cart = () => {
     () => determine_wholesale_proceed(current_user, cartItems),
     [current_user, cartItems]
   );
+
+  const formFields = {
+    title: { label: "Title", type: "text", value: "" },
+    subtitle: { label: "Subtitle", type: "text", value: "" },
+    short_description: { label: "Short Description", type: "text", value: "" },
+  };
 
   return (
     <Drawer
@@ -68,9 +85,22 @@ const Cart = () => {
             </Box>
             <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
           </Box>
-          <Button onClick={closeMenu} color="inherit" variant="outlined">
-            <CloseIcon /> Close
-          </Button>
+          <Box display={"flex"} gap={2}>
+            {(current_user.isAdmin || current_user.affiliate) && (
+              <Button
+                onClick={() => {
+                  dispatch(openCreateProductBundleModal());
+                }}
+                color="inherit"
+                variant="outlined"
+              >
+                <Add /> Create Bundle
+              </Button>
+            )}
+            <Button onClick={closeMenu} color="inherit" variant="outlined">
+              <CloseIcon /> Close
+            </Button>
+          </Box>
         </Box>
         <Divider color="white" />
         <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
@@ -153,6 +183,39 @@ const Cart = () => {
           </Box>
         </Box>
       </Box>
+      <GLActionModal
+        isOpen={create_product_bundle_modal}
+        onConfirm={() => {
+          console.log({
+            affiliateId: current_user.affiliate,
+            cartId: my_cart._id,
+            ...productBundle,
+          });
+          dispatch(
+            API.createProductBundle({
+              affiliateId: current_user.affiliate,
+              cartId: my_cart._id,
+              ...productBundle,
+            })
+          );
+        }}
+        onCancel={() => {
+          dispatch(closeCreateProductBundleModal());
+        }}
+        title={"Create Product Bundle"}
+        confirmLabel={"Create"}
+        confirmColor="primary"
+        cancelLabel={"Cancel"}
+        cancelColor="secondary"
+        disableEscapeKeyDown
+      >
+        <GLForm
+          formData={formFields}
+          state={productBundle}
+          onChange={value => dispatch(setProductBundle(value))}
+          loading={loading}
+        />
+      </GLActionModal>
     </Drawer>
   );
 };

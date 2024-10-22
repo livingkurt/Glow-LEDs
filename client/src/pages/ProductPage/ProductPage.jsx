@@ -59,7 +59,7 @@ const ProductPage = () => {
 
   const handleAddToCart = () => {
     if (validateOptions()) {
-      dispatch(API.addToCart({ cart: my_cart, cartItem: customizedProduct, type: "add_to_cart" }));
+      dispatch(API.addToCart({ cart: my_cart, cartItems: [customizedProduct], type: "add_to_cart" }));
     }
   };
 

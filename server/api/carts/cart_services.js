@@ -70,32 +70,37 @@ export default {
     }
   },
   add_to_cart_carts_s: async body => {
-    const { cart_item, cartItems, current_user } = body;
+    const { existingCartItems, cartItems, current_user } = body;
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
         let data = await cart_db.findByUser_carts_db(current_user._id);
+        let result;
         if (data) {
-          const result = updateCartItems(data.cartItems, cart_item);
-          data.cartItems = result.items;
-          await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
-          data = await cart_db.findById_carts_db(data._id);
+          for (const cart_item of cartItems) {
+            result = updateCartItems(data.cartItems, cart_item);
+            data.cartItems = result.items;
+            await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
+            data = await cart_db.findById_carts_db(data._id);
+          }
           return {
             data: data.toObject ? data.toObject() : data,
             message: result.message,
           };
         } else {
-          const result = updateCartItems([], cart_item);
-          data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
-          data = await cart_db.findById_carts_db(data._id);
+          for (const cart_item of cartItems) {
+            result = updateCartItems([], cart_item);
+            data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
+            data = await cart_db.findById_carts_db(data._id);
+          }
           return {
             data: data.toObject ? data.toObject() : data,
             message: result.message,
           };
         }
       } else {
-        if (cartItems && cartItems.length > 0) {
-          const result = updateCartItems(cartItems, cart_item);
+        if (existingCartItems && existingCartItems.length > 0) {
+          const result = updateCartItems(existingCartItems, cart_item);
           return {
             data: { cartItems: result.items },
             message: result.message,

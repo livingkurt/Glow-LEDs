@@ -147,4 +147,16 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  create_product_bundle_affiliates_c: async (req, res) => {
+    const { params, body } = req;
+    try {
+      const affiliate = await affiliate_services.create_product_bundle_affiliates_s(params, body);
+      if (affiliate) {
+        return res.status(200).send(affiliate);
+      }
+      return res.status(500).send({ message: "Error Creating Product Bundle" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

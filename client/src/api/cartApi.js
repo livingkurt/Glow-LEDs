@@ -36,7 +36,7 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dis
 
 export const addToCart = createAsyncThunk(
   "carts/addToCart",
-  async ({ cart, cartItem, type }, { dispatch, rejectWithValue, getState }) => {
+  async ({ cart, cartItems, type }, { dispatch, rejectWithValue, getState }) => {
     try {
       const {
         users: {
@@ -51,28 +51,30 @@ export const addToCart = createAsyncThunk(
       let response;
       if (cart?._id) {
         response = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
-          cart_item: cartItem,
-          cartItems: my_cart?.cartItems || [],
+          cartItems: Array.isArray(cartItems) ? cartItems : [cartItems],
+          existingCartItems: my_cart?.cartItems || [],
           current_user,
         });
       } else {
         response = await axios.post(`/api/carts/add_to_cart`, {
-          cart_item: cartItem,
-          cartItems: my_cart?.cartItems || [],
+          cartItems: Array.isArray(cartItems) ? cartItems : [cartItems],
+          existingCartItems: my_cart?.cartItems || [],
           current_user,
         });
       }
 
-      const { data, message } = response.data;
+      const { data, messages } = response.data;
 
-      if (message) {
-        dispatch(showInfo({ message, duration: 3000 }));
+      if (messages && messages.length > 0) {
+        messages.forEach(message => {
+          dispatch(showInfo({ message, duration: 3000 }));
+        });
       } else {
-        dispatch(showSuccess({ message: `Cart Item Added`, duration: 1000 }));
+        dispatch(showSuccess({ message: `Cart Items Added`, duration: 1000 }));
       }
 
       // Add current_user to the returned payload
-      return { data, type, current_user, message };
+      return { data, type, current_user, messages };
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);

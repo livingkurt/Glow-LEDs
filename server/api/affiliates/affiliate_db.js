@@ -7,11 +7,15 @@ export default {
       return await Affiliate.find(filter)
         .sort(sort)
         .populate("user")
-        .populate({ path: "products", populate: { path: "images" } })
-        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
+        // .populate({ path: "products", populate: { path: "images" } })
+        // .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
+        .populate({
+          path: "product_bundles",
+          populate: { path: "cart", populate: { path: "cartItems", populate: { path: "display_image_object" } } },
+        })
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -26,10 +30,14 @@ export default {
       return await Affiliate.findOne(params)
         .populate("user")
         .populate("chips")
-        .populate({ path: "products", populate: { path: "images" } })
-        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
+        // .populate({ path: "products", populate: { path: "images" } })
+        // .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
-        .populate("private_code");
+        .populate("private_code")
+        .populate({
+          path: "product_bundles",
+          populate: { path: "cart", populate: { path: "cartItems", populate: { path: "display_image_object" } } },
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -41,10 +49,14 @@ export default {
       return await Affiliate.findOne({ pathname: pathname, deleted: false })
         .populate("user")
         .populate("chips")
-        .populate({ path: "products", populate: { path: "images" } })
-        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
+        // .populate({ path: "products", populate: { path: "images" } })
+        // .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
-        .populate("private_code");
+        .populate("private_code")
+        .populate({
+          path: "product_bundles",
+          populate: { path: "cart", populate: { path: "cartItems", populate: { path: "display_image_object" } } },
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -56,10 +68,14 @@ export default {
       return await Affiliate.findOne({ _id: id, deleted: false })
         .populate("user")
         .populate("chips")
-        .populate({ path: "products", populate: { path: "images" } })
-        .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
+        // .populate({ path: "products", populate: { path: "images" } })
+        // .populate({ path: "product_bundles", populate: { path: "products", populate: { path: "images" } } })
         .populate("public_code")
-        .populate("private_code");
+        .populate("private_code")
+        .populate({
+          path: "product_bundles",
+          populate: { path: "cart", populate: { path: "cartItems", populate: { path: "display_image_object" } } },
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

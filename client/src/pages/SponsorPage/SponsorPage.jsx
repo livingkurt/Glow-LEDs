@@ -14,8 +14,8 @@ import {
   Button,
   IconButton,
   Divider,
+  Paper,
 } from "@mui/material";
-import ProductCard from "../ProductsGridPage/components/ProductCard";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -29,6 +29,9 @@ import { useTutorialsQuery } from "../../api/allRecordsApi";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
+import CartItemCard from "./components/CartItemCard";
+import { EditCartModal } from "../CartsPage/components";
+import { open_edit_cart_modal } from "../../slices/cartSlice";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +39,8 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
+
+  const { my_cart } = useSelector(state => state.carts.cartPage);
 
   const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
 
@@ -51,7 +56,7 @@ const SponsorPage = () => {
 
   const { current_user } = useSelector(state => state.users.userPage);
 
-  const { data: tutorials, isLoading: isLoadingTutorials } = useTutorialsQuery({ affiliate: affiliate._id });
+  const { data: tutorials } = useTutorialsQuery({ affiliate: affiliate._id });
 
   useEffect(() => {
     dispatch(API.detailsAffiliate({ pathname: params.pathname }));
@@ -216,7 +221,7 @@ const SponsorPage = () => {
       {affiliate.product_bundles &&
         affiliate.product_bundles.length > 0 &&
         affiliate.product_bundles.map(bundle => (
-          <>
+          <Box sx={{ my: 2 }}>
             {bundle.title && (
               <Box>
                 <Typography variant="h5" align="center" gutterBottom>
@@ -238,53 +243,89 @@ const SponsorPage = () => {
                 </Typography>
               </Box>
             )}
-            {bundle.products && bundle.products.length > 0 && (
+            {bundle?.cart?.cartItems?.length > 0 && (
               <Box
                 sx={{
-                  pb: 6,
+                  pb: 2,
                   px: 2,
                   display: "flex",
-                  overflowX: "auto",
-                  minWidth: "100%",
-                  "&::-webkit-scrollbar": {
-                    height: "8px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "rgba(0, 0, 0, 0.2)",
-                    borderRadius: "4px",
-                  },
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
-                {console.log({ products: bundle.products })}
-                {bundle.products.length > 0 ? (
-                  bundle.products.map(product => (
-                    <Box
-                      key={product._id}
-                      sx={{
-                        minWidth: "250px", // Change minWidth to 250px
-                        width: "100%", // Add width: 100% to make the item fill the available space
-                        marginRight: "20px",
-                        "&:last-child": {
-                          marginRight: 0,
-                        },
-                      }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    overflowX: "auto",
+                    minWidth: "100%",
+                    "&::-webkit-scrollbar": {
+                      height: "8px",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      backgroundColor: "rgba(0, 0, 0, 0.2)",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  {bundle?.cart?.cartItems?.length > 0 ? (
+                    bundle?.cart?.cartItems?.map((item, index) => (
+                      <Box
+                        key={item._id}
+                        sx={{
+                          m: 2,
+                          mb: 4,
+                          maxWidth: "250px",
+                          width: "100%",
+                        }}
+                      >
+                        <CartItemCard item={item} />
+                      </Box>
+                    ))
+                  ) : (
+                    <>
+                      <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                        No products found for matching criteria
+                      </Typography>
+                      <Typography variant="subtitle2" textAlign="center" width="100%">
+                        Try removing some filters to find what you're looking for
+                      </Typography>
+                    </>
+                  )}
+                </Box>
+                <Box display={"flex"} gap={2} sx={{ mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
+
+                      const code = sessionStorage.getItem("promo_code");
+                      if (!code) {
+                        sessionStorage.setItem("promo_code", affiliate.public_code?.promo_code);
+                        dispatch(
+                          showInfo({
+                            message: `Code ${affiliate.public_code?.promo_code.toUpperCase()} Added to Checkout`,
+                          })
+                        );
+                      }
+                    }}
+                  >
+                    Add Bundle to Cart
+                  </Button>
+                  {(current_user.isAdmin || current_user?.affiliate === affiliate?._id) && (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => dispatch(open_edit_cart_modal(bundle.cart))}
                     >
-                      <ProductCard product={product} promo_code={affiliate.public_code?.promo_code} />
-                    </Box>
-                  ))
-                ) : (
-                  <>
-                    <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                      No products found for matching criteria
-                    </Typography>
-                    <Typography variant="subtitle2" textAlign="center" width="100%">
-                      Try removing some filters to find what you're looking for
-                    </Typography>
-                  </>
-                )}
+                      Edit Bundle
+                    </Button>
+                  )}
+                </Box>
+                <Divider sx={{ my: 4, borderColor: "#fff" }} />
               </Box>
             )}
-          </>
+          </Box>
         ))}
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {tutorials && tutorials.length > 0 && (
@@ -381,6 +422,7 @@ const SponsorPage = () => {
           </Box>
         ))}
       <EditAffiliateModal />
+      <EditCartModal />
     </Container>
   );
 };

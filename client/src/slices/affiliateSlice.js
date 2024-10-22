@@ -67,6 +67,11 @@ const affiliatePage = createSlice({
     questionsConcerns: "",
     numberOfContent: 0,
     createAffiliateStep: 0,
+    productBundle: {
+      title: "",
+      subtitle: "",
+      short_description: "",
+    },
   },
   reducers: {
     set_affiliate: (state, { payload }) => {
@@ -140,6 +145,15 @@ const affiliatePage = createSlice({
     },
     setCreateAffiliateStep: (state, { payload }) => {
       state.createAffiliateStep = payload;
+    },
+    openCreateProductBundleModal: (state, { payload }) => {
+      state.create_product_bundle_modal = true;
+    },
+    closeCreateProductBundleModal: (state, { payload }) => {
+      state.create_product_bundle_modal = false;
+    },
+    setProductBundle: (state, { payload }) => {
+      state.productBundle = { ...state.productBundle, ...payload };
     },
   },
   extraReducers: {
@@ -236,6 +250,19 @@ const affiliatePage = createSlice({
     [API.savePromo.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
+    [API.createProductBundle.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.createProductBundle.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.create_product_bundle_modal = false;
+      state.message = "Product Bundle Created";
+    },
+    [API.createProductBundle.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -257,5 +284,8 @@ export const {
   setCheckin,
   addNewCheckin,
   setCreateAffiliateStep,
+  openCreateProductBundleModal,
+  closeCreateProductBundleModal,
+  setProductBundle,
 } = affiliatePage.actions;
 export default affiliatePage.reducer;
