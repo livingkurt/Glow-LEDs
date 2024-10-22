@@ -116,6 +116,10 @@ const features = addIdsRecursively({
       name: "Stickers",
       path: "/products?tags[]=merch&stags[]=stickers",
     },
+    // {
+    //   name: "Product Bundles",
+    //   path: "/products?tags[]=bundles",
+    // },
   ],
 });
 const glowskinz = addIdsRecursively({

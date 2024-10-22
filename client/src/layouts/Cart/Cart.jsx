@@ -18,6 +18,7 @@ import {
   openCreateProductBundleModal,
   setProductBundle,
 } from "../../slices/affiliateSlice";
+
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -84,18 +85,22 @@ const Cart = () => {
             </Box>
             <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
           </Box>
-          <Button
-            onClick={() => {
-              dispatch(openCreateProductBundleModal());
-            }}
-            color="inherit"
-            variant="outlined"
-          >
-            <Add /> Create Bundle
-          </Button>
-          <Button onClick={closeMenu} color="inherit" variant="outlined">
-            <CloseIcon /> Close
-          </Button>
+          <Box display={"flex"} gap={2}>
+            {(current_user.isAdmin || current_user.affiliate) && (
+              <Button
+                onClick={() => {
+                  dispatch(openCreateProductBundleModal());
+                }}
+                color="inherit"
+                variant="outlined"
+              >
+                <Add /> Create Bundle
+              </Button>
+            )}
+            <Button onClick={closeMenu} color="inherit" variant="outlined">
+              <CloseIcon /> Close
+            </Button>
+          </Box>
         </Box>
         <Divider color="white" />
         <Box sx={{ flexGrow: 1, overflowY: "auto" }}>

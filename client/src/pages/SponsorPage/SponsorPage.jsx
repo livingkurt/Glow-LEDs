@@ -39,7 +39,6 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
-  console.log({ affiliate });
 
   const { my_cart } = useSelector(state => state.carts.cartPage);
 
@@ -57,7 +56,7 @@ const SponsorPage = () => {
 
   const { current_user } = useSelector(state => state.users.userPage);
 
-  const { data: tutorials, isLoading: isLoadingTutorials } = useTutorialsQuery({ affiliate: affiliate._id });
+  const { data: tutorials } = useTutorialsQuery({ affiliate: affiliate._id });
 
   useEffect(() => {
     dispatch(API.detailsAffiliate({ pathname: params.pathname }));
@@ -268,7 +267,6 @@ const SponsorPage = () => {
                     },
                   }}
                 >
-                  {console.log({ products: bundle.cart })}
                   {bundle?.cart?.cartItems?.length > 0 ? (
                     bundle?.cart?.cartItems?.map((item, index) => (
                       <Box
@@ -314,8 +312,7 @@ const SponsorPage = () => {
                   >
                     Add Bundle to Cart
                   </Button>
-                  {console.log({ current_user, affiliate })}
-                  {(current_user.isAdmin || current_user.affiliate === affiliate._id) && (
+                  {(current_user.isAdmin || current_user?.affiliate === affiliate?._id) && (
                     <Button
                       variant="contained"
                       color="secondary"
