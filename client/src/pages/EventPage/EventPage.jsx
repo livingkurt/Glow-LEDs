@@ -49,20 +49,22 @@ const EventPage = () => {
     dispatch(
       API.addToCart({
         cart: my_cart,
-        cartItem: {
-          itemType: "ticket",
-          ticket: selectedTicket._id,
-          quantity: quantity,
-          max_display_quantity: selectedTicket.max_display_quantity,
-          max_quantity: selectedTicket.max_quantity,
-          price: selectedTicket.price,
-          name: selectedTicket.title,
-          color: selectedTicket.color,
-          finite_stock: true,
-          ticket_type: selectedTicket.ticket_type,
-          display_image_object: selectedTicket.image,
-          count_in_stock: selectedTicket.count_in_stock,
-        },
+        cartItem: [
+          {
+            itemType: "ticket",
+            ticket: selectedTicket._id,
+            quantity: quantity,
+            max_display_quantity: selectedTicket.max_display_quantity,
+            max_quantity: selectedTicket.max_quantity,
+            price: selectedTicket.price,
+            name: selectedTicket.title,
+            color: selectedTicket.color,
+            finite_stock: true,
+            ticket_type: selectedTicket.ticket_type,
+            display_image_object: selectedTicket.image,
+            count_in_stock: selectedTicket.count_in_stock,
+          },
+        ],
         type: "add_to_cart",
       })
     );

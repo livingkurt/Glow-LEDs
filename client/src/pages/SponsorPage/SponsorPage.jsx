@@ -29,6 +29,8 @@ import { useTutorialsQuery } from "../../api/allRecordsApi";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import CartItemCard from "./components/CartItemCard";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +38,9 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
+  console.log({ affiliate });
+
+  const { my_cart } = useSelector(state => state.carts.cartPage);
 
   const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
 
@@ -238,50 +243,68 @@ const SponsorPage = () => {
                 </Typography>
               </Box>
             )}
-            {bundle.products && bundle.products.length > 0 && (
+            {bundle?.cart?.cartItems?.length > 0 && (
               <Box
                 sx={{
                   pb: 6,
                   px: 2,
                   display: "flex",
-                  overflowX: "auto",
-                  minWidth: "100%",
-                  "&::-webkit-scrollbar": {
-                    height: "8px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "rgba(0, 0, 0, 0.2)",
-                    borderRadius: "4px",
-                  },
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
-                {console.log({ products: bundle.products })}
-                {bundle.products.length > 0 ? (
-                  bundle.products.map(product => (
-                    <Box
-                      key={product._id}
-                      sx={{
-                        minWidth: "250px", // Change minWidth to 250px
-                        width: "100%", // Add width: 100% to make the item fill the available space
-                        marginRight: "20px",
-                        "&:last-child": {
-                          marginRight: 0,
-                        },
-                      }}
-                    >
-                      <ProductCard product={product} promo_code={affiliate.public_code?.promo_code} />
-                    </Box>
-                  ))
-                ) : (
-                  <>
-                    <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                      No products found for matching criteria
-                    </Typography>
-                    <Typography variant="subtitle2" textAlign="center" width="100%">
-                      Try removing some filters to find what you're looking for
-                    </Typography>
-                  </>
-                )}
+                <Box
+                  sx={{
+                    display: "flex",
+                    overflowX: "auto",
+                    minWidth: "100%",
+                    "&::-webkit-scrollbar": {
+                      height: "8px",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      backgroundColor: "rgba(0, 0, 0, 0.2)",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  {console.log({ products: bundle.cart })}
+                  {bundle?.cart?.cartItems?.length > 0 ? (
+                    bundle?.cart?.cartItems?.map((item, index) => (
+                      <Box
+                        key={item._id}
+                        sx={{
+                          maxWidth: "250px",
+                          width: "100%",
+                          marginRight: "20px",
+                          "&:last-child": {
+                            marginRight: 0,
+                          },
+                        }}
+                      >
+                        <CartItemCard item={item} />
+                      </Box>
+                    ))
+                  ) : (
+                    <>
+                      <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                        No products found for matching criteria
+                      </Typography>
+                      <Typography variant="subtitle2" textAlign="center" width="100%">
+                        Try removing some filters to find what you're looking for
+                      </Typography>
+                    </>
+                  )}
+                </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2 }}
+                  onClick={() => {
+                    dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
+                  }}
+                >
+                  Add Bundle to Cart
+                </Button>
               </Box>
             )}
           </>

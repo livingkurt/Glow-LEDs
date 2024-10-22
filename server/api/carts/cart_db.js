@@ -12,6 +12,7 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.tags")
         .populate("cartItems.selectedOptions.filament")
+        .populate("affiliate")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -30,7 +31,8 @@ export default {
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
-        .populate("cartItems.tags");
+        .populate("cartItems.tags")
+        .populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,7 +48,8 @@ export default {
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
-        .populate("cartItems.tags");
+        .populate("cartItems.tags")
+        .populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

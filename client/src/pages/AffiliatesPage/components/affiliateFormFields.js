@@ -98,11 +98,9 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
             type: "text",
             label: "Short Description",
           },
-          products: {
-            type: "autocomplete_multiple",
-            label: "Products",
-            options: products,
-            labelProp: "name",
+          cart: {
+            type: "text",
+            label: "Cart",
           },
         },
       },

@@ -9,6 +9,10 @@ const cartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    affiliate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Affiliate",
+    },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

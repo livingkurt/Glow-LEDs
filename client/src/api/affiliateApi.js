@@ -71,6 +71,19 @@ export const saveAffiliate = createAsyncThunk(
   }
 );
 
+export const createProductBundle = createAsyncThunk(
+  "affiliates/createProductBundle",
+  async ({ affiliateId, cartId, ...productBundle }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/affiliates/${affiliateId}/create_product_bundle/${cartId}`, productBundle);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const detailsAffiliate = createAsyncThunk(
   "affiliates/detailsAffiliate",
   async ({ pathname, id }, { dispatch, rejectWithValue }) => {

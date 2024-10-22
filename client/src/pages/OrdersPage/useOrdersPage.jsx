@@ -174,7 +174,7 @@ const useOrdersPage = ({ userProfile }) => {
               <GLIconButton
                 onClick={() => {
                   row.orderItems.map(item =>
-                    dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" }))
+                    dispatch(API.addToCart({ cart: my_cart, cartItems: [item], type: "add_to_cart" }))
                   );
                 }}
                 tooltip="Add to Cart"
