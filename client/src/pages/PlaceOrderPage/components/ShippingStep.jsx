@@ -648,6 +648,7 @@ const ShippingStep = () => {
         }}
         onCancel={() => {
           submitShipping();
+          dispatch(closeSaveShippingModal(false));
         }}
         title={"Save Shipping Address"}
         confirmLabel={"Save Shipping"}
