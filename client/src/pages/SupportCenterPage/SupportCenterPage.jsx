@@ -26,6 +26,7 @@ import { ExpandMore } from "@mui/icons-material";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import { scrollToId } from "../../utils/helpers/universal_helpers";
 import { useChipsQuery } from "../../api/allRecordsApi";
+import config from "../../config";
 
 const SupportCenterPage = () => {
   const params = useParams();
@@ -61,6 +62,7 @@ const SupportCenterPage = () => {
   });
 
   const [orderNumber, setOrderNumber] = useState("");
+  const [contactSent, setContactSent] = useState(false);
 
   const [validations, setValidations] = useState({
     first_name: "",
@@ -76,7 +78,7 @@ const SupportCenterPage = () => {
 
   useEffect(() => {
     if (successContactSend) {
-      navigate("/complete/email");
+      setContactSent(true);
       dispatch(setSuccessContactSend(false));
     }
   }, [navigate, successContactSend, dispatch]);
@@ -238,159 +240,191 @@ const SupportCenterPage = () => {
           </Box>
         }
       />
-      <Typography variant="h5" align="center">
-        Contact
-      </Typography>
+      {contactSent && (
+        <div className="column jc-c">
+          <h2 className="ta-c">Thank You for Contacting Glow LEDs!</h2>
+          <p className="ta-c max-w-800px lh-30px m-auto">
+            We'll answer your questions or requests as soon as possible.
+          </p>
+          <div className="max-w-800px w-100per m-auto column g-20px">
+            <p className="ta-c max-w-800px lh-30px m-auto">
+              In the meantime, check out the info above for answers to frequently asked questions.
+            </p>
+          </div>
 
-      <Box component="form" onSubmit={sendEmail} id="contact">
-        <TextField
-          fullWidth
-          label="First Name"
-          name="first_name"
-          value={formData.first_name}
-          onChange={handleInputChange}
-          variant="filled"
-          sx={{
-            "& .MuiFilledInput-root": {
-              backgroundColor: "white !important",
-              "&:hover": {
-                backgroundColor: "white !important",
-              },
-              "&:focus": {
-                backgroundColor: "white !important",
-              },
-            },
-          }}
-          error={!!validations.first_name}
-          helperText={validations.first_name}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Last Name"
-          name="last_name"
-          value={formData.last_name}
-          onChange={handleInputChange}
-          variant="filled"
-          sx={{
-            "& .MuiFilledInput-root": {
-              backgroundColor: "white !important",
-              "&:hover": {
-                backgroundColor: "white !important",
-              },
-              "&:focus": {
-                backgroundColor: "white !important",
-              },
-            },
-          }}
-          error={!!validations.last_name}
-          helperText={validations.last_name}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          variant="filled"
-          sx={{
-            "& .MuiFilledInput-root": {
-              backgroundColor: "white !important",
-              "&:hover": {
-                backgroundColor: "white !important",
-              },
-              "&:focus": {
-                backgroundColor: "white !important",
-              },
-            },
-          }}
-          error={!!validations.email}
-          helperText={validations.email}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Order Number"
-          name="order_number"
-          value={formData.order_number}
-          onChange={handleInputChange}
-          variant="filled"
-          sx={{
-            "& .MuiFilledInput-root": {
-              backgroundColor: "white !important",
-              "&:hover": {
-                backgroundColor: "white !important",
-              },
-              "&:focus": {
-                backgroundColor: "white !important",
-              },
-            },
-          }}
-          error={!!validations.order_number}
-          helperText={validations.order_number}
-          margin="normal"
-        />
-        <FormControl fullWidth margin="normal" variant="filled">
-          <InputLabel>Reason for Contact</InputLabel>
-          <Select
-            name="reason_for_contact"
-            value={formData.reason_for_contact}
-            onChange={handleInputChange}
-            sx={{
-              backgroundColor: "white",
-              "& .MuiFilledInput-root": {
-                backgroundColor: "white !important",
-                "&:hover": {
+          <div className="jc-c">
+            <img
+              src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
+              alt="heart_caps"
+              className="br-20px w-100per max-w-800px m-10px"
+            />
+          </div>
+          <div className="jc-c">
+            <p className="max-w-800px mv-2rem lh-30px ta-c">
+              {" "}
+              If you have not recieved a confirmation email make sure to check your spam folder for the confirmation
+              email. Please reach out with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
+            </p>
+          </div>
+        </div>
+      )}
+      {!contactSent && (
+        <>
+          <Typography variant="h5" align="center">
+            Contact
+          </Typography>
+
+          <Box component="form" onSubmit={sendEmail} id="contact">
+            <TextField
+              fullWidth
+              label="First Name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleInputChange}
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
                   backgroundColor: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white !important",
+                  },
+                  "&:focus": {
+                    backgroundColor: "white !important",
+                  },
                 },
-                "&.Mui-focused": {
+              }}
+              error={!!validations.first_name}
+              helperText={validations.first_name}
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Last Name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleInputChange}
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
                   backgroundColor: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white !important",
+                  },
+                  "&:focus": {
+                    backgroundColor: "white !important",
+                  },
                 },
-              },
-              "& .MuiSelect-select": {
-                backgroundColor: "white !important",
-              },
-            }}
-            error={!!validations.reason_for_contact}
-          >
-            <MenuItem value="">----Choose Reason----</MenuItem>
-            <MenuItem value="order_issues">Order Issues</MenuItem>
-            <MenuItem value="infinite_loading">Infinite loading during order process</MenuItem>
-            <MenuItem value="returns">Returns</MenuItem>
-            <MenuItem value="technical_support">Technical Support</MenuItem>
-            <MenuItem value="website_bugs">Website Bugs</MenuItem>
-            <MenuItem value="product_suggestions">Product Suggestions</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          fullWidth
-          label="Message"
-          name="message"
-          multiline
-          rows={4}
-          value={formData.message}
-          onChange={handleInputChange}
-          variant="filled"
-          sx={{
-            "& .MuiFilledInput-root": {
-              backgroundColor: "white !important",
-              "&:hover": {
-                backgroundColor: "white !important",
-              },
-              "&:focus": {
-                backgroundColor: "white !important",
-              },
-            },
-          }}
-          margin="normal"
-        />
-        <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
-          Send
-        </Button>
-      </Box>
+              }}
+              error={!!validations.last_name}
+              helperText={validations.last_name}
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white !important",
+                  },
+                  "&:focus": {
+                    backgroundColor: "white !important",
+                  },
+                },
+              }}
+              error={!!validations.email}
+              helperText={validations.email}
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Order Number"
+              name="order_number"
+              value={formData.order_number}
+              onChange={handleInputChange}
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white !important",
+                  },
+                  "&:focus": {
+                    backgroundColor: "white !important",
+                  },
+                },
+              }}
+              error={!!validations.order_number}
+              helperText={validations.order_number}
+              margin="normal"
+            />
+            <FormControl fullWidth margin="normal" variant="filled">
+              <InputLabel>Reason for Contact</InputLabel>
+              <Select
+                name="reason_for_contact"
+                value={formData.reason_for_contact}
+                onChange={handleInputChange}
+                sx={{
+                  backgroundColor: "white",
+                  "& .MuiFilledInput-root": {
+                    backgroundColor: "white !important",
+                    "&:hover": {
+                      backgroundColor: "white !important",
+                    },
+                    "&.Mui-focused": {
+                      backgroundColor: "white !important",
+                    },
+                  },
+                  "& .MuiSelect-select": {
+                    backgroundColor: "white !important",
+                  },
+                }}
+                error={!!validations.reason_for_contact}
+              >
+                <MenuItem value="">----Choose Reason----</MenuItem>
+                <MenuItem value="order_issues">Order Issues</MenuItem>
+                <MenuItem value="infinite_loading">Infinite loading during order process</MenuItem>
+                <MenuItem value="returns">Returns</MenuItem>
+                <MenuItem value="technical_support">Technical Support</MenuItem>
+                <MenuItem value="website_bugs">Website Bugs</MenuItem>
+                <MenuItem value="product_suggestions">Product Suggestions</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              fullWidth
+              label="Message"
+              name="message"
+              multiline
+              rows={4}
+              value={formData.message}
+              onChange={handleInputChange}
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white !important",
+                  },
+                  "&:focus": {
+                    backgroundColor: "white !important",
+                  },
+                },
+              }}
+              margin="normal"
+            />
+            <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
+              Send
+            </Button>
+          </Box>
+        </>
+      )}
     </Container>
   );
 };

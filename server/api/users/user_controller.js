@@ -179,7 +179,7 @@ export default {
 
       const currentDate = new Date();
       const startDate = new Date("2024-10-24");
-      const endDate = new Date("2024-11-14");
+      const endDate = new Date("2024-10-30");
 
       if (currentDate > startDate && currentDate < endDate) {
         await sendAnnouncementEmail(user.email);
