@@ -98,10 +98,6 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
             type: "text",
             label: "Short Description",
           },
-          cart: {
-            type: "text",
-            label: "Cart",
-          },
         },
       },
     },

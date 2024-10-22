@@ -15,7 +15,6 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import ProductCard from "../ProductsGridPage/components/ProductCard";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -29,8 +28,9 @@ import { useTutorialsQuery } from "../../api/allRecordsApi";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
-import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import CartItemCard from "./components/CartItemCard";
+import { EditCartModal } from "../CartsPage/components";
+import { open_edit_cart_modal } from "../../slices/cartSlice";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -295,16 +295,27 @@ const SponsorPage = () => {
                     </>
                   )}
                 </Box>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ mt: 2 }}
-                  onClick={() => {
-                    dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
-                  }}
-                >
-                  Add Bundle to Cart
-                </Button>
+                <Box display={"flex"} gap={2} sx={{ mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
+                    }}
+                  >
+                    Add Bundle to Cart
+                  </Button>
+                  {console.log({ current_user, affiliate })}
+                  {(current_user.isAdmin || current_user.affiliate === affiliate._id) && (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => dispatch(open_edit_cart_modal(bundle.cart))}
+                    >
+                      Edit Bundle
+                    </Button>
+                  )}
+                </Box>
               </Box>
             )}
           </>
@@ -404,6 +415,7 @@ const SponsorPage = () => {
           </Box>
         ))}
       <EditAffiliateModal />
+      <EditCartModal />
     </Container>
   );
 };
