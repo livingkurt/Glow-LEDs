@@ -130,6 +130,31 @@ export const detailsProductPage = createAsyncThunk(
   }
 );
 
+export const getBasicProductDetails = createAsyncThunk("productPage/getBasicProductDetails", async pathname => {
+  const { data } = await axios.get(`/api/products/${pathname}/basic`);
+  return data;
+});
+
+export const getProductOptions = createAsyncThunk("productPage/getProductOptions", async pathname => {
+  const { data } = await axios.get(`/api/products/${pathname}/options`);
+  return data;
+});
+
+export const getProductFeatures = createAsyncThunk("productPage/getProductFeatures", async pathname => {
+  const { data } = await axios.get(`/api/products/${pathname}/features`);
+  return data;
+});
+
+export const getRelatedProducts = createAsyncThunk("productPage/getRelatedProducts", async pathname => {
+  const { data } = await axios.get(`/api/products/${pathname}/related`);
+  return data;
+});
+
+export const getProductReviews = createAsyncThunk("productPage/getProductReviews", async pathname => {
+  const { data } = await axios.get(`/api/products/${pathname}/reviews`);
+  return data;
+});
+
 export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/api/products/${id}`);

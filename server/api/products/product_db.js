@@ -481,4 +481,94 @@ export default {
       }
     }
   },
+  basic_product_details_db: async pathname => {
+    try {
+      return await Product.findOne({ pathname, deleted: false })
+        .select(
+          "name short_description fact images price wholesale_price previous_price sale_price size count_in_stock pathname category subcategory product_collection chips tags max_display_quantity max_quantity sale_start_date sale_end_date dimensions processing_time wholesale_product isPreOrder preOrderReleaseDate preOrderQuantity primary_color options"
+        )
+        .populate("images")
+        .populate("chips")
+        .populate("tags")
+        .populate({
+          path: "options",
+          populate: {
+            path: "values",
+            populate: {
+              path: "product",
+              select: "images color_object.filament filament tags chips price sale_price",
+            },
+          },
+        })
+        .lean()
+        .exec();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_options_db: async pathname => {
+    try {
+      return await Product.findOne({ pathname, deleted: false })
+        .select("options")
+        .populate({
+          path: "options",
+          populate: {
+            path: "values",
+            populate: {
+              path: "product",
+              select: "images color_object.filament filament tags chips price sale_price",
+            },
+          },
+        })
+        .lean()
+        .exec();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_features_db: async pathname => {
+    try {
+      return await Product.findOne({ pathname, deleted: false })
+        .select("features tech_specs in_the_box product_support")
+        .populate(
+          "features.image_grid_1.image features.image_grid_2.image features.hero_image_1 features.hero_image_2 features.hero_image_3"
+        )
+        .lean()
+        .exec();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  related_products_db: async pathname => {
+    try {
+      return await Product.findOne({ pathname, deleted: false })
+        .select("elevate_your_experience")
+        .populate({
+          path: "elevate_your_experience.products",
+          select: "name images price pathname",
+        })
+        .lean()
+        .exec();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_reviews_db: async pathname => {
+    try {
+      return await Product.findOne({ pathname, deleted: false })
+        .select("reviews rating numReviews")
+        .populate({
+          path: "reviews.user",
+          select: "first_name last_name",
+        })
+        .lean()
+        .exec();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };

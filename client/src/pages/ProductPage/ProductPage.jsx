@@ -128,14 +128,14 @@ const ProductPage = () => {
                         variant="body2"
                         sx={{
                           ml: 1,
-                          bgcolor: product.primary_color,
+                          bgcolor: product?.primary_color,
                           px: 1,
                           py: 0.5,
                           mb: 1,
                           borderRadius: 1,
                           fontSize: "1.2rem",
                           fontWeight: 800,
-                          color: theme.palette.getContrastText(product.primary_color),
+                          color: theme.palette.getContrastText(product?.primary_color),
                         }}
                       >
                         New In
@@ -270,7 +270,7 @@ const ProductPage = () => {
             </Container>
             {!product?.navigation_buttons_hidden && (
               <Box mb={-4}>
-                <NavigationButtons navigation={product?.navigation} primary_color={product.primary_color} />
+                <NavigationButtons navigation={product?.navigation} primary_color={product?.primary_color} />
               </Box>
             )}
             <Box
@@ -292,7 +292,7 @@ const ProductPage = () => {
                   </Grid>
                 )}
                 <Grid item xs={12} mt={!product?.hero_video?.hidden && product?.hero_video?.video ? -4 : 0}>
-                  <ProductProtectionDetails transparent={false} primary_color={product.primary_color} />
+                  <ProductProtectionDetails transparent={false} primary_color={product?.primary_color} />
                 </Grid>
                 {product?.header_image?.link && (
                   <Grid item xs={12} id="features">
@@ -405,7 +405,7 @@ const ProductPage = () => {
                       <TechSpecs
                         tech_specs={product?.tech_specs}
                         text_color={product.text_color}
-                        primary_color={product.primary_color}
+                        primary_color={product?.primary_color}
                         header_text_color={product.header_text_color}
                       />
                     </Grid>
@@ -452,7 +452,7 @@ const ProductPage = () => {
                     <SupportBanner
                       text_color={product.text_color}
                       header_text_color={product.header_text_color}
-                      primary_color={product.primary_color}
+                      primary_color={product?.primary_color}
                     />
                   </Grid>
                   <Grid item xs={12}>

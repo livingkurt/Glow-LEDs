@@ -39,6 +39,12 @@ router
   .put(isAuth, isAdmin, product_controller.update_products_c)
   .delete(isAuth, isAdmin, product_controller.remove_products_c);
 
+router.route("/:pathname/basic").get(product_controller.basic_product_details_c);
+router.route("/:pathname/options").get(product_controller.product_options_c);
+router.route("/:pathname/features").get(product_controller.product_features_c);
+router.route("/:pathname/related").get(product_controller.related_products_c);
+router.route("/:pathname/reviews").get(product_controller.product_reviews_c);
+
 router.route("/").get(product_controller.findAll_products_c).post(product_controller.create_products_c);
 router.route("/image_upload").post(product_controller.image_upload_products_c);
 

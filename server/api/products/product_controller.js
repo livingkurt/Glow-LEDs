@@ -316,4 +316,69 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  // Add these new controller functions
+  basic_product_details_c: async (req, res) => {
+    const { pathname } = req.params;
+    try {
+      const product = await product_services.basic_product_details_s(pathname);
+      if (product) {
+        return res.status(200).send(product);
+      }
+      return res.status(404).send({ message: "Product Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
+  product_options_c: async (req, res) => {
+    const { pathname } = req.params;
+    try {
+      const options = await product_services.product_options_s(pathname);
+      if (options) {
+        return res.status(200).send(options);
+      }
+      return res.status(404).send({ message: "Product Options Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
+  product_features_c: async (req, res) => {
+    const { pathname } = req.params;
+    try {
+      const features = await product_services.product_features_s(pathname);
+      if (features) {
+        return res.status(200).send(features);
+      }
+      return res.status(404).send({ message: "Product Features Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
+  related_products_c: async (req, res) => {
+    const { pathname } = req.params;
+    try {
+      const relatedProducts = await product_services.related_products_s(pathname);
+      if (relatedProducts) {
+        return res.status(200).send(relatedProducts);
+      }
+      return res.status(404).send({ message: "Related Products Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
+  product_reviews_c: async (req, res) => {
+    const { pathname } = req.params;
+    try {
+      const reviews = await product_services.product_reviews_s(pathname);
+      if (reviews) {
+        return res.status(200).send(reviews);
+      }
+      return res.status(404).send({ message: "Product Reviews Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

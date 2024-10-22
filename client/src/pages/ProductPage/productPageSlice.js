@@ -7,7 +7,7 @@ import {
   updatePrice,
   updateProductDetailsFromOption,
 } from "./productHelpers";
-import { detailsProductPage } from "../../api";
+import * as API from "../../api";
 import { productInitialState } from "../ProductsPage/productsPageHelpers";
 
 const productPage = createSlice({
@@ -107,80 +107,79 @@ const productPage = createSlice({
       state.isAddonChecked = payload;
     },
   },
-  extraReducers: {
-    [detailsProductPage.pending]: (state, { payload }) => {
-      state.productPageLoading = true;
-    },
-    [detailsProductPage.fulfilled]: (state, { payload }) => {
-      const { data } = payload;
-
-      // Filter active options and their active values
-      const activeOptions = data?.options
-        ?.filter(option => option.active)
-        .map(option => ({
-          ...option,
-          values: option.values.filter(value => value.active),
-        }));
-
-      // Maintain original selectedOptions behavior, but only for active options and values
-      const selectedOptions = data?.options
-        ?.map(option => {
-          if (!option.active) return null;
-          if (option.isAddOn) return {};
-          const activeValue = option.values.find(value => value.active && value.isDefault);
-          return activeValue || {};
-        })
-        .filter(Boolean);
-
-      return {
-        ...state,
-        productPageLoading: false,
-        product: data,
-        customizedProduct: {
-          product: data._id,
-          name: data.name,
-          short_description: data.short_description,
-          fact: data.fact,
-          images: data.images,
-          set_of: data.set_of,
-          original_images: data.images,
-          display_image_object: data.images[0],
-          category: data.category,
-          subcategory: data.subcategory,
-          product_collection: data.product_collection,
-          facts: data.facts,
-          included_items: data.included_items,
-          price: data.price,
-          itemType: "product",
-          chips: data.chips,
-          tags: data.tags,
-          wholesale_price: data.wholesale_price,
-          previous_price: data.previous_price,
-          sale_price: data.sale_price,
-          size: data.size,
-          max_display_quantity: data.max_display_quantity,
-          max_quantity: data.max_quantity,
-          quantity: 1,
-          count_in_stock: data.count_in_stock,
-          pathname: data.pathname,
-          sale_start_date: data.sale_start_date,
-          sale_end_date: data.sale_end_date,
-          dimensions: data.dimensions,
-          processing_time: data.processing_time,
-          rating: data.rating,
-          wholesale_product: data.wholesale_product,
-          isPreOrder: data.isPreOrder,
-          preOrderReleaseDate: data.preOrderReleaseDate,
-          preOrderQuantity: data.preOrderQuantity,
-          selectedOptions,
-          currentOptions: activeOptions,
-        },
-      };
-    },
-    [detailsProductPage.rejected]: (state, { payload }) => {
-      state.productPageLoading = false;
-      state.error = payload;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(API.getBasicProductDetails.pending, state => {
+        state.productPageLoading = true;
+      })
+      .addCase(API.getBasicProductDetails.fulfilled, (state, action) => {
+        state.productPageLoading = false;
+        state.product = { ...state.product, ...action.payload };
+        state.customizedProduct = {
+          ...state.customizedProduct,
+          ...action.payload,
+          original_images: action.payload.images,
+          display_image_object: action.payload.images[0],
+        };
+      })
+      .addCase(API.getBasicProductDetails.rejected, (state, action) => {
+        state.productPageLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(API.getProductOptions.pending, state => {
+        state.productPageLoading = true;
+      })
+      .addCase(API.getProductOptions.fulfilled, (state, action) => {
+        const activeOptions = action.payload.options
+          .filter(option => option.active)
+          .map(option => ({
+            ...option,
+            values: option.values.filter(value => value.active),
+          }));
+        const selectedOptions = action.payload.options
+          .map(option => {
+            if (!option.active) return null;
+            if (option.isAddOn) return {};
+            const activeValue = option.values.find(value => value.active && value.isDefault);
+            return activeValue || {};
+          })
+          .filter(Boolean);
+        state.product.options = action.payload.options;
+        state.customizedProduct.currentOptions = activeOptions;
+        state.customizedProduct.selectedOptions = selectedOptions;
+      })
+      .addCase(API.getProductOptions.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(API.getProductFeatures.fulfilled, (state, action) => {
+        state.product = { ...state.product, ...action.payload };
+        state.customizedProduct = {
+          ...state.customizedProduct,
+          ...action.payload,
+        };
+      })
+      .addCase(API.getRelatedProducts.fulfilled, (state, action) => {
+        state.product.elevate_your_experience = action.payload.elevate_your_experience;
+      })
+      .addCase(API.getProductReviews.fulfilled, (state, action) => {
+        state.product.reviews = action.payload.reviews;
+        state.product.rating = action.payload.rating;
+        state.product.numReviews = action.payload.numReviews;
+        state.customizedProduct.rating = action.payload.rating;
+      });
+    // .addMatcher(
+    //   action => action.type.endsWith("/fulfilled"),
+    //   state => {
+    //     state.productPageLoading = false;
+    //   }
+    // )
+    // .addMatcher(
+    //   action => action.type.endsWith("/rejected"),
+    //   (state, action) => {
+    //     state.productPageLoading = false;
+    //     state.error = action.error.message;
+    //   }
+    // );
   },
 });
 

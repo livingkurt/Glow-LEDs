@@ -848,4 +848,44 @@ export default {
       }
     }
   },
+  // Add these new service functions
+  basic_product_details_s: async pathname => {
+    try {
+      return await product_db.basic_product_details_db(pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_options_s: async pathname => {
+    try {
+      return await product_db.product_options_db(pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_features_s: async pathname => {
+    try {
+      return await product_db.product_features_db(pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  related_products_s: async pathname => {
+    try {
+      return await product_db.related_products_db(pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  product_reviews_s: async pathname => {
+    try {
+      return await product_db.product_reviews_db(pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };

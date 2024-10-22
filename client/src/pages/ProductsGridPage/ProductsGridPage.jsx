@@ -7,6 +7,8 @@ import { useProductsGridPage } from "./useProductsGridPage";
 import { sortOptions } from "./productGridPageHelpers";
 import ProductsGridPageSkeletons from "./components/ProductsGridPageSkeletons";
 import CategoryBanner from "./components/CategoryBanner";
+import { Helmet } from "react-helmet";
+import { useLocation } from "react-router-dom";
 
 const ProductGridPage = () => {
   const {
@@ -28,6 +30,7 @@ const ProductGridPage = () => {
   } = useProductsGridPage();
 
   const theme = useTheme();
+  const location = useLocation();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (isLoading) return <ProductsGridPageSkeletons />;
@@ -49,8 +52,17 @@ const ProductGridPage = () => {
     }
   };
 
+  const pageTitle = `Products | Glow LEDs`;
+
   return (
     <Box>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta property="og:title" content={pageTitle} />
+        <meta name="twitter:title" content={pageTitle} />
+        <link rel="canonical" href={`https://www.glow-leds.com/products`} />
+        <meta property="og:url" content={`https://www.glow-leds.com/products`} />
+      </Helmet>
       {!isMobile && <CategoryBanner banner={categoryBanner} />}
       <Container maxWidth="xl">
         <Typography variant="h4" align="center" pt={2}>

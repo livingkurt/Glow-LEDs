@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Grid,
-  Container,
-  useTheme,
-  getContrastRatio,
-} from "@mui/material";
+import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, Grid, useTheme } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const TechSpecs = ({ tech_specs, text_color, primary_color, header_text_color }) => {

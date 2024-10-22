@@ -168,7 +168,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
               value={password}
               sx={{
                 "& .MuiInputBase-input": {
-                  bgcolor: product.primary_color,
+                  bgcolor: product?.primary_color,
                   color: product.background_color,
                   borderRadius: 3,
                 },
@@ -188,11 +188,11 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
               fullWidth
               sx={{
                 mt: 2,
-                background: product.primary_color,
+                background: product?.primary_color,
                 color: product.background_color,
                 "&:hover": {
                   color: darken(product.background_color, 0.2),
-                  background: darken(product.primary_color, 0.2),
+                  background: darken(product?.primary_color, 0.2),
                 },
               }}
             >
@@ -206,7 +206,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
               sx={{
                 mt: 2,
                 background: product.background_color,
-                color: product.primary_color,
+                color: product?.primary_color,
               }}
             >
               I'm not ready yet

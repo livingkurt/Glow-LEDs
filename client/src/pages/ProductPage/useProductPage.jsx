@@ -4,7 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { selectOption, setCustomizedProduct, setIsAddonChecked } from "./productPageSlice";
 import { scrollToElement, updateRecentlyViewed } from "./productHelpers";
 import { showInfo } from "../../slices/snackbarSlice";
-import { detailsProductPage } from "../../api";
+import * as API from "../../api";
 
 const useProductPage = () => {
   const params = useParams();
@@ -14,7 +14,12 @@ const useProductPage = () => {
   const [scrollTarget, setScrollTarget] = useState(null);
 
   useEffect(() => {
-    dispatch(detailsProductPage({ pathname: params.pathname }));
+    // dispatch(detailsProductPage({ pathname: params.pathname }));
+    dispatch(API.getBasicProductDetails(params.pathname));
+    dispatch(API.getProductOptions(params.pathname));
+    dispatch(API.getProductFeatures(params.pathname));
+    dispatch(API.getRelatedProducts(params.pathname));
+    dispatch(API.getProductReviews(params.pathname));
   }, [dispatch, params.pathname]);
 
   const userPage = useSelector(state => state.users.userPage);
@@ -24,6 +29,7 @@ const useProductPage = () => {
   const { my_cart } = cartPage;
   const productPage = useSelector(state => state.products.productPage);
   const { customizedProduct, productPageLoading, product, isAddonChecked } = productPage;
+  console.log({ customizedProduct });
 
   useEffect(() => {
     updateRecentlyViewed(product);
