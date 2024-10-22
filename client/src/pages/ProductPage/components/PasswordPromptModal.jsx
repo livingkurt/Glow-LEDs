@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Box, Typography, TextField, Button, Modal, darken } from "@mui/material";
 import * as API from "../../../api";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Key } from "@mui/icons-material";
 
 const PasswordPromptModal = ({ productId, onUnlock, product }) => {
@@ -13,6 +13,16 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
   const [unlockingPhase, setUnlockingPhase] = useState(0);
   const [unlockFailed, setUnlockFailed] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const passwordParam = searchParams.get("password");
+    if (passwordParam) {
+      setPassword(passwordParam.toLowerCase());
+      handleSubmit(null, passwordParam.toLowerCase());
+    }
+  }, [location]);
 
   useEffect(() => {
     const releaseDate = new Date(product.preOrderReleaseDate);
@@ -27,7 +37,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
       setCountdown(countdownText);
     }, 1000);
     return () => clearInterval(countdownInterval);
-  }, [product.preOrderReleaseDate]); // Added useEffect for countdown
+  }, [product.preOrderReleaseDate]);
 
   const unlockingPhrases = [
     "You try the key...",
@@ -43,14 +53,16 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
     "Try again...",
   ];
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async (e, passwordOverride = null) => {
+    if (e) e.preventDefault();
     setIsUnlocking(true);
     setUnlockingPhase(0);
     setUnlockFailed(false);
 
+    const passwordToSubmit = passwordOverride || password;
+
     try {
-      const response = await dispatch(API.checkProductPassword({ productId, password }));
+      const response = await dispatch(API.checkProductPassword({ productId, password: passwordToSubmit }));
       console.log({ response });
       if (response.payload.success) {
         // Animate through the unlocking phrases
@@ -158,10 +170,10 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
                 "& .MuiInputBase-input": {
                   bgcolor: product.primary_color,
                   color: product.background_color,
-                  borderRadius: 3, // Adjusted to match the borderRadius of the modal
+                  borderRadius: 3,
                 },
                 "& .MuiInputBase-input::placeholder": {
-                  color: "black", // Set the placeholder text color to the background color
+                  color: "black",
                 },
               }}
               placeholder="Enter Password"

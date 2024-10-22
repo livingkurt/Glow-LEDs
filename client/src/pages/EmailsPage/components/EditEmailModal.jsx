@@ -2,21 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_email_modal, set_email } from "../../../slices/emailSlice";
 import * as API from "../../../api";
-import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { emailFormFields } from "./emailFormFields";
 import { Box, Grid, Paper } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
+import EmailTemplateEditor from "./EmailTemplateEditor";
+import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
+import { emailFormFields } from "./emailFormFields";
 
 let debounceTimer;
 
 const EditEmailModal = () => {
   const dispatch = useDispatch();
   const emailPage = useSelector(state => state.emails.emailPage);
-  const { edit_email_modal, email, loading, template } = emailPage;
-
-  const formFields = emailFormFields({
-    email,
-  });
+  const { edit_email_modal, email, template } = emailPage;
 
   const [debounceValue, setDebounceValue] = useState(null);
   const initialFetchDone = useRef(false);
@@ -32,25 +29,28 @@ const EditEmailModal = () => {
     initialFetchDone.current = false;
   }, [edit_email_modal]);
 
-  const debounceKeys = ["status", "scheduled_at", "active", "link", "subject"];
-
   useEffect(() => {
     if (debounceValue && initialFetchDone.current) {
-      const keys = Object.keys(debounceValue);
-      const shouldDebounce = keys.some(key => debounceKeys.includes(key));
-
-      if (!shouldDebounce) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          dispatch(API.viewAnnouncement({ template: email }));
-        }, 2000); // 2000ms debounce time
-      }
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        dispatch(API.viewAnnouncement({ template: email }));
+      }, 500); // Reduced debounce time to 500ms for better responsiveness
     }
 
     return () => {
       clearTimeout(debounceTimer);
     };
   }, [debounceValue, dispatch, email]);
+
+  const handleEmailChange = newModules => {
+    const updatedEmail = { ...email, modules: newModules };
+    console.log({ updatedEmail });
+    dispatch(set_email(updatedEmail));
+    setDebounceValue(Date.now()); // Use current timestamp to trigger debounce
+  };
+  const formFields = emailFormFields({
+    email,
+  });
 
   return (
     <div>
@@ -62,7 +62,7 @@ const EditEmailModal = () => {
         onCancel={() => {
           dispatch(set_edit_email_modal(false));
         }}
-        maxWidth="xl"
+        maxWidth="xxl"
         title={"Edit Email"}
         confirmLabel={"Save"}
         confirmColor="primary"
@@ -81,6 +81,7 @@ const EditEmailModal = () => {
                 setDebounceValue(value);
               }}
             />
+            <EmailTemplateEditor initialModules={email.modules || []} onChange={handleEmailChange} />
           </Grid>
           <Grid item xs={6}>
             <Box m={2}>

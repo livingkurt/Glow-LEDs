@@ -4,11 +4,21 @@ export default {
   findAll_emails_db: async (filter, sort, limit, page) => {
     try {
       return await Email.find(filter)
-        .populate("image")
-        .populate("images")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+        .populate({
+          path: "modules.content.line_break",
+          model: "Image",
+        })
+        .populate({
+          path: "modules.content.title_image",
+          model: "Image",
+        })
+        .populate({
+          path: "modules.content.image",
+          model: "Image",
+        })
         .exec();
     } catch (error) {
       if (error instanceof Error) {
@@ -18,7 +28,19 @@ export default {
   },
   findById_emails_db: async id => {
     try {
-      return await Email.findOne({ _id: id, deleted: false }).populate("image").populate("images");
+      return await Email.findOne({ _id: id, deleted: false })
+        .populate({
+          path: "modules.content.line_break",
+          model: "Image",
+        })
+        .populate({
+          path: "modules.content.image",
+          model: "Image",
+        })
+        .populate({
+          path: "modules.content.title_image",
+          model: "Image",
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -36,6 +58,9 @@ export default {
   },
   update_emails_db: async (id, body) => {
     try {
+      console.log({
+        modules: body.modules[5].content.images,
+      });
       const email = await Email.findOne({ _id: id, deleted: false });
       if (email) {
         return await Email.updateOne({ _id: id }, body);

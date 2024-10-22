@@ -1,4 +1,15 @@
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  MenuItem,
+  Paper,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -583,6 +594,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     setLocalState={setLocalState}
                   />
                 );
+
               default:
                 return <div></div>;
             }

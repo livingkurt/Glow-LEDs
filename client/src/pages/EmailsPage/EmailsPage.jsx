@@ -40,12 +40,10 @@ const EmailsPage = () => {
           ),
       },
       {
-        title: "Title",
-        display: email => email?.h1,
-      },
-      {
-        title: "Summary",
-        display: email => email?.h2,
+        title: "Subject",
+        display: email => {
+          return email?.subject;
+        },
       },
 
       {
@@ -98,9 +96,7 @@ const EmailsPage = () => {
                   API.saveEmail({
                     ...email,
                     _id: null,
-                    home_page: { ...email.home_page, h1: `${email.home_page.h1} Copy` },
-                    createdAt: null,
-                    updatedAt: null,
+                    subject: `${email.subject} Copy`,
                   })
                 )
               }

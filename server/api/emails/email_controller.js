@@ -27,8 +27,7 @@ import { promo_db } from "../promos";
 import { User, user_db } from "../users";
 import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors";
 import { determine_code_tier, format_date, make_private_code, toCapitalize } from "../../utils/util";
-import { sendEmail, sendEmailsInBatches } from "./email_helpers";
-import email_db from "./email_db";
+import { sendEmail as sendEmailHelper, sendEmailsInBatches } from "./email_helpers";
 import { product_db } from "../products";
 import { team_db } from "../teams";
 const jwt = require("jsonwebtoken");
@@ -38,6 +37,8 @@ import { domain } from "../../email_templates/email_template_helpers";
 import Email from "./email";
 import paycheck from "../../email_templates/pages/paycheck";
 import ticketEmail from "../../email_templates/pages/ticketEmail";
+import { sendAnnouncementEmail } from "../users/user_interactors";
+import { sendEmail } from "../orders/order_interactors";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -129,7 +130,7 @@ export default {
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
   },
   send_order_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -150,7 +151,7 @@ export default {
       subject: subject,
       html: App({ body: order(bodyConfirmation), unsubscribe: false }),
     };
-    await sendEmail(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
+    await sendEmailHelper(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
   },
   send_ticket_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -176,7 +177,7 @@ export default {
     if (order_data.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
     }
-    await sendEmail(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
+    await sendEmailHelper(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
   },
   send_refund_emails_c: async (req, res) => {
     const { order: order_data, email } = req.body;
@@ -200,7 +201,7 @@ export default {
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmail(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
   },
   send_order_status_emails_c: async (req, res) => {
     const body = {
@@ -224,7 +225,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
   },
   send_current_stock_emails_c: async (req, res) => {
     const data = await product_db.current_stock_products_db();
@@ -238,7 +239,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
+    sendEmailHelper(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
   send_paycheck_emails_c: async (req, res) => {
     const { email, subject } = req.body;
@@ -252,7 +253,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Paycheck Email Sent to " + email);
+    sendEmailHelper(mailOptions, res, "info", "Paycheck Email Sent to " + email);
   },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;
@@ -268,7 +269,7 @@ export default {
         html: affiliate_onboard(data),
       };
 
-      await sendEmail(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
+      await sendEmailHelper(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
     }
   },
 
@@ -284,7 +285,7 @@ export default {
       html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
-    sendEmail(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
   },
   send_feature_emails_c: async (req, res) => {
     const body = {
@@ -301,7 +302,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
   },
   send_external_contact_emails_c: async (req, res) => {
     const mailOptions = {
@@ -310,7 +311,7 @@ export default {
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message,
     };
-    sendEmail(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
   },
   send_user_contact_emails_c: async (req, res) => {
     const { email, first_name, reason_for_contact } = req.body;
@@ -321,7 +322,7 @@ export default {
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: contact(req.body),
     };
-    sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
+    sendEmailHelper(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
   },
   send_admin_contact_emails_c: async (req, res) => {
     const { email, first_name } = req.body;
@@ -333,7 +334,7 @@ export default {
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
     };
-    sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
+    sendEmailHelper(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
   },
   send_custom_contact_emails_c: async (req, res) => {
     const { order, email } = req.body;
@@ -343,7 +344,7 @@ export default {
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
       html: custom_contact({ order }),
     };
-    sendEmail(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
+    sendEmailHelper(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
   },
   send_code_used_emails_c: async (req, res) => {
     const { promo_code } = req.params;
@@ -433,7 +434,7 @@ export default {
             unsubscribe: false,
           }),
         };
-        sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
+        sendEmailHelper(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
     }
   },
@@ -462,7 +463,7 @@ export default {
           unsubscribe: false,
         }),
       };
-      sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+      sendEmailHelper(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
     } else {
       res.status(500).send({ message: "You do not have an account with us" });
     }
@@ -480,7 +481,7 @@ export default {
         unsubscribe: false,
       }),
     };
-    sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
   },
   send_review_emails_c: async (req, res) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -500,7 +501,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Email Sent to " + req.body.email);
   },
 
   send_scheduled_emails_c: async (req, res) => {
@@ -527,7 +528,25 @@ export default {
   },
   send_announcement_emails_c: async (req, res) => {
     const { id, test } = req.params;
-    const email = await email_db.findById_emails_db(id);
+    const email = await Email.findOne({ _id: id, deleted: false })
+      .populate({
+        path: "modules.content.images",
+        model: "Image",
+      })
+      .populate({
+        path: "modules.content.line_break",
+        model: "Image",
+      })
+      .populate({
+        path: "modules.content.title_image",
+        model: "Image",
+      })
+      .populate({
+        path: "modules.content.image",
+        model: "Image",
+      })
+      .exec()
+      .lean();
     if (test === "true") {
       const test_emails = ["lavacquek@icloud.com"];
       await sendEmailsInBatches(email, res, test_emails);
@@ -544,6 +563,7 @@ export default {
           body: announcement(template),
           unsubscribe: true,
           background_color: template.background_color,
+          header_footer_color: template.header_footer_color,
         })
       );
     }
@@ -603,7 +623,17 @@ export default {
         }),
       };
 
-      sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
+      // sendEmailHelper(mailOptions, res, "info", "Email Sent to " + req.body.email);
+      await sendEmail("info", mailOptions);
+
+      const currentDate = new Date();
+      const startDate = new Date("2024-10-24");
+      const endDate = new Date("2024-10-30");
+
+      if (currentDate > startDate && currentDate < endDate) {
+        await sendAnnouncementEmail(req.body.email);
+      }
+      res.status(200).json({ message: "Email Sent to " + req.body.email });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "An error occurred", error: error.message });
@@ -629,7 +659,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
   },
   send_verified_emails_c: async (req, res) => {
     const { email } = req.body;
@@ -643,7 +673,7 @@ export default {
       html: App({
         body: verify({
           title: "Verify your Email",
-          url: `${domain()}/pages/complete/account_created/${token}`,
+          url: `${domain()}?token=${token}`,
           user: user,
         }),
 
@@ -651,7 +681,7 @@ export default {
       }),
     };
 
-    sendEmail(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
   },
   send_shipping_status_emails_c: async (req, res) => {
     try {
@@ -678,7 +708,7 @@ export default {
             }),
           };
 
-          await sendEmail(mailOptions, res, "info", `Order Status Email Sent to ${order.shipping.email}`);
+          await sendEmailHelper(mailOptions, res, "info", `Order Status Email Sent to ${order.shipping.email}`);
         }
 
         if (tracker.status === "delivered") {

@@ -28,7 +28,10 @@ const useHomePage = () => {
   useEffect(() => {
     const register = searchParams.get("register");
     const login = searchParams.get("login");
-    if (register === "true") {
+    const token = searchParams.get("token");
+    if (token) {
+      dispatch(openLoginModal({ token }));
+    } else if (register === "true") {
       dispatch(openLoginModal({ register: true }));
     } else if (login === "true") {
       dispatch(openLoginModal());

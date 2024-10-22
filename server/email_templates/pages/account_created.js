@@ -1,5 +1,4 @@
 export default ({ user, categories }) => {
-  console.log({ categories });
   return `<div style="background-color:#7d7c7c;padding:10px">
 
 
