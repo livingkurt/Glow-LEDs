@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, IconButton, Chip } from "@mui/material";
+import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, IconButton, Chip, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import * as API from "../../../api";
+import { showInfo } from "../../../slices/snackbarSlice";
 
 const CartItemCard = ({ item }) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { current_user } = useSelector(state => state.users.userPage);
+  const { my_cart } = useSelector(state => state.carts.cartPage);
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -30,6 +35,15 @@ const CartItemCard = ({ item }) => {
     e.preventDefault();
     e.stopPropagation();
     setCurrentImageIndex(prevIndex => (prevIndex + 1) % item.images.length);
+  };
+
+  const handleQuickAddToCart = () => {
+    dispatch(API.addToCart({ cart: my_cart, cartItems: [item], type: "add_to_cart" }));
+    const code = sessionStorage.getItem("promo_code");
+    if (!code) {
+      sessionStorage.setItem("promo_code", code);
+      dispatch(showInfo({ message: `Code ${code.toUpperCase()} Added to Checkout` }));
+    }
   };
 
   const processedOptions = item.selectedOptions?.map(option => ({
@@ -70,6 +84,7 @@ const CartItemCard = ({ item }) => {
           boxShadow: `0 12px 24px 0 hsl(${random(0, 360)}deg 50% 50%)`,
         },
         borderRadius: "1rem",
+        position: "relative",
       }}
       elevation={0}
       onMouseEnter={handleMouseEnter}
@@ -124,6 +139,24 @@ const CartItemCard = ({ item }) => {
               <ChevronRightIcon />
             </IconButton>
           </>
+        )}
+        {isHovered && (
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddShoppingCartIcon />}
+            sx={{
+              position: "absolute",
+              bottom: 8,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 2,
+              whiteSpace: "nowrap",
+            }}
+            onClick={handleQuickAddToCart}
+          >
+            Quick Add
+          </Button>
         )}
       </Box>
       <CardContent>

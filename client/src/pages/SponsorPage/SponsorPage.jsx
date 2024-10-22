@@ -14,6 +14,7 @@ import {
   Button,
   IconButton,
   Divider,
+  Paper,
 } from "@mui/material";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
@@ -221,7 +222,7 @@ const SponsorPage = () => {
       {affiliate.product_bundles &&
         affiliate.product_bundles.length > 0 &&
         affiliate.product_bundles.map(bundle => (
-          <>
+          <Box sx={{ my: 2 }}>
             {bundle.title && (
               <Box>
                 <Typography variant="h5" align="center" gutterBottom>
@@ -246,7 +247,7 @@ const SponsorPage = () => {
             {bundle?.cart?.cartItems?.length > 0 && (
               <Box
                 sx={{
-                  pb: 6,
+                  pb: 2,
                   px: 2,
                   display: "flex",
                   flexDirection: "column",
@@ -273,12 +274,10 @@ const SponsorPage = () => {
                       <Box
                         key={item._id}
                         sx={{
+                          m: 2,
+                          mb: 4,
                           maxWidth: "250px",
                           width: "100%",
-                          marginRight: "20px",
-                          "&:last-child": {
-                            marginRight: 0,
-                          },
                         }}
                       >
                         <CartItemCard item={item} />
@@ -301,6 +300,16 @@ const SponsorPage = () => {
                     color="primary"
                     onClick={() => {
                       dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
+
+                      const code = sessionStorage.getItem("promo_code");
+                      if (!code) {
+                        sessionStorage.setItem("promo_code", affiliate.public_code?.promo_code);
+                        dispatch(
+                          showInfo({
+                            message: `Code ${affiliate.public_code?.promo_code.toUpperCase()} Added to Checkout`,
+                          })
+                        );
+                      }
                     }}
                   >
                     Add Bundle to Cart
@@ -316,9 +325,10 @@ const SponsorPage = () => {
                     </Button>
                   )}
                 </Box>
+                <Divider sx={{ my: 4, borderColor: "#fff" }} />
               </Box>
             )}
-          </>
+          </Box>
         ))}
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {tutorials && tutorials.length > 0 && (
