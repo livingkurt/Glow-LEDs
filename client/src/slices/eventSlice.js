@@ -24,6 +24,7 @@ const eventPage = createSlice({
     message: "",
     success: false,
     error: {},
+    ticketHolders: [],
   },
   reducers: {
     set_event: (state, { payload }) => {
@@ -148,6 +149,18 @@ const eventPage = createSlice({
       state.tickets = payload;
     },
     [API.getEventTickets.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getTicketHolders.pending]: state => {
+      state.loading = true;
+    },
+    [API.getTicketHolders.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.ticketHolders = payload;
+    },
+    [API.getTicketHolders.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

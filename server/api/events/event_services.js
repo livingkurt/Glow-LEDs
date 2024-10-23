@@ -1,5 +1,7 @@
 import event_db from "./event_db";
 import { getFilteredData } from "../api_helpers";
+import { Order } from "../orders";
+import mongoose from "mongoose";
 
 export default {
   findAll_events_s: async query => {
@@ -91,4 +93,79 @@ export default {
       }
     }
   },
+  getTicketHolders_events_s: async params => {
+    try {
+      const eventId = params.id;
+
+      // Find all orders that have orderItems with the specified event ID
+      const orders = await Order.find({
+        "orderItems.event": eventId,
+        "orderItems.itemType": "ticket",
+      }).populate("orderItems.ticket");
+
+      // // Update all orderitems with tickets to have the event ID
+      // orders.forEach(async order => {
+      //   order.orderItems.forEach(item => {
+      //     if (item.itemType === "ticket") {
+      //       item.event = eventId;
+      //     }
+      //   });
+      //   await order.save();
+      // });
+
+      const ticketHolders = orders.flatMap(order =>
+        order.orderItems
+          .filter(item => item.itemType === "ticket" && item.event.toString() === eventId)
+          .map(item => {
+            return {
+              firstName: order.shipping.first_name,
+              lastName: order.shipping.last_name,
+              orderDate: order.createdAt,
+              ticketType: item?.ticket_type,
+              quantity: item?.quantity,
+            };
+          })
+      );
+
+      return ticketHolders;
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  // getTicketHolders_events_s: async params => {
+  //   try {
+  //     const eventId = params.id;
+
+  //     // Find all orders that have orderItems with the specified event ID
+  //     const orders = await Order.find({
+  //       "orderItems.event": eventId,
+  //       "orderItems.itemType": "ticket",
+  //     }).populate("orderItems.ticket");
+
+  //     const ticketHolders = orders.flatMap(order =>
+  //       order.orderItems
+  //         .filter(item => item.itemType === "ticket" && item.event.toString() === eventId)
+  //         .map(item => {
+  //           console.log({ item });
+  //           return {
+  //             firstName: order.shipping.first_name,
+  //             lastName: order.shipping.last_name,
+  //             orderDate: order.createdAt,
+  //             ticketType: item?.ticket_type,
+  //             quantity: item?.quantity,
+  //           };
+  //         })
+  //     );
+
+  //     return ticketHolders;
+  //   } catch (error) {
+  //     console.log({ error });
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
 };

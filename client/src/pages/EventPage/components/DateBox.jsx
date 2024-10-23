@@ -32,9 +32,8 @@ const DateBox = ({ startDate, endDate, color }) => {
       }}
     >
       <Typography
-        variant="h6"
+        variant="subtitle2"
         sx={{
-          fontSize: "1.25rem",
           lineHeight: 1,
           position: "absolute",
           top: 0,
@@ -49,13 +48,12 @@ const DateBox = ({ startDate, endDate, color }) => {
         {sameMonth ? getMonthAbbr(start) : `${getMonthAbbr(start)}-${getMonthAbbr(end)}`}
         {!sameYear && ` ${start.getFullYear().toString().substr(-2)}-${end.getFullYear().toString().substr(-2)}`}
       </Typography>
-      <Typography variant="h5" sx={{ fontSize: sameDay ? "3rem" : "2.5rem", lineHeight: 1 }}>
+      <Typography variant={sameDay ? "h5" : "h6"} sx={{ lineHeight: 1 }}>
         {sameDay ? start.getDate() : `${start.getDate()}-${end.getDate()}`}
       </Typography>
       <Typography
-        variant="h6"
+        variant="subtitle2"
         sx={{
-          fontSize: "1.25rem",
           lineHeight: 1,
           position: "absolute",
           bottom: 0,

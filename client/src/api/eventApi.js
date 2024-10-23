@@ -78,3 +78,16 @@ export const deleteEvent = createAsyncThunk("events/deleteEvent", async (id, { d
     return rejectWithValue(error.response?.data);
   }
 });
+
+export const getTicketHolders = createAsyncThunk(
+  "events/getTicketHolders",
+  async (eventId, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/events/${eventId}/ticket_holders`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

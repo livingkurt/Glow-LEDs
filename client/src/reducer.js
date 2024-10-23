@@ -75,6 +75,9 @@ const reducers = {
   events: combineReducers({
     eventPage: eventSlice,
     eventTable: glTableReducer("eventTable", {}),
+    ticketHolders: glTableReducer("ticketHolders", {
+      searchBy: (row, search) => row.firstName.toLowerCase().includes(search.toLowerCase()),
+    }),
   }),
   tickets: combineReducers({
     ticketPage: ticketSlice,

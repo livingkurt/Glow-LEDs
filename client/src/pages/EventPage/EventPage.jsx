@@ -12,6 +12,7 @@ import TicketScanner from "./components/TicketScanner";
 import { EditEventModal } from "../EventsPage/components";
 import { open_edit_event_modal } from "../../slices/eventSlice";
 import { EditTicketModal } from "../TicketsPage/components";
+import TicketHoldersModal from "./components/TicketHolderModal";
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -21,6 +22,7 @@ const EventPage = () => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [openScannerModal, setOpenScannerModal] = useState(false);
+  const [openTicketHoldersModal, setOpenTicketHoldersModal] = useState(false);
 
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
@@ -49,10 +51,11 @@ const EventPage = () => {
     dispatch(
       API.addToCart({
         cart: my_cart,
-        cartItem: [
+        cartItems: [
           {
             itemType: "ticket",
             ticket: selectedTicket._id,
+            event: event._id,
             quantity: quantity,
             max_display_quantity: selectedTicket.max_display_quantity,
             max_quantity: selectedTicket.max_quantity,
@@ -102,6 +105,9 @@ const EventPage = () => {
           </Button>
           <Button variant="contained" color="primary" onClick={() => setOpenScannerModal(true)}>
             Scan Tickets
+          </Button>
+          <Button variant="contained" color="primary" onClick={() => setOpenTicketHoldersModal(true)}>
+            Ticket Holders
           </Button>
         </Box>
       )}
@@ -159,6 +165,12 @@ const EventPage = () => {
       />
 
       <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
+      <TicketHoldersModal
+        open={openTicketHoldersModal}
+        onClose={() => setOpenTicketHoldersModal(false)}
+        event={event}
+        allTickets={allTickets}
+      />
       <EditEventModal />
       <EditTicketModal />
     </EventContainer>
