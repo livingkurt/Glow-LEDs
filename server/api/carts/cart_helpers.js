@@ -38,41 +38,95 @@ export const areCartItemsEqual = (item1, item2) => {
   return true;
 };
 
-export const updateCartItems = (cartItems, cart_item) => {
-  let found = false;
-  let message = null;
+export const updateCartItems = (existingItems, newItems) => {
+  let messages = [];
+  let updatedItems = [...existingItems];
 
   const getEffectiveMaxQuantity = item => {
-    if (item.max_quantity === 0 || item.max_quantity === undefined) {
-      return Infinity;
-    }
-    return item.max_quantity;
+    return item.max_quantity > 0 ? item.max_quantity : Infinity;
   };
 
-  const updatedItems = cartItems.map(x => {
-    if (areCartItemsEqual(x, cart_item)) {
-      found = true;
-      const newQuantity = x.quantity + cart_item.quantity;
-      const maxQuantity = getEffectiveMaxQuantity(x);
+  for (const newItem of newItems) {
+    let found = false;
 
-      if (maxQuantity !== Infinity && newQuantity > maxQuantity) {
-        message = `Maximum quantity of ${maxQuantity} reached for ${x.name}`;
-        return { ...x, quantity: maxQuantity };
+    updatedItems = updatedItems.map(existingItem => {
+      if (areCartItemsEqual(existingItem, newItem)) {
+        found = true;
+        const totalQuantity = existingItem.quantity + newItem.quantity;
+        const maxQuantity = getEffectiveMaxQuantity(existingItem);
+
+        if (totalQuantity > maxQuantity) {
+          messages.push(`Maximum quantity of ${maxQuantity} reached for ${existingItem.name}`);
+          return { ...existingItem, quantity: maxQuantity };
+        }
+
+        return { ...existingItem, quantity: totalQuantity };
       }
+      return existingItem;
+    });
 
-      return { ...x, quantity: newQuantity };
+    if (!found) {
+      const maxQuantity = getEffectiveMaxQuantity(newItem);
+      if (newItem.quantity > maxQuantity) {
+        messages.push(`Maximum quantity of ${maxQuantity} reached for ${newItem.name}`);
+        newItem.quantity = maxQuantity;
+      }
+      updatedItems.push(newItem);
     }
-    return x;
-  });
-
-  if (!found) {
-    const maxQuantity = getEffectiveMaxQuantity(cart_item);
-    if (maxQuantity !== Infinity && cart_item.quantity > maxQuantity) {
-      message = `Maximum quantity of ${maxQuantity} reached for ${cart_item.name}`;
-      cart_item = { ...cart_item, quantity: maxQuantity };
-    }
-    return { items: [...cartItems, cart_item], message };
   }
 
-  return { items: updatedItems, message };
+  return { items: updatedItems, messages };
+};
+
+// First, aggregate duplicate items in cartItems
+export const aggregateCartItems = items => {
+  const itemMap = {};
+  for (const item of items) {
+    const key = JSON.stringify({
+      name: item.name,
+      selectedOptions: item.selectedOptions,
+      // Include other properties that define item uniqueness
+    });
+    if (itemMap[key]) {
+      itemMap[key].quantity += item.quantity;
+    } else {
+      itemMap[key] = { ...item };
+    }
+  }
+  return Object.values(itemMap);
+};
+
+export const normalizeCartItem = item => {
+  // Convert Mongoose documents to plain objects
+  item = item.toObject ? item.toObject() : item;
+
+  // Ensure selectedOptions are in consistent format
+  if (item.selectedOptions && Array.isArray(item.selectedOptions)) {
+    item.selectedOptions = item.selectedOptions.map(option => {
+      return {
+        name: option.name,
+        value: option.value,
+      };
+    });
+  } else {
+    item.selectedOptions = [];
+  }
+
+  // Ensure ticket is a string
+  if (item.ticket && item.ticket._id) {
+    item.ticket = item.ticket._id.toString();
+  } else if (item.ticket && item.ticket.toString) {
+    item.ticket = item.ticket.toString();
+  }
+
+  // Ensure product is a string
+  if (item.product && item.product._id) {
+    item.product = item.product._id.toString();
+  } else if (item.product && item.product.toString) {
+    item.product = item.product.toString();
+  }
+
+  // Handle other nested properties as needed
+
+  return item;
 };

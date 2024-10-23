@@ -1,7 +1,7 @@
 import { Cart, cart_db } from "../carts";
 import { deepEqual } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { updateCartItems } from "./cart_helpers";
+import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers";
 
 export default {
   findAll_carts_s: async query => {
@@ -69,50 +69,56 @@ export default {
       }
     }
   },
+
   add_to_cart_carts_s: async body => {
     const { existingCartItems, cartItems, current_user } = body;
 
     try {
+      // Aggregate duplicate items
+      const aggregatedCartItems = aggregateCartItems(cartItems);
+
+      let data;
+      let result;
+      let messages = [];
+
       if (current_user && Object.keys(current_user).length > 0) {
-        let data = await cart_db.findByUser_carts_db(current_user._id);
-        let result;
-        if (data) {
-          for (const cart_item of cartItems) {
-            result = updateCartItems(data.cartItems, cart_item);
-            data.cartItems = result.items;
-            await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
-            data = await cart_db.findById_carts_db(data._id);
-          }
-          return {
-            data: data.toObject ? data.toObject() : data,
-            message: result.message,
-          };
-        } else {
-          for (const cart_item of cartItems) {
-            result = updateCartItems([], cart_item);
-            data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
-            data = await cart_db.findById_carts_db(data._id);
-          }
-          return {
-            data: data.toObject ? data.toObject() : data,
-            message: result.message,
-          };
-        }
+        data = await cart_db.findByUser_carts_db(current_user._id);
+        let existingItems = data ? data.cartItems : [];
+
+        // Normalize existingItems
+        existingItems = existingItems.map(normalizeCartItem);
+
+        // Normalize newItems
+        const normalizedNewItems = aggregatedCartItems.map(normalizeCartItem);
+
+        // Process all items at once
+        result = updateCartItems(existingItems, normalizedNewItems);
+
+        // Update or create the cart and get the updated/created document
+        data = data
+          ? await cart_db.update_carts_db(data._id, { cartItems: result.items })
+          : await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
+
+        messages = result.messages;
       } else {
-        if (existingCartItems && existingCartItems.length > 0) {
-          const result = updateCartItems(existingCartItems, cart_item);
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        } else {
-          const result = updateCartItems([], cart_item);
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        }
+        // Handle case without current_user
+        let existingItems = existingCartItems || [];
+
+        // Normalize existingItems
+        existingItems = existingItems.map(normalizeCartItem);
+
+        // Normalize newItems
+        const normalizedNewItems = aggregatedCartItems.map(normalizeCartItem);
+
+        result = updateCartItems(existingItems, normalizedNewItems);
+        messages = result.messages;
+        data = { cartItems: result.items };
       }
+
+      return {
+        data: data.toObject ? data.toObject() : data,
+        messages,
+      };
     } catch (error) {
       console.log({ error });
       if (error instanceof Error) {
