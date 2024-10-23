@@ -77,8 +77,8 @@ export default {
         let data = await cart_db.findByUser_carts_db(current_user._id);
         let result;
         if (data) {
-          for (const cart_item of cartItems) {
-            result = updateCartItems(data.cartItems, cart_item);
+          for (const cartItem of cartItems) {
+            result = updateCartItems(data.cartItems, cartItem);
             data.cartItems = result.items;
             await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
             data = await cart_db.findById_carts_db(data._id);
@@ -88,8 +88,8 @@ export default {
             message: result.message,
           };
         } else {
-          for (const cart_item of cartItems) {
-            result = updateCartItems([], cart_item);
+          for (const cartItem of cartItems) {
+            result = updateCartItems([], cartItem);
             data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
             data = await cart_db.findById_carts_db(data._id);
           }
@@ -99,14 +99,20 @@ export default {
           };
         }
       } else {
-        if (existingCartItems && existingCartItems.length > 0) {
-          const result = updateCartItems(existingCartItems, cart_item);
+        let result;
+        let newExistingCartItems = [...existingCartItems];
+        if (newExistingCartItems && newExistingCartItems.length > 0) {
+          for (const cartItem of newExistingCartItems) {
+            result = updateCartItems(newExistingCartItems, cartItem);
+          }
           return {
             data: { cartItems: result.items },
             message: result.message,
           };
         } else {
-          const result = updateCartItems([], cart_item);
+          for (const cartItem of newExistingCartItems) {
+            result = updateCartItems([], cartItem);
+          }
           return {
             data: { cartItems: result.items },
             message: result.message,
