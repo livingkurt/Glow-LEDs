@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /secure/*
-
-Sitemap: https://www.glow-leds.com/sitemap.xml
