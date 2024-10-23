@@ -1,7 +1,7 @@
 import { Cart, cart_db } from "../carts";
 import { deepEqual } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { updateCartItems } from "./cart_helpers";
+import { aggregateCartItems, updateCartItems } from "./cart_helpers";
 
 export default {
   findAll_carts_s: async query => {
@@ -69,56 +69,43 @@ export default {
       }
     }
   },
+
+  // Then, modify your add_to_cart_carts_s function
   add_to_cart_carts_s: async body => {
     const { existingCartItems, cartItems, current_user } = body;
 
     try {
+      // Aggregate duplicate items
+      const aggregatedCartItems = aggregateCartItems(cartItems);
+
+      let data;
+      let result;
+      let messages = [];
+
       if (current_user && Object.keys(current_user).length > 0) {
-        let data = await cart_db.findByUser_carts_db(current_user._id);
-        let result;
-        if (data) {
-          for (const cartItem of cartItems) {
-            result = updateCartItems(data.cartItems, cartItem);
-            data.cartItems = result.items;
-            await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
-            data = await cart_db.findById_carts_db(data._id);
-          }
-          return {
-            data: data.toObject ? data.toObject() : data,
-            message: result.message,
-          };
-        } else {
-          for (const cartItem of cartItems) {
-            result = updateCartItems([], cartItem);
-            data = await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
-            data = await cart_db.findById_carts_db(data._id);
-          }
-          return {
-            data: data.toObject ? data.toObject() : data,
-            message: result.message,
-          };
-        }
+        data = await cart_db.findByUser_carts_db(current_user._id);
+        const existingItems = data ? data.cartItems : [];
+
+        // Process all items at once
+        result = updateCartItems(existingItems, aggregatedCartItems);
+        data = data
+          ? await cart_db.update_carts_db(data._id, { cartItems: result.items })
+          : await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
+
+        messages = result.messages;
+        data = await cart_db.findById_carts_db(data._id);
       } else {
-        let result;
-        let newExistingCartItems = [...existingCartItems];
-        if (newExistingCartItems && newExistingCartItems.length > 0) {
-          for (const cartItem of newExistingCartItems) {
-            result = updateCartItems(newExistingCartItems, cartItem);
-          }
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        } else {
-          for (const cartItem of newExistingCartItems) {
-            result = updateCartItems([], cartItem);
-          }
-          return {
-            data: { cartItems: result.items },
-            message: result.message,
-          };
-        }
+        // Handle case without current_user
+        const existingItems = existingCartItems || [];
+        result = updateCartItems(existingItems, aggregatedCartItems);
+        messages = result.messages;
+        data = { cartItems: result.items };
       }
+
+      return {
+        data: data.toObject ? data.toObject() : data,
+        messages,
+      };
     } catch (error) {
       console.log({ error });
       if (error instanceof Error) {
