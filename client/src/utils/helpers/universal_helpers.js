@@ -48,6 +48,11 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
           loading: ticketsQuery?.isLoading,
           labelProp: "title",
         },
+        ticket_type: {
+          type: "text",
+          label: "Ticket Type",
+          labelProp: "ticket_type",
+        },
         itemType: {
           type: "autocomplete_single",
           label: "Item Type",

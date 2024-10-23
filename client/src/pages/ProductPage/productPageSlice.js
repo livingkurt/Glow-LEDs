@@ -3,6 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   calculateAdditionalCost,
+  getActiveOptions,
+  getSelectedOptions,
   handlePriceReplacement,
   updatePrice,
   updateProductDetailsFromOption,
@@ -114,24 +116,6 @@ const productPage = createSlice({
     [detailsProductPage.fulfilled]: (state, { payload }) => {
       const { data } = payload;
 
-      // Filter active options and their active values
-      const activeOptions = data?.options
-        ?.filter(option => option.active)
-        .map(option => ({
-          ...option,
-          values: option.values.filter(value => value.active),
-        }));
-
-      // Maintain original selectedOptions behavior, but only for active options and values
-      const selectedOptions = data?.options
-        ?.map(option => {
-          if (!option.active) return null;
-          if (option.isAddOn) return {};
-          const activeValue = option.values.find(value => value.active && value.isDefault);
-          return activeValue || {};
-        })
-        .filter(Boolean);
-
       return {
         ...state,
         productPageLoading: false,
@@ -172,8 +156,8 @@ const productPage = createSlice({
           isPreOrder: data.isPreOrder,
           preOrderReleaseDate: data.preOrderReleaseDate,
           preOrderQuantity: data.preOrderQuantity,
-          selectedOptions,
-          currentOptions: activeOptions,
+          selectedOptions: getSelectedOptions(data),
+          currentOptions: getActiveOptions(data),
         },
       };
     },

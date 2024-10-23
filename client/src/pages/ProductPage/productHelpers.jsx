@@ -189,3 +189,23 @@ export const scrollToElement = target => {
     });
   }
 };
+
+// Filter active options and their active values
+export const getActiveOptions = product =>
+  product?.options
+    ?.filter(option => option.active)
+    .map(option => ({
+      ...option,
+      values: option.values.filter(value => value.active),
+    }));
+
+// Maintain original selectedOptions behavior, but only for active options and values
+export const getSelectedOptions = product =>
+  product?.options
+    ?.map(option => {
+      if (!option.active) return null;
+      if (option.isAddOn) return {};
+      const activeValue = option.values.find(value => value.active && value.isDefault);
+      return activeValue || {};
+    })
+    .filter(Boolean);
