@@ -1,7 +1,7 @@
 import { Cart, cart_db } from "../carts";
 import { deepEqual } from "../../utils/util";
 import { getFilteredData } from "../api_helpers";
-import { aggregateCartItems, updateCartItems } from "./cart_helpers";
+import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers";
 
 export default {
   findAll_carts_s: async query => {
@@ -70,7 +70,6 @@ export default {
     }
   },
 
-  // Then, modify your add_to_cart_carts_s function
   add_to_cart_carts_s: async body => {
     const { existingCartItems, cartItems, current_user } = body;
 
@@ -84,20 +83,34 @@ export default {
 
       if (current_user && Object.keys(current_user).length > 0) {
         data = await cart_db.findByUser_carts_db(current_user._id);
-        const existingItems = data ? data.cartItems : [];
+        let existingItems = data ? data.cartItems : [];
+
+        // Normalize existingItems
+        existingItems = existingItems.map(normalizeCartItem);
+
+        // Normalize newItems
+        const normalizedNewItems = aggregatedCartItems.map(normalizeCartItem);
 
         // Process all items at once
-        result = updateCartItems(existingItems, aggregatedCartItems);
+        result = updateCartItems(existingItems, normalizedNewItems);
+
+        // Update or create the cart and get the updated/created document
         data = data
           ? await cart_db.update_carts_db(data._id, { cartItems: result.items })
           : await cart_db.create_carts_db({ user: current_user._id, cartItems: result.items });
 
         messages = result.messages;
-        data = await cart_db.findById_carts_db(data._id);
       } else {
         // Handle case without current_user
-        const existingItems = existingCartItems || [];
-        result = updateCartItems(existingItems, aggregatedCartItems);
+        let existingItems = existingCartItems || [];
+
+        // Normalize existingItems
+        existingItems = existingItems.map(normalizeCartItem);
+
+        // Normalize newItems
+        const normalizedNewItems = aggregatedCartItems.map(normalizeCartItem);
+
+        result = updateCartItems(existingItems, normalizedNewItems);
         messages = result.messages;
         data = { cartItems: result.items };
       }

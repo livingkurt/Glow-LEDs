@@ -95,3 +95,38 @@ export const aggregateCartItems = items => {
   }
   return Object.values(itemMap);
 };
+
+export const normalizeCartItem = item => {
+  // Convert Mongoose documents to plain objects
+  item = item.toObject ? item.toObject() : item;
+
+  // Ensure selectedOptions are in consistent format
+  if (item.selectedOptions && Array.isArray(item.selectedOptions)) {
+    item.selectedOptions = item.selectedOptions.map(option => {
+      return {
+        name: option.name,
+        value: option.value,
+      };
+    });
+  } else {
+    item.selectedOptions = [];
+  }
+
+  // Ensure ticket is a string
+  if (item.ticket && item.ticket._id) {
+    item.ticket = item.ticket._id.toString();
+  } else if (item.ticket && item.ticket.toString) {
+    item.ticket = item.ticket.toString();
+  }
+
+  // Ensure product is a string
+  if (item.product && item.product._id) {
+    item.product = item.product._id.toString();
+  } else if (item.product && item.product.toString) {
+    item.product = item.product.toString();
+  }
+
+  // Handle other nested properties as needed
+
+  return item;
+};

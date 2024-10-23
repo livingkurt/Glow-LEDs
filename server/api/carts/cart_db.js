@@ -58,26 +58,42 @@ export default {
   },
   create_carts_db: async body => {
     try {
-      return await Cart.create(body);
+      const newCart = new Cart(body);
+      await newCart.save();
+      return await Cart.findById(newCart._id)
+        .populate("user")
+        .populate("cartItems.display_image_object")
+        .populate("cartItems.product")
+        .populate("cartItems.event")
+        .populate("cartItems.ticket")
+        .populate("cartItems.selectedOptions.filament")
+        .populate("cartItems.tags")
+        .populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   update_carts_db: async (id, body) => {
     try {
-      const cart = await Cart.findOne({ _id: id, active: true });
-      if (cart) {
-        return await Cart.updateOne({ _id: id }, body);
-      }
-      return cart;
+      return await Cart.findByIdAndUpdate(id, body, { new: true })
+        .populate("user")
+        .populate("cartItems.display_image_object")
+        .populate("cartItems.product")
+        .populate("cartItems.event")
+        .populate("cartItems.ticket")
+        .populate("cartItems.selectedOptions.filament")
+        .populate("cartItems.tags")
+        .populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   update_user_carts_db: async (id, body) => {
     try {
       const cart = await Cart.findOne({ user: id, active: true });
