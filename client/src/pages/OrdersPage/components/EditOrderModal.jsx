@@ -11,6 +11,7 @@ import {
   handleProductChange,
   handlePromoCode,
   handleQtyChange,
+  handleTicketChange,
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import {
@@ -130,7 +131,9 @@ const EditOrderModal = () => {
               dispatch(set_order(value));
 
               if (actualFieldName === "product") {
-                handleProductChange(index, value, dispatch, order, isUpdatePricesActive);
+                handleProductChange(index, value, dispatch, isUpdatePricesActive);
+              } else if (actualFieldName === "ticket") {
+                handleTicketChange(index, value, dispatch, isUpdatePricesActive);
               } else if (actualFieldName === "quantity") {
                 handleQtyChange(value, dispatch, order, isUpdatePricesActive);
               }

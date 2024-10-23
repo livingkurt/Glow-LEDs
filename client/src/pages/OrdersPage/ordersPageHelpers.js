@@ -5,6 +5,7 @@ import { set_order } from "../../slices/orderSlice";
 import config from "../../config";
 import { io } from "socket.io-client";
 import { formatDate } from "../../utils/helpers/universal_helpers";
+import { getActiveOptions, getSelectedOptions } from "../ProductPage/productHelpers";
 
 export const orderStatusColors = {
   unpaid: { name: "Unpaid", color: "#6d3e3e" },
@@ -239,23 +240,16 @@ export const printInvoice = async invoice => {
   ]);
 };
 
-export const updateOrderPrices = ({ orderItems, shippingPrice, taxPrice, tip }) => {
-  let updatedItemsPrice = 0;
-  // let updatedTaxPrice = 0;
+export const updateOrderPrices = ({ orderItems = [], shippingPrice = 0, taxRate = 0, tip = 0 }) => {
+  console.log({ orderItems, shippingPrice, taxRate, tip });
+  let itemsPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  console.log({ itemsPrice });
+  let taxPrice = itemsPrice * taxRate;
+  console.log({ taxPrice });
+  let totalPrice = itemsPrice + taxPrice + shippingPrice + tip;
+  console.log({ totalPrice });
 
-  orderItems.forEach(item => {
-    updatedItemsPrice += item.price * item.quantity;
-  });
-
-  // Assuming a tax rate of 10% (customize as needed)
-  // updatedTaxPrice = updatedItemsPrice * 0.1;
-
-  const updatedTotalPrice = updatedItemsPrice + taxPrice + shippingPrice + tip;
-
-  return {
-    itemsPrice: updatedItemsPrice,
-    totalPrice: updatedTotalPrice,
-  };
+  return { itemsPrice, taxPrice, totalPrice };
 };
 
 export const updatePricesAndDispatch = (updatedOrderItems, dispatch, order) => {
@@ -263,6 +257,7 @@ export const updatePricesAndDispatch = (updatedOrderItems, dispatch, order) => {
     orderItems: updatedOrderItems,
     shippingPrice: order.shippingPrice,
     taxPrice: order.taxPrice,
+    taxRate: order.taxRate,
     tip: order.tip,
   });
 
@@ -273,48 +268,6 @@ export const updatePricesAndDispatch = (updatedOrderItems, dispatch, order) => {
   };
 
   dispatch(set_order(finalUpdatedOrder));
-};
-
-export const updateOrderItem = (index, value, order) => {
-  const orderItems = order.orderItems.map((item, i) => {
-    if (i === index) {
-      return {
-        name: value.name,
-        quantity: item.quantity || 1,
-        display_image_object: value?.images[0],
-        price: value?.price,
-        color: value?.color,
-        color_code: value?.color_code,
-        secondary_color: value?.secondary_color,
-        secondary_color_code: value?.secondary_color_code,
-        category: value?.category,
-        subcategory: value?.subcategory,
-        product_collection: value?.product_collection,
-        size: value?.size,
-        count_in_stock: value?.count_in_stock,
-        pathname: value?.pathname,
-        package_volume: value?.package_volume,
-        weight_pounds: value?.weight_pounds,
-        weight_ounces: value?.weight_ounces,
-        package_length: value?.package_length,
-        package_width: value?.package_width,
-        package_height: value?.package_height,
-        reviewed: value?.reviewed,
-        product: value,
-        color_products: value?.color_products.map(product => product._id),
-        secondary_color_products: value?.secondary_color_products.map(product => product._id),
-        option_products: value?.option_products.map(product => product._id),
-        secondary_products: value?.secondary_products.map(product => product._id),
-        color_group_name: value?.color_group_name,
-        secondary_color_group_name: value?.secondary_color_group_name,
-        option_group_name: value?.option_group_name,
-        secondary_group_name: value?.secondary_group_name,
-      };
-    } else {
-      return item;
-    }
-  });
-  return { orderItems };
 };
 
 // orderLogic.js
@@ -333,22 +286,119 @@ export const handleDuplicate = (value, dispatch, order, isUpdatePricesActive) =>
   }
 };
 
-export const handleProductChange = (index, value, dispatch, order, isUpdatePricesActive) => {
-  const updatedOrderItems = updateOrderItem(index, value.orderItems[index].product, order);
+export const handleProductChange = (index, value, dispatch, isUpdatePricesActive) => {
+  const order = value; // Use the latest order state
+  const product = order.orderItems[index].product;
+
+  const updatedOrderItems = order.orderItems.map((item, i) => {
+    if (i === index) {
+      return {
+        itemType: "product",
+        product: product,
+        name: product.name,
+        short_description: product.short_description,
+        fact: product.fact,
+        images: product.images,
+        set_of: product.set_of,
+        original_images: product.images,
+        display_image_object: product.images[0],
+        category: product.category,
+        subcategory: product.subcategory,
+        product_collection: product.product_collection,
+        facts: product.facts,
+        included_items: product.included_items,
+        price: product.price,
+        chips: product.chips,
+        tags: product.tags,
+        wholesale_price: product.wholesale_price,
+        previous_price: product.previous_price,
+        sale_price: product.sale_price,
+        size: product.size,
+        max_display_quantity: product.max_display_quantity,
+        max_quantity: product.max_quantity,
+        quantity: item.quantity || 1, // Keep existing quantity or default to 1
+        count_in_stock: product.count_in_stock,
+        pathname: product.pathname,
+        sale_start_date: product.sale_start_date,
+        sale_end_date: product.sale_end_date,
+        dimensions: product.dimensions,
+        processing_time: product.processing_time,
+        rating: product.rating,
+        wholesale_product: product.wholesale_product,
+        isPreOrder: product.isPreOrder,
+        preOrderReleaseDate: product.preOrderReleaseDate,
+        preOrderQuantity: product.preOrderQuantity,
+        selectedOptions: getSelectedOptions(product),
+        currentOptions: getActiveOptions(product),
+      };
+    } else {
+      return item;
+    }
+  });
+
   let updatedPrices = {};
 
   if (isUpdatePricesActive) {
     updatedPrices = updateOrderPrices({
-      orderItems: updatedOrderItems.orderItems,
-      shippingPrice: order.shippingPrice,
-      taxPrice: order.taxPrice,
-      tip: order.tip,
+      orderItems: updatedOrderItems, // Use updatedOrderItems directly
+      shippingPrice: order.shippingPrice || 0,
+      taxPrice: order.taxPrice || 0,
+      taxRate: order.taxRate || 0,
+      tip: order.tip || 0,
     });
   }
 
   const finalUpdatedOrder = {
     ...order,
-    orderItems: updatedOrderItems.orderItems,
+    orderItems: updatedOrderItems, // Corrected here
+    ...updatedPrices,
+  };
+
+  dispatch(set_order(finalUpdatedOrder));
+};
+
+export const handleTicketChange = (index, value, dispatch, isUpdatePricesActive) => {
+  const order = value; // Use the latest order state
+
+  const ticket = order.orderItems[index].ticket;
+
+  const updatedOrderItems = order.orderItems.map((item, i) => {
+    if (i === index) {
+      return {
+        itemType: "ticket",
+        ticket,
+        event: order?.event?._id,
+        quantity: order.orderItems[index].quantity,
+        max_display_quantity: ticket.max_display_quantity,
+        max_quantity: ticket.max_quantity,
+        price: ticket.price,
+        name: ticket.title,
+        color: ticket.color,
+        finite_stock: ticket.finite_stock,
+        ticket_type: ticket.ticket_type,
+        display_image_object: ticket?.image,
+        count_in_stock: ticket.count_in_stock,
+      };
+    } else {
+      return item;
+    }
+  });
+
+  let updatedPrices = {};
+
+  if (isUpdatePricesActive) {
+    updatedPrices = updateOrderPrices({
+      orderItems: updatedOrderItems, // Corrected here
+      shippingPrice: order.shippingPrice || 0,
+      taxPrice: order.taxPrice || 0,
+      taxRate: order.taxRate || 0,
+      tip: order.tip || 0,
+    });
+  }
+
+  const finalUpdatedOrder = {
+    ...order,
+    orderItems: updatedOrderItems, // Corrected here
     ...updatedPrices,
   };
 
@@ -367,6 +417,7 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
       orderItems: updatedOrderItems,
       shippingPrice: order.shippingPrice,
       taxPrice: order.taxPrice,
+      taxRate: order.taxRate,
       tip: order.tip,
     });
   }
@@ -380,47 +431,39 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
   dispatch(set_order(finalUpdatedOrder));
 };
 
-export const handlePromoCode = (value, order, dispatch) => {
-  // Get the original itemsPrice from the determineItemsTotal function
-  const originalItemsPrice = determineItemsTotal(order.orderItems, false);
+export const handlePromoCode = (value, dispatch) => {
   const promoCodeData = value.promo_code;
-  let { taxPrice, shippingPrice } = order; // Assuming these are part of your order state
+  const order = value; // Use the latest order state
+  let { itemsPrice, shippingPrice, taxPrice } = order;
 
   if (promoCodeData) {
-    let itemsPrice = originalItemsPrice; // Use the original itemsPrice as the base
-
     if (promoCodeData.percentage_off) {
-      const discount = originalItemsPrice * (promoCodeData.percentage_off / 100);
+      const discount = itemsPrice * (promoCodeData.percentage_off / 100);
       itemsPrice -= discount;
     } else if (promoCodeData.amount_off) {
       itemsPrice -= promoCodeData.amount_off;
     }
 
     if (promoCodeData.free_shipping) {
-      shippingPrice = 0; // Set shipping price to zero
+      shippingPrice = 0;
     }
 
-    const newTotalPrice = itemsPrice + taxPrice + shippingPrice; // Recalculate total price
+    // Recalculate taxPrice and totalPrice
+    taxPrice = itemsPrice * order.taxRate;
+    const totalPrice = itemsPrice + taxPrice + shippingPrice + order.tip;
 
     const updatedOrder = {
+      ...order,
       itemsPrice,
-      totalPrice: newTotalPrice,
+      taxPrice,
       shippingPrice,
+      totalPrice,
       promo_code: promoCodeData.promo_code,
     };
 
-    // Dispatch the updated order state
     dispatch(set_order(updatedOrder));
   } else {
-    const updatedOrder = {
-      itemsPrice: originalItemsPrice,
-      totalPrice: originalItemsPrice + taxPrice + shippingPrice,
-      shippingPrice,
-      promo_code: "",
-    };
-
-    // Dispatch the updated order state
-    dispatch(set_order(updatedOrder));
+    // Handle removal of promo code
   }
 };
 

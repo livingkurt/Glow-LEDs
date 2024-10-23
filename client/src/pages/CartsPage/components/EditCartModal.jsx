@@ -1,4 +1,6 @@
-import React, { useCallback } from "react";
+// EditCartModal.jsx
+
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";
@@ -12,7 +14,9 @@ import {
   useProductsQuery,
   useTicketsQuery,
   useUsersQuery,
+  useAffiliatesQuery,
 } from "../../../api/allRecordsApi";
+import { handleCartProductChange, handleCartTicketChange } from "../cartsPageHelpers";
 
 const EditCartModal = () => {
   const dispatch = useDispatch();
@@ -24,35 +28,45 @@ const EditCartModal = () => {
   const ticketsQuery = useTicketsQuery();
   const categorysQuery = useCategorysQuery();
   const productsQuery = useProductsQuery({ option: false, hidden: false });
+  const affiliateQuery = useAffiliatesQuery();
   const userQuery = useUsersQuery();
 
   const formFields = React.useMemo(
     () =>
       cartFormFields({
         userQuery,
+        affiliateQuery,
         cart,
         eventsQuery,
         ticketsQuery,
         categorysQuery,
         productsQuery,
       }),
-    [userQuery, cart, eventsQuery, ticketsQuery, categorysQuery, productsQuery]
+    [userQuery, affiliateQuery, cart, eventsQuery, ticketsQuery, categorysQuery, productsQuery]
   );
 
-  const handleConfirm = useCallback(() => {
+  const handleConfirm = () => {
     dispatch(API.saveCart({ ...cart, user: user?._id ? user?._id : null }));
-  }, [dispatch, cart, user]);
+  };
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     dispatch(set_edit_cart_modal(false));
-  }, [dispatch]);
+  };
 
-  const handleChange = useCallback(
-    value => {
+  const handleChange = (value, fieldName, index) => {
+    if (fieldName !== undefined) {
+      const actualFieldName = fieldName.split(".")[1] || fieldName;
       dispatch(set_cart(value));
-    },
-    [dispatch]
-  );
+
+      if (actualFieldName === "product") {
+        handleCartProductChange(index, value, dispatch);
+      } else if (actualFieldName === "ticket") {
+        handleCartTicketChange(index, value, dispatch);
+      }
+    } else {
+      dispatch(set_cart(value));
+    }
+  };
 
   return (
     <GLActionModal
@@ -66,7 +80,7 @@ const EditCartModal = () => {
       cancelColor="secondary"
       disableEscapeKeyDown
     >
-      <GLForm formData={formFields} state={cart} onChange={handleChange} loading={loading} />
+      <GLForm formData={formFields} state={cart} onChange={handleChange} />
     </GLActionModal>
   );
 };
