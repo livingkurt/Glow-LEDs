@@ -23,7 +23,7 @@ const MetaDataDisplay = ({ row }) => {
     await API_Emails.send_order_status_email(
       row,
       row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      config.REACT_APP_INFO_EMAIL,
+      config.VITE_INFO_EMAIL,
       status,
       message_to_user
     );
@@ -34,18 +34,14 @@ const MetaDataDisplay = ({ row }) => {
   const send_order_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_order_email(row, "Thank you for your Glow LEDs Order", row.shipping.email);
-    await API_Emails.send_order_email(
-      row,
-      "New Order Created by " + row.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL
-    );
+    await API_Emails.send_order_email(row, "New Order Created by " + row.shipping.first_name, config.VITE_INFO_EMAIL);
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({
           order: row,
           subject: "New Order Created by " + row.shipping.first_name,
-          email: config.REACT_APP_INFO_EMAIL,
+          email: config.VITE_INFO_EMAIL,
         })
       );
     }
@@ -72,7 +68,7 @@ const MetaDataDisplay = ({ row }) => {
     await API_Emails.send_refund_email(
       row,
       "New Refunded for " + row.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL,
+      config.VITE_INFO_EMAIL,
       true
     );
 

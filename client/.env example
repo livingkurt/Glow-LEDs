@@ -4,29 +4,29 @@
 
 
 ################## Stripe ##################
-REACT_APP_STRIPE_KEY==
+VITE_STRIPE_KEY==
 
 ################## Company Info ##################
 
 # No Reply Email
-REACT_APP_INFO_EMAIL=
+VITE_INFO_EMAIL=
 
 # Contact Email
-REACT_APP_CONTACT_EMAIL=
+VITE_CONTACT_EMAIL=
 
 # Production Address
-REACT_APP_PRODUCTION_ADDRESS=
-REACT_APP_PRODUCTION_CITY=
-REACT_APP_PRODUCTION_STATE=
-REACT_APP_PRODUCTION_POSTAL_CODE=
-REACT_APP_PRODUCTION_COUNTRY=
+VITE_PRODUCTION_ADDRESS=
+VITE_PRODUCTION_CITY=
+VITE_PRODUCTION_STATE=
+VITE_PRODUCTION_POSTAL_CODE=
+VITE_PRODUCTION_COUNTRY=
 
 #Temp Password
-REACT_APP_TEMP_PASS=
+VITE_TEMP_PASS=
 
 ################## Google Sheets ##################
 
-REACT_APP_GOOGLE_SHEETS_PRIVATE=
+VITE_GOOGLE_SHEETS_PRIVATE=
 
 ################## React Check Blocker ##################
 
@@ -35,12 +35,12 @@ SKIP_PREFLIGHT_CHECK=
 ################## Debugging ##################
 
 # Bugsnag
-REACT_APP_BUGSNAG_KEY=
+VITE_BUGSNAG_KEY=
 
 ################## Google Autocomplete ##################
 
-REACT_APP_GOOGLE_PLACES_KEY=
+VITE_GOOGLE_PLACES_KEY=
 
 
 ################## Airtable ##################
-REACT_APP_AIRTABLE_ACCESS_TOKEN=
+VITE_AIRTABLE_ACCESS_TOKEN=

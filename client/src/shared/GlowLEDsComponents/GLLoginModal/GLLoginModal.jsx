@@ -182,7 +182,7 @@ const GLLoginModal = () => {
 
             <div className="jc-c">
               <p className="max-w-800px mv-2rem lh-30px ta-c">
-                If you have any questions or concerns, please reach out to {config.REACT_APP_CONTACT_EMAIL}.
+                If you have any questions or concerns, please reach out to {config.VITE_CONTACT_EMAIL}.
               </p>
             </div>
           </div>
@@ -219,7 +219,7 @@ const GLLoginModal = () => {
             <div className="jc-c"></div>
             <div className="jc-c">
               <p className="max-w-800px mv-2rem lh-30px ta-c">
-                If you have any questions or concerns, please reach out to {config.REACT_APP_CONTACT_EMAIL}.
+                If you have any questions or concerns, please reach out to {config.VITE_CONTACT_EMAIL}.
               </p>
             </div>
           </div>

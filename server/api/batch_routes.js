@@ -2646,7 +2646,7 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
             {
               title: "Tracking",
-              description: `All shipments come with tracking numbers that will be sent to your email when the package is ready for shipment. If the address on your order is incorrect, please contact us immediately at ${config.REACT_APP_CONTACT_EMAIL}. If your shipping information was incorrectly input and your package is returned to us, you will be responsible for paying the secondary shipping fees.`,
+              description: `All shipments come with tracking numbers that will be sent to your email when the package is ready for shipment. If the address on your order is incorrect, please contact us immediately at ${config.VITE_CONTACT_EMAIL}. If your shipping information was incorrectly input and your package is returned to us, you will be responsible for paying the secondary shipping fees.`,
             },
             {
               title: "International Shipping",
@@ -2677,15 +2677,15 @@ router.route("/update_faq_page").put(async (req, res) => {
             },
             {
               title: "Damaged Items",
-              description: `We take full responsibility for damaged products due to manufacturing defects. Please send us a photo at ${config.REACT_APP_CONTACT_EMAIL}., and we'll be happy to figure out a solution.`,
+              description: `We take full responsibility for damaged products due to manufacturing defects. Please send us a photo at ${config.VITE_CONTACT_EMAIL}., and we'll be happy to figure out a solution.`,
             },
             {
               title: "Cancellations and Modifications",
-              description: `Once your order is placed, we have a very limited window to make any changes or cancellations. If you require an order change or cancellation, please let us know as soon as possible by sending us an email to ${config.REACT_APP_CONTACT_EMAIL}. We can't guarantee that we'll be able to catch your order before it gets produced, but we'll try our absolute best!`,
+              description: `Once your order is placed, we have a very limited window to make any changes or cancellations. If you require an order change or cancellation, please let us know as soon as possible by sending us an email to ${config.VITE_CONTACT_EMAIL}. We can't guarantee that we'll be able to catch your order before it gets produced, but we'll try our absolute best!`,
             },
             {
               title: "Returns",
-              description: `We offer a 100% satisfaction guarantee. Returns are accepted within 30 days of delivery. To initiate a return please contact ${config.REACT_APP_CONTACT_EMAIL} and you will be supplied with a prepaid shipping label to send back your product. Please include your full name and order number in the return shipment and you will be refunded the full amount minus original shipping costs. Certian items are non-refundable. Refunds are returned to the original form of payment.`,
+              description: `We offer a 100% satisfaction guarantee. Returns are accepted within 30 days of delivery. To initiate a return please contact ${config.VITE_CONTACT_EMAIL} and you will be supplied with a prepaid shipping label to send back your product. Please include your full name and order number in the return shipment and you will be refunded the full amount minus original shipping costs. Certian items are non-refundable. Refunds are returned to the original form of payment.`,
               button_text: "Contact",
               button_link: "/pages/contact/returns",
             },

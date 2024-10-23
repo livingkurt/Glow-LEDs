@@ -1,9 +1,10 @@
 /* eslint-disable max-lines-per-function */
 
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api";
-import { handleTokenRefresh, setAuthToken, setCurrentUser } from "../api/axiosInstance";
+import { setAuthToken } from "../api/axiosInstance";
 import jwt_decode from "jwt-decode";
+
+import * as API from "../api";
 
 const user = {
   first_name: "",
@@ -189,230 +190,162 @@ const userPage = createSlice({
       state.re_password_validations = payload.rePassword;
     },
   },
-  extraReducers: {
-    [API.listUsers.pending]: (state, { payload }) => {
-      state.loading = true;
-      state.users = [];
-    },
-    [API.listUsers.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.users = payload;
-      state.message = "Users Found";
-      state.loading = false;
-    },
-    [API.listUsers.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.saveUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.saveUser.fulfilled]: (state, { payload }) => {
-      // const { profile } = payload;
-      state.loading = false;
-      state.message = "User Saved";
-      state.loading = false;
-      state.remoteVersionRequirement = Date.now();
-      state.edit_user_modal = false;
-      state.success = true;
-      // if (profile) {
-      //   const accessToken = await handleTokenRefresh();
-      //   setCurrentUser(accessToken);
-      //   // window.location.reload();
-      // }
-    },
-    [API.saveUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.detailsUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.detailsUser.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.user = payload;
-      state.message = "User Found";
-      state.loading = false;
-    },
-    [API.detailsUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.deleteUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.deleteUser.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.message = "User Deleted";
-      state.remoteVersionRequirement = Date.now();
-    },
-    [API.deleteUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-      state.loading = false;
-    },
-    [API.resetPassword.pending]: (state, { payload }) => {
-      state.loadingResetPassword = true;
-    },
-    [API.resetPassword.fulfilled]: (state, { payload }) => {
-      const { current_user, data } = payload;
-
-      if (!current_user.isAdmin) {
+  extraReducers: builder => {
+    builder
+      .addCase(API.listUsers.pending, state => {
+        state.loading = true;
+        state.users = [];
+      })
+      .addCase(API.listUsers.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.users = payload;
+        state.message = "Users Found";
+      })
+      .addCase(API.listUsers.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.saveUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.saveUser.fulfilled, state => {
+        state.loading = false;
+        state.message = "User Saved";
+        state.remoteVersionRequirement = Date.now();
+        state.edit_user_modal = false;
+        state.success = true;
+      })
+      .addCase(API.saveUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.detailsUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.detailsUser.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.user = payload;
+        state.message = "User Found";
+      })
+      .addCase(API.detailsUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.deleteUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.deleteUser.fulfilled, state => {
+        state.loading = false;
+        state.message = "User Deleted";
+        state.remoteVersionRequirement = Date.now();
+      })
+      .addCase(API.deleteUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.resetPassword.pending, state => {
+        state.loadingResetPassword = true;
+      })
+      .addCase(API.resetPassword.fulfilled, (state, { payload }) => {
+        const { current_user } = payload;
+        if (!current_user.isAdmin) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          setAuthToken(false);
+          state.current_user = {};
+        }
+        state.loadingResetPassword = false;
+        state.message = "Password Reset";
+        state.success = true;
+      })
+      .addCase(API.resetPassword.rejected, (state, { payload, error }) => {
+        state.loadingResetPassword = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.registerUser.pending, state => {
+        state.loading = true;
+        state.registrationSuccess = false;
+      })
+      .addCase(API.registerUser.fulfilled, state => {
+        state.loading = false;
+        state.message = "User Registered";
+        state.registrationSuccess = true;
+      })
+      .addCase(API.registerUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.verifyUser.pending, state => {
+        state.verificationLoading = true;
+        state.registrationSuccess = false;
+      })
+      .addCase(API.verifyUser.fulfilled, state => {
+        state.verificationLoading = false;
+        state.message = "User Verified";
+        state.verificationSuccess = true;
+      })
+      .addCase(API.verifyUser.rejected, (state, { payload, error }) => {
+        state.verificationLoading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.resendVerification.pending, state => {
+        state.loadingVerification = true;
+      })
+      .addCase(API.resendVerification.fulfilled, state => {
+        state.loadingVerification = false;
+        state.resendVerificationSucess = true;
+      })
+      .addCase(API.resendVerification.rejected, (state, { payload, error }) => {
+        state.loadingVerification = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.loginUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.loginUser.fulfilled, (state, { payload }) => {
+        const { access_token, refresh_token } = payload;
+        localStorage.setItem("accessToken", access_token);
+        localStorage.setItem("refreshToken", refresh_token);
+        setAuthToken(access_token);
+        const decoded = jwt_decode(access_token);
+        state.loading = false;
+        state.current_user = decoded;
+        state.message = "User Login Success";
+        state.loginModal = false;
+        state.loginSuccess = true;
+      })
+      .addCase(API.loginUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.email_validations = payload.message;
+        state.password_validations = payload.message;
+        state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.logoutUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.logoutUser.fulfilled, (state, { payload }) => {
+        const { my_cart } = payload;
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setAuthToken(false);
+        localStorage.setItem("cartItems", JSON.stringify(my_cart.cartItems));
         state.current_user = {};
-      }
-      state.loadingResetPassword = false;
-      state.message = "Password Reset";
-      state.success = true;
-    },
-    [API.resetPassword.rejected]: (state, { payload, error }) => {
-      state.loadingResetPassword = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.registerUser.pending]: (state, { payload }) => {
-      state.loading = true;
-      state.registrationSuccess = false;
-    },
-    [API.registerUser.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.message = "User Registered";
-      state.registrationSuccess = true;
-      // state.loginModal = false;
-    },
-    [API.registerUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.verifyUser.pending]: (state, { payload }) => {
-      state.verificationLoading = true;
-      state.registrationSuccess = false;
-    },
-    [API.verifyUser.fulfilled]: (state, { payload }) => {
-      state.verificationLoading = false;
-      state.message = "User Registered";
-      state.verificationSuccess = true;
-    },
-    [API.verifyUser.rejected]: (state, { payload, error }) => {
-      state.verificationLoading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.resendVerification.pending]: (state, { payload }) => {
-      state.loadingVerification = true;
-    },
-    [API.resendVerification.fulfilled]: (state, { payload }) => {
-      state.loadingVerification = false;
-      state.resendVerificationSucess = true;
-    },
-    [API.resendVerification.rejected]: (state, { payload, error }) => {
-      state.loadingVerification = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.loginUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.loginUser.fulfilled]: (state, { payload }) => {
-      const { access_token, refresh_token } = payload;
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
-      setAuthToken(access_token);
-      const decoded = jwt_decode(access_token);
-      state.loading = false;
-      state.current_user = decoded;
-      state.message = "User Login Success";
-      state.loginModal = false;
-      state.loginSuccess = true;
-    },
-
-    [API.loginUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.email_validations = payload.message;
-      state.password_validations = payload.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.loginAsUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.loginAsUser.fulfilled]: (state, { payload }) => {
-      const { access_token, refresh_token } = payload;
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
-      setAuthToken(access_token);
-      const decoded = jwt_decode(access_token);
-      state.access_token = access_token;
-      state.loading = false;
-      state.current_user = decoded;
-      state.message = "User Login Success";
-      state.success = true;
-    },
-    [API.loginAsUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.logoutUser.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.logoutUser.fulfilled]: (state, { payload }) => {
-      const { my_cart } = payload;
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      setAuthToken(false);
-      localStorage.setItem("cartItems", JSON.stringify(my_cart.cartItems));
-      state.current_user = {};
-      state.loading = false;
-    },
-    [API.logoutUser.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.verifyEmailPasswordReset.pending]: (state, { payload }) => {
-      state.loadingPasswordReset = true;
-    },
-    [API.verifyEmailPasswordReset.fulfilled]: (state, { payload }) => {
-      state.loadingPasswordReset = false;
-      state.email_validations = "";
-    },
-    [API.verifyEmailPasswordReset.rejected]: (state, { payload, error }) => {
-      state.loadingPasswordReset = false;
-      state.email_validations = payload.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.generatePasswordResetToken.pending]: (state, { payload }) => {
-      state.loadingChangePassword = true;
-    },
-    [API.generatePasswordResetToken.fulfilled]: (state, { payload }) => {
-      state.loadingChangePassword = false;
-      state.email_validations = "";
-    },
-    [API.generatePasswordResetToken.rejected]: (state, { payload, error }) => {
-      state.loadingChangePassword = false;
-      state.email_validations = payload.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.sendAffiliateOnboardEmail.pending]: (state, { payload }) => {
-      state.loadingAffiliateOnboardSend = true;
-    },
-    [API.sendAffiliateOnboardEmail.fulfilled]: (state, { payload }) => {
-      state.loadingAffiliateOnboardSend = false;
-      state.remoteVersionRequirement = Date.now();
-    },
-    [API.sendAffiliateOnboardEmail.rejected]: (state, { payload, error }) => {
-      state.loadingAffiliateOnboardSend = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
+        state.loading = false;
+      })
+      .addCase(API.logoutUser.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
+      });
   },
 });
 

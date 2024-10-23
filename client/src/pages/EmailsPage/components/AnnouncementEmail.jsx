@@ -8,7 +8,7 @@ import { accurate_date, format_date, format_time, unformat_date_and_time } from 
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-const HtmlToReactParser = require("html-to-react").Parser;
+import HtmlToReactParser from "html-to-react";
 
 const AnnouncementEmail = () => {
   const params = useParams();
