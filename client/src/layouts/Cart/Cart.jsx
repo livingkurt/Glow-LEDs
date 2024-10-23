@@ -109,7 +109,7 @@ const Cart = () => {
               <Typography variant="body1">Cart is Empty</Typography>
               <RecentlyViewed closeMenu={closeMenu} />
               <TopCategories
-                category_items={contents.length > 0 && contents[0].home_page?.slideshow}
+                category_items={contents.length > 0 && contents[0].menus[0].menu_items}
                 closeMenu={closeMenu}
               />
             </Box>
