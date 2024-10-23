@@ -101,6 +101,8 @@ export default {
       const orders = await Order.find({
         "orderItems.event": eventId,
         "orderItems.itemType": "ticket",
+        status: { $nin: ["unpaid", "canceled"] },
+        deleted: false,
       }).populate("orderItems.ticket");
 
       // // Update all orderitems with tickets to have the event ID
