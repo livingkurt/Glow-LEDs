@@ -100,18 +100,13 @@ export default {
         }
       } else {
         if (existingCartItems && existingCartItems.length > 0) {
-          for (const cart_item of cartItems) {
-            result = updateCartItems(existingCartItems, cart_item);
-            existingCartItems = result.items;
-          }
+          const result = updateCartItems(existingCartItems, cart_item);
           return {
             data: { cartItems: result.items },
             message: result.message,
           };
         } else {
-          for (const cart_item of cartItems) {
-            result = updateCartItems([], cart_item);
-          }
+          const result = updateCartItems([], cart_item);
           return {
             data: { cartItems: result.items },
             message: result.message,
