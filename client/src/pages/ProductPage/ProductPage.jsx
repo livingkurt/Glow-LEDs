@@ -73,6 +73,8 @@ const ProductPage = () => {
   useEffect(() => {
     if (product && product.isPasswordProtected) {
       setShowPasswordPrompt(true);
+    } else {
+      setShowPasswordPrompt(false);
     }
   }, [product]);
 

@@ -76,7 +76,7 @@ const EmailsPage = () => {
               <AccessTimeIcon color="white" />
             </GLIconButton>
             <GLIconButton
-              tooltip="Send Test Email"
+              tooltip="Send Email"
               onClick={() => {
                 dispatch(
                   showConfirm({
