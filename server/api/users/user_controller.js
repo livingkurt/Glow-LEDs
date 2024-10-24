@@ -303,7 +303,7 @@ export default {
                 unsubscribe: false,
               }),
             };
-            sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + user.first_name);
+            sendEmail(mailOptions, res, "contact", "Reset Password Email Sent to " + user.first_name);
             // return res.status(200).send(new_user);
           } catch (error) {
             res.status(500).json({ message: error.message, error });
@@ -340,7 +340,7 @@ export default {
             unsubscribe: false,
           }),
         };
-        sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+        sendEmail(mailOptions, res, "contact", "Reset Password Link Email Sent to " + user.first_name);
       } else {
         res.status(500).send({ message: "You do not have an account with us" });
       }

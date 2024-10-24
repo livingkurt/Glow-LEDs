@@ -73,7 +73,7 @@ export const send_multiple_emails = async (emailAddresses, email, res, testEmail
 
     email.status = "Sent";
     email.save();
-    sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+    sendEmail(mailOptions, res, "contact", "Email " + subject + " to everyone");
   } catch (err) {
     return "Error Sending Email";
   }

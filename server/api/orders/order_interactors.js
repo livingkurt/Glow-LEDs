@@ -387,7 +387,7 @@ export const sendOrderEmail = async orderData => {
       subject: "Thank you for your Glow LEDs Order",
       html: App({ body: order(bodyConfirmation), unsubscribe: false }),
     };
-    await sendEmail("info", mailOptionsConfirmation);
+    await sendEmail("contact", mailOptionsConfirmation);
   } catch (error) {
     console.error("Error sending order email:", error);
     throw new Error("Failed to send order email");
@@ -415,7 +415,7 @@ export const sendTicketEmail = async orderData => {
     if (orderData.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(orderData._id, { status: "delivered", deliveredAt: new Date() });
     }
-    await sendEmail("info", mailOptionsTickets);
+    await sendEmail("contact", mailOptionsTickets);
   } catch (error) {
     console.error("Error sending ticket email:", error);
     throw new Error("Failed to send ticket email");
@@ -458,7 +458,7 @@ export const sendCodeUsedEmail = async promo_code => {
             unsubscribe: false,
           }),
         };
-        await sendEmail("info", mailOptions);
+        await sendEmail("contact", mailOptions);
       }
     }
   } catch (error) {
