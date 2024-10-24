@@ -19,6 +19,7 @@ const MODULE_TYPES = [
   { value: "spacer", label: "Spacer" },
   { value: "line_break", label: "Line Break" },
   { value: "title_image", label: "Title Image" },
+  { value: "video", label: "Video" },
 ];
 
 const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
@@ -150,6 +151,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
             album: "Email Images",
             forceArray: true,
           },
+          link: { type: "text", label: "Images Link" },
         };
       case "image":
         return {
@@ -159,6 +161,12 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
             labelProp: "image",
             album: "Email Images",
           },
+          link: { type: "text", label: "Image Link" },
+        };
+      case "video":
+        return {
+          video_link: { type: "text", label: "Video Link" },
+          link: { type: "text", label: "Link" },
         };
 
       case "body":

@@ -238,7 +238,7 @@ const typography = {
     marginBottom: "0",
     marginTop: "0",
     display: "flex",
-    textShadow: "0 0 1px #fff, 0 0 13px",
+    textShadow: isSafari ? "" : "0 0 1px #fff, 0 0 13px",
   },
 };
 

@@ -936,6 +936,7 @@ router.get("/announcement", async (req, res) => {
   res.send(
     App({
       body: announcement(email[0]),
+      unsubscribe: true,
       header_footer_color: email[0].header_footer_color,
       background_color: email[0].background_color,
     })
