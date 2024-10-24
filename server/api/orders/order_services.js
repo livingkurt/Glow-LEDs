@@ -279,16 +279,29 @@ export default {
       }
 
       // Process payment for non-pre-order items or the entire order if not split
-      let paymentOrder = splitOrder ? nonPreOrderOrder : orders[0];
-      if (paymentOrder && paymentMethod) {
-        paymentOrder = await processPayment(paymentOrder._id, paymentMethod, order.totalPrice);
-      }
+      // Process payment for non-pre-order items or the entire order if not split
+      let paymentOrder;
+      if (paymentMethod) {
+        if (splitOrder) {
+          if (nonPreOrderOrder) {
+            paymentOrder = nonPreOrderOrder;
+          } else if (preOrderOrder) {
+            paymentOrder = preOrderOrder;
+          }
+        } else {
+          paymentOrder = orders[0];
+        }
+        if (paymentOrder) {
+          paymentOrder = await processPayment(paymentOrder._id, paymentMethod, paymentOrder.totalPrice);
 
-      // Update preOrder status if it exists
-      if (splitOrder && preOrderOrder) {
-        preOrderOrder.status = "paid_pre_order";
-        preOrderOrder.paidAt = Date.now();
-        await preOrderOrder.save();
+          // After processing payment, update the preOrderOrder if it exists
+          if (splitOrder && preOrderOrder && preOrderOrder._id !== paymentOrder._id) {
+            preOrderOrder.status = "paid_pre_order";
+            preOrderOrder.paidAt = Date.now();
+            preOrderOrder.payment = paymentOrder.payment; // Use the same payment info
+            await preOrderOrder.save();
+          }
+        }
       }
 
       // Process payments and send emails for each order
