@@ -39,6 +39,7 @@ import paycheck from "../../email_templates/pages/paycheck";
 import ticketEmail from "../../email_templates/pages/ticketEmail";
 import { sendAnnouncementEmail } from "../users/user_interactors";
 import { sendEmail } from "../orders/order_interactors";
+import email_db from "./email_db";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -528,27 +529,14 @@ export default {
   },
   send_announcement_emails_c: async (req, res) => {
     const { id, test } = req.params;
-    const email = await Email.findOne({ _id: id, deleted: false })
-      .populate({
-        path: "modules.content.images",
-        model: "Image",
-      })
-      .populate({
-        path: "modules.content.line_break",
-        model: "Image",
-      })
-      .populate({
-        path: "modules.content.title_image",
-        model: "Image",
-      })
-      .populate({
-        path: "modules.content.image",
-        model: "Image",
-      })
-      .exec()
-      .lean();
+    const email = await email_db.findById_emails_db(id);
     if (test === "true") {
-      const test_emails = ["lavacquek@icloud.com"];
+      const test_emails = [
+        "lavacquek@icloud.com",
+        "destanyesalinas@gmail.com",
+        "kevcablay@gmail.com",
+        "codychau122@gmail.com",
+      ];
       await sendEmailsInBatches(email, res, test_emails);
     } else {
       await sendEmailsInBatches(email, res);

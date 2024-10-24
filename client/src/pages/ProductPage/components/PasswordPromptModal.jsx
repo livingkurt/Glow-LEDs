@@ -59,7 +59,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
     setUnlockingPhase(0);
     setUnlockFailed(false);
 
-    const passwordToSubmit = passwordOverride || password;
+    const passwordToSubmit = (passwordOverride || password).toLowerCase();
 
     try {
       const response = await dispatch(API.checkProductPassword({ productId, password: passwordToSubmit }));
@@ -177,7 +177,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
                 },
               }}
               placeholder="Enter Password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value.toLowerCase())}
               margin="normal"
               error={!!error}
               helperText={error}

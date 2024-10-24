@@ -77,7 +77,7 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
           <table style="max-width:800px;width:100%;text-align:center;border-spacing:0;margin:10px auto;">
             <tr>
               <td style="font-family:helvetica;padding:10px; border-radius:20px;">
-                <img src=${module.content?.image?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image"   style="width:100%; height:auto; display:block; border:0; object-fit: cover;  border-radius:20px;" />
+                <img src=${module.content?.image?.link}?t=${Date.now()} alt="Glow LEDs" title="Email Image"   style="width:100%; height:auto; display:block; border:0; object-fit: cover;  border-radius:20px; " />
               </td>
             </tr>
           </table>`;
@@ -98,6 +98,21 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
             <tr>
               <td style="font-family:helvetica;padding:10px;">
                 ${module.content?.html}
+              </td>
+            </tr>
+          </table>`;
+          break;
+        case "video":
+          emailContent += `
+          <table style="max-width:800px;width:100%;text-align:center;border-spacing:0;margin:10px auto;">
+            <tr>
+              <td style="font-family:helvetica;padding:10px; border-radius:20px; position:relative;">
+                <a href="${module.content?.link}" style="display:block; position:relative;">
+                  <img src="http://img.youtube.com/vi/${module.content?.video_link}/hqdefault.jpg?t=${Date.now()}" alt="Video Thumbnail" title="Video Thumbnail" style="width:100%; height:auto; display:block; border:0; object-fit: cover; border-radius:20px; aspect-ratio: 16 / 9;" />
+                  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:68px; height:48px; background-color:rgba(0,0,0,0.7); border-radius:14px; display:flex; justify-content:center; align-items:center;">
+                    <div style="width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:20px solid white; margin-left:5px;"></div>
+                  </div>
+                </a>
               </td>
             </tr>
           </table>`;

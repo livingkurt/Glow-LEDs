@@ -49,17 +49,18 @@ export const sendEmail = async (emailOptions, res, type, name) => {
   }
 };
 
-export const send_multiple_emails = async (emailAddresses, email, res) => {
+export const send_multiple_emails = async (emailAddresses, email, res, testEmails = null) => {
   const { subject } = email;
   try {
     const mailOptions = {
       to: config.INFO_EMAIL,
       from: config.DISPLAY_INFO_EMAIL,
-      subject: subject,
+      subject: !!testEmails ? "TEST " + subject : subject,
       html: App({
         body: announcement(email),
         unsubscribe: true,
         header_footer_color: email.header_footer_color,
+        background_color: email.background_color,
       }),
       bcc: emailAddresses,
       headers: {
@@ -99,7 +100,7 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
       emailAddresses = subscribed_users.slice(startIndex, endIndex).map(user => user.email);
     }
 
-    await send_multiple_emails(emailAddresses, email, res);
+    await send_multiple_emails(emailAddresses, email, res, testEmails);
     console.log(`Batch ${i + 1}: Sent emails to ${emailAddresses.length} users`);
 
     if (!testEmails) {
