@@ -2,24 +2,17 @@ import App from "../../email_templates/App";
 import { announcement } from "../../email_templates/pages";
 import config from "../../config";
 import { user_db } from "../users";
-import { oauthClients } from "../../server";
-
-const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
 
-export const createTransporter = async type => {
+export const createTransporter = async () => {
   try {
-    const { client, accessToken, user } = oauthClients[type];
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
+      host: "email-smtp.us-east-1.amazonaws.com", // or your preferred region
+      port: 587,
+      secure: false,
       auth: {
-        type: "OAuth2",
-        user: user, // Use the stored user email
-        accessToken,
-        clientId: client._clientId,
-        clientSecret: client._clientSecret,
-        refreshToken: client.credentials.refresh_token,
+        user: config.AWS_SES_SMTP_USER, // SMTP user from AWS SES
+        pass: config.AWS_SES_SMTP_PASSWORD, // SMTP password from AWS SES
       },
     });
 
