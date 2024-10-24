@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import first from "lodash/first";
 import sortBy from "lodash/sortBy";
-import { styled } from "@mui/material/styles";
-import { Button, Switch, Badge, Checkbox, ClickAwayListener, Divider, Icon, MenuItem, MenuList } from "@mui/material";
+import { Button, Switch, Badge, Checkbox, ClickAwayListener, Divider, MenuItem, MenuList } from "@mui/material";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
 import {
   applyFilterSearch,
@@ -16,68 +15,7 @@ import {
 import GLPopper from "../../GLPopper/GLPopper";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
 import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
-
-// Styled components
-const MainMenu = styled("div")(({ theme }) => ({
-  minWidth: "235px",
-  maxHeight: "320px",
-}));
-
-const MainMenuList = styled(MenuList)(({ theme }) => ({
-  maxHeight: "300px",
-  padding: "0px",
-}));
-
-const SubMenu = styled("div")(({ theme }) => ({
-  minWidth: "235px",
-  maxHeight: "500px",
-}));
-
-const FilterButton = styled(Button)(({ theme }) => ({
-  margin: "10px 0px",
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  padding: "15px",
-}));
-
-const MainMenuItemContent = styled("div")({
-  display: "flex",
-  width: "100%",
-  fontSize: "16px",
-  justifyContent: "space-between",
-});
-
-const SubMenuItemContent = styled("div")({
-  display: "flex",
-  width: "100%",
-  fontSize: "16px",
-});
-
-const MainMenuFooter = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  height: "46px",
-});
-
-const MenuItemsContainer = styled("div")({
-  maxHeight: "385px",
-  overflowX: "hidden",
-  overflowY: "auto",
-});
-
-const SubMenuCounter = styled("div")(({ theme }) => ({
-  padding: "9px 6px",
-  margin: "8px",
-  fontSize: "12px",
-  color: theme.palette.text.secondary,
-}));
-
-const SubMenuFooter = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  height: "46px",
-});
+import { FilterList } from "@mui/icons-material";
 
 const GLTableFilterDropdown = ({
   availableFilters,
@@ -111,33 +49,34 @@ const GLTableFilterDropdown = ({
       }}
     >
       <div>
-        <FilterButton
+        <Button
           disabled={isLoading || disabled}
           id="matrixMenuButton"
           color="secondary"
           ref={anchorRef}
-          startIcon={<Icon>filter_list</Icon>}
+          startIcon={<FilterList />}
           variant="outlined"
           onClick={() => {
             dispatch(updateFilterDisplay(namespace, { menuOpen: !menuOpen, menuSelection: null }));
           }}
+          sx={{ margin: "10px 0px" }}
         >
           Filter By
-        </FilterButton>
+        </Button>
 
         <GLPopper
           open={menuOpen}
           anchorEl={anchorRef.current}
           placement="bottom-start"
           disablePortal={false}
-          paperClasses={MainMenu}
+          paperClasses={{ sx: { minWidth: "235px", maxHeight: "320px" } }}
           flip
           transition
           boundariesElement="viewport"
         >
-          <MainMenuList id="matrix-main-menu" data-test="matrix-main-menu">
+          <MenuList id="matrix-main-menu" data-test="matrix-main-menu" sx={{ maxHeight: "300px", padding: "0px" }}>
             {Object.keys(availableFilters).map((mainMenuItem, index) => (
-              <StyledMenuItem
+              <MenuItem
                 id={`matrixMenuItem-${index}`}
                 selected={mainMenuItem === menuSelection || (filters && filters[mainMenuItem]?.length > 0)}
                 ref={el => {
@@ -152,8 +91,9 @@ const GLTableFilterDropdown = ({
                   }
                 }}
                 dense
+                sx={{ padding: "15px" }}
               >
-                <MainMenuItemContent>
+                <div style={{ display: "flex", width: "100%", fontSize: "16px", justifyContent: "space-between" }}>
                   <div>{`${filterLabelsMap[mainMenuItem] || toCapitalize(mainMenuItem)} (${
                     availableFilters[mainMenuItem]?.length
                   })`}</div>
@@ -162,11 +102,11 @@ const GLTableFilterDropdown = ({
                       <Badge variant="dot" color="primary" overlap="rectangular" />
                     ) : null}
                   </div>
-                </MainMenuItemContent>
-              </StyledMenuItem>
+                </div>
+              </MenuItem>
             ))}
             <Divider />
-            <MainMenuFooter>
+            <div style={{ display: "flex", justifyContent: "center", height: "46px" }}>
               <Button
                 id="matrixMenuClearAll"
                 data-test="matrix-main-menu-clear-button"
@@ -180,8 +120,8 @@ const GLTableFilterDropdown = ({
               >
                 Clear
               </Button>
-            </MainMenuFooter>
-          </MainMenuList>
+            </div>
+          </MenuList>
         </GLPopper>
         <div>
           <GLPopper
@@ -189,7 +129,7 @@ const GLTableFilterDropdown = ({
             anchorEl={subAnchorRef.current[menuSelection]}
             placement="right-start"
             disablePortal={false}
-            paperClasses={SubMenu}
+            paperClasses={{ sx: { minWidth: "235px", maxHeight: "500px" } }}
             flip
             transition
             boundariesElement="viewport"
@@ -219,9 +159,13 @@ const GLTableFilterDropdown = ({
                   />
                 </div>
               )}
-              <MenuItemsContainer id="matrix-sub-menu" data-test="matrix-sub-menu">
+              <div
+                style={{ maxHeight: "385px", overflowX: "hidden", overflowY: "auto" }}
+                id="matrix-sub-menu"
+                data-test="matrix-sub-menu"
+              >
                 {sortBy(applyFilter(subMenuItems, filterSearch, minFilterLength), item => sortItem(item)).map(item => (
-                  <StyledMenuItem
+                  <MenuItem
                     data-test="menu-item"
                     selected={filters[menuSelection]?.includes(item)}
                     key={item}
@@ -230,12 +174,13 @@ const GLTableFilterDropdown = ({
                       onChangeFunction(item);
                     }}
                     dense
+                    sx={{ padding: "10px" }}
                   >
-                    <SubMenuItemContent>
+                    <div style={{ display: "flex", width: "100%", fontSize: "16px", alignItems: "center" }}>
                       {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
                       {typeof item === "string" ? humanize(item) : item}
-                    </SubMenuItemContent>
-                  </StyledMenuItem>
+                    </div>
+                  </MenuItem>
                 ))}
                 {Object.keys(booleanFilters)?.includes(menuSelection) && (
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -257,12 +202,15 @@ const GLTableFilterDropdown = ({
                     </Button>
                   </div>
                 )}
-              </MenuItemsContainer>
+              </div>
               <Divider />
-              <SubMenuFooter>
-                <SubMenuCounter data-test="matrix-menu-selected-counter">
+              <div style={{ display: "flex", justifyContent: "space-between", height: "46px" }}>
+                <div
+                  style={{ padding: "9px 6px", margin: "8px", fontSize: "12px", color: "text.secondary" }}
+                  data-test="matrix-menu-selected-counter"
+                >
                   {`${(filters[menuSelection] && filters[menuSelection]?.length) || 0} Selected`}
-                </SubMenuCounter>
+                </div>
                 <Button
                   data-test="matrix-sub-menu-clear-button"
                   color="secondary"
@@ -275,7 +223,7 @@ const GLTableFilterDropdown = ({
                 >
                   Clear
                 </Button>
-              </SubMenuFooter>
+              </div>
             </MenuList>
           </GLPopper>
         </div>
