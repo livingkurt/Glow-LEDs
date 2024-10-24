@@ -15,7 +15,7 @@ import {
 import GLPopper from "../../GLPopper/GLPopper";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
 import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
-import { FilterList } from "@mui/icons-material";
+import { FilterList, Search } from "@mui/icons-material";
 
 const GLTableFilterDropdown = ({
   availableFilters,
@@ -149,7 +149,7 @@ const GLTableFilterDropdown = ({
                     name="filter_search"
                     variant="outlined"
                     size="small"
-                    icon="search"
+                    icon={<Search />}
                     iconPosition="start"
                     iconFontSize="small"
                     onChange={e => dispatch(applyFilterSearch(namespace, e.target.value))}
