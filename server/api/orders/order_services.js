@@ -279,6 +279,7 @@ export default {
       }
 
       // Process payment for non-pre-order items or the entire order if not split
+      // Process payment for non-pre-order items or the entire order if not split
       let paymentOrder;
       if (paymentMethod) {
         if (splitOrder) {
@@ -292,6 +293,14 @@ export default {
         }
         if (paymentOrder) {
           paymentOrder = await processPayment(paymentOrder._id, paymentMethod, paymentOrder.totalPrice);
+
+          // After processing payment, update the preOrderOrder if it exists
+          if (splitOrder && preOrderOrder && preOrderOrder._id !== paymentOrder._id) {
+            preOrderOrder.status = "paid_pre_order";
+            preOrderOrder.paidAt = Date.now();
+            preOrderOrder.payment = paymentOrder.payment; // Use the same payment info
+            await preOrderOrder.save();
+          }
         }
       }
 
