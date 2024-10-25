@@ -122,14 +122,14 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   : fieldState;
 
                 return (
-                  <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"space-between"}>
+                  <Box display="flex" flexDirection="column" gap={1} justifyContent="space-between">
                     <GLAutocomplete
                       key={`${fieldName}-${fieldData.type}`}
                       autoComplete="new-password"
                       freeSolo
                       customClasses={classes}
                       helperText={formErrors && formErrors[fieldName]}
-                      error={formErrors && !!formErrors[fieldName]}
+                      error={formErrors && Boolean(formErrors[fieldName])}
                       margin="normal"
                       loading={!fieldData.loading}
                       value={selected || ""}
@@ -172,18 +172,19 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       <>
                         {selected?.name && (
                           <Button
-                            variant={"contained"}
+                            variant="contained"
                             fullWidth
                             onClick={() => {
                               fieldData.onEditButtonClick(selected);
                             }}
                           >
-                            Edit {selected?.name}
+                            {"Edit "}
+                            {selected?.name}
                           </Button>
                         )}
                         <Button
-                          variant={"contained"}
-                          color={"secondary"}
+                          variant="contained"
+                          color="secondary"
                           fullWidth
                           onClick={() => {
                             fieldData.onCreateNewButtonClick({
@@ -194,7 +195,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                             });
                           }}
                         >
-                          New Based On {selected?.name}
+                          {"New Based On "}
+                          {selected?.name}
                         </Button>
                       </>
                     )}
@@ -252,7 +254,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         name={fieldName}
                         size="large"
                         onChange={e => handleInputChange(fieldName, e.target.checked)}
-                        checked={!!fieldState}
+                        checked={Boolean(fieldState)}
                         // error={formErrors && !!formErrors[fieldName]}
                       />
                     }
@@ -288,7 +290,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
                     helperText={formErrors && formErrors[fieldName]}
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     label={fieldData.label}
                     margin="normal"
                     size="small"
@@ -307,7 +309,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       className: classes.label,
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     apiKey={config.VITE_GOOGLE_PLACES_KEY}
                     value={fieldState || ""}
@@ -324,7 +327,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                 return (
                   <GLTextFieldV2
                     helperText={formErrors && formErrors[fieldName]}
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     autoComplete="new-password"
                     className={classes.outlinedInput}
                     disabled={fieldData.disabled}
@@ -339,7 +342,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       className: classes.label,
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
@@ -363,7 +367,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <GLTextFieldV2
                     helperText={formErrors && formErrors[fieldName]}
                     autoComplete="new-password"
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     className={classes.outlinedInput}
                     disabled={fieldData.disabled}
                     InputProps={{
@@ -377,7 +381,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       className: classes.label,
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
@@ -398,7 +403,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <GLTextFieldV2
                     helperText={formErrors && formErrors[fieldName]}
                     autoComplete="new-password"
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     className={classes.outlinedInput}
                     disabled={fieldData.disabled}
                     InputProps={{
@@ -412,7 +417,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       className: classes.label,
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
@@ -435,7 +441,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <GLTextFieldV2
                     helperText={formErrors && formErrors[fieldName]}
                     autoComplete="new-password"
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     className={classes.outlinedInput}
                     disabled={fieldData.disabled}
                     InputProps={{
@@ -450,14 +456,15 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       shrink: true, // Always keep the label shrunk
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
                     margin="normal"
                     size="small"
                     fullWidth
-                    type={"datetime-local"}
+                    type="datetime-local"
                     label={fieldData.label}
                     variant="outlined"
                     value={formatDateTimeLocal(fieldState)}
@@ -469,7 +476,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                   <GLTextFieldV2
                     helperText={formErrors && formErrors[fieldName]}
                     autoComplete="new-password"
-                    error={formErrors && !!formErrors[fieldName]}
+                    error={formErrors && Boolean(formErrors[fieldName])}
                     className={classes.outlinedInput}
                     disabled={fieldData.disabled}
                     InputProps={{
@@ -483,7 +490,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       className: classes.label,
                     }}
                     FormHelperTextProps={{
-                      className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
+                      className:
+                        formErrors && Boolean(formErrors[fieldName]) ? classes.errorHelperText : classes.helperText,
                     }}
                     key={`${fieldName}-${fieldData.type}`}
                     name={fieldName}
@@ -520,7 +528,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         //   return option.short_name === value.short_name;
                         // }}
                         helperText={formErrors && formErrors[fieldName]}
-                        error={formErrors && !!formErrors[fieldName]}
+                        error={formErrors && Boolean(formErrors[fieldName])}
                         margin="normal"
                         value={selectedOption || ""}
                         // value={fieldState || ""}
