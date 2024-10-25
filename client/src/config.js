@@ -12,9 +12,6 @@ const decideEnvironment = ({ production, staging, development }) => {
 
 // Glow LEDs Backend Environment Variables
 const config = {
-  // Public URL
-  PUBLIC_URL: process.env.PUBLIC_URL,
-
   // Environment
   NODE_ENV: process.env.NODE_ENV,
 

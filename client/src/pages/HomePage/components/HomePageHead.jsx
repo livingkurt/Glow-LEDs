@@ -4,9 +4,9 @@ import { Helmet } from "react-helmet";
 const HomePageHead = () => {
   return (
     <Helmet>
-      <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
-      <meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
-      <meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
+      <title>Glow LEDs | Your Complete Gloving Supply Hub</title>
+      <meta property="og:title" content="Glow LEDs | Your Complete Gloving Supply Hub" />
+      <meta name="twitter:title" content="Glow LEDs | Your Complete Gloving Supply Hub" />
       <link rel="canonical" href="https://www.glow-leds.com/" />
       <meta property="og:url" content="https://www.glow-leds.com" />
       <meta

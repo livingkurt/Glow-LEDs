@@ -1,5 +1,4 @@
 import React from "react";
-import config from "../../config";
 
 const LoadingInside = ({ loading, error, children }) => {
   const loading_message = () => {
@@ -22,13 +21,13 @@ const LoadingInside = ({ loading, error, children }) => {
         >
           <div className="loading_images_container">
             <img
-              src={config.PUBLIC_URL + "/loading.gif"}
+              src={"/loading.gif"}
               className="loading_gif_inside"
               alt="LoadingInside Circle"
               title="LoadingInside Circle"
             />
             <img
-              src={config.PUBLIC_URL + "/loading_overlay.png"}
+              src={"/loading_overlay.png"}
               className="loading_png_inside"
               alt="LoadingInside Overlay"
               title="LoadingInside Overlay"
