@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
-import { logout_user, set_current_user } from "../slices/userSlice";
+import { set_current_user } from "../slices/userSlice";
 import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import GLIconButton from "../shared/GlowLEDsComponents/GLIconButton/GLIconButton";

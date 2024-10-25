@@ -10,7 +10,6 @@ import { handleTokenRefresh } from "./api/axiosInstance";
 import * as API from "./api";
 import { adminRoutes, privateRoutes, redirects, routes } from "./utils/helpers/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
-import { hot } from "react-hot-loader/root";
 import { AdminComponents, Components, PrivateComponents } from "./shared/RouteComponents/pages";
 import Head from "./shared/RouteComponents/Head";
 import GLSnackbar from "./shared/GlowLEDsComponents/GLSnackbar/GLSnackbar";
@@ -146,4 +145,4 @@ const App = () => {
   );
 };
 
-export default process.env.NODE_ENV === "development" ? hot(App) : App;
+export default App;

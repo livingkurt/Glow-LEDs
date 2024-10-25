@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  MenuItem,
-  Paper,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -18,7 +7,6 @@ import ImageWizard from "../../SharedComponents/ImageWizard";
 import {
   determine_shown_fields,
   formatDate,
-  formatDateTime,
   formatDateTimeLocal,
   getEmptyObjectFromSchema,
   getValueByStringPath,
@@ -321,7 +309,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     FormHelperTextProps={{
                       className: formErrors && !!formErrors[fieldName] ? classes.errorHelperText : classes.helperText,
                     }}
-                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.VITE_GOOGLE_PLACES_KEY}
                     value={fieldState || ""}
                     options={{
                       types: ["address"],

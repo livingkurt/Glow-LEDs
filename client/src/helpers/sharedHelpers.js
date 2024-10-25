@@ -1,9 +1,9 @@
 import config from "../config";
 
 export const domain = () => {
-  if (config.REACT_APP_ENVIRONMENT === "production") {
+  if (config.VITE_ENVIRONMENT === "production") {
     return "https://www.glow-leds.com";
-  } else if (config.REACT_APP_ENVIRONMENT === "staging") {
+  } else if (config.VITE_ENVIRONMENT === "staging") {
     return "https://glow-leds-dev.herokuapp.com";
   } else {
     return "http://localhost:3000";

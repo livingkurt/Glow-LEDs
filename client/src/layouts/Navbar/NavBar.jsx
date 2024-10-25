@@ -29,7 +29,7 @@ import ColumnItemButton from "./components/ColumnItemButton";
 import { debounce } from "lodash";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
 import { set_first_name } from "../../slices/userSlice";
-import { flagState, getCartQuantity } from "../../helpers/sharedHelpers";
+import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import * as API from "../../api";
 import useFeatureFlags from "../../shared/Hooks/useFeatureFlags";

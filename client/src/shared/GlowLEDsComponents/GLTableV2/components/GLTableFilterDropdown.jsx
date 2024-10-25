@@ -1,20 +1,9 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable max-lines-per-function */
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
-import Button from "@mui/material/Button";
-import Switch from "@mui/material/Switch";
-import Badge from "@mui/material/Badge";
-import Checkbox from "@mui/material/Checkbox";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
 import { useDispatch } from "react-redux";
 import first from "lodash/first";
 import sortBy from "lodash/sortBy";
-import { makeStyles } from "@mui/styles";
+import { Button, Switch, Badge, Checkbox, ClickAwayListener, Divider, MenuItem, MenuList } from "@mui/material";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
 import {
   applyFilterSearch,
@@ -26,59 +15,7 @@ import {
 import GLPopper from "../../GLPopper/GLPopper";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
 import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
-
-export const useStyles = makeStyles(() => ({
-  mainMenu: {
-    minWidth: "235px",
-    maxHeight: "320px",
-  },
-  mainMenuList: {
-    maxHeight: "300px",
-    padding: "0px",
-  },
-  subMenu: {
-    minWidth: "235px",
-    maxHeight: "500px",
-  },
-  filterButton: {
-    margin: "10px 0px",
-  },
-  menuItem: {
-    padding: "15px",
-  },
-  mainMenuItem: {
-    display: "flex",
-    width: "100%",
-    fontSize: "16px",
-    justifyContent: "space-between",
-  },
-  subMenuItem: {
-    display: "flex",
-    width: "100%",
-    fontSize: "16px",
-  },
-  mainMenuFooter: {
-    display: "flex",
-    justifyContent: "center",
-    height: "46px",
-  },
-  menuItemsContainer: {
-    maxHeight: "385px",
-    overflowX: "hidden",
-    overflowY: "auto",
-  },
-  subMenuCounter: {
-    padding: "9px 6px",
-    margin: "8px",
-    fontSize: "12px",
-    color: "#bdbdbd",
-  },
-  subMenuFooter: {
-    display: "flex",
-    justifyContent: "space-between",
-    height: "46px",
-  },
-}));
+import { FilterList, Search } from "@mui/icons-material";
 
 const GLTableFilterDropdown = ({
   availableFilters,
@@ -96,8 +33,6 @@ const GLTableFilterDropdown = ({
   disabled,
 }) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
-
   const anchorRef = useRef(null);
   const subAnchorRef = useRef({});
 
@@ -119,12 +54,12 @@ const GLTableFilterDropdown = ({
           id="matrixMenuButton"
           color="secondary"
           ref={anchorRef}
-          startIcon={<Icon>{"filter_list"}</Icon>}
+          startIcon={<FilterList />}
           variant="outlined"
-          className={classes.filterButton}
           onClick={() => {
             dispatch(updateFilterDisplay(namespace, { menuOpen: !menuOpen, menuSelection: null }));
           }}
+          sx={{ margin: "10px 0px" }}
         >
           Filter By
         </Button>
@@ -134,17 +69,16 @@ const GLTableFilterDropdown = ({
           anchorEl={anchorRef.current}
           placement="bottom-start"
           disablePortal={false}
-          paperClasses={classes.mainMenu}
+          paperClasses={{ sx: { minWidth: "235px", maxHeight: "320px" } }}
           flip
           transition
           boundariesElement="viewport"
         >
-          <MenuList id="matrix-main-menu" data-test="matrix-main-menu" className={classes.mainMenuList}>
+          <MenuList id="matrix-main-menu" data-test="matrix-main-menu" sx={{ maxHeight: "300px", padding: "0px" }}>
             {Object.keys(availableFilters).map((mainMenuItem, index) => (
               <MenuItem
                 id={`matrixMenuItem-${index}`}
                 selected={mainMenuItem === menuSelection || (filters && filters[mainMenuItem]?.length > 0)}
-                className={classes.menuItem}
                 ref={el => {
                   subAnchorRef.current[mainMenuItem] = el;
                 }}
@@ -157,8 +91,9 @@ const GLTableFilterDropdown = ({
                   }
                 }}
                 dense
+                sx={{ padding: "15px" }}
               >
-                <div className={classes.mainMenuItem}>
+                <div style={{ display: "flex", width: "100%", fontSize: "16px", justifyContent: "space-between" }}>
                   <div>{`${filterLabelsMap[mainMenuItem] || toCapitalize(mainMenuItem)} (${
                     availableFilters[mainMenuItem]?.length
                   })`}</div>
@@ -171,7 +106,7 @@ const GLTableFilterDropdown = ({
               </MenuItem>
             ))}
             <Divider />
-            <div className={classes.mainMenuFooter}>
+            <div style={{ display: "flex", justifyContent: "center", height: "46px" }}>
               <Button
                 id="matrixMenuClearAll"
                 data-test="matrix-main-menu-clear-button"
@@ -194,7 +129,7 @@ const GLTableFilterDropdown = ({
             anchorEl={subAnchorRef.current[menuSelection]}
             placement="right-start"
             disablePortal={false}
-            paperClasses={classes.subMenu}
+            paperClasses={{ sx: { minWidth: "235px", maxHeight: "500px" } }}
             flip
             transition
             boundariesElement="viewport"
@@ -214,7 +149,7 @@ const GLTableFilterDropdown = ({
                     name="filter_search"
                     variant="outlined"
                     size="small"
-                    icon="search"
+                    icon={<Search />}
                     iconPosition="start"
                     iconFontSize="small"
                     onChange={e => dispatch(applyFilterSearch(namespace, e.target.value))}
@@ -224,10 +159,13 @@ const GLTableFilterDropdown = ({
                   />
                 </div>
               )}
-              <div id="matrix-sub-menu" data-test="matrix-sub-menu" className={classes.menuItemsContainer}>
+              <div
+                style={{ maxHeight: "385px", overflowX: "hidden", overflowY: "auto" }}
+                id="matrix-sub-menu"
+                data-test="matrix-sub-menu"
+              >
                 {sortBy(applyFilter(subMenuItems, filterSearch, minFilterLength), item => sortItem(item)).map(item => (
                   <MenuItem
-                    className={classes.subMenuItem}
                     data-test="menu-item"
                     selected={filters[menuSelection]?.includes(item)}
                     key={item}
@@ -236,17 +174,19 @@ const GLTableFilterDropdown = ({
                       onChangeFunction(item);
                     }}
                     dense
+                    sx={{ padding: "10px" }}
                   >
-                    {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
-                    {typeof item === "string" ? humanize(item) : item}
+                    <div style={{ display: "flex", width: "100%", fontSize: "16px", alignItems: "center" }}>
+                      {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
+                      {typeof item === "string" ? humanize(item) : item}
+                    </div>
                   </MenuItem>
                 ))}
                 {Object.keys(booleanFilters)?.includes(menuSelection) && (
-                  <div className="jc-b ai-c">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Switch
                       checked={first(filters[menuSelection]) === 1}
-                      selected={first(filters[menuSelection]) === 1}
-                      onClick={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
+                      onChange={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
                     />
                     {humanize(booleanFilters[menuSelection].label)}
                     <Button
@@ -264,8 +204,11 @@ const GLTableFilterDropdown = ({
                 )}
               </div>
               <Divider />
-              <div className={classes.subMenuFooter}>
-                <div data-test="matrix-menu-selected-counter" className={classes.subMenuCounter}>
+              <div style={{ display: "flex", justifyContent: "space-between", height: "46px" }}>
+                <div
+                  style={{ padding: "9px 6px", margin: "8px", fontSize: "12px", color: "text.secondary" }}
+                  data-test="matrix-menu-selected-counter"
+                >
                   {`${(filters[menuSelection] && filters[menuSelection]?.length) || 0} Selected`}
                 </div>
                 <Button

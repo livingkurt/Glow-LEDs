@@ -13,8 +13,8 @@ fi
 FILE="client/src/config.js"
 
 # Check if the environment variable in your file is set to process.env.ENVIRONMENT
-if ! grep -q 'const environment = process.env.REACT_APP_ENVIRONMENT;' "$FILE"; then
-  echo "Can only commit when environment is set to process.env.REACT_APP_ENVIRONMENT"
+if ! grep -q 'const environment = process.env.VITE_ENVIRONMENT;' "$FILE"; then
+  echo "Can only commit when environment is set to process.env.VITE_ENVIRONMENT"
   exit 1
 fi
 

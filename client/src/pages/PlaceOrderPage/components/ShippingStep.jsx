@@ -368,7 +368,7 @@ const ShippingStep = () => {
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
                   <ReactGoogleAutocomplete
-                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.VITE_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     name="address_1"
                     value={shipping.address_1}

@@ -79,7 +79,7 @@ const OrderComplete = ({ current_user, orderIds }) => {
           <p className="ta-c max-w-800px lh-30px m-auto mt-15px mb-15px">
             You will be receiving a confirmation email with your order details shortly. Double check your spam folder if
             you don't see it in your inbox. Please reach out with any questions or concerns to{" "}
-            {config.REACT_APP_CONTACT_EMAIL}.
+            {config.VITE_CONTACT_EMAIL}.
           </p>
           <Divider />
           <h2 className="ta-c mb-10px">What to Expect</h2>

@@ -166,7 +166,14 @@ const CartItemCard = ({ item }) => {
         </Typography>
         {renderOptions()}
         {item.isPreOrder && (
-          <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
+          <Typography
+            variant="body2"
+            fontWeight={800}
+            mt={1}
+            display="flex"
+            alignItems="center"
+            sx={{ color: "white" }}
+          >
             <ShoppingBagIcon sx={{ mb: 0.25, mr: 0.5 }} />
             Pre-Order: Estimated Availability {formatDate(item.preOrderReleaseDate)}
           </Typography>

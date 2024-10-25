@@ -1,42 +1,41 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable max-lines-per-function */
 import { useRef, useState } from "react";
+import { styled } from "@mui/material/styles";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { makeStyles } from "@mui/styles";
 import GLPopper from "../../GLPopper/GLPopper";
 import { Paper, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import GLIconButton from "../../GLIconButton/GLIconButton";
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-    padding: 0,
-  },
-  icon: {
-    marginLeft: theme.spacing(1),
-  },
-  popper: {
-    zIndex: theme.zIndex.tooltip,
-  },
-  paper: {
-    padding: 0,
-    backgroundColor: theme.palette.background.paper,
-  },
-  listItemIcon: {
-    minWidth: "auto",
-    marginRight: theme.spacing(1),
-  },
-  list: {
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
+
+const Root = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: 0,
 }));
 
-const GLLegend = ({ colors }) => {
-  const [open, setOpen] = useState(null);
-  const classes = useStyles();
+const StyledGLIconButton = styled(GLIconButton)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
 
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: 0,
+  backgroundColor: theme.palette.background.paper,
+}));
+
+const StyledList = styled(List)({
+  paddingTop: 0,
+  paddingBottom: 0,
+});
+
+const StyledListItem = styled(ListItem)(({ backgroundColor }) => ({
+  backgroundColor,
+}));
+
+const StyledListItemText = styled(ListItemText)({
+  color: "white",
+});
+
+const GLLegend = ({ colors }) => {
+  const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
   return (
@@ -49,45 +48,44 @@ const GLLegend = ({ colors }) => {
         }
       }}
     >
-      <div>
-        <GLIconButton
+      <Root>
+        <StyledGLIconButton
           id="matrixMenuButton"
           color="secondary"
           tooltip="Color Legend"
           ref={anchorRef}
           variant="outlined"
-          className={classes.filterButton}
           onClick={() => {
             setOpen(!open);
           }}
         >
           <Info />
-        </GLIconButton>
+        </StyledGLIconButton>
 
         <GLPopper
           open={open}
           anchorEl={anchorRef.current}
           placement="bottom-end"
           disablePortal={false}
-          paperClasses={classes.mainMenu}
+          paperClasses={{ root: StyledPaper.toString() }}
           flip
           transition
           boundariesElement="viewport"
         >
-          <Paper className={classes.paper}>
-            <Typography variant="h6" style={{ padding: "8px 16px" }}>
+          <StyledPaper>
+            <Typography variant="h6" sx={{ padding: "8px 16px" }}>
               Legend
             </Typography>
-            <List className={classes.list}>
+            <StyledList>
               {colors.map(color => (
-                <ListItem key={color.name} style={{ backgroundColor: color.color }}>
-                  <ListItemText primary={color.name} style={{ color: "white" }} />
-                </ListItem>
+                <StyledListItem key={color.name} backgroundColor={color.color}>
+                  <StyledListItemText primary={color.name} />
+                </StyledListItem>
               ))}
-            </List>
-          </Paper>
+            </StyledList>
+          </StyledPaper>
         </GLPopper>
-      </div>
+      </Root>
     </ClickAwayListener>
   );
 };

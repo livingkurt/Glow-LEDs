@@ -1,17 +1,12 @@
-/* eslint-disable max-lines-per-function */
 import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
-
 import React from "react";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import Chip from "@mui/material/Chip";
-import Checkbox from "@mui/material/Checkbox";
-import { makeStyles, styled } from "@mui/styles";
+import { styled } from "@mui/material/styles";
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginTop: 15,
+  marginBottom: 15,
   "& label.Mui-focused": {
     color: "white",
   },
@@ -31,52 +26,16 @@ const StyledTextField = styled(TextField)({
   },
   "& input": {
     boxShadow: "0 0 0 0.2rem rgba(0,0,0,0.01)",
+    color: "white !important",
   },
-});
+  "& .MuiInputLabel-root": {
+    color: "white",
+  },
+}));
 
-const useStyles = makeStyles(() => ({
-  textField: {
-    marginTop: 15,
-    marginBottom: 15,
-    "& label.Mui-focused": {
-      color: "green",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "green",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "red",
-      },
-      "&:hover fieldset": {
-        borderColor: "yellow",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "green",
-      },
-    },
-  },
-  skeleton: {
-    marginTop: -10,
-    marginBottom: -10,
-  },
-  inputRoot: {
-    color: "white !important",
-  },
-  inputBase: {
-    color: "white !important",
-    "&.MuiInputLabel-root": {
-      color: "white",
-    },
-    " & label.Mui-focused": {
-      color: "white",
-    },
-    "& .,MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "white",
-      },
-    },
-  },
+const StyledSkeleton = styled(Skeleton)(({ theme }) => ({
+  marginTop: -10,
+  marginBottom: -10,
 }));
 
 const GLTextField = ({
@@ -92,19 +51,12 @@ const GLTextField = ({
   fullWidth,
   ...otherProps
 }) => {
-  const classes = useStyles();
   return (
     <div>
       {loading ? (
         <StyledTextField
           fullWidth={fullWidth}
           elevation={4}
-          inputProps={{ className: classes.inputRoot }}
-          InputProps={{ className: classes.inputBase }}
-          InputLabelProps={{
-            style: { color: "#fff" },
-          }}
-          classes={classes.textField}
           size={size}
           value={value}
           type={type}
@@ -116,12 +68,13 @@ const GLTextField = ({
           {...otherProps}
         />
       ) : (
-        <Skeleton variant="text" height={80} className={classes.skeleton} animation="wave" />
+        <StyledSkeleton variant="text" height={80} animation="wave" />
       )}
     </div>
   );
 };
-PropTypes.GLTextField = {
+
+GLTextField.propTypes = {
   loading: PropTypes.bool,
   size: PropTypes.string,
   value: PropTypes.string,
@@ -133,6 +86,7 @@ PropTypes.GLTextField = {
   onChange: PropTypes.func,
   fullWidth: PropTypes.bool,
 };
+
 GLTextField.defaultProps = {
   size: "medium",
   value: "",

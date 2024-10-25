@@ -11,7 +11,7 @@ import { showError } from "../../../../slices/snackbarSlice";
 import { errorMessage } from "../../../../helpers/sharedHelpers";
 import { getHasPreOrderItems, getPreOrderReleaseDate } from "../../placeOrderHelpers";
 
-const stripePromise = loadStripe(config.REACT_APP_STRIPE_KEY);
+const stripePromise = loadStripe(config.VITE_STRIPE_KEY);
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();

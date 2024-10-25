@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import { styled } from "@mui/material/styles";
+import React from "react";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
-import { makeStyles } from "@mui/styles";
 import { determineHover, tableColors } from "../glTableHelpers";
 import { Checkbox, darken } from "@mui/material";
 
-const useStyles = makeStyles(() => ({
-  dropdownRows: {
-    cursor: "pointer",
+// Styled Components
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  cursor: "pointer",
+  height: "50px",
+  width: "auto",
+  marginLeft: "10px",
+  backgroundColor: "#f0f0f0",
+}));
+
+const StyledCheckbox = styled(Checkbox, {
+  shouldForwardProp: prop => prop !== "determineColor",
+})(({ theme, determineColor }) => ({
+  color: determineColor ? "white" : "",
+  "& .MuiSvgIcon-root": {
+    color: "white",
+  },
+  "& .Mui-checked": {
+    color: "white",
+    backgroundColor: determineColor ? determineColor : "#",
+  },
+  "&:hover": {
+    backgroundColor: `${determineColor ? darken(determineColor || tableColors.active, 0.3) : "white"} !important`,
   },
 }));
 
@@ -23,47 +42,30 @@ const GLTableRowDropdown = ({
   labelId,
   onCellClick,
 }) => {
-  const classes = useStyles();
-  // const [selectedRows, selectedRows] = useState([]);
   const subRows = dropdownRows(row);
 
   return (
     <>
       {subRows.map(subrow => {
         return (
-          <TableRow
+          <StyledTableRow
             onMouseOver={e => {
               determineHover(e, "visible", subrow, namespace, "dropdown-row");
             }}
             onMouseOut={e => {
               determineHover(e, "hidden", subrow, namespace, "dropdown-row");
             }}
-            className={classes.dropdownRows}
             hover
-            style={{ height: "50px", width: "auto", marginLeft: "10px", backgroundColor: "#f0f0f0" }}
             key={subrow}
             id={`${namespace}-dropdown-row-${subrow}`}
             data-test={`${namespace}-subrow`}
           >
             {enableRowSelect && (
               <TableCell padding="checkbox" key={row._id || row.id}>
-                <Checkbox
+                <StyledCheckbox
                   size="large"
                   color="primary"
-                  sx={{
-                    color: determineColor ? "white" : "",
-                    "& .MuiSvgIcon-root": {
-                      color: "white",
-                    },
-                    "& .Mui-checked": {
-                      color: "white",
-                      backgroundColor: determineColor ? determineColor(subrow) : "#",
-                    },
-                    "&:hover": {
-                      backgroundColor: `${determineColor ? darken(determineColor(subrow) || tableColors.active, 0.3) : "white"} !important`,
-                    },
-                  }}
-                  // checked={enableRowSelect && isItemSelected(row._id || row.id, selectedRows)}
+                  determineColor={() => determineColor?.(subrow)}
                   inputProps={{
                     "aria-labelledby": labelId,
                     "aria-label": labelId,
@@ -86,7 +88,7 @@ const GLTableRowDropdown = ({
                 </TableCell>
               );
             })}
-          </TableRow>
+          </StyledTableRow>
         );
       })}
     </>

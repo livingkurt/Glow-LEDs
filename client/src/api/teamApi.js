@@ -6,7 +6,7 @@ import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
 
-import * as API from "../api";
+import * as API from ".";
 import { handleTokenRefresh } from "./axiosInstance";
 
 export const getTeams = async ({ search, sorting, filters, page, pageSize }) => {

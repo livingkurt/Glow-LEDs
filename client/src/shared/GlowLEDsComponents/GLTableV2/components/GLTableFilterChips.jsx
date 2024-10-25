@@ -1,47 +1,49 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pickBy from "lodash/pickBy";
-import Chip from "@mui/material/Chip";
-import { makeStyles } from "@mui/styles";
+import { Chip, Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { removeFilter, updateFilterDisplay } from "../actions/actions";
-import { Button } from "@mui/material";
 import { humanize } from "../../../../utils/helper_functions";
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: "flex",
-  },
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: theme.spacing(0.5),
-    margin: 0,
-  },
+const Container = styled("div")({
+  display: "flex",
+});
 
-  chip: {
-    margin: theme.spacing(0.5),
-    borderRadius: "16.5px",
-    backgroundColor: "#e4ebf3",
-    deleteIcon: {
-      height: 40,
-      width: 40,
-      fontSize: 40,
-    },
-    deleteIconColorPrimary: "red",
+const ChipList = styled("ul")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: theme.spacing(0.5),
+  margin: 0,
+}));
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  borderRadius: "16.5px",
+  backgroundColor: "#e4ebf3",
+  fontSize: "12px",
+  "& .MuiChip-deleteIcon": {
+    height: 40,
+    width: 40,
+    fontSize: 40,
+  },
+  "& .MuiChip-deleteIconColorPrimary": {
+    color: "red",
+  },
+  "&:hover": {
+    backgroundColor: "#4c6ebf",
+    color: "white",
   },
 }));
 
-const customStyles = {
-  container: {
-    lineHeight: 3,
-  },
-};
+const MoreButton = styled(Button)(({ theme }) => ({
+  lineHeight: 3,
+}));
 
 const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFunction, disabled, booleanFilters }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   // determine if there's at least one chip to show
   const showChips = Object.values(filters).reduce((acc, cur) => acc || cur.length > 0, false);
@@ -69,45 +71,30 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
   };
 
   return (
-    <div className={classes.container}>
-      <ul className={classes.root}>
+    <Container>
+      <ChipList>
         {chips.slice(0, maxChips).map(chip => {
           return (
             <li key={chip.key}>
-              <Chip
-                // color="primary"
-                sx={{
-                  fontSize: "12px",
-                  // "&:hover": {
-                  //   backgroundColor: "#4c6ebf",
-                  //   color: "white"
-                  // }
-                }}
+              <StyledChip
                 label={chip.name}
                 onClick={() => handleClick(chip)}
                 onDelete={() => {
                   dispatch(removeFilter(namespace, chip.key));
                   onChangeFunction(chip.key);
                 }}
-                className={classes.chip}
                 disabled={disabled}
               />
             </li>
           );
         })}
-      </ul>
+      </ChipList>
       {chips.length > maxChips && (
-        <Button
-          color="secondary"
-          variant="outlined"
-          size="small"
-          onClick={() => handleClick(chips[maxChips])}
-          customStyles={customStyles}
-        >
+        <MoreButton color="secondary" variant="outlined" size="small" onClick={() => handleClick(chips[maxChips])}>
           + {chips.length - maxChips}
-        </Button>
+        </MoreButton>
       )}
-    </div>
+    </Container>
   );
 };
 

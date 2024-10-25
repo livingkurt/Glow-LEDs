@@ -132,12 +132,9 @@ require("./passport")(passport);
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-if (config.NODE_ENV === "production") {
-  app.use(express.static("dist"));
-  app.use(express.static("client/build"));
-
-  app.get("*", (request, response) => {
-    response.sendFile(path.join("/app", "client/build", "index.html"));
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
 
