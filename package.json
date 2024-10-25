@@ -77,7 +77,7 @@
     "serve:client": "cd client && npm run preview",
     "client": "cd client && npm run dev",
     "build": "babel server --out-dir dist",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && cd client && npm install --legacy-peer-deps && npm run build",
     "install": "cd client && npm install --legacy-peer-deps",
     "build:client": "cd client && npm run build && npm run preview",
     "lint": "npm run lint:js && npm run lint:scss",
