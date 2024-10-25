@@ -2,17 +2,22 @@ import sslRedirect from "heroku-ssl-redirect";
 import express from "express";
 import path from "path";
 import mongoose from "mongoose";
-import routes from "./api";
-
-import template_routes from "./email_templates/template_routes";
-import config from "./config";
-const cors = require("cors");
-const passport = require("passport");
-const compression = require("compression");
+import template_routes from "./email_templates/template_routes.js";
+import config from "./config.js";
+import cors from "cors";
+import passport from "passport";
+import compression from "compression";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
-import { google } from "googleapis"; // Import Google's OAuth libraries
+import { google } from "googleapis";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import routes from "./api/index.js"; // Make sure to add the .js extension
 
+// ... rest of your server.js code
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 // const Bugsnag = require("@bugsnag/js");
 // const BugsnagPluginExpress = require("@bugsnag/plugin-express");
 

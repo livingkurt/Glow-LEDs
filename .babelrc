@@ -5,8 +5,10 @@
       {
         "targets": {
           "node": "current"
-        }
+        },
+        "modules": false
       }
     ]
-  ]
+  ],
+  "plugins": [["babel-plugin-add-import-extension", { "extension": "js" }]]
 }

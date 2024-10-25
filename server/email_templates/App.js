@@ -1,5 +1,5 @@
-import { UnsubscribeFooter, Footer, Header } from "./components";
-import NoReply from "./components/NoReply";
+import { UnsubscribeFooter, Footer, Header } from "./components/index.js";
+import NoReply from "./components/NoReply.js";
 
 export default ({ body, background_color, unsubscribe, header_footer_color }) => {
   return `<body style="background:unset;color:white;padding:0;margin:0;font-size:16px">

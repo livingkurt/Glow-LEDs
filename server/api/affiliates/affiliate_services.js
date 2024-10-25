@@ -1,18 +1,18 @@
-import { determine_filter, make_private_code, snake_case } from "../../utils/util";
-import affiliate_db from "./affiliate_db";
-import { user_db } from "../users";
-import Affiliate from "./affiliate";
-import { generateSponsorCodes } from "../promos/promo_interactors";
+import { determine_filter, make_private_code, snake_case } from "../../utils/util.js";
+import affiliate_db from "./affiliate_db.js";
+import { user_db } from "../users.js";
+import Affiliate from "./affiliate.js";
+import { generateSponsorCodes } from "../promos/promo_interactors.js";
 import {
   createPrivatePromoCode,
   createPublicPromoCode,
   monthToNum,
   normalizeAffiliateSearch,
-} from "./affiliate_helpers";
-import { createStripeAccountLink } from "./affiliate_interactors";
-import { getFilteredData } from "../api_helpers";
-import { Cart } from "../carts";
-const bcrypt = require("bcryptjs");
+} from "./affiliate_helpers.js";
+import { createStripeAccountLink } from "./affiliate_interactors.js";
+import { getFilteredData } from "../api_helpers.js";
+import { Cart } from "../carts/cart.js";
+import bcrypt from "bcryptjs";
 
 export default {
   findAll_affiliates_s: async query => {
