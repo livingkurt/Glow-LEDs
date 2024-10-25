@@ -341,7 +341,6 @@ export const handleUserCreation = async (shipping, create_account, new_password)
 
 export const processPayment = async (orderId, paymentMethod, totalPrice) => {
   try {
-    // Implement your payment processing logic here
     const order = await Order.findById(orderId).populate("user");
     const current_userrmation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
     const paymentInformation = normalizePaymentInfo({ totalPrice });

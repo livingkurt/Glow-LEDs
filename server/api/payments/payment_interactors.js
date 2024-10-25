@@ -67,9 +67,12 @@ export const confirmPaymentIntent = async (result, paymentMethodId) => {
 // Function to confirm a payment intent
 // Function to update order after payment confirmation
 export const updateOrder = async (order, confirmedPayment, paymentMethod, hasPreOrderItems) => {
+  console.log({ hasPreOrderItems });
   try {
-    // If the order already has "paid_pre_order" status or contains pre-order items, keep that status
-    if (order.status !== "paid_pre_order" && !hasPreOrderItems) {
+    // Ensure the status is set to "paid_pre_order" if there are pre-order items
+    if (hasPreOrderItems) {
+      order.status = "paid_pre_order";
+    } else if (order.status !== "paid_pre_order") {
       order.status = "paid";
     }
 
