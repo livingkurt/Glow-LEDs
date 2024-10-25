@@ -27,7 +27,7 @@ export const sendRegistrationEmail = async user => {
       }),
     };
 
-    await sendEmail("contact", mailOptions);
+    await sendEmail("info", mailOptions);
   } catch (error) {
     console.error("Error sending order email:", error);
     throw new Error("Failed to send order email");
@@ -51,7 +51,7 @@ export const sendEmailVerifiedSuccess = async user => {
         unsubscribe: false,
       }),
     };
-    await sendEmail("contact", mailOptions);
+    await sendEmail("info", mailOptions);
   } catch (error) {
     console.error("Error sending email verified success:", error);
     throw new Error("Failed to send email verified success");
@@ -79,7 +79,7 @@ export const sendAnnouncementEmail = async userEmail => {
       },
     };
 
-    await sendEmail("contact", mailOptions);
+    await sendEmail("info", mailOptions);
   } catch (error) {
     console.error("Error sending announcement email:", error);
     throw new Error("Failed to send announcement email");
