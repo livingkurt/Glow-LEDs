@@ -131,7 +131,7 @@ export default {
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmailHelper(mailOptions, res, "contact", "Invoice Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
   },
   send_order_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -152,7 +152,7 @@ export default {
       subject: subject,
       html: App({ body: order(bodyConfirmation), unsubscribe: false }),
     };
-    await sendEmailHelper(mailOptionsConfirmation, res, "contact", "Order Confirmation Email Sent to " + email);
+    await sendEmailHelper(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
   },
   send_ticket_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;
@@ -178,7 +178,7 @@ export default {
     if (order_data.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
     }
-    await sendEmailHelper(mailOptionsTickets, res, "contact", "Ticket Email Sent to " + email);
+    await sendEmailHelper(mailOptionsTickets, res, "info", "Ticket Email Sent to " + email);
   },
   send_refund_emails_c: async (req, res) => {
     const { order: order_data, email } = req.body;
@@ -202,7 +202,7 @@ export default {
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
-    sendEmailHelper(mailOptions, res, "contact", "Refund Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
   },
   send_order_status_emails_c: async (req, res) => {
     const body = {
@@ -226,7 +226,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Order Status Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
   },
   send_current_stock_emails_c: async (req, res) => {
     const data = await product_db.current_stock_products_db();
@@ -240,7 +240,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Current Stock Email Sent to " + config.INFO_EMAIL);
+    sendEmailHelper(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
   send_paycheck_emails_c: async (req, res) => {
     const { email, subject } = req.body;
@@ -254,7 +254,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Paycheck Email Sent to " + email);
+    sendEmailHelper(mailOptions, res, "info", "Paycheck Email Sent to " + email);
   },
   affiliate_onboard_emails_c: async (req, res) => {
     const { userIds } = req.body;
@@ -270,7 +270,7 @@ export default {
         html: affiliate_onboard(data),
       };
 
-      await sendEmailHelper(mailOptions, res, "contact", "Affiliate Onboarding Email Sent to " + data.email);
+      await sendEmailHelper(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
     }
   },
 
@@ -286,7 +286,7 @@ export default {
       html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Affiliate Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
   },
   send_feature_emails_c: async (req, res) => {
     const body = {
@@ -303,7 +303,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Featured Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
   },
   send_external_contact_emails_c: async (req, res) => {
     const mailOptions = {
@@ -312,7 +312,7 @@ export default {
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message,
     };
-    sendEmailHelper(mailOptions, res, "contact", "Contact Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
   },
   send_user_contact_emails_c: async (req, res) => {
     const { email, first_name, reason_for_contact } = req.body;
@@ -435,7 +435,7 @@ export default {
             unsubscribe: false,
           }),
         };
-        sendEmailHelper(mailOptions, res, "contact", "Code Used Email sent to " + mailRecipients.join(", "));
+        sendEmailHelper(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
     }
   },
@@ -464,7 +464,7 @@ export default {
           unsubscribe: false,
         }),
       };
-      sendEmailHelper(mailOptions, res, "contact", "Reset Password Link Email Sent to " + user.first_name);
+      sendEmailHelper(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
     } else {
       res.status(500).send({ message: "You do not have an account with us" });
     }
@@ -482,7 +482,7 @@ export default {
         unsubscribe: false,
       }),
     };
-    sendEmailHelper(mailOptions, res, "contact", "Reset Password Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
   },
   send_review_emails_c: async (req, res) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -502,7 +502,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Email Sent to " + req.body.email);
+    sendEmailHelper(mailOptions, res, "info", "Email Sent to " + req.body.email);
   },
 
   send_scheduled_emails_c: async (req, res) => {
@@ -611,8 +611,8 @@ export default {
         }),
       };
 
-      // sendEmailHelper(mailOptions, res, "contact", "Email Sent to " + req.body.email);
-      await sendEmail("contact", mailOptions);
+      // sendEmailHelper(mailOptions, res, "info", "Email Sent to " + req.body.email);
+      await sendEmail("info", mailOptions);
 
       const currentDate = new Date();
       const startDate = new Date("2024-10-24");
@@ -647,7 +647,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Registration Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
   },
   send_verified_emails_c: async (req, res) => {
     const { email } = req.body;
@@ -669,7 +669,7 @@ export default {
       }),
     };
 
-    sendEmailHelper(mailOptions, res, "contact", "Verification Email Sent to " + req.body.first_name);
+    sendEmailHelper(mailOptions, res, "info", "Verification Email Sent to " + req.body.first_name);
   },
   send_shipping_status_emails_c: async (req, res) => {
     try {
@@ -696,7 +696,7 @@ export default {
             }),
           };
 
-          await sendEmailHelper(mailOptions, res, "contact", `Order Status Email Sent to ${order.shipping.email}`);
+          await sendEmailHelper(mailOptions, res, "info", `Order Status Email Sent to ${order.shipping.email}`);
         }
 
         if (tracker.status === "delivered") {
