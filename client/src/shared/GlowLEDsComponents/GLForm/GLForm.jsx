@@ -116,7 +116,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
             }
           } else if (determine_shown_fields(fieldData, current_user, mode)) {
             switch (fieldData.type) {
-              case "autocomplete_single":
+              case "autocomplete_single": {
                 const selected = fieldData.valueAttribute
                   ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                   : fieldState;
@@ -202,6 +202,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     )}
                   </Box>
                 );
+              }
               case "image_upload":
                 return (
                   <ImageWizard
@@ -396,7 +397,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
-              case "date":
+              case "date": {
                 const formattedDate = formatDate(fieldState);
 
                 return (
@@ -436,6 +437,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
+              }
               case "datetime":
                 return (
                   <GLTextFieldV2
@@ -509,7 +511,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
-              case "object":
+              case "object": {
                 const selectedOption = fieldData.valueAttribute
                   ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                   : fieldState;
@@ -564,6 +566,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     />
                   </Paper>
                 );
+              }
               case "array":
                 return (
                   <GLArray
@@ -605,6 +608,18 @@ GLForm.defaultProps = {
   formErrors: {},
   classes: {},
   loading: false,
+  mode: "view",
+};
+
+GLForm.propTypes = {
+  formData: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+  formErrors: PropTypes.object,
+  setFormErrors: PropTypes.func,
+  classes: PropTypes.object,
+  mode: PropTypes.string,
 };
 
 export default GLForm;
