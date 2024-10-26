@@ -72,7 +72,7 @@
   "scripts": {
     "start": "npm run env-check && npm run start:prod || npm run start:dev",
     "env-check": "cross-env NODE_ENV=production",
-    "start:prod": "node --experimental-specifier-resolution=node dist/server.js",
+    "start:prod": "node dist/server.js",
     "start:dev": "concurrently \"npm:server-dev\" \"npm:client\" \"npm:serve:client\"",
     "transpile-watch": "babel server --out-dir dist --ignore node_modules --watch",
     "server-dev": "nodemon dist/server.js",

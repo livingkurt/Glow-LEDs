@@ -12,10 +12,11 @@ import testingLibrary from "eslint-plugin-testing-library";
 import jestDom from "eslint-plugin-jest-dom";
 import babelEslint from "@babel/eslint-plugin";
 import * as babelParser from "@babel/eslint-parser";
-import importPlugin from "eslint-plugin-import"; // Add this import
+import importPlugin from "eslint-plugin-import";
 
 export default [
   { ignores: ["dist"] },
+  js.configs.recommended,
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -29,13 +30,12 @@ export default [
         node: "readonly",
         serviceworker: "readonly",
       },
-      parser: babelParser, // Use the imported parser object
+      parser: babelParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
-          experimentalObjectRestSpread: true,
         },
-        requireConfigFile: false, // Add this line
+        requireConfigFile: false,
         babelOptions: {
           babelrcRoots: ["."],
           presets: ["@babel/preset-react"],
@@ -45,6 +45,11 @@ export default [
     settings: {
       react: { version: "16.14" },
       jest: { version: "29" },
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx"],
+        },
+      },
     },
     plugins: {
       react,
@@ -56,17 +61,15 @@ export default [
       prettier,
       "testing-library": testingLibrary,
       "jest-dom": jestDom,
-      import: importPlugin, // Add this line
+      import: importPlugin,
     },
     rules: {
       ...eslintConfigAirbnb.rules,
       ...eslintConfigPrettier.rules,
-      ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      // Add all the custom rules from your provided configuration
       "arrow-body-style": "off",
       "prefer-arrow-callback": "off",
       "prettier/prettier": "error",
@@ -78,29 +81,16 @@ export default [
       ],
       "jsx-quotes": ["error", "prefer-double"],
       "prefer-object-spread": "error",
-      // complexity: ["warn", 20],
-      // "max-len": [
-      //   "warn",
-      //   {
-      //     code: 120,
-      //     ignoreComments: true,
-      //     ignoreUrls: true,
-      //     ignoreStrings: true,
-      //     ignoreTemplateLiterals: true,
-      //     ignoreRegExpLiterals: true,
-      //   },
-      // ],
+      "import/extensions": ["error", "ignorePackages", { js: "never", jsx: "never" }],
       "max-nested-callbacks": ["warn", 4],
       "no-implicit-coercion": "warn",
+      "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
       "react/jsx-curly-brace-presence": ["error", { props: "never", children: "always" }],
       "react/no-access-state-in-setstate": "warn",
       "import/no-unresolved": "off",
       "import/order": "off",
       "react/sort-comp": "warn",
       "max-depth": ["warn", 4],
-      // "max-lines": ["warn", { max: 800, skipBlankLines: true, skipComments: true }],
-      // "max-lines-per-function": ["warn", { max: 100, skipBlankLines: true, skipComments: true, IIFEs: true }],
-      // "max-statements": ["warn", 200],
       "max-classes-per-file": ["warn", 1],
       "react/prop-types": ["error", { ignore: ["intl", "data", "router", "children"] }],
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],
