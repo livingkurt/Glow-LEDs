@@ -1,0 +1,6 @@
+{
+  "uri": "mongodb://localhost:27017/glow_leds_db",
+  "collection": "migrations",
+  "migrationsPath": "./migrations",
+  "autosync": false
+}
