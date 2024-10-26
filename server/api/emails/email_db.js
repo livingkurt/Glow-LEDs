@@ -1,4 +1,4 @@
-import { Email } from "../emails";
+import Email from "./email.js";
 
 export default {
   findAll_emails_db: async (filter, sort, limit, page) => {

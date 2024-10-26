@@ -1,5 +1,5 @@
-import { determineIDPathname } from "../api_helpers";
-import Event from "./event";
+import { determineIDPathname } from "../api_helpers.js";
+import Event from "./event.js";
 
 export default {
   findAll_events_db: async (filter, sort, limit, page) => {

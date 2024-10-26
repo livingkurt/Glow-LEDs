@@ -1,4 +1,4 @@
-import config from "../../config";
+import config from "../../config.js";
 
 export default background_color => {
   return `<table style="width:100%;border-spacing:0;color:white;background:${

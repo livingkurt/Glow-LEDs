@@ -1,6 +1,6 @@
 import express from "express";
-import { product_controller } from "../products";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import product_controller from "./product_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 router.route("/grid").get(product_controller.findAllGrid_products_c);

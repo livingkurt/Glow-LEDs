@@ -1,7 +1,6 @@
-import { category_db } from "../categorys";
-import { getFilteredData } from "../api_helpers";
-import { normalizeCategorySearch } from "./category_helpers";
-import { determine_filter } from "../../utils/util";
+import category_db from "./category_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizeCategorySearch } from "./category_helpers.js";
 
 export default {
   table_categorys_s: async query => {

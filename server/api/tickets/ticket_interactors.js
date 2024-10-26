@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Order } from "../orders";
+import Order from "../orders/order.js";
 
 export const countScannedTickets = async eventId => {
   const result = await Order.aggregate([

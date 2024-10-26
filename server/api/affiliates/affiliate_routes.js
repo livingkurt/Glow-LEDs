@@ -1,6 +1,6 @@
 import express from "express";
-import { affiliate_controller } from ".";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import affiliate_controller from "./affiliate_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router

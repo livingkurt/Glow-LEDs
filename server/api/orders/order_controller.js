@@ -1,6 +1,6 @@
-import invoice from "../../email_templates/pages/invoice";
-import { affiliate_db } from "../affiliates";
-import { order_services } from "../orders";
+import invoice from "../../email_templates/pages/invoice.js";
+import affiliate_db from "../affiliates/affiliate_db.js";
+import order_services from "../orders/order_services.js";
 
 export default {
   get_table_orders_c: async (req, res) => {

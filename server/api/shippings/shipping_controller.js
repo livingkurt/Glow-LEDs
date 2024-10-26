@@ -1,4 +1,4 @@
-import { shipping_services } from "../shippings";
+import shipping_services from "./shipping_services.js";
 
 export default {
   buy_label_shipping_c: async (req, res) => {

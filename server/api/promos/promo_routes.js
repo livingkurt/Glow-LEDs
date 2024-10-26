@@ -1,5 +1,5 @@
 import express from "express";
-import { promo_controller } from "../promos/index.js";
+import promo_controller from "./promo_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();

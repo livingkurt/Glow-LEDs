@@ -1,4 +1,4 @@
-import { Category } from "../categorys";
+import Category from "./category.js";
 
 export default {
   table_categorys_db: async (filter, sort, limit, page) => {

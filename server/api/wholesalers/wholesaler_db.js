@@ -1,5 +1,4 @@
-import { Promo } from "../promos";
-import { Wholesaler } from "../wholesalers";
+import Wholesaler from "./wholesaler.js";
 
 export default {
   findAll_wholesalers_db: async (filter, sort, limit, page) => {

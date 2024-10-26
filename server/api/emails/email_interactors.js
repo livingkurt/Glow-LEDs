@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import { toCamelCase } from "./email_helpers";
+import { toCamelCase } from "./email_helpers.js";
 
 export const determine_status = status => {
   switch (status) {

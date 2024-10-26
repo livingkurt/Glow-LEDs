@@ -1,4 +1,4 @@
-import Chip from "./chip";
+import Chip from "./chip.js";
 
 export default {
   findAll_chips_db: async (filter, sort, limit, page) => {

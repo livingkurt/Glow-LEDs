@@ -1,8 +1,8 @@
-import { Content } from "../contents";
-import { Product, product_db } from "../products";
-import { Category } from "../categorys";
-import { Order } from "../orders";
-import { Chip } from "../chips";
+import Content from "../contents/content.js";
+import Product from "./product.js";
+import Category from "../categorys/category.js";
+import Order from "../orders/order.js";
+import Chip from "../chips/chip.js";
 
 export const updateProductStock = async (product, quantityToReduce) => {
   console.log(`Updating stock for product: ${product.name}`);

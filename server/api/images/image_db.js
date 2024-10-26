@@ -1,4 +1,4 @@
-import { Image } from "../images";
+import Image from "./image.js";
 import mongoose from "mongoose";
 
 export default {

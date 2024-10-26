@@ -1,4 +1,4 @@
-import { Feature } from "../features";
+import Feature from "./feature.js";
 
 export default {
   findAll_features_db: async (filter, sort, limit, page) => {

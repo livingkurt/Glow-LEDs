@@ -1,4 +1,4 @@
-import { parcel_services } from "../parcels";
+import parcel_services from "./parcel_services.js";
 
 export default {
   get_table_parcels_c: async (req, res) => {

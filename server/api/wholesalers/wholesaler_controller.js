@@ -1,4 +1,4 @@
-import { wholesaler_services } from "../wholesalers";
+import wholesaler_services from "./wholesaler_services.js";
 
 export default {
   findAll_wholesalers_c: async (req, res) => {

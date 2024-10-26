@@ -29,6 +29,13 @@ const addJsExtensionRule = {
   },
 };
 
+// Define the custom plugin
+const customPlugin = {
+  rules: {
+    "add-js-extension": addJsExtensionRule,
+  },
+};
+
 export default [
   { ignores: ["dist", "client"] },
   {
@@ -62,14 +69,14 @@ export default [
       jest: jestPlugin,
       prettier,
       import: importPlugin,
-      "add-js-extension": { rules: { "add-js-extension": addJsExtensionRule } },
+      custom: customPlugin,
     },
     rules: {
       ...eslintConfigAirbnb.rules,
       ...eslintConfigPrettier.rules,
       ...js.configs.recommended.rules,
       "arrow-body-style": "off",
-      "add-js-extension": "error",
+      "custom/add-js-extension": "error",
       "prefer-arrow-callback": "off",
       "prettier/prettier": "error",
       "sort-imports": ["error", { ignoreDeclarationSort: true, ignoreMemberSort: true }],
@@ -86,7 +93,7 @@ export default [
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],
-      "import/prefer-default-export": "warn",
+      // "import/prefer-default-export": "warn",
       "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
       "no-mixed-operators": "off",
       "function-paren-newline": "off",

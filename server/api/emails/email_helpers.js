@@ -1,11 +1,9 @@
-import App from "../../email_templates/App";
-import { announcement } from "../../email_templates/pages";
-import config from "../../config";
-import { user_db } from "../users";
-import { oauthClients } from "../../server";
-
-const { google } = require("googleapis");
-const nodemailer = require("nodemailer");
+import App from "../../email_templates/App.js";
+import announcement from "../../email_templates/pages/announcement.js";
+import config from "../../config.js";
+import user_db from "../users/user_db.js";
+import { oauthClients } from "../../server.js";
+import nodemailer from "nodemailer";
 
 export const createTransporter = async type => {
   try {
@@ -55,7 +53,7 @@ export const send_multiple_emails = async (emailAddresses, email, res, testEmail
     const mailOptions = {
       to: config.INFO_EMAIL,
       from: config.DISPLAY_INFO_EMAIL,
-      subject: !!testEmails ? "TEST " + subject : subject,
+      subject: testEmails ? "TEST " + subject : subject,
       html: App({
         body: announcement(email),
         unsubscribe: true,

@@ -1,10 +1,9 @@
-import config from "../../config";
-import { determine_tracking_carrier } from "../../utils/util";
-import { order_db } from "../orders";
-import { parcel_db } from "../parcels";
-import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";
+import config from "../../config.js";
+import order_db from "../orders/order_db.js";
+import parcel_db from "../parcels/parcel_db.js";
+import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers.js";
 
-const easy_post_api = require("@easypost/api");
+import easy_post_api from "@easypost/api";
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {

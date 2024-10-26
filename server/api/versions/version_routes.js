@@ -1,12 +1,12 @@
-import config from "../../config";
+import config from "../../config.js";
 import express from "express";
-import Version from "./version";
-import { Product } from "../products";
-import Affiliate from "../affiliates/affiliate";
-import Team from "../teams/team";
-import Article from "../articles/article";
-import Event from "../events/event";
-import Content from "../contents/content";
+import Version from "./version.js";
+import Product from "../products/product.js";
+import Affiliate from "../affiliates/affiliate.js";
+import Team from "../teams/team.js";
+import Article from "../articles/article.js";
+import Event from "../events/event.js";
+import Content from "../contents/content.js";
 const router = express.Router();
 
 router.get("/environment", async (req, res) => {

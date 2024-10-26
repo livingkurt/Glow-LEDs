@@ -1,10 +1,7 @@
-import jwt from "jsonwebtoken";
-import config from "../config";
-import { Request } from "express";
-import multer, { Multer } from "multer";
+import multer from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
-import Token from "../api/tokens/token";
+import Token from "../api/tokens/token.js";
 
 export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;

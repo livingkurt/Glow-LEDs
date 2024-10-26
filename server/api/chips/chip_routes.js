@@ -1,6 +1,6 @@
 import express from "express";
-import { chip_controller } from "../chips";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import chip_controller from "./chip_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

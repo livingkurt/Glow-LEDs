@@ -1,7 +1,7 @@
-import { feature_db } from "../features";
-import { determine_filter } from "../../utils/util";
-import { normalizeFeatureSearch } from "./feature_helpers";
-import { getFilteredData } from "../api_helpers";
+import feature_db from "./feature_db.js";
+import { determine_filter } from "../../utils/util.js";
+import { normalizeFeatureSearch } from "./feature_helpers.js";
+import { getFilteredData } from "../api_helpers.js";
 
 export default {
   get_table_features_s: async query => {

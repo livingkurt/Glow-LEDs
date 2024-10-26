@@ -1,4 +1,4 @@
-import { optionSchema, optionValueSchema } from "../products/product";
+import { optionSchema, optionValueSchema } from "../products/product.js";
 import mongoose from "mongoose";
 
 export const sharedItemSchema = {

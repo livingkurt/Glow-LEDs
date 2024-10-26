@@ -1,6 +1,6 @@
-import { filament_db } from "../filaments";
-import { determine_filter } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
+import filament_db from "./filament_db.js";
+import { determine_filter } from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
 
 export default {
   get_table_filaments_s: async query => {

@@ -1,7 +1,7 @@
-import article_db from "./article_db";
-import { getFilteredData } from "../api_helpers";
-import { handleTagFiltering } from "../products/product_helpers";
-import { User } from "../users";
+import article_db from "./article_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { handleTagFiltering } from "../products/product_helpers.js";
+import User from "../users/user.js";
 
 export default {
   findAll_articles_s: async query => {

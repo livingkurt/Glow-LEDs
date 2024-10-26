@@ -1,14 +1,14 @@
-import { Expense, expense_db } from "../expenses";
-import { determine_filter, unformat_date } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import config from "../../config";
+import Expense from "./expense.js";
+import expense_db from "./expense_db.js";
+import { unformat_date } from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
 import {
   determine_application,
   determine_category,
   determine_place,
   normalizeExpenseFilters,
   normalizeExpenseSearch,
-} from "./expense_helpers";
+} from "./expense_helpers.js";
 
 export default {
   findAll_expenses_s: async query => {

@@ -1,6 +1,7 @@
-import { Content, content_db } from "../contents";
-import { normalizeContentFilters, normalizeContentSearch } from "./content_helpers";
-import { getFilteredData } from "../api_helpers";
+import Content from "./content.js";
+import content_db from "./content_db.js";
+import { normalizeContentFilters, normalizeContentSearch } from "./content_helpers.js";
+import { getFilteredData } from "../api_helpers.js";
 
 export default {
   get_table_contents_s: async query => {

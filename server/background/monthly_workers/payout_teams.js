@@ -1,5 +1,5 @@
 import axios from "axios";
-import { last_month_date_range, get_todays_date, domain } from "../worker_helpers";
+import { last_month_date_range, get_todays_date, domain } from "../worker_helpers.js";
 
 export const payout_teams = async () => {
   try {

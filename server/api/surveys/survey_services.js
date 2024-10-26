@@ -1,7 +1,6 @@
-import { determine_filter } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import { survey_db } from "../surveys";
-import { normalizeSurveyFilters, normalizeSurveySearch } from "./survey_helpers";
+import { getFilteredData } from "../api_helpers.js";
+import survey_db from "./survey_db.js";
+import { normalizeSurveyFilters, normalizeSurveySearch } from "./survey_helpers.js";
 
 export default {
   get_table_surveys_s: async query => {

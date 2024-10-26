@@ -1,4 +1,4 @@
-import { Parcel } from "../parcels";
+import Parcel from "./parcel.js";
 
 export default {
   findAll_parcels_db: async (filter, sort, limit, page) => {

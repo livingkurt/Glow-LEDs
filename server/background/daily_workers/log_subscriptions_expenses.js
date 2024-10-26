@@ -1,5 +1,5 @@
 import axios from "axios";
-import { domain } from "../worker_helpers";
+import { domain } from "../worker_helpers.js";
 
 export const log_subscription_expenses = async () => {
   try {

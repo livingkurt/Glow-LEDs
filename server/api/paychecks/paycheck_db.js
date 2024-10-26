@@ -1,4 +1,4 @@
-import { Paycheck } from "../paychecks";
+import Paycheck from "./paycheck.js";
 
 export default {
   findAll_paychecks_db: async (filter, sort, limit, page) => {

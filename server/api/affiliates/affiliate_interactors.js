@@ -1,5 +1,5 @@
-import { domain } from "../../background/worker_helpers";
-import config from "../../config";
+import { domain } from "../../background/worker_helpers.js";
+import config from "../../config.js";
 import Stripe from "stripe";
 
 const stripe = new Stripe(config.STRIPE_KEY, {

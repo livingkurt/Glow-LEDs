@@ -1,5 +1,5 @@
-import wholesaler_db from "./wholesaler_db";
-import { getFilteredData } from "../api_helpers";
+import wholesaler_db from "./wholesaler_db.js";
+import { getFilteredData } from "../api_helpers.js";
 
 export default {
   findAll_wholesalers_s: async query => {

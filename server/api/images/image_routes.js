@@ -1,6 +1,6 @@
 import express from "express";
-import { image_controller } from "../images";
-import { upload } from "./image_helper";
+import image_controller from "./image_controller.js";
+import { upload } from "./image_helper.js";
 
 const router = express.Router();
 router.route("/delete_multiple").post(image_controller.remove_multiple_images_c);

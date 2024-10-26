@@ -1,7 +1,7 @@
-import { getFilteredData } from "../api_helpers";
-import { determine_filter } from "../../utils/util";
-import { chip_db } from "../chips";
-import { normalizeChipSearch } from "./chip_helpers";
+import { getFilteredData } from "../api_helpers.js";
+import { determine_filter } from "../../utils/util.js";
+import chip_db from "./chip_db.js";
+import { normalizeChipSearch } from "./chip_helpers.js";
 
 export default {
   findAll_chips_s: async query => {

@@ -1,4 +1,4 @@
-import { Filament } from "../filaments";
+import Filament from "./filament.js";
 
 export default {
   findAll_filaments_db: async (filter, sort, limit, page) => {

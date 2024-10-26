@@ -1,18 +1,17 @@
-import { User, user_db, user_services } from "../users";
-import Token from "../tokens/token";
-import { getAccessToken, getRefreshToken } from "./userInteractors";
-import config from "../../config";
-import App from "../../email_templates/App";
-import verify from "../../email_templates/pages/verify";
-import { domain } from "../../email_templates/email_template_helpers";
-import { content_db } from "../contents";
-import { account_created, successful_password_reset, verify_email_password_reset } from "../../email_templates/pages";
-import { sendEmail } from "../orders/order_interactors";
-import { sendRegistrationEmail, sendEmailVerifiedSuccess, sendAnnouncementEmail } from "./user_interactors";
-// import Token from "../tokens/token";
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-require("dotenv");
+import User from "./user.js";
+import user_db from "./user_db.js";
+import user_services from "./user_services.js";
+import Token from "../tokens/token.js";
+import { getAccessToken } from "./userInteractors.js";
+import config from "../../config.js";
+import App from "../../email_templates/App.js";
+import { domain } from "../../email_templates/email_template_helpers.js";
+import successful_password_reset from "../../email_templates/pages/successful_password_reset.js";
+import verify_email_password_reset from "../../email_templates/pages/verify_email_password_reset.js";
+import { sendEmail } from "../orders/order_interactors.js";
+import { sendRegistrationEmail, sendEmailVerifiedSuccess, sendAnnouncementEmail } from "./user_interactors.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export default {
   findAll_users_c: async (req, res) => {

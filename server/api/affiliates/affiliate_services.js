@@ -1,6 +1,6 @@
 import { determine_filter, make_private_code, snake_case } from "../../utils/util.js";
 import affiliate_db from "./affiliate_db.js";
-import { user_db } from "../users.js";
+import user_db from "../users/user_db.js";
 import Affiliate from "./affiliate.js";
 import { generateSponsorCodes } from "../promos/promo_interactors.js";
 import {
@@ -11,8 +11,8 @@ import {
 } from "./affiliate_helpers.js";
 import { createStripeAccountLink } from "./affiliate_interactors.js";
 import { getFilteredData } from "../api_helpers.js";
-import { Cart } from "../carts/cart.js";
 import bcrypt from "bcryptjs";
+import Cart from "../carts/cart.js";
 
 export default {
   findAll_affiliates_s: async query => {

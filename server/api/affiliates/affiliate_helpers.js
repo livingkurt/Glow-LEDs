@@ -1,4 +1,4 @@
-import { make_private_code } from "../../utils/util";
+import { make_private_code } from "../../utils/util.js";
 
 export const monthToNum = monthName => {
   const monthNames = [

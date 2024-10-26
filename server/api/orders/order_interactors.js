@@ -1,26 +1,27 @@
 import mongoose from "mongoose";
-import { determine_code_tier, isEmail } from "../../utils/util";
-import order_db from "./order_db";
-import Order from "./order";
-import { User } from "../users";
-import { normalizeCustomerInfo, normalizePaymentInfo } from "../payments/payment_helpers";
+import { determine_code_tier, isEmail } from "../../utils/util.js";
+import order_db from "./order_db.js";
+import Order from "./order.js";
+import User from "../users/user.js";
+import { normalizeCustomerInfo, normalizePaymentInfo } from "../payments/payment_helpers.js";
 import {
   createOrUpdateCustomer,
   createPaymentIntent,
   confirmPaymentIntent,
   logStripeFeeToExpenses,
   updateOrder,
-} from "../payments/payment_interactors";
-import { code_used, order } from "../../email_templates/pages";
-import config from "../../config";
-import { Affiliate } from "../affiliates";
-import order_services from "./order_services";
-import App from "../../email_templates/App";
-import ticketEmail from "../../email_templates/pages/ticketEmail";
-import { generateTicketQRCodes } from "../emails/email_interactors";
-import { createTransporter } from "../emails/email_helpers";
-import { promo_db } from "../promos";
-const bcrypt = require("bcryptjs");
+} from "../payments/payment_interactors.js";
+import order from "../../email_templates/pages/order.js";
+import code_used from "../../email_templates/pages/code_used.js";
+import config from "../../config.js";
+import Affiliate from "../affiliates/affiliate.js";
+import order_services from "./order_services.js";
+import App from "../../email_templates/App.js";
+import ticketEmail from "../../email_templates/pages/ticketEmail.js";
+import { generateTicketQRCodes } from "../emails/email_interactors.js";
+import { createTransporter } from "../emails/email_helpers.js";
+import promo_db from "../promos/promo_db.js";
+import bcrypt from "bcryptjs";
 
 export const normalizeOrderFilters = input => {
   const output = {};

@@ -1,6 +1,6 @@
 import express from "express";
-import { ticket_controller } from ".";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import ticket_controller from "./ticket_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.route("/").get(ticket_controller.findAll_tickets_c).post(isAuth, isAdmin, ticket_controller.create_tickets_c);

@@ -1,9 +1,9 @@
-import { Team, team_db } from "../teams";
-import { user_db } from "../users";
-import { determine_filter } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import { createStripeAccountLink } from "../affiliates/affiliate_interactors";
-import { createPublicPromoCode, createPrivatePromoCode, monthToNum } from "../affiliates/affiliate_helpers";
+import Team from "./team.js";
+import team_db from "./team_db.js";
+import { determine_filter } from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
+import { createStripeAccountLink } from "../affiliates/affiliate_interactors.js";
+import { createPublicPromoCode, createPrivatePromoCode, monthToNum } from "../affiliates/affiliate_helpers.js";
 
 export default {
   findAll_teams_s: async query => {

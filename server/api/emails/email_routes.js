@@ -1,8 +1,8 @@
 import express from "express";
-import { email_controller } from "../emails";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import email_controller from "./email_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
-const cors = require("cors");
+import cors from "cors";
 
 router.route("/email_subscription").post(email_controller.send_email_subscription_emails_c);
 router.route("/order").post(email_controller.send_order_emails_c);

@@ -1,11 +1,10 @@
-import { user_db } from "../users";
-import { getFilteredData } from "../api_helpers";
-import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
-import { getRefreshToken } from "./userInteractors";
-import Token from "../tokens/token";
-import config from "../../config";
-const bcrypt = require("bcryptjs");
-require("dotenv");
+import user_db from "./user_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers.js";
+import { getRefreshToken } from "./userInteractors.js";
+import Token from "../tokens/token.js";
+import config from "../../config.js";
+import bcrypt from "bcryptjs";
 
 export default {
   findAll_users_s: async query => {

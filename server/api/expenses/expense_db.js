@@ -1,4 +1,4 @@
-import { Expense } from "../expenses";
+import Expense from "./expense.js";
 
 export default {
   findAll_expenses_db: async (filter, sort, limit, page) => {

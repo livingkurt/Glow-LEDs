@@ -1,4 +1,3 @@
-import sslRedirect from "heroku-ssl-redirect";
 import express from "express";
 import path from "path";
 import mongoose from "mongoose";
@@ -13,6 +12,8 @@ import { google } from "googleapis";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import routes from "./api/index.js"; // Make sure to add the .js extension
+import sslRedirect from "heroku-ssl-redirect";
+import configurePassport from "./passport.js";
 
 // ... rest of your server.js code
 
@@ -120,7 +121,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(compression());
-app.use(sslRedirect());
+app.use(sslRedirect.default());
 
 app.use(passport.initialize());
 
@@ -132,7 +133,7 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
-require("./passport")(passport);
+configurePassport(passport);
 
 app.use(routes);
 app.use("/api/templates", template_routes);

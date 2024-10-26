@@ -1,9 +1,9 @@
 import multer from "multer";
 import path from "path";
-import config from "../../config";
-const axios = require("axios");
-import image_db from "./image_db";
-const Jimp = require("jimp");
+import config from "../../config.js";
+import axios from "axios";
+import image_db from "./image_db.js";
+import Jimp from "jimp";
 
 export const convertDriveLinkToDirectLink = shareLink => {
   // Check if the link is already a direct Google Drive link
