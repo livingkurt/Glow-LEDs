@@ -5,8 +5,8 @@ import {
   determin_card_logo_images_white,
   order_status_steps,
   getItemsTotal,
-} from "../../utils/util";
-import { isColorLight } from "../email_template_helpers";
+} from "../../utils/util.js";
+import { isColorLight } from "../email_template_helpers.js";
 
 export default ({ email, order }) => {
   return `<table style="width:100%;border-spacing:0; padding: 10px;">

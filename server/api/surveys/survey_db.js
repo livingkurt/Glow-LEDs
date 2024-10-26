@@ -1,4 +1,4 @@
-import { Survey } from "../surveys";
+import Survey from "./survey.js";
 
 export default {
   findAll_surveys_db: async (filter, sort, limit, page) => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { last_month_date_range, determine_code_tier, get_todays_date, domain } from "../worker_helpers";
+import { last_month_date_range, determine_code_tier, get_todays_date, domain } from "../worker_helpers.js";
 
 export const payout_affiliates = async () => {
   try {

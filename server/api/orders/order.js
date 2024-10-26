@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { sharedItemSchema } from "../carts/shared_item";
+import { sharedItemSchema } from "../carts/shared_item.js";
 
 const shippingSchema = {
   shipment_id: { type: String },

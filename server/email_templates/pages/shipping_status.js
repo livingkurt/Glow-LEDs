@@ -1,5 +1,10 @@
-import { format_date, determine_tracking_link, shipping_status_steps, email_sale_price_switch } from "../../utils/util";
-import { isColorLight } from "../email_template_helpers";
+import {
+  format_date,
+  determine_tracking_link,
+  shipping_status_steps,
+  email_sale_price_switch,
+} from "../../utils/util.js";
+import { isColorLight } from "../email_template_helpers.js";
 
 const determine_emoji = status => {
   switch (status) {

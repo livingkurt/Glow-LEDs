@@ -1,19 +1,14 @@
-import { Image, image_db } from "../images";
-import { getFilteredData } from "../api_helpers";
+import Image from "./image.js";
+import image_db from "./image_db.js";
+import { getFilteredData } from "../api_helpers.js";
 
-import path from "path";
-import appRoot from "app-root-path";
 import {
   compressImage,
   convertDriveLinkToDirectLink,
   createImageRecords,
   createImgurAlbum,
-  deleteImages,
-  findImages,
   uploadImageToImgur,
-} from "./image_helper";
-
-// const client = new ImgurClient({ clientId: config.IMGUR_ClIENT_ID });
+} from "./image_helper.js";
 
 export default {
   findAll_images_s: async query => {

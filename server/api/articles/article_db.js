@@ -1,5 +1,5 @@
-import { determineIDPathname } from "../api_helpers";
-import Article from "./article";
+import { determineIDPathname } from "../api_helpers.js";
+import Article from "./article.js";
 
 export default {
   findAll_articles_db: async (filter, sort, limit, page) => {

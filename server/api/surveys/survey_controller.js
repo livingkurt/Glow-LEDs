@@ -1,4 +1,4 @@
-import { survey_services } from "../surveys";
+import survey_services from "./survey_services.js";
 
 export default {
   get_table_surveys_c: async (req, res) => {

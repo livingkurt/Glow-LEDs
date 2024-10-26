@@ -1,6 +1,5 @@
-import { optionSchema, optionValueSchema } from "../products/product";
 import mongoose from "mongoose";
-import { sharedItemSchema } from "./shared_item";
+import { sharedItemSchema } from "./shared_item.js";
 
 const cartSchema = new mongoose.Schema(
   {

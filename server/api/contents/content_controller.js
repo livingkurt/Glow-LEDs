@@ -1,4 +1,4 @@
-import content_services from "./content_services";
+import content_services from "./content_services.js";
 
 export default {
   get_table_contents_c: async (req, res) => {

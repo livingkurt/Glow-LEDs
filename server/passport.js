@@ -1,18 +1,21 @@
-import { User } from "./api/users";
-import config from "./config";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import User from "./api/users/user.js";
+import config from "./config.js";
 
-const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
-// dotenv.config();
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: config.ACCESS_TOKEN_SECRET,
+};
 
-const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.ACCESS_TOKEN_SECRET;
+export default function configurePassport(passport) {
+  // Check if ACCESS_TOKEN_SECRET is defined
+  if (!config.ACCESS_TOKEN_SECRET) {
+    console.error("ACCESS_TOKEN_SECRET is not defined in the config file");
+    return;
+  }
 
-module.exports = passport => {
   passport.use(
-    new JwtStrategy(opts, jwt_payload => {
+    new JwtStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id)
         .then(user => {
           if (user) {
@@ -20,7 +23,10 @@ module.exports = passport => {
           }
           return done(null, false);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.error("Error in JwtStrategy:", err);
+          return done(err, false);
+        });
     })
   );
-};
+}

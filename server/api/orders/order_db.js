@@ -1,7 +1,7 @@
-import { Product } from "../products";
-import { Order } from "../orders";
-import { Affiliate } from "../affiliates";
-import { dedupeAddresses } from "./order_helpers";
+import Product from "../products/product.js";
+import Order from "./order.js";
+import Affiliate from "../affiliates/affiliate.js";
+import { dedupeAddresses } from "./order_helpers.js";
 
 export default {
   table_orders_db: async (filter, sort, limit, page) => {

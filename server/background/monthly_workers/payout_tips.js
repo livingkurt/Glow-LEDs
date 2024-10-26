@@ -1,6 +1,6 @@
 import axios from "axios";
-import { last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import { domain } from "../worker_helpers";
+import { last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers.js";
+import { domain } from "../worker_helpers.js";
 
 export const payout_tips = async () => {
   try {

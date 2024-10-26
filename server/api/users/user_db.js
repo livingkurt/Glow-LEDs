@@ -1,7 +1,4 @@
-import User from "../users/user";
-import { prnt } from "../../utils/util";
-// import Token from "../tokens/token";
-require("dotenv");
+import User from "./user.js";
 
 export default {
   findAll_users_db: async (filter, sort, limit, page) => {

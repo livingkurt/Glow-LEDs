@@ -1,4 +1,4 @@
-import { tutorial_services } from ".";
+import tutorial_services from "./tutorial_services.js";
 
 export default {
   findAll_tutorials_c: async (req, res) => {

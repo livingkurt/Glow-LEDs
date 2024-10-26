@@ -1,8 +1,3 @@
-import axios from "axios";
-import fs from "fs";
-import config from "../../config";
-import path from "path";
-
 // export const normalizeChipFilters = input => {
 //   const output = {};
 //   Object.keys(input).forEach(key => {

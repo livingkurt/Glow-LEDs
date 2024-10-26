@@ -1,7 +1,6 @@
-import event_db from "./event_db";
-import { getFilteredData } from "../api_helpers";
-import { Order } from "../orders";
-import mongoose from "mongoose";
+import event_db from "./event_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import Order from "../orders/order.js";
 
 export default {
   findAll_events_s: async query => {
@@ -10,7 +9,6 @@ export default {
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
       const events = await event_db.findAll_events_db(filter, sort, limit, page);
-      const count = await event_db.count_events_db(filter);
       return events;
     } catch (error) {
       if (error instanceof Error) {

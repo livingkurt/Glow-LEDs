@@ -1,14 +1,12 @@
-import { month_dates } from "../../utils/util";
-import { affiliate_db } from "../affiliates";
-import { order_db } from "../orders";
-import { paycheck_db } from "../paychecks";
-import { team_db } from "../teams";
-import { getFilteredData } from "../api_helpers";
-import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
-import { user_db } from "../users";
-import { mongodbFindAll } from "../api_interactors";
+import { month_dates } from "../../utils/util.js";
+import affiliate_db from "../affiliates/affiliate_db.js";
+import order_db from "../orders/order_db.js";
+import paycheck_db from "./paycheck_db.js";
+import team_db from "../teams/team_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors.js";
+import user_db from "../users/user_db.js";
 import mongoose from "mongoose";
-import { email_controller } from "../emails";
 
 export default {
   get_table_paychecks_s: async query => {

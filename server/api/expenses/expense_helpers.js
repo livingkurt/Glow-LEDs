@@ -1,6 +1,6 @@
 import axios from "axios";
 import fs from "fs";
-import config from "../../config";
+import config from "../../config.js";
 import path from "path";
 
 export const normalizeExpenseFilters = input => {

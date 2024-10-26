@@ -1,7 +1,7 @@
-import { Cart, cart_db } from "../carts";
-import { deepEqual } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers";
+import Cart from "./cart.js";
+import cart_db from "./cart_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers.js";
 
 export default {
   findAll_carts_s: async query => {

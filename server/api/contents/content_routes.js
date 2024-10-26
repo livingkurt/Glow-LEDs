@@ -1,6 +1,6 @@
 import express from "express";
-import { content_controller } from "../contents";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import content_controller from "./content_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router

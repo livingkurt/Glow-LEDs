@@ -1,5 +1,5 @@
-import { Promo } from "../promos";
-import { Team } from "../teams";
+import Promo from "../promos/promo.js";
+import Team from "./team.js";
 
 export default {
   findAll_teams_db: async (filter, sort, limit, page) => {

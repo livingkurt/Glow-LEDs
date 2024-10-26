@@ -1,5 +1,5 @@
-import { Promo } from "../promos";
-import { Affiliate } from "../affiliates";
+import Promo from "../promos/promo.js";
+import Affiliate from "./affiliate.js";
 
 export default {
   findAll_affiliates_db: async (filter, sort, limit, page) => {

@@ -4,18 +4,19 @@ import {
   determine_sponsor_code_tier,
   make_private_code,
   month_dates,
-} from "../../utils/util";
-import { Affiliate, affiliate_db } from "../affiliates";
-import { getFilteredData } from "../api_helpers";
-import { order_db } from "../orders";
-import { Promo, promo_db } from "../promos";
-import { containsIncludedItems, containsOnlyExcludedItems, determineCartTotal, extractCodes } from "./promo_helpers";
+} from "../../utils/util.js";
+import affiliate_db from "../affiliates/affiliate_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import order_db from "../orders/order_db.js";
+import Promo from "./promo.js";
+import promo_db from "./promo_db.js";
+import { containsIncludedItems, containsOnlyExcludedItems, determineCartTotal, extractCodes } from "./promo_helpers.js";
 import {
   deactivateOldCodes,
   generateSponsorCodes,
   normalizePromoFilters,
   normalizePromoSearch,
-} from "./promo_interactors";
+} from "./promo_interactors.js";
 
 export default {
   findAll_promos_s: async query => {

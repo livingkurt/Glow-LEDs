@@ -1,14 +1,14 @@
-import { user_db } from "../users";
-import config from "../../config";
-import { Order } from "../orders";
-import { normalizeCustomerInfo, normalizePaymentInfo } from "./payment_helpers";
+import user_db from "../users/user_db.js";
+import config from "../../config.js";
+import Order from "../orders/order.js";
+import { normalizeCustomerInfo, normalizePaymentInfo } from "./payment_helpers.js";
 import {
   confirmPaymentIntent,
   createOrUpdateCustomer,
   createPaymentIntent,
   logStripeFeeToExpenses,
   updateOrder,
-} from "./payment_interactors";
+} from "./payment_interactors.js";
 import Stripe from "stripe";
 
 const stripe = new Stripe(config.STRIPE_KEY, {

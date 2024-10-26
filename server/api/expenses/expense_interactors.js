@@ -1,5 +1,4 @@
-import { Image } from "../images";
-import { deleteTempFile, downloadFile, sanitizeExpenseName, uploadToImgur } from "./expense_helpers";
+import { downloadFile, sanitizeExpenseName } from "./expense_helpers.js";
 
 // Interactors
 export const processInvoice = async (doc, record) => {

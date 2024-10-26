@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import Token from "../tokens/token";
-import config from "../../config";
+import Token from "../tokens/token.js";
+import config from "../../config.js";
 
 export const getAccessToken = user => {
   return jwt.sign(

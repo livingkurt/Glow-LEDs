@@ -1,6 +1,6 @@
 import express from "express";
-import { feature_controller } from "../features";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import feature_controller from "./feature_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

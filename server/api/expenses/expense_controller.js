@@ -1,4 +1,5 @@
-import { expense_db, expense_services } from "../expenses";
+import expense_db from "./expense_db.js";
+import expense_services from "./expense_services.js";
 
 export default {
   findAll_expenses_c: async (req, res) => {

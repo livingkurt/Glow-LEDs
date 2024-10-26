@@ -1,8 +1,7 @@
-import ticket_db from "./ticket_db";
-import { getFilteredData } from "../api_helpers";
-import { order_db } from "../orders";
-import { event_db } from "../events";
-import { countScannedTickets } from "./ticket_interactors";
+import ticket_db from "./ticket_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import order_db from "../orders/order_db.js";
+import { countScannedTickets } from "./ticket_interactors.js";
 
 export default {
   findAll_tickets_s: async query => {

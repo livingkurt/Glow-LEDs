@@ -1,6 +1,6 @@
 import express from "express";
-import { paycheck_controller } from "../paychecks";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import paycheck_controller from "./paycheck_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

@@ -1,45 +1,37 @@
 import express from "express";
 import mongoose from "mongoose";
-import { User } from "./users";
-import { Expense, expense_db } from "./expenses";
-import { Product } from "./products";
-import { Feature } from "./features";
-import { Order } from "./orders";
-import { Email } from "./emails";
-import { Affiliate } from "./affiliates";
-import { Content } from "./contents";
-import { Promo } from "./promos";
-import { Survey } from "./surveys";
-import { Paycheck, paycheck_db } from "./paychecks";
-import { Parcel } from "./parcels";
-import Chip from "./chips/chip";
-import { snake_case } from "../utils/util";
-import { Filament } from "./filaments";
-import { Image, image_db, image_services } from "./images";
-import { Category } from "./categorys";
-import { isAdmin, isAuth } from "../middlewares/authMiddleware";
-import { Cart } from "./carts";
+import User from "./users/user.js";
+import Expense from "./expenses/expense.js";
+import Product from "./products/product.js";
+import Feature from "./features/feature.js";
+import Order from "./orders/order.js";
+import Email from "./emails/email.js";
+import Affiliate from "./affiliates/affiliate.js";
+import Content from "./contents/content.js";
+import Promo from "./promos/promo.js";
+import Survey from "./surveys/survey.js";
+import Paycheck from "./paychecks/paycheck.js";
+import Parcel from "./parcels/parcel.js";
+import Chip from "./chips/chip.js";
+import Filament from "./filaments/filament.js";
+import Image from "./images/image.js";
+import Category from "./categorys/category.js";
+import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
+import Cart from "./carts/cart.js";
 import { promises as fs } from "fs";
 import path from "path";
-import * as cheerio from "cheerio";
-import axios from "axios";
-import appRoot from "app-root-path";
-import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
-import config from "../config";
+import config from "../config.js";
 import Stripe from "stripe";
-import { Team } from "./teams";
-import { Event } from "./events";
+import Team from "./teams/team.js";
 import {
   preprocessShipments,
   findMatchingPayment,
-  findMatchingPaymentMethod,
   findMatchingShipment,
   parseOrderEmail,
   preprocessPayments,
   extractShipmentDetails,
-} from "./batch_helpers";
-import { Ticket } from "./tickets";
-const Papa = require("papaparse");
+} from "./batch_helpers.js";
+import Ticket from "./tickets/ticket.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -6223,7 +6215,7 @@ router.route("/fetch_stripe_refunds").put(async (req, res) => {
   }
 });
 
-const easy_post_api = require("@easypost/api");
+import easy_post_api from "@easypost/api";
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 router.route("/fetch_easypost_data").put(async (req, res) => {

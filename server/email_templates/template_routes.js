@@ -2,7 +2,7 @@
 // html-routes.js - this file offers a set of routes for sending users to the various html pages
 // *********************************************************************************
 
-import App from "./App";
+import App from "./App.js";
 import {
   account_created,
   affiliate,
@@ -20,26 +20,25 @@ import {
   shipping_status,
   verify_email_password_reset,
   affiliate_onboard,
-} from "./pages";
+} from "./pages/index.js";
 import express from "express";
-import invoice from "./pages/invoice";
-import { order_db, order_services } from "../api/orders";
-import { content_db } from "../api/contents";
-import { affiliate_db } from "../api/affiliates";
-import { promo_db } from "../api/promos";
-import { make_private_code, months } from "../utils/util";
-import { user_db } from "../api/users";
-import { determine_status } from "../api/emails/email_interactors";
-import { email_db } from "../api/emails";
-import { paycheck_db } from "../api/paychecks";
-import current_stock from "./pages/current_stock";
-import { product_db } from "../api/products";
-import config from "../config";
-import mongoose from "mongoose";
-import verify from "./pages/verify";
-import { domain } from "./email_template_helpers";
-import paycheck from "./pages/paycheck";
-import ticketEmail from "./pages/ticketEmail";
+import invoice from "./pages/invoice.js";
+import { order_db, order_services } from "../api/orders/index.js";
+import { content_db } from "../api/contents/index.js";
+import { affiliate_db } from "../api/affiliates/index.js";
+import { promo_db } from "../api/promos/index.js";
+import { make_private_code, months } from "../utils/util.js";
+import { user_db } from "../api/users/index.js";
+import { determine_status } from "../api/emails/email_interactors.js";
+import { email_db } from "../api/emails/index.js";
+import { paycheck_db } from "../api/paychecks/index.js";
+import current_stock from "./pages/current_stock.js";
+import { product_db } from "../api/products/index.js";
+import config from "../config.js";
+import verify from "./pages/verify.js";
+import { domain } from "./email_template_helpers.js";
+import paycheck from "./pages/paycheck.js";
+import ticketEmail from "./pages/ticketEmail.js";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {

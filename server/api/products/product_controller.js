@@ -1,4 +1,4 @@
-import { product_services } from "../products";
+import product_services from "./product_services.js";
 
 export default {
   findAll_products_c: async (req, res) => {

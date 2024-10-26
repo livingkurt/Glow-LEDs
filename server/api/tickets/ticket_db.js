@@ -1,7 +1,7 @@
-import { Order } from "../orders";
-import { Event } from "../events";
-import Ticket from "./ticket";
-import { getEventTicketIds } from "./ticket_interactors";
+import Order from "../orders/order.js";
+import Event from "../events/event.js";
+import Ticket from "./ticket.js";
+import { countScannedTickets } from "./ticket_interactors.js";
 
 export default {
   findAll_tickets_db: async (filter, sort, limit, page) => {
@@ -141,7 +141,7 @@ export default {
         {
           $match: {
             "orderItems.itemType": "ticket",
-            "ticketInfo._id": { $in: await getEventTicketIds(eventId) },
+            "ticketInfo._id": { $in: await countScannedTickets(eventId) },
           },
         },
         {
