@@ -14,11 +14,14 @@ const shippingSchema = {
 
 const userSchema = new mongoose.Schema(
   {
-    first_name: { type: String },
-    last_name: { type: String },
+    first_name: { type: String, trim: true },
+    last_name: { type: String, trim: true },
     email: {
       type: String,
       required: true,
+      lowercase: true,
+      trim: true,
+      unique: true,
     },
     shipping: shippingSchema,
     password: { type: String },
@@ -43,6 +46,13 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.pre("save", function (next) {
+  if (this.email) {
+    this.email = this.email.toLowerCase();
+  }
+  next();
+});
 
 const userModal = mongoose.model("User", userSchema);
 

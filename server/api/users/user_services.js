@@ -118,7 +118,11 @@ export default {
         bcrypt.hash(temporary_password, salt, async (err, hash) => {
           if (err) throw err;
           hashed_password = hash;
-          user = { ...body, password: hashed_password };
+          user = {
+            ...body,
+            email: body.email?.toLowerCase(),
+            password: hashed_password,
+          };
           response = await user_db.create_users_db(user);
         });
       });
@@ -149,7 +153,8 @@ export default {
   },
 
   register_users_s: async body => {
-    const user = await user_db.findByEmail_users_db(body.email);
+    const lowercaseEmail = body.email.toLowerCase();
+    const user = await user_db.findByEmail_users_db(lowercaseEmail);
     if (user) {
       const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
       if (isMatch) {
@@ -162,7 +167,7 @@ export default {
         user: {
           first_name: body.first_name,
           last_name: body.last_name,
-          email: body.email,
+          email: lowercaseEmail,
           password: body.password,
           affiliate: body.affiliate,
           cart: body.cart,
@@ -195,7 +200,7 @@ export default {
         _id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
-        email: user.email,
+        email: user.email.toLowerCase(),
         affiliate: user.affiliate,
         email_subscription: user.email_subscription,
         is_affiliated: user.is_affiliated,
@@ -223,7 +228,7 @@ export default {
       _id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
-      email: user.email,
+      email: user.email.toLowerCase(),
       affiliate: user.affiliate,
       email_subscription: user.email_subscription,
       is_affiliated: user.is_affiliated,
@@ -242,7 +247,7 @@ export default {
       _id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
-      email: user.email,
+      email: user.email.toLowerCase(),
       affiliate: user.affiliate,
       email_subscription: user.email_subscription,
       is_affiliated: user.is_affiliated,
@@ -270,7 +275,7 @@ export default {
           _id: user.id,
           first_name: user.first_name,
           last_name: user.last_name,
-          email: user.email,
+          email: user.email.toLowerCase(),
           isAdmin: user.isAdmin,
           cart: user.cart,
           isVerified: user.isVerified,
