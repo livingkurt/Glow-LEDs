@@ -63,7 +63,7 @@ const EmailStep = () => {
   return (
     <div>
       <div className="jc-b mv-10px">
-        <Typography variant="h4">1. Email</Typography>
+        <Typography variant="h4">{"1. Email"}</Typography>
         {email_completed && !show_email && (
           <GLButtonV2
             variant="contained"
@@ -71,7 +71,7 @@ const EmailStep = () => {
             color="secondary"
             onClick={() => dispatch(showHideSteps("email"))}
           >
-            Edit
+            {"Edit"}
           </GLButtonV2>
         )}
       </div>
@@ -82,16 +82,18 @@ const EmailStep = () => {
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
                 <li>
                   <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
-                    Signed in with {current_user.email} {"\n"}
-                    {"\n"}Not you?
+                    {"Signed in with "}
+                    {current_user.email} {"\n"}
+                    {"\n"}
+                    {"Not you?"}
                     <GLButton variant="primary" className="title_font m-10px" onClick={e => submit_logout(e)}>
-                      Logout
+                      {"Logout"}
                     </GLButton>
                   </pre>
                 </li>
                 <li className="mv-0px">
                   <GLButton variant="primary" className="w-100per bob" onClick={() => next_step("shipping")}>
-                    Continue
+                    {"Continue"}
                   </GLButton>
                 </li>
               </ul>
@@ -99,7 +101,7 @@ const EmailStep = () => {
           ) : (
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">{"Email"}</label>
                 <input
                   type="text"
                   value={shipping.email}
@@ -117,8 +119,10 @@ const EmailStep = () => {
                 {email_validations}
               </label>
               <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
-                You'll recieve receipts and notifications at this email address.{"\n"}
-                {"\n"}Already have an account?
+                {"You'll recieve receipts and notifications at this email address."}
+                {"\n"}
+                {"\n"}
+                {"Already have an account?"}
                 <GLButton
                   variant="primary"
                   className="title_font m-10px"
@@ -127,12 +131,12 @@ const EmailStep = () => {
                     dispatch(set_is_guest(is_guest ? false : true));
                   }}
                 >
-                  Login
+                  {"Login"}
                 </GLButton>
               </pre>
 
               <GLButton variant="primary" className="bob" onClick={e => validate_email(e)}>
-                Continue
+                {"Continue"}
               </GLButton>
             </ul>
           )}

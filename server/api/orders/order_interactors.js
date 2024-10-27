@@ -291,12 +291,9 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
 };
 
 export const handleUserCreation = async (shipping, create_account, new_password) => {
-  console.log({ shipping, create_account, new_password });
   try {
     const { email, first_name, last_name } = shipping;
     const lowercaseEmail = email.toLowerCase();
-
-    console.log({ lowercaseEmail, first_name, last_name });
 
     // Check if user exists
     let user = await User.findOne({ email: lowercaseEmail });
@@ -335,7 +332,6 @@ export const handleUserCreation = async (shipping, create_account, new_password)
 
     return user._id;
   } catch (error) {
-    console.error("Error in handleUserCreation:", error);
     throw new Error("Failed to create or find user");
   }
 };
