@@ -103,7 +103,6 @@ export default [
       "no-else-return": "off",
       "no-use-before-define": ["error", { variables: false }],
       camelcase: "off",
-      "no-underscore-dangle": ["error", { allow: ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__", "__typename"] }],
       "import/extensions": ["error", "always", { ignorePackages: true }],
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     },
