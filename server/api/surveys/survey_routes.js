@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/").get(survey_controller.findAll_surveys_c).post(survey_controller.create_surveys_c);
 
-router.route("/table").get(survey_controller.get_table_surveys_c);
+router.route("/table").get(isAuth, isAdmin, survey_controller.get_table_surveys_c);
 
 router
   .route("/:id")

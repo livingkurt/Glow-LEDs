@@ -1,9 +1,10 @@
 import express from "express";
 import image_controller from "./image_controller.js";
 import { upload } from "./image_helper.js";
+import { isAuth, isAdmin } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
-router.route("/delete_multiple").post(image_controller.remove_multiple_images_c);
+router.route("/delete_multiple").post(isAuth, isAdmin, image_controller.remove_multiple_images_c);
 
 router.route("/link").put(image_controller.findByLink_images_c);
 router

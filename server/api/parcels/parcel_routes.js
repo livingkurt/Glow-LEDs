@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/").get(parcel_controller.findAll_parcels_c).post(isAuth, isAdmin, parcel_controller.create_parcels_c);
 
-router.route("/table").get(parcel_controller.get_table_parcels_c);
+router.route("/table").get(isAuth, isAdmin, parcel_controller.get_table_parcels_c);
 
 router
   .route("/:id")

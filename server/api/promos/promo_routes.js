@@ -12,11 +12,11 @@ router.route("/:affiliate_id/sponsor_codes").get(promo_controller.findByAffiliat
 
 router.route("/update_discount/:year?/:month?").put(promo_controller.update_affiliate_codes_promos_c);
 router.route("/create_one_time_use_code").put(promo_controller.create_one_time_use_code_promos_c);
-router.route("/refresh_sponsor_codes").post(promo_controller.refresh_sponsor_codes_promos_c);
+router.route("/refresh_sponsor_codes").post(isAuth, isAdmin, promo_controller.refresh_sponsor_codes_promos_c);
 router.route("/filters").get(promo_controller.create_filters_promos_c);
 
-router.route("/delete_multiple").put(promo_controller.remove_multiple_promos_c);
-router.route("/table").get(promo_controller.findAllTable_promos_c);
+router.route("/delete_multiple").put(isAuth, isAdmin, promo_controller.remove_multiple_promos_c);
+router.route("/table").get(isAuth, isAdmin, promo_controller.findAllTable_promos_c);
 router.route("/:promo_code/validate").put(promo_controller.validate_promo_code_promos_c);
 router.route("/").get(promo_controller.findAll_promos_c).post(isAuth, isAdmin, promo_controller.create_promos_c);
 

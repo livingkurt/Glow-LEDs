@@ -223,20 +223,6 @@ const contentPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.getSlideshowImages.pending]: (state, { payload }) => {
-      state.loadingSlideshowImages = true;
-    },
-    [API.getSlideshowImages.fulfilled]: (state, { payload }) => {
-      state.loadingSlideshowImages = false;
-      state.menuItems = payload.home_page.slideshow;
-      state.banner = payload.banner;
-      state.message = "Slideshow Found";
-    },
-    [API.getSlideshowImages.rejected]: (state, { payload, error }) => {
-      state.loadingSlideshowImages = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
     [API.deleteContent.pending]: (state, { payload }) => {
       state.loading = true;
     },

@@ -19,11 +19,9 @@ router.route("/generate_password_reset_token").put(user_controller.generate_pass
 router.route("/refresh_login").put(user_controller.refresh_login_users_c);
 router.route("/logout").put(user_controller.logout_users_c);
 
-router.route("/table").get(user_controller.table_users_c);
+router.route("/table").get(isAuth, isAdmin, user_controller.table_users_c);
 
 router.route("/filters").get(user_controller.create_filters_users_c);
-// router.route('/checkemail').post(user_controller.checkemail_users_c);
-// router.route('/createadmin').post(user_controller.createadmin_users_c);
 
 router
   .route("/:id")

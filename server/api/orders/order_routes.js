@@ -63,7 +63,7 @@ router.route("/glow/update_multiple_status").put(order_controller.update_multipl
 router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.transfer_orders_c);
 router.route("/test_delete/:id").delete(order_controller.test_delete_orders_c);
 
-router.route("/table").get(order_controller.get_table_orders_c);
+router.route("/table").get(isAuth, isAdmin, order_controller.get_table_orders_c);
 
 router.route("/place_order").post(order_controller.place_order_orders_c);
 

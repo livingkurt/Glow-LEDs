@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(wholesaler_controller.findAll_wholesalers_c)
+  .get(isAuth, isAdmin, wholesaler_controller.findAll_wholesalers_c)
   .post(isAuth, wholesaler_controller.create_wholesalers_c);
 
 router

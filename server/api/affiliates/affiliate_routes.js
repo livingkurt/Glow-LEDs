@@ -10,13 +10,15 @@ router
 
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 
-router.route("/table").get(affiliate_controller.table_affiliates_c);
-// router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
-router.route("/:id/generate_sponsor_codes").post(affiliate_controller.generate_sponsor_codes_affiliates_c);
-router.route("/checkin_status").get(affiliate_controller.checkin_status_affiliates_c);
-router.route("/question_concerns").get(affiliate_controller.question_concerns_affiliates_c);
-router.route("/:id/monthly_checkin").put(affiliate_controller.sponsor_monthly_checkin_affiliates_c);
-router.route("/:id/create_product_bundle/:cartId").put(affiliate_controller.create_product_bundle_affiliates_c);
+router.route("/table").get(isAuth, isAdmin, affiliate_controller.table_affiliates_c);
+// router.route("/reorder").put(isAuth, isAdmin,affiliate_controller.reorder_affiliates_c);
+router
+  .route("/:id/generate_sponsor_codes")
+  .post(isAuth, isAdmin, affiliate_controller.generate_sponsor_codes_affiliates_c);
+router.route("/checkin_status").get(isAuth, isAdmin, affiliate_controller.checkin_status_affiliates_c);
+router.route("/question_concerns").get(isAuth, isAdmin, affiliate_controller.question_concerns_affiliates_c);
+router.route("/:id/monthly_checkin").put(isAuth, affiliate_controller.sponsor_monthly_checkin_affiliates_c);
+router.route("/:id/create_product_bundle/:cartId").put(isAuth, affiliate_controller.create_product_bundle_affiliates_c);
 
 router
   .route("/:id")

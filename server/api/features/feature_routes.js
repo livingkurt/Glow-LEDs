@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/").get(feature_controller.findAll_features_c).post(feature_controller.create_features_c);
 
-router.route("/table").get(feature_controller.get_table_features_c);
+router.route("/table").get(isAuth, isAdmin, feature_controller.get_table_features_c);
 
 router
   .route("/:id")
