@@ -103,31 +103,24 @@ export const diminish_refresh_pack_stock = async (product, item) => {
     }
   }
 };
-
 export const diminish_single_glove_stock = async (product, item, isRefreshPack = false) => {
   console.log(`Diminishing single glove stock for product: ${product.name}`);
   await updateProductStock(product, item.quantity);
 
   const gloveOption = product.options.find(option => option.name.toLowerCase().includes("glove"));
-  if (gloveOption) {
-    const selectedGloveSize = item.selectedOptions.find(opt =>
-      gloveOption.values.some(value => value.name === opt.name)
-    );
+  if (!gloveOption) return;
 
-    if (selectedGloveSize) {
-      const selectedGlove = gloveOption.values.find(value => value.name === selectedGloveSize.name);
-      if (selectedGlove) {
-        const glove_option_product = await Product.findById(selectedGlove.product);
-        if (glove_option_product) {
-          if (isRefreshPack) {
-            await updateProductStock(glove_option_product, item.quantity * 6);
-          } else {
-            await updateProductStock(glove_option_product, item.quantity);
-          }
-        }
-      }
-    }
-  }
+  const selectedGloveSize = item.selectedOptions.find(opt => gloveOption.values.some(value => value.name === opt.name));
+  if (!selectedGloveSize) return;
+
+  const selectedGlove = gloveOption.values.find(value => value.name === selectedGloveSize.name);
+  if (!selectedGlove) return;
+
+  const glove_option_product = await Product.findById(selectedGlove.product);
+  if (!glove_option_product) return;
+
+  const quantity = isRefreshPack ? item.quantity * 6 : item.quantity;
+  await updateProductStock(glove_option_product, quantity);
 };
 
 export const diminish_sampler_stock = async (product, item) => {
@@ -355,18 +348,19 @@ const updateProductOptions = (existingOptions, templateProduct, selectedOptions)
 
   return JSON.parse(JSON.stringify(templateProduct.options));
 };
-
 const updateSelectedOptions = (existingOptions, templateProduct, selectedOptions) => {
   return selectedOptions.reduce(
     (updatedOptions, selectedOption) => {
       const templateOption = templateProduct.options.find(o => o.name === selectedOption.name);
       if (templateOption) {
         const index = selectedOption.order - 1;
-        if (index < updatedOptions.length) {
-          updatedOptions[index] = JSON.parse(JSON.stringify(templateOption));
+        const newOptions = [...updatedOptions];
+        if (index < newOptions.length) {
+          newOptions[index] = JSON.parse(JSON.stringify(templateOption));
         } else {
-          updatedOptions.push(JSON.parse(JSON.stringify(templateOption)));
+          newOptions.push(JSON.parse(JSON.stringify(templateOption)));
         }
+        return newOptions;
       }
       return updatedOptions;
     },
@@ -476,26 +470,40 @@ export const handleCategoryFiltering = async category => {
   switch (category) {
     case "best_sellers":
       return { _id: { $in: await getBestSellers() } };
-    case "our_picks":
+    case "our_picks": {
       const ourPicks = await getOurPicks();
       return ourPicks ? { _id: { $in: ourPicks } } : null;
+    }
     case "discounted":
       return { previous_price: { $gt: 0 } };
     case "new_releases":
       return {};
-    default:
+    default: {
       const categoryDoc = await Category.findOne({ deleted: false, pathname: category });
       return categoryDoc ? { tags: { $all: [categoryDoc._id] } } : {};
+    }
   }
 };
 
 export const sortProducts = (products, category, bestSellers, ourPicks) => {
-  if (category === "best_sellers") {
-    const bestSellerOrder = bestSellers.reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
-    return products.sort((a, b) => bestSellerOrder[a._id.toString()] - bestSellerOrder[b._id.toString()]);
-  } else if (category === "our_picks" && ourPicks) {
-    const ourPicksOrder = ourPicks.reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
-    return products.sort((a, b) => ourPicksOrder[a._id.toString()] - ourPicksOrder[b._id.toString()]);
+  if (category === "best_sellers" && Array.isArray(bestSellers)) {
+    const bestSellerOrder = bestSellers
+      .filter(id => id != null) // Filter out null/undefined values
+      .reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
+    return products.sort((a, b) => {
+      const aIndex = bestSellerOrder[a._id?.toString()] ?? Infinity;
+      const bIndex = bestSellerOrder[b._id?.toString()] ?? Infinity;
+      return aIndex - bIndex;
+    });
+  } else if (category === "our_picks" && Array.isArray(ourPicks)) {
+    const ourPicksOrder = ourPicks
+      .filter(id => id != null)
+      .reduce((acc, id, index) => ({ ...acc, [id.toString()]: index }), {});
+    return products.sort((a, b) => {
+      const aIndex = ourPicksOrder[a._id?.toString()] ?? Infinity;
+      const bIndex = ourPicksOrder[b._id?.toString()] ?? Infinity;
+      return aIndex - bIndex;
+    });
   }
   return products;
 };
