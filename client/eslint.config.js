@@ -115,7 +115,6 @@ export default [
       "no-else-return": "off",
       "no-use-before-define": ["error", { variables: false }],
       camelcase: "off",
-      "no-underscore-dangle": ["error", { allow: ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__", "__typename"] }],
       "jsx-a11y/label-has-for": [2, { required: { every: ["id"] } }],
     },
   },
