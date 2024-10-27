@@ -9,7 +9,7 @@ export const domain = () => {
   } else if (config.ENVIRONMENT === "staging") {
     return "https://glow-leds-dev.herokuapp.com";
   } else {
-    return "http://localhost:3000";
+    return "http://localhost:5173";
   }
 };
 

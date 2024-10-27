@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as API from "../../../api";
 import {
@@ -20,7 +20,6 @@ import {
 import { validate_login, validate_registration } from "../../../utils/validations";
 import { Loading } from "../../SharedComponents";
 import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material";
-import GLButton from "../GLButton/GLButton";
 import config from "../../../config";
 
 const GLLoginModal = () => {
@@ -157,18 +156,25 @@ const GLLoginModal = () => {
           loading={verificationLoading}
           message={
             <div className="payment_message">
-              <h2 className="ta-c">Wait a moment while your account is verified</h2>
-              <p className="ta-c">Please do not refresh page</p>
+              <h2 className="ta-c">{"Wait a moment while your account is verified"}</h2>
+              <p className="ta-c">{"Please do not refresh page"}</p>
             </div>
           }
         />
         {token && (
           <div>
-            <h2 className="ta-c">Your Glow LEDs Account has been created!</h2>
-            <h3 className="ta-c max-w-800px lh-30px m-auto">Thank you joining the Glow LEDs family!</h3>
+            <h2 className="ta-c">{"Your Glow LEDs Account has been created!"}</h2>
+            <h3 className="ta-c max-w-800px lh-30px m-auto">{"Thank you joining the Glow LEDs family!"}</h3>
             <Box display="flex" justifyContent="center" my={1}>
-              <Button variant="contained" onClick={() => dispatch(openLoginModal())}>
-                Login Here
+              <Button
+                variant="contained"
+                onClick={() => {
+                  const newSearchParams = new URLSearchParams(searchParams);
+                  newSearchParams.delete("token");
+                  setSearchParams(newSearchParams);
+                }}
+              >
+                {"Login Here"}
               </Button>
             </Box>
             <div className="jc-c">
@@ -178,11 +184,13 @@ const GLLoginModal = () => {
                 className="br-20px w-100per max-w-800px m-10px"
               />
             </div>
-            <h3 className="ta-c">Checkout our product categories below! Our collection is always growing!</h3>
+            <h3 className="ta-c">{"Checkout our product categories below! Our collection is always growing!"}</h3>
 
             <div className="jc-c">
               <p className="max-w-800px mv-2rem lh-30px ta-c">
-                If you have any questions or concerns, please reach out to {config.VITE_CONTACT_EMAIL}.
+                {"If you have any questions or concerns, please reach out to "}
+                {config.VITE_CONTACT_EMAIL}
+                {"."}
               </p>
             </div>
           </div>
@@ -190,9 +198,9 @@ const GLLoginModal = () => {
 
         {registrationSuccess ? (
           <div className="column jc-c">
-            <h2 className="ta-c">Thank you for registering at Glow-LEDs.com!</h2>
+            <h2 className="ta-c">{"Thank you for registering at Glow-LEDs.com!"}</h2>
             <p className="ta-c max-w-800px lh-30px m-auto">
-              You're almost done! Please check your email for verification link.
+              {"You're almost done! Please check your email for verification link."}
             </p>
 
             <div className="jc-c">
@@ -204,22 +212,26 @@ const GLLoginModal = () => {
             </div>
             <div className="jc-c">
               <p className="max-w-800px mv-2rem lh-30px ta-c">
-                If you haven't received a confirmation email, please check your spam folder. If you still can't find it,
-                click
+                {
+                  "If you haven't received a confirmation email, please check your spam folder. If you still can't find it,"
+                }
+                {"click"}
                 <Button
                   variant="contained"
                   color="primary"
                   className="mh-10px"
                   onClick={() => dispatch(API.resendVerification({ email: email.toLowerCase() }))}
                 >
-                  Resend Verification Email
+                  {"Resend Verification Email"}
                 </Button>
               </p>
             </div>
             <div className="jc-c"></div>
             <div className="jc-c">
               <p className="max-w-800px mv-2rem lh-30px ta-c">
-                If you have any questions or concerns, please reach out to {config.VITE_CONTACT_EMAIL}.
+                {"If you have any questions or concerns, please reach out to "}
+                {config.VITE_CONTACT_EMAIL}
+                {"."}
               </p>
             </div>
           </div>
@@ -237,8 +249,8 @@ const GLLoginModal = () => {
                     error={error}
                     message={
                       <div className="payment_message">
-                        <h2 className="ta-c">Sending Verification Email</h2>
-                        <p className="ta-c">Please do not refresh page</p>
+                        <h2 className="ta-c">{"Sending Verification Email"}</h2>
+                        <p className="ta-c">{"Please do not refresh page"}</p>
                       </div>
                     }
                   />
@@ -247,8 +259,8 @@ const GLLoginModal = () => {
                     error={error}
                     message={
                       <div className="payment_message">
-                        <h2 className="ta-c">Sending Password Reset Email</h2>
-                        <p className="ta-c">Please do not refresh page</p>
+                        <h2 className="ta-c">{"Sending Password Reset Email"}</h2>
+                        <p className="ta-c">{"Please do not refresh page"}</p>
                       </div>
                     }
                   />
@@ -408,7 +420,7 @@ const GLLoginModal = () => {
                           fullWidth
                           onClick={() => dispatch(setShowForgotPassword(true))}
                         >
-                          Forgot Password?
+                          {"Forgot Password?"}
                         </Button>
                       </Grid>
 
@@ -428,7 +440,7 @@ const GLLoginModal = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <Typography variant="h6" style={{ fontSize: "15px" }} gutterBottom>
-                      Verification Email Sent to:
+                      {"Verification Email Sent to:"}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -436,7 +448,7 @@ const GLLoginModal = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="subtitle" gutterBottom>
-                      Please check your email for a verification link
+                      {"Please check your email for a verification link"}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
