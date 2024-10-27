@@ -5,7 +5,6 @@ import { Chip, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { removeFilter, updateFilterDisplay } from "../actions/actions";
-import { humanize } from "../../../../utils/helper_functions";
 
 const Container = styled("div")({
   display: "flex",
@@ -25,16 +24,10 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   borderRadius: "16.5px",
   backgroundColor: "#e4ebf3",
   fontSize: "12px",
-  "& .MuiChip-deleteIcon": {
-    height: 40,
-    width: 40,
-    fontSize: 40,
-  },
   "& .MuiChip-deleteIconColorPrimary": {
     color: "red",
   },
   "&:hover": {
-    backgroundColor: "#4c6ebf",
     color: "white",
   },
 }));
@@ -91,7 +84,8 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
       </ChipList>
       {chips.length > maxChips && (
         <MoreButton color="secondary" variant="outlined" size="small" onClick={() => handleClick(chips[maxChips])}>
-          + {chips.length - maxChips}
+          {"+ "}
+          {chips.length - maxChips}
         </MoreButton>
       )}
     </Container>
