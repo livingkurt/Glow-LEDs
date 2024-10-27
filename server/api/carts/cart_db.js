@@ -11,10 +11,7 @@ export default {
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.tags")
-        .populate({
-          path: "cartItems.selectedOptions.filament",
-          model: "Filament",
-        })
+        .populate("cartItems.selectedOptions.filament")
         .populate("affiliate")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -33,10 +30,7 @@ export default {
         .populate("cartItems.product")
         .populate("cartItems.event")
         .populate("cartItems.ticket")
-        .populate({
-          path: "cartItems.selectedOptions.filament",
-          model: "Filament",
-        })
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate");
     } catch (error) {
@@ -53,10 +47,7 @@ export default {
         .populate("cartItems.product")
         .populate("cartItems.event")
         .populate("cartItems.ticket")
-        .populate({
-          path: "cartItems.selectedOptions.filament",
-          model: "Filament",
-        })
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate");
     } catch (error) {
@@ -75,10 +66,7 @@ export default {
         .populate("cartItems.product")
         .populate("cartItems.event")
         .populate("cartItems.ticket")
-        .populate({
-          path: "cartItems.selectedOptions.filament",
-          model: "Filament",
-        })
+        .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate");
     } catch (error) {
