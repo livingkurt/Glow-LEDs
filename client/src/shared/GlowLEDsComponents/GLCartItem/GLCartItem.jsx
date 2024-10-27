@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid, Chip, ListItem, useTheme, useMediaQuery } from "@mui/material";
@@ -67,11 +68,14 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
             dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
           }}
           size="small"
-          options={[
-            ...Array(current_user?.isWholesaler ? 500 : Math.max(item?.max_display_quantity, item?.quantity)).keys(),
-          ].map(value => ({
-            name: value + 1,
-          }))}
+          options={Array.from(
+            {
+              length: current_user?.isWholesaler ? 500 : Math.max(item?.max_display_quantity || 1, item?.quantity || 1),
+            },
+            (_, i) => ({
+              name: i + 1,
+            })
+          )}
           width="70px"
           getOptionLabel={option => option.name}
           valueKey="name"
@@ -188,7 +192,8 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
               {item.isPreOrder && (
                 <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
                   <ShoppingBagIcon sx={{ mb: 0.25, mr: 0.5 }} />
-                  Pre-Order: Estimated Availability {formatDate(item.preOrderReleaseDate)}
+                  {"Pre-Order: Estimated Availability "}
+                  {formatDate(item.preOrderReleaseDate)}
                 </Typography>
               )}
             </Grid>
@@ -214,6 +219,18 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
       )}
     </ListItem>
   );
+};
+
+GLCartItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  showQuantity: PropTypes.bool,
+  isOrderItem: PropTypes.bool,
+};
+
+GLCartItem.defaultProps = {
+  isOrderItem: false,
+  showQuantity: true,
 };
 
 export default GLCartItem;

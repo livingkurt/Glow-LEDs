@@ -28,7 +28,11 @@ export const areCartItemsEqual = (item1, item2) => {
       const option1 = sortedOptions1[i];
       const option2 = sortedOptions2[i];
 
-      if (option1.name !== option2.name || option1.value !== option2.value) {
+      if (
+        option1.name !== option2.name ||
+        option1.value !== option2.value ||
+        option1.filament?.toString() !== option2.filament?.toString()
+      ) {
         return false;
       }
     }
@@ -98,35 +102,39 @@ export const aggregateCartItems = items => {
 
 export const normalizeCartItem = item => {
   // Convert Mongoose documents to plain objects
-  item = item.toObject ? item.toObject() : item;
+  const normalizedItem = item.toObject ? item.toObject() : { ...item };
 
   // Ensure selectedOptions are in consistent format
-  if (item.selectedOptions && Array.isArray(item.selectedOptions)) {
-    item.selectedOptions = item.selectedOptions.map(option => {
+  if (normalizedItem.selectedOptions && Array.isArray(normalizedItem.selectedOptions)) {
+    normalizedItem.selectedOptions = normalizedItem.selectedOptions.map(option => {
       return {
         name: option.name,
         value: option.value,
+        filament: option.filament?._id || option.filament,
+        colorCode: option.colorCode,
+        product: option.product?._id || option.product,
+        isDefault: option.isDefault,
+        additionalCost: option.additionalCost,
+        active: option.active,
       };
     });
   } else {
-    item.selectedOptions = [];
+    normalizedItem.selectedOptions = [];
   }
 
   // Ensure ticket is a string
-  if (item.ticket && item.ticket._id) {
-    item.ticket = item.ticket._id.toString();
-  } else if (item.ticket && item.ticket.toString) {
-    item.ticket = item.ticket.toString();
+  if (normalizedItem.ticket && normalizedItem.ticket._id) {
+    normalizedItem.ticket = normalizedItem.ticket._id.toString();
+  } else if (normalizedItem.ticket && normalizedItem.ticket.toString) {
+    normalizedItem.ticket = normalizedItem.ticket.toString();
   }
 
   // Ensure product is a string
-  if (item.product && item.product._id) {
-    item.product = item.product._id.toString();
-  } else if (item.product && item.product.toString) {
-    item.product = item.product.toString();
+  if (normalizedItem.product && normalizedItem.product._id) {
+    normalizedItem.product = normalizedItem.product._id.toString();
+  } else if (normalizedItem.product && normalizedItem.product.toString) {
+    normalizedItem.product = normalizedItem.product.toString();
   }
 
-  // Handle other nested properties as needed
-
-  return item;
+  return normalizedItem;
 };
