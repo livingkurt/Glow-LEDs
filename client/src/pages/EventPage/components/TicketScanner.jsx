@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { QrReader } from "react-qr-reader";
+import { Scanner } from '@yudiel/react-qr-scanner';
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+
 
 const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
   const [scanResult, setScanResult] = useState(null);
@@ -14,12 +15,13 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
   const dispatch = useDispatch();
 
   const handleResult = useCallback(
-    async result => {
-      if (result && !isProcessing) {
+    async (result) => {
+      if (result && result.length > 0 && !isProcessing) {
         setIsProcessing(true);
-        setScanResult(result.text);
+        const scannedValue = result[0].rawValue;
+        setScanResult(scannedValue);
         try {
-          const response = await dispatch(API.validateTicket(result.text));
+          const response = await dispatch(API.validateTicket(scannedValue));
           setScannedCount(response.payload.scanned_tickets_count);
           setScanStatus(response.payload.message === "Ticket validated successfully" ? "success" : "error");
         } catch (error) {
@@ -32,7 +34,6 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
     },
     [dispatch, isProcessing]
   );
-
   const handleError = error => {
     console.error(error);
     setScanStatus("error");
@@ -66,14 +67,16 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
         color: scanStatus ? "#ffffff" : "#000000",
       }}
     >
-      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" p={2}>
+     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" p={2}>
         {isScanning ? (
           <Box width="100%" maxWidth="300px" position="relative">
-            <QrReader
+            <Scanner
+              onScan={handleResult}
+              onError={(error) => {
+                console.error(error);
+                setScanStatus("error");
+              }}
               constraints={{ facingMode: "environment" }}
-              onResult={handleResult}
-              onError={handleError}
-              style={{ width: "100%" }}
             />
             {isProcessing && (
               <Box
