@@ -4,12 +4,13 @@ import user_services from "./user_services.js";
 import Token from "../tokens/token.js";
 import { getAccessToken } from "./userInteractors.js";
 import config from "../../config.js";
-import App from "../../email_templates/App.js";
-import { domain } from "../../email_templates/email_template_helpers.js";
-import successful_password_reset from "../../email_templates/pages/successful_password_reset.js";
-import verify_email_password_reset from "../../email_templates/pages/verify_email_password_reset.js";
-import { sendEmail } from "../orders/order_interactors.js";
-import { sendRegistrationEmail, sendEmailVerifiedSuccess, sendAnnouncementEmail } from "./user_interactors.js";
+import {
+  sendRegistrationEmail,
+  sendEmailVerifiedSuccess,
+  sendAnnouncementEmail,
+  sendPasswordResetSuccessEmail,
+  sendVerifyEmailPasswordResetSuccessEmail,
+} from "./user_interactors.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -290,20 +291,8 @@ export default {
           try {
             user.password = hash;
             await user_db.update_users_db(user._id, user);
-            const mailOptions = {
-              from: config.DISPLAY_INFO_EMAIL,
-              to: user.email,
-              subject: "Successfully Changed Password",
-              html: App({
-                body: successful_password_reset({
-                  first_name: user.first_name,
-                  title: "Successfully Changed Password",
-                }),
-                unsubscribe: false,
-              }),
-            };
-            sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + user.first_name);
-            // return res.status(200).send(new_user);
+            await sendPasswordResetSuccessEmail(user);
+            return res.status(200).send(user);
           } catch (error) {
             res.status(500).json({ message: error.message, error });
           }
@@ -322,24 +311,8 @@ export default {
       if (user) {
         // Generate a JWT token for reset password
         const resetToken = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
-
-        // Include the token in the reset URL
-        const url = `${domain()}/account/reset_password?token=${resetToken}`;
-
-        const mailOptions = {
-          from: config.DISPLAY_INFO_EMAIL,
-          to: req.body.email,
-          subject: "Glow LEDs Reset Password",
-          html: App({
-            body: verify_email_password_reset({
-              ...req.body,
-              url,
-              title: "Glow LEDs Reset Password",
-            }),
-            unsubscribe: false,
-          }),
-        };
-        sendEmail(mailOptions, res, "info", "Reset Password Link Email Sent to " + user.first_name);
+        await sendVerifyEmailPasswordResetSuccessEmail(user, resetToken);
+        return res.status(200).send({ message: "Email sent successfully" });
       } else {
         res.status(500).send({ message: "You do not have an account with us" });
       }
@@ -366,19 +339,6 @@ export default {
     }
   },
 
-  // verify_users_c: async (req, res) => {
-  // 	const { params } = req;
-  // 	try {
-  // 		const user = await user_services.verify_users_s(params);
-  // 		if (user) {
-  // 			return res.status(200).send(user );
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // },
   check_password_c: async (req, res) => {
     const { params, body } = req;
     try {
@@ -403,30 +363,4 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  // checkemail_users_c: async (req, res) => {
-  // 	const { params } = req;
-  // 	try {
-  // 		const user = await user_services.checkemail_users_s(params);
-  // 		if (user) {
-  // 			return res.status(200).send(user );
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // },
-  // createadmin_users_c: async (req, res) => {
-  // 	const { params } = req;
-  // 	try {
-  // 		const user = await user_services.createadmin_users_s(params);
-  // 		if (user) {
-  // 			return res.status(200).send(user );
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // }
 };
