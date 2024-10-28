@@ -1,5 +1,5 @@
-import React from "react";
 import { useSelector } from "react-redux";
+import { Box, Typography, Stack } from "@mui/material";
 
 const ProfileDetails = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -8,66 +8,95 @@ const ProfileDetails = () => {
   const { _id, first_name, last_name, email, isVerified, isAdmin, shipping, email_subscription } = user;
 
   return (
-    <div className="w-50per">
-      {current_user?.isAdmin && (
-        <div className="mb-20px">
-          <h3>{"ID"}</h3>
-          <label>{_id}</label>
-        </div>
-      )}
-      <div className="mb-20px">
-        <h3>{"First Name"}</h3>
-        <label>{first_name}</label>
-      </div>
-      <div className="mb-20px">
-        <h3>{"Last Name"}</h3>
-        <label>{last_name}</label>
-      </div>
-      <div className="mb-20px">
-        <h3>{"Email"}</h3>
-        <label>{email}</label>
-      </div>
-      <div className="mb-20px">
-        <h3>{"Password"}</h3>
-        <label>{"**********"}</label>
-      </div>
-      {shipping && shipping.first_name && shipping.last_name && (
-        <div className="label">
-          <h3>{"Shipping Address"}</h3>
-          <div>
-            <div>
-              {shipping.first_name} {shipping.last_name}
-            </div>
-            <div>
-              {shipping.address_1} {shipping.address_2}
-            </div>
-            <div>
-              {shipping.city}
-              {", "}
-              {shipping.state} {shipping.postalCode} {shipping.country}
-            </div>
-            <div>{shipping.international && "International"}</div>
-            <div>{shipping.email}</div>
-          </div>
-        </div>
-      )}
-      <div className="mb-20px">
-        <h3>{"Promotional Emails"}</h3>
-        <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
-      </div>
-      {current_user?.isAdmin && (
-        <>
-          <div className="mb-20px">
-            <h3>{"Verified"}</h3>
-            <label>{isVerified === true ? "Verified" : "Not Verified"}</label>
-          </div>
-          <div className="mb-20px">
-            <h3>{"Admin"}</h3>
-            <label>{isAdmin === true ? "Admin" : "Not Admin"}</label>
-          </div>
-        </>
-      )}
-    </div>
+    <Box sx={{ p: 3 }}>
+      <Stack spacing={2}>
+        {current_user?.isAdmin && (
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              {"ID"}
+            </Typography>
+            <Typography>{_id}</Typography>
+          </Box>
+        )}
+
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            {"First Name"}
+          </Typography>
+          <Typography>{first_name}</Typography>
+        </Box>
+
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            {"Last Name"}
+          </Typography>
+          <Typography>{last_name}</Typography>
+        </Box>
+
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            {"Email"}
+          </Typography>
+          <Typography>{email}</Typography>
+        </Box>
+
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            {"Password"}
+          </Typography>
+          <Typography>{"**********"}</Typography>
+        </Box>
+
+        {shipping && shipping.first_name && shipping.last_name && (
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              {"Shipping Address"}
+            </Typography>
+            <Stack spacing={0.5}>
+              <Typography>
+                {shipping.first_name} {shipping.last_name}
+              </Typography>
+              <Typography>
+                {shipping.address_1} {shipping.address_2}
+              </Typography>
+              <Typography>
+                {shipping.city}
+                {", "}
+                {shipping.state} {shipping.postalCode} {shipping.country}
+              </Typography>
+              {shipping.international && <Typography>{"International"}</Typography>}
+              <Typography>{shipping.email}</Typography>
+            </Stack>
+          </Box>
+        )}
+
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            {"Promotional Emails"}
+          </Typography>
+          <Typography>{email_subscription ? "Subscribed" : "Not Subscribed"}</Typography>
+        </Box>
+
+        {current_user?.isAdmin && (
+          <>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                {"Verified"}
+              </Typography>
+              <Typography>{isVerified === true ? "Verified" : "Not Verified"}</Typography>
+            </Box>
+
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                {"Admin"}
+              </Typography>
+              <Typography>{isAdmin === true ? "Admin" : "Not Admin"}</Typography>
+            </Box>
+          </>
+        )}
+      </Stack>
+    </Box>
   );
 };
+
 export default ProfileDetails;
