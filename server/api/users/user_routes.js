@@ -9,7 +9,7 @@ router.route("/email/:email").get(user_controller.findByEmail_users_c);
 router.route("/affiliate/:id").get(user_controller.findByEmail_users_c);
 
 router.route("/check_password/:id").post(user_controller.check_password_c);
-router.route("/validate_email/:email").post(user_controller.validate_email_c);
+router.route("/validate_email/:email").post(user_controller.validate_email_users_c);
 router.route("/register").post(user_controller.register_users_c);
 router.route("/verify/:token").post(user_controller.verify_users_c);
 router.route("/login_as_user").post(isAuth, isAdmin, user_controller.login_as_user_users_c);
@@ -22,8 +22,8 @@ router.route("/logout").put(user_controller.logout_users_c);
 router.route("/table").get(user_controller.table_users_c);
 
 router.route("/filters").get(user_controller.create_filters_users_c);
-// router.route('/checkemail').post(user_controller.checkemail_users_c);
-// router.route('/createadmin').post(user_controller.createadmin_users_c);
+
+router.route("/unsubscribe").post(user_controller.unsubscribe_email_users_c);
 
 router
   .route("/:id")

@@ -51,7 +51,7 @@ import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
 import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 import AcademyPage from "../../pages/AcademyPage/AcademyPage";
-
+import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 export const Components = {
   PlaceOrderPage,
   OrderPage,
@@ -79,6 +79,7 @@ export const Components = {
   ArticlesGridPage,
   ArticlePage,
   AcademyPage,
+  UnsubscribePage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

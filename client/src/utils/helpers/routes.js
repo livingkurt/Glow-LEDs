@@ -36,6 +36,7 @@ export const routes = [
   { path: "/menu/:pathname", element: "MenuPage", exact: true },
 
   { path: "/palettes", element: "ColorPalettePage", exact: true },
+  { path: "/unsubscribe", element: "UnsubscribePage", exact: true },
 ];
 export const adminRoutes = [
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },

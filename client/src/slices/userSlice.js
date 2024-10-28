@@ -345,6 +345,18 @@ const userPage = createSlice({
         state.loading = false;
         state.error = payload ? payload.error : error.message;
         state.message = payload ? payload.message : "An error occurred";
+      })
+      .addCase(API.unsubscribeEmail.pending, state => {
+        state.loading = true;
+      })
+      .addCase(API.unsubscribeEmail.fulfilled, state => {
+        state.loading = false;
+        state.message = "Unsubscribed";
+      })
+      .addCase(API.unsubscribeEmail.rejected, (state, { payload, error }) => {
+        state.loading = false;
+        state.error = payload ? payload.error : error.message;
+        state.message = payload ? payload.message : "An error occurred";
       });
   },
 });

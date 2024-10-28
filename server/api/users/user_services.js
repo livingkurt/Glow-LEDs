@@ -292,13 +292,33 @@ export default {
       }
     }
   },
-  validate_email_s: async (params, body) => {
+  validate_email_users_s: async (params, body) => {
     try {
       const user = await user_db.findByEmail_users_db(params.email);
       if (user) {
         return true;
       }
       return false;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  unsubscribe_email_users_s: async body => {
+    try {
+      const { email } = body;
+
+      // Find and update the user
+      const user = await user_db.findByEmail_users_db(email);
+      if (!user) {
+        throw new Error("User Not Found");
+      }
+
+      // Update email subscription status
+      await user_db.update_users_db(user._id, { email_subscription: false });
+
+      return { message: "Unsubscribed" };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
