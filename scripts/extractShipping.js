@@ -1,4 +1,3 @@
-const { JSDOM } = require("jsdom");
 const parseAddress = require("parse-address");
 const he = require("he");
 const cheerio = require("cheerio");

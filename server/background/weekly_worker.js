@@ -1,5 +1,5 @@
-const { check_stock } = require("./weekly_workers/check_stock");
-const { payout_employees } = require("./weekly_workers/payout_employees");
+import { check_stock } from "./weekly_workers/check_stock.js";
+import { payout_employees } from "./weekly_workers/payout_employees.js";
 
 const getWeekNumber = d => {
   // Copy date so don't modify original

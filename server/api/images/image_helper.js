@@ -4,6 +4,7 @@ import config from "../../config.js";
 import axios from "axios";
 import image_db from "./image_db.js";
 import Jimp from "jimp";
+import FormData from "form-data";
 
 export const convertDriveLinkToDirectLink = shareLink => {
   // Check if the link is already a direct Google Drive link
@@ -50,7 +51,6 @@ export const compressImage = async imageBuffer => {
 
 export const uploadImageToImgur = async (imageBuffer, albumDeletehash) => {
   console.log("Preparing image upload to Imgur...");
-  const FormData = require("form-data");
   const data = new FormData();
   data.append("image", imageBuffer, { filename: "image.jpg" });
   data.append("type", "image");
@@ -97,7 +97,7 @@ export const upload = multer({
 
 export const createImgurAlbum = async (albumName, imageHash) => {
   console.log(`Creating Imgur album: ${albumName}`);
-  const FormData = require("form-data");
+
   const data = new FormData();
   data.append("title", albumName);
   data.append("description", "This album contains images uploaded from the application.");

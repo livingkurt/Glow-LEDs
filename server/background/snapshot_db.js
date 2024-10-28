@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const fs = require("fs");
+import mongoose from "mongoose";
+import fs from "fs";
 
 async function snapshotDatabase() {
   await mongoose.connect("mongodb://localhost/glow_leds_db", { useNewUrlParser: true, useUnifiedTopology: true });

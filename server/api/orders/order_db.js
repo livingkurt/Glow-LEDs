@@ -1,6 +1,7 @@
 import Product from "../products/product.js";
 import Order from "./order.js";
 import Affiliate from "../affiliates/affiliate.js";
+import mongoose from "mongoose";
 import { dedupeAddresses } from "./order_helpers.js";
 
 export default {
@@ -516,7 +517,7 @@ export default {
   // },
   get_monthly_revenue_product_orders_db: async (year, product_id) => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const ObjectId = mongoose.Types.ObjectId;
       const totalPriceByMonth = await Order.aggregate([
         {
           $match: {
@@ -584,7 +585,7 @@ export default {
 
   get_yearly_revenue_product_orders_db: async product_id => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const ObjectId = mongoose.Types.ObjectId;
       const totalPriceByYear = await Order.aggregate([
         {
           $match: {
