@@ -1,32 +1,32 @@
 @font-face {
   font-family: "heading_font";
-  src: url("../fonts/beyond_the_mountains.otf");
+  src: url("../assets/fonts/beyond_the_mountains.otf");
 }
 
 @font-face {
   font-family: "title_font";
-  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+  src: url("../assetsfonts/Montserrat-VariableFont_wght.ttf");
 }
 
 @font-face {
   font-family: "phrase_font";
-  src: url("../fonts/Quicksand-VariableFont_wght.ttf");
+  src: url("../assetsfonts/Quicksand-VariableFont_wght.ttf");
   // font-weight: 800;
 }
 
 @font-face {
   font-family: "paragraph_font";
-  src: url("../fonts/Quicksand-VariableFont_wght.ttf");
+  src: url("../assetsfonts/Quicksand-VariableFont_wght.ttf");
 }
 
 // @font-face {
 //   font-family: "new_font_1";
-//   src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+//   src: url("../../assetsfonts/Montserrat-VariableFont_wght.ttf");
 // }
 
 // @font-face {
 //   font-family: "new_font_2";
-//   src: url("../fonts/Raleway-VariableFont_wght.ttf");
+//   src: url("../../assetsfonts/Raleway-VariableFont_wght.ttf");
 // }
 
 $phrase_font: phrase_font;
