@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -13,13 +13,12 @@ import { useLocation } from 'react-router-dom';
 import * as API from '../../api';
 import { Loading } from '../../shared/SharedComponents';
 
-
 const UnsubscribePage = () => {
   const dispatch = useDispatch();
   const { loading, message, error } = useSelector((state) => state.users.userPage);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const email = searchParams.get('email');
+  const [email, setEmail] = useState(searchParams.get('email'));
 
   const isUnsubscribed = message === 'Unsubscribed';
 
@@ -43,11 +42,11 @@ const UnsubscribePage = () => {
 
               <TextField
                 fullWidth
-                value={email || ''}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 variant="outlined"
                 type="email"
                 sx={{ mb: 3 }}
-                disabled
               />
 
               <Button
