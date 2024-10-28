@@ -99,7 +99,9 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
     }
 
     await send_multiple_emails(emailAddresses, email, res, testEmails);
-    console.log(`Batch ${i + 1}: Sent emails to ${emailAddresses.length} users`);
+    console.log(
+      `Batch ${i + 1}: Sent emails to ${emailAddresses.length} users (Total: ${(i + 1) * emailAddresses.length} emails sent)`
+    );
 
     if (!testEmails) {
       // If not testing, wait before sending the next batch

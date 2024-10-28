@@ -45,7 +45,7 @@ const ProfilePage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin User Profile | Glow LEDs</title>
+        <title>{"Admin User Profile | Glow LEDs"}</title>
       </Helmet>
       <EditUserModal />
       {current_user?.isAdmin && (
@@ -74,7 +74,7 @@ const ProfilePage = () => {
         <Grid item xs={12}>
           {user && user?.affiliate?._id && (
             <GLDisplayTable
-              title={"Monthly Revenue"}
+              title="Monthly Revenue"
               rows={
                 !monthlyEarnings.isLoading &&
                 monthlyEarnings.data &&
@@ -94,7 +94,7 @@ const ProfilePage = () => {
           {user._id && (
             <GLTableV2
               remoteApi={ordersRemoteApi}
-              tableName={"Orders"}
+              tableName="Orders"
               colors={Object.values(orderStatusColors)}
               enableSearch={false}
               noURLParams
@@ -114,7 +114,7 @@ const ProfilePage = () => {
               remoteVersionRequirement={remoteVersionRequirement}
               determineColor={determineColor}
               noURLParams
-              tableName={"Paychecks"}
+              tableName="Paychecks"
               enableSearch={false}
               namespaceScope="paychecks"
               namespace="paycheckTable"

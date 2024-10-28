@@ -45,12 +45,12 @@ const DashboardPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
-        <title>Dashboard | Glow LEDs</title>
+        <title>{"Dashboard | Glow LEDs"}</title>
       </Helmet>
-      <h2 className="ta-c w-100per jc-c fs-30px">Glow LEDs Dashboard</h2>
+      <h2 className="ta-c w-100per jc-c fs-30px">{"Glow LEDs Dashboard"}</h2>
       <div className="jc-b w-100per">
         <Button variant="contained" onClick={() => dispatch(openGcodeContinuousModal(true))}>
-          Gcode Generater
+          {"Gcode Generater"}
         </Button>
       </div>
 
@@ -82,12 +82,15 @@ const DashboardPage = () => {
               variant="scrollable"
               scrollButtons="false"
             >
-              <Tab label={`${determineTabName(month, year)} Revenue`} value={0} />;
-              <Tab label={"Affiliate Earnings"} value={1} />;
-              <Tab label={"Product Categories"} value={2} />;
-              <Tab label={"All Products"} value={3} />
-              <Tab label={"Product Revenue"} value={4} />
-              <Tab label={"Sponsor Checkins"} value={5} />
+              <Tab label={`${determineTabName(month, year)} Revenue`} value={0} />
+              {";"}
+              <Tab label="Affiliate Earnings" value={1} />
+              {";"}
+              <Tab label="Product Categories" value={2} />
+              {";"}
+              <Tab label="All Products" value={3} />
+              <Tab label="Product Revenue" value={4} />
+              <Tab label="Sponsor Checkins" value={5} />
             </Tabs>
           </AppBar>
         </Paper>
