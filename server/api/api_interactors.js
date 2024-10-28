@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
 import config from "../config.js";
-const { MongoClient, ObjectId } = require("mongodb");
+import { MongoClient, ObjectId } from "mongodb";
 
 export const mongodbFindAllNoPopulate = async (collectionName, options) => {
   const client = await MongoClient.connect(config.MONGODB_URI);

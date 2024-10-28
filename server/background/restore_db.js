@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const fs = require("fs");
+import mongoose from "mongoose";
+import fs from "fs";
 
 async function restoreDatabase() {
   const snapshot = JSON.parse(fs.readFileSync("db-snapshot.json"));

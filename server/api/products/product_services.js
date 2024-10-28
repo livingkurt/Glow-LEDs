@@ -24,8 +24,6 @@ import Ticket from "../tickets/ticket.js";
 import fs from "fs";
 import Papa from "papaparse";
 
-// const sharp = require("sharp");
-
 export default {
   findAll_products_s: async query => {
     try {

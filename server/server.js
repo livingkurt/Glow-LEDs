@@ -15,12 +15,8 @@ import routes from "./api/index.js"; // Make sure to add the .js extension
 import sslRedirect from "heroku-ssl-redirect";
 import configurePassport from "./passport.js";
 
-// ... rest of your server.js code
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-// const Bugsnag = require("@bugsnag/js");
-// const BugsnagPluginExpress = require("@bugsnag/plugin-express");
 
 const oauthClients = {};
 
@@ -55,12 +51,6 @@ async function initializeAllOAuthClients() {
     refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
   });
 }
-
-// Bugsnag.start({
-//   apiKey: config.BUGSNAG_KEY,
-//   plugins: [BugsnagPluginExpress],
-//   releaseStage: process.env.NODE_ENV || "development",
-// });
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
@@ -113,9 +103,6 @@ app.all("*", function (req, res, next) {
   next();
 });
 
-// const bugsnagMiddleware = Bugsnag.getPlugin("express");
-// app.use(bugsnagMiddleware.requestHandler);
-
 app.use(cors({ origin: ["http://localhost:5173", "https://livingkurt.github.io/"] }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
@@ -148,8 +135,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// app.use(bugsnagMiddleware.errorHandler);
-
 initializeAllOAuthClients()
   .then(() => {
     server.listen(config.PORT, () => {
@@ -164,12 +149,5 @@ initializeAllOAuthClients()
       console.log(`Server listening on port ${config.PORT}`);
     });
   });
-
-// ... (rest of the code remains the same)
-
-// app.get("/api/bugsnag-test", function (req, res) {
-//   Bugsnag.notify(new Error("Test error"));
-//   res.send("Test error sent to Bugsnag");
-// });
 
 export { oauthClients }; // Export oauthClients

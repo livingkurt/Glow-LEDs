@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const { default: axios } = require("axios");
-const { routes } = require("../utils/helpers/routes");
+import fs from "fs";
+import path from "path";
+import axios from "axios";
+import { routes } from "../utils/helpers/routes.js";
 
 function generateUrlXML(url, lastmod = null) {
   let xml = `

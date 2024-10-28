@@ -1,6 +1,6 @@
-const { Category } = require("../categorys");
-const { Product } = require("../products");
-const mongoose = require("mongoose");
+import Category from "../categorys.js";
+import Product from "../products.js";
+import mongoose from "mongoose";
 
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
