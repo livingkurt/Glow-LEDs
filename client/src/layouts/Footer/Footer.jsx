@@ -91,12 +91,11 @@ const Footer = () => {
       }
     }
   };
-  console.log({ main: theme.palette.primary.main });
   return (
     <Box
       component="footer"
       sx={{
-        background: `linear-gradient(0deg, #4d5061 0%, rgba(0,0,0,0) 100%)`,
+        background: `linear-gradient(0deg, ${theme.palette.primary.main} 0%, rgba(0,0,0,0) 100%)`,
         color: "white",
         py: 2,
       }}
