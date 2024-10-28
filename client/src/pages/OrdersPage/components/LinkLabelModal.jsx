@@ -99,10 +99,10 @@ const LinkLabelModal = () => {
           dispatch(clearTable("shippingTable"));
         }}
         confirmDisabled={selectedRows.length > 1 || selectedRows.length === 0}
-        title={"Link Label to Order"}
-        confirmLabel={"Save"}
+        title="Link Label to Order"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
@@ -112,7 +112,7 @@ const LinkLabelModal = () => {
             <>
               <GLTableV2
                 rows={shipments}
-                tableName={"Shipments"}
+                tableName="Shipments"
                 namespaceScope="shipping"
                 namespace="shippingTable"
                 columnDefs={columnDefs}
@@ -120,35 +120,35 @@ const LinkLabelModal = () => {
                 enableRowSelect={true}
                 noURLParams
                 singleSelect={true}
-                minTableWidth={"unset"}
+                minTableWidth="unset"
               />
               <Collapse in={selectedShipment}>
                 <div className="mt-10px">
                   <Typography variant="h6" gutterBottom>
-                    Selected Shipment Details:
+                    {"Selected Shipment Details:"}
                   </Typography>
                   <List>
                     <ListItem>
                       <ListItemText
-                        primary={<strong>Name:</strong>}
+                        primary={<strong>{"Name:"}</strong>}
                         secondary={selectedShipment?.buyer_address.name || selectedShipment?.buyer_address.company}
                       />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary={<strong>Shipment ID:</strong>} secondary={selectedShipment?.id} />
+                      <ListItemText primary={<strong>{"Shipment ID:"}</strong>} secondary={selectedShipment?.id} />
                     </ListItem>
                     <ListItem>
                       <ListItemText
-                        primary={<strong>Tracking Number:</strong>}
+                        primary={<strong>{"Tracking Number:"}</strong>}
                         secondary={selectedShipment?.tracking_code}
                       />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary={<strong>Tracker:</strong>} secondary={selectedShipment?.tracker.id} />
+                      <ListItemText primary={<strong>{"Tracker:"}</strong>} secondary={selectedShipment?.tracker.id} />
                     </ListItem>
                     <ListItem>
                       <ListItemText
-                        primary={<strong>Shipping Rate:</strong>}
+                        primary={<strong>{"Shipping Rate:"}</strong>}
                         secondary={`$${parseFloat(
                           selectedShipment?.selected_rate?.list_rate || selectedShipment?.selected_rate?.rate || 0
                         ).toFixed(2)}`}
@@ -156,13 +156,13 @@ const LinkLabelModal = () => {
                     </ListItem>{" "}
                     <ListItem>
                       <ListItemText
-                        primary={<strong>Service:</strong>}
+                        primary={<strong>{"Service:"}</strong>}
                         secondary={selectedShipment?.selected_rate.service}
                       />
                     </ListItem>
                     <ListItem>
                       <ListItemText
-                        primary={<strong>Tracking URL:</strong>}
+                        primary={<strong>{"Tracking URL:"}</strong>}
                         secondary={selectedShipment?.postage_label.label_url}
                       />
                     </ListItem>

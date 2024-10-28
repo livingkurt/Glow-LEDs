@@ -3,7 +3,7 @@ import React from "react";
 const LoadingInside = ({ loading, error, children }) => {
   const loading_message = () => {
     setTimeout(() => {
-      return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
+      return <h3 style={{ textAlign: "center" }}>{"If page doesn't show in 5 seconds, refresh the page."}</h3>;
     }, 3000);
   };
 
@@ -21,13 +21,13 @@ const LoadingInside = ({ loading, error, children }) => {
         >
           <div className="loading_images_container">
             <img
-              src={"/loading.gif"}
+              src="/loading.gif"
               className="loading_gif_inside"
               alt="LoadingInside Circle"
               title="LoadingInside Circle"
             />
             <img
-              src={"/loading_overlay.png"}
+              src="/loading_overlay.png"
               className="loading_png_inside"
               alt="LoadingInside Overlay"
               title="LoadingInside Overlay"
@@ -37,7 +37,10 @@ const LoadingInside = ({ loading, error, children }) => {
         </div>
       ) : error ? (
         <div className="error_message jc-c column">
-          <p className="ta-c  fs-14px">Error: {error}</p>
+          <p className="ta-c  fs-14px">
+            {"Error: "}
+            {error}
+          </p>
         </div>
       ) : (
         children

@@ -33,7 +33,7 @@ const FeaturedPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Featured | Glow LEDs</title>
+        <title>{"Featured | Glow LEDs"}</title>
         <meta property="og:title" content="Featured" />
         <meta name="twitter:title" content="Featured" />
         <link rel="canonical" href="https://www.glow-leds.com/featured" />
@@ -56,12 +56,12 @@ const FeaturedPage = () => {
         <div className="">
           <div className="jc-b">
             <GLButton variant="secondary" onClick={() => navigate(-1)}>
-              Back to Features
+              {"Back to Features"}
             </GLButton>
             {current_user?.isAdmin && (
               <Link to={"/secure/glow/editfeature/" + params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
-                  Edit Feature
+                  {"Edit Feature"}
                 </GLButton>
               </Link>
             )}
@@ -81,7 +81,7 @@ const FeaturedPage = () => {
                   height="560"
                   style={{ borderRadius: "20px" }}
                   src={`https://www.youtube.com/embed/${feature.video}`}
-                  frameborder="0"
+                  frameBorder="0"
                   allowfullscreen
                 />
               </div>
@@ -130,7 +130,8 @@ const FeaturedPage = () => {
           </div>
           {feature.song_id && (
             <p className="p_descriptions" style={{ textAlign: "center" }}>
-              Song ID: {feature.song_id}
+              {"Song ID: "}
+              {feature.song_id}
             </p>
           )}
 

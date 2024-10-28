@@ -13,7 +13,7 @@ const ChooseShipping = ({ shippingRates, onChange, carrier }) => {
     <Box>
       <FormControl component="fieldset">
         <FormLabel component="h2" sx={{ color: "white" }}>
-          <strong>Choose a shipping option:</strong>
+          <strong>{"Choose a shipping option:"}</strong>
         </FormLabel>
         <RadioGroup value={value} onChange={handleChange}>
           {shippingRates

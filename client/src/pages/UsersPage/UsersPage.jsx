@@ -48,7 +48,7 @@ const UsersPage = () => {
         title: "",
         nonSelectable: true,
         display: user => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -95,7 +95,7 @@ const UsersPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Users | Glow LEDs</title>
+        <title>{"Admin Users | Glow LEDs"}</title>
       </Helmet>
       <Loading loading={loadingAffiliateOnboardSend} />
       <GLTableV2
@@ -103,7 +103,7 @@ const UsersPage = () => {
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
-        tableName={"Users"}
+        tableName="Users"
         namespaceScope="users"
         namespace="userTable"
         columnDefs={columnDefs}
@@ -123,7 +123,7 @@ const UsersPage = () => {
                     }
                   }}
                 >
-                  Delete Users
+                  {"Delete Users"}
                 </Button>
                 <Button
                   color="secondary"
@@ -137,7 +137,7 @@ const UsersPage = () => {
                     }
                   }}
                 >
-                  Send Affiliate Onboard Email
+                  {"Send Affiliate Onboard Email"}
                 </Button>
                 {selectedRows.length === 2 && (
                   <Button
@@ -152,13 +152,13 @@ const UsersPage = () => {
                       )
                     }
                   >
-                    Combine Users
+                    {"Combine Users"}
                   </Button>
                 )}
               </>
             )}
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_user_modal())}>
-              Create User
+              {"Create User"}
             </Button>
           </div>
         }

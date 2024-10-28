@@ -40,7 +40,7 @@ const StripeForm = ({ handleSubmit }) => {
       )}
       {/* {!hideCheckoutButton && ( */}
       <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>
-        Complete Order
+        {"Complete Order"}
       </GLButton>
       {/* )} */}
     </form>

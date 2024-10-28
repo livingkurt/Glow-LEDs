@@ -32,10 +32,10 @@ const ArticlePage = () => {
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Link to="/learn">
-          <GLButtonV2>Back to Articles</GLButtonV2>
+          <GLButtonV2>{"Back to Articles"}</GLButtonV2>
         </Link>
         {current_user.isAdmin && (
-          <GLButtonV2 onClick={() => dispatch(open_edit_article_modal(article))}>Edit Article</GLButtonV2>
+          <GLButtonV2 onClick={() => dispatch(open_edit_article_modal(article))}>{"Edit Article"}</GLButtonV2>
         )}
       </Box>
       <Typography variant="h4" gutterBottom>

@@ -22,10 +22,10 @@ const AcademyPage = () => {
 
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Featured Articles
+          {"Featured Articles"}
         </Typography>
         <Button component={Link} to="/learn" variant="text" sx={{ mb: 2, color: "#fff" }}>
-          View All Articles
+          {"View All Articles"}
         </Button>
         <Grid container spacing={3}>
           {currentContent?.academy_page?.featured_articles?.map(article => (
@@ -38,10 +38,10 @@ const AcademyPage = () => {
 
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Featured Tutorials
+          {"Featured Tutorials"}
         </Typography>
         <Button component={Link} to="/tutorials" variant="text" sx={{ mb: 2, color: "#fff" }}>
-          View All Tutorials
+          {"View All Tutorials"}
         </Button>
         <Grid container spacing={3}>
           {currentContent?.academy_page?.featured_tutorials?.map(tutorial => (

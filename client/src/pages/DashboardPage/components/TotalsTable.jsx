@@ -23,30 +23,36 @@ const TotalsTable = ({ range_revenue, tips_range_revenue, range_payouts, range_e
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className="title_font">Sales</TableCell>
-              <TableCell className="title_font">Expenses</TableCell>
-              <TableCell className="title_font">Profit</TableCell>
-              <TableCell className="title_font">Tips</TableCell>
-              <TableCell className="title_font">Payouts</TableCell>
+              <TableCell className="title_font">{"Sales"}</TableCell>
+              <TableCell className="title_font">{"Expenses"}</TableCell>
+              <TableCell className="title_font">{"Profit"}</TableCell>
+              <TableCell className="title_font">{"Tips"}</TableCell>
+              <TableCell className="title_font">{"Payouts"}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-              <TableCell>${isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}</TableCell>
               <TableCell>
-                ${isLoading(range_expenses) ? range_expenses.data[0]?.totalAmount?.toFixed(2) : "0.00"}
+                {"$"}
+                {isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
               </TableCell>
               <TableCell>
-                $
+                {"$"}
+                {isLoading(range_expenses) ? range_expenses.data[0]?.totalAmount?.toFixed(2) : "0.00"}
+              </TableCell>
+              <TableCell>
+                {"$"}
                 {isLoading(range_expenses) && isLoading(range_revenue)
                   ? (range_revenue.data[0]?.totalPrice - range_expenses.data[0]?.totalAmount).toFixed(2)
                   : "0.00"}
               </TableCell>
               <TableCell>
-                ${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
+                {"$"}
+                {isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
               </TableCell>
               <TableCell>
-                ${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}
+                {"$"}
+                {isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}
               </TableCell>
             </TableRow>
           </TableBody>

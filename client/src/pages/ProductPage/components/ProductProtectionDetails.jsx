@@ -8,29 +8,29 @@ const ProductProtectionDetails = () => {
         <Grid item xs={12} sm={4}>
           <Box sx={{ textAlign: "center", width: "100%", maxWidth: "300px", margin: "0 auto" }}>
             <Typography variant="h6" gutterBottom>
-              Free Shipping
+              {"Free Shipping"}
             </Typography>
-            <Typography variant="body2">Free ground shipping on orders of $99 or more in the U.S.</Typography>
+            <Typography variant="body2">{"Free ground shipping on orders of $99 or more in the U.S."}</Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={4}>
           <Box sx={{ textAlign: "center", width: "100%", maxWidth: "300px", margin: "0 auto" }}>
             <Typography variant="h6" gutterBottom>
-              Free Returns
+              {"Free Returns"}
             </Typography>
             <Typography variant="body2">
-              We offer a 30-day return policy, allowing you to shop with confidence.
+              {"We offer a 30-day return policy, allowing you to shop with confidence."}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={4}>
           <Box sx={{ textAlign: "center", width: "100%", maxWidth: "300px", margin: "0 auto" }}>
             <Typography variant="h6" gutterBottom>
-              Product Protection
+              {"Product Protection"}
             </Typography>
             <Typography variant="body2">
-              Rest easy with our manufacturer warranty, ensuring that your product is protected against any
-              manufacturing defects or issues.
+              {"Rest easy with our manufacturer warranty, ensuring that your product is protected against any"}
+              {"manufacturing defects or issues."}
             </Typography>
           </Box>
         </Grid>

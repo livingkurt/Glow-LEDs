@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 const Head = () => {
   return (
     <Helmet>
-      <title>Glow LEDs | Your Complete Gloving Supply Hub</title>
+      <title>{"Glow LEDs | Your Complete Gloving Supply Hub"}</title>
       <meta
         name="description"
         content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."

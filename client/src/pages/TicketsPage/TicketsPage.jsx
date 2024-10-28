@@ -46,7 +46,7 @@ const TicketsPage = () => {
         title: "",
         nonSelectable: true,
         display: ticket => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -86,15 +86,15 @@ const TicketsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Tickets | Glow LEDs</title>
+        <title>{"Admin Tickets | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"tickets/setRemoteVersionRequirement"}
-        tableName={"Tickets"}
+        remoteVersionRequirementType="tickets/setRemoteVersionRequirement"
+        tableName="Tickets"
         namespaceScope="tickets"
         namespace="ticketTable"
         columnDefs={columnDefs}
@@ -103,7 +103,7 @@ const TicketsPage = () => {
         enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_ticket_modal())}>
-            Create Ticket
+            {"Create Ticket"}
           </Button>
         }
       />

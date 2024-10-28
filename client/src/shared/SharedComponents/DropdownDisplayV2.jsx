@@ -35,7 +35,7 @@ const DropdownDisplayV2 = ({
     <Box sx={{ p: 1 }}>
       <Paper elevation={5} sx={{ width: "100%", overflow: "hidden" }}>
         <Box sx={{ p: 2 }}>
-          <Typography variant={"h6"} align={"left"} fontSize={16}>
+          <Typography variant="h6" align="left" fontSize={16}>
             {label}
           </Typography>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -71,7 +71,7 @@ const DropdownDisplayV2 = ({
                               backgroundColor: "primary.dark",
                             },
                           }}
-                          deleteIcon={<Icon style={{ color: "white" }}>clear</Icon>}
+                          deleteIcon={<Icon style={{ color: "white" }}>{"clear"}</Icon>}
                           {...getTagProps({ index })}
                         />
                       ))

@@ -69,13 +69,13 @@ const GcodeGeneratorModal = () => {
       onConfirm={() => createNewGcode()}
       onCancel={() => dispatch(closeGcodeGeneratorModal())}
       onAction={() => dispatch(resetGcodeGenerator())}
-      title={"Gcode Generator"}
+      title="Gcode Generator"
       confirmDisabled={gcodeNames.length === 0}
-      confirmLabel={"Generate"}
+      confirmLabel="Generate"
       confirmColor="primary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
-      actionLabel={"Reset Generator"}
+      actionLabel="Reset Generator"
       actionColor="secondary"
       disableEscapeKeyDown
     >
@@ -83,19 +83,19 @@ const GcodeGeneratorModal = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h6" fontSize={16}>
-            Step 1: Select any number of gcode files
+            {"Step 1: Select any number of gcode files"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" component="label" fullWidth>
-            Choose gcode files
+            {"Choose gcode files"}
             <input type="file" id="file" hidden multiple accept=".gcode" onChange={e => showFiles(e)} />
           </Button>
         </Grid>
         {numberOfFiles > 0 && (
           <Grid item xs={12}>
             <Typography variant="h6" fontSize={16}>
-              Step 2: Add Modifications
+              {"Step 2: Add Modifications"}
             </Typography>
           </Grid>
         )}
@@ -118,7 +118,7 @@ const GcodeGeneratorModal = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  name={"changeColorOnPrintRemoval"}
+                  name="changeColorOnPrintRemoval"
                   size="large"
                   onChange={e => {
                     dispatch(setChangeColorOnPrintRemoval(e.target.checked));
@@ -126,7 +126,7 @@ const GcodeGeneratorModal = () => {
                   checked={changeColorOnPrintRemoval}
                 />
               }
-              label={"Change Color on Print Removal"}
+              label="Change Color on Print Removal"
             />
           </Grid>
         )}
@@ -187,7 +187,7 @@ const GcodeGeneratorModal = () => {
         {gcodeNames.length > 0 && (
           <Grid item xs={12}>
             <Typography variant="h6" fontSize={16}>
-              New Filename
+              {"New Filename"}
             </Typography>
             <Paper>
               <Box p={3}>

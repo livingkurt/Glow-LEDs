@@ -50,15 +50,17 @@ const TutorialCard = ({ tutorial, handleOpen }) => {
       </Box>
       <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
         <Box>
-          <Typography variant={"h6"} color="white" gutterBottom>
+          <Typography variant="h6" color="white" gutterBottom>
             {tutorial.title}
           </Typography>
-          <Typography variant={"body1"} color="white">
-            by {tutorial?.affiliate?.artist_name}
+          <Typography variant="body1" color="white">
+            {"by "}
+            {tutorial?.affiliate?.artist_name}
           </Typography>
         </Box>
         <Typography variant="body2" color="white">
-          Level: {toCapitalize(tutorial.level)}
+          {"Level: "}
+          {toCapitalize(tutorial.level)}
         </Typography>
       </CardContent>
     </Card>

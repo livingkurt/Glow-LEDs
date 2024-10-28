@@ -21,7 +21,7 @@ const PasswordResetPublicPage = () => {
   return (
     <div className="form">
       <Helmet>
-        <title>Password Reset | Glow LEDs</title>
+        <title>{"Password Reset | Glow LEDs"}</title>
         <meta property="og:title" content="Password Reset" />
         <meta name="twitter:title" content="Password Reset" />
         <link rel="canonical" href="https://www.glow-leds.com/account/password_reset" />
@@ -31,7 +31,7 @@ const PasswordResetPublicPage = () => {
         <ul className="form-container">
           <li>
             {/* <h2>Login</h2> */}
-            <h1>Password Reset</h1>
+            <h1>{"Password Reset"}</h1>
           </li>
           <li>
             <Loading loading={loading} error={error}>
@@ -39,13 +39,13 @@ const PasswordResetPublicPage = () => {
             </Loading>
           </li>
           <li>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{"Email"}</label>
             <input type="email" name="email" id="email" onChange={e => setEmail(e.target.value)} />
           </li>
 
           <li>
             <GLButton type="submit" variant="primary">
-              Verify Email
+              {"Verify Email"}
             </GLButton>
           </li>
         </ul>

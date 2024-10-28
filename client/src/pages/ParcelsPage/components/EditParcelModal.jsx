@@ -22,10 +22,10 @@ const EditParcelModal = () => {
         onCancel={() => {
           dispatch(set_edit_parcel_modal(false));
         }}
-        title={"Edit Parcel"}
-        confirmLabel={"Save"}
+        title="Edit Parcel"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

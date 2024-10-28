@@ -27,10 +27,10 @@ const EditArticleModal = () => {
         onCancel={() => {
           dispatch(set_edit_article_modal(false));
         }}
-        title={"Edit Article"}
-        confirmLabel={"Save"}
+        title="Edit Article"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

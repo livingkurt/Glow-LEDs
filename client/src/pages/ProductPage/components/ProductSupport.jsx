@@ -60,7 +60,7 @@ const ProductSupport = ({ productSupport, text_color, header_text_color }) => {
               gutterBottom
               color={header_text_color ? header_text_color : "white"}
             >
-              Product Support
+              {"Product Support"}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8}>

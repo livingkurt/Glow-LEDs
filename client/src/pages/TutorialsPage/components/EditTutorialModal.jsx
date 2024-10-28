@@ -34,10 +34,10 @@ const EditTutorialModal = () => {
         onCancel={() => {
           dispatch(set_edit_tutorial_modal(false));
         }}
-        title={"Edit Tutorial"}
-        confirmLabel={"Save"}
+        title="Edit Tutorial"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

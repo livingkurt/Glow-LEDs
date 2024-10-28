@@ -55,7 +55,7 @@ const ImagesPage = () => {
         title: "",
         nonSelectable: true,
         display: image => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_image_modal(image))}>
               <Edit color="white" />
             </GLIconButton>
@@ -74,13 +74,13 @@ const ImagesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Images | Glow LEDs</title>
+        <title>{"Admin Images | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Images"}
+        tableName="Images"
         namespaceScope="images"
         namespace="imageTable"
         columnDefs={columnDefs}
@@ -88,7 +88,7 @@ const ImagesPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_image_modal())}>
-            Create Image
+            {"Create Image"}
           </Button>
         }
       />

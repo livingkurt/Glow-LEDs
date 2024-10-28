@@ -72,7 +72,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
           onChange={e => setLink(e.target.value)}
         />
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>
-          Save
+          {"Save"}
         </Button>
       </div>
       <ImageDisplay

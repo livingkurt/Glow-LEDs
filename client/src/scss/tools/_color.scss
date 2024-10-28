@@ -1,20 +1,20 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .bg-primary {
-	background-color: $theme_color_primary !important;
+  background-color: $theme_color_primary !important;
 }
 .bg-secondary {
-	background-color: $theme_color_secondary !important;
+  background-color: $theme_color_secondary !important;
 }
 .bg-white {
-	background-color: white !important;
+  background-color: white !important;
 }
 .ft-white {
-	color: white !important;
+  color: white !important;
 }
 .ft-white {
-	color: white !important;
+  color: white !important;
 }
 .ft-primary {
-	color: $theme_color_primary !important;
+  color: $theme_color_primary !important;
 }

@@ -78,7 +78,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
   return (
     <Paper className="p-20px mt-20px">
       <Typography variant="h6" align="center">
-        Choose Date Range
+        {"Choose Date Range"}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -146,7 +146,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
           variant="contained"
           className="mt-10px"
         >
-          Reset Date Range
+          {"Reset Date Range"}
         </Button>
         <Button
           onClick={() => {
@@ -156,7 +156,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
           variant="contained"
           className="mt-10px"
         >
-          Remove Month
+          {"Remove Month"}
         </Button>
       </Box>
     </Paper>

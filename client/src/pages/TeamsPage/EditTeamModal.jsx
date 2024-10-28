@@ -105,10 +105,10 @@ const EditTeamModal = () => {
           onCancel={() => {
             dispatch(set_edit_team_modal(false));
           }}
-          title={"Edit Team"}
-          confirmLabel={"Save"}
+          title="Edit Team"
+          confirmLabel="Save"
           confirmColor="primary"
-          cancelLabel={"Cancel"}
+          cancelLabel="Cancel"
           cancelColor="secondary"
           disableEscapeKeyDown
         >
@@ -131,7 +131,7 @@ const EditTeamModal = () => {
               dispatch(set_edit_team_modal(false));
             }
           }}
-          title={"Create Team"}
+          title="Create Team"
           confirmLabel={determineConfirmLabel()}
           cancelLabel={createTeamStep === 1 || createTeamStep === 2 || createTeamStep === 3 ? "" : "Cancel"}
           cancelDisabled={stripeSuccess}
@@ -151,38 +151,40 @@ const EditTeamModal = () => {
           {createTeamStep === 1 && (
             <Box sx={{ padding: 3, marginBottom: 2 }}>
               <Typography variant="h6" gutterBottom>
-                Create Your Stripe Account
+                {"Create Your Stripe Account"}
               </Typography>
               <Typography variant="body1" paragraph>
-                In order to receive commissions from your team sales, you'll need to create a Stripe account. This is a
-                quick and secure process.
+                {
+                  "In order to receive commissions from your team sales, you'll need to create a Stripe account. This is a"
+                }
+                {"quick and secure process."}
               </Typography>
             </Box>
           )}
           {createTeamStep === 2 && (
             <Box sx={{ padding: 3 }}>
               <Typography variant="h6" gutterBottom>
-                Join our Glow LEDs Discord Community
+                {"Join our Glow LEDs Discord Community"}
               </Typography>
               <Typography variant="body1" paragraph>
-                Be a part of our vibrant community on Discord! Engage with fellow teams, get updates, and share your
-                experiences.
+                {"Be a part of our vibrant community on Discord! Engage with fellow teams, get updates, and share your"}
+                {"experiences."}
               </Typography>
               <Typography variant="body1" paragraph>
-                Once completed Navigate back to this page and click the "Complete" button.
+                {'Once completed Navigate back to this page and click the "Complete" button.'}
               </Typography>
             </Box>
           )}
           {createTeamStep === 3 && (
             <Box sx={{ padding: 3 }}>
               <Typography variant="h6" gutterBottom>
-                Welcome to the Glow LEDs Team Team!
+                {"Welcome to the Glow LEDs Team Team!"}
               </Typography>
               <Typography variant="body1" paragraph>
-                You're all set! You can now start earning commissions on your sales.
+                {"You're all set! You can now start earning commissions on your sales."}
               </Typography>
               <Typography variant="body1" paragraph>
-                If you have any questions, please reach out to us on Discord.
+                {"If you have any questions, please reach out to us on Discord."}
               </Typography>
             </Box>
           )}

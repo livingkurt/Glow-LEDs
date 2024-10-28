@@ -7,10 +7,10 @@ const SponsorsBanner = ({ sponsors }) => {
   return (
     <Box sx={{ my: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Learn More About Our Sponsors
+        {"Learn More About Our Sponsors"}
       </Typography>
       <Button component={Link} to="/sponsors" variant="text" sx={{ mb: 2, color: "#fff" }}>
-        View All Sponsors
+        {"View All Sponsors"}
       </Button>
       <Box
         sx={{

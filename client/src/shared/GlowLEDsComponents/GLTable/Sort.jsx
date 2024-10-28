@@ -6,7 +6,7 @@ const Sort = ({ sortHandler, sort_options }) => {
       <div className="custom-select">
         <select name="sort" className="sort_select w-221px" onChange={sortHandler}>
           <option className="grey_option" disabled="disabled" selected="selected" defaultValue="">
-            Sort By
+            {"Sort By"}
           </option>
           {sort_options.map((option, index) => {
             return (

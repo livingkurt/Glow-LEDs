@@ -66,8 +66,8 @@ const ProtectedRoute = ({ children, isAdminRoute = false }) => {
         loading={isLoading}
         message={
           <div className="payment_message">
-            <h2 className="ta-c">Refreshing Login</h2>
-            <p className="ta-c">Please wait</p>
+            <h2 className="ta-c">{"Refreshing Login"}</h2>
+            <p className="ta-c">{"Please wait"}</p>
           </div>
         }
       />

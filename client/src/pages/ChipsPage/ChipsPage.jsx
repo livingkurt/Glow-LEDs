@@ -43,7 +43,7 @@ const ChipsPage = () => {
         title: "",
         nonSelectable: true,
         display: chip => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_chip_modal(chip))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -78,7 +78,7 @@ const ChipsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Chips | Glow LEDs</title>
+        <title>{"Admin Chips | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
@@ -86,7 +86,7 @@ const ChipsPage = () => {
         // remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         // determineColor={determineChipColors}
-        tableName={"Chips"}
+        tableName="Chips"
         namespaceScope="chips"
         namespace="chipTable"
         columnDefs={columnDefs}
@@ -94,7 +94,7 @@ const ChipsPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_chip_modal())}>
-            Create Chip
+            {"Create Chip"}
           </Button>
         }
       />

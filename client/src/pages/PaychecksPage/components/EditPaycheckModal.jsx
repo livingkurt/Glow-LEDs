@@ -50,10 +50,10 @@ const EditPaycheckModal = () => {
         onCancel={() => {
           dispatch(set_edit_paycheck_modal(false));
         }}
-        title={"Edit Paycheck"}
-        confirmLabel={"Save"}
+        title="Edit Paycheck"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

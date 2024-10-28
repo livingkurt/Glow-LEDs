@@ -26,12 +26,12 @@ const RefundOrderModal = () => {
       onConfirm={() => refundOrder(refundAmount)}
       onCancel={() => refundOrder(order.totalPrice)}
       onAction={() => dispatch(closeRefundModal())}
-      title={"Refund Order"}
-      confirmLabel={"Refund Partial Amount"}
+      title="Refund Order"
+      confirmLabel="Refund Partial Amount"
       confirmColor="primary"
-      actionLabel={"Cancel"}
+      actionLabel="Cancel"
       actionColor="primary"
-      cancelLabel={"Refund Full Amount"}
+      cancelLabel="Refund Full Amount"
       cancelColor="secondary"
       disableEscapeKeyDown
     >

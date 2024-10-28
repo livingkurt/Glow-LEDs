@@ -21,10 +21,17 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
           {title}
         </Typography>
         <Typography variant="h5" component="div" sx={{ fontWeight: "bold" }}>
-          Earned: ${data?.earnings.toFixed(2)}
+          {"Earned: $"}
+          {data?.earnings.toFixed(2)}
         </Typography>
-        <Typography variant="subtitle1">Revenue: ${parseFloat(data?.revenue).toFixed(2)}</Typography>
-        <Typography variant="subtitle1">Uses: {data?.number_of_uses}</Typography>
+        <Typography variant="subtitle1">
+          {"Revenue: $"}
+          {parseFloat(data?.revenue).toFixed(2)}
+        </Typography>
+        <Typography variant="subtitle1">
+          {"Uses: "}
+          {data?.number_of_uses}
+        </Typography>
       </CardContent>
     </Card>
   );
@@ -46,33 +53,33 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
             {!yearlyEarnings.isLoading && <EarningsCard title="Current Year" data={yearlyEarnings.data} />}
           </Loading>
           <div className="mb-20px">
-            <h3>Public Code</h3>
+            <h3>{"Public Code"}</h3>
             <label>{user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
           </div>
 
           <div className="mb-20px">
-            <h3>Private Code</h3>
+            <h3>{"Private Code"}</h3>
             <label>{user?.affiliate?.private_code.promo_code.toUpperCase()}</label>
           </div>
           {user?.affiliate?.artist_name && (
             <div className="mb-20px">
-              <h3>Projected Private Code Discount</h3>
+              <h3>{"Projected Private Code Discount"}</h3>
               <label>
                 {user?.affiliate?.sponsor
                   ? determine_sponsor_code_tier(currentMonthEarnings?.data?.number_of_uses)
                   : determine_promoter_code_tier(currentMonthEarnings?.data?.number_of_uses)}
-                % Off
+                {"% Off"}
               </label>
             </div>
           )}
           {user?.affiliate?.sponsor && (
             <>
               <div className="mb-20px">
-                <h3>Monthly Sponsor Code ($25 off)</h3>
+                <h3>{"Monthly Sponsor Code ($25 off)"}</h3>
                 <label>{sponsorCodes?.data?.twentyFiveOffCode?.toUpperCase()}</label>
               </div>
               <div className="mb-20px">
-                <h3>Refresh Pack Sponsor Code</h3>
+                <h3>{"Refresh Pack Sponsor Code"}</h3>
                 <label>{sponsorCodes?.data?.refreshCode?.toUpperCase()}</label>
               </div>
             </>
@@ -82,12 +89,13 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
             <>
               <div className="mb-20px">
                 <h3>
-                  You Earn {user?.affiliate?.sponsorTeamCaptain ? "20%" : user?.affiliate?.sponsor ? "15%" : "10%"} on
-                  Revenue Generated
+                  {"You Earn "}
+                  {user?.affiliate?.sponsorTeamCaptain ? "20%" : user?.affiliate?.sponsor ? "15%" : "10%"} {"on"}
+                  {"Revenue Generated"}
                 </h3>
 
                 <label>
-                  Example: $20 * 10% = $18 *{" "}
+                  {"Example: $20 * 10% = $18 *"}{" "}
                   {user?.affiliate?.sponsorTeamCaptain
                     ? "20% = $3.60"
                     : user?.affiliate?.sponsor
@@ -98,8 +106,11 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
             </>
           )}
           <div className="mb-20px">
-            <h3>Promo Code URL</h3>
-            <label>https://www.glow-leds.com?code={user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
+            <h3>{"Promo Code URL"}</h3>
+            <label>
+              {"https://www.glow-leds.com?code="}
+              {user?.affiliate?.public_code.promo_code.toUpperCase()}
+            </label>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
@@ -112,7 +123,7 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
                 )
               }
             >
-              Copy Link to Clipboard
+              {"Copy Link to Clipboard"}
             </Button>
             <a
               href={determine_terms_link(user.affiliate)}
@@ -121,16 +132,16 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
               className="mr-10px"
             >
               <Button variant="contained" color="secondary" fullWidth>
-                Affiliate Terms
+                {"Affiliate Terms"}
               </Button>
             </a>
             <a
-              href={"https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"}
+              href="https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Button variant="contained" color="secondary" fullWidth>
-                Affiliate Learnings
+                {"Affiliate Learnings"}
               </Button>
             </a>
           </Box>

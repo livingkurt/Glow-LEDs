@@ -82,10 +82,12 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
         </Typography>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="caption" color="white" sx={{ mt: 1 }}>
-            at {event.venue}
+            {"at "}
+            {event.venue}
           </Typography>
           <Typography variant="caption" color="white" sx={{ mt: 1 }}>
-            Ages {event.age_group} Only
+            {"Ages "}
+            {event.age_group} {"Only"}
           </Typography>
         </Box>
       </Box>
@@ -120,7 +122,7 @@ const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
               fontWeight: isSafari ? 699 : 700,
             }}
           >
-            SOLD OUT{" "}
+            {"SOLD OUT"}{" "}
           </Typography>
         )}
       </Box>

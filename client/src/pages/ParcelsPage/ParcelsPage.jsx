@@ -51,7 +51,7 @@ const ParcelsPage = () => {
       {
         title: "",
         display: parcel => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_parcel_modal(parcel))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -70,12 +70,12 @@ const ParcelsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Parcels | Glow LEDs</title>
+        <title>{"Admin Parcels | Glow LEDs"}</title>
       </Helmet>
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Parcels"}
+        tableName="Parcels"
         namespaceScope="parcels"
         namespace="parcelTable"
         columnDefs={columnDefs}
@@ -83,7 +83,7 @@ const ParcelsPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_parcel_modal())}>
-            Create Parcel
+            {"Create Parcel"}
           </Button>
         }
       />

@@ -196,7 +196,7 @@ const GLTableV2 = ({
         nonTagFilters,
         filters: mapValues(availableFiltersProp, () => []),
         availableFilters: availableFiltersProp,
-        isRemote: !!remoteApi,
+        isRemote: Boolean(remoteApi),
       })
     );
   }, [remoteApi, availableFiltersProp, columnDefs, dispatch, namespace, nonTagFilters, rows]);
@@ -371,10 +371,13 @@ const GLTableV2 = ({
                 {enableRowSelect && numSelected > 0 ? (
                   <div data-test="tableToolbarTitle">
                     <Typography variant="h6" color="textPrimary" component="div">
-                      {numSelected} Selected
+                      {numSelected} {"Selected"}
                     </Typography>
                     {hiddenSelected > 0 && (
-                      <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>
+                      <sup className={glTable.subtextWrapper}>
+                        {hiddenSelected}
+                        {" not shown on the current page"}
+                      </sup>
                     )}
                   </div>
                 ) : (

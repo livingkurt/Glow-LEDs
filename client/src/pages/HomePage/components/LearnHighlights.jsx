@@ -19,7 +19,7 @@ const LearnHighlights = ({ learn_highlights }) => {
           <Box py={{ xs: 2, sm: 4, md: 6 }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
-                <Typography variant="h5" component="h2" align={"left"} gutterBottom>
+                <Typography variant="h5" component="h2" align="left" gutterBottom>
                   {learn_highlights.title}
                 </Typography>
               </Grid>

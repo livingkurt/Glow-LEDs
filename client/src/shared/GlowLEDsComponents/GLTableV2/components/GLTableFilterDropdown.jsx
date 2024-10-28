@@ -61,7 +61,7 @@ const GLTableFilterDropdown = ({
           }}
           sx={{ margin: "10px 0px" }}
         >
-          Filter By
+          {"Filter By"}
         </Button>
 
         <GLPopper
@@ -118,7 +118,7 @@ const GLTableFilterDropdown = ({
                 color="secondary"
                 disabled={!enableClearAll(filters)}
               >
-                Clear
+                {"Clear"}
               </Button>
             </div>
           </MenuList>
@@ -198,7 +198,7 @@ const GLTableFilterDropdown = ({
                         onChangeFunction();
                       }}
                     >
-                      Clear
+                      {"Clear"}
                     </Button>
                   </div>
                 )}
@@ -221,7 +221,7 @@ const GLTableFilterDropdown = ({
                   }}
                   disabled={filters[menuSelection] && filters[menuSelection]?.length === 0}
                 >
-                  Clear
+                  {"Clear"}
                 </Button>
               </div>
             </MenuList>

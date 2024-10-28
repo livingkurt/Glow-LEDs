@@ -6,7 +6,7 @@ const ContributorsDisplay = ({ contributors, text_color, secondary_color, header
   return (
     <Box mt={4}>
       <Typography variant="h4" gutterBottom color={header_text_color ? header_text_color : "white"}>
-        Community Contributors
+        {"Community Contributors"}
       </Typography>
       <Box
         gap={2}

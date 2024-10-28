@@ -105,7 +105,10 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
           }
           label={
             <Box sx={{ display: "flex", alignItems: "center" }} gap={1}>
-              Add {option.name} + ${option.values[0].additionalCost?.toFixed(2)}{" "}
+              {"Add "}
+              {option.name}
+              {" + $"}
+              {option.values[0].additionalCost?.toFixed(2)}{" "}
               {option.details && <GLInfoPopover details={option.details} />}
             </Box>
           }
@@ -115,7 +118,7 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
         <Box>
           <Box display="flex" alignItems="center" gap={1}>
             {option.optionType !== "checkbox" && (
-              <Box display="flex" alignItems={"center"} gap={1}>
+              <Box display="flex" alignItems="center" gap={1}>
                 <Typography variant="subtitle1">
                   {option.isAddOn ? "OPTIONAL: " : ""}
                   {option.name}

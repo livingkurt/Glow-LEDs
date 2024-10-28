@@ -28,7 +28,7 @@ const MaintenancePage = () => {
   return (
     <div style={{ padding: 0 }}>
       <Helmet>
-        <title>Maintenance | Glow LEDs</title>
+        <title>{"Maintenance | Glow LEDs"}</title>
         <meta property="og:title" content="Maintenance" />
         <meta name="twitter:title" content="Maintenance" />
         <link rel="canonical" href="https://www.glow-leds.com/" />
@@ -67,29 +67,33 @@ const MaintenancePage = () => {
               marginTop: "17px",
             }}
           >
-            Glow LEDs
+            {"Glow LEDs"}
           </h1>
         </div>
       </div>
       <div style={content_styles}>
         <div className="jc-c">
           <h2 className="welcome_text" style={{ fontSize: "6rem", marginBottom: "3vh" }}>
-            Glow LEDs Coming Soon!
+            {"Glow LEDs Coming Soon!"}
           </h2>
         </div>
         <div className="jc-c">
-          <h2>From a Glover that just wants the world to stay lit</h2>
+          <h2>{"From a Glover that just wants the world to stay lit"}</h2>
         </div>
         <p className="p_descriptions" style={{ textAlign: "center" }}>
-          Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are handmade
-          at my home in Baytown, TX and all ideas came from my own brain. Our items were dreamt up with the intention of
-          turning your home into a glowing rainbow dreamland with infinite hours of entertainment. You don’t need a
-          party to enjoy our products (although parties are definitely encouraged). The beautiful colors have the
-          ability to turn your home into the next best festival or into a relaxing retreat, you decide.
+          {
+            "Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are handmade"
+          }
+          {
+            "at my home in Baytown, TX and all ideas came from my own brain. Our items were dreamt up with the intention of"
+          }
+          {"turning your home into a glowing rainbow dreamland with infinite hours of entertainment. You don’t need a"}
+          {"party to enjoy our products (although parties are definitely encouraged). The beautiful colors have the"}
+          {"ability to turn your home into the next best festival or into a relaxing retreat, you decide."}
         </p>
         <div className="container">
           <div className="jc-c">
-            <h2>Diffuser Caps</h2>
+            <h2>{"Diffuser Caps"}</h2>
           </div>
           <div className="jc-c" style={video_wrapper}>
             <div className="iframe-container">
@@ -99,22 +103,26 @@ const MaintenancePage = () => {
                 title="Diffuser Caps"
                 style={{ borderRadius: "20px" }}
                 src="https://www.youtube.com/embed/CaC-86DAql4"
-                frameborder="0"
+                frameBorder="0"
                 allowfullscreen
               />
             </div>
           </div>
           <p className="p_descriptions" style={{ textAlign: "center" }}>
-            It's been too long since a truly new element has been introduced to gloving. We are here to change
-            lightshows forever. This new technology puts designs on the outside of your glove for ultimate definition.
-            Using a propriety design, you will be able to simply screw on the caps through the gloves to the adapter and
-            start throwing heat right away. Mix and match the cap designs create truly ridiculous light shows. 100%
-            facemelt guarantee.
+            {"It's been too long since a truly new element has been introduced to gloving. We are here to change"}
+            {
+              "lightshows forever. This new technology puts designs on the outside of your glove for ultimate definition."
+            }
+            {
+              "Using a propriety design, you will be able to simply screw on the caps through the gloves to the adapter and"
+            }
+            {"start throwing heat right away. Mix and match the cap designs create truly ridiculous light shows. 100%"}
+            {"facemelt guarantee."}
           </p>
         </div>
         <div className="container">
           <div className="jc-c">
-            <h2>Glowstringz</h2>
+            <h2>{"Glowstringz"}</h2>
           </div>
           <div className="jc-c" style={video_wrapper}>
             <div className="iframe-container">
@@ -124,16 +132,20 @@ const MaintenancePage = () => {
                 title="Glowstringz"
                 style={{ borderRadius: "20px" }}
                 src="https://www.youtube.com/embed/TCArM88Ll1s"
-                frameborder="0"
+                frameBorder="0"
                 allowfullscreen
               />
             </div>
           </div>
           <p className="p_descriptions" style={{ textAlign: "center" }}>
-            Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home into a
-            festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool of light in
-            every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150 LED), and 46 ft (200
-            LED) options so there’s a size for every need.
+            {
+              "Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home into a"
+            }
+            {"festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool of light in"}
+            {
+              "every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150 LED), and 46 ft (200"
+            }
+            {"LED) options so there’s a size for every need."}
           </p>
         </div>
       </div>

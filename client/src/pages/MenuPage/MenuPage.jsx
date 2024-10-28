@@ -17,7 +17,7 @@ const MenuPage = () => {
   const menus = currentContent?.menus || [];
   const menu = menus.find(menu => menu.pathname === pathname);
 
-  if (!menu) return <Typography>Menu not found</Typography>;
+  if (!menu) return <Typography>{"Menu not found"}</Typography>;
 
   return (
     <Box>
@@ -40,7 +40,7 @@ const MenuPage = () => {
             ))
           ) : (
             <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-              No items found in this menu
+              {"No items found in this menu"}
             </Typography>
           )}
         </Grid>

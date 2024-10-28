@@ -58,7 +58,7 @@ const ResetPasswordPage = () => {
   return (
     <div className="form">
       <Helmet>
-        <title>Reset Password | Glow LEDs</title>
+        <title>{"Reset Password | Glow LEDs"}</title>
         <meta property="og:title" content="Reset Password" />
         <meta name="twitter:title" content="Reset Password" />
         <link rel="canonical" href="https://www.glow-leds.com/account/resetpassword" />
@@ -68,22 +68,22 @@ const ResetPasswordPage = () => {
         loading={loadingResetPassword}
         message={
           <div className="payment_message">
-            <h2 className="ta-c">Resetting Password</h2>
-            <p className="ta-c">You will be redirected shortly</p>
+            <h2 className="ta-c">{"Resetting Password"}</h2>
+            <p className="ta-c">{"You will be redirected shortly"}</p>
           </div>
         }
       />
       <form onSubmit={submitHandler} className="max-w-350px w-100per m-auto">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <h1>Reset Password</h1>
+            <h1>{"Reset Password"}</h1>
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
               size="small"
               variant="filled"
-              error={!!passwordHelperText} // true if there's an error message
+              error={Boolean(passwordHelperText)} // true if there's an error message
               helperText={passwordHelperText}
               sx={{
                 "& .MuiFilledInput-root": {
@@ -109,7 +109,7 @@ const ResetPasswordPage = () => {
               fullWidth
               size="small"
               variant="filled"
-              error={!!rePasswordHelperText} // true if there's an error message
+              error={Boolean(rePasswordHelperText)} // true if there's an error message
               helperText={rePasswordHelperText}
               sx={{
                 "& .MuiFilledInput-root": {
@@ -132,7 +132,7 @@ const ResetPasswordPage = () => {
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" fullWidth color="primary" type="submit">
-              Reset Password
+              {"Reset Password"}
             </Button>
           </Grid>
         </Grid>

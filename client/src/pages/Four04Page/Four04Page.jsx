@@ -5,14 +5,14 @@ const Four04Page = () => {
   return (
     <div className="jc-c column ta-c">
       <Helmet>
-        <title>404 Not Found | Glow LEDs</title>
+        <title>{"404 Not Found | Glow LEDs"}</title>
         <meta property="og:title" content="404 Not Found" />
         <meta property="og:url" content="https://www.glow-leds.com" />
 
         <meta name="twitter:title" content="404 Not Found" />
       </Helmet>
-      <h1 style={{ margin: "20px auto" }}>404 Page Not Found</h1>
-      <label>Sorry About that</label>
+      <h1 style={{ margin: "20px auto" }}>{"404 Page Not Found"}</h1>
+      <label>{"Sorry About that"}</label>
     </div>
   );
 };

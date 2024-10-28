@@ -50,7 +50,7 @@ const EmailsPage = () => {
         title: "",
         nonSelectable: true,
         display: email => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_email_modal(email))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -119,21 +119,21 @@ const EmailsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Emails | Glow LEDs</title>
+        <title>{"Admin Emails | Glow LEDs"}</title>
       </Helmet>
       <Loading loading={loadingSendAnnouncment} />
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineEmailColors}
-        tableName={"Emails"}
+        tableName="Emails"
         namespaceScope="emails"
         namespace="emailTable"
         columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Box display="flex" alignItems={"center"} gap={2}>
+          <Box display="flex" alignItems="center" gap={2}>
             <Autocomplete
               options={templates}
               getOptionLabel={option => humanize(option)}
@@ -155,7 +155,7 @@ const EmailsPage = () => {
             />
             <div>
               <Button color="primary" variant="contained" onClick={() => dispatch(open_create_email_modal())}>
-                Create Email
+                {"Create Email"}
               </Button>
             </div>
           </Box>

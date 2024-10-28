@@ -60,7 +60,7 @@ const Survey = () => {
           {surveys && surveys.length > 0 && surveys[0] && !finished ? (
             <div>
               <ul className="edit-form-container" style={{ maxWidth: "60rem" }}>
-                <label htmlFor="description">How was your ordering experience at Glow-LEDs.com?</label>
+                <label htmlFor="description">{"How was your ordering experience at Glow-LEDs.com?"}</label>
                 <StarRating set_rating={set_rating} rating={rating} />
                 {surveys[0].question_answer.map((q, index) => (
                   <li key={index}>
@@ -77,17 +77,21 @@ const Survey = () => {
                               })
                             }
                           >
-                            <option value="">---{q.question}---</option>
-                            <option value="google_search">Google Search</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="youtube">YouTube</option>
-                            <option value="glovers_lounge">Glovers Lounge</option>
-                            <option value="glovers_lounge">Festival</option>
-                            <option value="glovers_lounge">Reddit</option>
-                            <option value="glovers_lounge">Rave Mob</option>
-                            <option value="friend">Friend</option>
+                            <option value="">
+                              {"---"}
+                              {q.question}
+                              {"---"}
+                            </option>
+                            <option value="google_search">{"Google Search"}</option>
+                            <option value="facebook">{"Facebook"}</option>
+                            <option value="instagram">{"Instagram"}</option>
+                            <option value="tiktok">{"TikTok"}</option>
+                            <option value="youtube">{"YouTube"}</option>
+                            <option value="glovers_lounge">{"Glovers Lounge"}</option>
+                            <option value="glovers_lounge">{"Festival"}</option>
+                            <option value="glovers_lounge">{"Reddit"}</option>
+                            <option value="glovers_lounge">{"Rave Mob"}</option>
+                            <option value="friend">{"Friend"}</option>
                           </select>
                           <span className="custom-arrow" />
                         </div>
@@ -112,7 +116,7 @@ const Survey = () => {
                 ))}
                 <li>
                   <GLButton variant="primary" onClick={e => submitHandler(e)}>
-                    Submit
+                    {"Submit"}
                   </GLButton>
                 </li>
               </ul>
@@ -121,9 +125,10 @@ const Survey = () => {
             <div className="edit-form-container" style={{ maxWidth: "60rem" }}>
               {finished && (
                 <div>
-                  <div>Thank you for taking the time to give us feedback!</div> <div>We greatly appreciate it! 💙</div>
+                  <div>{"Thank you for taking the time to give us feedback!"}</div>{" "}
+                  <div>{"We greatly appreciate it! 💙"}</div>
                   <br />
-                  <div>Follow us on Social Media</div>
+                  <div>{"Follow us on Social Media"}</div>
                   <div className="mt-2rem wrap jc-c ">
                     <div className="ml-10px fs-25px jc-b w-100per max-w-500px">
                       <div className="ml-10px fs-40px">

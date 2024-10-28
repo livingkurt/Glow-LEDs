@@ -108,13 +108,13 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
               />
               <label htmlFor={`${album}-upload-input`}>
                 <Button variant="contained" component="span">
-                  Select
+                  {"Select"}
                 </Button>
               </label>
             </div>
             <div>
               <Button variant="contained" type="submit" disabled={files.length === 0}>
-                Upload
+                {"Upload"}
               </Button>
             </div>
           </Grid>

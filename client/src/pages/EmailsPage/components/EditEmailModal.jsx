@@ -63,10 +63,10 @@ const EditEmailModal = () => {
           dispatch(set_edit_email_modal(false));
         }}
         maxWidth="xxl"
-        title={"Edit Email"}
-        confirmLabel={"Save"}
+        title="Edit Email"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         actionColor="secondary"
         disableEscapeKeyDown

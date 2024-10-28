@@ -83,7 +83,7 @@ const EventPage = () => {
   }
 
   if (!event.name) {
-    return <Typography variant="h4">Event not found</Typography>;
+    return <Typography variant="h4">{"Event not found"}</Typography>;
   }
 
   const fullTickets = tickets => {
@@ -101,13 +101,13 @@ const EventPage = () => {
       {current_user?.isAdmin && (
         <Box mt={2} mb={2} display="flex" justifyContent="flex-end" gap={2}>
           <Button variant="contained" color="primary" onClick={() => dispatch(open_edit_event_modal(event))}>
-            Edit Event
+            {"Edit Event"}
           </Button>
           <Button variant="contained" color="primary" onClick={() => setOpenScannerModal(true)}>
-            Scan Tickets
+            {"Scan Tickets"}
           </Button>
           <Button variant="contained" color="primary" onClick={() => setOpenTicketHoldersModal(true)}>
-            Ticket Holders
+            {"Ticket Holders"}
           </Button>
         </Box>
       )}
@@ -129,11 +129,12 @@ const EventPage = () => {
         </Box>
         <Box sx={{ padding: "10px", borderRadius: "10px" }}>
           <Typography variant="subtitle1" textAlign="center" gutterBottom sx={{ mt: 2, color: "white" }}>
-            Follow us at{" "}
+            {"Follow us at"}{" "}
             <Link href={event.social_media_url} target="_blank" rel="noopener noreferrer" sx={{ color: "white" }}>
               {event.social_media_handle}
             </Link>{" "}
-            on {event.social_media_type} to get the latest updates
+            {"on "}
+            {event.social_media_type} {"to get the latest updates"}
           </Typography>
           <Box my={4}>
             {allTickets && allTickets.length > 0 ? (
@@ -148,7 +149,7 @@ const EventPage = () => {
               ))
             ) : (
               <Typography variant="body1" align="center" color="white">
-                No tickets available for this event.
+                {"No tickets available for this event."}
               </Typography>
             )}
           </Box>

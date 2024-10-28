@@ -37,10 +37,10 @@ const EditExpenseModal = () => {
         onCancel={() => {
           dispatch(set_edit_expense_modal(false));
         }}
-        title={"Edit Expense"}
-        confirmLabel={"Save"}
+        title="Edit Expense"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

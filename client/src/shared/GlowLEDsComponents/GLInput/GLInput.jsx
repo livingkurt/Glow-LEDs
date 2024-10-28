@@ -44,7 +44,7 @@ const GLInput = ({
           id={id}
           required={required}
           autoFocus={autoFocus}
-          spellcheck="false"
+          spellCheck="false"
           {...inputProps}
         />
         <span htmlFor="name" className="fs-16px pos-abs place_holder">

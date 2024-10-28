@@ -62,12 +62,12 @@ const StripeForm = ({ pay_order, date_1, date_2, setLoadingPayment }) => {
       )}
       {new Date() > new Date(date_1) && new Date() < new Date(date_2) && (
         <li>
-          <p style={{ color: "#ffca00" }}>Your Order will ship after 12/02/2021 🚚</p>
+          <p style={{ color: "#ffca00" }}>{"Your Order will ship after 12/02/2021 🚚"}</p>
         </li>
       )}
       {!remove_button && (
         <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>
-          Complete Order
+          {"Complete Order"}
         </GLButton>
       )}
     </form>

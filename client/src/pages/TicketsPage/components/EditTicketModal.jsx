@@ -25,10 +25,10 @@ const EditTicketModal = () => {
         onCancel={() => {
           dispatch(set_edit_ticket_modal(false));
         }}
-        title={"Edit Ticket"}
-        confirmLabel={"Save"}
+        title="Edit Ticket"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
