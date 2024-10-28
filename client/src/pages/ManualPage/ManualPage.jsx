@@ -13,7 +13,7 @@ const ManualPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Manual | Glow LEDs</title>
+        <title>{"Manual | Glow LEDs"}</title>
         <meta property="og:title" content="Manual" />
         <meta name="twitter:title" content="Manual" />
         <link rel="canonical" href="https://www.glow-leds.com/about" />
@@ -24,8 +24,8 @@ const ManualPage = () => {
       </Helmet>
       <div className="jc-b">
         <div className="mb-10px">
-          <Link to={`/menu/manuals`}>
-            <GLButton variant="secondary">Back to Manuals</GLButton>
+          <Link to="/menu/manuals">
+            <GLButton variant="secondary">{"Back to Manuals"}</GLButton>
           </Link>
         </div>
         {(pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2") && (
@@ -42,7 +42,7 @@ const ManualPage = () => {
               }
               download="Glowstringz V2 Manual"
             >
-              <GLButton variant="primary">Download Manual</GLButton>
+              <GLButton variant="primary">{"Download Manual"}</GLButton>
             </a>
           </div>
         )}
@@ -54,7 +54,10 @@ const ManualPage = () => {
                 : pathname
             }`}
           >
-            <GLButton variant="secondary">View Available {toCapitalize(humanize(pathname))}</GLButton>
+            <GLButton variant="secondary">
+              {"View Available "}
+              {toCapitalize(humanize(pathname))}
+            </GLButton>
           </Link>
         </div>
       </div>
@@ -102,7 +105,7 @@ const ManualPage = () => {
             justifyContent: "center",
           }}
         >
-          Watch the Videos below to Learn More
+          {"Watch the Videos below to Learn More"}
         </h2>
       )}
       <div className="jc-c column m-0px">
@@ -128,7 +131,7 @@ const ManualPage = () => {
                 title={video.title}
                 style={{ borderRadius: "20px" }}
                 src={`https://www.youtube.com/embed/${video.video}`}
-                frameborder="0"
+                frameBorder="0"
                 allowfullscreen
               />
             </div>

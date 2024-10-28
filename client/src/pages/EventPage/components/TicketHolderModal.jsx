@@ -51,15 +51,15 @@ const TicketHoldersModal = ({ open, onClose, event, allTickets }) => {
     >
       <Box sx={{ maxWidth: "500px", mb: 2, margin: "auto" }}>
         <Typography variant="h6" gutterBottom sx={{ m: 2 }}>
-          Ticket Sales Summary
+          {"Ticket Sales Summary"}
         </Typography>
         <Paper>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Ticket Type</TableCell>
-                <TableCell>Sold</TableCell>
-                <TableCell>Remaining</TableCell>
+                <TableCell>{"Ticket Type"}</TableCell>
+                <TableCell>{"Sold"}</TableCell>
+                <TableCell>{"Remaining"}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,7 +76,7 @@ const TicketHoldersModal = ({ open, onClose, event, allTickets }) => {
               ))}
               <TableRow>
                 <TableCell>
-                  <strong>Total</strong>
+                  <strong>{"Total"}</strong>
                 </TableCell>
                 <TableCell>
                   <strong>{ticketHolders.reduce((acc, curr) => acc + curr.quantity, 0)}</strong>

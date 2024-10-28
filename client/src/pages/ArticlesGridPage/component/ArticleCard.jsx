@@ -51,7 +51,7 @@ const ArticleCard = ({ article }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={"h5"} color="white" gutterBottom>
+            <Typography variant="h5" color="white" gutterBottom>
               {article.title}
             </Typography>
           </Box>

@@ -67,7 +67,7 @@ const FilamentsPage = () => {
         title: "",
         nonSelectable: true,
         display: filament => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_filament_modal(filament))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -101,14 +101,14 @@ const FilamentsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Filaments | Glow LEDs</title>
+        <title>{"Admin Filaments | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"filaments/setRemoteVersionRequirement"}
-        tableName={"Filaments"}
+        remoteVersionRequirementType="filaments/setRemoteVersionRequirement"
+        tableName="Filaments"
         namespaceScope="filaments"
         namespace="filamentTable"
         determineColor={determineFilamentColors}
@@ -117,7 +117,7 @@ const FilamentsPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_filament_modal())}>
-            Create Filament
+            {"Create Filament"}
           </Button>
         }
       />

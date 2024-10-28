@@ -64,7 +64,7 @@ const AboutPage = () => {
               )}
             </Box>
           ))}
-          <Typography variant="h2" textAlign={"center"}>
+          <Typography variant="h2" textAlign="center">
             {about_page?.footer_title}
           </Typography>
         </Container>

@@ -38,7 +38,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
             return (
               <li className="pagination-item dots" key={pageNumber}>
                 {" "}
-                <div className="fs-35px">...</div>
+                <div className="fs-35px">{"..."}</div>
               </li>
             );
           }

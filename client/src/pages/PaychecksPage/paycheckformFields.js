@@ -35,8 +35,12 @@ export const paycheckFormFields = ({ users, promos, teams, affiliates }) => {
       type: "number",
       label: "Amount",
     },
-    stripe_connect_id: {
+    uses: {
       type: "number",
+      label: "Code Uses",
+    },
+    stripe_connect_id: {
+      type: "text",
       label: "Stripe Connect ID",
     },
     paid: {
@@ -47,9 +51,5 @@ export const paycheckFormFields = ({ users, promos, teams, affiliates }) => {
       type: "date",
       label: "Paid At",
     },
-    // reciept: {
-    //   type: "number",
-    //   label: "Reciept",
-    // },
   };
 };

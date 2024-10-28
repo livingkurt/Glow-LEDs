@@ -60,22 +60,22 @@ const CombineUserModal = () => {
       onCancel={() => {
         dispatch(close_modals());
       }}
-      title={"Combine Users"}
-      confirmLabel={"Combine"}
+      title="Combine Users"
+      confirmLabel="Combine"
       confirmColor="primary"
-      actionLabel={"Reset"}
+      actionLabel="Reset"
       actionColor="secondary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
       disableEscapeKeyDown
     >
       <Box>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Typography variant="h6">User1</Typography>
+            <Typography variant="h6">{"User1"}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6">User2</Typography>
+            <Typography variant="h6">{"User2"}</Typography>
           </Grid>
         </Grid>
         {attributes(user1, user2).map(attribute => (

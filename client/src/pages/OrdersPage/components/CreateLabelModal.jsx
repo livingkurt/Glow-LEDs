@@ -347,13 +347,13 @@ const CreateLabelModal = () => {
       onConfirm={() => dispatch(API.createCustomLabel({ selectedRateId, shipmentId }))}
       onCancel={() => dispatch(closeCreateLabelModal())}
       onAction={() => dispatch(resetRates(label))}
-      title={"Create Label"}
+      title="Create Label"
       confirmDisabled={selectedRateId === ""}
-      confirmLabel={"Buy Label"}
+      confirmLabel="Buy Label"
       confirmColor="primary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
-      actionLabel={"Reset Rates"}
+      actionLabel="Reset Rates"
       actionColor="secondary"
       disableEscapeKeyDown
     >
@@ -372,7 +372,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(productionAddress))}
               >
-                To Production
+                {"To Production"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -382,7 +382,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(headquartersAddress))}
               >
-                To Headquarters
+                {"To Headquarters"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -392,7 +392,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(destanyeAddress))}
               >
-                To Destanye
+                {"To Destanye"}
               </Button>
             </Grid>
           </Grid>
@@ -416,7 +416,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(productionAddress))}
               >
-                From Production
+                {"From Production"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -426,7 +426,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(headquartersAddress))}
               >
-                From Headquarters
+                {"From Headquarters"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -436,7 +436,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(destanyeAddress))}
               >
-                From Destanye
+                {"From Destanye"}
               </Button>
             </Grid>
           </Grid>
@@ -471,13 +471,13 @@ const CreateLabelModal = () => {
             }
           }}
         >
-          Generate Rates
+          {"Generate Rates"}
         </Button>
       )}
       {!label && shippingRates.length > 0 && (
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom component="div" className="mt-10px">
-            Choose Shipping Rate
+            {"Choose Shipping Rate"}
           </Typography>
           <RadioGroup value={selectedRateId} onChange={e => dispatch(setSelectedRateId(e.target.value))}>
             {shippingRates.map((rate, index) => (
@@ -493,7 +493,7 @@ const CreateLabelModal = () => {
       )}
       {label && (
         <Button variant="contained" color="secondary" fullWidth onClick={() => printLabel(label)}>
-          Print Label
+          {"Print Label"}
         </Button>
       )}
     </GLActionModal>

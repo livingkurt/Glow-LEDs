@@ -59,7 +59,9 @@ const EventTitle = ({ event }) => {
           },
         }}
       >
-        {event.address.city}, {event.address.state}
+        {event.address.city}
+        {", "}
+        {event.address.state}
       </Typography>
       <Typography
         align="center"

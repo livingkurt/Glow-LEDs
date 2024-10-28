@@ -24,7 +24,7 @@ const OrderDropdown = ({ row, determineColor, colspan }) => {
           <Grid item xs={12}>
             {row?.change_log && row?.change_log?.length > 0 && (
               <>
-                <Typography variant="h6">Change Log</Typography>
+                <Typography variant="h6">{"Change Log"}</Typography>
                 {[...row?.change_log]
                   ?.sort((a, b) => new Date(b.changedAt) - new Date(a.changedAt))
                   .map((log, i) => (
@@ -39,7 +39,10 @@ const OrderDropdown = ({ row, determineColor, colspan }) => {
                             minute: "numeric",
                             hour12: true,
                           })}{" "}
-                          - Changed By - {log.changedBy} - Change Description: {log.change}
+                          {"- Changed By - "}
+                          {log.changedBy}
+                          {" - Change Description: "}
+                          {log.change}
                         </Typography>
                       </Box>
                     </Paper>

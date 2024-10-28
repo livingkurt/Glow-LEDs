@@ -13,7 +13,7 @@ const CurrentStock = () => {
         {"Current Stock"}
       </Typography>
       <GLDisplayTable
-        title={"Current Gloves Stock"}
+        title="Current Gloves Stock"
         loading={currentStock.isLoading && currentStock.data}
         defaultSorting={[0, "desc"]}
         onEdit={async value => {
@@ -24,8 +24,8 @@ const CurrentStock = () => {
           !currentStock.isLoading &&
           currentStock.data?.filter(row => row.subcategory === "gloves" || row.category === "gloves")
         }
-        defaultSortColumn={"Name"}
-        defaultSort={"desc"}
+        defaultSortColumn="Name"
+        defaultSort="desc"
         columnDefs={[
           { title: "Name", display: "name", sortable: true },
           {
@@ -38,7 +38,7 @@ const CurrentStock = () => {
       />
 
       <GLDisplayTable
-        title={"Current Battery Stock"}
+        title="Current Battery Stock"
         loading={currentStock.isLoading && currentStock.data}
         rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
         defaultSorting={[0, "desc"]}
@@ -63,8 +63,8 @@ const CurrentStock = () => {
 
           currentStock.refetch();
         }}
-        defaultSortColumn={"Name"}
-        defaultSort={"desc"}
+        defaultSortColumn="Name"
+        defaultSort="desc"
         columnDefs={[
           { title: "Name", display: "name", sortable: true },
           { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock", sortable: true },

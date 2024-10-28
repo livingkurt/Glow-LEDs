@@ -162,7 +162,7 @@ const Navbar = () => {
                   whiteSpace: "nowrap",
                 }}
               >
-                Glow LEDs
+                {"Glow LEDs"}
               </Typography>
             </Link>
           </Box>
@@ -281,7 +281,7 @@ const Navbar = () => {
                                   ariaLabel={row.ariaLabel}
                                   fullWidth
                                   to={row.path}
-                                  align={"left"}
+                                  align="left"
                                   onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
                                 >
                                   {determineName(row, current_user)}

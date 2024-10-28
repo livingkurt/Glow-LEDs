@@ -104,7 +104,7 @@ const Footer = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={5}>
             <Typography variant="h6" gutterBottom>
-              Sign up to be the first to learn about whats new!
+              {"Sign up to be the first to learn about whats new!"}
             </Typography>
             <form onSubmit={submitHandler}>
               <TextField
@@ -147,12 +147,12 @@ const Footer = () => {
                   "&:hover": { bgcolor: "grey.300" },
                 }}
               >
-                SUBMIT
+                {"SUBMIT"}
               </Button>
             </form>
             {isSubmitted && (
               <Typography variant="body2" sx={{ mt: 2, color: "green" }}>
-                Thank you for signing up!
+                {"Thank you for signing up!"}
               </Typography>
             )}
             {emailError && (
@@ -249,12 +249,13 @@ const Footer = () => {
               </Box>
               <Box>
                 <Typography variant="body2" color="white">
-                  Designed and developed by a glover who wants to see the community grow
+                  {"Designed and developed by a glover who wants to see the community grow"}
                 </Typography>
               </Box>
               <Box>
                 <Typography variant="body2" color="white">
-                  © {new Date().getFullYear()} Glow LEDs. All rights reserved.
+                  {"© "}
+                  {new Date().getFullYear()} {"Glow LEDs. All rights reserved."}
                 </Typography>
               </Box>
             </Grid>

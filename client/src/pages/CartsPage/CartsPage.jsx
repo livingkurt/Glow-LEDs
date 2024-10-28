@@ -49,7 +49,7 @@ const CartsPage = () => {
         title: "",
         nonSelectable: true,
         display: cart => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_cart_modal(cart))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -69,13 +69,13 @@ const CartsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Carts | Glow LEDs</title>
+        <title>{"Admin Carts | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Carts"}
+        tableName="Carts"
         namespaceScope="carts"
         namespace="cartTable"
         determineColor={determineColor}
@@ -83,7 +83,7 @@ const CartsPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_cart_modal())}>
-            Create Cart
+            {"Create Cart"}
           </Button>
         }
       />

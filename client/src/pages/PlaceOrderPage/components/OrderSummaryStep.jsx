@@ -38,7 +38,7 @@ const OrderSummaryStep = () => {
     <div className="place_order-action">
       <ul>
         <li>
-          <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>Order Summary</h4>
+          <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>{"Order Summary"}</h4>
           {hasPreOrderItems && (
             <Tooltip title="Pre-order items are items that are not yet available for immediate delivery. If ordered with non-pre-order items, the pre-order items will be released on their estimated release date.">
               <Typography
@@ -55,7 +55,7 @@ const OrderSummaryStep = () => {
                   color: theme.palette.getContrastText("#496cba"),
                 }}
               >
-                This order contains pre-order items.
+                {"This order contains pre-order items."}
               </Typography>
             </Tooltip>
           )}
@@ -65,11 +65,11 @@ const OrderSummaryStep = () => {
           <ul className="cart-list-container w-100per">
             <li>
               <div className="">
-                <label style={{ textAlign: "right" }}>Price</label>
+                <label style={{ textAlign: "right" }}>{"Price"}</label>
               </div>
             </li>
             {cartItems.length === 0 ? (
-              <div>Cart is empty</div>
+              <div>{"Cart is empty"}</div>
             ) : (
               cartItems.map((item, index) => <GLCartItem item={item} index={index} showQuantity={false} />)
             )}
@@ -78,8 +78,11 @@ const OrderSummaryStep = () => {
 
         {!activePromoCodeIndicator && (
           <li>
-            <div>Subtotal</div>
-            <div>${itemsPrice.toFixed(2)}</div>
+            <div>{"Subtotal"}</div>
+            <div>
+              {"$"}
+              {itemsPrice.toFixed(2)}
+            </div>
           </li>
         )}
 
@@ -87,27 +90,36 @@ const OrderSummaryStep = () => {
           <>
             <li>
               <del style={{ color: "red" }}>
-                <div style={{ color: "white" }}>Subtotal</div>
+                <div style={{ color: "white" }}>{"Subtotal"}</div>
               </del>
               <div>
                 <del style={{ color: "red" }}>
-                  <label style={{ color: "white" }}>${items_price.toFixed(2)}</label>
+                  <label style={{ color: "white" }}>
+                    {"$"}
+                    {items_price.toFixed(2)}
+                  </label>
                 </del>
               </div>
             </li>
             <li>
-              <div>Discount</div>
-              <div>-${(items_price - itemsPrice).toFixed(2)}</div>
+              <div>{"Discount"}</div>
+              <div>
+                {"-$"}
+                {(items_price - itemsPrice).toFixed(2)}
+              </div>
             </li>
             <li>
-              <div>New Subtotal</div>
-              <div>${itemsPrice.toFixed(2)}</div>
+              <div>{"New Subtotal"}</div>
+              <div>
+                {"$"}
+                {itemsPrice.toFixed(2)}
+              </div>
             </li>
           </>
         )}
 
         <li>
-          <div>Tax</div>
+          <div>{"Tax"}</div>
           <div>
             {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
           </div>
@@ -115,7 +127,7 @@ const OrderSummaryStep = () => {
         {splitOrder ? (
           <>
             <li className="pos-rel">
-              <div>In-stock Items Shipping</div>
+              <div>{"In-stock Items Shipping"}</div>
               <div>
                 {shipping && shipping.hasOwnProperty("first_name") && nonPreOrderShippingPrice > 0
                   ? "$" + nonPreOrderShippingPrice.toFixed(2)
@@ -123,7 +135,7 @@ const OrderSummaryStep = () => {
               </div>
             </li>
             <li className="pos-rel">
-              <div>Pre-order Items Shipping</div>
+              <div>{"Pre-order Items Shipping"}</div>
               <div>
                 {shipping && shipping.hasOwnProperty("first_name") && preOrderShippingPrice > 0
                   ? "$" + preOrderShippingPrice.toFixed(2)
@@ -133,7 +145,7 @@ const OrderSummaryStep = () => {
           </>
         ) : (
           <li className="pos-rel">
-            <div>Shipping</div>
+            <div>{"Shipping"}</div>
             <div>
               {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
                 ? "$" + shippingPrice.toFixed(2)
@@ -143,18 +155,24 @@ const OrderSummaryStep = () => {
         )}
         {serviceFee > 0 && (
           <li className="pos-rel">
-            <div>Service Fee (10% for tickets)</div>
-            <div>${serviceFee.toFixed(2)}</div>
+            <div>{"Service Fee (10% for tickets)"}</div>
+            <div>
+              {"$"}
+              {serviceFee.toFixed(2)}
+            </div>
           </li>
         )}
         {tip > 0 && (
           <li className="pos-rel">
-            <div>Tip</div>
-            <div>${tip.toFixed(2)}</div>
+            <div>{"Tip"}</div>
+            <div>
+              {"$"}
+              {tip.toFixed(2)}
+            </div>
           </li>
         )}
         <li>
-          <div>Order Total</div>
+          <div>{"Order Total"}</div>
           <div>
             {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + totalPrice.toFixed(2) : "------"}
           </div>

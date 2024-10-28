@@ -25,7 +25,7 @@ const ArticlesGridPage = () => {
   } = useArticlesGridPage();
 
   if (isLoading) return <ArticlesGridPageSkeletons />;
-  if (isError) return <Typography>Error loading articles</Typography>;
+  if (isError) return <Typography>{"Error loading articles"}</Typography>;
 
   const getPageTitle = () => {
     if (selectedTags.length > 0) {
@@ -41,7 +41,7 @@ const ArticlesGridPage = () => {
     <Box>
       <Container maxWidth="xl">
         <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
-          Back to Academy
+          {"Back to Academy"}
         </Button>
 
         <Typography variant="h4" align="center" pt={2}>
@@ -74,10 +74,10 @@ const ArticlesGridPage = () => {
           ) : (
             <>
               <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                No articles found for matching criteria
+                {"No articles found for matching criteria"}
               </Typography>
               <Typography variant="subtitle2" textAlign="center" width="100%">
-                Try removing some filters to find what you're looking for
+                {"Try removing some filters to find what you're looking for"}
               </Typography>
             </>
           )}

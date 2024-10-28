@@ -5,7 +5,7 @@ const ColorPalettePage = () => {
   return (
     <div className="column jc-c">
       <Helmet>
-        <title>Check Email | Glow LEDs</title>
+        <title>{"Check Email | Glow LEDs"}</title>
         <meta property="og:title" content="Check Email" />
         <meta name="twitter:title" content="Check Email" />
         <link rel="canonical" href="https://www.glow-leds.com/account/checkemail" />

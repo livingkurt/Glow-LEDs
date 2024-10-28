@@ -64,7 +64,7 @@ const YearlyMonthlyDailyRevenue = () => {
         <div>
           {combinedYearlyData.length > 0 && (
             <GLDisplayTable
-              title={"Yearly Revenue and Expenses"}
+              title="Yearly Revenue and Expenses"
               rows={combinedYearlyData}
               columnDefs={[
                 { title: "Year", display: "year", sortable: true },
@@ -96,7 +96,7 @@ const YearlyMonthlyDailyRevenue = () => {
         <div>
           {combinedMonthlyData.length > 0 && (
             <GLDisplayTable
-              title={"Monthly Revenue"}
+              title="Monthly Revenue"
               rows={combinedMonthlyData}
               columnDefs={[
                 { title: "Month", display: row => months[row.month - 1], sortable: true },
@@ -124,7 +124,7 @@ const YearlyMonthlyDailyRevenue = () => {
         <>
           {combinedDailyData.length > 0 && (
             <GLDisplayTable
-              title={"Daily Revenue"}
+              title="Daily Revenue"
               rows={combinedDailyData}
               columnDefs={[
                 { title: "Day", display: row => format_date(row.date), sortable: true },
@@ -152,7 +152,7 @@ const YearlyMonthlyDailyRevenue = () => {
         <>
           {combinedCategoryData.length > 0 && (
             <GLDisplayTable
-              title={"IRS Category Expenses"}
+              title="IRS Category Expenses"
               rows={combinedCategoryData}
               defaultSorting={[1, "desc"]}
               columnDefs={[

@@ -105,7 +105,7 @@ const AskForEmailModal = () => {
         <ul className="column jc-b ai-c p-20px">
           <li className="mb-2rem">
             <label className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-28px lh-40px"} ta-c jc-c `}>
-              Thank you for Signing Up!
+              {"Thank you for Signing Up!"}
             </label>
           </li>
 
@@ -120,17 +120,17 @@ const AskForEmailModal = () => {
             />
           </li>
           <li>
-            <p className="p_descriptions fs-16px ta-c jc-c">Check your email for your 10% off Promo Code!</p>
+            <p className="p_descriptions fs-16px ta-c jc-c">{"Check your email for your 10% off Promo Code!"}</p>
           </li>
         </ul>
       ) : (
         <form onSubmit={submitHandler} className="modal-content-floating ">
           <div className="h-100per jc-b column">
-            <label className="p_descriptions fs-16px ta-c jc-c">Come Into the Light</label>
+            <label className="p_descriptions fs-16px ta-c jc-c">{"Come Into the Light"}</label>
             <label className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-30px lh-40px"} ta-c jc-c `}>
-              Get 10% Off Your Next Order
+              {"Get 10% Off Your Next Order"}
             </label>
-            <label className="p_descriptions fs-16px ta-c jc-c">It's Brighter Over Here</label>
+            <label className="p_descriptions fs-16px ta-c jc-c">{"It's Brighter Over Here"}</label>
             <ul>
               <li>
                 <input
@@ -153,7 +153,7 @@ const AskForEmailModal = () => {
                   variant="inherit"
                   className="w-100per mt-2rem bg-white ft-primary title_font bob"
                 >
-                  Join Us
+                  {"Join Us"}
                 </GLButton>
               </li>
             </ul>

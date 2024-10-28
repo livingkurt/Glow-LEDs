@@ -28,7 +28,7 @@ const PalettesPage = () => {
       {
         title: "",
         display: palette => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_palette_modal(palette))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -47,12 +47,12 @@ const PalettesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Palettes | Glow LEDs</title>
+        <title>{"Admin Palettes | Glow LEDs"}</title>
       </Helmet>
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Palettes"}
+        tableName="Palettes"
         namespaceScope="palettes"
         namespace="paletteTable"
         columnDefs={columnDefs}
@@ -60,7 +60,7 @@ const PalettesPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_palette_modal())}>
-            Create Palette
+            {"Create Palette"}
           </Button>
         }
       />

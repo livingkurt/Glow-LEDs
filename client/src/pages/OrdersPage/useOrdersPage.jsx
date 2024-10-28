@@ -88,13 +88,13 @@ const useOrdersPage = ({ userProfile }) => {
             <div className="mt-10px">
               {row.order_note && (
                 <div className="ai-c">
-                  <div className="title_font mr-10px">Order Note: </div>
+                  <div className="title_font mr-10px">{"Order Note: "}</div>
                   <div>{row.order_note}</div>
                 </div>
               )}
               {row.production_note && (
                 <div className="ai-c">
-                  <div className="title_font mr-10px">Production Note: </div>
+                  <div className="title_font mr-10px">{"Production Note: "}</div>
                   <div>{row.production_note}</div>
                 </div>
               )}
@@ -109,26 +109,38 @@ const useOrdersPage = ({ userProfile }) => {
           <div>
             {!row.isRefunded && (
               <div>
-                <div>${row.totalPrice?.toFixed(2)}</div>
+                <div>
+                  {"$"}
+                  {row.totalPrice?.toFixed(2)}
+                </div>
               </div>
             )}
             {row.isRefunded && (
               <div>
                 <del style={{ color: "red" }}>
                   <label style={{ color: "white" }}>
-                    <div>${row.totalPrice?.toFixed(2)}</div>
+                    <div>
+                      {"$"}
+                      {row.totalPrice?.toFixed(2)}
+                    </div>
                   </label>
                 </del>
               </div>
             )}
             {row.isRefunded && (
               <div>
-                <div>-${(row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}</div>
+                <div>
+                  {"-$"}
+                  {(row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}
+                </div>
               </div>
             )}
             {row.isRefunded && (
               <div>
-                <div>${(row.totalPrice - row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}</div>
+                <div>
+                  {"$"}
+                  {(row.totalPrice - row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}
+                </div>
               </div>
             )}
           </div>
@@ -139,7 +151,7 @@ const useOrdersPage = ({ userProfile }) => {
         nonSelectable: true,
         display: row =>
           current_user.isAdmin ? (
-            <Box display="flex" justifyContent={"flex-end"}>
+            <Box display="flex" justifyContent="flex-end">
               <GLIconButton
                 tooltip="Edit"
                 onClick={() => {

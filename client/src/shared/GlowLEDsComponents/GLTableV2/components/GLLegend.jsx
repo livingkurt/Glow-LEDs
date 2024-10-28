@@ -74,7 +74,7 @@ const GLLegend = ({ colors }) => {
         >
           <StyledPaper>
             <Typography variant="h6" sx={{ padding: "8px 16px" }}>
-              Legend
+              {"Legend"}
             </Typography>
             <StyledList>
               {colors.map(color => (

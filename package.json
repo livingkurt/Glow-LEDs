@@ -89,7 +89,9 @@
     "cypress:run": "cd client && npm run cypress:run",
     "g": "node server/scripts/generateMigration.js",
     "lint": "node --experimental-vm-modules node_modules/eslint/bin/eslint.js server",
-    "lint:fix": "node --experimental-vm-modules node_modules/eslint/bin/eslint.js server --fix"
+    "lint:fix": "node --experimental-vm-modules node_modules/eslint/bin/eslint.js server --fix",
+    "prettier": "prettier --check . && cd client && prettier --check .",
+    "prettier:fix": "prettier --write . && cd client && prettier --write ."
   },
   "engines": {
     "node": "20.11.1",

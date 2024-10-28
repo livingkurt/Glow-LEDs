@@ -296,10 +296,10 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
   return (
     <div>
       <div className="jc-b">
-        <h2>2. Shipping</h2>
+        <h2>{"2. Shipping"}</h2>
         {shipping_completed && !show_shipping && (
           <GLButton variant="secondary" className="mv-10px" onClick={() => dispatch(showHideSteps("shipping"))}>
-            Edit
+            {"Edit"}
           </GLButton>
         )}
       </div>
@@ -312,7 +312,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                   {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                     <li>
                       <GLButton onClick={e => dispatch(save_shipping({ ...current_user.shipping }))} variant="primary">
-                        Use Saved Shipping
+                        {"Use Saved Shipping"}
                       </GLButton>
                     </li>
                   )}
@@ -338,7 +338,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                   />
                 </Paper>
                 <GLButton onClick={validateShipping} variant="primary" className="bob mt-15px">
-                  Continue
+                  {"Continue"}
                 </GLButton>
               </div>
             </>
@@ -353,7 +353,11 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                     {shipping.address_1} {shipping.address_2}
                   </div>
                   <div>
-                    {shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
+                    {shipping.city}
+                    {", "}
+                    {shipping.state} {shipping.postalCode}
+                    {", "}
+                    {shipping.country}
                   </div>
                   <div>{shipping.international && "International"}</div>
                 </div>
@@ -366,15 +370,15 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
               <ShippingChoice rates={shipping_rates.rates} choose_shipping_rate={choose_shipping_rate} />
               {cartItems.some(item => item.processing_time) && (
                 <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
-                  Estimated Time to Ship{" "}
+                  {"Estimated Time to Ship"}{" "}
                   {Math.max(
                     ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[0])
                   )}{" "}
-                  -{" "}
+                  {"-"}{" "}
                   {Math.max(
                     ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
                   )}{" "}
-                  business days
+                  {"business days"}
                 </h4>
               )}
               {!show_payment && (
@@ -395,7 +399,7 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
                       }
                     }}
                   >
-                    Continue
+                    {"Continue"}
                   </GLButton>
                 </GLTooltip>
               )}
@@ -427,10 +431,10 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
           dispatch(closeSaveShippingModal(false));
           submitShipping();
         }}
-        title={"Save Shipping Address"}
-        confirmLabel={"Save"}
+        title="Save Shipping Address"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
@@ -438,7 +442,8 @@ const ShippingStep = ({ choose_shipping_rate, next_step }) => {
           <Info color="primary" /> {modalText}
         </p>
         <p>
-          <strong>Note</strong>: You can change your saved address later from your profile page
+          <strong>{"Note"}</strong>
+          {": You can change your saved address later from your profile page"}
         </p>
       </GLActionModal>
     </div>

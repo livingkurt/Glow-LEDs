@@ -37,7 +37,7 @@ const FeaturesPage = () => {
       {
         title: "",
         display: feature => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_feature_modal(feature))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -56,12 +56,12 @@ const FeaturesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Features | Glow LEDs</title>
+        <title>{"Admin Features | Glow LEDs"}</title>
       </Helmet>
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Features"}
+        tableName="Features"
         namespaceScope="features"
         namespace="featureTable"
         columnDefs={columnDefs}
@@ -69,7 +69,7 @@ const FeaturesPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_feature_modal())}>
-            Create Feature
+            {"Create Feature"}
           </Button>
         }
       />

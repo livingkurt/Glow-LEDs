@@ -61,7 +61,7 @@ const LearnMoreProducts = ({ learn_more_products, learn_more_products_hidden }) 
                 </Typography>
                 <Link to={product.link}>
                   <Button variant="contained" onClick={() => navigate(product.link)}>
-                    Shop Now
+                    {"Shop Now"}
                   </Button>
                 </Link>
               </Box>

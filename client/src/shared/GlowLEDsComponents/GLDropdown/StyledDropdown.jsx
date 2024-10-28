@@ -29,7 +29,7 @@ const StyledDropdown = ({ onChange, items, label }) => {
     <div className="custom-select-wrapper">
       <div className="custom-select">
         <div className="custom-select__trigger">
-          <span>Tesla</span>
+          <span>{"Tesla"}</span>
           <div className="arrow-button">
             <div className="arrow" />
           </div>
@@ -46,13 +46,13 @@ const StyledDropdown = ({ onChange, items, label }) => {
 						</span>
 					))} */}
           <span className="custom-option selected" data-value="tesla">
-            Tesla
+            {"Tesla"}
           </span>
           <span className="custom-option" data-value="volvo">
-            Volvo
+            {"Volvo"}
           </span>
           <span className="custom-option" data-value="mercedes">
-            Mercedes
+            {"Mercedes"}
           </span>
         </div>
       </div>

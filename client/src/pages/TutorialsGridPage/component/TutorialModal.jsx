@@ -13,7 +13,7 @@ const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
           height="600"
           src={`https://www.youtube.com/embed/${selectedTutorial?.video}`}
           title={selectedTutorial?.title}
-          frameborder="0"
+          frameBorder="0"
           style={{ borderRadius: "20px" }}
           allowFullScreen
         ></iframe>
@@ -23,7 +23,8 @@ const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
         <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
           <Link to={`/sponsors/${selectedTutorial?.affiliate.pathname}`}>
             <Button variant="contained" color="primary">
-              Learn more about {selectedTutorial?.affiliate.artist_name}
+              {"Learn more about "}
+              {selectedTutorial?.affiliate.artist_name}
             </Button>
           </Link>
         </Box>

@@ -24,10 +24,10 @@ const EditSurveyModal = () => {
         onCancel={() => {
           dispatch(set_edit_survey_modal(false));
         }}
-        title={"Edit Survey"}
-        confirmLabel={"Save"}
+        title="Edit Survey"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

@@ -47,7 +47,7 @@ const TutorialsPage = () => {
         title: "",
         nonSelectable: true,
         display: tutorial => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -72,15 +72,15 @@ const TutorialsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Tutorials | Glow LEDs</title>
+        <title>{"Admin Tutorials | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"tutorials/setRemoteVersionRequirement"}
-        tableName={"Tutorials"}
+        remoteVersionRequirementType="tutorials/setRemoteVersionRequirement"
+        tableName="Tutorials"
         namespaceScope="tutorials"
         namespace="tutorialTable"
         columnDefs={columnDefs}
@@ -89,7 +89,7 @@ const TutorialsPage = () => {
         enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_tutorial_modal())}>
-            Create Tutorial
+            {"Create Tutorial"}
           </Button>
         }
       />

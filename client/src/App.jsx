@@ -61,13 +61,25 @@ const App = () => {
                     {route.element === "PlaceOrderPage" ? (
                       <PlaceOrderLayout>
                         {createElement(
-                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                          PrivateComponents[route.element] ||
+                            (() => (
+                              <div>
+                                {"Component not found "}
+                                {route.element}{" "}
+                              </div>
+                            ))
                         )}
                       </PlaceOrderLayout>
                     ) : (
                       <MainLayout>
                         {createElement(
-                          PrivateComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                          PrivateComponents[route.element] ||
+                            (() => (
+                              <div>
+                                {"Component not found "}
+                                {route.element}{" "}
+                              </div>
+                            ))
                         )}
                       </MainLayout>
                     )}
@@ -85,7 +97,13 @@ const App = () => {
                   <ProtectedRoute isAdminRoute={true}>
                     <MainLayout>
                       {createElement(
-                        AdminComponents[route.element] || (() => <div>Component not found {route.element} </div>)
+                        AdminComponents[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </MainLayout>
                   </ProtectedRoute>
@@ -102,13 +120,25 @@ const App = () => {
                   route.element === "PlaceOrderPage" ? (
                     <PlaceOrderLayout>
                       {createElement(
-                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                        Components[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </PlaceOrderLayout>
                   ) : (
                     <MainLayout>
                       {createElement(
-                        Components[route.element] || (() => <div>Component not found {route.element} </div>)
+                        Components[route.element] ||
+                          (() => (
+                            <div>
+                              {"Component not found "}
+                              {route.element}{" "}
+                            </div>
+                          ))
                       )}
                     </MainLayout>
                   )
@@ -117,7 +147,7 @@ const App = () => {
             ))}
 
             <Route
-              path={"/"}
+              path="/"
               exact={true}
               element={
                 <MainLayout>

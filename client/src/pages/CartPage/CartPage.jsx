@@ -40,26 +40,26 @@ const CartPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Helmet>
-        <title>Cart | Glow LEDs </title>
+        <title>{"Cart | Glow LEDs "}</title>
         <meta property="og:title" content="Cart" />
         <meta name="twitter:title" content="Cart" />
         <link rel="canonical" href="https://www.glow-leds.com/checkout/cart" />
         <meta property="og:url" content="https://www.glow-leds.com/checkout/cart" />
       </Helmet>
       <Typography variant="h4" gutterBottom>
-        Cart
+        {"Cart"}
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} md={7}>
           <Box sx={{ mb: 4 }}>
             <Grid container sx={{ mb: 2 }}>
               <Grid item xs={9}>
-                <Typography variant="subtitle1">Product</Typography>
+                <Typography variant="subtitle1">{"Product"}</Typography>
               </Grid>
             </Grid>
             <Divider sx={{ mb: 2, bgcolor: "white" }} />
             {cartItems.length === 0 ? (
-              <Typography variant="body1">Cart is empty</Typography>
+              <Typography variant="body1">{"Cart is empty"}</Typography>
             ) : (
               <List disablePadding>
                 {cartItems.map((item, index) => (
@@ -71,18 +71,19 @@ const CartPage = () => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} md={5} display={"flex"} flexDirection={"column"}>
+        <Grid item xs={12} md={5} display="flex" flexDirection="column">
           <Paper sx={{ p: 3, borderRadius: 2, bgcolor: theme.palette.background.block, color: "white" }}>
-            <Box display={"flex"} justifyContent={"space-between"}>
+            <Box display="flex" justifyContent="space-between">
               <Typography variant="h6" gutterBottom>
-                Subtotal
+                {"Subtotal"}
               </Typography>
               <Typography variant="h5" gutterBottom>
-                ${determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
+                {"$"}
+                {determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
               </Typography>
             </Box>
             <Typography variant="body2" gutterBottom>
-              Taxes and shipping calculated at checkout
+              {"Taxes and shipping calculated at checkout"}
             </Typography>
             <GLButtonV2
               onClick={checkoutHandler}
@@ -94,7 +95,7 @@ const CartPage = () => {
                 mt: 2,
               }}
             >
-              CHECKOUT
+              {"CHECKOUT"}
             </GLButtonV2>
           </Paper>
           {product_protection_details?.length > 0 && (
@@ -105,7 +106,7 @@ const CartPage = () => {
                 overflow: "hidden", // This ensures the inner content doesn't overflow the rounded corners
               }}
             >
-              <Box display="flex" flexDirection={"column"} gap={2}>
+              <Box display="flex" flexDirection="column" gap={2}>
                 {product_protection_details.map((detail, index) => (
                   <Box key={index}>
                     <Box sx={{ textAlign: "left", width: "100%" }}>

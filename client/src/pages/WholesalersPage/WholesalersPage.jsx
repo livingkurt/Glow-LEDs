@@ -69,13 +69,13 @@ const WholesalersPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Wholesalers | Glow LEDs</title>
+        <title>{"Admin Wholesalers | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        tableName={"Wholesalers"}
+        tableName="Wholesalers"
         namespaceScope="wholesalers"
         namespace="wholesalerTable"
         columnDefs={columnDefs}
@@ -84,7 +84,7 @@ const WholesalersPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_wholesaler_modal())}>
-            Create Wholesaler
+            {"Create Wholesaler"}
           </Button>
         }
       />

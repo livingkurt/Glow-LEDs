@@ -66,7 +66,7 @@ const ChangePasswordModal = () => {
         <form onSubmit={submitHandler} className="form-container w-50rem">
           <Grid container spacing={3} direction="column">
             <Grid item xs={12}>
-              <h1>Change Password</h1>
+              <h1>{"Change Password"}</h1>
             </Grid>
 
             <Grid item xs={12}>
@@ -155,7 +155,7 @@ const ChangePasswordModal = () => {
 
             <Grid item xs={12}>
               <Button variant="contained" color="primary" type="submit" fullWidth>
-                Change Password
+                {"Change Password"}
               </Button>
             </Grid>
           </Grid>

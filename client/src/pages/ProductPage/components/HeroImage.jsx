@@ -8,7 +8,7 @@ const HeroImage = ({ image }) => {
     <Box
       component="img"
       src={image?.link}
-      alt={"Hero"}
+      alt="Hero"
       sx={{
         width: "100%",
         // aspectRatio: "16/9",

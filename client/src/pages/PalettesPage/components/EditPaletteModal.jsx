@@ -29,10 +29,10 @@ const EditPaletteModal = () => {
         onCancel={() => {
           dispatch(set_edit_palette_modal(false));
         }}
-        title={"Edit Palette"}
-        confirmLabel={"Save"}
+        title="Edit Palette"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

@@ -79,10 +79,10 @@ const ShippingModal = () => {
         onCancel={() => {
           dispatch(closeShippingModal());
         }}
-        title={"Choose New Shipping Rate"}
-        confirmLabel={"Save"}
+        title="Choose New Shipping Rate"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
@@ -95,13 +95,16 @@ const ShippingModal = () => {
                   <div className="service">{rate.carrier}</div>
                   <div className="service">{rate.service}</div>
 
-                  <div>${parseFloat(rate.rate).toFixed(2)}</div>
+                  <div>
+                    {"$"}
+                    {parseFloat(rate.rate).toFixed(2)}
+                  </div>
                   <div>
                     {rate.delivery_days} {rate.delivery_days === 1 ? "Day" : "Days"}
                   </div>
                 </div>
                 <GLButton className="rates" onClick={() => dispatch(chooseShippingRate({ rate, speed: rate.service }))}>
-                  Select
+                  {"Select"}
                 </GLButton>
               </div>
             );
@@ -110,12 +113,14 @@ const ShippingModal = () => {
           <div className=" mv-1rem jc-b ai-c w-100per">
             <div className="shipping_rates jc-b w-100per ">
               <div>
-                {rate.speed} ${parseFloat(rate.rate.rate)}
+                {rate.speed}
+                {" $"}
+                {parseFloat(rate.rate.rate)}
                 {rate.rate.delivery_days} {rate.rate.delivery_days === 1 ? "Day" : "Days"}
               </div>
             </div>
             <GLButton className="rates w-10rem" onClick={() => dispatch(reChooseShippingRate())}>
-              Change
+              {"Change"}
             </GLButton>
           </div>
         )}

@@ -47,7 +47,10 @@ const SurveysPage = () => {
                   </>
                 ) : (
                   <span>
-                    Q{index + 1}. {qa.answer}
+                    {"Q"}
+                    {index + 1}
+                    {". "}
+                    {qa.answer}
                   </span>
                 )}
               </div>
@@ -60,7 +63,7 @@ const SurveysPage = () => {
         title: "",
         nonSelectable: true,
         display: survey => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_survey_modal(survey))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -80,14 +83,14 @@ const SurveysPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Surveys | Glow LEDs</title>
+        <title>{"Admin Surveys | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineSurveyColors}
-        tableName={"Surveys"}
+        tableName="Surveys"
         namespaceScope="surveys"
         namespace="surveyTable"
         columnDefs={columnDefs}
@@ -95,7 +98,7 @@ const SurveysPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_survey_modal())}>
-            Create Survey
+            {"Create Survey"}
           </Button>
         }
       />

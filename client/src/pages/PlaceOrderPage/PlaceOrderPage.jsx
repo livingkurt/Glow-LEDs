@@ -31,7 +31,7 @@ const PlaceOrderPage = () => {
   return (
     <div>
       <Helmet>
-        <title>Place Order | Glow LEDs</title>
+        <title>{"Place Order | Glow LEDs"}</title>
         <meta property="og:title" content="Place Order" />
         <meta name="twitter:title" content="Place Order" />
         <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/place_order" />
@@ -58,7 +58,7 @@ const PlaceOrderPage = () => {
             }}
             startIcon={<ArrowBack />}
           >
-            <div className="mt-3px">Back to Shopping</div>
+            <div className="mt-3px">{"Back to Shopping"}</div>
           </Button>
 
           <CheckoutSteps success={orderCompleted} show_payment={show_payment} shipping_completed={shipping_completed} />

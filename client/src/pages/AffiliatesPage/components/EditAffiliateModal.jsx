@@ -110,10 +110,10 @@ const EditAffiliateModal = () => {
           onCancel={() => {
             dispatch(set_edit_affiliate_modal(false));
           }}
-          title={"Edit Affiliate"}
-          confirmLabel={"Save"}
+          title="Edit Affiliate"
+          confirmLabel="Save"
           confirmColor="primary"
-          cancelLabel={"Cancel"}
+          cancelLabel="Cancel"
           cancelColor="secondary"
           disableEscapeKeyDown
         >
@@ -136,7 +136,7 @@ const EditAffiliateModal = () => {
               dispatch(set_edit_affiliate_modal(false));
             }
           }}
-          title={"Create Affiliate"}
+          title="Create Affiliate"
           confirmLabel={determineConfirmLabel()}
           cancelLabel={
             createAffiliateStep === 1 || createAffiliateStep === 2 || createAffiliateStep === 3 ? "" : "Cancel"
@@ -158,38 +158,40 @@ const EditAffiliateModal = () => {
           {createAffiliateStep === 1 && (
             <Box sx={{ padding: 3, marginBottom: 2 }}>
               <Typography variant="h6" gutterBottom>
-                Create Your Stripe Account
+                {"Create Your Stripe Account"}
               </Typography>
               <Typography variant="body1" paragraph>
-                In order to receive commissions from your affiliate sales, you'll need to create a Stripe account. This
-                is a quick and secure process.
+                {
+                  "In order to receive commissions from your affiliate sales, you'll need to create a Stripe account. This"
+                }
+                {"is a quick and secure process."}
               </Typography>
             </Box>
           )}
           {createAffiliateStep === 2 && (
             <Box sx={{ padding: 3 }}>
               <Typography variant="h6" gutterBottom>
-                Join our Glow LEDs Discord Community
+                {"Join our Glow LEDs Discord Community"}
               </Typography>
               <Typography variant="body1" paragraph>
-                Be a part of our vibrant community on Discord! Engage with fellow affiliates, get updates, and share
-                your experiences.
+                {"Be a part of our vibrant community on Discord! Engage with fellow affiliates, get updates, and share"}
+                {"your experiences."}
               </Typography>
               <Typography variant="body1" paragraph>
-                Once completed Navigate back to this page and click the "Complete" button.
+                {'Once completed Navigate back to this page and click the "Complete" button.'}
               </Typography>
             </Box>
           )}
           {createAffiliateStep === 3 && (
             <Box sx={{ padding: 3 }}>
               <Typography variant="h6" gutterBottom>
-                Welcome to the Glow LEDs Affiliate Team!
+                {"Welcome to the Glow LEDs Affiliate Team!"}
               </Typography>
               <Typography variant="body1" paragraph>
-                You're all set! You can now start earning commissions on your sales.
+                {"You're all set! You can now start earning commissions on your sales."}
               </Typography>
               <Typography variant="body1" paragraph>
-                If you have any questions, please reach out to us on Discord.
+                {"If you have any questions, please reach out to us on Discord."}
               </Typography>
             </Box>
           )}

@@ -22,7 +22,7 @@ const OrderActionButtons = ({ order }) => {
       <Loading loading={loading_label} />
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <h3 className="fs-20px mv-5px">Actions</h3>
+          <h3 className="fs-20px mv-5px">{"Actions"}</h3>
         </Grid>
         {order.shipping.shipping_label && (
           <Grid item xs={12}>
@@ -32,7 +32,7 @@ const OrderActionButtons = ({ order }) => {
               onClick={() => printLabel(order.shipping.shipping_label.postage_label.label_url)}
               className="w-100per mv-5px"
             >
-              Print Label
+              {"Print Label"}
             </Button>
           </Grid>
         )}
@@ -46,7 +46,7 @@ const OrderActionButtons = ({ order }) => {
             }}
             className="w-100per mv-5px"
           >
-            Print Invoice
+            {"Print Invoice"}
           </Button>
         </Grid>
         {order.shipping.shipment_id !== null && !order.shipping.shipping_label && (
@@ -57,7 +57,7 @@ const OrderActionButtons = ({ order }) => {
               onClick={() => dispatch(API.buyLabel({ orderId: order._id }))}
               className="w-100per mv-5px"
             >
-              Buy Label
+              {"Buy Label"}
             </Button>
           </Grid>
         )}
@@ -74,7 +74,7 @@ const OrderActionButtons = ({ order }) => {
               }}
               className="w-100per mv-5px"
             >
-              Refund Label
+              {"Refund Label"}
             </Button>
           </Grid>
         )}
@@ -85,7 +85,7 @@ const OrderActionButtons = ({ order }) => {
             className="w-100per mv-5px"
             onClick={() => dispatch(openShippingModal(order))}
           >
-            Choose New Shipping Rate
+            {"Choose New Shipping Rate"}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -131,7 +131,7 @@ const OrderActionButtons = ({ order }) => {
               );
             }}
           >
-            Clear Shipping Label
+            {"Clear Shipping Label"}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -145,7 +145,7 @@ const OrderActionButtons = ({ order }) => {
               dispatch(openLinkLabelModal());
             }}
           >
-            Link Order to Label
+            {"Link Order to Label"}
           </Button>
         </Grid>
         {!order.shipping.return_shipping_label && (
@@ -180,7 +180,7 @@ const OrderActionButtons = ({ order }) => {
                 )
               }
             >
-              Buy Return Label Production
+              {"Buy Return Label Production"}
             </Button>
           </Grid>
         )}
@@ -192,7 +192,7 @@ const OrderActionButtons = ({ order }) => {
               className="w-100per mv-5px"
               onClick={() => dispatch(API.createReturnLabel({ orderId: order._id, returnToHeadquarters: true }))}
             >
-              Buy Return Label To HQ
+              {"Buy Return Label To HQ"}
             </Button>
           </Grid>
         )}
@@ -204,7 +204,7 @@ const OrderActionButtons = ({ order }) => {
               className="w-100per mv-5px"
               onClick={() => printLabel(order.shipping.return_shipping_label.postage_label.label_url)}
             >
-              Print Return Label
+              {"Print Return Label"}
             </Button>
           </Grid>
         )}
@@ -221,7 +221,7 @@ const OrderActionButtons = ({ order }) => {
                 }
               }}
             >
-              Refund Return Label
+              {"Refund Return Label"}
             </Button>
           </Grid>
         )}
@@ -235,7 +235,7 @@ const OrderActionButtons = ({ order }) => {
               download={order.shipping.return_shipping_label.postage_label.label_url}
             >
               <Button color="secondary" variant="contained" className="mv-5px w-100per">
-                Download Return Label
+                {"Download Return Label"}
               </Button>
             </a>
           </Grid>

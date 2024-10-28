@@ -10,7 +10,7 @@ const Filter = ({ filterHandler, filter_options, state, title, width }) => {
           onChange={filterHandler}
           value={JSON.stringify(state)} // use this instead of 'selected' on option
         >
-          <option className="grey_option" value={""}>
+          <option className="grey_option" value="">
             {title || "Filter By Chip"}
           </option>
           {filter_options?.map((option, index) => (

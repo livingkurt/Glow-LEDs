@@ -52,10 +52,10 @@ const EditPromoModal = () => {
         onCancel={() => {
           dispatch(set_edit_promo_modal(false));
         }}
-        title={"Edit Promo"}
-        confirmLabel={"Save"}
+        title="Edit Promo"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

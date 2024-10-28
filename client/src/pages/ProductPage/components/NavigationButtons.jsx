@@ -35,17 +35,17 @@ const NavigationButtons = ({ primary_color }) => {
     >
       <Box sx={buttonStyle} onClick={() => scrollToElement("features")}>
         <Typography variant="h6" sx={buttonTextStyle}>
-          Features
+          {"Features"}
         </Typography>
       </Box>
       <Box sx={buttonStyle} onClick={() => scrollToElement("tech-specs")}>
         <Typography variant="h6" sx={buttonTextStyle}>
-          Tech Specs
+          {"Tech Specs"}
         </Typography>
       </Box>
       <Box sx={buttonStyle} onClick={() => scrollToElement("manual")}>
         <Typography variant="h6" sx={buttonTextStyle}>
-          Manual
+          {"Manual"}
         </Typography>
       </Box>
     </Box>

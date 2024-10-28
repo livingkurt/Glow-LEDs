@@ -195,14 +195,14 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Email Template Editor
+        {"Email Template Editor"}
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box mb={2}>
             <Select fullWidth displayEmpty value="" onChange={e => addModule(e.target.value)}>
               <MenuItem value="" disabled>
-                Add new module
+                {"Add new module"}
               </MenuItem>
               {MODULE_TYPES.map(type => (
                 <MenuItem key={type.value} value={type.value}>

@@ -50,70 +50,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
 import GLTablePagination from "./components/GLTablePagination";
 
-// const useStyles = makeStyles(() => ({
-//   palette: {
-//     background: {
-//       default: "#4e5061"
-//     },
-//     text: {
-//       primary: "#ffffff"
-//     }
-//   },
-//   components: {
-//     MuiPaper: {
-//       styleOverrides: {
-//         root: {
-//           backgroundColor: "#4e5061"
-//         }
-//       }
-//     },
-//     MuiTableRow: {
-//       styleOverrides: {
-//         root: {
-//           backgroundColor: "#343540"
-//         }
-//       },
-//       head: {
-//         backgroundColor: "#343540 !important"
-//       }
-//     },
-//     MuiCheckbox: {
-//       styleOverrides: {
-//         root: {
-//           color: "#fff"
-//         }
-//       }
-//     },
-//     MuiTableCell: {
-//       styleOverrides: {
-//         root: {
-//           color: "#ffffff"
-//         }
-//       },
-//       head: {
-//         color: "white !important"
-//       }
-//     },
-//     MuiTypography: {
-//       styleOverrides: {
-//         root: {
-//           color: "#ffffff"
-//         }
-//       }
-//     },
-//     MuiTablePagination: {
-//       styleOverrides: {
-//         caption: {
-//           color: "#ffffff"
-//         },
-//         select: {
-//           color: "#ffffff"
-//         }
-//       }
-//     }
-//   }
-// }));
-
 const GLTableV2 = ({
   remoteApi,
   remoteFiltersApi,
@@ -196,7 +132,7 @@ const GLTableV2 = ({
         nonTagFilters,
         filters: mapValues(availableFiltersProp, () => []),
         availableFilters: availableFiltersProp,
-        isRemote: !!remoteApi,
+        isRemote: Boolean(remoteApi),
       })
     );
   }, [remoteApi, availableFiltersProp, columnDefs, dispatch, namespace, nonTagFilters, rows]);
@@ -371,10 +307,13 @@ const GLTableV2 = ({
                 {enableRowSelect && numSelected > 0 ? (
                   <div data-test="tableToolbarTitle">
                     <Typography variant="h6" color="textPrimary" component="div">
-                      {numSelected} Selected
+                      {numSelected} {"Selected"}
                     </Typography>
                     {hiddenSelected > 0 && (
-                      <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>
+                      <sup className={glTable.subtextWrapper}>
+                        {hiddenSelected}
+                        {" not shown on the current page"}
+                      </sup>
                     )}
                   </div>
                 ) : (

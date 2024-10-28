@@ -81,10 +81,11 @@ const LoadingPayments = ({ loading }) => {
           }}
         >
           <Typography variant="h3" sx={{ textAlign: "center", color: "#ffffff", my: 2 }}>
-            Processing your Payment{dots}
+            {"Processing your Payment"}
+            {dots}
           </Typography>
           <Typography variant="h6" style={{ textAlign: "center", color: "#ffffff" }}>
-            Please do not refresh the page
+            {"Please do not refresh the page"}
           </Typography>
           <div
             style={{
@@ -110,7 +111,7 @@ const LoadingPayments = ({ loading }) => {
             ))}
           </div>
           <Typography variant="h6" textAlign="center">
-            The more your know
+            {"The more your know"}
           </Typography>
           <p style={{ textAlign: "center", color: "#ffffff" }}>{tip}</p>
         </div>

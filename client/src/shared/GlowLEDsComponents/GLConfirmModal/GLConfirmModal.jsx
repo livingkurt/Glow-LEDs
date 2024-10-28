@@ -57,10 +57,10 @@ const GLConfirmModal = () => {
       </DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={() => handleClose()} color="secondary">
-          No
+          {"No"}
         </Button>
         <Button variant="contained" onClick={handleConfirm} color="primary">
-          Yes
+          {"Yes"}
         </Button>
       </DialogActions>
     </Dialog>

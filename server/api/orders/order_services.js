@@ -31,6 +31,7 @@ import {
   createSplitOrder,
 } from "./order_interactors.js";
 import SalesTax from "sales-tax";
+import affiliate_db from "../affiliates/affiliate_db.js";
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
 export default {

@@ -36,7 +36,7 @@ const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizo
       <Alert
         elevation={10}
         variant="filled"
-        severity={"success"}
+        severity="success"
         style={{ backgroundColor: determine_alert_color(), color: "white", fontSize: "16px" }}
       >
         {message}

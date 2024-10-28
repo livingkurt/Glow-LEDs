@@ -60,7 +60,7 @@ const PaychecksPage = () => {
         title: "",
         nonSelectable: true,
         display: paycheck => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_paycheck_modal(paycheck))}>
               <Edit color="white" />
             </GLIconButton>
@@ -105,7 +105,7 @@ const PaychecksPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Paychecks | Glow LEDs</title>
+        <title>{"Admin Paychecks | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
@@ -113,7 +113,7 @@ const PaychecksPage = () => {
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
-        tableName={"Paychecks"}
+        tableName="Paychecks"
         namespaceScope="paychecks"
         namespace="paycheckTable"
         columnDefs={columnDefs}
@@ -132,11 +132,11 @@ const PaychecksPage = () => {
                   }
                 }}
               >
-                Delete Paychecks
+                {"Delete Paychecks"}
               </Button>
             )}
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_paycheck_modal())}>
-              Create Paycheck
+              {"Create Paycheck"}
             </Button>
           </div>
         }

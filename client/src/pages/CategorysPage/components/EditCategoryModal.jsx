@@ -34,10 +34,10 @@ const EditCategoryModal = () => {
         onCancel={() => {
           dispatch(set_edit_category_modal(false));
         }}
-        title={"Edit Category"}
-        confirmLabel={"Save"}
+        title="Edit Category"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

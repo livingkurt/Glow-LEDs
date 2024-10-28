@@ -26,10 +26,10 @@ const EditFeatureModal = () => {
         onCancel={() => {
           dispatch(set_edit_feature_modal(false));
         }}
-        title={"Edit Feature"}
-        confirmLabel={"Save"}
+        title="Edit Feature"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

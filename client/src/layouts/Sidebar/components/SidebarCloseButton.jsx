@@ -10,7 +10,7 @@ const SidebarCloseButton = () => {
     <>
       <div className="h-40px bg-primary ta-c title_font ai-c w-100per">
         <p className="w-100per fs-20px mt-24px" style={{ color: "white" }}>
-          Find Your Glow
+          {"Find Your Glow"}
         </p>
       </div>
       <div className="ai-c">
@@ -41,7 +41,7 @@ const SidebarCloseButton = () => {
           </GLButton>
         </div>
         <Link to="/" aria-label="Home Page">
-          <label className="fs-20px mv-0px ff-h mr-20px ta-c">GL</label>
+          <label className="fs-20px mv-0px ff-h mr-20px ta-c">{"GL"}</label>
         </Link>
       </div>
     </>

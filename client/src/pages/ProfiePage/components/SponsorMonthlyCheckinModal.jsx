@@ -51,21 +51,24 @@ const SponsorMonthlyCheckinModal = ({ type }) => {
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
       title={`${user?.affiliate?.teamCaptain ? "Team" : "Sponsor"} Monthly Check In`}
-      confirmLabel={"Confirm"}
+      confirmLabel="Confirm"
       confirmColor="primary"
       confirmDisabled={numberOfContent < 3}
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
       disableEscapeKeyDown
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
           <Typography variant="body1" gutterBottom>
-            Please fill out this form below to complete your monthly check in.
+            {"Please fill out this form below to complete your monthly check in."}
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="body1">You are checking in for: {month}</Typography>
+          <Typography variant="body1">
+            {"You are checking in for: "}
+            {month}
+          </Typography>
         </Grid>
         <Grid item>
           <TextField
@@ -82,8 +85,10 @@ const SponsorMonthlyCheckinModal = ({ type }) => {
 
         <Grid item>
           <Typography variant="body1" gutterBottom>
-            Please follow the link below to upload at least 3 pieces of content to the corresponding month folder in the
-            Google Drive.
+            {
+              "Please follow the link below to upload at least 3 pieces of content to the corresponding month folder in the"
+            }
+            {"Google Drive."}
           </Typography>
         </Grid>
         <Grid item>
@@ -93,7 +98,7 @@ const SponsorMonthlyCheckinModal = ({ type }) => {
             rel="noopener"
           >
             <Button variant="contained" color="primary" fullWidth>
-              Google Drive
+              {"Google Drive"}
             </Button>
           </Link>
         </Grid>
@@ -111,7 +116,7 @@ const SponsorMonthlyCheckinModal = ({ type }) => {
         </Grid>
         <Grid item>
           <Typography variant="body1" gutterBottom>
-            Once checkin is completed your monthly sponsor codes will be generated at the beginning of the month.
+            {"Once checkin is completed your monthly sponsor codes will be generated at the beginning of the month."}
           </Typography>
         </Grid>
       </Grid>

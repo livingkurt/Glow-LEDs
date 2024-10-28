@@ -96,23 +96,23 @@ const EditOrderModal = () => {
         onCancel={() => {
           dispatch(set_edit_order_modal(false));
         }}
-        title={"Edit Order"}
-        confirmLabel={"Save"}
+        title="Edit Order"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
         <FormControlLabel
           control={
             <Checkbox
-              name={"is_updated"}
+              name="is_updated"
               size="large"
               onChange={e => setIsUpdatePricesActive(e.target.checked)}
               checked={isUpdatePricesActive}
             />
           }
-          label={"Update Prices"}
+          label="Update Prices"
         />
         <GLForm
           formData={formFields}

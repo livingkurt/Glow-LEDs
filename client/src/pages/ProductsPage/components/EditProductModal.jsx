@@ -70,8 +70,8 @@ const EditProductModal = () => {
             );
           }
         }}
-        title={"Edit Product"}
-        confirmLabel={"Save"}
+        title="Edit Product"
+        confirmLabel="Save"
         confirmColor="primary"
         cancelLabel={
           editProductHistory.length > 0 ? `Back to ${editProductHistory[editProductHistory.length - 1].name}` : "Cancel"

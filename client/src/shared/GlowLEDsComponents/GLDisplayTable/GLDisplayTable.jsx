@@ -120,7 +120,7 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
                             sx={{ height: 22 }}
                             onClick={e => handleSave(row, e, columnDef.attribute)}
                           >
-                            Save
+                            {"Save"}
                           </Button>
                         </Box>
                       ) : (

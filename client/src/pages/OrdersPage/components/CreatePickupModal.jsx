@@ -56,10 +56,10 @@ const CreatePickupModal = () => {
       isOpen={create_pickup_modal}
       onConfirm={handleConfirmPickup}
       onCancel={() => dispatch(close_create_pickup_modal(false))}
-      title={"Create Pickup"}
-      confirmLabel={"Confirm"}
+      title="Create Pickup"
+      confirmLabel="Confirm"
       confirmColor="primary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
       disableEscapeKeyDown
     >
@@ -93,13 +93,13 @@ const CreatePickupModal = () => {
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" onClick={handleCreatePickup}>
-            Generate Pickup Rates
+            {"Generate Pickup Rates"}
           </Button>
         </Grid>
         {orders && (
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom component="div">
-              Packages in Pickup
+              {"Packages in Pickup"}
             </Typography>
             <Typography variant="body" gutterBottom component="div">
               {orders?.map((order, index) => `${order.shipping.first_name} ${order.shipping.last_name}`)}
@@ -109,7 +109,7 @@ const CreatePickupModal = () => {
         {pickup && pickup.pickup_rates && (
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom component="div">
-              Choose Pickup Rate
+              {"Choose Pickup Rate"}
             </Typography>
             <RadioGroup value={selectedRate} onChange={e => setSelectedRate(e.target.value)}>
               {pickup.pickup_rates.map((rate, index) => (
