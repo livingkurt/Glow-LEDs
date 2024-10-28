@@ -351,11 +351,23 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  validate_email_c: async (req, res) => {
+  validate_email_users_c: async (req, res) => {
     const { params, body } = req;
     try {
-      const user = await user_services.validate_email_s(params, body);
+      const user = await user_services.validate_email_users_s(params, body);
       if (user !== undefined) {
+        return res.status(200).send(user);
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  unsubscribe_email_users_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const user = await user_services.unsubscribe_email_users_s(body);
+      if (user) {
         return res.status(200).send(user);
       }
       return res.status(404).send({ message: "User Not Found" });
