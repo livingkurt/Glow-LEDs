@@ -118,6 +118,7 @@ const EditOrderModal = () => {
           formData={formFields}
           state={order}
           onChange={(value, fieldName, index) => {
+            console.log({ value, fieldName, index });
             if (fieldName === "delete") {
               handleDelete(value, dispatch, order, isUpdatePricesActive);
             } else if (fieldName === "duplicate") {

@@ -103,12 +103,6 @@ const orderSchema = new mongoose.Schema(
     serviceFee: { type: Number },
     totalPrice: { type: Number },
     refundTotal: { type: Number },
-    // Primary status
-    status: {
-      type: String,
-      enum: Object.values(OrderStatusEnum),
-      default: "unpaid",
-    },
     // Exceptional statuses as booleans
     isReassured: { type: Boolean, default: false },
     isRefunded: { type: Boolean, default: false },

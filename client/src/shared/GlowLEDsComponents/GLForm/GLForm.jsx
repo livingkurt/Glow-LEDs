@@ -19,8 +19,9 @@ import GLColorPicker from "./components/GLColorPicker";
 import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
+import GLOptionSelector from "./components/GLOptionSelector";
 
-const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode }) => {
+const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode, index }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -593,6 +594,19 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     setLocalState={setLocalState}
                   />
                 );
+              case "option_selector":
+                return (
+                  <GLOptionSelector
+                    key={`${fieldName}-${fieldData.type}`}
+                    fieldName={fieldName}
+                    fieldData={fieldData}
+                    value={fieldState}
+                    onChange={value => handleInputChange(fieldName, value)}
+                    classes={classes}
+                    formErrors={formErrors}
+                    index={index} // Pass the index here
+                  />
+                );
 
               default:
                 return <div></div>;
@@ -609,6 +623,7 @@ GLForm.defaultProps = {
   classes: {},
   loading: false,
   mode: "view",
+  index: 0,
 };
 
 GLForm.propTypes = {
@@ -620,6 +635,7 @@ GLForm.propTypes = {
   setFormErrors: PropTypes.func,
   classes: PropTypes.object,
   mode: PropTypes.string,
+  index: PropTypes.number,
 };
 
 export default GLForm;
