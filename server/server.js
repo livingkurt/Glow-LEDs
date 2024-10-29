@@ -14,6 +14,8 @@ import { dirname } from "path";
 import routes from "./api/index.js"; // Make sure to add the .js extension
 import sslRedirect from "heroku-ssl-redirect";
 import configurePassport from "./passport.js";
+import { configureSNSEndpoint } from "./api/emails/sns_handler.js";
+import { validateEmails } from "./api/emails/email_validator.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -109,6 +111,12 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(compression());
 app.use(sslRedirect.default());
+
+// Configure SNS endpoint for email feedback
+configureSNSEndpoint(app);
+
+// Add email validation middleware to relevant routes
+app.use("/api/emails/send", validateEmails);
 
 app.use(passport.initialize());
 

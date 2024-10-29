@@ -23,6 +23,53 @@ import { createTransporter } from "../emails/email_helpers.js";
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 
+import { validateEmailBeforeSending } from "../emails/email_management.js";
+import { emailValidationRules } from "../emails/email_validator.js";
+
+export const sendEmail = async (type, emailOptions) => {
+  try {
+    // Validate email format
+    const emails = Array.isArray(emailOptions.to) ? emailOptions.to : [emailOptions.to];
+
+    for (const email of emails) {
+      if (!emailValidationRules.validateEmailFormat(email)) {
+        throw new Error(`Invalid email format: ${email}`);
+      }
+
+      // Check suppression list
+      const validationResult = await validateEmailBeforeSending(email);
+      if (!validationResult.isValid) {
+        throw new Error(`Email ${email} is suppressed: ${validationResult.reason}`);
+      }
+    }
+
+    const emailTransporter = await createTransporter(type);
+
+    if (emailTransporter) {
+      // Add tracking headers
+      const enhancedOptions = {
+        ...emailOptions,
+        headers: {
+          ...emailOptions.headers,
+          "X-SES-CONFIGURATION-SET": "GlowLEDsEmailMetrics",
+          "X-SES-MESSAGE-TAGS": JSON.stringify({
+            emailType: type,
+            timestamp: new Date().toISOString(),
+          }),
+        },
+      };
+
+      await emailTransporter.sendMail(enhancedOptions);
+
+      // Log successful send
+      console.log(`Email sent successfully to ${emails.join(", ")}`);
+    }
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
+};
+
 export const normalizeOrderFilters = input => {
   const output = {};
   Object.keys(input).forEach(key => {
@@ -358,16 +405,16 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     throw new Error(error);
   }
 };
-export const sendEmail = async (type, emailOptions) => {
-  const emailTransporter = await createTransporter(type);
-  try {
-    if (emailTransporter) {
-      await emailTransporter.sendMail(emailOptions);
-    }
-  } catch (error) {
-    console.log({ sendOrderEmail: error });
-  }
-};
+// export const sendEmail = async (type, emailOptions) => {
+//   const emailTransporter = await createTransporter(type);
+//   try {
+//     if (emailTransporter) {
+//       await emailTransporter.sendMail(emailOptions);
+//     }
+//   } catch (error) {
+//     console.log({ sendOrderEmail: error });
+//   }
+// };
 export const sendOrderEmail = async orderData => {
   try {
     const bodyConfirmation = {
