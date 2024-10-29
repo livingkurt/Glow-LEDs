@@ -32,10 +32,9 @@ const ProfilePage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading: loading_order } = orderPage;
 
-  const { orderColumnDefs, ordersRemoteApi } = useUserProfilePage();
+  const { ordersRemoteApi, orderColumnDefs, paychecksRemoteApi, paychecksColumnDefs } = useUserProfilePage();
+
   const {
-    paycheckColumnDefs,
-    paychecksRemoteApi,
     yearlyEarnings,
     currentMonthEarnings,
     sponsorCodes,
@@ -118,7 +117,7 @@ const ProfilePage = () => {
               enableSearch={false}
               namespaceScope="paychecks"
               namespace="paycheckTable"
-              columnDefs={paycheckColumnDefs}
+              columnDefs={paychecksColumnDefs}
               loading={loading}
               enableRowSelect={false}
             />
