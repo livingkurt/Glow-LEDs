@@ -15,12 +15,12 @@ import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 import { Container, Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
-import useUserProfilePage from "./useUserProfilePage";
+import {useUserProfilePage} from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import { months } from "../DashboardPage/dashboardHelpers";
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   const navigate = useNavigate();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
@@ -130,4 +130,3 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;

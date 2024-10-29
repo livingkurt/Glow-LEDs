@@ -16,12 +16,12 @@ import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
 import { toTitleCase } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
-import useOrdersPage from "./useOrdersPage";
+import { useOrdersPage } from "./useOrdersPage";
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
   const { columnDefs, remoteApi, remoteFiltersApi, loading, remoteVersionRequirement, selectedRows, order } =
-    useOrdersPage({ userProfile: false });
+    useOrdersPage({ userId: null });
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>

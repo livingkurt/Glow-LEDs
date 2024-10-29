@@ -20,7 +20,7 @@ import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
-import { ProfilePage } from "../../pages/ProfiePage";
+import { ProfilePage } from "../../pages/ProfiePage/ProfilePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
