@@ -232,11 +232,13 @@ export const useOrdersPage = ({ userId }) => {
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
   const user_id = userId || current_user._id;
+
   const ordersRemoteApi = useCallback(options => API.getMyOrders(options, user_id), [user_id]);
   const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
   return {
     columnDefs,
-    remoteApi: userId ? ordersRemoteApi : remoteApi,
+    remoteApi: remoteApi,
+    myRemoteApi: ordersRemoteApi,
     remoteFiltersApi,
     loading,
     remoteVersionRequirement,
@@ -244,4 +246,3 @@ export const useOrdersPage = ({ userId }) => {
     order,
   };
 };
-

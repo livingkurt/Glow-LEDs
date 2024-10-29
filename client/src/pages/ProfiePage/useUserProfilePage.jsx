@@ -24,10 +24,9 @@ export const useUserProfilePage = () => {
     };
   }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
 
-  const { columnDefs: orderColumnDefs, remoteApi: ordersRemoteApi } = useOrdersPage({ userId: id });
+  const { columnDefs: orderColumnDefs, myRemoteApi: ordersRemoteApi } = useOrdersPage({ userId: id });
   return {
     ordersRemoteApi,
     orderColumnDefs,
   };
 };
-
