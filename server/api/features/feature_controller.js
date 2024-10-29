@@ -1,4 +1,4 @@
-import { feature_services } from "../features";
+import feature_services from "./feature_services.js";
 
 export default {
   get_table_features_c: async (req, res) => {

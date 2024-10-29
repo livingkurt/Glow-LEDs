@@ -1,4 +1,4 @@
-import Tutorial from "./tutorial";
+import Tutorial from "./tutorial.js";
 
 export default {
   findAll_tutorials_db: async (filter, sort, limit, page) => {

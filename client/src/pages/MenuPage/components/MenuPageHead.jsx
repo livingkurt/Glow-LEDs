@@ -4,7 +4,10 @@ import { Helmet } from "react-helmet";
 const MenuPageHead = ({ name }) => {
   return (
     <Helmet>
-      <title>{name} | Glow LEDs</title>
+      <title>
+        {name}
+        {" | Glow LEDs"}
+      </title>
       <meta property="og:title" content={`${name}| Glow LEDs`} />
       <meta name="twitter:title" content={`${name}| Glow LEDs`} />
       <link rel="canonical" href="https://www.glow-leds.com/featured" />

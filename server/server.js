@@ -1,14 +1,11 @@
-import sslRedirect from "heroku-ssl-redirect";
 import express from "express";
 import path from "path";
 import mongoose from "mongoose";
-import routes from "./api";
-
-import template_routes from "./email_templates/template_routes";
-import config from "./config";
-const cors = require("cors");
-const passport = require("passport");
-const compression = require("compression");
+import template_routes from "./email_templates/template_routes.js";
+import config from "./config.js";
+import cors from "cors";
+import passport from "passport";
+import compression from "compression";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 
@@ -46,7 +43,7 @@ const server = createServer(app); // Attach Express to HTTP Server
 const io = new SocketIOServer(server, {
   cors: {
     origin: [
-      "http://localhost:3000",
+      "http://localhost:5173",
       "https://glow-leds.com",
       "https://www.glow-leds.com",
       "https://glow-leds-dev.herokuapp.com",
@@ -63,12 +60,12 @@ app.all("*", function (req, res, next) {
   next();
 });
 
-app.use(cors({ origin: ["http://localhost:3000", "https://livingkurt.github.io/"] }));
+app.use(cors({ origin: ["http://localhost:5173", "https://livingkurt.github.io/"] }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(compression());
-app.use(sslRedirect());
+app.use(sslRedirect.default());
 
 app.use(passport.initialize());
 
@@ -80,17 +77,18 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
-require("./passport")(passport);
+configurePassport(passport);
 
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-if (config.NODE_ENV === "production") {
-  app.use(express.static("dist"));
-  app.use(express.static("client/build"));
+if (process.env.NODE_ENV === "production") {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, "../client/dist")));
 
-  app.get("*", (request, response) => {
-    response.sendFile(path.join("/app", "client/build", "index.html"));
+  // Handle React routing, return all requests to React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
 

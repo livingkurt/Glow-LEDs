@@ -1,5 +1,6 @@
-import { email_controller } from "../emails";
-import { paycheck_db, paycheck_services } from "../paychecks";
+import email_controller from "../emails/email_controller.js";
+import paycheck_db from "./paycheck_db.js";
+import paycheck_services from "./paycheck_services.js";
 
 export default {
   get_table_paychecks_c: async (req, res) => {

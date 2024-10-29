@@ -1,6 +1,6 @@
 import express from "express";
-import { survey_controller } from "../surveys";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import survey_controller from "./survey_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
-import config from "../../config";
-import SocialMediaIcons from "./SocialMediaIcons";
+import config from "../../config.js";
+import SocialMediaIcons from "./SocialMediaIcons.js";
 
 export default header_footer_color => {
   return `<table style="width:100%;border-spacing:0;background-color:${

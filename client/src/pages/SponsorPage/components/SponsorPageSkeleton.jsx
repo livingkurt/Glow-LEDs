@@ -32,7 +32,7 @@ const SponsorPageSkeleton = () => {
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ bgcolor: "#4e5061", borderRadius: "20px", bgcolor: "transparent" }} elevation={0}>
+          <Card sx={{ borderRadius: "20px", bgcolor: "transparent" }} elevation={0}>
             <Skeleton
               animation="wave"
               variant="rectangular"
@@ -43,7 +43,7 @@ const SponsorPageSkeleton = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card sx={{ color: "#fff", bgcolor: "#4c526d", bgcolor: "#4e5061", borderRadius: "20px" }}>
+          <Card sx={{ color: "#fff", bgcolor: "#4e5061", borderRadius: "20px" }}>
             <CardContent>
               {[...Array(6)].map((_, index) => (
                 <React.Fragment key={index}>
@@ -68,7 +68,7 @@ const SponsorPageSkeleton = () => {
                 variant="rectangular"
                 width={200}
                 height={36}
-                sx={{ bgcolor: "#5c6281", bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
+                sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
               />
               <Skeleton animation="wave" variant="text" width="40%" height={28} sx={{ bgcolor: "#5c6281", mb: 1 }} />
               <Box sx={{ display: "flex", gap: 2 }}>
@@ -100,10 +100,7 @@ const SponsorPageSkeleton = () => {
       <Grid container spacing={3}>
         {[...Array(4)].map((_, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-            <Card
-              sx={{ bgcolor: "transparent", height: "100%", bgcolor: "#4e5061", borderRadius: "1rem" }}
-              elevation={0}
-            >
+            <Card sx={{ height: "100%", bgcolor: "#4e5061", borderRadius: "1rem" }} elevation={0}>
               <Skeleton
                 animation="wave"
                 variant="rectangular"

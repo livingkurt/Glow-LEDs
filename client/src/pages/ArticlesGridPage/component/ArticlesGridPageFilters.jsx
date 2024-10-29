@@ -89,7 +89,7 @@ const ArticlesGridPageFilters = ({
               },
             }}
           >
-            Clear Filters
+            {"Clear Filters"}
           </Button>
         )}
       </Box>
@@ -106,7 +106,7 @@ const ArticlesGridPageFilters = ({
                   },
                 }}
               >
-                Sort By
+                {"Sort By"}
               </InputLabel>
               <Select
                 labelId="sort-select-label"
@@ -116,9 +116,9 @@ const ArticlesGridPageFilters = ({
                 sx={selectStyle}
               >
                 <MenuItem value="clear">
-                  <Box display="flex" justifyContent="flex-end" width={"100%"} alignItems={"center"}>
+                  <Box display="flex" justifyContent="flex-end" width="100%" alignItems="center">
                     <Clear fontSize="large" />
-                    <Typography ml={1}>Clear Sort</Typography>
+                    <Typography ml={1}>{"Clear Sort"}</Typography>
                   </Box>
                 </MenuItem>
                 {sortOptions.map(option => (

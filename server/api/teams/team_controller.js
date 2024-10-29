@@ -1,4 +1,4 @@
-import { team_services } from "../teams";
+import team_services from "./team_services.js";
 
 export default {
   findAll_teams_c: async (req, res) => {

@@ -50,7 +50,8 @@ const TicketPrice = ({ ticket, tickets }) => {
         </Typography>
       </Box>
       <Typography variant="h4" color="white" fontWeight="bold" align="center">
-        ${ticket?.price}
+        {"$"}
+        {ticket?.price}
       </Typography>
     </Box>
   );

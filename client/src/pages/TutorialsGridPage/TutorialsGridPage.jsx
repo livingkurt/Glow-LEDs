@@ -32,7 +32,7 @@ const TutorialsGridPage = () => {
   } = useTutorialsGridPage();
 
   if (isLoading) return <TutorialsGridPageSkeletons />;
-  if (isError) return <Typography>Error loading tutorials</Typography>;
+  if (isError) return <Typography>{"Error loading tutorials"}</Typography>;
 
   const getPageTitle = () => {
     if (selectedLevel) {
@@ -50,7 +50,7 @@ const TutorialsGridPage = () => {
     <Box>
       <Container maxWidth="xl">
         <Button component={Link} to="/academy" variant="text" sx={{ mt: 2, color: "#fff" }}>
-          Back to Academy
+          {"Back to Academy"}
         </Button>
         <Typography variant="h4" align="center" pt={2}>
           {getPageTitle()}
@@ -84,10 +84,10 @@ const TutorialsGridPage = () => {
           ) : (
             <>
               <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                No tutorials found for matching criteria
+                {"No tutorials found for matching criteria"}
               </Typography>
               <Typography variant="subtitle2" textAlign="center" width="100%">
-                Try removing some filters to find what you're looking for
+                {"Try removing some filters to find what you're looking for"}
               </Typography>
             </>
           )}

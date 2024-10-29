@@ -1,6 +1,6 @@
-import Product from "./product";
+import Product from "./product.js";
 import mongoose from "mongoose";
-import { determineIDPathname } from "../api_helpers";
+import { determineIDPathname } from "../api_helpers.js";
 
 export default {
   findAll_products_db: async (filter, sort, limit, page) => {

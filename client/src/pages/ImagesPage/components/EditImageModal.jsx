@@ -37,10 +37,10 @@ const EditImageModal = () => {
         onCancel={() => {
           dispatch(set_edit_image_modal(false));
         }}
-        title={"Edit Image"}
-        confirmLabel={"Save"}
+        title="Edit Image"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

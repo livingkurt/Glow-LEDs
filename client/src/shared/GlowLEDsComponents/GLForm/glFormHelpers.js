@@ -100,3 +100,10 @@ export const getEmptyObjectFromSchema = schema => {
   });
   return emptyObject;
 };
+
+export const getSelectedValue = (fieldData, fieldState) => {
+  const selected = fieldData.valueAttribute
+    ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
+    : fieldState;
+  return selected;
+};

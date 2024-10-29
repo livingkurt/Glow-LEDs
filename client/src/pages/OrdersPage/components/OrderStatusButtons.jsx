@@ -110,7 +110,10 @@ const OrderStatusButtons = ({ order }) => {
         {order.status && (
           <>
             <Grid item xs={12}>
-              <h3 className="fs-20px mv-5px">Status {toTitleCase(order.status)}</h3>
+              <h3 className="fs-20px mv-5px">
+                {"Status "}
+                {toTitleCase(order.status)}
+              </h3>
             </Grid>
             {order.status === "paid" && (
               <Grid item xs={12}>
@@ -123,7 +126,7 @@ const OrderStatusButtons = ({ order }) => {
                   p={1}
                 >
                   <Typography variant="button" textAlign="center">
-                    Buy Label to Change Status
+                    {"Buy Label to Change Status"}
                   </Typography>
                 </Box>
               </Grid>
@@ -139,7 +142,7 @@ const OrderStatusButtons = ({ order }) => {
                   p={1}
                 >
                   <Typography variant="button" textAlign="center">
-                    Will Change to Shipped
+                    {"Will Change to Shipped"}
                   </Typography>
                 </Box>
               </Grid>
@@ -152,7 +155,8 @@ const OrderStatusButtons = ({ order }) => {
                   fullWidth
                   onClick={() => updateOrder(nextStatus(order.status, order.orderItems), true)}
                 >
-                  Set Status to {nextStatus(order.status, order.orderItems, true)}
+                  {"Set Status to "}
+                  {nextStatus(order.status, order.orderItems, true)}
                 </Button>
               </Grid>
             )}
@@ -160,7 +164,7 @@ const OrderStatusButtons = ({ order }) => {
               <div className="mt-n15px mb-n5px">
                 <GLAutocomplete
                   value={order.status}
-                  variant={"filled"}
+                  variant="filled"
                   options={Object.keys(orderStatusColors)}
                   optionDisplay={option => toTitleCase(option)}
                   getOptionLabel={option => toTitleCase(option)}
@@ -177,7 +181,7 @@ const OrderStatusButtons = ({ order }) => {
         {order.isUpdated && (
           <Grid item xs={12}>
             <Button color="primary" variant="contained" fullWidth onClick={() => updateOrder("updated", false)}>
-              Update Acknowledged
+              {"Update Acknowledged"}
             </Button>
           </Grid>
         )}
@@ -191,7 +195,7 @@ const OrderStatusButtons = ({ order }) => {
                 updateOrder("print_issue", false);
               }}
             >
-              Print Issue Acknowledged
+              {"Print Issue Acknowledged"}
             </Button>
           </Grid>
         )}
@@ -208,7 +212,8 @@ const OrderStatusButtons = ({ order }) => {
               fullWidth
               onClick={() => send_order_status_email(order.status)}
             >
-              Send {toTitleCase(order.status)} Status Email
+              {"Send "}
+              {toTitleCase(order.status)} {"Status Email"}
             </Button>
           </Grid>
         )}
@@ -219,18 +224,18 @@ const OrderStatusButtons = ({ order }) => {
             fullWidth
             onClick={() => updateOrder("updated", !order.isUpdated)}
           >
-            {order.isUpdated ? "Unset" : "Set"} to Updated
+            {order.isUpdated ? "Unset" : "Set"} {"to Updated"}
           </Button>
         </Grid>
         <Grid item xs={12}>
           <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("print_issue", false)}>
-            {order.isPrintIssue ? "Unset" : "Set"} to Print Issue
+            {order.isPrintIssue ? "Unset" : "Set"} {"to Print Issue"}
           </Button>
         </Grid>
 
         <Grid item xs={12}>
           <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("prioritized", false)}>
-            {order.isPrioritized ? "Unset" : "Set"} to Prioritized
+            {order.isPrioritized ? "Unset" : "Set"} {"to Prioritized"}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -240,12 +245,12 @@ const OrderStatusButtons = ({ order }) => {
             fullWidth
             onClick={() => updateOrder("reassured", !order.isReassured)}
           >
-            {order.isReassured ? "Unset" : "Set"} to Reassured
+            {order.isReassured ? "Unset" : "Set"} {"to Reassured"}
           </Button>
         </Grid>
         <Grid item xs={12}>
           <Button color="secondary" variant="contained" fullWidth onClick={() => updateOrder("paused", false)}>
-            {order.isPaused ? "Unset" : "Set"} to Paused
+            {order.isPaused ? "Unset" : "Set"} {"to Paused"}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -255,7 +260,7 @@ const OrderStatusButtons = ({ order }) => {
             fullWidth
             onClick={() => updateOrder("refunded", !order.isRefunded)}
           >
-            {order.isRefunded ? "Unset" : "Set"} to Refunded
+            {order.isRefunded ? "Unset" : "Set"} {"to Refunded"}
           </Button>
         </Grid>
       </Grid>

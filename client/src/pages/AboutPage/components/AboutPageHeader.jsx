@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 const AboutPageHeader = () => {
   return (
     <Helmet>
-      <title>About | Glow LEDs</title>
+      <title>{"About | Glow LEDs"}</title>
       <meta property="og:title" content="About" />
       <meta name="twitter:title" content="About" />
       <link rel="canonical" href="https://www.glow-leds.com/about" />

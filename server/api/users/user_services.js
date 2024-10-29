@@ -1,11 +1,10 @@
-import { user_db } from "../users";
-import { getFilteredData } from "../api_helpers";
-import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
-import { getRefreshToken } from "./userInteractors";
-import Token from "../tokens/token";
-import config from "../../config";
-const bcrypt = require("bcryptjs");
-require("dotenv");
+import user_db from "./user_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers.js";
+import { getRefreshToken } from "./userInteractors.js";
+import Token from "../tokens/token.js";
+import config from "../../config.js";
+import bcrypt from "bcryptjs";
 
 export default {
   findAll_users_s: async query => {
@@ -119,7 +118,11 @@ export default {
         bcrypt.hash(temporary_password, salt, async (err, hash) => {
           if (err) throw err;
           hashed_password = hash;
-          user = { ...body, password: hashed_password };
+          user = {
+            ...body,
+            email: body.email?.toLowerCase(),
+            password: hashed_password,
+          };
           response = await user_db.create_users_db(user);
         });
       });
@@ -150,7 +153,8 @@ export default {
   },
 
   register_users_s: async body => {
-    const user = await user_db.findByEmail_users_db(body.email);
+    const lowercaseEmail = body.email.toLowerCase();
+    const user = await user_db.findByEmail_users_db(lowercaseEmail);
     if (user) {
       const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
       if (isMatch) {
@@ -163,7 +167,7 @@ export default {
         user: {
           first_name: body.first_name,
           last_name: body.last_name,
-          email: body.email,
+          email: lowercaseEmail,
           password: body.password,
           affiliate: body.affiliate,
           cart: body.cart,
@@ -196,7 +200,7 @@ export default {
         _id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
-        email: user.email,
+        email: user.email.toLowerCase(),
         affiliate: user.affiliate,
         email_subscription: user.email_subscription,
         is_affiliated: user.is_affiliated,
@@ -224,7 +228,7 @@ export default {
       _id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
-      email: user.email,
+      email: user.email.toLowerCase(),
       affiliate: user.affiliate,
       email_subscription: user.email_subscription,
       is_affiliated: user.is_affiliated,
@@ -243,7 +247,7 @@ export default {
       _id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
-      email: user.email,
+      email: user.email.toLowerCase(),
       affiliate: user.affiliate,
       email_subscription: user.email_subscription,
       is_affiliated: user.is_affiliated,
@@ -271,7 +275,7 @@ export default {
           _id: user.id,
           first_name: user.first_name,
           last_name: user.last_name,
-          email: user.email,
+          email: user.email.toLowerCase(),
           isAdmin: user.isAdmin,
           cart: user.cart,
           isVerified: user.isVerified,
@@ -288,13 +292,33 @@ export default {
       }
     }
   },
-  validate_email_s: async (params, body) => {
+  validate_email_users_s: async (params, body) => {
     try {
       const user = await user_db.findByEmail_users_db(params.email);
       if (user) {
         return true;
       }
       return false;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  unsubscribe_email_users_s: async body => {
+    try {
+      const { email } = body;
+
+      // Find and update the user
+      const user = await user_db.findByEmail_users_db(email);
+      if (!user) {
+        throw new Error("User Not Found");
+      }
+
+      // Update email subscription status
+      await user_db.update_users_db(user._id, { email_subscription: false });
+
+      return { message: "Unsubscribed" };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

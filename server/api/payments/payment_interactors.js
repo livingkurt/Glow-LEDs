@@ -1,5 +1,5 @@
-import { expense_db } from "../expenses";
-import config from "../../config";
+import expense_db from "../expenses/expense_db.js";
+import config from "../../config.js";
 
 import Stripe from "stripe";
 

@@ -510,7 +510,7 @@ export const nextStatus = (currentStatus, orderItems) => {
   return currentStatus;
 };
 const URL = () => {
-  switch (config.REACT_APP_ENVIRONMENT) {
+  switch (config.VITE_ENVIRONMENT) {
     case "production":
       return "https://www.glow-leds.com";
     case "staging":

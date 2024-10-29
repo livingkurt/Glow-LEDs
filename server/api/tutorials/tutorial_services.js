@@ -1,7 +1,7 @@
-import tutorial_db from "./tutorial_db";
-import { getFilteredData } from "../api_helpers";
-import { handleTagFiltering } from "../products/product_helpers";
-import { Affiliate } from "../affiliates";
+import tutorial_db from "./tutorial_db.js";
+import { getFilteredData } from "../api_helpers.js";
+import { handleTagFiltering } from "../products/product_helpers.js";
+import Affiliate from "../affiliates/affiliate.js";
 
 export default {
   findAll_tutorials_s: async query => {

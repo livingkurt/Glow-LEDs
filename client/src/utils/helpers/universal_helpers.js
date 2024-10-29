@@ -118,98 +118,103 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
           label: "Pathname",
           labelProp: "pathname",
         },
-
         selectedOptions: {
-          type: "array",
-          title: "Selected Options",
-          label: item => item.name,
-          itemSchema: {
-            type: "object",
-            fields: {
-              name: { type: "text", label: "Name" },
-              replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-              isDefault: { type: "checkbox", label: "Default Option" },
-              // product: {
-              //   type: "autocomplete_single",
-              //   label: "Option Product",
-              //   options: productsQuery,
-              //   labelProp: "name",
-              //   onEditButtonClick: selectedProduct => {
-              //     dispatch(saveToEditProductHistory(product));
-              //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-              //   },
-              //   onCreateNewButtonClick: selectedProduct => {
-              //     dispatch(saveToEditProductHistory(product));
-              //     dispatch(API.saveProduct({ ...selectedProduct }));
-              //   },
-              //   showEditButton: true,
-              // },
-            },
-          },
+          type: "option_selector",
+          label: "Selected Options",
+          getCurrentOptions: index => item?.orderItems?.[index]?.currentOptions || [],
+          getSelectedOptions: index => item?.orderItems?.[index]?.selectedOptions || [],
         },
-        currentOptions: {
-          type: "array",
-          label: item => item.name,
-          title: "Current Product Options",
-          itemSchema: {
-            type: "object",
-            fields: {
-              name: {
-                type: "text",
-                label: "Option Name",
-                labelProp: "name",
-              },
-              optionType: {
-                type: "autocomplete_single",
-                label: "Option Type",
-                getOptionLabel: option => {
-                  if (typeof option === "string") {
-                    return toCapitalize(option);
-                  }
-                },
-                options: ["dropdown", "buttons"],
-              },
-              isAddOn: {
-                type: "checkbox",
-                label: "Is Add-On",
-              },
-              additionalCost: { type: "number", label: "Additional Cost" },
-              values: {
-                type: "array",
-                title: "Option Choices",
-                label: item => item.name,
-                itemSchema: {
-                  type: "object",
-                  fields: {
-                    name: { type: "text", label: "Name" },
-                    replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-                    isDefault: { type: "checkbox", label: "Default Option" },
-                    // product: {
-                    //   type: "autocomplete_single",
-                    //   label: "Option Product",
-                    //   options: productsQuery,
-                    //   labelProp: "name",
-                    //   onEditButtonClick: selectedProduct => {
-                    //     dispatch(saveToEditProductHistory(product));
-                    //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-                    //   },
-                    //   onCreateNewButtonClick: selectedProduct => {
-                    //     dispatch(saveToEditProductHistory(product));
-                    //     dispatch(API.saveProduct({ ...selectedProduct }));
-                    //   },
-                    //   showEditButton: true,
-                    // },
-                  },
-                },
-              },
-            },
-          },
-        },
-        size: {
-          type: "text",
-          label: "Size",
-          labelProp: "size",
-        },
+        // selectedOptions: {
+        //   type: "array",
+        //   title: "Selected Options",
+        //   label: item => item.name,
+        //   itemSchema: {
+        //     type: "object",
+        //     fields: {
+        //       name: { type: "text", label: "Name" },
+        //       replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+        //       isDefault: { type: "checkbox", label: "Default Option" },
+        //       // product: {
+        //       //   type: "autocomplete_single",
+        //       //   label: "Option Product",
+        //       //   options: productsQuery,
+        //       //   labelProp: "name",
+        //       //   onEditButtonClick: selectedProduct => {
+        //       //     dispatch(saveToEditProductHistory(product));
+        //       //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+        //       //   },
+        //       //   onCreateNewButtonClick: selectedProduct => {
+        //       //     dispatch(saveToEditProductHistory(product));
+        //       //     dispatch(API.saveProduct({ ...selectedProduct }));
+        //       //   },
+        //       //   showEditButton: true,
+        //       // },
+        //     },
+        //   },
+        // },
+        // currentOptions: {
+        //   type: "array",
+        //   label: item => item.name,
+        //   title: "Current Product Options",
+        //   itemSchema: {
+        //     type: "object",
+        //     fields: {
+        //       name: {
+        //         type: "text",
+        //         label: "Option Name",
+        //         labelProp: "name",
+        //       },
+        //       optionType: {
+        //         type: "autocomplete_single",
+        //         label: "Option Type",
+        //         getOptionLabel: option => {
+        //           if (typeof option === "string") {
+        //             return toCapitalize(option);
+        //           }
+        //         },
+        //         options: ["dropdown", "buttons"],
+        //       },
+        //       isAddOn: {
+        //         type: "checkbox",
+        //         label: "Is Add-On",
+        //       },
+        //       additionalCost: { type: "number", label: "Additional Cost" },
+        //       values: {
+        //         type: "array",
+        //         title: "Option Choices",
+        //         label: item => item.name,
+        //         itemSchema: {
+        //           type: "object",
+        //           fields: {
+        //             name: { type: "text", label: "Name" },
+        //             replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
+        //             isDefault: { type: "checkbox", label: "Default Option" },
+        //             // product: {
+        //             //   type: "autocomplete_single",
+        //             //   label: "Option Product",
+        //             //   options: productsQuery,
+        //             //   labelProp: "name",
+        //             //   onEditButtonClick: selectedProduct => {
+        //             //     dispatch(saveToEditProductHistory(product));
+        //             //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
+        //             //   },
+        //             //   onCreateNewButtonClick: selectedProduct => {
+        //             //     dispatch(saveToEditProductHistory(product));
+        //             //     dispatch(API.saveProduct({ ...selectedProduct }));
+        //             //   },
+        //             //   showEditButton: true,
+        //             // },
+        //           },
+        //         },
+        //       },
+        //     },
+        //   },
+        // },
+        // size: {
+        //   type: "text",
+        //   label: "Size",
+        //   labelProp: "size",
+        // },
 
         count_in_stock: {
           type: "number",

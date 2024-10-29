@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Drawer, Box, Typography, IconButton, Button, Divider, List, useTheme } from "@mui/material";
+import { Drawer, Box, Typography, Button, Divider, List, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { determineItemsTotal } from "../../utils/helper_functions";
 import { setCartDrawer } from "../../slices/cartSlice";
@@ -9,7 +9,7 @@ import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
-import { Add } from "@mui/icons-material";
+import { Add, Sell } from "@mui/icons-material";
 import * as API from "../../api";
 import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
@@ -25,11 +25,12 @@ const Cart = () => {
   const theme = useTheme();
 
   const { current_user } = useSelector(state => state.users.userPage);
-  const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
+  const { my_cart, cartDrawer, promoCode } = useSelector(state => state.carts.cartPage);
 
   const { create_product_bundle_modal, productBundle, loading } = useSelector(state => state.affiliates.affiliatePage);
 
   const { cartItems } = my_cart;
+
   const { contents } = useSelector(state => state.contents.contentPage);
 
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
@@ -83,9 +84,13 @@ const Cart = () => {
                 title="Small Logo"
               />
             </Box>
-            <Typography variant="h6">Cart ({getCartQuantity(cartItems)})</Typography>
+            <Typography variant="h6">
+              {"Cart ("}
+              {getCartQuantity(cartItems)}
+              {")"}
+            </Typography>
           </Box>
-          <Box display={"flex"} gap={2}>
+          <Box display="flex" gap={2}>
             {(current_user.isAdmin || current_user.affiliate) && (
               <Button
                 onClick={() => {
@@ -94,11 +99,11 @@ const Cart = () => {
                 color="inherit"
                 variant="outlined"
               >
-                <Add /> Create Bundle
+                <Add /> {"Create Bundle"}
               </Button>
             )}
             <Button onClick={closeMenu} color="inherit" variant="outlined">
-              <CloseIcon /> Close
+              <CloseIcon /> {"Close"}
             </Button>
           </Box>
         </Box>
@@ -106,7 +111,7 @@ const Cart = () => {
         <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
           {cartItems && cartItems.length === 0 ? (
             <Box sx={{ p: 2, textAlign: "center" }}>
-              <Typography variant="body1">Cart is Empty</Typography>
+              <Typography variant="body1">{"Cart is Empty"}</Typography>
               <RecentlyViewed closeMenu={closeMenu} />
               <TopCategories
                 category_items={contents.length > 0 && contents[0].menus[0].menu_items}
@@ -128,16 +133,27 @@ const Cart = () => {
             background: `linear-gradient(180deg, ${theme.palette.background.dark} 0%, ${theme.palette.primary.main} 100%)`,
           }}
         >
-          <Box display={"flex"} justifyContent={"space-between"} sx={{ mb: 1 }}>
-            <Typography variant="subtitle1">Total</Typography>
+          <Box display="flex" justifyContent="space-between" sx={{ mb: 1 }}>
+            <Typography variant="subtitle1">{"Total"}</Typography>
             <Typography variant="subtitle1">
-              ${determineItemsTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} USD
+              {"$"}
+              {determineItemsTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} {"USD"}
             </Typography>
           </Box>
+          {sessionStorage.getItem("promo_code") && (
+            <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={2}>
+              <Typography variant="body2">{"Promo code applied at checkout"}</Typography>
+              <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={1}>
+                <Sell />
+                <Typography variant="body2">{sessionStorage.getItem("promo_code").toUpperCase()}</Typography>
+              </Box>
+            </Box>
+          )}
           <Typography variant="body2" sx={{ mb: 2 }}>
-            Taxes and shipping calculated at checkout
+            {"Taxes and shipping calculated at checkout"}
           </Typography>
-          <Box display={"flex"} justifyContent={"space-between"} gap={2} sx={{ mb: 2 }}>
+
+          <Box display="flex" justifyContent="space-between" gap={2} sx={{ mb: 2 }}>
             <Button
               variant="contained"
               color="secondary"
@@ -150,7 +166,7 @@ const Cart = () => {
                 padding: 1.5,
               }}
             >
-              View Cart
+              {"View Cart"}
             </Button>
             {current_user?.isWholesaler ? (
               <Button
@@ -164,7 +180,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Checkout
+                {"Checkout"}
               </Button>
             ) : (
               <Button
@@ -177,7 +193,7 @@ const Cart = () => {
                   padding: 1.5,
                 }}
               >
-                Checkout
+                {"Checkout"}
               </Button>
             )}
           </Box>
@@ -186,11 +202,6 @@ const Cart = () => {
       <GLActionModal
         isOpen={create_product_bundle_modal}
         onConfirm={() => {
-          console.log({
-            affiliateId: current_user.affiliate,
-            cartId: my_cart._id,
-            ...productBundle,
-          });
           dispatch(
             API.createProductBundle({
               affiliateId: current_user.affiliate,
@@ -202,10 +213,10 @@ const Cart = () => {
         onCancel={() => {
           dispatch(closeCreateProductBundleModal());
         }}
-        title={"Create Product Bundle"}
-        confirmLabel={"Create"}
+        title="Create Product Bundle"
+        confirmLabel="Create"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

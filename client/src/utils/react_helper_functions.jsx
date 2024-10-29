@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
-import { logout_user, set_current_user } from "../slices/userSlice";
+import { set_current_user } from "../slices/userSlice";
 import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import GLIconButton from "../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
@@ -53,17 +53,30 @@ export const product_page_sale_price_switch = (
 
   // 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
   if (isWholesaler && wholesale_price > 0) {
-    return <label className="fs-18px">WSP: ${wholesale_price ? wholesale_price?.toFixed(2) : wholesale_price}</label>;
+    return (
+      <label className="fs-18px">
+        {"WSP: $"}
+        {wholesale_price ? wholesale_price?.toFixed(2) : wholesale_price}
+      </label>
+    );
   }
   if (previous_price) {
     return (
       <label className="fs-18px">
-        <label>${price ? price?.toFixed(2) : price}</label>
-        <label> ({(100 * (1 - price / previous_price))?.toFixed(0)}% Off) </label>
+        <label>
+          {"$"}
+          {price ? price?.toFixed(2) : price}
+        </label>
+        <label>
+          {" ("}
+          {(100 * (1 - price / previous_price))?.toFixed(0)}
+          {"% Off) "}
+        </label>
         <label>
           <del style={color}>
             <label className="" style={color}>
-              ${previous_price ? previous_price?.toFixed(2) : previous_price}
+              {"$"}
+              {previous_price ? previous_price?.toFixed(2) : previous_price}
             </label>
           </del>{" "}
         </label>
@@ -73,19 +86,32 @@ export const product_page_sale_price_switch = (
     if (sale_price !== 0 && today >= new Date(sale_start_date) && today <= new Date(sale_end_date)) {
       return (
         <label className="fs-18px">
-          <label>${sale_price ? sale_price?.toFixed(2) : sale_price}</label>
-          <label> ({100 * (1 - sale_price / price).toFixed(0)}% Off) </label>
+          <label>
+            {"$"}
+            {sale_price ? sale_price?.toFixed(2) : sale_price}
+          </label>
+          <label>
+            {" ("}
+            {100 * (1 - sale_price / price).toFixed(0)}
+            {"% Off) "}
+          </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${price ? price?.toFixed(2) : price}
+                {"$"}
+                {price ? price?.toFixed(2) : price}
               </label>
             </del>{" "}
           </label>
         </label>
       );
     } else {
-      return <label className="fs-18px">${price ? price?.toFixed(2) : price}</label>;
+      return (
+        <label className="fs-18px">
+          {"$"}
+          {price ? price?.toFixed(2) : price}
+        </label>
+      );
     }
   }
 };
@@ -99,7 +125,12 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
 
   if (product) {
     if (isWholesaler && product.wholesale_price) {
-      return <label className="fs-18px">WSP: ${formatPrice(product.wholesale_price)}</label>;
+      return (
+        <label className="fs-18px">
+          {"WSP: $"}
+          {formatPrice(product.wholesale_price)}
+        </label>
+      );
     } else if (
       product.sale_price !== 0 &&
       today >= new Date(product.sale_start_date) &&
@@ -113,12 +144,22 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
       return (
         <label className="fs-18px">
           {product.preorder ? "Preorder " : ""}
-          <label>${formatPrice(product.sale_price)}</label>
-          {discount && <label> ({discount}% Off) </label>}
+          <label>
+            {"$"}
+            {formatPrice(product.sale_price)}
+          </label>
+          {discount && (
+            <label>
+              {" ("}
+              {discount}
+              {"% Off) "}
+            </label>
+          )}
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${formatPrice(product.price)}
+                {"$"}
+                {formatPrice(product.price)}
               </label>
             </del>{" "}
           </label>
@@ -133,12 +174,22 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
       return (
         <label className="fs-18px">
           {product.preorder ? "Preorder " : ""}
-          <label>${formatPrice(product.price)}</label>
-          {discount && <label> ({discount}% Off) </label>}
+          <label>
+            {"$"}
+            {formatPrice(product.price)}
+          </label>
+          {discount && (
+            <label>
+              {" ("}
+              {discount}
+              {"% Off) "}
+            </label>
+          )}
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${formatPrice(product.previous_price)}
+                {"$"}
+                {formatPrice(product.previous_price)}
               </label>
             </del>{" "}
           </label>
@@ -147,7 +198,9 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
     } else {
       return (
         <label className="fs-18px">
-          {product.preorder ? "Preorder " : ""} ${formatPrice(product.price)}
+          {product.preorder ? "Preorder " : ""}
+          {" $"}
+          {formatPrice(product.price)}
         </label>
       );
     }
@@ -158,7 +211,8 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
   if (isWholesaler && item.wholesale_price) {
     return (
       <label className="fs-18px">
-        WSP: ${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}
+        {"WSP: $"}
+        {item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}
       </label>
     );
   } else if (item.sale_price !== 0) {
@@ -167,9 +221,14 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
         {item.preorder ? "Preorder " : ""}
         {/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
         <del style={{ color: "#a03131" }}>
-          <label style={{ color: color }}>${item.price && (item.price * item.quantity).toFixed(2)}</label>
+          <label style={{ color: color }}>
+            {"$"}
+            {item.price && (item.price * item.quantity).toFixed(2)}
+          </label>
         </del>{" "}
-        {"-->"} ${item.sale_price && (item.sale_price * item.quantity).toFixed(2)}
+        {"-->"}
+        {" $"}
+        {item.sale_price && (item.sale_price * item.quantity).toFixed(2)}
       </label>
     );
   } else if (item.quantity === 0) {
@@ -178,16 +237,19 @@ export const email_sale_price_switch = (item, color, isWholesaler) => {
         {item.preorder ? "Preorder " : ""}
         <del style={{ color: "#a03131" }}>
           <label style={{ color: color, marginLeft: "7px" }}>
-            ${item.price && (item.price * item.quantity).toFixed(2)}
+            {"$"}
+            {item.price && (item.price * item.quantity).toFixed(2)}
           </label>
         </del>{" "}
-        {"-->"} <label style={{ color: color, marginLeft: "7px" }}>Sold Out</label>
+        {"-->"} <label style={{ color: color, marginLeft: "7px" }}>{"Sold Out"}</label>
       </label>
     );
   } else {
     return (
       <label>
-        {item.preorder ? "Preorder " : ""} ${item.price && (item.price * item.quantity).toFixed(2)}
+        {item.preorder ? "Preorder " : ""}
+        {" $"}
+        {item.price && (item.price * item.quantity).toFixed(2)}
       </label>
     );
   }
@@ -402,11 +464,26 @@ export const determine_product_name_display = product => {
     product.category === "exo_diffusers" ||
     product.category === "diffuser_caps"
   ) {
-    return <div>{product.name} - 10</div>;
+    return (
+      <div>
+        {product.name}
+        {" - 10"}
+      </div>
+    );
   } else if (product.category === "decals") {
-    return <div>{product.name} - 11</div>;
+    return (
+      <div>
+        {product.name}
+        {" - 11"}
+      </div>
+    );
   } else if (product.name === "Nova Clip") {
-    return <div>{product.name} - 1</div>;
+    return (
+      <div>
+        {product.name}
+        {" - 1"}
+      </div>
+    );
   } else {
     return (
       <div>
@@ -496,7 +573,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Ordered</div>
+        <div style={{ fontSize: "16px" }}>{"Ordered"}</div>
       </div>
       <div
         style={
@@ -517,7 +594,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Paid </div>
+        <div style={{ fontSize: "16px" }}>{"Paid "}</div>
       </div>
       <div
         style={
@@ -538,7 +615,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Crafted</div>
+        <div style={{ fontSize: "16px" }}>{"Crafted"}</div>
       </div>
       <div
         style={
@@ -559,7 +636,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Packaged</div>
+        <div style={{ fontSize: "16px" }}>{"Packaged"}</div>
       </div>
       <div
         style={
@@ -580,7 +657,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Shipped</div>
+        <div style={{ fontSize: "16px" }}>{"Shipped"}</div>
       </div>
       {/* <div
         style={

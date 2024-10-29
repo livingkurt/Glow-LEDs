@@ -16,33 +16,33 @@ import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
 import { toTitleCase } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
-import useOrdersPage from "./useOrdersPage";
+import { useOrdersPage } from "./useOrdersPage";
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
   const { columnDefs, remoteApi, remoteFiltersApi, loading, remoteVersionRequirement, selectedRows, order } =
-    useOrdersPage({ userProfile: false });
+    useOrdersPage({ userId: null });
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Orders | Glow LEDs</title>
+        <title>{"Admin Orders | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
-        tableName={"Orders"}
-        searchPlaceholder={"Search by ID, Name, Email, #code"}
+        remoteVersionRequirementType="orders/setRemoteVersionRequirement"
+        tableName="Orders"
+        searchPlaceholder="Search by ID, Name, Email, #code"
         colors={[...Object.values(orderExceptionStatusColors), ...Object.values(orderStatusColors)]}
         determineColor={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
         columnDefs={columnDefs}
         enableDropdownRow
-        rowName={"_id"}
+        rowName="_id"
         dropdownComponent={row => (
           <OrderDropdown row={row} determineColor={determineOrderColors} colspan={columnDefs.length + 1} />
         )}
@@ -53,7 +53,7 @@ const OrdersPage = () => {
             {selectedRows.length > 1 && (
               <GLAutocomplete
                 value={order.status}
-                variant={"outlined"}
+                variant="outlined"
                 options={[
                   ...Object.keys(orderStatusColors),
                   "Set isPrioritized",
@@ -97,19 +97,19 @@ const OrdersPage = () => {
                     }
                   }}
                 >
-                  Delete Orders
+                  {"Delete Orders"}
                 </Button>
               )}
               {selectedRows.length > 0 && (
                 <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
-                  Create UPS Pickup
+                  {"Create UPS Pickup"}
                 </Button>
               )}
               <Button color="secondary" variant="contained" onClick={() => dispatch(openCreateLabelModal())}>
-                Create Label
+                {"Create Label"}
               </Button>
               <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
-                Create Order
+                {"Create Order"}
               </Button>
             </div>
           </div>

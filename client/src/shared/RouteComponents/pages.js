@@ -20,7 +20,7 @@ import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
-import { ProfilePage } from "../../pages/ProfiePage";
+import { ProfilePage } from "../../pages/ProfiePage/ProfilePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
@@ -51,7 +51,7 @@ import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
 import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 import AcademyPage from "../../pages/AcademyPage/AcademyPage";
-
+import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 export const Components = {
   PlaceOrderPage,
   OrderPage,
@@ -79,6 +79,7 @@ export const Components = {
   ArticlesGridPage,
   ArticlePage,
   AcademyPage,
+  UnsubscribePage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

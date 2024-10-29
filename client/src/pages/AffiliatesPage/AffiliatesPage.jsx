@@ -81,7 +81,7 @@ const AffiliatesPage = () => {
         title: "",
         nonSelectable: true,
         display: affiliate => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_affiliate_modal(affiliate))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -108,14 +108,14 @@ const AffiliatesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Affiliates | Glow LEDs</title>
+        <title>{"Admin Affiliates | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
-        tableName={"Affiliates"}
+        tableName="Affiliates"
         namespaceScope="affiliates"
         namespace="affiliateTable"
         columnDefs={columnDefs}
@@ -123,7 +123,7 @@ const AffiliatesPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_affiliate_modal())}>
-            Create Affiliate
+            {"Create Affiliate"}
           </Button>
         }
       />

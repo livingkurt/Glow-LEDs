@@ -66,7 +66,7 @@ const ExpensesPage = () => {
         title: "",
         nonSelectable: true,
         display: expense => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_expense_modal(expense))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -145,14 +145,14 @@ const ExpensesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Expenses | Glow LEDs</title>
+        <title>{"Admin Expenses | Glow LEDs"}</title>
       </Helmet>
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineExpenseColors}
-        tableName={"Expenses"}
+        tableName="Expenses"
         namespaceScope="expenses"
         namespace="expenseTable"
         columnDefs={columnDefs}
@@ -171,17 +171,17 @@ const ExpensesPage = () => {
                   }
                 }}
               >
-                Delete Expenses
+                {"Delete Expenses"}
               </Button>
             )}
             <div>
               <Button variant="contained" color="primary" component="label" fullWidth>
-                Import CSV
+                {"Import CSV"}
                 <input type="file" id="file" hidden multiple onChange={e => showFiles(e)} />
               </Button>
             </div>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_expense_modal())}>
-              Create Expense
+              {"Create Expense"}
             </Button>
           </div>
         }

@@ -1,7 +1,7 @@
-const { payout_affiliates } = require("./monthly_workers/payout_affiliates");
-const { payout_teams } = require("./monthly_workers/payout_teams");
-const { payout_tips } = require("./monthly_workers/payout_tips");
-const { refresh_sponsor_codes } = require("./monthly_workers/refresh_sponsor_codes");
+import { payout_affiliates } from "./monthly_workers/payout_affiliates.js";
+import { payout_teams } from "./monthly_workers/payout_teams.js";
+import { payout_tips } from "./monthly_workers/payout_tips.js";
+import { refresh_sponsor_codes } from "./monthly_workers/refresh_sponsor_codes.js";
 
 const monthly_worker = () => {
   // Get the current date

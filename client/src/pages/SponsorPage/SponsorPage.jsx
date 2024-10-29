@@ -86,13 +86,13 @@ const SponsorPage = () => {
       </Helmet>
 
       <Box sx={{ mb: 4 }}>
-        <Box display={"flex"} justifyContent={"space-between"}>
+        <Box display="flex" justifyContent="space-between">
           <Button onClick={() => navigate("/sponsors")} sx={{ mb: 2, color: "#fff" }}>
-            Back to Sponsors
+            {"Back to Sponsors"}
           </Button>
           {current_user.isAdmin && (
             <Button onClick={() => dispatch(open_edit_affiliate_modal(affiliate))} sx={{ mb: 2, color: "#fff" }}>
-              Edit Sponsor
+              {"Edit Sponsor"}
             </Button>
           )}
         </Box>
@@ -117,16 +117,18 @@ const SponsorPage = () => {
           <Card sx={{ color: "#fff", bgcolor: "#4c526d", borderRadius: "20px" }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Who is this?
+                {"Who is this?"}
               </Typography>
               <Typography variant="body1" paragraph>
-                {affiliate.user?.first_name} {affiliate.user?.last_name} AKA {affiliate.artist_name}
+                {affiliate.user?.first_name} {affiliate.user?.last_name}
+                {" AKA "}
+                {affiliate.artist_name}
               </Typography>
 
               {affiliate.bio && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Bio
+                    {"Bio"}
                   </Typography>
                   <Typography variant="body1" paragraph>
                     {affiliate.bio}
@@ -137,16 +139,18 @@ const SponsorPage = () => {
               {affiliate.start_year && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Gloving Since
+                    {"Gloving Since"}
                   </Typography>
                   <Typography variant="body1" paragraph>
-                    {affiliate.start_year}, ({new Date().getFullYear() - affiliate.start_year} Years)
+                    {affiliate.start_year}
+                    {", ("}
+                    {new Date().getFullYear() - affiliate.start_year} {"Years)"}
                   </Typography>
                 </>
               )}
 
               <Typography variant="h6" gutterBottom>
-                Location
+                {"Location"}
               </Typography>
               <Typography variant="body1" paragraph>
                 {affiliate.location}
@@ -155,7 +159,7 @@ const SponsorPage = () => {
               {affiliate.inspiration && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Inspired by
+                    {"Inspired by"}
                   </Typography>
                   <Typography variant="body1" paragraph>
                     {affiliate.inspiration}
@@ -163,9 +167,9 @@ const SponsorPage = () => {
                 </>
               )}
               <Typography variant="h6" gutterBottom>
-                Promo Code
+                {"Promo Code"}
               </Typography>
-              <Box display={"flex"} alignItems={"center"} gap={2} sx={{ mb: 2 }}>
+              <Box display="flex" alignItems="center" gap={2} sx={{ mb: 2 }}>
                 <Button
                   variant="contained"
                   color="secondary"
@@ -176,13 +180,15 @@ const SponsorPage = () => {
                     );
                   }}
                 >
-                  Use Code {affiliate.public_code?.promo_code.toUpperCase()} at checkout
+                  {"Use Code "}
+                  {affiliate.public_code?.promo_code.toUpperCase()} {"at checkout"}
                 </Button>
               </Box>
               {affiliate.social_media && affiliate.social_media.length > 0 && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Follow {affiliate.artist_name}
+                    {"Follow "}
+                    {affiliate.artist_name}
                   </Typography>
                   <Box sx={{ display: "flex", gap: 2 }}>
                     {affiliate?.social_media?.map(({ platform, link }, index) => {
@@ -214,14 +220,15 @@ const SponsorPage = () => {
       {affiliate.product_bundles && affiliate.product_bundles.length > 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            Product Bundles by {affiliate.artist_name}
+            {"Product Bundles by "}
+            {affiliate.artist_name}
           </Typography>
         </Box>
       )}
       {affiliate.product_bundles &&
         affiliate.product_bundles.length > 0 &&
         affiliate.product_bundles.map(bundle => (
-          <Box sx={{ my: 2 }}>
+          <Box sx={{ my: 2 }} key={bundle._id}>
             {bundle.title && (
               <Box>
                 <Typography variant="h5" align="center" gutterBottom>
@@ -284,15 +291,15 @@ const SponsorPage = () => {
                   ) : (
                     <>
                       <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                        No products found for matching criteria
+                        {"No products found for matching criteria"}
                       </Typography>
                       <Typography variant="subtitle2" textAlign="center" width="100%">
-                        Try removing some filters to find what you're looking for
+                        {"Try removing some filters to find what you're looking for"}
                       </Typography>
                     </>
                   )}
                 </Box>
-                <Box display={"flex"} gap={2} sx={{ mt: 2 }}>
+                <Box display="flex" gap={2} sx={{ mt: 2 }}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -310,7 +317,7 @@ const SponsorPage = () => {
                       }
                     }}
                   >
-                    Add Bundle to Cart
+                    {"Add Bundle to Cart"}
                   </Button>
                   {(current_user.isAdmin || current_user?.affiliate === affiliate?._id) && (
                     <Button
@@ -318,7 +325,7 @@ const SponsorPage = () => {
                       color="secondary"
                       onClick={() => dispatch(open_edit_cart_modal(bundle.cart))}
                     >
-                      Edit Bundle
+                      {"Edit Bundle"}
                     </Button>
                   )}
                 </Box>
@@ -331,14 +338,15 @@ const SponsorPage = () => {
       {tutorials && tutorials.length > 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            Tutorials by {affiliate.artist_name}
+            {"Tutorials by "}
+            {affiliate.artist_name}
           </Typography>
         </Box>
       )}
       {tutorials && tutorials.length === 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
-            {affiliate.artist_name} has no tutorials yet.
+            {affiliate.artist_name} {"has no tutorials yet."}
           </Typography>
         </Box>
       )}
@@ -380,10 +388,10 @@ const SponsorPage = () => {
           ) : (
             <>
               <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                No tutorials found for matching criteria
+                {"No tutorials found for matching criteria"}
               </Typography>
               <Typography variant="subtitle2" textAlign="center" width="100%">
-                Try removing some filters to find what you're looking for
+                {"Try removing some filters to find what you're looking for"}
               </Typography>
             </>
           )}
@@ -393,7 +401,8 @@ const SponsorPage = () => {
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.videos && affiliate.videos.length > 0 && (
         <Typography variant="h4" align="center" gutterBottom>
-          Lightshows By {affiliate.artist_name}
+          {"Lightshows By "}
+          {affiliate.artist_name}
         </Typography>
       )}
       {affiliate.videos &&

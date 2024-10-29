@@ -1,4 +1,5 @@
-import { Product, product_db } from "../products";
+import Product from "./product.js";
+import product_db from "./product_db.js";
 
 import {
   diminish_sampler_stock,
@@ -15,15 +16,13 @@ import {
   getOurPicks,
   sortProducts,
   handleChipFiltering,
-} from "./product_helpers";
-import { categories, determine_filter, snake_case, subcategories } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import { Ticket } from "../tickets";
+} from "./product_helpers.js";
+import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
+import Ticket from "../tickets/ticket.js";
 
-const fs = require("fs");
-const Papa = require("papaparse");
-
-// const sharp = require("sharp");
+import fs from "fs";
+import Papa from "papaparse";
 
 export default {
   findAll_products_s: async query => {

@@ -8,7 +8,7 @@ import { accurate_date, format_date, format_time, unformat_date_and_time } from 
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-const HtmlToReactParser = require("html-to-react").Parser;
+import HtmlToReactParser from "html-to-react";
 
 const AnnouncementEmail = () => {
   const params = useParams();
@@ -87,28 +87,28 @@ const AnnouncementEmail = () => {
   return (
     <div className="">
       <Helmet>
-        <title>View Email | Glow LEDs</title>
+        <title>{"View Email | Glow LEDs"}</title>
       </Helmet>
       <div className="jc-b mb-1rem ai-c">
         <GLButton variant="primary" onClick={() => navigate(-1)}>
-          Back to Emails
+          {"Back to Emails"}
         </GLButton>
         {email && (
           <Link to={"/secure/glow/editemail/" + email._id}>
-            <GLButton variant="primary">Edit Email</GLButton>
+            <GLButton variant="primary">{"Edit Email"}</GLButton>
           </Link>
         )}
       </div>
       <div className="column jc-c max-w-400px m-auto g-20px">
         <div className="jc-c">
-          <h1 style={{ textAlign: "center" }}>Email Sender</h1>
+          <h1 style={{ textAlign: "center" }}>{"Email Sender"}</h1>
         </div>
 
         {loading_checkboxes ? (
-          <div>Loading...</div>
+          <div>{"Loading..."}</div>
         ) : (
           <div>
-            <label htmlFor="schedule">Schedule</label>
+            <label htmlFor="schedule">{"Schedule"}</label>
             <input
               type="checkbox"
               name="schedule"
@@ -133,10 +133,10 @@ const AnnouncementEmail = () => {
           onChange={e => set_subject(e.target.value)}
         />
         {loading_checkboxes ? (
-          <div>Loading...</div>
+          <div>{"Loading..."}</div>
         ) : (
           <div>
-            <label htmlFor="test">Test</label>
+            <label htmlFor="test">{"Test"}</label>
             <input
               type="checkbox"
               name="test"
@@ -149,11 +149,12 @@ const AnnouncementEmail = () => {
           </div>
         )}
         <GLButton variant="primary" className="mb-1rem" onClick={() => send_announcement_email()}>
-          Send {schedule && "Scheduled"} {test && "Test"} Email
+          {"Send "}
+          {schedule && "Scheduled"} {test && "Test"} {"Email"}
         </GLButton>
       </div>
       <div className="jc-c">
-        <h2 style={{ textAlign: "center" }}>Email Template</h2>
+        <h2 style={{ textAlign: "center" }}>{"Email Template"}</h2>
       </div>
       {template}
     </div>

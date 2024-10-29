@@ -5,7 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import config from "../../../config";
 
 const Stripe = ({ pay_order, loadingPayment, setLoadingPayment, guest, date_1, date_2 }) => {
-  const [stripePromise, setStripePromise] = useState(() => loadStripe(config.REACT_APP_STRIPE_KEY));
+  const [stripePromise, setStripePromise] = useState(() => loadStripe(config.VITE_STRIPE_KEY));
   return (
     <div>
       <Elements stripe={stripePromise}>

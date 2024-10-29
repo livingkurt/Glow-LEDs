@@ -50,7 +50,7 @@ const SponsorsGridPageSkeleton = () => {
                   width={150}
                   height={20}
                 />
-                <Box display={"flex"} gap={2} justifyContent={"space-between"} mt={2}>
+                <Box display="flex" gap={2} justifyContent="space-between" mt={2}>
                   <Skeleton
                     animation="wave"
                     sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}

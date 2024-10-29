@@ -75,39 +75,39 @@ const CreateLabelModal = () => {
   };
 
   const productionAddress = {
-    first_name: config.REACT_APP_PRODUCTION_FIRST_NAME,
-    last_name: config.REACT_APP_PRODUCTION_LAST_NAME,
-    address_1: config.REACT_APP_PRODUCTION_ADDRESS,
-    city: config.REACT_APP_PRODUCTION_CITY,
-    state: config.REACT_APP_PRODUCTION_STATE,
-    postalCode: config.REACT_APP_PRODUCTION_POSTAL_CODE,
-    country: config.REACT_APP_PRODUCTION_COUNTRY,
-    phone: config.REACT_APP_PRODUCTION_PHONE_NUMBER,
-    email: config.REACT_APP_INFO_EMAIL,
+    first_name: config.VITE_PRODUCTION_FIRST_NAME,
+    last_name: config.VITE_PRODUCTION_LAST_NAME,
+    address_1: config.VITE_PRODUCTION_ADDRESS,
+    city: config.VITE_PRODUCTION_CITY,
+    state: config.VITE_PRODUCTION_STATE,
+    postalCode: config.VITE_PRODUCTION_POSTAL_CODE,
+    country: config.VITE_PRODUCTION_COUNTRY,
+    phone: config.VITE_PRODUCTION_PHONE_NUMBER,
+    email: config.VITE_INFO_EMAIL,
     company: "Glow LEDs",
   };
   const headquartersAddress = {
-    first_name: config.REACT_APP_HEADQUARTERS_FIRST_NAME,
-    last_name: config.REACT_APP_HEADQUARTERS_LAST_NAME,
-    address_1: config.REACT_APP_HEADQUARTERS_ADDRESS,
-    city: config.REACT_APP_HEADQUARTERS_CITY,
-    state: config.REACT_APP_HEADQUARTERS_STATE,
-    postalCode: config.REACT_APP_HEADQUARTERS_POSTAL_CODE,
-    country: config.REACT_APP_HEADQUARTERS_COUNTRY,
-    phone: config.REACT_APP_HEADQUARTERS_PHONE_NUMBER,
-    email: config.REACT_APP_INFO_EMAIL,
+    first_name: config.VITE_HEADQUARTERS_FIRST_NAME,
+    last_name: config.VITE_HEADQUARTERS_LAST_NAME,
+    address_1: config.VITE_HEADQUARTERS_ADDRESS,
+    city: config.VITE_HEADQUARTERS_CITY,
+    state: config.VITE_HEADQUARTERS_STATE,
+    postalCode: config.VITE_HEADQUARTERS_POSTAL_CODE,
+    country: config.VITE_HEADQUARTERS_COUNTRY,
+    phone: config.VITE_HEADQUARTERS_PHONE_NUMBER,
+    email: config.VITE_INFO_EMAIL,
     company: "Glow LEDs",
   };
   const destanyeAddress = {
-    first_name: config.REACT_APP_DESTANYE_FIRST_NAME,
-    last_name: config.REACT_APP_DESTANYE_LAST_NAME,
-    address_1: config.REACT_APP_PRODUCTION_ADDRESS,
-    city: config.REACT_APP_PRODUCTION_CITY,
-    state: config.REACT_APP_PRODUCTION_STATE,
-    postalCode: config.REACT_APP_PRODUCTION_POSTAL_CODE,
-    country: config.REACT_APP_PRODUCTION_COUNTRY,
-    phone: config.REACT_APP_HEADQUARTERS_PHONE_NUMBER,
-    email: config.REACT_APP_DESTANYE_EMAIL,
+    first_name: config.VITE_DESTANYE_FIRST_NAME,
+    last_name: config.VITE_DESTANYE_LAST_NAME,
+    address_1: config.VITE_PRODUCTION_ADDRESS,
+    city: config.VITE_PRODUCTION_CITY,
+    state: config.VITE_PRODUCTION_STATE,
+    postalCode: config.VITE_PRODUCTION_POSTAL_CODE,
+    country: config.VITE_PRODUCTION_COUNTRY,
+    phone: config.VITE_HEADQUARTERS_PHONE_NUMBER,
+    email: config.VITE_DESTANYE_EMAIL,
     company: "",
   };
 
@@ -347,13 +347,13 @@ const CreateLabelModal = () => {
       onConfirm={() => dispatch(API.createCustomLabel({ selectedRateId, shipmentId }))}
       onCancel={() => dispatch(closeCreateLabelModal())}
       onAction={() => dispatch(resetRates(label))}
-      title={"Create Label"}
+      title="Create Label"
       confirmDisabled={selectedRateId === ""}
-      confirmLabel={"Buy Label"}
+      confirmLabel="Buy Label"
       confirmColor="primary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
-      actionLabel={"Reset Rates"}
+      actionLabel="Reset Rates"
       actionColor="secondary"
       disableEscapeKeyDown
     >
@@ -372,7 +372,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(productionAddress))}
               >
-                To Production
+                {"To Production"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -382,7 +382,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(headquartersAddress))}
               >
-                To Headquarters
+                {"To Headquarters"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -392,7 +392,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setToShipping(destanyeAddress))}
               >
-                To Destanye
+                {"To Destanye"}
               </Button>
             </Grid>
           </Grid>
@@ -416,7 +416,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(productionAddress))}
               >
-                From Production
+                {"From Production"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -426,7 +426,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(headquartersAddress))}
               >
-                From Headquarters
+                {"From Headquarters"}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -436,7 +436,7 @@ const CreateLabelModal = () => {
                 fullWidth
                 onClick={() => dispatch(setFromShipping(destanyeAddress))}
               >
-                From Destanye
+                {"From Destanye"}
               </Button>
             </Grid>
           </Grid>
@@ -471,13 +471,13 @@ const CreateLabelModal = () => {
             }
           }}
         >
-          Generate Rates
+          {"Generate Rates"}
         </Button>
       )}
       {!label && shippingRates.length > 0 && (
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom component="div" className="mt-10px">
-            Choose Shipping Rate
+            {"Choose Shipping Rate"}
           </Typography>
           <RadioGroup value={selectedRateId} onChange={e => dispatch(setSelectedRateId(e.target.value))}>
             {shippingRates.map((rate, index) => (
@@ -493,7 +493,7 @@ const CreateLabelModal = () => {
       )}
       {label && (
         <Button variant="contained" color="secondary" fullWidth onClick={() => printLabel(label)}>
-          Print Label
+          {"Print Label"}
         </Button>
       )}
     </GLActionModal>

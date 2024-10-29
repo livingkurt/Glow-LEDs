@@ -66,10 +66,10 @@ const EditWholesalerModal = () => {
         onCancel={() => {
           dispatch(set_edit_wholesaler_modal(false));
         }}
-        title={"Edit Wholesaler"}
-        confirmLabel={"Save"}
+        title="Edit Wholesaler"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

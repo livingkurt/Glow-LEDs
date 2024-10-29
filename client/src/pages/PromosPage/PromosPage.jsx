@@ -58,7 +58,7 @@ const PromosPage = () => {
         title: "",
         nonSelectable: true,
         display: promo => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_promo_modal(promo))}>
               <Edit color="white" />
             </GLIconButton>
@@ -78,7 +78,7 @@ const PromosPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Promos | Glow LEDs</title>
+        <title>{"Admin Promos | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
@@ -86,9 +86,9 @@ const PromosPage = () => {
         remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
-        tableName={"Promos"}
+        tableName="Promos"
         namespaceScope="promos"
-        searchPlaceholder={"Search By Promo Code"}
+        searchPlaceholder="Search By Promo Code"
         namespace="promoTable"
         columnDefs={columnDefs}
         loading={loading}
@@ -96,7 +96,7 @@ const PromosPage = () => {
         titleActions={
           <div className="row g-10px">
             <Button color="secondary" variant="contained" onClick={() => dispatch(API.refreshSponsorCodes())}>
-              Create Sponsor Codes
+              {"Create Sponsor Codes"}
             </Button>
             {/* <Button
               color="secondary"
@@ -117,11 +117,11 @@ const PromosPage = () => {
                   }
                 }}
               >
-                Delete Promos
+                {"Delete Promos"}
               </Button>
             )}
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_promo_modal())}>
-              Create Promo
+              {"Create Promo"}
             </Button>
           </div>
         }

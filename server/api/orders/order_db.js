@@ -1,7 +1,8 @@
-import { Product } from "../products";
-import { Order } from "../orders";
-import { Affiliate } from "../affiliates";
-import { dedupeAddresses } from "./order_helpers";
+import Product from "../products/product.js";
+import Order from "./order.js";
+import Affiliate from "../affiliates/affiliate.js";
+import mongoose from "mongoose";
+import { dedupeAddresses } from "./order_helpers.js";
 
 export default {
   table_orders_db: async (filter, sort, limit, page) => {
@@ -186,6 +187,7 @@ export default {
         .populate("orderItems.event")
         .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
+        .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -208,6 +210,7 @@ export default {
         .populate("orderItems.event")
         .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
+        .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -228,6 +231,7 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.event")
         .populate("orderItems.ticket")
+        .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
@@ -244,6 +248,7 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.event")
         .populate("orderItems.ticket")
+        .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
@@ -516,7 +521,7 @@ export default {
   // },
   get_monthly_revenue_product_orders_db: async (year, product_id) => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const ObjectId = mongoose.Types.ObjectId;
       const totalPriceByMonth = await Order.aggregate([
         {
           $match: {
@@ -584,7 +589,7 @@ export default {
 
   get_yearly_revenue_product_orders_db: async product_id => {
     try {
-      const ObjectId = require("mongoose").Types.ObjectId;
+      const ObjectId = mongoose.Types.ObjectId;
       const totalPriceByYear = await Order.aggregate([
         {
           $match: {

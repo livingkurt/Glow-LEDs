@@ -9,7 +9,7 @@ const ShippingDisplay = ({ shipping }) => {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography variant="h6" mt="5px" mb="5px">
-            Shipping
+            {"Shipping"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -24,7 +24,9 @@ const ShippingDisplay = ({ shipping }) => {
         </Grid>
         <Grid item xs={12}>
           <Typography>
-            {shipping.city}, {shipping.state} {shipping.postalCode}
+            {shipping.city}
+            {", "}
+            {shipping.state} {shipping.postalCode}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -41,11 +43,11 @@ const ShippingDisplay = ({ shipping }) => {
         {shipping.shipping_rate && (
           <>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
-              <Typography variant="h6">Shipping Label</Typography>
+              <Typography variant="h6">{"Shipping Label"}</Typography>
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Purchased:
+                {"Purchased:"}
               </Typography>
               <Typography component="label" className=" mv-0px">
                 {shipping.shipping_label ? "True" : "False"}
@@ -53,7 +55,7 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Carrier:
+                {"Carrier:"}
               </Typography>
               <Typography component="label" className=" mv-0px">
                 {shipping.shipping_rate.carrier}
@@ -61,7 +63,7 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Speed:
+                {"Speed:"}
               </Typography>
               <Typography component="label" className=" mv-0px">
                 {toTitleCaseSnakeCase(shipping.shipping_rate.service)}
@@ -69,7 +71,7 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Delivery Time:
+                {"Delivery Time:"}
               </Typography>
               <Typography component="label" className=" mv-0px">
                 {determine_service(shipping.shipping_rate)}
@@ -77,10 +79,10 @@ const ShippingDisplay = ({ shipping }) => {
             </Grid>
             <Grid item container xs={12} alignItems="center" justifyContent="space-between">
               <Typography component="label" className="mv-0px mr-5px">
-                Rate:
+                {"Rate:"}
               </Typography>
               <Typography component="label" className=" mv-0px">
-                $
+                {"$"}
                 {shipping.international
                   ? shipping.shipping_rate.rate
                   : shipping.shipping_rate.list_rate || shipping.shipping_rate.rate}
@@ -90,7 +92,7 @@ const ShippingDisplay = ({ shipping }) => {
         )}
         <Grid item xs={12}>
           <Button color="secondary" variant="contained" fullWidth onClick={() => sendEmail(shipping)}>
-            Send User a Message
+            {"Send User a Message"}
           </Button>
         </Grid>
       </Grid>

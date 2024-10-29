@@ -1,45 +1,45 @@
-import email_services from "./email_services";
+import email_services from "./email_services.js";
 
-import App from "../../email_templates/App";
-import {
-  account_created,
-  contact,
-  contact_confirmation,
-  order_status,
-  order,
-  review,
-  affiliate,
-  feature,
-  announcement,
-  custom_contact,
-  code_used,
-  shipping_status,
-  verify_email_password_reset,
-  successful_password_reset,
-  affiliate_onboard,
-  current_stock,
-} from "../../email_templates/pages/index";
-import email_subscription from "../../email_templates/pages/email_subscription";
-import { order_db, order_services } from "../orders";
-import { content_db } from "../contents";
-import { Affiliate } from "../affiliates";
-import { promo_db } from "../promos";
-import { User, user_db } from "../users";
-import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors";
-import { determine_code_tier, format_date, make_private_code, toCapitalize } from "../../utils/util";
-import { sendEmail as sendEmailHelper, sendEmailsInBatches } from "./email_helpers";
-import { product_db } from "../products";
-import { team_db } from "../teams";
-const jwt = require("jsonwebtoken");
-import config from "../../config";
-import verify from "../../email_templates/pages/verify";
-import { domain } from "../../email_templates/email_template_helpers";
-import Email from "./email";
-import paycheck from "../../email_templates/pages/paycheck";
-import ticketEmail from "../../email_templates/pages/ticketEmail";
-import { sendAnnouncementEmail } from "../users/user_interactors";
-import { sendEmail } from "../orders/order_interactors";
-import email_db from "./email_db";
+import App from "../../email_templates/App.js";
+import account_created from "../../email_templates/pages/account_created.js";
+import contact from "../../email_templates/pages/contact.js";
+import contact_confirmation from "../../email_templates/pages/contact_confirmation.js";
+import order_status from "../../email_templates/pages/order_status.js";
+import order from "../../email_templates/pages/order.js";
+import review from "../../email_templates/pages/review.js";
+import affiliate from "../../email_templates/pages/affiliate.js";
+import feature from "../../email_templates/pages/feature.js";
+import announcement from "../../email_templates/pages/announcement.js";
+import custom_contact from "../../email_templates/pages/custom_contact.js";
+import code_used from "../../email_templates/pages/code_used.js";
+import shipping_status from "../../email_templates/pages/shipping_status.js";
+import verify_email_password_reset from "../../email_templates/pages/verify_email_password_reset.js";
+import successful_password_reset from "../../email_templates/pages/successful_password_reset.js";
+import affiliate_onboard from "../../email_templates/pages/affiliate_onboard.js";
+import current_stock from "../../email_templates/pages/current_stock.js";
+import email_subscription from "../../email_templates/pages/email_subscription.js";
+import order_db from "../orders/order_db.js";
+import order_services from "../orders/order_services.js";
+import content_db from "../contents/content_db.js";
+import Affiliate from "../affiliates/affiliate.js";
+import promo_db from "../promos/promo_db.js";
+import User from "../users/user.js";
+import user_db from "../users/user_db.js";
+import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors.js";
+import { determine_code_tier, format_date, make_private_code, toCapitalize } from "../../utils/util.js";
+import { sendEmail as sendEmailHelper, sendEmailsInBatches } from "./email_helpers.js";
+import product_db from "../products/product_db.js";
+import team_db from "../teams/team_db.js";
+import jwt from "jsonwebtoken";
+import config from "../../config.js";
+import verify from "../../email_templates/pages/verify.js";
+import { domain } from "../../email_templates/email_template_helpers.js";
+import Email from "./email.js";
+import paycheck from "../../email_templates/pages/paycheck.js";
+import ticketEmail from "../../email_templates/pages/ticketEmail.js";
+import { sendAnnouncementEmail } from "../users/user_interactors.js";
+import { sendEmail } from "../orders/order_interactors.js";
+import email_db from "./email_db.js";
 
 export default {
   get_table_emails_c: async (req, res) => {

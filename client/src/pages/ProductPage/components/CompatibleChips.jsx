@@ -14,7 +14,7 @@ const CompatibleChips = ({ chips }) => {
   return (
     <Box mt={2}>
       <Typography variant="subtitle2" gutterBottom>
-        Compatible Chips:
+        {"Compatible Chips:"}
       </Typography>
       <Box display="flex" flexWrap="wrap" gap={1}>
         {chips.map(chip => (

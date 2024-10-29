@@ -73,7 +73,7 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
         }}
       >
         <Typography variant="subtitle1" sx={{ mt: "-10px", mb: 2, color: "black", fontSize: "2rem" }}>
-          Event Details
+          {"Event Details"}
         </Typography>
         <Divider sx={{ mb: 2 }} />
         {selectedTicket && (
@@ -124,15 +124,22 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
             <Box sx={{ flex: 1, mb: isMobile ? 2 : 0, mt: isMobile ? 2 : 0 }}>
               <Typography variant="subtitle1">{selectedTicket.title}</Typography>
               <Typography variant="body1" mb={1}>
-                Ages {event.age_group} Only
+                {"Ages "}
+                {event.age_group} {"Only"}
               </Typography>
               <Box display="flex" alignItems="center" mb={1}>
                 <LocationOn sx={{ marginRight: 1, color: "black" }} />
-                <Typography variant="body1">at {event.venue}</Typography>
+                <Typography variant="body1">
+                  {"at "}
+                  {event.venue}
+                </Typography>
               </Box>
               <Typography variant="body2" ml={4}>
-                {event.address.address_1} {event.address.address_2}, {event.address.city}, {event.address.state}{" "}
-                {event.address.postalCode}
+                {event.address.address_1} {event.address.address_2}
+                {", "}
+                {event.address.city}
+                {", "}
+                {event.address.state} {event.address.postalCode}
               </Typography>
               <Box display="flex" alignItems="center" mt={1}>
                 <CalendarToday sx={{ marginRight: 1, color: "black" }} />
@@ -141,13 +148,14 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
             </Box>
             <Box sx={{ width: isMobile ? "100%" : "30%" }}>
               <Typography variant="subtitle1" sx={{ mb: 2, textAlign: isMobile ? "left" : "right" }}>
-                Ticket Price: ${selectedTicket.price}
+                {"Ticket Price: $"}
+                {selectedTicket.price}
                 <Typography variant="caption" sx={{ display: "block" }}>
-                  + service fees
+                  {"+ service fees"}
                 </Typography>
               </Typography>
               <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel id="quantity-select-label">Quantity</InputLabel>
+                <InputLabel id="quantity-select-label">{"Quantity"}</InputLabel>
                 <Select
                   labelId="quantity-select-label"
                   id="quantity-select"
@@ -172,7 +180,7 @@ const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuanti
                   fontSize: "1.5rem",
                 }}
               >
-                Add to Cart
+                {"Add to Cart"}
               </Button>
             </Box>
           </Box>

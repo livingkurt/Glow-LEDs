@@ -1,6 +1,6 @@
 import axios from "axios";
-import { get_todays_date } from "../worker_helpers";
-import { domain } from "../worker_helpers";
+import { get_todays_date } from "../worker_helpers.js";
+import { domain } from "../worker_helpers.js";
 
 export const payout_employees = async () => {
   try {

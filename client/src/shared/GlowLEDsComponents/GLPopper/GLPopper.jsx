@@ -1,62 +1,59 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grow, Paper } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { Popper as MuiPopper } from "@mui/material";
+import { Grow, Paper, Popper as MuiPopper } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-export const useStyles = makeStyles(theme => ({
-  paper: {
-    overflow: "auto",
-    fontSize: "16px",
+const StyledPopper = styled(MuiPopper)(({ theme }) => ({
+  zIndex: 2000,
+  fontSize: "16px",
+  '&[x-placement*="bottom"] .arrow': {
+    top: 0,
+    left: 0,
+    marginTop: "-0.9em",
+    width: "3em",
+    height: "1em",
+    "&::before": {
+      borderWidth: "0 1em 1em 1em",
+      borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
+    },
   },
-  arrow: {},
-  popper: {
-    zIndex: 2000,
-    fontSize: "16px",
-    '&[x-placement*="bottom"] $arrow': {
-      top: 0,
-      left: 0,
-      marginTop: "-0.9em",
-      width: "3em",
-      height: "1em",
-      "&::before": {
-        borderWidth: "0 1em 1em 1em",
-        borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
-      },
+  '&[x-placement*="top"] .arrow': {
+    bottom: 0,
+    left: 0,
+    marginBottom: "-0.9em",
+    width: "3em",
+    height: "1em",
+    "&::before": {
+      borderWidth: "1em 1em 0 1em",
+      borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
     },
-    '&[x-placement*="top"] $arrow': {
-      bottom: 0,
-      left: 0,
-      marginBottom: "-0.9em",
-      width: "3em",
-      height: "1em",
-      "&::before": {
-        borderWidth: "1em 1em 0 1em",
-        borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
-      },
+  },
+  '&[x-placement*="right"] .arrow': {
+    left: 0,
+    marginLeft: "-0.9em",
+    height: "3em",
+    width: "1em",
+    "&::before": {
+      borderWidth: "1em 1em 1em 0",
+      borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
     },
-    '&[x-placement*="right"] $arrow': {
-      left: 0,
-      marginLeft: "-0.9em",
-      height: "3em",
-      width: "1em",
-      "&::before": {
-        borderWidth: "1em 1em 1em 0",
-        borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
-      },
-    },
-    '&[x-placement*="left"] $arrow': {
-      right: 0,
-      marginRight: "-0.9em",
-      height: "3em",
-      width: "1em",
-      "&::before": {
-        borderWidth: "1em 0 1em 1em",
-        borderColor: `transparent transparent transparent ${theme.palette.background.paper}`,
-      },
+  },
+  '&[x-placement*="left"] .arrow': {
+    right: 0,
+    marginRight: "-0.9em",
+    height: "3em",
+    width: "1em",
+    "&::before": {
+      borderWidth: "1em 0 1em 1em",
+      borderColor: `transparent transparent transparent ${theme.palette.background.paper}`,
     },
   },
 }));
+
+const StyledPaper = styled(Paper)({
+  overflow: "auto",
+  fontSize: "16px",
+});
 
 const GLPopper = ({
   open,
@@ -69,37 +66,34 @@ const GLPopper = ({
   flip,
   transition,
 }) => {
-  const classes = useStyles();
   return (
-    <div>
-      <MuiPopper
-        open={open || false}
-        anchorEl={anchorEl}
-        placement={placement}
-        disablePortal={false}
-        className={`${classes.popper} ${popperClasses ? popperClasses : ""}`}
-        transition={transition}
-        modifiers={[
-          {
-            name: "flip",
-            enabled: flip,
+    <StyledPopper
+      open={open || false}
+      anchorEl={anchorEl}
+      placement={placement}
+      disablePortal={false}
+      className={popperClasses}
+      transition={transition}
+      modifiers={[
+        {
+          name: "flip",
+          enabled: flip,
+        },
+        {
+          name: "preventOverflow",
+          enabled: true,
+          options: {
+            boundariesElement,
           },
-          {
-            name: "preventOverflow",
-            enabled: true,
-            options: {
-              boundariesElement,
-            },
-          },
-        ]}
-      >
-        {({ TransitionProps }) => (
-          <Grow {...TransitionProps} timeout={350} style={{ transformOrigin: "0 0 0" }}>
-            <Paper className={`${classes.paper} ${paperClasses ? paperClasses : ""}`}>{children}</Paper>
-          </Grow>
-        )}
-      </MuiPopper>
-    </div>
+        },
+      ]}
+    >
+      {({ TransitionProps }) => (
+        <Grow {...TransitionProps} timeout={350} style={{ transformOrigin: "0 0 0" }}>
+          <StyledPaper className={paperClasses}>{children}</StyledPaper>
+        </Grow>
+      )}
+    </StyledPopper>
   );
 };
 
@@ -123,6 +117,7 @@ GLPopper.propTypes = {
   boundariesElement: PropTypes.string,
   flip: PropTypes.bool,
   transition: PropTypes.bool,
+  children: PropTypes.node.isRequired,
 };
 
 export default GLPopper;

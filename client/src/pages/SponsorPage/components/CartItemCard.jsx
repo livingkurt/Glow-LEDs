@@ -155,7 +155,7 @@ const CartItemCard = ({ item }) => {
             }}
             onClick={handleQuickAddToCart}
           >
-            Quick Add
+            {"Quick Add"}
           </Button>
         )}
       </Box>
@@ -166,9 +166,17 @@ const CartItemCard = ({ item }) => {
         </Typography>
         {renderOptions()}
         {item.isPreOrder && (
-          <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
+          <Typography
+            variant="body2"
+            fontWeight={800}
+            mt={1}
+            display="flex"
+            alignItems="center"
+            sx={{ color: "white" }}
+          >
             <ShoppingBagIcon sx={{ mb: 0.25, mr: 0.5 }} />
-            Pre-Order: Estimated Availability {formatDate(item.preOrderReleaseDate)}
+            {"Pre-Order: Estimated Availability "}
+            {formatDate(item.preOrderReleaseDate)}
           </Typography>
         )}
         <Box display="flex" justifyContent="space-between">
@@ -181,7 +189,8 @@ const CartItemCard = ({ item }) => {
             })}
           </Typography>
           <Typography variant="body1" color="white" mt={1}>
-            Qty: {item.quantity}
+            {"Qty: "}
+            {item.quantity}
           </Typography>
         </Box>
       </CardContent>

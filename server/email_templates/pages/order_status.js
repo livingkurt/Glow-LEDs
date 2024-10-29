@@ -4,8 +4,8 @@ import {
   order_status_steps,
   determine_tracking_link,
   email_sale_price_switch,
-} from "../../utils/util";
-import { isColorLight } from "../email_template_helpers";
+} from "../../utils/util.js";
+import { isColorLight } from "../email_template_helpers.js";
 
 const determineColor = status => {
   switch (status) {

@@ -1,6 +1,6 @@
 import express from "express";
-import { event_controller } from ".";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import event_controller from "./event_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.route("/").get(event_controller.findAll_events_c).post(isAuth, isAdmin, event_controller.create_events_c);

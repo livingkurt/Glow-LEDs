@@ -269,7 +269,7 @@ const ShippingStep = () => {
   return (
     <div>
       <div className="jc-b mt-10px">
-        <Typography variant="h4">2. Shipping</Typography>
+        <Typography variant="h4">{"2. Shipping"}</Typography>
         {shipping_completed && !show_shipping && (
           <GLButtonV2
             variant="contained"
@@ -277,7 +277,7 @@ const ShippingStep = () => {
             color="secondary"
             onClick={() => dispatch(showHideSteps("shipping"))}
           >
-            Edit
+            {"Edit"}
           </GLButtonV2>
         )}
       </div>
@@ -289,7 +289,7 @@ const ShippingStep = () => {
                 {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
                     <GLButton onClick={e => dispatch(save_shipping({ ...current_user.shipping }))} variant="primary">
-                      Use Saved Shipping
+                      {"Use Saved Shipping"}
                     </GLButton>
                   </li>
                 )}
@@ -297,14 +297,14 @@ const ShippingStep = () => {
                   <GLAutocomplete
                     margin="normal"
                     value={shipping}
-                    variant={"filled"}
+                    variant="filled"
                     loading={!all_shipping.isLoading}
                     options={all_shipping.isLoading ? [] : all_shipping.data}
                     getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                     optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                     isOptionEqualToValue={(option, value) => option.uniqueKey === value.uniqueKey}
-                    name={"product"}
-                    label={"Choose Shipping"}
+                    name="product"
+                    label="Choose Shipping"
                     onChange={(event, newValue) => {
                       if (newValue) {
                         const stateShortName = state_names.find(
@@ -325,7 +325,7 @@ const ShippingStep = () => {
                 <li>
                   <div className="jc-b">
                     <div className="mr-5px w-50per">
-                      <label htmlFor="first_name">First Name</label>
+                      <label htmlFor="first_name">{"First Name"}</label>
                       <input
                         type="text"
                         className="w-100per"
@@ -345,7 +345,7 @@ const ShippingStep = () => {
                       </label>
                     </div>
                     <div className="ml-5px w-50per">
-                      <label htmlFor="last_name">Last Name</label>
+                      <label htmlFor="last_name">{"Last Name"}</label>
                       <input
                         type="text"
                         className="w-100per"
@@ -366,9 +366,9 @@ const ShippingStep = () => {
                   </div>
                 </li>
                 <li>
-                  <label htmlFor="address_autocomplete">Address</label>
+                  <label htmlFor="address_autocomplete">{"Address"}</label>
                   <ReactGoogleAutocomplete
-                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.VITE_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     name="address_1"
                     value={shipping.address_1}
@@ -398,7 +398,7 @@ const ShippingStep = () => {
                   {address_validations}
                 </label>
                 <li>
-                  <label htmlFor="address_2">Apt/Suite</label>
+                  <label htmlFor="address_2">{"Apt/Suite"}</label>
                   <input
                     type="text"
                     value={shipping.address_2}
@@ -408,7 +408,7 @@ const ShippingStep = () => {
                   />
                 </li>
                 <li>
-                  <label htmlFor="city">City</label>
+                  <label htmlFor="city">{"City"}</label>
                   <input
                     type="text"
                     value={shipping.city}
@@ -428,7 +428,7 @@ const ShippingStep = () => {
                 {!shipping.international && (
                   <li>
                     <label className="mb-1rem" htmlFor="state">
-                      State
+                      {"State"}
                     </label>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
@@ -450,7 +450,7 @@ const ShippingStep = () => {
                 )}
                 {shipping.international && (
                   <li>
-                    <label htmlFor="state">State</label>
+                    <label htmlFor="state">{"State"}</label>
                     <input
                       type="text"
                       value={shipping.state}
@@ -469,7 +469,7 @@ const ShippingStep = () => {
                   {state_validations}
                 </label>
                 <li>
-                  <label htmlFor="postalCode">Postal Code</label>
+                  <label htmlFor="postalCode">{"Postal Code"}</label>
                   <input
                     type="text"
                     value={shipping.postalCode}
@@ -501,7 +501,7 @@ const ShippingStep = () => {
                   {shipping.international && (
                     <>
                       <li>
-                        <label htmlFor="country">Country</label>
+                        <label htmlFor="country">{"Country"}</label>
                         <input
                           type="text"
                           value={shipping.country}
@@ -523,7 +523,7 @@ const ShippingStep = () => {
                   {shipping.international && (
                     <>
                       <li>
-                        <label htmlFor="phone_number">Phone Number</label>
+                        <label htmlFor="phone_number">{"Phone Number"}</label>
                         <input
                           type="text"
                           value={shipping.phone_number}
@@ -546,7 +546,7 @@ const ShippingStep = () => {
 
                 <li>
                   <GLButton onClick={validateShipping} variant="primary" className="bob">
-                    Continue
+                    {"Continue"}
                   </GLButton>
                 </li>
               </ul>
@@ -562,7 +562,11 @@ const ShippingStep = () => {
                     {shipping.address_1} {shipping.address_2}
                   </div>
                   <div>
-                    {shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
+                    {shipping.city}
+                    {", "}
+                    {shipping.state} {shipping.postalCode}
+                    {", "}
+                    {shipping.country}
                   </div>
                   <div>{shipping?.phone_number}</div>
                   <div>{shipping.international && "International"}</div>
@@ -579,17 +583,19 @@ const ShippingStep = () => {
                       {placeOrder.splitOrder ? (
                         <>
                           <Typography variant="subtitle2" className="mb-0px mt-0px">
-                            Estimated Time to Ship (In-Stock Items): {calculateEstimatedShippingTime().inStock} business
-                            days
+                            {"Estimated Time to Ship (In-Stock Items): "}
+                            {calculateEstimatedShippingTime().inStock} {"business"}
+                            {"days"}
                           </Typography>
                           <Typography variant="subtitle2" className="mb-0px mt-0px">
-                            Estimated Time to Ship (Pre-Order Items): {calculateEstimatedShippingTime().preOrder}{" "}
-                            business days
+                            {"Estimated Time to Ship (Pre-Order Items): "}
+                            {calculateEstimatedShippingTime().preOrder} {"business days"}
                           </Typography>
                         </>
                       ) : (
                         <Typography variant="subtitle2" className="mb-0px mt-0px">
-                          Estimated Time to Ship: {calculateEstimatedShippingTime()} business days
+                          {"Estimated Time to Ship: "}
+                          {calculateEstimatedShippingTime()} {"business days"}
                         </Typography>
                       )}
                     </>
@@ -614,7 +620,7 @@ const ShippingStep = () => {
                       }
                     }}
                   >
-                    Continue
+                    {"Continue"}
                   </GLButton>
                 </GLTooltip>
               )}
@@ -650,16 +656,17 @@ const ShippingStep = () => {
           submitShipping();
           dispatch(closeSaveShippingModal(false));
         }}
-        title={"Save Shipping Address"}
-        confirmLabel={"Save Shipping"}
+        title="Save Shipping Address"
+        confirmLabel="Save Shipping"
         confirmColor="primary"
-        cancelLabel={"Continue without Saving Shipping"}
+        cancelLabel="Continue without Saving Shipping"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
         <p>{modalText}</p>
         <p>
-          <strong>Note</strong>: You can change your saved address later from your profile page
+          <strong>{"Note"}</strong>
+          {": You can change your saved address later from your profile page"}
         </p>
       </GLActionModal>
       <GLActionModal
@@ -674,16 +681,17 @@ const ShippingStep = () => {
           dispatch(closeSplitOrderModal(false));
           submitShipping();
         }}
-        title={"Your order contains both pre-order and in-stock items."}
-        confirmLabel={"Yes, split my order"}
+        title="Your order contains both pre-order and in-stock items."
+        confirmLabel="Yes, split my order"
         confirmColor="primary"
-        cancelLabel={"No, ship everything together"}
+        cancelLabel="No, ship everything together"
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <p>Would you like to receive your in-stock items first and pre-order items later?</p>
+        <p>{"Would you like to receive your in-stock items first and pre-order items later?"}</p>
         <p>
-          <strong>Note</strong>: If you split your order, you must pay for shipping twice.
+          <strong>{"Note"}</strong>
+          {": If you split your order, you must pay for shipping twice."}
         </p>
       </GLActionModal>
     </div>

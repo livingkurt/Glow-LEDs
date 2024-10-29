@@ -1,4 +1,4 @@
-import { category_services } from "../categorys";
+import category_services from "./category_services.js";
 
 export default {
   table_categorys_c: async (req, res) => {

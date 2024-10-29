@@ -95,16 +95,22 @@ const ProductOptionsGeneratorModal = () => {
                 )}
               </Box>
 
-              <Box display={"flex"} justifyContent={"flex-end"}>
+              <Box display="flex" justifyContent="flex-end">
                 {value.additionalCost > 0 && (
                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-                    <Typography variant="body2">+${value.additionalCost.toFixed(2)}</Typography>
+                    <Typography variant="body2">
+                      {"+$"}
+                      {value.additionalCost.toFixed(2)}
+                    </Typography>
                   </Box>
                 )}
                 {value.replacePrice && (
                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-                    <GLBoolean tooltip={"Replace Price"} boolean={!!value.replacePrice} />
-                    <Typography variant="body2">${value.product.price}</Typography>
+                    <GLBoolean tooltip="Replace Price" boolean={Boolean(value.replacePrice)} />
+                    <Typography variant="body2">
+                      {"$"}
+                      {value.product.price}
+                    </Typography>
                   </Box>
                 )}
               </Box>
@@ -122,9 +128,12 @@ const ProductOptionsGeneratorModal = () => {
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12}>
               <Typography variant="h6">{option.name}</Typography>
-              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
-              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
-              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <Typography variant="subtitle2">
+                {"Type: "}
+                {option.optionType}
+              </Typography>
+              {option.replacePrice && <Typography variant="subtitle2">{"Replaces Price"}</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">{"Add-On Option"}</Typography>}
               <List dense>{renderOptionValues(option.values)}</List>
             </Grid>
           </Grid>
@@ -157,9 +166,12 @@ const ProductOptionsGeneratorModal = () => {
             </Grid>
             <Grid item xs={9}>
               <Typography variant="h6">{option.name}</Typography>
-              <Typography variant="subtitle2">Type: {option.optionType}</Typography>
-              {option.replacePrice && <Typography variant="subtitle2">Replaces Price</Typography>}
-              {option.isAddOn && <Typography variant="subtitle2">Add-On Option</Typography>}
+              <Typography variant="subtitle2">
+                {"Type: "}
+                {option.optionType}
+              </Typography>
+              {option.replacePrice && <Typography variant="subtitle2">{"Replaces Price"}</Typography>}
+              {option.isAddOn && <Typography variant="subtitle2">{"Add-On Option"}</Typography>}
               <List dense>{renderOptionValues(option.values)}</List>
             </Grid>
           </Grid>
@@ -200,17 +212,17 @@ const ProductOptionsGeneratorModal = () => {
       onCancel={() => {
         dispatch(closeProductOptionsGeneratorModal());
       }}
-      title={"Product Options Generator"}
-      confirmLabel={"Generate"}
+      title="Product Options Generator"
+      confirmLabel="Generate"
       confirmDisabled={useTemplate && !templateProduct}
       confirmColor="primary"
-      cancelLabel={"Cancel"}
+      cancelLabel="Cancel"
       cancelColor="secondary"
       disableEscapeKeyDown
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h6">Selected Products</Typography>
+          <Typography variant="h6">{"Selected Products"}</Typography>
           <List>
             {selectedProducts?.map((product, index) => (
               <ListItem key={product._id} component={Paper} style={{ marginBottom: "10px" }}>
@@ -226,7 +238,7 @@ const ProductOptionsGeneratorModal = () => {
                 >
                   <ClickAwayListener onClickAway={handleInfoClose}>
                     <Paper style={{ padding: "20px", maxWidth: "500px", maxHeight: "80vh", overflow: "auto" }}>
-                      <Typography variant="h6">Original Options</Typography>
+                      <Typography variant="h6">{"Original Options"}</Typography>
                       {renderProductOptions(product.options)}
                     </Paper>
                   </ClickAwayListener>
@@ -277,7 +289,7 @@ const ProductOptionsGeneratorModal = () => {
         )}
         {useTemplate && templateProduct && (
           <Grid item xs={12}>
-            <Typography variant="h6">Template Product Options</Typography>
+            <Typography variant="h6">{"Template Product Options"}</Typography>
             {renderTemplateOptions()}
           </Grid>
         )}

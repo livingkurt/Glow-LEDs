@@ -55,7 +55,7 @@ const ChangePasswordPage = () => {
   return (
     <div className="profile_container column p-20px">
       <Helmet>
-        <title>Change Password | Glow LEDs</title>
+        <title>{"Change Password | Glow LEDs"}</title>
         <meta property="og:title" content="Change Password" />
         <meta name="twitter:title" content="Change Password" />
         <link rel="canonical" href="https://www.glow-leds.com/secure/account/change_password" />
@@ -63,7 +63,7 @@ const ChangePasswordPage = () => {
       </Helmet>
       <div className="mb-10px">
         <GLButton variant="secondary" onClick={() => navigate(-1)}>
-          Back to Profile
+          {"Back to Profile"}
         </GLButton>
       </div>
       <div className="profile-info">
@@ -71,7 +71,7 @@ const ChangePasswordPage = () => {
           <form onSubmit={submitHandler} style={{ width: "100%" }}>
             <ul className="form-container">
               <li>
-                <h1 style={{ textAlign: "center" }}>Change Password</h1>
+                <h1 style={{ textAlign: "center" }}>{"Change Password"}</h1>
               </li>
               {/* <li>
 								<Loading loading={loading} error={error}>
@@ -79,7 +79,7 @@ const ChangePasswordPage = () => {
 								</Loading>
 							</li> */}
               <li>
-                <label htmlFor="current_password">Current Password</label>
+                <label htmlFor="current_password">{"Current Password"}</label>
                 <input
                   className="form_input"
                   defaultValue={current_password}
@@ -93,7 +93,7 @@ const ChangePasswordPage = () => {
                 {current_password_validations}
               </label>
               <li>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{"Password"}</label>
                 <input
                   className="form_input"
                   type="password"
@@ -106,7 +106,7 @@ const ChangePasswordPage = () => {
                 {password_validations}
               </label>
               <li>
-                <label htmlFor="rePassword">Re-Enter Password</label>
+                <label htmlFor="rePassword">{"Re-Enter Password"}</label>
                 <input
                   className="form_input"
                   type="password"
@@ -120,13 +120,13 @@ const ChangePasswordPage = () => {
               </label>
               <li>
                 <GLButton type="submit" variant="primary">
-                  Update
+                  {"Update"}
                 </GLButton>
               </li>
               <li>
-                <Link to={`/secure/account/profile`}>
+                <Link to="/secure/account/profile">
                   <GLButton type="button" variant="secondary" className="w-100per">
-                    Cancel
+                    {"Cancel"}
                   </GLButton>
                 </Link>
               </li>

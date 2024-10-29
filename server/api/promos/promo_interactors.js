@@ -1,7 +1,6 @@
-import { product_db } from "../products";
-import { make_private_code } from "../../utils/util";
-import promo_db from "./promo_db";
-import { category_db } from "../categorys";
+import product_db from "../products/product_db.js";
+import { make_private_code } from "../../utils/util.js";
+import promo_db from "./promo_db.js";
 
 export const normalizePromoFilters = input => {
   const output = {};

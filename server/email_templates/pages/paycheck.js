@@ -1,4 +1,4 @@
-import { format_date } from "../../utils/util";
+import { format_date } from "../../utils/util.js";
 
 export default ({ first_name, amount, stripe_connect_id, paid_at }) => {
   return `<table

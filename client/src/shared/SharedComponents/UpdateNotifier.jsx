@@ -35,12 +35,12 @@ const UpdateNotifier = () => {
     <Dialog open={showUpdatePopup} onClose={() => setShowUpdatePopup(false)}>
       <DialogTitle>{"New Update Available"}</DialogTitle>
       <DialogContent>
-        <DialogContentText>A new update is available. Please refresh to update.</DialogContentText>
+        <DialogContentText>{"A new update is available. Please refresh to update."}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setShowUpdatePopup(false)}>Later</Button>
+        <Button onClick={() => setShowUpdatePopup(false)}>{"Later"}</Button>
         <Button onClick={handleUpdate} autoFocus>
-          Refresh
+          {"Refresh"}
         </Button>
       </DialogActions>
     </Dialog>

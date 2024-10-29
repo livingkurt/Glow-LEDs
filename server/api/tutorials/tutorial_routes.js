@@ -1,6 +1,6 @@
 import express from "express";
-import { tutorial_controller } from ".";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import tutorial_controller from "./tutorial_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router

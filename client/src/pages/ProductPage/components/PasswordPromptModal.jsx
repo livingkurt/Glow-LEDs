@@ -140,7 +140,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
           </Typography>
         )}
         <Typography variant="h6" component="h2" gutterBottom textAlign="center">
-          Enter the password below to see what we see
+          {"Enter the password below to see what we see"}
         </Typography>
         {isUnlocking ? (
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 4 }}>
@@ -179,7 +179,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
               placeholder="Enter Password"
               onChange={e => setPassword(e.target.value.toLowerCase())}
               margin="normal"
-              error={!!error}
+              error={Boolean(error)}
               helperText={error}
             />
             <Button
@@ -196,11 +196,11 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
                 },
               }}
             >
-              Submit
+              {"Submit"}
             </Button>
             <Button
               component={Link}
-              to={`/`}
+              to="/"
               variant=""
               fullWidth
               sx={{
@@ -209,7 +209,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
                 color: product.primary_color,
               }}
             >
-              I'm not ready yet
+              {"I'm not ready yet"}
             </Button>
           </form>
         )}

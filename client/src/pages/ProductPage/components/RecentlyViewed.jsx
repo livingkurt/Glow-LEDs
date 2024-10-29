@@ -15,8 +15,8 @@ const RecentlyViewed = ({ currentProduct }) => {
 
   return (
     <Box sx={{ my: 4 }}>
-      <Typography variant="h5" component="h2" gutterBottom textAlign={"center"}>
-        Recently Viewed
+      <Typography variant="h5" component="h2" gutterBottom textAlign="center">
+        {"Recently Viewed"}
       </Typography>
       <Box
         sx={{
@@ -67,7 +67,10 @@ const RecentlyViewed = ({ currentProduct }) => {
                   <Typography variant="subtitle2" component="div">
                     {product.name}
                   </Typography>
-                  <Typography variant="body2">${product.price?.toFixed(2) || "N/A"}</Typography>
+                  <Typography variant="body2">
+                    {"$"}
+                    {product.price?.toFixed(2) || "N/A"}
+                  </Typography>
                 </CardContent>
               </Card>
             </Link>

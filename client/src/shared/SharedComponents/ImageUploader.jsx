@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
-import { Loading } from "../../shared/SharedComponents";
+import { Loading } from ".";
 
 const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const dispatch = useDispatch();
@@ -108,13 +108,13 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
               />
               <label htmlFor={`${album}-upload-input`}>
                 <Button variant="contained" component="span">
-                  Select
+                  {"Select"}
                 </Button>
               </label>
             </div>
             <div>
               <Button variant="contained" type="submit" disabled={files.length === 0}>
-                Upload
+                {"Upload"}
               </Button>
             </div>
           </Grid>

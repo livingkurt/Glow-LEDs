@@ -49,7 +49,7 @@ const ArticlesPage = () => {
         title: "",
         nonSelectable: true,
         display: article => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -91,15 +91,15 @@ const ArticlesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Articles | Glow LEDs</title>
+        <title>{"Admin Articles | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"articles/setRemoteVersionRequirement"}
-        tableName={"Articles"}
+        remoteVersionRequirementType="articles/setRemoteVersionRequirement"
+        tableName="Articles"
         namespaceScope="articles"
         namespace="articleTable"
         columnDefs={columnDefs}
@@ -108,7 +108,7 @@ const ArticlesPage = () => {
         enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_article_modal())}>
-            Create Article
+            {"Create Article"}
           </Button>
         }
       />

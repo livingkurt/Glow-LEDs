@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import config from "../../../config";
 import { stopLoading } from "../../../slices/snackbarSlice";
 
 const GLLoading = () => {
@@ -19,23 +18,16 @@ const GLLoading = () => {
     <div>
       {loading ? (
         <div className="jc-c column">
-          <img
-            src={config.PUBLIC_URL + "/loading.gif"}
-            className="loading_gif"
-            alt="Loading Circle"
-            title="Loading Circle"
-          />
-          <img
-            src={config.PUBLIC_URL + "/loading_overlay.png"}
-            className="loading_png"
-            alt="Loading Overlay"
-            title="Loading Overlay"
-          />
+          <img src="/loading.gif" className="loading_gif" alt="Loading Circle" title="Loading Circle" />
+          <img src="/loading_overlay.png" className="loading_png" alt="Loading Overlay" title="Loading Overlay" />
           {loadingMessage()}
         </div>
       ) : error && error.message ? (
         <div className="error_message jc-c column">
-          <p className="ta-c  fs-14px">Error: {error.message}</p>
+          <p className="ta-c  fs-14px">
+            {"Error: "}
+            {error.message}
+          </p>
         </div>
       ) : (
         <div />

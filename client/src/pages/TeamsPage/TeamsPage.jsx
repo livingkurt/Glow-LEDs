@@ -81,7 +81,7 @@ const TeamsPage = () => {
         title: "",
         nonSelectable: true,
         display: team => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_team_modal(team))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -105,14 +105,14 @@ const TeamsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Teams | Glow LEDs</title>
+        <title>{"Admin Teams | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
-        tableName={"Teams"}
+        tableName="Teams"
         namespaceScope="teams"
         namespace="teamTable"
         columnDefs={columnDefs}
@@ -120,7 +120,7 @@ const TeamsPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_team_modal())}>
-            Create Team
+            {"Create Team"}
           </Button>
         }
       />

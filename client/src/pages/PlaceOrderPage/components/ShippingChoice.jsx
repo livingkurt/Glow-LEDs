@@ -123,7 +123,9 @@ const ShippingChoice = () => {
           <div className="rate-container mv-1rem jc-b ai-c" key={index}>
             <div className="shipping_rates jc-b w-100per wrap">
               <div className="service">
-                {friendlyCarrier}: {friendlyService}
+                {friendlyCarrier}
+                {": "}
+                {friendlyService}
                 {rate.carrier === "USPS" && (
                   <Tooltip
                     title="USPS is not recommended for international shipping. Packages can become lost. Proceed at your own risk."
@@ -136,14 +138,17 @@ const ShippingChoice = () => {
               </div>
               <div className="jc-b max-w-150px w-100per">
                 <div className="">{determine_service(rate)}</div>
-                <div> ${parseFloat(rate.rate).toFixed(2)} </div>
+                <div>
+                  {" $"}
+                  {parseFloat(rate.rate).toFixed(2)}{" "}
+                </div>
               </div>
             </div>
             <GLButton
               variant="rates"
               onClick={() => handleOpen(rate, index, isPreOrder, `${friendlyCarrier}: ${friendlyService}`)}
             >
-              Select
+              {"Select"}
             </GLButton>
           </div>
         );
@@ -170,7 +175,7 @@ const ShippingChoice = () => {
                   handleOpen(rate, index, isPreOrder, serviceNames[index] || toTitleCaseSnakeCase(rate.service))
                 }
               >
-                Select
+                {"Select"}
               </GLButton>
             </div>
           );
@@ -186,13 +191,13 @@ const ShippingChoice = () => {
             <>
               {!nonPreOrderShippingRate?.rate && (
                 <>
-                  <Typography variant="subtitle1">In-stock Items Shipping</Typography>
+                  <Typography variant="subtitle1">{"In-stock Items Shipping"}</Typography>
                   {renderShippingRates(nonPreOrderRates.shipment, false)}
                 </>
               )}
               {nonPreOrderShippingRate?.rate && (
                 <div>
-                  <Typography variant="subtitle1">In-stock Items Shipping</Typography>
+                  <Typography variant="subtitle1">{"In-stock Items Shipping"}</Typography>
                   <div className="mv-1rem jc-b ai-c w-100per">
                     <div className="shipping_rates jc-b w-100per ">
                       <div className="jc-b w-100per">
@@ -209,20 +214,20 @@ const ShippingChoice = () => {
                       className="rates w-10rem"
                       onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: false }))}
                     >
-                      Change
+                      {"Change"}
                     </GLButton>
                   </div>
                 </div>
               )}
               {!preOrderShippingRate?.rate && (
                 <>
-                  <Typography variant="subtitle1">Pre-order Items Shipping</Typography>
+                  <Typography variant="subtitle1">{"Pre-order Items Shipping"}</Typography>
                   {renderShippingRates(preOrderRates.shipment, true)}
                 </>
               )}
               {preOrderShippingRate?.rate && (
                 <div>
-                  <Typography variant="subtitle1">Pre-order Items Shipping</Typography>
+                  <Typography variant="subtitle1">{"Pre-order Items Shipping"}</Typography>
                   <div className="mv-1rem jc-b ai-c w-100per">
                     <div className="shipping_rates jc-b w-100per ">
                       <div className="jc-b w-100per">
@@ -237,7 +242,7 @@ const ShippingChoice = () => {
                       className="rates w-10rem"
                       onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: true, isPreOrder: true }))}
                     >
-                      Change
+                      {"Change"}
                     </GLButton>
                   </div>
                 </div>
@@ -271,7 +276,7 @@ const ShippingChoice = () => {
             </div>
           </div>
           <GLButton className="rates w-10rem" onClick={() => dispatch(re_choose_shipping_rate({ splitOrder: false }))}>
-            Change
+            {"Change"}
           </GLButton>
         </div>
       )}

@@ -1,6 +1,6 @@
 import express from "express";
-import { expense_controller } from "../expenses";
-import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
+import expense_controller from "./expense_controller.js";
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 router.route("/filters").get(expense_controller.create_filters_expenses_c);

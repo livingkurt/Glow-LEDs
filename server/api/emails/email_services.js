@@ -1,9 +1,9 @@
-import { determine_filter } from "../../utils/util";
-import { user_db } from "../users";
-import { email_db } from "../emails";
-import config from "../../config";
-import { getFilteredData } from "../api_helpers";
-import { normalizeEmailFilters, normalizeEmailSearch } from "./email_helpers";
+import { determine_filter } from "../../utils/util.js";
+import user_db from "../users/user_db.js";
+import email_db from "./email_db.js";
+import config from "../../config.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizeEmailFilters, normalizeEmailSearch } from "./email_helpers.js";
 
 export default {
   get_table_emails_s: async query => {

@@ -23,7 +23,7 @@ const MetaDataDisplay = ({ row }) => {
     await API_Emails.send_order_status_email(
       row,
       row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      config.REACT_APP_INFO_EMAIL,
+      config.VITE_INFO_EMAIL,
       status,
       message_to_user
     );
@@ -34,18 +34,14 @@ const MetaDataDisplay = ({ row }) => {
   const send_order_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_order_email(row, "Thank you for your Glow LEDs Order", row.shipping.email);
-    await API_Emails.send_order_email(
-      row,
-      "New Order Created by " + row.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL
-    );
+    await API_Emails.send_order_email(row, "New Order Created by " + row.shipping.first_name, config.VITE_INFO_EMAIL);
     const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
     if (has_ticket) {
       dispatch(
         API.sendTicketEmail({
           order: row,
           subject: "New Order Created by " + row.shipping.first_name,
-          email: config.REACT_APP_INFO_EMAIL,
+          email: config.VITE_INFO_EMAIL,
         })
       );
     }
@@ -72,7 +68,7 @@ const MetaDataDisplay = ({ row }) => {
     await API_Emails.send_refund_email(
       row,
       "New Refunded for " + row.shipping.first_name,
-      config.REACT_APP_INFO_EMAIL,
+      config.VITE_INFO_EMAIL,
       true
     );
 
@@ -82,11 +78,11 @@ const MetaDataDisplay = ({ row }) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <h3 className="fs-20px mv-5px">Meta Data</h3>
+        <h3 className="fs-20px mv-5px">{"Meta Data"}</h3>
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          ID #:
+          {"ID #:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
           {row._id}
@@ -94,7 +90,7 @@ const MetaDataDisplay = ({ row }) => {
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Payment Method:
+          {"Payment Method:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
           {row?.payment?.paymentMethod}
@@ -102,7 +98,7 @@ const MetaDataDisplay = ({ row }) => {
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Promo Code:
+          {"Promo Code:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
           {row.promo_code}
@@ -110,42 +106,46 @@ const MetaDataDisplay = ({ row }) => {
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Total Price Paid:
+          {"Total Price Paid:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${(row?.payment?.charge?.amount / 100)?.toFixed(2)}
+          {"$"}
+          {(row?.payment?.charge?.amount / 100)?.toFixed(2)}
         </Typography>
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Total Price:
+          {"Total Price:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${row.totalPrice?.toFixed(2)}
+          {"$"}
+          {row.totalPrice?.toFixed(2)}
         </Typography>
       </Grid>
 
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Outstanding Balance:
+          {"Outstanding Balance:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${(row?.payment?.charge?.amount / 100 - row.totalPrice)?.toFixed(2)}
+          {"$"}
+          {(row?.payment?.charge?.amount / 100 - row.totalPrice)?.toFixed(2)}
         </Typography>
       </Grid>
       <Grid item container xs={12} alignItems="center" justifyContent="space-between">
         <Typography component="label" className="mv-0px mr-5px">
-          Total Refund:
+          {"Total Refund:"}
         </Typography>
         <Typography component="label" className=" mv-0px">
-          ${totalRefundAmount?.toFixed(2)}
+          {"$"}
+          {totalRefundAmount?.toFixed(2)}
         </Typography>
       </Grid>
 
       {row.hasPreOrderItems && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
-            Pre-Order Shipping Date:
+            {"Pre-Order Shipping Date:"}
           </Typography>
           <Typography component="label" className=" mv-0px">
             {formatDate(row.preOrderShippingDate)}
@@ -156,7 +156,7 @@ const MetaDataDisplay = ({ row }) => {
       {row.tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
-            Tracking #:
+            {"Tracking #:"}
           </Typography>
           <Typography component="label" className=" mv-0px">
             <a
@@ -177,7 +177,7 @@ const MetaDataDisplay = ({ row }) => {
       {row.return_tracking_number && (
         <Grid item container xs={12} alignItems="center" justifyContent="space-between">
           <Typography component="label" className="mv-0px mr-5px">
-            Return Tracking #:{" "}
+            {"Return Tracking #:"}{" "}
           </Typography>
           <Typography component="label" className=" mv-0px">
             <a
@@ -205,28 +205,28 @@ const MetaDataDisplay = ({ row }) => {
             fullWidth
             onClick={() => dispatch(applySearch("orderTable", row.splitOrder))}
           >
-            Go to Split Order
+            {"Go to Split Order"}
           </Button>
         </Grid>
       )}
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_email()}>
-          Send Order Email
+          {"Send Order Email"}
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_ticket_email()}>
-          Send Ticket Email
+          {"Send Ticket Email"}
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_status_email("updated")}>
-          Send Update Order Email
+          {"Send Update Order Email"}
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_refund_email()}>
-          Send Refund Email
+          {"Send Refund Email"}
         </Button>
       </Grid>
     </Grid>

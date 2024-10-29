@@ -2,44 +2,42 @@
 // html-routes.js - this file offers a set of routes for sending users to the various html pages
 // *********************************************************************************
 
-import App from "./App";
-import {
-  account_created,
-  affiliate,
-  announcement,
-  contact,
-  contact_confirmation,
-  feature,
-  order,
-  successful_password_reset,
-  review,
-  email_subscription,
-  order_status,
-  custom_contact,
-  code_used,
-  shipping_status,
-  verify_email_password_reset,
-  affiliate_onboard,
-} from "./pages";
+import App from "./App.js";
+import account_created from "./pages/account_created.js";
+import affiliate from "./pages/affiliate.js";
+import announcement from "./pages/announcement.js";
+import contact from "./pages/contact.js";
+import contact_confirmation from "./pages/contact_confirmation.js";
+import feature from "./pages/feature.js";
+import order from "./pages/order.js";
+import successful_password_reset from "./pages/successful_password_reset.js";
+import review from "./pages/review.js";
+import email_subscription from "./pages/email_subscription.js";
+import order_status from "./pages/order_status.js";
+import custom_contact from "./pages/custom_contact.js";
+import code_used from "./pages/code_used.js";
+import shipping_status from "./pages/shipping_status.js";
+import verify_email_password_reset from "./pages/verify_email_password_reset.js";
+import affiliate_onboard from "./pages/affiliate_onboard.js";
 import express from "express";
-import invoice from "./pages/invoice";
-import { order_db, order_services } from "../api/orders";
-import { content_db } from "../api/contents";
-import { affiliate_db } from "../api/affiliates";
-import { promo_db } from "../api/promos";
-import { make_private_code, months } from "../utils/util";
-import { user_db } from "../api/users";
-import { determine_status } from "../api/emails/email_interactors";
-import { email_db } from "../api/emails";
-import { paycheck_db } from "../api/paychecks";
-import current_stock from "./pages/current_stock";
-import { product_db } from "../api/products";
-import config from "../config";
-import mongoose from "mongoose";
-import verify from "./pages/verify";
-import { domain } from "./email_template_helpers";
-import paycheck from "./pages/paycheck";
-import ticketEmail from "./pages/ticketEmail";
+import invoice from "./pages/invoice.js";
+import order_db from "../api/orders/order_db.js";
+import order_services from "../api/orders/order_services.js";
+import content_db from "../api/contents/content_db.js";
+import affiliate_db from "../api/affiliates/affiliate_db.js";
+import promo_db from "../api/promos/promo_db.js";
+import { make_private_code, months } from "../utils/util.js";
+import user_db from "../api/users/user_db.js";
+import { determine_status } from "../api/emails/email_interactors.js";
+import email_db from "../api/emails/email_db.js";
+import paycheck_db from "../api/paychecks/paycheck_db.js";
+import current_stock from "./pages/current_stock.js";
+import product_db from "../api/products/product_db.js";
+import config from "../config.js";
+import verify from "./pages/verify.js";
+import { domain } from "./email_template_helpers.js";
+import paycheck from "./pages/paycheck.js";
+import ticketEmail from "./pages/ticketEmail.js";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {

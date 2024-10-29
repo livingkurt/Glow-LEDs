@@ -35,9 +35,9 @@ const Links = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
-        <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
-        <meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
-        <meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
+        <title>{"Glow LEDs | Your Complete Gloving Supply Hub"}</title>
+        <meta property="og:title" content="Glow LEDs | Your Complete Gloving Supply Hub" />
+        <meta name="twitter:title" content="Glow LEDs | Your Complete Gloving Supply Hub" />
         <link rel="canonical" href="https://www.glow-leds.com/" />
         <meta property="og:url" content="https://www.glow-leds.com" />
         <meta
@@ -105,11 +105,11 @@ const Links = () => {
                   width < 500 ? "fs-40px" : ""
                 } `}
               >
-                Glow LEDs
+                {"Glow LEDs"}
               </label>
 
               <label className="tm" style={{ color: "#9a9898" }}>
-                ™
+                {"™"}
               </label>
               {/* <label className="make_it_glow_text_links fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px"> */}
               <label
@@ -117,7 +117,7 @@ const Links = () => {
                   width > 500 ? "fs-18px" : ""
                 } ${width < 500 && width > 400 ? "fs-16px" : ""} ${width < 500 ? "fs-14px" : ""} `}
               >
-                Make it Glow
+                {"Make it Glow"}
               </label>
             </div>
           </a>

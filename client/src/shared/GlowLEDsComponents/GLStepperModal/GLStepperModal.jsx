@@ -1,42 +1,38 @@
-/* eslint-disable max-lines-per-function */
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Divider, Step, StepLabel, Stepper } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import GLActionModal from "../GLActionModal/GLActionModal";
-import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
-  stepper: {
-    // maxWidth: "70%",
-    flexGrow: 1,
-    justifyContent: "space-between",
-  },
-  divider: {
-    marginTop: "1rem",
-  },
-});
+const StyledStepper = styled(Stepper)(({ theme }) => ({
+  flexGrow: 1,
+  justifyContent: "space-between",
+}));
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
 
 const GLStepperModal = ({ step, isOpen, children, stepLabels, dataTest, ...otherProps }) => {
-  const classes = useStyles();
-
   return (
     <GLActionModal isOpen={isOpen} dataTest={dataTest} {...otherProps}>
       <>
         <Box display="flex" justifyContent="center">
-          <Stepper activeStep={step} className={classes.stepper}>
+          <StyledStepper activeStep={step}>
             {stepLabels.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
-          </Stepper>
+          </StyledStepper>
         </Box>
-        <Divider className={classes.divider} />
+        <StyledDivider />
         {children}
       </>
     </GLActionModal>
   );
 };
+
 GLStepperModal.defaultProps = {
   dataTest: "stepper-modal",
 };

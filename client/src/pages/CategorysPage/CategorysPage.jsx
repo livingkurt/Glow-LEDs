@@ -30,7 +30,7 @@ const CategorysPage = () => {
         title: "",
         nonSelectable: true,
         display: category => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_category_modal(category))}>
               <EditIcon color="white" />
             </GLIconButton>
@@ -63,15 +63,15 @@ const CategorysPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Categorys | Glow LEDs</title>
+        <title>{"Admin Categorys | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"categorys/setRemoteVersionRequirement"}
+        remoteVersionRequirementType="categorys/setRemoteVersionRequirement"
         determineColor={determineCategoryColors}
-        tableName={"Categorys"}
+        tableName="Categorys"
         namespaceScope="categorys"
         namespace="categoryTable"
         columnDefs={columnDefs}
@@ -79,7 +79,7 @@ const CategorysPage = () => {
         enableRowSelect={true}
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_category_modal())}>
-            Create Category
+            {"Create Category"}
           </Button>
         }
       />

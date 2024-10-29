@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import config from "../config";
-import Token from "../api/tokens/token";
-import { user_services } from "../api/users";
+import config from "../config.js";
+import Token from "../api/tokens/token.js";
+import user_services from "../api/users/user_services.js";
 
 export const setCurrentUser = (req, res, next) => {
   const authHeader = req.headers["authorization"];

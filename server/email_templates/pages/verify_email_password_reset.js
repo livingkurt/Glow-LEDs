@@ -1,5 +1,5 @@
-import config from "../../config";
-import { domain } from "../email_template_helpers";
+import config from "../../config.js";
+import { domain } from "../email_template_helpers.js";
 
 export default ({ email, url }) => {
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">

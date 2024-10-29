@@ -44,12 +44,12 @@ export const ProfileActions = () => {
           dispatch(open_edit_user_modal(user));
         }}
       >
-        Edit Profile
+        {"Edit Profile"}
       </Button>
 
       {/* <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/change_password"} className="w-100per"> */}
       <Button variant="contained" color="secondary" fullWidth onClick={() => dispatch(openChangePasswordModal())}>
-        Change Password
+        {"Change Password"}
       </Button>
       {/* </Link> */}
 
@@ -64,7 +64,7 @@ export const ProfileActions = () => {
             dispatch(open_edit_affiliate_modal(affiliate));
           }}
         >
-          Edit Affiliate Profile
+          {"Edit Affiliate Profile"}
         </Button>
       )}
       {user.is_affiliated && user?.affiliate?.teamCaptain && (
@@ -75,7 +75,7 @@ export const ProfileActions = () => {
             dispatch(open_edit_team_modal(team));
           }}
         >
-          Edit Team Profile
+          {"Edit Team Profile"}
         </Button>
       )}
       {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
@@ -102,7 +102,8 @@ export const ProfileActions = () => {
           )} */}
           {!checkinCompleted && (
             <Typography variant="body1" gutterBottom>
-              You have not checked in for the month of {currentMonth}
+              {"You have not checked in for the month of "}
+              {currentMonth}
             </Typography>
           )}
           <Button
@@ -129,7 +130,7 @@ export const ProfileActions = () => {
             dispatch(open_edit_wholesaler_modal(user.wholesaler));
           }}
         >
-          Edit Wholesaler Profile
+          {"Edit Wholesaler Profile"}
         </Button>
       )}
 
@@ -141,7 +142,7 @@ export const ProfileActions = () => {
             dispatch(API.loginAsUser(user));
           }}
         >
-          Sign In as User
+          {"Sign In as User"}
         </Button>
       )}
       {current_user?.isAdmin && (
@@ -152,7 +153,7 @@ export const ProfileActions = () => {
             dispatch(API.saveStripeAccount(id || current_user._id));
           }}
         >
-          Link User to Stripe Account
+          {"Link User to Stripe Account"}
         </Button>
       )}
 

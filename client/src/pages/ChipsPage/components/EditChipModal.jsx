@@ -25,10 +25,10 @@ const EditChipModal = () => {
         onCancel={() => {
           dispatch(set_edit_chip_modal(false));
         }}
-        title={"Edit Chip"}
-        confirmLabel={"Save"}
+        title="Edit Chip"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

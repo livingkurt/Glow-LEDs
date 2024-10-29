@@ -31,7 +31,7 @@ const ProductGridPage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (isLoading) return <ProductsGridPageSkeletons />;
-  if (isError) return <Typography>Error loading products</Typography>;
+  if (isError) return <Typography>{"Error loading products"}</Typography>;
 
   const categoryBanner = currentContent?.products_grid_page?.category_banners?.find(banner =>
     selectedTags.some(tag => tag.toLowerCase() === banner?.tag?.pathname?.toLowerCase())
@@ -87,10 +87,10 @@ const ProductGridPage = () => {
           ) : (
             <>
               <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                No products found for matching criteria
+                {"No products found for matching criteria"}
               </Typography>
               <Typography variant="subtitle2" textAlign="center" width="100%">
-                Try removing some filters to find what you're looking for
+                {"Try removing some filters to find what you're looking for"}
               </Typography>
             </>
           )}

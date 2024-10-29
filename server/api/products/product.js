@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -298,14 +298,8 @@ const productSchema = new mongoose.Schema(
 
     secondary_images_object: { type: Array },
 
-    chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
-    has_add_on: { type: Boolean, default: false },
 
-    color: { type: String },
-    color_code: { type: String },
-    size: { type: String },
-    sizing: { type: String },
     // Depreciated
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     // color_images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],

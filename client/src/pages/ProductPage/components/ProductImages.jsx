@@ -68,7 +68,7 @@ const ProductImages = ({ images, originalImages }) => {
           </Box>
           {JSON.stringify(originalImages) !== JSON.stringify(images) && (
             <GLButtonV2 variant="contained" color="secondary" onClick={() => dispatch(restoreOriginalImages())}>
-              View Original Images
+              {"View Original Images"}
             </GLButtonV2>
           )}
           <Box

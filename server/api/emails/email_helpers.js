@@ -1,8 +1,8 @@
-import App from "../../email_templates/App";
-import { announcement } from "../../email_templates/pages";
-import config from "../../config";
-import { user_db } from "../users";
-const nodemailer = require("nodemailer");
+import App from "../../email_templates/App.js";
+import announcement from "../../email_templates/pages/announcement.js";
+import config from "../../config.js";
+import user_db from "../users/user_db.js";
+import nodemailer from "nodemailer";
 
 export const createTransporter = async () => {
   try {
@@ -48,7 +48,7 @@ export const send_multiple_emails = async (emailAddresses, email, res, testEmail
     const mailOptions = {
       to: config.INFO_EMAIL,
       from: config.DISPLAY_INFO_EMAIL,
-      subject: !!testEmails ? "TEST " + subject : subject,
+      subject: testEmails ? "TEST " + subject : subject,
       html: App({
         body: announcement(email),
         unsubscribe: true,
@@ -94,7 +94,9 @@ export const sendEmailsInBatches = async (email, res, testEmails = null) => {
     }
 
     await send_multiple_emails(emailAddresses, email, res, testEmails);
-    console.log(`Batch ${i + 1}: Sent emails to ${emailAddresses.length} users`);
+    console.log(
+      `Batch ${i + 1}: Sent emails to ${emailAddresses.length} users (Total: ${(i + 1) * emailAddresses.length} emails sent)`
+    );
 
     if (!testEmails) {
       // If not testing, wait before sending the next batch

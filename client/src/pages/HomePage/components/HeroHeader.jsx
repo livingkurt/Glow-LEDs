@@ -89,7 +89,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                   {slide.label}
                 </Typography>
                 <Typography
-                  variant={"subtitle1"}
+                  variant="subtitle1"
                   gutterBottom
                   sx={{
                     mb: 2,

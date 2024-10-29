@@ -1,4 +1,4 @@
-const routes = [
+export const routes = [
   { path: "/account/change_password", element: "ChangePasswordPage" },
   { path: "/account/password_reset", element: "PasswordResetPage" },
   { path: "/account/reset_password", element: "ResetPasswordPage" },
@@ -36,8 +36,9 @@ const routes = [
   { path: "/menu/:pathname", element: "MenuPage", exact: true },
 
   { path: "/palettes", element: "ColorPalettePage", exact: true },
+  { path: "/unsubscribe", element: "UnsubscribePage", exact: true },
 ];
-const adminRoutes = [
+export const adminRoutes = [
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
   { path: "/secure/glow/products", element: "ProductsPage" },
   { path: "/secure/glow/orders", element: "OrdersPage" },
@@ -68,13 +69,13 @@ const adminRoutes = [
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
   { path: "/secure/glow/articles", element: "ArticlesPage" },
 ];
-const privateRoutes = [
+export const privateRoutes = [
   { path: "/secure/account/profile", element: "ProfilePage" },
   { path: "/secure/account/order/:id", element: "OrderPage" },
   { path: "/secure/checkout/place_order", element: "PlaceOrderPage" },
 ];
 
-const redirects = [
+export const redirects = [
   { from: "/account/changepassword", to: "/account/change_password" },
   { from: "/account/passwordreset", to: "/account/password_reset" },
   { from: "/checkout/placeorder", to: "/checkout/place_order" },
@@ -107,5 +108,3 @@ const redirects = [
   { from: "/pages/music", to: "/about" },
   { from: "/pages/complete/:type/:id?", to: "/" },
 ];
-
-module.exports = { routes, adminRoutes, privateRoutes, redirects };

@@ -90,7 +90,7 @@ const ProductPage = () => {
       <ProductPageLoading loading={productPageLoading}>
         {product && (
           <>
-            <Box display="flex" justifyContent={"space-between"} p={2}>
+            <Box display="flex" justifyContent="space-between" p={2}>
               <GLBreadcrumbs
                 items={
                   current_user.isWholesaler
@@ -105,7 +105,7 @@ const ProductPage = () => {
                     color="secondary"
                     onClick={e => dispatch(openEditProductModal(product))}
                   >
-                    Edit Product
+                    {"Edit Product"}
                   </GLButtonV2>
                 </Box>
               )}
@@ -140,7 +140,7 @@ const ProductPage = () => {
                           color: theme.palette.getContrastText(product.primary_color),
                         }}
                       >
-                        New In
+                        {"New In"}
                       </Typography>
                     )}
                   </Box>
@@ -148,7 +148,8 @@ const ProductPage = () => {
                     <Box display="flex" alignItems="center" mb={2}>
                       <Rating value={product.rating} precision={0.5} readOnly />
                       <Typography variant="body2" ml={1}>
-                        ({product.numReviews} reviews)
+                        {"("}
+                        {product.numReviews} {"reviews)"}
                       </Typography>
                     </Box>
                   )}
@@ -156,7 +157,7 @@ const ProductPage = () => {
                     {customizedProduct.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                    Price:{" "}
+                    {"Price:"}{" "}
                     {sale_price_switch({
                       product: customizedProduct,
                       cartItem: false,
@@ -178,14 +179,15 @@ const ProductPage = () => {
                           color: theme.palette.getContrastText(theme.palette.primary.main),
                         }}
                       >
-                        Pre-Order
+                        {"Pre-Order"}
                       </Typography>
                     )}
                   </Typography>
 
                   {customizedProduct.isPreOrder && (
                     <Typography variant="body2" gutterBottom mt={1} mb={2}>
-                      Estimated Availability: {formatDate(customizedProduct.preOrderReleaseDate)}
+                      {"Estimated Availability: "}
+                      {formatDate(customizedProduct.preOrderReleaseDate)}
                     </Typography>
                   )}
 
@@ -222,7 +224,8 @@ const ProductPage = () => {
                     </Box>
                   ))}
                   <Typography variant="subtitle1">
-                    Quantity {customizedProduct.set_of ? `(Set of ${customizedProduct.set_of})` : ""}
+                    {"Quantity "}
+                    {customizedProduct.set_of ? `(Set of ${customizedProduct.set_of})` : ""}
                   </Typography>
                   <GLSelect
                     value={customizedProduct?.quantity}
@@ -238,7 +241,7 @@ const ProductPage = () => {
                   />
                   {product.isPreOrder && (
                     <Typography variant="body2" fontWeight={800} mt={1}>
-                      Pre-Order: Estimated Availability{" "}
+                      {"Pre-Order: Estimated Availability"}{" "}
                       {new Date(product.preOrderReleaseDate).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "long",

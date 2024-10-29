@@ -1,4 +1,4 @@
-import { ticket_services } from ".";
+import ticket_services from "./ticket_services.js";
 
 export default {
   findAll_tickets_c: async (req, res) => {

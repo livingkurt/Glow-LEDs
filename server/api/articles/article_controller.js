@@ -1,4 +1,4 @@
-import { article_services } from ".";
+import article_services from "./article_services.js";
 
 export default {
   findAll_articles_c: async (req, res) => {

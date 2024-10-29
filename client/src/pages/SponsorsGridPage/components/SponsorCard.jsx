@@ -51,13 +51,13 @@ const SponsorCard = ({ affiliate, goHorizontal = true }) => {
           />
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <Typography variant={"h6"} color="white" gutterBottom>
+          <Typography variant="h6" color="white" gutterBottom>
             {affiliate.artist_name}
           </Typography>
 
           <Box display="flex" justifyContent="space-between">
             {!isMobile && (
-              <Typography variant={"body1"} color="white">
+              <Typography variant="body1" color="white">
                 {affiliate?.user.first_name} {affiliate?.user.last_name}
               </Typography>
             )}

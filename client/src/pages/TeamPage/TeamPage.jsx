@@ -39,11 +39,11 @@ const TeamPage = () => {
       <Box sx={{ mb: 4 }}>
         <Box display="flex" justifyContent="space-between">
           <Button onClick={() => navigate("/teams")} sx={{ mb: 2, color: "#fff" }}>
-            Back to Teams
+            {"Back to Teams"}
           </Button>
           {current_user?.isAdmin && (
             <Button sx={{ mb: 2, color: "#fff" }} onClick={() => dispatch(open_edit_team_modal(team))}>
-              Edit Team
+              {"Edit Team"}
             </Button>
           )}
         </Box>
@@ -68,7 +68,8 @@ const TeamPage = () => {
           <Card sx={{ color: "#fff", bgcolor: "#4c526d", borderRadius: "20px" }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                About {team.team_name}
+                {"About "}
+                {team.team_name}
               </Typography>
               <Typography variant="body1" paragraph>
                 {team.bio}
@@ -77,7 +78,7 @@ const TeamPage = () => {
               {team.start_year && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Founded
+                    {"Founded"}
                   </Typography>
                   <Typography variant="body1" paragraph>
                     {team.start_year}
@@ -88,7 +89,7 @@ const TeamPage = () => {
               {team.captain && (
                 <>
                   <Typography variant="h6" gutterBottom>
-                    Team Captain
+                    {"Team Captain"}
                   </Typography>
                   <Typography variant="body1" paragraph>
                     {team.captain.artist_name}
@@ -103,7 +104,7 @@ const TeamPage = () => {
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
       <Typography variant="h4" align="center" gutterBottom>
-        {team.team_name} Members
+        {team.team_name} {"Members"}
       </Typography>
       <Grid container spacing={3}>
         {team.affiliates &&
@@ -119,7 +120,8 @@ const TeamPage = () => {
           <Divider sx={{ my: 4, borderColor: "#fff" }} />
           <Box>
             <Typography variant="h4" align="center" gutterBottom>
-              Watch {team.team_name} in Action
+              {"Watch "}
+              {team.team_name} {"in Action"}
             </Typography>
             <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
               <iframe
@@ -144,7 +146,7 @@ const TeamPage = () => {
         <>
           <Divider sx={{ my: 4, borderColor: "#fff" }} />
           <Typography variant="h4" align="center" gutterBottom>
-            {team.team_name} Meetup Map
+            {team.team_name} {"Meetup Map"}
           </Typography>
           <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
             <GLLazyImage
@@ -155,7 +157,7 @@ const TeamPage = () => {
           </Box>
 
           <Typography variant="h4" align="center" sx={{ mt: 4 }} gutterBottom>
-            {team.team_name} Moments in Time
+            {team.team_name} {"Moments in Time"}
           </Typography>
           <Grid container spacing={2} justifyContent="center">
             {team.images.map((image, index) => (

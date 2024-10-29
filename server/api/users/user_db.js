@@ -1,7 +1,4 @@
-import User from "../users/user";
-import { prnt } from "../../utils/util";
-// import Token from "../tokens/token";
-require("dotenv");
+import User from "./user.js";
 
 export default {
   findAll_users_db: async (filter, sort, limit, page) => {
@@ -152,7 +149,7 @@ export default {
   },
   findByEmail_users_db: async email => {
     try {
-      return await User.findOne({ email, deleted: false }).populate("wholesaler");
+      return await User.findOne({ email: email.toLowerCase(), deleted: false }).populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

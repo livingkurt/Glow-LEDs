@@ -47,7 +47,7 @@ const EventsPage = () => {
         title: "",
         nonSelectable: true,
         display: event => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -72,15 +72,15 @@ const EventsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Events | Glow LEDs</title>
+        <title>{"Admin Events | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"events/setRemoteVersionRequirement"}
-        tableName={"Events"}
+        remoteVersionRequirementType="events/setRemoteVersionRequirement"
+        tableName="Events"
         namespaceScope="events"
         namespace="eventTable"
         columnDefs={columnDefs}
@@ -89,7 +89,7 @@ const EventsPage = () => {
         enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_event_modal())}>
-            Create Event
+            {"Create Event"}
           </Button>
         }
       />

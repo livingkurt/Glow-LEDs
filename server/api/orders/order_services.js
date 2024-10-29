@@ -1,10 +1,11 @@
-import { affiliate_db } from "../affiliates";
-import { Order, order_db } from "../orders";
-import { promo_db } from "../promos";
-import { User, user_db } from "../users";
-import { cart_services } from "../carts";
-import { product_services } from "../products";
-import { promo_services } from "../promos";
+import Order from "../orders/order.js";
+import order_db from "../orders/order_db.js";
+import promo_db from "../promos/promo_db.js";
+import User from "../users/user.js";
+import user_db from "../users/user_db.js";
+import cart_services from "../carts/cart_services.js";
+import product_services from "../products/product_services.js";
+import promo_services from "../promos/promo_services.js";
 import {
   dates_in_year,
   determine_filter,
@@ -13,10 +14,9 @@ import {
   isEmail,
   month_dates,
   removeDuplicates,
-  subcategories,
   toCapitalize,
-} from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
+} from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
 import {
   getCodeUsage,
   getMonthlyCodeUsage,
@@ -29,8 +29,9 @@ import {
   sendTicketEmail,
   splitOrderItems,
   createSplitOrder,
-} from "./order_interactors";
-const SalesTax = require("sales-tax");
+} from "./order_interactors.js";
+import SalesTax from "sales-tax";
+import affiliate_db from "../affiliates/affiliate_db.js";
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
 export default {

@@ -142,12 +142,12 @@ const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={"h6"} color="white" gutterBottom>
+            <Typography variant="h6" color="white" gutterBottom>
               {product.name}
             </Typography>
             {product.rating ? <Rating value={product.rating} readOnly size={isMobile ? "small" : "medium"} /> : null}
           </Box>
-          <Typography variant={"body1"} color="white">
+          <Typography variant="body1" color="white">
             {sale_price_switch({
               product,
               cartItem: false,

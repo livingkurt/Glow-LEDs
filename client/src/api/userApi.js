@@ -236,3 +236,13 @@ export const verifyEmailPasswordReset = createAsyncThunk(
     }
   }
 );
+
+export const unsubscribeEmail = createAsyncThunk("users/unsubscribeEmail", async ({ email }, { dispatch, rejectWithValue }) => {
+  try {
+    const { data } = await axios.post("/api/users/unsubscribe", { email });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+  }
+});

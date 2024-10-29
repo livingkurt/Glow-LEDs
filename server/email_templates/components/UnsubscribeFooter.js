@@ -1,7 +1,10 @@
-import config from "../../config";
-import SocialMediaIcons from "./SocialMediaIcons";
+import config from "../../config.js";
+import SocialMediaIcons from "./SocialMediaIcons.js";
+import { domain } from "../email_template_helpers.js";
 
-export default header_footer_color => {
+export default (header_footer_color, recipientEmail) => {
+  const unsubscribeUrl = `${domain()}/unsubscribe?email=${encodeURIComponent(recipientEmail)}`;
+
   return `<table style="width:100%;border-spacing:0;background-color:${
     header_footer_color ? header_footer_color : `#333333`
   }">
@@ -25,7 +28,7 @@ export default header_footer_color => {
                   emails? <br /> You can <a
                     href="https://www.glow-leds.com/secure/account/editprofile" target="_blank"
                     rel="noopener noreferrer" style="text-decoration:underline;color:white">update your preferences</a>
-                  or <a href="https://www.glow-leds.com/secure/account/editprofile"
+                  or <a href="${unsubscribeUrl}"
                     target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:white">unsubscribe
                   </a>from this list.</p>
               </td>

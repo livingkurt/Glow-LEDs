@@ -1,4 +1,4 @@
-import { image_services } from "../images";
+import image_services from "./image_services.js";
 
 export default {
   findAll_images_c: async (req, res) => {

@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import { JSDOM } from "jsdom";
 import * as cheerio from "cheerio";
-import { toCapitalize } from "../utils/util";
+import { toCapitalize } from "../utils/util.js";
 import { simpleParser } from "mailparser";
 import parseAddress from "parse-address";
 import he from "he";

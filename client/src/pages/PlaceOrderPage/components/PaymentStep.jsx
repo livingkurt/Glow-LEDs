@@ -20,7 +20,7 @@ import {
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { Sell } from "@mui/icons-material";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -216,7 +217,7 @@ const PaymentStep = () => {
     <div>
       <ul className="mv-0px">
         <div className="jc-b mv-10px">
-          <Typography variant="h4">3. Payment & Review</Typography>
+          <Typography variant="h4">{"3. Payment & Review"}</Typography>
           {payment_completed && !show_payment && (
             <GLButtonV2
               variant="contained"
@@ -224,7 +225,7 @@ const PaymentStep = () => {
               color="secondary"
               onClick={() => dispatch(showHideSteps("payment"))}
             >
-              Edit
+              {"Edit"}
             </GLButtonV2>
           )}
         </div>
@@ -232,7 +233,7 @@ const PaymentStep = () => {
         {show_payment && !loading_tax_rates && (
           <div className="w-100per">
             <div className="w-100per ">
-              <div htmlFor="order_note">Add a note</div>
+              <div htmlFor="order_note">{"Add a note"}</div>
               <input
                 type="text"
                 name="order_note"
@@ -243,7 +244,7 @@ const PaymentStep = () => {
             </div>
             {current_user?.isAdmin && (
               <div className="w-100per mt-10px">
-                <div htmlFor="production_note">Add a production note</div>
+                <div htmlFor="production_note">{"Add a production note"}</div>
                 <input
                   type="text"
                   name="production_note"
@@ -257,7 +258,7 @@ const PaymentStep = () => {
               <div>
                 {show_promo_code_input_box && (
                   <div className="mv-10px">
-                    <label htmlFor="promo_code">Promo Code</label>
+                    <label htmlFor="promo_code">{"Promo Code"}</label>
                     <form onSubmit={e => check_code(e)} className="row">
                       <input
                         type="text"
@@ -278,7 +279,7 @@ const PaymentStep = () => {
                           curser: "pointer",
                         }}
                       >
-                        Apply
+                        {"Apply"}
                       </GLButton>
                     </form>
                   </div>
@@ -293,27 +294,30 @@ const PaymentStep = () => {
                 </label>
                 {activePromoCodeIndicator && (
                   <div className="promo_code mv-1rem">
-                    <GLButton
-                      variant="icon"
-                      onClick={() =>
-                        dispatch(
-                          removePromo({
-                            items_price,
-                            tax_rate,
-                            shippingPrice,
-                            preOrderShippingPrice,
-                            nonPreOrderShippingPrice,
-                            previousShippingPrice,
-                            shipping,
-                            splitOrder,
-                          })
-                        )
-                      }
-                      aria-label="Detete"
-                    >
-                      <i className="fas fa-times mr-5px" />
-                    </GLButton>
-                    {activePromoCodeIndicator}
+                    <Box display="flex" alignItems="center">
+                      <GLButton
+                        variant="icon"
+                        onClick={() =>
+                          dispatch(
+                            removePromo({
+                              items_price,
+                              tax_rate,
+                              shippingPrice,
+                              preOrderShippingPrice,
+                              nonPreOrderShippingPrice,
+                              previousShippingPrice,
+                              shipping,
+                              splitOrder,
+                            })
+                          )
+                        }
+                        aria-label="Detete"
+                      >
+                        <i className="fas fa-times mr-5px" />
+                      </GLButton>
+                      <Sell sx={{ mr: 1 }} />
+                      {activePromoCodeIndicator}
+                    </Box>
                   </div>
                 )}
               </div>
@@ -321,7 +325,7 @@ const PaymentStep = () => {
             <li>
               <div className="w-100per mb-1rem">
                 <label htmlFor="tip" className="fs-16px">
-                  Leave a tip for our production team 💙
+                  {"Leave a tip for our production team 💙"}
                 </label>
                 <input
                   type="number"
@@ -354,13 +358,13 @@ const PaymentStep = () => {
                       dispatch(set_create_account(e.target.checked));
                     }}
                   />
-                  <label htmlFor="create_account mb-20px">Create an account for faster checkout</label>
+                  <label htmlFor="create_account mb-20px">{"Create an account for faster checkout"}</label>
                 </div>
               </li>
             )}
             {current_user && !current_user.first_name && create_account && (
               <li className="column mb-2rem">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{"Password"}</label>
                 <input // className="form_input"
                   type="password"
                   id="password"
@@ -378,7 +382,7 @@ const PaymentStep = () => {
               )}
               {(!totalPrice || totalPrice === 0) && (
                 <>
-                  <p htmlFor="password">Payment is not necessary at this time</p>
+                  <p htmlFor="password">{"Payment is not necessary at this time"}</p>
                   <GLButton
                     onClick={() => {
                       create_no_payment_order();
@@ -386,7 +390,7 @@ const PaymentStep = () => {
                     variant="primary"
                     className="w-100per bob mb-12px"
                   >
-                    Complete Order
+                    {"Complete Order"}
                   </GLButton>
                 </>
               )}
@@ -418,7 +422,7 @@ const PaymentStep = () => {
                             onChange={e => dispatch(set_paymentMethod(e.target.value))}
                           >
                             <option key={1} defaultValue="">
-                              Payment Method
+                              {"Payment Method"}
                             </option>
                             {[
                               "stripe",
@@ -445,25 +449,25 @@ const PaymentStep = () => {
                     <GLAutocomplete
                       margin="normal"
                       value={user || ""}
-                      variant={"filled"}
+                      variant="filled"
                       options={users.filter(user => !user.deleted).filter(user => user.first_name)}
                       getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                       optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
                       isOptionEqualToValue={(option, value) => option._id === value._id}
-                      name={"users"}
-                      label={"Choose User"}
+                      name="users"
+                      label="Choose User"
                       onChange={(event, newValue) => {
                         dispatch(set_user(newValue));
                       }}
                     />
                     <GLButton onClick={create_order_without_paying} variant="secondary" className="w-100per mb-12px">
-                      Create Order For User
+                      {"Create Order For User"}
                     </GLButton>
                   </div>
                 )}
                 {current_user.isAdmin && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
-                    Create Order Without User
+                    {"Create Order Without User"}
                   </GLButton>
                 )}
               </div>

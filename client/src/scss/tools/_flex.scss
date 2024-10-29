@@ -1,17 +1,31 @@
-$justify: "c" center, "fs" flex-start, "fe" flex-end, "b" space-between, "a" space-around, "e" space-evenly;
-$align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
+@use "sass:list";
+@use "sass:math";
+
+$justify:
+  "c" center,
+  "fs" flex-start,
+  "fe" flex-end,
+  "b" space-between,
+  "a" space-around,
+  "e" space-evenly;
+$align:
+  "c" center,
+  "fs" flex-start,
+  "fe" flex-end,
+  "b" stretch,
+  "b" baseline;
 
 @each $i in $justify {
-  .jc-#{nth($i, 1)} {
+  .jc-#{list.nth($i, 1)} {
     display: flex !important;
-    justify-content: nth($i, 2) !important;
+    justify-content: list.nth($i, 2) !important;
   }
 }
 
 @each $i in $align {
-  .ai-#{nth($i, 1)} {
+  .ai-#{list.nth($i, 1)} {
     display: flex !important;
-    align-items: nth($i, 2) !important;
+    align-items: list.nth($i, 2) !important;
   }
 }
 

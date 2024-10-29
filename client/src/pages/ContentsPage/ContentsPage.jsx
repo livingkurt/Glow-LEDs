@@ -100,10 +100,10 @@ const ContentsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Contents | Glow LEDs</title>
+        <title>{"Admin Contents | Glow LEDs"}</title>
       </Helmet>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <h1>Content Management</h1>
+        <h1>{"Content Management"}</h1>
         <Box display="flex" gap={2} alignItems="center">
           {saveStatus && <span>{saveStatus}</span>}
 
@@ -115,7 +115,7 @@ const ContentsPage = () => {
               dispatch(API.saveContent(newContent));
             }}
           >
-            Create New Version
+            {"Create New Version"}
           </Button>
         </Box>
       </Box>

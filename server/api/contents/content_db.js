@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Content } from "../contents";
+import Content from "./content.js";
 
 export default {
   findAll_contents_db: async (filter, sort, limit, page) => {

@@ -59,7 +59,7 @@ const ProductsPage = () => {
         title: "",
         nonSelectable: true,
         display: row => (
-          <Box display="flex" justifyContent={"flex-end"}>
+          <Box display="flex" justifyContent="flex-end">
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
@@ -123,7 +123,7 @@ const ProductsPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
-        <title>Admin Products | Glow LEDs</title>
+        <title>{"Admin Products | Glow LEDs"}</title>
       </Helmet>
 
       <GLTableV2
@@ -132,15 +132,15 @@ const ProductsPage = () => {
         remoteFiltersApi={remoteFiltersApi}
         defaultFilters={defaultFilters}
         remoteVersionRequirement={remoteVersionRequirement}
-        remoteVersionRequirementType={"products/setRemoteVersionRequirement"}
-        tableName={"Products"}
+        remoteVersionRequirementType="products/setRemoteVersionRequirement"
+        tableName="Products"
         colors={productColors}
         determineColor={determineColor}
         namespaceScope="products"
         namespace="productTable"
         columnDefs={columnDefs}
         enableDropdownRow
-        rowName={"name"}
+        rowName="name"
         dropdownComponent={row => (
           <ProductDropdown row={row} determineColor={determineColor} colspan={columnDefs.length + 1} />
         )}
@@ -161,7 +161,7 @@ const ProductsPage = () => {
                   }
                 }}
               >
-                Delete Products
+                {"Delete Products"}
               </Button>
             )}
             {selectedRows.length > 0 && (
@@ -174,7 +174,7 @@ const ProductsPage = () => {
                   );
                 }}
               >
-                Replicate Product Options
+                {"Replicate Product Options"}
               </Button>
             )}
 
@@ -191,10 +191,10 @@ const ProductsPage = () => {
                 }
               }}
             >
-              Generate Product Catelog CSV
+              {"Generate Product Catelog CSV"}
             </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
-              Create Product
+              {"Create Product"}
             </Button>
           </div>
         }

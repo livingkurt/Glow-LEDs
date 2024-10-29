@@ -50,14 +50,15 @@ const TeamCard = ({ team }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            <Typography variant={"h6"} color="white" gutterBottom>
+            <Typography variant="h6" color="white" gutterBottom>
               {team.team_name}
             </Typography>
-            <Typography variant={"body1"} color="white" gutterBottom>
-              {team?.affiliates?.length} Members
+            <Typography variant="body1" color="white" gutterBottom>
+              {team?.affiliates?.length} {"Members"}
             </Typography>
             <Typography variant="body2" color="white" gutterBottom>
-              Founded: {new Date(team.createdAt).toLocaleDateString()}
+              {"Founded: "}
+              {new Date(team.createdAt).toLocaleDateString()}
             </Typography>
           </Box>
           <Box sx={{ mt: 2 }}>
@@ -75,7 +76,8 @@ const TeamCard = ({ team }) => {
           </Box>
           {team.description && (
             <Typography variant="body2" color="white" sx={{ mt: 2 }}>
-              {team.description.slice(0, 100)}...
+              {team.description.slice(0, 100)}
+              {"..."}
             </Typography>
           )}
         </CardContent>

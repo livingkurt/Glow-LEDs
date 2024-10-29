@@ -26,7 +26,7 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location }) =>
       >
         <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
           <Typography variant="body2" className="mr-10px">
-            Rows Per Page
+            {"Rows Per Page"}
           </Typography>
           <Autocomplete
             value={rowsPerPage}

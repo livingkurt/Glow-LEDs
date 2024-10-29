@@ -68,7 +68,7 @@ const FeaturesGridPage = () => {
   return (
     <div>
       <Helmet>
-        <title>Featured | Glow LEDs</title>
+        <title>{"Featured | Glow LEDs"}</title>
         <meta property="og:title" content="Featured" />
         <meta name="twitter:title" content="Featured" />
         <link rel="canonical" href="https://www.glow-leds.com/collections/features" />
@@ -115,7 +115,9 @@ const FeaturesGridPage = () => {
             )}
           </div>
         </div>
-        {features.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+        {features.length === 0 && (
+          <h2 style={{ textAlign: "center" }}>{"Sorry we can't find anything with that name"}</h2>
+        )}
       </Loading>
     </div>
   );

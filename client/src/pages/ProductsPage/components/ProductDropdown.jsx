@@ -84,16 +84,22 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                               )}
                             </Box>
 
-                            <Box display={"flex"} justifyContent={"flex-end"}>
+                            <Box display="flex" justifyContent="flex-end">
                               {value.additionalCost > 0 && (
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-                                  <Typography variant="body2">+${value.additionalCost.toFixed(2)}</Typography>
+                                  <Typography variant="body2">
+                                    {"+$"}
+                                    {value.additionalCost.toFixed(2)}
+                                  </Typography>
                                 </Box>
                               )}
                               {value.replacePrice && (
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-                                  <GLBoolean tooltip={"Replace Price"} boolean={!!value.replacePrice} />
-                                  <Typography variant="body2">${value.product.price}</Typography>
+                                  <GLBoolean tooltip="Replace Price" boolean={Boolean(value.replacePrice)} />
+                                  <Typography variant="body2">
+                                    {"$"}
+                                    {value.product.price}
+                                  </Typography>
                                 </Box>
                               )}
                               <GLIconButton

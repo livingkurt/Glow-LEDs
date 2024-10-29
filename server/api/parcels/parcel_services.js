@@ -1,7 +1,7 @@
-import { parcel_db } from "../parcels";
-import { determine_filter } from "../../utils/util";
-import { getFilteredData } from "../api_helpers";
-import { normalizeParcelSearch } from "./parcel_helpers";
+import parcel_db from "./parcel_db.js";
+import { determine_filter } from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
+import { normalizeParcelSearch } from "./parcel_helpers.js";
 
 export default {
   get_table_parcels_s: async query => {

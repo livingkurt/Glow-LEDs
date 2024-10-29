@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../config";
+import config from "../config.js";
 const baseId = "app1s1rBexc8nLb9s";
 const tableIdOrName = "tblsCcVphzBosLDmU";
 
@@ -9,7 +9,7 @@ export const domain = () => {
   } else if (config.ENVIRONMENT === "staging") {
     return "https://glow-leds-dev.herokuapp.com";
   } else {
-    return "http://localhost:3000";
+    return "http://localhost:5173";
   }
 };
 

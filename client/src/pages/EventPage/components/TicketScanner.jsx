@@ -102,13 +102,14 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
             }}
             style={{ marginBottom: "20px", fontSize: "1.2rem" }}
           >
-            Start Scanning
+            {"Start Scanning"}
           </Button>
         )}
 
         {scanResult && (
           <Typography variant="body1" mt={2}>
-            Scanned Ticket ID: {scanResult}
+            {"Scanned Ticket ID: "}
+            {scanResult}
           </Typography>
         )}
         {scanStatus && (
@@ -118,7 +119,8 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
         )}
         {scannedCount !== null && (
           <Typography variant="body1" mt={2} color="inherit">
-            Scanned Count: {scannedCount}
+            {"Scanned Count: "}
+            {scannedCount}
           </Typography>
         )}
       </Box>

@@ -1,4 +1,4 @@
-import { event_services } from ".";
+import event_services from "./event_services.js";
 
 export default {
   findAll_events_c: async (req, res) => {

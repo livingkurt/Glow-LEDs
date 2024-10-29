@@ -1,4 +1,4 @@
-import { filament_services } from "../filaments";
+import filament_services from "./filament_services.js";
 
 export default {
   get_table_filaments_c: async (req, res) => {

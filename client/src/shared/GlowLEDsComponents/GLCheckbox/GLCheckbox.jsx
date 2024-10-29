@@ -10,7 +10,7 @@ const GLCheckbox = ({ children, onChecked, value, ...otherProps }) => {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <div>{"Loading..."}</div>
       ) : (
         <div className="row">
           <input

@@ -36,10 +36,10 @@ const EditFilamentModal = () => {
         onCancel={() => {
           dispatch(set_edit_filament_modal(false));
         }}
-        title={"Edit Filament"}
-        confirmLabel={"Save"}
+        title="Edit Filament"
+        confirmLabel="Save"
         confirmColor="primary"
-        cancelLabel={"Cancel"}
+        cancelLabel="Cancel"
         cancelColor="secondary"
         disableEscapeKeyDown
       >

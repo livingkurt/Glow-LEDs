@@ -107,7 +107,7 @@ const DatabaseMigrationPage = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
-      <h1 style={{ textAlign: "center" }}>Edit All Data</h1>
+      <h1 style={{ textAlign: "center" }}>{"Edit All Data"}</h1>
 
       <div className="form">
         <form style={{ width: "100%" }}>
@@ -118,7 +118,7 @@ const DatabaseMigrationPage = () => {
           {/* {affiliate && ( */}
           <div>
             <Helmet>
-              <title>Edit All Data | Glow LEDs</title>
+              <title>{"Edit All Data | Glow LEDs"}</title>
             </Helmet>
             <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
               {/* {loading_checkboxes ? (
@@ -137,7 +137,7 @@ const DatabaseMigrationPage = () => {
 								</li>
 							)} */}
               <li>
-                <label htmlFor="discount_percentage">Discount Percentage</label>
+                <label htmlFor="discount_percentage">{"Discount Percentage"}</label>
                 <input
                   type="text"
                   name="discount_percentage"
@@ -149,7 +149,7 @@ const DatabaseMigrationPage = () => {
               <li>
                 <div className="jc-b">
                   <div className="mr-5px">
-                    <label htmlFor="sale_start_date">Start Date</label>
+                    <label htmlFor="sale_start_date">{"Start Date"}</label>
                     <input
                       type="text"
                       className="w-100per"
@@ -160,7 +160,7 @@ const DatabaseMigrationPage = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="sale_start_time">Start Time</label>
+                    <label htmlFor="sale_start_time">{"Start Time"}</label>
                     <input
                       type="text"
                       className="w-100per"
@@ -178,7 +178,7 @@ const DatabaseMigrationPage = () => {
               <li>
                 <div className="jc-b">
                   <div className="mr-5px">
-                    <label htmlFor="sale_end_date">End Date</label>
+                    <label htmlFor="sale_end_date">{"End Date"}</label>
                     <input
                       type="text"
                       className="w-100per"
@@ -190,7 +190,7 @@ const DatabaseMigrationPage = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="sale_end_time">End Time</label>
+                    <label htmlFor="sale_end_time">{"End Time"}</label>
                     <input
                       type="text"
                       className="w-100per"
@@ -204,12 +204,12 @@ const DatabaseMigrationPage = () => {
               </li>
               <li>
                 <GLButton onClick={e => update_sale_price(e)} variant="primary">
-                  Update Sale Price
+                  {"Update Sale Price"}
                 </GLButton>
               </li>
               <li>
                 <GLButton onClick={e => clear_sale(e)} variant="primary">
-                  Clear Sale
+                  {"Clear Sale"}
                 </GLButton>
               </li>
             </ul>
@@ -217,7 +217,7 @@ const DatabaseMigrationPage = () => {
               <div className="row wrap">
                 <div className="w-228px m-10px">
                   <li>
-                    <label htmlFor="method">Method</label>
+                    <label htmlFor="method">{"Method"}</label>
                     <input
                       type="text"
                       name="method"
@@ -230,7 +230,7 @@ const DatabaseMigrationPage = () => {
                     <div className="custom-select w-100per">
                       <select className="qty_select_dropdown w-100per" onChange={e => set_method(e.target.value)}>
                         <option key={0} defaultValue="">
-                          ---Choose Method---
+                          {"---Choose Method---"}
                         </option>
                         {methods.map((method, index) => (
                           <option key={index} value={method}>
@@ -242,7 +242,7 @@ const DatabaseMigrationPage = () => {
                     </div>
                   </div>
                   <li>
-                    <label htmlFor="collection">Collection</label>
+                    <label htmlFor="collection">{"Collection"}</label>
                     <input
                       type="text"
                       name="collection"
@@ -255,7 +255,7 @@ const DatabaseMigrationPage = () => {
                     <div className="custom-select w-100per">
                       <select className="qty_select_dropdown w-100per" onChange={e => set_collection(e.target.value)}>
                         <option key={0} defaultValue="">
-                          ---Choose Collection---
+                          {"---Choose Collection---"}
                         </option>
                         {collections.map((collection, index) => (
                           <option key={index} value={collection}>
@@ -268,7 +268,7 @@ const DatabaseMigrationPage = () => {
                   </div>
 
                   <li>
-                    <label htmlFor="action">Action</label>
+                    <label htmlFor="action">{"Action"}</label>
                     <input
                       type="text"
                       name="action"
@@ -281,7 +281,7 @@ const DatabaseMigrationPage = () => {
                     <div className="custom-select w-100per">
                       <select className="qty_select_dropdown w-100per" onChange={e => set_action(e.target.value)}>
                         <option key={0} defaultValue="">
-                          ---Choose Action---
+                          {"---Choose Action---"}
                         </option>
                         {actions.map((action, index) => (
                           <option key={index} value={action}>
@@ -294,7 +294,7 @@ const DatabaseMigrationPage = () => {
                   </div>
 
                   <li>
-                    <label htmlFor="search_parameter_field">Search Parameter Field</label>
+                    <label htmlFor="search_parameter_field">{"Search Parameter Field"}</label>
                     <input
                       type="text"
                       name="search_parameter_field"
@@ -304,7 +304,7 @@ const DatabaseMigrationPage = () => {
                     />
                   </li>
                   <li>
-                    <label htmlFor="search_parameter">Search Parameter</label>
+                    <label htmlFor="search_parameter">{"Search Parameter"}</label>
                     <input
                       type="text"
                       name="search_parameter"
@@ -314,7 +314,7 @@ const DatabaseMigrationPage = () => {
                     />
                   </li>
                   <li>
-                    <label htmlFor="property">Property</label>
+                    <label htmlFor="property">{"Property"}</label>
                     <input
                       type="text"
                       name="property"
@@ -324,7 +324,7 @@ const DatabaseMigrationPage = () => {
                     />
                   </li>
                   <li>
-                    <label htmlFor="value">Value</label>
+                    <label htmlFor="value">{"Value"}</label>
 
                     <textarea
                       type="text"
@@ -340,12 +340,12 @@ const DatabaseMigrationPage = () => {
 
               <li>
                 <GLButton onClick={e => batch_request(e)} variant="primary">
-                  Complete
+                  {"Complete"}
                 </GLButton>
               </li>
               <li>
                 <GLButton variant="secondary" onClick={() => navigate(-1)}>
-                  Back
+                  {"Back"}
                 </GLButton>
               </li>
               {/* <li>
@@ -362,7 +362,7 @@ const DatabaseMigrationPage = () => {
         </form>
       </div>
       <div>
-        <label htmlFor="request">Results</label>
+        <label htmlFor="request">{"Results"}</label>
         <textarea
           type="text"
           className="w-100per h-99rem"

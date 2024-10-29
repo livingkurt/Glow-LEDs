@@ -12,7 +12,7 @@ const TeamsGridPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Helmet>
-        <title>Team | Glow LEDs</title>
+        <title>{"Team | Glow LEDs"}</title>
         <meta property="og:title" content="Team" />
         <meta name="twitter:title" content="Team" />
         <link rel="canonical" href="https://www.glow-leds.com/teams" />
@@ -23,11 +23,11 @@ const TeamsGridPage = () => {
       </Helmet>
 
       <Typography variant="h4" align="center" gutterBottom>
-        Sponsored Teams
+        {"Sponsored Teams"}
       </Typography>
 
       <Typography variant="subtitle1" textAlign="center" gutterBottom>
-        These are the teams that represent Glow LEDs. They're passionate about the art of gloving and light shows.
+        {"These are the teams that represent Glow LEDs. They're passionate about the art of gloving and light shows."}
       </Typography>
 
       <Grid container spacing={2}>
@@ -44,7 +44,7 @@ const TeamsGridPage = () => {
 
       {teams?.length === 0 && (
         <Typography variant="h6" textAlign="center">
-          Sorry, we can't find any teams matching your criteria.
+          {"Sorry, we can't find any teams matching your criteria."}
         </Typography>
       )}
     </Container>

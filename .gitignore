@@ -138,3 +138,6 @@ dump
 server/api/zOrdersRestore/
 
 webhook_payload.json
+
+
+!client/dist

@@ -1,7 +1,8 @@
-import config from "../../config";
-import invoice from "../../email_templates/pages/invoice";
-import { Order, order_db } from "../orders";
-import { covertToOunces, parseOrderData } from "./shipping_helpers";
+import config from "../../config.js";
+import invoice from "../../email_templates/pages/invoice.js";
+import Order from "../orders/order.js";
+import order_db from "../orders/order_db.js";
+import { parseOrderData } from "./shipping_helpers.js";
 import {
   addTracking,
   buyLabel,
@@ -11,9 +12,9 @@ import {
   createShippingRates,
   createTracker,
   refundLabel,
-} from "./shipping_interactors";
+} from "./shipping_interactors.js";
 
-const easy_post_api = require("@easypost/api");
+import easy_post_api from "@easypost/api";
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
