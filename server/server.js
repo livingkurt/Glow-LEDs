@@ -8,6 +8,9 @@ import passport from "passport";
 import compression from "compression";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
+import sslRedirect from "heroku-ssl-redirect";
+import configurePassport from "./passport.js";
+import routes from "./api/index.js"; // Make sure to add the .js extension
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
