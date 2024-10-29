@@ -149,6 +149,9 @@ const config = {
   // Facebook
   FACEBOOK_ACCESS_TOKEN: process.env.FACEBOOK_ACCESS_TOKEN,
   FACEBOOK_CATALOG_ID: process.env.FACEBOOK_CATALOG_ID,
+  // AWS SES
+  AWS_SES_SMTP_USER: process.env.AWS_SES_SMTP_USER,
+  AWS_SES_SMTP_PASSWORD: process.env.AWS_SES_SMTP_PASSWORD,
 };
 
 export default config;

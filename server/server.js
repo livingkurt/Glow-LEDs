@@ -8,49 +8,9 @@ import passport from "passport";
 import compression from "compression";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
-import { google } from "googleapis";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import routes from "./api/index.js"; // Make sure to add the .js extension
 import sslRedirect from "heroku-ssl-redirect";
 import configurePassport from "./passport.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const oauthClients = {};
-
-async function initializeOAuthClient(type, credentials) {
-  const oauth2Client = new google.auth.OAuth2(
-    credentials.client_id,
-    credentials.client_secret,
-    "https://developers.google.com/oauthplayground"
-  );
-
-  oauth2Client.setCredentials({
-    refresh_token: credentials.refresh_token,
-  });
-
-  // Refresh and store the access token for this client
-  const { token } = await oauth2Client.getAccessToken();
-  oauthClients[type] = { client: oauth2Client, accessToken: token, user: credentials.user };
-}
-
-// Initialize all OAuth clients on server start
-async function initializeAllOAuthClients() {
-  await initializeOAuthClient("contact", {
-    user: config.CONTACT_EMAIL,
-    client_id: config.GOOGLE_CONTACT_OAUTH_ID,
-    client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
-    refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN,
-  });
-  await initializeOAuthClient("info", {
-    user: config.INFO_EMAIL,
-    client_id: config.GOOGLE_INFO_OAUTH_ID,
-    client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
-    refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
-  });
-}
+import routes from "./api/index.js"; // Make sure to add the .js extension
 
 mongoose.connect(config.MONGODB_URI || "", {}).catch(error => console.log(error));
 
@@ -135,19 +95,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-initializeAllOAuthClients()
-  .then(() => {
-    server.listen(config.PORT, () => {
-      console.log(`Server listening on port ${config.PORT}`);
-    });
-  })
-  .catch(error => {
-    console.error("Failed to initialize OAuth clients", error);
-    console.warn("Starting server without OAuth clients. Some functionality may be limited.");
-
-    server.listen(config.PORT, () => {
-      console.log(`Server listening on port ${config.PORT}`);
-    });
-  });
-
-export { oauthClients }; // Export oauthClients
+server.listen(config.PORT, () => {
+  console.log(`Server listening on port ${config.PORT}`);
+});

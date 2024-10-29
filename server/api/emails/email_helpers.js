@@ -2,22 +2,17 @@ import App from "../../email_templates/App.js";
 import announcement from "../../email_templates/pages/announcement.js";
 import config from "../../config.js";
 import user_db from "../users/user_db.js";
-import { oauthClients } from "../../server.js";
 import nodemailer from "nodemailer";
 
-export const createTransporter = async type => {
+export const createTransporter = async () => {
   try {
-    const { client, accessToken, user } = oauthClients[type];
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
+      host: "email-smtp.us-east-1.amazonaws.com", // or your preferred region
+      port: 587,
+      secure: false,
       auth: {
-        type: "OAuth2",
-        user: user, // Use the stored user email
-        accessToken,
-        clientId: client._clientId,
-        clientSecret: client._clientSecret,
-        refreshToken: client.credentials.refresh_token,
+        user: config.AWS_SES_SMTP_USER, // SMTP user from AWS SES
+        pass: config.AWS_SES_SMTP_PASSWORD, // SMTP password from AWS SES
       },
     });
 
@@ -29,13 +24,16 @@ export const createTransporter = async type => {
 };
 
 export const sendEmail = async (emailOptions, res, type, name) => {
+  console.log({ emailOptions, res, type, name });
   const emailTransporter = await createTransporter(type);
   try {
     if (emailTransporter) {
       await emailTransporter.sendMail(emailOptions, (err, data) => {
         if (err) {
+          console.log({ sendEmail: err });
           res.status(500).send({ error: err, message: "Error Sending Email" });
         } else {
+          console.log({ sendEmail: data });
           res.status(200).send({ message: "Email Successfully Sent" });
         }
       });
