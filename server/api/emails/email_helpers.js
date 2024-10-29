@@ -24,13 +24,16 @@ export const createTransporter = async () => {
 };
 
 export const sendEmail = async (emailOptions, res, type, name) => {
+  console.log({ emailOptions, res, type, name });
   const emailTransporter = await createTransporter(type);
   try {
     if (emailTransporter) {
       await emailTransporter.sendMail(emailOptions, (err, data) => {
         if (err) {
+          console.log({ sendEmail: err });
           res.status(500).send({ error: err, message: "Error Sending Email" });
         } else {
+          console.log({ sendEmail: data });
           res.status(200).send({ message: "Email Successfully Sent" });
         }
       });
