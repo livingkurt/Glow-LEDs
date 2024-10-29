@@ -96,7 +96,6 @@ const usePaychecksPage = () => {
   );
 
   const remoteApi = useCallback(options => API.getPaychecks(options), []);
-  const user_id = userId || current_user._id;
   const paychecksRemoteApi = useCallback(
     options => API.getMyPaychecks(options, { affiliateId: user?.affiliate?._id }),
     [user?.affiliate?._id]
