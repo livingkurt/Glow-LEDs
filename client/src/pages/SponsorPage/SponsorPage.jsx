@@ -228,7 +228,7 @@ const SponsorPage = () => {
       {affiliate.product_bundles &&
         affiliate.product_bundles.length > 0 &&
         affiliate.product_bundles.map(bundle => (
-          <Box sx={{ my: 2 }}>
+          <Box sx={{ my: 2 }} key={bundle._id}>
             {bundle.title && (
               <Box>
                 <Typography variant="h5" align="center" gutterBottom>

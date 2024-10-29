@@ -20,7 +20,7 @@ import {
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { Sell } from "@mui/icons-material";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -293,27 +294,30 @@ const PaymentStep = () => {
                 </label>
                 {activePromoCodeIndicator && (
                   <div className="promo_code mv-1rem">
-                    <GLButton
-                      variant="icon"
-                      onClick={() =>
-                        dispatch(
-                          removePromo({
-                            items_price,
-                            tax_rate,
-                            shippingPrice,
-                            preOrderShippingPrice,
-                            nonPreOrderShippingPrice,
-                            previousShippingPrice,
-                            shipping,
-                            splitOrder,
-                          })
-                        )
-                      }
-                      aria-label="Detete"
-                    >
-                      <i className="fas fa-times mr-5px" />
-                    </GLButton>
-                    {activePromoCodeIndicator}
+                    <Box display="flex" alignItems="center">
+                      <GLButton
+                        variant="icon"
+                        onClick={() =>
+                          dispatch(
+                            removePromo({
+                              items_price,
+                              tax_rate,
+                              shippingPrice,
+                              preOrderShippingPrice,
+                              nonPreOrderShippingPrice,
+                              previousShippingPrice,
+                              shipping,
+                              splitOrder,
+                            })
+                          )
+                        }
+                        aria-label="Detete"
+                      >
+                        <i className="fas fa-times mr-5px" />
+                      </GLButton>
+                      <Sell sx={{ mr: 1 }} />
+                      {activePromoCodeIndicator}
+                    </Box>
                   </div>
                 )}
               </div>

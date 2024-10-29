@@ -9,7 +9,7 @@ import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
-import { Add } from "@mui/icons-material";
+import { Add, Sell } from "@mui/icons-material";
 import * as API from "../../api";
 import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
@@ -25,7 +25,7 @@ const Cart = () => {
   const theme = useTheme();
 
   const { current_user } = useSelector(state => state.users.userPage);
-  const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
+  const { my_cart, cartDrawer, promoCode } = useSelector(state => state.carts.cartPage);
 
   const { create_product_bundle_modal, productBundle, loading } = useSelector(state => state.affiliates.affiliatePage);
 
@@ -140,9 +140,19 @@ const Cart = () => {
               {determineItemsTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} {"USD"}
             </Typography>
           </Box>
+          {sessionStorage.getItem("promo_code") && (
+            <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={2}>
+              <Typography variant="body2">{"Promo code applied at checkout"}</Typography>
+              <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={1}>
+                <Sell />
+                <Typography variant="body2">{sessionStorage.getItem("promo_code").toUpperCase()}</Typography>
+              </Box>
+            </Box>
+          )}
           <Typography variant="body2" sx={{ mb: 2 }}>
             {"Taxes and shipping calculated at checkout"}
           </Typography>
+
           <Box display="flex" justifyContent="space-between" gap={2} sx={{ mb: 2 }}>
             <Button
               variant="contained"
