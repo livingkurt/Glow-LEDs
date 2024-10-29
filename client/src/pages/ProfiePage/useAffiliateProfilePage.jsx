@@ -63,31 +63,7 @@ const useAffiliateProfilePage = () => {
     }
   );
 
-  const paycheckColumnDefs = useMemo(
-    () => [
-      { title: "Date Created", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
-      { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
-      {
-        title: "Affiliate",
-        display: paycheck =>
-          paycheck.affiliate ? paycheck.affiliate?.artist_name : paycheck.team && paycheck.team.team_name,
-      },
-      {
-        title: "Paid",
-        display: paycheck => <GLBoolean boolean={paycheck.paid} />,
-      },
-      { title: "Amount", display: paycheck => `$${paycheck.amount?.toFixed(2)}` },
-    ],
-    []
-  );
-
-  const paychecksRemoteApi = useCallback(
-    options => API.getMyPaychecks(options, { affiliateId: user?.affiliate?._id }),
-    [user?.affiliate?._id]
-  );
   return {
-    paychecksRemoteApi,
-    paycheckColumnDefs,
     yearlyEarnings,
     currentMonthEarnings,
     sponsorCodes,
