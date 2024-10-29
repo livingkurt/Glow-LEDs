@@ -187,6 +187,7 @@ export default {
         .populate("orderItems.event")
         .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
+        .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -209,6 +210,7 @@ export default {
         .populate("orderItems.event")
         .populate("orderItems.ticket")
         .populate("orderItems.selectedOptions.filament")
+        .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -229,6 +231,7 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.event")
         .populate("orderItems.ticket")
+        .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {
@@ -245,6 +248,7 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.event")
         .populate("orderItems.ticket")
+        .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament");
     } catch (error) {
       if (error instanceof Error) {

@@ -128,6 +128,7 @@ const GLArray = ({
             <GLForm
               formData={fieldData.itemSchema.fields}
               state={item}
+              index={index}
               onChange={newItem => {
                 const newArray = [...fieldState];
                 newArray[index] = {
