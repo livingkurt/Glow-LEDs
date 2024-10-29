@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import "./ProfilePage.scss";
 import { useParams } from "react-router-dom";
-import useOrdersPage from "../OrdersPage/useOrdersPage";
+import { useOrdersPage } from "../OrdersPage/useOrdersPage";
 
-const useUserProfilePage = () => {
+export const useUserProfilePage = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
@@ -24,11 +24,10 @@ const useUserProfilePage = () => {
     };
   }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
 
-  const { columnDefs: orderColumnDefs, remoteApi: ordersRemoteApi } = useOrdersPage({ userProfile: true });
+  const { columnDefs: orderColumnDefs, remoteApi: ordersRemoteApi } = useOrdersPage({ userId: id });
   return {
     ordersRemoteApi,
     orderColumnDefs,
   };
 };
 
-export default useUserProfilePage;

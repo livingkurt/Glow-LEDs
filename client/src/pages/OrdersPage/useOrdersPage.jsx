@@ -18,7 +18,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 
-const useOrdersPage = ({ userProfile }) => {
+export const useOrdersPage = ({ userId }) => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading, remoteVersionRequirement, order } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
@@ -231,11 +231,12 @@ const useOrdersPage = ({ userProfile }) => {
   );
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
-  const ordersRemoteApi = useCallback(options => API.getMyOrders(options, current_user._id), [current_user._id]);
+  const user_id = userId || current_user._id;
+  const ordersRemoteApi = useCallback(options => API.getMyOrders(options, user_id), [user_id]);
   const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
   return {
     columnDefs,
-    remoteApi: userProfile ? ordersRemoteApi : remoteApi,
+    remoteApi: userId ? ordersRemoteApi : remoteApi,
     remoteFiltersApi,
     loading,
     remoteVersionRequirement,
@@ -244,4 +245,3 @@ const useOrdersPage = ({ userProfile }) => {
   };
 };
 
-export default useOrdersPage;
