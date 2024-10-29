@@ -5,6 +5,7 @@ import {
   make_private_code,
   month_dates,
 } from "../../utils/util.js";
+import Affiliate from "../affiliates/affiliate.js";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { getFilteredData } from "../api_helpers.js";
 import order_db from "../orders/order_db.js";
@@ -404,8 +405,6 @@ export default {
       if (promo.minimum_total > itemsPrice) {
         return { isValid: false, errors: { promo_code: `Minimum total of ${promo.minimum_total} is required.` } };
       }
-
-      // ... (other code remains the same)
 
       const affiliates = await Affiliate.find({ deleted: false, active: true }).populate("user").exec();
       const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
