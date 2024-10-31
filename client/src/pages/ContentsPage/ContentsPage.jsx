@@ -50,23 +50,24 @@ const ContentsPage = () => {
   // Debounced save function
   const debouncedSave = useCallback(
     debounce(updatedContent => {
-      console.log({ updatedContent });
       setSaveStatus("Autosaving...");
       dispatch(API.saveContent(updatedContent))
         .then(() => {
-          dispatch(set_content(updatedContent));
           setSaveStatus("Save Complete");
-          setTimeout(() => setSaveStatus(null), 2000); // Clear the message after 2 seconds
+          setTimeout(() => setSaveStatus(null), 2000);
         })
         .catch(() => {
           setSaveStatus("Save Failed");
-          setTimeout(() => setSaveStatus(null), 4000); // Clear the message after 2 seconds
+          setTimeout(() => setSaveStatus(null), 4000);
         });
     }, 1000),
     [dispatch]
   );
 
   const handleContentChange = updatedContent => {
+    // Update the content in Redux store immediately
+    dispatch(set_content(updatedContent));
+    // Then, debounce the save API call
     debouncedSave(updatedContent);
   };
 

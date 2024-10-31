@@ -13,8 +13,7 @@ import {
 } from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
-import { useEffect, useMemo, useState } from "react";
-import { debounce } from "lodash";
+import { useEffect, useState } from "react";
 import GLColorPicker from "./components/GLColorPicker";
 import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
@@ -29,14 +28,6 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
     setFormErrors({ ...formErrors });
   }, []);
 
-  const [localState, setLocalState] = useState({});
-
-  useEffect(() => {
-    if (state !== localState) {
-      setLocalState(state);
-    }
-  }, [state]);
-
   const determineOptions = (fieldData, fieldState) => {
     if (typeof fieldData.options === "string") {
       return getValueByStringPath(fieldState, fieldData.options);
@@ -45,15 +36,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
     }
   };
 
-  const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
-
-  const handleInputChange = (fieldName, value, fieldType) => {
-    setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
-    if (fieldType === "text" || fieldType === "text_multiline" || fieldType === "number") {
-      onChange({ [fieldName]: value }, fieldName);
-    } else {
-      debouncedOnChange({ [fieldName]: value }, fieldName);
-    }
+  const handleInputChange = (fieldName, value) => {
+    onChange({ [fieldName]: value }, fieldName);
   };
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -84,7 +68,8 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
       {formData &&
         Object.keys(formData).map(fieldName => {
           const fieldData = formData[fieldName];
-          let fieldState = localState[fieldName] ?? {};
+          const fieldState = state[fieldName] ?? {};
+
           if (loading) {
             if (fieldData.type === "checkbox") {
               return (
@@ -135,7 +120,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                       loading={!fieldData.loading}
                       value={selected || ""}
                       disabled={fieldData.disabled}
-                      options={(!fieldData.loading && determineOptions(fieldData, localState)) || []}
+                      options={(!fieldData.loading && determineOptions(fieldData, state)) || []}
                       getOptionLabel={option =>
                         option
                           ? fieldData.getOptionLabel
@@ -535,7 +520,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         margin="normal"
                         value={selectedOption || ""}
                         // value={fieldState || ""}
-                        options={determineOptions(fieldData, localState) || []}
+                        options={determineOptions(fieldData, state) || []}
                         getOptionLabel={option =>
                           option
                             ? fieldData.getOptionLabel
@@ -590,8 +575,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     fieldState={fieldState}
                     fieldData={fieldData}
                     handleInputChange={handleInputChange}
-                    localState={localState}
-                    setLocalState={setLocalState}
+                    state={state}
                   />
                 );
               case "option_selector":

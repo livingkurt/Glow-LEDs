@@ -3,7 +3,7 @@ import { SketchPicker } from "react-color";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Grid, Box, TextField } from "@mui/material";
 
-const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, localState, setLocalState }) => {
+const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, state }) => {
   const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
 
   return (
@@ -17,7 +17,9 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
             boxShadow: 1,
             cursor: "pointer",
           }}
-          onClick={() => setLocalState({ ...localState, [fieldName + "_picker"]: !localState[fieldName + "_picker"] })}
+          onClick={() =>
+            handleInputChange(fieldName, { ...state, [fieldName + "_picker"]: !state[fieldName + "_picker"] })
+          }
         >
           <Box
             sx={{
@@ -28,8 +30,10 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, lo
             }}
           />
         </Box>
-        {localState[fieldName + "_picker"] && (
-          <ClickAwayListener onClickAway={() => setLocalState({ ...localState, [fieldName + "_picker"]: false })}>
+        {state[fieldName + "_picker"] && (
+          <ClickAwayListener
+            onClickAway={() => handleInputChange(fieldName, { ...state, [fieldName + "_picker"]: false })}
+          >
             <Box sx={{ position: "absolute", zIndex: "2" }}>
               <SketchPicker
                 color={fieldState || fieldData.defaultColor}
@@ -63,8 +67,7 @@ GLColorPicker.propTypes = {
   fieldState: PropTypes.string.isRequired,
   fieldData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
-  localState: PropTypes.object.isRequired,
-  setLocalState: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
 };
 
 export default GLColorPicker;

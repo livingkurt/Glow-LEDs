@@ -2,7 +2,6 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import HomePageHead from "./components/HomePageHead";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import SupportBanner from "../../shared/SupportBanner/SupportBanner.jsx";
 import LearnHighlights from "./components/LearnHighlights";
 import HeroHeader from "./components/HeroHeader";
 import FeaturedProducts from "./components/FeaturedProducts";
@@ -10,8 +9,9 @@ import LearnMoreProducts from "./components/LearnMoreProducts";
 import useHomePage from "./useHomePage";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
 import GetTheMost from "./components/GetTheMost.jsx";
-import HeroVideo from "./components/HeroVideo.jsx";
-import SponsorsBanner from "./components/SponsorsBanner.jsx";
+import HeroVideo from "./components/HeroVideo";
+import SponsorsBanner from "./components/SponsorsBanner";
+import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 
 const HomePage = () => {
   const {
