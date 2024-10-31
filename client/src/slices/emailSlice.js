@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
-import HtmlToReactParser from "html-to-react";
+import { Parser as HtmlToReactParser } from "html-to-react";
 
 const email = {
   "email_type": "Announcments",

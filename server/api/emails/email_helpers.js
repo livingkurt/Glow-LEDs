@@ -2,22 +2,17 @@ import App from "../../email_templates/App.js";
 import announcement from "../../email_templates/pages/announcement.js";
 import config from "../../config.js";
 import user_db from "../users/user_db.js";
-import { oauthClients } from "../../server.js";
 import nodemailer from "nodemailer";
 
 export const createTransporter = async type => {
   try {
-    const { client, accessToken, user } = oauthClients[type];
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
       auth: {
-        type: "OAuth2",
-        user: user, // Use the stored user email
-        accessToken,
-        clientId: client._clientId,
-        clientSecret: client._clientSecret,
-        refreshToken: client.credentials.refresh_token,
+        user: "7f0417001@smtp-brevo.com", // Your Brevo SMTP login
+        pass: config.BREVO_API_KEY, // You'll need to add your Brevo SMTP key here
       },
     });
 
@@ -34,8 +29,10 @@ export const sendEmail = async (emailOptions, res, type, name) => {
     if (emailTransporter) {
       await emailTransporter.sendMail(emailOptions, (err, data) => {
         if (err) {
+          console.log({ sendEmail: err });
           res.status(500).send({ error: err, message: "Error Sending Email" });
         } else {
+          console.log({ sendEmail: data });
           res.status(200).send({ message: "Email Successfully Sent" });
         }
       });
