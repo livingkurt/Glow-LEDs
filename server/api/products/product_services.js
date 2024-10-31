@@ -215,17 +215,17 @@ export default {
             sortOption = { price: 1 };
             break;
           case "-createdAt":
-            sortOption = { createdAt: -1 };
+            sortOption = { release_date: -1 };
             break;
           case "createdAt":
-            sortOption = { createdAt: 1 };
+            sortOption = { release_date: 1 };
             break;
         }
       }
 
       if (query.category === "new_releases") {
-        sortOption = { createdAt: -1 }; // Sort by createdAt in descending order
-        limit = 5;
+        sortOption = { release_date: -1 }; // Sort by release_date in descending order
+        limit = 20;
       }
 
       let products = await product_db.findAllGrid_products_db(filter, sortOption, limit);
