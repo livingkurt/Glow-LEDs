@@ -32,8 +32,8 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
           emailContent += `
           <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:10px auto;">
             <tr>
-              <td style="font-family:helvetica;padding:10px;">
-                <${module.content.size || "h1"} style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:${title_color};font-size:${module.content.size === "h1" ? "40px" : module.content.size === "h2" ? "35px" : "30px"}; padding-bottom: 7px;">
+              <td style="font-family:helvetica;">
+                <${module.content.size || "h1"} style="text-align:center;font-family:helvetica;width:100%;line-height:50px;color:${title_color};  margin: ${module.content.size === "h1" ? "10px 0" : "0"};">
                   ${module.content.text}
                 </${module.content.size || "h1"}>
               </td>
