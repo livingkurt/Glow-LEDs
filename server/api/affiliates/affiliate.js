@@ -12,12 +12,13 @@ const sponsorCheckinSchema = new mongoose.Schema(
   }
 );
 
-const productBundleSchema = new mongoose.Schema(
+export const productBundleSchema = new mongoose.Schema(
   {
     title: { type: String },
     subtitle: { type: String },
     short_description: { type: String },
     cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
+    image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   },
   {
     timestamps: true,
