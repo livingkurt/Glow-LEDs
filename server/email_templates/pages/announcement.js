@@ -51,7 +51,6 @@ const renderEmail = ({ module_color, button_color, text_color, title_color, butt
           </table>`;
           break;
         case "images":
-          console.log({ images: module.content?.images });
           emailContent += `
             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:800px; margin: 0 auto; text-align:center;">
               <tr>
