@@ -253,45 +253,15 @@ const diffuser_caps = addIdsRecursively({
   },
 });
 
-const diffusers = addIdsRecursively({
-  name: "Diffusers",
-  path: "/products?tags[]=diffusers",
-  id: "diffusers_dropdown",
-  sideDrawer: {
-    drawerItems: [
-      {
-        name: "Abstract",
-        path: "/products?tags[]=diffusers&tags[]=abstract",
-      },
-      {
-        name: "Polygons",
-        path: "/products?tags[]=diffusers&tags[]=polygons",
-      },
-      {
-        name: "Cylinders",
-        path: "/products?tags[]=diffusers&tags[]=cylinders",
-      },
-      {
-        name: "Domes",
-        path: "/products?tags[]=diffusers&tags[]=domes",
-      },
-      {
-        name: "Open Hole",
-        path: "/products?tags[]=diffusers&tags[]=open_hole",
-      },
-      {
-        name: "Closed Hole",
-        path: "/products?tags[]=diffusers&tags[]=closed_hole",
-      },
-    ],
-  },
-});
-
 const enhancers = addIdsRecursively({
   name: "Enhancers",
   // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
+    {
+      name: "Glove Sets (NEW!)",
+      path: "/products?tags[]=glove_sets",
+    },
     glowskinz,
     {
       name: "Glowframez",
