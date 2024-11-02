@@ -130,14 +130,14 @@ const ProductPage = () => {
                         variant="body2"
                         sx={{
                           ml: 1,
-                          bgcolor: product.primary_color,
+                          bgcolor: product.primary_color || theme.palette.primary.main,
                           px: 1,
                           py: 0.5,
                           mb: 1,
                           borderRadius: 1,
                           fontSize: "1.2rem",
                           fontWeight: 800,
-                          color: theme.palette.getContrastText(product.primary_color),
+                          color: theme.palette.getContrastText(product?.primary_color || theme.palette.primary.main),
                         }}
                       >
                         {"New In"}

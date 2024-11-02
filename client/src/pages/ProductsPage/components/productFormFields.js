@@ -165,6 +165,10 @@ export const productFormFields = ({
       type: "number",
       label: "Price",
     },
+    release_date: {
+      type: "date",
+      label: "Release Date",
+    },
     isPreOrder: {
       type: "checkbox",
       label: "Is Pre-Order",

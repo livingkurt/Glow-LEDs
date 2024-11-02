@@ -20,32 +20,28 @@ const MetaDataDisplay = ({ row }) => {
       status,
       message_to_user
     );
-    await API_Emails.send_order_status_email(
-      row,
-      row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      config.VITE_INFO_EMAIL,
-      status,
-      message_to_user
-    );
     dispatch(API.saveOrder({ ...row, isUpdated: false }));
     dispatch(set_loading_label(false));
   };
 
   const send_order_email = async () => {
-    dispatch(set_loading_label(true));
-    await API_Emails.send_order_email(row, "Thank you for your Glow LEDs Order", row.shipping.email);
-    await API_Emails.send_order_email(row, "New Order Created by " + row.shipping.first_name, config.VITE_INFO_EMAIL);
-    const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
-    if (has_ticket) {
-      dispatch(
-        API.sendTicketEmail({
-          order: row,
-          subject: "New Order Created by " + row.shipping.first_name,
-          email: config.VITE_INFO_EMAIL,
-        })
-      );
+    try {
+      dispatch(set_loading_label(true));
+      await API_Emails.send_order_email(row, "Thank you for your Glow LEDs Order", row.shipping.email);
+      const has_ticket = row.orderItems.some(item => item.itemType === "ticket");
+      if (has_ticket) {
+        dispatch(
+          API.sendTicketEmail({
+            order: row,
+            subject: "New Order Created by " + row.shipping.first_name,
+            email: config.VITE_INFO_EMAIL,
+          })
+        );
+      }
+      dispatch(set_loading_label(false));
+    } catch (error) {
+      console.error("Error sending order email:", error);
     }
-    dispatch(set_loading_label(false));
   };
   const send_ticket_email = async () => {
     dispatch(set_loading_label(true));
@@ -65,12 +61,6 @@ const MetaDataDisplay = ({ row }) => {
   const send_refund_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_refund_email(row, "Refund Successful", row.shipping.email, true);
-    await API_Emails.send_refund_email(
-      row,
-      "New Refunded for " + row.shipping.first_name,
-      config.VITE_INFO_EMAIL,
-      true
-    );
 
     dispatch(set_loading_label(false));
   };

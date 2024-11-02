@@ -205,6 +205,7 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
     reviews: [reviewSchema],
+    release_date: { type: Date },
 
     hidden: { type: Boolean, default: false },
     sale: {

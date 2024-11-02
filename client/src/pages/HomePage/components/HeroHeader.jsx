@@ -33,7 +33,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
         slidesPerView={1}
         pagination={{ clickable: true }}
         autoplay={{
-          delay: 5000,
+          delay: 10000,
         }}
         style={{
           "--swiper-navigation-color": "#ffffff50",

@@ -45,6 +45,8 @@ const config = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
 
+  // Brevo
+  BREVO_API_KEY: process.env.BREVO_API_KEY,
   // Server
   PORT: process.env.PORT || 8080,
 

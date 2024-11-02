@@ -1,7 +1,6 @@
 import { Box, Container } from "@mui/material";
 import HomePageHead from "./components/HomePageHead";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
-import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import LearnHighlights from "./components/LearnHighlights";
 import HeroHeader from "./components/HeroHeader";
 import FeaturedProducts from "./components/FeaturedProducts";
@@ -12,6 +11,7 @@ import DiscoverMoreHero from "./components/DiscoverMoreHero";
 import GetTheMost from "./components/GetTheMost.jsx";
 import HeroVideo from "./components/HeroVideo";
 import SponsorsBanner from "./components/SponsorsBanner";
+import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 
 const HomePage = () => {
   const {
