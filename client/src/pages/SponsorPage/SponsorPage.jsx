@@ -14,7 +14,6 @@ import {
   Button,
   IconButton,
   Divider,
-  Paper,
 } from "@mui/material";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
@@ -29,9 +28,7 @@ import { useTutorialsQuery } from "../../api/allRecordsApi";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
-import CartItemCard from "./components/CartItemCard";
 import { EditCartModal } from "../CartsPage/components";
-import { open_edit_cart_modal } from "../../slices/cartSlice";
 import ProductBundles from "./components/ProductBundles";
 
 const SponsorPage = () => {
@@ -40,7 +37,6 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
-  console.log({ affiliate });
 
   const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
 

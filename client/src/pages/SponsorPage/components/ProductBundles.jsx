@@ -15,7 +15,7 @@ const ProductBundles = ({ affiliate }) => {
 
   return (
     <div>
-      {affiliate.product_bundles && affiliate.product_bundles.length > 0 && (
+      {affiliate.bundles && affiliate.bundles.length > 0 && (
         <Box>
           <Typography variant="h4" align="center" gutterBottom>
             {"Product Bundles by "}
@@ -23,9 +23,9 @@ const ProductBundles = ({ affiliate }) => {
           </Typography>
         </Box>
       )}
-      {affiliate.product_bundles &&
-        affiliate.product_bundles.length > 0 &&
-        affiliate.product_bundles.map(bundle => (
+      {affiliate.bundles &&
+        affiliate.bundles.length > 0 &&
+        affiliate.bundles.map(bundle => (
           <Box sx={{ my: 2 }} key={bundle._id}>
             {bundle.title && (
               <Box>
@@ -48,7 +48,7 @@ const ProductBundles = ({ affiliate }) => {
                 </Typography>
               </Box>
             )}
-            {bundle?.cart?.cartItems?.length > 0 && (
+            {bundle?.cartItems?.length > 0 && (
               <Box
                 sx={{
                   pb: 2,
@@ -72,8 +72,8 @@ const ProductBundles = ({ affiliate }) => {
                     },
                   }}
                 >
-                  {bundle?.cart?.cartItems?.length > 0 ? (
-                    bundle?.cart?.cartItems?.map((item, index) => (
+                  {bundle?.cartItems?.length > 0 &&
+                    bundle?.cartItems?.map((item, index) => (
                       <Box
                         key={item._id}
                         sx={{
@@ -85,24 +85,14 @@ const ProductBundles = ({ affiliate }) => {
                       >
                         <CartItemCard item={item} />
                       </Box>
-                    ))
-                  ) : (
-                    <>
-                      <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                        {"No products found for matching criteria"}
-                      </Typography>
-                      <Typography variant="subtitle2" textAlign="center" width="100%">
-                        {"Try removing some filters to find what you're looking for"}
-                      </Typography>
-                    </>
-                  )}
+                    ))}
                 </Box>
                 <Box display="flex" gap={2} sx={{ mt: 2 }}>
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
+                      dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cartItems, type: "add_to_cart" }));
 
                       const code = sessionStorage.getItem("promo_code");
                       if (!code) {
@@ -121,7 +111,7 @@ const ProductBundles = ({ affiliate }) => {
                     <Button
                       variant="contained"
                       color="secondary"
-                      onClick={() => dispatch(open_edit_cart_modal(bundle.cart))}
+                      onClick={() => dispatch(open_edit_cart_modal(bundle))}
                     >
                       {"Edit Bundle"}
                     </Button>
