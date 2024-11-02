@@ -42,7 +42,13 @@ export default {
   },
   product_bundles_carts_s: async query => {
     try {
-      let filter = { deleted: false, active: true, title: { $exists: true }, affiliate: { $exists: true } };
+      let filter = {
+        deleted: false,
+        active: true,
+        title: { $exists: true },
+        affiliate: { $exists: true },
+        cartItems: { $exists: true, $ne: [] }, // Add this condition
+      };
 
       const tagFilter = await handleBundleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -96,7 +102,6 @@ export default {
       }
 
       const bundles = await cart_db.aggregate_carts_db(pipeline);
-      console.log({ bundles });
       return bundles;
     } catch (error) {
       if (error instanceof Error) {

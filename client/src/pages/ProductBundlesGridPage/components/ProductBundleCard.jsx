@@ -28,7 +28,6 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
     setCurrentImageIndex(prevIndex => (prevIndex + 1) % bundle.images.length);
   };
 
-  console.log({ bundle });
   return (
     <Link to={`/bundles/${bundle.pathname}`} style={{ textDecoration: "none" }}>
       <Card
@@ -129,16 +128,22 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
                 {bundle.subtitle}
               </Typography>
             )}
-            <Typography variant="body2" color="white" gutterBottom>
-              {"By "}
-              {bundle.affiliate.artist_name}
-            </Typography>
+            {bundle.short_description && (
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                {bundle.short_description}
+              </Typography>
+            )}
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" color="white">
+                {"By "}
+                {bundle.affiliate.artist_name}
+              </Typography>
+              <Typography variant="body2" color="white">
+                {"$"}
+                {bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+              </Typography>
+            </Box>
           </Box>
-          {bundle.short_description && (
-            <Typography variant="body2" color="text.secondary">
-              {bundle.short_description}
-            </Typography>
-          )}
         </CardContent>
       </Card>
     </Link>
