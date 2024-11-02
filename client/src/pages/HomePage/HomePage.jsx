@@ -32,6 +32,7 @@ const HomePage = () => {
     sponsors,
   } = useHomePage();
 
+  console.log({ featured_product_bundles });
   return (
     <Box>
       {!isLoading && (

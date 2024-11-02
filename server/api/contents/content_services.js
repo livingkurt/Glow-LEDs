@@ -118,6 +118,13 @@ export default {
             model: "Affiliate",
           },
         })
+        .populate({
+          path: "home_page.featured_product_bundles",
+          populate: [
+            { path: "image" },
+            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
+          ],
+        })
         .populate("home_page.learn_more_products.image")
         .populate("home_page.learn_highlights.images_data.image")
         .populate("home_page.discover_more.image")

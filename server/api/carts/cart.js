@@ -6,8 +6,9 @@ const cartSchema = new mongoose.Schema(
     title: { type: String },
     subtitle: { type: String },
     short_description: { type: String },
-    image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     cartItems: [sharedItemSchema],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -16,6 +17,7 @@ const cartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Affiliate",
     },
+    pathname: { type: String },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
   },

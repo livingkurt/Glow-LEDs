@@ -10,7 +10,7 @@ import store from "../store";
 
 export const getCarts = async ({ search, sorting, filters, page, pageSize }) => {
   try {
-    return await axios.get(`/api/carts`, {
+    return await axios.get(`/api/carts/table`, {
       params: {
         limit: pageSize,
         page: page,
@@ -134,6 +134,19 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id, { di
     return rejectWithValue(error.response?.data);
   }
 });
+export const detailsProductBundle = createAsyncThunk(
+  "carts/detailsProductBundle",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/carts/${id}`);
+      dispatch(showSuccess({ message: `Cart Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 export const getCurrentUserCart = createAsyncThunk(
   "carts/getCurrentUserCart",

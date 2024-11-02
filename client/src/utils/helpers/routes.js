@@ -10,7 +10,8 @@ export const routes = [
   { path: "/products", element: "ProductsGridPage", exact: true },
   { path: "/products/:pathname", element: "ProductPage" },
 
-  { path: "/bundles", element: "ProductBundlesPage", exact: true },
+  { path: "/bundles", element: "ProductBundlesGridPage", exact: true },
+  { path: "/bundles/:pathname", element: "ProductBundlePage", exact: true },
 
   { path: "/sponsors", element: "SponsorsGridPage", exact: true },
   { path: "/sponsors/:pathname", element: "SponsorPage", exact: true },

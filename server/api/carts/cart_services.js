@@ -1,10 +1,29 @@
-import Cart from "./cart.js";
 import cart_db from "./cart_db.js";
 import { getFilteredData } from "../api_helpers.js";
-import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers.js";
+import {
+  aggregateCartItems,
+  handleBundleAffiliateFiltering,
+  handleBundleSortFiltering,
+  handleBundleTagFiltering,
+  normalizeBundleFilters,
+  normalizeCartItem,
+  updateCartItems,
+} from "./cart_helpers.js";
 
 export default {
   findAll_carts_s: async query => {
+    try {
+      const sort_options = ["active", "updatedAt", "user", "cartItems"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
+      const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
+      return carts;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_carts_s: async query => {
     try {
       const sort_options = ["active", "updatedAt", "user", "cartItems"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
@@ -15,6 +34,37 @@ export default {
         total_count: count,
         currentPage: page,
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  product_bundles_carts_s: async query => {
+    try {
+      let filter = { deleted: false, active: true, title: { $exists: true }, affiliate: { $exists: true } };
+
+      const tagFilter = await handleBundleTagFiltering(query.tags);
+      filter = { ...filter, ...tagFilter };
+
+      if (query.affiliate) {
+        const affiliateFilter = await handleBundleAffiliateFiltering(query.affiliate);
+        filter = { ...filter, ...affiliateFilter };
+      }
+
+      // Add search functionality
+      if (query.search) {
+        const searchRegex = new RegExp(query.search, "i");
+        filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
+      }
+
+      let sortOption = { createdAt: -1 }; // default sort
+      if (query.sort) {
+        sortOption = handleBundleSortFiltering(query.sort);
+      }
+
+      const bundles = await cart_db.findAll_carts_db(filter, sortOption, 0, 1);
+      return bundles;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

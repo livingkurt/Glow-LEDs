@@ -1,3 +1,6 @@
+import Category from "../categorys/category.js";
+import Affiliate from "../affiliates/affiliate.js";
+
 export const areCartItemsEqual = (item1, item2) => {
   // Compare names
   if (item1.name !== item2.name) {
@@ -137,4 +140,56 @@ export const normalizeCartItem = item => {
   }
 
   return normalizedItem;
+};
+
+export const handleBundleTagFiltering = async tags => {
+  if (!tags || tags.length === 0) return {};
+  const tagArray = Array.isArray(tags) ? tags : [tags];
+  const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+  const tagIds = tagCategories.map(cat => cat._id);
+  return { tags: { $all: tagIds } };
+};
+
+export const handleBundleAffiliateFiltering = async affiliateName => {
+  if (!affiliateName) return {};
+  const affiliate = await Affiliate.findOne({
+    pathname: affiliateName,
+    deleted: false,
+    active: true,
+  });
+  return affiliate ? { affiliate: affiliate._id } : { affiliate: { $exists: true } };
+};
+
+export const handleBundleSortFiltering = sort => {
+  switch (sort) {
+    case "price_low":
+      return { total_price: 1 };
+    case "price_high":
+      return { total_price: -1 };
+    case "newest":
+      return { createdAt: -1 };
+    case "oldest":
+      return { createdAt: 1 };
+    default:
+      return { createdAt: -1 };
+  }
+};
+
+export const normalizeBundleFilters = async query => {
+  const { tags, affiliate, sort } = query;
+
+  const tagFilter = await handleBundleTagFiltering(tags);
+  const affiliateFilter = await handleBundleAffiliateFiltering(affiliate);
+  const sortFilter = handleBundleSortFiltering(sort);
+
+  return {
+    filter: {
+      deleted: false,
+      active: true,
+      ...tagFilter,
+      ...affiliateFilter,
+      title: { $exists: true },
+    },
+    sort: sortFilter,
+  };
 };
