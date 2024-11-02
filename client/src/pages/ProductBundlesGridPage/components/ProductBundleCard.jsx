@@ -28,6 +28,7 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
     setCurrentImageIndex(prevIndex => (prevIndex + 1) % bundle.images.length);
   };
 
+  console.log({ bundle });
   return (
     <Link to={`/bundles/${bundle.pathname}`} style={{ textDecoration: "none" }}>
       <Card
@@ -74,7 +75,7 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
             }}
           >
             <GLLazyImage
-              src={bundle.images[currentImageIndex]?.link}
+              src={bundle?.images?.[currentImageIndex]?.link}
               alt={bundle.title}
               style={{
                 width: "100%",

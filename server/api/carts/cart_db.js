@@ -136,4 +136,29 @@ export default {
       }
     }
   },
+  aggregate_carts_db: async pipeline => {
+    try {
+      return await Cart.aggregate(pipeline)
+        .lookup({
+          from: "affiliates",
+          localField: "affiliate",
+          foreignField: "_id",
+          as: "affiliate",
+        })
+        .unwind({
+          path: "$affiliate",
+          preserveNullAndEmptyArrays: true,
+        })
+        .lookup({
+          from: "categories",
+          localField: "tags",
+          foreignField: "_id",
+          as: "tags",
+        });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 };

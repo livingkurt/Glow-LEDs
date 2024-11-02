@@ -34,6 +34,13 @@ export const cartFormFields = ({
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
+    tags: {
+      type: "autocomplete_multiple",
+      label: "Tags",
+      options: !categorysQuery.isLoading ? categorysQuery?.data : [],
+      labelProp: "tags",
+      getOptionLabel: option => `${option.pathname}`,
+    },
     affiliate: {
       type: "autocomplete_single",
       label: "Affiliate",

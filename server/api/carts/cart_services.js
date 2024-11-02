@@ -52,18 +52,51 @@ export default {
         filter = { ...filter, ...affiliateFilter };
       }
 
-      // Add search functionality
       if (query.search) {
         const searchRegex = new RegExp(query.search, "i");
         filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
       }
 
-      let sortOption = { createdAt: -1 }; // default sort
+      const pipeline = [
+        { $match: filter },
+        {
+          $addFields: {
+            totalPrice: {
+              $sum: {
+                $map: {
+                  input: "$cartItems",
+                  as: "item",
+                  in: { $multiply: ["$$item.price", { $ifNull: ["$$item.quantity", 1] }] },
+                },
+              },
+            },
+          },
+        },
+      ];
+
       if (query.sort) {
-        sortOption = handleBundleSortFiltering(query.sort);
+        switch (query.sort) {
+          case "-price":
+            pipeline.push({ $sort: { totalPrice: -1 } });
+            break;
+          case "price":
+            pipeline.push({ $sort: { totalPrice: 1 } });
+            break;
+          case "-createdAt":
+            pipeline.push({ $sort: { createdAt: -1 } });
+            break;
+          case "createdAt":
+            pipeline.push({ $sort: { createdAt: 1 } });
+            break;
+          default:
+            pipeline.push({ $sort: { createdAt: -1 } });
+        }
+      } else {
+        pipeline.push({ $sort: { createdAt: -1 } });
       }
 
-      const bundles = await cart_db.findAll_carts_db(filter, sortOption, 0, 1);
+      const bundles = await cart_db.aggregate_carts_db(pipeline);
+      console.log({ bundles });
       return bundles;
     } catch (error) {
       if (error instanceof Error) {

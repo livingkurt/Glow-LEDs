@@ -162,10 +162,35 @@ export const handleBundleAffiliateFiltering = async affiliateName => {
 
 export const handleBundleSortFiltering = sort => {
   switch (sort) {
-    case "price_low":
-      return { total_price: 1 };
-    case "price_high":
-      return { total_price: -1 };
+    case "-price":
+      return {
+        $expr: {
+          $sum: {
+            $map: {
+              input: "$cartItems",
+              as: "item",
+              in: { $multiply: ["$$item.price", "$$item.quantity"] },
+            },
+          },
+        },
+      };
+    case "price":
+      return {
+        $expr: {
+          $multiply: [
+            {
+              $sum: {
+                $map: {
+                  input: "$cartItems",
+                  as: "item",
+                  in: { $multiply: ["$$item.price", "$$item.quantity"] },
+                },
+              },
+            },
+            -1,
+          ],
+        },
+      };
     case "newest":
       return { createdAt: -1 };
     case "oldest":
