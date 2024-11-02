@@ -12,12 +12,15 @@ const migrationSchema = new mongoose.Schema({
   appliedAt: { type: Date, default: Date.now },
 });
 
-const Migration = mongoose.model("Migration", migrationSchema);
-
 export async function runMigrations(direction = "up", version = null) {
+  let connection;
   try {
-    await mongoose.connect(config.MONGODB_URI || "", {});
+    // Establish connection and wait for it to be ready
+    connection = await mongoose.connect(config.MONGODB_URI || "", {});
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Give connection time to establish
     console.log("Connected to MongoDB");
+
+    const Migration = connection.model("Migration", migrationSchema);
 
     const migrationsDir = path.join(__dirname, "..", "migrations");
     await fs.mkdir(migrationsDir, { recursive: true });
@@ -61,10 +64,12 @@ export async function runMigrations(direction = "up", version = null) {
     console.log("Database connection closed");
   } catch (error) {
     console.error("Migration error:", error);
-    if (mongoose.connection.readyState === 1) {
-      await mongoose.connection.close();
-    }
     process.exit(1);
+  } finally {
+    if (connection) {
+      await connection.disconnect();
+      console.log("Database connection closed");
+    }
   }
 }
 
