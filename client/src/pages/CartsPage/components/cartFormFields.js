@@ -10,6 +10,23 @@ export const cartFormFields = ({
   categorysQuery,
 }) => {
   return {
+    title: {
+      type: "text",
+      label: "Title",
+    },
+    subtitle: {
+      type: "text",
+      label: "Subtitle",
+    },
+    short_description: {
+      type: "text",
+      label: "Short Description",
+    },
+    images: {
+      type: "image_upload",
+      label: "Images",
+      album: `${cart.title} Images`,
+    },
     user: {
       type: "autocomplete_single",
       label: "Users",

@@ -30,6 +30,7 @@ const affiliateSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     product_bundles: [productBundleSchema],
+    bundles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     artist_name: { type: String },
     social_media: [

@@ -40,8 +40,7 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
-
-  const { my_cart } = useSelector(state => state.carts.cartPage);
+  console.log({ affiliate });
 
   const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
 

@@ -43,6 +43,7 @@ const CartsPage = () => {
         ),
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
+      { title: "Title", display: row => row.title },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {

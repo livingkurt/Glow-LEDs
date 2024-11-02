@@ -92,7 +92,11 @@
     "lint": "node --experimental-vm-modules node_modules/eslint/bin/eslint.js server",
     "lint:fix": "node --experimental-vm-modules node_modules/eslint/bin/eslint.js server --fix",
     "prettier": "prettier --check . && cd client && prettier --check .",
-    "prettier:fix": "prettier --write . && cd client && prettier --write ."
+    "prettier:fix": "prettier --write . && cd client && prettier --write .",
+    "generate-migration": "node server/api/migrations/scripts/migration_generator.js",
+    "migrate": "node -e \"import('./server/api/migrations/scripts/migration_runner.js').then(m => m.runMigrations('up'))\"",
+    "migrate:down": "node server/api/migrations/scripts/migration_runner.js down",
+    "migrate:redo": "node server/api/migrations/scripts/migration_runner.js redo"
   },
   "engines": {
     "node": "20.11.1",

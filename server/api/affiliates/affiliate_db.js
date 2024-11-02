@@ -20,6 +20,13 @@ export default {
             },
           },
         })
+        .populate({
+          path: "bundles",
+          populate: [
+            { path: "image" },
+            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
+          ],
+        })
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -45,6 +52,13 @@ export default {
               populate: [{ path: "tags" }, { path: "display_image_object" }],
             },
           },
+        })
+        .populate({
+          path: "bundles",
+          populate: [
+            { path: "image" },
+            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
+          ],
         });
     } catch (error) {
       if (error instanceof Error) {
@@ -69,6 +83,13 @@ export default {
               populate: [{ path: "tags" }, { path: "display_image_object" }],
             },
           },
+        })
+        .populate({
+          path: "bundles",
+          populate: [
+            { path: "image" },
+            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
+          ],
         });
     } catch (error) {
       if (error instanceof Error) {
@@ -93,6 +114,13 @@ export default {
               populate: [{ path: "tags" }, { path: "display_image_object" }],
             },
           },
+        })
+        .populate({
+          path: "bundles",
+          populate: [
+            { path: "image" },
+            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
+          ],
         });
     } catch (error) {
       if (error instanceof Error) {

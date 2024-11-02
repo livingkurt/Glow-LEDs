@@ -31,6 +31,9 @@ const EditAffiliateModal = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
 
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { carts, loading: loading_carts } = cartPage;
+
   const [searchParams] = useSearchParams();
   const stripeSuccess = searchParams.get("stripe_success") === "true";
 
@@ -41,6 +44,7 @@ const EditAffiliateModal = () => {
       dispatch(API.listProducts({ option: false, hidden: false }));
       dispatch(API.listPromos({}));
       dispatch(API.listChips({}));
+      dispatch(API.listCarts({}));
       // Check for stripe_success=true
       if (stripeSuccess) {
         dispatch(set_edit_affiliate_modal(true)); // Open the modal
@@ -55,6 +59,7 @@ const EditAffiliateModal = () => {
     users,
     chips,
     promos,
+    carts,
   });
 
   const stepLabels = ["Create Affiliate Account", "Create Stripe Account", "Join our Discord", "Complete"];

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { productBundleSchema } from "../affiliates/affiliate.js";
 
 const contentSchema = new mongoose.Schema(
   {
@@ -16,12 +15,7 @@ const contentSchema = new mongoose.Schema(
       ],
       slideshow_hidden: { type: Boolean, default: false },
       featured_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-      featured_product_bundles: [
-        {
-          affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
-          bundle: [productBundleSchema],
-        },
-      ],
+      featured_product_bundles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
       featured_product_bundles_hidden: { type: Boolean, default: false },
       learn_more_products: [
         {
