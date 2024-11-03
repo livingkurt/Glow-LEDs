@@ -24,6 +24,9 @@ export const routes = [
   { path: "/learn", element: "ArticlesGridPage", exact: true },
   { path: "/learn/:pathname", element: "ArticlePage", exact: true },
 
+  { path: "/giftcards", element: "GiftcardsGridPage", exact: true },
+  { path: "/giftcards/:amount", element: "GiftcardPage", exact: true },
+
   { path: "/academy", element: "AcademyPage", exact: true },
 
   { path: "/events/:pathname", element: "EventPage", exact: true },
@@ -41,6 +44,7 @@ export const routes = [
   { path: "/palettes", element: "ColorPalettePage", exact: true },
   { path: "/unsubscribe", element: "UnsubscribePage", exact: true },
 ];
+
 export const adminRoutes = [
   { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
   { path: "/secure/glow/products", element: "ProductsPage" },
@@ -71,7 +75,9 @@ export const adminRoutes = [
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
   { path: "/secure/glow/articles", element: "ArticlesPage" },
+  { path: "/secure/glow/giftcards", element: "GiftcardsPage" },
 ];
+
 export const privateRoutes = [
   { path: "/secure/account/profile", element: "ProfilePage" },
   { path: "/secure/account/order/:id", element: "OrderPage" },

@@ -240,6 +240,13 @@ export const determine_sponsor_code_tier = code_usage => {
     return 75;
   }
 };
+export const formatPrice = price => {
+  return `$${price.toFixed(2)}`;
+};
+
+export const formatDate = date => {
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+};
 
 export const format_date = isoDateString => {
   const date = new Date(isoDateString);
