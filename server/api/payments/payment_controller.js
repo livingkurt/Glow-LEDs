@@ -1,7 +1,7 @@
 import user_db from "../users/user_db.js";
 import config from "../../config.js";
 import Order from "../orders/order.js";
-import { normalizeCustomerInfo, normalizePaymentInfo } from "./payment_helpers.js";
+import { normalizeCustomerInfo, normalizePaymentInfo, checkBalanceAndPayout } from "./payment_helpers.js";
 import {
   confirmPaymentIntent,
   createOrUpdateCustomer,
@@ -143,6 +143,29 @@ export default {
       res.status(200).send({ message: `Stripe Account Connected to: ${user.first_name} ${user.last_name}` });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
+    }
+  },
+  automated_payout_payments_c: async (req, res) => {
+    try {
+      const result = await checkBalanceAndPayout();
+
+      if (result.success) {
+        res.status(200).send({
+          message: "Automated payout completed successfully",
+          details: result,
+        });
+      } else {
+        res.status(200).send({
+          message: "No payout needed at this time",
+          details: result,
+        });
+      }
+    } catch (error) {
+      res.status(500).send({
+        error,
+        message: error.message,
+        solution: "Please check Stripe dashboard and ensure account is properly configured",
+      });
     }
   },
 };
