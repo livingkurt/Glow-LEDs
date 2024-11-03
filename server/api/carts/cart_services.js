@@ -1,10 +1,29 @@
-import Cart from "./cart.js";
 import cart_db from "./cart_db.js";
 import { getFilteredData } from "../api_helpers.js";
-import { aggregateCartItems, normalizeCartItem, updateCartItems } from "./cart_helpers.js";
+import {
+  aggregateCartItems,
+  handleBundleAffiliateFiltering,
+  handleBundleSortFiltering,
+  handleBundleTagFiltering,
+  normalizeBundleFilters,
+  normalizeCartItem,
+  updateCartItems,
+} from "./cart_helpers.js";
 
 export default {
   findAll_carts_s: async query => {
+    try {
+      const sort_options = ["active", "updatedAt", "user", "cartItems"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
+      const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
+      return carts;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  table_carts_s: async query => {
     try {
       const sort_options = ["active", "updatedAt", "user", "cartItems"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
@@ -15,6 +34,75 @@ export default {
         total_count: count,
         currentPage: page,
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  product_bundles_carts_s: async query => {
+    try {
+      let filter = {
+        deleted: false,
+        active: true,
+        title: { $exists: true },
+        affiliate: { $exists: true },
+        cartItems: { $exists: true, $ne: [] }, // Add this condition
+      };
+
+      const tagFilter = await handleBundleTagFiltering(query.tags);
+      filter = { ...filter, ...tagFilter };
+
+      if (query.affiliate) {
+        const affiliateFilter = await handleBundleAffiliateFiltering(query.affiliate);
+        filter = { ...filter, ...affiliateFilter };
+      }
+
+      if (query.search) {
+        const searchRegex = new RegExp(query.search, "i");
+        filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
+      }
+
+      const pipeline = [
+        { $match: filter },
+        {
+          $addFields: {
+            totalPrice: {
+              $sum: {
+                $map: {
+                  input: "$cartItems",
+                  as: "item",
+                  in: { $multiply: ["$$item.price", { $ifNull: ["$$item.quantity", 1] }] },
+                },
+              },
+            },
+          },
+        },
+      ];
+
+      if (query.sort) {
+        switch (query.sort) {
+          case "-price":
+            pipeline.push({ $sort: { totalPrice: -1 } });
+            break;
+          case "price":
+            pipeline.push({ $sort: { totalPrice: 1 } });
+            break;
+          case "-createdAt":
+            pipeline.push({ $sort: { createdAt: -1 } });
+            break;
+          case "createdAt":
+            pipeline.push({ $sort: { createdAt: 1 } });
+            break;
+          default:
+            pipeline.push({ $sort: { createdAt: -1 } });
+        }
+      } else {
+        pipeline.push({ $sort: { createdAt: -1 } });
+      }
+
+      const bundles = await cart_db.aggregate_carts_db(pipeline);
+      return bundles;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -120,7 +208,6 @@ export default {
         messages,
       };
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

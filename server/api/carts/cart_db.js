@@ -1,3 +1,4 @@
+import { determineIDPathname } from "../api_helpers.js";
 import Cart from "./cart.js";
 
 export default {
@@ -13,6 +14,8 @@ export default {
         .populate("cartItems.tags")
         .populate("cartItems.selectedOptions.filament")
         .populate("affiliate")
+        .populate("tags")
+        .populate("images")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -23,8 +26,9 @@ export default {
     }
   },
   findById_carts_db: async id => {
+    const query = determineIDPathname(id);
     try {
-      return await Cart.findOne({ _id: id, active: true, deleted: false })
+      return await Cart.findOne({ ...query, active: true, deleted: false })
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")
@@ -32,7 +36,9 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate");
+        .populate("affiliate")
+        .populate("images")
+        .populate("tags");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -49,7 +55,9 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate");
+        .populate("affiliate")
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -68,7 +76,9 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate");
+        .populate("affiliate")
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -86,7 +96,9 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate");
+        .populate("affiliate")
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -125,6 +137,37 @@ export default {
   count_carts_db: async filter => {
     try {
       return await Cart.countDocuments(filter);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  aggregate_carts_db: async pipeline => {
+    try {
+      return await Cart.aggregate(pipeline)
+        .lookup({
+          from: "affiliates",
+          localField: "affiliate",
+          foreignField: "_id",
+          as: "affiliate",
+        })
+        .unwind({
+          path: "$affiliate",
+          preserveNullAndEmptyArrays: true,
+        })
+        .lookup({
+          from: "categories",
+          localField: "tags",
+          foreignField: "_id",
+          as: "tags",
+        })
+        .lookup({
+          from: "images",
+          localField: "images",
+          foreignField: "_id",
+          as: "images",
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

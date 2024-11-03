@@ -61,7 +61,6 @@ export default {
         search_name: "artist_name",
         normalizeSearch: normalizeAffiliateSearch,
       });
-      console.log({ query, filter, sort, limit, page });
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
@@ -378,7 +377,6 @@ export default {
 
       return updatedAffiliate;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

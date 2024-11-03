@@ -1,8 +1,26 @@
-import { Button, Tooltip, useTheme } from "@mui/material";
+import { Button, CircularProgress, Tooltip, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 
-const GLButtonV2 = ({ children, tooltip, color, margin, variant, disabled, size, sx, ...otherProps }) => {
+const GLButtonV2 = ({
+  children,
+  tooltip,
+  color,
+  margin,
+  variant,
+  disabled,
+  size,
+  sx,
+  startIcon,
+  endIcon,
+  loading,
+  ...otherProps
+}) => {
+  const loadingIcon = loading && <CircularProgress color="inherit" size={20} />;
+
+  const setIcon = icon => {
+    return icon;
+  };
   const theme = useTheme();
   return (
     <Tooltip title={tooltip}>
@@ -13,6 +31,8 @@ const GLButtonV2 = ({ children, tooltip, color, margin, variant, disabled, size,
           color={color}
           size={size}
           disabled={disabled}
+          startIcon={startIcon && (loading ? loadingIcon : setIcon(startIcon))}
+          endIcon={endIcon && setIcon(endIcon)}
           sx={
             color === "primary" && !disabled
               ? {
@@ -43,6 +63,9 @@ GLButtonV2.propTypes = {
   variant: PropTypes.string,
   margin: PropTypes.string,
   disabled: PropTypes.bool,
+  startIcon: PropTypes.node,
+  endIcon: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 GLButtonV2.defaultProps = {
@@ -53,6 +76,9 @@ GLButtonV2.defaultProps = {
   variant: "contained",
   margin: "normal",
   disabled: false,
+  loading: false,
+  startIcon: null,
+  endIcon: null,
 };
 
 export default GLButtonV2;

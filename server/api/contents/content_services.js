@@ -98,6 +98,17 @@ export default {
           },
         })
         .populate({
+          path: "home_page.featured_product_bundles",
+          populate: [
+            { path: "images" },
+            { path: "affiliate" },
+            {
+              path: "cartItems",
+              populate: [{ path: "tags" }, { path: "display_image_object" }],
+            },
+          ],
+        })
+        .populate({
           path: "academy_page.featured_articles",
           populate: {
             path: "image",

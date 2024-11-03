@@ -14,7 +14,6 @@ import {
   Button,
   IconButton,
   Divider,
-  Paper,
 } from "@mui/material";
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
@@ -29,9 +28,9 @@ import { useTutorialsQuery } from "../../api/allRecordsApi";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
-import CartItemCard from "./components/CartItemCard";
 import { EditCartModal } from "../CartsPage/components";
-import { open_edit_cart_modal } from "../../slices/cartSlice";
+import ProductBundleCard from "../ProductBundlesGridPage/components/ProductBundleCard";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,8 +38,6 @@ const SponsorPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { affiliate, loading } = useSelector(state => state.affiliates.affiliatePage);
-
-  const { my_cart } = useSelector(state => state.carts.cartPage);
 
   const { selectedTutorial } = useSelector(state => state.tutorials.tutorialsGridPage);
 
@@ -87,9 +84,9 @@ const SponsorPage = () => {
 
       <Box sx={{ mb: 4 }}>
         <Box display="flex" justifyContent="space-between">
-          <Button onClick={() => navigate("/sponsors")} sx={{ mb: 2, color: "#fff" }}>
-            {"Back to Sponsors"}
-          </Button>
+          <GLBreadcrumbs
+            items={[{ name: "ALL SPONSORS", to: "/sponsors" }, { name: affiliate.artist_name.toUpperCase() }]}
+          />
           {current_user.isAdmin && (
             <Button onClick={() => dispatch(open_edit_affiliate_modal(affiliate))} sx={{ mb: 2, color: "#fff" }}>
               {"Edit Sponsor"}
@@ -217,130 +214,78 @@ const SponsorPage = () => {
       </Grid>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
-      {affiliate.product_bundles && affiliate.product_bundles.length > 0 && (
-        <Box>
-          <Typography variant="h4" align="center" gutterBottom>
-            {"Product Bundles by "}
-            {affiliate.artist_name}
-          </Typography>
-        </Box>
-      )}
-      {affiliate.product_bundles &&
-        affiliate.product_bundles.length > 0 &&
-        affiliate.product_bundles.map(bundle => (
-          <Box sx={{ my: 2 }} key={bundle._id}>
-            {bundle.title && (
-              <Box>
-                <Typography variant="h5" align="center" gutterBottom>
-                  {bundle.title}
-                </Typography>
-              </Box>
-            )}
-            {bundle.subtitle && (
-              <Box>
-                <Typography variant="subtitle1" align="center" gutterBottom>
-                  {bundle.subtitle}
-                </Typography>
-              </Box>
-            )}
-            {bundle.short_description && (
-              <Box>
-                <Typography variant="body1" align="center" gutterBottom>
-                  {bundle.short_description}
-                </Typography>
-              </Box>
-            )}
-            {bundle?.cart?.cartItems?.length > 0 && (
-              <Box
-                sx={{
-                  pb: 2,
-                  px: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
+      <>
+        {affiliate.bundles && affiliate.bundles.length > 0 && (
+          <Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+              <Typography variant="h4" align="left">
+                {"Product Bundles by "}
+                {affiliate.artist_name}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/bundles", { state: { affiliate: affiliate._id } })}
               >
+                {"View All Bundles"}
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                pb: 6,
+                px: 2,
+                display: "flex",
+                overflowX: "auto",
+                minWidth: "100%",
+                "&::-webkit-scrollbar": {
+                  height: "8px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "rgba(0, 0, 0, 0.2)",
+                  borderRadius: "4px",
+                },
+              }}
+            >
+              {affiliate.bundles.map(bundle => (
                 <Box
+                  key={bundle._id}
                   sx={{
-                    display: "flex",
-                    overflowX: "auto",
-                    minWidth: "100%",
-                    "&::-webkit-scrollbar": {
-                      height: "8px",
-                    },
-                    "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: "rgba(0, 0, 0, 0.2)",
-                      borderRadius: "4px",
+                    minWidth: "250px",
+                    width: "100%",
+                    marginRight: "20px",
+                    "&:last-child": {
+                      marginRight: 0,
                     },
                   }}
                 >
-                  {bundle?.cart?.cartItems?.length > 0 ? (
-                    bundle?.cart?.cartItems?.map((item, index) => (
-                      <Box
-                        key={item._id}
-                        sx={{
-                          m: 2,
-                          mb: 4,
-                          maxWidth: "250px",
-                          width: "100%",
-                        }}
-                      >
-                        <CartItemCard item={item} />
-                      </Box>
-                    ))
-                  ) : (
-                    <>
-                      <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                        {"No products found for matching criteria"}
-                      </Typography>
-                      <Typography variant="subtitle2" textAlign="center" width="100%">
-                        {"Try removing some filters to find what you're looking for"}
-                      </Typography>
-                    </>
-                  )}
+                  <ProductBundleCard bundle={bundle} affiliate={affiliate} />
                 </Box>
-                <Box display="flex" gap={2} sx={{ mt: 2 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cart.cartItems, type: "add_to_cart" }));
-
-                      const code = sessionStorage.getItem("promo_code");
-                      if (!code) {
-                        sessionStorage.setItem("promo_code", affiliate.public_code?.promo_code);
-                        dispatch(
-                          showInfo({
-                            message: `Code ${affiliate.public_code?.promo_code.toUpperCase()} Added to Checkout`,
-                          })
-                        );
-                      }
-                    }}
-                  >
-                    {"Add Bundle to Cart"}
-                  </Button>
-                  {(current_user.isAdmin || current_user?.affiliate === affiliate?._id) && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => dispatch(open_edit_cart_modal(bundle.cart))}
-                    >
-                      {"Edit Bundle"}
-                    </Button>
-                  )}
-                </Box>
-                <Divider sx={{ my: 4, borderColor: "#fff" }} />
-              </Box>
-            )}
+              ))}
+            </Box>
           </Box>
-        ))}
+        )}
+        {affiliate.bundles && affiliate.bundles.length === 0 && (
+          <Box>
+            <Typography variant="h4" align="center" gutterBottom>
+              {affiliate.artist_name} {"has no product bundles yet."}
+            </Typography>
+          </Box>
+        )}
+      </>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {tutorials && tutorials.length > 0 && (
-        <Box>
-          <Typography variant="h4" align="center" gutterBottom>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Typography variant="h4" align="left">
             {"Tutorials by "}
             {affiliate.artist_name}
           </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate("/tutorials", { state: { affiliate: affiliate._id } })}
+          >
+            {"View All Tutorials"}
+          </Button>
         </Box>
       )}
       {tutorials && tutorials.length === 0 && (
@@ -400,7 +345,7 @@ const SponsorPage = () => {
       <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.videos && affiliate.videos.length > 0 && (
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           {"Lightshows By "}
           {affiliate.artist_name}
         </Typography>

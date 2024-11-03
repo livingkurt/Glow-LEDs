@@ -1,6 +1,6 @@
 import { months, toCapitalize } from "../../../utils/helper_functions";
 
-export const affiliateFormFields = ({ products, users, chips, promos }) => {
+export const affiliateFormFields = ({ products, users, chips, promos, carts }) => {
   return {
     _id: {
       type: "text",
@@ -79,27 +79,12 @@ export const affiliateFormFields = ({ products, users, chips, promos }) => {
       options: chips,
       labelProp: "name",
     },
+
     product_bundles: {
-      type: "array",
-      title: "Product Bundles",
-      label: "title",
-      itemSchema: {
-        type: "object",
-        fields: {
-          title: {
-            type: "text",
-            label: "Title",
-          },
-          subtitle: {
-            type: "text",
-            label: "Subtitle",
-          },
-          short_description: {
-            type: "text",
-            label: "Short Description",
-          },
-        },
-      },
+      type: "autocomplete_multiple",
+      label: "Product Bundles",
+      options: carts?.filter(cart => cart.title),
+      labelProp: "title",
     },
 
     products: {

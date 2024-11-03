@@ -12,12 +12,13 @@ const sponsorCheckinSchema = new mongoose.Schema(
   }
 );
 
-const productBundleSchema = new mongoose.Schema(
+export const productBundleSchema = new mongoose.Schema(
   {
     title: { type: String },
     subtitle: { type: String },
     short_description: { type: String },
     cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
+    image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
   },
   {
     timestamps: true,
@@ -29,6 +30,7 @@ const affiliateSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     product_bundles: [productBundleSchema],
+    bundles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     artist_name: { type: String },
     social_media: [

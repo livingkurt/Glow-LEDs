@@ -37,7 +37,6 @@ export default {
     }
   },
   findAllGrid_articles_s: async query => {
-    console.log({ query });
     try {
       let filter = { deleted: false };
       let limit = query.limit ? query.limit : 0;

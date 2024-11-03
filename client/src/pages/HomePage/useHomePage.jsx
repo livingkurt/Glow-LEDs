@@ -22,6 +22,8 @@ const useHomePage = () => {
   const hero_video_hidden = currentContent?.home_page?.hero_video_hidden;
   const learn_more_products_hidden = currentContent?.home_page?.learn_more_products_hidden;
   const sponsors = currentContent?.home_page?.sponsors;
+  const featured_product_bundles = currentContent?.home_page?.featured_product_bundles;
+  const featured_product_bundles_hidden = currentContent?.home_page?.featured_product_bundles_hidden;
 
   const [searchParams] = useSearchParams();
 
@@ -62,6 +64,8 @@ const useHomePage = () => {
     hero_video_hidden,
     learn_more_products_hidden,
     sponsors,
+    featured_product_bundles,
+    featured_product_bundles_hidden,
   };
 };
 

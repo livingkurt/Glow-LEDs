@@ -15,6 +15,8 @@ const contentSchema = new mongoose.Schema(
       ],
       slideshow_hidden: { type: Boolean, default: false },
       featured_products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+      featured_product_bundles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
+      featured_product_bundles_hidden: { type: Boolean, default: false },
       learn_more_products: [
         {
           label: { type: String },
@@ -87,7 +89,6 @@ const contentSchema = new mongoose.Schema(
         hidden: { type: Boolean, default: false },
       },
       product_protection_details_hidden: { type: Boolean, default: false },
-
       hero_video: { type: String },
       hero_video_hidden: { type: Boolean },
     },

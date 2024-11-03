@@ -90,36 +90,119 @@ const SponsorPageSkeleton = () => {
 
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
-      <Skeleton
-        animation="wave"
-        variant="rectangular"
-        width={300}
-        height={40}
-        sx={{ bgcolor: "#4e5061", borderRadius: "4px", margin: "0 auto 20px" }}
-      />
-      <Grid container spacing={3}>
-        {[...Array(4)].map((_, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-            <Card sx={{ height: "100%", bgcolor: "#4e5061", borderRadius: "1rem" }} elevation={0}>
-              <Skeleton
-                animation="wave"
-                variant="rectangular"
-                width="100%"
-                height={200}
-                sx={{ bgcolor: "#4e5061", borderRadius: "1rem" }}
-              />
-              <CardContent>
-                <Skeleton animation="wave" variant="text" width="80%" sx={{ mb: 1 }} />
-                <Skeleton animation="wave" variant="text" width="60%" sx={{ mb: 1 }} />
-                <Skeleton animation="wave" variant="text" width="40%" />
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      {/* Product Bundles Section */}
+      <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={300}
+            height={40}
+            sx={{ bgcolor: "#4e5061", borderRadius: "4px" }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={150}
+            height={36}
+            sx={{ bgcolor: "#4e5061", borderRadius: "4px" }}
+          />
+        </Box>
+        <Box
+          sx={{
+            pb: 6,
+            px: 2,
+            display: "flex",
+            overflowX: "hidden",
+            gap: 2,
+          }}
+        >
+          {[...Array(4)].map((_, index) => (
+            <Box
+              key={index}
+              sx={{
+                minWidth: "250px",
+                width: "100%",
+              }}
+            >
+              <Card sx={{ height: "100%", bgcolor: "#4e5061", borderRadius: "1rem" }} elevation={0}>
+                <Skeleton
+                  animation="wave"
+                  variant="rectangular"
+                  width="100%"
+                  height={200}
+                  sx={{ bgcolor: "#5c6281", borderRadius: "1rem 1rem 0 0" }}
+                />
+                <CardContent>
+                  <Skeleton animation="wave" variant="text" width="80%" sx={{ mb: 1, bgcolor: "#5c6281" }} />
+                  <Skeleton animation="wave" variant="text" width="60%" sx={{ mb: 1, bgcolor: "#5c6281" }} />
+                  <Skeleton animation="wave" variant="text" width="40%" sx={{ bgcolor: "#5c6281" }} />
+                </CardContent>
+              </Card>
+            </Box>
+          ))}
+        </Box>
+      </Box>
 
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
+      {/* Tutorials Section */}
+      <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={300}
+            height={40}
+            sx={{ bgcolor: "#4e5061", borderRadius: "4px" }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={150}
+            height={36}
+            sx={{ bgcolor: "#4e5061", borderRadius: "4px" }}
+          />
+        </Box>
+        <Box
+          sx={{
+            pb: 6,
+            px: 2,
+            display: "flex",
+            overflowX: "hidden",
+            gap: 2,
+          }}
+        >
+          {[...Array(4)].map((_, index) => (
+            <Box
+              key={index}
+              sx={{
+                minWidth: "250px",
+                width: "100%",
+              }}
+            >
+              <Card sx={{ height: "100%", bgcolor: "#4e5061", borderRadius: "1rem" }} elevation={0}>
+                <Skeleton
+                  animation="wave"
+                  variant="rectangular"
+                  width="100%"
+                  height={200}
+                  sx={{ bgcolor: "#5c6281", borderRadius: "1rem 1rem 0 0" }}
+                />
+                <CardContent>
+                  <Skeleton animation="wave" variant="text" width="80%" sx={{ mb: 1, bgcolor: "#5c6281" }} />
+                  <Skeleton animation="wave" variant="text" width="60%" sx={{ mb: 1, bgcolor: "#5c6281" }} />
+                  <Skeleton animation="wave" variant="text" width="40%" sx={{ bgcolor: "#5c6281" }} />
+                </CardContent>
+              </Card>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Divider sx={{ my: 4, borderColor: "#fff" }} />
+
+      {/* Videos Section */}
       <Skeleton
         animation="wave"
         variant="rectangular"

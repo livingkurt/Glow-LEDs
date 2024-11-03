@@ -52,6 +52,8 @@ import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 import AcademyPage from "../../pages/AcademyPage/AcademyPage";
 import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
+import ProductBundlesGridPage from "../../pages/ProductBundlesGridPage/ProductBundlesGridPage";
+import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
 export const Components = {
   PlaceOrderPage,
   OrderPage,
@@ -80,6 +82,8 @@ export const Components = {
   ArticlePage,
   AcademyPage,
   UnsubscribePage,
+  ProductBundlesGridPage,
+  ProductBundlePage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

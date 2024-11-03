@@ -97,6 +97,12 @@ export const allRecordsApi = createApi({
     users: builder.query({
       query: query => `/users?${create_query(query)}`,
     }),
+    productBundles: builder.query({
+      query: query => {
+
+        return `/carts/product_bundles?${create_query(query)}`;
+      },
+    }),
   }),
 });
 
@@ -126,4 +132,5 @@ export const {
   useArticlesGridQuery,
   useArticlesQuery,
   useTutorialsQuery,
+  useProductBundlesQuery,
 } = allRecordsApi;

@@ -98,6 +98,11 @@ const features = addIdsRecursively({
       extraContent: "🆕",
     },
     {
+      name: "Featured Bundles",
+      path: "/bundles",
+      extraContent: "💰",
+    },
+    {
       name: "Best Sellers",
       path: "/products?category=best_sellers",
       extraContent: "✅",

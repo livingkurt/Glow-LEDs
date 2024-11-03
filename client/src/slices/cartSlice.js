@@ -25,6 +25,7 @@ const cartPage = createSlice({
   name: "cartPage",
   initialState: {
     loading: false,
+    bundle: null,
     loadingAddToCart: false,
     my_cart: { ...my_cart },
     carts: [],
@@ -232,6 +233,19 @@ const cartPage = createSlice({
     },
     [API.detailsCart.rejected]: (state, { payload, error }) => {
       state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.detailsProductBundle.pending]: (state, { payload }) => {
+      state.loadingProductBundle = true;
+    },
+    [API.detailsProductBundle.fulfilled]: (state, { payload }) => {
+      state.loadingProductBundle = false;
+      state.bundle = payload;
+      state.message = "Cart Found";
+    },
+    [API.detailsProductBundle.rejected]: (state, { payload, error }) => {
+      state.loadingProductBundle = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

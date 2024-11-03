@@ -18,6 +18,7 @@ import {
 import {
   useAffiliatesQuery,
   useArticlesQuery,
+  useCartsQuery,
   useCategorysQuery,
   useProductsQuery,
   useTutorialsQuery,
@@ -37,6 +38,7 @@ const ContentsPage = () => {
   const { data: articles, isLoading: articlesLoading } = useArticlesQuery();
   const { data: tutorials, isLoading: tutorialsLoading } = useTutorialsQuery();
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
+  const { data: carts, isLoading: cartsLoading } = useCartsQuery();
 
   const [tabValue, setTabValue] = useState(0);
   const [menusTabIndex, setMenusTabIndex] = useState(0);
@@ -82,6 +84,7 @@ const ContentsPage = () => {
     articles: articlesLoading ? [] : articles,
     tutorials: tutorialsLoading ? [] : tutorials,
     affiliates: affiliatesLoading ? [] : affiliates,
+    carts: cartsLoading ? [] : carts,
   };
 
   const getEmptyObjectFromSchema = schema => {

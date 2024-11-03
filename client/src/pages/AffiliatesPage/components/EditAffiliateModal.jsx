@@ -9,6 +9,13 @@ import { affiliateFormFields } from "./affiliateFormFields";
 import { Box, Typography } from "@mui/material";
 import GLStepperModal from "../../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
 import { Loading } from "../../../shared/SharedComponents";
+import {
+  useCartsQuery,
+  useChipsQuery,
+  useProductsQuery,
+  usePromosQuery,
+  useUsersQuery,
+} from "../../../api/allRecordsApi";
 
 const EditAffiliateModal = () => {
   const dispatch = useDispatch();
@@ -18,43 +25,28 @@ const EditAffiliateModal = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { edit_affiliate_modal, affiliate, loading, createAffiliateStep, stripeAccountLink, loadingSaveAffiliate } =
     affiliatePage;
-
-  const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users, current_user } = userPage;
-
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { products, loading: loading_products } = productsPage;
-
-  const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips, loading: loading_chips } = chipPage;
-
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos, loading: loading_promos } = promoPage;
+  const { data: users, isLoading: usersLoading } = useUsersQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery();
+  const { data: chips, isLoading: chipsLoading } = useChipsQuery();
+  const { data: promos, isLoading: promosLoading } = usePromosQuery();
+  const { data: carts, isLoading: cartsLoading } = useCartsQuery();
 
   const [searchParams] = useSearchParams();
   const stripeSuccess = searchParams.get("stripe_success") === "true";
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listUsers({}));
-      dispatch(API.listProducts({ option: false, hidden: false }));
-      dispatch(API.listPromos({}));
-      dispatch(API.listChips({}));
-      // Check for stripe_success=true
-      if (stripeSuccess) {
-        dispatch(set_edit_affiliate_modal(true)); // Open the modal
-        dispatch(setCreateAffiliateStep(2)); // Set the step to 3 (zero-indexed)
-      }
+    if (stripeSuccess) {
+      dispatch(set_edit_affiliate_modal(true)); // Open the modal
+      dispatch(setCreateAffiliateStep(2)); // Set the step to 3 (zero-indexed)
     }
-    return () => (clean = false);
   }, [dispatch, stripeSuccess]);
 
   const formFields = affiliateFormFields({
-    products,
-    users,
-    chips,
-    promos,
+    products: productsLoading ? [] : products,
+    users: usersLoading ? [] : users,
+    chips: chipsLoading ? [] : chips,
+    promos: promosLoading ? [] : promos,
+    carts: cartsLoading ? [] : carts,
   });
 
   const stepLabels = ["Create Affiliate Account", "Create Stripe Account", "Join our Discord", "Complete"];

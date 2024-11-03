@@ -121,7 +121,6 @@ export default {
 
       return { message: "Ticket validated successfully" };
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },

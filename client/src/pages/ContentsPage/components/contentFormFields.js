@@ -6,7 +6,7 @@ export const mainFormFields = () => ({
   active: { type: "checkbox", label: "Active" },
 });
 
-export const homePageFields = ({ content, products, affiliates }) => ({
+export const homePageFields = ({ content, products, affiliates, carts }) => ({
   type: "object",
   title: "Home Page",
   fields: {
@@ -36,6 +36,12 @@ export const homePageFields = ({ content, products, affiliates }) => ({
       label: "Featured Products",
       options: products,
       labelProp: "name",
+    },
+    featured_product_bundles: {
+      type: "autocomplete_multiple",
+      label: "Featured Product Bundles",
+      options: carts?.filter(cart => cart.title),
+      labelProp: "title",
     },
     featured_products_hidden: { type: "checkbox", label: "Featured Products Hidden", leftSpacing: true },
     hero_video: { type: "text", label: "Hero Video", leftSpacing: true },

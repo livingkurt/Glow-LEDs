@@ -13,6 +13,28 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  table_carts_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const carts = await cart_services.table_carts_s(query);
+      if (carts) {
+        return res.status(200).send(carts);
+      }
+      return res.status(404).send({ message: "Carts Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  product_bundles_carts_c: async (req, res) => {
+    const { query } = req;
+
+    try {
+      const carts = await cart_services.product_bundles_carts_s(query);
+      return res.status(200).send(carts);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_carts_c: async (req, res) => {
     const { params } = req;
     try {

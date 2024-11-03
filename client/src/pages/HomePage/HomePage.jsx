@@ -1,10 +1,10 @@
 import { Box, Container } from "@mui/material";
-import React from "react";
 import HomePageHead from "./components/HomePageHead";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
 import LearnHighlights from "./components/LearnHighlights";
 import HeroHeader from "./components/HeroHeader";
 import FeaturedProducts from "./components/FeaturedProducts";
+import FeaturedBundles from "./components/FeaturedBundles";
 import LearnMoreProducts from "./components/LearnMoreProducts";
 import useHomePage from "./useHomePage";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
@@ -17,6 +17,7 @@ const HomePage = () => {
   const {
     slideshow,
     featured_products,
+    featured_product_bundles,
     learn_more_products,
     learn_highlights,
     isLoading,
@@ -24,11 +25,14 @@ const HomePage = () => {
     get_more_out_of,
     hero_video,
     featured_products_hidden,
+    featured_product_bundles_hidden,
     slideshow_hidden,
     hero_video_hidden,
     learn_more_products_hidden,
     sponsors,
   } = useHomePage();
+
+  console.log({ featured_product_bundles });
   return (
     <Box>
       {!isLoading && (
@@ -47,6 +51,7 @@ const HomePage = () => {
               </Box>
             </Container>
           )}
+
           {!hero_video_hidden && hero_video && <HeroVideo video={hero_video} video_hidden={hero_video_hidden} />}
           {!learn_more_products_hidden && !slideshow_hidden && (
             <Container maxWidth="xl">
@@ -54,6 +59,16 @@ const HomePage = () => {
                 <LearnMoreProducts
                   learn_more_products={learn_more_products}
                   learn_more_products_hidden={learn_more_products_hidden}
+                />
+              </Box>
+            </Container>
+          )}
+          {!featured_product_bundles_hidden && featured_product_bundles && (
+            <Container maxWidth="xl">
+              <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>
+                <FeaturedBundles
+                  featured_product_bundles={featured_product_bundles}
+                  featured_product_bundles_hidden={featured_product_bundles_hidden}
                 />
               </Box>
             </Container>

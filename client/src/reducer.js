@@ -40,6 +40,7 @@ import productsGridPageSlice from "./pages/ProductsGridPage/productsGridPageSlic
 import tutorialsGridPageSlice from "./pages/TutorialsGridPage/tutorialsGridPageSlice";
 import articleSlice from "./slices/articleSlice";
 import articlesGridPageSlice from "./pages/ArticlesGridPage/articlesGridPageSlice";
+import productBundlesGridPageSlice from "./pages/ProductBundlesGridPage/productBundlesGridPageSlice";
 
 const reducers = {
   affiliates: combineReducers({
@@ -51,6 +52,7 @@ const reducers = {
     cartTable: glTableReducer("cartTable", {
       sorting: [1, "asc"],
     }),
+    productBundlesGridPage: productBundlesGridPageSlice,
   }),
   categorys: combineReducers({
     categoryPage: categorySlice,
