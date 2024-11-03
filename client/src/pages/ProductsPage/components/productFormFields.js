@@ -99,7 +99,7 @@ export const productFormFields = ({
             type: "image_upload_single",
             label: "Image",
 
-            album: `${product.name} Images`,
+            album: `${product.name} Option Images`,
           },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
           active: {
@@ -128,7 +128,7 @@ export const productFormFields = ({
                   type: "image_upload_single",
                   label: "Image",
 
-                  album: `${product.name} Images`,
+                  album: `${product.name} Option Value Images`,
                 },
                 product: {
                   type: "autocomplete_single",
@@ -233,7 +233,7 @@ export const productFormFields = ({
       type: "image_upload_multiple",
       label: "Images",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Product Images`,
       getOptionLabel: option => option.link,
     },
     hero_video: {
@@ -263,7 +263,7 @@ export const productFormFields = ({
       type: "image_upload_single",
       label: "Hero Image",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Hero Images`,
       getOptionLabel: option => option.link,
     },
     icon_specs: {
@@ -293,35 +293,35 @@ export const productFormFields = ({
       type: "image_upload_single",
       label: "Title Image",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Title Images`,
       getOptionLabel: option => option.link,
     },
     themed_logo: {
       type: "image_upload_single",
       label: "Themed Logo",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Themed Logo Images`,
       getOptionLabel: option => option.link,
     },
     line_break: {
       type: "image_upload_single",
       label: "Line Break",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Line Break Images`,
       getOptionLabel: option => option.link,
     },
     pattern_tile: {
       type: "image_upload_single",
       label: "Pattern Tile",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Pattern Tile Images`,
       getOptionLabel: option => option.link,
     },
     corner_image: {
       type: "image_upload_single",
       label: "Corner Image",
 
-      album: `${product.name} Images`,
+      album: `${product.name} Corner Images`,
       getOptionLabel: option => option.link,
     },
     primary_color: {
@@ -412,14 +412,14 @@ export const productFormFields = ({
                 type: "image_upload_single",
                 label: "Image",
 
-                album: `${product.name} Images`,
+                album: `${product.name} Image Grid 1 Images`,
                 getOptionLabel: option => option.link,
               },
               text_image: {
                 type: "image_upload_single",
                 label: "Text Image",
 
-                album: `${product.name} Images`,
+                album: `${product.name} Image Grid 1 Text Images`,
                 getOptionLabel: option => option.link,
               },
               button_text: {
@@ -442,7 +442,7 @@ export const productFormFields = ({
           type: "image_upload_single",
           label: "Hero Image 1",
 
-          album: `${product.name} Images`,
+          album: `${product.name} Hero Image 1 Images`,
           getOptionLabel: option => option.link,
         },
         hero_fact_1: {
@@ -487,14 +487,14 @@ export const productFormFields = ({
                 type: "image_upload_single",
                 label: "Image",
 
-                album: `${product.name} Images`,
+                album: `${product.name} Image Grid 2 Images`,
                 getOptionLabel: option => option.link,
               },
               text_image: {
                 type: "image_upload_single",
                 label: "Text Image",
 
-                album: `${product.name} Images`,
+                album: `${product.name} Image Grid 2 Text Images`,
                 getOptionLabel: option => option.link,
               },
               button_text: {
@@ -517,7 +517,7 @@ export const productFormFields = ({
           type: "image_upload_single",
           label: "Hero Image 2",
 
-          album: `${product.name} Images`,
+          album: `${product.name} Hero Image 2 Images`,
           getOptionLabel: option => option.link,
         },
         hero_fact_2: {
@@ -547,7 +547,7 @@ export const productFormFields = ({
           type: "image_upload_multiple",
           label: "Lifestyle Images",
 
-          album: `${product.name} Images`,
+          album: `${product.name} Lifestyle Images`,
           getOptionLabel: option => option.link,
         },
         lifestyle_images_hidden: {
@@ -559,7 +559,7 @@ export const productFormFields = ({
           type: "image_upload_single",
           label: "Hero Image 3",
 
-          album: `${product.name} Images`,
+          album: `${product.name} Hero Image 3 Images`,
           getOptionLabel: option => option.link,
         },
         hero_fact_3: {
@@ -676,7 +676,7 @@ export const productFormFields = ({
                 type: "image_upload_single",
                 label: "Image",
 
-                album: `${product.name} Images`,
+                album: `${product.name} In the Box I mages`,
                 getOptionLabel: option => option.link,
               },
               description: {

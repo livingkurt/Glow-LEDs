@@ -46,9 +46,12 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple })
 
   const handleImageUpload = uploadedImages => {
     if (isMultiple) {
+      // For multiple images, append to existing array
       onChange([...(Array.isArray(initializedFieldState) ? initializedFieldState : []), ...uploadedImages]);
     } else {
-      onChange(uploadedImages[0]); // Only use the first image for single image fields
+      // For single image, just take the first uploaded image
+      const singleImage = Array.isArray(uploadedImages) ? uploadedImages[0] : uploadedImages;
+      onChange(singleImage);
     }
   };
 

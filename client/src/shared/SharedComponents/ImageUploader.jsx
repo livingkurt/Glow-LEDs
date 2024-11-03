@@ -51,11 +51,8 @@ const ImageUploader = ({ onChange, album, type, isMultiple }) => {
       });
 
       // Handle the response based on whether it's multiple or single
-      if (isMultiple) {
-        onChange(response.data);
-      } else {
-        onChange(response.data[0]); // Only pass the first image for single mode
-      }
+      const uploadedImages = response.data;
+      onChange(uploadedImages); // Pass the entire array, let ImageWizard handle single/multiple
 
       setLoading(false);
       dispatch(clear_image({}));
