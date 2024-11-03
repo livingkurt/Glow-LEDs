@@ -12,30 +12,17 @@ import { formatDate } from "../../../utils/helpers/universal_helpers";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import * as API from "../../../api";
 import { showInfo } from "../../../slices/snackbarSlice";
+import PropTypes from "prop-types";
 
 const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const [isHovered, setIsHovered] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
-
-  const handlePrevImage = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentImageIndex(prevIndex => (prevIndex === 0 ? item.images.length - 1 : prevIndex - 1));
-  };
-
-  const handleNextImage = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentImageIndex(prevIndex => (prevIndex + 1) % item.images.length);
-  };
 
   const handleQuickAddToCart = () => {
     dispatch(API.addToCart({ cart: my_cart, cartItems: [item], type: "add_to_cart" }));
@@ -108,38 +95,7 @@ const CartItemCard = ({ item }) => {
             transition: "opacity 0.3s ease-in-out",
           }}
         />
-        {isHovered && item.images && item.images.length > 1 && !isMobile && (
-          <>
-            <IconButton
-              sx={{
-                position: "absolute",
-                left: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.9)" },
-                zIndex: 2,
-              }}
-              onClick={handlePrevImage}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
-            <IconButton
-              sx={{
-                position: "absolute",
-                right: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.9)" },
-                zIndex: 2,
-              }}
-              onClick={handleNextImage}
-            >
-              <ChevronRightIcon />
-            </IconButton>
-          </>
-        )}
+
         {isHovered && (
           <Button
             variant="contained"
@@ -196,6 +152,10 @@ const CartItemCard = ({ item }) => {
       </CardContent>
     </Card>
   );
+};
+
+CartItemCard.propTypes = {
+  item: PropTypes.object.isRequired,
 };
 
 export default CartItemCard;

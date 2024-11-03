@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Zoom, Thumbs } from "swiper/modules";
 import "swiper/css";
@@ -119,6 +120,11 @@ const ProductImages = ({ images, originalImages }) => {
       )}
     </Box>
   );
+};
+
+ProductImages.propTypes = {
+  images: PropTypes.array.isRequired,
+  originalImages: PropTypes.array.isRequired,
 };
 
 export default ProductImages;

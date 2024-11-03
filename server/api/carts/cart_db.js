@@ -14,6 +14,7 @@ export default {
         .populate("cartItems.selectedOptions.filament")
         .populate("affiliate")
         .populate("tags")
+        .populate("images")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -34,8 +35,10 @@ export default {
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate")
+        .populate("images")
         .populate("tags");
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -52,7 +55,8 @@ export default {
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate")
-        .populate("tags");
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -72,7 +76,8 @@ export default {
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate")
-        .populate("tags");
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -91,7 +96,8 @@ export default {
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
         .populate("affiliate")
-        .populate("tags");
+        .populate("tags")
+        .populate("images");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -154,6 +160,12 @@ export default {
           localField: "tags",
           foreignField: "_id",
           as: "tags",
+        })
+        .lookup({
+          from: "images",
+          localField: "images",
+          foreignField: "_id",
+          as: "images",
         });
     } catch (error) {
       if (error instanceof Error) {

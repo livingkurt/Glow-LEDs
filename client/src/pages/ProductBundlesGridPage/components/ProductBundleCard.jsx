@@ -29,7 +29,7 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
   };
 
   return (
-    <Link to={`/bundles/${bundle.pathname}`} style={{ textDecoration: "none" }}>
+    <Link to={`/bundles/${bundle._id}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",
@@ -123,7 +123,7 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
             <Typography variant="h6" color="white" gutterBottom>
               {bundle.title}
             </Typography>
-            {bundle.subtitle && (
+            {/* {bundle.subtitle && (
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 {bundle.subtitle}
               </Typography>
@@ -132,7 +132,7 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 {bundle.short_description}
               </Typography>
-            )}
+            )} */}
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <Typography variant="body2" color="white">
                 {"By "}
