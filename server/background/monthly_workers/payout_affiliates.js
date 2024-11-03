@@ -42,8 +42,7 @@ export const payout_affiliates = async () => {
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
         paid: affiliate?.user?.stripe_connect_id ? true : false,
         description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
-        // paid_at: new Date(),
-        paid_at: new Date("2024-11-01"),
+        paid_at: new Date(),
         email: affiliate?.user?.email,
       });
       await axios.post(`${domainUrl}/api/paychecks`, {
@@ -56,8 +55,7 @@ export const payout_affiliates = async () => {
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
         paid: affiliate?.user?.stripe_connect_id ? true : false,
         description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
-        // paid_at: new Date(),
-        paid_at: new Date("2024-11-01"),
+        paid_at: new Date(),
         email: affiliate.user.email,
         subject: "Your Glow LEDs Affiliate Earnings",
       });
