@@ -9,6 +9,7 @@ export const sharedItemSchema = {
   product_collection: { type: String },
   display_image: { type: String },
   display_image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
+  qty: { type: Number },
   quantity: { type: Number },
   max_display_quantity: { type: Number },
   max_quantity: { type: Number },
