@@ -18,6 +18,7 @@ import {
   normalizePromoFilters,
   normalizePromoSearch,
 } from "./promo_interactors.js";
+import gift_card_db from "../gift_cards/gift_card_db.js";
 
 export default {
   findAll_promos_s: async query => {
@@ -465,5 +466,82 @@ export default {
       }
     }
     return { isValid, errors };
+  },
+
+  validate_code_promos_s: async params => {
+    try {
+      // First try as a promo code
+      const promo = await promo_db.findBy_promos_db({ promo_code: params.promo_code.toLowerCase(), deleted: false });
+
+      if (promo) {
+        return {
+          type: "promo",
+          code: promo.promo_code,
+          percentage_off: promo.percentage_off,
+          isValid: true,
+        };
+      }
+
+      // If not a promo code, try as a gift card
+      const giftCard = await gift_card_db.validate_gift_card_db(params.promo_code);
+
+      if (giftCard) {
+        return {
+          type: "gift_card",
+          code: giftCard.code,
+          currentBalance: giftCard.currentBalance,
+          giftCardType: giftCard.type,
+          isValid: true,
+        };
+      }
+
+      throw new Error("Invalid code");
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  apply_code_promos_s: async (params, body) => {
+    try {
+      const { promo_code } = params;
+      const { orderTotal, items } = body;
+
+      // First try as a promo code
+      const promo = await promo_db.findBy_promos_db({ promo_code: promo_code.toLowerCase(), deleted: false });
+
+      if (promo) {
+        const discount = (orderTotal * promo.percentage_off) / 100;
+        return {
+          type: "promo",
+          discount,
+          finalTotal: orderTotal - discount,
+        };
+      }
+
+      // If not a promo code, try as a gift card
+      const giftCard = await gift_card_db.validate_gift_card_db(promo_code);
+
+      if (giftCard) {
+        // For supplies gift cards, filter applicable items
+        let applicableTotal = orderTotal;
+        if (giftCard.type === "supplies") {
+          applicableTotal = items
+            .filter(item => item.category === "supplies")
+            .reduce((sum, item) => sum + item.price * item.quantity, 0);
+        }
+
+        const discount = Math.min(giftCard.currentBalance, applicableTotal);
+        return {
+          type: "gift_card",
+          discount,
+          finalTotal: orderTotal - discount,
+          remainingBalance: giftCard.currentBalance - discount,
+        };
+      }
+
+      throw new Error("Invalid code");
+    } catch (error) {
+      throw new Error(error.message);
+    }
   },
 };

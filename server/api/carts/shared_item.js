@@ -36,7 +36,7 @@ export const sharedItemSchema = {
   finite_stock: { type: Boolean },
   wholesale_product: { type: Boolean },
   wholesale_price: { type: Number },
-  itemType: { type: String, enum: ["product", "ticket"] },
+  itemType: { type: String, enum: ["product", "ticket", "gift_card"] },
   event: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
   ticket_type: { type: String },
   isPreOrder: { type: Boolean, default: false },

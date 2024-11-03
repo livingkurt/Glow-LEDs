@@ -61,7 +61,7 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
               return toCapitalize(option);
             }
           },
-          options: ["product", "ticket"],
+          options: ["product", "ticket", "gift_card"],
         },
         name: {
           type: "text",

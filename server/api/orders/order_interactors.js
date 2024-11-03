@@ -1,3 +1,6 @@
+import { gift_card_template } from "../../email_templates/pages/gift_card.js";
+import { generateRandomCode } from "../../utils/util.js";
+import GiftCard from "../gift_cards/gift_card.js";
 import mongoose from "mongoose";
 import { determine_code_tier, isEmail } from "../../utils/util.js";
 import order_db from "./order_db.js";
@@ -500,4 +503,56 @@ export const calculateOrderPrices = (items, originalOrder, shipping_rate) => {
   const taxPrice = originalOrder?.taxRate ? itemsPrice * originalOrder?.taxRate : 0;
 
   return { itemsPrice, shippingPrice, taxPrice };
+};
+
+export const generateGiftCards = async orderItems => {
+  const giftCardsByAmount = [];
+
+  for (const item of orderItems) {
+    if (item.itemType === "gift_card") {
+      const giftCardsForAmount = {
+        initialBalance: item.data.initialBalance,
+        quantity: item.quantity,
+        codes: [],
+      };
+
+      // Generate gift cards for this amount
+      for (let i = 0; i < item.quantity; i++) {
+        const code = generateRandomCode(8); // Generate 8-character unique code
+
+        await GiftCard.create({
+          code,
+          type: item.data.type || "general",
+          initialBalance: item.data.initialBalance,
+          currentBalance: item.data.initialBalance,
+          source: "purchase",
+          isActive: true,
+        });
+
+        giftCardsForAmount.codes.push(code);
+      }
+
+      giftCardsByAmount.push(giftCardsForAmount);
+    }
+  }
+
+  return giftCardsByAmount;
+};
+
+export const sendGiftCardEmail = async order => {
+  const giftCardItems = order.orderItems.filter(item => item.itemType === "gift_card");
+
+  if (giftCardItems.length > 0) {
+    const giftCards = await generateGiftCards(giftCardItems);
+
+    await sendEmail({
+      to: order.shipping.email,
+      subject: "Your Glow LEDs Gift Card Codes",
+      html: gift_card_template(giftCards),
+    });
+
+    return giftCards;
+  }
+
+  return null;
 };

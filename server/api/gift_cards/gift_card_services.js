@@ -1,90 +1,122 @@
 import gift_card_db from "./gift_card_db.js";
+import { getFilteredData } from "../api_helpers.js";
 
 export default {
-  findAll_gift_cards_s: async query => {
-    const filter = {};
-    if (query.type) filter.type = query.type;
-    if (query.source) filter.source = query.source;
-    if (query.isActive !== undefined) filter.isActive = query.isActive === "true";
-
-    return await gift_card_db.findAll_gift_cards_db(filter);
-  },
-
-  findById_gift_card_s: async id => {
-    return await gift_card_db.findById_gift_card_db(id);
-  },
-
-  findByCode_gift_card_s: async code => {
-    return await gift_card_db.findByCode_gift_card_db(code);
-  },
-
-  findByUser_gift_cards_s: async (userId, query = {}) => {
-    const filter = {};
-    if (query.type) filter.type = query.type;
-    if (query.isActive !== undefined) filter.isActive = query.isActive === "true";
-
-    return await gift_card_db.findByUser_gift_cards_db(userId, filter);
-  },
-
-  create_gift_card_s: async data => {
-    return await gift_card_db.create_gift_card_db(data);
-  },
-
-  update_gift_card_s: async (id, data) => {
-    return await gift_card_db.update_gift_card_db(id, data);
-  },
-
-  delete_gift_card_s: async id => {
-    return await gift_card_db.delete_gift_card_db(id);
-  },
-
-  add_funds_gift_card_s: async (id, amount, description) => {
-    return await gift_card_db.add_funds_gift_card_db(id, amount, description);
-  },
-
-  use_funds_gift_card_s: async (code, amount, orderId, description) => {
-    return await gift_card_db.use_funds_gift_card_db(code, amount, orderId, description);
-  },
-
-  get_transactions_gift_card_s: async id => {
-    return await gift_card_db.get_transactions_gift_card_db(id);
-  },
-
-  create_sponsor_benefits_s: async (userId, monthlyRevenue) => {
-    return await gift_card_db.create_sponsor_benefits_gift_card_db(userId, monthlyRevenue);
-  },
-
-  validate_gift_card_s: async code => {
-    const giftCard = await gift_card_db.findByCode_gift_card_db(code);
-    if (!giftCard) {
+  get_table_gift_cards_s: async query => {
+    try {
+      const sort_options = ["createdAt", "code", "currentBalance"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "code",
+      });
+      const gift_cards = await gift_card_db.findAll_gift_cards_db(filter, sort, limit, page);
+      const count = await gift_card_db.count_gift_cards_db(filter);
       return {
-        isValid: false,
-        error: "Gift card not found",
+        data: gift_cards,
+        total_count: count,
+        currentPage: parseInt(page),
       };
+    } catch (error) {
+      throw new Error(error.message);
     }
-
-    const isValid = giftCard.isValid();
-    return {
-      isValid,
-      currentBalance: isValid ? giftCard.currentBalance : 0,
-      type: giftCard.type,
-      error: isValid ? null : "Gift card is not valid for use",
-    };
   },
 
-  check_balance_s: async code => {
-    const giftCard = await gift_card_db.findByCode_gift_card_db(code);
-    if (!giftCard) {
-      return {
-        error: "Gift card not found",
-      };
+  findById_gift_cards_s: async params => {
+    try {
+      return await gift_card_db.findById_gift_cards_db(params.id);
+    } catch (error) {
+      throw new Error(error.message);
     }
+  },
 
-    return {
-      currentBalance: giftCard.currentBalance,
-      isActive: giftCard.isActive,
-      type: giftCard.type,
-      expirationDate: giftCard.expirationDate,
-    };
+  create_gift_cards_s: async body => {
+    try {
+      return await gift_card_db.create_gift_cards_db(body);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  update_gift_cards_s: async (params, body) => {
+    try {
+      return await gift_card_db.update_gift_cards_db(params.id, body);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  remove_gift_cards_s: async params => {
+    try {
+      return await gift_card_db.remove_gift_cards_db(params.id);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  validate_gift_card_s: async params => {
+    try {
+      const giftCard = await gift_card_db.validate_gift_card_db(params.code);
+      if (!giftCard) throw new Error("Invalid or expired gift card");
+      return {
+        code: giftCard.code,
+        currentBalance: giftCard.currentBalance,
+        type: giftCard.type,
+        isValid: true,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  use_gift_card_s: async (params, body) => {
+    try {
+      const { code } = params;
+      const { amount, orderId } = body;
+
+      // Validate amount
+      if (!amount || amount <= 0) {
+        throw new Error("Invalid amount");
+      }
+
+      // Use gift card
+      const updatedGiftCard = await gift_card_db.use_gift_card_db(code, amount, orderId);
+
+      return {
+        code: updatedGiftCard.code,
+        amountUsed: amount,
+        remainingBalance: updatedGiftCard.currentBalance,
+        isActive: updatedGiftCard.isActive,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  check_balance_s: async params => {
+    try {
+      const giftCard = await gift_card_db.findByCode_gift_cards_db(params.code);
+      if (!giftCard) throw new Error("Gift card not found");
+
+      return {
+        code: giftCard.code,
+        currentBalance: giftCard.currentBalance,
+        isActive: giftCard.isActive,
+        expirationDate: giftCard.expirationDate,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  get_transactions_s: async params => {
+    try {
+      const giftCard = await gift_card_db.findByCode_gift_cards_db(params.code);
+      if (!giftCard) throw new Error("Gift card not found");
+
+      return giftCard.transactions;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   },
 };

@@ -1,3 +1,5 @@
+import { sendGiftCardEmail } from "./order_interactors.js";
+
 import Order from "../orders/order.js";
 import order_db from "../orders/order_db.js";
 import promo_db from "../promos/promo_db.js";
@@ -280,7 +282,6 @@ export default {
       }
 
       // Process payment for non-pre-order items or the entire order if not split
-      // Process payment for non-pre-order items or the entire order if not split
       let paymentOrder;
       if (paymentMethod) {
         if (splitOrder) {
@@ -311,6 +312,9 @@ export default {
           await sendOrderEmail(order);
           if (order.orderItems.some(item => item.itemType === "ticket")) {
             await sendTicketEmail(order);
+          }
+          if (order.orderItems.some(item => item.itemType === "gift_card")) {
+            await sendGiftCardEmail(order);
           }
 
           return order;

@@ -7,6 +7,11 @@ import Token from "../api/tokens/token.js";
 export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;
 };
+export const generateRandomCode = length => {
+  return Math.random()
+    .toString(36)
+    .substring(2, 2 + length);
+};
 
 export const getItemsTotal = items => {
   return items.reduce((acc, item) => acc + item.quantity * item.price, 0);
