@@ -28,6 +28,7 @@ const ImagesPage = () => {
 
   const columnDefs = useMemo(
     () => [
+      { title: "ID", display: "_id" },
       { title: "Date Added", display: image => image.createdAt && format_date(image.createdAt) },
       {
         title: "Album",

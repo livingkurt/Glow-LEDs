@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatPrice } from "../../utils/helper_functions";
 import { Loading } from "../../shared/SharedComponents";
 import { showError, showSuccess } from "../../slices/snackbarSlice";
-import { addToCart } from "../../api";
+import * as API from "../../api";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
@@ -19,6 +19,9 @@ const GiftCardPage = () => {
   const [customAmount, setCustomAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
+
   const isCustom = amount === "custom";
   const giftCardAmount = isCustom ? parseFloat(customAmount) : parseFloat(amount);
 
@@ -27,6 +30,18 @@ const GiftCardPage = () => {
     if (value === "" || (/^\d*\.?\d{0,2}$/.test(value) && parseFloat(value) <= 1000)) {
       setCustomAmount(value);
     }
+  };
+  const breadcrumbItems = [
+    { name: "HOME", to: "/" },
+    { name: "GIFT CARDS", to: "/gift_cards" },
+    { name: isCustom ? "CUSTOM" : `$${amount} GiftCard` },
+  ];
+  const images = {
+    20: { link: "https://i.imgur.com/mkHVKV2.jpeg", _id: "6727d4e87d04c380be03bb34" },
+    50: { link: "https://i.imgur.com/bKwv02C.png", _id: "6727d4e87d04c380be03bb35" },
+    100: { link: "https://i.imgur.com/dkryTIc.jpeg", _id: "6727d4e87d04c380be03bb36" },
+    150: { link: "https://i.imgur.com/9rhXLsB.jpeg", _id: "6727d4e87d04c380be03bb37" },
+    custom: { link: "https://i.imgur.com/a7Dgmf0.png", _id: "6727d4e87d04c380be03bb38" },
   };
 
   const handleAddToCart = async () => {
@@ -44,14 +59,15 @@ const GiftCardPage = () => {
       };
 
       const cartItem = {
-        name: `Gift Card - ${formatPrice(giftCardAmount)}`,
+        name: `${formatPrice(giftCardAmount)} Gift Card`,
         itemType: "giftCard",
         price: giftCardAmount,
         quantity: 1,
+        display_image_object: images[amount]?._id,
         giftCard: giftCard,
       };
 
-      dispatch(addToCart(cartItem));
+      dispatch(API.addToCart({ cart: my_cart, cartItems: [cartItem], type: "add_to_cart" }));
       dispatch(showSuccess({ message: "Gift card added to cart" }));
     } catch (error) {
       dispatch(showError({ message: error.message }));
@@ -61,19 +77,6 @@ const GiftCardPage = () => {
   };
 
   if (loading) return <Loading />;
-
-  const breadcrumbItems = [
-    { name: "HOME", to: "/" },
-    { name: "GIFT CARDS", to: "/gift_cards" },
-    { name: isCustom ? "CUSTOM" : `$${amount} GiftCard` },
-  ];
-  const images = {
-    20: { link: "https://i.imgur.com/mkHVKV2.jpeg" },
-    50: { link: "https://i.imgur.com/bKwv02C.png" },
-    100: { link: "https://i.imgur.com/dkryTIc.jpeg" },
-    150: { link: "https://i.imgur.com/9rhXLsB.jpeg" },
-    custom: { link: "https://i.imgur.com/a7Dgmf0.png" },
-  };
 
   return (
     <Box>
