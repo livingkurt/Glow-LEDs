@@ -1,3 +1,4 @@
+import { automated_payout_worker } from "./daily_workers/automated_payout_worker.js";
 import { check_stock } from "./weekly_workers/check_stock.js";
 import { payout_employees } from "./weekly_workers/payout_employees.js";
 
@@ -18,16 +19,18 @@ const getWeekNumber = d => {
 const weekly_worker = () => {
   // Get the current date
   const today = new Date();
+
   // Check if today is Friday (the 5th day of the week)
   if (today.getDay() === 5) {
-    // Check if it's an even week
+    // Bi-weekly tasks - run every other Friday
     if (getWeekNumber(today) % 2 === 0) {
-      // Run the code that you only want to run once every two weeks
       payout_employees();
       check_stock();
     } else {
-      console.log("Not the right week");
+      console.log("Not a payroll week");
     }
+    // Weekly tasks - run every Friday
+    automated_payout_worker();
   } else {
     console.log("Not Friday");
   }
