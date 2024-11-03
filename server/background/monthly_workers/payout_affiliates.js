@@ -72,7 +72,7 @@ export const payout_affiliates = async () => {
 
       // Create gift cards for sponsors
       if (affiliate.sponsor) {
-        await axios.post(`${domainUrl}/api/giftcards/sponsor-benefits`, {
+        await axios.post(`${domainUrl}/api/gift_cards/sponsor-benefits`, {
           userId: affiliate.user._id,
           monthlyRevenue: promo_code_usage.revenue,
         });

@@ -24,8 +24,8 @@ export const routes = [
   { path: "/learn", element: "ArticlesGridPage", exact: true },
   { path: "/learn/:pathname", element: "ArticlePage", exact: true },
 
-  { path: "/giftcards", element: "GiftcardsGridPage", exact: true },
-  { path: "/giftcards/:amount", element: "GiftcardPage", exact: true },
+  { path: "/gift_cards", element: "GiftCardsGridPage", exact: true },
+  { path: "/gift_cards/:amount", element: "GiftCardPage", exact: true },
 
   { path: "/academy", element: "AcademyPage", exact: true },
 
@@ -75,7 +75,7 @@ export const adminRoutes = [
   { path: "/secure/glow/images", element: "ImagesPage" },
   { path: "/secure/glow/wholesalers", element: "WholesalersPage" },
   { path: "/secure/glow/articles", element: "ArticlesPage" },
-  { path: "/secure/glow/giftcards", element: "GiftcardsPage" },
+  { path: "/secure/glow/gift_cards", element: "GiftCardsPage" },
 ];
 
 export const privateRoutes = [

@@ -1,44 +1,44 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { useCreateGiftcardMutation, useUpdateGiftcardMutation } from "../../../api/giftcardApi";
-import { close_edit_giftcard_modal, close_create_giftcard_modal, set_giftcard } from "../../../slices/giftcardSlice";
+import { useCreateGiftCardMutation, useUpdateGiftCardMutation } from "../../../api/giftCardApi";
+import { close_edit_gift_card_modal, close_create_gift_card_modal, set_giftCard } from "../../../slices/giftCardSlice";
 import { showError, showSuccess } from "../../../slices/snackbarSlice";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
 
-const EditGiftcardModal = () => {
+const EditGiftCardModal = () => {
   const dispatch = useDispatch();
-  const giftcardPage = useSelector(state => state.giftcards.giftcardPage);
-  const { edit_giftcard_modal, create_giftcard_modal, giftcard, loading } = giftcardPage;
+  const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
+  const { edit_gift_card_modal, create_gift_card_modal, giftCard, loading } = giftCardPage;
 
-  const [createGiftcard] = useCreateGiftcardMutation();
-  const [updateGiftcard] = useUpdateGiftcardMutation();
+  const [createGiftCard] = useCreateGiftCardMutation();
+  const [updateGiftCard] = useUpdateGiftCardMutation();
 
-  const isOpen = edit_giftcard_modal || create_giftcard_modal;
-  const isEdit = edit_giftcard_modal;
+  const isOpen = edit_gift_card_modal || create_gift_card_modal;
+  const isEdit = edit_gift_card_modal;
 
   useEffect(() => {
     if (!isOpen) {
-      dispatch(set_giftcard(null));
+      dispatch(set_giftCard(null));
     }
   }, [isOpen, dispatch]);
 
   const handleClose = () => {
     if (isEdit) {
-      dispatch(close_edit_giftcard_modal());
+      dispatch(close_edit_gift_card_modal());
     } else {
-      dispatch(close_create_giftcard_modal());
+      dispatch(close_create_gift_card_modal());
     }
   };
 
   const handleSubmit = async values => {
     try {
       if (isEdit) {
-        await updateGiftcard({ id: giftcard._id, ...values }).unwrap();
+        await updateGiftCard({ id: giftCard._id, ...values }).unwrap();
         dispatch(showSuccess({ message: "Gift card updated successfully" }));
       } else {
-        await createGiftcard(values).unwrap();
+        await createGiftCard(values).unwrap();
         dispatch(showSuccess({ message: "Gift card created successfully" }));
       }
       handleClose();
@@ -98,12 +98,12 @@ const EditGiftcardModal = () => {
           onSubmit={handleSubmit}
           loading={loading}
           submitText={isEdit ? "Update" : "Create"}
-          values={giftcard}
-          onChange={value => dispatch(set_giftcard(value))}
+          values={giftCard}
+          onChange={value => dispatch(set_giftCard(value))}
         />
       </Box>
     </GLActionModal>
   );
 };
 
-export default EditGiftcardModal;
+export default EditGiftCardModal;

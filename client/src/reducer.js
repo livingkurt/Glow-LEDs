@@ -29,12 +29,12 @@ import {
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
-import { giftcardApi } from "./api/giftcardApi";
+import { giftCardApi } from "./api/giftCardApi";
 import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
-import giftcardSlice from "./slices/giftcardSlice";
+import giftCardSlice from "./slices/giftCardSlice";
 import productPageSlice from "./pages/ProductPage/productPageSlice";
 import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 import { affiliateApi, contentApi } from "./api";
@@ -99,9 +99,9 @@ const reducers = {
     filamentPage: filamentSlice,
     filamentTable: glTableReducer("filamentTable", { sorting: [0, "desc"] }),
   }),
-  giftcards: combineReducers({
-    giftcardPage: giftcardSlice,
-    giftcardTable: glTableReducer("giftcardTable", {}),
+  giftCards: combineReducers({
+    giftCardPage: giftCardSlice,
+    giftCardTable: glTableReducer("giftCardTable", {}),
   }),
   orders: combineReducers({
     orderPage: orderSlice,
@@ -170,7 +170,7 @@ const reducers = {
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   [contentApi.reducerPath]: contentApi.reducer,
-  [giftcardApi.reducerPath]: giftcardApi.reducer,
+  [giftCardApi.reducerPath]: giftCardApi.reducer,
   snackbar: snackbarSlice,
   dashboards: dashboardSlice,
   wholesalers: combineReducers({

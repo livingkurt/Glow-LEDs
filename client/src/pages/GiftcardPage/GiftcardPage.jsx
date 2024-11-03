@@ -13,14 +13,14 @@ import ProductProtectionDetails from "../../shared/ProductProtectionDetails/Prod
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const GiftcardPage = () => {
+const GiftCardPage = () => {
   const { amount } = useParams();
   const dispatch = useDispatch();
   const [customAmount, setCustomAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
   const isCustom = amount === "custom";
-  const giftcardAmount = isCustom ? parseFloat(customAmount) : parseFloat(amount);
+  const giftCardAmount = isCustom ? parseFloat(customAmount) : parseFloat(amount);
 
   const handleCustomAmountChange = e => {
     const value = e.target.value;
@@ -37,18 +37,18 @@ const GiftcardPage = () => {
 
     try {
       setLoading(true);
-      const giftcard = {
+      const giftCard = {
         type: "general",
-        initialBalance: giftcardAmount,
+        initialBalance: giftCardAmount,
         source: "purchase",
       };
 
       const cartItem = {
-        name: `Gift Card - ${formatPrice(giftcardAmount)}`,
-        itemType: "giftcard",
-        price: giftcardAmount,
+        name: `Gift Card - ${formatPrice(giftCardAmount)}`,
+        itemType: "giftCard",
+        price: giftCardAmount,
         quantity: 1,
-        giftcard: giftcard,
+        giftCard: giftCard,
       };
 
       dispatch(addToCart(cartItem));
@@ -64,8 +64,8 @@ const GiftcardPage = () => {
 
   const breadcrumbItems = [
     { name: "HOME", to: "/" },
-    { name: "GIFT CARDS", to: "/giftcards" },
-    { name: isCustom ? "CUSTOM" : `$${amount} Giftcard` },
+    { name: "GIFT CARDS", to: "/gift_cards" },
+    { name: isCustom ? "CUSTOM" : `$${amount} GiftCard` },
   ];
   const images = {
     20: { link: "https://i.imgur.com/mkHVKV2.jpeg" },
@@ -78,11 +78,11 @@ const GiftcardPage = () => {
   return (
     <Box>
       <Helmet>
-        <title>{`${isCustom ? "Custom" : formatPrice(giftcardAmount)} Gift Card | Glow LEDs`}</title>
+        <title>{`${isCustom ? "Custom" : formatPrice(giftCardAmount)} Gift Card | Glow LEDs`}</title>
         <meta
           name="description"
           content={`Purchase a ${
-            isCustom ? "custom amount" : formatPrice(giftcardAmount)
+            isCustom ? "custom amount" : formatPrice(giftCardAmount)
           } Glow LEDs gift card. Perfect for gifting to LED enthusiasts.`}
         />
       </Helmet>
@@ -121,7 +121,7 @@ const GiftcardPage = () => {
 
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Typography variant="h4" gutterBottom sx={{ typography: { sm: "h4", xs: "h5" } }}>
-              {isCustom ? "Custom Gift Card" : `${formatPrice(giftcardAmount)} Gift Card`}
+              {isCustom ? "Custom Gift Card" : `${formatPrice(giftCardAmount)} Gift Card`}
             </Typography>
 
             <Typography variant="body1" gutterBottom mt={2} mb={2}>
@@ -151,7 +151,7 @@ const GiftcardPage = () => {
 
             <Typography variant="h6" gutterBottom mt={2} mb={2}>
               {"Price: "}
-              {formatPrice(giftcardAmount)}
+              {formatPrice(giftCardAmount)}
             </Typography>
 
             <Box mt={2}>
@@ -191,4 +191,4 @@ const GiftcardPage = () => {
   );
 };
 
-export default GiftcardPage;
+export default GiftCardPage;

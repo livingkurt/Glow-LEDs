@@ -114,7 +114,7 @@ const features = addIdsRecursively({
     },
     {
       name: "Gift Cards",
-      path: "/giftcards",
+      path: "/gift_cards",
       extraContent: "🎁",
     },
     {
@@ -675,8 +675,8 @@ const admin = addIdsRecursively({
       onClick: x => true,
     },
     {
-      name: "Giftcards",
-      path: "/secure/glow/giftcards",
+      name: "GiftCards",
+      path: "/secure/glow/gift_cards",
       onClick: x => true,
     },
 

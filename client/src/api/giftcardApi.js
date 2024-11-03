@@ -1,84 +1,84 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const giftcardApi = createApi({
-  reducerPath: "giftcardApi",
+export const giftCardApi = createApi({
+  reducerPath: "giftCardApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-  tagTypes: ["Giftcard"],
+  tagTypes: ["GiftCard"],
   endpoints: builder => ({
-    getGiftcards: builder.query({
+    getGiftCards: builder.query({
       query: params => ({
-        url: "/giftcards",
+        url: "/gift_cards",
         params,
       }),
-      providesTags: ["Giftcard"],
+      providesTags: ["GiftCard"],
     }),
 
-    getGiftcard: builder.query({
-      query: id => `/giftcards/${id}`,
-      providesTags: ["Giftcard"],
+    getGiftCard: builder.query({
+      query: id => `/gift_cards/${id}`,
+      providesTags: ["GiftCard"],
     }),
 
-    createGiftcard: builder.mutation({
+    createGiftCard: builder.mutation({
       query: data => ({
-        url: "/giftcards",
+        url: "/gift_cards",
         method: "POST",
         data,
       }),
-      invalidatesTags: ["Giftcard"],
+      invalidatesTags: ["GiftCard"],
     }),
 
-    updateGiftcard: builder.mutation({
+    updateGiftCard: builder.mutation({
       query: ({ id, ...data }) => ({
-        url: `/giftcards/${id}`,
+        url: `/gift_cards/${id}`,
         method: "PUT",
         data,
       }),
-      invalidatesTags: ["Giftcard"],
+      invalidatesTags: ["GiftCard"],
     }),
 
-    deleteGiftcard: builder.mutation({
+    deleteGiftCard: builder.mutation({
       query: id => ({
-        url: `/giftcards/${id}`,
+        url: `/gift_cards/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Giftcard"],
+      invalidatesTags: ["GiftCard"],
     }),
 
-    validateGiftcard: builder.query({
-      query: code => `/giftcards/validate/${code}`,
+    validateGiftCard: builder.query({
+      query: code => `/gift_cards/validate/${code}`,
     }),
 
     checkBalance: builder.query({
-      query: code => `/giftcards/balance/${code}`,
+      query: code => `/gift_cards/balance/${code}`,
     }),
 
-    getMyGiftcards: builder.query({
+    getMyGiftCards: builder.query({
       query: params => ({
-        url: "/giftcards/my-cards",
+        url: "/gift_cards/my-cards",
         params,
       }),
-      providesTags: ["Giftcard"],
+      providesTags: ["GiftCard"],
     }),
 
-    useGiftcard: builder.mutation({
+    useGiftCard: builder.mutation({
       query: data => ({
-        url: "/giftcards/use",
+        url: "/gift_cards/use",
         method: "POST",
         data,
       }),
-      invalidatesTags: ["Giftcard"],
+      invalidatesTags: ["GiftCard"],
     }),
   }),
 });
 
 export const {
-  useGetGiftcardsQuery,
-  useGetGiftcardQuery,
-  useCreateGiftcardMutation,
-  useUpdateGiftcardMutation,
-  useDeleteGiftcardMutation,
-  useValidateGiftcardQuery,
+  useGetGiftCardsQuery,
+  useGetGiftCardQuery,
+  useCreateGiftCardMutation,
+  useUpdateGiftCardMutation,
+  useDeleteGiftCardMutation,
+  useValidateGiftCardQuery,
   useCheckBalanceQuery,
-  useGetMyGiftcardsQuery,
-  useUseGiftcardMutation,
-} = giftcardApi;
+  useGetMyGiftCardsQuery,
+  useUseGiftCardMutation,
+} = giftCardApi;

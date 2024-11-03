@@ -1,8 +1,8 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
-import { useGetGiftcardsQuery } from "../../api/giftcardApi";
+import { useGetGiftCardsQuery } from "../../api/giftCardApi";
 import { Loading } from "../../shared/SharedComponents";
-import GiftcardCard from "./components/GiftcardCard";
+import GiftCardCard from "./components/GiftCardCard";
 
 const fixedAmounts = [
   {
@@ -37,8 +37,8 @@ const fixedAmounts = [
   },
 ];
 
-const GiftcardsGridPage = () => {
-  const { isLoading } = useGetGiftcardsQuery();
+const GiftCardsGridPage = () => {
+  const { isLoading } = useGetGiftCardsQuery();
 
   if (isLoading) return <Loading />;
 
@@ -59,14 +59,14 @@ const GiftcardsGridPage = () => {
         </Typography>
 
         <Grid container spacing={2}>
-          {fixedAmounts.map((giftcard, index) => (
+          {fixedAmounts.map((giftCard, index) => (
             <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-              <GiftcardCard
-                amount={giftcard.amount}
-                title={giftcard.title}
-                description={giftcard.description}
-                isCustom={giftcard.amount === 0}
-                image={giftcard.image}
+              <GiftCardCard
+                amount={giftCard.amount}
+                title={giftCard.title}
+                description={giftCard.description}
+                isCustom={giftCard.amount === 0}
+                image={giftCard.image}
               />
             </Grid>
           ))}
@@ -76,4 +76,4 @@ const GiftcardsGridPage = () => {
   );
 };
 
-export default GiftcardsGridPage;
+export default GiftCardsGridPage;

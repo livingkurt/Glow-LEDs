@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { allRecordsApi } from "./api/allRecordsApi";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
-import { giftcardApi } from "./api/giftcardApi";
+import { giftCardApi } from "./api/giftCardApi";
 import reducer from "./reducer";
 import { affiliateApi, contentApi } from "./api";
 
@@ -12,7 +12,7 @@ const apiMiddleware = [
   placeOrderApi.middleware,
   contentApi.middleware,
   affiliateApi.middleware,
-  giftcardApi.middleware,
+  giftCardApi.middleware,
 ];
 
 const store = configureStore({

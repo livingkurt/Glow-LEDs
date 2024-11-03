@@ -5,9 +5,9 @@ import { random } from "lodash";
 import { formatPrice } from "../../../utils/helper_functions";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const GiftcardCard = ({ amount, title, description, isCustom, image }) => {
+const GiftCardCard = ({ amount, title, description, isCustom, image }) => {
   return (
-    <Link to={`/giftcards/${isCustom ? "custom" : amount}`} style={{ textDecoration: "none" }}>
+    <Link to={`/gift_cards/${isCustom ? "custom" : amount}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",
@@ -63,7 +63,7 @@ const GiftcardCard = ({ amount, title, description, isCustom, image }) => {
   );
 };
 
-GiftcardCard.propTypes = {
+GiftCardCard.propTypes = {
   amount: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -71,4 +71,4 @@ GiftcardCard.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default GiftcardCard;
+export default GiftCardCard;
