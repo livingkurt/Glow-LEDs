@@ -1,5 +1,6 @@
 import multer from "multer";
 import path from "path";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from "uuid";
 import Token from "../api/tokens/token.js";
 
@@ -80,6 +81,7 @@ export const deepEqual = (object1, object2) => {
   for (const key of keys1) {
     const val1 = object1[key];
     const val2 = object2[key];
+    // eslint-disable-next-line no-use-before-define
     const areObjects = isObject(val1) && isObject(val2);
     if ((areObjects && !deepEqual(val1, val2)) || (!areObjects && val1 !== val2)) {
       return false;
@@ -123,6 +125,7 @@ export const determine_promoter_code_tier = code_usage => {
     return 50;
   }
 };
+
 export const determine_sponsor_code_tier = code_usage => {
   if (code_usage === 0 || code_usage === 1) {
     return 30;
@@ -134,11 +137,40 @@ export const determine_sponsor_code_tier = code_usage => {
     return 50;
   } else if (code_usage >= 15) {
     return 60;
-  } else if (code_usage >= 20) {
-    return 75;
   }
 };
 
+export const calculate_performance_bonus = monthlyRevenue => {
+  if (monthlyRevenue >= 10000) {
+    return 25; // $25 bonus for $10,000+ revenue
+  } else if (monthlyRevenue >= 8000) {
+    return 10; // $10 bonus for $8,000-$9,999 revenue
+  }
+  return 0;
+};
+
+export const calculate_gift_card_rollover = (currentBalance, previousBalances, maxBalance) => {
+  // Start with current month's balance
+  let totalBalance = currentBalance;
+
+  // Add balances from previous months (up to 3 months)
+  for (let i = 0; i < Math.min(previousBalances.length, 3); i++) {
+    totalBalance += previousBalances[i];
+  }
+
+  // Cap at maximum allowed balance
+  return Math.min(totalBalance, maxBalance);
+};
+
+export const get_sponsor_benefit_limits = () => {
+  return {
+    maxGeneralGiftCard: 75, // $25 x 3 months
+    maxSuppliesGiftCard: 104.97, // $34.99 x 3 months
+    baseGeneralGiftCard: 25, // Monthly base amount
+    baseSuppliesGiftCard: 34.99, // Monthly base amount
+    maxRolloverMonths: 3,
+  };
+};
 export const categories = [
   "gloves",
   "batteries",
@@ -643,6 +675,7 @@ export const determine_secondary_product_name = (name, item) => {
 };
 
 export const order_status_steps = (order, status) => {
+  // eslint-disable-next-line no-param-reassign
   status = status?.toLowerCase();
   return `<div
 			style='display: flex;justify-content: space-between;max-width: 58rem;width: 100%;margin: 1rem auto;'

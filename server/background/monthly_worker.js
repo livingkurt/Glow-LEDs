@@ -9,7 +9,7 @@ const monthly_worker = () => {
   // Check if today is the first of the month
   if (today.getDate() === 1) {
     // Run the code that you only want to run once a month
-    payout_affiliates();
+    payout_affiliates(); // Now includes sponsor benefits processing
     payout_teams();
     payout_tips();
     refresh_sponsor_codes();

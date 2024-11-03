@@ -12,6 +12,20 @@ const sponsorCheckinSchema = new mongoose.Schema(
   }
 );
 
+const sponsorBenefitsSchema = new mongoose.Schema(
+  {
+    month: { type: String },
+    year: { type: Number },
+    generalGiftCardBalance: { type: Number, default: 0 }, // Tracks $25 gift card balance
+    suppliesGiftCardBalance: { type: Number, default: 0 }, // Tracks $34.99 supplies gift card balance
+    performanceBonus: { type: Number, default: 0 }, // Tracks additional bonuses for high revenue months
+    lastRolloverMonth: { type: String }, // Tracks when gift cards were last rolled over
+  },
+  {
+    timestamps: true,
+  }
+);
+
 export const productBundleSchema = new mongoose.Schema(
   {
     title: { type: String },
@@ -41,6 +55,7 @@ const affiliateSchema = new mongoose.Schema(
     ],
     percentage_off: { type: Number },
     sponsorMonthlyCheckins: [sponsorCheckinSchema],
+    sponsorBenefits: [sponsorBenefitsSchema], // Track monthly benefits including rollovers
     public_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     location: { type: String },
