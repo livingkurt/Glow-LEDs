@@ -29,7 +29,8 @@ import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import { setSelectedTutorial } from "../TutorialsGridPage/tutorialsGridPageSlice";
 import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
 import { EditCartModal } from "../CartsPage/components";
-import ProductBundles from "./components/ProductBundles";
+import ProductBundleCard from "../ProductBundlesGridPage/components/ProductBundleCard";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,9 +84,9 @@ const SponsorPage = () => {
 
       <Box sx={{ mb: 4 }}>
         <Box display="flex" justifyContent="space-between">
-          <Button onClick={() => navigate("/sponsors")} sx={{ mb: 2, color: "#fff" }}>
-            {"Back to Sponsors"}
-          </Button>
+          <GLBreadcrumbs
+            items={[{ name: "ALL SPONSORS", to: "/sponsors" }, { name: affiliate.artist_name.toUpperCase() }]}
+          />
           {current_user.isAdmin && (
             <Button onClick={() => dispatch(open_edit_affiliate_modal(affiliate))} sx={{ mb: 2, color: "#fff" }}>
               {"Edit Sponsor"}
@@ -213,14 +214,78 @@ const SponsorPage = () => {
       </Grid>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
 
-      <ProductBundles affiliate={affiliate} />
+      <>
+        {affiliate.bundles && affiliate.bundles.length > 0 && (
+          <Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+              <Typography variant="h4" align="left">
+                {"Product Bundles by "}
+                {affiliate.artist_name}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/bundles", { state: { affiliate: affiliate._id } })}
+              >
+                {"View All Bundles"}
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                pb: 6,
+                px: 2,
+                display: "flex",
+                overflowX: "auto",
+                minWidth: "100%",
+                "&::-webkit-scrollbar": {
+                  height: "8px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "rgba(0, 0, 0, 0.2)",
+                  borderRadius: "4px",
+                },
+              }}
+            >
+              {affiliate.bundles.map(bundle => (
+                <Box
+                  key={bundle._id}
+                  sx={{
+                    minWidth: "250px",
+                    width: "100%",
+                    marginRight: "20px",
+                    "&:last-child": {
+                      marginRight: 0,
+                    },
+                  }}
+                >
+                  <ProductBundleCard bundle={bundle} affiliate={affiliate} />
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
+        {affiliate.bundles && affiliate.bundles.length === 0 && (
+          <Box>
+            <Typography variant="h4" align="center" gutterBottom>
+              {affiliate.artist_name} {"has no product bundles yet."}
+            </Typography>
+          </Box>
+        )}
+      </>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {tutorials && tutorials.length > 0 && (
-        <Box>
-          <Typography variant="h4" align="center" gutterBottom>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Typography variant="h4" align="left">
             {"Tutorials by "}
             {affiliate.artist_name}
           </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate("/tutorials", { state: { affiliate: affiliate._id } })}
+          >
+            {"View All Tutorials"}
+          </Button>
         </Box>
       )}
       {tutorials && tutorials.length === 0 && (
@@ -280,7 +345,7 @@ const SponsorPage = () => {
       <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.videos && affiliate.videos.length > 0 && (
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           {"Lightshows By "}
           {affiliate.artist_name}
         </Typography>

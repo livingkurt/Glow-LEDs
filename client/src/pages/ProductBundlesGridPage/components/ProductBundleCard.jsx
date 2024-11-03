@@ -7,7 +7,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
+const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isHovered, setIsHovered] = useState(false);
@@ -123,20 +123,10 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
             <Typography variant="h6" color="white" gutterBottom>
               {bundle.title}
             </Typography>
-            {/* {bundle.subtitle && (
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                {bundle.subtitle}
-              </Typography>
-            )}
-            {bundle.short_description && (
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                {bundle.short_description}
-              </Typography>
-            )} */}
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <Typography variant="body2" color="white">
                 {"By "}
-                {bundle.affiliate.artist_name}
+                {affiliate.artist_name}
               </Typography>
               <Typography variant="body2" color="white">
                 {"$"}
@@ -153,10 +143,12 @@ const ProductBundleCard = ({ bundle, goHorizontal = true }) => {
 ProductBundleCard.propTypes = {
   bundle: PropTypes.object.isRequired,
   goHorizontal: PropTypes.bool,
+  affiliate: PropTypes.object,
 };
 
 ProductBundleCard.defaultProps = {
   goHorizontal: true,
+  affiliate: {},
 };
 
 export default ProductBundleCard;

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Grid, Typography } from "@mui/material";
-import CartItemCard from "../../SponsorPage/components/CartItemCard";
+import { Box, Container, Typography } from "@mui/material";
+import BundleItemCard from "./BundleItemCard";
 
 const BundleItems = ({ items }) => {
   if (!items?.length) return null;
@@ -11,13 +11,11 @@ const BundleItems = ({ items }) => {
       <Typography variant="h4" gutterBottom>
         {"Bundle Items"}
       </Typography>
-      <Grid container spacing={3}>
+      <Container maxWidth="lg">
         {items.map((item, idx) => (
-          <Grid item xs={12} sm={6} md={4} key={item._id || idx}>
-            <CartItemCard item={item} />
-          </Grid>
+          <BundleItemCard key={item._id || idx} item={item} />
         ))}
-      </Grid>
+      </Container>
     </Box>
   );
 };

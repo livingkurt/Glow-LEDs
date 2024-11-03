@@ -237,15 +237,15 @@ const cartPage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsProductBundle.pending]: (state, { payload }) => {
-      state.loading = true;
+      state.loadingProductBundle = true;
     },
     [API.detailsProductBundle.fulfilled]: (state, { payload }) => {
-      state.loading = false;
+      state.loadingProductBundle = false;
       state.bundle = payload;
       state.message = "Cart Found";
     },
     [API.detailsProductBundle.rejected]: (state, { payload, error }) => {
-      state.loading = false;
+      state.loadingProductBundle = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },

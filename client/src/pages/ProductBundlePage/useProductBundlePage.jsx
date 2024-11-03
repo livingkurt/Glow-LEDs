@@ -8,15 +8,14 @@ const useProductBundlePage = () => {
   const { pathname } = useParams();
 
   const cartPage = useSelector(state => state.carts.cartPage);
-  const { bundle, my_cart } = cartPage;
+  const { bundle, my_cart, loadingProductBundle } = cartPage;
   const { current_user } = useSelector(state => state.users.userPage);
-  const loading = useSelector(state => state.carts.loading);
 
   useEffect(() => {
     dispatch(detailsProductBundle(pathname));
   }, [dispatch, pathname]);
 
-  return { bundle, current_user, my_cart, loading };
+  return { bundle, current_user, my_cart, loadingProductBundle };
 };
 
 export default useProductBundlePage;

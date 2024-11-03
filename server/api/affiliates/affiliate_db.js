@@ -23,7 +23,7 @@ export default {
         .populate({
           path: "bundles",
           populate: [
-            { path: "image" },
+            { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         })
@@ -56,7 +56,7 @@ export default {
         .populate({
           path: "bundles",
           populate: [
-            { path: "image" },
+            { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         });
@@ -87,7 +87,7 @@ export default {
         .populate({
           path: "bundles",
           populate: [
-            { path: "image" },
+            { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         });
@@ -118,7 +118,7 @@ export default {
         .populate({
           path: "bundles",
           populate: [
-            { path: "image" },
+            { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         });

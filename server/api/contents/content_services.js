@@ -98,6 +98,17 @@ export default {
           },
         })
         .populate({
+          path: "home_page.featured_product_bundles",
+          populate: [
+            { path: "images" },
+            { path: "affiliate" },
+            {
+              path: "cartItems",
+              populate: [{ path: "tags" }, { path: "display_image_object" }],
+            },
+          ],
+        })
+        .populate({
           path: "academy_page.featured_articles",
           populate: {
             path: "image",
@@ -117,13 +128,6 @@ export default {
             path: "affiliate",
             model: "Affiliate",
           },
-        })
-        .populate({
-          path: "home_page.featured_product_bundles",
-          populate: [
-            { path: "image" },
-            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
-          ],
         })
         .populate("home_page.learn_more_products.image")
         .populate("home_page.learn_highlights.images_data.image")
@@ -146,6 +150,7 @@ export default {
         .populate("academy_page.sponsors")
         .populate("about_page.sections.image");
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
