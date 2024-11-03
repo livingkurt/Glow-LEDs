@@ -17,6 +17,7 @@ export async function up() {
           subtitle: bundle.subtitle,
           short_description: bundle.short_description,
           image: bundle.image,
+          pathname: bundle.title?.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
           affiliate: affiliate._id,
           user: affiliate.user,
         },
