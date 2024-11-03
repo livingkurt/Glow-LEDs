@@ -107,7 +107,6 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
               formData={formData}
               state={module.content}
               onChange={newContent => {
-                console.log({ newContent });
                 updateModule(index, newContent);
               }}
             />
