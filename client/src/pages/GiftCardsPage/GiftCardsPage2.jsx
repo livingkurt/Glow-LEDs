@@ -7,7 +7,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { showError, showSuccess } from "../../slices/snackbarSlice";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import EditGiftCardModal from "./components/EditGiftCardModal";
+import EditGiftCardModal from "./components/EditGiftCardModal2";
 import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice";
 
 const GiftCardsPage = () => {

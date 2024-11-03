@@ -60,7 +60,7 @@ const GiftCardPage = () => {
 
       const cartItem = {
         name: `${formatPrice(giftCardAmount)} Gift Card`,
-        itemType: "giftCard",
+        itemType: "gift_card",
         price: giftCardAmount,
         quantity: 1,
         display_image_object: images[amount]?._id,

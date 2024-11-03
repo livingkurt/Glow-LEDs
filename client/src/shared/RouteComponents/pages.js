@@ -54,9 +54,9 @@ import AcademyPage from "../../pages/AcademyPage/AcademyPage";
 import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 import ProductBundlesGridPage from "../../pages/ProductBundlesGridPage/ProductBundlesGridPage";
 import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
-import GiftCardsGridPage from "../../pages/GiftCardsGridPage/GiftCardsGridPage";
-import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage";
-import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage";
+import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage2";
+import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage2";
+import GiftCardsGridPage from "../../pages/GiftCardsGridPage/GiftCardsGridPage2";
 
 export const Components = {
   PlaceOrderPage,

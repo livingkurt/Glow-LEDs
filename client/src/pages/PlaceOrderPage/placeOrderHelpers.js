@@ -1,5 +1,3 @@
-import { determineItemsTotal } from "../../utils/helper_functions";
-
 export const determine_service = rate => {
   if (rate.est_delivery_days) {
     return `Est: ${rate.est_delivery_days} ${rate.est_delivery_days === 1 ? "Day" : "Days"}`;
@@ -78,7 +76,6 @@ export const isFreeShipping = ({ shipping, items_price, rate, sortedRates, freeS
 };
 
 export const displayRate = ({ current_shipping_speed, shipping }) => {
-  console.log({ current_shipping_speed });
   return current_shipping_speed.freeShipping
     ? "Free"
     : `$${parseFloat(
@@ -179,6 +176,11 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
   let totalEligibleForDiscount = 0;
 
   cartItems?.forEach(item => {
+    // Skip gift cards
+    if (item.itemType === "gift_card") {
+      return;
+    }
+
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
     const salePrice =
       today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0
@@ -198,7 +200,6 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
 
   return totalEligibleForDiscount;
 };
-
 export const constructOutOfStockMessage = outOfStockItems => {
   // Construct a message listing out-of-stock items, including option details if present
   const itemsList = outOfStockItems

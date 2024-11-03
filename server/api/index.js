@@ -48,7 +48,7 @@ router.use("/api/paychecks", paycheck_routes);
 router.use("/api/payments", payment_routes);
 router.use("/api/products", product_routes);
 router.use("/api/promos", promo_routes);
-router.use("/api/shippings", shipping_routes);
+router.use("/api/shipping", shipping_routes);
 router.use("/api/surveys", survey_routes);
 router.use("/api/teams", team_routes);
 router.use("/api/tickets", ticket_routes);

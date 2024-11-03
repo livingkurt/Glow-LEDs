@@ -352,8 +352,17 @@ export default {
     const { current_user, cartItems, shipping } = body;
     const errors = { promo_code: [] };
     const isValid = true;
+
     try {
-      const itemsPrice = determineCartTotal(cartItems, current_user.isWholesaler);
+      // Check if cart contains only gift cards
+      const hasOnlyGiftCards = cartItems.every(item => item.itemType === "giftCard");
+      if (hasOnlyGiftCards) {
+        return { isValid: false, errors: { promo_code: "Promo codes cannot be applied to gift card purchases." } };
+      }
+
+      // Calculate total price excluding gift cards
+      const nonGiftCardItems = cartItems.filter(item => item.itemType !== "giftCard");
+      const itemsPrice = determineCartTotal(nonGiftCardItems, current_user.isWholesaler);
 
       // Check if promo_code exists in the database
       const promo = await Promo.findOne({ promo_code: promo_code.toLowerCase(), deleted: false });
