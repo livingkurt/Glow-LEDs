@@ -23,7 +23,16 @@ const ProductImages = ({ images, originalImages }) => {
     <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
       {images && (
         <>
-          <Box sx={{ flex: 1, width: "100%", mb: 2, aspectRatio: "1/1", position: "relative" }}>
+          <Box
+            sx={{
+              flex: 1,
+              width: "100%",
+              mb: 2,
+              aspectRatio: "1/1",
+              position: "relative",
+              overflow: "hidden", // Added to ensure content is cropped
+            }}
+          >
             <Swiper
               spaceBetween={0}
               modules={[Navigation, Pagination, Scrollbar, A11y, Zoom, Thumbs]}
@@ -37,14 +46,23 @@ const ProductImages = ({ images, originalImages }) => {
                 "--swiper-scrollbar-color": "#ffffff50",
                 height: "100%",
                 width: "100%",
+                aspectRatio: "1/1", // Added to enforce 1:1 ratio
               }}
             >
               {images?.map((image, index) => (
-                <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <SwiperSlide
+                  key={index}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    aspectRatio: "1/1", // Added to enforce 1:1 ratio
+                  }}
+                >
                   <Box
                     sx={{
                       width: "100%",
-                      height: "100%",
+                      paddingTop: "100%", // This creates a perfect square
                       position: "relative",
                       overflow: "hidden",
                       borderRadius: 5,
@@ -55,8 +73,9 @@ const ProductImages = ({ images, originalImages }) => {
                       alt={`Product ${index}`}
                       style={{
                         position: "absolute",
-                        top: 0,
-                        left: 0,
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)", // Center the image
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
@@ -88,11 +107,18 @@ const ProductImages = ({ images, originalImages }) => {
               style={{ width: "100%" }}
             >
               {images?.map((image, index) => (
-                <SwiperSlide key={index} style={{ width: 60, height: 60, position: "relative" }}>
+                <SwiperSlide
+                  key={index}
+                  style={{
+                    width: 60,
+                    height: 60, // Keeping thumbnails square
+                    position: "relative",
+                  }}
+                >
                   <Box
                     sx={{
                       width: "100%",
-                      height: "100%",
+                      paddingTop: "100%", // This creates a perfect square
                       position: "relative",
                       overflow: "hidden",
                       borderRadius: 2,
@@ -103,8 +129,9 @@ const ProductImages = ({ images, originalImages }) => {
                       alt={`Thumbnail ${index}`}
                       style={{
                         position: "absolute",
-                        top: 0,
-                        left: 0,
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)", // Center the image
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",

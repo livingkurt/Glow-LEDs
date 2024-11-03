@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 const RecentlyViewed = ({ currentProduct }) => {
   const recently_viewed_products = JSON.parse(sessionStorage.getItem("recently_viewed")) || [];
 
@@ -57,12 +57,22 @@ const RecentlyViewed = ({ currentProduct }) => {
                   backgroundColor: "transparent",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  image={product.image?.link}
-                  alt={product.name}
-                  sx={{ borderRadius: "20px", objectFit: "cover" }}
-                />
+                <Box sx={{ width: "100%", paddingTop: "100%", position: "relative" }}>
+                  <CardMedia
+                    component="img"
+                    image={product.image?.link}
+                    alt={product.name}
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "20px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
                 <CardContent sx={{ width: "100%", padding: "10px" }}>
                   <Typography variant="subtitle2" component="div">
                     {product.name}
@@ -79,6 +89,10 @@ const RecentlyViewed = ({ currentProduct }) => {
       </Box>
     </Box>
   );
+};
+
+RecentlyViewed.propTypes = {
+  currentProduct: PropTypes.object.isRequired,
 };
 
 export default RecentlyViewed;
