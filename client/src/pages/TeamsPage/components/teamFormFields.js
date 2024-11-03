@@ -43,21 +43,21 @@ export const teamFormFields = ({ team, promos, affiliates }) => {
       label: "The year you your team was founded",
     },
     images: {
-      type: "image_upload",
+      type: "image_upload_multiple",
       label: "Images",
 
       album: `${team.team_name} Images`,
       permissions: ["admin"],
     },
     map: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Map Image",
 
       album: `${team.team_name} Map Image`,
       permissions: ["admin"],
     },
     profile_image: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Profile Image",
 
       album: `${team.team_name} Profile Image`,

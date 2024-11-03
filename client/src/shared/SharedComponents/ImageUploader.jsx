@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from ".";
 
-const ImageUploader = ({ onChange, album, type, fieldName }) => {
+const ImageUploader = ({ onChange, album, type, isMultiple }) => {
   const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,17 +15,13 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
   const [compressImages, setCompressImages] = useState(false);
 
   const handleFileChange = event => {
-    const selectedFiles = event.target.files;
-    const selectedPreviewUrls = [];
+    const selectedFiles = Array.from(event.target.files);
+    // If not multiple, only take the first file
+    const filesToUse = isMultiple ? selectedFiles : selectedFiles.slice(0, 1);
 
-    // Loop through the selected files and create preview URLs
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      const previewUrl = URL.createObjectURL(file);
-      selectedPreviewUrls.push(previewUrl);
-    }
+    const selectedPreviewUrls = filesToUse.map(file => URL.createObjectURL(file));
 
-    setFiles(Array.from(selectedFiles));
+    setFiles(filesToUse);
     setPreviewUrls(selectedPreviewUrls);
   };
 
@@ -32,16 +29,17 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
     setAlbumName(event.target.value);
   };
 
-  // At the top of your component
   const fileInputRef = useRef(null);
 
   const handleSubmit = async event => {
     event.preventDefault();
     setLoading(true);
     const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append("images", files[i]);
-    }
+
+    files.forEach(file => {
+      formData.append("images", file);
+    });
+
     formData.append("albumName", albumName);
     formData.append("compress", compressImages);
 
@@ -51,17 +49,25 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      onChange(response.data);
+
+      // Handle the response based on whether it's multiple or single
+      if (isMultiple) {
+        onChange(response.data);
+      } else {
+        onChange(response.data[0]); // Only pass the first image for single mode
+      }
+
       setLoading(false);
       dispatch(clear_image({}));
 
-      // Reset the file input
+      // Reset the form
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
       setFiles([]);
       setPreviewUrls([]);
     } catch (error) {
+      setLoading(false);
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -103,7 +109,8 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
                 hidden
                 onChange={handleFileChange}
                 id={`${album}-upload-input`}
-                multiple
+                multiple={isMultiple}
+                accept="image/*"
                 ref={fileInputRef}
               />
               <label htmlFor={`${album}-upload-input`}>
@@ -129,6 +136,13 @@ const ImageUploader = ({ onChange, album, type, fieldName }) => {
       </form>
     </div>
   );
+};
+
+ImageUploader.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  album: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  isMultiple: PropTypes.bool.isRequired,
 };
 
 export default ImageUploader;

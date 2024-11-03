@@ -122,7 +122,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
       case "title_image":
         return {
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Title Image",
             labelProp: "image",
             album: "Email Title Images",
@@ -145,7 +145,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
       case "images":
         return {
           images: {
-            type: "image_upload",
+            type: "image_upload_multiple",
             label: "Images",
             labelProp: "image",
             album: "Email Images",
@@ -156,7 +156,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
       case "image":
         return {
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
             labelProp: "image",
             album: "Email Images",
@@ -181,7 +181,7 @@ const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
       case "line_break":
         return {
           line_break: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Line Break",
             labelProp: "line_break",
             album: ` Line Break`,

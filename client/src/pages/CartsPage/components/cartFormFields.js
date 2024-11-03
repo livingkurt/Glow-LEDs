@@ -27,7 +27,7 @@ export const cartFormFields = ({
       label: "Pathname",
     },
     images: {
-      type: "image_upload",
+      type: "image_upload_multiple",
       label: "Images",
       album: `${cart.title} Images`,
     },

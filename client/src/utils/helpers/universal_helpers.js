@@ -77,7 +77,7 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
           options: Array.from({ length: 30 }, (_, i) => i + 1),
         },
         display_image_object: {
-          type: "image_upload",
+          type: "image_upload_single",
           label: "Images",
 
           album: `${itemType} ${item.name} Images`,

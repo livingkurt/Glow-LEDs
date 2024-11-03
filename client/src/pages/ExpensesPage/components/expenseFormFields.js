@@ -100,7 +100,7 @@ export const expenseFormFields = ({ expense, dispatch, expenses, filters }) => {
       },
     },
     documents: {
-      type: "image_upload",
+      type: "image_upload_multiple",
       label: "Documents",
 
       album: `${expense.expense_name} Documents`,

@@ -10,13 +10,13 @@ export const articleFormFields = ({ usersQuery, tagsQuery, article }) => {
     title: { type: "text", label: "Title" },
     short_description: { type: "text", label: "Short Description" },
     image: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Thumbnail",
       album: `${article.title} Images`,
     },
     content: { type: "text_multiline", label: "Content" },
     images: {
-      type: "image_upload",
+      type: "image_upload_multiple",
       label: "Images",
       album: `${article.title} Images`,
     },

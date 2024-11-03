@@ -20,7 +20,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
           label: { type: "text", label: "Label" },
           fact: { type: "text", label: "Fact" },
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
 
             album: `${content?.name} Home Page Slideshow Content Images`,
@@ -55,7 +55,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
           label: { type: "text", label: "Label" },
           fact: { type: "text", label: "Fact" },
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
 
             album: `${content?.name} Home Page Learn More Products Content Images`,
@@ -81,7 +81,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
             type: "object",
             fields: {
               image: {
-                type: "image_upload",
+                type: "image_upload_single",
                 label: "Image",
 
                 album: `${content?.name} Home Page Learn Highlights Content Images`,
@@ -104,7 +104,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         title: { type: "text", label: "Title" },
         subtitle: { type: "text", label: "Subtitle" },
         image: {
-          type: "image_upload",
+          type: "image_upload_single",
           label: "Image",
 
           album: `${content?.name} Home Page Discover More Content Images`,
@@ -121,7 +121,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         title: { type: "text", label: "Title" },
         description: { type: "text_multiline", label: "Description" },
         image: {
-          type: "image_upload",
+          type: "image_upload_single",
           label: "Image",
 
           album: `${content?.name} Home Page Get More Out Of Content Images`,
@@ -151,7 +151,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         title: { type: "text", label: "Title" },
         subtitle: { type: "text_multiline", label: "Subtitle" },
         image: {
-          type: "image_upload",
+          type: "image_upload_single",
           label: "Image",
 
           album: `${content?.name} Home Page Support Banner Content Images`,
@@ -191,7 +191,7 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
     //           quote: { type: "text", label: "Quote" },
     //           author: { type: "text", label: "Author" },
     //           image: {
-    //             type: "image_upload",
+    //             type: "image_upload_single",
     //             label: "Image",
     //
     //             album: `${content?.home_page?.sponsors?.title} Quotes Content Images`,
@@ -238,7 +238,7 @@ export const aboutPageFields = ({ content }) => ({
           title: { type: "text", label: "Title" },
           description: { type: "text_multiline", label: "Description" },
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
 
             album: `${content?.name} About Page Content Images`,
@@ -274,7 +274,7 @@ export const productsGridPageFields = ({ content, products, categorys }) => ({
           short_description: { type: "text_multiline", label: "Short Description" },
           fact: { type: "text", label: "Fact" },
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
 
             album: `${content?.name} Category Banner Content Images`,
@@ -320,7 +320,7 @@ export const faqPageFields = ({ content }) => ({
           description: { type: "text_multiline", label: "Description" },
           video: { type: "text", label: "Video" },
           image: {
-            type: "image_upload",
+            type: "image_upload_single",
             label: "Image",
 
             album: `${content?.name} FAQ Page Sections Content Images`,
@@ -337,7 +337,7 @@ export const faqPageFields = ({ content }) => ({
                 title: { type: "text", label: "Title" },
                 description: { type: "text_multiline", label: "Description" },
                 image: {
-                  type: "image_upload",
+                  type: "image_upload_single",
                   label: "Image",
 
                   album: `${content?.name} FAQ Page Subsections Content Images`,
@@ -371,7 +371,7 @@ export const menusFields = ({ content }) => ({
             label: { type: "text", label: "Label" },
             description: { type: "text", label: "Description" },
             image: {
-              type: "image_upload",
+              type: "image_upload_single",
               label: "Image",
               album: `${content?.name} Menu Images`,
             },
