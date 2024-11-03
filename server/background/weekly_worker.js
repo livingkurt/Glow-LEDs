@@ -20,21 +20,20 @@ const weekly_worker = () => {
   // Get the current date
   const today = new Date();
 
-  automated_payout_worker();
   // Check if today is Friday (the 5th day of the week)
-  // if (today.getDay() === 5) {
-  //   // Weekly tasks - run every Friday
-
-  //   // Bi-weekly tasks - run every other Friday
-  //   if (getWeekNumber(today) % 2 === 0) {
-  //     payout_employees();
-  //     check_stock();
-  //   } else {
-  //     console.log("Not a payroll week");
-  //   }
-  // } else {
-  //   console.log("Not Friday");
-  // }
+  if (today.getDay() === 5) {
+    // Bi-weekly tasks - run every other Friday
+    if (getWeekNumber(today) % 2 === 0) {
+      payout_employees();
+      check_stock();
+    } else {
+      console.log("Not a payroll week");
+    }
+    // Weekly tasks - run every Friday
+    automated_payout_worker();
+  } else {
+    console.log("Not Friday");
+  }
 };
 
 weekly_worker();
