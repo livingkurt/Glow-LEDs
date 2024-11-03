@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { FileCopy } from "@mui/icons-material";
-
+import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 
@@ -90,6 +90,11 @@ const ImageDisplay = ({ images, onChange }) => {
       </DragDropContext>
     </div>
   );
+};
+
+ImageDisplay.propTypes = {
+  images: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default ImageDisplay;

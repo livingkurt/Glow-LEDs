@@ -25,7 +25,7 @@ const Cart = () => {
   const theme = useTheme();
 
   const { current_user } = useSelector(state => state.users.userPage);
-  const { my_cart, cartDrawer, promoCode } = useSelector(state => state.carts.cartPage);
+  const { my_cart, cartDrawer } = useSelector(state => state.carts.cartPage);
 
   const { create_product_bundle_modal, productBundle, loading } = useSelector(state => state.affiliates.affiliatePage);
 
@@ -46,9 +46,14 @@ const Cart = () => {
   );
 
   const formFields = {
-    title: { label: "Title", type: "text", value: "" },
-    subtitle: { label: "Subtitle", type: "text", value: "" },
-    short_description: { label: "Short Description", type: "text", value: "" },
+    title: { label: "Title", type: "text" },
+    subtitle: { label: "Subtitle", type: "text" },
+    short_description: { label: "Short Description", type: "text" },
+    images: {
+      type: "image_upload_multiple",
+      label: "Images",
+      album: `${productBundle.title} Bundle Images`,
+    },
   };
 
   return (

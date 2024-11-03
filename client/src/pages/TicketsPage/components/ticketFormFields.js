@@ -26,7 +26,7 @@ export const ticketFormFields = ({ ticket, ticketsQuery }) => {
       label: "Max Quantity",
     },
     image: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Image",
 
       album: `${ticket.title} Images`,

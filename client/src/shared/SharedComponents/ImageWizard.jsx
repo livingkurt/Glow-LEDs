@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
+import PropTypes from "prop-types";
 import * as API from "../../api";
 import { useDispatch } from "react-redux";
 
-const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
+const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple }) => {
+  console.log({ fieldData, fieldState, onChange, fieldName, isMultiple });
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
 
@@ -20,6 +22,8 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
 
     return [...thumbs2Links, ...imgurLinks, ...images2Links];
   };
+  // Initialize fieldState as an array if it's empty and isMultiple is true
+  const initializedFieldState = isMultiple && !Array.isArray(fieldState) ? [] : fieldState;
 
   const handleSaveId = async () => {
     const foundLinks = extractImageLinks(link);
@@ -31,44 +35,52 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
 
       const newImages = fetchedImages.map(({ payload }) => payload);
 
-      if (Array.isArray(fieldState) || fieldData.forceArray) {
-        onChange([...fieldState, ...newImages]);
-      } else if (typeof fieldState === "object") {
-        onChange(newImages[0]); // Only use the first image for single image fields
+      if (isMultiple) {
+        onChange([...(Array.isArray(initializedFieldState) ? initializedFieldState : []), ...newImages]);
       } else {
-        onChange(newImages);
+        onChange(newImages[0]); // Only use the first image for single image fields
       }
     }
     setLink("");
   };
 
   const handleImageUpload = uploadedImages => {
-    if (Array.isArray(fieldState) || fieldData.forceArray) {
-      onChange([...fieldState, ...uploadedImages]);
-    } else if (typeof fieldState === "object") {
-      onChange(uploadedImages[0]); // Only use the first image for single image fields
+    if (isMultiple) {
+      // For multiple images, append to existing array
+      onChange([...(Array.isArray(initializedFieldState) ? initializedFieldState : []), ...uploadedImages]);
     } else {
-      onChange(uploadedImages);
+      // For single image, just take the first uploaded image
+      const singleImage = Array.isArray(uploadedImages) ? uploadedImages[0] : uploadedImages;
+      onChange(singleImage);
     }
   };
 
-  const images = Array.isArray(fieldState)
-    ? fieldState
-    : fieldState && Object.keys(fieldState).length > 0
-      ? [fieldState]
+  const images = isMultiple
+    ? Array.isArray(initializedFieldState)
+      ? initializedFieldState
+      : []
+    : initializedFieldState && Object.keys(initializedFieldState).length > 0
+      ? [initializedFieldState]
       : [];
 
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-      <ImageUploader onChange={handleImageUpload} album={fieldData.album} fieldName={fieldName} type="image" />
+      <ImageUploader
+        onChange={handleImageUpload}
+        album={fieldData.album}
+        fieldName={fieldName}
+        type="image"
+        isMultiple={isMultiple}
+      />
       <div className="ai-c g-10px">
         <TextField
           label="Enter an Image Link"
-          multiline={Array.isArray(fieldState)}
+          multiline={isMultiple}
           fullWidth
           margin="normal"
           size="small"
+          value={link}
           onChange={e => setLink(e.target.value)}
         />
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>
@@ -79,7 +91,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
         images={images}
         fieldName={fieldName}
         onChange={value => {
-          if (Array.isArray(fieldState)) {
+          if (isMultiple) {
             onChange(value);
           } else {
             onChange(value[0]); // Only use the first image for single image fields
@@ -88,6 +100,14 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
       />
     </div>
   );
+};
+
+ImageWizard.propTypes = {
+  fieldData: PropTypes.object.isRequired,
+  fieldState: PropTypes.any.isRequired,
+  onChange: PropTypes.func.isRequired,
+  fieldName: PropTypes.string.isRequired,
+  isMultiple: PropTypes.bool.isRequired,
 };
 
 export default ImageWizard;

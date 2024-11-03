@@ -53,13 +53,13 @@ export const eventFormFields = ({ event, ticketsQuery }) => {
       label: "Ticket Box Color",
     },
     thumbnail_image: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Thumbnail Image",
 
       album: `${event.name} Images`,
     },
     background_image: {
-      type: "image_upload",
+      type: "image_upload_single",
       label: "Background Image",
 
       album: `${event.name} Images`,
