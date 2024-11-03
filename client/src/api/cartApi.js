@@ -136,10 +136,10 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id, { di
 });
 export const detailsProductBundle = createAsyncThunk(
   "carts/detailsProductBundle",
-  async (id, { dispatch, rejectWithValue }) => {
+  async (pathname, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/carts/${id}`);
-      dispatch(showSuccess({ message: `Cart Found` }));
+      const { data } = await axios.get(`/api/carts/${pathname}`);
+      dispatch(showSuccess({ message: `Product Bundle Found` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

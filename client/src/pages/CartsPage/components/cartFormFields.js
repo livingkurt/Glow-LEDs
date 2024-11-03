@@ -22,6 +22,10 @@ export const cartFormFields = ({
       type: "text",
       label: "Short Description",
     },
+    pathname: {
+      type: "text",
+      label: "Pathname",
+    },
     images: {
       type: "image_upload",
       label: "Images",

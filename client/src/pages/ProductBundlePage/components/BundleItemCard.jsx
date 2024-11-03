@@ -8,9 +8,11 @@ import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyIm
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
 import { showInfo } from "../../../slices/snackbarSlice";
+import { useNavigate } from "react-router-dom";
 
 const BundleItemCard = ({ item }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
   const { current_user } = useSelector(state => state.users.userPage);
 
@@ -72,6 +74,13 @@ const BundleItemCard = ({ item }) => {
               <GLButtonV2 variant="contained" color="primary" onClick={handleQuickAdd} startIcon={<Add />}>
                 {"Add to Cart"}
               </GLButtonV2>
+              <GLButtonV2
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate(`/products/${item.product.pathname}`)}
+              >
+                {"View Product"}
+              </GLButtonV2>
             </Box>
           </Box>
         </Grid>
@@ -88,6 +97,7 @@ BundleItemCard.propTypes = {
     product: PropTypes.shape({
       fact: PropTypes.string,
       short_description: PropTypes.string,
+      pathname: PropTypes.string,
     }),
     display_image_object: PropTypes.shape({
       link: PropTypes.string,

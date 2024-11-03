@@ -206,6 +206,7 @@ const Cart = () => {
             API.createProductBundle({
               affiliateId: current_user.affiliate,
               cartId: my_cart._id,
+              pathname: productBundle.title?.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
               ...productBundle,
             })
           );

@@ -1,3 +1,4 @@
+import { determineIDPathname } from "../api_helpers.js";
 import Cart from "./cart.js";
 
 export default {
@@ -25,8 +26,9 @@ export default {
     }
   },
   findById_carts_db: async id => {
+    const query = determineIDPathname(id);
     try {
-      return await Cart.findOne({ _id: id, active: true, deleted: false })
+      return await Cart.findOne({ ...query, active: true, deleted: false })
         .populate("user")
         .populate("cartItems.display_image_object")
         .populate("cartItems.product")

@@ -29,7 +29,7 @@ const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true }) => {
   };
 
   return (
-    <Link to={`/bundles/${bundle._id}`} style={{ textDecoration: "none" }}>
+    <Link to={`/bundles/${bundle.pathname}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           bgcolor: "transparent",
