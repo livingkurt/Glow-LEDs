@@ -16,7 +16,6 @@ import Cart from "../carts/cart.js";
 
 export default {
   findAll_affiliates_s: async query => {
-    console.log({ query });
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -48,7 +47,6 @@ export default {
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       return affiliates;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -379,7 +377,6 @@ export default {
 
       return updatedAffiliate;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

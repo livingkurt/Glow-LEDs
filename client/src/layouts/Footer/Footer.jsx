@@ -86,7 +86,7 @@ const Footer = () => {
           setIsSubscribed(false);
         }
       } catch (error) {
-        console.log({ error });
+
         setEmailError(error.response.data.message);
       }
     }

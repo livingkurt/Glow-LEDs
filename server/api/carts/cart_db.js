@@ -40,7 +40,6 @@ export default {
         .populate("images")
         .populate("tags");
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

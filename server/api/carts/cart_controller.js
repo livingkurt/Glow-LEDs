@@ -27,7 +27,7 @@ export default {
   },
   product_bundles_carts_c: async (req, res) => {
     const { query } = req;
-    console.log({ query });
+
     try {
       const carts = await cart_services.product_bundles_carts_s(query);
       return res.status(200).send(carts);

@@ -150,7 +150,6 @@ export default {
         .populate("academy_page.sponsors")
         .populate("about_page.sections.image");
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
