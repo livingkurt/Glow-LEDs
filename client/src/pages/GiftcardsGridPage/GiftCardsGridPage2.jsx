@@ -1,8 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
-import { useGetGiftCardsQuery } from "../../api/giftCardApi";
-import { Loading } from "../../shared/SharedComponents";
-import GiftCardCard from "./components/GiftCardCard";
+import GiftCardCard from "./components/GiftCardCard3";
 
 const fixedAmounts = [
   {
@@ -38,10 +36,6 @@ const fixedAmounts = [
 ];
 
 const GiftCardsGridPage = () => {
-  const { isLoading } = useGetGiftCardsQuery();
-
-  if (isLoading) return <Loading />;
-
   return (
     <Box>
       <Helmet>

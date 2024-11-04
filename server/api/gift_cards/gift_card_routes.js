@@ -7,9 +7,10 @@ const router = express.Router();
 // Admin routes
 router
   .route("/")
-  .get(isAuth, isAdmin, gift_card_controller.get_table_gift_cards_c)
+  .get(isAuth, isAdmin, gift_card_controller.findAll_gift_cards_c)
   .post(isAuth, isAdmin, gift_card_controller.create_gift_cards_c);
 
+router.route("/table").get(isAuth, isAdmin, gift_card_controller.get_table_gift_cards_c);
 router
   .route("/:id")
   .get(isAuth, isAdmin, gift_card_controller.findById_gift_cards_c)

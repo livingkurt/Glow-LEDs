@@ -1,32 +1,23 @@
 import { Box, Button, Container } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatDate, formatPrice } from "../../utils/helper_functions";
-import { useGetGiftCardsQuery, useDeleteGiftCardMutation } from "../../api/giftCardApi";
-import { Loading } from "../../shared/SharedComponents";
-import { showError, showSuccess } from "../../slices/snackbarSlice";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditGiftCardModal from "./components/EditGiftCardModal2";
-import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice";
+import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice2";
+import { useCallback } from "react";
+import * as API from "../../api";
 
 const GiftCardsPage = () => {
   const dispatch = useDispatch();
-  const { data: giftCards, isLoading } = useGetGiftCardsQuery();
-  const [deleteGiftCard] = useDeleteGiftCardMutation();
+  const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
+  const { loading, remoteVersionRequirement } = giftCardPage;
 
-  const handleDelete = async id => {
-    try {
-      await deleteGiftCard(id);
-      dispatch(showSuccess({ message: "Gift card deleted successfully" }));
-    } catch (error) {
-      dispatch(showError({ message: error.message }));
-    }
-  };
+  const remoteApi = useCallback(options => API.getGiftCards(options), []);
 
   const columnDefs = [
     { title: "Code", display: giftCard => giftCard.code },
-    { title: "Type", display: giftCard => giftCard.type },
     { title: "Initial Balance", display: giftCard => formatPrice(giftCard.initialBalance) },
     { title: "Current Balance", display: giftCard => formatPrice(giftCard.currentBalance) },
     { title: "Source", display: giftCard => giftCard.source },
@@ -41,34 +32,32 @@ const GiftCardsPage = () => {
       display: giftCard => (
         <Box display="flex" justifyContent="flex-end">
           <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_gift_card_modal(giftCard))}>
-            <Edit />
+            <Edit color="white" />
           </GLIconButton>
-          <GLIconButton tooltip="Delete" onClick={() => handleDelete(giftCard._id)}>
-            <Delete />
+          <GLIconButton onClick={() => dispatch(API.deleteGiftCard(giftCard._id))} tooltip="Delete">
+            <Delete color="white" />
           </GLIconButton>
         </Box>
       ),
     },
   ];
 
-  if (isLoading) return <Loading />;
-
   return (
-    <Container maxWidth={false}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <h1>{"Gift Cards"}</h1>
-        <Button variant="contained" color="primary" onClick={() => dispatch(open_create_gift_card_modal())}>
-          {"Create Gift Card"}
-        </Button>
-      </Box>
-
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <GLTableV2
+        remoteApi={remoteApi}
+        remoteVersionRequirement={remoteVersionRequirement}
         tableName="Gift Cards"
         namespaceScope="giftCards"
-        searchPlaceholder="Search by code"
         namespace="giftCardTable"
         columnDefs={columnDefs}
-        data={giftCards}
+        loading={loading}
+        enableRowSelect={true}
+        titleActions={
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_gift_card_modal())}>
+            {"Create Gift Card"}
+          </Button>
+        }
       />
 
       <EditGiftCardModal />

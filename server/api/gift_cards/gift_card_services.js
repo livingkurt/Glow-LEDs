@@ -18,6 +18,22 @@ export default {
         currentPage: parseInt(page),
       };
     } catch (error) {
+      console.log({ error });
+      throw new Error(error.message);
+    }
+  },
+
+  findAll_gift_cards_s: async query => {
+    try {
+      const sort_options = ["createdAt", "code", "currentBalance"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "code",
+      });
+      const gift_cards = await gift_card_db.findAll_gift_cards_db(filter, sort, limit, page);
+      return gift_cards;
+    } catch (error) {
       throw new Error(error.message);
     }
   },

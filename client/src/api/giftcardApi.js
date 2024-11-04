@@ -1,84 +1,87 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+/* eslint-disable consistent-return */
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const giftCardApi = createApi({
-  reducerPath: "giftCardApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-  tagTypes: ["GiftCard"],
-  endpoints: builder => ({
-    getGiftCards: builder.query({
-      query: params => ({
-        url: "/gift_cards",
-        params,
-      }),
-      providesTags: ["GiftCard"],
-    }),
+import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
-    getGiftCard: builder.query({
-      query: id => `/gift_cards/${id}`,
-      providesTags: ["GiftCard"],
-    }),
+import { create_query } from "../utils/helper_functions";
+import { showError, showSuccess } from "../slices/snackbarSlice";
+import store from "../store";
 
-    createGiftCard: builder.mutation({
-      query: data => ({
-        url: "/gift_cards",
-        method: "POST",
-        data,
-      }),
-      invalidatesTags: ["GiftCard"],
-    }),
+export const getGiftCards = async ({ search, sorting, filters, page, pageSize }) => {
+  try {
+    return await axios.get(`/api/gift_cards/table`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: JSON.stringify(filters),
+      },
+    });
+  } catch (error) {
+    console.log({ error });
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
 
-    updateGiftCard: builder.mutation({
-      query: ({ id, ...data }) => ({
-        url: `/gift_cards/${id}`,
-        method: "PUT",
-        data,
-      }),
-      invalidatesTags: ["GiftCard"],
-    }),
+export const listGiftCards = createAsyncThunk(
+  "giftCards/listGiftCards",
+  async (query, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/gift_cards?${create_query(query)}`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
-    deleteGiftCard: builder.mutation({
-      query: id => ({
-        url: `/gift_cards/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["GiftCard"],
-    }),
+export const saveGiftCard = createAsyncThunk(
+  "giftCards/saveGiftCard",
+  async (parcel, { dispatch, rejectWithValue }) => {
+    try {
+      if (!parcel._id) {
+        const { data } = await axios.post("/api/gift_cards", parcel);
+        dispatch(showSuccess({ message: `GiftCard Created` }));
+        return data;
+      } else {
+        const { data } = await axios.put(`/api/gift_cards/${parcel._id}`, parcel);
+        dispatch(showSuccess({ message: `GiftCard Updated` }));
+        return data;
+      }
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
-    validateGiftCard: builder.query({
-      query: code => `/gift_cards/validate/${code}`,
-    }),
+export const detailsGiftCard = createAsyncThunk(
+  "giftCards/detailsGiftCard",
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/gift_cards/${id}`);
+      dispatch(showSuccess({ message: `GiftCard Found` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
-    checkBalance: builder.query({
-      query: code => `/gift_cards/balance/${code}`,
-    }),
-
-    getMyGiftCards: builder.query({
-      query: params => ({
-        url: "/gift_cards/my-cards",
-        params,
-      }),
-      providesTags: ["GiftCard"],
-    }),
-
-    useGiftCard: builder.mutation({
-      query: data => ({
-        url: "/gift_cards/use",
-        method: "POST",
-        data,
-      }),
-      invalidatesTags: ["GiftCard"],
-    }),
-  }),
-});
-
-export const {
-  useGetGiftCardsQuery,
-  useGetGiftCardQuery,
-  useCreateGiftCardMutation,
-  useUpdateGiftCardMutation,
-  useDeleteGiftCardMutation,
-  useValidateGiftCardQuery,
-  useCheckBalanceQuery,
-  useGetMyGiftCardsQuery,
-  useUseGiftCardMutation,
-} = giftCardApi;
+export const deleteGiftCard = createAsyncThunk(
+  "giftCards/deleteGiftCard",
+  async (pathname, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete("/api/gift_cards/" + pathname);
+      dispatch(showSuccess({ message: `GiftCard Deleted` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
