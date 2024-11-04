@@ -99,7 +99,6 @@ export const allRecordsApi = createApi({
     }),
     productBundles: builder.query({
       query: query => {
-
         return `/carts/product_bundles?${create_query(query)}`;
       },
     }),

@@ -1,79 +1,77 @@
-import { Box, Button, Container } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { formatDate, formatPrice } from "../../utils/helper_functions";
-import { useGetGiftCardsQuery, useDeleteGiftCardMutation } from "../../api/giftCardApi";
-import { Loading } from "../../shared/SharedComponents";
-import { showError, showSuccess } from "../../slices/snackbarSlice";
-import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { useCallback, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice2";
+import * as API from "../../api";
+import { Box, Button, Container } from "@mui/material";
+import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 import EditGiftCardModal from "./components/EditGiftCardModal2";
-import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice";
+import { formatDate, formatPrice } from "../../utils/helper_functions";
 
 const GiftCardsPage = () => {
+  const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
+  const { loading } = giftCardPage;
+
   const dispatch = useDispatch();
-  const { data: giftCards, isLoading } = useGetGiftCardsQuery();
-  const [deleteGiftCard] = useDeleteGiftCardMutation();
 
-  const handleDelete = async id => {
-    try {
-      await deleteGiftCard(id);
-      dispatch(showSuccess({ message: "Gift card deleted successfully" }));
-    } catch (error) {
-      dispatch(showError({ message: error.message }));
-    }
-  };
+  const columnDefs = useMemo(
+    () => [
+      { title: "Code", display: giftCard => giftCard.code },
+      { title: "Initial Balance", display: giftCard => formatPrice(giftCard.initialBalance) },
+      { title: "Current Balance", display: giftCard => formatPrice(giftCard.currentBalance) },
+      { title: "Source", display: giftCard => giftCard.source },
+      {
+        title: "Expiration",
+        display: giftCard => (giftCard.expirationDate ? formatDate(giftCard.expirationDate) : "Never"),
+      },
+      { title: "Status", display: giftCard => (giftCard.isActive ? "Active" : "Inactive") },
+      {
+        title: "Actions",
+        nonSelectable: true,
+        display: giftCard => (
+          <Box display="flex" justifyContent="flex-end">
+            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_gift_card_modal(giftCard))}>
+              <Edit color="white" />
+            </GLIconButton>
+            <GLIconButton onClick={() => dispatch(API.deleteGiftCard(giftCard._id))} tooltip="Delete">
+              <Delete color="white" />
+            </GLIconButton>
+          </Box>
+        ),
+      },
+    ],
+    [dispatch]
+  );
 
-  const columnDefs = [
-    { title: "Code", display: giftCard => giftCard.code },
-    { title: "Type", display: giftCard => giftCard.type },
-    { title: "Initial Balance", display: giftCard => formatPrice(giftCard.initialBalance) },
-    { title: "Current Balance", display: giftCard => formatPrice(giftCard.currentBalance) },
-    { title: "Source", display: giftCard => giftCard.source },
-    {
-      title: "Expiration",
-      display: giftCard => (giftCard.expirationDate ? formatDate(giftCard.expirationDate) : "Never"),
-    },
-    { title: "Status", display: giftCard => (giftCard.isActive ? "Active" : "Inactive") },
-    {
-      title: "Actions",
-      nonSelectable: true,
-      display: giftCard => (
-        <Box display="flex" justifyContent="flex-end">
-          <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_gift_card_modal(giftCard))}>
-            <Edit />
-          </GLIconButton>
-          <GLIconButton tooltip="Delete" onClick={() => handleDelete(giftCard._id)}>
-            <Delete />
-          </GLIconButton>
-        </Box>
-      ),
-    },
-  ];
-
-  if (isLoading) return <Loading />;
+  const remoteApi = useCallback(options => API.getGiftCards(options), []);
 
   return (
-    <Container maxWidth={false}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <h1>{"Gift Cards"}</h1>
-        <Button variant="contained" color="primary" onClick={() => dispatch(open_create_gift_card_modal())}>
-          {"Create Gift Card"}
-        </Button>
-      </Box>
+    <Container maxWidth="xl" sx={{ py: 2 }}>
+      <Helmet>
+        <title>{"Admin Gift Cards | Glow LEDs"}</title>
+      </Helmet>
 
       <GLTableV2
+        remoteApi={remoteApi}
         tableName="Gift Cards"
         namespaceScope="giftCards"
-        searchPlaceholder="Search by code"
         namespace="giftCardTable"
         columnDefs={columnDefs}
-        data={giftCards}
+        loading={loading}
+        enableRowSelect
+        enableDragDrop
+        titleActions={
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_gift_card_modal())}>
+            {"Create Gift Card"}
+          </Button>
+        }
       />
-
       <EditGiftCardModal />
     </Container>
   );
 };
-
 export default GiftCardsPage;

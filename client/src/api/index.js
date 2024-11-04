@@ -20,6 +20,7 @@ export * from "./userApi";
 export * from "./tutorialApi";
 export * from "./wholesalerApi";
 export * from "./imageApi";
+export * from "./giftCardApi2";
 export * from "./glowLedsApi";
 export * from "./eventApi";
 export * from "./articleApi";

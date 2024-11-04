@@ -29,12 +29,11 @@ import {
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
-import { giftCardApi } from "./api/giftCardApi";
 import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
-import giftCardSlice from "./slices/giftCardSlice";
+import giftCardSlice from "./slices/giftCardSlice2";
 import productPageSlice from "./pages/ProductPage/productPageSlice";
 import placeOrderSlice from "./pages/PlaceOrderPage/placeOrderSlice";
 import { affiliateApi, contentApi } from "./api";
@@ -170,7 +169,6 @@ const reducers = {
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   [contentApi.reducerPath]: contentApi.reducer,
-  [giftCardApi.reducerPath]: giftCardApi.reducer,
   snackbar: snackbarSlice,
   dashboards: dashboardSlice,
   wholesalers: combineReducers({

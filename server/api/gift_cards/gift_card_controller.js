@@ -13,6 +13,18 @@ export default {
     }
   },
 
+  findAll_gift_cards_c: async (req, res) => {
+    try {
+      const giftCards = await gift_card_services.findAll_gift_cards_s(req.query);
+      if (giftCards) {
+        return res.status(200).send(giftCards);
+      }
+      return res.status(404).send({ message: "Gift cards not found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
   findById_gift_cards_c: async (req, res) => {
     try {
       const giftCard = await gift_card_services.findById_gift_cards_s(req.params);
