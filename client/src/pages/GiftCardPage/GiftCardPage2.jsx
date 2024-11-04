@@ -41,11 +41,11 @@ const GiftCardPage = () => {
     { name: isCustom ? "CUSTOM" : `$${amount} GiftCard` },
   ];
   const images = {
-    20: { link: "https://i.imgur.com/mkHVKV2.jpeg", _id: "6728df5223238648435c459f" },
-    50: { link: "https://i.imgur.com/bKwv02C.png", _id: "6728df5b23238648435c45a4" },
-    100: { link: "https://i.imgur.com/dkryTIc.jpeg", _id: "6728df6523238648435c45aa" },
-    150: { link: "https://i.imgur.com/9rhXLsB.jpeg", _id: "6728df6e23238648435c45af" },
-    custom: { link: "https://i.imgur.com/a7Dgmf0.png", _id: "6728df7823238648435c45b6" },
+    20: { link: "https://i.imgur.com/mkHVKV2.jpeg", _id: "6728f1c2f14eefb0e86889ef" },
+    50: { link: "https://i.imgur.com/bKwv02C.png", _id: "6728f1caf14eefb0e86889f4" },
+    100: { link: "https://i.imgur.com/dkryTIc.jpeg", _id: "6728f1d1f14eefb0e86889fa" },
+    150: { link: "https://i.imgur.com/9rhXLsB.jpeg", _id: "6728f1d9f14eefb0e86889ff" },
+    custom: { link: "https://i.imgur.com/a7Dgmf0.png", _id: "6728f1e0f14eefb0e8688a04" },
   };
 
   const handleAddToCart = async () => {
