@@ -54,6 +54,10 @@ import AcademyPage from "../../pages/AcademyPage/AcademyPage";
 import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 import ProductBundlesGridPage from "../../pages/ProductBundlesGridPage/ProductBundlesGridPage";
 import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
+import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage2";
+import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage2";
+import GiftCardsGridPage from "../../pages/GiftCardsGridPage/GiftCardsGridPage2";
+
 export const Components = {
   PlaceOrderPage,
   OrderPage,
@@ -84,6 +88,8 @@ export const Components = {
   UnsubscribePage,
   ProductBundlesGridPage,
   ProductBundlePage,
+  GiftCardsGridPage,
+  GiftCardPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,
@@ -115,6 +121,7 @@ export const AdminComponents = {
   EventsPage,
   TicketsPage,
   ArticlesPage,
+  GiftCardsPage,
 };
 export const PrivateComponents = {
   ProfilePage,

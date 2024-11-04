@@ -113,6 +113,11 @@ const features = addIdsRecursively({
       extraContent: "⭐",
     },
     {
+      name: "Gift Cards",
+      path: "/gift_cards",
+      extraContent: "🎁",
+    },
+    {
       name: "On Sale!",
       path: "/products?category=discounted",
       extraContent: "💰",
@@ -121,10 +126,6 @@ const features = addIdsRecursively({
       name: "Stickers",
       path: "/products?tags[]=merch&stags[]=stickers",
     },
-    // {
-    //   name: "Product Bundles",
-    //   path: "/products?tags[]=bundles",
-    // },
   ],
 });
 const glowskinz = addIdsRecursively({
@@ -671,6 +672,11 @@ const admin = addIdsRecursively({
     {
       name: "Tickets",
       path: "/secure/glow/tickets",
+      onClick: x => true,
+    },
+    {
+      name: "GiftCards",
+      path: "/secure/glow/gift_cards",
       onClick: x => true,
     },
 

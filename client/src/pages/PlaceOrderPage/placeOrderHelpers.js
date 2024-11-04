@@ -1,5 +1,3 @@
-import { determineItemsTotal } from "../../utils/helper_functions";
-
 export const determine_service = rate => {
   if (rate.est_delivery_days) {
     return `Est: ${rate.est_delivery_days} ${rate.est_delivery_days === 1 ? "Day" : "Days"}`;
@@ -78,7 +76,6 @@ export const isFreeShipping = ({ shipping, items_price, rate, sortedRates, freeS
 };
 
 export const displayRate = ({ current_shipping_speed, shipping }) => {
-  console.log({ current_shipping_speed });
   return current_shipping_speed.freeShipping
     ? "Free"
     : `$${parseFloat(
@@ -166,19 +163,67 @@ export const applyAmountOff = (state, eligibleTotal, validPromo, tax_rate) => {
 };
 
 export const applyFreeShipping = (state, validPromo) => {
+  // Store previous prices before setting to zero
+  state.previousShippingPrice = state.shippingPrice;
+  state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+  state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
+
   state.shippingPrice = 0;
   state.preOrderShippingPrice = 0;
   state.nonPreOrderShippingPrice = 0;
   state.free_shipping_message = "Free";
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
+export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
+  // Calculate total order cost including shipping
+  const totalOrderCost = state.itemsPrice + state.shippingPrice;
 
+  // Determine how much of the gift card to use
+  const discount = Math.min(validGiftCard.currentBalance, totalOrderCost);
+
+  // Store previous shipping prices before setting to zero
+  state.previousShippingPrice = state.shippingPrice;
+  state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+  state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
+
+  // If gift card covers entire order (items + shipping)
+  if (discount >= totalOrderCost) {
+    state.itemsPrice = 0;
+    state.shippingPrice = 0;
+    state.preOrderShippingPrice = 0;
+    state.nonPreOrderShippingPrice = 0;
+    state.taxPrice = 0;
+    state.free_shipping_message = "Free";
+  } else {
+    // Apply discount to items first, then shipping if there's remaining balance
+    const remainingAfterItems = discount - state.itemsPrice;
+    state.itemsPrice = Math.max(0, state.itemsPrice - discount);
+
+    if (remainingAfterItems > 0) {
+      state.shippingPrice = Math.max(0, state.shippingPrice - remainingAfterItems);
+      state.preOrderShippingPrice = 0;
+      state.nonPreOrderShippingPrice = 0;
+      state.free_shipping_message = state.shippingPrice === 0 ? "Free" : state.free_shipping_message;
+    }
+
+    state.taxPrice = state.taxRate * state.itemsPrice;
+  }
+
+  state.activePromoCodeIndicator = `Gift Card: $${discount.toFixed(2)} Applied`;
+  state.giftCardAmount = discount;
+  state.giftCardCode = validGiftCard.code;
+};
 // Calculate the new total price based on included or excluded products and categories
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
   const today = new Date();
   let totalEligibleForDiscount = 0;
 
   cartItems?.forEach(item => {
+    // Skip gift cards
+    if (item.itemType === "gift_card") {
+      return;
+    }
+
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
     const salePrice =
       today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0
@@ -198,7 +243,6 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
 
   return totalEligibleForDiscount;
 };
-
 export const constructOutOfStockMessage = outOfStockItems => {
   // Construct a message listing out-of-stock items, including option details if present
   const itemsList = outOfStockItems

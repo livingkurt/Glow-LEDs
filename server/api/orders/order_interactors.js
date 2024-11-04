@@ -1,3 +1,6 @@
+import { gift_card_template } from "../../email_templates/pages/gift_card.js";
+import { generateRandomCode } from "../../utils/util.js";
+import GiftCard from "../gift_cards/gift_card.js";
 import mongoose from "mongoose";
 import { determine_code_tier, isEmail } from "../../utils/util.js";
 import order_db from "./order_db.js";
@@ -22,6 +25,7 @@ import { generateTicketQRCodes } from "../emails/email_interactors.js";
 import { createTransporter } from "../emails/email_helpers.js";
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
+import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -338,18 +342,28 @@ export const handleUserCreation = async (shipping, create_account, new_password)
 
 export const processPayment = async (orderId, paymentMethod, totalPrice) => {
   try {
+    let newTotalPrice = totalPrice;
     const order = await Order.findById(orderId).populate("user");
-    const current_userrmation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
-    const paymentInformation = normalizePaymentInfo({ totalPrice });
-    const customer = await createOrUpdateCustomer(current_userrmation);
-    const paymentIntent = await createPaymentIntent(customer, paymentInformation);
-    const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
-    await logStripeFeeToExpenses(confirmedPayment);
 
-    // Check if the order contains pre-order items
+    // If gift card was used, process it first
+    if (order.giftCardCode && order.giftCardAmount) {
+      await useGiftCard(order.giftCardCode, order.giftCardAmount, orderId);
+      // Adjust the amount to charge via Stripe
+      newTotalPrice -= order.giftCardAmount;
+    }
+    let confirmedPayment;
+
+    // Only process Stripe payment if there's remaining balance
+    if (newTotalPrice > 0) {
+      const customerInformation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
+      const paymentInformation = normalizePaymentInfo({ totalPrice: newTotalPrice });
+      const customer = await createOrUpdateCustomer(customerInformation);
+      const paymentIntent = await createPaymentIntent(customer, paymentInformation);
+      confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
+      await logStripeFeeToExpenses(confirmedPayment);
+    }
+
     const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
-
-    // Update the order, maintaining "paid_pre_order" status if necessary
     const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod, hasPreOrderItems);
 
     return updatedOrder;
@@ -500,4 +514,65 @@ export const calculateOrderPrices = (items, originalOrder, shipping_rate) => {
   const taxPrice = originalOrder?.taxRate ? itemsPrice * originalOrder?.taxRate : 0;
 
   return { itemsPrice, shippingPrice, taxPrice };
+};
+
+export const generateGiftCards = async orderItems => {
+  const giftCardsByAmount = [];
+
+  for (const item of orderItems) {
+    if (item.itemType === "gift_card") {
+      // Get the price as the initial balance if data.initialBalance is not present
+      const initialBalance = item.data?.initialBalance || item.price;
+
+      const giftCardsForAmount = {
+        initialBalance,
+        quantity: item.quantity,
+        codes: [],
+      };
+
+      // Generate gift cards for this amount
+      for (let i = 0; i < item.quantity; i++) {
+        const code = generateRandomCode(16); // Generate 16-character unique code
+
+        await GiftCard.create({
+          code,
+          initialBalance,
+          currentBalance: initialBalance,
+          source: "customer",
+          isActive: true,
+        });
+
+        giftCardsForAmount.codes.push(code);
+      }
+
+      giftCardsByAmount.push(giftCardsForAmount);
+    }
+  }
+
+  return giftCardsByAmount;
+};
+
+export const sendGiftCardEmail = async order => {
+  const giftCardItems = order.orderItems.filter(item => item.itemType === "gift_card");
+
+  if (giftCardItems.length > 0) {
+    const giftCards = await generateGiftCards(giftCardItems);
+
+    const mailOptionsConfirmation = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: order.shipping.email,
+      subject: `Your Glow LEDs Gift Card${giftCards.length > 1 ? "s" : ""} Codes`,
+      html: App({ body: gift_card_template(giftCards, order._id), unsubscribe: false }),
+      headers: {
+        "Precedence": "transactional",
+        "X-Auto-Response-Suppress": "OOF, AutoReply",
+      },
+    };
+
+    await sendEmail("info", mailOptionsConfirmation);
+
+    return giftCards;
+  }
+
+  return null;
 };

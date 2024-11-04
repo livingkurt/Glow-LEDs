@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import { Tooltip, Typography, useTheme } from "@mui/material";
 import { getHasPreOrderItems } from "../placeOrderHelpers";
+import ShippingPrice from "./ShippingPrice";
 
 const OrderSummaryStep = () => {
   const theme = useTheme();
@@ -17,7 +18,9 @@ const OrderSummaryStep = () => {
     activePromoCodeIndicator,
     loading,
     shippingPrice,
-    free_shipping_message,
+    previousShippingPrice,
+    previousNonPreOrderShippingPrice,
+    previousPreOrderShippingPrice,
     tip,
     itemsPrice,
     taxPrice,
@@ -94,10 +97,10 @@ const OrderSummaryStep = () => {
               </del>
               <div>
                 <del style={{ color: "red" }}>
-                  <label style={{ color: "white" }}>
+                  <div style={{ color: "white" }}>
                     {"$"}
                     {items_price.toFixed(2)}
-                  </label>
+                  </div>
                 </del>
               </div>
             </li>
@@ -126,32 +129,19 @@ const OrderSummaryStep = () => {
         </li>
         {splitOrder ? (
           <>
-            <li className="pos-rel">
-              <div>{"In-stock Items Shipping"}</div>
-              <div>
-                {shipping && shipping.hasOwnProperty("first_name") && nonPreOrderShippingPrice > 0
-                  ? "$" + nonPreOrderShippingPrice.toFixed(2)
-                  : free_shipping_message}
-              </div>
-            </li>
-            <li className="pos-rel">
-              <div>{"Pre-order Items Shipping"}</div>
-              <div>
-                {shipping && shipping.hasOwnProperty("first_name") && preOrderShippingPrice > 0
-                  ? "$" + preOrderShippingPrice.toFixed(2)
-                  : free_shipping_message}
-              </div>
-            </li>
+            <ShippingPrice
+              label="In-stock Items Shipping"
+              originalPrice={previousNonPreOrderShippingPrice}
+              newPrice={nonPreOrderShippingPrice}
+            />
+            <ShippingPrice
+              label="Pre-order Items Shipping"
+              originalPrice={previousPreOrderShippingPrice}
+              newPrice={preOrderShippingPrice}
+            />
           </>
         ) : (
-          <li className="pos-rel">
-            <div>{"Shipping"}</div>
-            <div>
-              {shipping && shipping.hasOwnProperty("first_name") && shippingPrice > 0
-                ? "$" + shippingPrice.toFixed(2)
-                : free_shipping_message}
-            </div>
-          </li>
+          <ShippingPrice label="Shipping" originalPrice={previousShippingPrice} newPrice={shippingPrice} />
         )}
         {serviceFee > 0 && (
           <li className="pos-rel">

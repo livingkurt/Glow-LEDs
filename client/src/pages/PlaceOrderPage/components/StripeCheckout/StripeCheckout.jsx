@@ -30,12 +30,15 @@ const StripeCheckout = () => {
     totalPrice,
     activePromoCodeIndicator,
     tip,
+    previousShippingPrice,
     order_note,
     production_note,
     serviceFee,
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
+    giftCardAmount,
+    giftCardCode,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -62,11 +65,7 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
-      console.log({
-        splitOrder: splitOrder,
-        preOrderShippingRate: preOrderShippingRate,
-        nonPreOrderShippingRate: nonPreOrderShippingRate,
-      });
+
       if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
@@ -82,6 +81,7 @@ const StripeCheckout = () => {
               payment,
               itemsPrice,
               shippingPrice,
+              previousShippingPrice,
               taxPrice,
               taxRate,
               totalPrice: totalPrice,
@@ -89,6 +89,14 @@ const StripeCheckout = () => {
               production_note,
               tip,
               promo_code: activePromoCodeIndicator && promo_code,
+              giftCard:
+                activePromoCodeIndicator && promo_code?.length === 16
+                  ? {
+                      code: giftCardCode,
+                      amountUsed: giftCardAmount,
+                      source: "customer",
+                    }
+                  : null,
               parcel: parcel || null,
               serviceFee,
               hasPreOrderItems,

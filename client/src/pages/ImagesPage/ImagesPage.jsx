@@ -23,11 +23,12 @@ import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage
 
 const ImagesPage = () => {
   const imagePage = useSelector(state => state.images.imagePage);
-  const { message, loading, remoteVersionRequirement, image_display_modal, selected_image } = imagePage;
+  const { loading, remoteVersionRequirement, image_display_modal, selected_image } = imagePage;
   const dispatch = useDispatch();
 
   const columnDefs = useMemo(
     () => [
+      { title: "ID", display: "_id" },
       { title: "Date Added", display: image => image.createdAt && format_date(image.createdAt) },
       {
         title: "Album",

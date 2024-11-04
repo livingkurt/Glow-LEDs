@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../../api";
-import { applyAmountOff, applyFreeShipping, applyPercentageOff, calculateNewItemsPrice } from "./placeOrderHelpers";
+import {
+  applyAmountOff,
+  applyFreeShipping,
+  applyGiftCard,
+  applyPercentageOff,
+  calculateNewItemsPrice,
+} from "./placeOrderHelpers";
 
 const initialState = {
   shipping_rates: {},
@@ -299,36 +305,40 @@ const placeOrder = createSlice({
         state.nonPreOrderShippingPrice = state.previousNonPreOrderShippingPrice;
         state.shippingPrice = previousShippingPrice;
       }
+      state.promo_code = "";
       state.show_promo_code_input_box = true;
+      sessionStorage.removeItem("promo_code");
     },
     activatePromo: (state, { payload }) => {
-      const { tax_rate, activePromoCodeIndicator, validPromo, cartItems, current_user } = payload;
+      const { tax_rate, activePromoCodeIndicator, validPromo, validGiftCard, cartItems, current_user } = payload;
 
-      const totalEligibleForDiscount = calculateNewItemsPrice({
-        cartItems,
-        validPromo,
-        isWholesaler: current_user?.isWholesaler,
-      });
-
-      if (validPromo) {
-        if (activePromoCodeIndicator) {
-          state.promo_code_validations = "Can only use one promo code at a time";
-        } else {
-          if (validPromo.percentage_off) {
-            applyPercentageOff(state, totalEligibleForDiscount, validPromo, tax_rate);
-          } else if (validPromo.amount_off) {
-            applyAmountOff(state, totalEligibleForDiscount, validPromo, tax_rate);
-          }
-
-          if (validPromo.free_shipping) {
-            applyFreeShipping(state, validPromo);
-          }
-
-          state.show_promo_code_input_box = false;
-        }
-      } else {
-        state.promo_code_validations = "Promo Code Not Found";
+      if (activePromoCodeIndicator) {
+        state.promo_code_validations = "Can only use one code at a time";
+        return;
       }
+
+      if (validGiftCard) {
+        const eligibleTotal = state.itemsPrice;
+        applyGiftCard(state, eligibleTotal, validGiftCard);
+      } else if (validPromo) {
+        const eligibleTotal = calculateNewItemsPrice({
+          cartItems,
+          validPromo,
+          isWholesaler: current_user?.isWholesaler,
+        });
+
+        if (validPromo.percentage_off) {
+          applyPercentageOff(state, eligibleTotal, validPromo, tax_rate);
+        } else if (validPromo.amount_off) {
+          applyAmountOff(state, eligibleTotal, validPromo, tax_rate);
+        }
+
+        if (validPromo.free_shipping) {
+          applyFreeShipping(state, validPromo);
+        }
+      }
+
+      state.show_promo_code_input_box = false;
     },
 
     re_choose_shipping_rate: (state, { payload }) => {
@@ -361,6 +371,10 @@ const placeOrder = createSlice({
       state.shipping_rate = payload;
     },
     setFreeShipping: (state, { payload }) => {
+      state.previousShippingPrice = state.shippingPrice;
+      state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+      state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
+
       state.hide_pay_button = false;
       state.shippingPrice = 0;
       state.free_shipping_message = "Free";
@@ -374,6 +388,9 @@ const placeOrder = createSlice({
       let shippingPrice = 0;
 
       if (freeShipping) {
+        state.previousShippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);
+        state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+        state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
         state.free_shipping_message = "Free";
       } else {
         shippingPrice = parseFloat(shipping.international ? rate.rate : rate.list_rate || rate.rate);

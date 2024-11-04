@@ -355,14 +355,49 @@ export default ({ email, order }) => {
 															</td>
 														</tr>
 														<tr>
-															<td style="font-family:helvetica;padding:5px 0">
-																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																		style="font-size:16px">Shipping</span></p>
-															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : "0.00"}</strong>
-															</td>
-														</tr>
+                              <td style="font-family:helvetica;padding:5px 0">
+                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                  <span style="font-size:16px">Shipping</span>
+                                </p>
+                              </td>
+                              <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                ${
+                                  order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                    ? `
+                                    <del style="color:red">
+                                      <strong style="font-size:16px;color:white">$${order.previousShippingPrice.toFixed(2)}</strong>
+                                    </del>
+                                    `
+                                    : `<strong style="font-size:16px;color:white">$${order.shippingPrice.toFixed(2)}</strong>`
+                                }
+                              </td>
+                            </tr>
+                            ${
+                              order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                ? `
+                                <tr>
+                                  <td style="font-family:helvetica;padding:5px 0">
+                                    <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                      <span style="font-size:16px">Shipping Discount</span>
+                                    </p>
+                                  </td>
+                                  <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                    <strong style="font-size:16px;color:white">-$${order.previousShippingPrice.toFixed(2)}</strong>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="font-family:helvetica;padding:5px 0">
+                                    <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                      <span style="font-size:16px">New Shipping</span>
+                                    </p>
+                                  </td>
+                                  <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                    <strong style="font-size:16px;color:white">$0.00</strong>
+                                  </td>
+                                </tr>
+                              `
+                                : ""
+                            }
 														  ${
                                 order.serviceFee > 0
                                   ? `
@@ -531,25 +566,21 @@ export default ({ email, order }) => {
 									</td>
 
 									<td style="font-family:helvetica;width:50%">
-
+                          ${
+                            order?.giftCard?.amountUsed
+                              ? `<p style="color:white;line-height:150%;font-size:16px;margin:10px 0;">
+                                <strong>Gift Card Applied:</strong> $${order?.giftCard?.amountUsed?.toFixed(2)}
+                              </p>`
+                              : ""
+                          }
 										<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
 											${
-                        order.payment &&
-                        order.payment.payment &&
-                        order.payment.payment.card &&
-                        order.payment.payment.card.brand
-                          ? `<img src=${determin_card_logo_images_white(order.payment.payment.card.brand)}
+                        order?.payment?.payment?.card
+                          ? `<img src=${determin_card_logo_images_white(order?.payment?.payment?.card?.brand)}
 												style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
-												alt="card_logo">`
+												alt="card_logo"> <span style="font-size:16px">ending with ${order?.payment?.payment?.card?.last4}`
                           : ""
-                      } <span style="font-size:16px">ending with ${
-                        order.payment &&
-                        order.payment.payment &&
-                        order.payment.payment.card &&
-                        order.payment.payment.card
-                          ? order.payment.payment.card.last4
-                          : ""
-                      }</span></p>
+                      } </span></p>
 									</td>
 								</tr>
 							</tbody>
