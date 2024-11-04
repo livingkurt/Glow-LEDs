@@ -117,6 +117,13 @@ const orderSchema = new mongoose.Schema(
     pausedAt: { type: Date },
     errorAt: { type: Date },
     updatedAt: { type: Date },
+    giftCard: {
+      code: { type: String },
+      amountUsed: { type: Number },
+      type: { type: String, enum: ["sponsored", "supplies"] },
+      remainingBalance: { type: Number },
+    },
+
     // Tracking the primary status changes
     paidAt: { type: Date },
     craftingAt: { type: Date },

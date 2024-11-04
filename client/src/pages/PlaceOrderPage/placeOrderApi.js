@@ -74,3 +74,29 @@ export const checkStock = createAsyncThunk(
     }
   }
 );
+
+export const validateGiftCard = createAsyncThunk(
+  "placeOrderPage/validateGiftCard",
+  async (code, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/gift_cards/validate/${code}`);
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const useGiftCard = createAsyncThunk(
+  "placeOrderPage/useGiftCard",
+  async ({ code, amount, orderId }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/api/gift_cards/use/${code}`, { amount, orderId });
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

@@ -75,6 +75,8 @@ const PaymentStep = () => {
     splitOrder,
     preOrderShippingPrice,
     nonPreOrderShippingPrice,
+    giftCardAmount,
+    giftCardCode,
   } = placeOrder;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
@@ -82,25 +84,48 @@ const PaymentStep = () => {
 
   const check_code = async e => {
     e.preventDefault();
-
-    const request = await dispatch(API.validatePromoCode({ promo_code, current_user, cartItems, shipping }));
-
-    if (request.payload.isValid) {
-      dispatch(
-        activatePromo({
-          cartItems,
-          tax_rate,
-          activePromoCodeIndicator,
-          current_user,
-          validPromo: request.payload.promo,
-        })
-      );
+    if (promo_code.length === 16) {
+      // Gift card validation
+      try {
+        const result = await dispatch(API.validateGiftCard(promo_code)).unwrap();
+        if (result.isValid) {
+          dispatch(
+            activatePromo({
+              tax_rate,
+              activePromoCodeIndicator,
+              validGiftCard: result,
+              cartItems,
+              current_user,
+            })
+          );
+        } else {
+          dispatch(set_promo_code_validations("Invalid gift card code"));
+        }
+      } catch (error) {
+        dispatch(set_promo_code_validations(error.message));
+      }
     } else {
-      dispatch(set_promo_code_validations(request.payload.errors.promo_code));
-      dispatch(set_promo_code(""));
+      // Existing promo code validation
+      try {
+        const result = await dispatch(API.validatePromoCode({ promo_code, cartItems, shipping })).unwrap();
+        if (result.isValid) {
+          dispatch(
+            activatePromo({
+              tax_rate,
+              activePromoCodeIndicator,
+              validPromo: result.promo,
+              cartItems,
+              current_user,
+            })
+          );
+        } else {
+          dispatch(set_promo_code_validations(result.errors.promo_code));
+        }
+      } catch (error) {
+        dispatch(set_promo_code_validations("Error validating code"));
+      }
     }
   };
-
   // const data = new Date()
   const today = new Date();
 
@@ -163,6 +188,14 @@ const PaymentStep = () => {
           production_note,
           tip,
           promo_code: activePromoCodeIndicator && promo_code,
+          giftCard:
+            activePromoCodeIndicator && promo_code?.length === 16
+              ? {
+                  code: giftCardCode,
+                  amountUsed: giftCardAmount,
+                  source: "customer",
+                }
+              : null,
           parcel: parcel || null,
           status: "paid",
           paidAt: today,

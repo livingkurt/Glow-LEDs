@@ -62,7 +62,10 @@ export default {
 
   validate_gift_card_db: async code => {
     try {
-      const giftCard = await GiftCard.findOne({ code: code, deleted: false });
+      const giftCard = await GiftCard.findOne({
+        code: code.toUpperCase(),
+        deleted: false,
+      });
       if (!giftCard) return null;
       return giftCard.isValid() ? giftCard : null;
     } catch (error) {

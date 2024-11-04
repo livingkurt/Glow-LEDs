@@ -25,6 +25,7 @@ import { generateTicketQRCodes } from "../emails/email_interactors.js";
 import { createTransporter } from "../emails/email_helpers.js";
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
+import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -341,18 +342,28 @@ export const handleUserCreation = async (shipping, create_account, new_password)
 
 export const processPayment = async (orderId, paymentMethod, totalPrice) => {
   try {
+    let newTotalPrice = totalPrice;
     const order = await Order.findById(orderId).populate("user");
-    const current_userrmation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
-    const paymentInformation = normalizePaymentInfo({ totalPrice });
-    const customer = await createOrUpdateCustomer(current_userrmation);
-    const paymentIntent = await createPaymentIntent(customer, paymentInformation);
-    const confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
-    await logStripeFeeToExpenses(confirmedPayment);
 
-    // Check if the order contains pre-order items
+    // If gift card was used, process it first
+    if (order.giftCardCode && order.giftCardAmount) {
+      await useGiftCard(order.giftCardCode, order.giftCardAmount, orderId);
+      // Adjust the amount to charge via Stripe
+      newTotalPrice -= order.giftCardAmount;
+    }
+    let confirmedPayment;
+
+    // Only process Stripe payment if there's remaining balance
+    if (newTotalPrice > 0) {
+      const customerInformation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
+      const paymentInformation = normalizePaymentInfo({ totalPrice: newTotalPrice });
+      const customer = await createOrUpdateCustomer(customerInformation);
+      const paymentIntent = await createPaymentIntent(customer, paymentInformation);
+      confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
+      await logStripeFeeToExpenses(confirmedPayment);
+    }
+
     const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
-
-    // Update the order, maintaining "paid_pre_order" status if necessary
     const updatedOrder = await updateOrder(order, confirmedPayment, paymentMethod, hasPreOrderItems);
 
     return updatedOrder;
@@ -521,14 +532,13 @@ export const generateGiftCards = async orderItems => {
 
       // Generate gift cards for this amount
       for (let i = 0; i < item.quantity; i++) {
-        const code = generateRandomCode(8); // Generate 8-character unique code
+        const code = generateRandomCode(16); // Generate 16-character unique code
 
         await GiftCard.create({
           code,
-          type: item.data?.type || "general",
           initialBalance,
           currentBalance: initialBalance,
-          source: "purchase",
+          source: "customer",
           isActive: true,
         });
 

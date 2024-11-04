@@ -56,7 +56,9 @@ export default {
 
   validate_gift_card_s: async params => {
     try {
+      console.log("Validating gift card:", params.code);
       const giftCard = await gift_card_db.validate_gift_card_db(params.code);
+      console.log("Gift card found:", giftCard);
       if (!giftCard) throw new Error("Invalid or expired gift card");
       return {
         code: giftCard.code,
@@ -65,6 +67,7 @@ export default {
         isValid: true,
       };
     } catch (error) {
+      console.error("Gift card validation error:", error);
       throw new Error(error.message);
     }
   },

@@ -36,6 +36,8 @@ const StripeCheckout = () => {
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
+    giftCardAmount,
+    giftCardCode,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -89,6 +91,14 @@ const StripeCheckout = () => {
               production_note,
               tip,
               promo_code: activePromoCodeIndicator && promo_code,
+              giftCard:
+                activePromoCodeIndicator && promo_code?.length === 16
+                  ? {
+                      code: giftCardCode,
+                      amountUsed: giftCardAmount,
+                      source: "customer",
+                    }
+                  : null,
               parcel: parcel || null,
               serviceFee,
               hasPreOrderItems,

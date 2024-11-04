@@ -7,11 +7,6 @@ const giftCardSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    type: {
-      type: String,
-      enum: ["general", "supplies"],
-      default: "general",
-    },
     initialBalance: {
       type: Number,
       required: true,
@@ -22,7 +17,7 @@ const giftCardSchema = new mongoose.Schema(
     },
     source: {
       type: String,
-      enum: ["purchase", "sponsor_benefit", "promotion", "compensation"],
+      enum: ["customer", "sponsor_benefit", "promotion", "compensation"],
       required: true,
     },
     isActive: {
@@ -80,6 +75,7 @@ giftCardSchema.methods.use = async function (amount, orderId) {
   this.transactions.push({
     orderId,
     amount: amount,
+    date: Date.now(),
   });
 
   if (this.currentBalance === 0) {

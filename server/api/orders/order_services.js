@@ -34,6 +34,7 @@ import {
 } from "./order_interactors.js";
 import SalesTax from "sales-tax";
 import affiliate_db from "../affiliates/affiliate_db.js";
+import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
 export default {
@@ -325,15 +326,20 @@ export default {
       await product_services.update_stock_products_s({ cartItems: order.orderItems });
       await cart_services.empty_carts_s({ id: cartId });
 
+      console.log({ promo_code: order.promo_code });
+      console.log({ giftCard: order.giftCard });
       // Handle promo code
-      if (order.promo_code) {
+      if (order.promo_code && order.promo_code.length !== 16) {
         await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });
         await sendCodeUsedEmail(order.promo_code);
+      }
+      if (order.giftCard) {
+        await useGiftCard(order.giftCard.code, order.giftCard.amountUsed, order._id);
       }
 
       return updatedOrders;
     } catch (error) {
-      console.log({ create_order_orders_s: error });
+      console.log({ place_order_orders_s: error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

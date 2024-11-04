@@ -1,158 +1,111 @@
 import gift_card_services from "./gift_card_services.js";
 
 export default {
-  // Get all gift cards (admin only)
-  get_all_gift_cards_c: async (req, res) => {
+  get_table_gift_cards_c: async (req, res) => {
     try {
-      const giftCards = await gift_card_services.findAll_gift_cards_s(req.query);
-      res.status(200).json(giftCards);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Get user's gift cards
-  get_user_gift_cards_c: async (req, res) => {
-    try {
-      const giftCards = await gift_card_services.findByUser_gift_cards_s(req.user._id, req.query);
-      res.status(200).json(giftCards);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Get single gift card
-  get_gift_card_c: async (req, res) => {
-    try {
-      const giftCard = await gift_card_services.findById_gift_card_s(req.params.id);
-
-      if (!giftCard) {
-        return res.status(404).json({ message: "Gift card not found" });
+      const giftCards = await gift_card_services.get_table_gift_cards_s(req.query);
+      if (giftCards) {
+        return res.status(200).send(giftCards);
       }
+      return res.status(404).send({ message: "Gift cards not found" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 
-      // Only allow admin or card owner to view details
-      if (!req.user.isAdmin && giftCard.user.toString() !== req.user._id.toString()) {
-        return res.status(403).json({ message: "Not authorized" });
+  findById_gift_cards_c: async (req, res) => {
+    try {
+      const giftCard = await gift_card_services.findById_gift_cards_s(req.params);
+      if (giftCard) {
+        return res.status(200).send(giftCard);
       }
-
-      res.status(200).json(giftCard);
+      return res.status(404).send({ message: "Gift card not found" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Create new gift card
-  create_gift_card_c: async (req, res) => {
+  create_gift_cards_c: async (req, res) => {
     try {
-      const giftCard = await gift_card_services.create_gift_card_s(req.body);
-      res.status(201).json(giftCard);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Create sponsor benefit gift cards
-  create_sponsor_benefits_c: async (req, res) => {
-    try {
-      const { userId, monthlyRevenue } = req.body;
-      const giftCards = await gift_card_services.create_sponsor_benefits_s(userId, monthlyRevenue);
-      res.status(201).json(giftCards);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Update gift card
-  update_gift_card_c: async (req, res) => {
-    try {
-      const giftCard = await gift_card_services.update_gift_card_s(req.params.id, req.body);
-      if (!giftCard) {
-        return res.status(404).json({ message: "Gift card not found" });
+      const giftCard = await gift_card_services.create_gift_cards_s(req.body);
+      if (giftCard) {
+        return res.status(201).send(giftCard);
       }
-      res.status(200).json(giftCard);
+      return res.status(500).send({ message: "Error creating gift card" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Delete gift card (soft delete)
-  delete_gift_card_c: async (req, res) => {
+  update_gift_cards_c: async (req, res) => {
     try {
-      await gift_card_services.delete_gift_card_s(req.params.id);
-      res.status(200).json({ message: "Gift card deleted successfully" });
+      const giftCard = await gift_card_services.update_gift_cards_s(req.params, req.body);
+      if (giftCard) {
+        return res.status(200).send(giftCard);
+      }
+      return res.status(500).send({ message: "Error updating gift card" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Add funds to gift card
-  add_funds_c: async (req, res) => {
+  remove_gift_cards_c: async (req, res) => {
     try {
-      const { amount, description } = req.body;
-      const giftCard = await gift_card_services.add_funds_gift_card_s(req.params.id, amount, description);
-      res.status(200).json(giftCard);
+      const giftCard = await gift_card_services.remove_gift_cards_s(req.params);
+      if (giftCard) {
+        return res.status(204).send({ message: "Gift card deleted" });
+      }
+      return res.status(500).send({ message: "Error deleting gift card" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Use gift card
-  use_gift_card_c: async (req, res) => {
-    try {
-      const { code, amount, orderId } = req.body;
-      const giftCard = await gift_card_services.use_funds_gift_card_s(code, amount, orderId, "Order payment");
-      res.status(200).json(giftCard);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Validate gift card
   validate_gift_card_c: async (req, res) => {
     try {
-      const result = await gift_card_services.validate_gift_card_s(req.params.code);
-      if (result.error) {
-        return res.status(400).json({ message: result.error });
+      const result = await gift_card_services.validate_gift_card_s(req.params);
+      if (result) {
+        return res.status(200).send(result);
       }
-      res.status(200).json(result);
+      return res.status(400).send({ message: "Invalid gift card" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Check gift card balance
   check_balance_c: async (req, res) => {
     try {
-      const result = await gift_card_services.check_balance_s(req.params.code);
-      if (result.error) {
-        return res.status(404).json({ message: result.error });
+      const result = await gift_card_services.check_balance_s(req.params);
+      if (result) {
+        return res.status(200).send(result);
       }
-      res.status(200).json(result);
+      return res.status(404).send({ message: "Gift card not found" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Deactivate gift card
-  deactivate_gift_card_c: async (req, res) => {
+  use_gift_card_c: async (req, res) => {
     try {
-      const giftCard = await gift_card_services.update_gift_card_s(req.params.id, { isActive: false });
-      if (!giftCard) {
-        return res.status(404).json({ message: "Gift card not found" });
+      const result = await gift_card_services.use_gift_card_s(req.params, req.body);
+      if (result) {
+        return res.status(200).send(result);
       }
-      res.status(200).json({ message: "Gift card deactivated successfully" });
+      return res.status(400).send({ message: "Error using gift card" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 
-  // Get gift card transactions
   get_transactions_c: async (req, res) => {
     try {
-      const transactions = await gift_card_services.get_transactions_gift_card_s(req.params.id);
-      res.status(200).json(transactions);
+      const transactions = await gift_card_services.get_transactions_s(req.params);
+      if (transactions) {
+        return res.status(200).send(transactions);
+      }
+      return res.status(404).send({ message: "Transactions not found" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ error, message: error.message });
     }
   },
 };

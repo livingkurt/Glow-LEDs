@@ -8,9 +8,12 @@ export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;
 };
 export const generateRandomCode = length => {
-  return Math.random()
-    .toString(36)
-    .substring(2, 2 + length);
+  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
 };
 
 export const getItemsTotal = items => {

@@ -169,7 +169,40 @@ export const applyFreeShipping = (state, validPromo) => {
   state.free_shipping_message = "Free";
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
+export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
+  // Calculate total order cost including shipping
+  const totalOrderCost = state.itemsPrice + state.shippingPrice;
 
+  // Determine how much of the gift card to use
+  const discount = Math.min(validGiftCard.currentBalance, totalOrderCost);
+
+  // If gift card covers entire order (items + shipping)
+  if (discount >= totalOrderCost) {
+    state.itemsPrice = 0;
+    state.shippingPrice = 0;
+    state.preOrderShippingPrice = 0;
+    state.nonPreOrderShippingPrice = 0;
+    state.taxPrice = 0;
+    state.free_shipping_message = "Free";
+  } else {
+    // Apply discount to items first, then shipping if there's remaining balance
+    const remainingAfterItems = discount - state.itemsPrice;
+    state.itemsPrice = Math.max(0, state.itemsPrice - discount);
+
+    if (remainingAfterItems > 0) {
+      state.shippingPrice = Math.max(0, state.shippingPrice - remainingAfterItems);
+      state.preOrderShippingPrice = 0;
+      state.nonPreOrderShippingPrice = 0;
+      state.free_shipping_message = state.shippingPrice === 0 ? "Free" : state.free_shipping_message;
+    }
+
+    state.taxPrice = state.taxRate * state.itemsPrice;
+  }
+
+  state.activePromoCodeIndicator = `Gift Card: $${discount.toFixed(2)} Applied`;
+  state.giftCardAmount = discount;
+  state.giftCardCode = validGiftCard.code;
+};
 // Calculate the new total price based on included or excluded products and categories
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
   const today = new Date();
