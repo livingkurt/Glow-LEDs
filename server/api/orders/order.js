@@ -100,6 +100,7 @@ const orderSchema = new mongoose.Schema(
     taxPrice: { type: Number },
     taxRate: { type: Number },
     shippingPrice: { type: Number },
+    previousShippingPrice: { type: Number },
     serviceFee: { type: Number },
     totalPrice: { type: Number },
     refundTotal: { type: Number },

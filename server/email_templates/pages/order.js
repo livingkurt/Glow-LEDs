@@ -355,14 +355,49 @@ export default ({ email, order }) => {
 															</td>
 														</tr>
 														<tr>
-															<td style="font-family:helvetica;padding:5px 0">
-																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																		style="font-size:16px">Shipping</span></p>
-															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : "0.00"}</strong>
-															</td>
-														</tr>
+                              <td style="font-family:helvetica;padding:5px 0">
+                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                  <span style="font-size:16px">Shipping</span>
+                                </p>
+                              </td>
+                              <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                ${
+                                  order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                    ? `
+                                    <del style="color:red">
+                                      <strong style="font-size:16px;color:white">$${order.previousShippingPrice.toFixed(2)}</strong>
+                                    </del>
+                                    `
+                                    : `<strong style="font-size:16px;color:white">$${order.shippingPrice.toFixed(2)}</strong>`
+                                }
+                              </td>
+                            </tr>
+                            ${
+                              order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                ? `
+                                <tr>
+                                  <td style="font-family:helvetica;padding:5px 0">
+                                    <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                      <span style="font-size:16px">Shipping Discount</span>
+                                    </p>
+                                  </td>
+                                  <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                    <strong style="font-size:16px;color:white">-$${order.previousShippingPrice.toFixed(2)}</strong>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="font-family:helvetica;padding:5px 0">
+                                    <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                      <span style="font-size:16px">New Shipping</span>
+                                    </p>
+                                  </td>
+                                  <td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+                                    <strong style="font-size:16px;color:white">$0.00</strong>
+                                  </td>
+                                </tr>
+                              `
+                                : ""
+                            }
 														  ${
                                 order.serviceFee > 0
                                   ? `

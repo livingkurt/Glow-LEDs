@@ -181,6 +181,7 @@ const PaymentStep = () => {
           payment,
           itemsPrice,
           shippingPrice,
+          previousShippingPrice,
           taxPrice,
           totalPrice,
           user: current_user._id,

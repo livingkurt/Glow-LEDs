@@ -30,6 +30,7 @@ const StripeCheckout = () => {
     totalPrice,
     activePromoCodeIndicator,
     tip,
+    previousShippingPrice,
     order_note,
     production_note,
     serviceFee,
@@ -64,11 +65,7 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
-      console.log({
-        splitOrder: splitOrder,
-        preOrderShippingRate: preOrderShippingRate,
-        nonPreOrderShippingRate: nonPreOrderShippingRate,
-      });
+
       if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
@@ -84,6 +81,7 @@ const StripeCheckout = () => {
               payment,
               itemsPrice,
               shippingPrice,
+              previousShippingPrice,
               taxPrice,
               taxRate,
               totalPrice: totalPrice,
