@@ -163,6 +163,11 @@ export const applyAmountOff = (state, eligibleTotal, validPromo, tax_rate) => {
 };
 
 export const applyFreeShipping = (state, validPromo) => {
+  // Store previous prices before setting to zero
+  state.previousShippingPrice = state.shippingPrice;
+  state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+  state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
+
   state.shippingPrice = 0;
   state.preOrderShippingPrice = 0;
   state.nonPreOrderShippingPrice = 0;
@@ -175,6 +180,11 @@ export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
 
   // Determine how much of the gift card to use
   const discount = Math.min(validGiftCard.currentBalance, totalOrderCost);
+
+  // Store previous shipping prices before setting to zero
+  state.previousShippingPrice = state.shippingPrice;
+  state.previousPreOrderShippingPrice = state.preOrderShippingPrice;
+  state.previousNonPreOrderShippingPrice = state.nonPreOrderShippingPrice;
 
   // If gift card covers entire order (items + shipping)
   if (discount >= totalOrderCost) {
