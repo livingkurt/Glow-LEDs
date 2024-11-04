@@ -510,8 +510,11 @@ export const generateGiftCards = async orderItems => {
 
   for (const item of orderItems) {
     if (item.itemType === "gift_card") {
+      // Get the price as the initial balance if data.initialBalance is not present
+      const initialBalance = item.data?.initialBalance || item.price;
+
       const giftCardsForAmount = {
-        initialBalance: item.data.initialBalance,
+        initialBalance,
         quantity: item.quantity,
         codes: [],
       };
@@ -522,9 +525,9 @@ export const generateGiftCards = async orderItems => {
 
         await GiftCard.create({
           code,
-          type: item.data.type || "general",
-          initialBalance: item.data.initialBalance,
-          currentBalance: item.data.initialBalance,
+          type: item.data?.type || "general",
+          initialBalance,
+          currentBalance: initialBalance,
           source: "purchase",
           isActive: true,
         });
@@ -545,11 +548,18 @@ export const sendGiftCardEmail = async order => {
   if (giftCardItems.length > 0) {
     const giftCards = await generateGiftCards(giftCardItems);
 
-    await sendEmail({
+    const mailOptionsConfirmation = {
+      from: config.DISPLAY_INFO_EMAIL,
       to: order.shipping.email,
-      subject: "Your Glow LEDs Gift Card Codes",
-      html: gift_card_template(giftCards),
-    });
+      subject: `Your Glow LEDs Gift Card${giftCards.length > 1 ? "s" : ""} Codes`,
+      html: App({ body: gift_card_template(giftCards, order._id), unsubscribe: false }),
+      headers: {
+        "Precedence": "transactional",
+        "X-Auto-Response-Suppress": "OOF, AutoReply",
+      },
+    };
+
+    await sendEmail("info", mailOptionsConfirmation);
 
     return giftCards;
   }

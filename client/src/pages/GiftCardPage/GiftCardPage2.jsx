@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Container, Grid, TextField, Typography } from "@mui/material";
+import { Box, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPrice } from "../../utils/helper_functions";
@@ -12,11 +12,15 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
 import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
+import GLTextFieldV2 from "../../shared/GlowLEDsComponents/GLTextFieldV2/GLTextFieldV2";
+import { AttachMoney, Money } from "@mui/icons-material";
 
 const GiftCardPage = () => {
   const { amount } = useParams();
   const dispatch = useDispatch();
   const [customAmount, setCustomAmount] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -62,7 +66,7 @@ const GiftCardPage = () => {
         name: `${formatPrice(giftCardAmount)} Gift Card`,
         itemType: "gift_card",
         price: giftCardAmount,
-        quantity: 1,
+        quantity: quantity,
         display_image_object: images[amount]?._id,
         giftCard: giftCard,
       };
@@ -136,14 +140,15 @@ const GiftCardPage = () => {
 
             {isCustom && (
               <Box my={4}>
-                <TextField
+                <GLTextFieldV2
                   label="Gift Card Amount"
-                  variant="outlined"
+                  variant="filled"
                   type="number"
                   value={customAmount}
                   onChange={handleCustomAmountChange}
+                  icon={<AttachMoney />}
+                  iconPosition="start"
                   InputProps={{
-                    startAdornment: "$",
                     inputProps: { min: 10, max: 1000, step: "0.01" },
                   }}
                   helperText="Enter an amount between $10 and $1000"
@@ -151,7 +156,19 @@ const GiftCardPage = () => {
                 />
               </Box>
             )}
-
+            <Typography variant="subtitle1">{"Quantity "}</Typography>
+            <GLSelect
+              value={quantity}
+              onChange={e => setQuantity(e.target.value)}
+              placeholder="Select Quantity"
+              size="small"
+              options={[...Array(10).keys()].map(value => ({
+                name: value + 1,
+              }))}
+              getOptionLabel={option => option.name}
+              valueKey="name"
+              fullWidth
+            />
             <Typography variant="h6" gutterBottom mt={2} mb={2}>
               {"Price: "}
               {formatPrice(giftCardAmount)}
