@@ -55,8 +55,8 @@ import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 import ProductBundlesGridPage from "../../pages/ProductBundlesGridPage/ProductBundlesGridPage";
 import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
 import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage2";
-import GiftCardsGridPage from "../../pages/GiftCardsGridPage/GiftCardsGridPage2";
 import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage2";
+import GiftCardsGridPage from "../../pages/GiftCardsGridPage2/GiftCardsGridPage2";
 
 export const Components = {
   PlaceOrderPage,
@@ -88,8 +88,8 @@ export const Components = {
   UnsubscribePage,
   ProductBundlesGridPage,
   ProductBundlePage,
-  GiftCardsGridPage,
   GiftCardPage,
+  GiftCardsGridPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,
