@@ -257,9 +257,13 @@ const ShippingStep = () => {
         ...cartItems.filter(item => item.itemType === "product").map(item => item.processing_time[1])
       );
 
-      const preOrderReleaseDate = new Date(
-        Math.max(...cartItems.filter(item => item.isPreOrder).map(item => new Date(item.preOrderReleaseDate)))
-      );
+      // Only calculate preorder release date if there are preorder items
+      const preOrderItems = cartItems.filter(item => item.isPreOrder);
+      if (preOrderItems.length === 0) {
+        return maxProcessingTime;
+      }
+
+      const preOrderReleaseDate = new Date(Math.max(...preOrderItems.map(item => new Date(item.preOrderReleaseDate))));
 
       const daysUntilRelease = Math.ceil((preOrderReleaseDate - today) / (1000 * 60 * 60 * 24));
       return Math.max(0, daysUntilRelease) + maxProcessingTime;
@@ -335,14 +339,14 @@ const ShippingStep = () => {
                         onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                       />
 
-                      <label
+                      <div
                         className="validation_text"
                         style={{
                           justifyContent: "center",
                         }}
                       >
                         {first_name_validations}
-                      </label>
+                      </div>
                     </div>
                     <div className="ml-5px w-50per">
                       <label htmlFor="last_name">{"Last Name"}</label>
@@ -354,14 +358,14 @@ const ShippingStep = () => {
                         id="last_name"
                         onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                       />
-                      <label
+                      <div
                         className="validation_text"
                         style={{
                           justifyContent: "center",
                         }}
                       >
                         {last_name_validations}
-                      </label>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -389,14 +393,14 @@ const ShippingStep = () => {
                     onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
-                <label
+                <div
                   className="validation_text"
                   style={{
                     justifyContent: "center",
                   }}
                 >
                   {address_validations}
-                </label>
+                </div>
                 <li>
                   <label htmlFor="address_2">{"Apt/Suite"}</label>
                   <input
@@ -417,14 +421,14 @@ const ShippingStep = () => {
                     onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
-                <label
+                <div
                   className="validation_text"
                   style={{
                     justifyContent: "center",
                   }}
                 >
                   {city_validations}
-                </label>
+                </div>
                 {!shipping.international && (
                   <li>
                     <label className="mb-1rem" htmlFor="state">
@@ -460,14 +464,14 @@ const ShippingStep = () => {
                     />
                   </li>
                 )}
-                <label
+                <div
                   className="validation_text"
                   style={{
                     justifyContent: "center",
                   }}
                 >
                   {state_validations}
-                </label>
+                </div>
                 <li>
                   <label htmlFor="postalCode">{"Postal Code"}</label>
                   <input
@@ -478,14 +482,14 @@ const ShippingStep = () => {
                     onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                   />
                 </li>
-                <label
+                <div
                   className="validation_text"
                   style={{
                     justifyContent: "center",
                   }}
                 >
                   {postal_code_validations}
-                </label>
+                </div>
                 <div>
                   <FormControlLabel
                     control={
@@ -510,14 +514,14 @@ const ShippingStep = () => {
                           onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                         />
                       </li>
-                      <label
+                      <div
                         className="validation_text"
                         style={{
                           justifyContent: "center",
                         }}
                       >
                         {country_validations}
-                      </label>
+                      </div>
                     </>
                   )}
                   {shipping.international && (
@@ -532,14 +536,14 @@ const ShippingStep = () => {
                           onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                         />
                       </li>
-                      <label
+                      <div
                         className="validation_text"
                         style={{
                           justifyContent: "center",
                         }}
                       >
                         {phone_number_validations}
-                      </label>
+                      </div>
                     </>
                   )}
                 </div>
@@ -578,6 +582,7 @@ const ShippingStep = () => {
               {shipping_choice && (
                 <>
                   <ShippingChoice />
+                  {console.log({ process: cartItems.map(item => item.processing_time) })}
                   {cartItems.some(item => item.processing_time) && (
                     <>
                       {placeOrder.splitOrder ? (
