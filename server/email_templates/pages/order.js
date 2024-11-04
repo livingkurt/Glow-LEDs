@@ -531,25 +531,21 @@ export default ({ email, order }) => {
 									</td>
 
 									<td style="font-family:helvetica;width:50%">
-
+                          ${
+                            order?.giftCard?.amountUsed
+                              ? `<p style="color:white;line-height:150%;font-size:16px;margin:10px 0;">
+                                <strong>Gift Card Applied:</strong> $${order?.giftCard?.amountUsed?.toFixed(2)}
+                              </p>`
+                              : ""
+                          }
 										<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
 											${
-                        order.payment &&
-                        order.payment.payment &&
-                        order.payment.payment.card &&
-                        order.payment.payment.card.brand
-                          ? `<img src=${determin_card_logo_images_white(order.payment.payment.card.brand)}
+                        order?.payment?.payment?.card
+                          ? `<img src=${determin_card_logo_images_white(order?.payment?.payment?.card?.brand)}
 												style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
-												alt="card_logo">`
+												alt="card_logo"> <span style="font-size:16px">ending with ${order?.payment?.payment?.card?.last4}`
                           : ""
-                      } <span style="font-size:16px">ending with ${
-                        order.payment &&
-                        order.payment.payment &&
-                        order.payment.payment.card &&
-                        order.payment.payment.card
-                          ? order.payment.payment.card.last4
-                          : ""
-                      }</span></p>
+                      } </span></p>
 									</td>
 								</tr>
 							</tbody>
