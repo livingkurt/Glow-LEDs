@@ -56,64 +56,54 @@ const giftCardPage = createSlice({
       state.gift_card_modal = true;
       state.gift_card = payload;
     },
-    gift_card_uploaded: (state, { payload }) => {
-      state.upload_gift_card_modal = false;
-      state.remoteVersionRequirement = Date.now();
-    },
   },
   extraReducers: {
-    [API.listParcels.pending]: (state, { payload }) => {
-      state.loading = true;
+    [API.listGiftCards.pending]: (state, { payload }) => {
       state.gift_cards = [];
     },
-    [API.listParcels.fulfilled]: (state, { payload }) => {
+    [API.listGiftCards.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.gift_cards = payload.gift_cards;
-      state.totalPages = payload.total_count;
-      state.page = payload.currentPage;
-      state.message = "Parcels Found";
+      state.gift_cards = payload;
+      state.message = "GiftCards Found";
     },
-    [API.listParcels.rejected]: (state, { payload, error }) => {
+    [API.listGiftCards.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.saveParcel.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [API.saveParcel.fulfilled]: (state, { payload }) => {
+    [API.saveGiftCard.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.message = "Parcel Saved";
+      state.message = "GiftCard Saved";
       state.remoteVersionRequirement = Date.now();
       state.edit_gift_card_modal = false;
     },
-    [API.saveParcel.rejected]: (state, { payload, error }) => {
+    [API.saveGiftCard.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.detailsParcel.pending]: (state, { payload }) => {
+    [API.detailsGiftCard.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.detailsParcel.fulfilled]: (state, { payload }) => {
+    [API.detailsGiftCard.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.gift_card = payload;
-      state.message = "Parcel Found";
+      state.message = "GiftCard Found";
     },
-    [API.detailsParcel.rejected]: (state, { payload, error }) => {
+    [API.detailsGiftCard.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.deleteParcel.pending]: (state, { payload }) => {
+    [API.deleteGiftCard.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [API.deleteParcel.fulfilled]: (state, { payload }) => {
+    [API.deleteGiftCard.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.message = "Parcel Deleted";
+      state.message = "GiftCard Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteParcel.rejected]: (state, { payload, error }) => {
+    [API.deleteGiftCard.rejected]: (state, { payload, error }) => {
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

@@ -40,14 +40,14 @@ export const listGiftCards = createAsyncThunk(
 
 export const saveGiftCard = createAsyncThunk(
   "giftCards/saveGiftCard",
-  async (parcel, { dispatch, rejectWithValue }) => {
+  async (gift_card, { dispatch, rejectWithValue }) => {
     try {
-      if (!parcel._id) {
-        const { data } = await axios.post("/api/gift_cards", parcel);
+      if (!gift_card._id) {
+        const { data } = await axios.post("/api/gift_cards", gift_card);
         dispatch(showSuccess({ message: `GiftCard Created` }));
         return data;
       } else {
-        const { data } = await axios.put(`/api/gift_cards/${parcel._id}`, parcel);
+        const { data } = await axios.put(`/api/gift_cards/${gift_card._id}`, gift_card);
         dispatch(showSuccess({ message: `GiftCard Updated` }));
         return data;
       }

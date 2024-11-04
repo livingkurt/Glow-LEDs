@@ -55,7 +55,7 @@ import UnsubscribePage from "../../pages/UnsubscribePage/UnsubscribePage";
 import ProductBundlesGridPage from "../../pages/ProductBundlesGridPage/ProductBundlesGridPage";
 import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
 import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage2";
-import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage2";
+import GiftCardsPage from "../../pages/GiftCardsPageOld/GiftCardsPage2";
 import GiftCardsGridPage from "../../pages/GiftCardsGridPage/GiftCardsGridPage2";
 
 export const Components = {
