@@ -32,10 +32,21 @@ import {
   setSplitOrder,
   closeSplitOrderModal,
   openSplitOrderModal,
+  set_user,
+  set_paymentMethod,
+  set_create_account,
+  set_new_password,
+  set_tip,
+  set_production_note,
+  set_order_note,
+  removePromo,
+  set_paid,
+  setPaymentValidations,
+  setLoadingPayment,
 } from "./placeOrderSlice";
 
 import { Box, Button, Typography, Checkbox, FormControlLabel, useTheme, Tooltip } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack, Sell } from "@mui/icons-material";
 
 import OrderComplete from "./components/OrderComplete";
 import { useEffect } from "react";
@@ -45,8 +56,13 @@ import { determineItemsTotal } from "../../utils/helper_functions";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 
 import * as API from "../../api";
-import { showConfirm, showInfo } from "../../slices/snackbarSlice";
-import { constructOutOfStockMessage, getHasNonPreOrderItems, getHasPreOrderItems } from "./placeOrderHelpers";
+import { showConfirm, showError, showInfo } from "../../slices/snackbarSlice";
+import {
+  constructOutOfStockMessage,
+  getHasNonPreOrderItems,
+  getHasPreOrderItems,
+  getPreOrderReleaseDate,
+} from "./placeOrderHelpers";
 
 import { isOrderComplete } from "./placeOrderHelpers";
 import { validate_login } from "../../utils/validations";
@@ -63,9 +79,14 @@ import { save_shipping, updateGoogleShipping, set_my_cart } from "../../slices/c
 import config from "../../config";
 
 import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import ShippingPrice from "./components/ShippingPrice";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import { errorMessage } from "../../helpers/sharedHelpers";
+import { CardElement, Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CardInput from "./components/CardInput";
+
+const stripePromise = loadStripe(config.VITE_STRIPE_KEY);
 
 const PlaceOrderPage = () => {
   const theme = useTheme();
@@ -80,7 +101,7 @@ const PlaceOrderPage = () => {
   const { orders } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user } = userPage;
+  const { current_user, users } = userPage;
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {
@@ -121,6 +142,25 @@ const PlaceOrderPage = () => {
     preOrderShippingPrice,
     nonPreOrderShippingPrice,
     splitOrder,
+    payment_completed,
+    show_promo_code,
+    show_promo_code_input_box,
+    promo_code_validations,
+    create_account,
+    password_validations,
+    taxRate,
+    shipment_id,
+    shipping_rate,
+    parcel,
+    user,
+    paid,
+    loading_tax_rates,
+    new_password,
+    giftCardAmount,
+    giftCardCode,
+    paymentValidations,
+    preOrderShippingRate,
+    nonPreOrderShippingRate,
   } = placeOrder;
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -129,6 +169,7 @@ const PlaceOrderPage = () => {
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const hasNonPreOrderItems = getHasNonPreOrderItems(cartItems);
   const items_price = determineItemsTotal(cartItems);
+  const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
   // Calculate service fee for tickets
   const ticketItems = cartItems.filter(item => item.itemType === "ticket");
@@ -495,6 +536,263 @@ const PlaceOrderPage = () => {
     );
   }
 
+  const check_code = async e => {
+    e.preventDefault();
+    if (promo_code.length === 16) {
+      // Gift card validation
+      try {
+        const result = await dispatch(API.validateGiftCard(promo_code)).unwrap();
+        if (result.isValid) {
+          dispatch(
+            activatePromo({
+              tax_rate,
+              activePromoCodeIndicator,
+              validGiftCard: result,
+              cartItems,
+              current_user,
+            })
+          );
+        } else {
+          dispatch(set_promo_code_validations("Invalid gift card code"));
+        }
+      } catch (error) {
+        dispatch(set_promo_code_validations(error.message));
+      }
+    } else {
+      // Existing promo code validation
+      try {
+        const result = await dispatch(
+          API.validatePromoCode({ promo_code, cartItems, shipping, current_user })
+        ).unwrap();
+        if (result.isValid) {
+          dispatch(
+            activatePromo({
+              tax_rate,
+              activePromoCodeIndicator,
+              validPromo: result.promo,
+              cartItems,
+              current_user,
+            })
+          );
+        } else {
+          dispatch(set_promo_code_validations(result.errors.promo_code));
+        }
+      } catch (error) {
+        dispatch(set_promo_code_validations("Error validating code"));
+      }
+    }
+  };
+  // const data = new Date()
+  const today = new Date();
+
+  const create_order_without_paying = async () => {
+    dispatch(
+      API.saveOrder({
+        orderItems: cartItems,
+        shipping: {
+          ...shipping,
+          email: user.email,
+          shipment_id: shipment_id && shipment_id,
+          shipping_rate: shipping_rate && shipping_rate,
+        },
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        user: current_user._id,
+        order_note,
+        production_note,
+        tip,
+        promo_code,
+        parcel: parcel ? parcel : null,
+        status: "paid",
+        paidAt: paid ? today : null,
+      })
+    );
+
+    dispatch(setLoadingPayment(false));
+    dispatch(API.emptyCart(my_cart._id));
+    dispatch(API.updateStock({ cartItems }));
+    if (promo_code) {
+      dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
+      dispatch(API.sendCodeUsedEmail(promo_code.toLowerCase()));
+    }
+    navigate("/secure/glow/orders");
+    sessionStorage.removeItem("shippingAddress");
+  };
+
+  const create_no_payment_order = async () => {
+    dispatch(
+      API.placeOrder({
+        order: {
+          orderItems: cartItems,
+          shipping: shipment_id
+            ? {
+                ...shipping,
+                shipment_id,
+                shipping_rate,
+              }
+            : shipping,
+          payment,
+          itemsPrice,
+          shippingPrice,
+          previousShippingPrice,
+          taxPrice,
+          totalPrice,
+          user: current_user._id,
+          order_note,
+          production_note,
+          tip,
+          promo_code: activePromoCodeIndicator && promo_code,
+          giftCard:
+            activePromoCodeIndicator && promo_code?.length === 16
+              ? {
+                  code: giftCardCode,
+                  amountUsed: giftCardAmount,
+                  source: "customer",
+                }
+              : null,
+          parcel: parcel || null,
+          status: "paid",
+          paidAt: today,
+          preOrderShippingDate: preOrderReleaseDate,
+          hasPreOrderItems,
+        },
+        splitOrder,
+        preOrderShippingPrice: splitOrder ? preOrderShippingPrice : null,
+        nonPreOrderShippingPrice: splitOrder ? nonPreOrderShippingPrice : null,
+        cartId: my_cart._id,
+        create_account,
+        new_password,
+      })
+    );
+  };
+
+  const create_order_without_user = async () => {
+    dispatch(
+      API.saveOrder({
+        orderItems: cartItems,
+        shipping: shipment_id
+          ? {
+              ...shipping,
+              shipment_id,
+              shipping_rate,
+            }
+          : shipping,
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        order_note,
+        production_note,
+        tip,
+        promo_code,
+        parcel,
+      })
+    );
+
+    dispatch(setLoadingPayment(false));
+    dispatch(API.emptyCart(my_cart._id));
+    dispatch(API.updateStock({ cartItems }));
+    if (promo_code) {
+      dispatch(API.promoCodeUsed(promo_code.toLowerCase()));
+    }
+    navigate("/secure/glow/orders");
+    sessionStorage.removeItem("shippingAddress");
+  };
+
+  const handleSubmit = async (event, stripe, elements) => {
+    event.preventDefault();
+    dispatch(setPaymentValidations());
+    isMobile && window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch(setLoadingPayment(true));
+    try {
+      const stripePayment = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+
+      const { paymentMethod, error } = stripePayment;
+      if (error) {
+        dispatch(setPaymentValidations(error.message));
+        dispatch(showError({ message: error.message }));
+        return;
+      }
+
+      if (cartItems.length > 0) {
+        dispatch(
+          API.placeOrder({
+            order: {
+              orderItems: cartItems,
+              shipping: shipment_id
+                ? {
+                    ...shipping,
+                    shipment_id,
+                    shipping_rate,
+                  }
+                : shipping,
+              payment,
+              itemsPrice,
+              shippingPrice,
+              previousShippingPrice,
+              taxPrice,
+              taxRate,
+              totalPrice: totalPrice,
+              order_note,
+              production_note,
+              tip,
+              promo_code: activePromoCodeIndicator && promo_code,
+              giftCard:
+                activePromoCodeIndicator && promo_code?.length === 16
+                  ? {
+                      code: giftCardCode,
+                      amountUsed: giftCardAmount,
+                      source: "customer",
+                    }
+                  : null,
+              parcel: parcel || null,
+              serviceFee,
+              hasPreOrderItems,
+              preOrderShippingDate: preOrderReleaseDate,
+            },
+            splitOrder: splitOrder,
+            preOrderShippingRate: preOrderShippingRate,
+            nonPreOrderShippingRate: nonPreOrderShippingRate,
+            cartId: my_cart._id,
+            create_account,
+            new_password,
+            paymentMethod,
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(setPaymentValidations(error.message));
+      dispatch(showError({ message: errorMessage(error) }));
+    }
+  };
+
+  const cardElementOptions = {
+    iconStyle: "solid",
+    style: {
+      base: {
+        iconColor: "#c4f0ff",
+        color: "#fff",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+        fontSize: "1.2rem",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": { color: "white" },
+        "::placeholder": { color: "white" },
+      },
+      invalid: {
+        iconColor: "#ffc7ee",
+        color: "#ffc7ee",
+      },
+    },
+  };
+
   return (
     <div>
       <Helmet>
@@ -538,14 +836,14 @@ const PlaceOrderPage = () => {
                 <div className="jc-b mv-10px">
                   <Typography variant="h4">{"1. Email"}</Typography>
                   {email_completed && !show_email && (
-                    <GLButtonV2
+                    <Button
                       variant="contained"
                       className="mv-10px"
                       color="secondary"
                       onClick={() => dispatch(showHideSteps("email"))}
                     >
                       {"Edit"}
-                    </GLButtonV2>
+                    </Button>
                   )}
                 </div>
                 {show_email ? (
@@ -559,18 +857,13 @@ const PlaceOrderPage = () => {
                               {current_user.email} {"\n"}
                               {"\n"}
                               {"Not you?"}
-                              <GLButtonV2
-                                variant="contained"
-                                color="secondary"
-                                fullWidth
-                                onClick={e => submit_logout(e)}
-                              >
+                              <Button variant="contained" color="secondary" fullWidth onClick={e => submit_logout(e)}>
                                 {"Logout"}
-                              </GLButtonV2>
+                              </Button>
                             </pre>
                           </li>
                           <li className="mv-0px">
-                            <GLButtonV2
+                            <Button
                               variant="contained"
                               color="primary"
                               fullWidth
@@ -578,7 +871,7 @@ const PlaceOrderPage = () => {
                               onClick={() => next_step_shipping("shipping")}
                             >
                               {"Continue"}
-                            </GLButtonV2>
+                            </Button>
                           </li>
                         </ul>
                       </div>
@@ -607,7 +900,7 @@ const PlaceOrderPage = () => {
                           {"\n"}
                           {"\n"}
                           {"Already have an account?"}
-                          <GLButtonV2
+                          <Button
                             variant="contained"
                             color="primary"
                             fullWidth
@@ -618,10 +911,10 @@ const PlaceOrderPage = () => {
                             }}
                           >
                             {"Login"}
-                          </GLButtonV2>
+                          </Button>
                         </pre>
 
-                        <GLButtonV2
+                        <Button
                           variant="contained"
                           color="primary"
                           fullWidth
@@ -629,7 +922,7 @@ const PlaceOrderPage = () => {
                           onClick={e => validate_email(e)}
                         >
                           {"Continue"}
-                        </GLButtonV2>
+                        </Button>
                       </ul>
                     )}
                   </div>
@@ -646,14 +939,14 @@ const PlaceOrderPage = () => {
                 <div className="jc-b mt-10px">
                   <Typography variant="h4">{"2. Shipping"}</Typography>
                   {shipping_completed && !show_shipping && (
-                    <GLButtonV2
+                    <Button
                       variant="contained"
                       className="mv-10px"
                       color="secondary"
                       onClick={() => dispatch(showHideSteps("shipping"))}
                     >
                       {"Edit"}
-                    </GLButtonV2>
+                    </Button>
                   )}
                 </div>
                 {shipping_completed && (
@@ -665,14 +958,14 @@ const PlaceOrderPage = () => {
                             current_user.shipping &&
                             current_user.shipping.hasOwnProperty("first_name") && (
                               <li>
-                                <GLButtonV2
+                                <Button
                                   onClick={e => dispatch(save_shipping({ ...current_user.shipping }))}
                                   variant="contained"
                                   color="primary"
                                   fullWidth
                                 >
                                   {"Use Saved Shipping"}
-                                </GLButtonV2>
+                                </Button>
                               </li>
                             )}
                           {current_user?.isAdmin && (
@@ -939,7 +1232,7 @@ const PlaceOrderPage = () => {
                           </div>
 
                           <li>
-                            <GLButtonV2
+                            <Button
                               onClick={validateShipping}
                               variant="contained"
                               color="primary"
@@ -947,7 +1240,7 @@ const PlaceOrderPage = () => {
                               className="bob"
                             >
                               {"Continue"}
-                            </GLButtonV2>
+                            </Button>
                           </li>
                         </ul>
                       </>
@@ -1011,12 +1304,12 @@ const PlaceOrderPage = () => {
                             }
                             className="w-100per"
                           >
-                            <GLButtonV2
+                            <Button
                               type="submit"
                               variant="contained"
-                              disabled={!show_shipping_complete && !hide_pay_button}
+                              disabled={show_shipping_complete && hide_pay_button}
                               id="open-modal"
-                              className={`${show_shipping_complete && !hide_pay_button ? "bob" : "disabled"} mt-10px w-100per`}
+                              className={`${show_shipping_complete && !hide_pay_button ? "bob" : ""} mt-10px w-100per`}
                               onClick={() => {
                                 if (show_shipping_complete && !hide_pay_button) {
                                   next_step_payment("payment");
@@ -1024,7 +1317,7 @@ const PlaceOrderPage = () => {
                               }}
                             >
                               {"Continue"}
-                            </GLButtonV2>
+                            </Button>
                           </GLTooltip>
                         )}
                       </div>
@@ -1098,7 +1391,288 @@ const PlaceOrderPage = () => {
                   </p>
                 </GLActionModal>
               </div>
-              <PaymentStep />
+              <div>
+                <ul className="mv-0px">
+                  <div className="jc-b mv-10px">
+                    <Typography variant="h4">{"3. Payment & Review"}</Typography>
+                    {payment_completed && !show_payment && (
+                      <Button
+                        variant="contained"
+                        className="mv-10px"
+                        color="secondary"
+                        onClick={() => dispatch(showHideSteps("payment"))}
+                      >
+                        {"Edit"}
+                      </Button>
+                    )}
+                  </div>
+                  <Loading loading={loading_tax_rates} />
+                  {show_payment && !loading_tax_rates && (
+                    <div className="w-100per">
+                      <div className="w-100per ">
+                        <div htmlFor="order_note">{"Add a note"}</div>
+                        <input
+                          type="text"
+                          name="order_note"
+                          id="order_note"
+                          className="w-100per"
+                          onChange={e => dispatch(set_order_note(e.target.value))}
+                        />
+                      </div>
+                      {current_user?.isAdmin && (
+                        <div className="w-100per mt-10px">
+                          <div htmlFor="production_note">{"Add a production note"}</div>
+                          <input
+                            type="text"
+                            name="production_note"
+                            id="production_note"
+                            className="w-100per"
+                            onChange={e => dispatch(set_production_note(e.target.value))}
+                          />
+                        </div>
+                      )}
+                      {show_promo_code && (
+                        <div>
+                          {show_promo_code_input_box && (
+                            <div className="mv-10px">
+                              <label htmlFor="promo_code">{"Promo Code"}</label>
+                              <form onSubmit={e => check_code(e)} className="row">
+                                <input
+                                  type="text"
+                                  name="promo_code"
+                                  id="promo_code"
+                                  className="w-100per"
+                                  style={{
+                                    textTransform: "uppercase",
+                                  }}
+                                  onChange={e => {
+                                    dispatch(set_promo_code(e.target.value.toUpperCase()));
+                                  }}
+                                />
+                                <Button
+                                  type="submit"
+                                  variant="primary"
+                                  style={{
+                                    curser: "pointer",
+                                  }}
+                                >
+                                  {"Apply"}
+                                </Button>
+                              </form>
+                            </div>
+                          )}
+                          <div
+                            className="validation_text"
+                            style={{
+                              textAlign: "center",
+                            }}
+                          >
+                            {promo_code_validations}
+                          </div>
+                          {activePromoCodeIndicator && (
+                            <div className="promo_code mv-1rem">
+                              <Box display="flex" alignItems="center">
+                                <Button
+                                  variant="icon"
+                                  onClick={() =>
+                                    dispatch(
+                                      removePromo({
+                                        items_price,
+                                        tax_rate,
+                                        shippingPrice,
+                                        preOrderShippingPrice,
+                                        nonPreOrderShippingPrice,
+                                        previousShippingPrice,
+                                        shipping,
+                                        splitOrder,
+                                      })
+                                    )
+                                  }
+                                  aria-label="Detete"
+                                >
+                                  <i className="fas fa-times mr-5px" />
+                                </Button>
+                                <Sell sx={{ mr: 1 }} />
+                                {activePromoCodeIndicator}
+                              </Box>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <li>
+                        <div className="w-100per mb-1rem">
+                          <label htmlFor="tip" className="fs-16px">
+                            {"Leave a tip for our production team 💙"}
+                          </label>
+                          <input
+                            type="number"
+                            min="0.01"
+                            step="1"
+                            name="tip"
+                            id="tip"
+                            placeholder="$0.00"
+                            defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
+                            className="w-100per"
+                            onChange={e => {
+                              dispatch(set_tip(parseFloat(e.target.value)));
+                            }}
+                          />
+                        </div>
+                      </li>
+                      {!current_user.hasOwnProperty("first_name") && (
+                        <li>
+                          <div className="mv-2rem">
+                            <input
+                              type="checkbox"
+                              name="create_account"
+                              defaultChecked={create_account}
+                              style={{
+                                transform: "scale(1.5)",
+                              }}
+                              className="mr-1rem"
+                              id="create_account"
+                              onChange={e => {
+                                dispatch(set_create_account(e.target.checked));
+                              }}
+                            />
+                            <label htmlFor="create_account mb-20px">{"Create an account for faster checkout"}</label>
+                          </div>
+                        </li>
+                      )}
+                      {current_user && !current_user.first_name && create_account && (
+                        <li className="column mb-2rem">
+                          <label htmlFor="password">{"Password"}</label>
+                          <input // className="form_input"
+                            type="password"
+                            id="password"
+                            name="password"
+                            onChange={e => dispatch(set_new_password(e.target.value))}
+                          />
+                          <div className="validation_text fs-16px jc-c ">{password_validations}</div>
+                        </li>
+                      )}
+                      <li>
+                        {cartItems.length > 0 && totalPrice ? (
+                          <div>
+                            <Elements stripe={stripePromise}>
+                              <CardInput
+                                handleSubmit={handleSubmit}
+                                paymentValidations={paymentValidations}
+                                cardElementOptions={cardElementOptions}
+                              />
+                            </Elements>
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                        {(!totalPrice || totalPrice === 0) && (
+                          <>
+                            <p htmlFor="password">{"Payment is not necessary at this time"}</p>
+                            <Button
+                              onClick={() => {
+                                create_no_payment_order();
+                              }}
+                              variant="contained"
+                              color="primary"
+                              className="w-100per bob mb-12px"
+                            >
+                              {"Complete Order"}
+                            </Button>
+                          </>
+                        )}
+                      </li>
+                      {current_user.isAdmin && (
+                        <div className="mt-2rem">
+                          {current_user.isAdmin && users && (
+                            <div>
+                              <li>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      size="large"
+                                      name="paid"
+                                      id="paid"
+                                      onChange={e => {
+                                        dispatch(set_paid(e.target.checked));
+                                      }}
+                                    />
+                                  }
+                                  label="Already Paid?"
+                                />
+                              </li>
+                              {paid && (
+                                <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
+                                  <div className="custom-select w-100per">
+                                    <select
+                                      className="qty_select_dropdown w-100per"
+                                      onChange={e => dispatch(set_paymentMethod(e.target.value))}
+                                    >
+                                      <option key={1} defaultValue="">
+                                        {"Payment Method"}
+                                      </option>
+                                      {[
+                                        "stripe",
+                                        "venmo",
+                                        "cashapp",
+                                        "paypal",
+                                        "cash",
+                                        "zelle",
+                                        "facebook",
+                                        "promo",
+                                        "sponsor",
+                                        "replacement",
+                                        "no payment",
+                                      ].map((method, index) => (
+                                        <option key={index} value={method}>
+                                          {method}
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <span className="custom-arrow" />
+                                  </div>
+                                </div>
+                              )}
+                              <GLAutocomplete
+                                margin="normal"
+                                value={user || ""}
+                                variant="filled"
+                                options={users.filter(user => !user.deleted).filter(user => user.first_name)}
+                                getOptionLabel={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                                optionDisplay={option => (option ? `${option.first_name} ${option.last_name}` : "")}
+                                isOptionEqualToValue={(option, value) => option._id === value._id}
+                                name="users"
+                                label="Choose User"
+                                onChange={(event, newValue) => {
+                                  dispatch(set_user(newValue));
+                                }}
+                              />
+                              <Button
+                                onClick={create_order_without_paying}
+                                variant="contained"
+                                color="secondary"
+                                className="w-100per mb-12px"
+                              >
+                                {"Create Order For User"}
+                              </Button>
+                            </div>
+                          )}
+                          {current_user.isAdmin && users && (
+                            <Button
+                              onClick={create_order_without_user}
+                              variant="contained"
+                              color="secondary"
+                              className="w-100per mb-12px"
+                            >
+                              {"Create Order Without User"}
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </ul>
+                {width < 400 && <hr />}
+              </div>
             </div>
           </div>
           <div className="place_order-action">

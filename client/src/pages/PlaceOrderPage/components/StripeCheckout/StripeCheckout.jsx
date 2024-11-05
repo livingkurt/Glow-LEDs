@@ -1,8 +1,6 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CardElement, Elements } from "@stripe/react-stripe-js";
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import StripeForm from "./StripeForm";
 import { isMobile } from "react-device-detect";
 import * as API from "../../../../api";
 import config from "../../../../config";
@@ -10,11 +8,14 @@ import { setPaymentValidations, setLoadingPayment } from "../../placeOrderSlice"
 import { showError } from "../../../../slices/snackbarSlice";
 import { errorMessage } from "../../../../helpers/sharedHelpers";
 import { getHasPreOrderItems, getPreOrderReleaseDate } from "../../placeOrderHelpers";
+import { GLButton } from "../../../../shared/GlowLEDsComponents";
 
 const stripePromise = loadStripe(config.VITE_STRIPE_KEY);
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();
+  const stripe = useStripe();
+  const elements = useElements();
   const placeOrder = useSelector(state => state.placeOrder);
   const {
     shipment_id,
@@ -39,6 +40,7 @@ const StripeCheckout = () => {
     nonPreOrderShippingRate,
     giftCardAmount,
     giftCardCode,
+    paymentValidations,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -118,10 +120,40 @@ const StripeCheckout = () => {
     }
   };
 
+  const cardElementOptions = {
+    iconStyle: "solid",
+    style: {
+      base: {
+        iconColor: "#c4f0ff",
+        color: "#fff",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+        fontSize: "1.2rem",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": { color: "white" },
+        "::placeholder": { color: "white" },
+      },
+      invalid: {
+        iconColor: "#ffc7ee",
+        color: "#ffc7ee",
+      },
+    },
+  };
+
   return (
     <div>
       <Elements stripe={stripePromise}>
-        <StripeForm handleSubmit={handleSubmit} />
+        <form onSubmit={e => handleSubmit(e, stripe, elements)}>
+          <CardElement options={cardElementOptions} />
+          {paymentValidations && (
+            <div className="validation_text" style={{ textAlign: "center" }}>
+              {paymentValidations}
+            </div>
+          )}
+          <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>
+            {"Complete Order"}
+          </GLButton>
+        </form>
       </Elements>
     </div>
   );
