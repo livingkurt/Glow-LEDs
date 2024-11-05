@@ -8,8 +8,11 @@ const ProfileDetails = () => {
   const { _id, first_name, last_name, email, isVerified, isAdmin, shipping, email_subscription } = user;
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box>
       <Stack spacing={2}>
+        <Typography variant="h4" gutterBottom>
+          {"Profile Details"}
+        </Typography>
         {current_user?.isAdmin && (
           <Box>
             <Typography variant="h6" gutterBottom>

@@ -25,6 +25,8 @@ const EditAffiliateModal = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { edit_affiliate_modal, affiliate, loading, createAffiliateStep, stripeAccountLink, loadingSaveAffiliate } =
     affiliatePage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { data: chips, isLoading: chipsLoading } = useChipsQuery();
@@ -114,7 +116,7 @@ const EditAffiliateModal = () => {
             state={affiliate}
             mode="edit"
             onChange={value => dispatch(set_affiliate(value))}
-            loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+            loading={loading && usersLoading && productsLoading && chipsLoading && promosLoading}
           />
         </GLActionModal>
       ) : (
@@ -144,7 +146,7 @@ const EditAffiliateModal = () => {
               state={affiliate}
               mode="create"
               onChange={value => dispatch(set_affiliate(value))}
-              loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+              loading={loading && usersLoading && productsLoading && chipsLoading && promosLoading}
             />
           )}
           {createAffiliateStep === 1 && (
