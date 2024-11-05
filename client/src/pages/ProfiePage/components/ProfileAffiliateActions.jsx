@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
+import PropTypes from "prop-types";
 import useClipboard from "react-hook-clipboard";
 import { Box, Button } from "@mui/material";
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from "../../../utils/helper_functions";
@@ -44,43 +45,55 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
   };
 
   return (
-    <div className="group_item w-100per">
+    <div className="w-100per">
       {user.is_affiliated && user?.affiliate && user?.affiliate?.public_code && (
         <div className="mb-20px ">
-          <h2 className="group_images">{determineTitle()}</h2>
+          <Typography variant="h4" gutterBottom>
+            {determineTitle()}
+          </Typography>
           <Loading loading={yearlyEarnings.isLoading || currentMonthEarnings.isLoading}>
             {!currentMonthEarnings.isLoading && <EarningsCard title="Current Month" data={currentMonthEarnings.data} />}
             {!yearlyEarnings.isLoading && <EarningsCard title="Current Year" data={yearlyEarnings.data} />}
           </Loading>
           <div className="mb-20px">
-            <h3>{"Public Code"}</h3>
-            <label>{user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
+            <Typography variant="h6" gutterBottom>
+              {"Public Code"}
+            </Typography>
+            <div>{user?.affiliate?.public_code.promo_code.toUpperCase()}</div>
           </div>
 
           <div className="mb-20px">
-            <h3>{"Private Code"}</h3>
-            <label>{user?.affiliate?.private_code.promo_code.toUpperCase()}</label>
+            <Typography variant="h6" gutterBottom>
+              {"Private Code"}
+            </Typography>
+            <div>{user?.affiliate?.private_code.promo_code.toUpperCase()}</div>
           </div>
           {user?.affiliate?.artist_name && (
             <div className="mb-20px">
-              <h3>{"Projected Private Code Discount"}</h3>
-              <label>
+              <Typography variant="h6" gutterBottom>
+                {"Projected Private Code Discount"}
+              </Typography>
+              <div>
                 {user?.affiliate?.sponsor
                   ? determine_sponsor_code_tier(currentMonthEarnings?.data?.number_of_uses)
                   : determine_promoter_code_tier(currentMonthEarnings?.data?.number_of_uses)}
                 {"% Off"}
-              </label>
+              </div>
             </div>
           )}
           {user?.affiliate?.sponsor && (
             <>
               <div className="mb-20px">
-                <h3>{"Monthly Sponsor Code ($25 off)"}</h3>
-                <label>{sponsorCodes?.data?.twentyFiveOffCode?.toUpperCase()}</label>
+                <Typography variant="h6" gutterBottom>
+                  {"Monthly Sponsor Code ($25 off)"}
+                </Typography>
+                <div>{sponsorCodes?.data?.twentyFiveOffCode?.toUpperCase()}</div>
               </div>
               <div className="mb-20px">
-                <h3>{"Refresh Pack Sponsor Code"}</h3>
-                <label>{sponsorCodes?.data?.refreshCode?.toUpperCase()}</label>
+                <Typography variant="h6" gutterBottom>
+                  {"Refresh Pack Sponsor Code"}
+                </Typography>
+                <div>{sponsorCodes?.data?.refreshCode?.toUpperCase()}</div>
               </div>
             </>
           )}
@@ -88,29 +101,31 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
           {user?.affiliate?.sponsorTeamCaptain && (
             <>
               <div className="mb-20px">
-                <h3>
+                <Typography variant="h6" gutterBottom>
                   {"You Earn "}
-                  {user?.affiliate?.sponsorTeamCaptain ? "20%" : user?.affiliate?.sponsor ? "15%" : "10%"} {"on"}
-                  {"Revenue Generated"}
-                </h3>
+                  {user?.affiliate?.sponsorTeamCaptain ? "20%" : user?.affiliate?.sponsor ? "15%" : "10%"}
+                  {" on Revenue Generated"}
+                </Typography>
 
-                <label>
+                <div>
                   {"Example: $20 * 10% = $18 *"}{" "}
                   {user?.affiliate?.sponsorTeamCaptain
                     ? "20% = $3.60"
                     : user?.affiliate?.sponsor
                       ? "15% = $2.70"
                       : "10% = $2.00"}
-                </label>
+                </div>
               </div>
             </>
           )}
           <div className="mb-20px">
-            <h3>{"Promo Code URL"}</h3>
-            <label>
+            <Typography variant="h6" gutterBottom>
+              {"Promo Code URL"}
+            </Typography>
+            <div>
               {"https://www.glow-leds.com?code="}
               {user?.affiliate?.public_code.promo_code.toUpperCase()}
-            </label>
+            </div>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
@@ -150,4 +165,11 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
     </div>
   );
 };
+
+ProfileAffiliateMetrics.propTypes = {
+  sponsorCodes: PropTypes.object.isRequired,
+  currentMonthEarnings: PropTypes.object.isRequired,
+  yearlyEarnings: PropTypes.object.isRequired,
+};
+
 export default ProfileAffiliateMetrics;
