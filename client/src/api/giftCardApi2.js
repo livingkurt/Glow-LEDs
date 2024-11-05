@@ -85,3 +85,55 @@ export const deleteGiftCard = createAsyncThunk(
     }
   }
 );
+
+export const validateMultipleGiftCards = createAsyncThunk(
+  "giftCards/validateMultipleGiftCards",
+  async (giftCardCodes, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put("/api/gift_cards/validate-multiple", { giftCardCodes });
+
+      // Process validation results
+      const validCards = data.filter(card => card.isValid);
+      const invalidCards = data.filter(card => !card.isValid);
+
+      if (validCards.length > 0) {
+        dispatch(
+          showSuccess({
+            message: `${validCards.length} Gift Card(s) Validated`,
+          })
+        );
+      }
+
+      if (invalidCards.length > 0) {
+        dispatch(
+          showError({
+            message: `${invalidCards.length} Gift Card(s) Invalid`,
+          })
+        );
+      }
+
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const validateGiftCard = createAsyncThunk(
+  "giftCards/validateGiftCard",
+  async (giftCardCode, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`/api/gift-cards/${giftCardCode}/validate`);
+      if (data.isValid) {
+        dispatch(showSuccess({ message: `Gift Card Validated` }));
+      } else {
+        dispatch(showError({ message: data.message || "Invalid Gift Card" }));
+      }
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);

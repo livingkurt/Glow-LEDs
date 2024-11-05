@@ -87,6 +87,29 @@ export default {
       throw new Error(error.message);
     }
   },
+  validate_multiple_gift_cards_s: async body => {
+    try {
+      const { giftCardCodes } = body;
+      const results = await Promise.all(
+        giftCardCodes.map(async code => {
+          const giftCard = await gift_card_db.findByCode_gift_cards_db(code);
+          return {
+            code,
+            isValid: Boolean(giftCard) && giftCard.balance > 0,
+            balance: giftCard ? giftCard.balance : 0,
+            message: !giftCard
+              ? "Invalid gift card"
+              : giftCard.balance <= 0
+                ? "Gift card has no remaining balance"
+                : "",
+          };
+        })
+      );
+      return results;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 
   use_gift_card_s: async (params, body) => {
     try {

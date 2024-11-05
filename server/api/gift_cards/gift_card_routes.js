@@ -22,5 +22,6 @@ router.route("/validate/:code").get(gift_card_controller.validate_gift_card_c);
 router.route("/balance/:code").get(gift_card_controller.check_balance_c);
 router.route("/transactions/:code").get(isAuth, gift_card_controller.get_transactions_c);
 router.route("/use/:code").post(isAuth, gift_card_controller.use_gift_card_c);
+router.route("/validate_multiple").post(gift_card_controller.validate_multiple_gift_cards_c);
 
 export default router;

@@ -5,6 +5,8 @@ import {
   applyFreeShipping,
   applyGiftCard,
   applyPercentageOff,
+  calculateFinalTotal,
+  calculateGiftCardTotal,
   calculateNewItemsPrice,
 } from "./placeOrderHelpers";
 
@@ -111,6 +113,9 @@ const initialState = {
   orderIds: [],
   previousPreOrderShippingPrice: 0,
   previousNonPreOrderShippingPrice: 0,
+  // Modify gift card handling to support multiple cards
+  giftCards: [], // Array to store multiple gift cards
+  giftCardTotal: 0, // Total amount from all gift cards
 };
 
 const placeOrder = createSlice({
@@ -157,7 +162,8 @@ const placeOrder = createSlice({
     },
 
     set_promo_code: (state, { payload }) => {
-      state.promo_code = payload;
+      state.promo_code = action.payload;
+      state.promo_code_validations = "";
     },
     setLoadingPayment: (state, { payload }) => {
       state.loadingPayment = payload;
@@ -292,6 +298,50 @@ const placeOrder = createSlice({
         state.show_email = false;
       }
     },
+    addGiftCard: (state, action) => {
+      const { code, balance } = action.payload;
+
+      // Check if gift card already exists
+      const existingCardIndex = state.giftCards.findIndex(card => card.code === code);
+
+      if (existingCardIndex !== -1) {
+        state.promo_code_validations = "This gift card has already been applied";
+        return;
+      }
+
+      // Add new gift card
+      state.giftCards.push({ code, balance });
+
+      // Recalculate total gift card amount
+      state.giftCardTotal = state.giftCards.reduce((total, card) => total + card.balance, 0);
+
+      // Ensure gift card total doesn't exceed total price
+      state.giftCardTotal = Math.min(state.giftCardTotal, state.totalPrice);
+
+      // Update promo code to reflect gift card code for backend compatibility
+      state.promo_code = code;
+      state.activePromoCodeIndicator = `Gift Card: $${state.giftCardTotal.toFixed(2)}`;
+    },
+
+    removeGiftCard: (state, action) => {
+      const codeToRemove = action.payload;
+
+      // Remove the specific gift card
+      state.giftCards = state.giftCards.filter(card => card.code !== codeToRemove);
+
+      // Recalculate total gift card amount
+      state.giftCardTotal = state.giftCards.reduce((total, card) => total + card.balance, 0);
+
+      // Reset promo code and indicator if no gift cards remain
+      if (state.giftCards.length === 0) {
+        state.promo_code = "";
+        state.activePromoCodeIndicator = null;
+      } else {
+        // Update promo code to the last remaining gift card
+        state.promo_code = state.giftCards[state.giftCards.length - 1].code;
+        state.activePromoCodeIndicator = `Gift Card: $${state.giftCardTotal.toFixed(2)}`;
+      }
+    },
     removePromo: (state, { payload }) => {
       const { items_price, tax_rate, previousShippingPrice, shipping } = payload;
 
@@ -307,34 +357,56 @@ const placeOrder = createSlice({
       }
       state.promo_code = "";
       state.show_promo_code_input_box = true;
+      state.giftCards = [];
+      state.giftCardTotal = 0;
+      state.promo_code = "";
+      state.activePromoCodeIndicator = null;
+      state.promo_code_validations = "";
       sessionStorage.removeItem("promo_code");
     },
     activatePromo: (state, { payload }) => {
-      const { tax_rate, activePromoCodeIndicator, validPromo, validGiftCard, cartItems, current_user } = payload;
+      const { tax_rate, validPromo, validGiftCard, cartItems, current_user } = payload;
 
-      if (activePromoCodeIndicator) {
-        state.promo_code_validations = "Can only use one code at a time";
+      // If there's already a promo code (not gift card), prevent adding another
+      if (state.activePromoCodeIndicator && !state.activePromoCodeIndicator.includes("Gift Card")) {
+        state.promo_code_validations = "Can only use one promo code at a time";
         return;
       }
 
+      // Handle gift cards and promo codes separately
       if (validGiftCard) {
-        const eligibleTotal = state.itemsPrice;
-        applyGiftCard(state, eligibleTotal, validGiftCard);
-      } else if (validPromo) {
-        const eligibleTotal = calculateNewItemsPrice({
-          cartItems,
-          validPromo,
-          isWholesaler: current_user?.isWholesaler,
-        });
+        // Add to gift cards array if not already present
+        if (!state.giftCards.some(card => card.code === validGiftCard.code)) {
+          state.giftCards.push({
+            code: validGiftCard.code,
+            balance: validGiftCard.balance,
+          });
 
-        if (validPromo.percentage_off) {
-          applyPercentageOff(state, eligibleTotal, validPromo, tax_rate);
-        } else if (validPromo.amount_off) {
-          applyAmountOff(state, eligibleTotal, validPromo, tax_rate);
+          // Recalculate total gift card amount
+          state.giftCardTotal = calculateGiftCardTotal(state.giftCards, state.totalPrice);
+
+          // Update the total price
+          state.totalPrice = calculateFinalTotal(state);
         }
+      } else if (validPromo) {
+        if (!state.activePromoCodeIndicator || state.activePromoCodeIndicator.includes("Gift Card")) {
+          state.promo_code = validPromo.code;
+          state.activePromoCodeIndicator = validPromo.code;
+          const eligibleTotal = calculateNewItemsPrice({
+            cartItems,
+            validPromo,
+            isWholesaler: current_user?.isWholesaler,
+          });
 
-        if (validPromo.free_shipping) {
-          applyFreeShipping(state, validPromo);
+          if (validPromo.percentage_off) {
+            applyPercentageOff(state, eligibleTotal, validPromo, tax_rate);
+          } else if (validPromo.amount_off) {
+            applyAmountOff(state, eligibleTotal, validPromo, tax_rate);
+          }
+
+          if (validPromo.free_shipping) {
+            applyFreeShipping(state, validPromo);
+          }
         }
       }
 
@@ -547,6 +619,15 @@ const placeOrder = createSlice({
     [API.sendCodeUsedEmail.fulfilled]: (state, { payload }) => {
       state.promo_code = "";
     },
+    [API.validateGiftCard.fulfilled]: (state, { payload }) => {
+      state.promo_code_validations = payload.errors?.giftCard || "";
+    },
+    [API.validateMultipleGiftCards.fulfilled]: (state, { payload }) => {
+      const invalidCards = payload.filter(card => !card.isValid);
+      if (invalidCards.length > 0) {
+        state.promo_code_validations = `Invalid gift card(s): ${invalidCards.map(card => card.code).join(", ")}`;
+      }
+    },
   },
 });
 
@@ -606,6 +687,8 @@ export const {
   closeSplitOrderModal,
   setPreOrderShippingRate,
   setNonPreOrderShippingRate,
+  addGiftCard,
+  removeGiftCard,
 } = placeOrder.actions;
 
 export default placeOrder.reducer;

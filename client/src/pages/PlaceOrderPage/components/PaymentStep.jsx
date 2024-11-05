@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { GLAutocomplete, GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
@@ -17,10 +17,11 @@ import {
   setLoadingPayment,
   set_user,
   set_promo_code_validations,
+  removeGiftCard,
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
@@ -42,13 +43,30 @@ const PaymentStep = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, users } = userPage;
 
-  const items_price = determineItemsTotal(cartItems);
+  // Add state for gift card input
+  const [giftCardInput, setGiftCardInput] = useState("");
+
+  // Add total calculations
+  const calculateOrderTotal = () => {
+    let total = itemsPrice + shippingPrice + taxPrice;
+
+    // Subtract gift card amounts
+    if (giftCards.length > 0) {
+      const giftCardTotal = giftCards.reduce((sum, card) => sum + card.balance, 0);
+      total -= Math.min(giftCardTotal, total);
+    }
+
+    // Add tip if present
+    if (tip) {
+      total += parseFloat(tip);
+    }
+
+    return total;
+  };
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {
     payment_completed,
-    show_promo_code,
-    show_promo_code_input_box,
     promo_code_validations,
     create_account,
     password_validations,
@@ -77,6 +95,7 @@ const PaymentStep = () => {
     nonPreOrderShippingPrice,
     giftCardAmount,
     giftCardCode,
+    giftCards,
   } = placeOrder;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
@@ -249,6 +268,49 @@ const PaymentStep = () => {
     sessionStorage.removeItem("shippingAddress");
   };
 
+  const GiftCardList = ({ giftCards, onRemove }) => {
+    return (
+      <div className="gift-card-list">
+        {giftCards.map(card => (
+          <div key={card.code} className="gift-card-item">
+            <span>
+              {"Gift Card: $"}
+              {card.balance.toFixed(2)}
+            </span>
+            <IconButton onClick={() => onRemove(card.code)}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // In your PaymentStep component, modify the gift card section:
+  const handleGiftCardSubmit = async code => {
+    if (!code) {
+      dispatch(setPromoCodeValidations("Please enter a gift card code"));
+      return;
+    }
+
+    // Check if we already have this gift card
+    if (giftCards.some(card => card.code === code)) {
+      dispatch(setPromoCodeValidations("This gift card has already been applied"));
+      return;
+    }
+
+    // Validate the gift card
+    const result = await dispatch(validateGiftCard(code));
+    if (result.payload?.isValid) {
+      dispatch(
+        addGiftCard({
+          code: result.payload.code,
+          balance: result.payload.balance,
+        })
+      );
+    }
+  };
+
   return (
     <div>
       <ul className="mv-0px">
@@ -290,72 +352,52 @@ const PaymentStep = () => {
                 />
               </div>
             )}
-            {show_promo_code && (
-              <div>
-                {show_promo_code_input_box && (
-                  <div className="mv-10px">
-                    <label htmlFor="promo_code">{"Promo Code"}</label>
-                    <form onSubmit={e => check_code(e)} className="row">
-                      <input
-                        type="text"
-                        name="promo_code"
-                        id="promo_code"
-                        className="w-100per"
-                        style={{
-                          textTransform: "uppercase",
-                        }}
-                        onChange={e => {
-                          dispatch(set_promo_code(e.target.value.toUpperCase()));
-                        }}
-                      />
-                      <GLButton
-                        type="submit"
-                        variant="primary"
-                        style={{
-                          curser: "pointer",
-                        }}
-                      >
-                        {"Apply"}
-                      </GLButton>
-                    </form>
-                  </div>
-                )}
-                <label
-                  className="validation_text"
-                  style={{
-                    textAlign: "center",
-                  }}
+            {/* Gift Cards Section */}
+            <div className="gift-cards-section">
+              <Typography variant="h6">{"Gift Cards"}</Typography>
+
+              {/* Show applied gift cards */}
+              {giftCards.length > 0 && (
+                <GiftCardList giftCards={giftCards} onRemove={code => dispatch(removeGiftCard(code))} />
+              )}
+
+              {/* Gift card input */}
+              <div className="gift-card-input">
+                <TextField
+                  label="Gift Card Code"
+                  value={giftCardInput}
+                  onChange={e => setGiftCardInput(e.target.value)}
+                  error={Boolean(promo_code_validations)}
+                  helperText={promo_code_validations}
+                  disabled={loadingPayment}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => handleGiftCardSubmit(giftCardInput)}
+                  disabled={loadingPayment}
                 >
-                  {promo_code_validations}
-                </label>
-                {activePromoCodeIndicator && (
-                  <div className="promo_code mv-1rem">
-                    <Box display="flex" alignItems="center">
-                      <GLButton
-                        variant="icon"
-                        onClick={() =>
-                          dispatch(
-                            removePromo({
-                              items_price,
-                              tax_rate,
-                              shippingPrice,
-                              preOrderShippingPrice,
-                              nonPreOrderShippingPrice,
-                              previousShippingPrice,
-                              shipping,
-                              splitOrder,
-                            })
-                          )
-                        }
-                        aria-label="Detete"
-                      >
-                        <i className="fas fa-times mr-5px" />
-                      </GLButton>
-                      <Sell sx={{ mr: 1 }} />
-                      {activePromoCodeIndicator}
-                    </Box>
-                  </div>
-                )}
+                  {"Apply Gift Card"}
+                </Button>
+              </div>
+            </div>
+
+            {/* Promo Code Section - only show if no promo code is active */}
+            {!activePromoCodeIndicator && (
+              <div className="promo-code-section">
+                <Typography variant="h6">{"Promo Code"}</Typography>
+                <div className="promo-input">
+                  <TextField
+                    label="Promo Code"
+                    value={promo_code}
+                    onChange={e => dispatch(set_promo_code(e.target.value))}
+                    error={Boolean(promo_code_validations)}
+                    helperText={promo_code_validations}
+                    disabled={loadingPayment}
+                  />
+                  <Button variant="contained" onClick={check_code} disabled={loadingPayment || !promo_code}>
+                    {"Apply Promo"}
+                  </Button>
+                </div>
               </div>
             )}
             <li>

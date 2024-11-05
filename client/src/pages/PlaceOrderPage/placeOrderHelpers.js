@@ -266,3 +266,25 @@ export const isOrderComplete = ({ orderIds, orderCompleted }) => {
 export const getHasPreOrderItems = cartItems => cartItems.some(item => item.isPreOrder);
 export const getHasNonPreOrderItems = cartItems => cartItems.some(item => !item.isPreOrder);
 export const getPreOrderReleaseDate = cartItems => cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
+
+// Add these helper functions
+export const calculateGiftCardTotal = (giftCards, orderTotal) => {
+  const total = giftCards.reduce((sum, card) => sum + card.balance, 0);
+  // Don't allow gift cards to exceed order total
+  return Math.min(total, orderTotal);
+};
+
+export const calculateFinalTotal = state => {
+  let total = state.itemsPrice + state.shippingPrice + state.taxPrice;
+
+  // Apply promo code discount if present
+  if (state.activePromoCodeIndicator && !state.activePromoCodeIndicator.includes("Gift Card")) {
+    // Your existing promo code logic here
+  }
+
+  // Apply gift card reduction
+  total -= state.giftCardTotal;
+
+  // Ensure total doesn't go below 0
+  return Math.max(0, total);
+};

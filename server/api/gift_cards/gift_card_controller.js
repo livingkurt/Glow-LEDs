@@ -85,6 +85,15 @@ export default {
     }
   },
 
+  validate_multiple_gift_cards_c: async (req, res) => {
+    try {
+      const result = await gift_card_services.validate_multiple_gift_cards_s(req.body);
+      return res.status(200).send(result);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+
   check_balance_c: async (req, res) => {
     try {
       const result = await gift_card_services.check_balance_s(req.params);
