@@ -107,7 +107,9 @@ const PaymentStep = () => {
     } else {
       // Existing promo code validation
       try {
-        const result = await dispatch(API.validatePromoCode({ promo_code, cartItems, shipping })).unwrap();
+        const result = await dispatch(
+          API.validatePromoCode({ promo_code, cartItems, shipping, current_user })
+        ).unwrap();
         if (result.isValid) {
           dispatch(
             activatePromo({
