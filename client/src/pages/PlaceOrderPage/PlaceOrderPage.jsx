@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
 import { LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
-import { OrderSummaryStep, ShippingChoice } from "./components";
+import { ShippingChoice } from "./components";
 import {
   initializePlaceOrderPage,
   setItemsPrice,
@@ -34,7 +34,7 @@ import {
   openSplitOrderModal,
 } from "./placeOrderSlice";
 
-import { Box, Button, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import { Box, Button, Typography, Checkbox, FormControlLabel, useTheme, Tooltip } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
 import OrderComplete from "./components/OrderComplete";
@@ -64,8 +64,11 @@ import config from "../../config";
 
 import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import ShippingPrice from "./components/ShippingPrice";
+import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 
 const PlaceOrderPage = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -111,6 +114,13 @@ const PlaceOrderPage = () => {
     showSaveShippingModal,
     modalText,
     showSplitOrderModal,
+    loading,
+    previousShippingPrice,
+    previousNonPreOrderShippingPrice,
+    previousPreOrderShippingPrice,
+    preOrderShippingPrice,
+    nonPreOrderShippingPrice,
+    splitOrder,
   } = placeOrder;
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -118,6 +128,12 @@ const PlaceOrderPage = () => {
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const hasNonPreOrderItems = getHasNonPreOrderItems(cartItems);
+  const items_price = determineItemsTotal(cartItems);
+
+  // Calculate service fee for tickets
+  const ticketItems = cartItems.filter(item => item.itemType === "ticket");
+  const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const serviceFee = ticketTotal * 0.1; // 10% service fee
 
   useEffect(() => {
     if (hasPreOrderItems) {
@@ -1085,7 +1101,141 @@ const PlaceOrderPage = () => {
               <PaymentStep />
             </div>
           </div>
-          <OrderSummaryStep />
+          <div className="place_order-action">
+            <ul>
+              <li>
+                <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>{"Order Summary"}</h4>
+                {hasPreOrderItems && (
+                  <Tooltip title="Pre-order items are items that are not yet available for immediate delivery. If ordered with non-pre-order items, the pre-order items will be released on their estimated release date.">
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{
+                        ml: 1,
+                        bgcolor: "#496cba",
+                        px: 0.5,
+                        py: 0.5,
+                        fontSize: "1.2rem",
+                        borderRadius: 1,
+                        fontWeight: 800,
+                        color: theme.palette.getContrastText("#496cba"),
+                      }}
+                    >
+                      {"This order contains pre-order items."}
+                    </Typography>
+                  </Tooltip>
+                )}
+              </li>
+              <li></li>
+              <li>
+                <ul className="cart-list-container w-100per">
+                  <li>
+                    <div className="">
+                      <div style={{ textAlign: "right" }}>{"Price"}</div>
+                    </div>
+                  </li>
+                  {cartItems.length === 0 ? (
+                    <div>{"Cart is empty"}</div>
+                  ) : (
+                    cartItems.map((item, index) => (
+                      <GLCartItem key={index} item={item} index={index} showQuantity={false} />
+                    ))
+                  )}
+                </ul>
+              </li>
+
+              {!activePromoCodeIndicator && (
+                <li>
+                  <div>{"Subtotal"}</div>
+                  <div>
+                    {"$"}
+                    {itemsPrice.toFixed(2)}
+                  </div>
+                </li>
+              )}
+
+              {activePromoCodeIndicator && (
+                <>
+                  <li>
+                    <del style={{ color: "red" }}>
+                      <div style={{ color: "white" }}>{"Subtotal"}</div>
+                    </del>
+                    <div>
+                      <del style={{ color: "red" }}>
+                        <div style={{ color: "white" }}>
+                          {"$"}
+                          {items_price.toFixed(2)}
+                        </div>
+                      </del>
+                    </div>
+                  </li>
+                  <li>
+                    <div>{"Discount"}</div>
+                    <div>
+                      {"-$"}
+                      {(items_price - itemsPrice).toFixed(2)}
+                    </div>
+                  </li>
+                  <li>
+                    <div>{"New Subtotal"}</div>
+                    <div>
+                      {"$"}
+                      {itemsPrice.toFixed(2)}
+                    </div>
+                  </li>
+                </>
+              )}
+
+              <li>
+                <div>{"Tax"}</div>
+                <div>
+                  {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
+                </div>
+              </li>
+              {splitOrder ? (
+                <>
+                  <ShippingPrice
+                    label="In-stock Items Shipping"
+                    originalPrice={previousNonPreOrderShippingPrice}
+                    newPrice={nonPreOrderShippingPrice}
+                  />
+                  <ShippingPrice
+                    label="Pre-order Items Shipping"
+                    originalPrice={previousPreOrderShippingPrice}
+                    newPrice={preOrderShippingPrice}
+                  />
+                </>
+              ) : (
+                <ShippingPrice label="Shipping" originalPrice={previousShippingPrice} newPrice={shippingPrice} />
+              )}
+              {serviceFee > 0 && (
+                <li className="pos-rel">
+                  <div>{"Service Fee (10% for tickets)"}</div>
+                  <div>
+                    {"$"}
+                    {serviceFee.toFixed(2)}
+                  </div>
+                </li>
+              )}
+              {tip > 0 && (
+                <li className="pos-rel">
+                  <div>{"Tip"}</div>
+                  <div>
+                    {"$"}
+                    {tip.toFixed(2)}
+                  </div>
+                </li>
+              )}
+              <li>
+                <div>{"Order Total"}</div>
+                <div>
+                  {!loading && shipping && shipping.hasOwnProperty("first_name")
+                    ? "$" + totalPrice.toFixed(2)
+                    : "------"}
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </Box>
     </div>
