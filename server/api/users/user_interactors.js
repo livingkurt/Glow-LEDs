@@ -4,12 +4,12 @@ import config from "../../config.js";
 import content_services from "../contents/content_services.js";
 import email_db from "../emails/email_db.js";
 import { sendEmail } from "../orders/order_interactors.js";
-import account_created from "../../email_templates/pages/account_created.js";
-import announcement from "../../email_templates/pages/announcement.js";
-import verify from "../../email_templates/pages/verify.js";
+import AccountCreatedTemplate from "../../email_templates/pages/AccountCreatedTemplate.js";
+import AnnouncementTemplate from "../../email_templates/pages/AnnouncementTemplate.js";
+import VerifyTemplate from "../../email_templates/pages/VerifyTemplate.js";
 import { domain } from "../../email_templates/email_template_helpers.js";
-import successful_password_reset from "../../email_templates/pages/successful_password_reset.js";
-import verify_email_password_reset from "../../email_templates/pages/verify_email_password_reset.js";
+import SuccessfulPasswordResetTemplate from "../../email_templates/pages/SuccessfulPasswordResetTemplate.js";
+import VerifyEmailPasswordResetTemplate from "../../email_templates/pages/VerifyEmailPasswordResetTemplate.js";
 
 export const sendRegistrationEmail = async user => {
   try {
@@ -20,7 +20,7 @@ export const sendRegistrationEmail = async user => {
       to: user.email,
       subject: "Verify your Email",
       html: App({
-        body: verify({
+        body: VerifyTemplate({
           title: "Verify your Email",
           url: `${domain()}?token=${token}`,
           user: user,
@@ -45,7 +45,7 @@ export const sendEmailVerifiedSuccess = async user => {
       to: user.email,
       subject: "Glow LEDs Account Created",
       html: App({
-        body: account_created({
+        body: AccountCreatedTemplate({
           user: user,
           categories: contents && contents[0]?.menus[0]?.menu_items,
           title: "Glow LEDs Account Created",
@@ -69,7 +69,7 @@ export const sendAnnouncementEmail = async userEmail => {
       from: config.DISPLAY_INFO_EMAIL,
       subject: email.subject,
       html: App({
-        body: announcement(email),
+        body: AnnouncementTemplate(email),
         unsubscribe: true,
         header_footer_color: email.header_footer_color,
         background_color: email.background_color,
@@ -95,7 +95,7 @@ export const sendPasswordResetSuccessEmail = async user => {
       to: user.email,
       subject: "Successfully Changed Password",
       html: App({
-        body: successful_password_reset({
+        body: SuccessfulPasswordResetTemplate({
           first_name: user.first_name,
           title: "Successfully Changed Password",
         }),
@@ -118,7 +118,7 @@ export const sendVerifyEmailPasswordResetSuccessEmail = async (user, resetToken)
       to: user.email,
       subject: "Glow LEDs Reset Password",
       html: App({
-        body: verify_email_password_reset({
+        body: VerifyEmailPasswordResetTemplate({
           first_name: user.first_name,
           email: user.email,
           url,

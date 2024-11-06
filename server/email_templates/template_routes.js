@@ -3,24 +3,24 @@
 // *********************************************************************************
 
 import App from "./App.js";
-import account_created from "./pages/account_created.js";
-import affiliate from "./pages/affiliate.js";
-import announcement from "./pages/announcement.js";
-import contact from "./pages/contact.js";
-import contact_confirmation from "./pages/contact_confirmation.js";
-import feature from "./pages/feature.js";
-import order from "./pages/order.js";
-import successful_password_reset from "./pages/successful_password_reset.js";
-import review from "./pages/review.js";
-import email_subscription from "./pages/email_subscription.js";
-import order_status from "./pages/order_status.js";
-import custom_contact from "./pages/custom_contact.js";
-import code_used from "./pages/code_used.js";
-import shipping_status from "./pages/shipping_status.js";
-import verify_email_password_reset from "./pages/verify_email_password_reset.js";
-import affiliate_onboard from "./pages/affiliate_onboard.js";
+import AccountCreatedTemplate from "./pages/AccountCreatedTemplate.js";
+import AffiliateTemplate from "./pages/AffiliateTemplate.js";
+import AnnouncementTemplate from "./pages/AnnouncementTemplate.js";
+import ContactTemplate from "./pages/ContactTemplate.js";
+import ContactConfirmationTemplate from "./pages/ContactConfirmationTemplate.js";
+import FeatureTemplate from "./pages/FeatureTemplate.js";
+import OrderTemplate from "./pages/OrderTemplate.js";
+import SuccessfulPasswordResetTemplate from "./pages/SuccessfulPasswordResetTemplate.js";
+import ReviewTemplate from "./pages/ReviewTemplate.js";
+import EmailSubscriptionTemplate from "./pages/EmailSubscriptionTemplate.js";
+import OrderStatusTemplate from "./pages/OrderStatusTemplate.js";
+import CustomContactTemplate from "./pages/CustomContactTemplate.js";
+import CodeUsedTemplate from "./pages/CodeUsedTemplate.js";
+import ShippingStatusTemplate from "./pages/ShippingStatusTemplate.js";
+import VerifyEmailPasswordResetTemplate from "./pages/VerifyEmailPasswordResetTemplate.js";
+import AffiliateOnboardingTemplate from "./pages/AffiliateOnboardingTemplate.js";
 import express from "express";
-import invoice from "./pages/invoice.js";
+import InvoiceTemplate from "./pages/InvoiceTemplate.js";
 import order_db from "../api/orders/order_db.js";
 import order_services from "../api/orders/order_services.js";
 import content_db from "../api/contents/content_db.js";
@@ -31,13 +31,13 @@ import user_db from "../api/users/user_db.js";
 import { determine_status } from "../api/emails/email_interactors.js";
 import email_db from "../api/emails/email_db.js";
 import paycheck_db from "../api/paychecks/paycheck_db.js";
-import current_stock from "./pages/current_stock.js";
+import CurrentStockTemplate from "./pages/CurrentStockTemplate.js";
 import product_db from "../api/products/product_db.js";
 import config from "../config.js";
-import verify from "./pages/verify.js";
+import verify from "./pages/VerifyTemplate.js";
 import { domain } from "./email_template_helpers.js";
-import paycheck from "./pages/paycheck.js";
-import ticketEmail from "./pages/ticketEmail.js";
+import PaycheckTemplate from "./pages/PaycheckTemplate.js";
+import TicketTemplate from "./pages/TicketTemplate.js";
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {
@@ -50,7 +50,7 @@ router.get("/email_subscription", async (req, res) => {
 
   res.send(
     App({
-      body: email_subscription({
+      body: EmailSubscriptionTemplate({
         ...body,
         title: "Enjoy 10% off your next purchase!",
       }),
@@ -98,15 +98,15 @@ router.get("/refund", async (req, res) => {
     title: "Thank you for your purchase!",
     order: data,
   };
-  res.send(App({ body: order(body), unsubscribe: false }));
+  res.send(App({ body: OrderTemplate(body), unsubscribe: false }));
 });
 router.get("/current_stock", async (req, res) => {
   const data = await product_db.current_stock_products_db();
-  res.send(App({ body: current_stock(data) }));
+  res.send(App({ body: CurrentStockTemplate(data) }));
 });
 router.get("/affiliate_onboard", async (req, res) => {
   const data = await user_db.findById_users_db("6527c4d2563238af50ee33aa");
-  res.send(affiliate_onboard(data));
+  res.send(App({ body: AffiliateOnboardingTemplate(data) }));
 });
 router.get("/code_used", async (req, res) => {
   const promo_code = "cosmo";
@@ -125,7 +125,7 @@ router.get("/code_used", async (req, res) => {
 
   res.send(
     App({
-      body: code_used({
+      body: CodeUsedTemplate({
         affiliate,
         number_of_uses: stats.number_of_uses,
         earnings: affiliate?.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
@@ -138,7 +138,7 @@ router.get("/paycheck", async (req, res) => {
   const paycheckDocument = await paycheck_db.findById_paychecks_db("656bc32d9701b7f4b9b9bd43");
   console.log({ paycheckDocument });
 
-  res.send(App({ body: paycheck(paycheckDocument), unsubscribe: false }));
+  res.send(App({ body: PaycheckTemplate(paycheckDocument), unsubscribe: false }));
 });
 router.get("/order", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("67045462819d06ecdf62ec6e");
@@ -160,7 +160,7 @@ router.get("/order", async (req, res) => {
     title: "Thank you for your purchase!",
     order: orderDocument,
   };
-  res.send(App({ body: order(body), unsubscribe: false }));
+  res.send(App({ body: OrderTemplate(body), unsubscribe: false }));
 });
 router.get("/ticket", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("66df079b45e19055855ce506");
@@ -256,7 +256,7 @@ router.get("/ticket", async (req, res) => {
     ],
   };
 
-  res.send(App({ body: ticketEmail(body), unsubscribe: false }));
+  res.send(App({ body: TicketTemplate(body), unsubscribe: false }));
 });
 router.get("/order_status", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("659cd96631c5c5730673e47b");
@@ -279,7 +279,7 @@ router.get("/order_status", async (req, res) => {
     status: "shipped",
     order: orderDocument,
   };
-  res.send(App({ body: order_status(body), unsubscribe: false }));
+  res.send(App({ body: OrderStatusTemplate(body), unsubscribe: false }));
 });
 router.get("/shipping_status", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("64a11a605157930002f3eb94");
@@ -289,7 +289,7 @@ router.get("/shipping_status", async (req, res) => {
     title: determine_status("out_for_delivery"),
     order: orderDocument,
   };
-  res.send(App({ body: shipping_status(body), unsubscribe: false }));
+  res.send(App({ body: ShippingStatusTemplate(body), unsubscribe: false }));
 });
 router.get("/invoice", async (req, res) => {
   const orderDocument = await order_db.findById_orders_db("61ba8e67b71be7002b7ccf3f");
@@ -311,7 +311,7 @@ router.get("/invoice", async (req, res) => {
     title: "Thank you for your purchase!",
     order: orderDocument,
   };
-  res.send(invoice(body));
+  res.send(App({ body: InvoiceTemplate(body) }));
 });
 
 router.get("/shipping_status", async (req, res) => {
@@ -805,7 +805,7 @@ router.get("/shipping_status", async (req, res) => {
       ],
     },
   };
-  res.send(App({ body: shipping_status(body), unsubscribe: false }));
+  res.send(App({ body: ShippingStatusTemplate(body), unsubscribe: false }));
 });
 router.get("/review", async (req, res) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -815,7 +815,7 @@ router.get("/review", async (req, res) => {
     categories: contents && contents[0].home_page?.slideshow,
   };
 
-  res.send(App({ body: review(body), title: "Enjoy 10% off your next purchase!" }));
+  res.send(App({ body: ReviewTemplate(body), title: "Enjoy 10% off your next purchase!" }));
 });
 router.get("/affiliate", async (req, res) => {
   const body = {
@@ -898,7 +898,7 @@ router.get("/affiliate", async (req, res) => {
     },
   };
 
-  res.send(App({ body: affiliate(body), title: "Welcome to the Team!" }));
+  res.send(App({ body: AffiliateTemplate(body), title: "Welcome to the Team!" }));
 });
 router.get("/feature", async (req, res) => {
   const body = {
@@ -926,14 +926,14 @@ router.get("/feature", async (req, res) => {
       release_date: "2021-05-12T00:00:00.000Z",
     },
   };
-  res.send(App({ body: feature(body), title: "Thank you for sending us your art!" }));
+  res.send(App({ body: FeatureTemplate(body), title: "Thank you for sending us your art!" }));
 });
 router.get("/announcement", async (req, res) => {
   const email = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, "1", "1");
 
   res.send(
     App({
-      body: announcement(email[0]),
+      body: AnnouncementTemplate(email[0]),
       unsubscribe: true,
       header_footer_color: email[0].header_footer_color,
       background_color: email[0].background_color,
@@ -942,7 +942,7 @@ router.get("/announcement", async (req, res) => {
 });
 
 router.get("/contact", (req, res) => {
-  res.send(contact(req.body));
+  res.send(ContactTemplate(req.body));
 });
 router.get("/custom_contact", (req, res) => {
   const data = {
@@ -1317,20 +1317,20 @@ router.get("/custom_contact", (req, res) => {
       refundedAt: "2021-12-10T18:10:35.453Z",
     },
   };
-  res.send(custom_contact(data));
+  res.send(CustomContactTemplate(data));
 });
 
 router.get("/contact_confirmation", (req, res) => {
-  res.send(contact_confirmation(req.body));
+  res.send(ContactConfirmationTemplate(req.body));
 });
 
 router.get("/reset_password", async (req, res) => {
   const user = await user_db.findByEmail_users_db("lavacquek@icloud.com");
-  res.send(App({ body: verify_email_password_reset(user), title: "Password Reset Instructions " }));
+  res.send(App({ body: VerifyEmailPasswordResetTemplate(user), title: "Password Reset Instructions " }));
 });
 router.get("/reset_password", async (req, res) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
-  res.send(App({ body: successful_password_reset(user), title: "Password Reset Successful" }));
+  res.send(App({ body: SuccessfulPasswordResetTemplate(user), title: "Password Reset Successful" }));
 });
 // router.get(
 //   "/announcement",
@@ -1357,7 +1357,7 @@ router.get("/account_created", async (req, res) => {
     categories: contents && contents[0]?.menus[0]?.menu_items,
   };
 
-  res.send(App({ body: account_created(body), title: "Glow LEDs Account Created" }));
+  res.send(App({ body: AccountCreatedTemplate(body), title: "Glow LEDs Account Created" }));
 });
 
 export default router;

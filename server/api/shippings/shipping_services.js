@@ -1,5 +1,5 @@
 import config from "../../config.js";
-import invoice from "../../email_templates/pages/invoice.js";
+import InvoiceTemplate from "../../email_templates/pages/InvoiceTemplate.js";
 import Order from "../orders/order.js";
 import order_db from "../orders/order_db.js";
 import { parseOrderData } from "./shipping_helpers.js";
@@ -73,7 +73,7 @@ export default {
       const label = await buyLabel({ shipment_id, shipping_rate });
       console.log({ label });
       await addTracking({ order, label, shipping_rate });
-      return { invoice: invoice({ order }), label: label.postage_label.label_url };
+      return { invoice: InvoiceTemplate({ order }), label: label.postage_label.label_url };
     } catch (error) {
       console.log({ error, errors: error.errors });
       if (error instanceof Error) {
@@ -87,7 +87,7 @@ export default {
       const { shipping_rate } = order.shipping;
       const label = await createLabel({ order, shipping_rate });
       await addTracking({ order, label, shipping_rate: label.selected_rate });
-      return { invoice: invoice({ order }), label: label.postage_label.label_url };
+      return { invoice: InvoiceTemplate({ order }), label: label.postage_label.label_url };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -18,14 +18,14 @@ export default ({ order }) => {
     Step 1: Deposit √
     </h3>
       <p>
-      Congratulations you made your depost! Your place in line is secured!
+      Congratulations you made your deposit! Your place in line is secured!
     </p>
     <h3>
       Step 2: Consultation
     </h3>
     <p>
       Please reply to this email with a description in detail of what you would like us to make for you.
-      This could be modifying a current product or a creating a completly new product!
+      This could be modifying a current product or a creating a completely new product!
       Feel free to send inspiration photos and drawings to help us better understand your vision.
     </p>
     <h3>

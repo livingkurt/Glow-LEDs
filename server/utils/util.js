@@ -431,6 +431,7 @@ export const format_date = isoDateString => {
 };
 
 export const formatDate = date => {
+  if (!date) return "Pending";
   return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
 };
 

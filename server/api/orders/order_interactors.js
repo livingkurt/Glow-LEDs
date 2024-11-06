@@ -1,4 +1,4 @@
-import { gift_card_template } from "../../email_templates/pages/gift_card.js";
+import GiftCardTemplate from "../../email_templates/pages/GiftCardTemplate.js";
 import { generateRandomCode } from "../../utils/util.js";
 import GiftCard from "../gift_cards/gift_card.js";
 import mongoose from "mongoose";
@@ -14,13 +14,13 @@ import {
   logStripeFeeToExpenses,
   updateOrder,
 } from "../payments/payment_interactors.js";
-import order from "../../email_templates/pages/order.js";
-import code_used from "../../email_templates/pages/code_used.js";
+import OrderTemplate from "../../email_templates/pages/OrderTemplate.js";
+import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
 import config from "../../config.js";
 import Affiliate from "../affiliates/affiliate.js";
 import order_services from "./order_services.js";
 import App from "../../email_templates/App.js";
-import ticketEmail from "../../email_templates/pages/ticketEmail.js";
+import TicketTemplate from "../../email_templates/pages/TicketTemplate.js";
 import { generateTicketQRCodes } from "../emails/email_interactors.js";
 import { createTransporter } from "../emails/email_helpers.js";
 import promo_db from "../promos/promo_db.js";
@@ -396,7 +396,7 @@ export const sendOrderEmail = async orderData => {
       from: config.DISPLAY_INFO_EMAIL,
       to: orderData.shipping.email,
       subject: "Thank you for your Glow LEDs Order",
-      html: App({ body: order(bodyConfirmation), unsubscribe: false }),
+      html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
     };
     await sendEmail("info", mailOptionsConfirmation);
   } catch (error) {
@@ -421,7 +421,7 @@ export const sendTicketEmail = async orderData => {
       from: config.DISPLAY_INFO_EMAIL,
       to: orderData.shipping.email,
       subject: "Your Event Tickets",
-      html: App({ body: ticketEmail(bodyTickets), unsubscribe: false }),
+      html: App({ body: TicketTemplate(bodyTickets), unsubscribe: false }),
     };
     if (orderData.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(orderData._id, { status: "delivered", deliveredAt: new Date() });
@@ -465,7 +465,7 @@ export const sendCodeUsedEmail = async promo_code => {
           to: user.email,
           subject: `Your code was just used!`,
           html: App({
-            body: code_used(mailBodyData),
+            body: CodeUsedTemplate(mailBodyData),
             unsubscribe: false,
           }),
         };
@@ -562,7 +562,7 @@ export const sendGiftCardEmail = async order => {
       from: config.DISPLAY_INFO_EMAIL,
       to: order.shipping.email,
       subject: `Your Glow LEDs Gift Card${giftCards.length > 1 ? "s" : ""} Codes`,
-      html: App({ body: gift_card_template(giftCards, order._id), unsubscribe: false }),
+      html: App({ body: GiftCardTemplate(giftCards, order._id), unsubscribe: false }),
       headers: {
         "Precedence": "transactional",
         "X-Auto-Response-Suppress": "OOF, AutoReply",
