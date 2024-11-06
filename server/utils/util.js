@@ -488,20 +488,11 @@ export const determine_card_logo_images_white = card_type => {
       return;
   }
 };
-const determine_preorder = product => {
-  if (product.preorder) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
 export const email_sale_price_switch = (item, color, wholesaler) => {
   if (wholesaler && item.wholesale_price) {
     return `<label>WSP: $${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>`;
   } else if (item.sale_price && item.sale_price !== 0) {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
 					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.quantity).toFixed(2)}</label>
 				</del>${" "}
@@ -509,7 +500,6 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 			</label>`;
   } else if (item.quantity === 0) {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
 					<label style='${`color: ${color}; margin-left: 7px;`}'>
 						${item.price && (item.price * item.quantity).toFixed(2)}
@@ -519,7 +509,7 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 			</label>`;
   } else {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""} $${item.price && (item.price * item.quantity).toFixed(2)}
+				$${item.price && (item.price * item.quantity).toFixed(2)}
 			</label>`;
   }
 };
