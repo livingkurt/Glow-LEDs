@@ -163,10 +163,10 @@ const ShippingChoice = () => {
           return (
             <div className="rate-container mv-1rem jc-b ai-c" key={index}>
               <div className="shipping_rates jc-b w-100per wrap">
-                <label className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</label>
+                <div className="service">{serviceNames[index] || toTitleCaseSnakeCase(rate.service)}</div>
                 <div className="jc-b max-w-150px w-100per">
-                  <label>{determine_service(rate)}</label>
-                  <label>{displayRate}</label>
+                  <div>{determine_service(rate)}</div>
+                  <div>{displayRate}</div>
                 </div>
               </div>
               <GLButton

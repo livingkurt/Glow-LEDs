@@ -1,4 +1,3 @@
-import PaymentStep from "./components/PaymentStep";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
