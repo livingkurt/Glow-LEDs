@@ -1,7 +1,6 @@
 import {
   formatDate,
   email_sale_price_switch,
-  determine_product_name,
   determine_card_logo_images_white,
   order_status_steps,
   getItemsTotal,

@@ -77,7 +77,7 @@ export default ({ order, isSponsor }) => {
       <tbody>
         ${order.orderItems
           .map(
-            (item, index) => `
+            item => `
         <tr>
           <td style="font-family:helvetica">
             <table style="width:100%;border-spacing:0;border-bottom:1px solid black">
