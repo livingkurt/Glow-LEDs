@@ -7,8 +7,8 @@ import {
   accurate_date,
   format_date,
   format_time,
-  unformat_date,
-  unformat_date_and_time,
+  formatDateToISODate,
+  formatDateToISODateAndTime,
 } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Container } from "@mui/material";
@@ -66,8 +66,8 @@ const DatabaseMigrationPage = () => {
 
   const update_sale_price = async e => {
     e.preventDefault();
-    const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
-    const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
+    const start_date = new Date(formatDateToISODateAndTime(sale_start_date, sale_start_time));
+    const end_date = new Date(formatDateToISODateAndTime(sale_end_date, sale_end_time));
     const request = await API_Products.set_sale_price(
       parseInt(discount_percentage) / 100,
       accurate_date(start_date),
@@ -80,8 +80,8 @@ const DatabaseMigrationPage = () => {
     e.preventDefault();
     const request = await API_Products.clear_sale(
       parseInt(discount_percentage) / 100,
-      unformat_date("01/01/2021"),
-      unformat_date("01/01/2021")
+      formatDateToISODate("01/01/2021"),
+      formatDateToISODate("01/01/2021")
     );
     set_request(request);
   };

@@ -45,5 +45,20 @@
   "editor.formatOnType": true,
   "eslint.lintTask.enable": true,
   "javascript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "cSpell.words": [
+    "Arrazati",
+    "Capez",
+    "clozd",
+    "glowframez",
+    "glowskinz",
+    "glowstringz",
+    "lilwhip",
+    "Nanoskinz",
+    "Novaskinz",
+    "Omniskinz",
+    "opyn",
+    "Qoagv",
+    "uuidv"
+  ]
 }

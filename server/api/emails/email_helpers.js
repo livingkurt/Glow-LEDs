@@ -1,5 +1,5 @@
 import App from "../../email_templates/App.js";
-import announcement from "../../email_templates/pages/announcement.js";
+import AnnouncementTemplate from "../../email_templates/pages/AnnouncementTemplate.js";
 import config from "../../config.js";
 import user_db from "../users/user_db.js";
 import nodemailer from "nodemailer";
@@ -52,7 +52,7 @@ export const send_multiple_emails = async (emailAddresses, email, res, testEmail
       from: config.DISPLAY_INFO_EMAIL,
       subject: testEmails ? "TEST " + subject : subject,
       html: App({
-        body: announcement(email),
+        body: AnnouncementTemplate(email),
         unsubscribe: true,
         header_footer_color: email.header_footer_color,
         background_color: email.background_color,

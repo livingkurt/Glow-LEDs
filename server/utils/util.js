@@ -431,6 +431,7 @@ export const format_date = isoDateString => {
 };
 
 export const formatDate = date => {
+  if (!date) return "Pending";
   return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
 };
 
@@ -438,16 +439,15 @@ export const humanDate = date => {
   return new Date(date).toLocaleDateString();
 };
 
-export const unformat_date = formatted_date => {
+export const formatDateToISODate = formatted_date => {
   //
   const date = formatted_date.split("/");
   const day = date[1];
   const month = date[0];
   const year = date[2];
-  const unformat_date = `${year}-${month}-${day}`;
-  return unformat_date;
+  return `${year}-${month}-${day}`;
 };
-export const determin_card_logo = card_type => {
+export const determine_card_logo = card_type => {
   switch (card_type) {
     case "American Express":
       return `<i class="fab fa-cc-amex" />`;
@@ -460,7 +460,7 @@ export const determin_card_logo = card_type => {
   }
 };
 
-export const determin_card_logo_images = card_type => {
+export const determine_card_logo_images = card_type => {
   switch (card_type) {
     case "amex":
       return "https://thumbs2.imgbox.com/c9/a5/0AsOySyq_b.png";
@@ -474,7 +474,7 @@ export const determin_card_logo_images = card_type => {
       return;
   }
 };
-export const determin_card_logo_images_white = card_type => {
+export const determine_card_logo_images_white = card_type => {
   switch (card_type) {
     case "amex":
       return "https://images2.imgbox.com/ea/c8/r82jUQW8_o.png";
@@ -488,20 +488,11 @@ export const determin_card_logo_images_white = card_type => {
       return;
   }
 };
-const determine_preorder = product => {
-  if (product.preorder) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
 export const email_sale_price_switch = (item, color, wholesaler) => {
   if (wholesaler && item.wholesale_price) {
     return `<label>WSP: $${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>`;
   } else if (item.sale_price && item.sale_price !== 0) {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
 					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.quantity).toFixed(2)}</label>
 				</del>${" "}
@@ -509,7 +500,6 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 			</label>`;
   } else if (item.quantity === 0) {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
 					<label style='${`color: ${color}; margin-left: 7px;`}'>
 						${item.price && (item.price * item.quantity).toFixed(2)}
@@ -519,7 +509,7 @@ export const email_sale_price_switch = (item, color, wholesaler) => {
 			</label>`;
   } else {
     return `<label>
-				${determine_preorder(item) ? "Preorder " : ""} $${item.price && (item.price * item.quantity).toFixed(2)}
+				$${item.price && (item.price * item.quantity).toFixed(2)}
 			</label>`;
   }
 };

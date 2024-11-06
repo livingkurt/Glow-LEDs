@@ -1,8 +1,7 @@
 import {
   formatDate,
   email_sale_price_switch,
-  determine_product_name,
-  determin_card_logo_images_white,
+  determine_card_logo_images_white,
   order_status_steps,
   getItemsTotal,
 } from "../../utils/util.js";
@@ -33,7 +32,7 @@ export default ({ email, order }) => {
 								<table style="width:100%;line-height:inherit;text-align:center" width="100%" align="left">
 									<tbody>
 										<tr>
-											<td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
+											<td style="vertical-align:top;color:#333333;font-size:20px" align="center">
 												<strong>Order #:</strong>
 												${order._id}<br /><strong>
 											</td>
@@ -272,7 +271,7 @@ export default ({ email, order }) => {
 																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
 																						style="font-size:16px">Subtotal</span></p>
 																			</td>
-																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right">
 																				<strong style="font-size:16px;color:white">$${order.orderItems
                                           .map(item => {
                                             return {
@@ -294,7 +293,7 @@ export default ({ email, order }) => {
 																						style="font-size:16px">Subtotal</span></p>
 																			</del>
 																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																		<td style="font-family:helvetica;padding:5px 0;text-align:right">
 																			<del style="color:red">
 																				<strong style="font-size:16px;color:white">$${order.orderItems
                                           .map(item => {
@@ -323,7 +322,7 @@ export default ({ email, order }) => {
                                       }</span></span>
 																</p>
 															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+															<td style="font-family:helvetica;padding:5px 0;text-align:right">
 															<strong style="font-size:16px;color:white">&minus;&nbsp;$${(
                                 getItemsTotal(order.orderItems) - order.itemsPrice
                               )?.toFixed(2)}</strong>
@@ -339,7 +338,7 @@ export default ({ email, order }) => {
 																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
 																		style="font-size:16px">New Subtotal</span></p>
 															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+															<td style="font-family:helvetica;padding:5px 0;text-align:right">
 																<strong style="font-size:16px;color:white">$${order.itemsPrice?.toFixed(2)}</strong>
 															</td>
 														</tr>`
@@ -350,7 +349,7 @@ export default ({ email, order }) => {
 																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
 																		style="font-size:16px">Taxes</span></p>
 															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+															<td style="font-family:helvetica;padding:5px 0;text-align:right">
 																<strong style="font-size:16px;color:white">$${order.taxPrice ? order.taxPrice?.toFixed(2) : "0.00"}</strong>
 															</td>
 														</tr>
@@ -576,7 +575,7 @@ export default ({ email, order }) => {
 										<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
 											${
                         order?.payment?.payment?.card
-                          ? `<img src=${determin_card_logo_images_white(order?.payment?.payment?.card?.brand)}
+                          ? `<img src=${determine_card_logo_images_white(order?.payment?.payment?.card?.brand)}
 												style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
 												alt="card_logo"> <span style="font-size:16px">ending with ${order?.payment?.payment?.card?.last4}`
                           : ""

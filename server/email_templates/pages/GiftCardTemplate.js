@@ -1,4 +1,4 @@
-export const gift_card_template = (gift_cards, order_id) => {
+export default (gift_cards, order_id) => {
   return `
   <table style="width:100%;border-spacing:0; padding: 10px;">
     <tr>

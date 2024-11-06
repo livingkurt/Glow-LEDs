@@ -1,23 +1,23 @@
 import email_services from "./email_services.js";
 
 import App from "../../email_templates/App.js";
-import account_created from "../../email_templates/pages/account_created.js";
-import contact from "../../email_templates/pages/contact.js";
-import contact_confirmation from "../../email_templates/pages/contact_confirmation.js";
-import order_status from "../../email_templates/pages/order_status.js";
-import order from "../../email_templates/pages/order.js";
-import review from "../../email_templates/pages/review.js";
-import affiliate from "../../email_templates/pages/affiliate.js";
-import feature from "../../email_templates/pages/feature.js";
-import announcement from "../../email_templates/pages/announcement.js";
-import custom_contact from "../../email_templates/pages/custom_contact.js";
-import code_used from "../../email_templates/pages/code_used.js";
-import shipping_status from "../../email_templates/pages/shipping_status.js";
-import verify_email_password_reset from "../../email_templates/pages/verify_email_password_reset.js";
-import successful_password_reset from "../../email_templates/pages/successful_password_reset.js";
-import affiliate_onboard from "../../email_templates/pages/affiliate_onboard.js";
-import current_stock from "../../email_templates/pages/current_stock.js";
-import email_subscription from "../../email_templates/pages/email_subscription.js";
+import AccountCreatedTemplate from "../../email_templates/pages/AccountCreatedTemplate.js";
+import ContactTemplate from "../../email_templates/pages/ContactTemplate.js";
+import ContactConfirmationTemplate from "../../email_templates/pages/ContactConfirmationTemplate.js";
+import OrderStatusTemplate from "../../email_templates/pages/OrderStatusTemplate.js";
+import OrderTemplate from "../../email_templates/pages/OrderTemplate.js";
+import ReviewTemplate from "../../email_templates/pages/ReviewTemplate.js";
+import AffiliateTemplate from "../../email_templates/pages/AffiliateTemplate.js";
+import FeatureTemplate from "../../email_templates/pages/FeatureTemplate.js";
+import AnnouncementTemplate from "../../email_templates/pages/AnnouncementTemplate.js";
+import CustomContactTemplate from "../../email_templates/pages/CustomContactTemplate.js";
+import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
+import ShippingStatusTemplate from "../../email_templates/pages/ShippingStatusTemplate.js";
+import VerifyEmailPasswordResetTemplate from "../../email_templates/pages/VerifyEmailPasswordResetTemplate.js";
+import SuccessfulPasswordResetTemplate from "../../email_templates/pages/SuccessfulPasswordResetTemplate.js";
+import AffiliateOnboardingTemplate from "../../email_templates/pages/AffiliateOnboardingTemplate.js";
+import CurrentStockTemplate from "../../email_templates/pages/CurrentStockTemplate.js";
+import EmailSubscriptionTemplate from "../../email_templates/pages/EmailSubscriptionTemplate.js";
 import order_db from "../orders/order_db.js";
 import order_services from "../orders/order_services.js";
 import content_db from "../contents/content_db.js";
@@ -32,11 +32,11 @@ import product_db from "../products/product_db.js";
 import team_db from "../teams/team_db.js";
 import jwt from "jsonwebtoken";
 import config from "../../config.js";
-import verify from "../../email_templates/pages/verify.js";
+import VerifyTemplate from "../../email_templates/pages/VerifyTemplate.js";
 import { domain } from "../../email_templates/email_template_helpers.js";
 import Email from "./email.js";
-import paycheck from "../../email_templates/pages/paycheck.js";
-import ticketEmail from "../../email_templates/pages/ticketEmail.js";
+import PaycheckTemplate from "../../email_templates/pages/PaycheckTemplate.js";
+import TicketTemplate from "../../email_templates/pages/TicketTemplate.js";
 import { sendAnnouncementEmail } from "../users/user_interactors.js";
 import { sendEmail } from "../orders/order_interactors.js";
 import email_db from "./email_db.js";
@@ -129,7 +129,7 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: order(body), unsubscribe: false }),
+      html: App({ body: OrderTemplate(body), unsubscribe: false }),
     };
     sendEmailHelper(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
   },
@@ -150,7 +150,7 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: subject,
-      html: App({ body: order(bodyConfirmation), unsubscribe: false }),
+      html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
     };
     await sendEmailHelper(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
   },
@@ -173,7 +173,7 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Your Event Tickets",
-      html: App({ body: ticketEmail(bodyTickets), unsubscribe: false }),
+      html: App({ body: TicketTemplate(bodyTickets), unsubscribe: false }),
     };
     if (order_data.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
@@ -200,7 +200,7 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Your Glow LEDs Refund",
-      html: App({ body: order(body), unsubscribe: false }),
+      html: App({ body: OrderTemplate(body), unsubscribe: false }),
     };
     sendEmailHelper(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
   },
@@ -221,7 +221,7 @@ export default {
       to: req.body.email,
       subject: req.body.status === "reassured" ? "Thank you for your patience" : req.body.subject,
       html: App({
-        body: order_status(body),
+        body: OrderStatusTemplate(body),
         unsubscribe: false,
       }),
     };
@@ -236,7 +236,7 @@ export default {
       to: config.INFO_EMAIL,
       subject: "Glow LEDs Current Stock",
       html: App({
-        body: current_stock(data),
+        body: CurrentStockTemplate(data),
       }),
     };
 
@@ -250,7 +250,7 @@ export default {
       to: email,
       subject: subject,
       html: App({
-        body: paycheck(req.body),
+        body: PaycheckTemplate(req.body),
       }),
     };
 
@@ -267,7 +267,7 @@ export default {
         from: config.DISPLAY_INFO_EMAIL,
         to: data.email,
         subject: "Congratulations! Lets get you started!",
-        html: affiliate_onboard(data),
+        html: AffiliateOnboardingTemplate(data),
       };
 
       await sendEmailHelper(mailOptions, res, "info", "Affiliate Onboarding Email Sent to " + data.email);
@@ -283,7 +283,7 @@ export default {
       from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: affiliate(body), unsubscribe: false }),
+      html: App({ body: AffiliateTemplate(body), unsubscribe: false }),
     };
 
     sendEmailHelper(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
@@ -298,7 +298,7 @@ export default {
       to: req.body.email,
       subject: req.body.subject,
       html: App({
-        body: feature(body),
+        body: FeatureTemplate(body),
         unsubscribe: false,
       }),
     };
@@ -321,7 +321,7 @@ export default {
       from: email,
       replyTo: email,
       subject: `New message from ${first_name} - ${reason_for_contact}`,
-      html: contact(req.body),
+      html: ContactTemplate(req.body),
     };
     sendEmailHelper(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
   },
@@ -333,7 +333,7 @@ export default {
       to: email,
       replyTo: email,
       subject: `Thank you for Contacting Glow LEDs Support`,
-      html: contact_confirmation(req.body),
+      html: ContactConfirmationTemplate(req.body),
     };
     sendEmailHelper(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
   },
@@ -343,7 +343,7 @@ export default {
       from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
-      html: custom_contact({ order }),
+      html: CustomContactTemplate({ order }),
     };
     sendEmailHelper(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
   },
@@ -431,7 +431,7 @@ export default {
           subject: mailSubject,
           bcc: config.INFO_EMAIL,
           html: App({
-            body: code_used(mailBodyData),
+            body: CodeUsedTemplate(mailBodyData),
             unsubscribe: false,
           }),
         };
@@ -456,7 +456,7 @@ export default {
         to: req.body.email,
         subject: "Glow LEDs Reset Password",
         html: App({
-          body: verify_email_password_reset({
+          body: VerifyEmailPasswordResetTemplate({
             ...req.body,
             url,
             title: "Glow LEDs Reset Password",
@@ -475,7 +475,7 @@ export default {
       to: req.body.email,
       subject: "Glow LEDs Reset Password",
       html: App({
-        body: successful_password_reset({
+        body: SuccessfulPasswordResetTemplate({
           ...req.body,
           title: "Glow LEDs Reset Password",
         }),
@@ -492,7 +492,7 @@ export default {
       to: req.body.email,
       subject: "Enjoy 10% off your next purchase!",
       html: App({
-        body: review({
+        body: ReviewTemplate({
           ...req.body,
           categories: contents && contents[0].home_page?.slideshow,
           title: "Enjoy 10% off your next purchase!",
@@ -548,7 +548,7 @@ export default {
     if (Object.keys(template).length > 2) {
       res.status(200).send(
         App({
-          body: announcement(template),
+          body: AnnouncementTemplate(template),
           unsubscribe: true,
           background_color: template.background_color,
           header_footer_color: template.header_footer_color,
@@ -594,14 +594,12 @@ export default {
         active: true,
       });
 
-      console.log({ promo_code });
-
       const mailOptions = {
         from: config.DISPLAY_INFO_EMAIL,
         to: req.body.email,
         subject: "Enjoy 10% off your next purchase!",
         html: App({
-          body: email_subscription({
+          body: EmailSubscriptionTemplate({
             ...req.body,
             categories: contents && contents[0]?.menus[0]?.menu_items,
             title: "Enjoy 10% off your next purchase!",
@@ -637,7 +635,7 @@ export default {
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({
-        body: account_created({
+        body: AccountCreatedTemplate({
           user: req.body,
           categories: contents && contents[0]?.menus[0]?.menu_items,
           title: "Glow LEDs Account Created",
@@ -659,7 +657,7 @@ export default {
       to: req.body.email,
       subject: "Verify your Email",
       html: App({
-        body: verify({
+        body: VerifyTemplate({
           title: "Verify your Email",
           url: `${domain()}?token=${token}`,
           user: user,
@@ -691,7 +689,7 @@ export default {
             to: order.shipping.email,
             subject: determine_status(tracker.status),
             html: App({
-              body: shipping_status(body),
+              body: ShippingStatusTemplate(body),
               unsubscribe: false,
             }),
           };

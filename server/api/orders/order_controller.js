@@ -1,4 +1,4 @@
-import invoice from "../../email_templates/pages/invoice.js";
+import InvoiceTemplate from "../../email_templates/pages/InvoiceTemplate.js";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import order_services from "../orders/order_services.js";
 
@@ -332,9 +332,9 @@ export default {
 
       if (order.user && order.user.affiliate) {
         const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate, deleted: false });
-        return res.status(200).send(invoice({ order, isSponsor: affiliate.sponsor }));
+        return res.status(200).send(InvoiceTemplate({ order, isSponsor: affiliate.sponsor }));
       } else {
-        return res.status(200).send(invoice({ order, isSponsor: false }));
+        return res.status(200).send(InvoiceTemplate({ order, isSponsor: false }));
       }
     } catch (error) {
       res.status(500).send({ error, message: error.message });
