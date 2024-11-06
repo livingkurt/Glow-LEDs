@@ -439,16 +439,15 @@ export const humanDate = date => {
   return new Date(date).toLocaleDateString();
 };
 
-export const unformat_date = formatted_date => {
+export const formatDateToISODate = formatted_date => {
   //
   const date = formatted_date.split("/");
   const day = date[1];
   const month = date[0];
   const year = date[2];
-  const unformat_date = `${year}-${month}-${day}`;
-  return unformat_date;
+  return `${year}-${month}-${day}`;
 };
-export const determin_card_logo = card_type => {
+export const determine_card_logo = card_type => {
   switch (card_type) {
     case "American Express":
       return `<i class="fab fa-cc-amex" />`;
@@ -461,7 +460,7 @@ export const determin_card_logo = card_type => {
   }
 };
 
-export const determin_card_logo_images = card_type => {
+export const determine_card_logo_images = card_type => {
   switch (card_type) {
     case "amex":
       return "https://thumbs2.imgbox.com/c9/a5/0AsOySyq_b.png";
@@ -475,7 +474,7 @@ export const determin_card_logo_images = card_type => {
       return;
   }
 };
-export const determin_card_logo_images_white = card_type => {
+export const determine_card_logo_images_white = card_type => {
   switch (card_type) {
     case "amex":
       return "https://images2.imgbox.com/ea/c8/r82jUQW8_o.png";

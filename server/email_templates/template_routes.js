@@ -1305,8 +1305,7 @@ router.get("/custom_contact", (req, res) => {
       taxPrice: 2.8625175,
       shippingPrice: 6.15,
       totalPrice: 58.4955175,
-      order_note:
-        "PLEASE MAKE MY SLEDS THE DUAL CHIP ONES WE DISCUSSED FOR THE EMAZING EVOS. :)     HIT ME UP WITH FURSTHER QUESTIONS, COMMENTS, CONCERNS. THANK YOU MUCH!",
+      order_note: "",
       production_note: "",
       promo_code: "SNAPS",
       parcel: "60c25b1575b455002a999820",
@@ -1332,23 +1331,6 @@ router.get("/reset_password", async (req, res) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
   res.send(App({ body: SuccessfulPasswordResetTemplate(user), title: "Password Reset Successful" }));
 });
-// router.get(
-//   "/announcement",
-//   async (req, res) => {
-//     const contents = await content_db.findAll_contents_d, 1b(
-//       { deleted: false },
-//       { _id: -1 },
-//       0
-//     );
-
-//     res.send(
-//       App({
-//         body: announcment(contents && contents[0]),
-//         title: "Glow LEDs Account Created",
-//       })
-//     );
-//   }
-// );
 router.get("/account_created", async (req, res) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");

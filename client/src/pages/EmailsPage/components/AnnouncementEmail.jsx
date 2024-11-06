@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { API_Emails } from "../../../utils";
-import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
+import { accurate_date, format_date, format_time, formatDateToISODateAndTime } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
@@ -80,7 +80,7 @@ const AnnouncementEmail = () => {
         email,
         `${test ? "[Test]" : ""} ${subject ? subject : email.h1}`,
         test,
-        schedule ? unformat_date_and_time(date, time) : ""
+        schedule ? formatDateToISODateAndTime(date, time) : ""
       );
     }
   };

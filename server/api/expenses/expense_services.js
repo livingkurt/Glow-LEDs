@@ -1,6 +1,6 @@
 import Expense from "./expense.js";
 import expense_db from "./expense_db.js";
-import { unformat_date } from "../../utils/util.js";
+import { formatDateToISODate } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
 import {
   determine_application,
@@ -124,7 +124,7 @@ export default {
       expenses.forEach(async expense => {
         if (!payment_check.includes(expense.description)) {
           const row = {
-            date_of_purchase: unformat_date(expense.date),
+            date_of_purchase: formatDateToISODate(expense.date),
             expense_name: expense.description,
             place_of_purchase: determine_place(expense.description),
             card: card,

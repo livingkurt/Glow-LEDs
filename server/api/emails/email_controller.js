@@ -594,8 +594,6 @@ export default {
         active: true,
       });
 
-      console.log({ promo_code });
-
       const mailOptions = {
         from: config.DISPLAY_INFO_EMAIL,
         to: req.body.email,

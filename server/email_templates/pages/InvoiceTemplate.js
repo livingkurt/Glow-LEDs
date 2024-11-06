@@ -1,5 +1,5 @@
 import config from "../../config.js";
-import { email_sale_price_switch, determin_card_logo_images, format_date } from "../../utils/util.js";
+import { email_sale_price_switch, determine_card_logo_images, format_date } from "../../utils/util.js";
 
 export default ({ order, isSponsor }) => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
@@ -60,7 +60,7 @@ export default ({ order, isSponsor }) => {
           order.payment.charge
             ? `<tr>
           <td valign="top" style="padding: 5px; vertical-align: top; border-bottom: 1px solid black;">
-            <img src=${order.payment.payment && determin_card_logo_images(order.payment.payment.card.brand)}
+            <img src=${order.payment.payment && determine_card_logo_images(order.payment.payment.card.brand)}
               alt=${order.payment.payment && order.payment.payment.card.brand} title="Card Type Image"
               style="width: 50px; margin-right: 0.5rem;" />
           </td>

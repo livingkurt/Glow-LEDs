@@ -302,16 +302,16 @@ export const accurate_date = date => {
 
 // var dt = new Date();
 
-export const unformat_date = formatted_date => {
+export const formatDateToISODate = formatted_date => {
   //
   const date = formatted_date.split("/");
   const day = date[1];
   const month = date[0];
   const year = date[2];
-  const unformat_date = `${year}-${month}-${day}`;
-  return unformat_date;
+  const formatDateToISODate = `${year}-${month}-${day}`;
+  return formatDateToISODate;
 };
-export const unformat_date_and_time = (formatted_date, formatted_time) => {
+export const formatDateToISODateAndTime = (formatted_date, formatted_time) => {
   const date = formatted_date.split("/");
   const time = formatted_time.trim().split(":");
   const day = date[1];
@@ -329,9 +329,8 @@ export const unformat_date_and_time = (formatted_date, formatted_time) => {
       hour = time[0];
     }
   }
-  const unformat_date = `${year}-${month}-${day}T${hour}:${minute}:00`;
 
-  return unformat_date;
+  return `${year}-${month}-${day}T${hour}:${minute}:00`;
 };
 export const format_date_and_time = (formatted_date, formatted_time) => {
   //
@@ -343,8 +342,8 @@ export const format_date_and_time = (formatted_date, formatted_time) => {
   const hour = time[1];
   const second = time[0];
   const ms = time[2];
-  const unformat_date = `${year}-${month}-${day}T${hour}.${second}.${ms}`;
-  return unformat_date;
+  const formatDateToISODate = `${year}-${month}-${day}T${hour}.${second}.${ms}`;
+  return formatDateToISODate;
 };
 
 export const daysBetween = (date1, date2) => {
