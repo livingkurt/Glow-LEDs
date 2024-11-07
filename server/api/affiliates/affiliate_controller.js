@@ -27,18 +27,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  findByPathname_affiliates_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const affiliate = await affiliate_services.findByPathname_affiliates_s(params);
-      if (affiliate) {
-        return res.status(200).send(affiliate);
-      }
-      return res.status(404).send({ message: "Affiliate Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   findById_affiliates_c: async (req, res) => {
     const { params } = req;
     try {

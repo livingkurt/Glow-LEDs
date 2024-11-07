@@ -3,11 +3,6 @@ import affiliate_controller from "./affiliate_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router
-  .route("/:pathname/pathname")
-  .get(affiliate_controller.findByPathname_affiliates_c)
-  .put(isAuth, affiliate_controller.update_affiliates_c);
-
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 
 router.route("/table").get(affiliate_controller.table_affiliates_c);

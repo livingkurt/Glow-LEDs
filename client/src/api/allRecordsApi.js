@@ -88,6 +88,9 @@ export const allRecordsApi = createApi({
     promos: builder.query({
       query: query => `/promos?${create_query(query)}`,
     }),
+    wholesalers: builder.query({
+      query: query => `/wholesalers?${create_query(query)}`,
+    }),
     surveys: builder.query({
       query: query => `/surveys?${create_query(query)}`,
     }),
@@ -132,4 +135,5 @@ export const {
   useArticlesQuery,
   useTutorialsQuery,
   useProductBundlesQuery,
+  useWholesalersQuery,
 } = allRecordsApi;
