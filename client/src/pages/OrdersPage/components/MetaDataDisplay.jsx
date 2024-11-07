@@ -211,7 +211,7 @@ const MetaDataDisplay = ({ row }) => {
       </Grid>
       <Grid item xs={12}>
         <Button color="secondary" variant="contained" fullWidth onClick={() => send_order_status_email("updated")}>
-          {"Send Update Order Email"}
+          {"Send Status Email"}
         </Button>
       </Grid>
       <Grid item xs={12}>

@@ -40,6 +40,7 @@ import TicketTemplate from "../../email_templates/pages/TicketTemplate.js";
 import { sendAnnouncementEmail } from "../users/user_interactors.js";
 import { sendEmail } from "../orders/order_interactors.js";
 import email_db from "./email_db.js";
+import OrderUpdateTemplate from "../../email_templates/pages/OrderUpdateTemplate.js";
 
 export default {
   get_table_emails_c: async (req, res) => {
@@ -153,6 +154,18 @@ export default {
       html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
     };
     await sendEmailHelper(mailOptionsConfirmation, res, "info", "Order Confirmation Email Sent to " + email);
+  },
+  send_order_update_emails_c: async (req, res) => {
+    const { order: order_data, subject, email } = req.body;
+    const orderData = await order_db.findById_orders_db(order_data._id);
+
+    const mailOptionsConfirmation = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: email,
+      subject: subject,
+      html: App({ body: OrderUpdateTemplate({ order: orderData }), unsubscribe: false }),
+    };
+    await sendEmailHelper(mailOptionsConfirmation, res, "info", "Order Update Email Sent to " + email);
   },
   send_ticket_emails_c: async (req, res) => {
     const { order: order_data, subject, email } = req.body;

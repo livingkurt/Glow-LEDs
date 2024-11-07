@@ -240,25 +240,50 @@ export const printInvoice = async invoice => {
   ]);
 };
 
-export const updateOrderPrices = ({ orderItems = [], shippingPrice = 0, taxRate = 0, tip = 0 }) => {
-  console.log({ orderItems, shippingPrice, taxRate, tip });
-  let itemsPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  console.log({ itemsPrice });
-  let taxPrice = itemsPrice * taxRate;
-  console.log({ taxPrice });
-  let totalPrice = itemsPrice + taxPrice + shippingPrice + tip;
-  console.log({ totalPrice });
+export const updateOrderPrices = ({
+  orderItems = [],
+  shippingPrice = 9.26,
+  taxRate = 0.08,
+  tip = 0,
+  serviceFee = 0,
+}) => {
+  // Calculate items price
+  const itemsPrice = parseFloat(
+    orderItems
+      .reduce((total, item) => {
+        const price = parseFloat(item.price) || 0;
+        const quantity = parseFloat(item.quantity) || 1;
+        return total + price * quantity;
+      }, 0)
+      .toFixed(2)
+  );
 
-  return { itemsPrice, taxPrice, totalPrice };
+  // Ensure shipping price is preserved
+  const finalShippingPrice = parseFloat(shippingPrice || 9.26);
+
+  // Calculate tax
+  const taxPrice = parseFloat(itemsPrice * taxRate);
+
+  // Calculate total
+  const totalPrice = parseFloat(itemsPrice + taxPrice + finalShippingPrice + parseFloat(tip) + parseFloat(serviceFee));
+
+  return {
+    itemsPrice,
+    taxPrice,
+    shippingPrice: finalShippingPrice,
+    shipping_price: finalShippingPrice,
+    totalPrice,
+    tip: parseFloat(tip),
+    serviceFee: parseFloat(serviceFee),
+  };
 };
-
 export const updatePricesAndDispatch = (updatedOrderItems, dispatch, order) => {
   const updatedPrices = updateOrderPrices({
     orderItems: updatedOrderItems,
     shippingPrice: order.shippingPrice,
-    taxPrice: order.taxPrice,
     taxRate: order.taxRate,
     tip: order.tip,
+    serviceFee: order.serviceFee,
   });
 
   const finalUpdatedOrder = {
@@ -289,6 +314,8 @@ export const handleDuplicate = (value, dispatch, order, isUpdatePricesActive) =>
 export const handleProductChange = (index, value, dispatch, isUpdatePricesActive) => {
   const order = value; // Use the latest order state
   const product = order.orderItems[index].product;
+
+  console.log({ product });
 
   const updatedOrderItems = order.orderItems.map((item, i) => {
     if (i === index) {
@@ -336,27 +363,44 @@ export const handleProductChange = (index, value, dispatch, isUpdatePricesActive
     }
   });
 
-  let updatedPrices = {};
-
   if (isUpdatePricesActive) {
-    updatedPrices = updateOrderPrices({
-      orderItems: updatedOrderItems, // Use updatedOrderItems directly
-      shippingPrice: order.shippingPrice || 0,
-      taxPrice: order.taxPrice || 0,
-      taxRate: order.taxRate || 0,
-      tip: order.tip || 0,
+    // Get the existing shipping price, with fallbacks
+    const existingShippingPrice = parseFloat(order.shippingPrice || order.shipping_price || 9.26);
+
+    const updatedPrices = updateOrderPrices({
+      orderItems: updatedOrderItems,
+      shippingPrice: existingShippingPrice, // Pass the existing shipping price
+      taxRate: order.taxRate || 0.08,
+      tip: parseFloat(order.tip) || 0,
+      serviceFee: parseFloat(order.serviceFee) || 0,
     });
+
+    const finalUpdatedOrder = {
+      ...order,
+      orderItems: updatedOrderItems,
+      ...updatedPrices,
+      shippingPrice: existingShippingPrice,
+      shipping_price: existingShippingPrice,
+    };
+
+    // Log the values to verify
+    console.log("Updated Prices:", {
+      itemsPrice: finalUpdatedOrder.itemsPrice,
+      taxPrice: finalUpdatedOrder.taxPrice,
+      shippingPrice: finalUpdatedOrder.shippingPrice,
+      totalPrice: finalUpdatedOrder.totalPrice,
+    });
+
+    dispatch(set_order(finalUpdatedOrder));
+  } else {
+    dispatch(
+      set_order({
+        ...order,
+        orderItems: updatedOrderItems,
+      })
+    );
   }
-
-  const finalUpdatedOrder = {
-    ...order,
-    orderItems: updatedOrderItems, // Corrected here
-    ...updatedPrices,
-  };
-
-  dispatch(set_order(finalUpdatedOrder));
 };
-
 export const handleTicketChange = (index, value, dispatch, isUpdatePricesActive) => {
   const order = value; // Use the latest order state
 
@@ -390,9 +434,9 @@ export const handleTicketChange = (index, value, dispatch, isUpdatePricesActive)
     updatedPrices = updateOrderPrices({
       orderItems: updatedOrderItems, // Corrected here
       shippingPrice: order.shippingPrice || 0,
-      taxPrice: order.taxPrice || 0,
-      taxRate: order.taxRate || 0,
+      taxRate: order.taxRate || 0.08,
       tip: order.tip || 0,
+      serviceFee: order.serviceFee || 0,
     });
   }
 
@@ -416,9 +460,9 @@ export const handleQtyChange = (value, dispatch, order, isUpdatePricesActive) =>
     updatedPrices = updateOrderPrices({
       orderItems: updatedOrderItems,
       shippingPrice: order.shippingPrice,
-      taxPrice: order.taxPrice,
       taxRate: order.taxRate,
       tip: order.tip,
+      serviceFee: order.serviceFee,
     });
   }
 
