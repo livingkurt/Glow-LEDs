@@ -69,6 +69,8 @@ const SponsorPage = () => {
     { icon: TikTokIcon, platform: "TikTok" },
   ];
 
+  const sponsorTutorials = tutorials?.filter(tutorial => tutorial.affiliate?._id === affiliate._id);
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Helmet>
@@ -272,50 +274,40 @@ const SponsorPage = () => {
           </Box>
         )}
       </>
-      <Divider sx={{ my: 4, borderColor: "#fff" }} />
-      {tutorials && tutorials.length > 0 && (
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-          <Typography variant="h4" align="left">
-            {"Tutorials by "}
-            {affiliate.artist_name}
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => navigate("/tutorials", { state: { affiliate: affiliate._id } })}
+      {sponsorTutorials && sponsorTutorials.length > 0 && (
+        <>
+          <Divider sx={{ my: 4, borderColor: "#fff" }} />
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+            <Typography variant="h4" align="left">
+              {"Tutorials by "}
+              {affiliate.artist_name}
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => navigate("/tutorials", { state: { affiliate: affiliate._id } })}
+            >
+              {"View All Tutorials"}
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              pb: 6,
+              px: 2,
+              display: "flex",
+              overflowX: "auto",
+              minWidth: "100%",
+              "&::-webkit-scrollbar": {
+                height: "8px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                borderRadius: "4px",
+              },
+            }}
           >
-            {"View All Tutorials"}
-          </Button>
-        </Box>
-      )}
-      {tutorials && tutorials.length === 0 && (
-        <Box>
-          <Typography variant="h4" align="center" gutterBottom>
-            {affiliate.artist_name} {"has no tutorials yet."}
-          </Typography>
-        </Box>
-      )}
-      {tutorials && tutorials.length > 0 && (
-        <Box
-          sx={{
-            pb: 6,
-            px: 2,
-            display: "flex",
-            overflowX: "auto",
-            minWidth: "100%",
-            "&::-webkit-scrollbar": {
-              height: "8px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "rgba(0, 0, 0, 0.2)",
-              borderRadius: "4px",
-            },
-          }}
-        >
-          {tutorials.length > 0 ? (
-            tutorials
-              .filter(tutorial => tutorial.affiliate?._id === affiliate._id)
-              .map(tutorial => (
+            {sponsorTutorials.length > 0 &&
+              sponsorTutorials.map(tutorial => (
                 <Box
                   key={tutorial._id}
                   sx={{
@@ -329,52 +321,43 @@ const SponsorPage = () => {
                 >
                   <TutorialCard tutorial={tutorial} handleOpen={handleOpen} />
                 </Box>
-              ))
-          ) : (
-            <>
-              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
-                {"No tutorials found for matching criteria"}
-              </Typography>
-              <Typography variant="subtitle2" textAlign="center" width="100%">
-                {"Try removing some filters to find what you're looking for"}
-              </Typography>
-            </>
-          )}
-        </Box>
+              ))}
+          </Box>
+        </>
       )}
       <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.videos && affiliate.videos.length > 0 && (
-        <Typography variant="h4" gutterBottom>
-          {"Lightshows By "}
-          {affiliate.artist_name}
-        </Typography>
-      )}
-      {affiliate.videos &&
-        affiliate.videos.length > 0 &&
-        affiliate.videos.map(videoObj => (
-          <Box key={videoObj._id}>
-            <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
-              <iframe
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  border: 0,
-                }}
-                title={videoObj.title || `${affiliate.artist_name} video`}
-                allowFullScreen
-                src={`https://www.youtube.com/embed/${videoObj.video}?autoplay=1&mute=0`}
-                allow="autoplay"
-                autoPlay
-                loop
-                playsInline
-              />
+        <>
+          <Typography variant="h4" gutterBottom>
+            {"Lightshows By "}
+            {affiliate.artist_name}
+          </Typography>
+          {affiliate.videos.map(videoObj => (
+            <Box key={videoObj._id}>
+              <Box sx={{ position: "relative", paddingTop: "56.25%", borderRadius: 5, overflow: "hidden" }}>
+                <iframe
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: 0,
+                  }}
+                  title={videoObj.title || `${affiliate.artist_name} video`}
+                  allowFullScreen
+                  src={`https://www.youtube.com/embed/${videoObj.video}?autoplay=1&mute=0`}
+                  allow="autoplay"
+                  autoPlay
+                  loop
+                  playsInline
+                />
+              </Box>
             </Box>
-          </Box>
-        ))}
+          ))}
+        </>
+      )}
       <EditAffiliateModal />
       <EditCartModal />
     </Container>

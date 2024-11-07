@@ -141,3 +141,4 @@ webhook_payload.json
 
 
 !client/dist
+.aider*

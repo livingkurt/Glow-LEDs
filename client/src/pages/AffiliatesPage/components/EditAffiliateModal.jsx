@@ -25,6 +25,10 @@ const EditAffiliateModal = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { edit_affiliate_modal, affiliate, loading, createAffiliateStep, stripeAccountLink, loadingSaveAffiliate } =
     affiliatePage;
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { data: chips, isLoading: chipsLoading } = useChipsQuery();
@@ -114,7 +118,7 @@ const EditAffiliateModal = () => {
             state={affiliate}
             mode="edit"
             onChange={value => dispatch(set_affiliate(value))}
-            loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+            loading={loading}
           />
         </GLActionModal>
       ) : (
@@ -144,7 +148,7 @@ const EditAffiliateModal = () => {
               state={affiliate}
               mode="create"
               onChange={value => dispatch(set_affiliate(value))}
-              loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+              loading={loading}
             />
           )}
           {createAffiliateStep === 1 && (
@@ -152,7 +156,7 @@ const EditAffiliateModal = () => {
               <Typography variant="h6" gutterBottom>
                 {"Create Your Stripe Account"}
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography variant="body1">
                 {
                   "In order to receive commissions from your affiliate sales, you'll need to create a Stripe account. This"
                 }
@@ -165,11 +169,11 @@ const EditAffiliateModal = () => {
               <Typography variant="h6" gutterBottom>
                 {"Join our Glow LEDs Discord Community"}
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography variant="body1">
                 {"Be a part of our vibrant community on Discord! Engage with fellow affiliates, get updates, and share"}
                 {"your experiences."}
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography variant="body1">
                 {'Once completed Navigate back to this page and click the "Complete" button.'}
               </Typography>
             </Box>
@@ -179,12 +183,10 @@ const EditAffiliateModal = () => {
               <Typography variant="h6" gutterBottom>
                 {"Welcome to the Glow LEDs Affiliate Team!"}
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography variant="body1">
                 {"You're all set! You can now start earning commissions on your sales."}
               </Typography>
-              <Typography variant="body1" paragraph>
-                {"If you have any questions, please reach out to us on Discord."}
-              </Typography>
+              <Typography variant="body1">{"If you have any questions, please reach out to us on Discord."}</Typography>
             </Box>
           )}
         </GLStepperModal>

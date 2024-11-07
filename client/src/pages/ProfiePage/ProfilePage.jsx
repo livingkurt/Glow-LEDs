@@ -15,7 +15,7 @@ import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 import { Container, Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
-import {useUserProfilePage} from "./useUserProfilePage";
+import { useUserProfilePage } from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import { months } from "../DashboardPage/dashboardHelpers";
@@ -129,4 +129,3 @@ export const ProfilePage = () => {
     </Container>
   );
 };
-
