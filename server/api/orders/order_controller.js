@@ -331,7 +331,7 @@ export default {
       const order = await order_services.invoice_orders_s(params.id);
 
       if (order.user && order.user.affiliate) {
-        const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate, deleted: false });
+        const affiliate = await affiliate_db.findById_affiliates_db(order.user.affiliate);
         return res.status(200).send(InvoiceTemplate({ order, isSponsor: affiliate.sponsor }));
       } else {
         return res.status(200).send(InvoiceTemplate({ order, isSponsor: false }));

@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { useLocation } from "react-router-dom";
 import { userFormFields } from "../userFormFields";
+import { useAffiliatesQuery, usePromosQuery, useTeamsQuery, useWholesalersQuery } from "../../../api/allRecordsApi";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
@@ -15,17 +16,6 @@ const EditUserModal = () => {
   const { edit_user_modal, user, loading } = userPage;
 
   const { affiliate } = user;
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates, loading: loading_affiliates } = affiliatePage;
-
-  const teamPage = useSelector(state => state.teams.teamPage);
-  const { teams, loading: loading_teams } = teamPage;
-
-  const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
-  const { wholesalers, loading: loading_wholesalers } = wholesalerPage;
-
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos, loading: loading_promos } = promoPage;
 
   useEffect(() => {
     let clean = true;
@@ -40,11 +30,16 @@ const EditUserModal = () => {
     };
   }, [dispatch]);
 
+  const { data: promos, isLoading: promosLoading } = usePromosQuery();
+  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
+  const { data: wholesalers, isLoading: wholesalersLoading } = useWholesalersQuery();
+  const { data: teams, isLoading: teamsLoading } = useTeamsQuery();
+
   const formFields = userFormFields({
-    affiliates,
-    wholesalers,
-    promos,
-    teams,
+    affiliates: affiliatesLoading ? [] : affiliates,
+    wholesalers: wholesalersLoading ? [] : wholesalers,
+    promos: promosLoading ? [] : promos,
+    teams: teamsLoading ? [] : teams,
   });
 
   return (
@@ -69,12 +64,7 @@ const EditUserModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm
-          formData={formFields}
-          state={user}
-          onChange={value => dispatch(set_user(value))}
-          loading={loading && loading_affiliates}
-        />
+        <GLForm formData={formFields} state={user} onChange={value => dispatch(set_user(value))} loading={loading} />
       </GLActionModal>
     </div>
   );

@@ -86,15 +86,10 @@ export const createProductBundle = createAsyncThunk(
 
 export const detailsAffiliate = createAsyncThunk(
   "affiliates/detailsAffiliate",
-  async ({ pathname, id }, { dispatch, rejectWithValue }) => {
+  async (id, { dispatch, rejectWithValue }) => {
     try {
-      if (id) {
-        const { data } = await axios.get(`/api/affiliates/${id}`);
-        return data;
-      } else if (pathname) {
-        const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
-        return data;
-      }
+      const { data } = await axios.get(`/api/affiliates/${id}`);
+      return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);

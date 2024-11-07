@@ -74,15 +74,6 @@ export default {
       }
     }
   },
-  findByPathname_affiliates_s: async params => {
-    try {
-      return await affiliate_db.findByPathname_affiliates_db(params.pathname);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   findById_affiliates_s: async params => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);
@@ -338,7 +329,7 @@ export default {
   },
   create_product_bundle_affiliates_s: async (params, body) => {
     const { id, cartId } = params;
-    const { title, subtitle, short_description } = body;
+    const { title, subtitle, short_description, images, pathname } = body;
     console.log({ params, body });
     try {
       const originalCart = await Cart.findById(cartId);
@@ -352,21 +343,18 @@ export default {
         _id: undefined,
         user: undefined,
         affiliate: id,
+        title,
+        subtitle,
+        short_description,
+        images,
+        pathname,
       });
       console.log({ newCart });
       const savedCart = await newCart.save();
 
-      const newProductBundle = {
-        title,
-        subtitle,
-        short_description,
-        cart: savedCart._id,
-      };
-      console.log({ newProductBundle });
-
       const updatedAffiliate = await Affiliate.findByIdAndUpdate(
         id,
-        { $push: { product_bundles: newProductBundle } },
+        { $push: { bundles: savedCart._id } },
         { new: true }
       );
       console.log({ updatedAffiliate });

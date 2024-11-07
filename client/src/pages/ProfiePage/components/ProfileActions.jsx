@@ -59,7 +59,7 @@ export const ProfileActions = () => {
           color="secondary"
           onClick={() => {
             if (user?.affiliate?._id) {
-              dispatch(API.detailsAffiliate({ id: user?.affiliate?._id }));
+              dispatch(API.detailsAffiliate(user?.affiliate?._id));
             }
             dispatch(open_edit_affiliate_modal(affiliate));
           }}

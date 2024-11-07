@@ -56,10 +56,11 @@ const SponsorPage = () => {
   const { data: tutorials } = useTutorialsQuery({ affiliate: affiliate._id });
 
   useEffect(() => {
-    dispatch(API.detailsAffiliate({ pathname: params.pathname }));
+    dispatch(API.detailsAffiliate(params.pathname));
   }, [dispatch, params.pathname]);
 
   if (loading || !affiliate?.artist_name) return <SponsorPageSkeleton />;
+  console.log({ affiliate });
 
   const socialIcons = [
     { icon: InstagramIcon, platform: "Instagram" },

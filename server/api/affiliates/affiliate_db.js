@@ -1,3 +1,4 @@
+import { determineIDPathname } from "../api_helpers.js";
 import Promo from "../promos/promo.js";
 import Affiliate from "./affiliate.js";
 
@@ -10,16 +11,6 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
-        .populate({
-          path: "product_bundles",
-          populate: {
-            path: "cart",
-            populate: {
-              path: "cartItems",
-              populate: [{ path: "tags" }, { path: "display_image_object" }],
-            },
-          },
-        })
         .populate({
           path: "bundles",
           populate: [
@@ -44,47 +35,6 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate({
-          path: "product_bundles",
-          populate: {
-            path: "cart",
-            populate: {
-              path: "cartItems",
-              populate: [{ path: "tags" }, { path: "display_image_object" }],
-            },
-          },
-        })
-        .populate({
-          path: "bundles",
-          populate: [
-            { path: "images" },
-            { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
-          ],
-        });
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  findByPathname_affiliates_db: async pathname => {
-    try {
-      return await Affiliate.findOne({ pathname: pathname, deleted: false })
-        .populate("user")
-        .populate("chips")
-
-        .populate("public_code")
-        .populate("private_code")
-        .populate({
-          path: "product_bundles",
-          populate: {
-            path: "cart",
-            populate: {
-              path: "cartItems",
-              populate: [{ path: "tags" }, { path: "display_image_object" }],
-            },
-          },
-        })
-        .populate({
           path: "bundles",
           populate: [
             { path: "images" },
@@ -98,23 +48,15 @@ export default {
     }
   },
   findById_affiliates_db: async id => {
+    const query = determineIDPathname(id);
     try {
-      return await Affiliate.findOne({ _id: id, deleted: false })
+      return await Affiliate.findOne({ ...query, deleted: false })
         .populate("user")
         .populate("chips")
 
         .populate("public_code")
         .populate("private_code")
-        .populate({
-          path: "product_bundles",
-          populate: {
-            path: "cart",
-            populate: {
-              path: "cartItems",
-              populate: [{ path: "tags" }, { path: "display_image_object" }],
-            },
-          },
-        })
+
         .populate({
           path: "bundles",
           populate: [
