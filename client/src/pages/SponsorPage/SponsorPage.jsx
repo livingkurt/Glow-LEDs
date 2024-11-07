@@ -60,7 +60,6 @@ const SponsorPage = () => {
   }, [dispatch, params.pathname]);
 
   if (loading || !affiliate?.artist_name) return <SponsorPageSkeleton />;
-  console.log({ affiliate });
 
   const socialIcons = [
     { icon: InstagramIcon, platform: "Instagram" },

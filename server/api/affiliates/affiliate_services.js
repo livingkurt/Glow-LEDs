@@ -330,10 +330,8 @@ export default {
   create_product_bundle_affiliates_s: async (params, body) => {
     const { id, cartId } = params;
     const { title, subtitle, short_description, images, pathname } = body;
-    console.log({ params, body });
     try {
       const originalCart = await Cart.findById(cartId);
-      console.log({ originalCart });
       if (!originalCart) {
         throw new Error("Cart not found");
       }
@@ -349,7 +347,6 @@ export default {
         images,
         pathname,
       });
-      console.log({ newCart });
       const savedCart = await newCart.save();
 
       const updatedAffiliate = await Affiliate.findByIdAndUpdate(
@@ -357,7 +354,6 @@ export default {
         { $push: { bundles: savedCart._id } },
         { new: true }
       );
-      console.log({ updatedAffiliate });
 
       if (!updatedAffiliate) {
         throw new Error("Affiliate not found");

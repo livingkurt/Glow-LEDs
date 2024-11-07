@@ -17,23 +17,10 @@ const EditUserModal = () => {
 
   const { affiliate } = user;
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listAffiliates({ active: true, limit: 0, page: 0 }));
-      dispatch(API.listWholesalers());
-      dispatch(API.listPromos({}));
-      dispatch(API.listTeams({}));
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch]);
-
-  const { data: promos, isLoading: promosLoading } = usePromosQuery();
-  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
+  const { data: promos, isLoading: promosLoading } = usePromosQuery({ active: true });
+  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery({ active: true });
   const { data: wholesalers, isLoading: wholesalersLoading } = useWholesalersQuery();
-  const { data: teams, isLoading: teamsLoading } = useTeamsQuery();
+  const { data: teams, isLoading: teamsLoading } = useTeamsQuery({ active: true });
 
   const formFields = userFormFields({
     affiliates: affiliatesLoading ? [] : affiliates,
