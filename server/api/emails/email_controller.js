@@ -441,7 +441,6 @@ export default {
           from: config.DISPLAY_INFO_EMAIL,
           to: mailRecipients,
           subject: mailSubject,
-          bcc: config.INFO_EMAIL,
           html: App({
             body: CodeUsedTemplate(mailBodyData),
             unsubscribe: false,
