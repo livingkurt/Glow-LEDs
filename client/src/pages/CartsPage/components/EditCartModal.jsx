@@ -21,28 +21,42 @@ import { handleCartProductChange, handleCartTicketChange } from "../cartsPageHel
 const EditCartModal = () => {
   const dispatch = useDispatch();
 
-  const { edit_cart_modal, cart, loading } = useSelector(state => state.carts.cartPage);
+  const { edit_cart_modal, cart } = useSelector(state => state.carts.cartPage);
   const { user } = cart || {};
 
-  const eventsQuery = useEventsQuery();
-  const ticketsQuery = useTicketsQuery();
-  const categorysQuery = useCategorysQuery();
-  const productsQuery = useProductsQuery({ option: false, hidden: false });
-  const affiliateQuery = useAffiliatesQuery();
-  const userQuery = useUsersQuery();
+  const { data: events, isLoading: eventsLoading } = useEventsQuery();
+  const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
+  const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
+  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
+  const { data: users, isLoading: usersLoading } = useUsersQuery();
 
   const formFields = React.useMemo(
     () =>
       cartFormFields({
-        userQuery,
-        affiliateQuery,
+        users: usersLoading ? [] : users,
+        affiliate: affiliatesLoading ? [] : affiliates,
         cart,
-        eventsQuery,
-        ticketsQuery,
-        categorysQuery,
-        productsQuery,
+        events: eventsLoading ? [] : events,
+        tickets: ticketsLoading ? [] : tickets,
+        categorys: categorysLoading ? [] : categorys,
+        products: productsLoading ? [] : products,
       }),
-    [userQuery, affiliateQuery, cart, eventsQuery, ticketsQuery, categorysQuery, productsQuery]
+    [
+      usersLoading,
+      users,
+      affiliatesLoading,
+      affiliates,
+      cart,
+      eventsLoading,
+      events,
+      ticketsLoading,
+      tickets,
+      categorysLoading,
+      categorys,
+      productsLoading,
+      products,
+    ]
   );
 
   const handleConfirm = () => {

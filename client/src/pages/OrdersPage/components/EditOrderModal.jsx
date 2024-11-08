@@ -18,6 +18,7 @@ import {
   useCategorysQuery,
   useEventsQuery,
   useProductsQuery,
+  usePromosQuery,
   useTicketsQuery,
   useUsersQuery,
 } from "../../../api/allRecordsApi";
@@ -25,46 +26,42 @@ import { showConfirm } from "../../../slices/snackbarSlice";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
-  const productsQuery = useProductsQuery({ option: false, hidden: false });
 
-  const all_shipping = API.useGetAllShippingOrdersQuery();
   const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { edit_order_modal, order, loading } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users, current_user } = userPage;
+  const { current_user } = userPage;
 
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
-
-  const categorysQuery = useCategorysQuery();
-  const eventsQuery = useEventsQuery();
-  const ticketsQuery = useTicketsQuery();
-  const usersQuery = useUsersQuery();
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listOrders({ option: true }));
-      dispatch(API.listUsers({}));
-      dispatch(API.listPromos({}));
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch, order._id]);
+  const { data: allShipping, isLoading: allShippingLoading } = API.useGetAllShippingOrdersQuery();
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
+  const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: events, isLoading: eventsLoading } = useEventsQuery();
+  const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
+  const { data: users, isLoading: usersLoading } = useUsersQuery();
+  const { data: promos, isLoading: promosLoading } = usePromosQuery();
 
   const formFields = orderFormFields({
-    usersQuery,
-    productsQuery,
-    promos,
-    all_shipping,
+    users: usersLoading ? [] : users,
+    products: productsLoading ? [] : products,
+    promos: promosLoading ? [] : promos,
+    allShipping: allShippingLoading ? [] : allShipping,
     order,
-    categorysQuery,
-    eventsQuery,
-    ticketsQuery,
+    categorys: categorysLoading ? [] : categorys,
+    events: eventsLoading ? [] : events,
+    tickets: ticketsLoading ? [] : tickets,
   });
+
+  // const isLoading =
+  //   loading ||
+  //   allShippingLoading ||
+  //   productsLoading ||
+  //   categorysLoading ||
+  //   eventsLoading ||
+  //   ticketsLoading ||
+  //   usersLoading ||
+  //   promosLoading;
 
   return (
     <div>
@@ -141,7 +138,7 @@ const EditOrderModal = () => {
               dispatch(set_order(value));
             }
           }}
-          loading={loading && loading_users}
+          // loading={isLoading}
         />
       </GLActionModal>
     </div>

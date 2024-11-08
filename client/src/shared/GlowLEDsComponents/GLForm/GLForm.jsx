@@ -103,8 +103,9 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
           } else if (determine_shown_fields(fieldData, current_user, mode)) {
             switch (fieldData.type) {
               case "autocomplete_single": {
+                const options = Array.isArray(fieldData.options) ? fieldData.options : [];
                 const selected = fieldData.valueAttribute
-                  ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
+                  ? options.find(opt => opt[fieldData.valueAttribute] === fieldState)
                   : fieldState;
 
                 return (

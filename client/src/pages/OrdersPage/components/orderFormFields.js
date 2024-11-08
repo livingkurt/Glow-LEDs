@@ -1,22 +1,24 @@
-import { humanize, toCapitalize } from "../../../utils/helper_functions";
+import { humanize, toCapitalize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
 export const orderFormFields = ({
-  usersQuery,
-  productsQuery,
+  users,
+  products,
   promos,
-  all_shipping,
+  allShipping,
   parcels,
   order,
-  categorysQuery,
-  eventsQuery,
-  ticketsQuery,
+  categorys,
+  events,
+  tickets,
 }) => {
   return {
     user: {
       type: "autocomplete_single",
       label: "User",
-      options: !usersQuery?.isLoading ? usersQuery?.data?.filter(user => user.first_name && user.last_name) : [],
+      options: users
+        ?.filter(user => user.first_name && user.last_name)
+        .sort((a, b) => a.first_name.localeCompare(b.first_name)),
       labelProp: "user",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
     },
@@ -54,7 +56,7 @@ export const orderFormFields = ({
       label: "Status",
       getOptionLabel: option => {
         if (typeof option === "string") {
-          return toCapitalize(option);
+          return toTitleCase(option);
         }
       },
       options: [
@@ -228,7 +230,7 @@ export const orderFormFields = ({
       type: "object",
       title: "Shipping",
       label: "Choose Shipping",
-      options: !all_shipping?.isLoading && all_shipping?.data?.filter(user => user.first_name && user.last_name),
+      options: allShipping?.filter(user => user.first_name && user.last_name),
       labelProp: "shipping",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       fields: {
@@ -322,10 +324,10 @@ export const orderFormFields = ({
       },
     },
     orderItems: sharedItemSchema({
-      productsQuery,
-      eventsQuery,
-      ticketsQuery,
-      categorysQuery,
+      products,
+      events,
+      tickets,
+      categorys,
       itemType: "order",
       item: order,
     }),

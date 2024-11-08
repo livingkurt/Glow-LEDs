@@ -46,6 +46,7 @@ const GLAutocomplete = ({
   margin,
   optionDisplay,
   customClasses,
+  getOptionKey,
   isOptionEqualToValue,
   ...otherProps
 }) => {
@@ -125,8 +126,10 @@ const GLAutocomplete = ({
               : false
           }
           renderOption={(props, option, { selected }) => {
+            // eslint-disable-next-line react/prop-types
+            const uniqueKey = getOptionKey?.(option) || `${option.name}-${props["data-option-index"]}`;
             return showCheckbox ? (
-              <li {...props}>
+              <li {...props} key={uniqueKey}>
                 <Checkbox
                   icon={icon}
                   size="large"
@@ -137,7 +140,7 @@ const GLAutocomplete = ({
                 {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
               </li>
             ) : (
-              <li {...props}>
+              <li {...props} key={uniqueKey}>
                 {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
               </li>
             );
@@ -188,6 +191,7 @@ GLAutocomplete.defaultProps = {
   limitTags: 5,
   inputPropsTextField: {},
   customClasses: {},
+  getOptionKey: option => option?._id || option?.id || JSON.stringify(option),
 };
 
 GLAutocomplete.propTypes = {
@@ -226,6 +230,7 @@ GLAutocomplete.propTypes = {
   limitTags: PropTypes.number,
   inputPropsTextField: PropTypes.object,
   customClasses: PropTypes.object,
+  getOptionKey: PropTypes.func,
 };
 
 export default GLAutocomplete;
