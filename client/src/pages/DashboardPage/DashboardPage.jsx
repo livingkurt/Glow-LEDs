@@ -35,6 +35,7 @@ const DashboardPage = () => {
   const range_payouts = API.useGetRangePayoutsQuery({ start_date, end_date });
   const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
   const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
+  console.log({ sponsorCheckinStatus });
   const questionConcerns = API.useGetQuestionConcernsQuery({ start_date, end_date });
 
   const monthly_product_revenue = API.useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });

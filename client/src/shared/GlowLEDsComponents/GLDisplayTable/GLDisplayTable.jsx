@@ -4,6 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import { Divider, Typography, TextField, Button, Box, TableSortLabel } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -142,6 +143,20 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
       </TableContainer>
     </Paper>
   );
+};
+
+GLDisplayTable.propTypes = {
+  rows: PropTypes.array.isRequired,
+  columnDefs: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  onEdit: PropTypes.func,
+  defaultSorting: PropTypes.array,
+};
+
+GLDisplayTable.defaultProps = {
+  onEdit: null,
+  defaultSorting: [],
 };
 
 export default GLDisplayTable;
