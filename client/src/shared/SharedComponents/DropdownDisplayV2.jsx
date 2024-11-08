@@ -1,5 +1,6 @@
 import TextField from "@mui/material/TextField";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import PropTypes from "prop-types";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
@@ -54,27 +55,30 @@ const DropdownDisplayV2 = ({
                       <TextField {...params} fullWidth variant="outlined" label={label} margin="normal" />
                     )}
                     renderTags={(tagValue, getTagProps) =>
-                      tagValue.map((option, index) => (
-                        <Chip
-                          key={option._id}
-                          label={option[labelProp]}
-                          onDelete={() => {
-                            const newValue = [...value];
-                            newValue.splice(index, 1);
-                            onChange(newValue);
-                          }}
-                          sx={{
-                            fontSize: "12px",
-                            backgroundColor: "primary.main",
-                            color: "white",
-                            "&:hover": {
-                              backgroundColor: "primary.dark",
-                            },
-                          }}
-                          deleteIcon={<Icon style={{ color: "white" }}>{"clear"}</Icon>}
-                          {...getTagProps({ index })}
-                        />
-                      ))
+                      tagValue.map((option, index) => {
+                        const { key, ...tagProps } = getTagProps({ index });
+                        return (
+                          <Chip
+                            key={option._id}
+                            label={option[labelProp]}
+                            onDelete={() => {
+                              const newValue = [...value];
+                              newValue.splice(index, 1);
+                              onChange(newValue);
+                            }}
+                            sx={{
+                              fontSize: "12px",
+                              backgroundColor: "primary.main",
+                              color: "white",
+                              "&:hover": {
+                                backgroundColor: "primary.dark",
+                              },
+                            }}
+                            deleteIcon={<Icon style={{ color: "white" }}>{"clear"}</Icon>}
+                            {...tagProps}
+                          />
+                        );
+                      })
                     }
                   />
                   {showItems && value && Array.isArray(value) && (
@@ -96,22 +100,26 @@ const DropdownDisplayV2 = ({
                                 borderRadius: 5,
                                 my: 1,
                               }}
+                              secondaryAction={
+                                <>
+                                  {onEdit && (
+                                    <GLIconButton tooltip="Edit" edge="end" onClick={() => onEdit(item)}>
+                                      <EditIcon sx={{ color: "white" }} />
+                                    </GLIconButton>
+                                  )}
+                                  <GLIconButton
+                                    edge="end"
+                                    tooltip="Delete"
+                                    onClick={() =>
+                                      onChange(value.filter(selectedItem => selectedItem._id !== item._id))
+                                    }
+                                  >
+                                    <DeleteIcon sx={{ color: "white" }} />
+                                  </GLIconButton>
+                                </>
+                              }
                             >
                               <ListItemText primary={item[labelProp]} />
-                              <ListItemSecondaryAction>
-                                {onEdit && (
-                                  <GLIconButton tooltip="Edit" edge="end" onClick={() => onEdit(item)}>
-                                    <EditIcon sx={{ color: "white" }} />
-                                  </GLIconButton>
-                                )}
-                                <GLIconButton
-                                  edge="end"
-                                  tooltip="Delete"
-                                  onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}
-                                >
-                                  <DeleteIcon sx={{ color: "white" }} />
-                                </GLIconButton>
-                              </ListItemSecondaryAction>
                             </ListItem>
                           )}
                         </Draggable>
@@ -127,6 +135,32 @@ const DropdownDisplayV2 = ({
       </Paper>
     </Box>
   );
+};
+
+DropdownDisplayV2.propTypes = {
+  options: PropTypes.array,
+  value: PropTypes.array,
+  getOptionLabel: PropTypes.func,
+  isOptionEqualToValue: PropTypes.func,
+  fieldName: PropTypes.string,
+  label: PropTypes.string,
+  labelProp: PropTypes.string,
+  onChange: PropTypes.func,
+  showItems: PropTypes.bool,
+  onEdit: PropTypes.func,
+};
+
+DropdownDisplayV2.defaultProps = {
+  options: [],
+  value: [],
+  getOptionLabel: option => option.name,
+  isOptionEqualToValue: (option, value) => option._id === value._id,
+  fieldName: "",
+  label: "",
+  labelProp: "name",
+  onChange: () => {},
+  showItems: false,
+  onEdit: () => {},
 };
 
 export default DropdownDisplayV2;

@@ -1,19 +1,9 @@
+import { affiliateField, userField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+
 export const paycheckFormFields = ({ users, promos, teams, affiliates }) => {
   return {
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-      permissions: ["admin"],
-    },
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "artist_name",
-    },
+    user: userField({ users, permissions: ["admin"] }),
+    affiliate: affiliateField({ affiliates }),
     description: {
       type: "text",
       label: "Description",

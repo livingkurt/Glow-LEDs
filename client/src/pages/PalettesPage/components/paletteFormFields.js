@@ -1,12 +1,8 @@
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+
 export const paletteFormFields = ({ chips, users }) => {
   return {
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
+    user: userField({ users }),
     chip: {
       type: "autocomplete_single",
       label: "Chip",

@@ -1,3 +1,4 @@
+import { tagField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../helper_functions";
 
 export const scrollToId = target => {
@@ -18,7 +19,7 @@ export const formatDate = date => {
   return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
 };
 
-export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, categorysQuery, itemType, item }) => {
+export const sharedItemSchema = ({ products, events, tickets, tags, itemType, item }) => {
   return {
     type: "array",
     title: `${toCapitalize(itemType)} Items`,
@@ -29,23 +30,20 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
         product: {
           type: "autocomplete_single",
           label: "Product",
-          options: !productsQuery?.isLoading ? productsQuery?.data : [],
-          loading: productsQuery?.isLoading,
+          options: products,
           labelProp: "name",
           required: true,
         },
         event: {
           type: "autocomplete_single",
           label: "Event",
-          options: !eventsQuery?.isLoading ? eventsQuery?.data : [],
-          loading: eventsQuery?.isLoading,
+          options: events,
           labelProp: "name",
         },
         ticket: {
           type: "autocomplete_single",
           label: "Ticket",
-          options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
-          loading: ticketsQuery?.isLoading,
+          options: tickets,
           labelProp: "title",
         },
         ticket_type: {
@@ -106,13 +104,7 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
           labelProp: "product_collection",
         },
 
-        tags: {
-          type: "autocomplete_multiple",
-          label: "Tags",
-          options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
-          loading: categorysQuery?.isLoading,
-          labelProp: "name",
-        },
+        tags: tagField({ tags }),
         pathname: {
           type: "text",
           label: "Pathname",
@@ -124,97 +116,6 @@ export const sharedItemSchema = ({ productsQuery, eventsQuery, ticketsQuery, cat
           getCurrentOptions: index => item?.orderItems?.[index]?.currentOptions || [],
           getSelectedOptions: index => item?.orderItems?.[index]?.selectedOptions || [],
         },
-        // selectedOptions: {
-        //   type: "array",
-        //   title: "Selected Options",
-        //   label: item => item.name,
-        //   itemSchema: {
-        //     type: "object",
-        //     fields: {
-        //       name: { type: "text", label: "Name" },
-        //       replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-        //       isDefault: { type: "checkbox", label: "Default Option" },
-        //       // product: {
-        //       //   type: "autocomplete_single",
-        //       //   label: "Option Product",
-        //       //   options: productsQuery,
-        //       //   labelProp: "name",
-        //       //   onEditButtonClick: selectedProduct => {
-        //       //     dispatch(saveToEditProductHistory(product));
-        //       //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-        //       //   },
-        //       //   onCreateNewButtonClick: selectedProduct => {
-        //       //     dispatch(saveToEditProductHistory(product));
-        //       //     dispatch(API.saveProduct({ ...selectedProduct }));
-        //       //   },
-        //       //   showEditButton: true,
-        //       // },
-        //     },
-        //   },
-        // },
-        // currentOptions: {
-        //   type: "array",
-        //   label: item => item.name,
-        //   title: "Current Product Options",
-        //   itemSchema: {
-        //     type: "object",
-        //     fields: {
-        //       name: {
-        //         type: "text",
-        //         label: "Option Name",
-        //         labelProp: "name",
-        //       },
-        //       optionType: {
-        //         type: "autocomplete_single",
-        //         label: "Option Type",
-        //         getOptionLabel: option => {
-        //           if (typeof option === "string") {
-        //             return toCapitalize(option);
-        //           }
-        //         },
-        //         options: ["dropdown", "buttons"],
-        //       },
-        //       isAddOn: {
-        //         type: "checkbox",
-        //         label: "Is Add-On",
-        //       },
-        //       additionalCost: { type: "number", label: "Additional Cost" },
-        //       values: {
-        //         type: "array",
-        //         title: "Option Choices",
-        //         label: item => item.name,
-        //         itemSchema: {
-        //           type: "object",
-        //           fields: {
-        //             name: { type: "text", label: "Name" },
-        //             replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
-        //             isDefault: { type: "checkbox", label: "Default Option" },
-        //             // product: {
-        //             //   type: "autocomplete_single",
-        //             //   label: "Option Product",
-        //             //   options: productsQuery,
-        //             //   labelProp: "name",
-        //             //   onEditButtonClick: selectedProduct => {
-        //             //     dispatch(saveToEditProductHistory(product));
-        //             //     dispatch(API.detailsProduct({ pathname: selectedProduct._id }));
-        //             //   },
-        //             //   onCreateNewButtonClick: selectedProduct => {
-        //             //     dispatch(saveToEditProductHistory(product));
-        //             //     dispatch(API.saveProduct({ ...selectedProduct }));
-        //             //   },
-        //             //   showEditButton: true,
-        //             // },
-        //           },
-        //         },
-        //       },
-        //     },
-        //   },
-        // },
-        // size: {
-        //   type: "text",
-        //   label: "Size",
-        //   labelProp: "size",
-        // },
 
         count_in_stock: {
           type: "number",

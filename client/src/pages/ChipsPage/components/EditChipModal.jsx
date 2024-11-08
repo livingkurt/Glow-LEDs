@@ -4,14 +4,17 @@ import { set_edit_chip_modal, set_chip } from "../../../slices/chipSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { chipFormFields } from "./chipFormFields";
+import { useCategorysQuery } from "../../../api/allRecordsApi";
 
 const EditChipModal = () => {
   const dispatch = useDispatch();
   const chipPage = useSelector(state => state.chips.chipPage);
   const { edit_chip_modal, chip, loading } = chipPage;
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
 
   const formFields = chipFormFields({
     chip,
+    tags: tagsLoading ? [] : tags,
     dispatch,
   });
 

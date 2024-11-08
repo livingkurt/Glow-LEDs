@@ -1,3 +1,4 @@
+import { affiliateField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../../utils/helper_functions";
 
 export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
@@ -34,14 +35,7 @@ export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
       label: "Weekly Wage",
       permissions: ["admin"],
     },
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliates",
-      options: affiliates,
-      labelProp: "affiliate",
-      getOptionLabel: option => option.artist_name,
-      permissions: ["admin"],
-    },
+    affiliate: affiliateField({ affiliates, permissions: ["admin"] }),
     team: {
       type: "autocomplete_single",
       label: "Teams",

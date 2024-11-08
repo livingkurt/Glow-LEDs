@@ -18,10 +18,13 @@ const EditTutorialModal = () => {
     return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
   };
 
-  const tagsQuery = useCategorysQuery();
-  const affiliatesQuery = useAffiliatesQuery();
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
 
-  const formFields = tutorialFormFields({ tagsQuery, affiliatesQuery });
+  const formFields = tutorialFormFields({
+    tags: !tagsLoading ? tags : [],
+    affiliates: !affiliatesLoading ? affiliates : [],
+  });
 
   return (
     <div>

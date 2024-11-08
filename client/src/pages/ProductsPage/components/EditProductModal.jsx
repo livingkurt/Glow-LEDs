@@ -7,42 +7,36 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
-import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
+import {
+  useCategorysQuery,
+  useChipsQuery,
+  useFilamentsQuery,
+  useProductsQuery,
+  useUsersQuery,
+} from "../../../api/allRecordsApi";
 
 const EditProductModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
-  const { edit_product_modal, product, loading, products, editProductHistory } = productsPage;
-  const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users } = userPage;
-  const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips } = chipPage;
-  const filamentPage = useSelector(state => state.filaments.filamentPage);
-  const { filaments } = filamentPage;
-  const productsQuery = useProductsQuery({ option: false, hidden: false, isVariation: false });
-  const categorysQuery = useCategorysQuery();
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listProducts({ option: true }));
-      dispatch(API.listUsers({}));
-      dispatch(API.listFilaments({}));
-    }
-    return () => {
-      clean = false;
-    };
-  }, [dispatch, product._id]);
+  const { edit_product_modal, product, loading, editProductHistory } = productsPage;
+  const { data: products, isLoading: productsLoading } = useProductsQuery({
+    option: false,
+    hidden: false,
+    isVariation: false,
+  });
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: users, isLoading: usersLoading } = useUsersQuery();
+  const { data: chips, isLoading: chipsLoading } = useChipsQuery();
+  const { data: filaments, isLoading: filamentsLoading } = useFilamentsQuery();
 
   const formFields = productFormFields({
-    products,
-    users,
-    categorysQuery,
-    chips,
+    products: !productsLoading ? products : [],
+    users: !usersLoading ? users : [],
+    tags: !tagsLoading ? tags : [],
+    chips: !chipsLoading ? chips : [],
+    filaments: !filamentsLoading ? filaments : [],
     product,
-    filaments,
     dispatch,
-    productsQuery,
   });
 
   return (

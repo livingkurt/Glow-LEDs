@@ -1,25 +1,10 @@
-import { humanize, toCapitalize } from "../../../utils/helper_functions";
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { humanize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
-export const orderFormFields = ({
-  usersQuery,
-  productsQuery,
-  promos,
-  all_shipping,
-  parcels,
-  order,
-  categorysQuery,
-  eventsQuery,
-  ticketsQuery,
-}) => {
+export const orderFormFields = ({ users, products, promos, allShipping, parcels, order, tags, events, tickets }) => {
   return {
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: !usersQuery?.isLoading ? usersQuery?.data?.filter(user => user.first_name && user.last_name) : [],
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
+    user: userField({ users }),
     itemsPrice: {
       type: "number",
       label: "Items Price",
@@ -54,7 +39,7 @@ export const orderFormFields = ({
       label: "Status",
       getOptionLabel: option => {
         if (typeof option === "string") {
-          return toCapitalize(option);
+          return toTitleCase(option);
         }
       },
       options: [
@@ -228,7 +213,7 @@ export const orderFormFields = ({
       type: "object",
       title: "Shipping",
       label: "Choose Shipping",
-      options: !all_shipping?.isLoading && all_shipping?.data?.filter(user => user.first_name && user.last_name),
+      options: allShipping?.filter(user => user.first_name && user.last_name),
       labelProp: "shipping",
       getOptionLabel: option => `${option.first_name} ${option.last_name}`,
       fields: {
@@ -322,10 +307,10 @@ export const orderFormFields = ({
       },
     },
     orderItems: sharedItemSchema({
-      productsQuery,
-      eventsQuery,
-      ticketsQuery,
-      categorysQuery,
+      products,
+      events,
+      tickets,
+      tags,
       itemType: "order",
       item: order,
     }),

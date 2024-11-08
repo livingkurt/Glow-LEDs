@@ -1,3 +1,4 @@
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { months, toCapitalize } from "../../../utils/helper_functions";
 
 export const affiliateFormFields = ({ products, users, chips, promos, carts }) => {
@@ -8,14 +9,7 @@ export const affiliateFormFields = ({ products, users, chips, promos, carts }) =
       permissions: ["admin"],
       disabled: true,
     },
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-      permissions: ["admin"],
-    },
+    user: userField({ users, permissions: ["admin"] }),
     artist_name: {
       type: "text",
       label: "Glover Name",

@@ -11,10 +11,14 @@ const EditArticleModal = () => {
   const articlePage = useSelector(state => state.articles.articlePage);
   const { edit_article_modal, article, loading } = articlePage;
 
-  const tagsQuery = useCategorysQuery();
-  const usersQuery = useUsersQuery();
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: users, isLoading: usersLoading } = useUsersQuery();
 
-  const formFields = articleFormFields({ tagsQuery, usersQuery, article });
+  const formFields = articleFormFields({
+    tags: !tagsLoading ? tags : [],
+    users: !usersLoading ? users : [],
+    article,
+  });
 
   return (
     <div>

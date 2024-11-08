@@ -1,4 +1,4 @@
-export const ticketFormFields = ({ ticket, ticketsQuery }) => {
+export const ticketFormFields = ({ ticket, tickets }) => {
   return {
     title: {
       type: "text",
@@ -54,8 +54,7 @@ export const ticketFormFields = ({ ticket, ticketsQuery }) => {
     backup_ticket: {
       type: "autocomplete_single",
       label: "Backup Ticket",
-      options: !ticketsQuery?.isLoading ? ticketsQuery?.data : [],
-      loading: ticketsQuery?.isLoading,
+      options: tickets,
       labelProp: "title",
     },
     active: {

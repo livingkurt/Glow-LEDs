@@ -1,13 +1,9 @@
+import { affiliateField, tagField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const tutorialFormFields = ({ affiliatesQuery, tagsQuery }) => {
+export const tutorialFormFields = ({ affiliates, tags }) => {
   return {
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: !affiliatesQuery?.isLoading ? affiliatesQuery?.data : [],
-      labelProp: "artist_name",
-    },
+    affiliate: affiliateField({ affiliates }),
     title: {
       type: "text",
       label: "Title",
@@ -30,12 +26,7 @@ export const tutorialFormFields = ({ affiliatesQuery, tagsQuery }) => {
       },
       options: ["beginner", "intermediate", "advanced"],
     },
-    tags: {
-      type: "autocomplete_multiple",
-      label: "Tags",
-      options: !tagsQuery?.isLoading ? tagsQuery?.data : [],
-      labelProp: "name",
-    },
+    tags: tagField({ tags }),
     order: {
       type: "text",
       label: "Order",
