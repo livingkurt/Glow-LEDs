@@ -160,8 +160,9 @@ export default {
     await sendEmail(mailOptions);
     return body.email;
   },
-  send_order_emails_s: async ({ order_data, subject, email }) => {
-    const orderData = await order_db.findById_orders_db(order_data._id);
+  send_order_emails_s: async body => {
+    const { order, email, subject } = body;
+    const orderData = await order_db.findById_orders_db(order._id);
     const bodyConfirmation = {
       email: {
         h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
@@ -179,8 +180,8 @@ export default {
     await sendEmail(mailOptions);
     return email;
   },
-  send_ticket_emails_s: async ({ order_data, email }) => {
-    const orderData = await order_db.findById_orders_db(order_data._id);
+  send_ticket_emails_s: async ({ order, email }) => {
+    const orderData = await order_db.findById_orders_db(order._id);
     const ticketQRCodes = await generateTicketQRCodes(orderData);
     const bodyTickets = {
       email: {
@@ -197,25 +198,25 @@ export default {
       subject: "Your Event Tickets",
       html: App({ body: TicketTemplate(bodyTickets), unsubscribe: false }),
     };
-    if (order_data.orderItems.every(item => item.itemType === "ticket")) {
-      await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
+    if (order.orderItems.every(item => item.itemType === "ticket")) {
+      await order_db.update_orders_db(order._id, { status: "delivered", deliveredAt: new Date() });
     }
     await sendEmail(mailOptions);
     return email;
   },
-  send_refund_emails_s: async ({ order_data, email }) => {
+  send_refund_emails_s: async ({ order, email }) => {
     const body = {
       email: {
         h1: `${
-          order_data.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 < order_data.itemsPrice ? "Partial" : "Full"
+          order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 < order.itemsPrice ? "Partial" : "Full"
         } Refund Successful`,
         h2: `Your Order has been refunded for ${" "}
-          ${order_data.payment.refund_reason[order_data.payment.refund_reason.length - 1]} on ${format_date(
-            order_data.refundedAt
+          ${order.payment.refund_reason[order.payment.refund_reason.length - 1]} on ${format_date(
+            order.refundedAt
           )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`,
       },
       title: "Thank you for your purchase!",
-      order: order_data,
+      order: order,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
