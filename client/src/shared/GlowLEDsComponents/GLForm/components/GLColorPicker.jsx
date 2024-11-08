@@ -1,61 +1,22 @@
 import PropTypes from "prop-types";
-import { SketchPicker } from "react-color";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { Grid, Box, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
 
-const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, state }) => {
-  const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
+const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange }) => {
+  const handleChange = newValue => {
+    handleInputChange(fieldName, newValue);
+  };
 
   return (
-    <Grid container key={fieldName} alignItems="center" spacing={2}>
-      <Grid item>
-        <Box
-          sx={{
-            padding: "5px",
-            background: "#fff",
-            borderRadius: "4px",
-            boxShadow: 1,
-            cursor: "pointer",
-          }}
-          onClick={() =>
-            handleInputChange(fieldName, { ...state, [fieldName + "_picker"]: !state[fieldName + "_picker"] })
-          }
-        >
-          <Box
-            sx={{
-              width: "36px",
-              height: "14px",
-              borderRadius: "4px",
-              bgcolor: fieldState || fieldData.defaultColor,
-            }}
-          />
-        </Box>
-        {state[fieldName + "_picker"] && (
-          <ClickAwayListener
-            onClickAway={() => handleInputChange(fieldName, { ...state, [fieldName + "_picker"]: false })}
-          >
-            <Box sx={{ position: "absolute", zIndex: "2" }}>
-              <SketchPicker
-                color={fieldState || fieldData.defaultColor}
-                presetColors={preset_colors}
-                onChangeComplete={color => handleInputChange(fieldName, color.hex)}
-              />
-            </Box>
-          </ClickAwayListener>
-        )}
-      </Grid>
+    <Grid container alignItems="center" spacing={2}>
       <Grid item xs>
-        <TextField
-          variant="outlined"
-          type="text"
-          size="small"
-          margin="normal"
+        <MuiColorInput
+          format="hex"
+          value={fieldState || fieldData.defaultColor || "#ffffff"}
+          onChange={handleChange}
+          label={fieldData.label || "Color"}
           fullWidth
-          label={fieldData.label || "Background"}
-          name={fieldName}
-          id={fieldName}
-          value={fieldState || fieldData.defaultColor}
-          onChange={e => handleInputChange(fieldName, e.target.value)}
+          margin="normal"
         />
       </Grid>
     </Grid>
@@ -64,10 +25,13 @@ const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange, st
 
 GLColorPicker.propTypes = {
   fieldName: PropTypes.string.isRequired,
-  fieldState: PropTypes.string.isRequired,
+  fieldState: PropTypes.string,
   fieldData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
+};
+
+GLColorPicker.defaultProps = {
+  fieldState: "#ffffff",
 };
 
 export default GLColorPicker;
