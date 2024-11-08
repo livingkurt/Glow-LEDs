@@ -1,44 +1,5 @@
 import email_services from "./email_services.js";
 
-import App from "../../email_templates/App.js";
-import AccountCreatedTemplate from "../../email_templates/pages/AccountCreatedTemplate.js";
-import ContactTemplate from "../../email_templates/pages/ContactTemplate.js";
-import ContactConfirmationTemplate from "../../email_templates/pages/ContactConfirmationTemplate.js";
-import OrderStatusTemplate from "../../email_templates/pages/OrderStatusTemplate.js";
-import OrderTemplate from "../../email_templates/pages/OrderTemplate.js";
-import ReviewTemplate from "../../email_templates/pages/ReviewTemplate.js";
-import AffiliateTemplate from "../../email_templates/pages/AffiliateTemplate.js";
-import FeatureTemplate from "../../email_templates/pages/FeatureTemplate.js";
-import AnnouncementTemplate from "../../email_templates/pages/AnnouncementTemplate.js";
-import CustomContactTemplate from "../../email_templates/pages/CustomContactTemplate.js";
-import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
-import ShippingStatusTemplate from "../../email_templates/pages/ShippingStatusTemplate.js";
-import VerifyEmailPasswordResetTemplate from "../../email_templates/pages/VerifyEmailPasswordResetTemplate.js";
-import SuccessfulPasswordResetTemplate from "../../email_templates/pages/SuccessfulPasswordResetTemplate.js";
-import AffiliateOnboardingTemplate from "../../email_templates/pages/AffiliateOnboardingTemplate.js";
-import CurrentStockTemplate from "../../email_templates/pages/CurrentStockTemplate.js";
-import EmailSubscriptionTemplate from "../../email_templates/pages/EmailSubscriptionTemplate.js";
-import order_db from "../orders/order_db.js";
-import order_services from "../orders/order_services.js";
-import content_db from "../contents/content_db.js";
-import Affiliate from "../affiliates/affiliate.js";
-import promo_db from "../promos/promo_db.js";
-import User from "../users/user.js";
-import user_db from "../users/user_db.js";
-import { determine_status, generateTicketQRCodes, shouldSendEmail, updateOrder } from "../emails/email_interactors.js";
-import { determine_code_tier, format_date, make_private_code, toCapitalize } from "../../utils/util.js";
-import product_db from "../products/product_db.js";
-import team_db from "../teams/team_db.js";
-import jwt from "jsonwebtoken";
-import config from "../../config.js";
-import VerifyTemplate from "../../email_templates/pages/VerifyTemplate.js";
-import { domain } from "../../email_templates/email_template_helpers.js";
-import Email from "./email.js";
-import PaycheckTemplate from "../../email_templates/pages/PaycheckTemplate.js";
-import TicketTemplate from "../../email_templates/pages/TicketTemplate.js";
-import { sendEmail } from "./email_interactors.js";
-import email_db from "./email_db.js";
-
 export default {
   get_table_emails_c: async (req, res) => {
     const { query } = req;
@@ -68,7 +29,6 @@ export default {
     const { params } = req;
     try {
       const email = await email_services.findById_emails_s(params);
-
       if (email) {
         return res.status(200).send(email);
       }
@@ -113,652 +73,212 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-
   get_invoice_emails_c: async (req, res) => {
-    const body = {
-      email: {
-        h1: "Thank you for your Order!",
-        h2: "We are starting production on your order! We will notify your as your order progresses.",
-      },
-      title: "Thank you for your purchase!",
-      order: req.body.order,
-    };
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: req.body.subject,
-      html: App({ body: OrderTemplate(body), unsubscribe: false }),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Invoice Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.get_invoice_emails_s(req.body);
+      res.status(200).send({ message: "Invoice Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_order_emails_c: async (req, res) => {
-    const { order: order_data, subject, email } = req.body;
-    const orderData = await order_db.findById_orders_db(order_data._id);
-
-    // Send the original order confirmation email
-    const bodyConfirmation = {
-      email: {
-        h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
-        h2: "We are starting production on your order! We will notify your as your order progresses.",
-      },
-      title: "Thank you for your purchase!",
-      order: orderData,
-    };
-    const mailOptionsConfirmation = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: email,
-      subject: subject,
-      html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
-    };
-    await sendEmail(mailOptionsConfirmation);
-    res.status(200).send({ message: "Order Confirmation Email Sent to " + email });
+    try {
+      const recipient = await email_services.send_order_emails_s(req.body);
+      res.status(200).send({ message: "Order Confirmation Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_ticket_emails_c: async (req, res) => {
-    const { order: order_data, subject, email } = req.body;
-    const orderData = await order_db.findById_orders_db(order_data._id);
-
-    // Generate QR codes and send ticket email
-    const ticketQRCodes = await generateTicketQRCodes(orderData);
-    const bodyTickets = {
-      email: {
-        h1: "YOUR EVENT TICKETS",
-        h2: "Here are your QR codes for event entry.",
-      },
-      title: "Your Event Tickets",
-      order: orderData,
-      ticketQRCodes,
-    };
-    const mailOptionsTickets = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: email,
-      subject: "Your Event Tickets",
-      html: App({ body: TicketTemplate(bodyTickets), unsubscribe: false }),
-    };
-    if (order_data.orderItems.every(item => item.itemType === "ticket")) {
-      await order_db.update_orders_db(order_data._id, { status: "delivered", deliveredAt: new Date() });
+    try {
+      const recipient = await email_services.send_ticket_emails_s(req.body);
+      res.status(200).send({ message: "Ticket Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
     }
-    await sendEmail(mailOptionsTickets);
-    res.status(200).send({ message: "Ticket Email Sent to " + email });
   },
   send_refund_emails_c: async (req, res) => {
-    const { order: order_data, email } = req.body;
-
-    const body = {
-      email: {
-        h1: `${
-          order_data.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 < order_data.itemsPrice ? "Partial" : "Full"
-        } Refund Successful`,
-        h2: `Your Order has been refunded for ${" "}
-          ${order_data.payment.refund_reason[order_data.payment.refund_reason.length - 1]} on ${format_date(
-            order_data.refundedAt
-          )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`,
-      },
-      title: "Thank you for your purchase!",
-      order: order_data,
-    };
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: email,
-      subject: "Your Glow LEDs Refund",
-      html: App({ body: OrderTemplate(body), unsubscribe: false }),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Refund Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.send_refund_emails_s(req.body);
+      res.status(200).send({ message: "Refund Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_order_status_emails_c: async (req, res) => {
-    const body = {
-      email: {
-        h1: "Thank you for your Order!",
-        h2: "We are starting production on your order! We will notify your as your order progresses.",
-      },
-      title: "Your Order has been " + toCapitalize(req.body.status),
-      order: req.body.order,
-      status: req.body.status,
-      message_to_user: req.body.message_to_user,
-    };
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: req.body.status === "reassured" ? "Thank you for your patience" : req.body.subject,
-      html: App({
-        body: OrderStatusTemplate(body),
-        unsubscribe: false,
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Order Status Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.send_order_status_emails_s(req.body);
+      res.status(200).send({ message: "Order Status Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_current_stock_emails_c: async (req, res) => {
-    const data = await product_db.current_stock_products_db();
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: config.INFO_EMAIL,
-      subject: "Glow LEDs Current Stock",
-      html: App({
-        body: CurrentStockTemplate(data),
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Current Stock Email Sent to " + config.INFO_EMAIL });
+    try {
+      const recipient = await email_services.send_current_stock_emails_s();
+      res.status(200).send({ message: "Current Stock Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_paycheck_emails_c: async (req, res) => {
-    const { email, subject } = req.body;
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: email,
-      subject: subject,
-      html: App({
-        body: PaycheckTemplate(req.body),
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Paycheck Email Sent to " + email });
+    try {
+      const recipient = await email_services.send_paycheck_emails_s(req.body);
+      res.status(200).send({ message: "Paycheck Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   affiliate_onboard_emails_c: async (req, res) => {
-    const { userIds } = req.body;
-
-    for (const id of userIds) {
-      await user_db.update_users_db(id, { is_affiliated: true });
-      const data = await user_db.findById_users_db(id);
-
-      const mailOptions = {
-        from: config.DISPLAY_INFO_EMAIL,
-        to: data.email,
-        subject: "Congratulations! Lets get you started!",
-        html: AffiliateOnboardingTemplate(data),
-      };
-
-      await sendEmail(mailOptions);
+    try {
+      const result = await email_services.affiliate_onboard_emails_s(req.body);
+      res.status(200).send({ message: result });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
     }
-    res.status(200).send({ message: "Affiliate Onboarding Emails Sent" });
   },
-
   send_affiliate_emails_c: async (req, res) => {
-    const body = {
-      affiliate: req.body.affiliate,
-      title: "Thank you for signing up!",
-    };
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: req.body.subject,
-      html: App({ body: AffiliateTemplate(body), unsubscribe: false }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Affiliate Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.send_affiliate_emails_s(req.body);
+      res.status(200).send({ message: "Affiliate Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_feature_emails_c: async (req, res) => {
-    const body = {
-      feature: req.body.feature,
-      title: "Thank you for sending us your art!",
-    };
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: req.body.subject,
-      html: App({
-        body: FeatureTemplate(body),
-        unsubscribe: false,
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Featured Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.send_feature_emails_s(req.body);
+      res.status(200).send({ message: "Featured Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_external_contact_emails_c: async (req, res) => {
-    const mailOptions = {
-      to: config.LOGIN_EMAIL,
-      from: req.body.email,
-      subject: `${req.body.subject} - ${req.body.name}`,
-      html: req.body.message,
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Contact Email Sent to " + req.body.first_name });
+    try {
+      const recipient = await email_services.send_external_contact_emails_s(req.body);
+      res.status(200).send({ message: "Contact Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_user_contact_emails_c: async (req, res) => {
-    const { email, first_name, reason_for_contact } = req.body;
-    const mailOptions = {
-      to: config.DISPLAY_CONTACT_EMAIL,
-      from: email,
-      replyTo: email,
-      subject: `New message from ${first_name} - ${reason_for_contact}`,
-      html: ContactTemplate(req.body),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "User Contact Email Sent to " + first_name });
+    try {
+      const recipient = await email_services.send_user_contact_emails_s(req.body);
+      res.status(200).send({ message: "User Contact Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_admin_contact_emails_c: async (req, res) => {
-    const { email, first_name } = req.body;
-
-    const mailOptions = {
-      from: config.DISPLAY_CONTACT_EMAIL,
-      to: email,
-      replyTo: email,
-      subject: `Thank you for Contacting Glow LEDs Support`,
-      html: ContactConfirmationTemplate(req.body),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Admin Contact Email Sent to " + first_name });
+    try {
+      const recipient = await email_services.send_admin_contact_emails_s(req.body);
+      res.status(200).send({ message: "Admin Contact Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_custom_contact_emails_c: async (req, res) => {
-    const { order, email } = req.body;
-    const mailOptions = {
-      from: config.DISPLAY_CONTACT_EMAIL,
-      to: email,
-      subject: `Thank you for ordering a custom Glow LEDs Product!`,
-      html: CustomContactTemplate({ order }),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Custom Contact Email Sent to " + order.shipping.first_name });
-  },
-  send_code_used_emails_c: async (req, res) => {
-    const { promo_code } = req.params;
-    const today = new Date();
-    const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
-    const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
-
-    let mailRecipients = [];
-    let mailSubject = "";
-    let mailBodyData = {};
-
-    if (promo) {
-      if (promo_code === "inkybois") {
-        const team = await team_db.findBy_teams_db({ promo_code, deleted: false });
-        if (team) {
-          const users = await Promise.all(
-            team.affiliates.map(async affiliate_id => {
-              const affiliate = await Affiliate.findOne({ _id: affiliate_id._id.toString(), deleted: false });
-              const users = await User.find({ deleted: false, is_affiliated: true });
-              return users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
-              // return await user_db.findByAffiliateId_users_db(affiliate._id);
-            })
-          );
-          mailRecipients = users.map(user => user.email);
-          mailSubject = `Your team's code was just used!`;
-          const stats = await order_services.code_usage_orders_s(
-            { promo_code },
-            { start_date: first_of_month, end_date: today }
-          );
-          mailBodyData = {
-            name: team.team_name,
-            promo_code: promo_code,
-            percentage_off: null,
-            number_of_uses: stats.number_of_uses,
-            earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
-          };
-        }
-      } else {
-        // TODO - For some reason I cant find by nested record id
-        // // Debug logs to understand what's happening
-        // const affiliateById = await Affiliate.findById("637849aa596602002956d895");
-
-        // const affiliateByPublicCode = await Affiliate.findOne({
-        //   public_code: affiliateById.public_code,
-        // });
-
-        // const affiliateByPublicCodeAsObjectId = await Affiliate.findOne({
-        //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
-        // }).lean();
-
-        // const affiliate = await Affiliate.findOne({
-        //   public_code: new mongoose.Types.ObjectId(affiliateById.public_code),
-        // });
-        const affiliates = await Affiliate.find({ deleted: false });
-        // Filter affiliates by public_code
-        const affiliate = affiliates.find(affiliate => affiliate.public_code.toString() === promo._id.toString());
-
-        // const affiliate = await Affiliate.findOne({ public_code: promo._id.toString() });
-        if (affiliate) {
-          const users = await User.find({ deleted: false, is_affiliated: true });
-          const user = users.find(user => user?.affiliate?.toString() === affiliate._id.toString());
-          // const user = await user_db.findByAffiliateId_users_db(affiliate._id.toString());
-          mailRecipients = [user.email];
-          mailSubject = `Your code was just used!`;
-          const stats = await order_services.code_usage_orders_s(
-            { promo_code },
-            { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
-          );
-          mailBodyData = {
-            name: affiliate.artist_name,
-            promo_code: promo_code,
-            percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
-            number_of_uses: stats.number_of_uses,
-            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
-          };
-        }
-      }
-
-      if (mailRecipients.length > 0) {
-        const mailOptions = {
-          from: config.DISPLAY_INFO_EMAIL,
-          to: mailRecipients,
-          subject: mailSubject,
-          html: App({
-            body: CodeUsedTemplate(mailBodyData),
-            unsubscribe: false,
-          }),
-        };
-        await sendEmail(mailOptions);
-        res.status(200).send({ message: "Code Used Email sent to " + mailRecipients.join(", ") });
-      }
+    try {
+      const recipient = await email_services.send_custom_contact_emails_s(req.body);
+      res.status(200).send({ message: "Custom Contact Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   send_verify_email_password_reset_emails_c: async (req, res) => {
-    const email = req.body.email;
-
-    const user = await user_db.findByEmail_users_db(email);
-
-    if (user) {
-      // Generate a JWT token for reset password
-      const resetToken = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
-
-      // Include the token in the reset URL
-      const url = `${domain()}/account/reset_password?token=${resetToken}`;
-
-      const mailOptions = {
-        from: config.DISPLAY_INFO_EMAIL,
-        to: req.body.email,
-        subject: "Glow LEDs Reset Password",
-        html: App({
-          body: VerifyEmailPasswordResetTemplate({
-            ...req.body,
-            url,
-            title: "Glow LEDs Reset Password",
-          }),
-          unsubscribe: false,
-        }),
-      };
-      await sendEmail(mailOptions);
-      res.status(200).send({ message: "Reset Password Link Email Sent to " + user.first_name });
-    } else {
-      res.status(500).send({ message: "You do not have an account with us" });
+    try {
+      const recipient = await email_services.send_verify_email_password_reset_emails_s(req.body);
+      res.status(200).send({ message: "Reset Password Link Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
   },
   send_successful_password_reset_emails_c: async (req, res) => {
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Glow LEDs Reset Password",
-      html: App({
-        body: SuccessfulPasswordResetTemplate({
-          ...req.body,
-          title: "Glow LEDs Reset Password",
-        }),
-        unsubscribe: false,
-      }),
-    };
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Reset Password Email Sent to " + req.body.first_name });
+    try {
+      const recipient = await email_services.send_successful_password_reset_emails_s(req.body);
+      res.status(200).send({ message: "Reset Password Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_review_emails_c: async (req, res) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Enjoy 10% off your next purchase!",
-      html: App({
-        body: ReviewTemplate({
-          ...req.body,
-          categories: contents && contents[0].home_page?.slideshow,
-          title: "Enjoy 10% off your next purchase!",
-        }),
-
-        unsubscribe: false,
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Email Sent to " + req.body.email });
+    try {
+      const recipient = await email_services.send_review_emails_s(req.body);
+      res.status(200).send({ message: "Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
-
   send_scheduled_emails_c: async (req, res) => {
     try {
-      // Find all emails that are scheduled to be sent and the time has passed
-      const emailsToSend = await Email.find({
-        status: "Scheduled",
-        scheduled_at: { $lte: new Date() },
-        active: true,
-        deleted: false,
-      });
-
-      for (const email of emailsToSend) {
-        const subscribed_users = await user_db.findAll_users_db(
-          { deleted: false, email_subscription: true },
-          {},
-          "0",
-          "1"
-        );
-        const emailAddresses = subscribed_users.map(user => user.email);
-
-        const mailOptions = {
-          to: emailAddresses,
-          from: config.DISPLAY_INFO_EMAIL,
-          subject: email.subject,
-          html: App({
-            body: AnnouncementTemplate(email),
-            unsubscribe: true,
-            header_footer_color: email.header_footer_color,
-            background_color: email.background_color,
-          }),
-        };
-
-        await sendEmail(mailOptions);
-        email.status = "Sent";
-        await email.save();
-      }
-
-      res.status(200).send({ message: "Scheduled emails have been processed." });
+      const result = await email_services.send_scheduled_emails_s();
+      res.status(200).send({ message: result });
     } catch (error) {
       res.status(500).send({ message: "Error sending scheduled emails", error: error });
     }
   },
-
   send_announcement_emails_c: async (req, res) => {
     try {
-      const { id, test } = req.params;
-      const email = await email_db.findById_emails_db(id);
-
-      const emailAddresses =
-        test === "true"
-          ? ["lavacquek@icloud.com", "destanyesalinas@gmail.com", "kevcablay@gmail.com", "codychau122@gmail.com"]
-          : (await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1")).map(
-              user => user.email
-            );
-
-      const mailOptions = {
-        to: emailAddresses,
-        from: config.DISPLAY_INFO_EMAIL,
-        subject: test === "true" ? "TEST " + email.subject : email.subject,
-        html: App({
-          body: AnnouncementTemplate(email),
-          unsubscribe: true,
-          header_footer_color: email.header_footer_color,
-          background_color: email.background_color,
-        }),
-      };
-
-      await sendEmail(mailOptions);
-      email.status = "Sent";
-      await email.save();
-
-      res.status(200).send({ message: "Announcement emails sent successfully" });
+      const result = await email_services.send_announcement_emails_s(req.params);
+      res.status(200).send({ message: result });
     } catch (error) {
       res.status(500).send({ message: "Error sending announcement emails", error: error });
     }
   },
   view_announcement_emails_c: async (req, res) => {
-    const { template } = req.body;
-
-    if (Object.keys(template).length > 2) {
-      res.status(200).send(
-        App({
-          body: AnnouncementTemplate(template),
-          unsubscribe: true,
-          background_color: template.background_color,
-          header_footer_color: template.header_footer_color,
-        })
-      );
+    try {
+      const result = await email_services.view_announcement_emails_s(req.body);
+      if (result) {
+        res.status(200).send(result);
+      }
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
     }
   },
   send_email_subscription_emails_c: async (req, res) => {
     try {
-      const user = await user_db.findByEmail_users_db(req.body.email);
-
-      if (user) {
-        return res.status(400).json({ message: "Email already exists" });
-      }
-
-      // Create a new user account
-      await user_db.create_users_db({
-        email: req.body.email,
-        _id: null,
-        first_name: "",
-        last_name: "",
-        affiliate: null,
-        is_affiliated: false,
-        isVerified: true,
-        isAdmin: false,
-        email_subscription: true,
-        shipping: {},
-      });
-
-      const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
-      const code = make_private_code(5);
-      await promo_db.create_promos_db({
-        promo_code: code,
-        admin_only: false,
-        sponsor_only: false,
-        single_use: true,
-        used_once: false,
-        excluded_categories: [],
-        included_products: [],
-        percentage_off: 10,
-        amount_off: 0,
-        free_shipping: false,
-        active: true,
-      });
-
-      const mailOptions = {
-        from: config.DISPLAY_INFO_EMAIL,
-        to: req.body.email,
-        subject: "Enjoy 10% off your next purchase!",
-        html: App({
-          body: EmailSubscriptionTemplate({
-            ...req.body,
-            categories: contents && contents[0]?.menus[0]?.menu_items,
-            title: "Enjoy 10% off your next purchase!",
-            promo_code: code,
-          }),
-          unsubscribe: true,
-        }),
-      };
-
-      await sendEmail(mailOptions);
-
-      res.status(200).json({ message: "Email Sent to " + req.body.email });
+      const recipient = await email_services.send_email_subscription_emails_s(req.body);
+      res.status(200).json({ message: "Email Sent to " + recipient });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "An error occurred", error: error.message });
+      if (error.message === "Email already exists") {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: "An error occurred", error: error.message });
+      }
     }
   },
-
   send_account_created_emails_c: async (req, res) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "10", "2");
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Glow LEDs Account Created",
-      html: App({
-        body: AccountCreatedTemplate({
-          user: req.body,
-          categories: contents && contents[0]?.menus[0]?.menu_items,
-          title: "Glow LEDs Account Created",
-        }),
-
-        unsubscribe: false,
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Registration Email Sent to " + req.body.first_name });
+    try {
+      const recipient = await email_services.send_account_created_emails_s(req.body);
+      res.status(200).send({ message: "Registration Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_verified_emails_c: async (req, res) => {
-    const { email } = req.body;
-    const user = await user_db.findByEmail_users_db(email);
-    const token = jwt.sign({ userId: user._id }, config.VERIFY_USER_TOKEN_SECRET, { expiresIn: "1h" });
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: req.body.email,
-      subject: "Verify your Email",
-      html: App({
-        body: VerifyTemplate({
-          title: "Verify your Email",
-          url: `${domain()}?token=${token}`,
-          user: user,
-        }),
-
-        unsubscribe: false,
-      }),
-    };
-
-    await sendEmail(mailOptions);
-    res.status(200).send({ message: "Verification Email Sent to " + req.body.first_name });
+    try {
+      const recipient = await email_services.send_verified_emails_s(req.body);
+      res.status(200).send({ message: "Verification Email Sent to " + recipient });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
   },
   send_shipping_status_emails_c: async (req, res) => {
     try {
-      const event = req.body;
-      if (event["object"] === "Event" && event["description"] === "tracker.updated") {
-        const tracker = event.result;
-        const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
-
-        if (shouldSendEmail(tracker.status, order.status)) {
-          const body = {
-            email: {},
-            title: determine_status(tracker.status),
-            order: order,
-            status: tracker.status,
-            tracker: tracker,
-          };
-          const mailOptions = {
-            from: config.DISPLAY_INFO_EMAIL,
-            to: order.shipping.email,
-            subject: determine_status(tracker.status),
-            html: App({
-              body: ShippingStatusTemplate(body),
-              unsubscribe: false,
-            }),
-          };
-
-          await sendEmail(mailOptions);
-        }
-
-        if (tracker.status === "delivered") {
-          await updateOrder("delivered", order);
-        } else if (tracker.status === "out_for_delivery") {
-          await updateOrder("out_for_delivery", order);
-        } else if (tracker.status === "in_transit") {
-          if (order.status === "packaged") {
-            await updateOrder("in_transit", order);
-          }
-        }
-
-        res.status(200).send("Tracker event processed successfully");
-      } else {
-        res.status(200).send("Not a Tracker event, so nothing to do here for now...");
-      }
+      const result = await email_services.send_shipping_status_emails_s(req.body);
+      res.status(200).send(result);
     } catch (error) {
       res.status(500).send("Error processing shipping status");
+    }
+  },
+  send_code_used_emails_c: async (req, res) => {
+    try {
+      const recipient = await email_services.send_code_used_emails_s(req.params);
+      if (recipient) {
+        res.status(200).send({ message: "Code Used Email sent to " + recipient });
+      }
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
     }
   },
 };
