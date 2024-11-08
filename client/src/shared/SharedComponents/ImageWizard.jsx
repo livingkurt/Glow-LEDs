@@ -7,7 +7,6 @@ import * as API from "../../api";
 import { useDispatch } from "react-redux";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple }) => {
-  console.log({ fieldData, fieldState, onChange, fieldName, isMultiple });
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
 
