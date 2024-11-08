@@ -1,13 +1,8 @@
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+
 export const featureFormFields = ({ users }) => {
   return {
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: users.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-      permissions: ["admin"],
-    },
+    user: userField({ users, permissions: ["admin"] }),
     artist_name: { type: "text", label: "Artist Name" },
     email: {
       type: "text",

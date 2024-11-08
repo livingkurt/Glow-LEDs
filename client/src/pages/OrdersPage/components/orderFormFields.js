@@ -1,4 +1,5 @@
-import { humanize, toCapitalize, toTitleCase } from "../../../utils/helper_functions";
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { humanize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
 export const orderFormFields = ({
@@ -13,15 +14,7 @@ export const orderFormFields = ({
   tickets,
 }) => {
   return {
-    user: {
-      type: "autocomplete_single",
-      label: "User",
-      options: users
-        ?.filter(user => user.first_name && user.last_name)
-        .sort((a, b) => a.first_name.localeCompare(b.first_name)),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
+    user: userField({ users }),
     itemsPrice: {
       type: "number",
       label: "Items Price",

@@ -1,3 +1,4 @@
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
 export const cartFormFields = ({ products, users, affiliates, cart, events, tickets, categorys }) => {
@@ -23,13 +24,7 @@ export const cartFormFields = ({ products, users, affiliates, cart, events, tick
       label: "Images",
       album: `${cart.title} Images`,
     },
-    user: {
-      type: "autocomplete_single",
-      label: "Users",
-      options: users?.filter(user => user.first_name && user.last_name),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
+    user: userField({ users }),
     tags: {
       type: "autocomplete_multiple",
       label: "Tags",

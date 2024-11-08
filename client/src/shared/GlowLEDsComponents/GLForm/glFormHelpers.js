@@ -110,3 +110,19 @@ export const getSelectedValue = (fieldData, fieldState) => {
     : fieldState;
   return selected;
 };
+
+export const userField = ({ users, ...otherProps }) => {
+  return {
+    type: "autocomplete_single",
+    label: "User",
+    options: users
+      ?.filter(user => user.first_name && user.last_name)
+      .sort((a, b) => a.first_name.localeCompare(b.first_name)),
+    labelProp: "user",
+    getOptionLabel: option => {
+      if (!option || (!option.first_name && !option.last_name)) return "";
+      return `${option.first_name || ""} ${option.last_name || ""}`.trim();
+    },
+    ...otherProps,
+  };
+};
