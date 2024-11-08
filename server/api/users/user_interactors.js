@@ -3,7 +3,7 @@ import App from "../../email_templates/App.js";
 import config from "../../config.js";
 import content_services from "../contents/content_services.js";
 import email_db from "../emails/email_db.js";
-import { sendEmail } from "../orders/order_interactors.js";
+import { sendEmail } from "../emails/email_interactors.js";
 import AccountCreatedTemplate from "../../email_templates/pages/AccountCreatedTemplate.js";
 import AnnouncementTemplate from "../../email_templates/pages/AnnouncementTemplate.js";
 import VerifyTemplate from "../../email_templates/pages/VerifyTemplate.js";
@@ -30,7 +30,7 @@ export const sendRegistrationEmail = async user => {
       }),
     };
 
-    await sendEmail("info", mailOptions);
+    await sendEmail(mailOptions);
   } catch (error) {
     console.error("Error sending order email:", error);
     throw new Error("Failed to send order email");
@@ -54,7 +54,7 @@ export const sendEmailVerifiedSuccess = async user => {
         unsubscribe: false,
       }),
     };
-    await sendEmail("info", mailOptions);
+    await sendEmail(mailOptions);
   } catch (error) {
     console.error("Error sending email verified success:", error);
     throw new Error("Failed to send email verified success");
@@ -82,7 +82,7 @@ export const sendAnnouncementEmail = async userEmail => {
       },
     };
 
-    await sendEmail("info", mailOptions);
+    await sendEmail(mailOptions);
   } catch (error) {
     console.error("Error sending announcement email:", error);
     throw new Error("Failed to send announcement email");
@@ -102,7 +102,7 @@ export const sendPasswordResetSuccessEmail = async user => {
         unsubscribe: false,
       }),
     };
-    await sendEmail("info", mailOptions);
+    await sendEmail(mailOptions);
   } catch (error) {
     console.error("Error sending password reset success email:", error);
     throw new Error("Failed to send password reset success email");
@@ -128,7 +128,7 @@ export const sendVerifyEmailPasswordResetSuccessEmail = async (user, resetToken)
       }),
     };
 
-    await sendEmail("info", mailOptions);
+    await sendEmail(mailOptions);
   } catch (error) {
     console.error("Error sending password reset verification email:", error);
     throw new Error("Failed to send password reset verification email");

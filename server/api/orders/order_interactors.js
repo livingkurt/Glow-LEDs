@@ -21,8 +21,7 @@ import Affiliate from "../affiliates/affiliate.js";
 import order_services from "./order_services.js";
 import App from "../../email_templates/App.js";
 import TicketTemplate from "../../email_templates/pages/TicketTemplate.js";
-import { generateTicketQRCodes } from "../emails/email_interactors.js";
-import { createTransporter } from "../emails/email_helpers.js";
+import { generateTicketQRCodes, sendEmail } from "../emails/email_interactors.js";
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
@@ -372,16 +371,6 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     throw new Error(error);
   }
 };
-export const sendEmail = async (type, emailOptions) => {
-  const emailTransporter = await createTransporter(type);
-  try {
-    if (emailTransporter) {
-      await emailTransporter.sendMail(emailOptions);
-    }
-  } catch (error) {
-    console.log({ sendOrderEmail: error });
-  }
-};
 export const sendOrderEmail = async orderData => {
   try {
     const bodyConfirmation = {
@@ -398,7 +387,7 @@ export const sendOrderEmail = async orderData => {
       subject: "Thank you for your Glow LEDs Order",
       html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
     };
-    await sendEmail("info", mailOptionsConfirmation);
+    await sendEmail(mailOptionsConfirmation);
   } catch (error) {
     console.error("Error sending order email:", error);
     throw new Error("Failed to send order email");
@@ -426,7 +415,7 @@ export const sendTicketEmail = async orderData => {
     if (orderData.orderItems.every(item => item.itemType === "ticket")) {
       await order_db.update_orders_db(orderData._id, { status: "delivered", deliveredAt: new Date() });
     }
-    await sendEmail("info", mailOptionsTickets);
+    await sendEmail(mailOptionsTickets);
   } catch (error) {
     console.error("Error sending ticket email:", error);
     throw new Error("Failed to send ticket email");
@@ -469,7 +458,7 @@ export const sendCodeUsedEmail = async promo_code => {
             unsubscribe: false,
           }),
         };
-        await sendEmail("info", mailOptions);
+        await sendEmail(mailOptions);
       }
     }
   } catch (error) {
@@ -569,7 +558,7 @@ export const sendGiftCardEmail = async order => {
       },
     };
 
-    await sendEmail("info", mailOptionsConfirmation);
+    await sendEmail(mailOptionsConfirmation);
 
     return giftCards;
   }

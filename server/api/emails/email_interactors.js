@@ -1,5 +1,7 @@
 import QRCode from "qrcode";
 import { toCamelCase } from "./email_helpers.js";
+import config from "../../config.js";
+import nodemailer from "nodemailer";
 
 export const determine_status = status => {
   switch (status) {
@@ -52,6 +54,7 @@ export const updateOrder = async (status, order) => {
     order[`${toCamelCase(status)}At`] = new Date();
     await order.save();
   } else {
+    return order;
   }
 };
 
@@ -60,4 +63,34 @@ export const shouldSendEmail = (trackerStatus, orderStatus) => {
     ["in_transit", "out_for_delivery", "delivered"].includes(trackerStatus) &&
     (orderStatus === "packaged" || trackerStatus !== "in_transit")
   );
+};
+
+export const createTransporter = async () => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: "7f0417001@smtp-brevo.com", // Your Brevo SMTP login
+        pass: config.BREVO_API_KEY, // You'll need to add your Brevo SMTP key here
+      },
+    });
+
+    return transporter;
+  } catch (error) {
+    console.error("Error creating transporter:", error);
+    return "Error Creating Transporter";
+  }
+};
+
+export const sendEmail = async emailOptions => {
+  const emailTransporter = await createTransporter();
+  try {
+    if (emailTransporter) {
+      await emailTransporter.sendMail(emailOptions);
+    }
+  } catch (error) {
+    console.log({ sendOrderEmail: error });
+  }
 };
