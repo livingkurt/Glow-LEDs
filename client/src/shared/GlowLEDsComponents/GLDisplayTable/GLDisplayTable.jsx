@@ -6,15 +6,29 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
-import { Divider, Typography, TextField, Button, Box, TableSortLabel } from "@mui/material";
+import { Divider, Typography, TextField, Button, Box, TableSortLabel, InputAdornment } from "@mui/material";
 import { useEffect, useState } from "react";
 import { applySort } from "../GLTableV2/glTableHelpers";
+import { Search } from "@mui/icons-material";
 
 const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorting }) => {
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editField, setEditField] = useState(null);
   const [editValue, setEditValue] = useState(null);
   const [sorting, setSorting] = useState(defaultSorting || []);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Add this new function to filter rows
+  const filterRows = rows => {
+    if (!searchTerm) return rows;
+
+    return rows.filter(row => {
+      return columnDefs.some(column => {
+        const value = displayValue(column.display, row);
+        return String(value).toLowerCase().includes(searchTerm.toLowerCase());
+      });
+    });
+  };
 
   const handleClick = (attribute, row, rowIndex, e) => {
     e.stopPropagation();
@@ -78,6 +92,22 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
         {title}
       </Typography>
       <Divider />
+      <Box sx={{ padding: "10px 16px" }}>
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Search all columns..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
@@ -101,8 +131,8 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
           </TableHead>
           <TableBody>
             {!loading &&
-              sortedRows.length > 0 &&
-              sortedRows?.map((row, rowIndex) => (
+              filterRows(sortedRows).length > 0 &&
+              filterRows(sortedRows)?.map((row, rowIndex) => (
                 <TableRow key={rowIndex} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   {columnDefs.map((columnDef, colIndex) => (
                     <TableCell key={colIndex}>
