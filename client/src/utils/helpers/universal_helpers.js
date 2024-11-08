@@ -1,3 +1,4 @@
+import { tagField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../helper_functions";
 
 export const scrollToId = target => {
@@ -18,7 +19,7 @@ export const formatDate = date => {
   return new Date(date).toLocaleDateString(undefined, { timeZone: "UTC" });
 };
 
-export const sharedItemSchema = ({ products, events, tickets, categorys, itemType, item }) => {
+export const sharedItemSchema = ({ products, events, tickets, tags, itemType, item }) => {
   return {
     type: "array",
     title: `${toCapitalize(itemType)} Items`,
@@ -103,12 +104,7 @@ export const sharedItemSchema = ({ products, events, tickets, categorys, itemTyp
           labelProp: "product_collection",
         },
 
-        tags: {
-          type: "autocomplete_multiple",
-          label: "Tags",
-          options: categorys,
-          labelProp: "name",
-        },
+        tags: tagField({ tags }),
         pathname: {
           type: "text",
           label: "Pathname",

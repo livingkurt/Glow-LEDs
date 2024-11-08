@@ -1,17 +1,9 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
+import { tagField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
-export const productFormFields = ({
-  products,
-  users,
-  categorysQuery,
-  product,
-  chips,
-  filaments,
-  dispatch,
-  productsQuery,
-}) => {
+export const productFormFields = ({ products, users, product, chips, filaments, dispatch, tags }) => {
   return {
     product_info_title: {
       label: "Product Info",
@@ -211,13 +203,7 @@ export const productFormFields = ({
       type: "number",
       label: "Previous Price",
     },
-    tags: {
-      type: "autocomplete_multiple",
-      label: "Tags",
-      options: !categorysQuery?.isLoading ? categorysQuery?.data : [],
-      loading: categorysQuery?.isLoading,
-      labelProp: "name",
-    },
+    tags: tagField({ tags }),
     hidden: {
       type: "checkbox",
       label: "Hidden",
@@ -708,8 +694,7 @@ export const productFormFields = ({
         products: {
           type: "autocomplete_multiple",
           label: "Products",
-          options: !productsQuery?.isLoading ? productsQuery?.data : [],
-          loading: productsQuery?.isLoading,
+          options: products,
           labelProp: "name",
         },
         hidden: {
@@ -759,13 +744,7 @@ export const productFormFields = ({
       type: "text",
       label: "Product Collection",
     },
-    contributors: {
-      type: "autocomplete_multiple",
-      label: "Contributors",
-      labelProp: "first_name",
-      options: users.filter(user => user.first_name && user.last_name),
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-    },
+    contributors: userField({ users }),
 
     chips: {
       type: "autocomplete_multiple",

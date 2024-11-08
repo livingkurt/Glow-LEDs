@@ -11,9 +11,9 @@ const EditTicketModal = () => {
   const ticketPage = useSelector(state => state.tickets.ticketPage);
   const { edit_ticket_modal, ticket, loading } = ticketPage;
 
-  const ticketsQuery = useTicketsQuery();
+  const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
 
-  const formFields = ticketFormFields({ ticket, ticketsQuery });
+  const formFields = ticketFormFields({ ticket, tickets: ticketsLoading ? [] : tickets });
 
   return (
     <div>

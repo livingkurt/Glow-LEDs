@@ -1,4 +1,6 @@
-export const chipFormFields = ({ chip, categorys }) => {
+import { tagField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+
+export const chipFormFields = ({ chip, tags }) => {
   return {
     name: {
       type: "text",
@@ -12,12 +14,7 @@ export const chipFormFields = ({ chip, categorys }) => {
       type: "text",
       label: "category",
     },
-    categorys: {
-      type: "autocomplete_single",
-      label: "Categorys",
-      options: categorys,
-      labelProp: "name",
-    },
+    tags: tagField({ tags }),
     programmable: {
       type: "checkbox",
       label: "Programmable",
@@ -67,7 +64,7 @@ export const chipFormFields = ({ chip, categorys }) => {
       title: "Dimensions",
       label: "dimensions",
       fields: {
-        legnth: {
+        length: {
           type: "text",
           label: "Length",
         },

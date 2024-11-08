@@ -126,3 +126,24 @@ export const userField = ({ users, ...otherProps }) => {
     ...otherProps,
   };
 };
+
+export const affiliateField = ({ affiliates, ...otherProps }) => {
+  return {
+    type: "autocomplete_single",
+    label: "Affiliate",
+    options: affiliates,
+    labelProp: "affiliate",
+    getOptionLabel: option => `${option.artist_name}`,
+    ...otherProps,
+  };
+};
+
+export const tagField = ({ tags, ...otherProps }) => {
+  return {
+    type: "autocomplete_multiple",
+    label: "Tags",
+    options: tags,
+    labelProp: "tags",
+    ...otherProps,
+  };
+};

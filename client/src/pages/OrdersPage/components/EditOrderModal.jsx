@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_order_modal, set_order } from "../../../slices/orderSlice";
@@ -30,13 +30,13 @@ const EditOrderModal = () => {
   const [isUpdatePricesActive, setIsUpdatePricesActive] = useState(true);
 
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { edit_order_modal, order, loading } = orderPage;
+  const { edit_order_modal, order } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
   const { data: allShipping, isLoading: allShippingLoading } = API.useGetAllShippingOrdersQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
-  const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
@@ -48,20 +48,10 @@ const EditOrderModal = () => {
     promos: promosLoading ? [] : promos,
     allShipping: allShippingLoading ? [] : allShipping,
     order,
-    categorys: categorysLoading ? [] : categorys,
+    tags: tagsLoading ? [] : tags,
     events: eventsLoading ? [] : events,
     tickets: ticketsLoading ? [] : tickets,
   });
-
-  // const isLoading =
-  //   loading ||
-  //   allShippingLoading ||
-  //   productsLoading ||
-  //   categorysLoading ||
-  //   eventsLoading ||
-  //   ticketsLoading ||
-  //   usersLoading ||
-  //   promosLoading;
 
   return (
     <div>

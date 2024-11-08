@@ -2,17 +2,7 @@ import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpe
 import { humanize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
-export const orderFormFields = ({
-  users,
-  products,
-  promos,
-  allShipping,
-  parcels,
-  order,
-  categorys,
-  events,
-  tickets,
-}) => {
+export const orderFormFields = ({ users, products, promos, allShipping, parcels, order, tags, events, tickets }) => {
   return {
     user: userField({ users }),
     itemsPrice: {
@@ -320,7 +310,7 @@ export const orderFormFields = ({
       products,
       events,
       tickets,
-      categorys,
+      tags,
       itemType: "order",
       item: order,
     }),

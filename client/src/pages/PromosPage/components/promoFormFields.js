@@ -1,14 +1,8 @@
-import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { affiliateField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
 export const promoFormFields = ({ affiliates, users, categorys, products }) => {
   return {
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliates",
-      options: affiliates,
-      labelProp: "affiliate",
-      getOptionLabel: option => option.artist_name,
-    },
+    affiliate: affiliateField({ affiliates }),
     user: userField({ users }),
     promo_code: {
       type: "text",

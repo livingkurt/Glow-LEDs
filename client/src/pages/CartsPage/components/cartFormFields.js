@@ -1,7 +1,7 @@
-import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { affiliateField, tagField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
-export const cartFormFields = ({ products, users, affiliates, cart, events, tickets, categorys }) => {
+export const cartFormFields = ({ products, users, affiliates, cart, events, tickets, tags }) => {
   return {
     title: {
       type: "text",
@@ -25,20 +25,8 @@ export const cartFormFields = ({ products, users, affiliates, cart, events, tick
       album: `${cart.title} Images`,
     },
     user: userField({ users }),
-    tags: {
-      type: "autocomplete_multiple",
-      label: "Tags",
-      options: categorys,
-      labelProp: "tags",
-      getOptionLabel: option => `${option.pathname}`,
-    },
-    affiliate: {
-      type: "autocomplete_single",
-      label: "Affiliate",
-      options: affiliates,
-      labelProp: "affiliate",
-      getOptionLabel: option => `${option.artist_name}`,
-    },
+    tags: tagField({ tags }),
+    affiliate: affiliateField({ affiliates }),
     active: {
       type: "checkbox",
       label: "Active",
@@ -47,7 +35,7 @@ export const cartFormFields = ({ products, users, affiliates, cart, events, tick
       products,
       events,
       tickets,
-      categorys,
+      tags,
       itemType: "cart",
       item: cart,
     }),

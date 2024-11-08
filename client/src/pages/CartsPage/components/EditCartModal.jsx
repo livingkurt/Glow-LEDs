@@ -26,7 +26,7 @@ const EditCartModal = () => {
 
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
-  const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
@@ -39,7 +39,7 @@ const EditCartModal = () => {
         cart,
         events: eventsLoading ? [] : events,
         tickets: ticketsLoading ? [] : tickets,
-        categorys: categorysLoading ? [] : categorys,
+        tags: tagsLoading ? [] : tags,
         products: productsLoading ? [] : products,
       }),
     [
@@ -52,8 +52,8 @@ const EditCartModal = () => {
       events,
       ticketsLoading,
       tickets,
-      categorysLoading,
-      categorys,
+      tagsLoading,
+      tags,
       productsLoading,
       products,
     ]
