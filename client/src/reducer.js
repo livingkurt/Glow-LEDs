@@ -1,7 +1,6 @@
 import {
   affiliateSlice,
   cartSlice,
-  categorySlice,
   chipSlice,
   contentSlice,
   emailSlice,
@@ -26,6 +25,7 @@ import {
   ticketSlice,
 } from "./slices";
 
+import tagSlice from "./slices/tagSlice";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
@@ -55,9 +55,9 @@ const reducers = {
     }),
     productBundlesGridPage: productBundlesGridPageSlice,
   }),
-  categorys: combineReducers({
-    categoryPage: categorySlice,
-    categoryTable: glTableReducer("categoryTable", {
+  tags: combineReducers({
+    tagPage: tagSlice,
+    tagTable: glTableReducer("tagTable", {
       sorting: [0, "desc"],
     }),
   }),

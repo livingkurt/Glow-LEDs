@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
@@ -8,7 +7,7 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
 import {
-  useCategorysQuery,
+  useTagsQuery,
   useChipsQuery,
   useFilamentsQuery,
   useProductsQuery,
@@ -24,7 +23,7 @@ const EditProductModal = () => {
     hidden: false,
     isVariation: false,
   });
-  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: chips, isLoading: chipsLoading } = useChipsQuery();
   const { data: filaments, isLoading: filamentsLoading } = useFilamentsQuery();

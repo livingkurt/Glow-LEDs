@@ -17,10 +17,9 @@ export const allRecordsApi = createApi({
     carts: builder.query({
       query: query => `/carts?${create_query(query)}`,
     }),
-
-    categorys: builder.query({
+    tags: builder.query({
       query: params => ({
-        url: `/categorys`,
+        url: `/tags`,
         params: create_query(params),
         method: "GET",
       }),
@@ -111,7 +110,7 @@ export const allRecordsApi = createApi({
 export const {
   useAffiliatesQuery,
   useCartsQuery,
-  useCategorysQuery,
+  useTagsQuery,
   useChipsQuery,
   useContentsQuery,
   useEmailsQuery,

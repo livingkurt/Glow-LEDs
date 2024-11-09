@@ -5,7 +5,7 @@ import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
-import { CategorysPage } from "../../pages/CategorysPage";
+import { TagsPage } from "../../pages/TagsPage/TagsPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { ParcelsPage } from "../../pages/ParcelsPage";
 import { PalettesPage } from "../../pages/PalettesPage";
@@ -97,7 +97,7 @@ export const AdminComponents = {
   OrdersPage,
   UsersPage,
   PaychecksPage,
-  CategorysPage,
+  TagsPage,
   SurveysPage,
   ParcelsPage,
   PalettesPage,

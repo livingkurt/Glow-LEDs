@@ -1,6 +1,6 @@
 export { default as affiliateSlice } from "./affiliateSlice";
 export { default as cartSlice } from "./cartSlice";
-export { default as categorySlice } from "./categorySlice";
+export { default as tagSlice } from "./tagSlice";
 export { default as chipSlice } from "./chipSlice";
 export { default as contentSlice } from "./contentSlice";
 export { default as emailSlice } from "./emailSlice";

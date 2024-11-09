@@ -51,7 +51,7 @@ export const adminRoutes = [
   { path: "/secure/glow/orders", element: "OrdersPage" },
   { path: "/secure/glow/users", element: "UsersPage" },
   { path: "/secure/glow/paychecks", element: "PaychecksPage" },
-  { path: "/secure/glow/categorys", element: "CategorysPage" },
+  { path: "/secure/glow/tags", element: "TagsPage" },
   { path: "/secure/glow/surveys", element: "SurveysPage" },
   { path: "/secure/glow/parcels", element: "ParcelsPage" },
   { path: "/secure/glow/palettes", element: "PalettesPage" },
