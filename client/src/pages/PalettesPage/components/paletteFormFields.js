@@ -1,12 +1,12 @@
 import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
-export const paletteFormFields = ({ chips, users }) => {
+export const paletteFormFields = ({ microlights, users }) => {
   return {
     user: userField({ users }),
-    chip: {
+    microlight: {
       type: "autocomplete_single",
-      label: "Chip",
-      options: chips,
+      label: "Microlight",
+      options: microlights,
       labelProp: "name",
     },
     name: {

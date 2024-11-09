@@ -3,7 +3,7 @@ import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
 import { filamentField, tagField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
-export const productFormFields = ({ products, users, product, chips, filaments, dispatch, tags }) => {
+export const productFormFields = ({ products, users, product, microlights, filaments, dispatch, tags }) => {
   return {
     product_info_title: {
       label: "Product Info",
@@ -746,10 +746,10 @@ export const productFormFields = ({ products, users, product, chips, filaments, 
     },
     contributors: userField({ users }),
 
-    chips: {
+    microlights: {
       type: "autocomplete_multiple",
-      label: "Chips",
-      options: chips,
+      label: "Microlights",
+      options: microlights,
       labelProp: "name",
     },
     color: {

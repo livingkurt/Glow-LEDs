@@ -2,7 +2,7 @@ import Content from "../contents/content.js";
 import Product from "./product.js";
 import Tag from "../tags/tag.js";
 import Order from "../orders/order.js";
-import Chip from "../chips/chip.js";
+import Microlight from "../microlights/microlight.js";
 
 export const updateProductStock = async (product, quantityToReduce) => {
   console.log(`Updating stock for product: ${product.name}`);
@@ -508,9 +508,9 @@ export const sortProducts = (products, category, bestSellers, ourPicks) => {
   return products;
 };
 
-export const handleChipFiltering = async chipPathname => {
-  if (!chipPathname) return {};
-  const chip = await Chip.findOne({ deleted: false, pathname: chipPathname });
-  if (!chip) return {};
-  return { chips: chip._id };
+export const handleMicrolightFiltering = async microlightPathname => {
+  if (!microlightPathname) return {};
+  const microlight = await Microlight.findOne({ deleted: false, pathname: microlightPathname });
+  if (!microlight) return {};
+  return { microlights: microlight._id };
 };

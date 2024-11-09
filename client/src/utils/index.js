@@ -8,6 +8,6 @@ export { default as API_Users } from "./API_Users";
 export { default as API_Shipping } from "./API_Shipping";
 export { default as API_Promos } from "./API_Promos";
 export { default as API_Affiliates } from "./API_Affiliates";
-export { default as API_Chips } from "./API_Chips";
+export { default as API_Microlights } from "./API_Microlights";
 export { default as API_Content } from "./API_Content";
 export { default as API_Paychecks } from "./API_Paychecks";

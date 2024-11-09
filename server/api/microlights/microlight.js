@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
-const chip_dimensions_schema = {
+const microlight_dimensions_schema = {
   height: { type: Number },
   width: { type: Number },
   length: { type: Number },
 };
-const chip_color_schema = {
+const microlight_color_schema = {
   name: { type: String },
   color: { type: String },
 };
 
-const chip_schema = new mongoose.Schema(
+const microlight_schema = new mongoose.Schema(
   {
     name: { type: String },
     company: { type: String },
@@ -20,12 +20,12 @@ const chip_schema = new mongoose.Schema(
     number_of_modes: { type: Number },
     characteristics: { type: String },
     colors_per_mode: { type: Number },
-    colors: [chip_color_schema],
+    colors: [microlight_color_schema],
     pathname: { type: String },
     image: { type: String },
     image_object: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    dimensions: chip_dimensions_schema,
+    dimensions: microlight_dimensions_schema,
     deleted: { type: Boolean, default: false },
   },
   {
@@ -33,6 +33,6 @@ const chip_schema = new mongoose.Schema(
   }
 );
 
-const Chip = mongoose.model("Chip", chip_schema);
+const Microlight = mongoose.model("Microlight", microlight_schema);
 
-export default Chip;
+export default Microlight;

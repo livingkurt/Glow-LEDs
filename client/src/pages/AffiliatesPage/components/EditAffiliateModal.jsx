@@ -11,7 +11,7 @@ import GLStepperModal from "../../../shared/GlowLEDsComponents/GLStepperModal/GL
 import { Loading } from "../../../shared/SharedComponents";
 import {
   useCartsQuery,
-  useChipsQuery,
+  useMicrolightsQuery,
   useProductsQuery,
   usePromosQuery,
   useUsersQuery,
@@ -31,7 +31,7 @@ const EditAffiliateModal = () => {
 
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery();
-  const { data: chips, isLoading: chipsLoading } = useChipsQuery();
+  const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const { data: promos, isLoading: promosLoading } = usePromosQuery();
   const { data: carts, isLoading: cartsLoading } = useCartsQuery();
 
@@ -48,7 +48,7 @@ const EditAffiliateModal = () => {
   const formFields = affiliateFormFields({
     products: productsLoading ? [] : products,
     users: usersLoading ? [] : users,
-    chips: chipsLoading ? [] : chips,
+    microlights: microlightsLoading ? [] : microlights,
     promos: promosLoading ? [] : promos,
     carts: cartsLoading ? [] : carts,
   });

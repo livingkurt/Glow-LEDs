@@ -25,14 +25,14 @@ import { isSafari } from "react-device-detect";
 
 const ProductsGridPageFilters = ({
   category,
-  chips,
-  selectedChip,
+  microlights,
+  selectedMicrolight,
   sortOptions,
   sort,
   allTags,
   selectedTags,
   handleCategoryChange,
-  handleChipChange,
+  handleMicrolightChange,
   handleSortChange,
   handleTagChange,
   clearAllFilters,
@@ -42,8 +42,8 @@ const ProductsGridPageFilters = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const activeFiltersCount = useMemo(() => {
-    return (category ? 1 : 0) + (selectedChip ? 1 : 0) + (sort ? 1 : 0) + selectedTags.length;
-  }, [category, selectedChip, sort, selectedTags]);
+    return (category ? 1 : 0) + (selectedMicrolight ? 1 : 0) + (sort ? 1 : 0) + selectedTags.length;
+  }, [category, selectedMicrolight, sort, selectedTags]);
 
   const handleSortChangeWithClear = event => {
     const value = event.target.value;
@@ -155,20 +155,20 @@ const ProductsGridPageFilters = ({
 
           <Grid item xs={12} sm={6} md={4}>
             <Autocomplete
-              options={chips || []}
+              options={microlights || []}
               getOptionLabel={option => option.name}
               renderInput={params => (
                 <TextField
                   {...params}
-                  label="Filter By Chip"
+                  label="Filter By Microlight"
                   fullWidth
                   InputLabelProps={{
                     style: { color: "white" },
                   }}
                 />
               )}
-              value={chips?.find(c => c.pathname === selectedChip) || null}
-              onChange={handleChipChange}
+              value={microlights?.find(c => c.pathname === selectedMicrolight) || null}
+              onChange={handleMicrolightChange}
               sx={autocompleteStyle}
             />
           </Grid>

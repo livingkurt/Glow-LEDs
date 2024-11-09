@@ -17,7 +17,7 @@ const glowLedsSlice = createSlice({
     options: [],
     pathname: "",
     search: "",
-    chip_name: "",
+    microlight_name: "",
     environment: "production",
   },
   reducers: {
@@ -42,8 +42,8 @@ const glowLedsSlice = createSlice({
     set_search: (state, { payload }) => {
       state.search = payload;
     },
-    set_chip_name: (state, { payload }) => {
-      state.chip_name = payload;
+    set_microlight_name: (state, { payload }) => {
+      state.microlight_name = payload;
     },
   },
 
@@ -63,6 +63,6 @@ export const {
   set_options,
   set_pathname,
   set_search,
-  set_chip_name,
+  set_microlight_name,
 } = glowLedsSlice.actions;
 export default glowLedsSlice.reducer;

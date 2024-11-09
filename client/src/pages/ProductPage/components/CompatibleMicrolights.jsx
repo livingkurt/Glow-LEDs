@@ -5,27 +5,27 @@ import { update_products_url } from "../../../utils/helper_functions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const CompatibleChips = ({ chips }) => {
+const CompatibleChips = ({ microlights }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (!chips || chips.length === 0 || chips[0]?.name === "All Chips") return null;
+  if (!microlights || microlights.length === 0 || microlights[0]?.name === "All Chips") return null;
 
   return (
     <Box mt={2}>
       <Typography variant="subtitle2" gutterBottom>
-        {"Compatible Chips:"}
+        {"Compatible Microlights:"}
       </Typography>
       <Box display="flex" flexWrap="wrap" gap={1}>
-        {chips.map(chip => (
-          // <Tooltip key={chip._id} title={`Find more products compatible with ${chip.name}`} arrow>
+        {microlights.map(microlight => (
+          // <Tooltip key={microlight._id} title={`Find more products compatible with ${microlight.name}`} arrow>
           <Chip
-            label={chip.name}
+            label={microlight.name}
             // onClick={() => {
-            //   update_products_url(navigate, "", "", chip.name, "", "0", "/products");
+            //   update_products_url(navigate, "", "", microlight.name, "", "0", "/products");
             //   dispatch(
             //     API.listProducts({
-            //       chip: chip._id,
+            //       microlight: microlight._id,
             //       hidden: false,
             //     })
             //   );

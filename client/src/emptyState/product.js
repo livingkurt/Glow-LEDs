@@ -72,7 +72,7 @@ export const product = {
   assembly_time: 0,
   order: 0,
   item_group_id: "",
-  chips: [],
+  microlights: [],
   products: [],
   has_add_on: false,
   color_product_group: false,

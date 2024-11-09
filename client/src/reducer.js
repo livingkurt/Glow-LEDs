@@ -1,7 +1,7 @@
 import {
   affiliateSlice,
   cartSlice,
-  chipSlice,
+  microlightSlice,
   contentSlice,
   emailSlice,
   expenseSlice,
@@ -61,9 +61,9 @@ const reducers = {
       sorting: [0, "desc"],
     }),
   }),
-  chips: combineReducers({
-    chipPage: chipSlice,
-    chipTable: glTableReducer("chipTable", {}),
+  microlights: combineReducers({
+    microlightPage: microlightSlice,
+    microlightTable: glTableReducer("microlightTable", {}),
   }),
   contents: combineReducers({
     contentPage: contentSlice,

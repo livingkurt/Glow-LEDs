@@ -11,17 +11,17 @@ import CategoryBanner from "./components/CategoryBanner";
 const ProductGridPage = () => {
   const {
     selectedTags,
-    selectedChip,
+    selectedMicrolight,
     category,
     sort,
     currentContent,
-    chips,
+    microlights,
     products,
     isLoading,
     isError,
     allTags,
     handleTagChange,
-    handleChipChange,
+    handleMicrolightChange,
     handleCategoryChange,
     handleSortChange,
     clearAllFilters,
@@ -64,14 +64,14 @@ const ProductGridPage = () => {
 
         <ProductsGridPageFilters
           category={category}
-          chips={chips}
-          selectedChip={selectedChip}
+          microlights={microlights}
+          selectedMicrolight={selectedMicrolight}
           sortOptions={sortOptions}
           sort={sort}
           allTags={allTags}
           selectedTags={selectedTags}
           handleCategoryChange={handleCategoryChange}
-          handleChipChange={handleChipChange}
+          handleMicrolightChange={handleMicrolightChange}
           handleSortChange={handleSortChange}
           handleTagChange={handleTagChange}
           clearAllFilters={clearAllFilters}

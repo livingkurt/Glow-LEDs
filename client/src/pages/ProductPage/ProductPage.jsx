@@ -28,7 +28,7 @@ import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
 import { setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
-import CompatibleChips from "./components/CompatibleChips";
+import CompatibleMicrolights from "./components/CompatibleMicrolights";
 import ContributorsDisplay from "./components/ContributorsDisplay";
 import { sale_price_switch } from "../../utils/react_helper_functions";
 import IconFeatures from "./components/IconFeatures";
@@ -194,7 +194,7 @@ const ProductPage = () => {
                   <Typography variant="body1" gutterBottom mt={2} mb={2}>
                     {customizedProduct.short_description}
                   </Typography>
-                  <CompatibleChips chips={customizedProduct.chips} />
+                  <CompatibleMicrolights microlights={customizedProduct.microlights} />
                   {customizedProduct.currentOptions?.map((option, index) => (
                     <Box key={index}>
                       <CustomizationOption

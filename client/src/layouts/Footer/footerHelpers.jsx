@@ -38,7 +38,7 @@ export const footerSections = [
     links: [
       { text: "Support Center", url: "/support_center" },
       { text: "About", url: "/about" },
-      { text: "Shop by Chip", url: "/products?filter=All%20Chips?limit=0" },
+      { text: "Shop by Microlight", url: "/products?filter=All%20Microlights?limit=0" },
     ],
   },
 ];

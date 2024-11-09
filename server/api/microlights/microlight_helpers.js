@@ -1,4 +1,4 @@
-// export const normalizeChipFilters = input => {
+// export const normalizeMicrolightFilters = input => {
 //   const output = {};
 //   Object.keys(input).forEach(key => {
 //     switch (key) {
@@ -25,7 +25,7 @@
 //   return output;
 // };
 
-export const normalizeChipSearch = query => {
+export const normalizeMicrolightSearch = query => {
   const search = query.search
     ? {
         name: {

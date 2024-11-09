@@ -68,7 +68,7 @@ export const adminRoutes = [
   { path: "/secure/glow/promos", element: "PromosPage" },
   { path: "/secure/glow/affiliates", element: "AffiliatesPage" },
   { path: "/secure/glow/teams", element: "TeamsPage" },
-  { path: "/secure/glow/chips", element: "ChipsPage" },
+  { path: "/secure/glow/microlights", element: "MicrolightsPage" },
   { path: "/secure/glow/tutorials", element: "TutorialsPage" },
   { path: "/secure/glow/tickets", element: "TicketsPage" },
   { path: "/secure/glow/events", element: "EventsPage" },

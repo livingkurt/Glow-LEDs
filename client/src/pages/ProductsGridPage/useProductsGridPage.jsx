@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useChipsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
+import { useMicrolightsQuery, useProductsGridQuery } from "../../api/allRecordsApi";
 import * as API from "../../api";
 import { toSnakeCase } from "./productGridPageHelpers";
 import {
   setSelectedTags,
-  setSelectedChip,
+  setSelectedMicrolight,
   setCategory,
   setSort,
   setSearch,
@@ -18,11 +18,13 @@ export const useProductsGridPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { selectedTags, selectedChip, category, sort, search } = useSelector(state => state.products.productsGridPage);
+  const { selectedTags, selectedMicrolight, category, sort, search } = useSelector(
+    state => state.products.productsGridPage
+  );
   const { current_user } = useSelector(state => state.users.userPage);
 
   const { data: currentContent } = API.useCurrentContentQuery();
-  const { data: chips } = useChipsQuery();
+  const { data: microlights } = useMicrolightsQuery();
 
   const {
     data: products,
@@ -32,7 +34,7 @@ export const useProductsGridPage = () => {
   } = useProductsGridQuery({
     tags: selectedTags,
     category,
-    chip: selectedChip,
+    microlight: selectedMicrolight,
     sort,
     search, // Add this line
   });
@@ -40,7 +42,7 @@ export const useProductsGridPage = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const newSelectedTags = searchParams.getAll("tags[]");
-    const newSelectedChip = searchParams.get("chip") || null;
+    const newSelectedMicrolight = searchParams.get("microlight") || null;
     const newCategory = searchParams.get("category") || null;
     const newSort = searchParams.get("sort") || null;
     const newSearch = searchParams.get("search") || ""; // Add this line
@@ -48,7 +50,7 @@ export const useProductsGridPage = () => {
     dispatch(
       updateFilters({
         tags: newSelectedTags,
-        chip: newSelectedChip,
+        microlight: newSelectedMicrolight,
         category: newCategory,
         sort: newSort,
         search: newSearch, // Add this line
@@ -74,35 +76,35 @@ export const useProductsGridPage = () => {
   const handleTagChange = (event, newValue) => {
     const snakeCaseTags = newValue.map(tag => toSnakeCase(tag));
     dispatch(setSelectedTags(snakeCaseTags));
-    updateUrl(snakeCaseTags, selectedChip, category, sort, search);
+    updateUrl(snakeCaseTags, selectedMicrolight, category, sort, search);
   };
 
-  const handleChipChange = (event, newValue) => {
-    const newChip = newValue ? newValue.pathname : null;
-    dispatch(setSelectedChip(newChip));
-    updateUrl(selectedTags, newChip, category, sort, search);
+  const handleMicrolightChange = (event, newValue) => {
+    const newMicrolight = newValue ? newValue.pathname : null;
+    dispatch(setSelectedMicrolight(newMicrolight));
+    updateUrl(selectedTags, newMicrolight, category, sort, search);
   };
 
   const handleCategoryChange = (event, newCategory) => {
     dispatch(setCategory(newCategory));
-    updateUrl(selectedTags, selectedChip, newCategory, sort, search);
+    updateUrl(selectedTags, selectedMicrolight, newCategory, sort, search);
   };
 
   const handleSortChange = (event, newValue) => {
     const newSort = newValue ? newValue.value : null;
     dispatch(setSort(newSort));
-    updateUrl(selectedTags, selectedChip, category, newSort, search);
+    updateUrl(selectedTags, selectedMicrolight, category, newSort, search);
   };
 
   const handleSearchChange = newSearch => {
     dispatch(setSearch(newSearch));
-    updateUrl(selectedTags, selectedChip, category, sort, newSearch);
+    updateUrl(selectedTags, selectedMicrolight, category, sort, newSearch);
   };
 
-  const updateUrl = (tags, chip, cat, sortValue, searchValue) => {
+  const updateUrl = (tags, microlight, cat, sortValue, searchValue) => {
     const newSearchParams = new URLSearchParams();
     tags.forEach(tag => newSearchParams.append("tags[]", tag));
-    if (chip) newSearchParams.append("chip", chip);
+    if (microlight) newSearchParams.append("microlight", microlight);
     if (cat) newSearchParams.append("category", cat);
     if (sortValue) newSearchParams.append("sort", sortValue);
     if (searchValue) newSearchParams.append("search", searchValue);
@@ -111,7 +113,7 @@ export const useProductsGridPage = () => {
 
   const clearAllFilters = () => {
     dispatch(setSelectedTags([]));
-    dispatch(setSelectedChip(null));
+    dispatch(setSelectedMicrolight(null));
     dispatch(setCategory(null));
     dispatch(setSort(null));
     dispatch(setSearch(""));
@@ -120,19 +122,19 @@ export const useProductsGridPage = () => {
 
   return {
     selectedTags,
-    selectedChip,
+    selectedMicrolight,
     category,
     sort,
     search,
     current_user,
     currentContent,
-    chips,
+    microlights,
     products,
     isLoading,
     isError,
     allTags,
     handleTagChange,
-    handleChipChange,
+    handleMicrolightChange,
     handleCategoryChange,
     handleSortChange,
     handleSearchChange,

@@ -1,10 +1,10 @@
 import { getFilteredData } from "../api_helpers.js";
 import { determine_filter } from "../../utils/util.js";
-import chip_db from "./chip_db.js";
-import { normalizeChipSearch } from "./chip_helpers.js";
+import microlight_db from "./microlight_db.js";
+import { normalizeMicrolightSearch } from "./microlight_helpers.js";
 
 export default {
-  findAll_chips_s: async query => {
+  findAll_microlights_s: async query => {
     try {
       const page = query.page ? query.page : "1";
       const limit = query.limit ? query.limit : "0";
@@ -26,28 +26,28 @@ export default {
       } else if (sort_query === "newest") {
         sort = { name: 1 };
       }
-      const chips = await chip_db.findAll_chips_db(filter, sort, limit, page);
-      return chips;
+      const microlights = await microlight_db.findAll_microlights_db(filter, sort, limit, page);
+      return microlights;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  table_chips_s: async query => {
+  table_microlights_s: async query => {
     try {
       const sort_options = ["name", "company", "category", "programmable"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
         search_name: "name",
-        // normalizeFilters: normalizeChipFilters,
-        normalizeSearch: normalizeChipSearch,
+        // normalizeFilters: normalizeMicrolightFilters,
+        normalizeSearch: normalizeMicrolightSearch,
       });
-      const chips = await chip_db.findAll_chips_db(filter, sort, limit, page);
-      const count = await chip_db.count_chips_db(filter);
+      const microlights = await microlight_db.findAll_microlights_db(filter, sort, limit, page);
+      const count = await microlight_db.count_microlights_db(filter);
       return {
-        data: chips,
+        data: microlights,
         total_count: count,
         currentPage: page,
       };
@@ -57,45 +57,45 @@ export default {
       }
     }
   },
-  findById_chips_s: async params => {
+  findById_microlights_s: async params => {
     try {
-      return await chip_db.findById_chips_db(params.id);
+      return await microlight_db.findById_microlights_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findByName_chips_s: async params => {
+  findByName_microlights_s: async params => {
     try {
-      return await chip_db.findByName_chips_db(params.name);
+      return await microlight_db.findByName_microlights_db(params.name);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  create_chips_s: async body => {
+  create_microlights_s: async body => {
     try {
-      return await chip_db.create_chips_db(body);
+      return await microlight_db.create_microlights_db(body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  update_chips_s: async (params, body) => {
+  update_microlights_s: async (params, body) => {
     try {
-      return await chip_db.update_chips_db(params.id, body);
+      return await microlight_db.update_microlights_db(params.id, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  remove_chips_s: async params => {
+  remove_microlights_s: async params => {
     try {
-      return await chip_db.remove_chips_db(params.id);
+      return await microlight_db.remove_microlights_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

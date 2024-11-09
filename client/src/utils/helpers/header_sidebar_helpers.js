@@ -401,8 +401,8 @@ export const navigation = [
         link: "/secure/glow/logs",
       },
       {
-        title: "Chips",
-        link: "/secure/glow/chips",
+        title: "Microlights",
+        link: "/secure/glow/microlights",
       },
       {
         title: "Surveys",

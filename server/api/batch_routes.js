@@ -9,7 +9,7 @@ import Affiliate from "./affiliates/affiliate.js";
 import Content from "./contents/content.js";
 import Paycheck from "./paychecks/paycheck.js";
 import Parcel from "./parcels/parcel.js";
-import Chip from "./chips/chip.js";
+import Microlight from "./microlights/microlight.js";
 import Filament from "./filaments/filament.js";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
 
@@ -231,7 +231,7 @@ router.route("/parcels").put(isAuth, isAdmin, async (req, res) => {
     }
   }
 });
-router.route("/chips").put(isAuth, isAdmin, async (req, res) => {
+router.route("/microlights").put(isAuth, isAdmin, async (req, res) => {
   try {
     const { method, search_parameter_field, search_parameter, action, property, value } = req.body;
     let parameter = {};
@@ -239,15 +239,15 @@ router.route("/chips").put(isAuth, isAdmin, async (req, res) => {
       parameter = { [search_parameter_field]: search_parameter };
     }
     if (method === "updateMany") {
-      const chips = await Chip.updateMany(parameter, {
+      const microlights = await Microlight.updateMany(parameter, {
         [action]: { [property]: value },
       });
 
-      res.send(chips);
+      res.send(microlights);
     } else {
-      const chips = await Chip.find(parameter);
+      const microlights = await Microlight.find(parameter);
 
-      res.send(chips);
+      res.send(microlights);
     }
   } catch (error) {
     if (error instanceof Error) {

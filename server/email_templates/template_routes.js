@@ -851,7 +851,7 @@ router.get("/affiliate", async (req, res) => {
         "5f90e202454528002af7df30",
         "600722965510ff002aceaeb0",
       ],
-      chips: [],
+      microlights: [],
       pathname: "cosmo",
       private_code: {
         _id: "5f6a5a82f04766002a522310",
