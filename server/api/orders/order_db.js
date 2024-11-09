@@ -828,12 +828,13 @@ export default {
 
   get_product_range_revenue_orders_db: async (id, start_date, end_date) => {
     try {
+      const { ObjectId } = mongoose.Types; // Changed this line
       const result = await Order.aggregate([
         {
           $match: {
             deleted: false,
             status: { $nin: ["unpaid", "canceled"] },
-            "orderItems.product": id,
+            "orderItems.product": new ObjectId(id), // Added 'new'
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -844,11 +845,20 @@ export default {
           $unwind: "$orderItems",
         },
         {
+          $match: {
+            "orderItems.product": new ObjectId(id), // Added 'new'
+          },
+        },
+        {
           $group: {
-            _id: "$orderItems.product",
+            _id: null,
             name: { $first: "$orderItems.name" },
             totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
             totalQuantity: { $sum: "$orderItems.quantity" },
+            averageOrderValue: { $avg: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+            numberOfOrders: { $sum: 1 },
+            firstOrder: { $min: "$createdAt" },
+            lastOrder: { $max: "$createdAt" },
           },
         },
         {
@@ -857,14 +867,17 @@ export default {
             name: 1,
             totalRevenue: 1,
             totalQuantity: 1,
+            averageOrderValue: 1,
+            numberOfOrders: 1,
+            firstOrder: 1,
+            lastOrder: 1,
           },
         },
       ]).exec();
       return result;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.error("Error in get_product_range_revenue_orders_db:", error);
+      throw error;
     }
   },
   get_all_product_range_revenue_orders_db: async (start_date, end_date) => {
