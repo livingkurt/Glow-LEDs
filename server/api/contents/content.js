@@ -123,7 +123,7 @@ const contentSchema = new mongoose.Schema(
           fact: { type: String },
           image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
           background_color: { type: String },
-          tag: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+          tag: { type: mongoose.Schema.Types.ObjectId, ref: "Tag" },
         },
       ],
     },

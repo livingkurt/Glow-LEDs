@@ -16,7 +16,7 @@ export const sharedItemSchema = {
   count_in_stock: { type: Number },
   currentOptions: [optionSchema],
   selectedOptions: [optionValueSchema],
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
   pathname: { type: String },
   sale_price: { type: Number },
   sale_start_date: { type: Date },

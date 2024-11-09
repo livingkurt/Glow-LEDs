@@ -8,7 +8,7 @@ const article_schema = new mongoose.Schema(
     content: { type: String },
     image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     pathname: { type: String },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
