@@ -107,8 +107,8 @@ dist
 node_modules
 client/node_modules
 client/build
-DS_STORE
-DS_Store
+.DS_Store
+**/.DS_Store
 
 client/public/images/full_sized_images
 client/public/videos/full_sized_videos
@@ -125,10 +125,6 @@ client/src/scss/OLDSCSS.scss
 /playwright-report/
 /playwright/.cache/
 
-.aider.tags.cache.v1/
-.aider.ident.cache.v1/
-.aider.chat.history.md
-.aider.chat.history
 
 
 db-snapshot.json
