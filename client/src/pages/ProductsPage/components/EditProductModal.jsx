@@ -8,7 +8,7 @@ import { productFormFields } from "./productFormFields";
 import { showConfirm } from "../../../slices/snackbarSlice";
 import {
   useTagsQuery,
-  useChipsQuery,
+  useMicrolightsQuery,
   useFilamentsQuery,
   useProductsQuery,
   useUsersQuery,
@@ -25,18 +25,20 @@ const EditProductModal = () => {
   });
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
-  const { data: chips, isLoading: chipsLoading } = useChipsQuery();
+  const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const { data: filaments, isLoading: filamentsLoading } = useFilamentsQuery();
 
   const formFields = productFormFields({
     products: !productsLoading ? products : [],
     users: !usersLoading ? users : [],
     tags: !tagsLoading ? tags : [],
-    chips: !chipsLoading ? chips : [],
+    microlights: !microlightsLoading ? microlights : [],
     filaments: !filamentsLoading ? filaments : [],
     product,
     dispatch,
   });
+
+  console.log({ product });
 
   return (
     <div>

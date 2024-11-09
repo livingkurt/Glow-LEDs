@@ -1,6 +1,6 @@
 import { tagField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
-export const chipFormFields = ({ chip, tags }) => {
+export const microlightFormFields = ({ microlight, tags }) => {
   return {
     name: {
       type: "text",
@@ -56,7 +56,7 @@ export const chipFormFields = ({ chip, tags }) => {
     images: {
       type: "image_upload_multiple",
       label: "Images",
-      album: `${chip.name} Images`,
+      album: `${microlight.name} Images`,
       getOptionLabel: option => option.link,
     },
     dimensions: {

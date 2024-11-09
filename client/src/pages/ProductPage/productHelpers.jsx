@@ -41,8 +41,8 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
       state.customizedProduct.images = selectedOption.product.images;
     }
   }
-  if (selectedOption?.product?.chips?.length > 0) {
-    state.customizedProduct.chips = selectedOption?.product?.chips;
+  if (selectedOption?.product?.microlights?.length > 0) {
+    state.customizedProduct.microlights = selectedOption?.product?.microlights;
   }
 
   // When product options are available, update the currentOptions based on option names

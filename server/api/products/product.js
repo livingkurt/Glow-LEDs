@@ -254,6 +254,7 @@ const productSchema = new mongoose.Schema(
     set_of: { type: Number },
 
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
+    microlights: [{ type: mongoose.Schema.Types.ObjectId, ref: "Microlight" }],
     isPasswordProtected: { type: Boolean, default: false },
     passwordProtection: {
       password: String,

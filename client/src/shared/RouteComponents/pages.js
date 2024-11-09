@@ -1,6 +1,6 @@
 import { OrderPage } from "../../pages/OrderPage";
 import { PlaceOrderPage } from "../../pages/PlaceOrderPage";
-import { AdminChangePasswordPage } from "../../pages/ProfiePage/components";
+import { AdminChangePasswordPage } from "../../pages/ProfilePage/components";
 import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
@@ -14,19 +14,19 @@ import { ExpensesPage } from "../../pages/ExpensesPage";
 import { FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
-import ChipsPage from "../../pages/ChipsPage/ChipsPage";
+import MicrolightsPage from "../../pages/MicrolightsPage/MicrolightsPage";
 import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
 import TagsPage from "../../pages/TagsPage/TagsPage";
-import { ProfilePage } from "../../pages/ProfiePage/ProfilePage";
+import { ProfilePage } from "../../pages/ProfilePage/ProfilePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
 import { WholesalersPage } from "../../pages/WholesalersPage";
 import TeamsPage from "../../pages/TeamsPage/TeamsPage";
 import { ImagesPage } from "../../pages/ImagesPage";
-import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfiePage/components";
+import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../pages/ProfilePage/components";
 import { CartPage } from "../../pages/CartPage";
 import { ProductsGridPage } from "../../pages/ProductsGridPage";
 import { ProductPage } from "../../pages/ProductPage";
@@ -113,7 +113,7 @@ export const AdminComponents = {
   PromosPage,
   AffiliatesPage,
   TeamsPage,
-  ChipsPage,
+  MicrolightsPage,
   TutorialsPage,
   ImagesPage,
   WholesalersPage,

@@ -19,7 +19,7 @@ export default {
                   { path: "color_object.filament" },
                   { path: "filament" },
                   { path: "tags" },
-                  { path: "chips" },
+                  { path: "microlights" },
                   {
                     path: "options",
                     populate: {
@@ -32,7 +32,7 @@ export default {
                             { path: "color_object.filament" },
                             { path: "filament" },
                             { path: "tags" },
-                            { path: "chips" },
+                            { path: "microlights" },
                           ],
                         },
                         { path: "filament" }, // Added filament population for nested options
@@ -51,7 +51,7 @@ export default {
         .populate("secondary_color_images")
         .populate("option_images")
         .populate("secondary_images")
-        .populate("chips")
+        .populate("microlights")
         .populate("products")
         // .populate("collections")
         .populate("contributors")
@@ -81,7 +81,7 @@ export default {
                   { path: "color_object.filament" },
                   { path: "filament" },
                   { path: "tags" },
-                  { path: "chips" },
+                  { path: "microlights" },
                   {
                     path: "options",
                     populate: {
@@ -94,7 +94,7 @@ export default {
                             { path: "color_object.filament" },
                             { path: "filament" },
                             { path: "tags" },
-                            { path: "chips" },
+                            { path: "microlights" },
                           ],
                         },
                         { path: "filament" }, // Added filament population for nested options
@@ -227,7 +227,7 @@ export default {
                     { path: "color_object.filament" },
                     { path: "filament" },
                     { path: "tags" },
-                    { path: "chips" },
+                    { path: "microlights" },
                     {
                       path: "options",
                       populate: [
@@ -244,7 +244,7 @@ export default {
                                 { path: "color_object.filament" },
                                 { path: "filament" },
                                 { path: "tags" },
-                                { path: "chips" },
+                                { path: "microlights" },
                               ],
                             },
                           ],
@@ -286,7 +286,7 @@ export default {
             { path: "color_object.filament" },
             { path: "filament" },
             { path: "tags" },
-            { path: "chips" },
+            { path: "microlights" },
           ],
         })
         .populate("tags")
@@ -296,7 +296,7 @@ export default {
           select: "first_name last_name",
         })
         .populate("color_object.filament")
-        .populate("chips")
+        .populate("microlights")
         .lean()
         .exec();
     } catch (error) {
@@ -327,7 +327,7 @@ export default {
                     { path: "color_object.filament" },
                     { path: "filament" },
                     { path: "tags" },
-                    { path: "chips" },
+                    { path: "microlights" },
                     {
                       path: "options",
                       populate: [
@@ -344,7 +344,7 @@ export default {
                                 { path: "color_object.filament" },
                                 { path: "filament" },
                                 { path: "tags" },
-                                { path: "chips" },
+                                { path: "microlights" },
                               ],
                             },
                           ],
@@ -386,7 +386,7 @@ export default {
             { path: "color_object.filament" },
             { path: "filament" },
             { path: "tags" },
-            { path: "chips" },
+            { path: "microlights" },
           ],
         })
         .populate("tags")
@@ -396,7 +396,7 @@ export default {
           select: "first_name last_name",
         })
         .populate("color_object.filament")
-        .populate("chips")
+        .populate("microlights")
         .lean()
         .exec();
     } catch (error) {

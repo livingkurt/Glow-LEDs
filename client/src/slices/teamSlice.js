@@ -6,7 +6,7 @@ import * as API from "../api";
 const team = {
   user: null,
   products: [],
-  chips: [],
+  microlights: [],
   artist_name: "",
   instagram_handle: "",
   facebook_name: "",

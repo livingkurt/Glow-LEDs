@@ -4,7 +4,7 @@ const productsGridPage = createSlice({
   name: "productsGridPage",
   initialState: {
     selectedTags: [],
-    selectedChip: null,
+    selectedMicrolight: null,
     category: null,
     sort: null,
     search: "", // Add this line
@@ -13,8 +13,8 @@ const productsGridPage = createSlice({
     setSelectedTags: (state, action) => {
       state.selectedTags = action.payload;
     },
-    setSelectedChip: (state, action) => {
-      state.selectedChip = action.payload;
+    setSelectedMicrolight: (state, action) => {
+      state.selectedMicrolight = action.payload;
     },
     setCategory: (state, action) => {
       state.category = action.payload;
@@ -27,9 +27,9 @@ const productsGridPage = createSlice({
       state.search = action.payload;
     },
     updateFilters: (state, action) => {
-      const { tags, chip, category, sort, search } = action.payload;
+      const { tags, microlight, category, sort, search } = action.payload;
       state.selectedTags = tags;
-      state.selectedChip = chip;
+      state.selectedMicrolight = microlight;
       state.category = category;
       state.sort = sort;
       state.search = search;
@@ -37,6 +37,6 @@ const productsGridPage = createSlice({
   },
 });
 
-export const { setSelectedTags, setSelectedChip, setCategory, setSort, setSearch, updateFilters } =
+export const { setSelectedTags, setSelectedMicrolight, setCategory, setSort, setSearch, updateFilters } =
   productsGridPage.actions;
 export default productsGridPage.reducer;

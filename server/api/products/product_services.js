@@ -15,7 +15,7 @@ import {
   getBestSellers,
   getOurPicks,
   sortProducts,
-  handleChipFiltering,
+  handleMicrolightFiltering,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -186,9 +186,9 @@ export default {
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
 
-      if (query.chip && query.chip !== null) {
-        const chipFilter = await handleChipFiltering(query.chip);
-        filter = { ...filter, ...chipFilter };
+      if (query.microlight && query.microlight !== null) {
+        const microlightFilter = await handleMicrolightFiltering(query.microlight);
+        filter = { ...filter, ...microlightFilter };
       }
 
       if (query.category) {
@@ -486,7 +486,7 @@ export default {
         "Visor Diffusers",
         "Coinskinz V2",
         "Nanoskinz",
-        "Hybridskinz (Coin/Coffin Chips)",
+        "Hybridskinz (Coin/Coffin Microlights)",
         "Alt Novaskinz w Nano Sleds",
         "Batman Decals",
         "X Decals",
@@ -718,7 +718,7 @@ export default {
         .populate("secondary_color_images")
         .populate("option_images")
         .populate("secondary_images")
-        .populate("chips")
+        .populate("microlights")
         .populate("products")
         .populate({
           path: "color_products",

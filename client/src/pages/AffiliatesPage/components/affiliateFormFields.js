@@ -1,7 +1,7 @@
 import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
-import { months, toCapitalize } from "../../../utils/helper_functions";
+import { months } from "../../../utils/helper_functions";
 
-export const affiliateFormFields = ({ products, users, chips, promos, carts }) => {
+export const affiliateFormFields = ({ products, users, microlights, promos, carts }) => {
   return {
     _id: {
       type: "text",
@@ -67,10 +67,10 @@ export const affiliateFormFields = ({ products, users, chips, promos, carts }) =
       },
     },
 
-    chips: {
+    microlights: {
       type: "autocomplete_multiple",
       label: "Microlights you currently have",
-      options: chips,
+      options: microlights,
       labelProp: "name",
     },
 

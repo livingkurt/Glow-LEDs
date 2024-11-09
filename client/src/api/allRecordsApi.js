@@ -24,8 +24,8 @@ export const allRecordsApi = createApi({
         method: "GET",
       }),
     }),
-    chips: builder.query({
-      query: query => `/chips?${create_query(query)}`,
+    microlights: builder.query({
+      query: query => `/microlights?${create_query(query)}`,
     }),
     contents: builder.query({
       query: query => `/contents?${create_query(query)}`,
@@ -111,7 +111,6 @@ export const {
   useAffiliatesQuery,
   useCartsQuery,
   useTagsQuery,
-  useChipsQuery,
   useContentsQuery,
   useEmailsQuery,
   useEventsQuery,
@@ -135,4 +134,5 @@ export const {
   useTutorialsQuery,
   useProductBundlesQuery,
   useWholesalersQuery,
+  useMicrolightsQuery,
 } = allRecordsApi;

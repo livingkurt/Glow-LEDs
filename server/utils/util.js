@@ -266,8 +266,8 @@ export const determine_filter = (query, search) => {
           },
         ];
       } else if (item[1]) {
-        if (item[0] === "chip") {
-          filter["chips"] = { $in: [item[1]] };
+        if (item[0] === "microlight") {
+          filter["microlights"] = { $in: [item[1]] };
         } else {
           filter[item[0]] = item[1];
         }

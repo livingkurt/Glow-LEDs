@@ -11,7 +11,7 @@ const Filter = ({ filterHandler, filter_options, state, title, width }) => {
           value={JSON.stringify(state)} // use this instead of 'selected' on option
         >
           <option className="grey_option" value="">
-            {title || "Filter By Chip"}
+            {title || "Filter By Microlight"}
           </option>
           {filter_options?.map((option, index) => (
             <option key={index} value={JSON.stringify(option)}>

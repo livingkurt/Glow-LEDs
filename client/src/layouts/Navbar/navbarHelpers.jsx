@@ -723,8 +723,8 @@ const admin = addIdsRecursively({
     },
 
     {
-      name: "Chips",
-      path: "/secure/glow/chips",
+      name: "Microlights",
+      path: "/secure/glow/microlights",
       onClick: x => true,
     },
 

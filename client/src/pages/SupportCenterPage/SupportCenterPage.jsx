@@ -25,7 +25,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import { scrollToId } from "../../utils/helpers/universal_helpers";
-import { useChipsQuery } from "../../api/allRecordsApi";
+import { useMicrolightsQuery } from "../../api/allRecordsApi";
 import config from "../../config";
 
 const SupportCenterPage = () => {
@@ -33,17 +33,17 @@ const SupportCenterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: currentContent } = API.useCurrentContentQuery();
-  const [chip, set_chip] = useState();
+  const [microlight, set_microlight] = useState();
 
   const faqPage = currentContent?.faq_page;
 
-  const { data: chips } = useChipsQuery();
+  const { data: microlights } = useMicrolightsQuery();
 
-  const filterHandler = chip_selected => {
+  const filterHandler = microlight_selected => {
     const newSearchParams = new URLSearchParams();
-    if (chip_selected) newSearchParams.append("chip", chip_selected.pathname);
+    if (microlight_selected) newSearchParams.append("microlight", microlight_selected.pathname);
 
-    set_chip(chip_selected);
+    set_microlight(microlight_selected);
     navigate(`/products?${newSearchParams.toString()}`);
   };
 
@@ -210,20 +210,20 @@ const SupportCenterPage = () => {
 
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            <Typography variant="h6">{"Chip Compatibility"}</Typography>
+            <Typography variant="h6">{"Microlight Compatibility"}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography gutterBottom variant="body1" paragraph>
-              {"Select your chip from the dropdown below to see what products are compatible!"}
+              {"Select your microlight from the dropdown below to see what products are compatible!"}
             </Typography>
             <Autocomplete
-              options={chips || []}
+              options={microlights || []}
               getOptionLabel={option => option.name}
-              value={chip}
+              value={microlight}
               onChange={(event, newValue) => {
                 filterHandler(newValue);
               }}
-              renderInput={params => <TextField {...params} label="Filter By Chip" variant="outlined" />}
+              renderInput={params => <TextField {...params} label="Filter By Microlight" variant="outlined" />}
               sx={{ width: 221 }}
             />
           </AccordionDetails>

@@ -6,7 +6,7 @@ import * as API from "../api";
 const affiliate = {
   user: null,
   products: [],
-  chips: [],
+  microlights: [],
   artist_name: "",
   instagram_handle: "",
   facebook_name: "",

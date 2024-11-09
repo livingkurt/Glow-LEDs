@@ -308,7 +308,7 @@ export const handleProductChange = (index, value, dispatch, isUpdatePricesActive
         facts: product.facts,
         included_items: product.included_items,
         price: product.price,
-        chips: product.chips,
+        microlights: product.microlights,
         tags: product.tags,
         wholesale_price: product.wholesale_price,
         previous_price: product.previous_price,

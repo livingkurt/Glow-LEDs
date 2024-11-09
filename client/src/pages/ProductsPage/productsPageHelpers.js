@@ -197,7 +197,7 @@ export const productInitialState = {
   },
   size: "",
   set_of: 0,
-  chips: [],
+  microlights: [],
   isPasswordProtected: false,
   passwordProtection: {
     password: "",

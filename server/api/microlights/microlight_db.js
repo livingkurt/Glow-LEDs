@@ -1,9 +1,9 @@
-import Chip from "./chip.js";
+import Microlight from "./microlight.js";
 
 export default {
-  findAll_chips_db: async (filter, sort, limit, page) => {
+  findAll_microlights_db: async (filter, sort, limit, page) => {
     try {
-      return await Chip.find(filter)
+      return await Microlight.find(filter)
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -14,50 +14,38 @@ export default {
       }
     }
   },
-  findById_chips_db: async id => {
+  findById_microlights_db: async id => {
     try {
-      return await Chip.findOne({ _id: id, deleted: false });
+      return await Microlight.findOne({ _id: id, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findByName_chips_db: async name => {
+  findByName_microlights_db: async name => {
     try {
-      return await Chip.findOne({ name: name, deleted: false });
+      return await Microlight.findOne({ name: name, deleted: false });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  create_chips_db: async body => {
+  create_microlights_db: async body => {
     try {
-      return await Chip.create(body);
+      return await Microlight.create(body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  update_chips_db: async (id, body) => {
+  update_microlights_db: async (id, body) => {
     try {
-      const chip = await Chip.findOne({ _id: id, deleted: false });
-      if (chip) {
-        return await Chip.updateOne({ _id: id }, body);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  remove_chips_db: async id => {
-    try {
-      const chip = await Chip.findOne({ _id: id, deleted: false });
-      if (chip) {
-        return await Chip.updateOne({ _id: id }, { deleted: true });
+      const microlight = await Microlight.findOne({ _id: id, deleted: false });
+      if (microlight) {
+        return await Microlight.updateOne({ _id: id }, body);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -65,9 +53,21 @@ export default {
       }
     }
   },
-  count_chips_db: async filter => {
+  remove_microlights_db: async id => {
     try {
-      return await Chip.countDocuments(filter);
+      const microlight = await Microlight.findOne({ _id: id, deleted: false });
+      if (microlight) {
+        return await Microlight.updateOne({ _id: id }, { deleted: true });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_microlights_db: async filter => {
+    try {
+      return await Microlight.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

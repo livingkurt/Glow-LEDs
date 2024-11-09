@@ -9,13 +9,13 @@ const EditPaletteModal = () => {
   const dispatch = useDispatch();
   const palettePage = useSelector(state => state.palettes.palettePage);
   const { edit_palette_modal, palette, loading } = palettePage;
-  const chipPage = useSelector(state => state.chips.chipPage);
-  const { chips } = chipPage;
+  const microlightPage = useSelector(state => state.microlights.microlightPage);
+  const { microlights } = microlightPage;
   const userPage = useSelector(state => state.users.userPage);
   const { users } = userPage;
 
   const formFields = paletteFormFields({
-    chips,
+    microlights,
     users,
   });
 

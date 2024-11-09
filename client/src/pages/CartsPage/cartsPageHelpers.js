@@ -38,7 +38,7 @@ export const handleCartProductChange = (index, value, dispatch) => {
         facts: product.facts,
         included_items: product.included_items,
         price: product.price,
-        chips: product.chips,
+        microlights: product.microlights,
         tags: product.tags,
         wholesale_price: product.wholesale_price,
         previous_price: product.previous_price,
