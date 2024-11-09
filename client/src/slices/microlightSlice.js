@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const microlight = {
-  id: "",
+  id: null,
   name: "",
   company: "",
   category: "",
-  tags: {},
+  tags: [],
   programmable: false,
   number_of_modes: 0,
   characteristics: "",
