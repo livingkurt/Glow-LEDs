@@ -1,4 +1,4 @@
-import Category from "../categorys/category.js";
+import Tag from "../tags/tag.js";
 import Affiliate from "../affiliates/affiliate.js";
 
 export const areCartItemsEqual = (item1, item2) => {
@@ -145,7 +145,7 @@ export const normalizeCartItem = item => {
 export const handleBundleTagFiltering = async tags => {
   if (!tags || tags.length === 0) return {};
   const tagArray = Array.isArray(tags) ? tags : [tags];
-  const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+  const tagCategories = await Tag.find({ deleted: false, pathname: { $in: tagArray } });
   const tagIds = tagCategories.map(cat => cat._id);
   return { tags: { $all: tagIds } };
 };

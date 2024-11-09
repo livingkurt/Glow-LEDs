@@ -1,6 +1,6 @@
 import Content from "../contents/content.js";
 import Product from "./product.js";
-import Category from "../categorys/category.js";
+import Tag from "../tags/tag.js";
 import Order from "../orders/order.js";
 import Chip from "../chips/chip.js";
 
@@ -434,7 +434,7 @@ export const createOrUpdateOptionProduct = async (parentProduct, optionName, val
 export const handleTagFiltering = async tags => {
   if (!tags || tags.length === 0) return {};
   const tagArray = Array.isArray(tags) ? tags : [tags];
-  const tagCategories = await Category.find({ deleted: false, pathname: { $in: tagArray } });
+  const tagCategories = await Tag.find({ deleted: false, pathname: { $in: tagArray } });
   const tagIds = tagCategories.map(cat => cat._id);
   return { tags: { $all: tagIds } };
 };
@@ -479,7 +479,7 @@ export const handleCategoryFiltering = async category => {
     case "new_releases":
       return {};
     default: {
-      const categoryDoc = await Category.findOne({ deleted: false, pathname: category });
+      const categoryDoc = await Tag.findOne({ deleted: false, pathname: category });
       return categoryDoc ? { tags: { $all: [categoryDoc._id] } } : {};
     }
   }
