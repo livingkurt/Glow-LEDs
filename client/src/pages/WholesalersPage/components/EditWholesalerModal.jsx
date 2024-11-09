@@ -4,15 +4,17 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import { set_edit_wholesaler_modal, set_wholesaler } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { fullName } from "../../UsersPage/usersHelpers";
+import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { useUsersQuery } from "../../../api/allRecordsApi";
 
 const EditWholesalerModal = () => {
   const dispatch = useDispatch();
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
   const { edit_wholesaler_modal, wholesaler, loading } = wholesalerPage;
 
-  const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_users, user, current_user } = userPage;
+  const { data: users, isLoading: loadingUsers } = useUsersQuery();
+
+  const { current_user, user } = useSelector(state => state.users.userPage);
 
   useEffect(() => {
     let clean = true;
@@ -27,14 +29,7 @@ const EditWholesalerModal = () => {
   }, [current_user?.isAdmin, dispatch]);
 
   const formFields = {
-    user: {
-      type: "autocomplete_single",
-      label: "Users",
-      options: users.filter(user => fullName(user)),
-      labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
-      permissions: ["admin"],
-    },
+    user: userField({ users: !loadingUsers ? users : [] }),
     company: {
       type: "text",
       label: "Company",
@@ -77,7 +72,7 @@ const EditWholesalerModal = () => {
           formData={formFields}
           state={wholesaler}
           onChange={value => dispatch(set_wholesaler(value))}
-          loading={loading && loading_users}
+          loading={loading}
         />
       </GLActionModal>
     </div>

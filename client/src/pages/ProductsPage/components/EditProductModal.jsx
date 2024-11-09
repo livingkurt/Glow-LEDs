@@ -79,7 +79,7 @@ const EditProductModal = () => {
           onChange={value => {
             dispatch(set_product(value));
           }}
-          loading={loading && loading_users}
+          loading={loading}
         />
       </GLActionModal>
     </div>

@@ -9,6 +9,7 @@ import { teamFormFields } from "./components/teamFormFields";
 import { Box, Typography } from "@mui/material";
 import GLStepperModal from "../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
 import { Loading } from "../../shared/SharedComponents";
+import { useAffiliatesQuery, usePromosQuery, useUsersQuery } from "../../api/allRecordsApi";
 
 const EditTeamModal = () => {
   const dispatch = useDispatch();
@@ -18,25 +19,18 @@ const EditTeamModal = () => {
   const teamPage = useSelector(state => state.teams.teamPage);
   const { edit_team_modal, team, loading, createTeamStep, stripeAccountLink, loadingSaveTeam } = teamPage;
 
-  const userPage = useSelector(state => state.users.userPage);
-  const { loading: loading_users, current_user } = userPage;
-
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates, loading: loading_affiliates } = affiliatePage;
-
-  const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos, loading: loading_promos } = promoPage;
+  const { current_user } = useSelector(state => state.users.userPage);
 
   const [searchParams] = useSearchParams();
   const stripeSuccess = searchParams.get("stripe_success") === "true";
 
+  const { data: affiliates, isLoading: loadingAffiliates } = useAffiliatesQuery({ active: true });
+  const { data: promos, isLoading: loadingPromos } = usePromosQuery({});
+  const { data: users, isLoading: loadingUsers } = useUsersQuery({});
+
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listUsers({}));
-      dispatch(API.listAffiliates());
-      dispatch(API.listPromos({}));
-      dispatch(API.listChips({}));
       // Check for stripe_success=true
       if (stripeSuccess) {
         dispatch(set_edit_team_modal(true)); // Open the modal
@@ -47,9 +41,10 @@ const EditTeamModal = () => {
   }, [dispatch, stripeSuccess]);
 
   const formFields = teamFormFields({
-    affiliates,
+    affiliates: loadingAffiliates ? [] : affiliates || [],
+    promos: loadingPromos ? [] : promos || [],
+    users: loadingUsers ? [] : users || [],
     team,
-    promos,
   });
 
   const stepLabels = ["Create Team Account", "Create Stripe Account", "Join our Discord", "Complete"];
@@ -117,7 +112,7 @@ const EditTeamModal = () => {
             state={team}
             mode="edit"
             onChange={value => dispatch(set_team(value))}
-            loading={loading && loading_users && loading_affiliates && loading_promos}
+            loading={loading}
           />
         </GLActionModal>
       ) : (
@@ -145,7 +140,7 @@ const EditTeamModal = () => {
               state={team}
               mode="create"
               onChange={value => dispatch(set_team(value))}
-              loading={loading && loading_users && loading_affiliates && loading_promos}
+              loading={loading}
             />
           )}
           {createTeamStep === 1 && (
