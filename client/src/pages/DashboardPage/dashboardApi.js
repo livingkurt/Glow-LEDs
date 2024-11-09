@@ -72,7 +72,7 @@ export const dashboardApi = createApi({
     }),
     getProductRevenue: builder.query({
       query: ({ start_date, end_date }) =>
-        `/orders/get_all_product_range_revenue_orders$?start_date=${start_date}&end_date=${end_date}`,
+        `/orders/get_all_product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getCurrentStock: builder.query({
       query: () => `/products/current_stock`,

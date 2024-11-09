@@ -6,6 +6,17 @@ import { useProductsQuery } from "../../../api/allRecordsApi";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { set_product } from "../../ProductsPage/productsPageSlice";
 
+// eslint-disable-next-line react/prop-types
+const StatisticItem = ({ label, value, prefix = "", suffix = "" }) => (
+  <Typography variant="body1" sx={{ mb: 1 }}>
+    {label}
+    {": "}
+    {prefix}
+    {value}
+    {suffix}
+  </Typography>
+);
+
 const ProductRevenue = () => {
   const dispatch = useDispatch();
   const dashboardPage = useSelector(state => state.dashboards);
@@ -17,11 +28,14 @@ const ProductRevenue = () => {
     data: productRevenue,
     isLoading: productRevenueLoading,
     error: revenueError,
-  } = API.useGetProductRangeRevenueOrdersQuery({
-    productId: product._id,
-    start_date,
-    end_date,
-  });
+  } = API.useGetProductRangeRevenueOrdersQuery(
+    {
+      productId: product._id,
+      start_date,
+      end_date,
+    },
+    { skip: !product._id }
+  );
 
   const data = productRevenue?.[0];
 
@@ -62,42 +76,80 @@ const ProductRevenue = () => {
                       {product.name}
                     </Typography>
                   </Grid>
+
+                  {/* Revenue Metrics */}
                   <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                       <Typography variant="h6" gutterBottom>
-                        {"Revenue Statistics"}
+                        {"Revenue Metrics"}
                       </Typography>
-                      <Typography>
-                        {"Total Revenue: $"}
-                        {data.totalRevenue?.toFixed(2)}
-                      </Typography>
-                      <Typography>
-                        {"Average Order Value: $"}
-                        {data.averageOrderValue?.toFixed(2)}
-                      </Typography>
-                      <Typography>
-                        {"Total Orders: "}
-                        {data.numberOfOrders}
-                      </Typography>
+                      <StatisticItem label="Gross Revenue" value={data.grossRevenue?.toFixed(2)} prefix="$" />
+                      <StatisticItem label="Net Revenue" value={data.netRevenue?.toFixed(2)} prefix="$" />
+                      <StatisticItem
+                        label="Total Shipping Revenue"
+                        value={data.totalShippingRevenue?.toFixed(2)}
+                        prefix="$"
+                      />
+                      <StatisticItem label="Total Tax Revenue" value={data.totalTaxRevenue?.toFixed(2)} prefix="$" />
+                      <StatisticItem label="Total Tips" value={data.totalTips?.toFixed(2)} prefix="$" />
+                      <StatisticItem label="Total Discounts" value={data.totalDiscounts?.toFixed(2)} prefix="$" />
                     </Paper>
                   </Grid>
+
+                  {/* Customer Metrics */}
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6" gutterBottom>
+                        {"Customer Metrics"}
+                      </Typography>
+                      <StatisticItem label="Unique Customers" value={data.uniqueCustomerCount} />
+                      <StatisticItem
+                        label="Average Revenue Per Customer"
+                        value={data.averageRevenuePerCustomer?.toFixed(2)}
+                        prefix="$"
+                      />
+                      <StatisticItem
+                        label="Average Quantity Per Order"
+                        value={data.averageQuantityPerOrder?.toFixed(2)}
+                      />
+                      <StatisticItem label="Max Quantity In Single Order" value={data.maxQuantityInOrder} />
+                      <StatisticItem label="Pre-orders" value={data.preOrderCount} />
+                    </Paper>
+                  </Grid>
+
+                  {/* Existing Product Statistics */}
                   <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                       <Typography variant="h6" gutterBottom>
                         {"Product Statistics"}
                       </Typography>
-                      <Typography>
-                        {"Total Quantity Sold: "}
-                        {data.totalQuantity}
+                      <StatisticItem label="Total Quantity Sold" value={data.totalQuantity} />
+                      <StatisticItem label="First Order" value={format_date(data.firstOrder)} />
+                      <StatisticItem label="Last Order" value={format_date(data.lastOrder)} />
+                      <StatisticItem label="Total Orders" value={data.numberOfOrders} />
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6" gutterBottom>
+                        {"Order Analytics"}
                       </Typography>
-                      <Typography>
-                        {"First Order: "}
-                        {format_date(data.firstOrder)}
-                      </Typography>
-                      <Typography>
-                        {"Last Order: "}
-                        {format_date(data.lastOrder)}
-                      </Typography>
+                      <StatisticItem label="Active Months with Orders" value={data.monthlyOrderFrequency} />
+                      <StatisticItem
+                        label="Average Orders per Month"
+                        value={(data.numberOfOrders / data.monthlyOrderFrequency).toFixed(1)}
+                      />
+                      <StatisticItem label="International Orders" value={data.internationalOrderCount} />
+                      <StatisticItem
+                        label="Domestic Orders"
+                        value={data.numberOfOrders - data.internationalOrderCount}
+                      />
+                      <StatisticItem
+                        label="International Order Rate"
+                        value={((data.internationalOrderCount / data.numberOfOrders) * 100).toFixed(1)}
+                        suffix="%"
+                      />
                     </Paper>
                   </Grid>
                 </Grid>
