@@ -15,6 +15,7 @@ import { FeaturesPage } from "../../pages/FeaturesPage";
 import { CartsPage } from "../../pages/CartsPage";
 import { ContentsPage } from "../../pages/ContentsPage";
 import MicrolightsPage from "../../pages/MicrolightsPage/MicrolightsPage";
+import ModesPage from "../../pages/ModesPage/ModesPage";
 import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
@@ -114,6 +115,7 @@ export const AdminComponents = {
   AffiliatesPage,
   TeamsPage,
   MicrolightsPage,
+  ModesPage,
   TutorialsPage,
   ImagesPage,
   WholesalersPage,

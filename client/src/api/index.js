@@ -2,6 +2,7 @@ export * from "./affiliateApi";
 export * from "./cartApi";
 export * from "./tagApi";
 export * from "./microlightApi";
+export * from "./modeApi";
 export * from "./contentApi";
 export * from "./emailApi";
 export * from "./expenseApi";

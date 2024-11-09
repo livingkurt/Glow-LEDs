@@ -46,6 +46,7 @@ const affiliateSchema = new mongoose.Schema(
     product_bundles: [productBundleSchema],
     bundles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
     microlights: [{ type: mongoose.Schema.Types.ObjectId, ref: "Microlight" }],
+    modes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Mode" }],
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
     artist_name: { type: String },
     social_media: [

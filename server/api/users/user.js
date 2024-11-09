@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema(
     affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
     team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
     employee_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
+    modes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Mode" }],
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
     wholesaler: { type: mongoose.Schema.Types.ObjectId, ref: "Wholesaler" },

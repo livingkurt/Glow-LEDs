@@ -26,6 +26,7 @@ import {
 } from "./slices";
 
 import tagSlice from "./slices/tagSlice";
+import modeSlice from "./slices/modeSlice";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
@@ -64,6 +65,10 @@ const reducers = {
   microlights: combineReducers({
     microlightPage: microlightSlice,
     microlightTable: glTableReducer("microlightTable", {}),
+  }),
+  modes: combineReducers({
+    modePage: modeSlice,
+    modeTable: glTableReducer("modeTable", {}),
   }),
   contents: combineReducers({
     contentPage: contentSlice,
