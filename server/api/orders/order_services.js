@@ -1492,7 +1492,7 @@ export default {
   get_product_range_revenue_orders_s: async (params, query) => {
     try {
       const { start_date, end_date } = query;
-      return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
+      return await order_db.get_product_range_revenue_orders_db(params.product_id, start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

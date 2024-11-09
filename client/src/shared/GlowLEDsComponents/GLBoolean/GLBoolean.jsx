@@ -1,6 +1,5 @@
 import { Cancel, CheckCircle } from "@mui/icons-material";
 import { Box, Tooltip } from "@mui/material";
-import React from "react";
 import PropTypes from "prop-types";
 
 const GLBoolean = ({ boolean, tooltip }) => {
@@ -8,10 +7,10 @@ const GLBoolean = ({ boolean, tooltip }) => {
     <Box>
       {tooltip ? (
         <Tooltip title={boolean ? `Does ${tooltip}` : `Does not ${tooltip}`}>
-          {boolean ? <CheckCircle color="white" /> : <Cancel color="white" />}
+          {boolean ? <CheckCircle /> : <Cancel />}
         </Tooltip>
       ) : (
-        <>{boolean ? <CheckCircle color="white" /> : <Cancel color="white" />}</>
+        <>{boolean ? <CheckCircle /> : <Cancel />}</>
       )}
     </Box>
   );

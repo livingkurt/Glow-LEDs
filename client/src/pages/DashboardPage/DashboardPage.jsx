@@ -14,18 +14,15 @@ import CategorySales from "./components/CategorySales";
 import CurrentStock from "./components/CurrentStock";
 import TotalsTable from "./components/TotalsTable";
 import AllProductRevenue from "./components/AllProductRevenue";
-import YearlyMonthlyProductRevenue from "./components/YearlyMonthlyProductRevenue";
 import SponsorCheckins from "./components/SponsorCheckins";
 import GcodeGeneratorModal from "./components/GcodeGeneratorModal/GcodeGeneratorModal";
+import ProductRevenue from "./components/ProductRevenue";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
   const dashboardPage = useSelector(state => state.dashboards);
 
   const { year, month, start_date, end_date, start_end_date, loading, tabIndex } = dashboardPage;
-
-  const productsPage = useSelector(state => state.products.productsPage);
-  const { product } = productsPage;
 
   const range_revenue = API.useGetRangeRevenueOrdersQuery({ start_date, end_date });
   const category_range_revenue = API.useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
@@ -36,11 +33,6 @@ const DashboardPage = () => {
   const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
   const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
   const questionConcerns = API.useGetQuestionConcernsQuery({ start_date, end_date });
-
-  const monthly_product_revenue = API.useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
-  const yearly_product_revenue = API.useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
-  // const range_product_revenue = API.useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
-  // const range_gloves = API.useGetRangeGlovesQuery({ start_date, end_date });
 
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
@@ -107,13 +99,7 @@ const DashboardPage = () => {
           <AllProductRevenue all_product_revenue={all_product_revenue} />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={4}>
-          <YearlyMonthlyProductRevenue
-            monthly_product_revenue={monthly_product_revenue}
-            yearly_product_revenue={yearly_product_revenue}
-            all_product_revenue={all_product_revenue}
-            month={month}
-            year={year}
-          />
+          <ProductRevenue />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={5}>
           <SponsorCheckins

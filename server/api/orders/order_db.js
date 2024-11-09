@@ -828,12 +828,13 @@ export default {
 
   get_product_range_revenue_orders_db: async (id, start_date, end_date) => {
     try {
+      const { ObjectId } = mongoose.Types;
       const result = await Order.aggregate([
         {
           $match: {
             deleted: false,
             status: { $nin: ["unpaid", "canceled"] },
-            "orderItems.product": id,
+            "orderItems.product": new ObjectId(id),
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -844,11 +845,40 @@ export default {
           $unwind: "$orderItems",
         },
         {
+          $match: {
+            "orderItems.product": new ObjectId(id),
+          },
+        },
+        {
           $group: {
-            _id: "$orderItems.product",
+            _id: null,
             name: { $first: "$orderItems.name" },
             totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
             totalQuantity: { $sum: "$orderItems.quantity" },
+            averageOrderValue: { $avg: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+            numberOfOrders: { $sum: 1 },
+            firstOrder: { $min: "$createdAt" },
+            lastOrder: { $max: "$createdAt" },
+            uniqueCustomers: { $addToSet: "$user" },
+            averageQuantityPerOrder: { $avg: "$orderItems.quantity" },
+            maxQuantityInOrder: { $max: "$orderItems.quantity" },
+            totalShippingRevenue: { $sum: "$shippingPrice" },
+            totalTaxRevenue: { $sum: "$taxPrice" },
+            totalDiscounts: { $sum: "$discount" },
+            ordersByMonth: {
+              $push: {
+                month: { $month: "$createdAt" },
+                year: { $year: "$createdAt" },
+              },
+            },
+            ordersByPaymentMethod: {
+              $push: "$payment.paymentMethod",
+            },
+            internationalOrders: {
+              $push: "$shipping.international",
+            },
+            hasPreOrderItems: { $push: "$hasPreOrderItems" },
+            totalTips: { $sum: "$tip" },
           },
         },
         {
@@ -857,14 +887,86 @@ export default {
             name: 1,
             totalRevenue: 1,
             totalQuantity: 1,
+            averageOrderValue: 1,
+            numberOfOrders: 1,
+            firstOrder: 1,
+            lastOrder: 1,
+            uniqueCustomerCount: { $size: "$uniqueCustomers" },
+            averageQuantityPerOrder: 1,
+            maxQuantityInOrder: 1,
+            totalShippingRevenue: 1,
+            totalTaxRevenue: 1,
+            totalDiscounts: 1,
+            totalTips: 1,
+            ordersByStatus: 1,
+            ordersByPaymentMethod: 1,
+            preOrderCount: {
+              $size: {
+                $filter: {
+                  input: "$hasPreOrderItems",
+                  as: "item",
+                  cond: { $eq: ["$$item", true] },
+                },
+              },
+            },
+            // Calculated fields
+            grossRevenue: {
+              $add: ["$totalRevenue", "$totalShippingRevenue", "$totalTaxRevenue", "$totalTips"],
+            },
+            netRevenue: {
+              $subtract: [
+                { $add: ["$totalRevenue", "$totalShippingRevenue", "$totalTaxRevenue", "$totalTips"] },
+                "$totalDiscounts",
+              ],
+            },
+            averageRevenuePerCustomer: {
+              $divide: ["$totalRevenue", { $size: "$uniqueCustomers" }],
+            },
+            monthlyOrderFrequency: {
+              $size: {
+                $setUnion: {
+                  $map: {
+                    input: "$ordersByMonth",
+                    as: "date",
+                    in: {
+                      $concat: [{ $toString: "$$date.year" }, "-", { $toString: "$$date.month" }],
+                    },
+                  },
+                },
+              },
+            },
+            paymentMethodBreakdown: {
+              $reduce: {
+                input: "$ordersByPaymentMethod",
+                initialValue: {},
+                in: {
+                  $mergeObjects: [
+                    "$$value",
+                    {
+                      $literal: {
+                        $concat: ["$$this", "_count"],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            internationalOrderCount: {
+              $size: {
+                $filter: {
+                  input: "$internationalOrders",
+                  as: "international",
+                  cond: { $eq: ["$$international", true] },
+                },
+              },
+            },
           },
         },
       ]).exec();
       return result;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.error("Error in get_product_range_revenue_orders_db:", error);
+      throw error;
     }
   },
   get_all_product_range_revenue_orders_db: async (start_date, end_date) => {

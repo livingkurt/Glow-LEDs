@@ -1,7 +1,6 @@
-import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
-
+import PropTypes from "prop-types";
 const SponsorCheckins = ({ month, year, sponsorCheckinStatus, questionConcerns }) => {
   return (
     <>
@@ -53,6 +52,20 @@ const SponsorCheckins = ({ month, year, sponsorCheckinStatus, questionConcerns }
       />
     </>
   );
+};
+
+SponsorCheckins.propTypes = {
+  month: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  sponsorCheckinStatus: PropTypes.object.isRequired,
+  questionConcerns: PropTypes.object.isRequired,
+};
+
+SponsorCheckins.defaultProps = {
+  month: "",
+  year: 0,
+  sponsorCheckinStatus: {},
+  questionConcerns: {},
 };
 
 export default SponsorCheckins;
