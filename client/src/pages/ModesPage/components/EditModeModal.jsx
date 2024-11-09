@@ -23,6 +23,7 @@ const EditModeModal = () => {
       <GLActionModal
         isOpen={edit_mode_modal}
         onConfirm={() => {
+          console.log({ mode });
           dispatch(API.saveMode(mode));
         }}
         onCancel={() => {

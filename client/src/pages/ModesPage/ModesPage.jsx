@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FileCopy } from "@mui/icons-material";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { toCapitalize } from "../../utils/helper_functions";
 
 const ModesPage = () => {
   const modePage = useSelector(state => state.modes.modePage);
@@ -34,7 +35,7 @@ const ModesPage = () => {
       },
       {
         title: "Visibility",
-        display: "visibility",
+        display: mode => toCapitalize(mode.visibility),
       },
       {
         title: "",

@@ -201,6 +201,9 @@ export const determine_tracking_link = tracking_number => {
 export const prnt = info => {};
 
 export const toCapitalize = string => {
+  if (!string) {
+    return "";
+  }
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 export const toTitleCase = string => {

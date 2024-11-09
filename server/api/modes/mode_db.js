@@ -4,6 +4,7 @@ export default {
   findAll_modes_db: async (filter, sort, limit, page) => {
     try {
       return await Mode.find(filter)
+        .populate("microlight")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))

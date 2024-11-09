@@ -1,3 +1,5 @@
+import { toCapitalize } from "../../../utils/helper_functions";
+
 export const modeFormFields = ({ mode, microlights }) => {
   return {
     mode_info_title: {
@@ -16,9 +18,9 @@ export const modeFormFields = ({ mode, microlights }) => {
       type: "text_multiline",
       rows: 4,
     },
-    microlights: {
-      type: "autocomplete_multiple",
-      label: "Microlights",
+    microlight: {
+      type: "autocomplete_single",
+      label: "Microlight",
       options: microlights,
       labelProp: "name",
     },
@@ -37,14 +39,12 @@ export const modeFormFields = ({ mode, microlights }) => {
           saturation: {
             label: "Saturation",
             type: "autocomplete_single",
-            options: Array.from({ length: mode?.microlight?.saturation_levels }, (_, i) => ({ label: i, value: i })),
-            getOptionLabel: option => option,
+            options: Array.from({ length: mode?.microlight?.saturation_levels }, (_, i) => i),
           },
           brightness: {
             label: "Brightness",
             type: "autocomplete_single",
-            options: Array.from({ length: mode?.microlight?.brightness_levels }, (_, i) => ({ label: i, value: i })),
-            getOptionLabel: option => option,
+            options: Array.from({ length: mode?.microlight?.brightness_levels }, (_, i) => i),
           },
         },
       },
@@ -68,11 +68,12 @@ export const modeFormFields = ({ mode, microlights }) => {
     visibility: {
       label: "Visibility",
       type: "autocomplete_single",
-      options: [
-        { label: "Public", value: "public" },
-        { label: "Private", value: "private" },
-      ],
-      getOptionLabel: option => option.label,
+      options: ["public", "private"],
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
       required: true,
     },
   };
