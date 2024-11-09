@@ -13,13 +13,13 @@ const EditPromoModal = () => {
 
   const { data: affiliates, isLoading: loadingAffiliates } = useAffiliatesQuery({ active: true });
   const { data: users, isLoading: loadingUsers } = useUsersQuery({});
-  const { data: categorys, isLoading: loadingCategorys } = useTagsQuery({});
+  const { data: tags, isLoading: loadingTags } = useTagsQuery({});
   const { data: products, isLoading: loadingProducts } = useProductsQuery({});
 
   const formFields = promoFormFields({
     affiliates: loadingAffiliates ? [] : affiliates || [],
     users: loadingUsers ? [] : users || [],
-    categorys: loadingCategorys ? [] : categorys || [],
+    tags: loadingTags ? [] : tags || [],
     products: loadingProducts ? [] : products || [],
   });
   return (
