@@ -19,7 +19,7 @@ import {
   useAffiliatesQuery,
   useArticlesQuery,
   useCartsQuery,
-  useCategorysQuery,
+  useTagsQuery,
   useProductsQuery,
   useTutorialsQuery,
 } from "../../api/allRecordsApi";
@@ -34,7 +34,7 @@ const ContentsPage = () => {
   const { content, loading } = contentPage;
 
   const { data: products, isLoading: productsLoading } = useProductsQuery();
-  const { data: categorys, isLoading: categorysLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: articles, isLoading: articlesLoading } = useArticlesQuery();
   const { data: tutorials, isLoading: tutorialsLoading } = useTutorialsQuery();
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
@@ -80,7 +80,7 @@ const ContentsPage = () => {
   const formFieldsData = {
     content,
     products: productsLoading ? [] : products,
-    categorys: categorysLoading ? [] : categorys,
+    tags: tagsLoading ? [] : tags,
     articles: articlesLoading ? [] : articles,
     tutorials: tutorialsLoading ? [] : tutorials,
     affiliates: affiliatesLoading ? [] : affiliates,

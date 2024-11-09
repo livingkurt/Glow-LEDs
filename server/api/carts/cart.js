@@ -8,7 +8,7 @@ const cartSchema = new mongoose.Schema(
     short_description: { type: String },
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     cartItems: [sharedItemSchema],
-    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

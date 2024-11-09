@@ -1,6 +1,6 @@
 export * from "./affiliateApi";
 export * from "./cartApi";
-export * from "./categoryApi";
+export * from "./tagApi";
 export * from "./chipApi";
 export * from "./contentApi";
 export * from "./emailApi";

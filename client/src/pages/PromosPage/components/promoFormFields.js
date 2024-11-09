@@ -1,6 +1,6 @@
 import { affiliateField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
-export const promoFormFields = ({ affiliates, users, categorys, products }) => {
+export const promoFormFields = ({ affiliates, users, tags, products }) => {
   return {
     affiliate: affiliateField({ affiliates }),
     user: userField({ users }),
@@ -27,13 +27,13 @@ export const promoFormFields = ({ affiliates, users, categorys, products }) => {
     excluded_categories: {
       type: "autocomplete_multiple",
       label: "Excluded Categories",
-      options: categorys,
+      options: tags,
       labelProp: "name",
     },
     included_categories: {
       type: "autocomplete_multiple",
       label: "Included Categories",
-      options: categorys,
+      options: tags,
       labelProp: "name",
     },
     included_products: {

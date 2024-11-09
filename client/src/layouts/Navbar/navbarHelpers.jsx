@@ -675,7 +675,7 @@ const admin = addIdsRecursively({
       onClick: x => true,
     },
     {
-      name: "GiftCards",
+      name: "Gift Cards",
       path: "/secure/glow/gift_cards",
       onClick: x => true,
     },
@@ -765,8 +765,8 @@ const admin = addIdsRecursively({
     },
 
     {
-      name: "Categorys",
-      path: "/secure/glow/categorys",
+      name: "Tags",
+      path: "/secure/glow/tags",
       onClick: x => true,
     },
     {

@@ -9,7 +9,7 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
 import { cartFormFields } from "./cartFormFields";
 import {
-  useCategorysQuery,
+  useTagsQuery,
   useEventsQuery,
   useProductsQuery,
   useTicketsQuery,
@@ -26,7 +26,7 @@ const EditCartModal = () => {
 
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
-  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();

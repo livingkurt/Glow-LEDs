@@ -195,7 +195,7 @@ const productSchema = new mongoose.Schema(
       hidden: { type: Boolean, default: false },
     },
 
-    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 
     category: { type: String },
     subcategory: { type: String },
@@ -341,9 +341,9 @@ const productSchema = new mongoose.Schema(
 
     included_items: { type: String },
 
-    categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-    collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+    subcategorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+    collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 
     video: { type: String },
   },

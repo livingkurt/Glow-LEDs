@@ -250,7 +250,7 @@ export const aboutPageFields = ({ content }) => ({
   },
 });
 
-export const productsGridPageFields = ({ content, products, categorys }) => ({
+export const productsGridPageFields = ({ content, products, tags }) => ({
   type: "object",
   title: "Products Grid Page",
   fields: {
@@ -280,12 +280,6 @@ export const productsGridPageFields = ({ content, products, categorys }) => ({
             album: `${content?.name} Category Banner Content Images`,
           },
           background_color: { type: "color_picker", label: "Background Color" },
-          // tag: {
-          //   type: "autocomplete_single",
-          //   label: "Category",
-          //   options: categorys,
-          //   labelProp: "name",
-          // },
           tag: {
             type: "autocomplete_single",
             label: "Tag",
@@ -295,7 +289,7 @@ export const productsGridPageFields = ({ content, products, categorys }) => ({
                 return toCapitalize(option.name);
               }
             },
-            options: categorys,
+            options: tags,
           },
         },
       },

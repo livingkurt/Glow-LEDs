@@ -45,6 +45,7 @@ export default {
             ],
           },
         })
+        .populate("tags")
         .populate("images")
         .populate("color_images")
         .populate("secondary_color_images")
@@ -67,10 +68,7 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
-        .populate("color_products")
-        .populate("secondary_color_products")
-        .populate("option_products")
-        .populate("secondary_products")
+        .populate("tags")
         .populate({
           path: "options",
           populate: {

@@ -4,7 +4,7 @@ import { set_edit_content_modal, set_content } from "../../../slices/contentSlic
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { contentFormFields } from "./contentFormFields";
-import { useCategorysQuery, useProductsQuery } from "../../../api/allRecordsApi";
+import { useTagsQuery, useProductsQuery } from "../../../api/allRecordsApi";
 import { useEffect } from "react";
 
 const EditContentModal = () => {
@@ -12,7 +12,7 @@ const EditContentModal = () => {
   const contentPage = useSelector(state => state.contents.contentPage);
   const { edit_content_modal, content, loading, contentType } = contentPage;
   const { data: products } = useProductsQuery({ option: false, hidden: false });
-  const { data: categorys } = useCategorysQuery();
+  const { data: categorys } = useTagsQuery();
 
   useEffect(() => {
     let clean = true;

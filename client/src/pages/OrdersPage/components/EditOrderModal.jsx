@@ -15,7 +15,7 @@ import {
 } from "../ordersPageHelpers";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import {
-  useCategorysQuery,
+  useTagsQuery,
   useEventsQuery,
   useProductsQuery,
   usePromosQuery,
@@ -36,7 +36,7 @@ const EditOrderModal = () => {
 
   const { data: allShipping, isLoading: allShippingLoading } = API.useGetAllShippingOrdersQuery();
   const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
-  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();

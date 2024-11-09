@@ -15,7 +15,7 @@ const chip_schema = new mongoose.Schema(
     name: { type: String },
     company: { type: String },
     category: { type: String },
-    tags: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     programmable: { type: Boolean },
     number_of_modes: { type: Number },
     characteristics: { type: String },

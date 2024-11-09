@@ -5,7 +5,6 @@ import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
-import { CategorysPage } from "../../pages/CategorysPage";
 import { SurveysPage } from "../../pages/SurveysPage";
 import { ParcelsPage } from "../../pages/ParcelsPage";
 import { PalettesPage } from "../../pages/PalettesPage";
@@ -20,6 +19,7 @@ import { AnnouncementEmail } from "../../pages/EmailsPage/components";
 import { EmailsPage } from "../../pages/EmailsPage";
 import { PromosPage } from "../../pages/PromosPage";
 import { AffiliatesPage } from "../../pages/AffiliatesPage";
+import TagsPage from "../../pages/TagsPage/TagsPage";
 import { ProfilePage } from "../../pages/ProfiePage/ProfilePage";
 import { UsersPage } from "../../pages/UsersPage";
 import { TutorialsPage } from "../../pages/TutorialsPage";
@@ -97,7 +97,7 @@ export const AdminComponents = {
   OrdersPage,
   UsersPage,
   PaychecksPage,
-  CategorysPage,
+  TagsPage,
   SurveysPage,
   ParcelsPage,
   PalettesPage,
