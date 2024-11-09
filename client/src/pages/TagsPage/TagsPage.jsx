@@ -29,7 +29,13 @@ const TagsPage = () => {
         nonSelectable: true,
         display: tag => (
           <Box display="flex" justifyContent="flex-end">
-            <GLIconButton tooltip="Edit" onClick={() => dispatch(open_edit_tag_modal(tag))}>
+            <GLIconButton
+              tooltip="Edit"
+              onClick={() => {
+                console.log({ tag });
+                dispatch(open_edit_tag_modal(tag));
+              }}
+            >
               <EditIcon color="white" />
             </GLIconButton>
             <GLIconButton
