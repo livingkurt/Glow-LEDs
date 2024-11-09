@@ -26,13 +26,14 @@ import tutorial_routes from "./tutorials/tutorial_routes.js";
 import user_routes from "./users/user_routes.js";
 import version_routes from "./versions/version_routes.js";
 import wholesaler_routes from "./wholesalers/wholesaler_routes.js";
-
+import mode_routes from "./modes/mode_routes.js";
 const router = express.Router();
 
 router.use("/api/affiliates", affiliate_routes);
 router.use("/api/articles", article_routes);
 router.use("/api/carts", cart_routes);
 router.use("/api/microlights", microlight_routes);
+router.use("/api/modes", mode_routes);
 router.use("/api/contents", content_routes);
 router.use("/api/emails", email_routes);
 router.use("/api/events", event_routes);
