@@ -1,7 +1,7 @@
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { saveToEditProductHistory } from "../productsPageSlice";
-import { tagField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { filamentField, tagField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
 export const productFormFields = ({ products, users, product, chips, filaments, dispatch, tags }) => {
   return {
@@ -768,13 +768,7 @@ export const productFormFields = ({ products, users, product, chips, filaments, 
           type: "checkbox",
           label: "Is Filament Color",
         },
-        filament: {
-          type: "autocomplete_single",
-          label: "Filament",
-          options: filaments,
-          getOptionLabel: option => (option ? `${option.color} ${option.type}` : ""),
-          labelProp: "name",
-        },
+        filament: filamentField({ filaments }),
       },
     },
     size: {

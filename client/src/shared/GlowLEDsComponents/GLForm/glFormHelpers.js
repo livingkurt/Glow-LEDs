@@ -126,13 +126,26 @@ export const userField = ({ users, ...otherProps }) => {
     ...otherProps,
   };
 };
+export const filamentField = ({ filaments, ...otherProps }) => {
+  return {
+    type: "autocomplete_single",
+    label: "Filament",
+    options: filaments,
+    getOptionLabel: option => {
+      if (!option || (!option.color && !option.type)) return "";
+      return `${option.color || ""} ${option.type || ""}`.trim();
+    },
+    labelProp: "filament",
+    ...otherProps,
+  };
+};
 
 export const affiliateField = ({ affiliates, ...otherProps }) => {
   return {
     type: "autocomplete_single",
     label: "Affiliate",
     options: affiliates,
-    labelProp: "affiliate",
+    labelProp: "artist_name",
     getOptionLabel: option => `${option.artist_name}`,
     ...otherProps,
   };
@@ -143,7 +156,10 @@ export const tagField = ({ tags, ...otherProps }) => {
     type: "autocomplete_multiple",
     label: "Tags",
     options: tags,
-    labelProp: "tags",
+    getOptionLabel: option => {
+      return `${option.name}`;
+    },
+    labelProp: "name",
     ...otherProps,
   };
 };
