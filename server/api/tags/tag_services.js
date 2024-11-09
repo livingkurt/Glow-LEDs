@@ -1,21 +1,21 @@
-import category_db from "./category_db.js";
+import tag_db from "./tag_db.js";
 import { getFilteredData } from "../api_helpers.js";
-import { normalizeCategorySearch } from "./category_helpers.js";
+import { normalizeTagSearch } from "./tag_helpers.js";
 
 export default {
-  table_categorys_s: async query => {
+  table_tags_s: async query => {
     try {
-      const sort_options = ["name", "type", "pathname"];
+      const sort_options = ["name", "pathname"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
         search_name: "name",
-        normalizeSearch: normalizeCategorySearch,
+        normalizeSearch: normalizeTagSearch,
       });
-      const categorys = await category_db.table_categorys_db(filter, sort, limit, page);
-      const count = await category_db.count_categorys_db(filter);
+      const tags = await tag_db.table_tags_db(filter, sort, limit, page);
+      const count = await tag_db.count_tags_db(filter);
       return {
-        data: categorys,
+        data: tags,
         total_count: count,
         currentPage: page,
       };
@@ -25,46 +25,46 @@ export default {
       }
     }
   },
-  findAll_categorys_s: async query => {
+  findAll_tags_s: async query => {
     try {
-      const categorys = await category_db.findAll_categorys_db({ deleted: false, ...query }, {});
-      return categorys;
+      const tags = await tag_db.findAll_tags_db({ deleted: false, ...query }, {});
+      return tags;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findById_categorys_s: async params => {
+  findById_tags_s: async params => {
     try {
-      return await category_db.findById_categorys_db(params.id);
+      return await tag_db.findById_tags_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  create_categorys_s: async body => {
+  create_tags_s: async body => {
     try {
-      return await category_db.create_categorys_db(body);
+      return await tag_db.create_tags_db(body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  update_categorys_s: async (params, body) => {
+  update_tags_s: async (params, body) => {
     try {
-      return await category_db.update_categorys_db(params.id, body);
+      return await tag_db.update_tags_db(params.id, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  remove_categorys_s: async params => {
+  remove_tags_s: async params => {
     try {
-      return await category_db.remove_categorys_db(params.id);
+      return await tag_db.remove_tags_db(params.id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

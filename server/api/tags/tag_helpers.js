@@ -1,4 +1,4 @@
-export const normalizeCategorySearch = query => {
+export const normalizeTagSearch = query => {
   const search = query.search
     ? {
         name: {
