@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
@@ -6,7 +5,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { snake_case } from "../../../utils/helper_functions";
 import { tutorialFormFields } from "./tutorialFormFields";
-import { useAffiliatesQuery, useCategorysQuery } from "../../../api/allRecordsApi";
+import { useAffiliatesQuery, useTagsQuery } from "../../../api/allRecordsApi";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ const EditTutorialModal = () => {
     return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
   };
 
-  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
 
   const formFields = tutorialFormFields({

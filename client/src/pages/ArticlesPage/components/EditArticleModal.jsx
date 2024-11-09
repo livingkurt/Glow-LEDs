@@ -4,14 +4,14 @@ import { set_edit_article_modal, set_article } from "../../../slices/articleSlic
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { articleFormFields } from "./articleFormFields";
-import { useCategorysQuery, useUsersQuery } from "../../../api/allRecordsApi";
+import { useTagsQuery, useUsersQuery } from "../../../api/allRecordsApi";
 
 const EditArticleModal = () => {
   const dispatch = useDispatch();
   const articlePage = useSelector(state => state.articles.articlePage);
   const { edit_article_modal, article, loading } = articlePage;
 
-  const { data: tags, isLoading: tagsLoading } = useCategorysQuery();
+  const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
 
   const formFields = articleFormFields({

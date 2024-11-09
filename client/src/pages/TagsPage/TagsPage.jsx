@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_tag_modal, open_edit_tag_modal } from "../../slices/tagSlice";
-import { EditTagModal } from "./components";
 import * as API from "../../api";
 import { Box, Button, Container } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { determineTagColors } from "./tagHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { ContentCopy } from "@mui/icons-material";
+import EditTagModal from "./components/EditTagModal";
 
 const TagsPage = () => {
   const tagPage = useSelector(state => state.tags.tagPage);

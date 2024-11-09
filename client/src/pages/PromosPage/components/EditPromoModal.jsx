@@ -4,7 +4,7 @@ import { set_edit_promo_modal, set_promo } from "../../../slices/promoSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { promoFormFields } from "./promoFormFields";
-import { useAffiliatesQuery, useCategorysQuery, useProductsQuery, useUsersQuery } from "../../../api/allRecordsApi";
+import { useAffiliatesQuery, useTagsQuery, useProductsQuery, useUsersQuery } from "../../../api/allRecordsApi";
 
 const EditPromoModal = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const EditPromoModal = () => {
 
   const { data: affiliates, isLoading: loadingAffiliates } = useAffiliatesQuery({ active: true });
   const { data: users, isLoading: loadingUsers } = useUsersQuery({});
-  const { data: categorys, isLoading: loadingCategorys } = useCategorysQuery({});
+  const { data: categorys, isLoading: loadingCategorys } = useTagsQuery({});
   const { data: products, isLoading: loadingProducts } = useProductsQuery({});
 
   const formFields = promoFormFields({
