@@ -58,6 +58,9 @@ import ProductBundlePage from "../../pages/ProductBundlePage/ProductBundlePage";
 import GiftCardPage from "../../pages/GiftCardPage/GiftCardPage2";
 import GiftCardsPage from "../../pages/GiftCardsPage/GiftCardsPage2";
 import GiftCardsGridPage from "../../pages/GiftCardsGridPage2/GiftCardsGridPage2";
+import ModeCreatorPage from "../../pages/ModeCreatorPage/ModeCreatorPage";
+import ModePage from "../../pages/ModePage/ModePage";
+import ModesGridPage from "../../pages/ModesGridPage/ModesGridPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -91,6 +94,9 @@ export const Components = {
   ProductBundlePage,
   GiftCardPage,
   GiftCardsGridPage,
+  ModeCreatorPage,
+  ModePage,
+  ModesGridPage,
 };
 export const AdminComponents = {
   DatabaseMigrationPage,

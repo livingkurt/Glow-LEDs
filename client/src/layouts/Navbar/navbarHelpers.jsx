@@ -337,6 +337,15 @@ const community = addIdsRecursively({
       name: "Sponsored Teams",
       path: "/teams",
     },
+    {
+      name: "Browse Modes",
+      path: "/modes",
+    },
+    {
+      name: "Create Mode",
+      path: "/modes/creator",
+    },
+
     // {
     //   name: "Rave Mob",
     //   path: "/teams/rave_mob",
@@ -609,6 +618,10 @@ const user = addIdsRecursively({
     {
       name: "Profile",
       path: "/secure/account/profile",
+    },
+    {
+      name: "My Modes",
+      path: "/secure/account/profile?tab=modes",
     },
 
     {
