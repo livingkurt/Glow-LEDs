@@ -96,7 +96,7 @@ const TeamTermsPage = () => {
           </li>
           <li>{"Top 10 Earner get to promote choice of product from product release"}</li>
           <ul style={{ padding: "0 18px", listStyle: "disc" }}>
-            <li>{"Take a picture of the product on the chips"}</li>
+            <li>{"Take a picture of the product on the microlights"}</li>
             <li>{"Take a picture of the product in the gloves"}</li>
             <li>{"Post a lightshow with it that night or the next day"}</li>
           </ul>
