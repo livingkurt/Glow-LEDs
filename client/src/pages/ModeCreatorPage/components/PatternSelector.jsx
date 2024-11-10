@@ -26,7 +26,7 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
       </Typography>
       <Grid container spacing={1}>
         {microlight.flashing_patterns.map(p => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={p._id}>
+          <Grid item xs={6} sm={4} md={3} lg={2} xl={2} key={p._id}>
             <Paper
               elevation={pattern?._id === p._id ? 4 : 1}
               sx={{
