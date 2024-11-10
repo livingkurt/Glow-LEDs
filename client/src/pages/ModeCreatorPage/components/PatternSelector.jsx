@@ -1,5 +1,6 @@
 import { Box, Paper, Slider, Typography, ToggleButton, ToggleButtonGroup, Select, MenuItem } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PropTypes from "prop-types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
@@ -92,6 +93,12 @@ const PatternSelector = ({ pattern, patterns = [], onChange }) => {
       </Box>
     </Paper>
   );
+};
+
+PatternSelector.propTypes = {
+  pattern: PropTypes.object.isRequired,
+  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default PatternSelector;

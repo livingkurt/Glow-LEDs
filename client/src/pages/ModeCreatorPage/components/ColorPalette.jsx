@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { Box, Tooltip } from "@mui/material";
 
@@ -42,6 +43,10 @@ const ColorPalette = ({ colors }) => {
       )}
     </Droppable>
   );
+};
+
+ColorPalette.propTypes = {
+  colors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ColorPalette;

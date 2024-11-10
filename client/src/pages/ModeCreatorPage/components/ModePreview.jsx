@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Box, Paper, Typography } from "@mui/material";
-
+import PropTypes from "prop-types";
 const ModePreview = ({ mode }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -147,6 +147,10 @@ const ModePreview = ({ mode }) => {
       </Box>
     </Paper>
   );
+};
+
+ModePreview.propTypes = {
+  mode: PropTypes.object.isRequired,
 };
 
 export default ModePreview;

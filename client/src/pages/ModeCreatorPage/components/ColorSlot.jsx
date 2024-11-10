@@ -1,8 +1,9 @@
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { Box, IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import PropTypes from "prop-types";
 
-const EmptySlot = ({ index }) => (
+const EmptySlot = () => (
   <Box
     sx={{
       width: 60,
@@ -88,6 +89,30 @@ const ColorSlots = ({ selectedColors, maxSlots, onRemove }) => {
       )}
     </Droppable>
   );
+};
+
+ColorSlot.propTypes = {
+  color: PropTypes.object,
+  index: PropTypes.number,
+  onRemove: PropTypes.func,
+};
+
+ColorSlot.defaultProps = {
+  color: null,
+  index: 0,
+  onRemove: () => {},
+};
+
+ColorSlots.propTypes = {
+  selectedColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  maxSlots: PropTypes.number.isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
+
+ColorSlots.defaultProps = {
+  selectedColors: [],
+  maxSlots: 0,
+  onRemove: () => {},
 };
 
 export default ColorSlots;
