@@ -109,7 +109,21 @@ const ModeCreatorPage = () => {
     if (source.droppableId === "color-palette" && destination.droppableId === "color-slots") {
       const selectedColor = selectedMicrolight.colors[source.index];
       const newColors = [...mode.colors];
-      newColors[destination.index] = selectedColor;
+
+      // Insert the color at the destination index
+      if (destination.index >= newColors.length) {
+        // If dropping beyond current array length, just push it
+        newColors.push(selectedColor);
+      } else {
+        // Insert at specific position
+        newColors.splice(destination.index, 0, selectedColor);
+      }
+
+      // Trim array if it exceeds max slots
+      if (newColors.length > selectedMicrolight.colors_per_mode) {
+        newColors.length = selectedMicrolight.colors_per_mode;
+      }
+
       setMode({ ...mode, colors: newColors });
     }
     // If reordering within slots

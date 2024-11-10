@@ -17,26 +17,55 @@ const ColorPalette = ({ colors }) => {
           }}
         >
           {colors.map((color, index) => (
-            <Draggable key={color._id} draggableId={color._id} index={index}>
-              {(provided, snapshot) => (
-                <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                  <Tooltip title={color.name} arrow placement="top">
+            <Box key={color._id} sx={{ position: "relative" }}>
+              <Draggable draggableId={color._id} index={index}>
+                {(provided, snapshot) => (
+                  <>
                     <Box
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
                       sx={{
-                        width: 60,
-                        boxShadow: 4,
-                        height: 60,
-                        borderRadius: "50%",
-                        backgroundColor: color.colorCode,
-                        opacity: snapshot.isDragging ? 0.5 : 1,
-                        cursor: "grab",
-                        margin: "0 auto",
+                        position: snapshot.isDragging ? "absolute" : "relative",
+                        zIndex: snapshot.isDragging ? 1000 : 1,
                       }}
-                    />
-                  </Tooltip>
-                </Box>
-              )}
-            </Draggable>
+                    >
+                      <Tooltip title={color.name} arrow placement="top">
+                        <Box
+                          sx={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: "50%",
+                            backgroundColor: color.colorCode,
+                            boxShadow: 4,
+                            cursor: "grab",
+                            margin: "0 auto",
+                          }}
+                        />
+                      </Tooltip>
+                    </Box>
+                    {/* Static copy that stays in place */}
+                    {snapshot.isDragging && (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: 60,
+                          height: 60,
+                          borderRadius: "50%",
+                          backgroundColor: color.colorCode,
+                          boxShadow: 4,
+                          margin: "0 auto",
+                          opacity: 1,
+                          pointerEvents: "none",
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+              </Draggable>
+            </Box>
           ))}
           {provided.placeholder}
         </Box>
@@ -44,7 +73,6 @@ const ColorPalette = ({ colors }) => {
     </Droppable>
   );
 };
-
 ColorPalette.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
