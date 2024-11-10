@@ -21,7 +21,6 @@ const EmptySlot = () => (
 );
 
 const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
-  console.log({ microlight, color });
   const [isHovered, setIsHovered] = useState(false);
   const [controlsAnchor, setControlsAnchor] = useState(null);
 

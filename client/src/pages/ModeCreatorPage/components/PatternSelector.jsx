@@ -44,6 +44,7 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
             >
               <Typography variant="body2" gutterBottom>
                 {p.name}
+                {console.log({ [p.name]: p })}
               </Typography>
             </Paper>
           </Grid>
