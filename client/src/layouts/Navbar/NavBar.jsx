@@ -279,7 +279,6 @@ const Navbar = () => {
                                 <ColumnItemButton
                                   key={rowIndex}
                                   ariaLabel={row.ariaLabel}
-                                  fullWidth
                                   to={row.path}
                                   align="left"
                                   onClick={() => row.onClick && row.onClick(dispatch, navigate, location)}
