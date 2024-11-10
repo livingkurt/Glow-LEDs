@@ -115,6 +115,30 @@ export const microlightFormFields = ({ microlight, tags }) => {
             type: "text",
             label: "Type",
           },
+          on_dur: {
+            type: "number",
+            label: "On Duration",
+          },
+          off_dur: {
+            type: "number",
+            label: "Off Duration",
+          },
+          gap_dur: {
+            type: "number",
+            label: "Gap Duration",
+          },
+          dash_dur: {
+            type: "number",
+            label: "Dash Duration",
+          },
+          group_size: {
+            type: "number",
+            label: "Group Size",
+          },
+          blend_speed: {
+            type: "number",
+            label: "Blend Speed",
+          },
         },
       },
     },

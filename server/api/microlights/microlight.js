@@ -8,6 +8,12 @@ export const microlight_color_schema = new mongoose.Schema({
 export const microlight_flashing_pattern_schema = new mongoose.Schema({
   name: { type: String },
   type: { type: String },
+  on_dur: { type: Number },
+  off_dur: { type: Number },
+  gap_dur: { type: Number },
+  dash_dur: { type: Number },
+  group_size: { type: Number },
+  blend_speed: { type: Number },
 });
 
 const microlight_schema = new mongoose.Schema(
