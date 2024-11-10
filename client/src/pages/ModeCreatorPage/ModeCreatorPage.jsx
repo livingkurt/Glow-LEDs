@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Box, Button, Container, TextField, Typography, MenuItem } from "@mui/material";
+import { Box, Button, Container, TextField, Typography, MenuItem, Paper, Grid } from "@mui/material";
 import * as API from "../../api";
 import { useMicrolightsQuery } from "../../api/allRecordsApi";
 import GLLoading from "../../shared/GlowLEDsComponents/GLLoading/GLLoading";
 import { showError } from "../../slices/snackbarSlice";
-import ColorPicker from "./components/ColorPicker";
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
+import { DragDropContext } from "@hello-pangea/dnd";
+import ColorPalette from "./components/ColorPalette";
+import ColorSlots from "./components/ColorSlot";
 
 const ModeCreatorPage = () => {
   const dispatch = useDispatch();
@@ -84,51 +86,40 @@ const ModeCreatorPage = () => {
     }
   };
 
-  const handleColorChange = (index, color) => {
-    const newColors = [...mode.colors];
-    newColors[index] = color;
-    setMode({ ...mode, colors: newColors });
-  };
-
-  const handleAddColor = () => {
-    if (!mode.microlight) {
-      dispatch(showError({ message: "Please select a microlight first" }));
-      return;
-    }
-
-    const selectedMicrolight = microlights.find(m => m._id === mode.microlight);
-    if (mode.colors.length >= selectedMicrolight.colors_per_mode) {
-      dispatch(showError({ message: `This microlight supports up to ${selectedMicrolight.colors_per_mode} colors` }));
-      return;
-    }
-
-    setMode({
-      ...mode,
-      colors: [
-        ...mode.colors,
-        {
-          hue: { red: 255, green: 0, blue: 0 },
-          saturation: 100,
-          brightness: 100,
-        },
-      ],
-    });
-  };
-
-  const handleRemoveColor = index => {
-    const newColors = mode.colors.filter((_, i) => i !== index);
-    setMode({ ...mode, colors: newColors });
-  };
-
   const handleMicrolightChange = event => {
     const selectedMicrolight = microlights.find(m => m._id === event.target.value);
     setMode({
       ...mode,
       microlight: event.target.value,
-      colors: mode.colors.slice(0, selectedMicrolight.colors_per_mode),
+      colors: [], // Reset colors when microlight changes
+      flashing_pattern: {
+        pattern_type: selectedMicrolight.flashing_patterns[0]?.name || "solid", // Set first available pattern
+        speed: 50,
+        direction: "forward",
+      },
     });
   };
+  const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);
+  const handleDragEnd = result => {
+    if (!result.destination) return;
 
+    const { source, destination } = result;
+
+    // If dropping from palette to slots
+    if (source.droppableId === "color-palette" && destination.droppableId === "color-slots") {
+      const selectedColor = selectedMicrolight.colors[source.index];
+      const newColors = [...mode.colors];
+      newColors[destination.index] = selectedColor;
+      setMode({ ...mode, colors: newColors });
+    }
+    // If reordering within slots
+    else if (source.droppableId === "color-slots" && destination.droppableId === "color-slots") {
+      const newColors = Array.from(mode.colors);
+      const [removed] = newColors.splice(source.index, 1);
+      newColors.splice(destination.index, 0, removed);
+      setMode({ ...mode, colors: newColors });
+    }
+  };
   if (loading || microlightsLoading) {
     return <GLLoading />;
   }
@@ -142,75 +133,99 @@ const ModeCreatorPage = () => {
         </title>
       </Helmet>
 
-      <Box display="flex" flexDirection="column" gap={4}>
-        <Typography variant="h4">{id ? "Edit Mode" : "Create Mode"}</Typography>
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h4">{id ? "Edit Mode" : "Create Mode"}</Typography>
+          </Grid>
 
-        <Box display="flex" gap={2}>
-          <TextField
-            label="Mode Name"
-            value={mode.name}
-            onChange={e => setMode({ ...mode, name: e.target.value })}
-            fullWidth
-          />
-          <TextField
-            select
-            label="Microlight"
-            value={mode.microlight || ""}
-            onChange={handleMicrolightChange}
-            fullWidth
-          >
-            {microlights?.map(microlight => (
-              <MenuItem key={microlight._id} value={microlight._id}>
-                {microlight.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
+          <Grid item xs={12}>
+            <TextField
+              label="Mode Name"
+              value={mode.name}
+              onChange={e => setMode({ ...mode, name: e.target.value })}
+              fullWidth
+            />
+          </Grid>
 
-        <TextField
-          label="Description"
-          value={mode.description}
-          onChange={e => setMode({ ...mode, description: e.target.value })}
-          multiline
-          rows={2}
-          fullWidth
-        />
+          <Grid item xs={12}>
+            <TextField
+              label="Description"
+              value={mode.description}
+              onChange={e => setMode({ ...mode, description: e.target.value })}
+              multiline
+              rows={2}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              select
+              label="Microlight"
+              value={mode.microlight || ""}
+              onChange={handleMicrolightChange}
+              fullWidth
+            >
+              {microlights?.map(microlight => (
+                <MenuItem key={microlight._id} value={microlight._id}>
+                  {microlight.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          {mode.microlight && (
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Grid item xs={12}>
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    {"Available Colors"}
+                  </Typography>
+                  <ColorPalette colors={selectedMicrolight.colors} />
 
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            {"Colors"}
-          </Typography>
-          <Box display="flex" gap={2} flexWrap="wrap">
-            {mode.colors.map((color, index) => (
-              <ColorPicker
-                key={index}
-                color={color}
-                onChange={color => handleColorChange(index, color)}
-                onRemove={() => handleRemoveColor(index)}
+                  <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+                    {"Selected Colors ("}
+                    {selectedMicrolight.colors_per_mode} {"max)"}
+                  </Typography>
+                  <ColorSlots
+                    selectedColors={mode.colors}
+                    maxSlots={selectedMicrolight.colors_per_mode}
+                    onRemove={index => {
+                      const newColors = [...mode.colors];
+                      newColors.splice(index, 1);
+                      setMode({ ...mode, colors: newColors });
+                    }}
+                  />
+                </Box>
+              </Grid>
+            </DragDropContext>
+          )}
+          {mode.microlight ? (
+            <Grid item xs={12}>
+              <PatternSelector
+                pattern={mode.flashing_pattern}
+                patterns={microlights?.find(m => m._id === mode.microlight)?.flashing_patterns || []}
+                onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
               />
-            ))}
-            <Button variant="outlined" onClick={handleAddColor} disabled={!mode.microlight}>
-              {"Add Color"}
-            </Button>
-          </Box>
-        </Box>
+              <ModePreview mode={mode} />
 
-        <PatternSelector
-          pattern={mode.flashing_pattern}
-          onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
-        />
-
-        <ModePreview mode={mode} />
-
-        <Box display="flex" justifyContent="flex-end" gap={2}>
-          <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
-            {"Cancel"}
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleSave}>
-            {"Save Mode"}
-          </Button>
-        </Box>
-      </Box>
+              <Box display="flex" justifyContent="flex-end" gap={2}>
+                <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
+                  {"Cancel"}
+                </Button>
+                <Button variant="contained" color="primary" onClick={handleSave}>
+                  {"Save Mode"}
+                </Button>
+              </Box>
+            </Grid>
+          ) : (
+            <Grid item xs={12}>
+              <Typography variant="h6" textAlign="center">
+                {"Please select a microlight first"}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+      </Paper>
     </Container>
   );
 };

@@ -17,7 +17,7 @@ export default {
   },
   findById_modes_db: async id => {
     try {
-      return await Mode.findOne({ _id: id, deleted: false });
+      return await Mode.findOne({ _id: id, deleted: false }).populate("microlight");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -26,7 +26,7 @@ export default {
   },
   findByName_modes_db: async name => {
     try {
-      return await Mode.findOne({ name: name, deleted: false });
+      return await Mode.findOne({ name: name, deleted: false }).populate("microlight");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
