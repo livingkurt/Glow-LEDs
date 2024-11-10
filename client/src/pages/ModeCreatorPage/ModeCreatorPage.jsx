@@ -11,7 +11,7 @@ import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
 import { DragDropContext } from "@hello-pangea/dnd";
 import ColorPalette from "./components/ColorPalette";
-import ColorSlots from "./components/ColorSlot";
+import ColorSlots from "./components/ColorSlots";
 
 const ModeCreatorPage = () => {
   const dispatch = useDispatch();
@@ -203,9 +203,15 @@ const ModeCreatorPage = () => {
                   <ColorSlots
                     selectedColors={mode.colors}
                     maxSlots={selectedMicrolight.colors_per_mode}
+                    microlight={selectedMicrolight}
                     onRemove={index => {
                       const newColors = [...mode.colors];
                       newColors.splice(index, 1);
+                      setMode({ ...mode, colors: newColors });
+                    }}
+                    onUpdate={(index, updatedColor) => {
+                      const newColors = [...mode.colors];
+                      newColors[index] = updatedColor;
                       setMode({ ...mode, colors: newColors });
                     }}
                   />

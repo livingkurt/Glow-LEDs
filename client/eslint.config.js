@@ -92,7 +92,7 @@ export default [
       "react/sort-comp": "warn",
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],
-      "react/prop-types": ["error", { ignore: ["intl", "data", "router", "children"] }],
+      "react/prop-types": "off",
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],
       "react/jsx-no-literals": "off",
       "react/no-unused-prop-types": "error",
