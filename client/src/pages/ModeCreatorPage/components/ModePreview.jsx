@@ -3,15 +3,30 @@ import { Box, Paper, Typography } from "@mui/material";
 
 const FRAME_RATE = 60; // 60fps
 const MS_PER_FRAME = 1000 / FRAME_RATE;
+const TIME_UNIT = 1; // Each duration unit represents 10ms
+
+const PatternStates = {
+  DISABLED: "DISABLED",
+  BLINK_ON: "BLINK_ON",
+  BLINK_OFF: "BLINK_OFF",
+  BEGIN_GAP: "BEGIN_GAP",
+  BEGIN_DASH: "BEGIN_DASH",
+  BEGIN_GAP2: "BEGIN_GAP2",
+};
 
 const ModePreview = ({ mode }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
-  const positionRef = useRef({ x: 0, direction: 1 });
+  const positionRef = useRef({
+    angle: 0,
+    radius: 0, // Will be set based on canvas size
+  });
   const stateRef = useRef({
+    state: PatternStates.BLINK_ON,
     currentColorIndex: 0,
+    groupCounter: 0,
+    stateTimer: 0,
     trailPositions: [],
-    colorTimer: 0,
   });
 
   useEffect(() => {
@@ -19,7 +34,10 @@ const ModePreview = ({ mode }) => {
     const ctx = canvas.getContext("2d");
     const width = canvas.width;
     const height = canvas.height;
+    const centerX = width / 2;
     const centerY = height / 2;
+    const radius = Math.min(width, height) / 3; // Circle radius
+    positionRef.current.radius = radius;
     let lastTime = 0;
 
     // Clear canvas with fade effect
@@ -29,9 +47,9 @@ const ModePreview = ({ mode }) => {
     };
 
     const drawLED = (x, y, color, alpha = 1) => {
-      const radius = 10;
+      if (!color) return;
 
-      // Draw glow effect
+      const radius = 10;
       const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius * 3);
       gradient.addColorStop(
         0,
@@ -46,7 +64,6 @@ const ModePreview = ({ mode }) => {
       ctx.fillStyle = gradient;
       ctx.fill();
 
-      // Draw core
       ctx.beginPath();
       ctx.arc(x, y, radius * 0.8, 0, Math.PI * 2);
       ctx.fillStyle = color;
@@ -54,33 +71,88 @@ const ModePreview = ({ mode }) => {
     };
 
     const updateState = deltaTime => {
-      const pattern = mode.flashing_pattern;
       const state = stateRef.current;
+      const pattern = mode.flashing_pattern;
 
-      // Update color timer
-      state.colorTimer += deltaTime;
-      const colorDuration = (pattern.on_dur || 5) * 50; // Longer duration for smoother trails
+      // Update state timer
+      state.stateTimer += deltaTime;
 
-      // Change color when timer expires
-      if (state.colorTimer >= colorDuration) {
-        state.colorTimer = 0;
-        state.currentColorIndex = (state.currentColorIndex + 1) % mode.colors.length;
+      // Get current duration based on state
+      let duration = 0;
+      switch (state.state) {
+        case PatternStates.BLINK_ON:
+          duration = pattern.on_dur * TIME_UNIT;
+          break;
+        case PatternStates.BLINK_OFF:
+          duration = pattern.off_dur * TIME_UNIT;
+          break;
+        case PatternStates.BEGIN_GAP:
+        case PatternStates.BEGIN_GAP2:
+          duration = pattern.gap_dur * TIME_UNIT;
+          break;
+        case PatternStates.BEGIN_DASH:
+          duration = pattern.dash_dur * TIME_UNIT;
+          break;
       }
 
-      // Add new trail position
-      if (mode.colors.length > 0) {
+      // Check if it's time to change state
+      if (duration > 0 && state.stateTimer >= duration) {
+        state.stateTimer = 0;
+
+        // Handle state transitions
+        switch (state.state) {
+          case PatternStates.BLINK_ON:
+            state.groupCounter--;
+            state.state = PatternStates.BLINK_OFF;
+            break;
+
+          case PatternStates.BLINK_OFF:
+            if (state.groupCounter > 0 || (!pattern.gap_dur && !pattern.dash_dur)) {
+              state.currentColorIndex = (state.currentColorIndex + 1) % mode.colors.length;
+              state.state = PatternStates.BLINK_ON;
+            } else {
+              state.state = PatternStates.BEGIN_GAP;
+            }
+            break;
+
+          case PatternStates.BEGIN_GAP:
+            state.groupCounter = pattern.group_size || mode.colors.length;
+            state.currentColorIndex = 0;
+            state.state = PatternStates.BEGIN_DASH;
+            break;
+
+          case PatternStates.BEGIN_DASH:
+            if (pattern.dash_dur > 0) {
+              state.state = PatternStates.BEGIN_GAP2;
+            } else {
+              state.state = PatternStates.BLINK_ON;
+            }
+            break;
+
+          case PatternStates.BEGIN_GAP2:
+            state.state = PatternStates.BLINK_ON;
+            break;
+        }
+      }
+
+      // Only add trail positions during ON states
+      if (state.state === PatternStates.BLINK_ON || state.state === PatternStates.BEGIN_DASH) {
+        const angle = positionRef.current.angle;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+
         state.trailPositions.push({
-          x: positionRef.current.x,
-          y: centerY,
-          color: mode.colors[state.currentColorIndex].colorCode,
+          x,
+          y,
+          color: mode.colors[state.currentColorIndex]?.colorCode,
           age: 0,
         });
-      }
 
-      // Age and remove old trail positions
-      state.trailPositions = state.trailPositions
-        .map(pos => ({ ...pos, age: pos.age + deltaTime }))
-        .filter(pos => pos.age < 500); // Keep trails longer
+        // Age and remove old trail positions
+        state.trailPositions = state.trailPositions
+          .map(pos => ({ ...pos, age: pos.age + deltaTime }))
+          .filter(pos => pos.age < 150);
+      }
     };
 
     const animate = timestamp => {
@@ -91,29 +163,33 @@ const ModePreview = ({ mode }) => {
         // Fade previous frame
         fadeCanvas();
 
-        // Update position with smoother movement
-        const speed = 4;
-        positionRef.current.x += positionRef.current.direction * speed;
+        // Update position with circular motion
+        const pattern = mode.flashing_pattern;
+        const baseSpeed = 0.03;
+        const speedMultiplier = pattern.on_dur ? 100 / pattern.on_dur : 1;
+        const speed = baseSpeed * (speedMultiplier * 0.2);
 
-        // Reverse direction at edges with some padding
-        if (positionRef.current.x >= width - 50 || positionRef.current.x <= 50) {
-          positionRef.current.direction *= -1;
-        }
+        positionRef.current.angle -= speed; // Negative for clockwise rotation
 
         // Update pattern state
         updateState(deltaTime);
 
-        // Draw all trails
+        // Draw trails
         const state = stateRef.current;
         state.trailPositions.forEach(pos => {
-          const alpha = Math.max(0, 1 - pos.age / 500);
-          drawLED(pos.x, pos.y, pos.color, alpha * 0.8); // Slightly reduce trail opacity
+          const alpha = Math.max(0, 1 - pos.age / 150);
+          drawLED(pos.x, pos.y, pos.color, alpha);
         });
 
         // Draw current LED
-        if (mode.colors.length > 0) {
-          const currentColor = mode.colors[state.currentColorIndex];
-          drawLED(positionRef.current.x, centerY, currentColor.colorCode, 1);
+        if (
+          (state.state === PatternStates.BLINK_ON || state.state === PatternStates.BEGIN_DASH) &&
+          mode.colors.length > 0
+        ) {
+          const currentColor = mode.colors[state.currentColorIndex]?.colorCode;
+          const x = centerX + Math.cos(positionRef.current.angle) * radius;
+          const y = centerY + Math.sin(positionRef.current.angle) * radius;
+          drawLED(x, y, currentColor, 1);
         }
 
         lastTime = timestamp;
@@ -122,12 +198,14 @@ const ModePreview = ({ mode }) => {
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    // Initialize position and state
-    positionRef.current = { x: width / 2, direction: 1 };
+    // Initialize state
+    const pattern = mode.flashing_pattern;
     stateRef.current = {
+      state: pattern.dash_dur > 0 ? PatternStates.BEGIN_DASH : PatternStates.BLINK_ON,
       currentColorIndex: 0,
+      groupCounter: pattern.group_size || mode.colors.length,
+      stateTimer: 0,
       trailPositions: [],
-      colorTimer: 0,
     };
 
     // Start animation
@@ -157,8 +235,8 @@ const ModePreview = ({ mode }) => {
       >
         <canvas
           ref={canvasRef}
-          width={600}
-          height={100}
+          width={800}
+          height={800}
           style={{
             maxWidth: "100%",
             height: "auto",

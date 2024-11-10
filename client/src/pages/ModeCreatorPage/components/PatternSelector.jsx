@@ -19,17 +19,6 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
     });
   };
 
-  const getPatternDescription = p => {
-    const parts = [];
-    if (p.on_dur) parts.push(`On: ${p.on_dur}`);
-    if (p.off_dur) parts.push(`Off: ${p.off_dur}`);
-    if (p.gap_dur) parts.push(`Gap: ${p.gap_dur}`);
-    if (p.dash_dur) parts.push(`Dash: ${p.dash_dur}`);
-    if (p.blend_speed) parts.push(`Blend: ${p.blend_speed}`);
-    if (p.group_size) parts.push(`Group: ${p.group_size}`);
-    return parts.join(" | ");
-  };
-
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
       <Typography variant="h6" gutterBottom>
@@ -37,11 +26,11 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
       </Typography>
       <Grid container spacing={1}>
         {microlight.flashing_patterns.map(p => (
-          <Grid item xs={12} sm={6} md={4} key={p._id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={p._id}>
             <Paper
               elevation={pattern?._id === p._id ? 4 : 1}
               sx={{
-                p: 2,
+                p: 1,
                 cursor: "pointer",
                 transition: "all 0.2s ease",
                 bgcolor: pattern?._id === p._id ? "primary.main" : "background.paper",
@@ -53,11 +42,8 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
               }}
               onClick={() => handlePatternSelect(p)}
             >
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="body2" gutterBottom>
                 {p.name}
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                {getPatternDescription(p)}
               </Typography>
             </Paper>
           </Grid>
