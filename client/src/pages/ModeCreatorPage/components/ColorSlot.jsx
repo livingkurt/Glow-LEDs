@@ -37,6 +37,7 @@ const ColorSlot = ({ color, index, onRemove }) => {
             sx={{
               width: "100%",
               height: "100%",
+              boxShadow: 4,
               borderRadius: "50%",
               backgroundColor: color.colorCode,
               opacity: snapshot.isDragging ? 0.5 : 1,
