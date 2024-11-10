@@ -8,9 +8,11 @@ const mode = {
   colors: [],
   microlight: null,
   flashing_pattern: {
-    pattern_type: "solid",
-    speed: 50,
-    direction: "forward",
+    name: "Ribbon",
+    type: "solid",
+    on_dur: 50,
+    off_dur: 50,
+    gap_dur: 50,
   },
   visibility: "public",
 };

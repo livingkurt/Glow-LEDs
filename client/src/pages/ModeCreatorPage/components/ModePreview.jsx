@@ -46,11 +46,11 @@ const ModePreview = ({ mode }) => {
       colors.forEach((color, index) => {
         let adjustedColor = { ...color };
 
-        if (mode.flashing_pattern.pattern_type !== "solid") {
+        if (mode.flashing_pattern.name !== "solid") {
           const cycleSpeed = (101 - mode.flashing_pattern.speed) * 20; // Invert speed so higher = faster
           const cycle = (progress % cycleSpeed) / cycleSpeed;
 
-          switch (mode.flashing_pattern.pattern_type) {
+          switch (mode.flashing_pattern.name) {
             case "strobe":
               adjustedColor.brightness = cycle > 0.5 ? color.brightness : 0;
               break;

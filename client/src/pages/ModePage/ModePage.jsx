@@ -112,10 +112,10 @@ const ModePage = () => {
               {"Pattern Type"}
             </Typography>
             <Typography>
-              {mode.flashing_pattern.pattern_type.charAt(0).toUpperCase() + mode.flashing_pattern.pattern_type.slice(1)}
+              {mode.flashing_pattern.name.charAt(0).toUpperCase() + mode.flashing_pattern.name.slice(1)}
             </Typography>
           </Box>
-          {mode.flashing_pattern.pattern_type !== "solid" && (
+          {mode.flashing_pattern.name !== "solid" && (
             <>
               <Box>
                 <Typography variant="subtitle2" color="textSecondary">

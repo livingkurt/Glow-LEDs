@@ -47,11 +47,11 @@ const ModeCard = ({ mode, onClick }) => {
       colors.forEach((color, index) => {
         let adjustedColor = { ...color };
 
-        if (mode.flashing_pattern.pattern_type !== "solid") {
+        if (mode.flashing_pattern.name !== "solid") {
           const cycleSpeed = (101 - mode.flashing_pattern.speed) * 20;
           const cycle = (progress % cycleSpeed) / cycleSpeed;
 
-          switch (mode.flashing_pattern.pattern_type) {
+          switch (mode.flashing_pattern.name) {
             case "strobe":
               adjustedColor.brightness = cycle > 0.5 ? color.brightness : 0;
               break;
@@ -163,9 +163,7 @@ const ModeCard = ({ mode, onClick }) => {
           </Typography>
           <Typography variant="caption" color="textSecondary" display="block">
             {mode.colors.length} {mode.colors.length === 1 ? "Color" : "Colors"}
-            {" •"}{" "}
-            {mode.flashing_pattern?.pattern_type?.charAt(0).toUpperCase() +
-              mode.flashing_pattern?.pattern_type?.slice(1)}
+            {" •"} {mode.flashing_pattern?.name?.charAt(0).toUpperCase() + mode.flashing_pattern?.name?.slice(1)}
           </Typography>
         </CardContent>
       </CardActionArea>

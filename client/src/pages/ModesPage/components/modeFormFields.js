@@ -53,15 +53,25 @@ export const modeFormFields = ({ mode, microlights }) => {
       label: "Flashing Pattern",
       type: "object",
       fields: {
-        pattern_type: {
-          label: "Pattern Type",
-          type: "autocomplete_single",
-          options: [
-            { label: "Solid", value: "solid" },
-            { label: "Strobe", value: "strobe" },
-            { label: "Fade", value: "fade" },
-            { label: "Rainbow", value: "rainbow" },
-          ],
+        name: {
+          label: "Name",
+          type: "text",
+        },
+        type: {
+          label: "Type",
+          type: "text",
+        },
+        on_dur: {
+          label: "On Duration",
+          type: "number",
+        },
+        off_dur: {
+          label: "Off Duration",
+          type: "number",
+        },
+        gap_dur: {
+          label: "Gap Duration",
+          type: "number",
         },
       },
     },

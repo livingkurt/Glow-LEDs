@@ -26,9 +26,14 @@ const ModeCreatorPage = () => {
     colors: [],
     microlight: null,
     flashing_pattern: {
-      pattern_type: "solid",
-      speed: 50,
-      direction: "forward",
+      name: "",
+      type: "",
+      on_dur: 5,
+      off_dur: 8,
+      gap_dur: 0,
+      dash_dur: 0,
+      group_size: 0,
+      blend_speed: 0,
     },
     visibility: "public",
   });
@@ -93,9 +98,14 @@ const ModeCreatorPage = () => {
       microlight: event.target.value,
       colors: [], // Reset colors when microlight changes
       flashing_pattern: {
-        pattern_type: selectedMicrolight.flashing_patterns[0]?.name || "solid", // Set first available pattern
-        speed: 50,
-        direction: "forward",
+        name: selectedMicrolight.flashing_patterns[0]?.name, // Set first available pattern
+        type: selectedMicrolight.flashing_patterns[0]?.type, // Set first available pattern
+        on_dur: selectedMicrolight.flashing_patterns[0]?.on_dur || 5, // Set first available pattern
+        off_dur: selectedMicrolight.flashing_patterns[0]?.off_dur || 8, // Set first available pattern
+        gap_dur: selectedMicrolight.flashing_patterns[0]?.gap_dur || 0, // Set first available pattern
+        dash_dur: selectedMicrolight.flashing_patterns[0]?.dash_dur || 0, // Set first available pattern
+        group_size: selectedMicrolight.flashing_patterns[0]?.group_size || 0, // Set first available pattern
+        blend_speed: selectedMicrolight.flashing_patterns[0]?.blend_speed || 0, // Set first available pattern
       },
     });
   };
@@ -211,23 +221,29 @@ const ModeCreatorPage = () => {
             </DragDropContext>
           )}
           {mode.microlight ? (
-            <Grid item xs={12}>
-              <PatternSelector
-                pattern={mode.flashing_pattern}
-                patterns={microlights?.find(m => m._id === mode.microlight)?.flashing_patterns || []}
-                onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
-              />
-              <ModePreview mode={mode} />
+            <>
+              <Grid item xs={12}>
+                <PatternSelector
+                  pattern={mode.flashing_pattern}
+                  patterns={microlights?.find(m => m._id === mode.microlight)?.flashing_patterns || []}
+                  onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <ModePreview mode={mode} />
+              </Grid>
 
-              <Box display="flex" justifyContent="flex-end" gap={2}>
-                <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
-                  {"Cancel"}
-                </Button>
-                <Button variant="contained" color="primary" onClick={handleSave}>
-                  {"Save Mode"}
-                </Button>
-              </Box>
-            </Grid>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="flex-end" gap={2}>
+                  <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
+                    {"Cancel"}
+                  </Button>
+                  <Button variant="contained" color="primary" onClick={handleSave}>
+                    {"Save Mode"}
+                  </Button>
+                </Box>
+              </Grid>
+            </>
           ) : (
             <Grid item xs={12}>
               <Typography variant="h6" textAlign="center">
