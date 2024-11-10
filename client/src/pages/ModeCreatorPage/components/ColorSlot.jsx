@@ -28,11 +28,12 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
 
   const handleOptionsClick = event => {
     event.stopPropagation();
-    setControlsAnchor(event.currentTarget);
+    setControlsAnchor(event.target.closest("[data-color-slot]"));
   };
 
   const handleControlsClose = () => {
     setControlsAnchor(null);
+    setIsHovered(false); // Reset hover state when controls close
   };
 
   const handleRemove = event => {
@@ -58,6 +59,7 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          data-color-slot // Add this attribute to help identify the color slot element
           sx={{
             width: 60,
             height: 60,
@@ -110,9 +112,10 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
                     variant="caption"
                     sx={{
                       color: "white",
-                      fontWeight: "medium",
+                      fontWeight: "bold",
                       textTransform: "uppercase",
                       letterSpacing: 1,
+                      fontSize: "1rem",
                       cursor: "pointer",
                       "&:hover": {
                         textDecoration: "underline",
@@ -156,6 +159,7 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
                 fontSize: "0.75rem",
                 whiteSpace: "nowrap",
                 bgcolor: "background.paper",
+
                 px: 1,
                 py: 0.5,
                 borderRadius: 1,

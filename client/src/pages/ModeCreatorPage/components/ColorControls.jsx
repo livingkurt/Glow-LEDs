@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { Box, Popper, Paper, ClickAwayListener, Typography, Fade } from "@mui/material";
+import { Box, Paper, Typography, Portal } from "@mui/material";
 import { hexToHSV, hsvToHex, generateBrightnessLevels, generateSaturationLevels } from "../modeCreatorPageHelpers";
 
 const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
   const [activeControl, setActiveControl] = useState(null);
-  const [levelsAnchor, setLevelsAnchor] = useState(null);
 
   const handleControlClick = (control, event) => {
     event.stopPropagation();
     setActiveControl(control);
-    setLevelsAnchor(event.currentTarget);
   };
 
   const handleLevelSelect = (type, value) => {
@@ -30,13 +28,22 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
       };
     }
 
+    // First update the color
     onUpdate(updatedColor);
-    setActiveControl(null);
-    setLevelsAnchor(null);
+
+    // Then close the controls after a small delay
+    setTimeout(() => {
+      setActiveControl(null);
+      onClose();
+    }, 50);
   };
 
+  if (!anchorEl) return null;
+
+  const rect = anchorEl.getBoundingClientRect();
+
   const renderLevels = () => {
-    if (!activeControl || !levelsAnchor) return null;
+    if (!activeControl) return null;
 
     const hsv = hexToHSV(color.colorCode);
     const levels =
@@ -45,86 +52,76 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
         : generateSaturationLevels(hsv.h, hsv.v, microlight.saturation_levels || 4);
 
     return (
-      <Popper open={Boolean(levelsAnchor)} anchorEl={levelsAnchor} placement="right-start" transition>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={200}>
-            <Paper
-              elevation={4}
-              sx={{
-                p: 1,
-                mt: 1,
-                display: "flex",
-                flexDirection: "column",
-                gap: 0.5,
-              }}
-            >
-              {levels.map(({ value, hex }) => (
-                <Box
-                  key={value}
-                  onClick={() => handleLevelSelect(activeControl, value)}
-                  sx={{
-                    width: 120,
-                    height: 30,
-                    backgroundColor: hex,
-                    cursor: "pointer",
-                    borderRadius: 1,
-                    border: theme => `1px solid ${theme.palette.divider}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: value > 50 ? "black" : "white",
-                    fontWeight: "medium",
-                    fontSize: "0.75rem",
-                    transition: "transform 0.2s ease",
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                    },
-                  }}
-                >
-                  {`${value}%`}
-                </Box>
-              ))}
-            </Paper>
-          </Fade>
-        )}
-      </Popper>
+      <Paper
+        elevation={4}
+        sx={{
+          position: "absolute",
+          left: "100%",
+          top: 0,
+          ml: 1,
+          p: 1.5,
+        }}
+      >
+        {levels.map(({ value, hex }, index) => (
+          <Box
+            key={value}
+            onClick={() => handleLevelSelect(activeControl, value)}
+            sx={{
+              backgroundColor: hex,
+              cursor: "pointer",
+              border: theme => `1px solid ${theme.palette.divider}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 60,
+              height: 60,
+              borderRadius: "50%",
+              color: value > 50 ? "black" : "white",
+              fontWeight: "medium",
+              fontSize: "2rem",
+              transition: "transform 0.2s ease",
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
+              mb: 1,
+              "&:last-child": {
+                mb: 0,
+              },
+            }}
+          >
+            {index + 1}
+          </Box>
+        ))}
+      </Paper>
     );
   };
 
   return (
-    <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="top" transition>
-      <ClickAwayListener onClickAway={onClose}>
+    <Portal>
+      <Box
+        sx={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: theme => theme.zIndex.modal - 1,
+        }}
+        onClick={onClose}
+      >
         <Paper
           elevation={4}
+          onClick={e => e.stopPropagation()}
           sx={{
+            position: "fixed",
+            left: `${rect.right + 10}px`,
+            top: `${rect.top}px`,
             p: 1.5,
             minWidth: 120,
+            zIndex: theme => theme.zIndex.modal,
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {microlight?.brightness_control && (
-              <Box
-                onClick={e => handleControlClick("brightness", e)}
-                sx={{
-                  p: 1,
-                  cursor: "pointer",
-                  borderRadius: 1,
-                  bgcolor: activeControl === "brightness" ? "primary.main" : "grey.100",
-                  color: activeControl === "brightness" ? "white" : "text.primary",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    bgcolor: activeControl === "brightness" ? "primary.dark" : "grey.200",
-                  },
-                }}
-              >
-                <Typography variant="body2">
-                  {"Brightness: "}
-                  {color.brightness || 100}
-                  {"%"}
-                </Typography>
-              </Box>
-            )}
-
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1, position: "relative" }}>
             {microlight?.saturation_control && (
               <Box
                 onClick={e => handleControlClick("saturation", e)}
@@ -142,17 +139,40 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
               >
                 <Typography variant="body2">
                   {"Saturation: "}
-                  {color.saturation || 100}
-                  {"%"}
+                  {color.saturation
+                    ? Math.ceil((color.saturation / 100) * (microlight.saturation_levels || 4))
+                    : microlight.saturation_levels || 4}
                 </Typography>
               </Box>
             )}
+            {microlight?.brightness_control && (
+              <Box
+                onClick={e => handleControlClick("brightness", e)}
+                sx={{
+                  p: 1,
+                  cursor: "pointer",
+                  borderRadius: 1,
+                  bgcolor: activeControl === "brightness" ? "primary.main" : "grey.100",
+                  color: activeControl === "brightness" ? "white" : "text.primary",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    bgcolor: activeControl === "brightness" ? "primary.dark" : "grey.200",
+                  },
+                }}
+              >
+                <Typography variant="body2">
+                  {"Brightness: "}
+                  {color.brightness
+                    ? Math.ceil((color.brightness / 100) * (microlight.brightness_levels || 4))
+                    : microlight.brightness_levels || 4}
+                </Typography>
+              </Box>
+            )}
+            {renderLevels()}
           </Box>
-
-          {renderLevels()}
         </Paper>
-      </ClickAwayListener>
-    </Popper>
+      </Box>
+    </Portal>
   );
 };
 

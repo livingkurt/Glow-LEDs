@@ -89,7 +89,7 @@ const hsvToHex = (h, s, v) => {
 };
 
 const generateBrightnessLevels = (h, s, levels) => {
-  const minBrightness = 25;
+  const minBrightness = 30;
   const maxBrightness = 100;
   const step = (maxBrightness - minBrightness) / (levels - 1);
 
@@ -103,7 +103,7 @@ const generateBrightnessLevels = (h, s, levels) => {
 };
 
 const generateSaturationLevels = (h, v, levels) => {
-  const minSaturation = 30;
+  const minSaturation = 40;
   const maxSaturation = 100;
   const step = (maxSaturation - minSaturation) / (levels - 1);
 
