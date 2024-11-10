@@ -28,14 +28,11 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
       };
     }
 
-    // First update the color
+    // Update the color
     onUpdate(updatedColor);
 
-    // Then close the controls after a small delay
-    setTimeout(() => {
-      setActiveControl(null);
-      onClose();
-    }, 50);
+    // Only close the active control menu
+    setActiveControl(null);
   };
 
   if (!anchorEl) return null;
@@ -48,8 +45,11 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
     const hsv = hexToHSV(color.colorCode);
     const levels =
       activeControl === "brightness"
-        ? generateBrightnessLevels(hsv.h, hsv.s, microlight.brightness_levels || 4)
-        : generateSaturationLevels(hsv.h, hsv.v, microlight.saturation_levels || 4);
+        ? generateBrightnessLevels(hsv.h, hsv.s, microlight?.brightness_levels || 4)
+        : generateSaturationLevels(hsv.h, hsv.v, microlight?.saturation_levels || 4);
+
+    // Sort levels from highest to lowest
+    const sortedLevels = levels.sort((a, b) => b.value - a.value);
 
     return (
       <Paper
@@ -62,36 +62,43 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
           p: 1.5,
         }}
       >
-        {levels.map(({ value, hex }, index) => (
-          <Box
-            key={value}
-            onClick={() => handleLevelSelect(activeControl, value)}
-            sx={{
-              backgroundColor: hex,
-              cursor: "pointer",
-              border: theme => `1px solid ${theme.palette.divider}`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              height: 60,
-              borderRadius: "50%",
-              color: value > 50 ? "black" : "white",
-              fontWeight: "medium",
-              fontSize: "2rem",
-              transition: "transform 0.2s ease",
-              "&:hover": {
-                transform: "scale(1.05)",
-              },
-              mb: 1,
-              "&:last-child": {
-                mb: 0,
-              },
-            }}
-          >
-            {index + 1}
-          </Box>
-        ))}
+        {sortedLevels.map(({ value, hex }, index) => {
+          // Calculate the level number (4,3,2,1) based on index
+          const levelNumber = sortedLevels.length - index;
+          // Calculate the actual value to use (map 4->100, 3->66.66, 2->33.33, 1->0)
+          const actualValue = ((levelNumber - 1) / (sortedLevels.length - 1)) * 100;
+
+          return (
+            <Box
+              key={value}
+              onClick={() => handleLevelSelect(activeControl, actualValue)}
+              sx={{
+                backgroundColor: hex,
+                cursor: "pointer",
+                border: theme => `1px solid ${theme.palette.divider}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 60,
+                height: 60,
+                borderRadius: "50%",
+                color: value > 50 ? "black" : "white",
+                fontWeight: "medium",
+                fontSize: "2rem",
+                transition: "transform 0.2s ease",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                },
+                mb: 1,
+                "&:last-child": {
+                  mb: 0,
+                },
+              }}
+            >
+              {levelNumber}
+            </Box>
+          );
+        })}
       </Paper>
     );
   };
@@ -129,11 +136,11 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
                   p: 1,
                   cursor: "pointer",
                   borderRadius: 1,
-                  bgcolor: activeControl === "saturation" ? "primary.main" : "grey.100",
+                  bgcolor: activeControl === "saturation" ? "grey.500" : "white",
                   color: activeControl === "saturation" ? "white" : "text.primary",
                   transition: "all 0.2s ease",
                   "&:hover": {
-                    bgcolor: activeControl === "saturation" ? "primary.dark" : "grey.200",
+                    bgcolor: activeControl === "saturation" ? "grey.600" : "grey.200",
                   },
                 }}
               >
@@ -152,11 +159,11 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
                   p: 1,
                   cursor: "pointer",
                   borderRadius: 1,
-                  bgcolor: activeControl === "brightness" ? "primary.main" : "grey.100",
+                  bgcolor: activeControl === "brightness" ? "grey.500" : "white",
                   color: activeControl === "brightness" ? "white" : "text.primary",
                   transition: "all 0.2s ease",
                   "&:hover": {
-                    bgcolor: activeControl === "brightness" ? "primary.dark" : "grey.200",
+                    bgcolor: activeControl === "brightness" ? "grey.600" : "grey.200",
                   },
                 }}
               >

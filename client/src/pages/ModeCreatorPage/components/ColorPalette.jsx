@@ -13,7 +13,7 @@ const ColorPalette = ({ colors }) => {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(60px, 1fr))",
             gap: 2,
-            p: 2,
+            // p: 2,
           }}
         >
           {colors.map((color, index) => (

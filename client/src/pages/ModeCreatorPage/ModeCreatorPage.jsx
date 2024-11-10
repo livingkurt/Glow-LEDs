@@ -105,30 +105,21 @@ const ModeCreatorPage = () => {
 
     const { source, destination } = result;
 
-    // If dropping from palette to slots
     if (source.droppableId === "color-palette" && destination.droppableId === "color-slots") {
-      const selectedColor = selectedMicrolight.colors[source.index];
+      const newColor = selectedMicrolight.colors[source.index];
+
+      // Add initial maximum levels if controls are enabled
+      const colorWithLevels = {
+        ...newColor,
+        brightness: selectedMicrolight?.brightness_control ? 100 : undefined, // Use 100 for max level
+        saturation: selectedMicrolight?.saturation_control ? 100 : undefined, // Use 100 for max level
+      };
+
       const newColors = [...mode.colors];
-
-      // Insert the color at the destination index
-      if (destination.index >= newColors.length) {
-        // If dropping beyond current array length, just push it
-        newColors.push(selectedColor);
-      } else {
-        // Insert at specific position
-        newColors.splice(destination.index, 0, selectedColor);
-      }
-
-      // Trim array if it exceeds max slots
-      if (newColors.length > selectedMicrolight.colors_per_mode) {
-        newColors.length = selectedMicrolight.colors_per_mode;
-      }
-
+      newColors.splice(destination.index, 0, colorWithLevels);
       setMode({ ...mode, colors: newColors });
-    }
-    // If reordering within slots
-    else if (source.droppableId === "color-slots" && destination.droppableId === "color-slots") {
-      const newColors = Array.from(mode.colors);
+    } else if (source.droppableId === "color-slots" && destination.droppableId === "color-slots") {
+      const newColors = [...mode.colors];
       const [removed] = newColors.splice(source.index, 1);
       newColors.splice(destination.index, 0, removed);
       setMode({ ...mode, colors: newColors });
