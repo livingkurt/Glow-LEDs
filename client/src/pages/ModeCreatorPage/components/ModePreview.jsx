@@ -1,90 +1,136 @@
 import { useEffect, useRef } from "react";
 import { Box, Paper, Typography } from "@mui/material";
-import PropTypes from "prop-types";
+
+const FRAME_RATE = 60; // 60fps
+const MS_PER_FRAME = 1000 / FRAME_RATE;
+
 const ModePreview = ({ mode }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
-  const timeRef = useRef(0);
+  const positionRef = useRef({ x: 0, direction: 1 });
+  const stateRef = useRef({
+    currentColorIndex: 0,
+    trailPositions: [],
+    colorTimer: 0,
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const width = canvas.width;
     const height = canvas.height;
+    const centerY = height / 2;
+    let lastTime = 0;
 
-    const drawLED = (x, y, color) => {
-      const { hue, saturation, brightness } = color;
-      const rgbaColor = `rgba(${hue.red}, ${hue.green}, ${hue.blue}, ${brightness / 100})`;
+    // Clear canvas with fade effect
+    const fadeCanvas = () => {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      ctx.fillRect(0, 0, width, height);
+    };
 
-      // Draw main LED circle
+    const drawLED = (x, y, color, alpha = 1) => {
+      const radius = 10;
+
+      // Draw glow effect
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius * 3);
+      gradient.addColorStop(
+        0,
+        `${color}${Math.floor(alpha * 255)
+          .toString(16)
+          .padStart(2, "0")}`
+      );
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
       ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
-      ctx.fillStyle = rgbaColor;
+      ctx.arc(x, y, radius * 3, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
       ctx.fill();
 
-      // Add glow effect
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, 40);
-      gradient.addColorStop(0, rgbaColor);
-      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+      // Draw core
       ctx.beginPath();
-      ctx.arc(x, y, 40, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
+      ctx.arc(x, y, radius * 0.8, 0, Math.PI * 2);
+      ctx.fillStyle = color;
       ctx.fill();
     };
 
+    const updateState = deltaTime => {
+      const pattern = mode.flashing_pattern;
+      const state = stateRef.current;
+
+      // Update color timer
+      state.colorTimer += deltaTime;
+      const colorDuration = (pattern.on_dur || 5) * 50; // Longer duration for smoother trails
+
+      // Change color when timer expires
+      if (state.colorTimer >= colorDuration) {
+        state.colorTimer = 0;
+        state.currentColorIndex = (state.currentColorIndex + 1) % mode.colors.length;
+      }
+
+      // Add new trail position
+      if (mode.colors.length > 0) {
+        state.trailPositions.push({
+          x: positionRef.current.x,
+          y: centerY,
+          color: mode.colors[state.currentColorIndex].colorCode,
+          age: 0,
+        });
+      }
+
+      // Age and remove old trail positions
+      state.trailPositions = state.trailPositions
+        .map(pos => ({ ...pos, age: pos.age + deltaTime }))
+        .filter(pos => pos.age < 500); // Keep trails longer
+    };
+
     const animate = timestamp => {
-      if (!timeRef.current) timeRef.current = timestamp;
-      const progress = timestamp - timeRef.current;
+      if (!lastTime) lastTime = timestamp;
+      const deltaTime = timestamp - lastTime;
 
-      ctx.clearRect(0, 0, width, height);
+      if (deltaTime >= MS_PER_FRAME) {
+        // Fade previous frame
+        fadeCanvas();
 
-      const colors = [...mode.colors];
-      if (colors.length === 0) return;
+        // Update position with smoother movement
+        const speed = 4;
+        positionRef.current.x += positionRef.current.direction * speed;
 
-      const spacing = width / (colors.length + 1);
-
-      colors.forEach((color, index) => {
-        let adjustedColor = { ...color };
-
-        if (mode.flashing_pattern.name !== "solid") {
-          const cycleSpeed = (101 - mode.flashing_pattern.speed) * 20; // Invert speed so higher = faster
-          const cycle = (progress % cycleSpeed) / cycleSpeed;
-
-          switch (mode.flashing_pattern.name) {
-            case "strobe":
-              adjustedColor.brightness = cycle > 0.5 ? color.brightness : 0;
-              break;
-            case "fade":
-              adjustedColor.brightness = Math.sin(cycle * Math.PI * 2) * 50 + 50;
-              break;
-            case "rainbow":
-              const hueShift = (cycle + index / colors.length) * 360;
-              const rgb = hslToRgb(hueShift, color.saturation / 100, color.brightness / 100);
-              adjustedColor.hue = {
-                red: Math.round(rgb[0] * 255),
-                green: Math.round(rgb[1] * 255),
-                blue: Math.round(rgb[2] * 255),
-              };
-              break;
-          }
-
-          if (mode.flashing_pattern.direction === "backward") {
-            const reverseIndex = colors.length - 1 - index;
-            drawLED(spacing * (reverseIndex + 1), height / 2, adjustedColor);
-          } else if (mode.flashing_pattern.direction === "alternate") {
-            const alternateIndex = cycle > 0.5 ? index : colors.length - 1 - index;
-            drawLED(spacing * (alternateIndex + 1), height / 2, adjustedColor);
-          } else {
-            drawLED(spacing * (index + 1), height / 2, adjustedColor);
-          }
-        } else {
-          drawLED(spacing * (index + 1), height / 2, color);
+        // Reverse direction at edges with some padding
+        if (positionRef.current.x >= width - 50 || positionRef.current.x <= 50) {
+          positionRef.current.direction *= -1;
         }
-      });
+
+        // Update pattern state
+        updateState(deltaTime);
+
+        // Draw all trails
+        const state = stateRef.current;
+        state.trailPositions.forEach(pos => {
+          const alpha = Math.max(0, 1 - pos.age / 500);
+          drawLED(pos.x, pos.y, pos.color, alpha * 0.8); // Slightly reduce trail opacity
+        });
+
+        // Draw current LED
+        if (mode.colors.length > 0) {
+          const currentColor = mode.colors[state.currentColorIndex];
+          drawLED(positionRef.current.x, centerY, currentColor.colorCode, 1);
+        }
+
+        lastTime = timestamp;
+      }
 
       animationRef.current = requestAnimationFrame(animate);
     };
 
+    // Initialize position and state
+    positionRef.current = { x: width / 2, direction: 1 };
+    stateRef.current = {
+      currentColorIndex: 0,
+      trailPositions: [],
+      colorTimer: 0,
+    };
+
+    // Start animation
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
@@ -94,36 +140,10 @@ const ModePreview = ({ mode }) => {
     };
   }, [mode]);
 
-  // Helper function to convert HSL to RGB
-  const hslToRgb = (h, s, l) => {
-    let r, g, b;
-
-    if (s === 0) {
-      r = g = b = l;
-    } else {
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-        return p;
-      };
-
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      r = hue2rgb(p, q, h / 360 + 1 / 3);
-      g = hue2rgb(p, q, h / 360);
-      b = hue2rgb(p, q, h / 360 - 1 / 3);
-    }
-
-    return [r, g, b];
-  };
-
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
       <Typography variant="h6" gutterBottom>
-        {"Preview"}
+        {"Pattern Preview"}
       </Typography>
       <Box
         sx={{
@@ -145,12 +165,12 @@ const ModePreview = ({ mode }) => {
           }}
         />
       </Box>
+      <Typography variant="caption" color="text.secondary" sx={{ display: "block", textAlign: "center", mt: 1 }}>
+        {"Pattern: "}
+        {mode.flashing_pattern.name}
+      </Typography>
     </Paper>
   );
-};
-
-ModePreview.propTypes = {
-  mode: PropTypes.object.isRequired,
 };
 
 export default ModePreview;

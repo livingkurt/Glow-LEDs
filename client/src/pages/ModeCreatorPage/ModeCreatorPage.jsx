@@ -39,6 +39,7 @@ const ModeCreatorPage = () => {
   });
 
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
+  const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);
 
   useEffect(() => {
     if (id) {
@@ -97,19 +98,20 @@ const ModeCreatorPage = () => {
       ...mode,
       microlight: event.target.value,
       colors: [], // Reset colors when microlight changes
-      flashing_pattern: {
-        name: selectedMicrolight.flashing_patterns[0]?.name, // Set first available pattern
-        type: selectedMicrolight.flashing_patterns[0]?.type, // Set first available pattern
-        on_dur: selectedMicrolight.flashing_patterns[0]?.on_dur || 5, // Set first available pattern
-        off_dur: selectedMicrolight.flashing_patterns[0]?.off_dur || 8, // Set first available pattern
-        gap_dur: selectedMicrolight.flashing_patterns[0]?.gap_dur || 0, // Set first available pattern
-        dash_dur: selectedMicrolight.flashing_patterns[0]?.dash_dur || 0, // Set first available pattern
-        group_size: selectedMicrolight.flashing_patterns[0]?.group_size || 0, // Set first available pattern
-        blend_speed: selectedMicrolight.flashing_patterns[0]?.blend_speed || 0, // Set first available pattern
+      flashing_pattern: selectedMicrolight.flashing_patterns[0] || {
+        // Set first available pattern
+        name: "",
+        type: "",
+        on_dur: 5,
+        off_dur: 8,
+        gap_dur: 0,
+        dash_dur: 0,
+        group_size: 0,
+        blend_speed: 0,
       },
     });
   };
-  const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);
+
   const handleDragEnd = result => {
     if (!result.destination) return;
 
@@ -121,8 +123,8 @@ const ModeCreatorPage = () => {
       // Add initial maximum levels if controls are enabled
       const colorWithLevels = {
         ...newColor,
-        brightness: selectedMicrolight?.brightness_control ? 100 : undefined, // Use 100 for max level
-        saturation: selectedMicrolight?.saturation_control ? 100 : undefined, // Use 100 for max level
+        brightness: selectedMicrolight?.brightness_control ? 100 : undefined,
+        saturation: selectedMicrolight?.saturation_control ? 100 : undefined,
       };
 
       const newColors = [...mode.colors];
@@ -135,6 +137,7 @@ const ModeCreatorPage = () => {
       setMode({ ...mode, colors: newColors });
     }
   };
+
   if (loading || microlightsLoading) {
     return <GLLoading />;
   }
@@ -173,6 +176,7 @@ const ModeCreatorPage = () => {
               fullWidth
             />
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               select
@@ -188,6 +192,7 @@ const ModeCreatorPage = () => {
               ))}
             </TextField>
           </Grid>
+
           {mode.microlight && (
             <DragDropContext onDragEnd={handleDragEnd}>
               <Grid item xs={12}>
@@ -220,15 +225,17 @@ const ModeCreatorPage = () => {
               </Grid>
             </DragDropContext>
           )}
-          {mode.microlight ? (
+
+          {mode.microlight && (
             <>
               <Grid item xs={12}>
                 <PatternSelector
                   pattern={mode.flashing_pattern}
-                  patterns={microlights?.find(m => m._id === mode.microlight)?.flashing_patterns || []}
+                  microlight={selectedMicrolight}
                   onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <ModePreview mode={mode} />
               </Grid>
@@ -244,7 +251,9 @@ const ModeCreatorPage = () => {
                 </Box>
               </Grid>
             </>
-          ) : (
+          )}
+
+          {!mode.microlight && (
             <Grid item xs={12}>
               <Typography variant="h6" textAlign="center">
                 {"Please select a microlight first"}
