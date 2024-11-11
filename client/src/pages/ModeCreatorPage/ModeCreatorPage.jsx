@@ -37,6 +37,7 @@ const ModeCreatorPage = () => {
     },
     visibility: "public",
   });
+  console.log({ mode });
 
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);

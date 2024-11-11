@@ -104,7 +104,7 @@ export default [
       "space-before-function-paren": "off",
       "no-console": "error",
       "no-alert": "error",
-      "react/require-default-props": "error",
+      "react/require-default-props": "off",
       "react/forbid-prop-types": "off",
       "react/function-component-definition": [
         1,

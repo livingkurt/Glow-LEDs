@@ -1,263 +1,404 @@
-import { useState, useEffect, useRef } from "react";
-import { Box, Slider, Select, MenuItem, Typography, Button, Stack } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Slider, Box, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-const ModePreview = () => {
+// Custom styled components
+const AnimationSlider = styled(Slider)({
+  color: "#1976d2",
+  "& .MuiSlider-thumb": {
+    backgroundColor: "#fff",
+  },
+  "& .MuiSlider-track": {
+    border: "none",
+  },
+  "& .MuiSlider-rail": {
+    opacity: 0.5,
+    backgroundColor: "#bfbfbf",
+  },
+});
+
+const ControlsContainer = styled(Box)({
+  backgroundColor: "rgba(30, 30, 30, 0.9)",
+  borderRadius: "8px",
+  padding: "16px",
+  marginTop: "16px",
+});
+
+const SliderContainer = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "16px",
+  marginBottom: "16px",
+});
+
+const PatternState = {
+  STATE_DISABLED: 0,
+  STATE_BLINK_ON: 1,
+  STATE_BLINK_OFF: 2,
+  STATE_BEGIN_GAP: 3,
+  STATE_IN_GAP: 4,
+  STATE_BEGIN_DASH: 5,
+  STATE_IN_DASH: 6,
+  STATE_BEGIN_GAP2: 7,
+  STATE_IN_GAP2: 8,
+};
+
+const ModePreview = ({ mode }) => {
+  // Animation control states
+  const [speed, setSpeed] = useState(100);
+  const [trailLength, setTrailLength] = useState(50);
+  const [size, setSize] = useState(50);
+  const [blur, setBlur] = useState(50);
+  const [radius, setRadius] = useState(70);
+
   const canvasRef = useRef(null);
-  const animationFrameRef = useRef();
+  const animationRef = useRef(null);
+  const stateRef = useRef(PatternState.STATE_BLINK_ON);
+  const lastUpdateTimeRef = useRef(0);
+  const currentColorIndexRef = useRef(0);
+  const groupCounterRef = useRef(0);
+  const blendCurrentColorRef = useRef(null);
+  const blendNextColorRef = useRef(null);
+  const trailRef = useRef([]);
   const angleRef = useRef(0);
 
-  // Control state
-  const [shape, setShape] = useState("circle");
-  const [tickRate, setTickRate] = useState(3);
-  const [trailSize, setTrailSize] = useState(100);
-  const [dotSize, setDotSize] = useState(25);
-  const [blurFac, setBlurFac] = useState(5);
-  const [circleRadius, setCircleRadius] = useState(400);
-  const [isAnimating, setIsAnimating] = useState(true);
+  // Convert slider values to actual parameters
+  const getAnimationParams = () => ({
+    rotationSpeed: 0.01 + (speed / 100) * 0.09,
+    trailLength: Math.floor(16 + (trailLength / 100) * 48),
+    dotSize: 2 + (size / 100) * 6,
+    blurAmount: 1 + (blur / 100) * 4,
+    circleRadius: 20 + (radius / 100) * 40,
+  });
 
-  // Pattern state
-  const colors = [
-    { red: 255, green: 0, blue: 0 },
-    { red: 0, green: 255, blue: 0 },
-    { red: 0, green: 0, blue: 255 },
-  ];
+  // Ensure pattern values are numbers with defaults
+  const pattern = {
+    ...mode.flashing_pattern,
+    on_dur: Number(mode.flashing_pattern.on_dur) || 0,
+    off_dur: mode.flashing_pattern.off_dur === null ? 0 : Number(mode.flashing_pattern.off_dur) || 0,
+    gap_dur: Number(mode.flashing_pattern.gap_dur) || 0,
+    dash_dur: Number(mode.flashing_pattern.dash_dur) || 0,
+    group_size: Number(mode.flashing_pattern.group_size) || 0,
+    blend_speed: Number(mode.flashing_pattern.blend_speed) || 0,
+  };
 
-  const histories = useRef(colors.map(() => []));
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-
-    const resizeCanvas = () => {
-      canvas.width = canvas.parentElement.clientWidth || window.innerWidth;
-      canvas.height = canvas.parentElement.clientHeight || window.innerHeight;
-      ctx.fillStyle = "rgba(0, 0, 0, 1)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, []);
-
-  const calculatePosition = (centerX, centerY, radius, currentAngle, colorIndex) => {
-    const offsetAngle = currentAngle + colorIndex * ((2 * Math.PI) / colors.length);
-
-    switch (shape) {
-      case "figure8":
-        return {
-          x: centerX + (radius * Math.sin(offsetAngle)) / (1 + Math.cos(offsetAngle) * Math.cos(offsetAngle)),
-          y:
-            centerY +
-            (radius * Math.sin(offsetAngle) * Math.cos(offsetAngle)) /
-              (1 + Math.cos(offsetAngle) * Math.cos(offsetAngle)),
-        };
-      case "heart": {
-        const scale = circleRadius / 20 + 1;
-        return {
-          x: centerX + scale * 16 * Math.pow(Math.sin(offsetAngle), 3),
-          y:
-            centerY -
-            scale *
-              (13 * Math.cos(offsetAngle) -
-                5 * Math.cos(2 * offsetAngle) -
-                2 * Math.cos(3 * offsetAngle) -
-                Math.cos(4 * offsetAngle)),
-        };
-      }
-      case "box": {
-        const boxSize = radius;
-        const halfBoxSize = boxSize / 2;
-        const fullPerimeter = 4 * boxSize;
-        const perimeterPosition = (offsetAngle * fullPerimeter) % fullPerimeter;
-
-        if (perimeterPosition < boxSize) {
-          return {
-            x: centerX - halfBoxSize + perimeterPosition,
-            y: centerY - halfBoxSize,
-          };
-        } else if (perimeterPosition < 2 * boxSize) {
-          return {
-            x: centerX + halfBoxSize,
-            y: centerY - halfBoxSize + (perimeterPosition - boxSize),
-          };
-        } else if (perimeterPosition < 3 * boxSize) {
-          return {
-            x: centerX + halfBoxSize - (perimeterPosition - 2 * boxSize),
-            y: centerY + halfBoxSize,
-          };
-        } else {
-          return {
-            x: centerX - halfBoxSize,
-            y: centerY + halfBoxSize - (perimeterPosition - 3 * boxSize),
-          };
+  const hexToRgb = hex => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          red: parseInt(result[1], 16),
+          green: parseInt(result[2], 16),
+          blue: parseInt(result[3], 16),
         }
-      }
-      case "circle":
-      default:
-        return {
-          x: centerX + radius * Math.cos(offsetAngle),
-          y: centerY + radius * Math.sin(offsetAngle),
-        };
+      : null;
+  };
+
+  const interpolate = (current, next, blendSpeed) => {
+    if (current === next) return current;
+    if (current < next) {
+      const step = Math.min(blendSpeed, next - current);
+      return current + step;
+    } else {
+      const step = Math.min(blendSpeed, current - next);
+      return current - step;
     }
   };
 
-  const animate = () => {
-    if (!isAnimating) return;
+  const getPosition = (angle, radius) => {
+    const centerX = canvasRef.current.width / 2;
+    const centerY = canvasRef.current.height / 2;
+    return {
+      x: centerX + Math.cos(angle) * radius,
+      y: centerY + Math.sin(angle) * radius,
+    };
+  };
 
+  const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = Math.min(centerX, centerY) - (500 - circleRadius);
+    const params = getAnimationParams();
 
-    // Update angle
-    angleRef.current += 0.02;
-    if (angleRef.current >= 2 * Math.PI) {
-      angleRef.current = 0;
-    }
-
-    // Update histories
-    colors.forEach((color, index) => {
-      const history = histories.current[index];
-
-      for (let i = 0; i < tickRate; i++) {
-        const position = calculatePosition(centerX, centerY, radius, angleRef.current, index);
-        history.push({
-          ...position,
-          color,
-        });
-      }
-
-      while (history.length > trailSize) {
-        history.shift();
-      }
-    });
-
-    // Draw frame
-    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    // Fill black background
+    ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    histories.current.forEach(history => {
-      history.forEach((point, index) => {
-        const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, dotSize);
-        const innerAlpha = (1 - (history.length - 1 - index) / history.length).toFixed(2);
-        const outerAlpha = blurFac !== 0 ? (innerAlpha / blurFac).toFixed(2) : innerAlpha;
+    // Draw motion circle guide
+    ctx.beginPath();
+    ctx.strokeStyle = "rgba(255,255,255,0)";
+    ctx.arc(canvas.width / 2, canvas.height / 2, params.circleRadius, 0, Math.PI * 2);
+    ctx.stroke();
 
-        gradient.addColorStop(0, `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${innerAlpha})`);
-        gradient.addColorStop(
-          0.8,
-          `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${outerAlpha})`
-        );
-        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    // Draw trail segments with blur effect
+    trailRef.current.forEach((point, index) => {
+      if (!point.color) return;
 
-        ctx.fillStyle = gradient;
+      const alpha = (index / params.trailLength) * 0.8;
+      if (index > 0 && trailRef.current[index - 1]) {
         ctx.beginPath();
-        ctx.arc(point.x, point.y, dotSize, 0, 2 * Math.PI);
-        ctx.fill();
-      });
+        ctx.shadowBlur = params.blurAmount * 5;
+        ctx.shadowColor = `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${alpha})`;
+        ctx.strokeStyle = `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${alpha})`;
+        ctx.lineWidth = params.dotSize;
+        ctx.lineCap = "round";
+        ctx.moveTo(trailRef.current[index - 1].x, trailRef.current[index - 1].y);
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+      }
     });
 
-    animationFrameRef.current = requestAnimationFrame(animate);
+    ctx.shadowBlur = 0;
+
+    // Draw current LED position
+    const currentPos = trailRef.current[0];
+    if (currentPos && currentPos.color) {
+      // Draw glow
+      const gradient = ctx.createRadialGradient(
+        currentPos.x,
+        currentPos.y,
+        0,
+        currentPos.x,
+        currentPos.y,
+        params.dotSize * 3
+      );
+      gradient.addColorStop(
+        0,
+        `rgba(${currentPos.color.red}, ${currentPos.color.green}, ${currentPos.color.blue}, 0.8)`
+      );
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(currentPos.x, currentPos.y, params.dotSize * 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw LED
+      ctx.beginPath();
+      ctx.fillStyle = `rgb(${currentPos.color.red}, ${currentPos.color.green}, ${currentPos.color.blue})`;
+      ctx.arc(currentPos.x, currentPos.y, params.dotSize, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  };
+
+  const updateTrail = (color, intensity = 1) => {
+    let rgbColor;
+    if (typeof color === "string") {
+      rgbColor = hexToRgb(color);
+    } else {
+      rgbColor = { ...color };
+    }
+
+    if (intensity !== 1) {
+      rgbColor.red = Math.floor(rgbColor.red * intensity);
+      rgbColor.green = Math.floor(rgbColor.green * intensity);
+      rgbColor.blue = Math.floor(rgbColor.blue * intensity);
+    }
+
+    const params = getAnimationParams();
+    const newPos = getPosition(angleRef.current, params.circleRadius);
+    angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
+
+    trailRef.current.unshift({
+      x: newPos.x,
+      y: newPos.y,
+      color: rgbColor,
+    });
+
+    if (trailRef.current.length > params.trailLength) {
+      trailRef.current.pop();
+    }
+
+    drawTrail();
+  };
+
+  const initPattern = () => {
+    currentColorIndexRef.current = 0;
+    groupCounterRef.current = pattern.group_size || mode.colors.length - (pattern.dash_dur ? 1 : 0);
+
+    if ((!pattern.on_dur && !pattern.dash_dur) || mode.colors.length === 0) {
+      stateRef.current = PatternState.STATE_DISABLED;
+    } else if (pattern.dash_dur > 0) {
+      stateRef.current = PatternState.STATE_BEGIN_DASH;
+    } else {
+      stateRef.current = PatternState.STATE_BLINK_ON;
+    }
+
+    if (pattern.blend_speed > 0) {
+      blendCurrentColorRef.current = hexToRgb(mode.colors[0].colorCode);
+      blendNextColorRef.current = hexToRgb(mode.colors[1 % mode.colors.length].colorCode);
+    }
   };
 
   useEffect(() => {
-    if (isAnimating) {
-      animationFrameRef.current = requestAnimationFrame(animate);
-    }
+    initPattern();
+    trailRef.current = [];
+
+    const animate = timestamp => {
+      if (!lastUpdateTimeRef.current) {
+        lastUpdateTimeRef.current = timestamp;
+      }
+
+      const deltaTime = timestamp - lastUpdateTimeRef.current;
+      let duration = pattern.on_dur;
+
+      if (pattern.blend_speed > 0) {
+        const current = blendCurrentColorRef.current;
+        const next = blendNextColorRef.current;
+
+        current.red = interpolate(current.red, next.red, pattern.blend_speed);
+        current.green = interpolate(current.green, next.green, pattern.blend_speed);
+        current.blue = interpolate(current.blue, next.blue, pattern.blend_speed);
+
+        updateTrail(current);
+
+        if (current.red === next.red && current.green === next.green && current.blue === next.blue) {
+          blendCurrentColorRef.current = { ...next };
+          const nextColorIndex = (currentColorIndexRef.current + 2) % mode.colors.length;
+          blendNextColorRef.current = hexToRgb(mode.colors[nextColorIndex].colorCode);
+          currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
+        }
+      } else {
+        switch (stateRef.current) {
+          case PatternState.STATE_DISABLED:
+            updateTrail(mode.colors[0].colorCode, 0.1);
+            break;
+
+          case PatternState.STATE_BLINK_ON:
+            updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
+            break;
+
+          case PatternState.STATE_BLINK_OFF:
+            updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
+            duration = pattern.off_dur;
+            break;
+
+          case PatternState.STATE_IN_GAP:
+          case PatternState.STATE_IN_GAP2:
+            updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
+            duration = pattern.gap_dur;
+            break;
+
+          case PatternState.STATE_IN_DASH:
+            updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
+            duration = pattern.dash_dur;
+            break;
+        }
+
+        if (deltaTime >= duration) {
+          if (stateRef.current === PatternState.STATE_BLINK_ON) {
+            groupCounterRef.current--;
+            if (groupCounterRef.current > 0) {
+              if (pattern.off_dur > 0) {
+                stateRef.current = PatternState.STATE_BLINK_OFF;
+              } else {
+                currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
+                stateRef.current = PatternState.STATE_BLINK_ON;
+              }
+            } else {
+              stateRef.current =
+                pattern.gap_dur > 0
+                  ? PatternState.STATE_IN_GAP
+                  : pattern.dash_dur > 0
+                    ? PatternState.STATE_BEGIN_DASH
+                    : PatternState.STATE_BLINK_ON;
+              if (stateRef.current === PatternState.STATE_BLINK_ON) {
+                initPattern();
+              }
+            }
+          } else if (stateRef.current === PatternState.STATE_BLINK_OFF) {
+            stateRef.current = PatternState.STATE_BLINK_ON;
+            currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
+          } else if (stateRef.current === PatternState.STATE_IN_GAP) {
+            stateRef.current = pattern.dash_dur > 0 ? PatternState.STATE_IN_DASH : PatternState.STATE_BLINK_ON;
+            if (stateRef.current === PatternState.STATE_BLINK_ON) {
+              initPattern();
+            }
+          } else if (stateRef.current === PatternState.STATE_IN_DASH) {
+            stateRef.current = pattern.gap_dur > 0 ? PatternState.STATE_IN_GAP2 : PatternState.STATE_BLINK_ON;
+            if (stateRef.current === PatternState.STATE_BLINK_ON) {
+              initPattern();
+            }
+          } else if (stateRef.current === PatternState.STATE_IN_GAP2) {
+            stateRef.current = PatternState.STATE_BLINK_ON;
+            initPattern();
+          }
+
+          lastUpdateTimeRef.current = timestamp;
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isAnimating, tickRate, trailSize, dotSize, blurFac, circleRadius, shape]);
+  }, [mode, pattern]);
 
   return (
-    <Stack spacing={2} sx={{ width: "100%" }}>
-      <Box sx={{ p: 2, bgcolor: "background.paper", borderRadius: 1 }}>
-        <Typography variant="h6" gutterBottom>
-          {"Animation Controls"}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <canvas
+        ref={canvasRef}
+        width={120}
+        height={120}
+        style={{ width: "100%", backgroundColor: "black", borderRadius: "8px" }}
+      />
+
+      <ControlsContainer>
+        <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
+          {"Animation"}
         </Typography>
-        <Stack spacing={2}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography sx={{ minWidth: 100 }}>{"Shape:"}</Typography>
-            <Select value={shape} onChange={e => setShape(e.target.value)} size="small" sx={{ minWidth: 120 }}>
-              <MenuItem value="circle">{"Circle"}</MenuItem>
-              <MenuItem value="figure8">{"Figure 8"}</MenuItem>
-              <MenuItem value="heart">{"Heart"}</MenuItem>
-              <MenuItem value="box">{"Box"}</MenuItem>
-            </Select>
-          </Box>
 
-          <Box>
-            <Typography gutterBottom>{"Speed"}</Typography>
-            <Slider
-              value={tickRate}
-              onChange={(e, value) => setTickRate(value)}
-              min={1}
-              max={30}
-              valueLabelDisplay="auto"
-            />
-          </Box>
+        <SliderContainer>
+          <AnimationSlider value={speed} onChange={(_, value) => setSpeed(value)} aria-label="Speed" />
+          <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
+        </SliderContainer>
+        <SliderContainer>
+          <AnimationSlider value={trailLength} onChange={(_, value) => setTrailLength(value)} aria-label="Trail" />
+          <Typography sx={{ color: "white", width: 80 }}>{"Trail"}</Typography>
+        </SliderContainer>
 
-          <Box>
-            <Typography gutterBottom>{"Trail"}</Typography>
-            <Slider
-              value={trailSize}
-              onChange={(e, value) => setTrailSize(value)}
-              min={1}
-              max={300}
-              valueLabelDisplay="auto"
-            />
-          </Box>
+        <SliderContainer>
+          <AnimationSlider value={size} onChange={(_, value) => setSize(value)} aria-label="Size" />
+          <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
+        </SliderContainer>
 
-          <Box>
-            <Typography gutterBottom>{"Size"}</Typography>
-            <Slider
-              value={dotSize}
-              onChange={(e, value) => setDotSize(value)}
-              min={5}
-              max={50}
-              valueLabelDisplay="auto"
-            />
-          </Box>
+        <SliderContainer>
+          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" />
+          <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
+        </SliderContainer>
 
-          <Box>
-            <Typography gutterBottom>{"Blur"}</Typography>
-            <Slider
-              value={blurFac}
-              onChange={(e, value) => setBlurFac(value)}
-              min={1}
-              max={10}
-              valueLabelDisplay="auto"
-            />
-          </Box>
-
-          <Box>
-            <Typography gutterBottom>{"Radius"}</Typography>
-            <Slider
-              value={circleRadius}
-              onChange={(e, value) => setCircleRadius(value)}
-              min={0}
-              max={600}
-              valueLabelDisplay="auto"
-            />
-          </Box>
-        </Stack>
-      </Box>
+        <SliderContainer>
+          <AnimationSlider value={radius} onChange={(_, value) => setRadius(value)} aria-label="Radius" />
+          <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
+        </SliderContainer>
+      </ControlsContainer>
 
       <Box
-        sx={{ width: "100%", height: 600, bgcolor: "black", borderRadius: 1, overflow: "hidden", position: "relative" }}
+        sx={{
+          textAlign: "center",
+          color: "text.secondary",
+          typography: "body2",
+          mt: 2,
+        }}
       >
-        <canvas ref={canvasRef} className="absolute inset-0" />
+        {"Pattern: "}
+        {pattern.name}
+        <br />
+        {mode.colors.length}
+        {" colors • "}
+        {pattern.on_dur}
+        {"ms on"}
+        {pattern.off_dur > 0 && ` • ${pattern.off_dur}ms off`}
+        {pattern.gap_dur > 0 && ` • ${pattern.gap_dur}ms gap`}
+        {pattern.dash_dur > 0 && ` • ${pattern.dash_dur}ms dash`}
+        {pattern.group_size > 0 && ` • group of ${pattern.group_size}`}
+        {pattern.blend_speed > 0 && ` • blend speed ${pattern.blend_speed}`}
       </Box>
-
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button variant="contained" onClick={() => setIsAnimating(!isAnimating)}>
-          {isAnimating ? "Pause" : "Play"}
-        </Button>
-      </Box>
-    </Stack>
+    </Box>
   );
 };
 
