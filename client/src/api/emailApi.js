@@ -84,7 +84,6 @@ export const sendContactEmail = createAsyncThunk(
   async (contact_info, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.post("/api/emails/contact", contact_info);
-      axios.post("/api/emails/contact_confirmation", contact_info);
       dispatch(showSuccess({ message: `Contact Email Sent` }));
       return data;
     } catch (error) {

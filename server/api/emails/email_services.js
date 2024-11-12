@@ -330,31 +330,30 @@ export default {
     await sendEmail(mailOptions);
     return name;
   },
-  send_user_contact_emails_s: async ({ email, first_name, reason_for_contact, ...rest }) => {
-    const mailOptions = {
+  send_contact_emails_s: async ({ email, first_name, reason_for_contact, ...rest }) => {
+    const adminMailOptions = {
       to: config.DISPLAY_CONTACT_EMAIL,
-      from: email,
+      from: config.DISPLAY_INFO_EMAIL,
       replyTo: email,
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: ContactTemplate({ email, first_name, reason_for_contact, ...rest }),
     };
-    await sendEmail(mailOptions);
-    return first_name;
-  },
-  send_admin_contact_emails_s: async ({ email, first_name, ...rest }) => {
-    const mailOptions = {
-      from: config.DISPLAY_CONTACT_EMAIL,
+    await sendEmail(adminMailOptions);
+
+    const userMailOptions = {
       to: email,
-      replyTo: email,
+      from: config.DISPLAY_INFO_EMAIL,
+      replyTo: config.DISPLAY_CONTACT_EMAIL,
       subject: "Thank you for Contacting Glow LEDs Support",
       html: ContactConfirmationTemplate({ email, first_name, ...rest }),
     };
-    await sendEmail(mailOptions);
+    await sendEmail(userMailOptions);
     return first_name;
   },
+
   send_custom_contact_emails_s: async ({ order, email }) => {
     const mailOptions = {
-      from: config.DISPLAY_CONTACT_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Thank you for ordering a custom Glow LEDs Product!",
       html: CustomContactTemplate({ order }),

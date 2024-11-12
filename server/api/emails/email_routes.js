@@ -20,8 +20,7 @@ router.route("/code_used/:promo_code").post(email_controller.send_code_used_emai
 router.route("/view_announcement").post(email_controller.view_announcement_emails_c);
 
 router.route("/external_contact").post(cors(), email_controller.send_external_contact_emails_c);
-router.route("/contact").post(email_controller.send_user_contact_emails_c);
-router.route("/contact_confirmation").post(email_controller.send_admin_contact_emails_c);
+router.route("/contact").post(email_controller.send_contact_emails_c);
 router.route("/custom_contact").post(email_controller.send_custom_contact_emails_c);
 router.route("/verify_email_password_reset").post(email_controller.send_verify_email_password_reset_emails_c);
 router.route("/reset_password").post(email_controller.send_successful_password_reset_emails_c);
