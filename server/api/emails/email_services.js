@@ -338,7 +338,6 @@ export default {
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: ContactTemplate({ email, first_name, reason_for_contact, ...rest }),
     };
-    console.log({ adminMailOptions });
     await sendEmail(adminMailOptions);
 
     const userMailOptions = {
@@ -348,7 +347,6 @@ export default {
       subject: "Thank you for Contacting Glow LEDs Support",
       html: ContactConfirmationTemplate({ email, first_name, ...rest }),
     };
-    console.log({ userMailOptions });
     await sendEmail(userMailOptions);
     return first_name;
   },
