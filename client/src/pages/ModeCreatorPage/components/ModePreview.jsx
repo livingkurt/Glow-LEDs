@@ -50,7 +50,13 @@ const ModePreview = ({ mode }) => {
         </Typography>
 
         <SliderContainer>
-          <AnimationSlider value={speed} onChange={(_, value) => setSpeed(value)} aria-label="Speed" />
+          <AnimationSlider
+            value={speed}
+            onChange={(_, value) => setSpeed(value)}
+            aria-label="Speed"
+            min={50}
+            max={150}
+          />
           <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
         </SliderContainer>
         <SliderContainer>
@@ -59,7 +65,13 @@ const ModePreview = ({ mode }) => {
         </SliderContainer>
 
         <SliderContainer>
-          <AnimationSlider value={size} onChange={(_, value) => setSize(value)} aria-label="Size" />
+          <AnimationSlider
+            value={size}
+            onChange={(_, value) => setSize(value)}
+            aria-label="Size"
+            min={100}
+            max={1000}
+          />
           <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
         </SliderContainer>
 
@@ -69,7 +81,13 @@ const ModePreview = ({ mode }) => {
         </SliderContainer>
 
         <SliderContainer>
-          <AnimationSlider value={radius} onChange={(_, value) => setRadius(value)} aria-label="Radius" />
+          <AnimationSlider
+            value={radius}
+            onChange={(_, value) => setRadius(value)}
+            aria-label="Radius"
+            min={0}
+            max={1000}
+          />
           <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
         </SliderContainer>
       </ControlsContainer>
