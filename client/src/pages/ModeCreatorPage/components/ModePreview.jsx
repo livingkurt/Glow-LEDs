@@ -76,7 +76,7 @@ const ModePreview = ({ mode }) => {
         </SliderContainer>
 
         <SliderContainer>
-          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" />
+          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" min={0} max={200} />
           <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
         </SliderContainer>
 

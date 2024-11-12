@@ -1,5 +1,5 @@
 // useModePreview.jsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } from "../modeCreatorPageHelpers";
 
 export const useModePreview = ({ mode }) => {
@@ -20,6 +20,38 @@ export const useModePreview = ({ mode }) => {
   const blendNextColorRef = useRef(null);
   const trailRef = useRef([]);
   const angleRef = useRef(0);
+
+  useLayoutEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    const resizeCanvas = () => {
+      // Get the device pixel ratio
+      const dpr = window.devicePixelRatio || 1;
+
+      // Get the size of the canvas in CSS pixels.
+      const rect = canvas.getBoundingClientRect();
+
+      // Set the canvas width and height to be scaled by the device pixel ratio.
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+
+      // Scale the context to match the device pixel ratio.
+      ctx.scale(dpr, dpr);
+
+      // Enable antialiasing for the canvas
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+    };
+
+    resizeCanvas();
+
+    window.addEventListener("resize", resizeCanvas);
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
 
   useEffect(() => {
     // Enable antialiasing for the canvas
@@ -43,72 +75,31 @@ export const useModePreview = ({ mode }) => {
     const ctx = canvas.getContext("2d");
     const params = getAnimationParams(speed, trailLength, size, blur, radius);
 
-    // Fill black background
-    ctx.fillStyle = "black";
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw background
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw motion circle guide
-    ctx.beginPath();
-    ctx.strokeStyle = "rgba(255,255,255,0)";
-    ctx.arc(canvas.width / 2, canvas.height / 2, params.circleRadius, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // Draw trail segments with blur effect
+    // Draw trail points
     trailRef.current.forEach((point, index) => {
-      if (!point.color || !trailRef.current[index - 1]) return;
+      if (!point.color) return;
 
-      const alpha = Math.pow(1 - index / params.trailLength, 1.5) * 0.9; // Smoother falloff
+      const innerAlpha = (1 - index / params.trailLength).toFixed(2);
+      const outerAlpha = params.blurFac !== 0 ? (innerAlpha / params.blurFac).toFixed(2) : innerAlpha;
 
-      ctx.beginPath();
-      ctx.shadowBlur = params.blurAmount * 8; // Increased blur effect
-      ctx.shadowColor = `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${alpha})`;
-      ctx.strokeStyle = `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${alpha})`;
-      ctx.lineWidth = params.dotSize * 1.5; // Slightly thicker lines
-      ctx.lineCap = "round";
+      const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, params.dotSize);
+      gradient.addColorStop(0, `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${innerAlpha})`);
+      gradient.addColorStop(0.8, `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${outerAlpha})`);
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
 
-      // Use quadratic curves for smoother trails
-      const prev = trailRef.current[index - 1];
-      const midX = (prev.x + point.x) / 2;
-      const midY = (prev.y + point.y) / 2;
-
-      ctx.moveTo(prev.x, prev.y);
-      ctx.quadraticCurveTo(prev.x, prev.y, midX, midY);
-      ctx.stroke();
-    });
-
-    ctx.shadowBlur = 0;
-
-    // Draw current LED position
-    const currentPos = trailRef.current[0];
-    if (currentPos && currentPos.color) {
-      // Draw glow
-      const gradient = ctx.createRadialGradient(
-        currentPos.x,
-        currentPos.y,
-        0,
-        currentPos.x,
-        currentPos.y,
-        params.dotSize * 3
-      );
-      gradient.addColorStop(
-        0,
-        `rgba(${currentPos.color.red}, ${currentPos.color.green}, ${currentPos.color.blue}, 0.8)`
-      );
-      gradient.addColorStop(1, "rgba(0,0,0,0)");
-
-      ctx.beginPath();
       ctx.fillStyle = gradient;
-      ctx.arc(currentPos.x, currentPos.y, params.dotSize * 3, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Draw LED
       ctx.beginPath();
-      ctx.fillStyle = `rgb(${currentPos.color.red}, ${currentPos.color.green}, ${currentPos.color.blue})`;
-      ctx.arc(currentPos.x, currentPos.y, params.dotSize, 0, Math.PI * 2);
+      ctx.arc(point.x, point.y, params.dotSize, 0, 2 * Math.PI);
       ctx.fill();
-    }
+    });
   };
-
   const updateTrail = (color, intensity = 1) => {
     let rgbColor;
     if (typeof color === "string") {
@@ -127,6 +118,17 @@ export const useModePreview = ({ mode }) => {
 
     const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
     angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
+
+    trailRef.current.unshift({
+      x: newPos.x,
+      y: newPos.y,
+      color: rgbColor,
+    });
+
+    // Ensure trail does not exceed the trail size
+    while (trailRef.current.length > params.trailLength) {
+      trailRef.current.pop();
+    }
 
     trailRef.current.unshift({
       x: newPos.x,

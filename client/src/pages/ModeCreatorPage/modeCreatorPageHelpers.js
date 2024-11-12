@@ -151,19 +151,33 @@ export const interpolate = (current, next, blendSpeed) => {
   }
 };
 
-export const getPosition = (angle, radius, canvasRef) => {
-  const centerX = canvasRef.current.width / 2;
-  const centerY = canvasRef.current.height / 2;
-  return {
-    x: centerX + Math.cos(angle) * radius,
-    y: centerY + Math.sin(angle) * radius,
-  };
-};
+export const getPosition = (angle, radius, canvasRef, shape = "circle") => {
+  const canvas = canvasRef.current;
+  const rect = canvas.getBoundingClientRect();
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
 
+  let x, y;
+  switch (shape) {
+    case "heart":
+      const scale = radius / 20 + 1;
+      x = centerX + scale * 16 * Math.pow(Math.sin(angle), 3);
+      y =
+        centerY -
+        scale * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+      break;
+    // Add other shapes here
+    default: // circle
+      x = centerX + Math.cos(angle) * radius;
+      y = centerY + Math.sin(angle) * radius;
+  }
+
+  return { x, y };
+};
 export const getAnimationParams = (speed, trailLength, size, blur, radius) => ({
   rotationSpeed: 0.01 + (speed / 100) * 0.09,
-  trailLength: Math.floor(16 + (trailLength / 100) * 48),
-  dotSize: 2 + (size / 100) * 6,
-  blurAmount: 3 + (blur / 100) * 8, // Increased base blur and range
-  circleRadius: 20 + (radius / 100) * 40,
+  trailLength: Math.floor(10 + (trailLength / 100) * 90), // Adjusted for longer trails
+  dotSize: 2 + (size / 100) * 20, // Increased dot size range
+  blurFac: blur / 10 + 1, // Adjusted blur factor
+  circleRadius: 20 + (radius / 100) * 200, // Adjusted circle radius range
 });
