@@ -128,7 +128,6 @@ export const PatternState = {
   STATE_BEGIN_GAP2: 7,
   STATE_IN_GAP2: 8,
 };
-
 // Move helper functions outside the hook
 export const hexToRgb = hex => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
