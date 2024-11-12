@@ -72,8 +72,6 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
         return existingOption;
       }
     });
-
-    // // Update the selectedOptions state
   }
 
   if (product?.short_description) {
@@ -94,30 +92,60 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
-  if (product?.sale.sale_price > 0) {
-    state.customizedProduct.sale_price = product.sale.sale_price;
-  }
   if (product?.sale.sale_start_date) {
     state.customizedProduct.sale_start_date = product.sale.sale_start_date;
   }
   if (product?.sale.sale_end_date) {
     state.customizedProduct.sale_end_date = product.sale.sale_end_date;
   }
-  if (product?.wholesale_price > 0) {
-    state.customizedProduct.wholesale_price = product.wholesale_price;
-  }
+
   if (product?.wholesale_product) {
     state.customizedProduct.wholesale_product = product.wholesale_product;
   }
   if (product?.dimensions) {
     state.customizedProduct.dimensions = product.dimensions;
   }
+  // Don't update price if this option doesn't replace price
+  if (!option.replacePrice) {
+    if (product?.price) {
+      // Store the original product price for reference
+      state.customizedProduct.originalPrice = product.price;
+    }
+
+    if (product?.sale.sale_price > 0) {
+      state.customizedProduct.sale_price = product.sale.sale_price;
+    }
+    if (product?.wholesale_price > 0) {
+      state.customizedProduct.wholesale_price = product.wholesale_price;
+    }
+  }
 };
+
 export const handlePriceReplacement = (state, option, selectedOption) => {
+  // Find any selected option that has replacePrice: true
+  const priceReplacingOption = state.customizedProduct.currentOptions?.find((opt, index) => {
+    if (opt.replacePrice) {
+      const selectedOpt = state.customizedProduct.selectedOptions[index];
+      return selectedOpt?.name; // Return true if this price-replacing option has a selection
+    }
+    return false;
+  });
+
   if (option?.replacePrice) {
+    // This is a price-replacing option being selected
     state.customizedProduct.price = selectedOption?.product?.price;
     state.customizedProduct.previousPriceWithAddOn = state?.customizedProduct?.price;
+  } else if (priceReplacingOption) {
+    // Another option changed, but we have a price-replacing option selected
+    // Find its current selection
+    const index = state.customizedProduct.currentOptions.indexOf(priceReplacingOption);
+    const selection = state.customizedProduct.selectedOptions[index];
+    if (selection?.product?.price) {
+      state.customizedProduct.price = selection.product.price;
+      state.customizedProduct.previousPriceWithAddOn = selection.product.price;
+    }
   } else {
+    // No price-replacing options selected, use normal price calculation
     if (!state.customizedProduct.previousPriceWithAddOn) {
       state.customizedProduct.previousPriceWithAddOn = state.product.price;
     }
@@ -125,7 +153,6 @@ export const handlePriceReplacement = (state, option, selectedOption) => {
     updatePrice(state, additionalCost);
   }
 };
-
 export const determineInStock = product => {
   if (product.count_in_stock > 0) {
     return "Add To Cart";
