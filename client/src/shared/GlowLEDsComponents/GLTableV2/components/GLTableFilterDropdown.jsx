@@ -206,7 +206,7 @@ const GLTableFilterDropdown = ({
               <Divider />
               <div style={{ display: "flex", justifyContent: "space-between", height: "46px" }}>
                 <div
-                  style={{ padding: "9px 6px", margin: "8px", fontSize: "12px", color: "text.secondary" }}
+                  style={{ padding: "9px 6px", margin: "8px", fontSize: "12px", color: "text.secondary_dark" }}
                   data-test="matrix-menu-selected-counter"
                 >
                   {`${(filters[menuSelection] && filters[menuSelection]?.length) || 0} Selected`}

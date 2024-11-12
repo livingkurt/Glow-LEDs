@@ -30,9 +30,14 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
 
 export const determineIDPathname = id => {
   let query = {};
-  if (id && mongoose.isValidObjectId(id)) {
-    query = { _id: id };
-  } else {
+  try {
+    // Check if it's a valid 24-character hex string (MongoDB ObjectId format)
+    if (id && /^[0-9a-fA-F]{24}$/.test(id) && mongoose.isValidObjectId(id)) {
+      query = { _id: id };
+    } else {
+      query = { pathname: id };
+    }
+  } catch (error) {
     query = { pathname: id };
   }
   return query;

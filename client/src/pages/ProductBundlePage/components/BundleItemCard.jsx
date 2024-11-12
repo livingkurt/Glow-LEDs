@@ -52,7 +52,7 @@ const BundleItemCard = ({ item }) => {
               {item.name}
             </Typography>
             {item.product.fact && (
-              <Typography variant="body1" color="text.secondary" gutterBottom>
+              <Typography variant="body1" color="text.secondary_light" gutterBottom>
                 {item.product.fact}
               </Typography>
             )}
@@ -66,7 +66,7 @@ const BundleItemCard = ({ item }) => {
               })}
             </Typography>
             {item.product.short_description && (
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary_light" paragraph>
                 {item.product.short_description}
               </Typography>
             )}

@@ -312,6 +312,8 @@ const palette = {
   text: {
     primary: "#212121",
     secondary: "#757575",
+    secondary_dark: "#333333",
+    secondary_light: "#b2b2b2",
     disabled: "rgba(0, 0, 0, 0.38)",
     hint: "rgba(0, 0, 0, 0.38)",
   },
