@@ -4,11 +4,11 @@ import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } 
 
 export const useModePreview = ({ mode }) => {
   // Animation control states
-  const [speed, setSpeed] = useState(100);
-  const [trailLength, setTrailLength] = useState(50);
-  const [size, setSize] = useState(50);
-  const [blur, setBlur] = useState(50);
-  const [radius, setRadius] = useState(70);
+  const [speed, setSpeed] = useState(135);
+  const [trailLength, setTrailLength] = useState(80);
+  const [size, setSize] = useState(400);
+  const [blur, setBlur] = useState(82);
+  const [radius, setRadius] = useState(150);
 
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -168,13 +168,13 @@ export const useModePreview = ({ mode }) => {
       }
 
       const deltaTime = timestamp - lastUpdateTimeRef.current;
-      const TIME_MULTIPLIER = 5; // Consistent multiplier for all durations
+      const TIME_MULTIPLIER = 2; // Consistent multiplier for all durations
       let duration;
 
       // Handle the current state's display
       switch (stateRef.current) {
         case PatternState.STATE_DISABLED:
-          updateTrail(mode.colors[0].colorCode, 0.1);
+          updateTrail(mode.colors[0].colorCode, 0);
           duration = 0;
           break;
 
@@ -201,13 +201,13 @@ export const useModePreview = ({ mode }) => {
           duration = pattern.on_dur * TIME_MULTIPLIER;
           break;
         case PatternState.STATE_BLINK_OFF:
-          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
           duration = pattern.off_dur * TIME_MULTIPLIER;
           break;
 
         case PatternState.STATE_IN_GAP:
         case PatternState.STATE_IN_GAP2:
-          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
           duration = pattern.gap_dur * TIME_MULTIPLIER;
           break;
 
