@@ -1,3 +1,4 @@
+// useModePreview.jsx
 import { useEffect, useRef, useState } from "react";
 import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } from "../modeCreatorPageHelpers";
 
@@ -31,13 +32,12 @@ export const useModePreview = ({ mode }) => {
   const pattern = {
     ...mode.flashing_pattern,
     on_dur: Number(mode.flashing_pattern.on_dur) || 0,
-    off_dur: mode.flashing_pattern.off_dur === null ? 0 : Number(mode.flashing_pattern.off_dur) || 0,
+    off_dur: Number(mode.flashing_pattern.off_dur) || 0,
     gap_dur: Number(mode.flashing_pattern.gap_dur) || 0,
     dash_dur: Number(mode.flashing_pattern.dash_dur) || 0,
     group_size: Number(mode.flashing_pattern.group_size) || 0,
     blend_speed: Number(mode.flashing_pattern.blend_speed) || 0,
   };
-
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -124,6 +124,7 @@ export const useModePreview = ({ mode }) => {
     }
 
     const params = getAnimationParams(speed, trailLength, size, blur, radius);
+
     const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
     angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
 
@@ -142,22 +143,19 @@ export const useModePreview = ({ mode }) => {
 
   const initPattern = () => {
     currentColorIndexRef.current = 0;
-    groupCounterRef.current = pattern.group_size || mode.colors.length - (pattern.dash_dur ? 1 : 0);
+    groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
 
     if ((!pattern.on_dur && !pattern.dash_dur) || mode.colors.length === 0) {
       stateRef.current = PatternState.STATE_DISABLED;
-    } else if (pattern.dash_dur > 0) {
-      stateRef.current = PatternState.STATE_BEGIN_DASH;
     } else {
       stateRef.current = PatternState.STATE_BLINK_ON;
     }
 
-    if (pattern.blend_speed > 0) {
+    if (pattern.blend_speed > 0 && mode.colors.length > 1) {
       blendCurrentColorRef.current = hexToRgb(mode.colors[0].colorCode);
       blendNextColorRef.current = hexToRgb(mode.colors[1 % mode.colors.length].colorCode);
     }
   };
-
   useEffect(() => {
     initPattern();
     trailRef.current = [];
@@ -168,27 +166,27 @@ export const useModePreview = ({ mode }) => {
       }
 
       const deltaTime = timestamp - lastUpdateTimeRef.current;
-      let duration = pattern.on_dur;
+      const TIME_MULTIPLIER = 5; // Consistent multiplier for all durations
+      let duration;
 
       // Handle the current state's display
       switch (stateRef.current) {
         case PatternState.STATE_DISABLED:
           updateTrail(mode.colors[0].colorCode, 0.1);
+          duration = 0;
           break;
 
         case PatternState.STATE_BLINK_ON:
-          if (pattern.blend_speed > 0) {
+          if (pattern.blend_speed > 0 && mode.colors.length > 1) {
             const current = blendCurrentColorRef.current;
             const next = blendNextColorRef.current;
 
-            // Handle color blending
             current.red = interpolate(current.red, next.red, pattern.blend_speed);
             current.green = interpolate(current.green, next.green, pattern.blend_speed);
             current.blue = interpolate(current.blue, next.blue, pattern.blend_speed);
 
             updateTrail(current);
 
-            // If blend complete, prepare next colors
             if (current.red === next.red && current.green === next.green && current.blue === next.blue) {
               blendCurrentColorRef.current = { ...next };
               const nextColorIndex = (currentColorIndexRef.current + 2) % mode.colors.length;
@@ -198,22 +196,22 @@ export const useModePreview = ({ mode }) => {
           } else {
             updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
           }
+          duration = pattern.on_dur * TIME_MULTIPLIER;
           break;
-
         case PatternState.STATE_BLINK_OFF:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
-          duration = pattern.off_dur;
+          duration = pattern.off_dur * TIME_MULTIPLIER;
           break;
 
         case PatternState.STATE_IN_GAP:
         case PatternState.STATE_IN_GAP2:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0.1);
-          duration = pattern.gap_dur;
+          duration = pattern.gap_dur * TIME_MULTIPLIER;
           break;
 
         case PatternState.STATE_IN_DASH:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
-          duration = pattern.dash_dur;
+          duration = pattern.dash_dur * TIME_MULTIPLIER;
           break;
       }
 
@@ -221,68 +219,65 @@ export const useModePreview = ({ mode }) => {
       if (deltaTime >= duration) {
         switch (stateRef.current) {
           case PatternState.STATE_BLINK_ON:
-            if (pattern.on_dur > 0) {
+            if (pattern.off_dur > 0) {
+              stateRef.current = PatternState.STATE_BLINK_OFF;
+            } else {
+              // Move to next color
+              currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
               groupCounterRef.current--;
-              if (pattern.off_dur > 0) {
-                stateRef.current = PatternState.STATE_BLINK_OFF;
+
+              if (groupCounterRef.current > 0) {
+                stateRef.current = PatternState.STATE_BLINK_ON;
               } else {
-                currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
-                if (groupCounterRef.current > 0) {
-                  stateRef.current = PatternState.STATE_BLINK_ON;
+                if (pattern.dash_dur > 0) {
+                  stateRef.current = PatternState.STATE_IN_DASH;
+                } else if (pattern.gap_dur > 0) {
+                  stateRef.current = PatternState.STATE_IN_GAP;
                 } else {
-                  stateRef.current = PatternState.STATE_BEGIN_GAP;
+                  // Reset for next group
+                  groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
+                  stateRef.current = PatternState.STATE_BLINK_ON;
                 }
               }
-            } else {
-              stateRef.current = PatternState.STATE_BEGIN_GAP;
             }
             break;
 
           case PatternState.STATE_BLINK_OFF:
-            if (groupCounterRef.current > 0 || (!pattern.gap_dur && !pattern.dash_dur)) {
-              currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
+            // Move to next color
+            currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
+            groupCounterRef.current--;
+
+            if (groupCounterRef.current > 0) {
               stateRef.current = PatternState.STATE_BLINK_ON;
             } else {
-              stateRef.current = PatternState.STATE_BEGIN_GAP;
-            }
-            break;
-          case PatternState.STATE_BEGIN_GAP:
-            groupCounterRef.current = pattern.group_size || mode.colors.length - (pattern.dash_dur ? 1 : 0);
-            if (pattern.gap_dur > 0) {
-              stateRef.current = PatternState.STATE_IN_GAP;
-            } else {
-              stateRef.current = PatternState.STATE_BEGIN_DASH;
-            }
-            break;
-
-          case PatternState.STATE_IN_GAP:
-            stateRef.current = PatternState.STATE_BEGIN_DASH;
-            break;
-
-          case PatternState.STATE_BEGIN_DASH:
-            if (pattern.dash_dur > 0) {
-              stateRef.current = PatternState.STATE_IN_DASH;
-            } else {
-              stateRef.current = PatternState.STATE_BEGIN_GAP2;
+              if (pattern.dash_dur > 0) {
+                stateRef.current = PatternState.STATE_IN_DASH;
+              } else if (pattern.gap_dur > 0) {
+                stateRef.current = PatternState.STATE_IN_GAP;
+              } else {
+                // Reset for next group
+                groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
+                stateRef.current = PatternState.STATE_BLINK_ON;
+              }
             }
             break;
 
           case PatternState.STATE_IN_DASH:
-            stateRef.current = PatternState.STATE_BEGIN_GAP2;
-            break;
-
-          case PatternState.STATE_BEGIN_GAP2:
-            if (pattern.dash_dur > 0 && pattern.gap_dur > 0) {
-              stateRef.current = PatternState.STATE_IN_GAP2;
+            if (pattern.gap_dur > 0) {
+              stateRef.current = PatternState.STATE_IN_GAP;
             } else {
-              stateRef.current = PatternState.STATE_BLINK_ON;
+              // Reset for next group
+              groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
               currentColorIndexRef.current = 0;
+              stateRef.current = PatternState.STATE_BLINK_ON;
             }
             break;
 
-          case PatternState.STATE_IN_GAP2:
-            stateRef.current = PatternState.STATE_BLINK_ON;
+          case PatternState.STATE_IN_GAP:
+            // Reset for next group
+            groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
             currentColorIndexRef.current = 0;
+            stateRef.current = PatternState.STATE_BLINK_ON;
             break;
         }
 

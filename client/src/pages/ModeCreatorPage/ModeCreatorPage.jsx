@@ -41,6 +41,7 @@ const ModeCreatorPage = () => {
 
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);
+  console.log({ selectedMicrolight });
 
   useEffect(() => {
     if (id) {
