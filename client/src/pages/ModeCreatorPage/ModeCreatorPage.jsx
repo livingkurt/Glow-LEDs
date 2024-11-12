@@ -238,7 +238,7 @@ const ModeCreatorPage = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <ModePreview mode={mode} />
+                <ModePreview mode={mode} pattern={mode.flashing_pattern} />
               </Grid>
 
               <Grid item xs={12}>

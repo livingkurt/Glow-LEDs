@@ -1,4 +1,4 @@
-const hexToHSV = hex => {
+export const hexToHSV = hex => {
   // Convert hex to RGB
   let r = parseInt(hex.slice(1, 3), 16) / 255;
   let g = parseInt(hex.slice(3, 5), 16) / 255;
@@ -39,7 +39,7 @@ const hexToHSV = hex => {
   };
 };
 
-const hsvToHex = (h, s, v) => {
+export const hsvToHex = (h, s, v) => {
   s = s / 100;
   v = v / 100;
 
@@ -88,7 +88,7 @@ const hsvToHex = (h, s, v) => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
 
-const generateBrightnessLevels = (h, s, levels) => {
+export const generateBrightnessLevels = (h, s, levels) => {
   const minBrightness = 30;
   const maxBrightness = 100;
   const step = (maxBrightness - minBrightness) / (levels - 1);
@@ -102,7 +102,7 @@ const generateBrightnessLevels = (h, s, levels) => {
   });
 };
 
-const generateSaturationLevels = (h, v, levels) => {
+export const generateSaturationLevels = (h, v, levels) => {
   const minSaturation = 40;
   const maxSaturation = 100;
   const step = (maxSaturation - minSaturation) / (levels - 1);
@@ -116,4 +116,55 @@ const generateSaturationLevels = (h, v, levels) => {
   });
 };
 
-export { hexToHSV, hsvToHex, generateBrightnessLevels, generateSaturationLevels };
+// Move PatternState outside the hook
+export const PatternState = {
+  STATE_DISABLED: 0,
+  STATE_BLINK_ON: 1,
+  STATE_BLINK_OFF: 2,
+  STATE_BEGIN_GAP: 3,
+  STATE_IN_GAP: 4,
+  STATE_BEGIN_DASH: 5,
+  STATE_IN_DASH: 6,
+  STATE_BEGIN_GAP2: 7,
+  STATE_IN_GAP2: 8,
+};
+
+// Move helper functions outside the hook
+export const hexToRgb = hex => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        red: parseInt(result[1], 16),
+        green: parseInt(result[2], 16),
+        blue: parseInt(result[3], 16),
+      }
+    : null;
+};
+
+export const interpolate = (current, next, blendSpeed) => {
+  if (current === next) return current;
+  if (current < next) {
+    const step = Math.min(blendSpeed, next - current);
+    return current + step;
+  } else {
+    const step = Math.min(blendSpeed, current - next);
+    return current - step;
+  }
+};
+
+export const getPosition = (angle, radius, canvasRef) => {
+  const centerX = canvasRef.current.width / 2;
+  const centerY = canvasRef.current.height / 2;
+  return {
+    x: centerX + Math.cos(angle) * radius,
+    y: centerY + Math.sin(angle) * radius,
+  };
+};
+
+export const getAnimationParams = (speed, trailLength, size, blur, radius) => ({
+  rotationSpeed: 0.01 + (speed / 100) * 0.09,
+  trailLength: Math.floor(16 + (trailLength / 100) * 48),
+  dotSize: 2 + (size / 100) * 6,
+  blurAmount: 3 + (blur / 100) * 8, // Increased base blur and range
+  circleRadius: 20 + (radius / 100) * 40,
+});
