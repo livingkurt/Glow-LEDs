@@ -546,6 +546,17 @@ const ShippingStep = () => {
                       </div>
                     </>
                   )}
+                  <li>
+                    <label htmlFor="handling_instructions">{"Special DeliveryInstructions"}</label>
+                    <input
+                      type="text"
+                      value={shipping.handling_instructions}
+                      name="handling_instructions"
+                      placeholder="Door Code, Leave on Porch, etc."
+                      id="handling_instructions"
+                      onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                    />
+                  </li>
                 </div>
 
                 <li>
