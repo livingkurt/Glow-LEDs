@@ -86,7 +86,7 @@ const ModePreview = ({ mode }) => {
             onChange={(_, value) => setRadius(value)}
             aria-label="Radius"
             min={0}
-            max={1000}
+            max={300}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
         </SliderContainer>
