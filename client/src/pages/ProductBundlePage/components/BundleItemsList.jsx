@@ -8,11 +8,11 @@ import { showInfo } from "../../../slices/snackbarSlice";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { Add } from "@mui/icons-material";
 
-const BundleItemsList = ({ items, isWholesaler }) => {
+const BundleItemsList = ({ item, idx, items }) => {
   const dispatch = useDispatch();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
 
-  if (!items?.length) return null;
+  const { current_user } = useSelector(state => state.users.userPage);
 
   const handleQuickAdd = item => {
     dispatch(
@@ -26,54 +26,42 @@ const BundleItemsList = ({ items, isWholesaler }) => {
   };
 
   return (
-    <Box sx={{ mt: 3, mb: 2 }}>
-      <Typography variant="h6" gutterBottom>
-        {"Bundle Items"}
-      </Typography>
-      <List>
-        {items.map((item, idx) => (
-          <React.Fragment key={item._id || idx}>
-            <ListItem sx={{ display: "flex", justifyContent: "space-between", py: 1 }}>
-              <Box>
-                <Typography variant="body1">{item.name}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {`Quantity: ${item.quantity}`}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Typography variant="body1">
-                  {sale_price_switch({
-                    product: item,
-                    cartItem: false,
-                    background: "dark",
-                    isWholesaler,
-                  })}
-                </Typography>
-                <GLButtonV2
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleQuickAdd(item)}
-                  sx={{ whiteSpace: "nowrap" }}
-                >
-                  <Add /> {"Add to Cart"}
-                </GLButtonV2>
-              </Box>
-            </ListItem>
-            {idx < items.length - 1 && <Divider />}
-          </React.Fragment>
-        ))}
-      </List>
-    </Box>
+    <React.Fragment key={item._id || idx}>
+      <ListItem sx={{ display: "flex", justifyContent: "space-between", py: 1 }}>
+        <Box>
+          <Typography variant="body1">{item.name}</Typography>
+          <Typography variant="body2" color="text.secondary_dark">
+            {`Quantity: ${item.quantity}`}
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Typography variant="body1">
+            {sale_price_switch({
+              product: item,
+              cartItem: false,
+              background: "dark",
+              isWholesaler: current_user?.isWholesaler,
+            })}
+          </Typography>
+          <GLButtonV2
+            variant="contained"
+            color="primary"
+            onClick={() => handleQuickAdd(item)}
+            sx={{ whiteSpace: "nowrap" }}
+          >
+            <Add /> {"Add to Cart"}
+          </GLButtonV2>
+        </Box>
+      </ListItem>
+      {idx < items.length - 1 && <Divider />}
+    </React.Fragment>
   );
 };
 
 BundleItemsList.propTypes = {
+  item: PropTypes.object.isRequired,
+  idx: PropTypes.number.isRequired,
   items: PropTypes.array.isRequired,
-  isWholesaler: PropTypes.bool,
-};
-
-BundleItemsList.defaultProps = {
-  isWholesaler: false,
 };
 
 export default BundleItemsList;

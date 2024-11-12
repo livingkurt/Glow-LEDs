@@ -10,10 +10,12 @@ import useProductBundlePage from "./useProductBundlePage";
 import { showInfo } from "../../slices/snackbarSlice";
 import { EditCartModal } from "../CartsPage/components";
 import { open_edit_cart_modal } from "../../slices/cartSlice";
-import BundleItems from "./components/BundleItems";
 import BundleItemsList from "./components/BundleItemsList";
 import { Add } from "@mui/icons-material";
 import ProductBundlePageSkeleton from "./components/ProductBundlePageSkeleton";
+import BundleItemCard from "./components/BundleItemCard";
+import { List } from "@mui/material";
+import { random } from "lodash";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
@@ -31,6 +33,14 @@ const ProductBundlePage = () => {
         })
       );
     }
+  };
+  // Add this function to generate a gradient background
+  const generateGradient = () => {
+    const hue1 = random(0, 360);
+    const hue2 = (hue1 + 60) % 360;
+    return `linear-gradient(135deg,
+      hsl(${hue1}deg 70% 20%) 0%,
+      hsl(${hue2}deg 70% 30%) 100%)`;
   };
 
   if (loadingProductBundle) return <ProductBundlePageSkeleton />;
@@ -63,7 +73,33 @@ const ProductBundlePage = () => {
           <Container maxWidth="xl" sx={{ mb: 2 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <ProductImages images={bundle?.images} originalImages={bundle?.images} />
+                {bundle?.images?.length ? (
+                  <ProductImages images={bundle?.images} originalImages={bundle?.images} />
+                ) : (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      aspectRatio: "1",
+                      background: generateGradient(bundle.title),
+                      borderRadius: "1rem",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 3,
+                    }}
+                  >
+                    <Typography
+                      variant="h1"
+                      sx={{
+                        color: "white",
+                        textAlign: "center",
+                        textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+                      }}
+                    >
+                      {bundle.title}
+                    </Typography>
+                  </Box>
+                )}
               </Grid>
 
               <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -74,7 +110,7 @@ const ProductBundlePage = () => {
                 </Box>
 
                 {bundle.subtitle && (
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                  <Typography variant="h6" color="text.secondary_dark" gutterBottom>
                     {bundle.subtitle}
                   </Typography>
                 )}
@@ -117,7 +153,16 @@ const ProductBundlePage = () => {
                   >
                     {"Add Bundle to Cart"}
                   </GLButtonV2>
-                  <BundleItemsList items={bundle.cartItems} isWholesaler={current_user?.isWholesaler} />
+                  <Box sx={{ mt: 3, mb: 2 }}>
+                    <Typography variant="h6" gutterBottom>
+                      {"Bundle Items"}
+                    </Typography>
+                    <List>
+                      {bundle.cartItems.map((item, idx) => (
+                        <BundleItemsList key={item._id || idx} item={item} idx={idx} items={bundle.cartItems} />
+                      ))}
+                    </List>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
@@ -131,7 +176,16 @@ const ProductBundlePage = () => {
             }}
           >
             <Container maxWidth="xl">
-              <BundleItems items={bundle.cartItems} />
+              <Box sx={{ py: 4 }}>
+                <Typography variant="h4" gutterBottom>
+                  {"Bundle Items"}
+                </Typography>
+                <Container maxWidth="lg">
+                  {bundle.cartItems.map((item, idx) => (
+                    <BundleItemCard key={item._id || idx} item={item} />
+                  ))}
+                </Container>
+              </Box>
             </Container>
           </Box>
         </>
