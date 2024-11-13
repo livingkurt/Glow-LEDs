@@ -55,12 +55,18 @@ const ModePreview = ({ mode }) => {
             onChange={(_, value) => setSpeed(value)}
             aria-label="Speed"
             min={50}
-            max={150}
+            max={300}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
         </SliderContainer>
         <SliderContainer>
-          <AnimationSlider value={trailLength} onChange={(_, value) => setTrailLength(value)} aria-label="Trail" />
+          <AnimationSlider
+            value={trailLength}
+            onChange={(_, value) => setTrailLength(value)}
+            aria-label="Trail"
+            min={0}
+            max={50}
+          />
           <Typography sx={{ color: "white", width: 80 }}>{"Trail"}</Typography>
         </SliderContainer>
 
@@ -76,7 +82,7 @@ const ModePreview = ({ mode }) => {
         </SliderContainer>
 
         <SliderContainer>
-          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" min={0} max={200} />
+          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" min={0} max={75} />
           <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
         </SliderContainer>
 

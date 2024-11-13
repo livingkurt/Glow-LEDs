@@ -70,6 +70,34 @@ export const useModePreview = ({ mode }) => {
     group_size: Number(mode.flashing_pattern.group_size) || 0,
     blend_speed: Number(mode.flashing_pattern.blend_speed) || 0,
   };
+  const updateTrail = (color, intensity = 1) => {
+    let rgbColor;
+    if (typeof color === "string") {
+      rgbColor = hexToRgb(color);
+    } else {
+      rgbColor = { ...color };
+    }
+
+    const params = getAnimationParams(speed, trailLength, size, blur, radius);
+
+    const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
+    angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
+
+    trailRef.current.unshift({
+      x: newPos.x,
+      y: newPos.y,
+      color: rgbColor,
+      alpha: intensity, // Store alpha instead of modifying color intensity
+    });
+
+    // Ensure trail does not exceed the trail size
+    while (trailRef.current.length > params.trailLength) {
+      trailRef.current.pop();
+    }
+
+    drawTrail();
+  };
+
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -82,11 +110,13 @@ export const useModePreview = ({ mode }) => {
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw trail points
-    trailRef.current.forEach((point, index) => {
-      if (!point.color) return;
+    // Draw trail points in reverse order so newest points are on top
+    for (let i = trailRef.current.length - 1; i >= 0; i--) {
+      const point = trailRef.current[i];
+      if (!point.color) continue;
 
-      const innerAlpha = (1 - index / params.trailLength).toFixed(2);
+      const fadeAlpha = (1 - i / params.trailLength).toFixed(2);
+      const innerAlpha = fadeAlpha * point.alpha; // Multiply by point's alpha value
       const outerAlpha = params.blurFac !== 0 ? (innerAlpha / params.blurFac).toFixed(2) : innerAlpha;
 
       const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, params.dotSize);
@@ -98,49 +128,7 @@ export const useModePreview = ({ mode }) => {
       ctx.beginPath();
       ctx.arc(point.x, point.y, params.dotSize, 0, 2 * Math.PI);
       ctx.fill();
-    });
-  };
-  const updateTrail = (color, intensity = 1) => {
-    let rgbColor;
-    if (typeof color === "string") {
-      rgbColor = hexToRgb(color);
-    } else {
-      rgbColor = { ...color };
     }
-
-    if (intensity !== 1) {
-      rgbColor.red = Math.floor(rgbColor.red * intensity);
-      rgbColor.green = Math.floor(rgbColor.green * intensity);
-      rgbColor.blue = Math.floor(rgbColor.blue * intensity);
-    }
-
-    const params = getAnimationParams(speed, trailLength, size, blur, radius);
-
-    const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
-    angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
-
-    trailRef.current.unshift({
-      x: newPos.x,
-      y: newPos.y,
-      color: rgbColor,
-    });
-
-    // Ensure trail does not exceed the trail size
-    while (trailRef.current.length > params.trailLength) {
-      trailRef.current.pop();
-    }
-
-    trailRef.current.unshift({
-      x: newPos.x,
-      y: newPos.y,
-      color: rgbColor,
-    });
-
-    if (trailRef.current.length > params.trailLength) {
-      trailRef.current.pop();
-    }
-
-    drawTrail();
   };
 
   const initPattern = () => {
