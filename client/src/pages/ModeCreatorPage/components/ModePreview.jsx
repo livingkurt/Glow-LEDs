@@ -1,6 +1,7 @@
 import { Slider, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useModePreview } from "./useModePreview";
+import { getSliderProps } from "../modeCreatorPageHelpers";
 
 // Custom styled components
 const AnimationSlider = styled(Slider)({
@@ -35,6 +36,9 @@ const ModePreview = ({ mode }) => {
   const { canvasRef, speed, setSpeed, trailLength, setTrailLength, size, setSize, blur, setBlur, radius, setRadius } =
     useModePreview({ mode });
 
+  // Get current slider ranges
+  const sliderProps = getSliderProps(canvasRef);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <canvas
@@ -44,7 +48,7 @@ const ModePreview = ({ mode }) => {
         style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
       />
 
-      {/* <ControlsContainer>
+      <ControlsContainer>
         <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
           {"Animation"}
         </Typography>
@@ -54,18 +58,19 @@ const ModePreview = ({ mode }) => {
             value={speed}
             onChange={(_, value) => setSpeed(value)}
             aria-label="Speed"
-            min={50}
-            max={300}
+            min={sliderProps.speed.min}
+            max={sliderProps.speed.max}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
         </SliderContainer>
+
         <SliderContainer>
           <AnimationSlider
             value={trailLength}
             onChange={(_, value) => setTrailLength(value)}
             aria-label="Trail"
-            min={0}
-            max={50}
+            min={sliderProps.trail.min}
+            max={sliderProps.trail.max}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Trail"}</Typography>
         </SliderContainer>
@@ -75,14 +80,20 @@ const ModePreview = ({ mode }) => {
             value={size}
             onChange={(_, value) => setSize(value)}
             aria-label="Size"
-            min={100}
-            max={5000}
+            min={sliderProps.size.min}
+            max={sliderProps.size.max}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
         </SliderContainer>
 
         <SliderContainer>
-          <AnimationSlider value={blur} onChange={(_, value) => setBlur(value)} aria-label="Blur" min={0} max={75} />
+          <AnimationSlider
+            value={blur}
+            onChange={(_, value) => setBlur(value)}
+            aria-label="Blur"
+            min={sliderProps.blur.min}
+            max={sliderProps.blur.max}
+          />
           <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
         </SliderContainer>
 
@@ -91,8 +102,8 @@ const ModePreview = ({ mode }) => {
             value={radius}
             onChange={(_, value) => setRadius(value)}
             aria-label="Radius"
-            min={0}
-            max={40}
+            min={sliderProps.radius.min}
+            max={sliderProps.radius.max}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
         </SliderContainer>
@@ -118,7 +129,7 @@ const ModePreview = ({ mode }) => {
         {mode.flashing_pattern.dash_dur > 0 && ` • ${mode.flashing_pattern.dash_dur}ms dash`}
         {mode.flashing_pattern.group_size > 0 && ` • group of ${mode.flashing_pattern.group_size}`}
         {mode.flashing_pattern.blend_speed > 0 && ` • blend speed ${mode.flashing_pattern.blend_speed}`}
-      </Box> */}
+      </Box>
     </Box>
   );
 };

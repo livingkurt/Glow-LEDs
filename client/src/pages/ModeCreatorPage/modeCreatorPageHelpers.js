@@ -151,33 +151,56 @@ export const interpolate = (current, next, blendSpeed) => {
   }
 };
 
-export const getPosition = (angle, baseRadius, canvasRef) => {
-  const canvas = canvasRef.current;
-  // Get the actual rendered size of the canvas
-  const rect = canvas.getBoundingClientRect();
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-
-  // Scale the radius based on the canvas size while respecting the radius slider
-  const scaleFactor = Math.min(rect.width, rect.height) / 300; // 300 is a base size reference
-  const adjustedRadius = baseRadius * scaleFactor;
-
-  return {
-    x: centerX + adjustedRadius * Math.cos(angle),
-    y: centerY + adjustedRadius * Math.sin(angle),
-  };
-};
-
 export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, canvasRef) => {
   const canvas = canvasRef.current;
   const rect = canvas.getBoundingClientRect();
-  const scaleFactor = Math.min(rect.width, rect.height) / 300;
+
+  // Calculate dimensions relative to canvas size
+  const maxDimension = Math.min(rect.width, rect.height);
+  const baseSize = maxDimension * 0.4; // 40% of canvas size as base reference
 
   return {
     rotationSpeed: (Math.PI / 180) * (speed / 30),
     trailLength: Math.max(1, trailLength),
-    dotSize: size / 20,
+    dotSize: (size / 500) * baseSize, // Scale dot size relative to canvas
     blurFac: blur / 10,
-    circleRadius: baseRadius * scaleFactor,
+    circleRadius: (baseRadius / 100) * baseSize, // Convert radius to percentage of canvas size
+  };
+};
+
+export const getPosition = (angle, radius, canvasRef) => {
+  const canvas = canvasRef.current;
+  const rect = canvas.getBoundingClientRect();
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  return {
+    x: centerX + radius * Math.cos(angle),
+    y: centerY + radius * Math.sin(angle),
+  };
+};
+
+export const getSliderProps = () => {
+  return {
+    speed: {
+      min: 20,
+      max: 200,
+    },
+    trail: {
+      min: 0,
+      max: 100,
+    },
+    size: {
+      min: 20,
+      max: 200,
+    },
+    blur: {
+      min: 0,
+      max: 100,
+    },
+    radius: {
+      min: 0,
+      max: 100, // Now represents percentage of canvas size
+    },
   };
 };

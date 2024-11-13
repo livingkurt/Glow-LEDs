@@ -4,11 +4,11 @@ import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } 
 
 export const useModePreview = ({ mode }) => {
   // Animation control states
-  const [speed, setSpeed] = useState(135);
-  const [trailLength, setTrailLength] = useState(40);
-  const [size, setSize] = useState(1000);
+  const [speed, setSpeed] = useState(150);
+  const [trailLength, setTrailLength] = useState(50);
+  const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
-  const [radius, setRadius] = useState(35);
+  const [radius, setRadius] = useState(95);
 
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -155,7 +155,7 @@ export const useModePreview = ({ mode }) => {
       }
 
       const deltaTime = timestamp - lastUpdateTimeRef.current;
-      const TIME_MULTIPLIER = 2; // Consistent multiplier for all durations
+      const TIME_MULTIPLIER = 5; // Consistent multiplier for all durations
       let duration;
 
       // Handle the current state's display
