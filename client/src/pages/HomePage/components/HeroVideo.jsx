@@ -1,9 +1,7 @@
 import { Box } from "@mui/material";
-import PropTypes from "prop-types";
-import YouTube from "react-youtube";
 
-const HeroVideo = ({ hero_video, hero_video_hidden }) => {
-  return hero_video && !hero_video_hidden ? (
+const HeroVideo = hero_video => {
+  return hero_video ? (
     <Box
       sx={{
         width: "100%",
@@ -13,31 +11,22 @@ const HeroVideo = ({ hero_video, hero_video_hidden }) => {
       }}
       mb={{ xs: 0, sm: 2 }}
     >
-      <YouTube
-        videoId={hero_video}
-        opts={{
+      <iframe
+        style={{
           width: "100%",
           height: "100%",
-          playerVars: {
-            autoplay: 0,
-          },
+          border: 0,
         }}
-        style={{ width: "100%", height: "100%" }}
+        title={`${hero_video.video} video`}
+        allowFullScreen
+        src={`https://www.youtube.com/embed/${hero_video.video}?autoplay=${hero_video.autoplay}&mute=${hero_video.muted}&loop=${hero_video.loop}&playsinline=${hero_video.playsInline}`}
+        allow={hero_video.autoplay ? "autoplay" : ""}
+        autoPlay={hero_video.autoplay}
       />
     </Box>
   ) : (
     <></>
   );
-};
-
-HeroVideo.propTypes = {
-  hero_video: PropTypes.string,
-  hero_video_hidden: PropTypes.bool,
-};
-
-HeroVideo.defaultProps = {
-  hero_video: "",
-  hero_video_hidden: false,
 };
 
 export default HeroVideo;

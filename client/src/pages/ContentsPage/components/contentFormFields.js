@@ -42,7 +42,17 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
       options: carts?.filter(cart => cart.title),
       labelProp: "title",
     },
-    hero_video: { type: "text", label: "Hero Video", leftSpacing: true },
+    hero_video: {
+      type: "object",
+      title: "Hero Video",
+      fields: {
+        video: { type: "text", label: "Video" },
+        autoplay: { type: "checkbox", label: "Autoplay" },
+        muted: { type: "checkbox", label: "Muted" },
+        loop: { type: "checkbox", label: "Loop" },
+        playsInline: { type: "checkbox", label: "Plays Inline" },
+      },
+    },
     learn_more_products: {
       type: "array",
       title: "Learn More Products",
