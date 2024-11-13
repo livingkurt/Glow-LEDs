@@ -184,7 +184,7 @@ export const getSliderProps = () => {
   return {
     speed: {
       min: 20,
-      max: 200,
+      max: 300,
     },
     trail: {
       min: 0,
@@ -192,7 +192,7 @@ export const getSliderProps = () => {
     },
     size: {
       min: 20,
-      max: 200,
+      max: 150,
     },
     blur: {
       min: 0,
@@ -201,6 +201,10 @@ export const getSliderProps = () => {
     radius: {
       min: 0,
       max: 100, // Now represents percentage of canvas size
+    },
+    timeMultiplier: {
+      min: 1,
+      max: 10,
     },
   };
 };

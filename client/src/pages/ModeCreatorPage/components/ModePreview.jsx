@@ -1,4 +1,4 @@
-import { Slider, Box, Typography } from "@mui/material";
+import { Slider, Box, Typography, Grid2, Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useModePreview } from "./useModePreview";
 import { getSliderProps } from "../modeCreatorPageHelpers";
@@ -33,103 +33,108 @@ const SliderContainer = styled(Box)({
 });
 
 const ModePreview = ({ mode }) => {
-  const { canvasRef, speed, setSpeed, trailLength, setTrailLength, size, setSize, blur, setBlur, radius, setRadius } =
-    useModePreview({ mode });
+  const {
+    canvasRef,
+    speed,
+    setSpeed,
+    trailLength,
+    setTrailLength,
+    size,
+    setSize,
+    blur,
+    setBlur,
+    radius,
+    setRadius,
+    timeMultiplier,
+    setTimeMultiplier,
+  } = useModePreview({ mode });
 
   // Get current slider ranges
   const sliderProps = getSliderProps(canvasRef);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <ControlsContainer>
+        <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
+          {"Animation"}
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <SliderContainer>
+              <AnimationSlider
+                value={timeMultiplier}
+                onChange={(_, value) => setTimeMultiplier(value)}
+                aria-label="Time Multiplier"
+                min={sliderProps.timeMultiplier.min}
+                max={sliderProps.timeMultiplier.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Scale"}</Typography>
+            </SliderContainer>
+
+            <SliderContainer>
+              <AnimationSlider
+                value={speed}
+                onChange={(_, value) => setSpeed(value)}
+                aria-label="Speed"
+                min={sliderProps.speed.min}
+                max={sliderProps.speed.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
+            </SliderContainer>
+            <SliderContainer>
+              <AnimationSlider
+                value={trailLength}
+                onChange={(_, value) => setTrailLength(value)}
+                aria-label="Trail"
+                min={sliderProps.trail.min}
+                max={sliderProps.trail.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Trail"}</Typography>
+            </SliderContainer>
+          </Grid>
+          <Grid item xs={6}>
+            <SliderContainer>
+              <AnimationSlider
+                value={size}
+                onChange={(_, value) => setSize(value)}
+                aria-label="Size"
+                min={sliderProps.size.min}
+                max={sliderProps.size.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
+            </SliderContainer>
+
+            <SliderContainer>
+              <AnimationSlider
+                value={blur}
+                onChange={(_, value) => setBlur(value)}
+                aria-label="Blur"
+                min={sliderProps.blur.min}
+                max={sliderProps.blur.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
+            </SliderContainer>
+
+            <SliderContainer>
+              <AnimationSlider
+                value={radius}
+                onChange={(_, value) => setRadius(value)}
+                aria-label="Radius"
+                min={sliderProps.radius.min}
+                max={sliderProps.radius.max}
+              />
+              <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
+            </SliderContainer>
+          </Grid>
+        </Grid>
+      </ControlsContainer>
       <canvas
         ref={canvasRef}
         width={120}
         height={120}
         style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
       />
-
-      <ControlsContainer>
-        <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
-          {"Animation"}
-        </Typography>
-
-        <SliderContainer>
-          <AnimationSlider
-            value={speed}
-            onChange={(_, value) => setSpeed(value)}
-            aria-label="Speed"
-            min={sliderProps.speed.min}
-            max={sliderProps.speed.max}
-          />
-          <Typography sx={{ color: "white", width: 80 }}>{"Speed"}</Typography>
-        </SliderContainer>
-
-        <SliderContainer>
-          <AnimationSlider
-            value={trailLength}
-            onChange={(_, value) => setTrailLength(value)}
-            aria-label="Trail"
-            min={sliderProps.trail.min}
-            max={sliderProps.trail.max}
-          />
-          <Typography sx={{ color: "white", width: 80 }}>{"Trail"}</Typography>
-        </SliderContainer>
-
-        <SliderContainer>
-          <AnimationSlider
-            value={size}
-            onChange={(_, value) => setSize(value)}
-            aria-label="Size"
-            min={sliderProps.size.min}
-            max={sliderProps.size.max}
-          />
-          <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
-        </SliderContainer>
-
-        <SliderContainer>
-          <AnimationSlider
-            value={blur}
-            onChange={(_, value) => setBlur(value)}
-            aria-label="Blur"
-            min={sliderProps.blur.min}
-            max={sliderProps.blur.max}
-          />
-          <Typography sx={{ color: "white", width: 80 }}>{"Blur"}</Typography>
-        </SliderContainer>
-
-        <SliderContainer>
-          <AnimationSlider
-            value={radius}
-            onChange={(_, value) => setRadius(value)}
-            aria-label="Radius"
-            min={sliderProps.radius.min}
-            max={sliderProps.radius.max}
-          />
-          <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
-        </SliderContainer>
-      </ControlsContainer>
-
-      <Box
-        sx={{
-          textAlign: "center",
-          color: "text.secondary",
-          typography: "body2",
-          mt: 2,
-        }}
-      >
-        {"Pattern: "}
-        {mode.flashing_pattern.name}
-        <br />
-        {mode.colors.length}
-        {" colors • "}
-        {mode.flashing_pattern.on_dur}
-        {"ms on"}
-        {mode.flashing_pattern.off_dur > 0 && ` • ${mode.flashing_pattern.off_dur}ms off`}
-        {mode.flashing_pattern.gap_dur > 0 && ` • ${mode.flashing_pattern.gap_dur}ms gap`}
-        {mode.flashing_pattern.dash_dur > 0 && ` • ${mode.flashing_pattern.dash_dur}ms dash`}
-        {mode.flashing_pattern.group_size > 0 && ` • group of ${mode.flashing_pattern.group_size}`}
-        {mode.flashing_pattern.blend_speed > 0 && ` • blend speed ${mode.flashing_pattern.blend_speed}`}
-      </Box>
     </Box>
   );
 };

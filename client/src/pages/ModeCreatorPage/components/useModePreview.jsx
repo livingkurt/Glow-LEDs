@@ -9,7 +9,7 @@ export const useModePreview = ({ mode }) => {
   const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
   const [radius, setRadius] = useState(95);
-
+  const [timeMultiplier, setTimeMultiplier] = useState(5);
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const stateRef = useRef(PatternState.STATE_BLINK_ON);
@@ -78,7 +78,7 @@ export const useModePreview = ({ mode }) => {
       rgbColor = { ...color };
     }
 
-    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
+    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef, timeMultiplier);
     const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
     angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
 
@@ -155,7 +155,6 @@ export const useModePreview = ({ mode }) => {
       }
 
       const deltaTime = timestamp - lastUpdateTimeRef.current;
-      const TIME_MULTIPLIER = 5; // Consistent multiplier for all durations
       let duration;
 
       // Handle the current state's display
@@ -185,22 +184,22 @@ export const useModePreview = ({ mode }) => {
           } else {
             updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
           }
-          duration = pattern.on_dur * TIME_MULTIPLIER;
+          duration = pattern.on_dur * timeMultiplier;
           break;
         case PatternState.STATE_BLINK_OFF:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
-          duration = pattern.off_dur * TIME_MULTIPLIER;
+          duration = pattern.off_dur * timeMultiplier;
           break;
 
         case PatternState.STATE_IN_GAP:
         case PatternState.STATE_IN_GAP2:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
-          duration = pattern.gap_dur * TIME_MULTIPLIER;
+          duration = pattern.gap_dur * timeMultiplier;
           break;
 
         case PatternState.STATE_IN_DASH:
           updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
-          duration = pattern.dash_dur * TIME_MULTIPLIER;
+          duration = pattern.dash_dur * timeMultiplier;
           break;
       }
 
@@ -296,5 +295,7 @@ export const useModePreview = ({ mode }) => {
     radius,
     setRadius,
     canvasRef,
+    timeMultiplier,
+    setTimeMultiplier,
   };
 };
