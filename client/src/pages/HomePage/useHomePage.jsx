@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 const useHomePage = () => {
   const dispatch = useDispatch();
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();
+  console.log({ homePageCurrentContent: currentContent?.home_page });
   const modules = currentContent?.home_page?.modules;
 
   const [searchParams] = useSearchParams();
