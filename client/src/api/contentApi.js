@@ -80,15 +80,18 @@ export const getContentsByLink = createAsyncThunk(
   }
 );
 
-export const getActiveContent = createAsyncThunk("contents/getActiveContent", async () => {
-  try {
-    const { data } = await axios.get("/api/contents/current");
-    console.log({ data });
-    return data;
-  } catch (error) {
-    console.error("Error fetching active content:", error);
+export const getActiveContent = createAsyncThunk(
+  "contents/getActiveContent",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/api/contents/current");
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 export const getSlideshowImages = createAsyncThunk(
   "contents/getSlideshowImages",
