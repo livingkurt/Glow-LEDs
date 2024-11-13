@@ -44,7 +44,7 @@ const ModePreview = ({ mode }) => {
         style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
       />
 
-      <ControlsContainer>
+      {/* <ControlsContainer>
         <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
           {"Animation"}
         </Typography>
@@ -118,7 +118,7 @@ const ModePreview = ({ mode }) => {
         {mode.flashing_pattern.dash_dur > 0 && ` • ${mode.flashing_pattern.dash_dur}ms dash`}
         {mode.flashing_pattern.group_size > 0 && ` • group of ${mode.flashing_pattern.group_size}`}
         {mode.flashing_pattern.blend_speed > 0 && ` • blend speed ${mode.flashing_pattern.blend_speed}`}
-      </Box>
+      </Box> */}
     </Box>
   );
 };
