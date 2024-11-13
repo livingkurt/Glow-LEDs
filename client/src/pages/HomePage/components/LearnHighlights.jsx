@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const LearnHighlights = ({ learn_highlights }) => {
+const LearnHighlights = learn_highlights => {
+  console.log({ learn_highlights });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return !learn_highlights.hidden ? (

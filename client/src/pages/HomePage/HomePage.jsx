@@ -18,12 +18,14 @@ const HomePage = () => {
           {modules.map((module, index) => {
             const Component = HOME_PAGE_COMPONENTS[module.type];
             // if (!Component || module.hidden) return null;
-            console.log({ module });
-
+            console.log({ [module.type]: module });
             return (
               <Box key={index}>
                 {module.type === "featured_products" ||
-                module.type === "featured_bundles" ||
+                module.type === "featured_product_bundles" ||
+                module.type === "support_banner" ||
+                module.type === "get_more_out_of" ||
+                module.type === "sponsors" ||
                 module.type === "learn_more_products" ? (
                   <Container maxWidth="xl">
                     <Box pt={{ xs: 2, sm: 4 }} pb={{ xs: 2 }}>

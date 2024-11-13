@@ -93,7 +93,7 @@ export default {
         .populate({
           path: "home_page.modules.content.featured_products",
           populate: {
-            path: "images",
+            path: "images_object",
             model: "Image",
           },
         })

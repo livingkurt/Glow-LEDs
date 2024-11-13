@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DiscoverMoreHero = ({ discover_more }) => {
+const DiscoverMoreHero = discover_more => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return !discover_more?.hidden ? (

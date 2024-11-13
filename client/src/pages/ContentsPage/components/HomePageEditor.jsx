@@ -156,6 +156,18 @@ const HomePageEditor = ({ initialModules = [], onChange, formFieldsData }) => {
               )}
             </Droppable>
           </DragDropContext>
+          <Box mb={2}>
+            <Select fullWidth displayEmpty value="" onChange={e => addModule(e.target.value)}>
+              <MenuItem value="" disabled>
+                {"Add new module"}
+              </MenuItem>
+              {MODULE_TYPES.map(type => (
+                <MenuItem key={type.value} value={type.value}>
+                  {type.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
         </Grid>
       </Grid>
     </Box>

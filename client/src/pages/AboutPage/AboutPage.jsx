@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "./aboutPageHelpers";
 
-import HeroVideo from "../HomePage/components/HeroVideo";
+import HeroVideo from "../../shared/GlowLEDsComponents/HeroVideo/HeroVideo";
 import AboutPageHeader from "./components/AboutPageHeader";
 import * as API from "../../api";
 import SectionContent from "./components/SectionContent";
