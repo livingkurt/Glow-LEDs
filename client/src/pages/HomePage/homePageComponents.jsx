@@ -5,10 +5,10 @@ import LearnMoreProducts from "./components/LearnMoreProducts";
 import LearnHighlights from "./components/LearnHighlights";
 import DiscoverMoreHero from "./components/DiscoverMoreHero";
 import GetTheMost from "./components/GetTheMost";
-import ProductProtectionDetails from "../../shared/ProductProtectionDetails/ProductProtectionDetails";
 import SponsorsBanner from "./components/SponsorsBanner";
 import SupportBanner from "./components/SupportBanner";
 import HeroVideo from "./components/HeroVideo";
+import ProductProtectionDetails from "./components/ProductProtectionDetails";
 export const HOME_PAGE_COMPONENTS = {
   slideshow: HeroHeader,
   featured_products: FeaturedProducts,
