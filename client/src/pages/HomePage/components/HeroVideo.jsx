@@ -9,7 +9,6 @@ const HeroVideo = ({ hero_video, hero_video_hidden }) => {
         width: "100%",
         height: "auto",
         aspectRatio: "16/9",
-        // borderRadius: "20px",
         overflow: "hidden",
       }}
       mb={{ xs: 0, sm: 2 }}

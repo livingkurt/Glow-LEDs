@@ -46,12 +46,10 @@ const FeaturedBundles = ({ featured_product_bundles }) => {
 
 FeaturedBundles.propTypes = {
   featured_product_bundles: PropTypes.array,
-  featured_bundles_hidden: PropTypes.bool,
 };
 
 FeaturedBundles.defaultProps = {
   featured_product_bundles: [],
-  featured_bundles_hidden: false,
 };
 
 export default FeaturedBundles;
