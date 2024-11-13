@@ -82,23 +82,23 @@ export default {
       }
     }
   },
-  current_contents_s: async query => {
+  current_contents_s: async () => {
     try {
       const sort = { createdAt: -1 }; // Sort by createdAt field in descending order
       const filter = { deleted: false, active: true }; // Filter for non-deleted and active records
 
-      return await Content.find(filter)
+      const currentContent = await Content.find(filter)
         .sort(sort)
         .limit(1)
         .populate({
-          path: "home_page.featured_products",
+          path: "home_page.modules.content.featured_products",
           populate: {
             path: "images",
             model: "Image",
           },
         })
         .populate({
-          path: "home_page.featured_product_bundles",
+          path: "home_page.modules.content.featured_product_bundles",
           populate: [
             { path: "images" },
             { path: "affiliate" },
@@ -129,16 +129,13 @@ export default {
             model: "Affiliate",
           },
         })
-        .populate("home_page.learn_more_products.image")
-        .populate("home_page.learn_highlights.images_data.image")
-        .populate("home_page.discover_more.image")
-        .populate("home_page.get_more_out_of.image")
-        .populate("home_page.slideshow.image")
-        .populate("home_page.support_banner.image")
-        // .populate("home_page.sponsors_banner.image")
-        // .populate("home_page.sponsors_banner.quotes.image")
-        // .populate("home_page.sponsors_banner.quotes.sponsor")
-        .populate("home_page.sponsors")
+        .populate("home_page.modules.content.learn_more_products.image")
+        .populate("home_page.modules.content.learn_highlights.images_data.image")
+        .populate("home_page.modules.content.discover_more.image")
+        .populate("home_page.modules.content.get_more_out_of.image")
+        .populate("home_page.modules.content.slideshow.image")
+        .populate("home_page.modules.content.support_banner.image")
+        .populate("home_page.modules.content.sponsors")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
         .populate("products_grid_page.category_banners.image")
@@ -149,6 +146,8 @@ export default {
         .populate("academy_page.featured_tutorials.image")
         .populate("academy_page.sponsors")
         .populate("about_page.sections.image");
+      console.log({ currentContent: currentContent[0].home_page, home_page: currentContent[0].home_page.modules });
+      return currentContent;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -39,25 +39,61 @@ export default {
     try {
       return await Content.findOne({ _id: id, deleted: false })
         .populate({
-          path: "home_page.featured_products",
+          path: "home_page.modules.content.featured_products",
           populate: {
             path: "images",
             model: "Image",
           },
         })
-        .populate("home_page.learn_more_products.image")
-        .populate("home_page.learn_highlights.images_data.image")
-        .populate("home_page.discover_more.image")
-        .populate("home_page.get_more_out_of.image")
-        .populate("home_page.slideshow.image")
-        .populate("home_page.support_banner.image")
+        .populate({
+          path: "home_page.modules.content.featured_product_bundles",
+          populate: [
+            { path: "images" },
+            { path: "affiliate" },
+            {
+              path: "cartItems",
+              populate: [{ path: "tags" }, { path: "display_image_object" }],
+            },
+          ],
+        })
+        .populate({
+          path: "academy_page.featured_articles",
+          populate: {
+            path: "image",
+            model: "Image",
+          },
+        })
+        .populate({
+          path: "academy_page.featured_articles",
+          populate: {
+            path: "author",
+            model: "User",
+          },
+        })
+        .populate({
+          path: "academy_page.featured_tutorials",
+          populate: {
+            path: "affiliate",
+            model: "Affiliate",
+          },
+        })
+        .populate("home_page.modules.content.learn_more_products.image")
+        .populate("home_page.modules.content.learn_highlights.images_data.image")
+        .populate("home_page.modules.content.discover_more.image")
+        .populate("home_page.modules.content.get_more_out_of.image")
+        .populate("home_page.modules.content.slideshow.image")
+        .populate("home_page.modules.content.support_banner.image")
+        .populate("home_page.modules.content.sponsors")
         .populate("faq_page.sections.image")
         .populate("faq_page.sections.subsections.image")
-        .populate("about_page.sections.image")
         .populate("products_grid_page.category_banners.image")
         .populate("products_grid_page.category_banners.tag")
+        .populate("menus.menu_items.image")
         .populate("products_grid_page.our_picks")
-        .populate("menus.menu_items.image");
+        .populate("academy_page.featured_articles.image")
+        .populate("academy_page.featured_tutorials.image")
+        .populate("academy_page.sponsors")
+        .populate("about_page.sections.image");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -117,6 +153,7 @@ export default {
     }
   },
   update_contents_db: async (id, body) => {
+    console.log({ home_page_modules: body.home_page.modules, id });
     try {
       const content = await Content.findOne({ _id: id, deleted: false });
       if (content) {

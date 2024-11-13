@@ -30,7 +30,6 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         },
       },
     },
-    slideshow_hidden: { type: "checkbox", label: "Slideshow Hidden", leftSpacing: true },
     featured_products: {
       type: "autocomplete_multiple",
       label: "Featured Products",
@@ -43,7 +42,6 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
       options: carts?.filter(cart => cart.title),
       labelProp: "title",
     },
-    featured_products_hidden: { type: "checkbox", label: "Featured Products Hidden", leftSpacing: true },
     hero_video: { type: "text", label: "Hero Video", leftSpacing: true },
     learn_more_products: {
       type: "array",
@@ -65,7 +63,6 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         },
       },
     },
-    learn_more_products_hidden: { type: "checkbox", label: "Learn More Products Hidden", leftSpacing: true },
     learn_highlights: {
       type: "object",
       title: "Learn Highlights",
@@ -172,41 +169,6 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
         }
       },
     },
-    // sponsors_banner: {
-    //   type: "object",
-    //   title: "Sponsors Banner",
-    //   fields: {
-    //     title: { type: "text", label: "Title" },
-    //     subtitle: { type: "text_multiline", label: "Subtitle" },
-    //     button_text: { type: "text", label: "Button Text" },
-    //     link: { type: "text", label: "Link" },
-    //     hidden: { type: "checkbox", label: "Hidden" },
-    //     quotes: {
-    //       type: "array",
-    //       title: "Quotes",
-    //       label: item => item.quote,
-    //       itemSchema: {
-    //         type: "object",
-    //         fields: {
-    //           quote: { type: "text", label: "Quote" },
-    //           author: { type: "text", label: "Author" },
-    //           image: {
-    //             type: "image_upload_single",
-    //             label: "Image",
-    //
-    //             album: `${content?.home_page?.sponsors?.title} Quotes Content Images`,
-    //           },
-    //           sponsor: {
-    //             type: "autocomplete_single",
-    //             label: "Sponsors",
-    //             options: affiliates,
-    //             labelProp: "artist_name",
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
   },
 });
 
