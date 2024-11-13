@@ -151,33 +151,33 @@ export const interpolate = (current, next, blendSpeed) => {
   }
 };
 
-export const getPosition = (angle, radius, canvasRef, shape = "circle") => {
+export const getPosition = (angle, baseRadius, canvasRef) => {
   const canvas = canvasRef.current;
+  // Get the actual rendered size of the canvas
   const rect = canvas.getBoundingClientRect();
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
 
-  let x, y;
-  switch (shape) {
-    case "heart":
-      const scale = radius / 20 + 1;
-      x = centerX + scale * 16 * Math.pow(Math.sin(angle), 3);
-      y =
-        centerY -
-        scale * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
-      break;
-    // Add other shapes here
-    default: // circle
-      x = centerX + Math.cos(angle) * radius;
-      y = centerY + Math.sin(angle) * radius;
-  }
+  // Scale the radius based on the canvas size while respecting the radius slider
+  const scaleFactor = Math.min(rect.width, rect.height) / 300; // 300 is a base size reference
+  const adjustedRadius = baseRadius * scaleFactor;
 
-  return { x, y };
+  return {
+    x: centerX + adjustedRadius * Math.cos(angle),
+    y: centerY + adjustedRadius * Math.sin(angle),
+  };
 };
-export const getAnimationParams = (speed, trailLength, size, blur, radius) => ({
-  rotationSpeed: 0.01 + (speed / 100) * 0.09,
-  trailLength: Math.floor(10 + (trailLength / 100) * 90), // Adjusted for longer trails
-  dotSize: 2 + (size / 100) * 20, // Increased dot size range
-  blurFac: blur / 10 + 1, // Adjusted blur factor
-  circleRadius: 20 + (radius / 100) * 200, // Adjusted circle radius range
-});
+
+export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, canvasRef) => {
+  const canvas = canvasRef.current;
+  const rect = canvas.getBoundingClientRect();
+  const scaleFactor = Math.min(rect.width, rect.height) / 300;
+
+  return {
+    rotationSpeed: (Math.PI / 180) * (speed / 30),
+    trailLength: Math.max(1, trailLength),
+    dotSize: size / 20,
+    blurFac: blur / 10,
+    circleRadius: baseRadius * scaleFactor,
+  };
+};

@@ -41,7 +41,7 @@ const ModePreview = ({ mode }) => {
         ref={canvasRef}
         width={120}
         height={120}
-        style={{ width: "100%", backgroundColor: "black", borderRadius: "8px" }}
+        style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
       />
 
       <ControlsContainer>
@@ -76,7 +76,7 @@ const ModePreview = ({ mode }) => {
             onChange={(_, value) => setSize(value)}
             aria-label="Size"
             min={100}
-            max={1000}
+            max={5000}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Size"}</Typography>
         </SliderContainer>
@@ -92,7 +92,7 @@ const ModePreview = ({ mode }) => {
             onChange={(_, value) => setRadius(value)}
             aria-label="Radius"
             min={0}
-            max={300}
+            max={40}
           />
           <Typography sx={{ color: "white", width: 80 }}>{"Radius"}</Typography>
         </SliderContainer>

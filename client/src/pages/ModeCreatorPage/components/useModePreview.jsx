@@ -78,8 +78,7 @@ export const useModePreview = ({ mode }) => {
       rgbColor = { ...color };
     }
 
-    const params = getAnimationParams(speed, trailLength, size, blur, radius);
-
+    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
     const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
     angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
 
@@ -101,7 +100,7 @@ export const useModePreview = ({ mode }) => {
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const params = getAnimationParams(speed, trailLength, size, blur, radius);
+    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
