@@ -5,10 +5,10 @@ import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } 
 export const useModePreview = ({ mode }) => {
   // Animation control states
   const [speed, setSpeed] = useState(135);
-  const [trailLength, setTrailLength] = useState(50);
-  const [size, setSize] = useState(300);
+  const [trailLength, setTrailLength] = useState(40);
+  const [size, setSize] = useState(1000);
   const [blur, setBlur] = useState(20);
-  const [radius, setRadius] = useState(150);
+  const [radius, setRadius] = useState(35);
 
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
