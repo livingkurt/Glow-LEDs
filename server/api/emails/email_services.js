@@ -423,9 +423,11 @@ export default {
     return email;
   },
   send_scheduled_emails_s: async () => {
+    const currentUTCTime = new Date();
+
     const emailsToSend = await Email.find({
       status: "Scheduled",
-      scheduled_at: { $lte: new Date() },
+      scheduled_at: { $lte: currentUTCTime }, // Compare against UTC time
       active: true,
       deleted: false,
     });
