@@ -205,6 +205,7 @@ const ProductPage = () => {
                         selectOption={data => dispatch(selectOption(data))}
                         isAddonChecked={isAddonChecked}
                         setIsAddonChecked={data => dispatch(setIsAddonChecked(data))}
+                        validationErrors={validationErrors}
                       />
                       {validationErrors[index] && (
                         <FormHelperText>

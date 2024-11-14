@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, Typography } from "@mui/material";
+import { Box, FormHelperText, Typography } from "@mui/material";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
 import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
@@ -105,7 +105,6 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
       confirmLabel="Add to Cart"
       cancelLabel="Cancel"
       cancelColor="secondary"
-      confirmDisabled={Object.values(validationErrors).some(error => error !== null)}
       maxWidth="md"
       backgroundColor="#8a8a8a"
       textColor="white"
@@ -166,20 +165,44 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
                   )}
                 </Box>
                 <Box flex={1}>
-                  {item.currentOptions.map((option, optionIndex) => (
-                    <CustomizationOption
-                      key={optionIndex}
-                      index={optionIndex}
-                      option={option}
-                      selectedOption={item.selectedOptions[optionIndex]}
-                      updateValidationError={(_, error) => updateValidationError(itemIndex, optionIndex, error)}
-                      selectOption={({ selectedOption, option, index }) => {
-                        handleOptionChange({ itemIndex, optionIndex: index, selectedOption, option });
-                      }}
-                      isAddonChecked={isAddonChecked}
-                      setIsAddonChecked={setIsAddonChecked}
-                    />
-                  ))}
+                  {item.currentOptions.map((option, optionIndex) => {
+                    const index = `${itemIndex}-${optionIndex}`;
+                    return (
+                      <>
+                        <CustomizationOption
+                          key={optionIndex}
+                          index={optionIndex}
+                          option={option}
+                          selectedOption={item.selectedOptions[optionIndex]}
+                          updateValidationError={(_, error) => updateValidationError(itemIndex, optionIndex, error)}
+                          selectOption={({ selectedOption, option, index }) => {
+                            handleOptionChange({ itemIndex, optionIndex: index, selectedOption, option });
+                          }}
+                          isAddonChecked={isAddonChecked}
+                          setIsAddonChecked={setIsAddonChecked}
+                          validationErrors={validationErrors}
+                        />
+                        {validationErrors[index] && (
+                          <FormHelperText>
+                            <Box
+                              sx={{
+                                display: "inline-block",
+                                bgcolor: "#8c444b",
+                                py: 1,
+                                px: 1.5,
+                                borderRadius: "10px",
+                                color: "white",
+                              }}
+                            >
+                              <Typography variant="subtitle2" fontWeight={800}>
+                                {validationErrors[index]}
+                              </Typography>
+                            </Box>
+                          </FormHelperText>
+                        )}
+                      </>
+                    );
+                  })}
                 </Box>
               </Box>
             </Box>
