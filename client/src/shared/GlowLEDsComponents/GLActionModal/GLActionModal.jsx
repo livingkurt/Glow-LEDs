@@ -36,7 +36,15 @@ const GLActionModal = ({
   style,
   actionDisabled,
   disableEscapeKeyDown,
+  backgroundColor,
+  textColor,
 }) => {
+  const combinedStyle = {
+    backgroundColor,
+    color: textColor,
+    ...style,
+  };
+
   return (
     <div data-test={dataTest}>
       <Dialog
@@ -46,7 +54,7 @@ const GLActionModal = ({
         open={isOpen}
         onClose={onCancel}
         PaperProps={{
-          style,
+          style: combinedStyle,
         }}
         aria-labelledby={title}
         maxWidth={maxWidth}
@@ -68,7 +76,6 @@ const GLActionModal = ({
               <div className={styles.actionButton}>
                 <Button
                   data-test="modal-action-button"
-                  // customClassNames="actionButton"
                   onClick={onAction}
                   variant={actionVariant}
                   color={actionColor}
@@ -84,7 +91,6 @@ const GLActionModal = ({
                 <Button
                   id="modalCancelButton"
                   data-test="modal-cancel-button"
-                  // customClassNames="cancelButton"
                   onClick={onCancel}
                   variant={cancelVariant}
                   color={cancelColor}
@@ -99,7 +105,6 @@ const GLActionModal = ({
                 <Button
                   id="modalSubmitButton"
                   data-test="submit"
-                  // customClassNames="submitButton"
                   onClick={onConfirm}
                   variant={confirmVariant}
                   color={confirmColor}
@@ -149,6 +154,8 @@ GLActionModal.defaultProps = {
   onEnter: null,
   disableEscapeKeyDown: false,
   style: null,
+  backgroundColor: null,
+  textColor: null,
 };
 
 GLActionModal.propTypes = {
@@ -168,12 +175,12 @@ GLActionModal.propTypes = {
   confirmLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   confirmLoading: PropTypes.bool,
   cancelLabel: PropTypes.string,
-  // cancelVariant: buttonVariantShape,
-  // actionVariant: buttonVariantShape,
-  // cancelColor: themeColorShape,
-  // confirmColor: themeColorShape,
-  // actionColor: themeColorShape,
-  // confirmVariant: buttonVariantShape,
+  actionVariant: PropTypes.string,
+  cancelVariant: PropTypes.string,
+  actionColor: PropTypes.string,
+  cancelColor: PropTypes.string,
+  confirmColor: PropTypes.string,
+  confirmVariant: PropTypes.string,
   maxWidth: PropTypes.string,
   fullWidth: PropTypes.bool,
   dataTest: PropTypes.string,
@@ -182,6 +189,8 @@ GLActionModal.propTypes = {
   contentClasses: PropTypes.object,
   actionClasses: PropTypes.object,
   style: PropTypes.object,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
 };
 
 export default GLActionModal;

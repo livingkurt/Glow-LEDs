@@ -5,7 +5,7 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
 import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-import { calculateAdditionalCost, updatePrice, updateProductDetailsFromOption } from "../../ProductPage/productHelpers";
+import { calculateAdditionalCost } from "../../ProductPage/productHelpers";
 
 const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
   // Initialize state for each bundle item
@@ -107,6 +107,8 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
       cancelColor="secondary"
       confirmDisabled={Object.values(validationErrors).some(error => error !== null)}
       maxWidth="md"
+      backgroundColor="#8a8a8a"
+      textColor="white"
     >
       <Typography variant="subtitle1" gutterBottom textAlign="center">
         {"Please confirm your options for each item in the bundle"}
@@ -116,10 +118,13 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
           item.currentOptions?.length > 0 && (
             <Box key={item._id || itemIndex} mb={3}>
               {/* Image and name section remains the same */}
-              <Typography variant="h3" gutterBottom textAlign="center">
-                {item.name}
-              </Typography>
-
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h3">{item.name}</Typography>
+                <Typography variant="h4">
+                  {"$"}
+                  {Number(item.price).toFixed(2)}
+                </Typography>
+              </Box>
               <Box display="flex" flexDirection="row" gap={2}>
                 {/* Image/Gradient Box */}
                 <Box
