@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Box, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,10 +6,10 @@ import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
-import { showInfo } from "../../../slices/snackbarSlice";
 import { useNavigate } from "react-router-dom";
+import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 
-const BundleItemCard = ({ item }) => {
+const BundleItemCard = ({ item, bundle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
@@ -24,7 +23,7 @@ const BundleItemCard = ({ item }) => {
         type: "add_to_cart",
       })
     );
-    dispatch(showInfo({ message: `${item.name} added to cart` }));
+    setPromoCode(dispatch, bundle.affiliate?.public_code?.promo_code);
   };
 
   return (
@@ -104,6 +103,7 @@ BundleItemCard.propTypes = {
     }),
     price: PropTypes.number,
   }).isRequired,
+  bundle: PropTypes.object.isRequired,
 };
 
 export default BundleItemCard;

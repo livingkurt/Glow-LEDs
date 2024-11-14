@@ -7,7 +7,6 @@ import ProductImages from "../ProductPage/components/ProductImages";
 import { sale_price_switch } from "../../utils/react_helper_functions";
 import * as API from "../../api";
 import useProductBundlePage from "./useProductBundlePage";
-import { showInfo } from "../../slices/snackbarSlice";
 import { EditCartModal } from "../CartsPage/components";
 import { open_edit_cart_modal } from "../../slices/cartSlice";
 import BundleItemsList from "./components/BundleItemsList";
@@ -16,6 +15,8 @@ import ProductBundlePageSkeleton from "./components/ProductBundlePageSkeleton";
 import BundleItemCard from "./components/BundleItemCard";
 import { List } from "@mui/material";
 import { random } from "lodash";
+import { useMemo } from "react";
+import { setPromoCode } from "../../utils/helpers/universal_helpers";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
@@ -24,24 +25,16 @@ const ProductBundlePage = () => {
   const handleAddToCart = () => {
     dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cartItems, type: "add_to_cart" }));
 
-    const code = sessionStorage.getItem("promo_code");
-    if (!code) {
-      sessionStorage.setItem("promo_code", bundle.affiliate?.public_code?.promo_code);
-      dispatch(
-        showInfo({
-          message: `Code ${bundle.affiliate?.public_code?.promo_code.toUpperCase()} Added to Checkout`,
-        })
-      );
-    }
+    setPromoCode(dispatch, bundle.affiliate?.public_code?.promo_code);
   };
   // Add this function to generate a gradient background
-  const generateGradient = () => {
+  const generateGradient = useMemo(() => {
     const hue1 = random(0, 360);
-    const hue2 = (hue1 + 60) % 360;
+    const hue2 = (hue1 + 90) % 360;
     return `linear-gradient(135deg,
-      hsl(${hue1}deg 70% 20%) 0%,
-      hsl(${hue2}deg 70% 30%) 100%)`;
-  };
+      hsl(${hue1}deg 100% 40%) 0%,
+      hsl(${hue2}deg 100% 40%) 100%)`;
+  }, []);
 
   if (loadingProductBundle) return <ProductBundlePageSkeleton />;
 
@@ -80,7 +73,7 @@ const ProductBundlePage = () => {
                     sx={{
                       width: "100%",
                       aspectRatio: "1",
-                      background: generateGradient(bundle.title),
+                      background: generateGradient,
                       borderRadius: "1rem",
                       display: "flex",
                       justifyContent: "center",
@@ -159,7 +152,7 @@ const ProductBundlePage = () => {
                     </Typography>
                     <List>
                       {bundle.cartItems.map((item, idx) => (
-                        <BundleItemsList key={item._id || idx} item={item} idx={idx} items={bundle.cartItems} />
+                        <BundleItemsList key={item._id || idx} item={item} idx={idx} bundle={bundle} />
                       ))}
                     </List>
                   </Box>
@@ -182,7 +175,7 @@ const ProductBundlePage = () => {
                 </Typography>
                 <Container maxWidth="lg">
                   {bundle.cartItems.map((item, idx) => (
-                    <BundleItemCard key={item._id || idx} item={item} />
+                    <BundleItemCard key={item._id || idx} item={item} bundle={bundle} />
                   ))}
                 </Container>
               </Box>

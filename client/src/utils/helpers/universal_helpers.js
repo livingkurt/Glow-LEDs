@@ -1,4 +1,5 @@
 import { tagField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { showInfo } from "../../slices/snackbarSlice";
 import { toCapitalize } from "../helper_functions";
 
 export const scrollToId = target => {
@@ -242,4 +243,13 @@ export const sharedItemSchema = ({ products, events, tickets, tags, itemType, it
       },
     },
   };
+};
+
+export const setPromoCode = (dispatch, promoCode) => {
+  sessionStorage.setItem("promo_code", promoCode);
+  dispatch(
+    showInfo({
+      message: `Code ${promoCode.toUpperCase()} Added to Checkout`,
+    })
+  );
 };

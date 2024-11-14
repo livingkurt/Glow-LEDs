@@ -1,10 +1,11 @@
 import { Box, Container } from "@mui/material";
 import HomePageHead from "./components/HomePageHead";
 import { HOME_PAGE_COMPONENTS } from "./homePageComponents";
-import useHomePage from "./useHomePage";
+import * as API from "../../api";
 
 const HomePage = () => {
-  const { modules, isLoading } = useHomePage();
+  const { data: currentContent, isLoading } = API.useCurrentContentQuery();
+  const modules = currentContent?.home_page?.modules;
 
   return (
     <Box>
