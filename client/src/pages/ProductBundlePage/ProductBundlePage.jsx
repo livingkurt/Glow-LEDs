@@ -17,6 +17,7 @@ import { List } from "@mui/material";
 import { random } from "lodash";
 import { useMemo } from "react";
 import { setPromoCode } from "../../utils/helpers/universal_helpers";
+import HeroVideo from "../HomePage/components/HeroVideo";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
@@ -160,7 +161,7 @@ const ProductBundlePage = () => {
               </Grid>
             </Grid>
           </Container>
-
+          {bundle?.video && <HeroVideo video={bundle?.video} />}
           <Box
             mt={4}
             sx={{
