@@ -29,7 +29,8 @@ const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
           <Box
             key={product.id}
             sx={{
-              minWidth: "250px", // Change minWidth to 250px
+              minWidth: "250px",
+              maxWidth: "300px", // Add maxWidth
               width: "100%", // Add width: 100% to make the item fill the available space
               marginRight: "20px",
               "&:last-child": {

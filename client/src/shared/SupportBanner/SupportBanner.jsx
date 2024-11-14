@@ -9,7 +9,7 @@ const SupportBanner = ({ text_color, header_text_color, primary_color }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const { data: currentContent } = API.useCurrentContentQuery();
-  const support_banner = currentContent?.home_page?.support_banner;
+  const support_banner = currentContent?.home_page?.modules.find(module => module.type === "support_banner").content;
   return !support_banner?.hidden ? (
     <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Grid container justifyContent="center" mb={2}>

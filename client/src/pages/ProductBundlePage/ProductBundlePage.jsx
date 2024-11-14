@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { useState, useMemo } from "react";
+import { Box, Container, Grid, Typography, List } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { Add } from "@mui/icons-material";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import ProductImages from "../ProductPage/components/ProductImages";
@@ -10,32 +12,40 @@ import useProductBundlePage from "./useProductBundlePage";
 import { EditCartModal } from "../CartsPage/components";
 import { open_edit_cart_modal } from "../../slices/cartSlice";
 import BundleItemsList from "./components/BundleItemsList";
-import { Add } from "@mui/icons-material";
 import ProductBundlePageSkeleton from "./components/ProductBundlePageSkeleton";
 import BundleItemCard from "./components/BundleItemCard";
-import { List } from "@mui/material";
-import { random } from "lodash";
-import { useMemo } from "react";
-import { setPromoCode } from "../../utils/helpers/universal_helpers";
+import { generateGradient, setPromoCode } from "../../utils/helpers/universal_helpers";
 import HeroVideo from "../HomePage/components/HeroVideo";
+import BundleOptionsModal from "./components/BundleOptionsModal";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
   const { bundle, current_user, my_cart, loadingProductBundle } = useProductBundlePage();
+  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
+
+  const hasItemsWithOptions = useMemo(() => {
+    if (!bundle?.cartItems) return false;
+    return bundle.cartItems.some(item => item.currentOptions && item.currentOptions.length > 0);
+  }, [bundle?.cartItems]);
 
   const handleAddToCart = () => {
-    dispatch(API.addToCart({ cart: my_cart, cartItems: bundle.cartItems, type: "add_to_cart" }));
+    if (hasItemsWithOptions) {
+      setIsOptionsModalOpen(true);
+    } else {
+      addItemsToCart(bundle.cartItems);
+    }
+  };
 
+  const addItemsToCart = cartItems => {
+    dispatch(API.addToCart({ cart: my_cart, cartItems, type: "add_to_cart" }));
     setPromoCode(dispatch, bundle.affiliate?.public_code?.promo_code);
   };
-  // Add this function to generate a gradient background
-  const generateGradient = useMemo(() => {
-    const hue1 = random(0, 360);
-    const hue2 = (hue1 + 90) % 360;
-    return `linear-gradient(135deg,
-      hsl(${hue1}deg 100% 40%) 0%,
-      hsl(${hue2}deg 100% 40%) 100%)`;
-  }, []);
+
+  const handleOptionsConfirm = updatedItems => {
+    addItemsToCart(updatedItems);
+  };
+
+  const gradient = useMemo(() => generateGradient(), []);
 
   if (loadingProductBundle) return <ProductBundlePageSkeleton />;
 
@@ -74,7 +84,7 @@ const ProductBundlePage = () => {
                     sx={{
                       width: "100%",
                       aspectRatio: "1",
-                      background: generateGradient,
+                      background: gradient,
                       borderRadius: "1rem",
                       display: "flex",
                       justifyContent: "center",
@@ -182,9 +192,16 @@ const ProductBundlePage = () => {
               </Box>
             </Container>
           </Box>
+
+          <BundleOptionsModal
+            isOpen={isOptionsModalOpen}
+            onClose={() => setIsOptionsModalOpen(false)}
+            bundleItems={bundle?.cartItems || []}
+            onConfirm={handleOptionsConfirm}
+          />
+          <EditCartModal />
         </>
       )}
-      <EditCartModal />
     </Box>
   );
 };
@@ -197,9 +214,27 @@ ProductBundlePage.propTypes = {
     image: PropTypes.shape({
       link: PropTypes.string,
     }),
-    cartItems: PropTypes.array,
+    cartItems: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        currentOptions: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+            values: PropTypes.array,
+          })
+        ),
+        selectedOptions: PropTypes.array,
+      })
+    ),
     affiliate: PropTypes.shape({
       artist_name: PropTypes.string,
+      pathname: PropTypes.string,
+      public_code: PropTypes.shape({
+        promo_code: PropTypes.string,
+      }),
     }),
   }),
 };
