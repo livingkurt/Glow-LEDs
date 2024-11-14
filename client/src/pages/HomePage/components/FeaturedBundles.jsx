@@ -29,6 +29,7 @@ const FeaturedBundles = ({ featured_product_bundles }) => {
             key={bundle._id}
             sx={{
               minWidth: "250px",
+              maxWidth: "300px", // Add maxWidth
               width: "100%",
               marginRight: "20px",
               "&:last-child": {

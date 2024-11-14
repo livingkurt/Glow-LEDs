@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useState, useMemo } from "react";
 import { Box, Container, Grid, Typography, List } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { random } from "lodash";
 import { Add } from "@mui/icons-material";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
