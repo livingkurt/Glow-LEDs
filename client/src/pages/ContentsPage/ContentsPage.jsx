@@ -27,11 +27,13 @@ import GLArray from "../../shared/GlowLEDsComponents/GLForm/components/GLArray";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { debounce } from "lodash";
 import { set_content } from "../../slices/contentSlice";
+import HomePageEditor from "./components/HomePageEditor";
 
 const ContentsPage = () => {
   const dispatch = useDispatch();
   const contentPage = useSelector(state => state.contents.contentPage);
   const { content, loading } = contentPage;
+  console.log({ content });
 
   const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
@@ -152,11 +154,20 @@ const ContentsPage = () => {
             </Tabs>
           </AppBar>
           <GLTabPanel value={tabValue} index={0}>
-            <GLForm
-              formData={homePageFields(formFieldsData).fields}
-              state={content?.home_page || {}}
-              onChange={updated => handleContentChange({ ...content, home_page: { ...content.home_page, ...updated } })}
-              loading={loading}
+            {console.log({ home_page: content?.home_page?.modules })}
+            <HomePageEditor
+              initialModules={content?.home_page?.modules || []}
+              onChange={modules => {
+                console.log({ ContentPageModules: modules });
+                handleContentChange({
+                  ...content,
+                  home_page: {
+                    ...content.home_page,
+                    modules,
+                  },
+                });
+              }}
+              formFieldsData={formFieldsData}
             />
           </GLTabPanel>
           <GLTabPanel value={tabValue} index={1}>

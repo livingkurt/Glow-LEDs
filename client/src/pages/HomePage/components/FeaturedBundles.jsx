@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import ProductBundleCard from "../../ProductBundlesGridPage/components/ProductBundleCard";
 
-const FeaturedBundles = ({ featured_product_bundles, featured_bundles_hidden }) => {
-  return !featured_bundles_hidden ? (
+const FeaturedBundles = ({ featured_product_bundles }) => {
+  return (
     <Box>
       <Typography variant="h4" component="h2" align="left" gutterBottom>
         {"Featured Bundles"}
@@ -41,19 +41,15 @@ const FeaturedBundles = ({ featured_product_bundles, featured_bundles_hidden }) 
         ))}
       </Box>
     </Box>
-  ) : (
-    <></>
   );
 };
 
 FeaturedBundles.propTypes = {
   featured_product_bundles: PropTypes.array,
-  featured_bundles_hidden: PropTypes.bool,
 };
 
 FeaturedBundles.defaultProps = {
   featured_product_bundles: [],
-  featured_bundles_hidden: false,
 };
 
 export default FeaturedBundles;

@@ -166,12 +166,10 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
         </label>
       );
     } else if (product.hasOwnProperty("previous_price") && product.previous_price) {
-      console.log({ previous_price: product.previous_price });
       const discount =
         product.price && product.previous_price
           ? (100 * (1 - parseInt(product.price, 10) / parseInt(product.previous_price, 10))).toFixed(0)
           : "";
-      console.log({ discount, price: product.price, previous_price: product.previous_price });
 
       return (
         <label className="fs-18px">
