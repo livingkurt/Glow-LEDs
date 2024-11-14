@@ -347,11 +347,7 @@ const SponsorPage = () => {
                   }}
                   title={videoObj.title || `${affiliate.artist_name} video`}
                   allowFullScreen
-                  src={`https://www.youtube.com/embed/${videoObj.video}?autoplay=1&mute=0`}
-                  allow="autoplay"
-                  autoPlay
-                  loop
-                  playsInline
+                  src={`https://www.youtube.com/embed/${videoObj.video}`}
                 />
               </Box>
             </Box>

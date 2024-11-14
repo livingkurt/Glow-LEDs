@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
-import { showInfo } from "../../../slices/snackbarSlice";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { Add } from "@mui/icons-material";
+import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 
-const BundleItemsList = ({ item, idx, items }) => {
+const BundleItemsList = ({ item, idx, bundle }) => {
   const dispatch = useDispatch();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
 
@@ -22,7 +22,7 @@ const BundleItemsList = ({ item, idx, items }) => {
         type: "add_to_cart",
       })
     );
-    dispatch(showInfo({ message: `${item.name} added to cart` }));
+    setPromoCode(dispatch, bundle.affiliate?.public_code?.promo_code);
   };
 
   return (
@@ -53,7 +53,7 @@ const BundleItemsList = ({ item, idx, items }) => {
           </GLButtonV2>
         </Box>
       </ListItem>
-      {idx < items.length - 1 && <Divider />}
+      {idx < bundle.cartItems.length - 1 && <Divider />}
     </React.Fragment>
   );
 };
@@ -61,7 +61,7 @@ const BundleItemsList = ({ item, idx, items }) => {
 BundleItemsList.propTypes = {
   item: PropTypes.object.isRequired,
   idx: PropTypes.number.isRequired,
-  items: PropTypes.array.isRequired,
+  bundle: PropTypes.object.isRequired,
 };
 
 export default BundleItemsList;

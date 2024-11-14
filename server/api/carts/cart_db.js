@@ -13,7 +13,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.tags")
         .populate("cartItems.selectedOptions.filament")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images")
         .limit(parseInt(limit))
@@ -36,7 +42,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("images")
         .populate("tags");
     } catch (error) {
@@ -55,7 +67,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {
@@ -76,7 +94,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {
@@ -96,7 +120,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {

@@ -24,6 +24,10 @@ export const cartFormFields = ({ products, users, affiliates, cart, events, tick
       label: "Images",
       album: `${cart.title} Images`,
     },
+    video: {
+      type: "text",
+      label: "Video",
+    },
     user: userField({ users }),
     tags: tagField({ tags }),
     affiliate: affiliateField({ affiliates }),

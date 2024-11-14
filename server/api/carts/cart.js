@@ -9,6 +9,7 @@ const cartSchema = new mongoose.Schema(
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     cartItems: [sharedItemSchema],
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+    video: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
