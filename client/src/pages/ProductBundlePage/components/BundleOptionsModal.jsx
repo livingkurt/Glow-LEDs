@@ -82,6 +82,7 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
       const updatedItems = bundleItemsState.map(item => ({
         ...item,
         selectedOptions: item.selectedOptions.map(option => ({
+          ...option,
           name: option?.name,
           value: option?.value,
           additionalCost: option?.additionalCost || 0,
