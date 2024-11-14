@@ -7,7 +7,6 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 import { convertDatesToUTC } from "../pages/EmailsPage/emailsPageHelpers";
 
 export const getEmails = async ({ search, sorting, filters, page, pageSize }) => {
