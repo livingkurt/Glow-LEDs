@@ -6,6 +6,7 @@ import { random } from "lodash";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
 
 const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true, index }) => {
   const theme = useTheme();
@@ -26,16 +27,6 @@ const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true, index }) =>
     e.preventDefault();
     e.stopPropagation();
     setCurrentImageIndex(prevIndex => (prevIndex + 1) % bundle.images.length);
-  };
-
-  const generateGradient = () => {
-    // Base hue will increment by 30 degrees for each card
-    const baseHue = (index * 90) % 360;
-    const hue1 = baseHue;
-    const hue2 = (baseHue + 90) % 360; // Still offset by 60 degrees for a complementary color
-    return `linear-gradient(135deg,
-      hsl(${hue1}deg 100% 40%) 0%,
-      hsl(${hue2}deg 100% 40%) 100%)`;
   };
 
   return (
@@ -81,7 +72,7 @@ const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true, index }) =>
               justifyContent: "center",
               alignItems: "center",
               overflow: "hidden",
-              background: !bundle?.images?.length ? generateGradient(bundle.title) : "none",
+              background: !bundle?.images?.length ? generateGradientFromIndex(index) : "none",
             }}
           >
             {bundle?.images?.length ? (

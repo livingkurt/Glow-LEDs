@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Add } from "@mui/icons-material";
@@ -8,22 +9,36 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { setPromoCode } from "../../../utils/helpers/universal_helpers";
+import BundleOptionsModal from "./BundleOptionsModal";
 
 const BundleItemCard = ({ item, bundle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
   const { current_user } = useSelector(state => state.users.userPage);
+  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
   const handleQuickAdd = () => {
+    if (item.currentOptions && item.currentOptions.length > 0) {
+      setIsOptionsModalOpen(true);
+    } else {
+      addToCart([{ ...item, quantity: 1 }]);
+    }
+  };
+
+  const addToCart = cartItems => {
     dispatch(
       API.addToCart({
         cart: my_cart,
-        cartItems: [{ ...item, quantity: 1 }],
+        cartItems,
         type: "add_to_cart",
       })
     );
     setPromoCode(dispatch, bundle.affiliate?.public_code?.promo_code);
+  };
+
+  const handleOptionsConfirm = updatedItems => {
+    addToCart(updatedItems);
   };
 
   return (
@@ -84,6 +99,13 @@ const BundleItemCard = ({ item, bundle }) => {
           </Box>
         </Grid>
       </Grid>
+
+      <BundleOptionsModal
+        isOpen={isOptionsModalOpen}
+        onClose={() => setIsOptionsModalOpen(false)}
+        bundleItems={[item]}
+        onConfirm={handleOptionsConfirm}
+      />
     </Box>
   );
 };
@@ -102,6 +124,13 @@ BundleItemCard.propTypes = {
       link: PropTypes.string,
     }),
     price: PropTypes.number,
+    currentOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        values: PropTypes.array,
+      })
+    ),
+    selectedOptions: PropTypes.array,
   }).isRequired,
   bundle: PropTypes.object.isRequired,
 };
