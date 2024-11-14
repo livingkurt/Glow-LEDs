@@ -32,7 +32,6 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
   };
 
   const handleOptionChange = ({ itemIndex, optionIndex, selectedOption, option }) => {
-    console.log({ itemIndex, optionIndex, selectedOption, option });
     setBundleItemsState(prev => {
       const newState = [...prev];
       const currentItem = { ...newState[itemIndex] };
