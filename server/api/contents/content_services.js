@@ -146,7 +146,6 @@ export default {
         .populate("academy_page.featured_tutorials.image")
         .populate("academy_page.sponsors")
         .populate("about_page.sections.image");
-      console.log({ currentContent: currentContent[0].home_page, home_page: currentContent[0].home_page.modules });
       return currentContent;
     } catch (error) {
       if (error instanceof Error) {

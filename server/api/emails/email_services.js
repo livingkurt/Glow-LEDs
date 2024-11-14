@@ -466,19 +466,45 @@ export default {
             user => user.email
           );
 
-    const mailOptions = {
-      to: emailAddresses,
-      from: config.DISPLAY_INFO_EMAIL,
-      subject: test === "true" ? "TEST " + email.subject : email.subject,
-      html: App({
-        body: AnnouncementTemplate(email),
-        unsubscribe: true,
-        header_footer_color: email.header_footer_color,
-        background_color: email.background_color,
-      }),
-    };
+    // Split emails into batches of 1000 (leaving some buffer below the 1500 limit)
+    const batchSize = 1000;
+    const emailBatches = [];
+    for (let i = 0; i < emailAddresses.length; i += batchSize) {
+      emailBatches.push(emailAddresses.slice(i, i + batchSize));
+    }
 
-    await sendEmail(mailOptions);
+    // Send emails in batches
+    let totalSent = 0;
+    for (const batch of emailBatches) {
+      const mailOptions = {
+        bcc: batch,
+        from: config.DISPLAY_INFO_EMAIL,
+        replyTo: null,
+        headers: {
+          "X-Auto-Response-Suppress": "All",
+          "Precedence": "bulk",
+          "Auto-Submitted": "auto-generated",
+        },
+        subject: test === "true" ? "TEST " + email.subject : email.subject,
+        html: App({
+          body: AnnouncementTemplate(email),
+          unsubscribe: true,
+          header_footer_color: email.header_footer_color,
+          background_color: email.background_color,
+        }),
+      };
+
+      await sendEmail(mailOptions);
+      totalSent += batch.length;
+      console.log(
+        `Batch of ${batch.length} emails sent successfully. Total sent so far: ${totalSent} out of ${emailAddresses.length}`
+      );
+
+      // Optional: Add a small delay between batches to prevent rate limiting
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    console.log(`All announcement emails sent successfully to ${emailAddresses.length} recipients`);
     email.status = "Sent";
     await email.save();
     return "Announcement emails sent successfully";
