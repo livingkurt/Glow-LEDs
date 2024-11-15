@@ -265,8 +265,12 @@ const enhancers = addIdsRecursively({
   id: "enhancers_dropdown",
   rows: [
     {
-      name: "Glove Sets (NEW!)",
+      name: "Premium Glove Sets",
       path: "/products?tags[]=glove_sets",
+    },
+    {
+      name: "Premium Microlights",
+      path: "/products?tags[]=microlight",
     },
     glowskinz,
     {

@@ -593,7 +593,6 @@ const ShippingStep = () => {
               {shipping_choice && (
                 <>
                   <ShippingChoice />
-                  {console.log({ process: cartItems.map(item => item.processing_time) })}
                   {cartItems.some(item => item.processing_time) && (
                     <>
                       {placeOrder.splitOrder ? (
