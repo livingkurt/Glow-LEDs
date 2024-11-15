@@ -260,7 +260,7 @@ const diffuser_caps = addIdsRecursively({
 });
 
 const enhancers = addIdsRecursively({
-  name: "Enhancers",
+  name: "Enhancements",
   // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
@@ -305,24 +305,24 @@ const essentials = addIdsRecursively({
       path: "/products?tags[]=glove_sets",
     },
     {
-      name: "Premium Microlights",
+      name: "Microlights",
       path: "/products?tags[]=microlight",
-    },
-    {
-      name: "Gloves",
-      path: "/products?tags[]=gloves&tags[]=singles",
     },
     {
       name: "Refresh Packs",
       path: "/products?tags[]=gloves&tags[]=refresh",
     },
     {
-      name: "Sizing Samplers",
-      path: "/products?tags[]=gloves&tags[]=sampler",
+      name: "Gloves",
+      path: "/products?tags[]=gloves",
     },
     {
       name: "Coin Batteries",
       path: "/products?tags[]=batteries&tags[]=coin",
+    },
+    {
+      name: "Sizing Samplers",
+      path: "/products?tags[]=gloves&tags[]=sampler",
     },
     {
       name: "Battery Storage",
