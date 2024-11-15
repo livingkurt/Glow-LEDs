@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, FormHelperText, Typography } from "@mui/material";
+import { Box, Divider, FormHelperText, Paper, Typography } from "@mui/material";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
 import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
@@ -106,108 +106,113 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
       cancelLabel="Cancel"
       cancelColor="secondary"
       maxWidth="md"
-      backgroundColor="#8a8a8a"
-      textColor="white"
     >
       <Typography variant="subtitle1" gutterBottom textAlign="center">
         {"Please confirm your options for each item in the bundle"}
       </Typography>
-      {bundleItemsState.map(
-        (item, itemIndex) =>
-          item.currentOptions?.length > 0 && (
-            <Box key={item._id || itemIndex} mb={3}>
-              {/* Image and name section remains the same */}
-              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                <Typography variant="h3">{item.name}</Typography>
-                <Typography variant="h4">
-                  {"$"}
-                  {Number(item.price).toFixed(2)}
-                </Typography>
-              </Box>
-              <Box display="flex" flexDirection="row" gap={2}>
-                {/* Image/Gradient Box */}
-                <Box
-                  sx={{
-                    width: 200,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    overflow: "hidden",
-                    background: !item?.images?.length ? generateGradientFromIndex(itemIndex) : "none",
-                    flexShrink: 0,
-                    borderRadius: "1rem",
-                  }}
-                >
-                  {item?.images?.length ? (
-                    <GLLazyImage
-                      src={item?.images?.[0]?.link}
-                      alt={item.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        transition: "opacity 0.3s ease-in-out",
-                        opacity: 1,
-                      }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        color: "white",
-                        textAlign: "center",
-                        padding: 2,
-                        textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
-                      }}
-                    >
-                      {item.name}
-                    </Typography>
-                  )}
+      <Box gap={2} display="flex" flexDirection="column">
+        {bundleItemsState.map(
+          (item, itemIndex) =>
+            item.currentOptions?.length > 0 && (
+              <Paper
+                key={item._id || itemIndex}
+                mb={3}
+                sx={{ backgroundColor: "#8a8a8a", color: "white", p: 2 }}
+                elevation={5}
+              >
+                {/* Image and name section remains the same */}
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                  <Typography variant="h3">{item.name}</Typography>
+                  <Typography variant="h4">
+                    {"$"}
+                    {Number(item.price).toFixed(2)}
+                  </Typography>
                 </Box>
-                <Box flex={1}>
-                  {item.currentOptions.map((option, optionIndex) => {
-                    const index = `${itemIndex}-${optionIndex}`;
-                    return (
-                      <>
-                        <CustomizationOption
-                          key={optionIndex}
-                          index={optionIndex}
-                          option={option}
-                          selectedOption={item.selectedOptions[optionIndex]}
-                          updateValidationError={(_, error) => updateValidationError(itemIndex, optionIndex, error)}
-                          selectOption={({ selectedOption, option, index }) => {
-                            handleOptionChange({ itemIndex, optionIndex: index, selectedOption, option });
-                          }}
-                          isAddonChecked={isAddonChecked}
-                          setIsAddonChecked={setIsAddonChecked}
-                          validationErrors={validationErrors}
-                        />
-                        {validationErrors[index] && (
-                          <FormHelperText>
-                            <Box
-                              sx={{
-                                display: "inline-block",
-                                bgcolor: "#8c444b",
-                                py: 1,
-                                px: 1.5,
-                                borderRadius: "10px",
-                                color: "white",
-                              }}
-                            >
-                              <Typography variant="subtitle2" fontWeight={800}>
-                                {validationErrors[index]}
-                              </Typography>
-                            </Box>
-                          </FormHelperText>
-                        )}
-                      </>
-                    );
-                  })}
+                <Box display="flex" flexDirection="row" gap={2}>
+                  {/* Image/Gradient Box */}
+                  <Box
+                    sx={{
+                      width: 200,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      overflow: "hidden",
+                      background: !item?.images?.length ? generateGradientFromIndex(itemIndex) : "none",
+                      flexShrink: 0,
+                      borderRadius: "1rem",
+                    }}
+                  >
+                    {item?.images?.length ? (
+                      <GLLazyImage
+                        src={item?.images?.[0]?.link}
+                        alt={item.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          transition: "opacity 0.3s ease-in-out",
+                          opacity: 1,
+                        }}
+                      />
+                    ) : (
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          color: "white",
+                          textAlign: "center",
+                          padding: 2,
+                          textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                    )}
+                  </Box>
+                  <Box flex={1}>
+                    {item.currentOptions.map((option, optionIndex) => {
+                      const index = `${itemIndex}-${optionIndex}`;
+                      return (
+                        <>
+                          <CustomizationOption
+                            key={optionIndex}
+                            index={optionIndex}
+                            option={option}
+                            selectedOption={item.selectedOptions[optionIndex]}
+                            updateValidationError={(_, error) => updateValidationError(itemIndex, optionIndex, error)}
+                            selectOption={({ selectedOption, option, index }) => {
+                              handleOptionChange({ itemIndex, optionIndex: index, selectedOption, option });
+                            }}
+                            isAddonChecked={isAddonChecked}
+                            setIsAddonChecked={setIsAddonChecked}
+                            validationErrors={validationErrors}
+                          />
+                          {validationErrors[index] && (
+                            <FormHelperText>
+                              <Box
+                                sx={{
+                                  display: "inline-block",
+                                  bgcolor: "#8c444b",
+                                  py: 1,
+                                  px: 1.5,
+                                  borderRadius: "10px",
+                                  color: "white",
+                                }}
+                              >
+                                <Typography variant="subtitle2" fontWeight={800}>
+                                  {validationErrors[index]}
+                                </Typography>
+                              </Box>
+                            </FormHelperText>
+                          )}
+                        </>
+                      );
+                    })}
+                  </Box>
                 </Box>
-              </Box>
-            </Box>
-          )
-      )}
+              </Paper>
+            )
+        )}
+      </Box>
     </GLActionModal>
   );
 };
