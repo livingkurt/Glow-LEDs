@@ -264,21 +264,25 @@ const enhancers = addIdsRecursively({
   // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
+    // glowskinz,
     {
-      name: "Premium Glove Sets",
-      path: "/products?tags[]=glove_sets",
+      name: "Glowskinz",
+      path: "/products?tags[]=glowskinz",
     },
-    {
-      name: "Premium Microlights",
-      path: "/products?tags[]=microlight",
-    },
-    glowskinz,
     {
       name: "Glowframez",
       path: "/products?tags[]=glowframez",
     },
-    exo_diffusers,
-    diffuser_caps,
+    {
+      name: "EXO Diffusers",
+      path: "/products?tags[]=exo_diffusers",
+    },
+    {
+      name: "Diffuser Caps",
+      path: "/products?tags[]=diffuser_caps",
+    },
+    // exo_diffusers,
+    // diffuser_caps,
     {
       name: "Diffusers",
       path: "/products?tags[]=diffusers",
@@ -296,6 +300,14 @@ const essentials = addIdsRecursively({
   id: "essentials_dropdown",
   path: "/products?tags[]=essentials",
   rows: [
+    {
+      name: "Premium Glove Sets",
+      path: "/products?tags[]=glove_sets",
+    },
+    {
+      name: "Premium Microlights",
+      path: "/products?tags[]=microlight",
+    },
     {
       name: "Gloves",
       path: "/products?tags[]=gloves&tags[]=singles",
@@ -815,8 +827,8 @@ export const navItems = [
     path: "/menu/shop",
     id: "shop_dropdown",
     dataTestId: "shop_button",
-    columns: [features, enhancers],
-    otherColumns: [essentials],
+    columns: [features, essentials],
+    otherColumns: [enhancers],
     navbarLocation: "center",
   },
   {
