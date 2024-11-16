@@ -1,4 +1,4 @@
-import { Slider, Box, Typography, Grid2, Grid } from "@mui/material";
+import { Slider, Box, Typography, Grid2, Grid, Link } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useModePreview } from "./useModePreview";
 import { getSliderProps } from "../modeCreatorPageHelpers";
@@ -56,9 +56,23 @@ const ModePreview = ({ mode }) => {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <ControlsContainer>
         <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
-          {"Animation"}
+          {"Mode Preview"}
         </Typography>
-
+        <canvas
+          ref={canvasRef}
+          width={120}
+          height={120}
+          style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
+        />
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 1, color: "white", my: 2 }}>
+          {"Inspired by"}{" "}
+          <Link href="https://lightshow.lol/" target="_blank" color="inherit">
+            {"lightshow.lol"}
+          </Link>
+        </Box>
+        <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
+          {"Animation Controls"}
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <SliderContainer>
@@ -129,12 +143,6 @@ const ModePreview = ({ mode }) => {
           </Grid>
         </Grid>
       </ControlsContainer>
-      <canvas
-        ref={canvasRef}
-        width={120}
-        height={120}
-        style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
-      />
     </Box>
   );
 };

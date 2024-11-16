@@ -1,5 +1,6 @@
-import { Paper, Typography, Grid } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import PropTypes from "prop-types";
+import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
 const PatternSelector = ({ pattern, onChange, microlight }) => {
   if (!microlight?.flashing_patterns?.length) {
@@ -12,11 +13,13 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
     );
   }
 
-  const handlePatternSelect = selectedPattern => {
-    onChange({
-      ...selectedPattern,
-      name: selectedPattern.name,
-    });
+  const handlePatternSelect = (_, selectedPattern) => {
+    if (selectedPattern) {
+      onChange({
+        ...selectedPattern,
+        name: selectedPattern.name,
+      });
+    }
   };
 
   return (
@@ -24,31 +27,15 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
       <Typography variant="h6" gutterBottom>
         {"Pattern Selection"}
       </Typography>
-      <Grid container spacing={1}>
-        {microlight.flashing_patterns.map(p => (
-          <Grid item xs={6} sm={4} md={3} lg={2} xl={2} key={p._id}>
-            <Paper
-              elevation={pattern?._id === p._id ? 4 : 1}
-              sx={{
-                p: 1,
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                bgcolor: pattern?._id === p._id ? "primary.main" : "background.paper",
-                color: pattern?._id === p._id ? "primary.contrastText" : "text.primary",
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  bgcolor: pattern?._id === p._id ? "primary.dark" : "action.hover",
-                },
-              }}
-              onClick={() => handlePatternSelect(p)}
-            >
-              <Typography variant="body2" gutterBottom>
-                {p.name}
-              </Typography>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
+      <GLAutocomplete
+        options={microlight.flashing_patterns}
+        value={pattern}
+        onChange={handlePatternSelect}
+        getOptionLabel={option => option.name}
+        isOptionEqualToValue={(option, value) => option._id === value._id}
+        label="Select Pattern"
+        placeholder="Search patterns..."
+      />
     </Paper>
   );
 };
