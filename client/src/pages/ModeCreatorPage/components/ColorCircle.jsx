@@ -20,16 +20,16 @@ const ColorCircle = ({ color, index, mode }) => {
                 <Typography variant="body2">
                   {"Saturation: "}
                   {color.saturation !== undefined
-                    ? getDisplayLevel(color.saturation, mode.microlight.saturation_levels)
-                    : mode.microlight.saturation_levels}
+                    ? getDisplayLevel(color.saturation, mode?.microlight?.saturation_levels)
+                    : mode?.microlight?.saturation_levels}
                 </Typography>
               )}
               {color.name !== "Blank" && color.brightness !== undefined && (
                 <Typography variant="body2">
                   {"Brightness: "}
                   {color.brightness !== undefined
-                    ? getDisplayLevel(color.brightness, mode.microlight.brightness_levels)
-                    : mode.microlight.brightness_levels}
+                    ? getDisplayLevel(color.brightness, mode?.microlight?.brightness_levels)
+                    : mode?.microlight?.brightness_levels}
                 </Typography>
               )}
             </Typography>

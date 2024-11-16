@@ -6,7 +6,7 @@ export const mainFormFields = () => ({
   active: { type: "checkbox", label: "Active" },
 });
 
-export const homePageFields = ({ content, products, affiliates, carts }) => ({
+export const homePageFields = ({ content, products, affiliates, carts, modes }) => ({
   type: "object",
   title: "Home Page",
   fields: {
@@ -41,6 +41,12 @@ export const homePageFields = ({ content, products, affiliates, carts }) => ({
       label: "Featured Product Bundles",
       options: carts?.filter(cart => cart.title),
       labelProp: "title",
+    },
+    featured_modes: {
+      type: "autocomplete_multiple",
+      label: "Featured Modes",
+      options: modes,
+      labelProp: "name",
     },
     hero_video: {
       type: "object",

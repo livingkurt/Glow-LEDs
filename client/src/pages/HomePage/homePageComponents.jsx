@@ -9,10 +9,13 @@ import SponsorsBanner from "./components/SponsorsBanner";
 import SupportBanner from "./components/SupportBanner";
 import HeroVideo from "./components/HeroVideo";
 import ProductProtectionDetails from "./components/ProductProtectionDetails";
+import FeaturedModes from "./components/FeaturedModes";
+
 export const HOME_PAGE_COMPONENTS = {
   slideshow: HeroHeader,
   featured_products: FeaturedProducts,
   featured_product_bundles: FeaturedBundles,
+  featured_modes: FeaturedModes,
   learn_more_products: LearnMoreProducts,
   learn_highlights: LearnHighlights,
   discover_more: DiscoverMoreHero,
@@ -27,6 +30,7 @@ export const MODULE_TYPES = [
   { value: "slideshow", label: "Hero Header" },
   { value: "featured_products", label: "Featured Products" },
   { value: "featured_product_bundles", label: "Featured Bundles" },
+  { value: "featured_modes", label: "Featured Modes" },
   { value: "learn_more_products", label: "Learn More Products" },
   { value: "learn_highlights", label: "Learn Highlights" },
   { value: "discover_more", label: "Discover More" },
