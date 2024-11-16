@@ -8,7 +8,7 @@ export const useModePreview = ({ mode }) => {
   const [trailLength, setTrailLength] = useState(50);
   const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
-  const [radius, setRadius] = useState(95);
+  const [radius, setRadius] = useState(100);
   const [timeMultiplier, setTimeMultiplier] = useState(5);
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -19,7 +19,6 @@ export const useModePreview = ({ mode }) => {
   const blendCurrentColorRef = useRef(null);
   const blendNextColorRef = useRef(null);
   const trailRef = useRef([]);
-  const angleRef = useRef(0);
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -70,6 +69,17 @@ export const useModePreview = ({ mode }) => {
     group_size: Number(mode.flashing_pattern.group_size) || 0,
     blend_speed: Number(mode.flashing_pattern.blend_speed) || 0,
   };
+
+  const radiiRef = useRef([radius * 0.6, radius * 0.8, radius]);
+
+  // Track angles for each circle
+  const anglesRef = useRef([0, 0, 0]);
+
+  // Update radii when radius changes
+  useEffect(() => {
+    radiiRef.current = [radius * 0.6, radius * 0.8, radius];
+  }, [radius]);
+
   const updateTrail = (color, intensity = 1) => {
     let rgbColor;
     if (typeof color === "string") {
@@ -78,25 +88,29 @@ export const useModePreview = ({ mode }) => {
       rgbColor = { ...color };
     }
 
-    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef, timeMultiplier);
-    const newPos = getPosition(angleRef.current, params.circleRadius, canvasRef);
-    angleRef.current = (angleRef.current + params.rotationSpeed) % (Math.PI * 2);
+    const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
-    trailRef.current.unshift({
-      x: newPos.x,
-      y: newPos.y,
-      color: rgbColor,
-      alpha: intensity, // Store alpha instead of modifying color intensity
+    // Update all three circles at different radii
+    radiiRef.current.forEach((radiusMultiplier, index) => {
+      const circleRadius = (radiusMultiplier / 100) * params.circleRadius; // Convert to responsive size
+      const newPos = getPosition(anglesRef.current[index], circleRadius, canvasRef);
+      anglesRef.current[index] = (anglesRef.current[index] + params.rotationSpeed) % (Math.PI * 2);
+
+      trailRef.current.unshift({
+        x: newPos.x,
+        y: newPos.y,
+        color: rgbColor,
+        alpha: intensity,
+      });
     });
 
-    // Ensure trail does not exceed the trail size
-    while (trailRef.current.length > params.trailLength) {
+    // Ensure trail doesn't exceed maximum length (accounting for 3 circles)
+    while (trailRef.current.length > params.trailLength * 3) {
       trailRef.current.pop();
     }
 
     drawTrail();
   };
-
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
