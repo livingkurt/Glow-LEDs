@@ -231,6 +231,14 @@ const ModeCreatorPage = () => {
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              label="Video"
+              value={mode.video}
+              onChange={e => dispatch(set_mode({ video: e.target.value }))}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel>{"Visibility"}</InputLabel>
               <Select

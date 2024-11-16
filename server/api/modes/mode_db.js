@@ -38,7 +38,8 @@ export default {
     try {
       const mode = await Mode.findOne({ _id: id, deleted: false });
       if (mode) {
-        return await Mode.updateOne({ _id: id }, body);
+        const updatedMode = await Mode.findByIdAndUpdate({ _id: id }, body);
+        return updatedMode;
       }
     } catch (error) {
       if (error instanceof Error) {

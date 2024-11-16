@@ -13,6 +13,7 @@ const mode_schema = new mongoose.Schema(
     name: { type: String },
     description: { type: String },
     author: { type: String },
+    video: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     colors: [mode_color_schema],
     microlight: { type: mongoose.Schema.Types.ObjectId, ref: "Microlight" },

@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Box, Paper, Typography, Portal } from "@mui/material";
-import { hexToHSV, hsvToHex, generateBrightnessLevels, generateSaturationLevels } from "../modeCreatorPageHelpers";
+import {
+  hexToHSV,
+  hsvToHex,
+  generateBrightnessLevels,
+  generateSaturationLevels,
+  getDisplayLevel,
+} from "../modeCreatorPageHelpers";
 
 const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
   const [activeControl, setActiveControl] = useState(null);
@@ -27,6 +33,7 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
         saturation: value,
       };
     }
+    console.log({ type, value, updatedColor });
 
     // Update the color
     onUpdate(updatedColor);
@@ -63,15 +70,12 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
         }}
       >
         {sortedLevels.map(({ value, hex }, index) => {
-          // Calculate the level number (4,3,2,1) based on index
           const levelNumber = sortedLevels.length - index;
-          // Calculate the actual value to use (map 4->100, 3->66.66, 2->33.33, 1->0)
-          const actualValue = ((levelNumber - 1) / (sortedLevels.length - 1)) * 100;
 
           return (
             <Box
               key={value}
-              onClick={() => handleLevelSelect(activeControl, actualValue)}
+              onClick={() => handleLevelSelect(activeControl, value)} // Use the actual value directly
               sx={{
                 backgroundColor: hex,
                 cursor: "pointer",
@@ -146,9 +150,9 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
               >
                 <Typography variant="body2">
                   {"Saturation: "}
-                  {color.saturation
-                    ? Math.ceil((color.saturation / 100) * (microlight.saturation_levels || 4))
-                    : microlight.saturation_levels || 4}
+                  {color.saturation !== undefined
+                    ? getDisplayLevel(color.saturation, microlight.saturation_levels)
+                    : microlight.saturation_levels}
                 </Typography>
               </Box>
             )}
@@ -169,9 +173,9 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
               >
                 <Typography variant="body2">
                   {"Brightness: "}
-                  {color.brightness
-                    ? Math.ceil((color.brightness / 100) * (microlight.brightness_levels || 4))
-                    : microlight.brightness_levels || 4}
+                  {color.brightness !== undefined
+                    ? getDisplayLevel(color.brightness, microlight.brightness_levels)
+                    : microlight.brightness_levels}
                 </Typography>
               </Box>
             )}

@@ -45,17 +45,18 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
     const parts = [`Base Color: ${color.name}`];
 
     if (color.saturation !== undefined) {
-      const sLevel = Math.ceil((color.saturation / 100) * (microlight.saturation_levels || 4));
+      const sLevel =
+        color.saturation === 0 ? 0 : Math.ceil((color.saturation / 100) * (microlight.saturation_levels || 4));
       parts.push(`Saturation Level: ${sLevel}`);
     }
     if (color.brightness !== undefined) {
-      const bLevel = Math.ceil((color.brightness / 100) * (microlight.brightness_levels || 4));
+      const bLevel =
+        color.brightness === 0 ? 0 : Math.ceil((color.brightness / 100) * (microlight.brightness_levels || 4));
       parts.push(`Brightness Level: ${bLevel}`);
     }
 
     return parts.join("\n");
   };
-
   return (
     <Draggable draggableId={`slot-${index}-${color._id}`} index={index}>
       {(provided, snapshot) => (

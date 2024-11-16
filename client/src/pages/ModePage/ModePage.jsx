@@ -9,6 +9,8 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
 import { useModePreview } from "../ModeCreatorPage/components/useModePreview";
+import HeroVideo from "../HomePage/components/HeroVideo";
+import ColorCircle from "../ModeCreatorPage/components/ColorCircle";
 
 const ModePage = () => {
   const dispatch = useDispatch();
@@ -119,52 +121,7 @@ const ModePage = () => {
                 </Typography>
                 <Box display="flex" gap={2}>
                   {mode?.colors?.map((color, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        position: "relative",
-                        zIndex: 1,
-                      }}
-                    >
-                      <Tooltip
-                        title={
-                          <Typography>
-                            {`Base Color: ${color.name}`}
-                            {color.saturation !== undefined && (
-                              <Box component="div">
-                                {`Saturation Level: ${Math.ceil((color.saturation / 100) * (mode.microlight?.saturation_levels || 4))}`}
-                              </Box>
-                            )}
-                            {color.brightness !== undefined && (
-                              <Box component="div">
-                                {`Brightness Level: ${Math.ceil((color.brightness / 100) * (mode.microlight?.brightness_levels || 4))}`}
-                              </Box>
-                            )}
-                          </Typography>
-                        }
-                        arrow
-                        placement="top"
-                      >
-                        <Box
-                          sx={{
-                            width: 60,
-                            height: 60,
-                            borderRadius: "50%",
-                            backgroundColor: color.colorCode,
-                            boxShadow: theme =>
-                              `0 4px 8px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)"}`,
-                            cursor: "pointer",
-                            margin: "0 auto",
-                            transition: "all 0.2s ease",
-                            "&:hover": {
-                              transform: "translateY(-2px)",
-                              boxShadow: theme =>
-                                `0 6px 12px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.3)"}`,
-                            },
-                          }}
-                        />
-                      </Tooltip>
-                    </Box>
+                    <ColorCircle key={index} color={color} index={index} mode={mode} />
                   ))}
                 </Box>
               </Box>
@@ -187,6 +144,7 @@ const ModePage = () => {
           </Grid>
         </Grid>
       </Container>
+      {mode?.video && <HeroVideo video={mode?.video} />}
     </Box>
   );
 };

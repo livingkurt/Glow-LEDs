@@ -89,12 +89,16 @@ export const hsvToHex = (h, s, v) => {
 };
 
 export const generateBrightnessLevels = (h, s, levels) => {
-  const minBrightness = 30;
-  const maxBrightness = 100;
-  const step = (maxBrightness - minBrightness) / (levels - 1);
+  const levelMap = {
+    4: 100,
+    3: 80,
+    2: 60,
+    1: 40,
+  };
 
   return Array.from({ length: levels }, (_, i) => {
-    const brightness = Math.round(minBrightness + step * i);
+    const levelNumber = levels - i;
+    const brightness = levelMap[levelNumber];
     return {
       value: brightness,
       hex: hsvToHex(h, s, brightness),
@@ -103,17 +107,31 @@ export const generateBrightnessLevels = (h, s, levels) => {
 };
 
 export const generateSaturationLevels = (h, v, levels) => {
-  const minSaturation = 40;
-  const maxSaturation = 100;
-  const step = (maxSaturation - minSaturation) / (levels - 1);
+  const levelMap = {
+    4: 100,
+    3: 80,
+    2: 60,
+    1: 40,
+  };
 
   return Array.from({ length: levels }, (_, i) => {
-    const saturation = Math.round(minSaturation + step * i);
+    const levelNumber = levels - i;
+    const saturation = levelMap[levelNumber];
     return {
       value: saturation,
       hex: hsvToHex(h, saturation, v),
     };
   });
+};
+
+export const getDisplayLevel = (value, totalLevels) => {
+  const levelMap = {
+    100: 4,
+    80: 3,
+    60: 2,
+    40: 1,
+  };
+  return levelMap[value] || totalLevels;
 };
 
 // Move PatternState outside the hook
