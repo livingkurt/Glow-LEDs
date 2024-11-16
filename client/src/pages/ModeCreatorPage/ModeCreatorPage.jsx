@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Box, Button, Container, TextField, Typography, MenuItem, Paper, Grid } from "@mui/material";
 import * as API from "../../api";
@@ -24,6 +24,7 @@ const ModeCreatorPage = () => {
   const initialSetupDone = useRef(false);
   const [macro] = useState(true); // You can make this dynamic later if needed
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -47,10 +48,11 @@ const ModeCreatorPage = () => {
   }, [dispatch, mode.flashing_pattern, selectedMicrolight]);
 
   useEffect(() => {
-    if (id) {
-      dispatch(API.detailsMode(id));
+    const copy = searchParams.get("copy");
+    if (id || copy) {
+      dispatch(API.detailsMode(id || copy));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, searchParams]);
 
   const handleSave = async () => {
     if (!mode.microlight) {
@@ -73,8 +75,12 @@ const ModeCreatorPage = () => {
     }
     const { payload } = await dispatch(
       API.saveMode({
-        ...mode,
-        user: current_user._id,
+        mode: {
+          ...mode,
+          _id: searchParams.has("copy") ? undefined : mode._id,
+          user: current_user._id,
+        },
+        copy: searchParams.has("copy"),
       })
     );
 

@@ -5,17 +5,29 @@ import GLLoading from "../../shared/GlowLEDsComponents/GLLoading/GLLoading";
 import AddIcon from "@mui/icons-material/Add";
 import { useModesQuery } from "../../api/allRecordsApi";
 import ModeCard from "./components/ModeCard";
-
+import { useEffect } from "react";
+import { modeInitialState, set_mode } from "../../slices/modeSlice";
+import { useDispatch } from "react-redux";
 const ModesGridPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { data: modes, isLoading } = useModesQuery({
+  const {
+    data: modes,
+    isLoading,
+    refetch,
+  } = useModesQuery({
     visibility: "public",
   });
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   const handleCreateMode = () => {
+    dispatch(set_mode(modeInitialState));
     navigate("/modes/creator");
   };
 

@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
@@ -23,7 +23,7 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
   };
 
   return (
-    <Paper elevation={3} sx={{ p: 3 }}>
+    <Box>
       <Typography variant="h6" gutterBottom>
         {"Pattern Selection"}
       </Typography>
@@ -34,9 +34,10 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
         getOptionLabel={option => option.name}
         isOptionEqualToValue={(option, value) => option._id === value._id}
         label="Select Pattern"
+        size="medium"
         placeholder="Search patterns..."
       />
-    </Paper>
+    </Box>
   );
 };
 

@@ -51,9 +51,6 @@ const ModeCard = ({ mode }) => {
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Box>
-            {/* <Typography variant="body2" color="white">
-              {mode.microlight?.name || "Unknown Device"}
-            </Typography> */}
             <Typography variant="body1" color="white" display="block">
               {mode.colors.length} {mode.colors.length === 1 ? "Color" : "Colors"}
               {" •"} {mode.flashing_pattern?.name?.charAt(0).toUpperCase() + mode.flashing_pattern?.name?.slice(1)}
@@ -63,10 +60,16 @@ const ModeCard = ({ mode }) => {
             <Typography variant="h6" color="white" gutterBottom>
               {mode.name}
             </Typography>
-            <Typography variant="body1" color="white" display="block">
-              {"By "}
-              {mode.user?.first_name} {mode.user?.last_name}
-            </Typography>
+            {mode?.author && (
+              <Typography variant="body1" color="white" display="block">
+                {"By "} {mode.author}
+              </Typography>
+            )}
+            {!mode?.author && mode?.user && (
+              <Typography variant="body1" color="white" display="block">
+                {"By "} {mode.user.first_name} {mode.user.last_name}
+              </Typography>
+            )}
           </Box>
         </CardContent>
       </Card>

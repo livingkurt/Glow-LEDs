@@ -28,7 +28,7 @@ const ModePage = () => {
       dispatch(openLoginModal());
       return;
     }
-    navigate(`/modes/creator`);
+    navigate(`/modes/creator?copy=${id}`);
   };
   const { canvasRef } = useModePreview({ mode });
 
