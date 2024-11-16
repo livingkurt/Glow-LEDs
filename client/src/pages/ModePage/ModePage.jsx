@@ -11,6 +11,8 @@ import * as API from "../../api";
 import { useModePreview } from "../ModeCreatorPage/components/useModePreview";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import ColorCircle from "../ModeCreatorPage/components/ColorCircle";
+import { useProductsGridQuery } from "../../api/allRecordsApi";
+import ProductCard from "../ProductsGridPage/components/ProductCard";
 
 const ModePage = () => {
   const dispatch = useDispatch();
@@ -21,9 +23,17 @@ const ModePage = () => {
 
   const { mode } = useSelector(state => state.modes.modePage);
 
+  const { data: products, refetch } = useProductsGridQuery({
+    microlight: mode.microlight.name.toLowerCase(),
+  });
+
   useEffect(() => {
     dispatch(API.detailsMode(id));
   }, [id]);
+
+  useEffect(() => {
+    refetch();
+  }, [mode, refetch]);
 
   const handleCopy = () => {
     if (!current_user._id) {
@@ -145,6 +155,29 @@ const ModePage = () => {
         </Grid>
       </Container>
       {mode?.video && <HeroVideo video={mode?.video} />}
+      <Container maxWidth="xl">
+        <Typography variant="h4" align="center" pt={2} gutterBottom>
+          {mode.microlight.name} {"Compatible Products"}
+        </Typography>
+        <Grid container spacing={2}>
+          {products?.length > 0 ? (
+            products.map(product => (
+              <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
+                <ProductCard product={product} />
+              </Grid>
+            ))
+          ) : (
+            <>
+              <Typography variant="h5" textAlign="center" width="100%" mt={4} gutterBottom>
+                {"No products found for matching criteria"}
+              </Typography>
+              <Typography variant="subtitle2" textAlign="center" width="100%">
+                {"Try removing some filters to find what you're looking for"}
+              </Typography>
+            </>
+          )}
+        </Grid>
+      </Container>
     </Box>
   );
 };
