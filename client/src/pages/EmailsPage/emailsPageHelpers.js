@@ -33,3 +33,13 @@ export const templates = [
   "paycheck",
   "ticket",
 ];
+
+export const convertDatesToUTC = email => {
+  const newEmail = { ...email };
+  if (newEmail.scheduled_at) {
+    // Ensure scheduled_at is in UTC
+    const localDate = new Date(newEmail.scheduled_at);
+    newEmail.scheduled_at = localDate.toUTCString();
+  }
+  return newEmail;
+};

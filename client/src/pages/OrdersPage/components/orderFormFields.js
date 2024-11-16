@@ -278,6 +278,10 @@ export const orderFormFields = ({ users, products, promos, allShipping, parcels,
           label: "Country",
           required: true,
         },
+        handling_instructions: {
+          type: "text",
+          label: "Special Instructions",
+        },
       },
     },
     payment: {

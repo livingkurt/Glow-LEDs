@@ -546,6 +546,17 @@ const ShippingStep = () => {
                       </div>
                     </>
                   )}
+                  <li>
+                    <label htmlFor="handling_instructions">{"Special DeliveryInstructions"}</label>
+                    <input
+                      type="text"
+                      value={shipping.handling_instructions}
+                      name="handling_instructions"
+                      placeholder="Door Code, Leave on Porch, etc."
+                      id="handling_instructions"
+                      onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
+                    />
+                  </li>
                 </div>
 
                 <li>
@@ -582,7 +593,6 @@ const ShippingStep = () => {
               {shipping_choice && (
                 <>
                   <ShippingChoice />
-                  {console.log({ process: cartItems.map(item => item.processing_time) })}
                   {cartItems.some(item => item.processing_time) && (
                     <>
                       {placeOrder.splitOrder ? (

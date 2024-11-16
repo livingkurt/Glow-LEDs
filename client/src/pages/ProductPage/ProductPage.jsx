@@ -26,7 +26,7 @@ import RecentlyViewed from "./components/RecentlyViewed";
 import * as API from "../../api";
 import ProductImages from "./components/ProductImages";
 import CustomizationOption from "./components/CustomizationOption";
-import { setQuantity } from "./productPageSlice";
+import { selectOption, setIsAddonChecked, setQuantity } from "./productPageSlice";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleMicrolights from "./components/CompatibleMicrolights";
 import ContributorsDisplay from "./components/ContributorsDisplay";
@@ -200,8 +200,12 @@ const ProductPage = () => {
                       <CustomizationOption
                         index={index}
                         option={option}
-                        selectedOption={customizedProduct?.selectedOptions[index]}
+                        selectedOption={customizedProduct?.selectedOptions[index] || null}
                         updateValidationError={updateValidationError}
+                        selectOption={data => dispatch(selectOption(data))}
+                        isAddonChecked={isAddonChecked}
+                        setIsAddonChecked={data => dispatch(setIsAddonChecked(data))}
+                        validationErrors={validationErrors}
                       />
                       {validationErrors[index] && (
                         <FormHelperText>

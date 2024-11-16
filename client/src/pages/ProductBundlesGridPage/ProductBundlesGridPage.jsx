@@ -63,9 +63,9 @@ const ProductBundlesGridPage = () => {
 
         <Grid container spacing={2}>
           {bundles.length > 0 ? (
-            bundles.map(bundle => (
+            bundles.map((bundle, index) => (
               <Grid item key={bundle._id} xs={12} sm={6} md={4} lg={3}>
-                <ProductBundleCard bundle={bundle} affiliate={bundle.affiliate} />
+                <ProductBundleCard bundle={bundle} affiliate={bundle.affiliate} index={index} />
               </Grid>
             ))
           ) : (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -6,8 +6,9 @@ import { random } from "lodash";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
 
-const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true }) => {
+const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true, index }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isHovered, setIsHovered] = useState(false);
@@ -71,21 +72,37 @@ const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true }) => {
               justifyContent: "center",
               alignItems: "center",
               overflow: "hidden",
+              background: !bundle?.images?.length ? generateGradientFromIndex(index) : "none",
             }}
           >
-            <GLLazyImage
-              src={bundle?.images?.[currentImageIndex]?.link}
-              alt={bundle.title}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                transition: "opacity 0.3s ease-in-out",
-                opacity: 1,
-              }}
-            />
+            {bundle?.images?.length ? (
+              <GLLazyImage
+                src={bundle?.images?.[currentImageIndex]?.link}
+                alt={bundle.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  transition: "opacity 0.3s ease-in-out",
+                  opacity: 1,
+                }}
+              />
+            ) : (
+              <Typography
+                variant="h2"
+                sx={{
+                  color: "white",
+                  textAlign: "center",
+                  padding: 2,
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+                }}
+              >
+                {bundle.title}
+              </Typography>
+            )}
           </Box>
-          {isHovered && bundle.images?.length > 1 && !isMobile && (
+          {/* Only show navigation buttons if there are images */}
+          {isHovered && bundle?.images?.length > 1 && !isMobile && (
             <>
               <IconButton
                 sx={{
@@ -144,11 +161,13 @@ ProductBundleCard.propTypes = {
   bundle: PropTypes.object.isRequired,
   goHorizontal: PropTypes.bool,
   affiliate: PropTypes.object,
+  index: PropTypes.number,
 };
 
 ProductBundleCard.defaultProps = {
   goHorizontal: true,
   affiliate: {},
+  index: 0,
 };
 
 export default ProductBundleCard;

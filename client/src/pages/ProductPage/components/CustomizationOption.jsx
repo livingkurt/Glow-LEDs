@@ -1,7 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { selectOption, setIsAddonChecked } from "../productPageSlice";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
@@ -9,29 +8,33 @@ import { CheckBox, CheckBoxOutlineBlank, Clear } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLInfoPopover from "../../../shared/GlowLEDsComponents/GLInfoPopover/GLInfoPopover";
 
-const CustomizationOption = ({ index, option, selectedOption, updateValidationError }) => {
-  const dispatch = useDispatch();
-  const productPage = useSelector(state => state.products.productPage);
-  const { isAddonChecked } = productPage;
-
+const CustomizationOption = ({
+  index,
+  option,
+  selectedOption,
+  updateValidationError,
+  isAddonChecked,
+  selectOption,
+  setIsAddonChecked,
+}) => {
   const handleChange = value => {
     if (value === null || value === "" || value === selectedOption?.name) {
       // Deselect the option
-      dispatch(selectOption({ index, selectedOption: undefined, option }));
+      selectOption({ index, selectedOption: undefined, option });
       updateValidationError(index, null);
     } else {
       const fullSelectedOption = option.values.find(opt => opt.name === value);
       if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
-        dispatch(selectOption({ index, selectedOption: fullSelectedOption, option }));
+        selectOption({ index, selectedOption: fullSelectedOption, option });
         updateValidationError(index, null);
       }
     }
   };
 
   const handleAddonCheckboxChange = event => {
-    dispatch(setIsAddonChecked(event.target.checked));
+    setIsAddonChecked(event.target.checked);
     if (!event.target.checked) {
-      dispatch(selectOption({ index, selectedOption: undefined, option }));
+      selectOption({ index, selectedOption: undefined, option });
       updateValidationError(index, null);
     }
   };
@@ -139,6 +142,21 @@ const CustomizationOption = ({ index, option, selectedOption, updateValidationEr
       )}
     </Box>
   );
+};
+
+CustomizationOption.propTypes = {
+  index: PropTypes.number.isRequired,
+  option: PropTypes.object.isRequired,
+  selectedOption: PropTypes.object,
+  updateValidationError: PropTypes.func.isRequired,
+  isAddonChecked: PropTypes.bool.isRequired,
+  selectOption: PropTypes.func.isRequired,
+  setIsAddonChecked: PropTypes.func.isRequired,
+};
+
+CustomizationOption.defaultProps = {
+  selectedOption: null,
+  setIsAddonChecked: () => {},
 };
 
 export default CustomizationOption;

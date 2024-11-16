@@ -22,6 +22,7 @@ const shippingSchema = {
   international: { type: Boolean },
   phone_number: { type: String },
   country: { type: String },
+  handling_instructions: { type: String },
   address_string: { type: String },
 };
 

@@ -260,21 +260,29 @@ const diffuser_caps = addIdsRecursively({
 });
 
 const enhancers = addIdsRecursively({
-  name: "Enhancers",
+  name: "Enhancements",
   // path: "/menu/enhancers",
   id: "enhancers_dropdown",
   rows: [
+    // glowskinz,
     {
-      name: "Glove Sets (NEW!)",
-      path: "/products?tags[]=glove_sets",
+      name: "Glowskinz",
+      path: "/products?tags[]=glowskinz",
     },
-    glowskinz,
     {
       name: "Glowframez",
       path: "/products?tags[]=glowframez",
     },
-    exo_diffusers,
-    diffuser_caps,
+    {
+      name: "EXO Diffusers",
+      path: "/products?tags[]=exo_diffusers",
+    },
+    {
+      name: "Diffuser Caps",
+      path: "/products?tags[]=diffuser_caps",
+    },
+    // exo_diffusers,
+    // diffuser_caps,
     {
       name: "Diffusers",
       path: "/products?tags[]=diffusers",
@@ -293,20 +301,28 @@ const essentials = addIdsRecursively({
   path: "/products?tags[]=essentials",
   rows: [
     {
-      name: "Gloves",
-      path: "/products?tags[]=gloves&tags[]=singles",
+      name: "Premium Glove Sets",
+      path: "/products?tags[]=glove_sets",
+    },
+    {
+      name: "Microlights",
+      path: "/products?tags[]=microlight",
     },
     {
       name: "Refresh Packs",
       path: "/products?tags[]=gloves&tags[]=refresh",
     },
     {
-      name: "Sizing Samplers",
-      path: "/products?tags[]=gloves&tags[]=sampler",
+      name: "Gloves",
+      path: "/products?tags[]=gloves",
     },
     {
       name: "Coin Batteries",
       path: "/products?tags[]=batteries&tags[]=coin",
+    },
+    {
+      name: "Sizing Samplers",
+      path: "/products?tags[]=gloves&tags[]=sampler",
     },
     {
       name: "Battery Storage",
@@ -824,8 +840,8 @@ export const navItems = [
     path: "/menu/shop",
     id: "shop_dropdown",
     dataTestId: "shop_button",
-    columns: [features, enhancers],
-    otherColumns: [essentials],
+    columns: [features, essentials],
+    otherColumns: [enhancers],
     navbarLocation: "center",
   },
   {

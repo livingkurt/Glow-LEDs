@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -46,6 +47,10 @@ const SponsorsBanner = ({ sponsors }) => {
       </Box>
     </Box>
   );
+};
+
+SponsorsBanner.propTypes = {
+  sponsors: PropTypes.array.isRequired,
 };
 
 export default SponsorsBanner;

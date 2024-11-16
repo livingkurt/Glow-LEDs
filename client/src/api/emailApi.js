@@ -7,7 +7,7 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { convertDatesToUTC } from "../pages/EmailsPage/emailsPageHelpers";
 
 export const getEmails = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -42,12 +42,14 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query, { 
 
 export const saveEmail = createAsyncThunk("emails/saveEmail", async (email, { dispatch, rejectWithValue }) => {
   try {
-    if (!email._id) {
-      const { data } = await axios.post("/api/emails", email);
+    const emailWithUTC = convertDatesToUTC(email);
+
+    if (!emailWithUTC._id) {
+      const { data } = await axios.post("/api/emails", emailWithUTC);
       dispatch(showSuccess({ message: `Email Created` }));
       return data;
     } else {
-      const { data } = await axios.put(`/api/emails/${email._id}`, email);
+      const { data } = await axios.put(`/api/emails/${emailWithUTC._id}`, emailWithUTC);
       dispatch(showSuccess({ message: `Email Updated` }));
       return data;
     }
@@ -84,7 +86,6 @@ export const sendContactEmail = createAsyncThunk(
   async (contact_info, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.post("/api/emails/contact", contact_info);
-      axios.post("/api/emails/contact_confirmation", contact_info);
       dispatch(showSuccess({ message: `Contact Email Sent` }));
       return data;
     } catch (error) {

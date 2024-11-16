@@ -13,7 +13,48 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.tags")
         .populate("cartItems.selectedOptions.filament")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
+        .populate({
+          path: "cartItems",
+          populate: [
+            {
+              path: "product",
+              populate: [
+                { path: "images" },
+                { path: "tags" },
+                { path: "color_object.filament" },
+                { path: "microlights" },
+              ],
+            },
+            {
+              path: "currentOptions",
+              populate: {
+                path: "values",
+                populate: [
+                  {
+                    path: "product",
+                    populate: [
+                      { path: "images" },
+                      { path: "color_object.filament" },
+                      { path: "filament" },
+                      { path: "tags" },
+                      { path: "microlights" },
+                    ],
+                  },
+                  { path: "filament" },
+                ],
+              },
+            },
+            { path: "tags" },
+            { path: "display_image_object" },
+          ],
+        })
         .populate("tags")
         .populate("images")
         .limit(parseInt(limit))
@@ -31,12 +72,52 @@ export default {
       return await Cart.findOne({ ...query, active: true, deleted: false })
         .populate("user")
         .populate("cartItems.display_image_object")
-        .populate("cartItems.product")
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "cartItems",
+          populate: [
+            {
+              path: "product",
+              populate: [
+                { path: "images" },
+                { path: "tags" },
+                { path: "color_object.filament" },
+                { path: "microlights" },
+              ],
+            },
+            {
+              path: "currentOptions",
+              populate: {
+                path: "values",
+                populate: [
+                  {
+                    path: "product",
+                    populate: [
+                      { path: "images" },
+                      { path: "color_object.filament" },
+                      { path: "filament" },
+                      { path: "tags" },
+                      { path: "microlights" },
+                    ],
+                  },
+                  { path: "filament" },
+                ],
+              },
+            },
+            { path: "tags" },
+            { path: "display_image_object" },
+          ],
+        })
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("images")
         .populate("tags");
     } catch (error) {
@@ -50,12 +131,52 @@ export default {
       return await Cart.findOne({ user: user_id, active: true, deleted: false })
         .populate("user")
         .populate("cartItems.display_image_object")
-        .populate("cartItems.product")
+        .populate({
+          path: "cartItems",
+          populate: [
+            {
+              path: "product",
+              populate: [
+                { path: "images" },
+                { path: "tags" },
+                { path: "color_object.filament" },
+                { path: "microlights" },
+              ],
+            },
+            {
+              path: "currentOptions",
+              populate: {
+                path: "values",
+                populate: [
+                  {
+                    path: "product",
+                    populate: [
+                      { path: "images" },
+                      { path: "color_object.filament" },
+                      { path: "filament" },
+                      { path: "tags" },
+                      { path: "microlights" },
+                    ],
+                  },
+                  { path: "filament" },
+                ],
+              },
+            },
+            { path: "tags" },
+            { path: "display_image_object" },
+          ],
+        })
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {
@@ -71,12 +192,52 @@ export default {
       return await Cart.findById(newCart._id)
         .populate("user")
         .populate("cartItems.display_image_object")
-        .populate("cartItems.product")
+        .populate({
+          path: "cartItems",
+          populate: [
+            {
+              path: "product",
+              populate: [
+                { path: "images" },
+                { path: "tags" },
+                { path: "color_object.filament" },
+                { path: "microlights" },
+              ],
+            },
+            {
+              path: "currentOptions",
+              populate: {
+                path: "values",
+                populate: [
+                  {
+                    path: "product",
+                    populate: [
+                      { path: "images" },
+                      { path: "color_object.filament" },
+                      { path: "filament" },
+                      { path: "tags" },
+                      { path: "microlights" },
+                    ],
+                  },
+                  { path: "filament" },
+                ],
+              },
+            },
+            { path: "tags" },
+            { path: "display_image_object" },
+          ],
+        })
         .populate("cartItems.event")
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {
@@ -96,7 +257,13 @@ export default {
         .populate("cartItems.ticket")
         .populate("cartItems.selectedOptions.filament")
         .populate("cartItems.tags")
-        .populate("affiliate")
+        .populate({
+          path: "affiliate",
+          populate: {
+            path: "public_code", // Ensure this is the correct path to the public_code field
+            model: "Promo", // Ensure the model is correctly referenced
+          },
+        })
         .populate("tags")
         .populate("images");
     } catch (error) {

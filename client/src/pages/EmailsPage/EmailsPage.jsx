@@ -27,7 +27,6 @@ const EmailsPage = () => {
 
   const columnDefs = useMemo(
     () => [
-      { title: "createdAt", display: email => email.createdAt && format_date(email.createdAt) },
       {
         title: "Status",
         display: email =>
@@ -38,6 +37,10 @@ const EmailsPage = () => {
           ) : (
             <SendIcon color="white" />
           ),
+      },
+      {
+        title: "Scheduled At",
+        display: email => (email.scheduled_at ? new Date(email.scheduled_at).toLocaleString() : ""),
       },
       {
         title: "Subject",

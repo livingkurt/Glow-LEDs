@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 
+const moduleSchema = new mongoose.Schema({
+  type: { type: String, required: true },
+  hidden: { type: Boolean, default: false },
+  content: mongoose.Schema.Types.Mixed,
+});
+
 const contentSchema = new mongoose.Schema(
   {
     name: { type: String },
     home_page: {
+      modules: [moduleSchema],
       slideshow: [
         {
           label: { type: String },

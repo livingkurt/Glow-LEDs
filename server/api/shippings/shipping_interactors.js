@@ -10,8 +10,9 @@ export const buyLabel = async ({ shipment_id, shipping_rate }) => {
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
+    console.log({ buyLabel: error });
     if (error instanceof Error) {
-      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", ") || error.message);
     }
   }
 };
@@ -264,8 +265,10 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
         commercial_invoice_signature: "IMAGE_2",
+        handling_instructions: order.shipping.handling_instructions,
       },
     });
+    console.log({ shipment });
     return { shipment, parcel };
   } catch (error) {
     console.log({ error, errors: error.errors });
@@ -312,6 +315,7 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
         commercial_invoice_signature: "IMAGE_2",
+        handling_instructions: toShipping.handling_instructions,
       },
     });
     return { shipment, parcel };

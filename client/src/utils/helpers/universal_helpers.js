@@ -1,4 +1,6 @@
+import { random } from "lodash";
 import { tagField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { showInfo } from "../../slices/snackbarSlice";
 import { toCapitalize } from "../helper_functions";
 
 export const scrollToId = target => {
@@ -242,4 +244,31 @@ export const sharedItemSchema = ({ products, events, tickets, tags, itemType, it
       },
     },
   };
+};
+
+export const setPromoCode = (dispatch, promoCode) => {
+  sessionStorage.setItem("promo_code", promoCode);
+  dispatch(
+    showInfo({
+      message: `Code ${promoCode.toUpperCase()} Added to Checkout`,
+    })
+  );
+};
+
+export const generateGradient = () => {
+  const hue1 = random(0, 360);
+  const hue2 = (hue1 + 90) % 360;
+  return `linear-gradient(135deg,
+      hsl(${hue1}deg 100% 40%) 0%,
+      hsl(${hue2}deg 100% 40%) 100%)`;
+};
+
+export const generateGradientFromIndex = index => {
+  // Base hue will increment by 30 degrees for each card
+  const baseHue = (index * 60) % 360;
+  const hue1 = baseHue;
+  const hue2 = (baseHue + 90) % 360; // Still offset by 60 degrees for a complementary color
+  return `linear-gradient(135deg,
+      hsl(${hue1}deg 100% 40%) 0%,
+    hsl(${hue2}deg 100% 40%) 100%)`;
 };

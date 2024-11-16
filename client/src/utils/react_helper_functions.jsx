@@ -137,8 +137,8 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
       today <= new Date(product.sale_end_date)
     ) {
       const discount =
-        typeof product.sale_price === "number" && typeof product.price === "number"
-          ? (100 * (1 - product.sale_price / product.price)).toFixed(0)
+        product.sale_price && product.price
+          ? (100 * (1 - parseInt(product.sale_price, 10) / parseInt(product.price, 10))).toFixed(0)
           : "";
 
       return (
@@ -167,8 +167,8 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
       );
     } else if (product.hasOwnProperty("previous_price") && product.previous_price) {
       const discount =
-        typeof product.price === "number" && typeof product.previous_price === "number"
-          ? (100 * (1 - product.price / product.previous_price)).toFixed(0)
+        product.price && product.previous_price
+          ? (100 * (1 - parseInt(product.price, 10) / parseInt(product.previous_price, 10))).toFixed(0)
           : "";
 
       return (
