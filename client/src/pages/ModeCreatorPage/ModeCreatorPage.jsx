@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -12,10 +12,13 @@ import ModePreview from "./components/ModePreview";
 import { DragDropContext } from "@hello-pangea/dnd";
 import ColorPalette from "./components/ColorPalette";
 import ColorSlots from "./components/ColorSlots";
+import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 
 const ModeCreatorPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const initialSetupDone = useRef(false);
+  const [macro] = useState(true); // You can make this dynamic later if needed
   const { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
@@ -37,11 +40,23 @@ const ModeCreatorPage = () => {
     },
     visibility: "public",
   });
-  console.log({ mode });
 
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
-  const selectedMicrolight = microlights?.find(m => m._id === mode.microlight);
-  console.log({ selectedMicrolight });
+  // Modify the selectedMicrolight logic to use macro
+  const selectedMicrolight = macro
+    ? microlights?.find(m => m.name === "Helios")
+    : microlights?.find(m => m._id === mode.microlight);
+
+  useEffect(() => {
+    if (selectedMicrolight && !initialSetupDone.current) {
+      setMode(prevMode => ({
+        ...prevMode,
+        microlight: selectedMicrolight._id,
+        flashing_pattern: selectedMicrolight.flashing_patterns[0] || prevMode.flashing_pattern,
+      }));
+      initialSetupDone.current = true;
+    }
+  }, [selectedMicrolight]);
 
   useEffect(() => {
     if (id) {
@@ -94,14 +109,31 @@ const ModeCreatorPage = () => {
     }
   };
 
-  const handleMicrolightChange = event => {
-    const selectedMicrolight = microlights.find(m => m._id === event.target.value);
+  const handleMicrolightChange = (event, newValue) => {
+    if (!newValue) {
+      setMode({
+        ...mode,
+        microlight: null,
+        colors: [],
+        flashing_pattern: {
+          name: "",
+          type: "",
+          on_dur: 5,
+          off_dur: 8,
+          gap_dur: 0,
+          dash_dur: 0,
+          group_size: 0,
+          blend_speed: 0,
+        },
+      });
+      return;
+    }
+
     setMode({
       ...mode,
-      microlight: event.target.value,
+      microlight: newValue._id, // Store the ID instead of the whole object
       colors: [], // Reset colors when microlight changes
-      flashing_pattern: selectedMicrolight.flashing_patterns[0] || {
-        // Set first available pattern
+      flashing_pattern: newValue.flashing_patterns[0] || {
         name: "",
         type: "",
         on_dur: 5,
@@ -156,6 +188,11 @@ const ModeCreatorPage = () => {
       <Paper elevation={3} sx={{ p: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
+            <Typography variant="h2" textAlign="center">
+              {"Helios Mode Editor"}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
             <Typography variant="h4">{id ? "Edit Mode" : "Create Mode"}</Typography>
           </Grid>
 
@@ -179,21 +216,20 @@ const ModeCreatorPage = () => {
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              select
-              label="Microlight"
-              value={mode.microlight || ""}
-              onChange={handleMicrolightChange}
-              fullWidth
-            >
-              {microlights?.map(microlight => (
-                <MenuItem key={microlight._id} value={microlight._id}>
-                  {microlight.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
+          {!macro && (
+            <Grid item xs={12}>
+              <GLAutocomplete
+                options={microlights || []}
+                value={microlights?.find(m => m._id === mode.microlight) || null}
+                onChange={handleMicrolightChange}
+                getOptionLabel={option => option?.name || ""}
+                isOptionEqualToValue={(option, value) => option?._id === value?._id}
+                label="Microlight"
+                size="medium"
+                placeholder="Search microlights..."
+              />
+            </Grid>
+          )}
 
           {mode.microlight && (
             <DragDropContext onDragEnd={handleDragEnd}>

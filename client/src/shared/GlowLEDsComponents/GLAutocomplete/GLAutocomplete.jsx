@@ -48,6 +48,7 @@ const GLAutocomplete = ({
   customClasses,
   getOptionKey,
   isOptionEqualToValue,
+  size,
   ...otherProps
 }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
@@ -100,6 +101,7 @@ const GLAutocomplete = ({
                 className: error ? customClasses.errorHelperText : customClasses.helperText,
               }}
               name={name}
+              size={size}
               margin={margin}
               data-test={textFieldDataTest}
               type={inputType}
@@ -192,6 +194,7 @@ GLAutocomplete.defaultProps = {
   inputPropsTextField: {},
   customClasses: {},
   getOptionKey: option => option?._id || option?.id || JSON.stringify(option),
+  size: "small",
 };
 
 GLAutocomplete.propTypes = {
@@ -231,6 +234,7 @@ GLAutocomplete.propTypes = {
   inputPropsTextField: PropTypes.object,
   customClasses: PropTypes.object,
   getOptionKey: PropTypes.func,
+  size: PropTypes.string,
 };
 
 export default GLAutocomplete;
