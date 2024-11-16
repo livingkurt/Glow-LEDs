@@ -59,6 +59,7 @@ const ModePreview = ({ mode }) => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Scale"}</Typography>
             <AnimationSlider
               value={timeMultiplier}
               onChange={(_, value) => setTimeMultiplier(value)}
@@ -66,10 +67,10 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.timeMultiplier.min}
               max={sliderProps.timeMultiplier.max}
             />
-            <Typography sx={{ width: 80 }}>{"Scale"}</Typography>
           </SliderContainer>
 
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Speed"}</Typography>
             <AnimationSlider
               value={speed}
               onChange={(_, value) => setSpeed(value)}
@@ -77,9 +78,9 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.speed.min}
               max={sliderProps.speed.max}
             />
-            <Typography sx={{ width: 80 }}>{"Speed"}</Typography>
           </SliderContainer>
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Trail"}</Typography>
             <AnimationSlider
               value={trailLength}
               onChange={(_, value) => setTrailLength(value)}
@@ -87,11 +88,11 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.trail.min}
               max={sliderProps.trail.max}
             />
-            <Typography sx={{ width: 80 }}>{"Trail"}</Typography>
           </SliderContainer>
         </Grid>
         <Grid item xs={6}>
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Size"}</Typography>
             <AnimationSlider
               value={size}
               onChange={(_, value) => setSize(value)}
@@ -99,10 +100,10 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.size.min}
               max={sliderProps.size.max}
             />
-            <Typography sx={{ width: 80 }}>{"Size"}</Typography>
           </SliderContainer>
 
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Blur"}</Typography>
             <AnimationSlider
               value={blur}
               onChange={(_, value) => setBlur(value)}
@@ -110,10 +111,10 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.blur.min}
               max={sliderProps.blur.max}
             />
-            <Typography sx={{ width: 80 }}>{"Blur"}</Typography>
           </SliderContainer>
 
           <SliderContainer>
+            <Typography sx={{ width: 80 }}>{"Radius"}</Typography>
             <AnimationSlider
               value={radius}
               onChange={(_, value) => setRadius(value)}
@@ -121,7 +122,6 @@ const ModePreview = ({ mode }) => {
               min={sliderProps.radius.min}
               max={sliderProps.radius.max}
             />
-            <Typography sx={{ width: 80 }}>{"Radius"}</Typography>
           </SliderContainer>
         </Grid>
         <Grid item xs={12}>

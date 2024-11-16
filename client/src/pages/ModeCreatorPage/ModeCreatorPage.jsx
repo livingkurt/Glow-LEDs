@@ -68,7 +68,7 @@ const ModeCreatorPage = () => {
     }
   }, [dispatch, id, searchParams]);
 
-  const handleSave = async () => {
+  const handleSave = async ({ createNew = false } = {}) => {
     if (!mode.microlight) {
       dispatch(showError({ message: "Please select a microlight" }));
       return;
@@ -91,7 +91,7 @@ const ModeCreatorPage = () => {
       API.saveMode({
         mode: {
           ...mode,
-          _id: searchParams.has("copy") ? undefined : mode._id,
+          _id: searchParams.has("copy") || createNew ? undefined : mode._id,
           user: current_user._id,
           affiliate: current_user?.affiliate,
         },
@@ -319,8 +319,13 @@ const ModeCreatorPage = () => {
                   <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
                     {"Cancel"}
                   </Button>
-                  <Button variant="contained" color="primary" onClick={handleSave}>
-                    {"Save Mode"}
+                  {id && (
+                    <Button variant="contained" color="secondary" onClick={() => handleSave({ createNew: true })}>
+                      {"Create New Mode"}
+                    </Button>
+                  )}
+                  <Button variant="contained" color="primary" onClick={() => handleSave()}>
+                    {id ? "Save Mode" : "Create Mode"}
                   </Button>
                 </Box>
               </Grid>
