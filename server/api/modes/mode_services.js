@@ -66,15 +66,6 @@ export default {
       }
     }
   },
-  findByName_modes_s: async params => {
-    try {
-      return await mode_db.findByName_modes_db(params.name);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   create_modes_s: async body => {
     try {
       return await mode_db.create_modes_db(body);

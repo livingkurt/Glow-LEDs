@@ -1,164 +1,193 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Box, Container, Grid, Typography, Tooltip } from "@mui/material";
+import { Edit } from "@mui/icons-material";
 import { Helmet } from "react-helmet";
-import { Box, Button, Container, Paper, Typography, IconButton, Tooltip } from "@mui/material";
+import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
-import GLLoading from "../../shared/GlowLEDsComponents/GLLoading/GLLoading";
-import ModePreview from "../ModeCreatorPage/components/ModePreview";
-import ShareIcon from "@mui/icons-material/Share";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import EditIcon from "@mui/icons-material/Edit";
-import { showSuccess } from "../../slices/snackbarSlice";
+import { useModePreview } from "../ModeCreatorPage/components/useModePreview";
 
 const ModePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [mode, setMode] = useState(null);
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+
+  const { mode } = useSelector(state => state.modes.modePage);
 
   useEffect(() => {
-    const fetchMode = async () => {
-      try {
-        const data = await dispatch(API.detailsMode(id)).unwrap();
-        setMode(data);
-      } catch (error) {
-        navigate("/modes");
-      } finally {
-        setLoading(false);
-      }
-    };
+    dispatch(API.detailsMode(id));
+  }, [id]);
 
-    fetchMode();
-  }, [dispatch, id, navigate]);
-
-  const handleShare = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    dispatch(showSuccess({ message: "Link copied to clipboard" }));
+  const handleCopy = () => {
+    if (!current_user._id) {
+      dispatch(openLoginModal());
+      return;
+    }
+    navigate(`/modes/creator`);
   };
-
-  const handleUseAsTemplate = () => {
-    const templateMode = {
-      ...mode,
-      _id: null,
-      name: `${mode.name} Copy`,
-      user: null,
-    };
-    navigate("/modes/creator", { state: { templateMode } });
-  };
-
-  const handleEdit = () => {
-    navigate(`/modes/creator/${id}`);
-  };
-
-  if (loading || !mode) {
-    return <GLLoading />;
-  }
+  const { canvasRef } = useModePreview({ mode });
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Box>
       <Helmet>
-        <title>{`${mode.name} | LED Mode | Glow LEDs`}</title>
-        <meta
-          name="description"
-          content={`Check out this custom LED mode for ${mode.microlight?.name || "Glow LEDs devices"}. ${mode.description || ""}`}
-        />
+        <title>{`${mode?.name || "Mode"} | Glow LEDs`}</title>
       </Helmet>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Box>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {mode.name}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            {"For "}
-            {mode.microlight?.name || "Unknown Device"}
-          </Typography>
-        </Box>
-        <Box display="flex" gap={1}>
-          <Tooltip title="Share Mode">
-            <IconButton onClick={handleShare}>
-              <ShareIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Use as Template">
-            <IconButton onClick={handleUseAsTemplate}>
-              <ContentCopyIcon />
-            </IconButton>
-          </Tooltip>
-          {mode.user === mode.current_user?._id && (
-            <Tooltip title="Edit Mode">
-              <IconButton onClick={handleEdit}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
+      <Box display="flex" justifyContent="space-between" p={2}>
+        <GLBreadcrumbs items={[{ name: "ALL MODES", to: "/modes" }, { name: mode?.name?.toUpperCase() }]} />
+        <Box display="flex" gap={2}>
+          {current_user._id === mode?.user?._id && (
+            <Link to={`/modes/creator/${id}`}>
+              <GLButtonV2 variant="contained" color="secondary" startIcon={<Edit />}>
+                {"Edit Mode"}
+              </GLButtonV2>
+            </Link>
           )}
         </Box>
       </Box>
 
-      <Paper elevation={3} sx={{ mb: 4 }}>
-        <ModePreview mode={mode} />
-      </Paper>
-
-      <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          {"Details"}
-        </Typography>
-        <Box display="flex" flexDirection="column" gap={2}>
-          <Box>
-            <Typography variant="subtitle2" color="textSecondary">
-              {"Pattern Type"}
-            </Typography>
-            <Typography>
-              {mode.flashing_pattern.name.charAt(0).toUpperCase() + mode.flashing_pattern.name.slice(1)}
-            </Typography>
-          </Box>
-          {mode.flashing_pattern.name !== "solid" && (
-            <>
-              <Box>
-                <Typography variant="subtitle2" color="textSecondary">
-                  {"Speed"}
-                </Typography>
-                <Typography>
-                  {mode.flashing_pattern.speed}
-                  {"%"}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="subtitle2" color="textSecondary">
-                  {"Direction"}
-                </Typography>
-                <Typography>
-                  {mode.flashing_pattern.direction.charAt(0).toUpperCase() + mode.flashing_pattern.direction.slice(1)}
-                </Typography>
-              </Box>
-            </>
-          )}
-          {mode.description && (
-            <Box>
-              <Typography variant="subtitle2" color="textSecondary">
-                {"Description"}
-              </Typography>
-              <Typography>{mode.description}</Typography>
+      <Container maxWidth="xl" sx={{ mb: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                width: "100%",
+                aspectRatio: "1",
+                bgcolor: "black",
+                borderRadius: "1rem",
+                overflow: "hidden",
+              }}
+            >
+              <canvas
+                ref={canvasRef}
+                width={300}
+                height={300}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "inherit",
+                }}
+              />
             </Box>
-          )}
-        </Box>
-      </Paper>
+          </Grid>
 
-      <Box display="flex" justifyContent="center">
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleUseAsTemplate}
-          startIcon={<ContentCopyIcon />}
-        >
-          {"Use this Mode as Template"}
-        </Button>
-      </Box>
-    </Container>
+          <Grid item xs={12} md={6}>
+            <Box>
+              <Typography variant="h4" gutterBottom>
+                {mode?.name}
+              </Typography>
+
+              {mode?.author && (
+                <Typography variant="subtitle1" gutterBottom>
+                  {"By "} {mode.author}
+                </Typography>
+              )}
+              {!mode?.author && mode?.user && (
+                <Typography variant="subtitle1" gutterBottom>
+                  {"By "} {mode.user.first_name} {mode.user.last_name}
+                </Typography>
+              )}
+
+              <Typography variant="body1" gutterBottom mt={2}>
+                {mode?.description}
+              </Typography>
+
+              <Box mt={4}>
+                <Typography variant="h6" gutterBottom>
+                  {"Mode Details"}
+                </Typography>
+                <Typography variant="body1">
+                  {"Colors: "} {mode?.colors?.length}
+                </Typography>
+                <Typography variant="body1">
+                  {"Pattern: "} {mode?.flashing_pattern?.name}
+                </Typography>
+                <Typography variant="body1">
+                  {"Device: "} {mode?.microlight?.name}
+                </Typography>
+              </Box>
+
+              <Box mt={4}>
+                <Typography variant="h6" gutterBottom>
+                  {"Colors Used"}
+                </Typography>
+                <Box display="flex" gap={2}>
+                  {mode?.colors?.map((color, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        position: "relative",
+                        zIndex: 1,
+                      }}
+                    >
+                      <Tooltip
+                        title={
+                          <Typography>
+                            {`Base Color: ${color.name}`}
+                            {color.saturation !== undefined && (
+                              <Box component="div">
+                                {`Saturation Level: ${Math.ceil((color.saturation / 100) * (mode.microlight?.saturation_levels || 4))}`}
+                              </Box>
+                            )}
+                            {color.brightness !== undefined && (
+                              <Box component="div">
+                                {`Brightness Level: ${Math.ceil((color.brightness / 100) * (mode.microlight?.brightness_levels || 4))}`}
+                              </Box>
+                            )}
+                          </Typography>
+                        }
+                        arrow
+                        placement="top"
+                      >
+                        <Box
+                          sx={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: "50%",
+                            backgroundColor: color.colorCode,
+                            boxShadow: theme =>
+                              `0 4px 8px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)"}`,
+                            cursor: "pointer",
+                            margin: "0 auto",
+                            transition: "all 0.2s ease",
+                            "&:hover": {
+                              transform: "translateY(-2px)",
+                              boxShadow: theme =>
+                                `0 6px 12px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.3)"}`,
+                            },
+                          }}
+                        />
+                      </Tooltip>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+            <GLButtonV2
+              variant="contained"
+              color="primary"
+              fullWidth
+              className="bob"
+              sx={{
+                fontSize: "1.6rem",
+                mt: 2,
+                padding: 2,
+              }}
+              size="large"
+              onClick={handleCopy}
+            >
+              {"Create New Based On This"}
+            </GLButtonV2>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

@@ -37,18 +37,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  findByName_modes_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const mode = await mode_services.findByName_modes_s(params);
-      if (mode) {
-        return res.status(200).send(mode);
-      }
-      return res.status(404).send({ message: "Mode Not Found" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   create_modes_c: async (req, res) => {
     const { body } = req;
     try {

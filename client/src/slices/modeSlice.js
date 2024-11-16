@@ -2,17 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const mode = {
-  _id: null,
   name: "",
   description: "",
   colors: [],
   microlight: null,
   flashing_pattern: {
-    name: "Ribbon",
-    type: "solid",
-    on_dur: 50,
-    off_dur: 50,
-    gap_dur: 50,
+    name: "",
+    type: "",
+    on_dur: 5,
+    off_dur: 8,
+    gap_dur: 0,
+    dash_dur: 0,
+    group_size: 0,
+    blend_speed: 0,
   },
   visibility: "public",
 };

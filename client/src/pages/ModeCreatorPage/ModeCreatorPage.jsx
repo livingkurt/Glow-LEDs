@@ -13,6 +13,9 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import ColorPalette from "./components/ColorPalette";
 import ColorSlots from "./components/ColorSlots";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
+import { openLoginModal } from "../../slices/userSlice";
+import { snakeCase } from "lodash";
+import { set_mode } from "../../slices/modeSlice";
 
 const ModeCreatorPage = () => {
   const dispatch = useDispatch();
@@ -22,24 +25,8 @@ const ModeCreatorPage = () => {
   const { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState({
-    name: "",
-    description: "",
-    colors: [],
-    microlight: null,
-    flashing_pattern: {
-      name: "",
-      type: "",
-      on_dur: 5,
-      off_dur: 8,
-      gap_dur: 0,
-      dash_dur: 0,
-      group_size: 0,
-      blend_speed: 0,
-    },
-    visibility: "public",
-  });
+
+  const { mode, loading } = useSelector(state => state.modes.modePage);
 
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   // Modify the selectedMicrolight logic to use macro
@@ -49,35 +36,21 @@ const ModeCreatorPage = () => {
 
   useEffect(() => {
     if (selectedMicrolight && !initialSetupDone.current) {
-      setMode(prevMode => ({
-        ...prevMode,
-        microlight: selectedMicrolight._id,
-        flashing_pattern: selectedMicrolight.flashing_patterns[0] || prevMode.flashing_pattern,
-      }));
+      dispatch(
+        set_mode({
+          microlight: selectedMicrolight._id,
+          flashing_pattern: selectedMicrolight.flashing_patterns[0] || mode.flashing_pattern,
+        })
+      );
       initialSetupDone.current = true;
     }
-  }, [selectedMicrolight]);
+  }, [dispatch, mode.flashing_pattern, selectedMicrolight]);
 
   useEffect(() => {
     if (id) {
-      setLoading(true);
-      dispatch(API.detailsMode(id))
-        .unwrap()
-        .then(data => {
-          if (data.user !== current_user._id) {
-            dispatch(showError({ message: "You do not have permission to edit this mode" }));
-            navigate("/modes/creator");
-            return;
-          }
-          setMode(data);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-          navigate("/modes/creator");
-        });
+      dispatch(API.detailsMode(id));
     }
-  }, [dispatch, id, current_user._id, navigate]);
+  }, [dispatch, id]);
 
   const handleSave = async () => {
     if (!mode.microlight) {
@@ -94,28 +67,46 @@ const ModeCreatorPage = () => {
       dispatch(showError({ message: "Please add at least one color" }));
       return;
     }
-
-    setLoading(true);
-    try {
-      const savedMode = await dispatch(
-        API.saveMode({
-          ...mode,
-          user: current_user._id,
-        })
-      ).unwrap();
-      navigate(`/modes/${savedMode._id}`);
-    } catch (error) {
-      setLoading(false);
+    if (!current_user._id) {
+      dispatch(openLoginModal());
+      return;
     }
+    const { payload } = await dispatch(
+      API.saveMode({
+        ...mode,
+        user: current_user._id,
+      })
+    );
+
+    navigate(`/modes/${payload._id}`);
   };
 
   const handleMicrolightChange = (event, newValue) => {
     if (!newValue) {
-      setMode({
-        ...mode,
-        microlight: null,
-        colors: [],
-        flashing_pattern: {
+      dispatch(
+        set_mode({
+          microlight: null,
+          colors: [],
+          flashing_pattern: {
+            name: "",
+            type: "",
+            on_dur: 5,
+            off_dur: 8,
+            gap_dur: 0,
+            dash_dur: 0,
+            group_size: 0,
+            blend_speed: 0,
+          },
+        })
+      );
+      return;
+    }
+
+    dispatch(
+      set_mode({
+        microlight: newValue._id, // Store the ID instead of the whole object
+        colors: [], // Reset colors when microlight changes
+        flashing_pattern: newValue.flashing_patterns[0] || {
           name: "",
           type: "",
           on_dur: 5,
@@ -125,25 +116,8 @@ const ModeCreatorPage = () => {
           group_size: 0,
           blend_speed: 0,
         },
-      });
-      return;
-    }
-
-    setMode({
-      ...mode,
-      microlight: newValue._id, // Store the ID instead of the whole object
-      colors: [], // Reset colors when microlight changes
-      flashing_pattern: newValue.flashing_patterns[0] || {
-        name: "",
-        type: "",
-        on_dur: 5,
-        off_dur: 8,
-        gap_dur: 0,
-        dash_dur: 0,
-        group_size: 0,
-        blend_speed: 0,
-      },
-    });
+      })
+    );
   };
 
   const handleDragEnd = result => {
@@ -162,13 +136,14 @@ const ModeCreatorPage = () => {
       };
 
       const newColors = [...mode.colors];
+      console.log({ colorWithLevels });
       newColors.splice(destination.index, 0, colorWithLevels);
-      setMode({ ...mode, colors: newColors });
+      dispatch(set_mode({ colors: newColors }));
     } else if (source.droppableId === "color-slots" && destination.droppableId === "color-slots") {
       const newColors = [...mode.colors];
       const [removed] = newColors.splice(source.index, 1);
       newColors.splice(destination.index, 0, removed);
-      setMode({ ...mode, colors: newColors });
+      dispatch(set_mode({ colors: newColors }));
     }
   };
 
@@ -200,7 +175,15 @@ const ModeCreatorPage = () => {
             <TextField
               label="Mode Name"
               value={mode.name}
-              onChange={e => setMode({ ...mode, name: e.target.value })}
+              onChange={e => dispatch(set_mode({ name: e.target.value, pathname: snakeCase(e.target.value) }))}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Author"
+              value={mode.author}
+              onChange={e => dispatch(set_mode({ author: e.target.value }))}
               fullWidth
             />
           </Grid>
@@ -209,7 +192,7 @@ const ModeCreatorPage = () => {
             <TextField
               label="Description"
               value={mode.description}
-              onChange={e => setMode({ ...mode, description: e.target.value })}
+              onChange={e => dispatch(set_mode({ description: e.target.value }))}
               multiline
               rows={2}
               fullWidth
@@ -251,12 +234,12 @@ const ModeCreatorPage = () => {
                     onRemove={index => {
                       const newColors = [...mode.colors];
                       newColors.splice(index, 1);
-                      setMode({ ...mode, colors: newColors });
+                      dispatch(set_mode({ colors: newColors }));
                     }}
                     onUpdate={(index, updatedColor) => {
                       const newColors = [...mode.colors];
                       newColors[index] = updatedColor;
-                      setMode({ ...mode, colors: newColors });
+                      dispatch(set_mode({ colors: newColors }));
                     }}
                   />
                 </Box>
@@ -270,7 +253,7 @@ const ModeCreatorPage = () => {
                 <PatternSelector
                   pattern={mode.flashing_pattern}
                   microlight={selectedMicrolight}
-                  onChange={pattern => setMode({ ...mode, flashing_pattern: pattern })}
+                  onChange={pattern => dispatch(set_mode({ ...mode, flashing_pattern: pattern }))}
                 />
               </Grid>
 
