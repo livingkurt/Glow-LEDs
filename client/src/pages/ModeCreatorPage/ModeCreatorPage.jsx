@@ -2,7 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Box, Button, Container, TextField, Typography, MenuItem, Paper, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  MenuItem,
+  Paper,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@mui/material";
 import * as API from "../../api";
 import { useMicrolightsQuery } from "../../api/allRecordsApi";
 import GLLoading from "../../shared/GlowLEDsComponents/GLLoading/GLLoading";
@@ -51,6 +63,8 @@ const ModeCreatorPage = () => {
     const copy = searchParams.get("copy");
     if (id || copy) {
       dispatch(API.detailsMode(id || copy));
+    } else {
+      dispatch(set_mode({ ...modeInitialState, microlight: mode.microlight }));
     }
   }, [dispatch, id, searchParams]);
 
@@ -189,7 +203,7 @@ const ModeCreatorPage = () => {
             </GLButtonV2>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Mode Name"
               value={mode.name}
@@ -197,9 +211,9 @@ const ModeCreatorPage = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              label="Author"
+              label="Author Name"
               value={mode.author}
               onChange={e => dispatch(set_mode({ author: e.target.value }))}
               fullWidth
@@ -215,6 +229,19 @@ const ModeCreatorPage = () => {
               rows={2}
               fullWidth
             />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel>{"Visibility"}</InputLabel>
+              <Select
+                value={mode.visibility || "public"}
+                onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
+                label="Visibility"
+              >
+                <MenuItem value="public">{"Public"}</MenuItem>
+                <MenuItem value="private">{"Private"}</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
 
           {!macro && (

@@ -1,5 +1,3 @@
-import User from "../users/user.js";
-import Affiliate from "../affiliates/affiliate.js";
 import Mode from "./mode.js";
 
 export default {
@@ -29,17 +27,7 @@ export default {
   },
   create_modes_db: async body => {
     try {
-      const mode = await Mode.create(body);
-
-      if (body.user) {
-        await User.findByIdAndUpdate(body.user, { $push: { modes: mode._id } });
-      }
-
-      if (body.affiliate) {
-        await Affiliate.findByIdAndUpdate(body.affiliate, { $push: { modes: mode._id } });
-      }
-
-      return mode;
+      return await Mode.create(body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

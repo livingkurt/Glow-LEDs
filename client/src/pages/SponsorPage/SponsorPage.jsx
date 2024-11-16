@@ -31,6 +31,7 @@ import TutorialModal from "../TutorialsGridPage/component/TutorialModal";
 import { EditCartModal } from "../CartsPage/components";
 import ProductBundleCard from "../ProductBundlesGridPage/components/ProductBundleCard";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
+import ModeCard from "../ModesGridPage/components/ModeCard";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +84,6 @@ const SponsorPage = () => {
         <meta property="og:description" content={affiliate.bio} />
         <meta name="twitter:description" content={affiliate.bio} />
       </Helmet>
-
       <Box sx={{ mb: 4 }}>
         <Box display="flex" justifyContent="space-between">
           <GLBreadcrumbs
@@ -99,7 +99,6 @@ const SponsorPage = () => {
           {affiliate.artist_name}
         </Typography>
       </Box>
-
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Card sx={{ borderRadius: "20px" }}>
@@ -215,7 +214,6 @@ const SponsorPage = () => {
         </Grid>
       </Grid>
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
-
       <>
         {affiliate.bundles && affiliate.bundles.length > 0 && (
           <Box>
@@ -327,7 +325,61 @@ const SponsorPage = () => {
           </Box>
         </>
       )}
+      {console.log({ modes: affiliate.modes })}
       <TutorialModal selectedTutorial={selectedTutorial} handleClose={handleClose} open={isOpen} />
+      {affiliate.modes && affiliate.modes.length > 0 && (
+        <>
+          <Divider sx={{ my: 4, borderColor: "#fff" }} />
+          <Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+              <Typography variant="h4" align="left">
+                {"Modes by "}
+                {affiliate.artist_name}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/modes", { state: { affiliate: affiliate._id } })}
+              >
+                {"View All Modes"}
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                pb: 6,
+                px: 2,
+                display: "flex",
+                overflowX: "auto",
+                minWidth: "100%",
+                "&::-webkit-scrollbar": {
+                  height: "8px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "rgba(0, 0, 0, 0.2)",
+                  borderRadius: "4px",
+                },
+              }}
+            >
+              {affiliate.modes.map(mode => (
+                <Box
+                  key={mode._id}
+                  sx={{
+                    minWidth: "250px",
+                    maxWidth: "300px",
+                    width: "100%",
+                    marginRight: "20px",
+                    "&:last-child": {
+                      marginRight: 0,
+                    },
+                  }}
+                >
+                  <ModeCard mode={mode} />
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </>
+      )}
       <Divider sx={{ my: 4, borderColor: "#fff" }} />
       {affiliate.videos && affiliate.videos.length > 0 && (
         <>

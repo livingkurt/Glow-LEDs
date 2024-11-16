@@ -1,6 +1,7 @@
+import { affiliateField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../../../utils/helper_functions";
 
-export const modeFormFields = ({ mode, microlights }) => {
+export const modeFormFields = ({ mode, microlights, users, affiliates }) => {
   return {
     mode_info_title: {
       label: "Mode Info",
@@ -8,6 +9,8 @@ export const modeFormFields = ({ mode, microlights }) => {
       align: "center",
       variant: "h6",
     },
+    user: userField({ users }),
+    affiliate: affiliateField({ affiliates }),
     name: {
       label: "Name",
       type: "text",
@@ -25,26 +28,26 @@ export const modeFormFields = ({ mode, microlights }) => {
       labelProp: "name",
     },
     colors: {
-      label: "Colors",
+      label: "name",
       type: "array",
       itemSchema: {
         type: "object",
         fields: {
-          hue: {
-            label: "Color",
-            type: "autocomplete_single",
-            options: mode?.microlight?.colors,
-            labelProp: "name",
+          name: {
+            label: "Name",
+            type: "text",
+          },
+          colorCode: {
+            label: "Color Code",
+            type: "text",
           },
           saturation: {
             label: "Saturation",
-            type: "autocomplete_single",
-            options: Array.from({ length: mode?.microlight?.saturation_levels }, (_, i) => i),
+            type: "number",
           },
           brightness: {
             label: "Brightness",
-            type: "autocomplete_single",
-            options: Array.from({ length: mode?.microlight?.brightness_levels }, (_, i) => i),
+            type: "number",
           },
         },
       },
@@ -71,6 +74,18 @@ export const modeFormFields = ({ mode, microlights }) => {
         },
         gap_dur: {
           label: "Gap Duration",
+          type: "number",
+        },
+        dash_dur: {
+          label: "Dash Duration",
+          type: "number",
+        },
+        group_size: {
+          label: "Group Size",
+          type: "number",
+        },
+        blend_speed: {
+          label: "Blend Speed",
           type: "number",
         },
       },

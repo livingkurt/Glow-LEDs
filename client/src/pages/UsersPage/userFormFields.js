@@ -1,7 +1,7 @@
-import { affiliateField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { affiliateField, modeField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { toCapitalize } from "../../utils/helper_functions";
 
-export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
+export const userFormFields = ({ affiliates, wholesalers, promos, teams, modes }) => {
   return {
     _id: {
       type: "text",
@@ -36,6 +36,7 @@ export const userFormFields = ({ affiliates, wholesalers, promos, teams }) => {
       permissions: ["admin"],
     },
     affiliate: affiliateField({ affiliates, permissions: ["admin"] }),
+    modes: modeField({ modes, permissions: ["admin"] }),
     team: {
       type: "autocomplete_single",
       label: "Teams",

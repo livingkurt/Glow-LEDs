@@ -182,7 +182,7 @@ const ModePage = () => {
               size="large"
               onClick={handleCopy}
             >
-              {"Create New Based On This"}
+              {"Create New Mode Based On This"}
             </GLButtonV2>
           </Grid>
         </Grid>

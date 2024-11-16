@@ -12,6 +12,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import {
   useCartsQuery,
   useMicrolightsQuery,
+  useModesQuery,
   useProductsQuery,
   usePromosQuery,
   useUsersQuery,
@@ -34,6 +35,7 @@ const EditAffiliateModal = () => {
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const { data: promos, isLoading: promosLoading } = usePromosQuery();
   const { data: carts, isLoading: cartsLoading } = useCartsQuery();
+  const { data: modes, isLoading: modesLoading } = useModesQuery();
 
   const [searchParams] = useSearchParams();
   const stripeSuccess = searchParams.get("stripe_success") === "true";
@@ -51,6 +53,7 @@ const EditAffiliateModal = () => {
     microlights: microlightsLoading ? [] : microlights,
     promos: promosLoading ? [] : promos,
     carts: cartsLoading ? [] : carts,
+    modes: modesLoading ? [] : modes,
   });
 
   const stepLabels = ["Create Affiliate Account", "Create Stripe Account", "Join our Discord", "Complete"];

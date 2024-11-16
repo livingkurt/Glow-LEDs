@@ -50,12 +50,6 @@ const ModeCard = ({ mode }) => {
           />
         </Box>
         <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <Box>
-            <Typography variant="body1" color="white" display="block">
-              {mode.colors.length} {mode.colors.length === 1 ? "Color" : "Colors"}
-              {" •"} {mode.flashing_pattern?.name?.charAt(0).toUpperCase() + mode.flashing_pattern?.name?.slice(1)}
-            </Typography>
-          </Box>
           <Box display="flex" gap={1} justifyContent="space-between">
             <Typography variant="h6" color="white" gutterBottom>
               {mode.name}
@@ -70,6 +64,12 @@ const ModeCard = ({ mode }) => {
                 {"By "} {mode.user.first_name} {mode.user.last_name}
               </Typography>
             )}
+          </Box>
+          <Box>
+            <Typography variant="body1" color="white" display="block">
+              {mode.colors.length} {mode.colors.length === 1 ? "Color" : "Colors"}
+              {" •"} {mode.flashing_pattern?.name?.charAt(0).toUpperCase() + mode.flashing_pattern?.name?.slice(1)}
+            </Typography>
           </Box>
         </CardContent>
       </Card>
