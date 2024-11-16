@@ -15,7 +15,8 @@ import ColorSlots from "./components/ColorSlots";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 import { openLoginModal } from "../../slices/userSlice";
 import { snakeCase } from "lodash";
-import { set_mode } from "../../slices/modeSlice";
+import { modeInitialState, set_mode } from "../../slices/modeSlice";
+import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const ModeCreatorPage = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,6 @@ const ModeCreatorPage = () => {
       dispatch(
         set_mode({
           microlight: selectedMicrolight._id,
-          flashing_pattern: selectedMicrolight.flashing_patterns[0] || mode.flashing_pattern,
         })
       );
       initialSetupDone.current = true;
@@ -136,7 +136,6 @@ const ModeCreatorPage = () => {
       };
 
       const newColors = [...mode.colors];
-      console.log({ colorWithLevels });
       newColors.splice(destination.index, 0, colorWithLevels);
       dispatch(set_mode({ colors: newColors }));
     } else if (source.droppableId === "color-slots" && destination.droppableId === "color-slots") {
@@ -167,8 +166,20 @@ const ModeCreatorPage = () => {
               {"Helios Mode Editor"}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Typography variant="h4">{id ? "Edit Mode" : "Create Mode"}</Typography>
+          </Grid>
+          <Grid item xs={6} textAlign="right">
+            <GLButtonV2
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                dispatch(set_mode({ ...modeInitialState, microlight: mode.microlight }));
+                navigate(`/modes/creator`);
+              }}
+            >
+              {"Reset"}
+            </GLButtonV2>
           </Grid>
 
           <Grid item xs={12}>
