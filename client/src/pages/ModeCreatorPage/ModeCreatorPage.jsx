@@ -79,6 +79,7 @@ const ModeCreatorPage = () => {
           ...mode,
           _id: searchParams.has("copy") ? undefined : mode._id,
           user: current_user._id,
+          affiliate: current_user?.affiliate,
         },
         copy: searchParams.has("copy"),
       })
