@@ -88,14 +88,14 @@ export const hsvToHex = (h, s, v) => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
 
-export const generateBrightnessLevels = (h, s, levels) => {
-  const levelMap = {
-    4: 100,
-    3: 80,
-    2: 60,
-    1: 40,
-  };
+const levelMap = {
+  4: 100,
+  3: 85,
+  2: 75,
+  1: 50,
+};
 
+export const generateBrightnessLevels = (h, s, levels) => {
   return Array.from({ length: levels }, (_, i) => {
     const levelNumber = levels - i;
     const brightness = levelMap[levelNumber];
@@ -107,13 +107,6 @@ export const generateBrightnessLevels = (h, s, levels) => {
 };
 
 export const generateSaturationLevels = (h, v, levels) => {
-  const levelMap = {
-    4: 100,
-    3: 80,
-    2: 60,
-    1: 40,
-  };
-
   return Array.from({ length: levels }, (_, i) => {
     const levelNumber = levels - i;
     const saturation = levelMap[levelNumber];
@@ -127,9 +120,9 @@ export const generateSaturationLevels = (h, v, levels) => {
 export const getDisplayLevel = (value, totalLevels) => {
   const levelMap = {
     100: 4,
-    80: 3,
-    60: 2,
-    40: 1,
+    85: 3,
+    75: 2,
+    50: 1,
   };
   return levelMap[value] || totalLevels;
 };
