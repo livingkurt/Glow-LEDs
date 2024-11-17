@@ -22,12 +22,10 @@ const ModePage = () => {
   const { current_user } = userPage;
 
   const { mode } = useSelector(state => state.modes.modePage);
-  console.log({ mode });
 
   const { data: products, refetch } = useProductsGridQuery({
     microlight: mode?.microlight?.name?.toLowerCase(),
   });
-  console.log({ microlight: mode?.microlight?.name?.toLowerCase() });
 
   useEffect(() => {
     dispatch(API.detailsMode(id));
