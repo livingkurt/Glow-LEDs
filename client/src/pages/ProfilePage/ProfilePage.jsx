@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
@@ -13,15 +13,19 @@ import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Box, Divider, Typography, Button } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 import { useUserProfilePage } from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import { months } from "../DashboardPage/dashboardHelpers";
+import ModeCard from "../ModesGridPage/components/ModeCard";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
   const { first_name } = user;
@@ -58,6 +62,7 @@ export const ProfilePage = () => {
         <h1 style={{ textAlign: "center", width: "100%" }}>{getProfileTitle(current_user, first_name, "Profile")}</h1>
       </div>
       <Loading loading={loading}></Loading>
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <ProfileDetails />
@@ -79,7 +84,7 @@ export const ProfilePage = () => {
                 !monthlyEarnings.isLoading &&
                 monthlyEarnings.data &&
                 monthlyEarnings.data.length > 0 &&
-                [...monthlyEarnings.data].sort((a, b) => a.month - b.month) // Sorting by month
+                [...monthlyEarnings.data].sort((a, b) => a.month - b.month)
               }
               columnDefs={[
                 { title: "Month", display: row => months[row.month - 1] },
@@ -88,6 +93,61 @@ export const ProfilePage = () => {
                 { title: "Revenue", display: row => `$${row.revenue?.toFixed(2)}` },
               ]}
             />
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          {user.modes && user.modes.length > 0 && (
+            <>
+              <Divider sx={{ my: 4, borderColor: "#fff" }} />
+              <Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+                  <Typography variant="h4" align="left">
+                    {"Modes by "}
+                    {user.first_name} {user.last_name}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => navigate("/modes", { state: { user: user._id } })}
+                  >
+                    {"View All Modes"}
+                  </Button>
+                </Box>
+                <Box
+                  sx={{
+                    pb: 6,
+                    px: 2,
+                    display: "flex",
+                    overflowX: "auto",
+                    minWidth: "100%",
+                    "&::-webkit-scrollbar": {
+                      height: "8px",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      backgroundColor: "rgba(0, 0, 0, 0.2)",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  {user.modes.map(mode => (
+                    <Box
+                      key={mode._id}
+                      sx={{
+                        minWidth: "250px",
+                        maxWidth: "300px",
+                        width: "100%",
+                        marginRight: "20px",
+                        "&:last-child": {
+                          marginRight: 0,
+                        },
+                      }}
+                    >
+                      <ModeCard mode={mode} />
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </>
           )}
         </Grid>
         <Grid item xs={12}>

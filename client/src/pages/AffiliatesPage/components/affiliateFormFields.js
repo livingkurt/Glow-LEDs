@@ -1,7 +1,7 @@
-import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { modeField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { months } from "../../../utils/helper_functions";
 
-export const affiliateFormFields = ({ products, users, microlights, promos, carts }) => {
+export const affiliateFormFields = ({ products, users, microlights, promos, carts, modes }) => {
   return {
     _id: {
       type: "text",
@@ -10,6 +10,7 @@ export const affiliateFormFields = ({ products, users, microlights, promos, cart
       disabled: true,
     },
     user: userField({ users, permissions: ["admin"] }),
+    modes: modeField({ modes, permissions: ["admin"] }),
     artist_name: {
       type: "text",
       label: "Glover Name",

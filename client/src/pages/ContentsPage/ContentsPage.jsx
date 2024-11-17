@@ -22,6 +22,7 @@ import {
   useTagsQuery,
   useProductsQuery,
   useTutorialsQuery,
+  useModesQuery,
 } from "../../api/allRecordsApi";
 import GLArray from "../../shared/GlowLEDsComponents/GLForm/components/GLArray";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
@@ -41,6 +42,7 @@ const ContentsPage = () => {
   const { data: tutorials, isLoading: tutorialsLoading } = useTutorialsQuery();
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: carts, isLoading: cartsLoading } = useCartsQuery();
+  const { data: modes, isLoading: modesLoading } = useModesQuery();
 
   const [tabValue, setTabValue] = useState(0);
   const [menusTabIndex, setMenusTabIndex] = useState(0);
@@ -87,6 +89,7 @@ const ContentsPage = () => {
     tutorials: tutorialsLoading ? [] : tutorials,
     affiliates: affiliatesLoading ? [] : affiliates,
     carts: cartsLoading ? [] : carts,
+    modes: modesLoading ? [] : modes,
   };
 
   const getEmptyObjectFromSchema = schema => {
@@ -154,7 +157,6 @@ const ContentsPage = () => {
             </Tabs>
           </AppBar>
           <GLTabPanel value={tabValue} index={0}>
-            {console.log({ home_page: content?.home_page?.modules })}
             <HomePageEditor
               initialModules={content?.home_page?.modules || []}
               onChange={modules => {
@@ -225,7 +227,6 @@ const ContentsPage = () => {
               formData={academyPageFields(formFieldsData).fields}
               state={content?.academy_page || {}}
               onChange={updated => {
-                console.log({ updated });
                 handleContentChange({ ...content, academy_page: { ...content.academy_page, ...updated } });
               }}
               loading={loading}

@@ -92,7 +92,7 @@ export default [
       "react/sort-comp": "warn",
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],
-      "react/prop-types": ["error", { ignore: ["intl", "data", "router", "children"] }],
+      "react/prop-types": "off",
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],
       "react/jsx-no-literals": "off",
       "react/no-unused-prop-types": "error",
@@ -104,7 +104,7 @@ export default [
       "space-before-function-paren": "off",
       "no-console": "error",
       "no-alert": "error",
-      "react/require-default-props": "error",
+      "react/require-default-props": "off",
       "react/forbid-prop-types": "off",
       "react/function-component-definition": [
         1,

@@ -5,6 +5,7 @@ export default {
     try {
       return await User.find(filter)
         .sort(sort)
+        .populate("modes")
         .populate({
           path: "affiliate",
           populate: [
@@ -69,6 +70,7 @@ export default {
           ],
         })
         .populate("employee_code")
+        .populate("modes")
         .populate("wholesaler");
     } catch (error) {
       if (error instanceof Error) {
@@ -79,6 +81,7 @@ export default {
   findById_users_db: async id => {
     try {
       return await User.findOne({ _id: id, deleted: false })
+        .populate("modes")
         .populate({
           path: "affiliate",
           populate: [
@@ -115,6 +118,7 @@ export default {
   findByAffiliateId_users_db: async id => {
     try {
       return await User.findOne({ affiliate: id, deleted: false })
+        .populate("modes")
         .populate({
           path: "affiliate",
           populate: [
@@ -149,7 +153,9 @@ export default {
   },
   findByEmail_users_db: async email => {
     try {
-      return await User.findOne({ email: email.toLowerCase(), deleted: false }).populate("wholesaler");
+      return await User.findOne({ email: email.toLowerCase(), deleted: false })
+        .populate("wholesaler")
+        .populate("modes");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

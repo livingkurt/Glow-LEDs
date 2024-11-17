@@ -35,6 +35,8 @@ import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
 import { formatDate } from "../../utils/helpers/universal_helpers";
 import PasswordPromptModal from "./components/PasswordPromptModal";
+import { Link } from "react-router-dom";
+import FeaturedModes from "../HomePage/components/FeaturedModes";
 
 const ProductPage = () => {
   const theme = useTheme();
@@ -195,6 +197,7 @@ const ProductPage = () => {
                     {customizedProduct.short_description}
                   </Typography>
                   <CompatibleMicrolights microlights={customizedProduct.microlights} />
+
                   {customizedProduct.currentOptions?.map((option, index) => (
                     <Box key={index}>
                       <CustomizationOption
@@ -435,6 +438,11 @@ const ProductPage = () => {
                         text_color={product.text_color}
                         header_text_color={product.header_text_color}
                       />
+                    </Grid>
+                  )}
+                  {product?.featured_modes && !product?.featured_modes.hidden && (
+                    <Grid item xs={12}>
+                      <FeaturedModes featured_modes={product.featured_modes} />
                     </Grid>
                   )}
                   {product?.product_support && !product?.product_support.hidden && (

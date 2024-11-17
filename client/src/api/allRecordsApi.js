@@ -104,6 +104,9 @@ export const allRecordsApi = createApi({
         return `/carts/product_bundles?${create_query(query)}`;
       },
     }),
+    modes: builder.query({
+      query: query => `/modes?${create_query(query)}`,
+    }),
   }),
 });
 
@@ -135,4 +138,5 @@ export const {
   useProductBundlesQuery,
   useWholesalersQuery,
   useMicrolightsQuery,
+  useModesQuery,
 } = allRecordsApi;

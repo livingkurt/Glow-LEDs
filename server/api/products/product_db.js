@@ -53,6 +53,7 @@ export default {
         .populate("secondary_images")
         .populate("microlights")
         .populate("products")
+        .populate("featured_modes")
         // .populate("collections")
         .populate("contributors")
         .limit(parseInt(limit))
@@ -107,6 +108,7 @@ export default {
             ],
           },
         })
+        .populate("featured_modes")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -258,6 +260,7 @@ export default {
           ],
         })
         .populate("title_image")
+        .populate("featured_modes")
         .populate("themed_logo")
         .populate("line_break")
         .populate("pattern_tile")
@@ -359,6 +362,7 @@ export default {
         })
         .populate("title_image")
         .populate("themed_logo")
+        .populate("featured_modes")
         .populate("line_break")
         .populate("pattern_tile")
         .populate("corner_image")

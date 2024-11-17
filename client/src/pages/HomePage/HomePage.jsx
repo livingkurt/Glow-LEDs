@@ -19,6 +19,7 @@ const HomePage = () => {
               <Box key={index}>
                 {module.type === "featured_products" ||
                 module.type === "featured_product_bundles" ||
+                module.type === "featured_modes" ||
                 module.type === "support_banner" ||
                 module.type === "get_more_out_of" ||
                 module.type === "sponsors" ||

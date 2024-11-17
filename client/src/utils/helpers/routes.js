@@ -43,6 +43,10 @@ export const routes = [
 
   { path: "/palettes", element: "ColorPalettePage", exact: true },
   { path: "/unsubscribe", element: "UnsubscribePage", exact: true },
+
+  { path: "/modes/creator/:id?", element: "ModeCreatorPage", exact: true },
+  { path: "/modes/:id", element: "ModePage", exact: true },
+  { path: "/modes", element: "ModesGridPage", exact: true },
 ];
 
 export const adminRoutes = [

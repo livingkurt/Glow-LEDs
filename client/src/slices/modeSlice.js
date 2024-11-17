@@ -1,16 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const mode = {
-  _id: null,
+export const modeInitialState = {
   name: "",
   description: "",
-  colors: [],
+  colors: [
+    {
+      colorCode: "#ff0000",
+      name: "Red",
+      saturation: 100,
+      brightness: 100,
+    },
+    {
+      colorCode: "#03ff00",
+      name: "Green",
+      saturation: 100,
+      brightness: 100,
+    },
+    {
+      colorCode: "#0000ff",
+      name: "Blue",
+      saturation: 100,
+      brightness: 100,
+    },
+  ],
   microlight: null,
+  author: "",
+  pathname: "",
   flashing_pattern: {
-    pattern_type: "solid",
-    speed: 50,
-    direction: "forward",
+    name: "Strobe",
+    type: "",
+    on_dur: 5,
+    off_dur: 8,
+    gap_dur: 0,
+    dash_dur: 0,
+    group_size: 0,
+    blend_speed: 0,
   },
   visibility: "public",
 };
@@ -20,7 +45,7 @@ const modePage = createSlice({
   initialState: {
     loading: false,
     modes: [],
-    mode: mode,
+    mode: modeInitialState,
     remoteVersionRequirement: 0,
     edit_mode_modal: false,
     mode_modal: false,
@@ -43,7 +68,7 @@ const modePage = createSlice({
     },
     open_create_mode_modal: state => {
       state.edit_mode_modal = true;
-      state.mode = mode;
+      state.mode = modeInitialState;
     },
     open_edit_mode_modal: (state, { payload }) => {
       state.edit_mode_modal = true;
@@ -52,7 +77,7 @@ const modePage = createSlice({
     close_mode_modal: state => {
       state.edit_mode_modal = false;
       state.mode_modal = false;
-      state.mode = mode;
+      state.mode = modeInitialState;
     },
     open_mode_modal: (state, { payload }) => {
       state.mode_modal = true;

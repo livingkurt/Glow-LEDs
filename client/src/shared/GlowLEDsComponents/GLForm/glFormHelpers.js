@@ -163,3 +163,14 @@ export const tagField = ({ tags, ...otherProps }) => {
     ...otherProps,
   };
 };
+
+export const modeField = ({ modes, ...otherProps }) => {
+  return {
+    type: "autocomplete_multiple",
+    label: "Modes",
+    options: modes,
+    labelProp: "name",
+    getOptionLabel: option => option.name,
+    ...otherProps,
+  };
+};

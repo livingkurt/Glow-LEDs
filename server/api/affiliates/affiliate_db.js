@@ -11,6 +11,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("microlights")
+        .populate("modes")
         .populate({
           path: "bundles",
           populate: [
@@ -32,6 +33,7 @@ export default {
       return await Affiliate.findOne(params)
         .populate("user")
         .populate("microlights")
+        .populate("modes")
         .populate("public_code")
         .populate("private_code")
         .populate({
@@ -53,7 +55,7 @@ export default {
       return await Affiliate.findOne({ ...query, deleted: false })
         .populate("user")
         .populate("microlights")
-
+        .populate("modes")
         .populate("public_code")
         .populate("private_code")
 

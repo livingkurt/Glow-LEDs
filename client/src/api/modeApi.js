@@ -31,9 +31,9 @@ export const listModes = createAsyncThunk("modes/listModes", async (query, { dis
   }
 });
 
-export const saveMode = createAsyncThunk("modes/saveMode", async (mode, { dispatch, rejectWithValue }) => {
+export const saveMode = createAsyncThunk("modes/saveMode", async ({ mode, copy }, { dispatch, rejectWithValue }) => {
   try {
-    if (!mode._id) {
+    if (!mode._id || copy) {
       const { data } = await axios.post("/api/modes", mode);
       dispatch(showSuccess({ message: `Mode Created` }));
       return data;

@@ -1,14 +1,26 @@
 import { IconButton, Tooltip } from "@mui/material";
-import React from "react";
+import PropTypes from "prop-types";
 
-const GLIconButton = ({ tooltip, onClick, children, ...otherProps }) => {
+const GLIconButton = ({ tooltip, onClick, ariaLabel, children, ...otherProps }) => {
   return (
     <Tooltip title={tooltip}>
-      <IconButton aria-label={tooltip} onClick={onClick} {...otherProps}>
+      <IconButton onClick={onClick} aria-label={ariaLabel} {...otherProps}>
         {children}
       </IconButton>
     </Tooltip>
   );
+};
+
+GLIconButton.propTypes = {
+  tooltip: PropTypes.string,
+  onClick: PropTypes.func,
+  ariaLabel: PropTypes.string,
+};
+
+GLIconButton.defaultProps = {
+  tooltip: "",
+  onClick: () => {},
+  ariaLabel: "",
 };
 
 export default GLIconButton;

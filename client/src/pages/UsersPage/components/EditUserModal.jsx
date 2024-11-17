@@ -6,7 +6,13 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { useLocation } from "react-router-dom";
 import { userFormFields } from "../userFormFields";
-import { useAffiliatesQuery, usePromosQuery, useTeamsQuery, useWholesalersQuery } from "../../../api/allRecordsApi";
+import {
+  useAffiliatesQuery,
+  useModesQuery,
+  usePromosQuery,
+  useTeamsQuery,
+  useWholesalersQuery,
+} from "../../../api/allRecordsApi";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
@@ -21,12 +27,14 @@ const EditUserModal = () => {
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery({ active: true });
   const { data: wholesalers, isLoading: wholesalersLoading } = useWholesalersQuery();
   const { data: teams, isLoading: teamsLoading } = useTeamsQuery({ active: true });
+  const { data: modes, isLoading: modesLoading } = useModesQuery();
 
   const formFields = userFormFields({
     affiliates: affiliatesLoading ? [] : affiliates,
     wholesalers: wholesalersLoading ? [] : wholesalers,
     promos: promosLoading ? [] : promos,
     teams: teamsLoading ? [] : teams,
+    modes: modesLoading ? [] : modes,
   });
 
   return (

@@ -5,6 +5,7 @@ export default {
     try {
       return await Mode.find(filter)
         .populate("microlight")
+        .populate("user")
         .sort(sort)
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
@@ -17,16 +18,7 @@ export default {
   },
   findById_modes_db: async id => {
     try {
-      return await Mode.findOne({ _id: id, deleted: false });
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  findByName_modes_db: async name => {
-    try {
-      return await Mode.findOne({ name: name, deleted: false });
+      return await Mode.findOne({ _id: id, deleted: false }).populate("microlight").populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,7 +38,8 @@ export default {
     try {
       const mode = await Mode.findOne({ _id: id, deleted: false });
       if (mode) {
-        return await Mode.updateOne({ _id: id }, body);
+        const updatedMode = await Mode.findByIdAndUpdate({ _id: id }, body);
+        return updatedMode;
       }
     } catch (error) {
       if (error instanceof Error) {

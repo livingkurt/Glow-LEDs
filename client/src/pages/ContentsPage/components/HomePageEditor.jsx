@@ -13,6 +13,7 @@ const MODULE_TYPES = [
   { value: "slideshow", label: "Slideshow" },
   { value: "featured_products", label: "Featured Products" },
   { value: "featured_product_bundles", label: "Featured Bundles" },
+  { value: "featured_modes", label: "Featured Modes" },
   { value: "learn_more_products", label: "Learn More Products" },
   { value: "learn_highlights", label: "Learn Highlights" },
   { value: "discover_more", label: "Discover More" },
