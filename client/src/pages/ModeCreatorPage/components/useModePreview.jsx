@@ -1,15 +1,16 @@
-// useModePreview.jsx
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } from "../modeCreatorPageHelpers";
+import { isMobile } from "react-device-detect";
 
 export const useModePreview = ({ mode }) => {
   // Animation control states
-  const [speed, setSpeed] = useState(150);
+  const [speed, setSpeed] = useState(isMobile ? 200 : 150);
   const [trailLength, setTrailLength] = useState(100);
   const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
   const [radius, setRadius] = useState(100);
   const [timeMultiplier, setTimeMultiplier] = useState(5);
+  const [isInView, setIsInView] = useState(false); // Track if canvas is in view
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const stateRef = useRef(PatternState.STATE_BLINK_ON);
@@ -25,26 +26,16 @@ export const useModePreview = ({ mode }) => {
     const ctx = canvas.getContext("2d");
 
     const resizeCanvas = () => {
-      // Get the device pixel ratio
       const dpr = window.devicePixelRatio || 1;
-
-      // Get the size of the canvas in CSS pixels.
       const rect = canvas.getBoundingClientRect();
-
-      // Set the canvas width and height to be scaled by the device pixel ratio.
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-
-      // Scale the context to match the device pixel ratio.
       ctx.scale(dpr, dpr);
-
-      // Enable antialiasing for the canvas
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
     };
 
     resizeCanvas();
-
     window.addEventListener("resize", resizeCanvas);
 
     return () => {
@@ -53,13 +44,11 @@ export const useModePreview = ({ mode }) => {
   }, []);
 
   useEffect(() => {
-    // Enable antialiasing for the canvas
     const ctx = canvasRef.current.getContext("2d", { alpha: false });
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
   }, []);
 
-  // Ensure pattern values are numbers with defaults
   const pattern = {
     ...mode.flashing_pattern,
     on_dur: Number(mode.flashing_pattern.on_dur) || 0,
@@ -71,11 +60,8 @@ export const useModePreview = ({ mode }) => {
   };
 
   const radiiRef = useRef([radius * 0.6, radius * 0.8, radius]);
-
-  // Track angles for each circle
   const anglesRef = useRef([0, 0, 0]);
 
-  // Update radii when radius changes
   useEffect(() => {
     radiiRef.current = [radius * 0.6, radius * 0.8, radius];
   }, [radius]);
@@ -90,9 +76,8 @@ export const useModePreview = ({ mode }) => {
 
     const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
-    // Update all three circles at different radii
     radiiRef.current.forEach((radiusMultiplier, index) => {
-      const circleRadius = (radiusMultiplier / 100) * params.circleRadius; // Convert to responsive size
+      const circleRadius = (radiusMultiplier / 100) * params.circleRadius;
       const newPos = getPosition(anglesRef.current[index], circleRadius, canvasRef);
       anglesRef.current[index] = (anglesRef.current[index] + params.rotationSpeed) % (Math.PI * 2);
 
@@ -104,32 +89,29 @@ export const useModePreview = ({ mode }) => {
       });
     });
 
-    // Ensure trail doesn't exceed maximum length (accounting for 3 circles)
     while (trailRef.current.length > params.trailLength * 3) {
       trailRef.current.pop();
     }
 
     drawTrail();
   };
+
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw background
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw trail points in reverse order so newest points are on top
     for (let i = trailRef.current.length - 1; i >= 0; i--) {
       const point = trailRef.current[i];
       if (!point.color) continue;
 
       const fadeAlpha = (1 - i / params.trailLength).toFixed(2);
-      const innerAlpha = fadeAlpha * point.alpha; // Multiply by point's alpha value
+      const innerAlpha = fadeAlpha * point.alpha;
       const outerAlpha = params.blurFac !== 0 ? (innerAlpha / params.blurFac).toFixed(2) : innerAlpha;
 
       const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, params.dotSize);
@@ -159,9 +141,43 @@ export const useModePreview = ({ mode }) => {
       blendNextColorRef.current = hexToRgb(mode.colors[1 % mode.colors.length].colorCode);
     }
   };
+
+  // Intersection Observer to detect if canvas is in view
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observerOptions = {
+      root: null, // Use viewport as root
+      rootMargin: "0px",
+      threshold: 0.05, // Trigger when 10% of the canvas is visible
+    };
+
+    const observerCallback = entries => {
+      entries.forEach(entry => {
+        setIsInView(entry.isIntersecting);
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    observer.observe(canvas);
+
+    return () => {
+      observer.unobserve(canvas);
+    };
+  }, [canvasRef]);
+
+  useEffect(() => {
+    if (!isInView) {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      return;
+    }
+
     initPattern();
     trailRef.current = [];
+    lastUpdateTimeRef.current = null;
 
     const animate = timestamp => {
       if (!lastUpdateTimeRef.current) {
@@ -288,6 +304,7 @@ export const useModePreview = ({ mode }) => {
 
       animationRef.current = requestAnimationFrame(animate);
     };
+
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
@@ -295,7 +312,7 @@ export const useModePreview = ({ mode }) => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [mode, pattern]);
+  }, [isInView, mode, pattern]);
 
   return {
     speed,
