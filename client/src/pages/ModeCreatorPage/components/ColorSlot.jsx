@@ -60,12 +60,14 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate, 
     event?.stopPropagation();
     onRemove(index);
     setActiveControl(null);
+    setControlsAnchor(null); // Add this line to close the dialog
   };
 
   const handleDuplicate = event => {
     event?.stopPropagation();
     onDuplicate(index);
     setActiveControl(null);
+    setControlsAnchor(null); // Add this line to close the dialog
   };
 
   const getLevelLabel = () => {

@@ -57,7 +57,7 @@ const ModePreview = ({ mode }) => {
 
       <Typography variant="h6">{"Animation Controls"}</Typography>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <SliderContainer>
             <Typography sx={{ width: 80 }}>{"Scale"}</Typography>
             <AnimationSlider
@@ -90,7 +90,7 @@ const ModePreview = ({ mode }) => {
             />
           </SliderContainer>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <SliderContainer>
             <Typography sx={{ width: 80 }}>{"Size"}</Typography>
             <AnimationSlider
