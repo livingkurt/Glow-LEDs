@@ -159,7 +159,7 @@ const ModePage = () => {
       {mode?.video && <HeroVideo video={mode?.video} />}
       <Container maxWidth="xl">
         <Typography variant="h4" align="center" pt={2} gutterBottom>
-          {mode.microlight.name} {"Compatible Products"}
+          {mode?.microlight?.name} {"Compatible Products"}
         </Typography>
         <Grid container spacing={2}>
           {products?.length > 0 ? (

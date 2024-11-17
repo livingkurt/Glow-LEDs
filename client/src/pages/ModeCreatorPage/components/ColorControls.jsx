@@ -33,7 +33,6 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
         saturation: value,
       };
     }
-    console.log({ type, value, updatedColor });
 
     // Update the color
     onUpdate(updatedColor);
@@ -86,7 +85,7 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
                 width: 60,
                 height: 60,
                 borderRadius: "50%",
-                color: value > 50 ? "black" : "white",
+                color: theme => theme.palette.getContrastText(hex),
                 fontWeight: "medium",
                 fontSize: "2rem",
                 transition: "transform 0.2s ease",

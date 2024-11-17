@@ -5,7 +5,7 @@ import { getAnimationParams, getPosition, hexToRgb, interpolate, PatternState } 
 export const useModePreview = ({ mode }) => {
   // Animation control states
   const [speed, setSpeed] = useState(150);
-  const [trailLength, setTrailLength] = useState(50);
+  const [trailLength, setTrailLength] = useState(100);
   const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
   const [radius, setRadius] = useState(100);

@@ -27,10 +27,16 @@ const ModesGridPage = () => {
   }, [refetch]);
 
   const handleCreateMode = () => {
-    dispatch(set_mode(modeInitialState));
-    navigate("/modes/creator");
+    // Reset everything including the setup flag
+    dispatch(
+      set_mode({
+        ...modeInitialState,
+        _id: undefined,
+      })
+    );
+    // Force a reload of the creator page to ensure fresh initialization
+    navigate("/modes/creator", { replace: true });
   };
-
   const handleModeClick = mode => {
     navigate(`/modes/${mode._id}`);
   };

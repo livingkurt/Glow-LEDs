@@ -11,7 +11,6 @@ import { modeInitialState, set_mode } from "../../slices/modeSlice";
 const useModeCreatorPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const initialSetupDone = useRef(false);
   const [macro] = useState(true); // You can make this dynamic later if needed
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -28,14 +27,20 @@ const useModeCreatorPage = () => {
 
   // First useEffect - handles initial Helios setup
   useEffect(() => {
-    // Only run this effect when microlights data is available and setup hasn't been done
-    // AND when there's no id parameter (don't set up Helios if we're editing an existing mode)
-    if (microlights?.length && !initialSetupDone.current && !id) {
+    const copy = searchParams.get("copy");
+
+    if (id || copy) {
+      // Handle editing or copying existing mode
+      dispatch(API.detailsMode(id || copy));
+    } else if (microlights?.length) {
+      // Handle new mode creation
       const helios = microlights.find(m => m.name === "Helios");
       if (helios) {
         dispatch(
           set_mode({
+            ...modeInitialState,
             microlight: helios._id,
+            _id: undefined,
             flashing_pattern: {
               name: "",
               type: "",
@@ -48,26 +53,9 @@ const useModeCreatorPage = () => {
             },
           })
         );
-        initialSetupDone.current = true;
       }
     }
-  }, [dispatch, microlights, id]);
-
-  // Second useEffect - handles loading existing mode or resetting
-  useEffect(() => {
-    const copy = searchParams.get("copy");
-    if (id || copy) {
-      dispatch(API.detailsMode(id || copy));
-    } else {
-      // Reset everything but preserve the microlight ID
-      dispatch(
-        set_mode({
-          ...modeInitialState,
-          microlight: mode.microlight,
-        })
-      );
-    }
-  }, [dispatch, id, searchParams]); // Removed mode.microlight from dependencies
+  }, [dispatch, id, searchParams, microlights]);
 
   const handleSave = async ({ createNew = false } = {}) => {
     if (!mode.microlight) {
