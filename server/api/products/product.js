@@ -186,6 +186,7 @@ const productSchema = new mongoose.Schema(
       products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
       hidden: { type: Boolean, default: false },
     },
+    featured_modes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Mode" }],
 
     product_support: {
       quick_guide: { type: String },

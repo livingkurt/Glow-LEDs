@@ -42,7 +42,7 @@ const ModesGridPage = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Helmet>
-        <title>{"LED Modes | Glow LEDs"}</title>
+        <title>{"Helios Community Modes | Glow LEDs"}</title>
         <meta
           name="description"
           content="Browse and create custom LED modes for your Glow LEDs devices. Customize colors, patterns, and share your creations with the community."
@@ -51,7 +51,7 @@ const ModesGridPage = () => {
 
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h4" component="h1">
-          {"Helios Modes"}
+          {"Helios Community Modes"}
         </Typography>
         <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleCreateMode}>
           {"Create Mode"}
@@ -59,7 +59,7 @@ const ModesGridPage = () => {
       </Box>
 
       {modes.length === 0 ? (
-        <Paper sx={{ p: 4, textAlign: "center" }}>
+        <Box sx={{ p: 4, textAlign: "center" }}>
           <Typography variant="h6" gutterBottom>
             {"No modes available yet"}
           </Typography>
@@ -69,7 +69,7 @@ const ModesGridPage = () => {
           <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleCreateMode}>
             {"Create Mode"}
           </Button>
-        </Paper>
+        </Box>
       ) : (
         <Grid container spacing={3}>
           {modes.map(mode => (

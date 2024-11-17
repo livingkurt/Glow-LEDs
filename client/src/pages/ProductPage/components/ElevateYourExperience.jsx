@@ -37,6 +37,7 @@ const ElevateYourExperience = ({ elevateYourExperience, text_color, header_text_
       >
         {products?.map(product => (
           <Box
+            key={product._id}
             sx={{
               minWidth: "250px", // Change minWidth to 250px
               width: "100%", // Add width: 100% to make the item fill the available space

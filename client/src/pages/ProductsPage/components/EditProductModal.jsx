@@ -12,6 +12,7 @@ import {
   useFilamentsQuery,
   useProductsQuery,
   useUsersQuery,
+  useModesQuery,
 } from "../../../api/allRecordsApi";
 
 const EditProductModal = () => {
@@ -27,6 +28,7 @@ const EditProductModal = () => {
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
   const { data: filaments, isLoading: filamentsLoading } = useFilamentsQuery();
+  const { data: modes, isLoading: modesLoading } = useModesQuery();
 
   const formFields = productFormFields({
     products: !productsLoading ? products : [],
@@ -34,6 +36,7 @@ const EditProductModal = () => {
     tags: !tagsLoading ? tags : [],
     microlights: !microlightsLoading ? microlights : [],
     filaments: !filamentsLoading ? filaments : [],
+    modes: !modesLoading ? modes : [],
     product,
     dispatch,
   });

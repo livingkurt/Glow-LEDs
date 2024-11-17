@@ -1,13 +1,20 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import ModeCard from "../../ModesGridPage/components/ModeCard";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedModes = ({ featured_modes, featured_modes_hidden }) => {
+  const navigate = useNavigate();
   return !featured_modes_hidden ? (
     <Box>
-      <Typography variant="h4" component="h2" align="left" gutterBottom>
-        {"Featured Modes"}
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <Typography variant="h4" align="left">
+          {"Featured Modes"}
+        </Typography>
+        <Button variant="contained" color="secondary" onClick={() => navigate("/modes")}>
+          {"View All Modes"}
+        </Button>
+      </Box>
       <Box
         sx={{
           pb: 6,

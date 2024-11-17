@@ -635,10 +635,6 @@ const user = addIdsRecursively({
       name: "Profile",
       path: "/secure/account/profile",
     },
-    {
-      name: "My Modes",
-      path: "/secure/account/profile?tab=modes",
-    },
 
     {
       name: "Logout",
