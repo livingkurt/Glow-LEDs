@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Box, Paper, Typography, Portal } from "@mui/material";
+import { Box, Paper, Typography, Portal, Dialog, useMediaQuery, useTheme } from "@mui/material";
+import { isMobile } from "react-device-detect";
 import {
   hexToHSV,
   hsvToHex,
@@ -7,13 +8,26 @@ import {
   generateSaturationLevels,
   getDisplayLevel,
 } from "../modeCreatorPageHelpers";
+import { ContentCopy, Delete } from "@mui/icons-material";
 
-const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
-  const [activeControl, setActiveControl] = useState(null);
+const ColorControls = ({
+  color,
+  onUpdate,
+  microlight,
+  anchorEl,
+  onClose,
+  onDuplicate,
+  onRemove,
+  activeControl,
+  setActiveControl,
+}) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobileDevice = isMobile || isSmallScreen;
 
   const handleControlClick = (control, event) => {
     event.stopPropagation();
-    setActiveControl(control);
+    setActiveControl(control === activeControl ? null : control);
   };
 
   const handleLevelSelect = (type, value) => {
@@ -34,10 +48,7 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
       };
     }
 
-    // Update the color
     onUpdate(updatedColor);
-
-    // Only close the active control menu
     setActiveControl(null);
   };
 
@@ -54,8 +65,62 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
         ? generateBrightnessLevels(hsv.h, hsv.s, microlight?.brightness_levels || 4)
         : generateSaturationLevels(hsv.h, hsv.v, microlight?.saturation_levels || 4);
 
-    // Sort levels from highest to lowest
     const sortedLevels = levels.sort((a, b) => b.value - a.value);
+
+    if (isMobileDevice) {
+      return (
+        <Dialog
+          open={Boolean(activeControl)}
+          onClose={() => setActiveControl(null)}
+          PaperProps={{
+            sx: {
+              p: 2,
+              maxWidth: "100%",
+              width: "auto",
+              m: 2,
+            },
+          }}
+        >
+          <Typography variant="h6" sx={{ mb: 2, textAlign: "center" }}>
+            {`Select ${activeControl === "brightness" ? "Brightness" : "Saturation"} Level`}
+          </Typography>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 2,
+              justifyItems: "center",
+            }}
+          >
+            {sortedLevels.map(({ value, hex }, index) => {
+              const levelNumber = sortedLevels.length - index;
+              return (
+                <Box
+                  key={value}
+                  onClick={() => handleLevelSelect(activeControl, value)}
+                  sx={{
+                    backgroundColor: hex,
+                    cursor: "pointer",
+                    border: theme => `1px solid ${theme.palette.divider}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 80,
+                    height: 80,
+                    borderRadius: "50%",
+                    color: theme => theme.palette.getContrastText(hex),
+                    fontWeight: "medium",
+                    fontSize: "2rem",
+                  }}
+                >
+                  {levelNumber}
+                </Box>
+              );
+            })}
+          </Box>
+        </Dialog>
+      );
+    }
 
     return (
       <Paper
@@ -70,11 +135,10 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
       >
         {sortedLevels.map(({ value, hex }, index) => {
           const levelNumber = sortedLevels.length - index;
-
           return (
             <Box
               key={value}
-              onClick={() => handleLevelSelect(activeControl, value)} // Use the actual value directly
+              onClick={() => handleLevelSelect(activeControl, value)}
               sx={{
                 backgroundColor: hex,
                 cursor: "pointer",
@@ -106,6 +170,102 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
     );
   };
 
+  const controlsContent = (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1, position: "relative" }}>
+      {isMobileDevice && (
+        <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+          <Box
+            onClick={onDuplicate}
+            sx={{
+              p: 1.5,
+              cursor: "pointer",
+              borderRadius: 1,
+              transition: "all 0.2s ease",
+            }}
+          >
+            <ContentCopy /> {"Duplicate"}
+          </Box>
+          <Box
+            onClick={onRemove}
+            sx={{
+              p: 1.5,
+              cursor: "pointer",
+              borderRadius: 1,
+            }}
+          >
+            <Delete /> {"Remove"}
+          </Box>
+        </Box>
+      )}
+      {microlight?.saturation_control && (
+        <Box
+          onClick={e => handleControlClick("saturation", e)}
+          sx={{
+            p: 1.5,
+            cursor: "pointer",
+            borderRadius: 1,
+            bgcolor: activeControl === "saturation" ? "grey.500" : "white",
+            color: activeControl === "saturation" ? "white" : "text.primary",
+            transition: "all 0.2s ease",
+            "&:hover": {
+              bgcolor: activeControl === "saturation" ? "grey.600" : "grey.200",
+            },
+          }}
+        >
+          <Typography variant="body1">
+            {"Saturation: "}
+            {color.saturation !== undefined
+              ? getDisplayLevel(color.saturation, microlight.saturation_levels)
+              : microlight.saturation_levels}
+          </Typography>
+        </Box>
+      )}
+      {microlight?.brightness_control && (
+        <Box
+          onClick={e => handleControlClick("brightness", e)}
+          sx={{
+            p: 1.5,
+            cursor: "pointer",
+            borderRadius: 1,
+            bgcolor: activeControl === "brightness" ? "grey.500" : "white",
+            color: activeControl === "brightness" ? "white" : "text.primary",
+            transition: "all 0.2s ease",
+            "&:hover": {
+              bgcolor: activeControl === "brightness" ? "grey.600" : "grey.200",
+            },
+          }}
+        >
+          <Typography variant="body1">
+            {"Brightness: "}
+            {color.brightness !== undefined
+              ? getDisplayLevel(color.brightness, microlight.brightness_levels)
+              : microlight.brightness_levels}
+          </Typography>
+        </Box>
+      )}
+      {renderLevels()}
+    </Box>
+  );
+
+  if (isMobileDevice) {
+    return (
+      <Dialog
+        open={Boolean(anchorEl)}
+        onClose={onClose}
+        PaperProps={{
+          sx: {
+            p: 2,
+            maxWidth: "100%",
+            width: "auto",
+            m: 2,
+          },
+        }}
+      >
+        {controlsContent}
+      </Dialog>
+    );
+  }
+
   return (
     <Portal>
       <Box
@@ -131,55 +291,7 @@ const ColorControls = ({ color, onUpdate, microlight, anchorEl, onClose }) => {
             zIndex: theme => theme.zIndex.modal,
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1, position: "relative" }}>
-            {microlight?.saturation_control && (
-              <Box
-                onClick={e => handleControlClick("saturation", e)}
-                sx={{
-                  p: 1,
-                  cursor: "pointer",
-                  borderRadius: 1,
-                  bgcolor: activeControl === "saturation" ? "grey.500" : "white",
-                  color: activeControl === "saturation" ? "white" : "text.primary",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    bgcolor: activeControl === "saturation" ? "grey.600" : "grey.200",
-                  },
-                }}
-              >
-                <Typography variant="body2">
-                  {"Saturation: "}
-                  {color.saturation !== undefined
-                    ? getDisplayLevel(color.saturation, microlight.saturation_levels)
-                    : microlight.saturation_levels}
-                </Typography>
-              </Box>
-            )}
-            {microlight?.brightness_control && (
-              <Box
-                onClick={e => handleControlClick("brightness", e)}
-                sx={{
-                  p: 1,
-                  cursor: "pointer",
-                  borderRadius: 1,
-                  bgcolor: activeControl === "brightness" ? "grey.500" : "white",
-                  color: activeControl === "brightness" ? "white" : "text.primary",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    bgcolor: activeControl === "brightness" ? "grey.600" : "grey.200",
-                  },
-                }}
-              >
-                <Typography variant="body2">
-                  {"Brightness: "}
-                  {color.brightness !== undefined
-                    ? getDisplayLevel(color.brightness, microlight.brightness_levels)
-                    : microlight.brightness_levels}
-                </Typography>
-              </Box>
-            )}
-            {renderLevels()}
-          </Box>
+          {controlsContent}
         </Paper>
       </Box>
     </Portal>

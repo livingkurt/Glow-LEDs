@@ -25,6 +25,7 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
 import ColorSlot from "./components/ColorSlot";
+import { isMobile } from "react-device-detect";
 
 const ModeCreatorPage = () => {
   const { id } = useParams();
@@ -41,6 +42,7 @@ const ModeCreatorPage = () => {
     selectedMicrolight,
     macro,
     microlights,
+    handleColorClick,
   } = useModeCreatorPage();
 
   if (loading || microlightsLoading) {
@@ -156,12 +158,24 @@ const ModeCreatorPage = () => {
                   <Typography variant="h6" gutterBottom>
                     {"Available Colors"}
                   </Typography>
-                  <ColorPalette colors={selectedMicrolight.colors} />
+                  <ColorPalette colors={selectedMicrolight.colors} onColorClick={handleColorClick} />
 
                   <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
                     {"Selected Colors ("}
                     {selectedMicrolight.colors_per_mode} {"max)"}
                   </Typography>
+
+                  {isMobile && (
+                    <Typography variant="subtitle2" gutterBottom>
+                      {"Click on a color slot for controls"}
+                    </Typography>
+                  )}
+                  {!isMobile && (
+                    <Typography variant="subtitle2" gutterBottom>
+                      {"Hover over a color slot for controls"}
+                    </Typography>
+                  )}
+
                   <Droppable droppableId="color-slots" direction="horizontal">
                     {provided => (
                       <Box
@@ -169,10 +183,9 @@ const ModeCreatorPage = () => {
                         {...provided.droppableProps}
                         sx={{
                           display: "grid",
-                          gridTemplateColumns: "repeat(auto-fit, 60px)",
-                          justifyContent: "start",
+                          gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))",
                           gap: 2,
-                          p: 2,
+                          px: 1, // Changed from px: 2 to px: 1 to match ColorPalette
                           minHeight: 80,
                         }}
                       >
