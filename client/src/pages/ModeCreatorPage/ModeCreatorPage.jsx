@@ -41,6 +41,7 @@ const ModeCreatorPage = () => {
     selectedMicrolight,
     macro,
     microlights,
+    handleColorClick,
   } = useModeCreatorPage();
 
   if (loading || microlightsLoading) {
@@ -156,7 +157,7 @@ const ModeCreatorPage = () => {
                   <Typography variant="h6" gutterBottom>
                     {"Available Colors"}
                   </Typography>
-                  <ColorPalette colors={selectedMicrolight.colors} />
+                  <ColorPalette colors={selectedMicrolight.colors} onColorClick={handleColorClick} />
 
                   <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
                     {"Selected Colors ("}

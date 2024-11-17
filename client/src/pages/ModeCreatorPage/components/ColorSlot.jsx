@@ -6,25 +6,43 @@ import { useState } from "react";
 import ColorControls from "./ColorControls";
 import { ContentCopy } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import { isMobile } from "react-device-detect";
 
 const EmptySlot = () => (
-  <Box
-    sx={{
-      width: 60,
-      height: 60,
-      border: "2px dashed",
-      borderColor: "grey.300",
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  />
+  <Box sx={{ textAlign: "center" }}>
+    {isMobile && (
+      <Typography
+        variant="caption"
+        sx={{
+          display: "block",
+          mb: 0.5,
+          fontSize: "1rem",
+          visibility: "hidden",
+          height: "1.5rem", // Maintains space while being invisible
+        }}
+      >
+        {"placeholder"}
+      </Typography>
+    )}
+    <Box
+      sx={{
+        width: 60,
+        height: 60,
+        border: "2px dashed",
+        borderColor: "grey.300",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    />
+  </Box>
 );
 
-const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }) => {
+const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate, snapshot }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [controlsAnchor, setControlsAnchor] = useState(null);
+  const [activeControl, setActiveControl] = useState(null);
 
   if (!color) return <EmptySlot index={index} />;
 
@@ -35,17 +53,19 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }
 
   const handleControlsClose = () => {
     setControlsAnchor(null);
-    setIsHovered(false); // Reset hover state when controls close
+    setIsHovered(false);
   };
 
   const handleRemove = event => {
-    event.stopPropagation();
+    event?.stopPropagation();
     onRemove(index);
+    setActiveControl(null);
   };
 
   const handleDuplicate = event => {
-    event.stopPropagation();
+    event?.stopPropagation();
     onDuplicate(index);
+    setActiveControl(null);
   };
 
   const getLevelLabel = () => {
@@ -64,160 +84,216 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }
 
     return parts.join("\n");
   };
-  return (
-    <Draggable draggableId={`slot-${index}-${color._id}`} index={index}>
-      {(provided, snapshot) => (
-        <Box
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          data-color-slot
+
+  const colorBox = (
+    <Box sx={{ textAlign: "center" }}>
+      {isMobile && (
+        <Typography
+          variant="caption"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 1, // Adds space between color circle and labels
+            display: "block",
+            mb: 0.5,
+            fontSize: "1rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "wrap",
+            maxWidth: "100%",
           }}
         >
+          {color.name}
+        </Typography>
+      )}
+      <Box
+        onClick={isMobile ? handleOptionsClick : undefined}
+        sx={{
+          width: 60,
+          height: 60,
+          position: "relative",
+        }}
+        onMouseEnter={() => !isMobile && setIsHovered(true)}
+        onMouseLeave={() => !isMobile && setIsHovered(false)}
+      >
+        {!isMobile ? (
+          <Tooltip
+            title={
+              <Typography>
+                {getLevelLabel()
+                  .split("\n")
+                  .map((line, index) => (
+                    <div key={index}>{line}</div>
+                  ))}
+              </Typography>
+            }
+            arrow
+            placement="bottom"
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+                backgroundColor: color.colorCode,
+                opacity: snapshot?.isDragging ? 0.5 : 1,
+                cursor: isMobile ? "pointer" : "grab",
+                position: "relative",
+                boxShadow: theme =>
+                  `0 4px 8px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)"}`,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                  boxShadow: theme =>
+                    `0 6px 12px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.3)"}`,
+                },
+              }}
+            >
+              <Fade in={isHovered}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    opacity: 0,
+                    transition: "opacity 0.2s ease",
+                    "&:hover": {
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  {(microlight?.brightness_control || microlight?.saturation_control) && (
+                    <Typography
+                      onClick={handleOptionsClick}
+                      variant="caption"
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        textTransform: "uppercase",
+                        letterSpacing: 1,
+                        fontSize: "1rem",
+                        cursor: "pointer",
+                        "&:hover": {
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      {"Options"}
+                    </Typography>
+                  )}
+                </Box>
+              </Fade>
+            </Box>
+          </Tooltip>
+        ) : (
           <Box
             sx={{
-              width: 60,
-              height: 60,
+              width: "100%",
+              height: "100%",
+              borderRadius: "50%",
+              backgroundColor: color.colorCode,
+              cursor: "pointer",
               position: "relative",
+              boxShadow: theme => `0 4px 8px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)"}`,
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Color circle and hover effects */}
-            <Tooltip
-              title={
-                <Typography>
-                  {getLevelLabel()
-                    .split("\n")
-                    .map((line, index) => (
-                      <div key={index}>{line}</div>
-                    ))}
-                </Typography>
-              }
-              arrow
-              placement="bottom"
+          />
+        )}
+
+        {!isMobile && (
+          <Fade in={isHovered}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: -8,
+                right: -3,
+                display: "flex",
+                gap: 0.5,
+              }}
             >
-              <Box
+              <GLIconButton
+                size="small"
+                tooltip="Duplicate"
+                onClick={handleDuplicate}
                 sx={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                  backgroundColor: color.colorCode,
-                  opacity: snapshot.isDragging ? 0.5 : 1,
-                  cursor: "grab",
-                  position: "relative",
-                  boxShadow: theme =>
-                    `0 4px 8px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)"}`,
-                  transition: "all 0.2s ease",
+                  bgcolor: "background.paper",
+                  boxShadow: 1,
+                  transition: "transform 0.2s ease",
                   "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: theme =>
-                      `0 6px 12px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.3)"}`,
+                    transform: "scale(1.1)",
                   },
                 }}
               >
-                <Fade in={isHovered}>
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      opacity: 0,
-                      transition: "opacity 0.2s ease",
-                      "&:hover": {
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    {(microlight?.brightness_control || microlight?.saturation_control) && (
-                      <Typography
-                        onClick={handleOptionsClick}
-                        variant="caption"
-                        sx={{
-                          color: "white",
-                          fontWeight: "bold",
-                          textTransform: "uppercase",
-                          letterSpacing: 1,
-                          fontSize: "1rem",
-                          cursor: "pointer",
-                          "&:hover": {
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        {"Options"}
-                      </Typography>
-                    )}
-                  </Box>
-                </Fade>
-              </Box>
-            </Tooltip>
-            <Fade in={isHovered}>
-              <Box
+                <ContentCopy fontSize="small" />
+              </GLIconButton>
+              <GLIconButton
+                size="small"
+                tooltip="Remove"
+                onClick={handleRemove}
                 sx={{
-                  position: "absolute",
-                  top: -8,
-                  right: -3,
-                  display: "flex",
-                  gap: 0.5,
+                  bgcolor: "background.paper",
+                  boxShadow: 1,
+                  transition: "transform 0.2s ease",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                  },
                 }}
               >
-                <GLIconButton
-                  size="small"
-                  tooltip="Duplicate"
-                  onClick={handleDuplicate}
-                  sx={{
-                    bgcolor: "background.paper",
-                    boxShadow: 1,
-                    transition: "transform 0.2s ease",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  <ContentCopy fontSize="small" />
-                </GLIconButton>
-                <GLIconButton
-                  size="small"
-                  tooltip="Remove"
-                  onClick={handleRemove}
-                  sx={{
-                    bgcolor: "background.paper",
-                    boxShadow: 1,
-                    transition: "transform 0.2s ease",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  <ClearIcon fontSize="small" />
-                </GLIconButton>
-              </Box>
-            </Fade>
+                <ClearIcon fontSize="small" />
+              </GLIconButton>
+            </Box>
+          </Fade>
+        )}
+      </Box>
+    </Box>
+  );
 
-            <ColorControls
-              color={color}
-              onUpdate={updatedColor => onUpdate(index, updatedColor)}
-              microlight={microlight}
-              anchorEl={controlsAnchor}
-              onClose={handleControlsClose}
-            />
-          </Box>
+  return (
+    <>
+      {isMobile ? (
+        <Box
+          data-color-slot
+          sx={{
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          {colorBox}
         </Box>
+      ) : (
+        <Draggable draggableId={`slot-${index}-${color._id}`} index={index}>
+          {(provided, snapshot) => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              data-color-slot
+              sx={{
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              {colorBox}
+            </Box>
+          )}
+        </Draggable>
       )}
-    </Draggable>
+      <ColorControls
+        color={color}
+        onUpdate={updatedColor => onUpdate(index, updatedColor)}
+        microlight={microlight}
+        anchorEl={controlsAnchor}
+        index={index}
+        onClose={handleControlsClose}
+        onRemove={isMobile ? handleRemove : undefined}
+        onDuplicate={isMobile ? handleDuplicate : undefined}
+        activeControl={activeControl}
+        setActiveControl={setActiveControl}
+      />
+    </>
   );
 };
 

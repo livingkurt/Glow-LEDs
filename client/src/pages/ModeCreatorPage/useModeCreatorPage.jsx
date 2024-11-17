@@ -161,6 +161,21 @@ const useModeCreatorPage = () => {
     }
   };
 
+  // Add this to the existing handleColorClick function in the component
+  const handleColorClick = color => {
+    if (mode?.colors.length >= selectedMicrolight.colors_per_mode) {
+      return; // Prevent adding more colors than allowed
+    }
+
+    const colorWithLevels = {
+      ...color,
+      brightness: selectedMicrolight?.brightness_control ? 100 : undefined,
+      saturation: selectedMicrolight?.saturation_control ? 100 : undefined,
+    };
+
+    dispatch(set_mode({ colors: [...mode.colors, colorWithLevels] }));
+  };
+
   if (loading || microlightsLoading) {
     return <GLLoading />;
   }
@@ -174,6 +189,7 @@ const useModeCreatorPage = () => {
     handleDragEnd,
     selectedMicrolight,
     macro,
+    handleColorClick,
     microlights,
   };
 };
