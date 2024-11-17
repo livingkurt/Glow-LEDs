@@ -1,10 +1,11 @@
 import { Draggable } from "@hello-pangea/dnd";
-import { Box, Typography, Fade, IconButton, Tooltip } from "@mui/material";
+import { Box, Typography, Fade, Tooltip } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import ColorControls from "./ColorControls";
 import { ContentCopy } from "@mui/icons-material";
+import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 
 const EmptySlot = () => (
   <Box
@@ -168,13 +169,14 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }
                 sx={{
                   position: "absolute",
                   top: -8,
-                  right: -8,
+                  right: -3,
                   display: "flex",
                   gap: 0.5,
                 }}
               >
-                <IconButton
+                <GLIconButton
                   size="small"
+                  tooltip="Duplicate"
                   onClick={handleDuplicate}
                   sx={{
                     bgcolor: "background.paper",
@@ -186,9 +188,10 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }
                   }}
                 >
                   <ContentCopy fontSize="small" />
-                </IconButton>
-                <IconButton
+                </GLIconButton>
+                <GLIconButton
                   size="small"
+                  tooltip="Remove"
                   onClick={handleRemove}
                   sx={{
                     bgcolor: "background.paper",
@@ -200,7 +203,7 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }
                   }}
                 >
                   <ClearIcon fontSize="small" />
-                </IconButton>
+                </GLIconButton>
               </Box>
             </Fade>
 
