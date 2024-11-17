@@ -168,7 +168,9 @@ const ModeCreatorPage = () => {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         sx={{
-                          display: "flex",
+                          display: "grid",
+                          gridTemplateColumns: "repeat(auto-fit, 60px)",
+                          justifyContent: "start",
                           gap: 2,
                           p: 2,
                           minHeight: 80,

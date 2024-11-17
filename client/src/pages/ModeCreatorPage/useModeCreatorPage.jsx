@@ -150,6 +150,11 @@ const useModeCreatorPage = () => {
     if (source.droppableId === "color-palette" && destination.droppableId === "color-slots") {
       const newColor = selectedMicrolight.colors[source.index];
 
+      // Check if the maximum number of colors has been reached
+      if (mode.colors.length >= selectedMicrolight.colors_per_mode) {
+        return; // Prevent adding more colors than allowed
+      }
+
       // Add initial maximum levels if controls are enabled
       const colorWithLevels = {
         ...newColor,
