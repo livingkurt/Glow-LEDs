@@ -4,6 +4,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import ColorControls from "./ColorControls";
+import { ContentCopy } from "@mui/icons-material";
 
 const EmptySlot = () => (
   <Box
@@ -20,7 +21,7 @@ const EmptySlot = () => (
   />
 );
 
-const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
+const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [controlsAnchor, setControlsAnchor] = useState(null);
 
@@ -39,6 +40,11 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
   const handleRemove = event => {
     event.stopPropagation();
     onRemove(index);
+  };
+
+  const handleDuplicate = event => {
+    event.stopPropagation();
+    onDuplicate(index);
   };
 
   const getLevelLabel = () => {
@@ -158,23 +164,44 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight }) => {
               </Box>
             </Tooltip>
             <Fade in={isHovered}>
-              <IconButton
-                size="small"
-                onClick={handleRemove}
+              <Box
                 sx={{
                   position: "absolute",
                   top: -8,
                   right: -8,
-                  bgcolor: "background.paper",
-                  boxShadow: 1,
-                  transition: "transform 0.2s ease",
-                  "&:hover": {
-                    transform: "scale(1.1)",
-                  },
+                  display: "flex",
+                  gap: 0.5,
                 }}
               >
-                <ClearIcon fontSize="small" />
-              </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={handleDuplicate}
+                  sx={{
+                    bgcolor: "background.paper",
+                    boxShadow: 1,
+                    transition: "transform 0.2s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  <ContentCopy fontSize="small" />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={handleRemove}
+                  sx={{
+                    bgcolor: "background.paper",
+                    boxShadow: 1,
+                    transition: "transform 0.2s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </Box>
             </Fade>
 
             <ColorControls
@@ -207,6 +234,7 @@ ColorSlot.propTypes = {
     brightness_levels: PropTypes.number,
     saturation_levels: PropTypes.number,
   }),
+  onDuplicate: PropTypes.func.isRequired,
 };
 
 ColorSlot.defaultProps = {
@@ -217,6 +245,7 @@ ColorSlot.defaultProps = {
     brightness_levels: 4,
     saturation_levels: 4,
   },
+  onDuplicate: () => {},
 };
 
 export default ColorSlot;

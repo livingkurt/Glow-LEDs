@@ -16,15 +16,15 @@ import {
 } from "@mui/material";
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
-import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import ColorPalette from "./components/ColorPalette";
-import ColorSlots from "./components/ColorSlots";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 import { snakeCase } from "lodash";
 import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
+import ColorSlot from "./components/ColorSlot";
 
 const ModeCreatorPage = () => {
   const { id } = useParams();
@@ -162,21 +162,50 @@ const ModeCreatorPage = () => {
                     {"Selected Colors ("}
                     {selectedMicrolight.colors_per_mode} {"max)"}
                   </Typography>
-                  <ColorSlots
-                    selectedColors={mode?.colors}
-                    maxSlots={selectedMicrolight.colors_per_mode}
-                    microlight={selectedMicrolight}
-                    onRemove={index => {
-                      const newColors = [...mode.colors];
-                      newColors.splice(index, 1);
-                      dispatch(set_mode({ colors: newColors }));
-                    }}
-                    onUpdate={(index, updatedColor) => {
-                      const newColors = [...mode.colors];
-                      newColors[index] = updatedColor;
-                      dispatch(set_mode({ colors: newColors }));
-                    }}
-                  />
+                  <Droppable droppableId="color-slots" direction="horizontal">
+                    {provided => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        sx={{
+                          display: "flex",
+                          gap: 2,
+                          p: 2,
+                          minHeight: 80,
+                        }}
+                      >
+                        {Array(selectedMicrolight.colors_per_mode)
+                          .fill(null)
+                          .map((_, i) => mode?.colors[i] || null)
+                          .map((color, index) => (
+                            <ColorSlot
+                              key={`slot-${index}`}
+                              color={color}
+                              index={index}
+                              onRemove={index => {
+                                const newColors = [...mode.colors];
+                                newColors.splice(index, 1);
+                                dispatch(set_mode({ colors: newColors }));
+                              }}
+                              onUpdate={(index, updatedColor) => {
+                                const newColors = [...mode.colors];
+                                newColors[index] = updatedColor;
+                                dispatch(set_mode({ colors: newColors }));
+                              }}
+                              onDuplicate={index => {
+                                const newColors = [...mode.colors];
+                                if (newColors.length < selectedMicrolight.colors_per_mode) {
+                                  newColors.splice(index + 1, 0, { ...newColors[index] });
+                                  dispatch(set_mode({ colors: newColors }));
+                                }
+                              }}
+                              microlight={selectedMicrolight}
+                            />
+                          ))}
+                        {provided.placeholder}
+                      </Box>
+                    )}
+                  </Droppable>
                 </Box>
               </Grid>
             </DragDropContext>
