@@ -25,6 +25,7 @@ import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
 import ColorSlot from "./components/ColorSlot";
+import { isMobile } from "react-device-detect";
 
 const ModeCreatorPage = () => {
   const { id } = useParams();
@@ -163,6 +164,18 @@ const ModeCreatorPage = () => {
                     {"Selected Colors ("}
                     {selectedMicrolight.colors_per_mode} {"max)"}
                   </Typography>
+
+                  {isMobile && (
+                    <Typography variant="subtitle2" gutterBottom>
+                      {"Click on a color slot for controls"}
+                    </Typography>
+                  )}
+                  {!isMobile && (
+                    <Typography variant="subtitle2" gutterBottom>
+                      {"Hover over a color slot for controls"}
+                    </Typography>
+                  )}
+
                   <Droppable droppableId="color-slots" direction="horizontal">
                     {provided => (
                       <Box
