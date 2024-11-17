@@ -9,7 +9,7 @@ import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIcon
 import { isMobile } from "react-device-detect";
 
 const EmptySlot = () => (
-  <Box sx={{ textAlign: "center" }}>
+  <Box sx={{ textAlign: "center" }} display="flex" justifyContent="center" alignItems="center">
     {isMobile && (
       <Typography
         variant="caption"
@@ -273,6 +273,9 @@ const ColorSlot = ({ color, index, onRemove, onUpdate, microlight, onDuplicate, 
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               data-color-slot
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
               sx={{
                 position: "relative",
                 zIndex: 1,

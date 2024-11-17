@@ -170,10 +170,9 @@ const ModeCreatorPage = () => {
                         {...provided.droppableProps}
                         sx={{
                           display: "grid",
-                          gridTemplateColumns: "repeat(auto-fit, 60px)",
-                          justifyContent: "start",
+                          gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))",
                           gap: 2,
-                          p: 2,
+                          px: 1, // Changed from px: 2 to px: 1 to match ColorPalette
                           minHeight: 80,
                         }}
                       >
