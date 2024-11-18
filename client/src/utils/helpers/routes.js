@@ -90,6 +90,10 @@ export const privateRoutes = [
 ];
 
 export const redirects = [
+  {
+    from: "/collections/all/products/helios_gloveset#manual",
+    to: "https://drive.google.com/uc?export=download&id=11tlCDtLpDfW2n-_BGbfsAvhQQUsXcjHm",
+  },
   { from: "/account/changepassword", to: "/account/change_password" },
   { from: "/account/passwordreset", to: "/account/password_reset" },
   { from: "/checkout/placeorder", to: "/checkout/place_order" },
@@ -121,8 +125,4 @@ export const redirects = [
   { from: "/pages/sitemap", to: "/sitemap" },
   { from: "/pages/music", to: "/about" },
   { from: "/pages/complete/:type/:id?", to: "/" },
-  {
-    from: "/collections/all/products/helios_gloveset#manual",
-    to: "https://drive.google.com/uc?export=download&id=11tlCDtLpDfW2n-_BGbfsAvhQQUsXcjHm",
-  },
 ];
