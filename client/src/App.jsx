@@ -1,5 +1,5 @@
 import { createElement, useEffect } from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
 import { createTheme, ThemeProvider } from "@mui/material";
 import GLTheme from "./theme";
@@ -8,7 +8,7 @@ import { Four04Page } from "./pages/Four04Page";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTokenRefresh } from "./api/axiosInstance";
 import * as API from "./api";
-import { adminRoutes, privateRoutes, redirects, routes } from "./utils/helpers/routes";
+import { adminRoutes, privateRoutes, routes } from "./utils/helpers/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 import { AdminComponents, Components, PrivateComponents } from "./shared/RouteComponents/pages";
 import Head from "./shared/RouteComponents/Head";
@@ -20,6 +20,19 @@ import MainLayout from "./shared/Layouts/MainLayout";
 import PlaceOrderLayout from "./shared/Layouts/PlaceOrderLayout";
 import GLConfirmModal from "./shared/GlowLEDsComponents/GLConfirmModal/GLConfirmModal";
 import HomePage from "./pages/HomePage/HomePage";
+
+const CustomRedirect = ({ from, to }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === from) {
+      navigate(to + location.hash, { replace: true });
+    }
+  }, [location, navigate, from, to]);
+
+  return null;
+};
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,9 +61,12 @@ const App = () => {
       <Router>
         <ScrollToTop>
           <Routes>
-            {redirects.map(({ from, to }) => (
-              <Route key={from} path={from} element={<Navigate to={to} replace />} />
-            ))}
+            <Route
+              path="/collections/all/products/helios_gloveset"
+              element={
+                <CustomRedirect from="/collections/all/products/helios_gloveset" to="/products/helios_gloveset" />
+              }
+            />
             {privateRoutes.map((route, index) => (
               <Route
                 key={index}
