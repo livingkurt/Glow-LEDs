@@ -121,4 +121,8 @@ export const redirects = [
   { from: "/pages/sitemap", to: "/sitemap" },
   { from: "/pages/music", to: "/about" },
   { from: "/pages/complete/:type/:id?", to: "/" },
+  {
+    from: "/collections/all/products/helios_gloveset#manual",
+    to: "https://drive.google.com/uc?export=download&id=11tlCDtLpDfW2n-_BGbfsAvhQQUsXcjHm",
+  },
 ];
