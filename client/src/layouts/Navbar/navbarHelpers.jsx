@@ -325,8 +325,8 @@ const essentials = addIdsRecursively({
       path: "/products?tags[]=gloves&tags[]=sampler",
     },
     {
-      name: "Battery Storage",
-      path: "/products?tags[]=batteries&tags[]=storage",
+      name: "Storage",
+      path: "/products?tags[]=storage",
     },
     {
       name: "Wholesale",
