@@ -60,5 +60,54 @@
     "opyn",
     "Qoagv",
     "uuidv"
-  ]
+  ],
+  "atlascode.jira.explorer.nestSubtasks": false,
+  "atlascode.jira.explorer.enabled": true,
+  "atlascode.jira.hover.enabled": true,
+  "atlascode.bitbucket.enabled": false,
+  "atlascode.jira.enabled": true,
+  "atlascode.jira.jqlList": [
+    ,
+    {
+      "id": "16680d7e-ddba-493b-9aab-c7559f2183cb",
+      "enabled": true,
+      "name": "📋 My Current Sprint Issues",
+      "query": "assignee = currentUser() AND sprint in openSprints() AND resolution = Unresolved ORDER BY rank ASC",
+      "siteId": "726e3be8-1b80-4f52-be60-8bdac4dbd43c",
+      "monitor": true
+    },
+    {
+      "id": "16680d7e-ddba-493b-9aab-c7559f2183cb",
+      "enabled": true,
+      "name": "🔥 High Priority Bugs",
+      "query": "assignee = currentUser() AND sprint in openSprints() AND resolution = Unresolved AND issuetype = Bug AND priority in (Highest, High) ORDER BY rank ASC",
+      "siteId": "726e3be8-1b80-4f52-be60-8bdac4dbd43c",
+      "monitor": true
+    },
+    {
+      "id": "16680d7e-ddba-493b-9aab-c7559f2183cc",
+      "enabled": true,
+      "name": "⭐ High Priority Stories",
+      "query": "assignee = currentUser() AND sprint in openSprints() AND resolution = Unresolved AND issuetype = Story AND priority in (Highest, High) ORDER BY rank ASC",
+      "siteId": "726e3be8-1b80-4f52-be60-8bdac4dbd43c",
+      "monitor": true
+    },
+    {
+      "id": "16680d7e-ddba-493b-9aab-c7559f2183cd",
+      "enabled": true,
+      "name": "🐛 Other Bugs",
+      "query": "assignee = currentUser() AND sprint in openSprints() AND resolution = Unresolved AND issuetype = Bug AND priority not in (Highest, High) ORDER BY rank ASC",
+      "siteId": "726e3be8-1b80-4f52-be60-8bdac4dbd43c",
+      "monitor": true
+    },
+    {
+      "id": "16680d7e-ddba-493b-9aab-c7559f2183ce",
+      "enabled": true,
+      "name": "📖 Other Stories",
+      "query": "assignee = currentUser() AND sprint in openSprints() AND resolution = Unresolved AND issuetype = Story AND priority not in (Highest, High) ORDER BY rank ASC",
+      "siteId": "726e3be8-1b80-4f52-be60-8bdac4dbd43c",
+      "monitor": true
+    }
+  ],
+  "atlascode.jira.startWorkBranchTemplate.customTemplate": "{{{issueKey}}}-{{{summary}}}"
 }

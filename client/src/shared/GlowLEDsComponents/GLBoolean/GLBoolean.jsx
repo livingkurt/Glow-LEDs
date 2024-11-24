@@ -2,15 +2,15 @@ import { Cancel, CheckCircle } from "@mui/icons-material";
 import { Box, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
 
-const GLBoolean = ({ boolean, tooltip }) => {
+const GLBoolean = ({ boolean, tooltip, color }) => {
   return (
     <Box>
       {tooltip ? (
         <Tooltip title={boolean ? `Does ${tooltip}` : `Does not ${tooltip}`}>
-          {boolean ? <CheckCircle /> : <Cancel />}
+          {boolean ? <CheckCircle color={color} /> : <Cancel color={color} />}
         </Tooltip>
       ) : (
-        <>{boolean ? <CheckCircle /> : <Cancel />}</>
+        <>{boolean ? <CheckCircle color={color} /> : <Cancel color={color} />}</>
       )}
     </Box>
   );
@@ -19,10 +19,12 @@ const GLBoolean = ({ boolean, tooltip }) => {
 GLBoolean.propTypes = {
   boolean: PropTypes.bool.isRequired,
   tooltip: PropTypes.string,
+  color: PropTypes.string,
 };
 
 GLBoolean.defaultProps = {
   tooltip: "",
+  color: "white",
 };
 
 export default GLBoolean;
