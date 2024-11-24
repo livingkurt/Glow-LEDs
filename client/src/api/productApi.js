@@ -36,6 +36,17 @@ export const reorderProducts = async ({ reorderedItems }) => {
   }
 };
 
+export const applySale = createAsyncThunk("products/applySale", async (saleData, { dispatch, rejectWithValue }) => {
+  try {
+    const { data } = await axios.put(`/api/products/apply_sale`, saleData);
+    dispatch(showSuccess({ message: `Sale Applied to ${data.count} Products` }));
+    return data;
+  } catch (error) {
+    dispatch(showError({ message: errorMessage(error) }));
+    return rejectWithValue(error.response?.data);
+  }
+});
+
 export const listProducts = createAsyncThunk("products/listProducts", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/products?${create_query(query)}`);

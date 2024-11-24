@@ -514,3 +514,12 @@ export const handleMicrolightFiltering = async microlightPathname => {
   if (!microlight) return {};
   return { microlights: microlight._id };
 };
+
+export const calculateSalePrice = (price, discountType, discountValue) => {
+  console.log({ price, discountType, discountValue });
+  if (discountType === "percentage") {
+    const discount = parseFloat(discountValue) / 100;
+    return Math.round(price * (1 - discount) * 100) / 100;
+  }
+  return Math.round((price - parseFloat(discountValue)) * 100) / 100;
+};

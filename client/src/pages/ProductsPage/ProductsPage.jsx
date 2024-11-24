@@ -1,10 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { openProductOptionsGeneratorModal, open_create_product_modal, set_loading } from "./productsPageSlice";
-import { EditProductModal } from "./components";
+import { openProductOptionsGeneratorModal, open_create_product_modal, openSalePriceModal } from "./productsPageSlice";
+import { EditProductModal, SalePriceModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Box, Button, Container } from "@mui/material";
@@ -15,7 +14,7 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import axios from "axios";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
@@ -55,6 +54,10 @@ const ProductsPage = () => {
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
       { title: "Price", display: row => `$${row.price}` },
+      {
+        title: "Sale Price",
+        display: row => (row.sale?.price ? `$${row.sale.price}` : "-"),
+      },
       { title: "Count In Stock", display: "count_in_stock" },
       {
         title: "",
@@ -170,19 +173,28 @@ const ProductsPage = () => {
               </Button>
             )}
             {selectedRows.length > 0 && (
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  dispatch(
-                    openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
-                  );
-                }}
-              >
-                {"Replicate Product Options"}
-              </Button>
+              <>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    dispatch(
+                      openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
+                    );
+                  }}
+                >
+                  {"Replicate Product Options"}
+                </Button>
+              </>
             )}
-
+            <Button
+              color="primary"
+              variant="contained"
+              startIcon={<LocalOfferIcon />}
+              onClick={() => dispatch(openSalePriceModal())}
+            >
+              {"Apply Product Discount"}
+            </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
               {"Create Product"}
             </Button>
@@ -191,7 +203,9 @@ const ProductsPage = () => {
       />
       <EditProductModal />
       <ProductOptionsGeneratorModal />
+      <SalePriceModal />
     </Container>
   );
 };
+
 export default ProductsPage;

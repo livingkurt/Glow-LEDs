@@ -16,6 +16,7 @@ import {
   getOurPicks,
   sortProducts,
   handleMicrolightFiltering,
+  calculateSalePrice,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -649,47 +650,6 @@ export default {
       }
     }
   },
-  image_upload_products_s: async req => {
-    // or you can use
-    const formData = new FormData(req);
-    // const { images, album_title } = body;
-    // try {
-    //   const options = {
-    //     auth_cookie: config.IMGBOX_AUTH_COOKIE,
-    //     album_title: album_title,
-    //     content_type: "safe",
-    //     thumbnail_size: "800r",
-    //     comments_enabled: false,
-    //     logger: true
-    //   };
-
-    //   const send = await imgbox(images, options);
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     throw new Error(error.message);
-    //   }
-    // }
-    return "Success";
-  },
-  // compress_images_products_s: async (body) => {
-  //   try {
-  //     //
-  //     const { images } = body;
-
-  //     sharp(images[0].data_url)
-  //       .jpeg({ progressive: true, force: false })
-  //       .toFile(
-  //         __dirname + "/Desktop/" + images[0].file.name + "-optimized.jpg"
-  //       );
-
-  //     return "Success";
-  //   } catch (error) {
-  //
-  // //     if (error instanceof Error) {
-  //             throw new Error(error.message);
-  //           }
-  //   }
-  // },
   remove_multiple_products_s: async body => {
     try {
       return await product_db.remove_multiple_products_db(body.ids);
@@ -699,6 +659,78 @@ export default {
       }
     }
   },
+  apply_sale_products_s: async body => {
+    try {
+      const { discountType, discountValue, startDate, endDate, applyToOptions, selectedTags, applyToAll } = body;
+      let query = {};
+
+      // Validate discount inputs
+      if (!discountType || !discountValue || isNaN(discountValue) || discountValue <= 0) {
+        throw new Error("Invalid discount value");
+      }
+
+      if (!applyToAll && selectedTags?.length > 0) {
+        query.tags = { $in: selectedTags };
+      }
+
+      const products = await Product.find(query);
+      const bulkOps = [];
+
+      for (const product of products) {
+        const salePrice = calculateSalePrice(product.price, discountType, discountValue);
+
+        // Skip if sale price calculation failed
+        if (isNaN(salePrice) || salePrice <= 0) {
+          console.warn(`Skipping invalid sale price for product ${product._id}`);
+          continue;
+        }
+
+        const update = {
+          $set: {
+            sale: {
+              price: Number(salePrice.toFixed(2)), // Ensure price is a valid number with 2 decimal places
+              start_date: startDate,
+              end_date: endDate,
+            },
+          },
+        };
+
+        if (applyToOptions && product.options) {
+          const updatedOptions = product.options.map(option => ({
+            ...option.toObject(),
+            values: option.values.map(value => {
+              const additionalCost = value.additionalCost
+                ? calculateSalePrice(value.additionalCost, discountType, discountValue)
+                : 0;
+              return {
+                ...value.toObject(),
+                additionalCost: Number(additionalCost.toFixed(2)), // Ensure additionalCost is a valid number
+              };
+            }),
+          }));
+          update.$set.options = updatedOptions;
+        }
+
+        bulkOps.push({
+          updateOne: {
+            filter: { _id: product._id },
+            update,
+          },
+        });
+      }
+
+      if (bulkOps.length > 0) {
+        await Product.bulkWrite(bulkOps);
+      }
+
+      return { success: true, count: bulkOps.length };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   current_stock_products_s: async () => {
     try {
       return await product_db.current_stock_products_db();

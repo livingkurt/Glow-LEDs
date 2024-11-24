@@ -39,6 +39,7 @@ const productsPage = createSlice({
     remoteVersionRequirement: 0,
     edit_product_modal: false,
     product_modal: false,
+    salePriceModalOpen: false,
     limit: 10,
     selectedOptionType: "",
     productOptionsGeneratorModal: {
@@ -85,6 +86,12 @@ const productsPage = createSlice({
     open_product_modal: (state, { payload }) => {
       state.product_modal = true;
       state.product = payload;
+    },
+    openSalePriceModal: state => {
+      state.salePriceModalOpen = true;
+    },
+    closeSalePriceModal: state => {
+      state.salePriceModalOpen = false;
     },
     setRemoteVersionRequirement: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
@@ -295,7 +302,6 @@ const productsPage = createSlice({
           review_modal: payload.review_modal,
           rating: payload.rating,
           comment: payload.comment,
-          // selectedOptions: payload.options.map(option => option.values.find(value => value.isDefault)),
         },
       };
     },
@@ -336,6 +342,16 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.applySale.pending]: (state, { payload }) => {
+      state.success = false;
+    },
+    [API.applySale.fulfilled]: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.applySale.rejected]: (state, { payload, error }) => {
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -360,6 +376,8 @@ export const {
   open_product_modal,
   close_edit_product_modal,
   openEditProductModal,
+  openSalePriceModal,
+  closeSalePriceModal,
   setRemoteVersionRequirement,
   setSelectedOptionType,
   openProductOptionsGeneratorModal,

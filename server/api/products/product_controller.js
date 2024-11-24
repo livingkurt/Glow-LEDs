@@ -316,4 +316,16 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  apply_sale_products_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const result = await product_services.apply_sale_products_s(body);
+      if (result) {
+        return res.status(200).send(result);
+      }
+      return res.status(500).send({ message: "Error Applying Sale" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };
