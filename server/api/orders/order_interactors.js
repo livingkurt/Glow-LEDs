@@ -354,12 +354,18 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
 
     // Only process Stripe payment if there's remaining balance
     if (newTotalPrice > 0) {
+      if (!paymentMethod) {
+        throw new Error("Payment method is required for orders with a positive total price.");
+      }
       const customerInformation = normalizeCustomerInfo({ shipping: order.shipping, paymentMethod });
       const paymentInformation = normalizePaymentInfo({ totalPrice: newTotalPrice });
       const customer = await createOrUpdateCustomer(customerInformation);
       const paymentIntent = await createPaymentIntent(customer, paymentInformation);
       confirmedPayment = await confirmPaymentIntent(paymentIntent, paymentMethod.id);
       await logStripeFeeToExpenses(confirmedPayment);
+    } else {
+      // No payment is needed; set confirmedPayment to an empty object or null
+      confirmedPayment = null;
     }
 
     const hasPreOrderItems = order.orderItems.some(item => item.isPreOrder);
@@ -371,6 +377,7 @@ export const processPayment = async (orderId, paymentMethod, totalPrice) => {
     throw new Error(error);
   }
 };
+
 export const sendOrderEmail = async orderData => {
   try {
     const bodyConfirmation = {

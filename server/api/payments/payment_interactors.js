@@ -67,9 +67,8 @@ export const confirmPaymentIntent = async (result, paymentMethodId) => {
 // Function to confirm a payment intent
 // Function to update order after payment confirmation
 export const updateOrder = async (order, confirmedPayment, paymentMethod, hasPreOrderItems) => {
-  console.log({ hasPreOrderItems });
   try {
-    // Ensure the status is set to "paid_pre_order" if there are pre-order items
+    // Set the status based on whether the order contains pre-order items
     if (hasPreOrderItems) {
       order.status = "paid_pre_order";
     } else if (order.status !== "paid_pre_order") {
@@ -78,7 +77,7 @@ export const updateOrder = async (order, confirmedPayment, paymentMethod, hasPre
 
     order.paidAt = Date.now();
     order.payment = {
-      paymentMethod: "stripe",
+      paymentMethod: confirmedPayment ? "stripe" : "none",
       charge: confirmedPayment,
       payment: paymentMethod,
     };
@@ -90,6 +89,7 @@ export const updateOrder = async (order, confirmedPayment, paymentMethod, hasPre
     }
   }
 };
+
 // Function to confirm a payment intent
 export const logStripeFeeToExpenses = async confirmedResult => {
   try {
