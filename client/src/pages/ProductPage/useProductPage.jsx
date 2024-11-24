@@ -85,8 +85,10 @@ const useProductPage = () => {
     if (urlParamsApplied.current) {
       const searchParams = new URLSearchParams(location.search);
       customizedProduct.selectedOptions?.forEach((selectedOption, index) => {
-        if (selectedOption && selectedOption.name) {
-          searchParams.set(customizedProduct.currentOptions[index].name, selectedOption.name);
+        const currentOption = customizedProduct.currentOptions[index];
+        // Skip adding text options to URL
+        if (selectedOption && selectedOption.name && currentOption.optionType !== "text") {
+          searchParams.set(currentOption.name, selectedOption.name);
         }
       });
 
