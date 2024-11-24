@@ -2,9 +2,6 @@ import axios from "axios";
 import { create_query } from "./helper_functions";
 
 const order_routes = {
-  last_months_orders: () => {
-    return axios.get("/api/orders/previous_income/30");
-  },
   findAll_orders_a: () => {
     return axios.get("/api/orders/?limit=0&page=1");
   },
@@ -20,9 +17,6 @@ const order_routes = {
   monthly_expenses: (date_1, date_2) => {
     return axios.put("/api/expenses/monthly_expenses", { date_1, date_2 });
   },
-  income: (year, month) => {
-    return axios.get(`/api/orders/income${year ? "/" + year : ""}${month ? "/" + month : ""}`);
-  },
   all_affiliate_code_usage_orders_a: arg => {
     return axios.get(
       `/api/orders/all_affiliate_code_usage/${arg.year}${arg.month ? "/" + arg.month : ""}${
@@ -36,19 +30,6 @@ const order_routes = {
   promo_code_usage_orders_a: (year, month, query) => {
     //
     return axios.get(`/api/orders/promo_code_usage/${year}${month ? "/" + month : ""}?${create_query(query)}`);
-  },
-  // yearly_income: (year) => {
-  // 	return axios.get(`/api/orders/yearly_income/${year}`);
-  // },
-  yearly_expenses: (date_1, date_2) => {
-    return axios.put("/api/expenses/yearly_expenses", { date_1, date_2 });
-  },
-  total_expenses: () => {
-    return axios.get("/api/expenses/total_expenses");
-  },
-  mark_as_shipped: () => {
-    //
-    return axios.put("/api/orders/mark_as_shipped");
   },
 };
 

@@ -55,16 +55,6 @@ const product_routes = {
   get_new_releases: () => {
     return axios.get("/api/products/new_releases");
   },
-  set_sale_price: (discount_percentage, sale_start_date, sale_end_date) => {
-    return axios.put("/api/all/product_sale_price", {
-      discount_percentage,
-      sale_start_date,
-      sale_end_date,
-    });
-  },
-  clear_sale: (sale_start_date, sale_end_date) => {
-    return axios.put("/api/all/clear_sale", { sale_start_date, sale_end_date });
-  },
   batch_request: (method, collection, search_parameter_field, search_parameter, action, property, value, user) => {
     return axios.put(
       "/api/all/" + collection,

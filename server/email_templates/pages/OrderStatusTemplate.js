@@ -1,12 +1,6 @@
-import {
-  format_date,
-  determine_product_name,
-  order_status_steps,
-  determine_tracking_link,
-  email_sale_price_switch,
-} from "../../utils/util.js";
+import { format_date, order_status_steps, determine_tracking_link } from "../../utils/util.js";
 import { isColorLight } from "../email_template_helpers.js";
-
+import Price from "../components/Price.js";
 const determineColor = status => {
   switch (status) {
     case "crafting":
@@ -280,7 +274,7 @@ export default ({ email, order, status, message_to_user }) => {
                                        	<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
                                           <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
                                             align="right">
-                                            ${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
+                                            ${item.quantity > 1 ? item.quantity + "x" : ""} ${Price(item, "white", order?.user?.isWholesaler)}
                                           </p>
                                         </td>
                                       </tr>

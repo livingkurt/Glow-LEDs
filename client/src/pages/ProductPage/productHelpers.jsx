@@ -92,12 +92,6 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
-  if (product?.sale.sale_start_date) {
-    state.customizedProduct.sale_start_date = product.sale.sale_start_date;
-  }
-  if (product?.sale.sale_end_date) {
-    state.customizedProduct.sale_end_date = product.sale.sale_end_date;
-  }
 
   if (product?.wholesale_product) {
     state.customizedProduct.wholesale_product = product.wholesale_product;
@@ -111,9 +105,14 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
       // Store the original product price for reference
       state.customizedProduct.originalPrice = product.price;
     }
-
-    if (product?.sale.sale_price > 0) {
-      state.customizedProduct.sale_price = product.sale.sale_price;
+    if (product.sale?.price) {
+      state.customizedProduct.sale = product.sale;
+    }
+    if (product?.sale?.start_date) {
+      state.customizedProduct.sale.start_date = product.sale.start_date;
+    }
+    if (product?.sale?.end_date) {
+      state.customizedProduct.sale.end_date = product.sale.end_date;
     }
     if (product?.wholesale_price > 0) {
       state.customizedProduct.wholesale_price = product.wholesale_price;

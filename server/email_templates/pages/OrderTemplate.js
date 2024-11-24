@@ -1,11 +1,6 @@
-import {
-  formatDate,
-  email_sale_price_switch,
-  determine_card_logo_images_white,
-  order_status_steps,
-  getItemsTotal,
-} from "../../utils/util.js";
+import { formatDate, determine_card_logo_images_white, order_status_steps, getItemsTotal } from "../../utils/util.js";
 import { isColorLight } from "../email_template_helpers.js";
+import Price from "../components/Price.js";
 
 export default ({ email, order }) => {
   return `<table style="width:100%;border-spacing:0; padding: 10px;">
@@ -241,7 +236,7 @@ export default ({ email, order }) => {
 																											<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
 																												<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
 																													align="right">
-																													${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
+																													${item.quantity > 1 ? item.quantity + "x" : ""} ${Price(item, "white", order?.user?.isWholesaler)}
 																												</p>
 																											</td>
 																										</tr>
@@ -275,7 +270,7 @@ export default ({ email, order }) => {
 																				<strong style="font-size:16px;color:white">$${order.orderItems
                                           .map(item => {
                                             return {
-                                              price: item.sale_price ? item.sale_price : item.price,
+                                              price: item.sale?.price ? item.sale?.price : item.price,
                                               quantity: item.quantity,
                                             };
                                           })
@@ -298,7 +293,7 @@ export default ({ email, order }) => {
 																				<strong style="font-size:16px;color:white">$${order.orderItems
                                           .map(item => {
                                             return {
-                                              price: item.sale_price ? item.sale_price : item.price,
+                                              price: item.sale?.price ? item.sale?.price : item.price,
                                               quantity: item.quantity,
                                             };
                                           })

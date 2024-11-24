@@ -6,7 +6,6 @@ import { Add } from "@mui/icons-material";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import ProductImages from "../ProductPage/components/ProductImages";
-import { sale_price_switch } from "../../utils/react_helper_functions";
 import * as API from "../../api";
 import useProductBundlePage from "./useProductBundlePage";
 import { EditCartModal } from "../CartsPage/components";
@@ -17,6 +16,7 @@ import BundleItemCard from "./components/BundleItemCard";
 import { generateGradient, setPromoCode } from "../../utils/helpers/universal_helpers";
 import HeroVideo from "../HomePage/components/HeroVideo";
 import BundleOptionsModal from "./components/BundleOptionsModal";
+import GLPrice from "../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
@@ -131,14 +131,13 @@ const ProductBundlePage = () => {
 
                 <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
                   {"Price: "}
-                  {sale_price_switch({
-                    product: {
-                      price: bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
-                    },
-                    cartItem: false,
-                    background: "dark",
-                    isWholesaler: current_user?.isWholesaler,
-                  })}
+                  <GLPrice
+                    product={{
+                      product: {
+                        price: bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+                      },
+                    }}
+                  />
                 </Typography>
 
                 <Box mt={2}>

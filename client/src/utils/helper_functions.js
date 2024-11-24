@@ -1,5 +1,3 @@
-import { determine_secondary_product_name } from "./react_helper_functions";
-
 export const create_query = query => {
   if (!query) {
     return "";
@@ -135,44 +133,6 @@ export const sizes_conversion = size => {
       break;
   }
 };
-
-// export const determine_link = (item) => {
-// 	return `/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
-// 		? '?secondary_color=' + item.secondary_color
-// 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
-// 		? '?secondary=' + item.size ? item.size : item.option_product_name
-// 		: ''}`;
-// };
-export const determine_link = item => {
-  //
-  const link = `/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
-    item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
-  }${item.option_product ? "?option=" + item.size : ""}${
-    item.secondary_product_name
-      ? "?secondary=" + determine_secondary_product_name(item.secondary_product_name, item)
-      : ""
-  }`;
-  //
-  return link;
-};
-
-// item.size ? item.size : item.option_product_name
-// export const determine_link = (item) => {
-//
-// 	const link = `/products/${item.pathname}${item.color
-// 		? '?color=' + item.color
-// 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
-// 		? item.option_product ? '?option=' + item.option_product.split('-')[1].trim() : ''
-// 		: item.option_product_name
-// 			? '?option=' + item.option_product_name.split('-')[1].trim()
-// 			: ''}${item.secondary_product_name ? '?secondary=' + item.secondary_product_name.split('-')[1].trim() : ''}`;
-//
-// 	return link;
-// };
-
-// export const snake_case = (str) => {
-// 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
-// };
 
 export const determine_tracking_link = tracking_number => {
   if (tracking_number) {
@@ -404,11 +364,11 @@ export const determineItemsTotal = (cartItems, isWholesaler) => {
       if (isWholesaler) {
         total = total + (item.wholesale_price || item.price) * item.quantity;
       } else if (
-        today >= new Date(item.sale_start_date) &&
-        today <= new Date(item.sale_end_date) &&
-        item.sale_price !== 0
+        today >= new Date(item.sale?.start_date) &&
+        today <= new Date(item.sale?.end_date) &&
+        item.sale?.price !== 0
       ) {
-        total = total + item.sale_price * item.quantity;
+        total = total + item.sale?.price * item.quantity;
       } else {
         total = total + item.price * item.quantity;
       }

@@ -157,20 +157,23 @@ export const sharedItemSchema = ({ products, events, tickets, tags, itemType, it
           label: "Review Email Sent",
           default: false,
         },
-        sale_price: {
-          type: "number",
-          label: "Sale Price",
-          labelProp: "sale_price",
-        },
-        sale_start_date: {
-          type: "date",
-          label: "Sale Start Date",
-          labelProp: "sale_start_date",
-        },
-        sale_end_date: {
-          type: "date",
-          label: "Sale End Date",
-          labelProp: "sale_end_date",
+        sale: {
+          type: "object",
+          title: "Sale",
+          fields: {
+            price: {
+              type: "number",
+              label: "Sale Price",
+            },
+            start_date: {
+              type: "date",
+              label: "Sale Start Date",
+            },
+            end_date: {
+              type: "date",
+              label: "Sale End Date",
+            },
+          },
         },
         dimensions: {
           type: "object",

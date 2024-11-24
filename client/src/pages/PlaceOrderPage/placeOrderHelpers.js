@@ -226,8 +226,8 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
 
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
     const salePrice =
-      today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0
-        ? item.sale_price
+      today >= new Date(item.sale?.start_date) && today <= new Date(item.sale?.end_date) && item.sale?.price !== 0
+        ? item.sale?.price
         : itemPrice;
     const finalPrice = salePrice * item.quantity;
 

@@ -1,9 +1,5 @@
-import {
-  format_date,
-  determine_tracking_link,
-  shipping_status_steps,
-  email_sale_price_switch,
-} from "../../utils/util.js";
+import { format_date, determine_tracking_link, shipping_status_steps } from "../../utils/util.js";
+import Price from "../components/Price.js";
 import { isColorLight } from "../email_template_helpers.js";
 
 const determine_emoji = status => {
@@ -128,7 +124,7 @@ const createOrderItemsHTML = (orderItems, isWholesaler) => {
                       <td style='font-family:helvetica;width:100%;white-space:nowrap;'>
                         <p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
                           align="right">
-                          ${item.quantity > 1 ? item.quantity + "x" : ""}${email_sale_price_switch(item, "white", isWholesaler)}
+                          ${item.quantity > 1 ? item.quantity + "x" : ""}${Price(item, "white", isWholesaler)}
                         </p>
                       </td>
                     </tr>

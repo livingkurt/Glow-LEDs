@@ -19,11 +19,11 @@ export const determineCartTotal = (cartItems, isWholesaler) => {
       if (isWholesaler) {
         total = total + (item.wholesale_price || item.price) * item.quantity;
       } else if (
-        today >= new Date(item.sale_start_date) &&
-        today <= new Date(item.sale_end_date) &&
-        item.sale_price !== 0
+        today >= new Date(item.sale?.start_date) &&
+        today <= new Date(item.sale?.end_date) &&
+        item.sale?.price !== 0
       ) {
-        total = total + item.sale_price * item.quantity;
+        total = total + item.sale?.price * item.quantity;
       } else {
         total = total + item.price * item.quantity;
       }

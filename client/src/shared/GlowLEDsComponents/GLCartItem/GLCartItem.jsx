@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid, Chip, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setCartDrawer } from "../../../slices/cartSlice";
-import { sale_price_switch } from "../../../utils/react_helper_functions";
 import GLSelect from "../GLSelect/GLSelect";
 import GLIconButton from "../GLIconButton/GLIconButton";
 import * as API from "../../../api";
@@ -14,6 +13,7 @@ import GLLazyImage from "../GLLazyImage/GLLazyImage";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
 import { isSafari } from "react-device-detect";
+import GLPrice from "../GLPrice/GLPrice";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -166,12 +166,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
             <Grid item xs={12}>
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
                 <Typography variant="body2" sx={{ mt: 2 }}>
-                  {sale_price_switch({
-                    product: item,
-                    cartItem: true,
-                    background: "light",
-                    isWholesaler: current_user?.isWholesaler,
-                  })}
+                  <GLPrice product={item} />
                 </Typography>
                 {renderQuantityAndDelete()}
               </Box>
@@ -200,12 +195,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
             {!isOrderItem && (
               <Grid item>
                 <Typography variant="body2">
-                  {sale_price_switch({
-                    product: item,
-                    cartItem: true,
-                    background: "light",
-                    isWholesaler: current_user?.isWholesaler,
-                  })}
+                  <GLPrice product={item} />
                 </Typography>
               </Grid>
             )}

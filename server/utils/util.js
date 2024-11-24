@@ -255,8 +255,10 @@ export const determine_filter = (query, search) => {
       if (item[0] === "sale" && item[1] === "true") {
         filter.$or = [
           {
-            sale_price: {
-              $gt: 0,
+            sale: {
+              price: {
+                $gt: 0,
+              },
             },
           },
           {
@@ -486,31 +488,6 @@ export const determine_card_logo_images_white = card_type => {
       return "https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png";
     default:
       return;
-  }
-};
-export const email_sale_price_switch = (item, color, wholesaler) => {
-  if (wholesaler && item.wholesale_price) {
-    return `<label>WSP: $${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>`;
-  } else if (item.sale_price && item.sale_price !== 0) {
-    return `<label>
-				<del style='color: #a03131;'>
-					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.quantity).toFixed(2)}</label>
-				</del>${" "}
-				${"-->"} $${item.sale_price && (item.sale_price * item.quantity).toFixed(2)}
-			</label>`;
-  } else if (item.quantity === 0) {
-    return `<label>
-				<del style='color: #a03131;'>
-					<label style='${`color: ${color}; margin-left: 7px;`}'>
-						${item.price && (item.price * item.quantity).toFixed(2)}
-					</label>
-				</del>${" "}
-				${"-->"} <label style='${`color: ${color}; margin-left: 7px;`}'>Sold Out</label>
-			</label>`;
-  } else {
-    return `<label>
-				$${item.price && (item.price * item.quantity).toFixed(2)}
-			</label>`;
   }
 };
 const included_for_option_name = ["diffusers"];

@@ -56,7 +56,7 @@ const ProductsPage = () => {
       { title: "Price", display: row => `$${row.price}` },
       {
         title: "Sale Price",
-        display: row => (row.sale?.price ? `$${row.sale.price}` : "-"),
+        display: row => (row.sale?.price ? `$${row.sale?.price}` : "-"),
       },
       { title: "Count In Stock", display: "count_in_stock" },
       {
