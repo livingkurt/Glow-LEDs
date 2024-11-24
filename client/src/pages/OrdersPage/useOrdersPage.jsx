@@ -118,12 +118,12 @@ export const useOrdersPage = ({ userId }) => {
             {row.isRefunded && (
               <div>
                 <del style={{ color: "red" }}>
-                  <label style={{ color: "white" }}>
+                  <div style={{ color: "white" }}>
                     <div>
                       {"$"}
                       {row.totalPrice?.toFixed(2)}
                     </div>
-                  </label>
+                  </div>
                 </del>
               </div>
             )}
