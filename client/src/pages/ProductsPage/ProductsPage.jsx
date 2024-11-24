@@ -20,6 +20,7 @@ import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { showConfirm } from "../../slices/snackbarSlice";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -144,7 +145,6 @@ const ProductsPage = () => {
         dropdownComponent={row => (
           <ProductDropdown row={row} determineColor={determineColor} colspan={columnDefs.length + 1} />
         )}
-        // dropdownRows={row => row.options.flatMap(option => option.values)}
         loading={loading}
         enableRowSelect
         enableDragDrop
@@ -155,10 +155,15 @@ const ProductsPage = () => {
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Products?`);
-                  if (confirm) {
-                    dispatch(API.deleteMultipleProducts(selectedRows));
-                  }
+                  dispatch(
+                    showConfirm({
+                      title: "Confirm Delete",
+                      message: `Are you sure you want to Delete ${selectedRows.length} Products?`,
+                      onConfirm: () => {
+                        dispatch(API.deleteMultipleProducts(selectedRows));
+                      },
+                    })
+                  );
                 }}
               >
                 {"Delete Products"}
@@ -178,21 +183,6 @@ const ProductsPage = () => {
               </Button>
             )}
 
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={async () => {
-                const confirm = window.confirm("Are you sure you want to generate the product catelog?");
-                if (confirm) {
-                  dispatch(set_loading(true));
-                  await axios.get(`/api/products/facebook_catelog`);
-                  // google_catalog_upload();
-                  dispatch(set_loading(false));
-                }
-              }}
-            >
-              {"Generate Product Catelog CSV"}
-            </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
               {"Create Product"}
             </Button>

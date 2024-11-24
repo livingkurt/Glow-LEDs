@@ -812,12 +812,6 @@ const admin = addIdsRecursively({
     },
 
     {
-      name: "Edit All Data",
-      path: "/secure/glow/edit_all_data",
-      onClick: x => true,
-    },
-
-    {
       name: "Update Version",
       path: "",
       onClick: () => updateVersion(),
