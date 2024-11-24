@@ -17,6 +17,7 @@ import CreateLabelModal from "./components/CreateLabelModal";
 import { toTitleCase } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
 import { useOrdersPage } from "./useOrdersPage";
+import { showConfirm } from "../../slices/snackbarSlice";
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
@@ -76,12 +77,15 @@ const OrdersPage = () => {
                 name="status"
                 label="Batch Set Status"
                 onChange={(e, value) => {
-                  const confirm = window.confirm(
-                    `Are you sure you want to Update Status on ${selectedRows.length} Orders?`
+                  dispatch(
+                    showConfirm({
+                      title: "Confirm Status Update",
+                      message: `Are you sure you want to Update Status on ${selectedRows.length} Orders?`,
+                      onConfirm: () => {
+                        dispatch(API.updateMultipleOrderStatus({ ids: selectedRows, status: value }));
+                      },
+                    })
                   );
-                  if (confirm) {
-                    dispatch(API.updateMultipleOrderStatus({ ids: selectedRows, status: value }));
-                  }
                 }}
               />
             )}
@@ -91,10 +95,15 @@ const OrdersPage = () => {
                   color="secondary"
                   variant="contained"
                   onClick={() => {
-                    const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Orders?`);
-                    if (confirm) {
-                      dispatch(API.deleteMultipleOrders(selectedRows));
-                    }
+                    dispatch(
+                      showConfirm({
+                        title: "Confirm Delete",
+                        message: `Are you sure you want to Delete ${selectedRows.length} Orders?`,
+                        onConfirm: () => {
+                          dispatch(API.deleteMultipleOrders(selectedRows));
+                        },
+                      })
+                    );
                   }}
                 >
                   {"Delete Orders"}
