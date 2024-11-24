@@ -159,7 +159,7 @@ const ProductPage = () => {
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
                     <Box display="flex" gap={1} alignItems="flex-end">
-                      {"Price:"} <GLPrice product={product} />
+                      {"Price:"} <GLPrice product={customizedProduct} />
                     </Box>
                     {customizedProduct.isPreOrder && (
                       <Typography
