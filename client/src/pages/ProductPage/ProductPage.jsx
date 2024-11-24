@@ -440,7 +440,6 @@ const ProductPage = () => {
                       />
                     </Grid>
                   )}
-                  {console.log({ featured_modes: product?.featured_modes })}
                   {product?.featured_modes?.length > 0 && (
                     <Grid item xs={12}>
                       <FeaturedModes featured_modes={product.featured_modes} />
