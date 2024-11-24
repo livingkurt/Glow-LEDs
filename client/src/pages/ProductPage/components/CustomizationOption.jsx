@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography, TextField } from "@mui/material";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
 import { CheckBox, CheckBoxOutlineBlank, Clear } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLInfoPopover from "../../../shared/GlowLEDsComponents/GLInfoPopover/GLInfoPopover";
+import GLTextFieldV2 from "../../../shared/GlowLEDsComponents/GLTextFieldV2/GLTextFieldV2";
 
 const CustomizationOption = ({
   index,
@@ -23,10 +24,21 @@ const CustomizationOption = ({
       selectOption({ index, selectedOption: undefined, option });
       updateValidationError(index, null);
     } else {
-      const fullSelectedOption = option.values.find(opt => opt.name === value);
-      if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
-        selectOption({ index, selectedOption: fullSelectedOption, option });
+      if (option.optionType === "text") {
+        // For text input, create a custom option with the text value
+        const customOption = {
+          name: value,
+          additionalCost: option.values[0]?.additionalCost || 0,
+          product: option.values[0]?.product,
+        };
+        selectOption({ index, selectedOption: customOption, option });
         updateValidationError(index, null);
+      } else {
+        const fullSelectedOption = option.values.find(opt => opt.name === value);
+        if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
+          selectOption({ index, selectedOption: fullSelectedOption, option });
+          updateValidationError(index, null);
+        }
       }
     }
   };
@@ -82,6 +94,22 @@ const CustomizationOption = ({
             options={option.values}
             isAddOn={option.isAddOn}
             disabledOptions={option.values.filter(opt => opt.product?.count_in_stock === 0).map(opt => opt.name)}
+          />
+        );
+      case "text":
+        return (
+          <GLTextFieldV2
+            fullWidth
+            value={selectedOption?.name || ""}
+            onChange={e => handleChange(e.target.value)}
+            placeholder={`Enter ${option.name}`}
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-root": {
+                fontSize: "1.2rem",
+                backgroundColor: "white",
+              },
+            }}
           />
         );
       default:

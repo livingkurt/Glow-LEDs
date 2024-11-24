@@ -77,7 +77,7 @@ export const productFormFields = ({ products, users, product, microlights, filam
                 return toCapitalize(option);
               }
             },
-            options: ["colors", "dropdown", "buttons"],
+            options: ["colors", "dropdown", "buttons", "text"],
           },
           isAddOn: {
             type: "checkbox",

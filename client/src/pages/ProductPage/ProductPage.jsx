@@ -411,7 +411,7 @@ const ProductPage = () => {
                       <CompareModels notSure={product?.not_sure} />
                     </Grid>
                   )}
-                  {product?.tech_specs && !product?.tech_specs.hidden && (
+                  {product?.tech_specs?.navigation?.length > 0 && (
                     <Grid item xs={12} id="tech-specs">
                       <LineBreak line_break={product?.line_break} />
                       <TechSpecs
@@ -422,7 +422,7 @@ const ProductPage = () => {
                       />
                     </Grid>
                   )}
-                  {product?.in_the_box && !product?.in_the_box.hidden && (
+                  {product?.in_the_box?.items?.length > 0 && (
                     <Grid item xs={12}>
                       <InTheBox
                         in_the_box={product?.in_the_box}
@@ -431,7 +431,7 @@ const ProductPage = () => {
                       />
                     </Grid>
                   )}
-                  {product?.elevate_your_experience && !product?.elevate_your_experience.hidden && (
+                  {product?.elevate_your_experience?.items?.length > 0 && (
                     <Grid item xs={12}>
                       <ElevateYourExperience
                         elevateYourExperience={product.elevate_your_experience}
@@ -440,7 +440,8 @@ const ProductPage = () => {
                       />
                     </Grid>
                   )}
-                  {product?.featured_modes && !product?.featured_modes.hidden && (
+                  {console.log({ featured_modes: product?.featured_modes })}
+                  {product?.featured_modes?.length > 0 && (
                     <Grid item xs={12}>
                       <FeaturedModes featured_modes={product.featured_modes} />
                     </Grid>
