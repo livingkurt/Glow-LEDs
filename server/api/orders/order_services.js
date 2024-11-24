@@ -283,18 +283,21 @@ export default {
       }
 
       // Process payment for non-pre-order items or the entire order if not split
+      // Determine which order to process payment for
       let paymentOrder;
-      if (paymentMethod) {
-        if (splitOrder) {
-          if (nonPreOrderOrder) {
-            paymentOrder = nonPreOrderOrder;
-          } else if (preOrderOrder) {
-            paymentOrder = preOrderOrder;
-          }
-        } else {
-          paymentOrder = orders[0];
+      if (splitOrder) {
+        if (nonPreOrderOrder) {
+          paymentOrder = nonPreOrderOrder;
+        } else if (preOrderOrder) {
+          paymentOrder = preOrderOrder;
         }
-        if (paymentOrder) {
+      } else {
+        paymentOrder = orders[0];
+      }
+
+      // Process payment if necessary
+      if (paymentOrder) {
+        if (paymentMethod || paymentOrder.totalPrice <= 0) {
           paymentOrder = await processPayment(paymentOrder._id, paymentMethod, paymentOrder.totalPrice);
 
           // After processing payment, update the preOrderOrder if it exists
@@ -304,6 +307,8 @@ export default {
             preOrderOrder.payment = paymentOrder.payment; // Use the same payment info
             await preOrderOrder.save();
           }
+        } else {
+          throw new Error("Payment method is required for orders with a positive total price.");
         }
       }
 
