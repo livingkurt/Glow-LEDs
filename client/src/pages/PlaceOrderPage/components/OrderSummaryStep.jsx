@@ -8,11 +8,11 @@ import ShippingPrice from "./ShippingPrice";
 
 const OrderSummaryStep = () => {
   const theme = useTheme();
+  const { current_user } = useSelector(state => state.users.userPage);
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping } = cartPage;
   const { cartItems } = my_cart;
 
-  const items_price = determineItemsTotal(cartItems);
   const placeOrder = useSelector(state => state.placeOrder);
   const {
     activePromoCodeIndicator,
@@ -36,6 +36,16 @@ const OrderSummaryStep = () => {
   const ticketItems = cartItems.filter(item => item.itemType === "ticket");
   const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const serviceFee = ticketTotal * 0.1; // 10% service fee
+
+  // Add these new calculations
+  const originalTotal = cartItems.reduce((total, item) => {
+    const originalPrice = item.previous_price || item.price;
+    return total + originalPrice * item.quantity;
+  }, 0);
+
+  const saleTotal = determineItemsTotal(cartItems, current_user.isWholesaler);
+
+  const hasActiveSale = saleTotal < originalTotal;
 
   return (
     <div className="place_order-action">
@@ -68,18 +78,18 @@ const OrderSummaryStep = () => {
           <ul className="cart-list-container w-100per">
             <li>
               <div className="">
-                <label style={{ textAlign: "right" }}>{"Price"}</label>
+                <div style={{ textAlign: "right" }}>{"Price"}</div>
               </div>
             </li>
             {cartItems.length === 0 ? (
               <div>{"Cart is empty"}</div>
             ) : (
-              cartItems.map((item, index) => <GLCartItem item={item} index={index} showQuantity={false} />)
+              cartItems.map((item, index) => <GLCartItem key={index} item={item} index={index} showQuantity={false} />)
             )}
           </ul>
         </li>
 
-        {!activePromoCodeIndicator && (
+        {!activePromoCodeIndicator && !hasActiveSale && (
           <li>
             <div>{"Subtotal"}</div>
             <div>
@@ -89,30 +99,41 @@ const OrderSummaryStep = () => {
           </li>
         )}
 
-        {activePromoCodeIndicator && (
+        {(hasActiveSale || activePromoCodeIndicator) && (
           <>
             <li>
               <del style={{ color: "red" }}>
-                <div style={{ color: "white" }}>{"Subtotal"}</div>
+                <div style={{ color: "white" }}>{"Original Subtotal"}</div>
               </del>
               <div>
                 <del style={{ color: "red" }}>
                   <div style={{ color: "white" }}>
                     {"$"}
-                    {items_price.toFixed(2)}
+                    {originalTotal.toFixed(2)}
                   </div>
                 </del>
               </div>
             </li>
+            {hasActiveSale && (
+              <li>
+                <div>{"Sale Discount"}</div>
+                <div>
+                  {"-$"}
+                  {(originalTotal - saleTotal).toFixed(2)}
+                </div>
+              </li>
+            )}
+            {activePromoCodeIndicator && (
+              <li>
+                <div>{"Promo Discount"}</div>
+                <div>
+                  {"-$"}
+                  {(saleTotal - itemsPrice).toFixed(2)}
+                </div>
+              </li>
+            )}
             <li>
-              <div>{"Discount"}</div>
-              <div>
-                {"-$"}
-                {(items_price - itemsPrice).toFixed(2)}
-              </div>
-            </li>
-            <li>
-              <div>{"New Subtotal"}</div>
+              <div>{"Final Subtotal"}</div>
               <div>
                 {"$"}
                 {itemsPrice.toFixed(2)}

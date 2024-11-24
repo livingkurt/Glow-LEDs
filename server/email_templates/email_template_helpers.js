@@ -18,3 +18,32 @@ export const isColorLight = color => {
   const brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000;
   return brightness > 155;
 };
+
+// Add these helper functions at the top of the file:
+export const getItemsTotal = orderItems => {
+  return orderItems.reduce((total, item) => {
+    const originalPrice = item.previous_price || item.price;
+    return total + originalPrice * item.quantity;
+  }, 0);
+};
+
+export const getSaleTotal = orderItems => {
+  return orderItems.reduce((total, item) => {
+    const today = new Date();
+    const isOnSale =
+      item.sale?.price &&
+      item.sale?.start_date &&
+      item.sale?.end_date &&
+      today >= new Date(item.sale?.start_date) &&
+      today <= new Date(item.sale?.end_date);
+
+    const price = isOnSale ? item.sale.price : item.price;
+    return total + price * item.quantity;
+  }, 0);
+};
+
+export const hasActiveSale = orderItems => {
+  const originalTotal = getItemsTotal(orderItems);
+  const saleTotal = getSaleTotal(orderItems);
+  return saleTotal < originalTotal;
+};

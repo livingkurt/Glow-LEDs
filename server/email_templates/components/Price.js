@@ -4,10 +4,10 @@ export default (item, color, wholesaler) => {
   const formatPrice = price => {
     return typeof price === "number" ? price.toFixed(2) : price;
   };
-
   const calculateDiscount = (currentPrice, originalPrice) => {
     if (!currentPrice || !originalPrice) return null;
-    return (100 * (1 - parseInt(currentPrice, 10) / parseInt(originalPrice, 10))).toFixed(0);
+    // Use parseFloat instead of parseInt to maintain decimal precision
+    return (100 * (1 - parseFloat(currentPrice) / parseFloat(originalPrice))).toFixed(0);
   };
 
   // Wholesale price display
@@ -27,17 +27,18 @@ export default (item, color, wholesaler) => {
   ) {
     const discount = calculateDiscount(item.sale?.price, item.price);
     const quantity = item.quantity || 1;
+    const promoPrice = item.promoPrice; // Add support for promo price
 
     return `<div style="font-size: 18px; display: flex; align-items: center; gap: 8px; color: ${color}">
       ${item.isPreOrder ? "Preorder " : ""}
-      <span>$${formatPrice(item.sale?.price * quantity)}</span>
+      <span>$${formatPrice((promoPrice || item.sale?.price) * quantity)}</span>
       ${discount ? `<span>(${discount}% Off)</span>` : ""}
+      ${promoPrice ? `<span>(+Promo Applied)</span>` : ""}
       <del style="color: #ff0000;">
         <span style="color: ${color};">$${formatPrice(item.price * quantity)}</span>
       </del>
     </div>`;
   }
-
   // Previous price display
   if (item.previous_price) {
     const discount = calculateDiscount(item.price, item.previous_price);
